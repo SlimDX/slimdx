@@ -23,7 +23,7 @@ namespace Direct3D
 		IDirect3DTexture9* texture;
 		HRESULT hr = device->InternalPointer->CreateTexture( width, height, numLevels, (DWORD) usage, 
 			(D3DFORMAT) format, (D3DPOOL) pool, &texture, NULL );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 
 		m_Texture = texture;
 		m_Disposed = false;
@@ -34,7 +34,7 @@ namespace Direct3D
 	{
 		D3DLOCKED_RECT lockedRect;
 		HRESULT hr = m_Texture->LockRect( level, &lockedRect, NULL, (DWORD) flags );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		GraphicsStream<T>^ stream = gcnew GraphicsStream<T>( lockedRect.pBits, true, !readOnly );
@@ -44,7 +44,7 @@ namespace Direct3D
 	void Texture::UnlockRectangle( int level )
 	{
 		HRESULT hr = m_Texture->UnlockRect( level );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 	}
 
 
@@ -62,7 +62,7 @@ namespace Direct3D
 		IDirect3DCubeTexture9* texture;
 		HRESULT hr = device->InternalPointer->CreateCubeTexture( edgeLength, numLevels, (DWORD) usage,
 			(D3DFORMAT) format, (D3DPOOL) pool, &texture, NULL );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 
 		m_Texture = texture;
 		m_Disposed = false;
@@ -73,7 +73,7 @@ namespace Direct3D
 	{
 		D3DLOCKED_RECT lockedRect;
 		HRESULT hr = m_Texture->LockRect( (D3DCUBEMAP_FACES) face, level, &lockedRect, NULL, (DWORD) flags );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		GraphicsStream<T>^ stream = gcnew GraphicsStream<T>( lockedRect.pBits, true, !readOnly );
@@ -83,7 +83,7 @@ namespace Direct3D
 	void CubeTexture::UnlockRectangle( CubeMapFace face, int level )
 	{
 		HRESULT hr = m_Texture->UnlockRect( (D3DCUBEMAP_FACES) face, level );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 	}
 
 	Texture^ TextureLoader::FromStream( Device^ device, Stream^ stream, int width, int height, int numLevels,

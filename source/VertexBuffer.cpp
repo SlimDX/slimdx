@@ -23,7 +23,7 @@ namespace Direct3D
 		IDirect3DVertexBuffer9* vb;
 		HRESULT hr = device->InternalPointer->CreateVertexBuffer( sizeBytes, (DWORD) usage, 
 			(DWORD) format, (D3DPOOL) pool, &vb, NULL );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 		
 		m_Buffer = vb;
 		m_Disposed = false;
@@ -34,7 +34,7 @@ namespace Direct3D
 	{
 		void* lockedPtr;
 		HRESULT hr = m_Buffer->Lock( offset, size, &lockedPtr, (DWORD) flags );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		GraphicsStream<T>^ stream = gcnew GraphicsStream<T>( lockedPtr, true, !readOnly );

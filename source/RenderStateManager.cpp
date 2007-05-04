@@ -14,28 +14,28 @@ namespace Direct3D
 	{
 		DWORD value;
 		HRESULT hr = m_Device->InternalPointer->GetRenderState( D3DRS_CULLMODE, &value );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 		return (Cull) value;
 	}
 
 	void RenderStateManager::CullMode::set( Cull cull )
 	{
 		HRESULT hr = m_Device->InternalPointer->SetRenderState( D3DRS_CULLMODE, (DWORD) cull );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 	}
 
 	bool RenderStateManager::ZBufferEnable::get()
 	{
 		DWORD value;
 		HRESULT hr = m_Device->InternalPointer->GetRenderState( D3DRS_ZENABLE, &value );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 		return value > 0;
 	}
 
 	void RenderStateManager::ZBufferEnable::set( bool value )
 	{
 		HRESULT hr = m_Device->InternalPointer->SetRenderState( D3DRS_ZENABLE, value );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 	}
 }
 }

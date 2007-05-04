@@ -15,7 +15,7 @@ namespace Direct3D
 		IDirect3DVertexDeclaration9* decl;
 
 		HRESULT hr = device->InternalPointer->CreateVertexDeclaration( (const D3DVERTEXELEMENT9*) pinnedElements, &decl );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 
 		m_Decl = decl;
 		m_Disposed = false;

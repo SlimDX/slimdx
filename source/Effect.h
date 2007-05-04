@@ -8,6 +8,82 @@ namespace SlimDX
 {
 	namespace Direct3D
 	{
+		//enums related to effects
+		public enum class ParameterClass : Int32
+		{
+			Scalar = D3DXPC_SCALAR,
+			Vector = D3DXPC_VECTOR,
+			MatrixRows = D3DXPC_MATRIX_ROWS,
+			MatrixColumns = D3DXPC_MATRIX_COLUMNS,
+			Object = D3DXPC_OBJECT,
+			Struct = D3DXPC_STRUCT,
+		};
+
+		public enum class ParameterType : Int32
+		{
+			Void = D3DXPT_VOID,
+			Bool = D3DXPT_BOOL,
+			Int = D3DXPT_INT,
+			Float = D3DXPT_FLOAT,
+			String = D3DXPT_STRING,
+			Texture = D3DXPT_TEXTURE,
+			Texture1D = D3DXPT_TEXTURE1D,
+			Texture2D = D3DXPT_TEXTURE2D,
+			Texture3D = D3DXPT_TEXTURE3D,
+			TextureCube = D3DXPT_TEXTURECUBE,
+			Sampler = D3DXPT_SAMPLER,
+			Sampler1D = D3DXPT_SAMPLER1D,
+			Sampler2D = D3DXPT_SAMPLER2D,
+			Sampler3D = D3DXPT_SAMPLER3D,
+			SamplerCube = D3DXPT_SAMPLERCUBE,
+			PixelShader = D3DXPT_PIXELSHADER,
+			VertexShader = D3DXPT_VERTEXSHADER,
+			PixelFragment = D3DXPT_PIXELFRAGMENT,
+			VertexFragment = D3DXPT_VERTEXFRAGMENT,
+			X = D3DX_PARAMETER_ANNOTATION
+		};
+
+		[Flags]
+		public enum class ParameterFlags : Int32
+		{
+			Shared = D3DX_PARAMETER_SHARED,
+			Literal = D3DX_PARAMETER_LITERAL,
+			Annotation = D3DX_PARAMETER_ANNOTATION,
+		};
+
+		//description structures for various things
+		public value class EffectDescription
+		{
+		public:
+			String^ Creator;
+			int Parameters;
+			int Techniques;
+			int Functions;
+		};
+
+		public value class FunctionDescription
+		{
+		public:
+			String^ Name;
+			int Annotations;
+		};
+
+		public value class ParameterDescription
+		{
+		public:
+			String^ Name;
+			String^ Semantic;
+			ParameterClass Class;
+			ParameterType Type;
+			int Rows;
+			int Columns;
+			int Elements;
+			int Annotations;
+			int StructMembers;
+			ParameterFlags Flags;
+			int Bytes;
+		};
+
 		public ref class EffectHandle
 		{
 		private:
@@ -42,7 +118,6 @@ namespace SlimDX
 			~EffectHandle()
 			{
 				//MSDN says this is ok to do: http://msdn2.microsoft.com/en-us/library/ms235250(VS.80).aspx
-				//TODO: Check with Washu on this whole affair
 				EffectHandle::!EffectHandle();
 			}
 
@@ -114,18 +189,18 @@ namespace SlimDX
 			}
 
 		public:
-			EffectHandle^ GetParameter( EffectHandle^ constant, String^ name )
-			{
-				array<Byte>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
-				pin_ptr<unsigned char> pinned_name = &nameBytes[0];
+			EffectHandle^ GetParameter( EffectHandle^ parameter, int index );
+			EffectHandle^ GetParameter( EffectHandle^ parameter, String^ name );
+			EffectHandle^ GetParameterBySemantic( EffectHandle^ parameter, String^ name );
+			ParameterDescription GetParameterDescription( EffectHandle^ parameter );
 
-				D3DXHANDLE parentHandle = constant != nullptr ? constant->InternalHandle : NULL;
-				D3DXHANDLE handle = m_BaseEffect->GetParameterByName( parentHandle, (const char*) pinned_name );
-				
-				if( handle != NULL )
-					return gcnew EffectHandle( handle );
-				else
-					return nullptr;
+			EffectHandle^ GetFunction( int index );
+			EffectHandle^ GetFunction( String^ name );
+			FunctionDescription GetFunctionDescription( EffectHandle^ handle );
+
+			property EffectDescription Description
+			{
+				EffectDescription get();
 			}
 
 			void SetValue( EffectHandle^ param, bool value );
