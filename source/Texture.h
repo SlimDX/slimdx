@@ -37,22 +37,8 @@ namespace SlimDX
 			!Texture();
 
 			generic<typename T> where T : value class
-			GraphicsStream<T>^ LockRectangle( int level, LockFlags flags )
-			{
-				D3DLOCKED_RECT lockedRect;
-				HRESULT hr = m_Texture->LockRect( level, &lockedRect, NULL, (DWORD) flags );
-				FAILED_THROW( hr );
-
-				bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-				GraphicsStream<T>^ stream = gcnew GraphicsStream<T>( lockedRect.pBits, true, !readOnly );
-				return stream;
-			}
-
-			void UnlockRectangle( int level )
-			{
-				HRESULT hr = m_Texture->UnlockRect( level );
-				FAILED_THROW( hr );
-			}
+			GraphicsStream<T>^ LockRectangle( int level, LockFlags flags );
+			void UnlockRectangle( int level );
 		};
 
 		public ref class CubeTexture : public BaseTexture
@@ -79,20 +65,8 @@ namespace SlimDX
 			!CubeTexture();
 
 			generic<typename T> where T : value class
-			GraphicsStream<T>^ LockRectangle( CubeMapFace face, int level, LockFlags flags )
-			{
-				D3DLOCKED_RECT lockedRect;
-				HRESULT hr = m_Texture->LockRect( (D3DCUBEMAP_FACES) face, level, &lockedRect, NULL, (DWORD) flags );
-				FAILED_THROW( hr );
-
-				bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-				GraphicsStream<T>^ stream = gcnew GraphicsStream<T>( lockedRect.pBits, true, !readOnly );
-				return stream;
-			}
-
-			void UnlockRectangle( CubeMapFace face, int level )
-			{
-			}
+			GraphicsStream<T>^ LockRectangle( CubeMapFace face, int level, LockFlags flags );
+			void UnlockRectangle( CubeMapFace face, int level );
 		};
 
 		public ref class TextureLoader sealed

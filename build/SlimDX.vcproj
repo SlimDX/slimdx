@@ -192,6 +192,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\Font.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\source\GraphicsStream.cpp"
 				>
 			</File>
@@ -209,6 +213,10 @@
 			</File>
 			<File
 				RelativePath="..\source\SlimDX.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\Sprite.cpp"
 				>
 			</File>
 			<File
@@ -250,6 +258,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\Font.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\GraphicsStream.h"
 				>
 			</File>
@@ -271,6 +283,10 @@
 			</File>
 			<File
 				RelativePath="..\source\Resource.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\Sprite.h"
 				>
 			</File>
 			<File
