@@ -21,6 +21,7 @@ namespace SlimDX
 		{
 			ComPointer->Release();
 			ComPointer = NULL;
+			m_Disposed = true;
 		}
 
 		DirectXObject() : m_Disposed( false )

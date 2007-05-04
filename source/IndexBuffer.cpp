@@ -15,7 +15,6 @@ namespace Direct3D
 			throw gcnew ArgumentNullException( "buffer" );
 
 		m_Buffer = buffer;
-		m_Disposed = false;
 	}
 
 	IndexBuffer::IndexBuffer( Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit )
@@ -26,7 +25,6 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 
 		m_Buffer = ib;
-		m_Disposed = false;
 	}
 
 	generic<typename T>

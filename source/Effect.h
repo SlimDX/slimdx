@@ -224,7 +224,6 @@ namespace SlimDX
 		{
 		private:
 			ID3DXEffect* m_Effect;
-			bool m_Disposed;
 
 		internal:
 			property ID3DXEffect* InternalPointer

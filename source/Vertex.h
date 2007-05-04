@@ -41,7 +41,6 @@ namespace SlimDX
 		{
 		private:
 			IDirect3DVertexDeclaration9* m_Decl;
-			bool m_Disposed;
 
 		internal:
 			property IDirect3DVertexDeclaration9* InternalPointer

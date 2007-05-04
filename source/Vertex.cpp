@@ -18,7 +18,6 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 
 		m_Decl = decl;
-		m_Disposed = false;
 	}
 }
 }

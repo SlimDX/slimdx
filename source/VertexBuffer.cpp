@@ -15,7 +15,6 @@ namespace Direct3D
 			throw gcnew ArgumentNullException( "buffer" );
 
 		m_Buffer = buffer;
-		m_Disposed = false;
 	}
 
 	VertexBuffer::VertexBuffer( Device^ device, int sizeBytes, Usage usage, VertexFormats format, Pool pool )
@@ -26,7 +25,6 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 		
 		m_Buffer = vb;
-		m_Disposed = false;
 	}
 
 	generic<typename T>
