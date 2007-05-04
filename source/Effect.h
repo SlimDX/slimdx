@@ -189,9 +189,13 @@ namespace SlimDX
 			}
 
 		public:
+			EffectHandle^ GetAnnotation( EffectHandle^ handle, int index );
+			EffectHandle^ GetAnnotation( EffectHandle^ handle, String^ name );
+
 			EffectHandle^ GetParameter( EffectHandle^ parameter, int index );
 			EffectHandle^ GetParameter( EffectHandle^ parameter, String^ name );
 			EffectHandle^ GetParameterBySemantic( EffectHandle^ parameter, String^ name );
+			EffectHandle^ GetParameterElement( EffectHandle^ parameter, int index );
 			ParameterDescription GetParameterDescription( EffectHandle^ parameter );
 
 			EffectHandle^ GetFunction( int index );
@@ -240,8 +244,6 @@ namespace SlimDX
 		public:
 			Effect( ID3DXEffect* effect );
 
-			property EffectHandle^ Technique;
-
 			static Effect^ FromStream( Device^ device, Stream^ stream, array<Macro^>^ preprocessorDefines, Include^ includeFile,
 				String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors );
 
@@ -258,12 +260,29 @@ namespace SlimDX
 				return FromStream( device, stream, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
 			}
 
-			EffectHandle^ FindNextValidTechnique( EffectHandle^ technique );
-
 			int Begin( FX flags );
 			void End();
 			void BeginPass( int pass );
 			void EndPass();
+
+			void BeginParameterBlock();
+			EffectHandle^ EndParameterBlock();
+			void ApplyParameterBlock( EffectHandle^ parameterBlock );
+			void DeleteParameterBlock( EffectHandle^ parameterBlock );
+
+			void CommitChanges();
+
+			EffectHandle^ FindNextValidTechnique( EffectHandle^ technique );
+			bool ValidateTechnique( EffectHandle^ technique );
+
+			property EffectHandle^ Technique
+			{
+				EffectHandle^ get();
+				void set( EffectHandle^ value );
+			}
+
+			void OnLostDevice();
+			void OnResetDevice();
 		};
 	}
 }

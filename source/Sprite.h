@@ -46,6 +46,13 @@ namespace SlimDX
 			void Begin( SpriteFlags flags );
 			void End();
 			void Flush();
+
+			void OnLostDevice();
+			void OnResetDevice();
+
+			void SetTransform( Matrix transform );
+			void SetWorldViewLH( Matrix world, Matrix view );
+			void SetWorldViewRH( Matrix world, Matrix view );
 		};
 	}
 }

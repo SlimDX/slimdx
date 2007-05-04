@@ -45,5 +45,35 @@ namespace Direct3D
 		HRESULT hr = m_Sprite->Flush();
 		GraphicsException::CheckHResult( hr );
 	}
+
+	void Sprite::OnLostDevice()
+	{
+		HRESULT hr = m_Sprite->OnLostDevice();
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Sprite::OnResetDevice()
+	{
+		HRESULT hr = m_Sprite->OnResetDevice();
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Sprite::SetTransform( Matrix transform )
+	{
+		HRESULT hr = m_Sprite->SetTransform( (const D3DXMATRIX*) &transform );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Sprite::SetWorldViewLH( Matrix world, Matrix view )
+	{
+		HRESULT hr = m_Sprite->SetWorldViewLH( (const D3DXMATRIX*) &world, (const D3DXMATRIX*) &view );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Sprite::SetWorldViewRH( Matrix world, Matrix view )
+	{
+		HRESULT hr = m_Sprite->SetWorldViewRH( (const D3DXMATRIX*) &world, (const D3DXMATRIX*) &view );
+		GraphicsException::CheckHResult( hr );
+	}
 }
 }

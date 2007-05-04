@@ -9,15 +9,37 @@ namespace SlimDX
 {
 namespace Direct3D
 {
+	EffectHandle^ BaseEffect::GetAnnotation( EffectHandle^ handle, int index )
+	{
+		D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;
+		D3DXHANDLE annotation = m_BaseEffect->GetAnnotation( parentHandle, index );
+
+		if( annotation == NULL )
+			return nullptr;
+		return gcnew EffectHandle( annotation );
+	}
+
+	EffectHandle^ BaseEffect::GetAnnotation( EffectHandle^ handle, String^ name )
+	{
+		array<Byte>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+		pin_ptr<unsigned char> pinned_name = &nameBytes[0];
+
+		D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;
+		D3DXHANDLE annotation = m_BaseEffect->GetAnnotationByName( parentHandle, (LPCSTR) pinned_name );
+
+		if( annotation == NULL )
+			return nullptr;
+		return gcnew EffectHandle( annotation );
+	}
+
 	EffectHandle^ BaseEffect::GetParameter( EffectHandle^ parameter, int index )
 	{
 		D3DXHANDLE parentHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		D3DXHANDLE handle = m_BaseEffect->GetParameter( parentHandle, index );
 		
-		if( handle != NULL )
-			return gcnew EffectHandle( handle );
-		else
+		if( handle == NULL )
 			return nullptr;
+		return gcnew EffectHandle( handle );
 	}
 
 	EffectHandle^ BaseEffect::GetParameter( EffectHandle^ parameter, String^ name )
@@ -28,10 +50,9 @@ namespace Direct3D
 		D3DXHANDLE parentHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		D3DXHANDLE handle = m_BaseEffect->GetParameterByName( parentHandle, (const char*) pinned_name );
 		
-		if( handle != NULL )
-			return gcnew EffectHandle( handle );
-		else
+		if( handle == NULL )
 			return nullptr;
+		return gcnew EffectHandle( handle );
 	}
 
 	EffectHandle^ BaseEffect::GetParameterBySemantic( EffectHandle^ parameter, String^ semantic )
@@ -42,10 +63,19 @@ namespace Direct3D
 		D3DXHANDLE parentHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		D3DXHANDLE handle = m_BaseEffect->GetParameterBySemantic( parentHandle, (const char*) pinned_semantic );
 		
-		if( handle != NULL )
-			return gcnew EffectHandle( handle );
-		else
+		if( handle == NULL )
 			return nullptr;
+		return gcnew EffectHandle( handle );
+	}
+
+	EffectHandle^ BaseEffect::GetParameterElement( EffectHandle^ parameter, int index )
+	{
+		D3DXHANDLE parentHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
+		D3DXHANDLE handle = m_BaseEffect->GetParameterElement( parentHandle, index );
+		
+		if( handle == NULL )
+			return nullptr;
+		return gcnew EffectHandle( handle );
 	}
 
 	ParameterDescription BaseEffect::GetParameterDescription( EffectHandle^ parameter )
@@ -75,10 +105,9 @@ namespace Direct3D
 	{
 		D3DXHANDLE handle = m_BaseEffect->GetFunction( index );
 		
-		if( handle != NULL )
-			return gcnew EffectHandle( handle );
-		else
+		if( handle == NULL )
 			return nullptr;
+		return gcnew EffectHandle( handle );
 	}
 
 	EffectHandle^ BaseEffect::GetFunction( String^ name )
@@ -88,10 +117,9 @@ namespace Direct3D
 
 		D3DXHANDLE handle = m_BaseEffect->GetFunctionByName( (const char*) pinned_name );
 		
-		if( handle != NULL )
-			return gcnew EffectHandle( handle );
-		else
+		if( handle == NULL )
 			return nullptr;
+		return gcnew EffectHandle( handle );
 	}
 
 	FunctionDescription BaseEffect::GetFunctionDescription( EffectHandle^ handle )
@@ -255,8 +283,9 @@ namespace Direct3D
 		pin_ptr<unsigned char> pinned_data = &data[0];
 
 		//TODO: Fix some of these params
-		D3DXCreateEffectEx( device->InternalPointer, pinned_data, data->Length, NULL, NULL, NULL,
+		HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinned_data, data->Length, NULL, NULL, NULL,
 			(DWORD) flags, NULL, &effect, &errorBuffer );
+		GraphicsException::CheckHResult( hr );
 
 		if( errorBuffer != NULL )
 		{
@@ -273,31 +302,109 @@ namespace Direct3D
 	int Effect::Begin( FX flags )
 	{
 		unsigned int passCount;
-		m_Effect->Begin( &passCount, (DWORD) flags );
+
+		HRESULT hr = m_Effect->Begin( &passCount, (DWORD) flags );
+		GraphicsException::CheckHResult( hr );
+
 		return passCount;
 	}
 
 	void Effect::End()
 	{
-		m_Effect->End();
+		HRESULT hr = m_Effect->End();
+		GraphicsException::CheckHResult( hr );
 	}
 
 	void Effect::BeginPass( int pass )
 	{
-		m_Effect->BeginPass( pass );
+		HRESULT hr = m_Effect->BeginPass( pass );
+		GraphicsException::CheckHResult( hr );
 	}
 
 	void Effect::EndPass()
 	{
-		m_Effect->EndPass();
+		HRESULT hr = m_Effect->EndPass();
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Effect::BeginParameterBlock()
+	{
+		HRESULT hr = m_Effect->BeginParameterBlock();
+		GraphicsException::CheckHResult( hr );
+	}
+
+	EffectHandle^ Effect::EndParameterBlock()
+	{
+		D3DXHANDLE handle = m_Effect->EndParameterBlock();
+		if( handle == NULL )
+			return nullptr;
+		return gcnew EffectHandle( handle );
+	}
+
+	void Effect::ApplyParameterBlock( EffectHandle^ parameterBlock )
+	{
+		D3DXHANDLE handle = parameterBlock != nullptr ? parameterBlock->InternalHandle : nullptr;
+		HRESULT hr = m_Effect->ApplyParameterBlock( handle );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Effect::DeleteParameterBlock( EffectHandle^ parameterBlock )
+	{
+		D3DXHANDLE handle = parameterBlock != nullptr ? parameterBlock->InternalHandle : nullptr;
+		HRESULT hr = m_Effect->DeleteParameterBlock( handle );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Effect::CommitChanges()
+	{
+		HRESULT hr = m_Effect->CommitChanges();
+		GraphicsException::CheckHResult( hr );
 	}
 
 	EffectHandle^ Effect::FindNextValidTechnique( EffectHandle^ technique )
 	{
 		D3DXHANDLE handle;
 		D3DXHANDLE parentHandle = technique != nullptr ? technique->InternalHandle : nullptr;
-		m_Effect->FindNextValidTechnique( parentHandle, &handle );
+
+		HRESULT hr = m_Effect->FindNextValidTechnique( parentHandle, &handle );
+		GraphicsException::CheckHResult( hr );
+
+		if( handle == NULL )
+			return nullptr;
 		return gcnew EffectHandle( handle );
+	}
+
+	bool Effect::ValidateTechnique( EffectHandle^ technique )
+	{
+		D3DXHANDLE handle = technique != nullptr ? technique->InternalHandle : nullptr;
+		return FAILED( m_Effect->ValidateTechnique( handle ) );
+	}
+
+	EffectHandle^ Effect::Technique::get()
+	{
+		D3DXHANDLE handle = m_Effect->GetCurrentTechnique();
+		if( handle == NULL )
+			return nullptr;
+		return gcnew EffectHandle( handle );
+	}
+
+	void Effect::Technique::set( EffectHandle^ value )
+	{
+		D3DXHANDLE handle = value != nullptr ? value->InternalHandle : nullptr;
+		HRESULT hr = m_Effect->SetTechnique( handle );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Effect::OnLostDevice()
+	{
+		HRESULT hr = m_Effect->OnLostDevice();
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Effect::OnResetDevice()
+	{
+		HRESULT hr = m_Effect->OnResetDevice();
+		GraphicsException::CheckHResult( hr );
 	}
 }
 }
