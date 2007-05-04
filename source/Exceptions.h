@@ -16,28 +16,39 @@ namespace SlimDX
 			EnableExceptions = true;
 		}
 
+		DirectXException() : Exception("A DirectX exception occurred.") {
+			ErrorCode = E_FAIL;
+		}
+		DirectXException(String^ message) : Exception(message) {
+			ErrorCode = E_FAIL;
+		}
 		DirectXException( int errorCode, String^ message ) : Exception( message )
 		{
 			ErrorCode = errorCode;
 		}
-
 		DirectXException( String^ message, Exception^ innerException ) : Exception( message, innerException )
 		{ }
 
-		DirectXException(SerializationInfo^ info, StreamingContext context) : Exception(info, context) { }
+		DirectXException(SerializationInfo^ info, StreamingContext context) : Exception(info, context)
+		{ }
 	};
 
 	namespace Direct3D
 	{
 		public ref class GraphicsException : public DirectXException
 		{
-		protected:
+		public:
+			GraphicsException() : DirectXException(E_FAIL, "A Direct3D exception occurred.")
+			{ }
+			GraphicsException(String^ message) : DirectXException(E_FAIL, message)
+			{ }
 			GraphicsException( int errorCode, String^ message ) : DirectXException( errorCode, message )
 			{ }
 			GraphicsException( String^ message, Exception^ innerException ) : DirectXException( message, innerException )
 			{ }
-			GraphicsException(SerializationInfo^ info, StreamingContext context) : DirectXException(info, context) { }
-		public:
+			GraphicsException(SerializationInfo^ info, StreamingContext context) : DirectXException(info, context)
+			{ }
+
 			static GraphicsException^ GetExceptionFromHResult( HRESULT hr );
 			static void CheckHResult( HRESULT hr );
 		};
