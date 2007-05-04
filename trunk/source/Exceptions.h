@@ -35,7 +35,7 @@ namespace SlimDX
 			{ }
 
 		public:
-			static GraphicsException^ ThrowFromHResult( HRESULT hr );
+			static GraphicsException^ GetExceptionFromHResult( HRESULT hr );
 			static void CheckHResult( HRESULT hr );
 		};
 
