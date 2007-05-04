@@ -42,6 +42,24 @@ namespace Direct3D
 		Utils::ReportNotDisposed( this );
 	}
 
+	generic<typename T>
+	GraphicsStream<T>^ Texture::LockRectangle( int level, LockFlags flags )
+	{
+		D3DLOCKED_RECT lockedRect;
+		HRESULT hr = m_Texture->LockRect( level, &lockedRect, NULL, (DWORD) flags );
+		FAILED_THROW( hr );
+
+		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
+		GraphicsStream<T>^ stream = gcnew GraphicsStream<T>( lockedRect.pBits, true, !readOnly );
+		return stream;
+	}
+
+	void Texture::UnlockRectangle( int level )
+	{
+		HRESULT hr = m_Texture->UnlockRect( level );
+		FAILED_THROW( hr );
+	}
+
 
 	CubeTexture::CubeTexture( IDirect3DCubeTexture9* texture )
 	{
@@ -74,6 +92,24 @@ namespace Direct3D
 	CubeTexture::!CubeTexture()
 	{
 		Utils::ReportNotDisposed( this );
+	}
+
+	generic<typename T>
+	GraphicsStream<T>^ CubeTexture::LockRectangle( CubeMapFace face, int level, LockFlags flags )
+	{
+		D3DLOCKED_RECT lockedRect;
+		HRESULT hr = m_Texture->LockRect( (D3DCUBEMAP_FACES) face, level, &lockedRect, NULL, (DWORD) flags );
+		FAILED_THROW( hr );
+
+		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
+		GraphicsStream<T>^ stream = gcnew GraphicsStream<T>( lockedRect.pBits, true, !readOnly );
+		return stream;
+	}
+
+	void CubeTexture::UnlockRectangle( CubeMapFace face, int level )
+	{
+		HRESULT hr = m_Texture->UnlockRect( (D3DCUBEMAP_FACES) face, level );
+		FAILED_THROW( hr );
 	}
 
 	Texture^ TextureLoader::FromStream( Device^ device, Stream^ stream, int width, int height, int numLevels,
