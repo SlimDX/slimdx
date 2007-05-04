@@ -17,7 +17,6 @@ namespace SlimDX
 		{
 		private:
 			IDirect3DTexture9* m_Texture;
-			bool m_Disposed;
 
 		internal:
 			property IDirect3DTexture9* InternalPointer
@@ -49,7 +48,6 @@ namespace SlimDX
 		{
 		private:
 			IDirect3DCubeTexture9* m_Texture;
-			bool m_Disposed;
 
 		internal:
 			property IDirect3DCubeTexture9* InternalPointer

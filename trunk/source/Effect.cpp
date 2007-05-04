@@ -243,7 +243,6 @@ namespace Direct3D
 			throw gcnew ArgumentNullException( "effect" );
 
 		m_Effect = effect;
-		m_Disposed = false;
 	}
 
 	Effect^ Effect::FromStream( Device^ device, Stream^ stream, array<Macro^>^ preprocessorDefines, Include^ includeFile,

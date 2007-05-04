@@ -13,7 +13,6 @@ namespace SlimDX
 		{
 		private:
 			IDirect3DVertexBuffer9* m_Buffer;
-			bool m_Disposed;
 
 		internal:
 			property IDirect3DVertexBuffer9* InternalPointer

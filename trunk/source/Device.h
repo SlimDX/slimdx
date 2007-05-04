@@ -51,7 +51,6 @@ namespace SlimDX
 		{
 		private:
 			IDirect3DDevice9* m_Device;
-			bool m_Disposed;
 
 			RenderStateManager^ m_RenderState;
 			IndexBuffer^ m_Indices;

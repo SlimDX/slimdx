@@ -40,8 +40,6 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 
 		m_Device = device;
-		m_Disposed = false;
-
 		m_RenderState = gcnew RenderStateManager( this );
 	}
 

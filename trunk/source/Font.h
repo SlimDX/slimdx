@@ -130,7 +130,6 @@ namespace SlimDX
 		{
 		private:
 			ID3DXFont* m_Font;
-			bool m_Disposed;
 
 		internal:
 			property ID3DXFont* InternalPointer

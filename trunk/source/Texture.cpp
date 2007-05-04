@@ -15,7 +15,6 @@ namespace Direct3D
 			throw gcnew ArgumentNullException( "texture" );
 
 		m_Texture = texture;
-		m_Disposed = false;
 	}
 
 	Texture::Texture( Device^ device, int width, int height, int numLevels, Usage usage, Format format, Pool pool )
@@ -26,7 +25,6 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 
 		m_Texture = texture;
-		m_Disposed = false;
 	}
 
 	generic<typename T>
@@ -54,7 +52,6 @@ namespace Direct3D
 			throw gcnew ArgumentNullException( "texture" );
 
 		m_Texture = texture;
-		m_Disposed = false;
 	}
 
 	CubeTexture::CubeTexture( Device^ device, int edgeLength, int numLevels, Usage usage, Format format, Pool pool )
@@ -65,7 +62,6 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 
 		m_Texture = texture;
-		m_Disposed = false;
 	}
 
 	generic<typename T>

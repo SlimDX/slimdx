@@ -21,7 +21,6 @@ namespace Direct3D
 			throw gcnew ArgumentNullException( "font" );
 
 		m_Font = font;
-		m_Disposed = false;
 	}
 
 	Font::Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,
@@ -36,7 +35,6 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 
 		m_Font = font;
-		m_Disposed = false;
 	}
 
 	int Font::DrawText( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, int color )
