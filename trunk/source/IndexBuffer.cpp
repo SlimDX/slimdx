@@ -23,7 +23,7 @@ namespace Direct3D
 		IDirect3DIndexBuffer9* ib;
 		D3DFORMAT format = sixteenBit ? D3DFMT_INDEX16 : D3DFMT_INDEX32;
 		HRESULT hr = device->InternalPointer->CreateIndexBuffer( sizeBytes, (DWORD) usage, format, (D3DPOOL) pool, &ib, NULL );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 
 		m_Buffer = ib;
 		m_Disposed = false;
@@ -34,7 +34,7 @@ namespace Direct3D
 	{
 		void* lockedPtr;
 		HRESULT hr = m_Buffer->Lock( offset, size, &lockedPtr, (DWORD) flags );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		GraphicsStream<T>^ stream = gcnew GraphicsStream<T>( lockedPtr, true, !readOnly );

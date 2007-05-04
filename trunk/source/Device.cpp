@@ -37,7 +37,7 @@ namespace Direct3D
 
 		HRESULT hr = Manager::Direct3D->CreateDevice( adapter, (D3DDEVTYPE) deviceType, (HWND) controlHandle.ToPointer(), 
 			(DWORD) createFlags, (D3DPRESENT_PARAMETERS*) &d3dpp, &device );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 
 		m_Device = device;
 		m_Disposed = false;
@@ -55,14 +55,14 @@ namespace Direct3D
 		else
 			hr = m_Device->SetIndices( NULL );
 
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::VertexFormat::set( VertexFormats value )
 	{
 		m_VertexFormat = value;
 		HRESULT hr = m_Device->SetFVF( (DWORD) value );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::VertexDeclaration::set( SlimDX::Direct3D::VertexDeclaration^ value )
@@ -75,13 +75,13 @@ namespace Direct3D
 		else
 			hr = m_Device->SetVertexDeclaration( NULL );
 
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount )
 	{
 		HRESULT hr = m_Device->DrawPrimitive( (D3DPRIMITIVETYPE) primitiveType, startIndex, primitiveCount );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minVertexIndex, 
@@ -89,13 +89,13 @@ namespace Direct3D
 	{
 		HRESULT hr = m_Device->DrawIndexedPrimitive( (D3DPRIMITIVETYPE) primitiveType, baseVertexIndex,
 			minVertexIndex, numVertices, startIndex, primCount );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::Clear( ClearFlags clearFlags, int color, float zdepth, int stencil )
 	{
 		HRESULT hr = m_Device->Clear( 0, 0, (DWORD) clearFlags, (D3DCOLOR) color, zdepth, stencil );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::Clear( ClearFlags clearFlags, Color color, float zdepth, int stencil )
@@ -106,25 +106,25 @@ namespace Direct3D
 	void Device::BeginScene()
 	{
 		HRESULT hr = m_Device->BeginScene();
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::EndScene()
 	{
 		HRESULT hr = m_Device->EndScene();
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::Present()
 	{
 		HRESULT hr = m_Device->Present( 0, 0, 0, 0 );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride )
 	{
 		HRESULT hr = m_Device->SetStreamSource( stream, streamData->InternalPointer, offsetInBytes, stride );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 	}
 }
 }

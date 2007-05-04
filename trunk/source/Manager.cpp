@@ -12,7 +12,7 @@ namespace Direct3D
 		DWORD flags = Manager::CheckWhql ? D3DENUM_WHQL_LEVEL : 0;
 
 		HRESULT hr = Manager::Direct3D->GetAdapterIdentifier( adapter, flags, &ident );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 		
 		DriverName = gcnew String( ident.Driver );
 		Description = gcnew String( ident.Description );

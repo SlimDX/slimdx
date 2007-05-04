@@ -33,7 +33,7 @@ namespace Direct3D
 
 		HRESULT hr = D3DXCreateFont( device->InternalPointer, height, width, (UINT) weight, mipLevels, italic, (DWORD) charSet,
 			(DWORD) outputPrecision, (DWORD) quality, (DWORD) pitchAndFamily, (LPCWSTR) pinned_name, &font );
-		FAILED_THROW( hr );
+		GraphicsException::CheckHResult( hr );
 
 		m_Font = font;
 		m_Disposed = false;

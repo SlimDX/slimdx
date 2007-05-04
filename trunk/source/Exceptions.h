@@ -35,7 +35,8 @@ namespace SlimDX
 			{ }
 
 		public:
-			static GraphicsException^ FromHResult( HRESULT hr );
+			static GraphicsException^ ThrowFromHResult( HRESULT hr );
+			static void CheckHResult( HRESULT hr );
 		};
 
 #define DEFINE_GRAPHICS_EXCEPTION( ExName, ErrorCode, Message ) \
@@ -68,7 +69,7 @@ namespace SlimDX
 		DEFINE_GRAPHICS_EXCEPTION( DriverInvalidCall, D3DERR_DRIVERINVALIDCALL, "Driver invalid call." );
 		DEFINE_GRAPHICS_EXCEPTION( WasStillDrawing, D3DERR_WASSTILLDRAWING, "Was still drawing." );
 
-		inline GraphicsException^ GraphicsException::FromHResult( HRESULT hr )
+		inline GraphicsException^ GraphicsException::ThrowFromHResult( HRESULT hr )
 		{
 			switch( hr )
 			{
@@ -118,14 +119,13 @@ namespace SlimDX
 				return gcnew GraphicsException( E_FAIL, "A graphics exception occurred." );
 			}
 		}
+
+		inline void GraphicsException::CheckHResult( HRESULT hr )
+		{
+			if( DirectXException::EnableExceptions )
+				throw GraphicsException::ThrowFromHResult( (hr) );
+
+			SetLastError( hr );
+		}
 	}
 }
-
-#define FAILED_THROW( hr ) { \
-	if( FAILED( (hr) ) ) \
-	{ \
-		if( DirectXException::EnableExceptions ) \
-			throw GraphicsException::FromHResult( (hr) ); \
-	} \
-	SetLastError( (hr) ); \
-} 
