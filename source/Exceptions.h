@@ -69,7 +69,7 @@ namespace SlimDX
 		DEFINE_GRAPHICS_EXCEPTION( DriverInvalidCall, D3DERR_DRIVERINVALIDCALL, "Driver invalid call." );
 		DEFINE_GRAPHICS_EXCEPTION( WasStillDrawing, D3DERR_WASSTILLDRAWING, "Was still drawing." );
 
-		inline GraphicsException^ GraphicsException::ThrowFromHResult( HRESULT hr )
+		inline GraphicsException^ GraphicsException::GetExceptionFromHResult( HRESULT hr )
 		{
 			switch( hr )
 			{
@@ -123,7 +123,7 @@ namespace SlimDX
 		inline void GraphicsException::CheckHResult( HRESULT hr )
 		{
 			if( DirectXException::EnableExceptions ) {
-				GraphicsException^ ex = GraphicsException::ThrowFromHResult( (hr) );
+				GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( (hr) );
 				ex->HResult = hr;
 				throw ex;
 			}
