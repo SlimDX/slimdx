@@ -29,19 +29,6 @@ namespace Direct3D
 		m_Disposed = false;
 	}
 
-	IndexBuffer::~IndexBuffer()
-	{
-		Utils::MarkDisposed( m_Disposed, this );
-
-		m_Buffer->Release();
-		m_Buffer = NULL;
-	}
-
-	IndexBuffer::!IndexBuffer()
-	{
-		Utils::ReportNotDisposed( this );
-	}
-
 	generic<typename T>
 	GraphicsStream<T>^ IndexBuffer::Lock( int offset, int size, LockFlags flags )
 	{

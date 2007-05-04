@@ -29,20 +29,6 @@ namespace Direct3D
 		m_Disposed = false;
 	}
 
-	VertexBuffer::~VertexBuffer()
-	{
-		Utils::MarkDisposed( m_Disposed, this );
-		GC::SuppressFinalize( this );
-
-		m_Buffer->Release();
-		m_Buffer = NULL;
-	}
-
-	VertexBuffer::!VertexBuffer()
-	{
-		Utils::ReportNotDisposed( this );
-	}
-
 	generic<typename T>
 	GraphicsStream<T>^ VertexBuffer::Lock( int offset, int size, LockFlags flags )
 	{

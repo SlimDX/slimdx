@@ -246,6 +246,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\DirectXObject.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\Effect.h"
 				>
 			</File>

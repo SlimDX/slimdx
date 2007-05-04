@@ -110,7 +110,7 @@ namespace SlimDX
 			RtlReading = DT_RTLREADING,
 		};
 
-		public ref class Font
+		public ref class Font : public DirectXObject
 		{
 		private:
 			ID3DXFont* m_Font;
@@ -122,13 +122,17 @@ namespace SlimDX
 				ID3DXFont* get() { return m_Font; }
 			}
 
+			property IUnknown* ComPointer
+			{
+				virtual IUnknown* get() override { return m_Font; }
+				virtual void set( IUnknown* value ) override { m_Font = (ID3DXFont*) value; }
+			}
+
 		public:
 			Font( ID3DXFont* font );
 			Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,
 				CharacterSet charSet, Precision outputPrecision, FontQuality quality,
 				PitchAndFamily pitchAndFamily, String^ faceName );
-			~Font();
-			!Font();
 
 			int DrawText( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, int color );
 			int DrawText( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, Color color );

@@ -45,19 +45,6 @@ namespace Direct3D
 		m_RenderState = gcnew RenderStateManager( this );
 	}
 
-	Device::~Device()
-	{
-		Utils::MarkDisposed( m_Disposed, this );
-
-		m_Device->Release();
-		m_Device = NULL;
-	}
-
-	Device::!Device()
-	{
-		Utils::ReportNotDisposed( this );
-	}
-
 	void Device::Indices::set( IndexBuffer^ value )
 	{
 		m_Indices = value;
