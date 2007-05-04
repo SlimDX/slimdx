@@ -14,17 +14,14 @@ namespace SlimDX
 		}
 
 	protected:
-		bool m_Disposed;
-
 		//the destructor code
 		void Destruct()
 		{
 			ComPointer->Release();
 			ComPointer = NULL;
-			m_Disposed = true;
 		}
 
-		DirectXObject() : m_Disposed( false )
+		DirectXObject()
 		{ }
 
 	public:
@@ -49,6 +46,14 @@ namespace SlimDX
 			else
 			{
 				Utils::ReportNotDisposed( this );
+			}
+		}
+
+		property bool Disposed
+		{
+			bool get()
+			{
+				return ComPointer == NULL;
 			}
 		}
 	};
