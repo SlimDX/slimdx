@@ -29,19 +29,6 @@ namespace Direct3D
 		m_Disposed = false;
 	}
 
-	Texture::~Texture()
-	{
-		Utils::MarkDisposed( m_Disposed, this );
-
-		m_Texture->Release();
-		m_Texture = NULL;
-	}
-
-	Texture::!Texture()
-	{
-		Utils::ReportNotDisposed( this );
-	}
-
 	generic<typename T>
 	GraphicsStream<T>^ Texture::LockRectangle( int level, LockFlags flags )
 	{
@@ -79,19 +66,6 @@ namespace Direct3D
 
 		m_Texture = texture;
 		m_Disposed = false;
-	}
-
-	CubeTexture::~CubeTexture()
-	{
-		Utils::MarkDisposed( m_Disposed, this );
-
-		m_Texture->Release();
-		m_Texture = NULL;
-	}
-
-	CubeTexture::!CubeTexture()
-	{
-		Utils::ReportNotDisposed( this );
 	}
 
 	generic<typename T>

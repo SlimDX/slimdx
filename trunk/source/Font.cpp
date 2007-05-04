@@ -24,19 +24,6 @@ namespace Direct3D
 		m_Disposed = false;
 	}
 
-	Font::~Font()
-	{
-		Utils::MarkDisposed( m_Disposed, this );
-
-		m_Font->Release();
-		m_Font = NULL;
-	}
-
-	Font::!Font()
-	{
-		Utils::ReportNotDisposed( this );
-	}
-
 	Font::Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,
 		CharacterSet charSet, Precision outputPrecision, FontQuality quality,
 		PitchAndFamily pitchAndFamily, String^ faceName )

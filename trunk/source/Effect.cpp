@@ -131,19 +131,6 @@ namespace Direct3D
 		m_Disposed = false;
 	}
 
-	Effect::~Effect()
-	{
-		Utils::MarkDisposed( m_Disposed, this );
-
-		m_Effect->Release();
-		m_Effect = NULL;
-	}
-
-	Effect::!Effect()
-	{
-		Utils::ReportNotDisposed( this );
-	}
-
 	Effect^ Effect::FromStream( Device^ device, Stream^ stream, array<Macro^>^ preprocessorDefines, Include^ includeFile,
 		String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors )
 	{

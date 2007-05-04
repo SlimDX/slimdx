@@ -98,7 +98,7 @@ namespace SlimDX
 		{
 		};
 
-		public ref class BaseEffect abstract
+		public ref class BaseEffect abstract : public DirectXObject
 		{
 		private:
 			ID3DXBaseEffect* m_BaseEffect;
@@ -114,10 +114,6 @@ namespace SlimDX
 			}
 
 		public:
-			virtual ~BaseEffect()
-			{
-			}
-
 			EffectHandle^ GetParameter( EffectHandle^ constant, String^ name )
 			{
 				array<Byte>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
@@ -161,10 +157,14 @@ namespace SlimDX
 				ID3DXEffect* get() { return m_Effect; }
 			}
 
+			property IUnknown* ComPointer
+			{
+				virtual IUnknown* get() override { return m_Effect; }
+				virtual void set( IUnknown* value ) override { m_Effect = (ID3DXEffect*) value; }
+			}
+
 		public:
 			Effect( ID3DXEffect* effect );
-			~Effect();
-			!Effect();
 
 			property EffectHandle^ Technique;
 

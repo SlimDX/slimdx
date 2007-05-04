@@ -17,18 +17,5 @@ namespace Direct3D
 		m_Sprite = sprite;
 		m_Disposed = false;
 	}
-
-	Sprite::~Sprite()
-	{
-		Utils::MarkDisposed( m_Disposed, this );
-
-		m_Sprite->Release();
-		m_Sprite = NULL;
-	}
-
-	Sprite::!Sprite()
-	{
-		Utils::ReportNotDisposed( this );
-	}
 }
 }

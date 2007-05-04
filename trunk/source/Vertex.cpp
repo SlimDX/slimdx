@@ -20,17 +20,5 @@ namespace Direct3D
 		m_Decl = decl;
 		m_Disposed = false;
 	}
-
-	VertexDeclaration::~VertexDeclaration()
-	{
-		Utils::MarkDisposed( m_Disposed, "VertexDeclaration" );
-
-		m_Decl->Release();
-	}
-
-	VertexDeclaration::!VertexDeclaration()
-	{
-		Utils::ReportNotDisposed( this );
-	}
 }
 }

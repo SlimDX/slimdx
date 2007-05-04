@@ -26,11 +26,15 @@ namespace SlimDX
 				virtual IDirect3DResource9* get() override { return m_Buffer; }
 			}
 
+			property IUnknown* ComPointer
+			{
+				virtual IUnknown* get() override { return m_Buffer; }
+				virtual void set( IUnknown* value ) override { m_Buffer = (IDirect3DVertexBuffer9*) value; }
+			}
+
 		public:
 			VertexBuffer( IDirect3DVertexBuffer9* buffer );
 			VertexBuffer( Device^ device, int sizeBytes, Usage usage, VertexFormats format, Pool pool );
-			~VertexBuffer();
-			!VertexBuffer();
 
 			generic<typename T> where T : value class
 			GraphicsStream<T>^ Lock( int offset, int size, LockFlags flags );

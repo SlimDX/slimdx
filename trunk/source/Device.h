@@ -8,6 +8,7 @@ using namespace System::Runtime::InteropServices;
 #include "Enums.h"
 #include "Vertex.h"
 #include "Math.h"
+#include "DirectXObject.h"
 
 namespace SlimDX
 {
@@ -46,7 +47,7 @@ namespace SlimDX
 		ref class VertexBuffer;
 		ref class RenderStateManager;
 
-		public ref class Device
+		public ref class Device : public DirectXObject
 		{
 		private:
 			IDirect3DDevice9* m_Device;
@@ -63,10 +64,14 @@ namespace SlimDX
 				IDirect3DDevice9* get() { return m_Device; }
 			}
 
+			property IUnknown* ComPointer
+			{
+				virtual IUnknown* get() override { return m_Device; }
+				virtual void set( IUnknown* value ) override { m_Device = (IDirect3DDevice9*) value; }
+			}
+
 		public:
 			Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams );
-			~Device();
-			!Device();
 
 			property RenderStateManager^ RenderState
 			{

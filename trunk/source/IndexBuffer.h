@@ -26,11 +26,15 @@ namespace SlimDX
 				virtual IDirect3DResource9* get() override { return m_Buffer; }
 			}
 
+			property IUnknown* ComPointer
+			{
+				virtual IUnknown* get() override { return m_Buffer; }
+				virtual void set( IUnknown* value ) override { m_Buffer = (IDirect3DIndexBuffer9*) value; }
+			}
+
 		public:
 			IndexBuffer( IDirect3DIndexBuffer9* buffer );
 			IndexBuffer( Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit );
-			~IndexBuffer();
-			!IndexBuffer();
 
 			generic<typename T> where T : value class
 			GraphicsStream<T>^ Lock( int offset, int size, LockFlags flags );

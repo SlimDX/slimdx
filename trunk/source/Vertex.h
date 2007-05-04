@@ -3,7 +3,7 @@
 using namespace System;
 
 #include "Exceptions.h"
-#include "Utils.h"
+#include "DirectXObject.h"
 
 namespace SlimDX
 {
@@ -37,7 +37,7 @@ namespace SlimDX
 
 		ref class Device;
 
-		public ref class VertexDeclaration sealed
+		public ref class VertexDeclaration sealed : public DirectXObject
 		{
 		private:
 			IDirect3DVertexDeclaration9* m_Decl;
@@ -49,10 +49,14 @@ namespace SlimDX
 				IDirect3DVertexDeclaration9* get() { return m_Decl; }
 			}
 
+			property IUnknown* ComPointer
+			{
+				virtual IUnknown* get() override { return m_Decl; }
+				virtual void set( IUnknown* value ) override { m_Decl = (IDirect3DVertexDeclaration9*) value; }
+			}
+
 		public:
 			VertexDeclaration( Device^ device, array<VertexElement>^ elements );
-			~VertexDeclaration();
-			!VertexDeclaration();
 		};
 	}
 }
