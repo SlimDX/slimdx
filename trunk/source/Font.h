@@ -94,6 +94,7 @@ namespace SlimDX
 			Decorative = FF_DECORATIVE,
 		};
 
+		[Flags]
 		public enum class DrawTextFormat : Int32
 		{
 			Top = DT_TOP,
@@ -108,6 +109,21 @@ namespace SlimDX
 			NoClip = DT_NOCLIP,
 			CalcRect = DT_CALCRECT,
 			RtlReading = DT_RTLREADING,
+		};
+
+		public value class FontDescription
+		{
+		public:
+			int Height;
+			int Width;
+			FontWeight Weight;
+			int MipLevels;
+			bool Italic;
+			CharacterSet CharSet;
+			Precision OutputPrecision;
+			FontQuality Quality;
+			PitchAndFamily PitchAndFamily;
+			String^ FaceName;
 		};
 
 		public ref class Font : public DirectXObject
@@ -138,6 +154,25 @@ namespace SlimDX
 			int DrawText( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, Color color );
 			int DrawText( Sprite^ sprite, String^ text, int x, int y, int color );
 			int DrawText( Sprite^ sprite, String^ text, int x, int y, Color color );
+
+			System::Drawing::Rectangle MeasureString( Sprite^ sprite, String^ text, DrawTextFormat format );
+
+			void PreloadCharacters( int first, int last );
+			void PreloadGlyphs( int first, int last );
+			void PreloadText( String^ text );
+
+			void OnLostDevice();
+			void OnResetDevice();
+
+			property FontDescription Description
+			{
+				FontDescription get();
+			}
+
+			property IntPtr DeviceContext
+			{
+				IntPtr get();
+			}
 		};
 	}
 }
