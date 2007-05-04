@@ -1,10 +1,11 @@
 #pragma once
 
 using namespace System;
+using namespace System::Runtime::Serialization;
 
 namespace SlimDX
 {
-	public ref class DirectXException : public ApplicationException
+	public ref class DirectXException : public Exception
 	{
 	public:
 		static property bool EnableExceptions;
@@ -15,13 +16,15 @@ namespace SlimDX
 			EnableExceptions = true;
 		}
 
-		DirectXException( int errorCode, String^ message ) : ApplicationException( message )
+		DirectXException( int errorCode, String^ message ) : Exception( message )
 		{
 			ErrorCode = errorCode;
 		}
 
-		DirectXException( String^ message, Exception^ innerException ) : ApplicationException( message, innerException )
+		DirectXException( String^ message, Exception^ innerException ) : Exception( message, innerException )
 		{ }
+
+		DirectXException(SerializationInfo^ info, StreamingContext context) : Exception(info, context) { }
 	};
 
 	namespace Direct3D
@@ -33,7 +36,7 @@ namespace SlimDX
 			{ }
 			GraphicsException( String^ message, Exception^ innerException ) : DirectXException( message, innerException )
 			{ }
-
+			GraphicsException(SerializationInfo^ info, StreamingContext context) : DirectXException(info, context) { }
 		public:
 			static GraphicsException^ GetExceptionFromHResult( HRESULT hr );
 			static void CheckHResult( HRESULT hr );
@@ -46,6 +49,7 @@ namespace SlimDX
 		ExName ## Exception () : GraphicsException( ErrorCode, Message ) { } \
 		ExName ## Exception ( String^ message ) : GraphicsException( ErrorCode, message ) { } \
 		ExName ## Exception ( String^ message, Exception^ innerException ) : GraphicsException( message, innerException ) { } \
+		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : GraphicsException(info, context) { }\
 	}
 
 		DEFINE_GRAPHICS_EXCEPTION( WrongTextureFormat, D3DERR_WRONGTEXTUREFORMAT, "Wrong texture format." );
