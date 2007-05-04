@@ -63,5 +63,76 @@ namespace Direct3D
 	{
 		return DrawText( sprite, text, x, y, color.ToArgb() );
 	}
+
+	System::Drawing::Rectangle Font::MeasureString( Sprite^ sprite, String^ text, DrawTextFormat format )
+	{
+		ID3DXSprite* spritePtr = sprite != nullptr ? sprite->InternalPointer : NULL;
+		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
+		RECT nativeRect;
+
+		m_Font->DrawTextW( spritePtr, (LPCWSTR) pinned_text, text->Length, &nativeRect, 
+			(DWORD) (format | DrawTextFormat::CalcRect), 0 );
+	
+		return System::Drawing::Rectangle( nativeRect.left, nativeRect.top, 
+			nativeRect.right - nativeRect.left, nativeRect.bottom - nativeRect.top );
+	}
+
+	void Font::PreloadCharacters( int first, int last )
+	{
+		HRESULT hr = m_Font->PreloadCharacters( first, last );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Font::PreloadGlyphs( int first, int last )
+	{
+		HRESULT hr = m_Font->PreloadGlyphs( first, last );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Font::PreloadText( String^ text )
+	{
+		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
+		HRESULT hr = m_Font->PreloadTextW( (LPCWSTR) pinned_text, text->Length );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Font::OnLostDevice()
+	{
+		HRESULT hr = m_Font->OnLostDevice();
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Font::OnResetDevice()
+	{
+		HRESULT hr = m_Font->OnResetDevice();
+		GraphicsException::CheckHResult( hr );
+	}
+
+	FontDescription Font::Description::get()
+	{
+		D3DXFONT_DESC desc;
+		
+		HRESULT hr = m_Font->GetDesc( &desc );
+		GraphicsException::CheckHResult( hr );
+
+		FontDescription outDesc;
+		outDesc.Height = desc.Height;
+		outDesc.Width = desc.Width;
+		outDesc.Weight = (FontWeight) desc.Weight;
+		outDesc.MipLevels = desc.MipLevels;
+		outDesc.Italic = desc.Italic > 0;
+		outDesc.CharSet = (CharacterSet) desc.CharSet;
+		outDesc.OutputPrecision = (Precision) desc.OutputPrecision;
+		outDesc.Quality = (FontQuality) desc.Quality;
+		outDesc.PitchAndFamily = (PitchAndFamily) desc.PitchAndFamily;
+		outDesc.FaceName = gcnew String( desc.FaceName );
+
+		return outDesc;
+	}
+
+	IntPtr Font::DeviceContext::get()
+	{
+		return (IntPtr) m_Font->GetDC();
+	}
 }
 }
