@@ -49,10 +49,10 @@ namespace SlimDX
 
 		static Vector3 TransformCoordinate( Vector3 coord, Matrix transform );
 
-    static float Dot( Vector3 lhs, Vector3 rhs )
-    {
-      return (lhs.X * rhs.X + lhs.Y * rhs.Y + lhs.Z * rhs.Z);
-    }
+	static float Dot( Vector3 lhs, Vector3 rhs )
+	{
+		return (lhs.X * rhs.X + lhs.Y * rhs.Y + lhs.Z * rhs.Z);
+	}
 
 		static Vector3 Cross( Vector3 lhs, Vector3 rhs )
 		{
@@ -200,9 +200,9 @@ namespace SlimDX
 
 		static Matrix LookAtLH(Vector3 eye, Vector3 target, Vector3 up )
 		{
-		  Matrix result;
-		  D3DXMatrixLookAtLH( (D3DXMATRIX*) &result, (D3DXVECTOR3*) &eye, (D3DXVECTOR3*) &target, (D3DXVECTOR3*) &up );
-		  return (result);
+			Matrix result;
+			D3DXMatrixLookAtLH( (D3DXMATRIX*) &result, (D3DXVECTOR3*) &eye, (D3DXVECTOR3*) &target, (D3DXVECTOR3*) &up );
+			return (result);
 		}
 
 		static Matrix OrthoOffCenterLH( float left, float right, float bottom, float top, float znear, float zfar )
@@ -237,13 +237,13 @@ namespace SlimDX
 
 		static property Quaternion Identity
 		{
-		  Quaternion get()
-		  {
+			Quaternion get()
+			{
 			Quaternion result;
 					result.X = result.Y = result.Z = 0.0f;
 					result.W = 1.0f;
 					return result;
-		  }
+			}
 		}
 
 		Quaternion(float x,float y,float z,float w)
@@ -260,9 +260,9 @@ namespace SlimDX
 		
 		static Quaternion operator * (Quaternion lhs, Quaternion rhs)
 		{
-		  Quaternion result;
-		  D3DXQuaternionMultiply( (D3DXQUATERNION*) &result, (D3DXQUATERNION*) &lhs, (D3DXQUATERNION*) &rhs );
-		  return result;
+			Quaternion result;
+			D3DXQuaternionMultiply( (D3DXQUATERNION*) &result, (D3DXQUATERNION*) &lhs, (D3DXQUATERNION*) &rhs );
+			return result;
 		}
 	};
 
