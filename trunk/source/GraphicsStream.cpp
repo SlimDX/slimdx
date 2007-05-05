@@ -9,8 +9,7 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	generic<typename T>
-	GraphicsStream<T>::GraphicsStream( void* buffer, bool canRead, bool canWrite )
+	GraphicsStream::GraphicsStream( void* buffer, bool canRead, bool canWrite )
 	{
 		m_Buffer = (char*) buffer;
 		m_CanRead = canRead;
@@ -18,14 +17,12 @@ namespace SlimDX
 		m_Position = 0;
 	}
 
-	generic<typename T>
-	void GraphicsStream<T>::Close()
+	void GraphicsStream::Close()
 	{
 		throw gcnew NotSupportedException();
 	}
 
-	generic<typename T>
-	Int64 GraphicsStream<T>::Seek( Int64 offset, SeekOrigin origin )
+	Int64 GraphicsStream::Seek( Int64 offset, SeekOrigin origin )
 	{
 		Int64 targetPosition;
 
@@ -50,8 +47,7 @@ namespace SlimDX
 		return m_Position;
 	}
 
-	generic<typename T>
-	void GraphicsStream<T>::Write( array<Byte>^ buffer, int offset, int count )
+	void GraphicsStream::Write( array<Byte>^ buffer, int offset, int count )
 	{
 		if( !m_CanWrite )
 			throw gcnew NotSupportedException();
@@ -68,8 +64,8 @@ namespace SlimDX
 		m_Position += count;
 	}
 
-	generic<typename T>
-	void GraphicsStream<T>::Write( T value )
+	generic<typename T> where T : value class
+	void GraphicsStream::Write( T value )
 	{
 		if( !m_CanWrite )
 			throw gcnew NotSupportedException();
@@ -79,8 +75,8 @@ namespace SlimDX
 		m_Position += size;
 	}
 
-	generic<typename T>
-	void GraphicsStream<T>::Write( array<T>^ data, int startIndex, int count )
+	generic<typename T> where T : value class
+	void GraphicsStream::Write( array<T>^ data, int startIndex, int count )
 	{
 		if( startIndex < 0 || startIndex > data->Length - 1 )
 			throw gcnew ArgumentOutOfRangeException( "startIndex" );

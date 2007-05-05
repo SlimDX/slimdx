@@ -135,6 +135,7 @@ namespace SlimDX
 		[Flags]
 		public enum class Filter : Int32
 		{
+			Default = (int) D3DX_DEFAULT,
 			None = D3DX_FILTER_NONE,
 			Point = D3DX_FILTER_POINT,
 			Linear = D3DX_FILTER_LINEAR,

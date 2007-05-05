@@ -2,6 +2,7 @@
 #include <d3dx9.h>
 
 #include "Device.h"
+#include "D3DX.h"
 #include "Texture.h"
 #include "Utils.h"
 
@@ -27,15 +28,35 @@ namespace Direct3D
 		m_Texture = texture;
 	}
 
-	generic<typename T>
-	GraphicsStream<T>^ Texture::LockRectangle( int level, LockFlags flags )
+	Texture^ Texture::FromStream( Device^ device, Stream^ stream, int width, int height, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
+	{
+		IDirect3DTexture9* texture;
+
+		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		pin_ptr<unsigned char> pinned_data = &data[0];
+
+		D3DXCreateTextureFromFileInMemoryEx( device->InternalPointer, pinned_data, data->Length, width, height, numLevels,
+			(DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter,
+			(D3DCOLOR) colorKey, 0, 0, &texture );
+
+		return gcnew Texture( texture );
+	}
+
+	Texture^ Texture::FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool )
+	{
+		return Texture::FromStream( device, stream, D3DX::Default, D3DX::Default, D3DX::Default,
+			usage, Format::Unknown, pool, Filter::Default, Filter::Default, 0 );
+	}
+
+	GraphicsStream^ Texture::LockRectangle( int level, LockFlags flags )
 	{
 		D3DLOCKED_RECT lockedRect;
 		HRESULT hr = m_Texture->LockRect( level, &lockedRect, NULL, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		GraphicsStream<T>^ stream = gcnew GraphicsStream<T>( lockedRect.pBits, true, !readOnly );
+		GraphicsStream^ stream = gcnew GraphicsStream( lockedRect.pBits, true, !readOnly );
 		return stream;
 	}
 
@@ -64,40 +85,7 @@ namespace Direct3D
 		m_Texture = texture;
 	}
 
-	generic<typename T>
-	GraphicsStream<T>^ CubeTexture::LockRectangle( CubeMapFace face, int level, LockFlags flags )
-	{
-		D3DLOCKED_RECT lockedRect;
-		HRESULT hr = m_Texture->LockRect( (D3DCUBEMAP_FACES) face, level, &lockedRect, NULL, (DWORD) flags );
-		GraphicsException::CheckHResult( hr );
-
-		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		GraphicsStream<T>^ stream = gcnew GraphicsStream<T>( lockedRect.pBits, true, !readOnly );
-		return stream;
-	}
-
-	void CubeTexture::UnlockRectangle( CubeMapFace face, int level )
-	{
-		HRESULT hr = m_Texture->UnlockRect( (D3DCUBEMAP_FACES) face, level );
-		GraphicsException::CheckHResult( hr );
-	}
-
-	Texture^ TextureLoader::FromStream( Device^ device, Stream^ stream, int width, int height, int numLevels,
-		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
-	{
-		IDirect3DTexture9* texture;
-
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
-		pin_ptr<unsigned char> pinned_data = &data[0];
-
-		D3DXCreateTextureFromFileInMemoryEx( device->InternalPointer, pinned_data, data->Length, width, height, numLevels,
-			(DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter,
-			(D3DCOLOR) colorKey, 0, 0, &texture );
-
-		return gcnew Texture( texture );
-	}
-
-	CubeTexture^ TextureLoader::FromCubeStream( Device^ device, Stream^ stream, int size, int numLevels,
+	CubeTexture^ CubeTexture::FromStream( Device^ device, Stream^ stream, int size, int numLevels,
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
 		IDirect3DCubeTexture9* texture;
@@ -110,6 +98,23 @@ namespace Direct3D
 			(D3DCOLOR) colorKey, 0, 0, &texture );
 
 		return gcnew CubeTexture( texture );
+	}
+
+	GraphicsStream^ CubeTexture::LockRectangle( CubeMapFace face, int level, LockFlags flags )
+	{
+		D3DLOCKED_RECT lockedRect;
+		HRESULT hr = m_Texture->LockRect( (D3DCUBEMAP_FACES) face, level, &lockedRect, NULL, (DWORD) flags );
+		GraphicsException::CheckHResult( hr );
+
+		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
+		GraphicsStream^ stream = gcnew GraphicsStream( lockedRect.pBits, true, !readOnly );
+		return stream;
+	}
+
+	void CubeTexture::UnlockRectangle( CubeMapFace face, int level )
+	{
+		HRESULT hr = m_Texture->UnlockRect( (D3DCUBEMAP_FACES) face, level );
+		GraphicsException::CheckHResult( hr );
 	}
 }
 }

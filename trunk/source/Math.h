@@ -198,12 +198,12 @@ namespace SlimDX
 			return result;
 		}
 
-    static Matrix LookAtLH(Vector3 eye, Vector3 target, Vector3 up )
-    {
-      Matrix result;
-      D3DXMatrixLookAtLH( (D3DXMATRIX*) &result, (D3DXVECTOR3*) &eye, (D3DXVECTOR3*) &target, (D3DXVECTOR3*) &up );
-      return (result);
-    }
+		static Matrix LookAtLH(Vector3 eye, Vector3 target, Vector3 up )
+		{
+		  Matrix result;
+		  D3DXMatrixLookAtLH( (D3DXMATRIX*) &result, (D3DXVECTOR3*) &eye, (D3DXVECTOR3*) &target, (D3DXVECTOR3*) &up );
+		  return (result);
+		}
 
 		static Matrix OrthoOffCenterLH( float left, float right, float bottom, float top, float znear, float zfar )
 		{
@@ -235,21 +235,21 @@ namespace SlimDX
 	public:
 		float X, Y, Z, W;
 
-    static property Quaternion Identity
-    {
-      Quaternion get()
-      {
-        Quaternion result;
-				result.X = result.Y = result.Z = 0.0f;
-				result.W = 1.0f;
-				return result;
-      }
-    }
+		static property Quaternion Identity
+		{
+		  Quaternion get()
+		  {
+			Quaternion result;
+					result.X = result.Y = result.Z = 0.0f;
+					result.W = 1.0f;
+					return result;
+		  }
+		}
 
-    Quaternion(float x,float y,float z,float w)
-    : X(x), Y(y), Z(z), W(w)
-    {
-    }
+		Quaternion(float x,float y,float z,float w)
+		: X(x), Y(y), Z(z), W(w)
+		{
+		}
 
 		static Quaternion RotationYawPitchRoll( float yaw, float pitch, float roll )
 		{
