@@ -19,49 +19,21 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <d3d9.h>
-#include <d3dx9.h>
+#pragma once
 
-#include "Device.h"
-#include "VertexBuffer.h"
-#include "Utils.h"
+using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D
-{
-	VertexBuffer::VertexBuffer( IDirect3DVertexBuffer9* buffer )
+	namespace Direct3D
 	{
-		if( buffer == NULL )
-			throw gcnew ArgumentNullException( "buffer" );
-
-		m_Buffer = buffer;
+		public ref class Resource abstract : public DirectXObject
+		{
+		internal:
+			virtual property IDirect3DResource9* ResourcePointer
+			{
+				IDirect3DResource9* get() abstract;
+			}
+		};
 	}
-
-	VertexBuffer::VertexBuffer( Device^ device, int sizeBytes, Usage usage, VertexFormats format, Pool pool )
-	{
-		IDirect3DVertexBuffer9* vb;
-		HRESULT hr = device->InternalPointer->CreateVertexBuffer( sizeBytes, (DWORD) usage, 
-			(DWORD) format, (D3DPOOL) pool, &vb, NULL );
-		GraphicsException::CheckHResult( hr );
-		
-		m_Buffer = vb;
-	}
-
-	GraphicsStream^ VertexBuffer::Lock( int offset, int size, LockFlags flags )
-	{
-		void* lockedPtr;
-		HRESULT hr = m_Buffer->Lock( offset, size, &lockedPtr, (DWORD) flags );
-		GraphicsException::CheckHResult( hr );
-
-		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		GraphicsStream^ stream = gcnew GraphicsStream( lockedPtr, true, !readOnly );
-		return stream;
-	}
-
-	void VertexBuffer::Unlock()
-	{
-		m_Buffer->Unlock();
-	}
-}
 }

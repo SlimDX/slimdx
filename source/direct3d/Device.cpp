@@ -23,13 +23,17 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "Exceptions.h"
+#include "../DirectXObject.h"
+#include "../Exceptions.h"
+#include "../Utils.h"
+
+#include "Math.h"
 #include "Device.h"
 #include "Manager.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "RenderStateManager.h"
-#include "Utils.h"
+#include "D3DX.h"
 
 namespace SlimDX
 {

@@ -21,11 +21,14 @@
 */
 #include <d3d9.h>
 #include <d3dx9.h>
+#include <vcclr.h>
+
+#include "../DirectXObject.h"
 
 #include "Device.h"
 #include "D3DX.h"
 #include "Texture.h"
-#include "Utils.h"
+#include "../Utils.h"
 
 namespace SlimDX
 {
@@ -68,6 +71,36 @@ namespace Direct3D
 	{
 		return Texture::FromStream( device, stream, D3DX::Default, D3DX::Default, D3DX::Default,
 			usage, Format::Unknown, pool, Filter::Default, Filter::Default, 0 );
+	}
+
+	Texture^ Texture::FromStream( Device^ device, Stream^ stream )
+	{
+		return Texture::FromStream( device, stream, Usage::None, Pool::Managed );
+	}
+
+	Texture^ Texture::FromFile( Device^ device, String^ fileName, int width, int height, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
+	{
+		IDirect3DTexture9* texture;
+		pin_ptr<const wchar_t> pinned_name = PtrToStringChars( fileName );
+
+		HRESULT hr = D3DXCreateTextureFromFileEx( device->InternalPointer, pinned_name, width, height, 
+			numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter, 
+			colorKey, NULL, NULL, &texture );
+		GraphicsException::CheckHResult( hr );
+
+		return gcnew Texture( texture );
+	}
+
+	Texture^ Texture::FromFile( Device^ device, String^ fileName, Usage usage, Pool pool )
+	{
+		return Texture::FromFile( device, fileName, D3DX::Default, D3DX::Default, D3DX::Default,
+			usage, Format::Unknown, pool, Filter::Default, Filter::Default, 0 );
+	}
+
+	Texture^ Texture::FromFile( Device^ device, String^ fileName )
+	{
+		return Texture::FromFile( device, fileName, Usage::None, Pool::Managed );
 	}
 
 	GraphicsStream^ Texture::LockRectangle( int level, LockFlags flags )

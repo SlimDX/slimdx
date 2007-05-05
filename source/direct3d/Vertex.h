@@ -23,8 +23,8 @@
 
 using namespace System;
 
-#include "Exceptions.h"
-#include "DirectXObject.h"
+#include "../Exceptions.h"
+#include "../DirectXObject.h"
 
 namespace SlimDX
 {

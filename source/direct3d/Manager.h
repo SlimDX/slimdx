@@ -25,9 +25,6 @@ using namespace System;
 using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
 
-#include "Enums.h"
-#include "Exceptions.h"
-
 namespace SlimDX
 {
 	namespace Direct3D

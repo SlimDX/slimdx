@@ -28,17 +28,25 @@ using namespace System::Runtime::InteropServices;
 
 #include "Enums.h"
 #include "Vertex.h"
-#include "Math.h"
-#include "DirectXObject.h"
 
 namespace SlimDX
 {
 	namespace Direct3D
 	{
+		//TODO: Consider moving these
 		public value class ColorValue
 		{
 		public:
 			float Alpha, Red, Green, Blue;
+		};
+
+		public value class Material
+		{
+			ColorValue Diffuse;
+			ColorValue Ambient;
+			ColorValue Specular;
+			ColorValue Emissive;
+			float Power;
 		};
 
 		[StructLayout( LayoutKind::Sequential )]
