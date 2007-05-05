@@ -137,7 +137,7 @@ namespace SlimDX
 
 		inline void GraphicsException::CheckHResult( HRESULT hr )
 		{
-			if( DirectXException::EnableExceptions ) {
+			if( DirectXException::EnableExceptions && FAILED(hr) ) {
 				GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( (hr) );
 				ex->HResult = hr;
 				throw ex;
