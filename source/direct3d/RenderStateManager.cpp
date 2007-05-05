@@ -72,5 +72,33 @@ namespace Direct3D
 		HRESULT hr = m_Device->InternalPointer->SetRenderState( D3DRS_ALPHABLENDENABLE, value );
 		GraphicsException::CheckHResult( hr );
 	}
+
+	Blend RenderStateManager::SourceBlend::get()
+	{
+		DWORD value;
+		HRESULT hr = m_Device->InternalPointer->GetRenderState( D3DRS_SRCBLEND, &value );
+		GraphicsException::CheckHResult( hr );
+		return (Blend) value;
+	}
+
+	void RenderStateManager::SourceBlend::set( Blend value )
+	{
+		HRESULT hr = m_Device->InternalPointer->SetRenderState( D3DRS_SRCBLEND, (DWORD) value );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	Blend RenderStateManager::DestBlend::get()
+	{
+		DWORD value;
+		HRESULT hr = m_Device->InternalPointer->GetRenderState( D3DRS_DESTBLEND, &value );
+		GraphicsException::CheckHResult( hr );
+		return (Blend) value;
+	}
+
+	void RenderStateManager::DestBlend::set( Blend value )
+	{
+		HRESULT hr = m_Device->InternalPointer->SetRenderState( D3DRS_DESTBLEND, (DWORD) value );
+		GraphicsException::CheckHResult( hr );
+	}
 }
 }

@@ -149,5 +149,11 @@ namespace Direct3D
 		HRESULT hr = m_Device->SetStreamSource( stream, streamData->InternalPointer, offsetInBytes, stride );
 		GraphicsException::CheckHResult( hr );
 	}
+
+	void Device::TestCooperativeLevel()
+	{
+		HRESULT hr = m_Device->TestCooperativeLevel();
+		GraphicsException::CheckHResult( hr );
+	}
 }
 }

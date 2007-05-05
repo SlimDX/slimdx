@@ -41,7 +41,10 @@ namespace SlimDX
 		public:
 			property Cull CullMode { Cull get(); void set( Cull value ); }
 			property bool ZBufferEnable { bool get(); void set( bool value ); }
+
 			property bool AlphaBlendEnable { bool get(); void set( bool value ); }
+			property Blend SourceBlend { Blend get(); void set( Blend value ); }
+			property Blend DestBlend { Blend get(); void set( Blend value ); }
 		};
 	}
 }
