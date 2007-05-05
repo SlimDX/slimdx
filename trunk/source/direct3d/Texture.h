@@ -103,6 +103,11 @@ namespace SlimDX
 			static CubeTexture^ FromStream( Device^ device, Stream^ stream, int size, int numLevels,
 				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 
+			static CubeTexture^ FromFile( Device^ device, String^ fileName, int size, int numLevels,
+				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
+			static CubeTexture^ FromFile( Device^ device, String^ fileName, Usage usage, Pool pool );
+			static CubeTexture^ FromFile( Device^ device, String^ fileName );
+
 			GraphicsStream^ LockRectangle( CubeMapFace face, int level, LockFlags flags );
 			void UnlockRectangle( CubeMapFace face, int level );
 		};

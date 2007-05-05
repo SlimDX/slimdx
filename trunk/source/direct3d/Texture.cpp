@@ -154,6 +154,31 @@ namespace Direct3D
 		return gcnew CubeTexture( texture );
 	}
 
+	CubeTexture^ CubeTexture::FromFile( Device^ device, String^ fileName, int size, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
+	{
+		IDirect3DCubeTexture9* texture;
+		pin_ptr<const wchar_t> pinned_name = PtrToStringChars( fileName );
+
+		HRESULT hr = D3DXCreateCubeTextureFromFileEx( device->InternalPointer, pinned_name, size, 
+			numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter, 
+			colorKey, NULL, NULL, &texture );
+		GraphicsException::CheckHResult( hr );
+
+		return gcnew CubeTexture( texture );
+	}
+
+	CubeTexture^ CubeTexture::FromFile( Device^ device, String^ fileName, Usage usage, Pool pool )
+	{
+		return CubeTexture::FromFile( device, fileName, D3DX::Default, D3DX::Default,
+			usage, Format::Unknown, pool, Filter::Default, Filter::Default, 0 );
+	}
+
+	CubeTexture^ CubeTexture::FromFile( Device^ device, String^ fileName )
+	{
+		return CubeTexture::FromFile( device, fileName, Usage::None, Pool::Managed );
+	}
+
 	GraphicsStream^ CubeTexture::LockRectangle( CubeMapFace face, int level, LockFlags flags )
 	{
 		D3DLOCKED_RECT lockedRect;

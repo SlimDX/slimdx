@@ -25,6 +25,12 @@ namespace Direct3D
 		return gcnew Mesh( mesh );
 	}
 
+	void BaseMesh::DrawSubset( int subset )
+	{
+		HRESULT hr = m_BaseMesh->DrawSubset( subset );
+		GraphicsException::CheckHResult( hr );
+	}
+
 	Mesh::Mesh( ID3DXMesh* mesh ) : BaseMesh( mesh ), m_Mesh( mesh )
 	{
 	}

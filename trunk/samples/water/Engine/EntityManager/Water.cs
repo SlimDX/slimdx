@@ -19,12 +19,12 @@ namespace Engine
 		public Water(Device device) : base(device, meshFilename, effectFilename)
 		{
 			//load the texture
-			texCube = TextureLoader.FromCubeFile(device, textureFilename);
-			texture = TextureLoader.FromFile(device, textureFilename1);
+			texCube = CubeTexture.FromFile(device, textureFilename);
+			texture = Texture.FromFile(device, textureFilename1);
 		}
 		public override void Update(Matrix matView, Matrix matProj)
 		{
-			matWorld.Translate(0.0f, -80.0f, 0.0f);
+			matWorld = Matrix.Translation(0.0f, -80.0f, 0.0f);
 			this.matView = matView;
 			this.matProj = matProj;
 		}
@@ -36,7 +36,7 @@ namespace Engine
 			Matrix modelViewProj = matWorld * matView * matProj;
 			Matrix modelViewIT = matWorld * matView * matProj;
 			modelViewIT.Invert();
-			modelViewIT = Matrix.TransposeMatrix(modelViewIT);
+			modelViewIT = Matrix.Transpose(modelViewIT);
 			//set the technique
 			effect.Technique = "water";
 			//set the texturs
@@ -69,7 +69,7 @@ namespace Engine
 			Matrix modelViewProj = matWorld * matView * matProj;
 			Matrix modelViewIT = matWorld * matView * matProj;
 			modelViewIT.Invert();
-			modelViewIT = Matrix.TransposeMatrix(modelViewIT);
+			modelViewIT = Matrix.Transpose(modelViewIT);
 			//set the technique
 			effect.Technique = "water";
 			//set the texturs
