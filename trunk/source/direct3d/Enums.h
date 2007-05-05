@@ -389,5 +389,12 @@ namespace SlimDX
 			BlendFactor = D3DBLEND_BLENDFACTOR,
 			InvBlendFactor = D3DBLEND_INVBLENDFACTOR,
 		};
+
+		public enum class ColorSource : Int32
+		{
+			Material = D3DMCS_MATERIAL,
+			Color1 = D3DMCS_COLOR1,
+			Color2 = D3DMCS_COLOR2,
+		};
 	}
 }

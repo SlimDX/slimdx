@@ -19,46 +19,53 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include <windows.h>
+#include <d3d9.h>
+#include <d3dx9.h>
 
-using namespace System;
+#include "../Exceptions.h"
+#include "Device.h"
+#include "Math.h"
+#include "TransformManager.h"
 
 namespace SlimDX
 {
-	namespace Direct3D
+namespace Direct3D
+{
+	Matrix TransformManager::World::get()
 	{
-		ref class Device;
-
-		public ref class RenderStateManager sealed
-		{
-		private:
-			Device^ m_Device;
-
-		internal:
-			RenderStateManager( Device^ device ) : m_Device( device )
-			{
-				m_Device->InternalPointer->AddRef();
-			}
-
-		public:
-			~RenderStateManager()
-			{
-				RenderStateManager::!RenderStateManager();
-			}
-
-			!RenderStateManager()
-			{
-				m_Device->InternalPointer->Release();
-			}
-
-			property Cull CullMode { Cull get(); void set( Cull value ); }
-			property bool ZBufferEnable { bool get(); void set( bool value ); }
-
-			property bool AlphaBlendEnable { bool get(); void set( bool value ); }
-			property Blend SourceBlend { Blend get(); void set( Blend value ); }
-			property Blend DestBlend { Blend get(); void set( Blend value ); }
-
-			property ColorSource DiffuseMaterialSource { ColorSource get(); void set( ColorSource value ); }
-		};
+		Matrix matrix;
+		m_Device->InternalPointer->GetTransform( D3DTS_WORLD, (D3DMATRIX*) &matrix );
+		return matrix;
 	}
+
+	void TransformManager::World::set( Matrix value )
+	{
+		m_Device->InternalPointer->SetTransform( D3DTS_WORLD, (const D3DMATRIX*) &value );
+	}
+
+	Matrix TransformManager::View::get()
+	{
+		Matrix matrix;
+		m_Device->InternalPointer->GetTransform( D3DTS_VIEW, (D3DMATRIX*) &matrix );
+		return matrix;
+	}
+
+	void TransformManager::View::set( Matrix value )
+	{
+		m_Device->InternalPointer->SetTransform( D3DTS_VIEW, (const D3DMATRIX*) &value );
+	}
+
+	Matrix TransformManager::Projection::get()
+	{
+		Matrix matrix;
+		m_Device->InternalPointer->GetTransform( D3DTS_PROJECTION, (D3DMATRIX*) &matrix );
+		return matrix;
+	}
+
+	void TransformManager::Projection::set( Matrix value )
+	{
+		m_Device->InternalPointer->SetTransform( D3DTS_PROJECTION, (const D3DMATRIX*) &value );
+	}
+}
 }

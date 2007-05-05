@@ -63,7 +63,8 @@ namespace Engine
 			device.Transform.Projection = matProj;
 			//device.Transform.View = matView;
 
-			device.DeviceResizing += new System.ComponentModel.CancelEventHandler(this.CancelResize);
+			//TODO: Figure out how to replace this correctly
+			//device.DeviceResizing += new System.ComponentModel.CancelEventHandler(this.CancelResize);
 		}
 		private void CancelResize(object sender, System.ComponentModel.CancelEventArgs e)
 		{

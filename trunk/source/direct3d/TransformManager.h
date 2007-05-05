@@ -29,36 +29,32 @@ namespace SlimDX
 	{
 		ref class Device;
 
-		public ref class RenderStateManager sealed
+		public ref class TransformManager sealed
 		{
 		private:
 			Device^ m_Device;
 
 		internal:
-			RenderStateManager( Device^ device ) : m_Device( device )
+			TransformManager( Device^ device ) : m_Device( device )
 			{
 				m_Device->InternalPointer->AddRef();
 			}
 
 		public:
-			~RenderStateManager()
+			~TransformManager()
 			{
-				RenderStateManager::!RenderStateManager();
+				TransformManager::!TransformManager();
 			}
 
-			!RenderStateManager()
+			!TransformManager()
 			{
 				m_Device->InternalPointer->Release();
 			}
 
-			property Cull CullMode { Cull get(); void set( Cull value ); }
-			property bool ZBufferEnable { bool get(); void set( bool value ); }
-
-			property bool AlphaBlendEnable { bool get(); void set( bool value ); }
-			property Blend SourceBlend { Blend get(); void set( Blend value ); }
-			property Blend DestBlend { Blend get(); void set( Blend value ); }
-
-			property ColorSource DiffuseMaterialSource { ColorSource get(); void set( ColorSource value ); }
+			property Matrix World { Matrix get(); void set( Matrix value ); }
+			property Matrix View { Matrix get(); void set( Matrix value ); }
+			property Matrix Projection { Matrix get(); void set( Matrix value ); }
+			//TODO: Add texture matrices
 		};
 	}
 }

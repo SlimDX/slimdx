@@ -75,6 +75,7 @@ namespace SlimDX
 		ref class IndexBuffer;
 		ref class VertexBuffer;
 		ref class RenderStateManager;
+		ref class TransformManager;
 
 		public ref class Device : public DirectXObject
 		{
@@ -82,6 +83,7 @@ namespace SlimDX
 			IDirect3DDevice9* m_Device;
 
 			RenderStateManager^ m_RenderState;
+			TransformManager^ m_Transforms;
 			IndexBuffer^ m_Indices;
 			VertexFormats m_VertexFormat;
 			VertexDeclaration^ m_VertexDecl;
@@ -106,6 +108,11 @@ namespace SlimDX
 				RenderStateManager^ get() { return m_RenderState; }
 			}
 
+			property TransformManager^ Transform
+			{
+				TransformManager^ get() { return m_Transforms; }
+			}
+
 			property IndexBuffer^ Indices
 			{
 				IndexBuffer^ get() { return m_Indices; }
@@ -125,6 +132,7 @@ namespace SlimDX
 			}
 
 			void TestCooperativeLevel();
+			void Reset( PresentParameters^ presentParams );
 
 			void Clear( ClearFlags clearFlags, int color, float zdepth, int stencil );
 			void Clear( ClearFlags clearFlags, Color color, float zdepth, int stencil );
