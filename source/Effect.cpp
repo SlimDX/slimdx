@@ -135,6 +135,42 @@ namespace Direct3D
 
 		return outDesc;
 	}
+	
+	EffectHandle^ BaseEffect::GetTechnique( int index )
+	{
+		D3DXHANDLE handle = m_BaseEffect->GetTechnique( index );
+		
+		if( handle == NULL )
+			return nullptr;
+		return gcnew EffectHandle( handle );
+	}
+
+	EffectHandle^ BaseEffect::GetTechnique( String^ name )
+	{
+		array<Byte>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+		pin_ptr<unsigned char> pinned_name = &nameBytes[0];
+
+		D3DXHANDLE handle = m_BaseEffect->GetTechniqueByName( (const char*) pinned_name );
+		
+		if( handle == NULL )
+			return nullptr;
+		return gcnew EffectHandle( handle );
+	}
+
+  TechniqueDescription BaseEffect::GetTechniqueDescription( EffectHandle^ handle )
+	{
+		D3DXTECHNIQUE_DESC desc;
+		
+		HRESULT hr = m_BaseEffect->GetTechniqueDesc( handle->InternalHandle, &desc );
+		GraphicsException::CheckHResult( hr );
+
+		TechniqueDescription outDesc;
+		outDesc.Name = gcnew String( desc.Name );
+		outDesc.Annotations = desc.Annotations;
+		outDesc.Passes = desc.Passes;
+
+		return outDesc;
+	}
 
 	EffectDescription BaseEffect::Description::get()
 	{
@@ -264,7 +300,17 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 	}
 
-
+  String^ BaseEffect::GetValueString( EffectHandle^ param )
+	{
+		D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+		LPCSTR data = 0;
+		
+		HRESULT hr = m_BaseEffect->GetString(handle,&data);
+		GraphicsException::CheckHResult( hr );
+		
+		return (gcnew String(data));
+	}
+	
 	Effect::Effect( ID3DXEffect* effect ) : BaseEffect( effect )
 	{
 		if( effect == NULL )
@@ -276,10 +322,38 @@ namespace Direct3D
 	Effect^ Effect::FromStream( Device^ device, Stream^ stream, array<Macro^>^ preprocessorDefines, Include^ includeFile,
 		String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors )
 	{
+	  //TODO: This is nearly identical to FromString. Could we factor this out?
 		ID3DXEffect* effect;
 		ID3DXBuffer* errorBuffer;
 
 		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		pin_ptr<unsigned char> pinned_data = &data[0];
+
+		//TODO: Fix some of these params
+		HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinned_data, data->Length, NULL, NULL, NULL,
+			(DWORD) flags, NULL, &effect, &errorBuffer );
+		GraphicsException::CheckHResult( hr );
+
+		if( errorBuffer != NULL )
+		{
+			compilationErrors = gcnew String( (const char*) errorBuffer->GetBufferPointer() );
+		}
+		else
+		{
+			compilationErrors = String::Empty;
+		}
+
+		return gcnew Effect( effect );
+	}
+	
+	Effect^ Effect::FromString( Device^ device, String^ sourceData, array<Macro^>^ preprocessorDefines, Include^ includeFile,
+		String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors )
+	{
+	  //TODO: This is nearly identical to FromStream. Could we factor this out?
+		ID3DXEffect* effect;
+		ID3DXBuffer* errorBuffer;
+
+		array<Byte>^ data = System::Text::ASCIIEncoding::ASCII->GetBytes( sourceData );
 		pin_ptr<unsigned char> pinned_data = &data[0];
 
 		//TODO: Fix some of these params
