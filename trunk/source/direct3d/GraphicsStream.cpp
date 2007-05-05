@@ -40,7 +40,7 @@ namespace SlimDX
 
 	void GraphicsStream::Close()
 	{
-		throw gcnew NotSupportedException();
+		Stream::Close();
 	}
 
 	Int64 GraphicsStream::Seek( Int64 offset, SeekOrigin origin )
