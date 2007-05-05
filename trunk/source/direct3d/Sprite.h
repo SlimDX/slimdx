@@ -23,8 +23,6 @@
 
 using namespace System;
 
-#include "DirectXObject.h"
-
 namespace SlimDX
 {
 	namespace Direct3D

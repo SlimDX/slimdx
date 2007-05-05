@@ -24,6 +24,7 @@
 
 #include "Device.h"
 #include "Texture.h"
+#include "Math.h"
 #include "Effect.h"
 
 namespace SlimDX
@@ -367,6 +368,19 @@ namespace SlimDX
 			return gcnew Effect( effect );
 		}
 
+		Effect^ Effect::FromStream( Device^ device, Stream^ stream, Include^ includeFile, String^ skipConstants,
+			ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors )
+		{
+			return FromStream( device, stream, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
+		}
+
+		Effect^ Effect::FromStream( Device^ device, Stream^ stream, Include^ includeFile, 
+			String^ skipConstants, ShaderFlags flags, EffectPool^ pool )
+		{
+			String^ compilationErrors;
+			return FromStream( device, stream, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
+		}
+
 		Effect^ Effect::FromString( Device^ device, String^ sourceData, array<Macro^>^ preprocessorDefines, Include^ includeFile,
 			String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors )
 		{
@@ -392,6 +406,19 @@ namespace SlimDX
 			}
 
 			return gcnew Effect( effect );
+		}
+
+		Effect^ Effect::FromString( Device^ device, String^ sourceData, Include^ includeFile, String^ skipConstants,
+			ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors)
+		{
+			return FromString(device, sourceData, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
+		}
+
+		Effect^ Effect::FromString( Device^ device, String^ sourceData, Include^ includeFile, String^ skipConstants,
+			ShaderFlags flags, EffectPool^ pool)
+		{
+			String^ compilationErrors;
+			return FromString(device, sourceData, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
 		}
 
 		int Effect::Begin( FX flags )

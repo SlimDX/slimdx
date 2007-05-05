@@ -23,9 +23,12 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include "../Utils.h"
+#include "../DirectXObject.h"
+
 #include "Device.h"
+#include "Math.h"
 #include "Sprite.h"
-#include "Utils.h"
 
 namespace SlimDX
 {

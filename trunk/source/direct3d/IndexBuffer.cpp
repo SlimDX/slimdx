@@ -22,9 +22,9 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include "../Utils.h"
 #include "Device.h"
 #include "IndexBuffer.h"
-#include "Utils.h"
 
 namespace SlimDX
 {

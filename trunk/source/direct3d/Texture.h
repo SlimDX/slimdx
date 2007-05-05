@@ -63,6 +63,12 @@ namespace SlimDX
 			static Texture^ FromStream( Device^ device, Stream^ stream, int width, int height, int numLevels,
 				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static Texture^ FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool );
+			static Texture^ FromStream( Device^ device, Stream^ stream );
+
+			static Texture^ FromFile( Device^ device, String^ fileName, int width, int height, int numLevels,
+				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
+			static Texture^ FromFile( Device^ device, String^ fileName, Usage usage, Pool pool );
+			static Texture^ FromFile( Device^ device, String^ fileName );
 
 			GraphicsStream^ LockRectangle( int level, LockFlags flags );
 			void UnlockRectangle( int level );

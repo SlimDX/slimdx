@@ -85,9 +85,9 @@ namespace SlimDX
 		public value class TechniqueDescription
 		{
 		public:
-			int Annotations;
 			String^ Name;
 			int Passes;
+			int Annotations;
 		};
 
 		public value class FunctionDescription
@@ -282,35 +282,17 @@ namespace SlimDX
 
 			static Effect^ FromStream( Device^ device, Stream^ stream, array<Macro^>^ preprocessorDefines, Include^ includeFile,
 				String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors );
-
 			static Effect^ FromStream( Device^ device, Stream^ stream, Include^ includeFile, String^ skipConstants,
-				ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors )
-			{
-				return FromStream( device, stream, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
-			}
-
+				ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors );
 			static Effect^ FromStream( Device^ device, Stream^ stream, Include^ includeFile, 
-				String^ skipConstants, ShaderFlags flags, EffectPool^ pool )
-			{
-				String^ compilationErrors;
-				return FromStream( device, stream, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
-			}
+				String^ skipConstants, ShaderFlags flags, EffectPool^ pool );
 
 			static Effect^ FromString( Device^ device, String^ sourceData, array<Macro^>^ preprocessorDefines, Include^ includeFile,
 				String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors );
-
 			static Effect^ FromString( Device^ device, String^ sourceData, Include^ includeFile, String^ skipConstants,
-				ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors)
-			{
-				return FromString(device, sourceData, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
-			}
-
+				ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors);
 			static Effect^ FromString( Device^ device, String^ sourceData, Include^ includeFile, String^ skipConstants,
-				ShaderFlags flags, EffectPool^ pool)
-			{
-				String^ compilationErrors;
-				return FromString(device, sourceData, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
-			}
+				ShaderFlags flags, EffectPool^ pool);
 
 			int Begin( FX flags );
 			void End();

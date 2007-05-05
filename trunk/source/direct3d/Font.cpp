@@ -25,10 +25,13 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include "../DirectXObject.h"
+#include "../Utils.h"
+
 #include "Device.h"
+#include "Math.h"
 #include "Sprite.h"
 #include "Font.h"
-#include "Utils.h"
 
 #include <vcclr.h>
 

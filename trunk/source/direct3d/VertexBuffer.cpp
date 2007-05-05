@@ -19,44 +19,49 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "Exceptions.h"
+#include "../Utils.h"
 #include "Device.h"
-#include "RenderStateManager.h"
+#include "VertexBuffer.h"
 
 namespace SlimDX
 {
 namespace Direct3D
 {
-	Cull RenderStateManager::CullMode::get()
+	VertexBuffer::VertexBuffer( IDirect3DVertexBuffer9* buffer )
 	{
-		DWORD value;
-		HRESULT hr = m_Device->InternalPointer->GetRenderState( D3DRS_CULLMODE, &value );
-		GraphicsException::CheckHResult( hr );
-		return (Cull) value;
+		if( buffer == NULL )
+			throw gcnew ArgumentNullException( "buffer" );
+
+		m_Buffer = buffer;
 	}
 
-	void RenderStateManager::CullMode::set( Cull cull )
+	VertexBuffer::VertexBuffer( Device^ device, int sizeBytes, Usage usage, VertexFormats format, Pool pool )
 	{
-		HRESULT hr = m_Device->InternalPointer->SetRenderState( D3DRS_CULLMODE, (DWORD) cull );
+		IDirect3DVertexBuffer9* vb;
+		HRESULT hr = device->InternalPointer->CreateVertexBuffer( sizeBytes, (DWORD) usage, 
+			(DWORD) format, (D3DPOOL) pool, &vb, NULL );
 		GraphicsException::CheckHResult( hr );
+		
+		m_Buffer = vb;
 	}
 
-	bool RenderStateManager::ZBufferEnable::get()
+	GraphicsStream^ VertexBuffer::Lock( int offset, int size, LockFlags flags )
 	{
-		DWORD value;
-		HRESULT hr = m_Device->InternalPointer->GetRenderState( D3DRS_ZENABLE, &value );
+		void* lockedPtr;
+		HRESULT hr = m_Buffer->Lock( offset, size, &lockedPtr, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
-		return value > 0;
+
+		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
+		GraphicsStream^ stream = gcnew GraphicsStream( lockedPtr, true, !readOnly );
+		return stream;
 	}
 
-	void RenderStateManager::ZBufferEnable::set( bool value )
+	void VertexBuffer::Unlock()
 	{
-		HRESULT hr = m_Device->InternalPointer->SetRenderState( D3DRS_ZENABLE, value );
-		GraphicsException::CheckHResult( hr );
+		m_Buffer->Unlock();
 	}
 }
 }

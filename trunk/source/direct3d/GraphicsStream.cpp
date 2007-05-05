@@ -22,9 +22,9 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include "../Utils.h"
 #include "Device.h"
 #include "GraphicsStream.h"
-#include "Utils.h"
 
 using namespace System::Runtime::InteropServices;
 
@@ -40,7 +40,7 @@ namespace SlimDX
 
 	void GraphicsStream::Close()
 	{
-		Stream::Close();
+		throw gcnew NotSupportedException();
 	}
 
 	Int64 GraphicsStream::Seek( Int64 offset, SeekOrigin origin )

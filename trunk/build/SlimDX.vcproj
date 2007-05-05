@@ -184,53 +184,87 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\Device.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\Effect.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\Font.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\GraphicsStream.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\IndexBuffer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\Manager.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\RenderStateManager.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\source\SlimDX.cpp"
 				>
 			</File>
-			<File
-				RelativePath="..\source\Sprite.cpp"
+			<Filter
+				Name="Direct3D"
 				>
-			</File>
-			<File
-				RelativePath="..\source\Texture.cpp"
+				<File
+					RelativePath="..\source\direct3d\Device.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Effect.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Font.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\GraphicsStream.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\IndexBuffer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Manager.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Mesh.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\RenderStateManager.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Sprite.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Texture.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Vertex.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\VertexBuffer.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="DirectInput"
 				>
-			</File>
-			<File
-				RelativePath="..\source\Vertex.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\VertexBuffer.cpp"
-				>
-			</File>
+				<File
+					RelativePath="..\source\directinput\Device.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -238,23 +272,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\source\D3DX.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\Device.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\DirectXObject.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\Effect.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\Enums.h"
 				>
 			</File>
 			<File
@@ -262,53 +280,85 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\Font.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\GraphicsStream.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\IndexBuffer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\Manager.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\Math.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\RenderStateManager.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\Resource.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\Sprite.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\Texture.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\Utils.h"
 				>
 			</File>
-			<File
-				RelativePath="..\source\Vertex.h"
+			<Filter
+				Name="Direct3D"
 				>
-			</File>
-			<File
-				RelativePath="..\source\VertexBuffer.h"
+				<File
+					RelativePath="..\source\direct3d\D3DX.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Device.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Effect.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Enums.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Font.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\GraphicsStream.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\IndexBuffer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Manager.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Math.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Mesh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\RenderStateManager.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Resource.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Sprite.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Texture.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Vertex.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\VertexBuffer.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="DirectInput"
 				>
-			</File>
+				<File
+					RelativePath="..\source\directinput\Device.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
