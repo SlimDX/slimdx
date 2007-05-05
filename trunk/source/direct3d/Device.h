@@ -124,6 +124,8 @@ namespace SlimDX
 				void set( SlimDX::Direct3D::VertexDeclaration^ value );
 			}
 
+			void TestCooperativeLevel();
+
 			void Clear( ClearFlags clearFlags, int color, float zdepth, int stencil );
 			void Clear( ClearFlags clearFlags, Color color, float zdepth, int stencil );
 			void BeginScene();

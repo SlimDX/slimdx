@@ -370,5 +370,24 @@ namespace SlimDX
 			Reference = D3DDEVTYPE_REF,
 			Software = D3DDEVTYPE_SW
 		};
+
+		public enum class Blend : Int32
+		{
+			Zero = D3DBLEND_ZERO,
+			One = D3DBLEND_ONE,
+			SrcColor = D3DBLEND_SRCCOLOR,
+			InvSrcColor = D3DBLEND_INVSRCCOLOR,
+			SrcAlpha = D3DBLEND_SRCALPHA,
+			InvSrcAlpha = D3DBLEND_INVSRCALPHA,
+			DestAlpha = D3DBLEND_DESTALPHA,
+			InvDestAlpha = D3DBLEND_INVDESTALPHA,
+			DestColor = D3DBLEND_DESTCOLOR,
+			InvDestColor = D3DBLEND_INVDESTCOLOR,
+			SrcAlphaSat = D3DBLEND_SRCALPHASAT,
+			BothSrcAlpha = D3DBLEND_BOTHSRCALPHA,
+			BothInvSrcAlpha = D3DBLEND_BOTHINVSRCALPHA,
+			BlendFactor = D3DBLEND_BLENDFACTOR,
+			InvBlendFactor = D3DBLEND_INVBLENDFACTOR,
+		};
 	}
 }
