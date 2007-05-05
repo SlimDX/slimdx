@@ -70,10 +70,10 @@ namespace SlimDX
 
 		static Vector3 TransformCoordinate( Vector3 coord, Matrix transform );
 
-	static float Dot( Vector3 lhs, Vector3 rhs )
-	{
-		return (lhs.X * rhs.X + lhs.Y * rhs.Y + lhs.Z * rhs.Z);
-	}
+		static float Dot( Vector3 lhs, Vector3 rhs )
+		{
+			return (lhs.X * rhs.X + lhs.Y * rhs.Y + lhs.Z * rhs.Z);
+		}
 
 		static Vector3 Cross( Vector3 lhs, Vector3 rhs )
 		{
@@ -260,15 +260,15 @@ namespace SlimDX
 		{
 			Quaternion get()
 			{
-			Quaternion result;
-					result.X = result.Y = result.Z = 0.0f;
-					result.W = 1.0f;
-					return result;
+				Quaternion result;
+				result.X = result.Y = result.Z = 0.0f;
+				result.W = 1.0f;
+				return result;
 			}
 		}
 
 		Quaternion(float x,float y,float z,float w)
-		: X(x), Y(y), Z(z), W(w)
+			: X(x), Y(y), Z(z), W(w)
 		{
 		}
 
@@ -278,7 +278,7 @@ namespace SlimDX
 			D3DXQuaternionRotationYawPitchRoll( (D3DXQUATERNION*) &result, yaw, pitch, roll );
 			return result;
 		}
-		
+
 		static Quaternion operator * (Quaternion lhs, Quaternion rhs)
 		{
 			Quaternion result;
