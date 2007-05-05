@@ -74,6 +74,8 @@ namespace SlimDX
 
 		public:
 			Mesh^ Clone( Device^ device, MeshFlags flags, array<VertexElement>^ elements  );
+
+			void DrawSubset( int subset );
 		};
 
 		public ref class Mesh : public BaseMesh

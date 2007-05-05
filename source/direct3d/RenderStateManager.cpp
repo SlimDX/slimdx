@@ -58,5 +58,19 @@ namespace Direct3D
 		HRESULT hr = m_Device->InternalPointer->SetRenderState( D3DRS_ZENABLE, value );
 		GraphicsException::CheckHResult( hr );
 	}
+
+	bool RenderStateManager::AlphaBlendEnable::get()
+	{
+		DWORD value;
+		HRESULT hr = m_Device->InternalPointer->GetRenderState( D3DRS_ALPHABLENDENABLE, &value );
+		GraphicsException::CheckHResult( hr );
+		return value > 0;
+	}
+
+	void RenderStateManager::AlphaBlendEnable::set( bool value )
+	{
+		HRESULT hr = m_Device->InternalPointer->SetRenderState( D3DRS_ALPHABLENDENABLE, value );
+		GraphicsException::CheckHResult( hr );
+	}
 }
 }

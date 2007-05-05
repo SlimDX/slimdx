@@ -21,6 +21,7 @@
 */
 #include <d3d9.h>
 #include <d3dx9.h>
+#include <vcclr.h>
 
 #include "Device.h"
 #include "Texture.h"
@@ -341,18 +342,16 @@ namespace SlimDX
 			m_Effect = effect;
 		}
 
-		Effect^ Effect::FromStream( Device^ device, Stream^ stream, array<Macro^>^ preprocessorDefines, Include^ includeFile,
-			String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors )
+		Effect^ Effect::FromMemory( Device ^device, array<Byte>^ memory, array<Macro>^ preprocessorDefines,
+			Include ^includeFile, String^ skipConstants, ShaderFlags flags, EffectPool^ pool,
+			[Out] String^ %compilationErrors )
 		{
-			//TODO: This is nearly identical to FromString. Could we factor this out?
 			ID3DXEffect* effect;
 			ID3DXBuffer* errorBuffer;
-
-			array<Byte>^ data = Utils::ReadStream( stream, 0 );
-			pin_ptr<unsigned char> pinned_data = &data[0];
+			pin_ptr<unsigned char> pinned_data = &memory[0];
 
 			//TODO: Fix some of these params
-			HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinned_data, data->Length, NULL, NULL, NULL,
+			HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinned_data, memory->Length, NULL, NULL, NULL,
 				(DWORD) flags, NULL, &effect, &errorBuffer );
 			GraphicsException::CheckHResult( hr );
 
@@ -366,6 +365,15 @@ namespace SlimDX
 			}
 
 			return gcnew Effect( effect );
+		}
+
+		Effect^ Effect::FromStream( Device^ device, Stream^ stream, array<Macro>^ preprocessorDefines, Include^ includeFile,
+			String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors )
+		{
+			array<Byte>^ data = Utils::ReadStream( stream, 0 );
+
+			return Effect::FromMemory( device, data, preprocessorDefines, includeFile,
+				skipConstants, flags, pool, compilationErrors );
 		}
 
 		Effect^ Effect::FromStream( Device^ device, Stream^ stream, Include^ includeFile, String^ skipConstants,
@@ -381,18 +389,37 @@ namespace SlimDX
 			return FromStream( device, stream, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
 		}
 
-		Effect^ Effect::FromString( Device^ device, String^ sourceData, array<Macro^>^ preprocessorDefines, Include^ includeFile,
+		Effect^ Effect::FromString( Device^ device, String^ sourceData, array<Macro>^ preprocessorDefines, Include^ includeFile,
 			String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors )
 		{
-			//TODO: This is nearly identical to FromStream. Could we factor this out?
+			array<Byte>^ data = System::Text::ASCIIEncoding::ASCII->GetBytes( sourceData );
+
+			return Effect::FromMemory( device, data, preprocessorDefines, includeFile,
+				skipConstants, flags, pool, compilationErrors );
+		}
+
+		Effect^ Effect::FromString( Device^ device, String^ sourceData, Include^ includeFile, String^ skipConstants,
+			ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors)
+		{
+			return FromString(device, sourceData, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
+		}
+
+		Effect^ Effect::FromString( Device^ device, String^ sourceData, Include^ includeFile, String^ skipConstants,
+			ShaderFlags flags, EffectPool^ pool)
+		{
+			String^ compilationErrors;
+			return FromString(device, sourceData, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
+		}
+
+		Effect^ Effect::FromFile( Device^ device, String^ fileName, array<Macro>^ preprocessorDefines, Include^ includeFile,
+			String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors )
+		{
 			ID3DXEffect* effect;
 			ID3DXBuffer* errorBuffer;
+			pin_ptr<const wchar_t> pinned_name = PtrToStringChars( fileName );
 
-			array<Byte>^ data = System::Text::ASCIIEncoding::ASCII->GetBytes( sourceData );
-			pin_ptr<unsigned char> pinned_data = &data[0];
-
-			//TODO: Fix some of these params
-			HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinned_data, data->Length, NULL, NULL, NULL,
+			//TODO: Fix some of these parameters
+			HRESULT hr = D3DXCreateEffectFromFile( device->InternalPointer, pinned_name, NULL, NULL,
 				(DWORD) flags, NULL, &effect, &errorBuffer );
 			GraphicsException::CheckHResult( hr );
 
@@ -408,17 +435,17 @@ namespace SlimDX
 			return gcnew Effect( effect );
 		}
 
-		Effect^ Effect::FromString( Device^ device, String^ sourceData, Include^ includeFile, String^ skipConstants,
+		Effect^ Effect::FromFile( Device^ device, String^ fileName, Include^ includeFile, String^ skipConstants,
 			ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors)
 		{
-			return FromString(device, sourceData, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
+			return Effect::FromFile( device, fileName, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
 		}
 
-		Effect^ Effect::FromString( Device^ device, String^ sourceData, Include^ includeFile, String^ skipConstants,
+		Effect^ Effect::FromFile( Device^ device, String^ fileName, Include^ includeFile, String^ skipConstants,
 			ShaderFlags flags, EffectPool^ pool)
 		{
 			String^ compilationErrors;
-			return FromString(device, sourceData, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
+			return Effect::FromFile( device, fileName, includeFile, skipConstants, flags, pool, compilationErrors );
 		}
 
 		int Effect::Begin( FX flags )

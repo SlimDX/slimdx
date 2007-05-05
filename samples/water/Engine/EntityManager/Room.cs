@@ -18,12 +18,12 @@ namespace Engine
 		public Room(Device device) : base(device, meshFilename, effectFilename)
 		{
 			//load the texture
-			texture = TextureLoader.FromFile(device, textureFilename);
-			texBump = TextureLoader.FromFile(device, textureFilename1);
+			texture = Texture.FromFile(device, textureFilename);
+			texBump = Texture.FromFile(device, textureFilename1);
 		}
 		public override void Update(Matrix matView, Matrix matProj)
 		{
-			matWorld.Translate(0.0f, 0.0f, 0.0f);
+			matWorld = Matrix.Translation(0.0f, 0.0f, 0.0f);
 			this.matView = matView;
 			this.matProj = matProj;
 		}
@@ -34,7 +34,7 @@ namespace Engine
 			Matrix modelViewIT = matWorld * matView * matProj;
 
 			modelViewIT = Matrix.Invert(modelViewIT);
-			modelViewIT = Matrix.TransposeMatrix(modelViewIT);
+			modelViewIT = Matrix.Transpose(modelViewIT);
 
 			//set the technique
 			effect.Technique = "bump";

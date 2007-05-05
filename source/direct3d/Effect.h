@@ -280,18 +280,32 @@ namespace SlimDX
 		public:
 			Effect( ID3DXEffect* effect );
 
-			static Effect^ FromStream( Device^ device, Stream^ stream, array<Macro^>^ preprocessorDefines, Include^ includeFile,
+			//FromMemory
+			static Effect^ FromMemory( Device^ device, array<Byte>^ memory, array<Macro>^ preprocessorDefines, Include^ includeFile,
+				String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors );
+
+			//FromStream
+			static Effect^ FromStream( Device^ device, Stream^ stream, array<Macro>^ preprocessorDefines, Include^ includeFile,
 				String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors );
 			static Effect^ FromStream( Device^ device, Stream^ stream, Include^ includeFile, String^ skipConstants,
 				ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors );
 			static Effect^ FromStream( Device^ device, Stream^ stream, Include^ includeFile, 
 				String^ skipConstants, ShaderFlags flags, EffectPool^ pool );
 
-			static Effect^ FromString( Device^ device, String^ sourceData, array<Macro^>^ preprocessorDefines, Include^ includeFile,
+			//FromString
+			static Effect^ FromString( Device^ device, String^ sourceData, array<Macro>^ preprocessorDefines, Include^ includeFile,
 				String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors );
 			static Effect^ FromString( Device^ device, String^ sourceData, Include^ includeFile, String^ skipConstants,
 				ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors);
 			static Effect^ FromString( Device^ device, String^ sourceData, Include^ includeFile, String^ skipConstants,
+				ShaderFlags flags, EffectPool^ pool);
+
+			//FromFile
+			static Effect^ FromFile( Device^ device, String^ fileName, array<Macro>^ preprocessorDefines, Include^ includeFile,
+				String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors );
+			static Effect^ FromFile( Device^ device, String^ sourceData, Include^ includeFile, String^ skipConstants,
+				ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors);
+			static Effect^ FromFile( Device^ device, String^ sourceData, Include^ includeFile, String^ skipConstants,
 				ShaderFlags flags, EffectPool^ pool);
 
 			int Begin( FX flags );
