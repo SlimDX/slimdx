@@ -5,7 +5,6 @@ using namespace System::IO;
 
 namespace SlimDX
 {
-	generic<typename T> where T : value class
 	public ref class GraphicsStream : public Stream
 	{
 	private:
@@ -22,9 +21,16 @@ namespace SlimDX
 		virtual void Close() override;
 		virtual Int64 Seek( Int64 offset, SeekOrigin origin ) override;
 
+		//Write functions
 		virtual void Write( array<Byte>^ buffer, int offset, int count ) override;
+
+		generic<typename T> where T : value class
 		void Write( T value );
+
+		generic<typename T> where T : value class
 		void Write( array<T>^ data, int startIndex, int count );
+
+		generic<typename T> where T : value class
 		void Write( array<T>^ data ) { Write( data, 0, 0 ); }
 
 		//TODO: Write all the read functions

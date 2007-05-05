@@ -39,8 +39,11 @@ namespace SlimDX
 			Texture( IDirect3DTexture9* texture );
 			Texture( Device^ device, int width, int height, int numLevels, Usage usage, Format format, Pool pool );
 
-			generic<typename T> where T : value class
-			GraphicsStream<T>^ LockRectangle( int level, LockFlags flags );
+			static Texture^ FromStream( Device^ device, Stream^ stream, int width, int height, int numLevels,
+				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
+			static Texture^ FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool );
+
+			GraphicsStream^ LockRectangle( int level, LockFlags flags );
 			void UnlockRectangle( int level );
 		};
 
@@ -70,19 +73,11 @@ namespace SlimDX
 			CubeTexture( IDirect3DCubeTexture9* texture );
 			CubeTexture( Device^ device, int edgeLength, int numLevels, Usage usage, Format format, Pool pool );
 
-			generic<typename T> where T : value class
-			GraphicsStream<T>^ LockRectangle( CubeMapFace face, int level, LockFlags flags );
+			static CubeTexture^ FromStream( Device^ device, Stream^ stream, int size, int numLevels,
+				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
+
+			GraphicsStream^ LockRectangle( CubeMapFace face, int level, LockFlags flags );
 			void UnlockRectangle( CubeMapFace face, int level );
-		};
-
-		public ref class TextureLoader sealed
-		{
-		public:
-			static Texture^ FromStream( Device^ device, Stream^ stream, int width, int height, int numLevels,
-				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
-
-			static CubeTexture^ FromCubeStream( Device^ device, Stream^ stream, int size, int numLevels,
-				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 		};
 	}
 }

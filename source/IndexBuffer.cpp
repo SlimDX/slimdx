@@ -27,15 +27,14 @@ namespace Direct3D
 		m_Buffer = ib;
 	}
 
-	generic<typename T>
-	GraphicsStream<T>^ IndexBuffer::Lock( int offset, int size, LockFlags flags )
+	GraphicsStream^ IndexBuffer::Lock( int offset, int size, LockFlags flags )
 	{
 		void* lockedPtr;
 		HRESULT hr = m_Buffer->Lock( offset, size, &lockedPtr, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		GraphicsStream<T>^ stream = gcnew GraphicsStream<T>( lockedPtr, true, !readOnly );
+		GraphicsStream^ stream = gcnew GraphicsStream( lockedPtr, true, !readOnly );
 		return stream;
 	}
 

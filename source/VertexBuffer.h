@@ -35,10 +35,8 @@ namespace SlimDX
 			VertexBuffer( IDirect3DVertexBuffer9* buffer );
 			VertexBuffer( Device^ device, int sizeBytes, Usage usage, VertexFormats format, Pool pool );
 
-			generic<typename T> where T : value class
-			GraphicsStream<T>^ Lock( int offset, int size, LockFlags flags );
-			generic<typename T> where T : value class
-			GraphicsStream<T>^ Lock( int offset, LockFlags flags )	{ return Lock<T>( offset, 0, flags ); }
+			GraphicsStream^ Lock( int offset, int size, LockFlags flags );
+			GraphicsStream^ Lock( int offset, LockFlags flags ) { return Lock( offset, 0, flags ); }
 			void Unlock();
 		};
 	}
