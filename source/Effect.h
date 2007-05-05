@@ -61,13 +61,13 @@ namespace SlimDX
 			int Functions;
 		};
 
-    public value class TechniqueDescription
-    {
-    public:
-      int Annotations;
-      String^ Name;
-      int Passes;
-    };
+		public value class TechniqueDescription
+		{
+		public:
+			int Annotations;
+			String^ Name;
+			int Passes;
+		};
 
 		public value class FunctionDescription
 		{
@@ -143,7 +143,7 @@ namespace SlimDX
 					return rhsObj == nullptr;
 				if( rhsObj == nullptr )
 					return lhsObj == nullptr;
-					
+
 				return lhs->m_Handle == rhs->m_Handle;
 			}
 
@@ -210,9 +210,9 @@ namespace SlimDX
 			EffectHandle^ GetFunction( String^ name );
 			FunctionDescription GetFunctionDescription( EffectHandle^ handle );
 
-      EffectHandle^ GetTechnique( int index );
-      EffectHandle^ GetTechnique( String^ name );
-      TechniqueDescription GetTechniqueDescription( EffectHandle^ handle );
+			EffectHandle^ GetTechnique( int index );
+			EffectHandle^ GetTechnique( String^ name );
+			TechniqueDescription GetTechniqueDescription( EffectHandle^ handle );
 
 			property EffectDescription Description
 			{
@@ -234,7 +234,7 @@ namespace SlimDX
 			void SetValue( EffectHandle^ param, BaseTexture^ value );
 			void SetValueTranspose( EffectHandle^ param, Matrix value );
 			void SetValueTranspose( EffectHandle^ param, array<Matrix>^ values );
-			
+
 			//TODO: Implement the rest of the get methods...
 			String^ GetValueString( EffectHandle^ param );
 		};
@@ -274,22 +274,22 @@ namespace SlimDX
 				String^ compilationErrors;
 				return FromStream( device, stream, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
 			}
-			
+
 			static Effect^ FromString( Device^ device, String^ sourceData, array<Macro^>^ preprocessorDefines, Include^ includeFile,
 				String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors );
 
-      static Effect^ FromString( Device^ device, String^ sourceData, Include^ includeFile, String^ skipConstants,
-        ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors)
-      {
-        return FromString(device, sourceData, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
-      }
-      
-      static Effect^ FromString( Device^ device, String^ sourceData, Include^ includeFile, String^ skipConstants,
-        ShaderFlags flags, EffectPool^ pool)
-      {
-        String^ compilationErrors;
-        return FromString(device, sourceData, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
-      }
+			static Effect^ FromString( Device^ device, String^ sourceData, Include^ includeFile, String^ skipConstants,
+				ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors)
+			{
+				return FromString(device, sourceData, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
+			}
+
+			static Effect^ FromString( Device^ device, String^ sourceData, Include^ includeFile, String^ skipConstants,
+				ShaderFlags flags, EffectPool^ pool)
+			{
+				String^ compilationErrors;
+				return FromString(device, sourceData, nullptr, includeFile, skipConstants, flags, pool, compilationErrors );
+			}
 
 			int Begin( FX flags );
 			void End();
