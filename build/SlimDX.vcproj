@@ -231,6 +231,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d\TransformManager.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d\Vertex.cpp"
 					>
 				</File>
@@ -340,6 +344,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d\Texture.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\TransformManager.h"
 					>
 				</File>
 				<File

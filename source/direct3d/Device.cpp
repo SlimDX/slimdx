@@ -33,18 +33,16 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "RenderStateManager.h"
+#include "TransformManager.h"
 #include "D3DX.h"
 
 namespace SlimDX
 {
 namespace Direct3D
 {
-	Device::Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams )
+	//quick utility function
+	void ConvertPresentParams( PresentParameters^ presentParams, D3DPRESENT_PARAMETERS& d3dpp )
 	{
-		IDirect3DDevice9* device;
-
-		//TODO: Interop the present parameters correctly
-		D3DPRESENT_PARAMETERS d3dpp = { 0 };
 		d3dpp.AutoDepthStencilFormat = (D3DFORMAT) presentParams->AutoDepthStencilFormat;
 		d3dpp.BackBufferCount = presentParams->BackBufferCount;
 		d3dpp.BackBufferFormat = (D3DFORMAT) presentParams->BackBufferFormat;
@@ -59,13 +57,21 @@ namespace Direct3D
 		d3dpp.PresentationInterval = (UINT) presentParams->PresentationInterval;
 		d3dpp.SwapEffect = (D3DSWAPEFFECT) presentParams->SwapEffect;
 		d3dpp.Windowed = presentParams->Windowed;
+	}
 
+	Device::Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams )
+	{
+		IDirect3DDevice9* device;
+		D3DPRESENT_PARAMETERS d3dpp;
+
+		ConvertPresentParams( presentParams, d3dpp );
 		HRESULT hr = Manager::Direct3D->CreateDevice( adapter, (D3DDEVTYPE) deviceType, (HWND) controlHandle.ToPointer(), 
 			(DWORD) createFlags, (D3DPRESENT_PARAMETERS*) &d3dpp, &device );
 		GraphicsException::CheckHResult( hr );
 
 		m_Device = device;
 		m_RenderState = gcnew RenderStateManager( this );
+		m_Transforms = gcnew TransformManager( this );
 	}
 
 	void Device::Indices::set( IndexBuffer^ value )
@@ -153,6 +159,15 @@ namespace Direct3D
 	void Device::TestCooperativeLevel()
 	{
 		HRESULT hr = m_Device->TestCooperativeLevel();
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::Reset( PresentParameters^ presentParams )
+	{
+		D3DPRESENT_PARAMETERS d3dpp;
+
+		ConvertPresentParams( presentParams, d3dpp );
+		HRESULT hr = m_Device->Reset( &d3dpp );
 		GraphicsException::CheckHResult( hr );
 	}
 }

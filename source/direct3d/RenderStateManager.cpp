@@ -100,5 +100,19 @@ namespace Direct3D
 		HRESULT hr = m_Device->InternalPointer->SetRenderState( D3DRS_DESTBLEND, (DWORD) value );
 		GraphicsException::CheckHResult( hr );
 	}
+
+	ColorSource RenderStateManager::DiffuseMaterialSource::get()
+	{
+		DWORD value;
+		HRESULT hr = m_Device->InternalPointer->GetRenderState( D3DRS_DIFFUSEMATERIALSOURCE, &value );
+		GraphicsException::CheckHResult( hr );
+		return (ColorSource) value;
+	}
+
+	void RenderStateManager::DiffuseMaterialSource::set( ColorSource value )
+	{
+		HRESULT hr = m_Device->InternalPointer->SetRenderState( D3DRS_DIFFUSEMATERIALSOURCE, (DWORD) value );
+		GraphicsException::CheckHResult( hr );
+	}
 }
 }
