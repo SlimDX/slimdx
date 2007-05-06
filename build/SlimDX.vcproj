@@ -399,6 +399,10 @@
 				Name="XInput"
 				>
 				<File
+					RelativePath="..\source\xinput\Exception.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\xinput\xinput.h"
 					>
 				</File>
