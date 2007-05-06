@@ -227,6 +227,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d\Surface.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d\Texture.cpp"
 					>
 				</File>
@@ -348,6 +352,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d\Sprite.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Surface.h"
 					>
 				</File>
 				<File

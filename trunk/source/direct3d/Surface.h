@@ -21,30 +21,59 @@
 */
 #pragma once
 
+#include "Resource.h"
+
 using namespace System;
 
 namespace SlimDX
 {
+	ref class GraphicsStream;
+
 	namespace Direct3D
 	{
-		public enum class ResourceType : Int32
+		public value class SurfaceDescription
 		{
-			Surface = D3DRTYPE_SURFACE,
-			Volume = D3DRTYPE_VOLUME,
-			Texture = D3DRTYPE_TEXTURE,
-			VolumeTexture = D3DRTYPE_VOLUMETEXTURE,
-			CubeTexture = D3DRTYPE_CUBETEXTURE,
-			VertexBuffer = D3DRTYPE_VERTEXBUFFER,
-			IndexBuffer = D3DRTYPE_INDEXBUFFER,
+			Format Format;
+			ResourceType Type;
+			Usage Usage;
+			Pool Pool;
+			MultiSampleType MultiSampleType;
+			int MultiSampleQuality;
+			int Width;
+			int Height;
 		};
 
-		public ref class Resource abstract : public DirectXObject
+		public ref class Surface : public Resource
 		{
+		private:
+			IDirect3DSurface9* m_Surface;
+
 		internal:
-			virtual property IDirect3DResource9* ResourcePointer
+			property IDirect3DSurface9* InternalPointer
 			{
-				IDirect3DResource9* get() abstract;
+				IDirect3DSurface9* get() { return m_Surface; }
 			}
+
+			property IDirect3DResource9* ResourcePointer
+			{
+				virtual IDirect3DResource9* get() override { return m_Surface; }
+			}
+
+			property IUnknown* ComPointer
+			{
+				virtual IUnknown* get() override { return m_Surface; }
+				virtual void set( IUnknown* value ) override { m_Surface = (IDirect3DSurface9*) value; }
+			}
+
+		public:
+			Surface( IDirect3DSurface9* Surface );
+
+			GraphicsStream^ LockRectangle( LockFlags flags );
+			void UnlockRectangle();
+
+			SurfaceDescription GetDesc();
+			IntPtr GetDC();
+			void ReleaseDC( IntPtr hdc );
 		};
 	}
 }
