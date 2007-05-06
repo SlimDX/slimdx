@@ -62,5 +62,10 @@ namespace SlimDX {
 				return false;
 			return true;
 		}
+
+		void Controller::GetBatteryInformation(BatteryDeviceType flag, [Out] BatteryInformation% batteryInfo) {
+			pin_ptr<BatteryInformation> batInfo = &batteryInfo;
+			XInputException::CheckResult(XInputGetBatteryInformation(userIndex, (Byte)flag, (XINPUT_BATTERY_INFORMATION*)batInfo));
+		}
 	}
 }
