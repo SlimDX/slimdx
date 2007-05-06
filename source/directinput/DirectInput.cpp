@@ -19,38 +19,62 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+//#define 
+#include <windows.h>
+#include <dinput.h>
 
-using namespace System;
-using namespace System::Runtime::Serialization;
+#include "DirectInput.h"
+#include "Device.h"
 
 namespace SlimDX
 {
-	public ref class DirectXException : public Exception
+namespace DirectInput
+{
+	Guid FromGUID( const GUID& guid )
 	{
-	public:
-		static property bool EnableExceptions;
-		property int ErrorCode;
+		Guid result( guid.Data1, guid.Data2, guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], 
+			guid.Data4[3], guid.Data4[4], guid.Data4[5], guid.Data4[6], guid.Data4[7] );
+		return result;
+	}
 
-		static DirectXException()
-		{
-			EnableExceptions = true;
-		}
+	Guid SystemGuid::Keyboard::get()
+	{
+		return FromGUID( GUID_SysKeyboard );
+	}
 
-		DirectXException() : Exception("A DirectX exception occurred.") {
-			ErrorCode = E_FAIL;
-		}
-		DirectXException(String^ message) : Exception(message) {
-			ErrorCode = E_FAIL;
-		}
-		DirectXException( int errorCode, String^ message ) : Exception( message )
-		{
-			ErrorCode = errorCode;
-		}
-		DirectXException( String^ message, Exception^ innerException ) : Exception( message, innerException )
-		{ }
+	Guid SystemGuid::Mouse::get()
+	{
+		return FromGUID( GUID_SysMouse );
+	}
 
-		DirectXException(SerializationInfo^ info, StreamingContext context) : Exception(info, context)
-		{ }
-	};
+	Guid SystemGuid::Joystick::get()
+	{
+		return FromGUID( GUID_Joystick );
+	}
+
+	Guid SystemGuid::MouseEm::get()
+	{
+		return FromGUID( GUID_SysMouseEm );
+	}
+
+	Guid SystemGuid::MouseEm2::get()
+	{
+		return FromGUID( GUID_SysMouseEm2 );
+	}
+
+	Guid SystemGuid::KeyboardEm::get()
+	{
+		return FromGUID( GUID_SysKeyboardEm );
+	}
+
+	Guid SystemGuid::KeyboardEm2::get()
+	{
+		return FromGUID( GUID_SysKeyboardEm2 );
+	}
+
+	Device^ DirectInput::CreateDevice( Guid subsystem )
+	{
+		return gcnew Device( subsystem );
+	}
+}
 }

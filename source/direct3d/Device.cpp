@@ -24,12 +24,12 @@
 #include <d3dx9.h>
 
 #include "../DirectXObject.h"
-#include "../Exceptions.h"
 #include "../Utils.h"
+#include "GraphicsException.h"
 
 #include "Math.h"
 #include "Device.h"
-#include "Manager.h"
+#include "Direct3D.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "RenderStateManager.h"

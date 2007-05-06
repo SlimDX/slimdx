@@ -58,7 +58,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit) dxguid.lib d3d9.lib d3dx9.lib"
+				AdditionalDependencies="$(NoInherit) dxguid.lib d3d9.lib d3dx9.lib dinput8.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
@@ -132,7 +132,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit) dxguid.lib d3d9.lib d3dx9.lib"
+				AdditionalDependencies="$(NoInherit) dxguid.lib d3d9.lib d3dx9.lib dinput.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
@@ -268,6 +268,10 @@
 						/>
 					</FileConfiguration>
 				</File>
+				<File
+					RelativePath="..\source\directinput\DirectInput.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -312,6 +316,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d\Font.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\GraphicsException.h"
 					>
 				</File>
 				<File
@@ -364,6 +372,10 @@
 				>
 				<File
 					RelativePath="..\source\directinput\Device.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DirectInput.h"
 					>
 				</File>
 			</Filter>

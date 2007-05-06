@@ -25,4 +25,50 @@
 #include "../DirectXObject.h"
 #include "../Utils.h"
 
+#include "DirectInput.h"
 #include "Device.h"
+
+namespace SlimDX
+{
+namespace DirectInput
+{
+	GUID ToGUID( Guid guid )
+	{
+		//TODO: This is fucking crazy
+		GUID result;
+		array<Byte>^ bytes = guid.ToByteArray();
+		pin_ptr<unsigned char> pinned_bytes = &bytes[0];
+		memcpy( &result, pinned_bytes, sizeof(GUID) );
+
+		return result;
+	}
+
+	Device::Device( IDirectInputDevice8W* device )
+	{
+		m_Device = device;
+	}
+
+	Device::Device( Guid subsystem )
+	{
+		IDirectInputDevice8W* device;
+		HRESULT hr = DirectInput::InternalPointer->CreateDevice( ToGUID( subsystem ), &device, NULL );
+
+		m_Device = device;
+	}
+
+	void Device::SetCooperativeLevel( IntPtr handle, CooperativeLevel flags )
+	{
+		HRESULT hr = m_Device->SetCooperativeLevel( (HWND) handle.ToPointer(), (DWORD) flags );
+	}
+
+	void Device::Acquire()
+	{
+		HRESULT hr = m_Device->Acquire();
+	}
+
+	void Device::Unacquire()
+	{
+		HRESULT hr = m_Device->Unacquire();
+	}
+}
+}
