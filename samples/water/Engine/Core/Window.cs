@@ -35,7 +35,7 @@ namespace Engine
 
 			if(MessageBox.Show("Fullscreen?", "Fullscreen", MessageBoxButtons.YesNo) == DialogResult.Yes)
 				fullScreen = true;
-			AdapterInformation adapterInfo = Manager.Adapters[0]; //Helper class to gain access to information about the display adapter
+			AdapterInformation adapterInfo = Direct3D.Adapters[0]; //Helper class to gain access to information about the display adapter
 			presentParams = new PresentParameters();
 			presentParams.BackBufferCount = 1; //Number of backbuffers to create
 			presentParams.BackBufferFormat = adapterInfo.CurrentDisplayMode.Format; //The current format of the display device

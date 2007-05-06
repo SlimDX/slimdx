@@ -65,7 +65,7 @@ namespace Direct3D
 		D3DPRESENT_PARAMETERS d3dpp;
 
 		ConvertPresentParams( presentParams, d3dpp );
-		HRESULT hr = Manager::Direct3D->CreateDevice( adapter, (D3DDEVTYPE) deviceType, (HWND) controlHandle.ToPointer(), 
+		HRESULT hr = Direct3D::InternalPointer->CreateDevice( adapter, (D3DDEVTYPE) deviceType, (HWND) controlHandle.ToPointer(), 
 			(DWORD) createFlags, (D3DPRESENT_PARAMETERS*) &d3dpp, &device );
 		GraphicsException::CheckHResult( hr );
 

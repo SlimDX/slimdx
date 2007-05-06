@@ -107,13 +107,13 @@ namespace SlimDX
 			}
 		};
 
-		public ref class Manager
+		public ref class Direct3D
 		{
 		private:
 			static IDirect3D9* m_Direct3D;
 
 		internal:
-			static property IDirect3D9* Direct3D
+			static property IDirect3D9* InternalPointer
 			{
 				IDirect3D9* get() { return m_Direct3D; }
 			}
@@ -122,7 +122,7 @@ namespace SlimDX
 			static property bool CheckWhql;
 			static property AdapterList^ Adapters;
 
-			static Manager()
+			static Direct3D()
 			{
 				m_Direct3D = Direct3DCreate9( D3D_SDK_VERSION );
 				if( m_Direct3D == NULL )

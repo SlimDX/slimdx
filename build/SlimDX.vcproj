@@ -195,6 +195,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d\Direct3D.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d\Effect.cpp"
 					>
 				</File>
@@ -208,10 +212,6 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d\IndexBuffer.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Manager.cpp"
 					>
 				</File>
 				<File
@@ -299,6 +299,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d\Direct3D.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d\Effect.h"
 					>
 				</File>
@@ -316,10 +320,6 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d\IndexBuffer.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Manager.h"
 					>
 				</File>
 				<File
