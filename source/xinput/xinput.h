@@ -28,416 +28,275 @@ namespace SlimDX {
 	namespace XInput {
 		[StructLayout(LayoutKind::Sequential)]
 		/// <summary>
-		/// 
+		/// Specifies motor speed levels for the vibration function of a controller.
 		/// </summary>
+		/// <remarks>
+		/// The left motor is the low-frequency rumble motor. The right motor is the high-frequency rumble motor. The two motors are not the same, and they create different vibration effects.
+		/// </remarks>
 		public value class Vibration {
 		public:
 			/// <summary>
-			/// 
+			/// Speed of the left motor. Valid values are in the range 0 to 65,535. Zero signifies no motor use; 65,535 signifies 100 percent motor use.
 			/// </summary>
 			UInt16 LeftMotorSpeed;
 			/// <summary>
-			/// 
+			/// Speed of the right motor. Valid values are in the range 0 to 65,535. Zero signifies no motor use; 65,535 signifies 100 percent motor use.
 			/// </summary>
 			UInt16 RightMotorSpeed;
 		};
 
 		[Flags]
 		/// <summary>
-		/// 
+		/// Bitmask of the device digital buttons
 		/// </summary>
 		public enum class GamepadButtonFlags : UInt16 {
-			/// <summary>
-			/// 
-			/// </summary>
 			DPadUp = XINPUT_GAMEPAD_DPAD_UP,
-			/// <summary>
-			/// 
-			/// </summary>
 			DPadDown = XINPUT_GAMEPAD_DPAD_DOWN,
-			/// <summary>
-			/// 
-			/// </summary>
 			DPadLeft = XINPUT_GAMEPAD_DPAD_LEFT,
-			/// <summary>
-			/// 
-			/// </summary>
 			DPadRight = XINPUT_GAMEPAD_DPAD_RIGHT,
-			/// <summary>
-			/// 
-			/// </summary>
 			Start = XINPUT_GAMEPAD_START,
-			/// <summary>
-			/// 
-			/// </summary>
 			Back =XINPUT_GAMEPAD_BACK,
-			/// <summary>
-			/// 
-			/// </summary>
 			LeftThumb = XINPUT_GAMEPAD_LEFT_THUMB,     
-			/// <summary>
-			/// 
-			/// </summary>
 			RightThumb = XINPUT_GAMEPAD_RIGHT_THUMB,     
-			/// <summary>
-			/// 
-			/// </summary>
 			LeftShoulder = XINPUT_GAMEPAD_LEFT_SHOULDER,
-			/// <summary>
-			/// 
-			/// </summary>
 			RightShoulder = XINPUT_GAMEPAD_RIGHT_SHOULDER,
-			/// <summary>
-			/// 
-			/// </summary>
 			A = XINPUT_GAMEPAD_A,
-			/// <summary>
-			/// 
-			/// </summary>
 			B = XINPUT_GAMEPAD_B,
-			/// <summary>
-			/// 
-			/// </summary>
 			X = XINPUT_GAMEPAD_X,
-			/// <summary>
-			/// 
-			/// </summary>
 			Y = XINPUT_GAMEPAD_Y,
 		};
 
 		[StructLayout(LayoutKind::Sequential)]
 		/// <summary>
-		/// 
+		/// Describes the current state of the Xbox 360 Controller.
 		/// </summary>
+		/// <remarks>
+		/// Each of the thumbstick axis members is a signed value between -32768 and 32767 describing the position of the thumbstick.
+		/// A value of 0 is centered. Negative values signify down or to the left. Positive values signify up or to the right.
+		/// The constants GamepadLeftThumbDeadZone or GamepadRightThumbDeadZone can be used as a positive and negative value to filter a
+		/// thumbstick input.
+		/// </remarks>
 		public value class GamePad {
 		public:
 			/// <summary>
-			/// 
+			/// Bitmask of the device digital buttons
 			/// </summary>
-			GamepadButtonFlags wButtons;
+			GamepadButtonFlags Buttons;
 			/// <summary>
-			/// 
+			/// The current value of the left trigger analog control. The value is between 0 and 255.
 			/// </summary>
-			Byte bLeftTrigger;
+			Byte LeftTrigger;
 			/// <summary>
-			/// 
+			/// The current value of the right trigger analog control. The value is between 0 and 255.
 			/// </summary>
-			Byte bRightTrigger;
+			Byte RightTrigger;
 			/// <summary>
-			/// 
+			/// Right thumbstick y-axis value. The value is between -32768 and 32767.
 			/// </summary>
-			Int16 sThumbLX;
+			Int16 LeftThumbX;
 			/// <summary>
-			/// 
+			/// Left thumbstick y-axis value. The value is between -32768 and 32767.
 			/// </summary>
-			Int16 sThumbLY;
+			Int16 LeftThumbY;
 			/// <summary>
-			/// 
+			/// Right thumbstick x-axis value. The value is between -32768 and 32767.
 			/// </summary>
-			Int16 sThumbRX;
+			Int16 RightThumbX;
 			/// <summary>
-			/// 
+			/// Right thumbstick y-axis value. The value is between -32768 and 32767.
 			/// </summary>
-			Int16 sThumbRY;
+			Int16 RightThumbY;
 
 			/// <summary>
-			/// 
+			/// Can be used as a positive and negative value to filter the left thumbstick input.
 			/// </summary>
 			static const Int16 GamepadLeftThumbDeadZone = XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
 			/// <summary>
-			/// 
+			/// Can be used as a positive and negative value to filter the right thumbstick input.
 			/// </summary>
 			static const Int16 GamepadRightThumbDeadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
 			/// <summary>
-			/// 
+			/// This constantmay be used as the value which LeftTrigger and RightTrigger must be greater than to register as pressed.
 			/// </summary>
 			static const Byte GamepadTriggerThreshold = XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
 		};
 
 		[Flags]
 		/// <summary>
-		/// 
+		/// Flags that indicate the keyboard state at the time of the input event.
 		/// </summary>
 		public enum class KeyStrokeFlags : UInt16 {
-			/// <summary>
-			/// 
-			/// </summary>
 			KeyDown = XINPUT_KEYSTROKE_KEYDOWN,
-			/// <summary>
-			/// 
-			/// </summary>
 			KeyUp = XINPUT_KEYSTROKE_KEYUP,
-			/// <summary>
-			/// 
-			/// </summary>
 			Repeat = XINPUT_KEYSTROKE_REPEAT
 		};
 
 		/// <summary>
-		/// 
+		/// Controller input virtual key codes
 		/// </summary>
 		public enum class GamepadKeyCodes : UInt16 {
-			/// <summary>
-			/// 
-			/// </summary>
 			A = VK_PAD_A,
-			/// <summary>
-			/// 
-			/// </summary>
 			B = VK_PAD_B,
-			/// <summary>
-			/// 
-			/// </summary>
 			X = VK_PAD_X,
-			/// <summary>
-			/// 
-			/// </summary>
 			Y = VK_PAD_Y,
-			/// <summary>
-			/// 
-			/// </summary>
 			RightShoulder = VK_PAD_RSHOULDER,
-			/// <summary>
-			/// 
-			/// </summary>
 			LeftShoulder = VK_PAD_LSHOULDER,
-			/// <summary>
-			/// 
-			/// </summary>
 			LeftTrigger = VK_PAD_LTRIGGER,
-			/// <summary>
-			/// 
-			/// </summary>
 			RightTrigger = VK_PAD_RTRIGGER,
-			/// <summary>
-			/// 
-			/// </summary>
 			DPadUp = VK_PAD_DPAD_UP,
-			/// <summary>
-			/// 
-			/// </summary>
 			DPadDown = VK_PAD_DPAD_DOWN,
-			/// <summary>
-			/// 
-			/// </summary>
 			DPadLeft = VK_PAD_DPAD_LEFT,
-			/// <summary>
-			/// 
-			/// </summary>
 			DPadRight = VK_PAD_DPAD_RIGHT,
-			/// <summary>
-			/// 
-			/// </summary>
 			Start = VK_PAD_START,
-			/// <summary>
-			/// 
-			/// </summary>
 			Back = VK_PAD_BACK,
-			/// <summary>
-			/// 
-			/// </summary>
 			LeftThumbPress = VK_PAD_LTHUMB_PRESS,
-			/// <summary>
-			/// 
-			/// </summary>
 			RightThumbPress=  VK_PAD_RTHUMB_PRESS,
-			/// <summary>
-			/// 
-			/// </summary>
 			LeftThumbUp = VK_PAD_LTHUMB_UP,
-			/// <summary>
-			/// 
-			/// </summary>
 			LeftThumbDown = VK_PAD_LTHUMB_DOWN,
-			/// <summary>
-			/// 
-			/// </summary>
 			LeftThumpLeft=  VK_PAD_LTHUMB_LEFT,
-			/// <summary>
-			/// 
-			/// </summary>
 			LeftThumbRight = VK_PAD_LTHUMB_RIGHT,
-			/// <summary>
-			/// 
-			/// </summary>
 			LeftThumbUpLeft = VK_PAD_LTHUMB_UPLEFT,
-			/// <summary>
-			/// 
-			/// </summary>
 			LeftThumbUpRight = VK_PAD_LTHUMB_UPRIGHT,
-			/// <summary>
-			/// 
-			/// </summary>
 			LeftThumbDownLeft = VK_PAD_LTHUMB_DOWNLEFT,
-			/// <summary>
-			/// 
-			/// </summary>
 			LeftThumbDownRight = VK_PAD_LTHUMB_DOWNRIGHT,
-			/// <summary>
-			/// 
-			/// </summary>
 			RightThumbUp = VK_PAD_RTHUMB_UP,
-			/// <summary>
-			/// 
-			/// </summary>
 			RightThumbDown = VK_PAD_RTHUMB_DOWN,
-			/// <summary>
-			/// 
-			/// </summary>
 			RightThumpLeft=  VK_PAD_RTHUMB_LEFT,
-			/// <summary>
-			/// 
-			/// </summary>
 			RightThumbRight = VK_PAD_RTHUMB_RIGHT,
-			/// <summary>
-			/// 
-			/// </summary>
 			RightThumbUpLeft = VK_PAD_RTHUMB_UPLEFT,
-			/// <summary>
-			/// 
-			/// </summary>
 			RightThumbUpRight = VK_PAD_RTHUMB_UPRIGHT,
-			/// <summary>
-			/// 
-			/// </summary>
 			RightThumbDownLeft = VK_PAD_RTHUMB_DOWNLEFT,
-			/// <summary>
-			/// 
-			/// </summary>
 			RightThumbDownRight = VK_PAD_RTHUMB_DOWNRIGHT
 		};
 
 		[StructLayout(LayoutKind::Sequential)]
 		/// <summary>
-		/// 
+		/// Specifies keystroke data returned by Controller.GetKeystroke
 		/// </summary>
 		public value class KeyStroke {
 		public:
 			/// <summary>
-			/// 
+			/// Virtual-key code of the key, button, or stick movement.
 			/// </summary>
 			GamepadKeyCodes VirtualKey;
 			/// <summary>
-			/// 
+			/// Unused and should be zero.
 			/// </summary>
 			Char Unicode;
 			/// <summary>
-			/// 
+			/// Combination of flags that indicate the keyboard state at the time of the input event.
 			/// </summary>
 			KeyStrokeFlags Flags;
 			/// <summary>
-			/// 
+			/// Index of the signed-in gamer associated with the device. Can be a value in the range 0–3.
 			/// </summary>
 			Byte UserIndex;
 			/// <summary>
-			/// 
+			/// HID code corresponding to the input. If there is no corresponding HID code, this value is zero.
 			/// </summary>
 			Byte HidCode;
 		};
 
 		[StructLayout(LayoutKind::Sequential)]
 		/// <summary>
-		/// 
+		/// Represents the state of a controller.
 		/// </summary>
 		public value class State {
 		public:
 			/// <summary>
-			/// 
+			/// State packet number. The packet number indicates whether there have been any changes in the state of the controller.
+			/// If the PacketNumber member is the same in sequentially returned State structures, the controller state has not changed. 
 			/// </summary>
 			UInt32 PacketNumber;
 			/// <summary>
-			/// 
+			/// GamePad structure containing the current state of an Xbox 360 Controller. 
 			/// </summary>
 			GamePad Gamepad;
 		};
 
 		/// <summary>
-		/// 
+		/// Controller type.
 		/// </summary>
 		public enum class DeviceType : Byte {
 			/// <summary>
-			/// 
+			/// The device is a game controller.
 			/// </summary>
 			Gamepad = XINPUT_DEVTYPE_GAMEPAD
 		};
 
 		/// <summary>
-		/// 
+		/// Subtype of the game controller.
 		/// </summary>
 		public enum class DeviceSubType : Byte {
-			/// <summary>
-			/// 
-			/// </summary>
 			ArcadeStick = XINPUT_DEVSUBTYPE_ARCADE_STICK,
-			/// <summary>
-			/// 
-			/// </summary>
 			Gamepad = XINPUT_DEVSUBTYPE_GAMEPAD,
-			/// <summary>
-			/// 
-			/// </summary>
 			Wheel = XINPUT_DEVSUBTYPE_WHEEL,
-			/// <summary>
-			/// 
-			/// </summary>
 			DancePad = XINPUT_DEVSUBTYPE_DANCE_PAD,
-			/// <summary>
-			/// 
-			/// </summary>
 			FlightStick = XINPUT_DEVSUBTYPE_FLIGHT_SICK
 		};
 
 		[Flags]
 		/// <summary>
-		/// 
+		/// Features of the controller. 
 		/// </summary>
 		public enum class CapabilitiesFlags : UInt16 {
 			/// <summary>
-			/// 
+			/// The device has an integrated voice device.
 			/// </summary>
 			VoiceSupported = XINPUT_CAPS_VOICE_SUPPORTED
 		};
 
 		[StructLayout(LayoutKind::Sequential)]
 		/// <summary>
-		/// 
+		/// Describes the capabilities of a connected controller.
 		/// </summary>
+		/// <remarks>
+		/// Sets the structure members to indicate which inputs the device supports. For binary state controls, such as digital buttons, the corresponding bit reflects
+		/// whether or not the control is supported by the device. For proportional controls, such as thumbsticks, the value indicates the resolution for that control.
+		/// Some number of the least significant bits may not be set, indicating that the control does not provide resolution to that level.
+		/// </remarks>
 		public value class Capabilities {
 		public:
 			/// <summary>
-			/// 
+			/// Controller type.
 			/// </summary>
 			DeviceType Type;
 			/// <summary>
-			/// 
+			/// Subtype of the game controller. 
 			/// </summary>
 			DeviceSubType SubType;
 			/// <summary>
-			/// 
+			/// Features of the controller. 
 			/// </summary>
 			CapabilitiesFlags Flags;
 			/// <summary>
-			/// 
+			/// GamePad structure that describes available controller features and control resolutions. 
 			/// </summary>
 			GamePad Gamepad;
 			/// <summary>
-			/// 
+			/// Vibration structure that describes available vibration functionality and resolutions. 
 			/// </summary>
 			Vibration Vibration;
 		};
 
 		/// <summary>
-		/// 
+		/// Flags that identify the device type.
 		/// </summary>
 		public enum class DeviceQueryType : Int32 {
-			/// <summary>
-			/// 
-			/// </summary>
 			Any = 0,
-			/// <summary>
-			/// 
-			/// </summary>
 			GamePad = XINPUT_FLAG_GAMEPAD
+		};
+
+		/// <summary>
+		/// Index of the signed-in gamer associated with the device.
+		/// </summary>
+		public enum class UserIndex : UInt32 {
+			Any = XUSER_INDEX_ANY,
+			One = 0,
+			Two = 1,
+			Three = 2,
+			Four = 3,
+			MaxUserCount = XUSER_MAX_COUNT
 		};
 
 		/// <summary>
@@ -448,41 +307,39 @@ namespace SlimDX {
 			/// <summary>
 			/// Initializes a new instance of Controller
 			/// </summary>
-			Controller();
+			/// <param name="userIndex">Index of the user's controller.</param>
+			Controller(UserIndex userIndex);
 			/// <summary>
-			/// 
+			/// Retrieves the current state of the specified controller.
 			/// </summary>
-			/// <param name="userIndex"></param>
-			/// <param name="currentState"></param>
-			void GetState(UInt32 userIndex, State% currentState);
+			/// <param name="currentState">Out reference to State structure that receives the current state of the controller.</param>
+			void GetState([Out] State% currentState);
 			/// <summary>
-			/// 
+			/// Sends data to a connected controller. This function is used to activate the vibration function of a controller.
 			/// </summary>
-			/// <param name="userIndex"></param>
-			/// <param name="vibration"></param>
-			void SetState(UInt32 userIndex, Vibration% vibration);
+			/// <param name="vibration">Reference structure containing the vibration information to send to the controller.</param>
+			void SetState(Vibration% vibration);
 			/// <summary>
-			/// 
+			/// Retrieves the capabilities and features of a connected controller.
 			/// </summary>
-			/// <param name="userIndex"></param>
-			/// <param name="flag"></param>
-			/// <param name="capabilities"></param>
-			void GetCapabilities(UInt32 userIndex, DeviceQueryType flag, Capabilities% capabilities);
+			/// <param name="flag">Input flags that identify the device type.</param>
+			/// <param name="capabilities">Out reference to Capabilities structure that receives the controller capabilities.</param>
+			void GetCapabilities(DeviceQueryType flag, [Out] Capabilities% capabilities);
 			/// <summary>
-			/// 
+			/// Retrieves the sound rendering and sound capture device GUIDs that are associated with the headset connected to the specified controller.
 			/// </summary>
-			/// <param name="userIndex"></param>
-			/// <param name="soundRenderGuid"></param>
-			/// <param name="soundCaptureGuid"></param>
-			void GetDirectSoundAudioDeviceGuids(UInt32 userIndex, Guid% soundRenderGuid, Guid% soundCaptureGuid);
+			/// <param name="soundRenderGuid">Out reference to Guid structure that receives the GUID of the headset sound rendering device.</param>
+			/// <param name="soundCaptureGuid">Out reference to Guid structure that receives the GUID of the headset sound capture device.</param>
+			void GetDirectSoundAudioDeviceGuids([Out] Guid% soundRenderGuid, [Out] Guid% soundCaptureGuid);
 			/// <summary>
-			/// 
+			/// Retrieves a gamepad input event.
 			/// </summary>
-			/// <param name="userIndex"></param>
-			/// <param name="flag"></param>
-			/// <param name="keystroke"></param>
-			/// <returns></returns>
-			bool GetKeystroke(UInt32 userIndex, DeviceQueryType flag, KeyStroke% keystroke);
+			/// <param name="flag">Input flags that identify the device type.</param>
+			/// <param name="keystroke">Out reference to KeyStroke structure that receives an input event.</param>
+			/// <returns>False if no new keys have been pressed.</returns>
+			bool GetKeystroke(DeviceQueryType flag, KeyStroke% keystroke);
+		private:
+			UInt32 userIndex;
 		};
 	}
 }
