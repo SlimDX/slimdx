@@ -280,11 +280,48 @@ namespace SlimDX {
 		};
 
 		/// <summary>
+		/// Flags for battery type
+		/// </summary>
+		public enum class BatteryType : Byte {
+			Disconnected = BATTERY_TYPE_DISCONNECTED,
+			Wired = BATTERY_TYPE_WIRED,
+			Alkaline = BATTERY_TYPE_ALKALINE,
+			NiMH = BATTERY_TYPE_NIMH,
+			Unknown = BATTERY_TYPE_UNKNOWN
+		};
+
+		/// <summary>
+		/// The amount of charge remaining in the battery.
+		/// </summary>
+		/// <remarks>
+		/// These are only valid for wireless, connected devices, with known battery types. The amount of use time remaining depends on the type of device.
+		/// </remarks>
+		public enum class BatteryLevel : Byte {
+			Empty = BATTERY_LEVEL_EMPTY,
+			Low = BATTERY_LEVEL_LOW,
+			Medium = BATTERY_LEVEL_MEDIUM,
+			Full = BATTERY_LEVEL_FULL
+		};
+
+		public value class BatteryInformation {
+			BatteryType Type;
+			BatteryLevel Level;
+		};
+
+		/// <summary>
 		/// Flags that identify the device type.
 		/// </summary>
 		public enum class DeviceQueryType : Int32 {
 			Any = 0,
 			GamePad = XINPUT_FLAG_GAMEPAD
+		};
+
+		/// <summary>
+		/// Devices that support batteries.
+		/// </summary>
+		public enum class BatteryDeviceType : Byte {
+			Gamepad = BATTERY_DEVTYPE_GAMEPAD,
+			Headset = BATTERY_DEVTYPE_HEADSET
 		};
 
 		/// <summary>
@@ -337,7 +374,13 @@ namespace SlimDX {
 			/// <param name="flag">Input flags that identify the device type.</param>
 			/// <param name="keystroke">Out reference to KeyStroke structure that receives an input event.</param>
 			/// <returns>False if no new keys have been pressed.</returns>
-			bool GetKeystroke(DeviceQueryType flag, KeyStroke% keystroke);
+			bool GetKeystroke(DeviceQueryType flag, [Out] KeyStroke% keystroke);
+			/// <summary>
+			/// Gets information on the controllers battery.
+			/// </summary>
+			/// <param name="flag">Input flags that identify the device type.</param>
+			/// <param name="batteryInfo">Out reference to BatteryInformation structure that receives the battery status information.</param>
+			void GetBatteryInformation(BatteryDeviceType flag, [Out] BatteryInformation% batteryInfo);
 		private:
 			UInt32 userIndex;
 		};
