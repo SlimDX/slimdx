@@ -22,7 +22,7 @@
 #pragma once
 
 #include "Resource.h"
-#include "GraphicsStream.h"
+#include "Surface.h"
 
 using namespace System;
 
@@ -72,6 +72,9 @@ namespace SlimDX
 
 			GraphicsStream^ LockRectangle( int level, LockFlags flags );
 			void UnlockRectangle( int level );
+
+			SurfaceDescription GetLevelDesc( int level );
+			Surface^ GetSurfaceLevel( int level );
 		};
 
 		public ref class CubeTexture : public BaseTexture

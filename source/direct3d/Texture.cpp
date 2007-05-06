@@ -24,11 +24,12 @@
 #include <vcclr.h>
 
 #include "../DirectXObject.h"
+#include "../Utils.h"
 
 #include "Device.h"
 #include "D3DX.h"
+#include "GraphicsStream.h"
 #include "Texture.h"
-#include "../Utils.h"
 
 namespace SlimDX
 {
@@ -120,6 +121,21 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 	}
 
+	SurfaceDescription Texture::GetLevelDesc( int level )
+	{
+		SurfaceDescription desc;
+		HRESULT hr = m_Texture->GetLevelDesc( level, (D3DSURFACE_DESC*) &desc );
+		GraphicsException::CheckHResult( hr );
+		return desc;
+	}
+
+	Surface^ Texture::GetSurfaceLevel( int level )
+	{
+		IDirect3DSurface9* surface;
+		HRESULT hr = m_Texture->GetSurfaceLevel( level, &surface );
+		GraphicsException::CheckHResult( hr );
+		return gcnew Surface( surface );
+	}
 
 	CubeTexture::CubeTexture( IDirect3DCubeTexture9* texture )
 	{
