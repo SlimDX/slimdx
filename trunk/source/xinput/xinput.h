@@ -381,6 +381,18 @@ namespace SlimDX {
 			/// <param name="flag">Input flags that identify the device type.</param>
 			/// <param name="batteryInfo">Out reference to BatteryInformation structure that receives the battery status information.</param>
 			void GetBatteryInformation(BatteryDeviceType flag, [Out] BatteryInformation% batteryInfo);
+
+		public:
+			/// <summary>
+			/// Tests if the controller is currently connected. 
+			/// </summary>
+			/// <remarks>
+			/// Wireless controllers are not considered active upon system startup, and calls to any of the XInput functions before a wireless controller
+			/// is made active return ERROR_DEVICE_NOT_CONNECTED. Game titles must examine the return code and be prepared to handle this condition.
+			/// Wired controllers are automatically activated when they are inserted. Wireless controllers are activated when the user presses the START
+			/// or Xbox Guide button to power on the controller.
+			/// </remarks>
+			property bool IsConnected { bool get(); }
 		private:
 			UInt32 userIndex;
 		};

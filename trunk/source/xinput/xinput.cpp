@@ -67,5 +67,18 @@ namespace SlimDX {
 			pin_ptr<BatteryInformation> batInfo = &batteryInfo;
 			XInputException::CheckResult(XInputGetBatteryInformation(userIndex, (Byte)flag, (XINPUT_BATTERY_INFORMATION*)batInfo));
 		}
+
+		bool Controller::IsConnected::get() {
+			State currentState;
+			pin_ptr<State> state = &currentState;
+			UInt32 result = XInputGetState(userIndex, (XINPUT_STATE*)state);
+
+			if(result == ERROR_DEVICE_NOT_CONNECTED)
+				return false;
+			else if(result != ERROR_SUCCESS)
+				XInputException::CheckResult(result);
+
+			return true;
+		}
 	}
 }

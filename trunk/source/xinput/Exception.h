@@ -20,10 +20,13 @@ namespace SlimDX {
 		internal:
 			static void CheckResult(UInt32 result) {
 				if(result != ERROR_SUCCESS && result != ERROR_EMPTY) {
-					if(result == ERROR_DEVICE_NOT_CONNECTED)
-						throw gcnew XInputException(ERROR_DEVICE_NOT_CONNECTED, "Device not connected. If this is a wireless device it may not yet be powered on.");
-					else
-						throw gcnew XInputException(result, "A XInput exception occured.");
+					if(DirectXException::EnableExceptions) {
+						if(result == ERROR_DEVICE_NOT_CONNECTED)
+							throw gcnew XInputException(ERROR_DEVICE_NOT_CONNECTED, "Device not connected. If this is a wireless device it may not yet be powered on.");
+						else
+							throw gcnew XInputException(result, "A XInput exception occured.");
+					} else
+						SetLastError(result);
 				}
 			}
 		};
