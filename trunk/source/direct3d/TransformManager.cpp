@@ -23,7 +23,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../Exceptions.h"
+#include "GraphicsException.h"
 #include "Device.h"
 #include "Math.h"
 #include "TransformManager.h"

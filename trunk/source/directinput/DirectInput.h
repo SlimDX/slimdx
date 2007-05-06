@@ -22,61 +22,55 @@
 #pragma once
 
 using namespace System;
+using namespace System::Runtime::InteropServices;
 
-#include "../DirectXObject.h"
+#include "../Exceptions.h."
 
 namespace SlimDX
 {
 	namespace DirectInput
 	{
-		[Flags]
-		public enum class CooperativeLevel : Int32
+		public ref class SystemGuid sealed
 		{
-			Exclusive = DISCL_EXCLUSIVE,
-			NonExclusive = DISCL_NONEXCLUSIVE,
-			Foreground = DISCL_FOREGROUND,
-			Background = DISCL_BACKGROUND,
-			NoWinKey = DISCL_NOWINKEY,
-		};
-
-		public value class MouseState
-		{
-		internal:
-			array<Byte>^ buttons;
-
 		public:
-			int X, Y, Z;
-
-			property array<Byte>^ Buttons
-			{
-				array<Byte>^ get() { return buttons; }
-			}
+			static property Guid Keyboard { Guid get(); }
+			static property Guid Mouse { Guid get(); }
+			static property Guid Joystick { Guid get(); }
+			static property Guid MouseEm { Guid get(); }
+			static property Guid MouseEm2 { Guid get(); }
+			static property Guid KeyboardEm { Guid get(); }
+			static property Guid KeyboardEm2 { Guid get(); }
 		};
 
-		public ref class Device : public DirectXObject
+		ref class Device;
+
+		public ref class DirectInput
 		{
 		private:
-			IDirectInputDevice8W* m_Device;
+			static IDirectInput8W* m_DirectInput;
 
 		internal:
-			property IDirectInputDevice8W* InternalPointer
+			static property IDirectInput8W* InternalPointer
 			{
-				IDirectInputDevice8W* get() { return m_Device; }
+				IDirectInput8W* get() { return m_DirectInput; }
 			}
 
-			property IUnknown* ComPointer
-			{
-				virtual IUnknown* get() override { return m_Device; }
-				virtual void set( IUnknown* value ) override { m_Device = (IDirectInputDevice8*) value; }
-			}
-			
 		public:
-			Device( IDirectInputDevice8W* device );
-			Device( Guid subsystem );
+			static DirectInput()
+			{
+				IDirectInput8W* dinput;
+				IntPtr hInstance = Marshal::GetHINSTANCE( DirectInput::typeid->Module );
 
-			void SetCooperativeLevel( IntPtr handle, CooperativeLevel flags );
-			void Acquire();
-			void Unacquire();
+				HRESULT hr = DirectInput8Create( (HINSTANCE) hInstance.ToPointer(), DIRECTINPUT_VERSION, 
+					IID_IDirectInput8, (void**) &dinput, NULL );
+				//TODO: Include proper HRESULT checks
+				if( FAILED( hr ) || dinput == NULL )
+					throw gcnew DirectXException( -1, "Could not create DirectInput instance." );
+
+				m_DirectInput = dinput;
+			}
+
+			Device^ CreateDevice( Guid subsystem );
 		};
 	}
 }
