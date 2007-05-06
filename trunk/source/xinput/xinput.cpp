@@ -27,32 +27,33 @@
 
 namespace SlimDX {
 	namespace XInput {
-		Controller::Controller() {
+		Controller::Controller(UserIndex userIndex) {
 			XInputEnable(true);
+			this->userIndex = (UInt32)userIndex;
 		}
 
-		void Controller::GetState(UInt32 userIndex, State% currentState) {
+		void Controller::GetState([Out] State% currentState) {
 			pin_ptr<State> state = &currentState;
 			XInputException::CheckResult(XInputGetState(userIndex, (XINPUT_STATE*)state));
 		}
 		
-		void Controller::SetState(UInt32 userIndex, Vibration% vibration) {
+		void Controller::SetState(Vibration% vibration) {
 			pin_ptr<Vibration> vib = &vibration;
 			XInputException::CheckResult(XInputSetState(userIndex, (XINPUT_VIBRATION*)vib));
 		}
 		
-		void Controller::GetCapabilities(UInt32 userIndex, DeviceQueryType flags, Capabilities% capabilities) {
+		void Controller::GetCapabilities(DeviceQueryType flags, Capabilities% capabilities) {
 			pin_ptr<Capabilities> cap = &capabilities;
 			XInputException::CheckResult(XInputGetCapabilities(userIndex, (UInt32)flags, (XINPUT_CAPABILITIES*)cap));
 		}
 		
-		void Controller::GetDirectSoundAudioDeviceGuids(UInt32 userIndex, Guid% soundRenderGuid, Guid% soundCaptureGuid) {
+		void Controller::GetDirectSoundAudioDeviceGuids(Guid% soundRenderGuid, Guid% soundCaptureGuid) {
 			pin_ptr<Guid> renderGuid = &soundRenderGuid;
 			pin_ptr<Guid> captureGuid = &soundCaptureGuid;
 			XInputException::CheckResult(XInputGetDSoundAudioDeviceGuids(userIndex, (GUID*)renderGuid, (GUID*)captureGuid));
 		}
 		
-		bool Controller::GetKeystroke(UInt32 userIndex, DeviceQueryType flags, KeyStroke% keystroke) {
+		bool Controller::GetKeystroke(DeviceQueryType flags, KeyStroke% keystroke) {
 			pin_ptr<KeyStroke> keys = &keystroke;
 			UInt32 result = XInputGetKeystroke(userIndex, (UInt32)flags, (XINPUT_KEYSTROKE*)keys);
 			XInputException::CheckResult(result);
