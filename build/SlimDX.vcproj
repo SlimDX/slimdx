@@ -277,6 +277,14 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="XInput"
+				>
+				<File
+					RelativePath="..\source\xinput\xinput.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -384,6 +392,14 @@
 				</File>
 				<File
 					RelativePath="..\source\directinput\DirectInput.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="XInput"
+				>
+				<File
+					RelativePath="..\source\xinput\xinput.h"
 					>
 				</File>
 			</Filter>
