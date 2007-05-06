@@ -25,7 +25,7 @@
 #include "../Exceptions.h"
 #include "Enums.h"
 
-#include "Manager.h"
+#include "Direct3D.h"
 
 namespace SlimDX
 {
@@ -34,9 +34,9 @@ namespace Direct3D
 	AdapterDetails::AdapterDetails( unsigned int adapter )
 	{
 		D3DADAPTER_IDENTIFIER9 ident;
-		DWORD flags = Manager::CheckWhql ? D3DENUM_WHQL_LEVEL : 0;
+		DWORD flags = Direct3D::CheckWhql ? D3DENUM_WHQL_LEVEL : 0;
 
-		HRESULT hr = Manager::Direct3D->GetAdapterIdentifier( adapter, flags, &ident );
+		HRESULT hr = Direct3D::InternalPointer->GetAdapterIdentifier( adapter, flags, &ident );
 		GraphicsException::CheckHResult( hr );
 		
 		DriverName = gcnew String( ident.Driver );
@@ -64,18 +64,18 @@ namespace Direct3D
 
 	int AdapterInformation::Monitor::get()
 	{
-		return (int) Manager::Direct3D->GetAdapterMonitor( m_Adapter );
+		return (int) Direct3D::InternalPointer->GetAdapterMonitor( m_Adapter );
 	}
 
 	DisplayMode AdapterInformation::CurrentDisplayMode::get()
 	{
 		DisplayMode displayMode;
-		HRESULT hr = Manager::Direct3D->GetAdapterDisplayMode( m_Adapter, (D3DDISPLAYMODE*) &displayMode );
+		HRESULT hr = Direct3D::InternalPointer->GetAdapterDisplayMode( m_Adapter, (D3DDISPLAYMODE*) &displayMode );
 		return displayMode;
 	}
 
 
-	bool Manager::CheckDeviceType( int adapter, DeviceType deviceType, Format adapterFormat, 
+	bool Direct3D::CheckDeviceType( int adapter, DeviceType deviceType, Format adapterFormat, 
 		Format backBufferFormat, bool windowed, [Out] int% result )
 	{
 		HRESULT hr = m_Direct3D->CheckDeviceType( adapter, (D3DDEVTYPE) deviceType, 
@@ -84,14 +84,14 @@ namespace Direct3D
 		return hr == S_OK;
 	}
 
-	bool Manager::CheckDeviceType( int adapter, DeviceType deviceType, Format adapterFormat, 
+	bool Direct3D::CheckDeviceType( int adapter, DeviceType deviceType, Format adapterFormat, 
 		Format backBufferFormat, bool windowed )
 	{
 		int result;
 		return CheckDeviceType( adapter, deviceType, adapterFormat, backBufferFormat, windowed, result );
 	}
 
-	bool Manager::CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, 
+	bool Direct3D::CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, 
 		Format renderTargetFormat, DepthFormat depthStencilFormat, [Out] int% result )
 	{
 		HRESULT hr = m_Direct3D->CheckDepthStencilMatch( adapter, (D3DDEVTYPE) deviceType,
@@ -100,7 +100,7 @@ namespace Direct3D
 		return hr == S_OK;
 	}
 
-	bool Manager::CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, 
+	bool Direct3D::CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, 
 		Format renderTargetFormat, DepthFormat depthStencilFormat )
 	{
 		int result;
@@ -108,7 +108,7 @@ namespace Direct3D
 			renderTargetFormat, depthStencilFormat, result );
 	}
 
-	Caps Manager::GetDeviceCaps( int adapter, DeviceType deviceType )
+	Caps Direct3D::GetDeviceCaps( int adapter, DeviceType deviceType )
 	{
 		return Caps( adapter, deviceType );
 	}
@@ -117,7 +117,7 @@ namespace Direct3D
 	Caps::Caps( int adapter, DeviceType deviceType )
 	{
 		D3DCAPS9 caps;
-		Manager::Direct3D->GetDeviceCaps( adapter, (D3DDEVTYPE) deviceType, &caps );
+		Direct3D::InternalPointer->GetDeviceCaps( adapter, (D3DDEVTYPE) deviceType, &caps );
 
 		VertexShaderVersion = gcnew Version( D3DSHADER_VERSION_MAJOR( caps.VertexShaderVersion ), 
 			D3DSHADER_VERSION_MINOR( caps.VertexShaderVersion ) );
