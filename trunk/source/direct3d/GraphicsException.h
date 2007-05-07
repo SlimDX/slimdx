@@ -79,64 +79,53 @@ namespace SlimDX
 		DEFINE_GRAPHICS_EXCEPTION( DriverInvalidCall, D3DERR_DRIVERINVALIDCALL, "Driver invalid call." );
 		DEFINE_GRAPHICS_EXCEPTION( WasStillDrawing, D3DERR_WASSTILLDRAWING, "Was still drawing." );
 
+
+
 		inline GraphicsException^ GraphicsException::GetExceptionFromHResult( HRESULT hr )
 		{
+			GraphicsException^ ex;
+
+#			define GENERATE_EXCEPTION(errCase, type) \
+			case errCase:\
+				ex = gcnew type ## Exception ();\
+				break;
+
 			switch( hr )
 			{
-			case D3DERR_WRONGTEXTUREFORMAT:
-				return gcnew WrongTextureFormatException();
-			case D3DERR_UNSUPPORTEDCOLOROPERATION:
-				return gcnew UnsupportedColorOperationException();
-			case D3DERR_UNSUPPORTEDCOLORARG:
-				return gcnew UnsupportedColorArgumentException();
-			case D3DERR_UNSUPPORTEDALPHAOPERATION:
-				return gcnew UnsupportedAlphaOperationException();
-			case D3DERR_UNSUPPORTEDALPHAARG:
-				return gcnew UnsupportedAlphaArgumentException();
-			case D3DERR_TOOMANYOPERATIONS:
-				return gcnew TooManyOperationsException();
-			case D3DERR_CONFLICTINGTEXTUREFILTER:
-				return gcnew ConflictingTextureFilterException();
-			case D3DERR_UNSUPPORTEDFACTORVALUE:
-				return gcnew UnsupportedFactorValueException();
-			case D3DERR_CONFLICTINGTEXTUREPALETTE:
-				return gcnew ConflictingTexturePaletteException();
-			case D3DERR_DRIVERINTERNALERROR:
-				return gcnew DriverInternalErrorException();
+			GENERATE_EXCEPTION(D3DERR_WRONGTEXTUREFORMAT, WrongTextureFormat);
+			GENERATE_EXCEPTION(D3DERR_UNSUPPORTEDCOLOROPERATION, UnsupportedColorOperation);
+			GENERATE_EXCEPTION(D3DERR_UNSUPPORTEDCOLORARG, UnsupportedColorArgument);
+			GENERATE_EXCEPTION(D3DERR_UNSUPPORTEDALPHAOPERATION, UnsupportedAlphaOperation);
+			GENERATE_EXCEPTION(D3DERR_UNSUPPORTEDALPHAARG, UnsupportedAlphaArgument);
+			GENERATE_EXCEPTION(D3DERR_TOOMANYOPERATIONS, TooManyOperations);
+			GENERATE_EXCEPTION(D3DERR_CONFLICTINGTEXTUREFILTER, ConflictingTextureFilter);
+			GENERATE_EXCEPTION(D3DERR_UNSUPPORTEDFACTORVALUE, UnsupportedFactorValue);
+			GENERATE_EXCEPTION(D3DERR_CONFLICTINGTEXTUREPALETTE, ConflictingTexturePalette);
+			GENERATE_EXCEPTION(D3DERR_DRIVERINTERNALERROR, DriverInternalError);
 
-			case D3DERR_NOTFOUND:
-				return gcnew NotFoundException();
-			case D3DERR_MOREDATA:
-				return gcnew MoreDataException();
-			case D3DERR_DEVICELOST:
-				return gcnew DeviceLostException();
-			case D3DERR_DEVICENOTRESET:
-				return gcnew DeviceNotResetException();
-			case D3DERR_NOTAVAILABLE:
-				return gcnew NotAvailableException();
-			case D3DERR_OUTOFVIDEOMEMORY:
-				return gcnew OutOfVideoMemoryException();
-			case D3DERR_INVALIDDEVICE:
-				return gcnew InvalidDeviceException();
-			case D3DERR_INVALIDCALL:
-				return gcnew InvalidCallException();
-			case D3DERR_DRIVERINVALIDCALL:
-				return gcnew DriverInvalidCallException();
-			case D3DERR_WASSTILLDRAWING:
-				return gcnew WasStillDrawingException();
+			GENERATE_EXCEPTION(D3DERR_NOTFOUND, NotFound);
+			GENERATE_EXCEPTION(D3DERR_MOREDATA, MoreData);
+			GENERATE_EXCEPTION(D3DERR_DEVICELOST, DeviceLost);
+			GENERATE_EXCEPTION(D3DERR_DEVICENOTRESET, DeviceNotReset);
+			GENERATE_EXCEPTION(D3DERR_NOTAVAILABLE, NotAvailable);
+			GENERATE_EXCEPTION(D3DERR_OUTOFVIDEOMEMORY,OutOfVideoMemory);
+			GENERATE_EXCEPTION(D3DERR_INVALIDDEVICE,InvalidDevice);
+			GENERATE_EXCEPTION(D3DERR_INVALIDCALL,InvalidCall);
+			GENERATE_EXCEPTION(D3DERR_DRIVERINVALIDCALL,DriverInvalidCall);
+			GENERATE_EXCEPTION(D3DERR_WASSTILLDRAWING,WasStillDrawing);
 
 			default:
-				return gcnew GraphicsException( E_FAIL, "A graphics exception occurred." );
+				ex = gcnew GraphicsException( E_FAIL, "A graphics exception occurred." );
 			}
+
+			ex->HResult = hr;
+			return ex;
 		}
 
 		inline void GraphicsException::CheckHResult( HRESULT hr )
 		{
-			if( DirectXException::EnableExceptions && FAILED(hr) ) {
-				GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( (hr) );
-				ex->HResult = hr;
-				throw ex;
-			}
+			if( DirectXException::EnableExceptions && FAILED(hr) )
+				throw GraphicsException::GetExceptionFromHResult( (hr) );
 
 			SetLastError( hr );
 		}
