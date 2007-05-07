@@ -353,8 +353,7 @@ namespace SlimDX
 			//TODO: Fix some of these params
 			HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinned_data, memory->Length, NULL, NULL, NULL,
 				(DWORD) flags, NULL, &effect, &errorBuffer );
-			GraphicsException::CheckHResult( hr );
-
+			
 			if( errorBuffer != NULL )
 			{
 				compilationErrors = gcnew String( (const char*) errorBuffer->GetBufferPointer() );
@@ -363,7 +362,19 @@ namespace SlimDX
 			{
 				compilationErrors = String::Empty;
 			}
+			
+			// CheckHResult() is not used because we need to include the compiler errors.
+			if( DirectXException::EnableExceptions && FAILED(hr) )
+			{
+				GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( hr );
+				ex->Data->Add( "CompilationErrors", compilationErrors );
+				throw ex;
+			}
 
+			SetLastError( hr );
+			
+			if( effect == NULL)
+				return nullptr;
 			return gcnew Effect( effect );
 		}
 
@@ -421,8 +432,7 @@ namespace SlimDX
 			//TODO: Fix some of these parameters
 			HRESULT hr = D3DXCreateEffectFromFile( device->InternalPointer, pinned_name, NULL, NULL,
 				(DWORD) flags, NULL, &effect, &errorBuffer );
-			GraphicsException::CheckHResult( hr );
-
+			
 			if( errorBuffer != NULL )
 			{
 				compilationErrors = gcnew String( (const char*) errorBuffer->GetBufferPointer() );
@@ -431,7 +441,19 @@ namespace SlimDX
 			{
 				compilationErrors = String::Empty;
 			}
+			
+			// CheckHResult() is not used because we need to include the compiler errors.
+			if( DirectXException::EnableExceptions && FAILED(hr) )
+			{
+				GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( hr );
+				ex->Data->Add( "CompilationErrors", compilationErrors );
+				throw ex;
+			}
 
+			SetLastError( hr );
+			
+			if( effect == NULL)
+				return nullptr;
 			return gcnew Effect( effect );
 		}
 
