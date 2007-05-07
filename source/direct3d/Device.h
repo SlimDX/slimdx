@@ -74,6 +74,8 @@ namespace SlimDX
 
 		ref class IndexBuffer;
 		ref class VertexBuffer;
+		ref class BaseTexture;
+		ref class Surface;
 		ref class RenderStateManager;
 		ref class TransformManager;
 
@@ -132,6 +134,7 @@ namespace SlimDX
 			}
 
 			void TestCooperativeLevel();
+			CooperativeLevel CheckCooperativeLevel();
 			void Reset( PresentParameters^ presentParams );
 
 			void Clear( ClearFlags clearFlags, int color, float zdepth, int stencil );
@@ -141,10 +144,17 @@ namespace SlimDX
 			void Present();
 
 			void SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride );
+			void SetTexture( int sampler, BaseTexture^ texture );
+			void SetRenderTarget( int rtIndex, Surface^ target );
 			
+			Surface^ GetBackBuffer( int swapChain, int backBuffer );
 			void DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount );
 			void DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minVertexIndex, 
 				int numVertices, int startIndex, int primCount );
+
+			generic<typename T> where T : value class
+			void DrawUserPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount, array<T>^ data );
+
 		};
 	}
 }

@@ -32,6 +32,7 @@
 #include "Direct3D.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "Texture.h"
 #include "RenderStateManager.h"
 #include "TransformManager.h"
 #include "D3DX.h"
@@ -113,6 +114,16 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 	}
 
+	generic<typename T>
+	void Device::DrawUserPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount, array<T>^ data )
+	{
+		pin_ptr<T> pinned_data = &data[startIndex];
+
+		HRESULT hr = m_Device->DrawPrimitiveUP( (D3DPRIMITIVETYPE) primitiveType, primitiveCount,
+			pinned_data, Marshal::SizeOf( T::typeid ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
 	void Device::DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minVertexIndex, 
 					int numVertices, int startIndex, int primCount )
 	{
@@ -162,6 +173,12 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 	}
 
+	CooperativeLevel Device::CheckCooperativeLevel()
+	{
+		HRESULT hr = m_Device->TestCooperativeLevel();
+		return (CooperativeLevel) hr;
+	}
+
 	void Device::Reset( PresentParameters^ presentParams )
 	{
 		D3DPRESENT_PARAMETERS d3dpp;
@@ -169,6 +186,28 @@ namespace Direct3D
 		ConvertPresentParams( presentParams, d3dpp );
 		HRESULT hr = m_Device->Reset( &d3dpp );
 		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::SetTexture( int sampler, BaseTexture^ texture )
+	{
+		HRESULT hr = m_Device->SetTexture( sampler, texture->BasePointer );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::SetRenderTarget( int rtIndex, Surface^ target )
+	{
+		HRESULT hr = m_Device->SetRenderTarget( rtIndex, target->InternalPointer );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	Surface^ Device::GetBackBuffer( int swapChain, int backBuffer )
+	{
+		IDirect3DSurface9* buffer;
+
+		HRESULT hr = m_Device->GetBackBuffer( swapChain, backBuffer, D3DBACKBUFFER_TYPE_MONO, &buffer );
+		GraphicsException::CheckHResult( hr );
+
+		return gcnew Surface( buffer );
 	}
 }
 }

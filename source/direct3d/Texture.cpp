@@ -53,19 +53,35 @@ namespace Direct3D
 		m_Texture = texture;
 	}
 
-	Texture^ Texture::FromStream( Device^ device, Stream^ stream, int width, int height, int numLevels,
+	Texture^ Texture::FromMemory( Device^ device, array<Byte>^ memory, int width, int height, int numLevels,
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
 		IDirect3DTexture9* texture;
+		pin_ptr<unsigned char> pinned_memory = &memory[0];
 
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
-		pin_ptr<unsigned char> pinned_data = &data[0];
-
-		D3DXCreateTextureFromFileInMemoryEx( device->InternalPointer, pinned_data, data->Length, width, height, numLevels,
+		D3DXCreateTextureFromFileInMemoryEx( device->InternalPointer, pinned_memory, memory->Length, width, height, numLevels,
 			(DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter,
 			(D3DCOLOR) colorKey, 0, 0, &texture );
 
 		return gcnew Texture( texture );
+	}
+
+	Texture^ Texture::FromMemory( Device^ device, array<Byte>^ memory, Usage usage, Pool pool )
+	{
+		return Texture::FromMemory( device, memory, D3DX::Default, D3DX::Default, D3DX::Default,
+			usage, Format::Unknown, pool, Filter::Default, Filter::Default, 0 );
+	}
+
+	Texture^ Texture::FromMemory( Device^ device, array<Byte>^ memory )
+	{
+		return Texture::FromMemory( device, memory, Usage::None, Pool::Managed );
+	}
+
+	Texture^ Texture::FromStream( Device^ device, Stream^ stream, int width, int height, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		return Texture::FromMemory( device, data, width, height, numLevels, usage, format, pool, filter, mipFilter, colorKey );
 	}
 
 	Texture^ Texture::FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool )
@@ -155,19 +171,46 @@ namespace Direct3D
 		m_Texture = texture;
 	}
 
-	CubeTexture^ CubeTexture::FromStream( Device^ device, Stream^ stream, int size, int numLevels,
+	CubeTexture^ CubeTexture::FromMemory( Device^ device, array<Byte>^ memory, int size, int numLevels,
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
 		IDirect3DCubeTexture9* texture;
+		pin_ptr<unsigned char> pinned_memory = &memory[0];
 
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
-		pin_ptr<unsigned char> pinned_data = &data[0];
-
-		D3DXCreateCubeTextureFromFileInMemoryEx( device->InternalPointer, pinned_data, data->Length, size, numLevels,
+		D3DXCreateCubeTextureFromFileInMemoryEx( device->InternalPointer, pinned_memory, memory->Length, size, numLevels,
 			(DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter,
 			(D3DCOLOR) colorKey, 0, 0, &texture );
 
 		return gcnew CubeTexture( texture );
+	}
+
+	CubeTexture^ CubeTexture::FromMemory( Device^ device, array<Byte>^ memory, Usage usage, Pool pool )
+	{
+		return CubeTexture::FromMemory( device, memory, D3DX::Default, D3DX::Default,
+			usage, Format::Unknown, pool, Filter::Default, Filter::Default, 0 );
+	}
+
+	CubeTexture^ CubeTexture::FromMemory( Device^ device, array<Byte>^ memory )
+	{
+		return CubeTexture::FromMemory( device, memory, Usage::None, Pool::Managed );
+	}
+
+	CubeTexture^ CubeTexture::FromStream( Device^ device, Stream^ stream, int size, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		return CubeTexture::FromMemory( device, data, size, numLevels, usage, format, pool, filter, mipFilter, colorKey );
+	}
+
+	CubeTexture^ CubeTexture::FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool )
+	{
+		return CubeTexture::FromStream( device, stream, D3DX::Default, D3DX::Default,
+			usage, Format::Unknown, pool, Filter::Default, Filter::Default, 0 );
+	}
+
+	CubeTexture^ CubeTexture::FromStream( Device^ device, Stream^ stream )
+	{
+		return CubeTexture::FromStream( device, stream, Usage::None, Pool::Managed );
 	}
 
 	CubeTexture^ CubeTexture::FromFile( Device^ device, String^ fileName, int size, int numLevels,
@@ -211,5 +254,93 @@ namespace Direct3D
 		HRESULT hr = m_Texture->UnlockRect( (D3DCUBEMAP_FACES) face, level );
 		GraphicsException::CheckHResult( hr );
 	}
+
+
+	VolumeTexture::VolumeTexture( IDirect3DVolumeTexture9* texture )
+	{
+		if( texture == NULL )
+			throw gcnew ArgumentNullException( "texture" );
+
+		m_Texture = texture;
+	}
+
+	VolumeTexture::VolumeTexture( Device^ device, int width, int height, int depth, int numLevels, Usage usage, Format format, Pool pool )
+	{
+		IDirect3DVolumeTexture9* texture;
+		HRESULT hr = device->InternalPointer->CreateVolumeTexture( width, height, depth, numLevels,
+			(DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, &texture, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		m_Texture = texture;
+	}
+
+	VolumeTexture^ VolumeTexture::FromMemory( Device^ device, array<Byte>^ memory, int width, int height, int depth,
+		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
+	{
+		IDirect3DVolumeTexture9* texture;
+		pin_ptr<unsigned char> pinned_memory = &memory[0];
+
+		D3DXCreateVolumeTextureFromFileInMemoryEx( device->InternalPointer, pinned_memory, memory->Length,
+			width, height, depth, numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool,
+			(DWORD) filter, (DWORD) mipFilter, (D3DCOLOR) colorKey, 0, 0, &texture );
+
+		return gcnew VolumeTexture( texture );
+	}
+
+	VolumeTexture^ VolumeTexture::FromMemory( Device^ device, array<Byte>^ memory, Usage usage, Pool pool )
+	{
+		return VolumeTexture::FromMemory( device, memory, D3DX::Default, D3DX::Default, D3DX::Default, D3DX::Default,
+			usage, Format::Unknown, pool, Filter::Default, Filter::Default, 0 );
+	}
+
+	VolumeTexture^ VolumeTexture::FromMemory( Device^ device, array<Byte>^ memory )
+	{
+		return VolumeTexture::FromMemory( device, memory, Usage::None, Pool::Managed );
+	}
+
+	VolumeTexture^ VolumeTexture::FromStream( Device^ device, Stream^ stream, int width, int height, int depth,
+		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		return VolumeTexture::FromMemory( device, data, width, height, depth, numLevels,
+			usage, format, pool, filter, mipFilter, colorKey );
+	}
+
+	VolumeTexture^ VolumeTexture::FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool )
+	{
+		return VolumeTexture::FromStream( device, stream, D3DX::Default, D3DX::Default, D3DX::Default,
+			D3DX::Default, usage, Format::Unknown, pool, Filter::Default, Filter::Default, 0 );
+	}
+
+	VolumeTexture^ VolumeTexture::FromStream( Device^ device, Stream^ stream )
+	{
+		return VolumeTexture::FromStream( device, stream, Usage::None, Pool::Managed );
+	}
+
+	VolumeTexture^ VolumeTexture::FromFile( Device^ device, String^ fileName, int width, int height, int depth,
+		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
+	{
+		IDirect3DVolumeTexture9* texture;
+		pin_ptr<const wchar_t> pinned_name = PtrToStringChars( fileName );
+
+		HRESULT hr = D3DXCreateVolumeTextureFromFileEx( device->InternalPointer, pinned_name, width, height,
+			depth, numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter,
+			(DWORD) mipFilter, colorKey, NULL, NULL, &texture );
+		GraphicsException::CheckHResult( hr );
+
+		return gcnew VolumeTexture( texture );
+	}
+
+	VolumeTexture^ VolumeTexture::FromFile( Device^ device, String^ fileName, Usage usage, Pool pool )
+	{
+		return VolumeTexture::FromFile( device, fileName, D3DX::Default, D3DX::Default, D3DX::Default,
+			D3DX::Default, usage, Format::Unknown, pool, Filter::Default, Filter::Default, 0 );
+	}
+
+	VolumeTexture^ VolumeTexture::FromFile( Device^ device, String^ fileName )
+	{
+		return VolumeTexture::FromFile( device, fileName, Usage::None, Pool::Managed );
+	}
+
 }
 }

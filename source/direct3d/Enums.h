@@ -172,6 +172,16 @@ namespace SlimDX
 			SrgbOut = D3DX_FILTER_SRGB_OUT
 		};
 
+		public enum class TextureFilter : Int32
+		{
+			None = D3DTEXF_NONE,
+			Point = D3DTEXF_POINT,
+			Linear = D3DTEXF_LINEAR,
+			Anisotropic = D3DTEXF_ANISOTROPIC,
+			PyramidalQuad = D3DTEXF_PYRAMIDALQUAD,
+			GaussianQuad = D3DTEXF_GAUSSIANQUAD,
+		};
+
 		[Flags]
 		public enum class VertexFormats : Int32
 		{
@@ -395,6 +405,14 @@ namespace SlimDX
 			Material = D3DMCS_MATERIAL,
 			Color1 = D3DMCS_COLOR1,
 			Color2 = D3DMCS_COLOR2,
+		};
+
+		public enum class CooperativeLevel : Int32
+		{
+			Ok = D3D_OK,
+			DeviceLost = D3DERR_DEVICELOST,
+			DeviceNotReset = D3DERR_DEVICENOTRESET,
+			DriverInternalError = D3DERR_DRIVERINTERNALERROR,
 		};
 	}
 }

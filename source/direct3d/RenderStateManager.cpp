@@ -59,6 +59,34 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 	}
 
+	bool RenderStateManager::Clipping::get()
+	{
+		DWORD value;
+		HRESULT hr = m_Device->InternalPointer->GetRenderState( D3DRS_CLIPPING, &value );
+		GraphicsException::CheckHResult( hr );
+		return value > 0;
+	}
+
+	void RenderStateManager::Clipping::set( bool value )
+	{
+		HRESULT hr = m_Device->InternalPointer->SetRenderState( D3DRS_CLIPPING, value );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	bool RenderStateManager::ScissorTestEnable::get()
+	{
+		DWORD value;
+		HRESULT hr = m_Device->InternalPointer->GetRenderState( D3DRS_SCISSORTESTENABLE, &value );
+		GraphicsException::CheckHResult( hr );
+		return value > 0;
+	}
+
+	void RenderStateManager::ScissorTestEnable::set( bool value )
+	{
+		HRESULT hr = m_Device->InternalPointer->SetRenderState( D3DRS_SCISSORTESTENABLE, value );
+		GraphicsException::CheckHResult( hr );
+	}
+
 	bool RenderStateManager::AlphaBlendEnable::get()
 	{
 		DWORD value;
