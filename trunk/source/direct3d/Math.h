@@ -38,6 +38,32 @@ namespace SlimDX
 
 		Vector2( float x, float y ) : X( x ), Y( y )
 		{ }
+
+		static Vector2 operator + ( Vector2 lhs, Vector2 rhs )
+		{
+			Vector2 result;
+			D3DXVec2Add( (D3DXVECTOR2*) &result, (D3DXVECTOR2*) &lhs, (D3DXVECTOR2*) &rhs );
+			return result;
+		}
+
+		static Vector2 operator - ( Vector2 lhs, Vector2 rhs )
+		{
+			Vector2 result;
+			D3DXVec2Subtract( (D3DXVECTOR2*) &result, (D3DXVECTOR2*) &lhs, (D3DXVECTOR2*) &rhs );
+			return result;
+		}
+
+		static Vector2 operator * ( Vector2 vec, float scale )
+		{
+			Vector2 result;
+			D3DXVec2Scale( (D3DXVECTOR2*) &result, (D3DXVECTOR2*) &vec, scale );
+			return result;
+		}
+
+		static Vector2 operator * ( float scale, Vector2 vec )
+		{
+			return vec * scale;
+		}
 	};
 
 	[StructLayout( LayoutKind::Sequential )]
@@ -126,6 +152,38 @@ namespace SlimDX
 
 		Vector4( float x, float y, float z, float w ) : X( x ), Y( y ), Z( z ), W( w )
 		{ }
+
+		float Length()
+		{
+			return (float) Math::Sqrt( (X * X) + (Y * Y) + (Z * Z) + (W * W) );
+		}
+
+		void Normalize()
+		{
+			float length = Length();
+			X /= length;
+			Y /= length;
+			Z /= length;
+			W /= length;
+		}
+
+		static Vector3 Normalize( Vector3 vec )
+		{
+			vec.Normalize();
+			return vec;
+		}
+
+		static Vector4 operator * ( Vector4 vec, float scale )
+		{
+			Vector4 result;
+			D3DXVec4Scale( (D3DXVECTOR4*) &result, (D3DXVECTOR4*) &vec, scale );
+			return result;
+		}
+
+		static Vector4 operator * ( float scale, Vector4 vec )
+		{
+			return vec * scale;
+		}
 	};
 
 	[StructLayout( LayoutKind::Sequential )]
@@ -143,6 +201,8 @@ namespace SlimDX
 			B /= magnitude;
 			C /= magnitude;
 		}
+
+		static Plane Transform( Plane coord, Matrix transform );
 
 		float Dot( Vector3 point )
 		{
@@ -240,6 +300,13 @@ namespace SlimDX
 			return result;
 		}
 
+		static Matrix Reflection( Plane plane )
+		{
+			Matrix result;
+			D3DXMatrixReflect( (D3DXMATRIX*) &result, (const D3DXPLANE*) &plane );
+			return result;
+		}
+
 		static Matrix RotationQuaternion( Quaternion quat );
 
 		static Matrix operator * ( Matrix lhs, Matrix rhs )
@@ -282,22 +349,29 @@ namespace SlimDX
 		static Quaternion operator * (Quaternion lhs, Quaternion rhs)
 		{
 			Quaternion result;
-			D3DXQuaternionMultiply( (D3DXQUATERNION*) &result, (D3DXQUATERNION*) &lhs, (D3DXQUATERNION*) &rhs );
+			D3DXQuaternionMultiply( (D3DXQUATERNION*) &result, (const D3DXQUATERNION*) &lhs, (const D3DXQUATERNION*) &rhs );
 			return result;
 		}
 	};
 
-	inline Vector3 Vector3::TransformCoordinate( SlimDX::Vector3 coord, SlimDX::Matrix transform )
+	inline Vector3 Vector3::TransformCoordinate( Vector3 coord, Matrix transform )
 	{
 		Vector3 result;
-		D3DXVec3TransformCoord( (D3DXVECTOR3*) &result, (D3DXVECTOR3*) &coord, (D3DXMATRIX*) &transform );
+		D3DXVec3TransformCoord( (D3DXVECTOR3*) &result, (const D3DXVECTOR3*) &coord, (const D3DXMATRIX*) &transform );
+		return result;
+	}
+	
+	inline Plane Plane::Transform( SlimDX::Plane plane, SlimDX::Matrix transform )
+	{
+		Plane result;
+		D3DXPlaneTransform( (D3DXPLANE*) &result, (const D3DXPLANE*) &plane, (const D3DXMATRIX*) &transform );
 		return result;
 	}
 
 	inline Matrix Matrix::RotationQuaternion( Quaternion quat )
 	{
 		Matrix result;
-		D3DXMatrixRotationQuaternion( (D3DXMATRIX*) &result, (D3DXQUATERNION*) &quat );
+		D3DXMatrixRotationQuaternion( (D3DXMATRIX*) &result, (const D3DXQUATERNION*) &quat );
 		return result;
 	}
 }

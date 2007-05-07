@@ -32,6 +32,11 @@ namespace SlimDX
 	{
 		public ref class BaseTexture abstract : public Resource
 		{
+		internal:
+			virtual property IDirect3DBaseTexture9* BasePointer
+			{
+				IDirect3DBaseTexture9* get() abstract;
+			}
 		};
 
 		public ref class Texture : public BaseTexture
@@ -43,6 +48,11 @@ namespace SlimDX
 			property IDirect3DTexture9* InternalPointer
 			{
 				IDirect3DTexture9* get() { return m_Texture; }
+			}
+
+			property IDirect3DBaseTexture9* BasePointer
+			{
+				virtual IDirect3DBaseTexture9* get() override { return m_Texture; }
 			}
 
 			property IDirect3DResource9* ResourcePointer
@@ -59,6 +69,11 @@ namespace SlimDX
 		public:
 			Texture( IDirect3DTexture9* texture );
 			Texture( Device^ device, int width, int height, int numLevels, Usage usage, Format format, Pool pool );
+
+			static Texture^ FromMemory( Device^ device, array<Byte>^ memory, int width, int height, int numLevels,
+				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
+			static Texture^ FromMemory( Device^ device, array<Byte>^ memory, Usage usage, Pool pool );
+			static Texture^ FromMemory( Device^ device, array<Byte>^ memory );
 
 			static Texture^ FromStream( Device^ device, Stream^ stream, int width, int height, int numLevels,
 				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
@@ -88,6 +103,11 @@ namespace SlimDX
 				IDirect3DCubeTexture9* get() { return m_Texture; }
 			}
 
+			property IDirect3DBaseTexture9* BasePointer
+			{
+				virtual IDirect3DBaseTexture9* get() override { return m_Texture; }
+			}
+
 			property IDirect3DResource9* ResourcePointer
 			{
 				virtual IDirect3DResource9* get() override { return m_Texture; }
@@ -103,8 +123,15 @@ namespace SlimDX
 			CubeTexture( IDirect3DCubeTexture9* texture );
 			CubeTexture( Device^ device, int edgeLength, int numLevels, Usage usage, Format format, Pool pool );
 
+			static CubeTexture^ FromMemory( Device^ device, array<Byte>^ memory, int size, int numLevels,
+				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
+			static CubeTexture^ FromMemory( Device^ device, array<Byte>^ memory, Usage usage, Pool pool );
+			static CubeTexture^ FromMemory( Device^ device, array<Byte>^ memory );
+
 			static CubeTexture^ FromStream( Device^ device, Stream^ stream, int size, int numLevels,
 				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
+			static CubeTexture^ FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool );
+			static CubeTexture^ FromStream( Device^ device, Stream^ stream );
 
 			static CubeTexture^ FromFile( Device^ device, String^ fileName, int size, int numLevels,
 				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
@@ -113,6 +140,53 @@ namespace SlimDX
 
 			GraphicsStream^ LockRectangle( CubeMapFace face, int level, LockFlags flags );
 			void UnlockRectangle( CubeMapFace face, int level );
+		};
+
+		public ref class VolumeTexture : public BaseTexture
+		{
+		private:
+			IDirect3DVolumeTexture9* m_Texture;
+
+		internal:
+			property IDirect3DVolumeTexture9* InternalPointer
+			{
+				IDirect3DVolumeTexture9* get() { return m_Texture; }
+			}
+
+			property IDirect3DBaseTexture9* BasePointer
+			{
+				virtual IDirect3DBaseTexture9* get() override { return m_Texture; }
+			}
+
+			property IDirect3DResource9* ResourcePointer
+			{
+				virtual IDirect3DResource9* get() override { return m_Texture; }
+			}
+
+			property IUnknown* ComPointer
+			{
+				virtual IUnknown* get() override { return m_Texture; }
+				virtual void set( IUnknown* value ) override { m_Texture = (IDirect3DVolumeTexture9*) value; }
+			}
+
+		public:
+			VolumeTexture( IDirect3DVolumeTexture9* texture );
+			VolumeTexture( Device^ device, int width, int height, int depth, int numLevels, Usage usage, Format format, Pool pool );
+
+			static VolumeTexture^ FromMemory( Device^ device, array<Byte>^ memory, int width, int height, int depth,
+				int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
+			static VolumeTexture^ FromMemory( Device^ device, array<Byte>^ memory, Usage usage, Pool pool );
+			static VolumeTexture^ FromMemory( Device^ device, array<Byte>^ memory );
+
+			static VolumeTexture^ FromStream( Device^ device, Stream^ stream, int width, int height, int depth,
+				int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
+			static VolumeTexture^ FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool );
+			static VolumeTexture^ FromStream( Device^ device, Stream^ stream );
+
+			static VolumeTexture^ FromFile( Device^ device, String^ fileName, int width, int height, int depth,
+				int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
+			static VolumeTexture^ FromFile( Device^ device, String^ fileName, Usage usage, Pool pool );
+			static VolumeTexture^ FromFile( Device^ device, String^ fileName );
 		};
 	}
 }
