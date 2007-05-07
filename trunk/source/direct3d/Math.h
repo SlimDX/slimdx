@@ -278,6 +278,27 @@ namespace SlimDX
 			D3DXMatrixTranslation( (D3DXMATRIX*) &result, translation.X, translation.Y, translation.Z );
 			return result;
 		}
+		
+		static Matrix Scaling ( float x, float y, float z )
+		{
+			Matrix result;
+			D3DXMatrixScaling( (D3DXMATRIX*) &result, x, y, z );
+			return result;
+		}
+
+		static Matrix Scaling ( Vector3 scaling )
+		{
+			Matrix result;
+			D3DXMatrixScaling( (D3DXMATRIX*) &result, scaling.X, scaling.Y, scaling.Z );
+			return result;
+		}
+		
+		static Matrix Scaling ( Vector3% scaling )
+		{
+			Matrix result;
+			D3DXMatrixScaling( (D3DXMATRIX*) &result, scaling.X, scaling.Y, scaling.Z );
+			return result;
+		}
 
 		static Matrix LookAtLH(Vector3 eye, Vector3 target, Vector3 up )
 		{
