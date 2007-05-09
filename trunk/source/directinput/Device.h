@@ -39,6 +39,13 @@ namespace SlimDX
 			NoWinKey = DISCL_NOWINKEY,
 		};
 
+		public enum class DeviceDataFormat : Int32
+		{
+			Keyboard,
+			Mouse,
+			Joystick
+		};
+
 		public value class MouseState
 		{
 		internal:
@@ -74,9 +81,16 @@ namespace SlimDX
 			Device( IDirectInputDevice8W* device );
 			Device( Guid subsystem );
 
+			void SetDataFormat( DeviceDataFormat format );
+			
 			void SetCooperativeLevel( IntPtr handle, CooperativeLevel flags );
 			void Acquire();
 			void Unacquire();
+
+			void Poll();
+
+			//device state retrieval
+			property MouseState CurrentMouseState { MouseState get(); }
 		};
 	}
 }

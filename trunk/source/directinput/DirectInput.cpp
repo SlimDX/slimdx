@@ -52,7 +52,7 @@ namespace DirectInput
 		return FromGUID( GUID_Joystick );
 	}
 
-	Guid SystemGuid::MouseEm::get()
+	/*Guid SystemGuid::MouseEm::get()
 	{
 		return FromGUID( GUID_SysMouseEm );
 	}
@@ -70,7 +70,7 @@ namespace DirectInput
 	Guid SystemGuid::KeyboardEm2::get()
 	{
 		return FromGUID( GUID_SysKeyboardEm2 );
-	}
+	}*/
 
 	Device^ DirectInput::CreateDevice( Guid subsystem )
 	{
