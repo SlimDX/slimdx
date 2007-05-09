@@ -51,9 +51,39 @@ namespace DirectInput
 	Device::Device( Guid subsystem )
 	{
 		IDirectInputDevice8W* device;
-		HRESULT hr = DirectInput::InternalPointer->CreateDevice( ToGUID( subsystem ), &device, NULL );
+		HRESULT hr = DirectInput::InternalPointer->CreateDevice( *(GUID*) &subsystem, &device, NULL );
 
 		m_Device = device;
+
+		if( subsystem == SystemGuid::Keyboard )
+			SetDataFormat( DeviceDataFormat::Keyboard );
+		else if( subsystem == SystemGuid::Mouse )
+			SetDataFormat( DeviceDataFormat::Mouse );
+		else if( subsystem == SystemGuid::Joystick )
+			SetDataFormat( DeviceDataFormat::Joystick );
+	}
+
+	void Device::SetDataFormat( DeviceDataFormat format )
+	{
+		HRESULT hr;
+
+		switch( format )
+		{
+		case DeviceDataFormat::Keyboard:
+			hr = m_Device->SetDataFormat( &c_dfDIKeyboard );
+			break;
+
+		case DeviceDataFormat::Mouse:
+			hr = m_Device->SetDataFormat( &c_dfDIMouse2 );
+			break;
+
+		case DeviceDataFormat::Joystick:
+			hr = m_Device->SetDataFormat( &c_dfDIJoystick2 );
+			break;
+
+		default:
+			hr = S_OK;
+		}
 	}
 
 	void Device::SetCooperativeLevel( IntPtr handle, CooperativeLevel flags )
@@ -69,6 +99,29 @@ namespace DirectInput
 	void Device::Unacquire()
 	{
 		HRESULT hr = m_Device->Unacquire();
+	}
+
+	void Device::Poll()
+	{
+		HRESULT hr = m_Device->Poll();
+	}
+
+	MouseState Device::CurrentMouseState::get()
+	{
+		DIMOUSESTATE2 state;
+
+		HRESULT hr = m_Device->GetDeviceState( sizeof( MouseState ), (DIMOUSESTATE2*) &state );
+
+		//convert to a managed structure
+		MouseState result;
+		result.X = state.lX;
+		result.Y = state.lY;
+		result.Z = state.lZ;
+		result.buttons = gcnew array<Byte>( 8 );
+		for( int i = 0; i < 8; ++i )
+			result.buttons[i] = state.rgbButtons[i];
+
+		return result;
 	}
 }
 }
