@@ -287,6 +287,34 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Math"
+				>
+				<File
+					RelativePath="..\source\math\Matrix.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Plane.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Quaternion.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Vector2.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Vector3.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Vector4.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -342,10 +370,6 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d\IndexBuffer.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Math.h"
 					>
 				</File>
 				<File
@@ -406,6 +430,38 @@
 				</File>
 				<File
 					RelativePath="..\source\xinput\xinput.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Math"
+				>
+				<File
+					RelativePath="..\source\math\Math.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Matrix.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Plane.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Quaternion.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Vector2.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Vector3.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Vector4.h"
 					>
 				</File>
 			</Filter>

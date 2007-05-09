@@ -25,9 +25,9 @@
 
 #include "../Utils.h"
 #include "../DirectXObject.h"
+#include "../math/Math.h"
 
 #include "Device.h"
-#include "Math.h"
 #include "Sprite.h"
 
 namespace SlimDX

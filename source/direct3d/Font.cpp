@@ -27,9 +27,9 @@
 
 #include "../DirectXObject.h"
 #include "../Utils.h"
+#include "../math/Math.h"
 
 #include "Device.h"
-#include "Math.h"
 #include "Sprite.h"
 #include "Font.h"
 

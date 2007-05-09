@@ -23,9 +23,9 @@
 #include <d3dx9.h>
 #include <vcclr.h>
 
+#include "../math/Math.h"
 #include "Device.h"
 #include "Texture.h"
-#include "Math.h"
 #include "Effect.h"
 
 namespace SlimDX

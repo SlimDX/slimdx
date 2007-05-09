@@ -33,7 +33,7 @@ namespace Engine
 			vecPos = new Vector3(450.0f, 350.0f, 750.0f);
 			kbDevice = new SlimDX.DirectInput.Device(SystemGuid.Keyboard);
 			mouseDevice = new SlimDX.DirectInput.Device(SystemGuid.Mouse);
-			mouseDevice.Properties.AxisModeAbsolute = false;
+			//mouseDevice.Properties.AxisModeAbsolute = false;
 			kbDevice.SetCooperativeLevel(handle, CooperativeLevel.NonExclusive | CooperativeLevel.Background);
 			mouseDevice.SetCooperativeLevel(handle, CooperativeLevel.NonExclusive | CooperativeLevel.Background);
 			kbDevice.Acquire();

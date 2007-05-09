@@ -19,53 +19,34 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <windows.h>
-#include <d3d9.h>
-#include <d3dx9.h>
+#pragma once
 
-#include "../math/Math.h"
-#include "GraphicsException.h"
-#include "Device.h"
-#include "TransformManager.h"
+using namespace System;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-namespace Direct3D
-{
-	Matrix TransformManager::World::get()
+	[StructLayout( LayoutKind::Sequential )]
+	public value class Vector3
 	{
-		Matrix matrix;
-		m_Device->InternalPointer->GetTransform( D3DTS_WORLD, (D3DMATRIX*) &matrix );
-		return matrix;
-	}
+	public:
+		float X, Y, Z;
 
-	void TransformManager::World::set( Matrix value )
-	{
-		m_Device->InternalPointer->SetTransform( D3DTS_WORLD, (const D3DMATRIX*) &value );
-	}
+		Vector3( float x, float y, float z );
 
-	Matrix TransformManager::View::get()
-	{
-		Matrix matrix;
-		m_Device->InternalPointer->GetTransform( D3DTS_VIEW, (D3DMATRIX*) &matrix );
-		return matrix;
-	}
+		float Length();
+		void Normalize();
+		static Vector3 Normalize( Vector3 vec );
 
-	void TransformManager::View::set( Matrix value )
-	{
-		m_Device->InternalPointer->SetTransform( D3DTS_VIEW, (const D3DMATRIX*) &value );
-	}
+		static Vector3 TransformCoordinate( Vector3 coord, Matrix transform );
 
-	Matrix TransformManager::Projection::get()
-	{
-		Matrix matrix;
-		m_Device->InternalPointer->GetTransform( D3DTS_PROJECTION, (D3DMATRIX*) &matrix );
-		return matrix;
-	}
+		static float Dot( Vector3 lhs, Vector3 rhs );
+		static Vector3 Cross( Vector3 lhs, Vector3 rhs );
+		static Vector3 Lerp( Vector3 start, Vector3 end, float factor );
 
-	void TransformManager::Projection::set( Matrix value )
-	{
-		m_Device->InternalPointer->SetTransform( D3DTS_PROJECTION, (const D3DMATRIX*) &value );
-	}
-}
+		static Vector3 operator + ( Vector3 lhs, Vector3 rhs );
+		static Vector3 operator - ( Vector3 lhs, Vector3 rhs );
+		static Vector3 operator * ( Vector3 vec, float scale );
+		static Vector3 operator * ( float scale, Vector3 vec );
+	};
 }
