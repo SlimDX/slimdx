@@ -26,17 +26,43 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	value class Vector2;
-	value class Vector3;
-	value class Vector4;
-	value class Matrix;
-	value class Plane;
-	value class Quaternion;
-}
+	[StructLayout( LayoutKind::Sequential )]
+	public value class Matrix
+	{
+	public:
+		float M11, M12, M13, M14;
+		float M21, M22, M23, M24;
+		float M31, M32, M33, M34;
+		float M41, M42, M43, M44;
 
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
-#include "Matrix.h"
-#include "Plane.h"
-#include "Quaternion.h"
+		static property Matrix Identity
+		{
+			Matrix get();
+		}
+
+		void Invert();
+		static Matrix Invert( Matrix mat );
+		static Matrix Transpose( Matrix mat );
+
+		static Matrix RotationAxis( Vector3 axis, float angle );
+
+		static Matrix Translation( float x, float y, float z );
+		static Matrix Translation( Vector3 translation );
+		static Matrix Translation( Vector3% translation );
+		
+		static Matrix Scaling ( float x, float y, float z );
+		static Matrix Scaling ( Vector3 scaling );
+		static Matrix Scaling ( Vector3% scaling );
+
+		static Matrix LookAtLH(Vector3 eye, Vector3 target, Vector3 up );
+
+		static Matrix OrthoOffCenterLH( float left, float right, float bottom, float top, float znear, float zfar );
+		static Matrix PerspectiveFovLH( float fov, float aspect, float znear, float zfar );
+
+		static Matrix Reflection( Plane plane );
+
+		static Matrix RotationQuaternion( Quaternion quat );
+
+		static Matrix operator * ( Matrix lhs, Matrix rhs );
+	};
+}

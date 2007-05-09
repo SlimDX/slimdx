@@ -25,9 +25,9 @@
 
 #include "../DirectXObject.h"
 #include "../Utils.h"
+#include "../math/Math.h"
 #include "GraphicsException.h"
 
-#include "Math.h"
 #include "Device.h"
 #include "Direct3D.h"
 #include "VertexBuffer.h"

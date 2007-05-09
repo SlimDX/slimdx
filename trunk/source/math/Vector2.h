@@ -26,17 +26,17 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	value class Vector2;
-	value class Vector3;
-	value class Vector4;
-	value class Matrix;
-	value class Plane;
-	value class Quaternion;
-}
+	[StructLayout( LayoutKind::Sequential )]
+	public value class Vector2
+	{
+	public:
+		float X, Y;
 
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
-#include "Matrix.h"
-#include "Plane.h"
-#include "Quaternion.h"
+		Vector2( float x, float y );
+
+		static Vector2 operator + ( Vector2 lhs, Vector2 rhs );
+		static Vector2 operator - ( Vector2 lhs, Vector2 rhs );
+		static Vector2 operator * ( Vector2 vec, float scale );
+		static Vector2 operator * ( float scale, Vector2 vec );
+	};
+}

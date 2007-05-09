@@ -19,53 +19,30 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <windows.h>
-#include <d3d9.h>
-#include <d3dx9.h>
+#pragma once
 
-#include "../math/Math.h"
-#include "GraphicsException.h"
-#include "Device.h"
-#include "TransformManager.h"
+using namespace System;
+using namespace System::Runtime::InteropServices;
+
+#include <d3dx9.h>
 
 namespace SlimDX
 {
-namespace Direct3D
-{
-	Matrix TransformManager::World::get()
+	[StructLayout( LayoutKind::Sequential )]
+	public value class Quaternion
 	{
-		Matrix matrix;
-		m_Device->InternalPointer->GetTransform( D3DTS_WORLD, (D3DMATRIX*) &matrix );
-		return matrix;
-	}
+	public:
+		float X, Y, Z, W;
 
-	void TransformManager::World::set( Matrix value )
-	{
-		m_Device->InternalPointer->SetTransform( D3DTS_WORLD, (const D3DMATRIX*) &value );
-	}
+		static property Quaternion Identity
+		{
+			Quaternion get();
+		}
 
-	Matrix TransformManager::View::get()
-	{
-		Matrix matrix;
-		m_Device->InternalPointer->GetTransform( D3DTS_VIEW, (D3DMATRIX*) &matrix );
-		return matrix;
-	}
+		Quaternion(float x,float y,float z,float w);
 
-	void TransformManager::View::set( Matrix value )
-	{
-		m_Device->InternalPointer->SetTransform( D3DTS_VIEW, (const D3DMATRIX*) &value );
-	}
+		static Quaternion RotationYawPitchRoll( float yaw, float pitch, float roll );
 
-	Matrix TransformManager::Projection::get()
-	{
-		Matrix matrix;
-		m_Device->InternalPointer->GetTransform( D3DTS_PROJECTION, (D3DMATRIX*) &matrix );
-		return matrix;
-	}
-
-	void TransformManager::Projection::set( Matrix value )
-	{
-		m_Device->InternalPointer->SetTransform( D3DTS_PROJECTION, (const D3DMATRIX*) &value );
-	}
-}
+		static Quaternion operator * (Quaternion lhs, Quaternion rhs);
+	};
 }

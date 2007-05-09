@@ -19,53 +19,25 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <windows.h>
-#include <d3d9.h>
-#include <d3dx9.h>
+#pragma once
 
-#include "../math/Math.h"
-#include "GraphicsException.h"
-#include "Device.h"
-#include "TransformManager.h"
+using namespace System;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-namespace Direct3D
-{
-	Matrix TransformManager::World::get()
+	[StructLayout( LayoutKind::Sequential )]
+	public value class Vector4
 	{
-		Matrix matrix;
-		m_Device->InternalPointer->GetTransform( D3DTS_WORLD, (D3DMATRIX*) &matrix );
-		return matrix;
-	}
+	public:
+		float X, Y, Z, W;
 
-	void TransformManager::World::set( Matrix value )
-	{
-		m_Device->InternalPointer->SetTransform( D3DTS_WORLD, (const D3DMATRIX*) &value );
-	}
+		Vector4( float x, float y, float z, float w );
 
-	Matrix TransformManager::View::get()
-	{
-		Matrix matrix;
-		m_Device->InternalPointer->GetTransform( D3DTS_VIEW, (D3DMATRIX*) &matrix );
-		return matrix;
-	}
+		float Length();
+		void Normalize();
 
-	void TransformManager::View::set( Matrix value )
-	{
-		m_Device->InternalPointer->SetTransform( D3DTS_VIEW, (const D3DMATRIX*) &value );
-	}
-
-	Matrix TransformManager::Projection::get()
-	{
-		Matrix matrix;
-		m_Device->InternalPointer->GetTransform( D3DTS_PROJECTION, (D3DMATRIX*) &matrix );
-		return matrix;
-	}
-
-	void TransformManager::Projection::set( Matrix value )
-	{
-		m_Device->InternalPointer->SetTransform( D3DTS_PROJECTION, (const D3DMATRIX*) &value );
-	}
-}
+		static Vector4 operator * ( Vector4 vec, float scale );
+		static Vector4 operator * ( float scale, Vector4 vec );
+	};
 }

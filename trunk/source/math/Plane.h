@@ -24,19 +24,18 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
+#include <d3dx9.h>
+
 namespace SlimDX
 {
-	value class Vector2;
-	value class Vector3;
-	value class Vector4;
-	value class Matrix;
-	value class Plane;
-	value class Quaternion;
-}
+	[StructLayout( LayoutKind::Sequential )]
+	public value class Plane
+	{
+	public:
+		float A, B, C, D;
 
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
-#include "Matrix.h"
-#include "Plane.h"
-#include "Quaternion.h"
+		void Normalize();
+		static Plane Transform( Plane coord, Matrix transform );
+		float Dot( Vector3 point );
+	};
+}
