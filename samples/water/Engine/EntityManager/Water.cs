@@ -8,10 +8,10 @@ namespace Engine
 	public class Water : Entity
 	{
 		#region Members
-		private const string meshFilename = "Resources/Models/water.x";
-		private const string textureFilename = "Resources/Textures/bricks.dds";
-		private const string textureFilename1 = "Resources/Textures/water.dds";
-		private const string effectFilename = "Resources/Shaders/water.fx";
+		private const string meshFilename = "../../Resources/Models/water.x";
+		private const string textureFilename = "../../Resources/Textures/bricks.dds";
+		private const string textureFilename1 = "../../Resources/Textures/water.dds";
+		private const string effectFilename = "../../Resources/Shaders/water.fx";
 		private CubeTexture texCube;
 		private static float waterTime = 0;
 		#endregion

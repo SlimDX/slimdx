@@ -104,6 +104,7 @@ namespace SlimDX
 
 		public:
 			Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams );
+			~Device();
 
 			property RenderStateManager^ RenderState
 			{

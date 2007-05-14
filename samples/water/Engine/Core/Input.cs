@@ -43,7 +43,7 @@ namespace Engine
 		{
 			for (int i = 0; i < 6; i++)
 				keyStates[i] = false;
-			foreach (Key k in kbDevice.GetPressedKeys())
+			/*foreach (Key k in kbDevice.GetPressedKeys())
 			{
 				switch (k.ToString())
 				{
@@ -62,7 +62,7 @@ namespace Engine
 					case "Z": keyStates[5] = true;
 						break;
 				}
-			}
+			}*/
 		}
 		private void PollMouse()
 		{
