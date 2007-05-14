@@ -8,10 +8,10 @@ namespace Engine
 	public class Room : Entity
 	{
 		#region Members
-		private const string meshFilename = "Resources/Models/room.x";
-		private const string textureFilename = "Resources/Textures/rockwall.dds";
-		private const string textureFilename1 = "Resources/Textures/rockwall_normal.dds";
-		private const string effectFilename = "Resources/Shaders/bump.fx";
+		private const string meshFilename = "../../Resources/Models/room.x";
+		private const string textureFilename = "../../Resources/Textures/rockwall.dds";
+		private const string textureFilename1 = "../../Resources/Textures/rockwall_normal.dds";
+		private const string effectFilename = "../../Resources/Shaders/bump.fx";
 		private Texture texBump;
 		#endregion
 		#region Methods

@@ -75,6 +75,12 @@ namespace Direct3D
 		m_Transforms = gcnew TransformManager( this );
 	}
 
+	Device::~Device()
+	{
+		delete m_RenderState;
+		delete m_Transforms;
+	}
+
 	void Device::Indices::set( IndexBuffer^ value )
 	{
 		m_Indices = value;
