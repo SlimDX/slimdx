@@ -33,6 +33,8 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "Texture.h"
+#include "PixelShader.h"
+#include "VertexShader.h"
 #include "RenderStateManager.h"
 #include "TransformManager.h"
 #include "D3DX.h"
@@ -203,6 +205,18 @@ namespace Direct3D
 	void Device::SetRenderTarget( int rtIndex, Surface^ target )
 	{
 		HRESULT hr = m_Device->SetRenderTarget( rtIndex, target->InternalPointer );
+		GraphicsException::CheckHResult( hr );
+	}
+	
+	void Device::SetPixelShader( PixelShader^ shader )
+	{
+		HRESULT hr = m_Device->SetPixelShader( shader->InternalPointer );
+		GraphicsException::CheckHResult( hr );
+	}
+	
+	void Device::SetVertexShader( VertexShader^ shader )
+	{
+		HRESULT hr = m_Device->SetVertexShader( shader->InternalPointer );
 		GraphicsException::CheckHResult( hr );
 	}
 
