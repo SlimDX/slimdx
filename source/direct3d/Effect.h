@@ -25,6 +25,9 @@ using namespace System;
 using namespace System::IO;
 using namespace System::Runtime::InteropServices;
 
+#include "../math/Math.h"
+#include "Device.h"
+
 namespace SlimDX
 {
 	namespace Direct3D
@@ -201,7 +204,7 @@ namespace SlimDX
 		public ref class EffectPool
 		{
 		};
-
+		
 		public ref class BaseEffect abstract : public DirectXObject
 		{
 		private:

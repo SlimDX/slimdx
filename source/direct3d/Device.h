@@ -76,6 +76,8 @@ namespace SlimDX
 		ref class VertexBuffer;
 		ref class BaseTexture;
 		ref class Surface;
+		ref class PixelShader;
+		ref class VertexShader;
 		ref class RenderStateManager;
 		ref class TransformManager;
 
@@ -147,6 +149,8 @@ namespace SlimDX
 			void SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride );
 			void SetTexture( int sampler, BaseTexture^ texture );
 			void SetRenderTarget( int rtIndex, Surface^ target );
+			void SetPixelShader( PixelShader^ pixelShader );
+			void SetVertexShader( VertexShader^ vertexShader );
 			
 			Surface^ GetBackBuffer( int swapChain, int backBuffer );
 			void DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount );
