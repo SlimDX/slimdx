@@ -349,6 +349,10 @@
 				Name="Direct3D"
 				>
 				<File
+					RelativePath="..\source\direct3d\ConstantTable.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d\D3DX.h"
 					>
 				</File>
@@ -389,6 +393,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d\PixelShader.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d\RenderStateManager.h"
 					>
 				</File>
@@ -418,6 +426,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d\VertexBuffer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\VertexShader.h"
 					>
 				</File>
 			</Filter>

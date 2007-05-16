@@ -105,6 +105,7 @@ namespace SlimDX
 			}
 
 		public:
+			Device( IDirect3DDevice9* device );
 			Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams );
 			~Device();
 

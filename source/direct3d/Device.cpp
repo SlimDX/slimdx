@@ -62,6 +62,15 @@ namespace Direct3D
 		d3dpp.Windowed = presentParams->Windowed;
 	}
 
+	Device::Device( IDirect3DDevice9* device ) : m_Device( device )
+	{
+		if( device == NULL )
+			throw gcnew ArgumentNullException( "device" );
+
+		m_RenderState = gcnew RenderStateManager( this );
+		m_Transforms = gcnew TransformManager( this );
+	}
+
 	Device::Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams )
 	{
 		IDirect3DDevice9* device;

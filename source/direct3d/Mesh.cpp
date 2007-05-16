@@ -56,15 +56,62 @@ namespace Direct3D
 	{
 	}
 
-	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags )
+	Mesh^ Mesh::FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<Material>^% materials )
 	{
 		ID3DXMesh* mesh;
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
-		pin_ptr<unsigned char> pinned_data = &data[0];
+		ID3DXBuffer* materialBuf;
+		DWORD materialCount;
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 		
-		HRESULT hr = D3DXLoadMeshFromXInMemory( pinned_data, data->Length, (DWORD) flags,
+		HRESULT hr = D3DXLoadMeshFromXInMemory( pinnedMemory, memory->Length, (DWORD) flags,
+			device->InternalPointer, NULL, &materialBuf, NULL, &materialCount, &mesh );
+		GraphicsException::CheckHResult( hr );
+
+		materials = gcnew array<Material>( materialCount );
+		pin_ptr<Material> pinnedMaterials = &materials[0];
+		memcpy( pinnedMaterials, materialBuf->GetBufferPointer(), materialBuf->GetBufferSize() );
+
+		return gcnew Mesh( mesh );
+	}
+
+	Mesh^ Mesh::FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags )
+	{
+		ID3DXMesh* mesh;
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+		
+		HRESULT hr = D3DXLoadMeshFromXInMemory( pinnedMemory, memory->Length, (DWORD) flags,
 			device->InternalPointer, NULL, NULL, NULL, NULL, &mesh );
 		GraphicsException::CheckHResult( hr );
+
+		return gcnew Mesh( mesh );
+	}
+
+	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<Material>^% materials )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		return Mesh::FromMemory( device, data, flags, materials );
+	}
+
+	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		return Mesh::FromMemory( device, data, flags );
+	}
+
+	Mesh^ Mesh::FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<Material>^% materials )
+	{
+		ID3DXMesh* mesh;
+		ID3DXBuffer* materialBuf;
+		DWORD materialCount;
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+		
+		HRESULT hr = D3DXLoadMeshFromXW( (LPCWSTR) pinnedName, (DWORD) flags, device->InternalPointer,
+			NULL, &materialBuf, NULL, &materialCount, &mesh );
+		GraphicsException::CheckHResult( hr );
+
+		materials = gcnew array<Material>( materialCount );
+		pin_ptr<Material> pinnedMaterials = &materials[0];
+		memcpy( pinnedMaterials, materialBuf->GetBufferPointer(), materialBuf->GetBufferSize() );
 
 		return gcnew Mesh( mesh );
 	}
@@ -72,9 +119,9 @@ namespace Direct3D
 	Mesh^ Mesh::FromFile( Device^ device, String^ fileName, MeshFlags flags )
 	{
 		ID3DXMesh* mesh;
-		pin_ptr<const wchar_t> pinned_name = PtrToStringChars( fileName );
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
-		HRESULT hr = D3DXLoadMeshFromX( (LPCWSTR) pinned_name, (DWORD) flags, 
+		HRESULT hr = D3DXLoadMeshFromXW( (LPCWSTR) pinnedName, (DWORD) flags, 
 			device->InternalPointer, NULL, NULL, NULL, NULL, &mesh );
 		GraphicsException::CheckHResult( hr );
 

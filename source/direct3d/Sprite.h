@@ -22,6 +22,7 @@
 #pragma once
 
 using namespace System;
+using namespace System::Drawing;
 
 namespace SlimDX
 {
@@ -40,6 +41,8 @@ namespace SlimDX
 			SortDepthFrontToBack = D3DXSPRITE_SORT_DEPTH_FRONTTOBACK,
 			SortDepthBackToFront = D3DXSPRITE_SORT_DEPTH_BACKTOFRONT,
 		};
+
+		ref class Texture;
 
 		public ref class Sprite : public DirectXObject
 		{
@@ -69,9 +72,21 @@ namespace SlimDX
 			void OnLostDevice();
 			void OnResetDevice();
 
+			Device^ GetDevice();
+
+			Matrix GetTransform();
 			void SetTransform( Matrix transform );
 			void SetWorldViewLH( Matrix world, Matrix view );
 			void SetWorldViewRH( Matrix world, Matrix view );
+
+			void Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, int color );
+			void Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color color );
+			void Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, int color );
+			void Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color color );
+			void Draw( Texture^ texture, Vector3 center, Vector3 position, int color );
+			void Draw( Texture^ texture, Vector3 center, Vector3 position, Color color );
+			void Draw( Texture^ texture, int color );
+			void Draw( Texture^ texture, Color color );
 		};
 	}
 }

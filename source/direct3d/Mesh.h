@@ -76,6 +76,26 @@ namespace SlimDX
 			GenerateInPlace = D3DXTANGENT_GENERATE_IN_PLACE,
 		};
 
+		public enum class EffectDefaultType : Int32
+		{
+			String = D3DXEDT_STRING,
+			Floats = D3DXEDT_FLOATS,
+			Dword = D3DXEDT_DWORD,
+		};
+
+		public value class EffectDefault
+		{
+			String^ ParamName;
+			EffectDefaultType Type;
+			array<Byte>^ Value;
+		};
+
+		public value class EffectInstance
+		{
+			String^ EffectFilename;
+			array<EffectDefault>^ Defaults;
+		};
+
 		ref class Mesh;
 
 		public ref class BaseMesh abstract : public DirectXObject
@@ -119,8 +139,15 @@ namespace SlimDX
 		public:
 			Mesh( ID3DXMesh* mesh );
 			
+			/*static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<Int32>% adjacency,
+				[Out] array<Material>% materials, [Out] array<IntPtr>% effectInstances );*/
+			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<Material>^% materials );
+			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags );
+
+			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<Material>^% materials );
 			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags );
 
+			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<Material>^% materials );
 			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags );
 
 			void ComputeTangentFrame( TangentOptions options );

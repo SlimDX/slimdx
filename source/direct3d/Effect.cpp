@@ -245,16 +245,15 @@ namespace SlimDX
 		void BaseEffect::SetValue( EffectHandle^ param, array<float>^ values )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			pin_ptr<float> pinned_value = &values[0];
-			HRESULT hr = m_BaseEffect->SetFloatArray( handle, pinned_value, values->Length );
+			pin_ptr<float> pinned_values = &values[0];
+			HRESULT hr = m_BaseEffect->SetFloatArray( handle, pinned_values, values->Length );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ param, Vector4 value )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			pin_ptr<Vector4> pinned_value = &value;
-			HRESULT hr = m_BaseEffect->SetVector( handle, (const D3DXVECTOR4*) pinned_value );
+			HRESULT hr = m_BaseEffect->SetVector( handle, (const D3DXVECTOR4*) &value );
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -269,8 +268,7 @@ namespace SlimDX
 		void BaseEffect::SetValue( EffectHandle^ param, ColorValue value )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			pin_ptr<ColorValue> pinned_value = &value;
-			HRESULT hr = m_BaseEffect->SetVector( handle, (const D3DXVECTOR4*) pinned_value );
+			HRESULT hr = m_BaseEffect->SetVector( handle, (const D3DXVECTOR4*) &value );
 			GraphicsException::CheckHResult( hr );
 		}
 
