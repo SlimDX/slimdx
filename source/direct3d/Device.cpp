@@ -233,13 +233,15 @@ namespace Direct3D
 	
 	void Device::SetPixelShader( PixelShader^ shader )
 	{
-		HRESULT hr = m_Device->SetPixelShader( shader->InternalPointer );
+		IDirect3DPixelShader9 *ptr = shader != nullptr ? shader->InternalPointer : NULL; 
+		HRESULT hr = m_Device->SetPixelShader( ptr );
 		GraphicsException::CheckHResult( hr );
 	}
 	
 	void Device::SetVertexShader( VertexShader^ shader )
 	{
-		HRESULT hr = m_Device->SetVertexShader( shader->InternalPointer );
+		IDirect3DVertexShader9 *ptr = shader != nullptr ? shader->InternalPointer : NULL; 
+		HRESULT hr = m_Device->SetVertexShader( ptr );
 		GraphicsException::CheckHResult( hr );
 	}
 
