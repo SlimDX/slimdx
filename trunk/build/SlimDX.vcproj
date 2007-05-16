@@ -193,6 +193,10 @@
 				Name="Direct3D"
 				>
 				<File
+					RelativePath="..\source\direct3d\ConstantTable.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d\Device.cpp"
 					>
 				</File>
@@ -221,6 +225,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d\PixelShader.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d\RenderStateManager.cpp"
 					>
 				</File>
@@ -246,6 +254,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d\VertexBuffer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\VertexShader.cpp"
 					>
 				</File>
 			</Filter>

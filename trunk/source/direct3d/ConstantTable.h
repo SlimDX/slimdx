@@ -51,6 +51,7 @@ namespace SlimDX
 
 		public:
 			ConstantTable( IDirect3DDevice9* device, ID3DXConstantTable* constantTable );
+			~ConstantTable();
 			
 			EffectHandle^ GetConstant( EffectHandle^ handle,int index );
 			EffectHandle^ GetConstant( EffectHandle^ handle,String^ name );

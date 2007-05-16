@@ -38,6 +38,12 @@ namespace Direct3D
 {
 	ConstantTable::ConstantTable( IDirect3DDevice9* device,ID3DXConstantTable* constantTable ) : m_Device(device),m_ConstantTable( constantTable )
 	{
+		m_Device->AddRef();
+	}
+
+	ConstantTable::~ConstantTable()
+	{
+		m_Device->Release();
 	}
 	
 	EffectHandle^ ConstantTable::GetConstant(SlimDX::Direct3D::EffectHandle ^handle, int index)
