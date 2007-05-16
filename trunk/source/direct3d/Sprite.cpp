@@ -29,6 +29,7 @@
 
 #include "Device.h"
 #include "Sprite.h"
+#include "Texture.h"
 
 namespace SlimDX
 {
@@ -82,6 +83,26 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 	}
 
+	Device^ Sprite::GetDevice()
+	{
+		IDirect3DDevice9* device;
+
+		HRESULT hr = m_Sprite->GetDevice( &device );
+		GraphicsException::CheckHResult( hr );
+
+		return gcnew Device( device );
+	}
+
+	Matrix Sprite::GetTransform()
+	{
+		Matrix result;
+
+		HRESULT hr = m_Sprite->GetTransform( (D3DXMATRIX*) &result );
+		GraphicsException::CheckHResult( hr );
+
+		return result;
+	}
+
 	void Sprite::SetTransform( Matrix transform )
 	{
 		HRESULT hr = m_Sprite->SetTransform( (const D3DXMATRIX*) &transform );
@@ -98,6 +119,56 @@ namespace Direct3D
 	{
 		HRESULT hr = m_Sprite->SetWorldViewRH( (const D3DXMATRIX*) &world, (const D3DXMATRIX*) &view );
 		GraphicsException::CheckHResult( hr );
+	}
+
+	void Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, int color )
+	{
+		RECT rect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
+
+		HRESULT hr = m_Sprite->Draw( texture->InternalPointer, &rect, (const D3DXVECTOR3*) &center,
+			(const D3DXVECTOR3*) &position, color );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color color )
+	{
+		Draw( texture, sourceRect, center, position, color.ToArgb() );
+	}
+
+	void Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, int color )
+	{
+		RECT rect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
+
+		HRESULT hr = m_Sprite->Draw( texture->InternalPointer, &rect, NULL, NULL, color );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color color )
+	{
+		Draw( texture, sourceRect, color.ToArgb() );
+	}
+
+	void Sprite::Draw( Texture^ texture, Vector3 center, Vector3 position, int color )
+	{
+		HRESULT hr = m_Sprite->Draw( texture->InternalPointer, NULL, (const D3DXVECTOR3*) &center,
+			(const D3DXVECTOR3*) &position, color );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Sprite::Draw( Texture^ texture, Vector3 center, Vector3 position, Color color )
+	{
+		Draw( texture, center, position, color.ToArgb() );
+	}
+
+	void Sprite::Draw( Texture^ texture, int color )
+	{
+		HRESULT hr = m_Sprite->Draw( texture->InternalPointer, NULL, NULL, NULL, color );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Sprite::Draw( Texture^ texture, Color color )
+	{
+		Draw( texture, color.ToArgb() );
 	}
 }
 }
