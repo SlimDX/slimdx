@@ -178,6 +178,20 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 	}
 
+	void Device::Present( SlimDX::Direct3D::Present flags )
+	{
+		IDirect3DSwapChain9* swapChain;
+
+		HRESULT hr = m_Device->GetSwapChain( 0, &swapChain );
+		GraphicsException::CheckHResult( hr );
+
+		hr = swapChain->Present( 0, 0, 0, 0, (DWORD) flags );
+		GraphicsException::CheckHResult( hr );
+
+		hr = swapChain->Release();
+		GraphicsException::CheckHResult( hr );
+	}
+
 	void Device::SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride )
 	{
 		HRESULT hr = m_Device->SetStreamSource( stream, streamData->InternalPointer, offsetInBytes, stride );

@@ -349,7 +349,14 @@ namespace SlimDX
 			One = D3DPRESENT_INTERVAL_ONE,
 			Two = D3DPRESENT_INTERVAL_TWO,
 			Three = D3DPRESENT_INTERVAL_THREE,
-			Four = D3DPRESENT_INTERVAL_FOUR
+			Four = D3DPRESENT_INTERVAL_FOUR,
+		};
+
+		[Flags]
+		public enum class Present : Int32
+		{
+			DoNotWait = D3DPRESENT_DONOTWAIT,
+			LinearContent = D3DPRESENT_LINEAR_CONTENT
 		};
 
 		public enum class MultiSampleType : Int32

@@ -146,6 +146,7 @@ namespace SlimDX
 			void BeginScene();
 			void EndScene();
 			void Present();
+			void Present( SlimDX::Direct3D::Present flags );
 
 			void SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride );
 			void SetTexture( int sampler, BaseTexture^ texture );

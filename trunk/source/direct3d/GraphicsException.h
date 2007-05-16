@@ -33,6 +33,14 @@ namespace SlimDX
 		public ref class GraphicsException : public DirectXException
 		{
 		public:
+			static GraphicsException()
+			{
+				LastError = S_OK;
+
+				EnableForDeviceState = true;
+				EnableForStillDrawing = true;
+			}
+
 			GraphicsException() : DirectXException(E_FAIL, "A Direct3D exception occurred.")
 			{ }
 			GraphicsException(String^ message) : DirectXException(E_FAIL, message)
@@ -43,6 +51,11 @@ namespace SlimDX
 			{ }
 			GraphicsException(SerializationInfo^ info, StreamingContext context) : DirectXException(info, context)
 			{ }
+
+			static property int LastError;
+
+			static property bool EnableForDeviceState;
+			static property bool EnableForStillDrawing;
 
 			static GraphicsException^ GetExceptionFromHResult( HRESULT hr );
 			static void CheckHResult( HRESULT hr );
@@ -109,8 +122,20 @@ namespace SlimDX
 				ex = gcnew type ## Exception ();\
 				break;
 
+#			define GENERATE_EXCEPTION_IF(errCase, type, condition) \
+			case errCase:\
+				if(condition)\
+					ex = gcnew type ## Exception ();\
+				else\
+					return nullptr;\
+				break;
+
 			switch( hr )
 			{
+			GENERATE_EXCEPTION_IF(D3DERR_DEVICELOST, DeviceLost, GraphicsException::EnableForDeviceState);
+			GENERATE_EXCEPTION_IF(D3DERR_DEVICENOTRESET, DeviceNotReset, GraphicsException::EnableForDeviceState);
+			GENERATE_EXCEPTION_IF(D3DERR_WASSTILLDRAWING, WasStillDrawing, GraphicsException::EnableForStillDrawing);
+
 			GENERATE_EXCEPTION(D3DERR_WRONGTEXTUREFORMAT, WrongTextureFormat);
 			GENERATE_EXCEPTION(D3DERR_UNSUPPORTEDCOLOROPERATION, UnsupportedColorOperation);
 			GENERATE_EXCEPTION(D3DERR_UNSUPPORTEDCOLORARG, UnsupportedColorArgument);
@@ -124,14 +149,11 @@ namespace SlimDX
 
 			GENERATE_EXCEPTION(D3DERR_NOTFOUND, NotFound);
 			GENERATE_EXCEPTION(D3DERR_MOREDATA, MoreData);
-			GENERATE_EXCEPTION(D3DERR_DEVICELOST, DeviceLost);
-			GENERATE_EXCEPTION(D3DERR_DEVICENOTRESET, DeviceNotReset);
 			GENERATE_EXCEPTION(D3DERR_NOTAVAILABLE, NotAvailable);
 			GENERATE_EXCEPTION(D3DERR_OUTOFVIDEOMEMORY,OutOfVideoMemory);
 			GENERATE_EXCEPTION(D3DERR_INVALIDDEVICE,InvalidDevice);
 			GENERATE_EXCEPTION(D3DERR_INVALIDCALL,InvalidCall);
 			GENERATE_EXCEPTION(D3DERR_DRIVERINVALIDCALL,DriverInvalidCall);
-			GENERATE_EXCEPTION(D3DERR_WASSTILLDRAWING,WasStillDrawing);
 
 			GENERATE_EXCEPTION(D3DXFERR_BADOBJECT, BadObject);
 			GENERATE_EXCEPTION(D3DXFERR_BADVALUE, BadValue);
@@ -165,9 +187,14 @@ namespace SlimDX
 		inline void GraphicsException::CheckHResult( HRESULT hr )
 		{
 			if( DirectXException::EnableExceptions && FAILED(hr) )
-				throw GraphicsException::GetExceptionFromHResult( (hr) );
+			{
+				GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( (hr) );
+				//don't throw if an exception wasn't returned for some reason (e.g. it's part of a disabled subset)
+				if( ex != nullptr )
+					throw ex;
+			}
 
-			SetLastError( hr );
+			GraphicsException::LastError = hr;
 		}
 	}
 }
