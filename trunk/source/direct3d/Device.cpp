@@ -202,6 +202,12 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 	}
 
+	void Device::SetStreamSourceFreq( int stream, int frequency )
+	{
+		HRESULT hr = m_Pointer->SetStreamSourceFreq( stream, frequency );
+		GraphicsException::CheckHResult( hr );
+	}
+
 	void Device::TestCooperativeLevel()
 	{
 		HRESULT hr = m_Pointer->TestCooperativeLevel();
@@ -271,6 +277,81 @@ namespace Direct3D
 			return false;
 
 		return true;
+	}
+
+	Capabilities Device::GetDeviceCaps()
+	{
+		D3DCAPS9 caps;
+		HRESULT hr = m_Pointer->GetDeviceCaps( &caps );
+		GraphicsException::CheckHResult( hr );
+
+		return Capabilities( caps );
+	}
+
+	int Device::AvailableTextureMem::get()
+	{
+		return m_Pointer->GetAvailableTextureMem();
+	}
+
+	int Device::ValidateDevice()
+	{
+		DWORD passCount = 0;
+
+		HRESULT hr = m_Pointer->ValidateDevice( &passCount );
+		GraphicsException::CheckHResult( hr );
+
+		return passCount;
+	}
+
+	bool Device::ShowCursor::get()
+	{
+		BOOL prev = m_Pointer->ShowCursor( true );
+		m_Pointer->ShowCursor( prev );
+
+		return prev > 0;
+	}
+
+	void Device::ShowCursor::set( bool value )
+	{
+		m_Pointer->ShowCursor( value );
+	}
+
+	bool Device::SoftwareVertexProcessing::get()
+	{
+		return m_Pointer->GetSoftwareVertexProcessing() > 0;
+	}
+
+	void Device::SoftwareVertexProcessing::set( bool value )
+	{
+		HRESULT hr = m_Pointer->SetSoftwareVertexProcessing( value );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	Surface^ Device::GetDepthStencilSurface()
+	{
+		IDirect3DSurface9* surface;
+
+		HRESULT hr = m_Pointer->GetDepthStencilSurface( &surface );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Surface( surface );
+	}
+
+	SlimDX::Direct3D::Viewport Device::Viewport::get()
+	{
+		SlimDX::Direct3D::Viewport viewport;
+		HRESULT hr = m_Pointer->GetViewport( (D3DVIEWPORT9*) &viewport );
+		GraphicsException::CheckHResult( hr );
+
+		return viewport;
+	}
+
+	void Device::Viewport::set( SlimDX::Direct3D::Viewport value )
+	{
+		HRESULT hr = m_Pointer->SetViewport( (const D3DVIEWPORT9*) &value );
+		GraphicsException::CheckHResult( hr );
 	}
 }
 }

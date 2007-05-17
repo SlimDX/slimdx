@@ -27,6 +27,7 @@ using namespace System::Drawing;
 using namespace System::Runtime::InteropServices;
 
 #include "Enums.h"
+#include "Direct3D.h"
 #include "Vertex.h"
 
 namespace SlimDX
@@ -47,6 +48,13 @@ namespace SlimDX
 			ColorValue Specular;
 			ColorValue Emissive;
 			float Power;
+		};
+
+		public value class Viewport
+		{
+			int X, Y;
+			int Width, Height;
+			float MinZ, MaxZ;
 		};
 
 		[StructLayout( LayoutKind::Sequential )]
@@ -95,6 +103,8 @@ namespace SlimDX
 			Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams );
 			~Device();
 
+			// --- Properties ---
+
 			property RenderStateManager^ RenderState
 			{
 				RenderStateManager^ get() { return m_RenderState; }
@@ -123,7 +133,34 @@ namespace SlimDX
 				void set( SlimDX::Direct3D::VertexDeclaration^ value );
 			}
 
+			property bool SoftwareVertexProcessing
+			{
+				bool get();
+				void set( bool value );
+			}
+
+			property Viewport Viewport
+			{
+				SlimDX::Direct3D::Viewport get();
+				void set( SlimDX::Direct3D::Viewport value );
+			}
+
+			property int AvailableTextureMem
+			{
+				int get();
+			}
+
+			property bool ShowCursor
+			{
+				bool get();
+				void set( bool show );
+			}
+
+			// --- Methods ---
+
 			bool IsQuerySupported( QueryType type );
+			Capabilities GetDeviceCaps();
+			int ValidateDevice();
 
 			void TestCooperativeLevel();
 			CooperativeLevel CheckCooperativeLevel();
@@ -136,13 +173,16 @@ namespace SlimDX
 			void Present();
 			void Present( SlimDX::Direct3D::Present flags );
 
+			Surface^ GetBackBuffer( int swapChain, int backBuffer );
+			Surface^ GetDepthStencilSurface();
+
 			void SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride );
+			void SetStreamSourceFreq( int stream, int frequency );
 			void SetTexture( int sampler, BaseTexture^ texture );
 			void SetRenderTarget( int rtIndex, Surface^ target );
 			void SetPixelShader( PixelShader^ pixelShader );
 			void SetVertexShader( VertexShader^ vertexShader );
 			
-			Surface^ GetBackBuffer( int swapChain, int backBuffer );
 			void DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount );
 			void DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minVertexIndex, 
 				int numVertices, int startIndex, int primCount );

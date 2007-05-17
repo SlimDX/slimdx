@@ -350,6 +350,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\DXEnums.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\Exceptions.h"
 				>
 			</File>
