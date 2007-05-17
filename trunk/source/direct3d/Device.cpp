@@ -64,7 +64,7 @@ namespace Direct3D
 		d3dpp.Windowed = presentParams->Windowed;
 	}
 
-	Device::Device( IDirect3DDevice9* device ) : m_Device( device )
+	Device::Device( IDirect3DDevice9* device ) : DirectXObject( device )
 	{
 		if( device == NULL )
 			throw gcnew ArgumentNullException( "device" );
@@ -83,7 +83,7 @@ namespace Direct3D
 			(DWORD) createFlags, (D3DPRESENT_PARAMETERS*) &d3dpp, &device );
 		GraphicsException::CheckHResult( hr );
 
-		m_Device = device;
+		m_Pointer = device;
 		m_RenderState = gcnew RenderStateManager( this );
 		m_Transforms = gcnew TransformManager( this );
 	}
@@ -100,9 +100,9 @@ namespace Direct3D
 
 		HRESULT hr;
 		if( value != nullptr )
-			 hr = m_Device->SetIndices( value->InternalPointer );
+			 hr = m_Pointer->SetIndices( value->IbPointer );
 		else
-			hr = m_Device->SetIndices( NULL );
+			hr = m_Pointer->SetIndices( NULL );
 
 		GraphicsException::CheckHResult( hr );
 	}
@@ -110,7 +110,7 @@ namespace Direct3D
 	void Device::VertexFormat::set( VertexFormats value )
 	{
 		m_VertexFormat = value;
-		HRESULT hr = m_Device->SetFVF( (DWORD) value );
+		HRESULT hr = m_Pointer->SetFVF( (DWORD) value );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -120,16 +120,16 @@ namespace Direct3D
 
 		HRESULT hr;
 		if( value != nullptr )
-			hr = m_Device->SetVertexDeclaration( value->InternalPointer );
+			hr = m_Pointer->SetVertexDeclaration( value->InternalPointer );
 		else
-			hr = m_Device->SetVertexDeclaration( NULL );
+			hr = m_Pointer->SetVertexDeclaration( NULL );
 
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount )
 	{
-		HRESULT hr = m_Device->DrawPrimitive( (D3DPRIMITIVETYPE) primitiveType, startIndex, primitiveCount );
+		HRESULT hr = m_Pointer->DrawPrimitive( (D3DPRIMITIVETYPE) primitiveType, startIndex, primitiveCount );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -138,7 +138,7 @@ namespace Direct3D
 	{
 		pin_ptr<T> pinned_data = &data[startIndex];
 
-		HRESULT hr = m_Device->DrawPrimitiveUP( (D3DPRIMITIVETYPE) primitiveType, primitiveCount,
+		HRESULT hr = m_Pointer->DrawPrimitiveUP( (D3DPRIMITIVETYPE) primitiveType, primitiveCount,
 			pinned_data, Marshal::SizeOf( T::typeid ) );
 		GraphicsException::CheckHResult( hr );
 	}
@@ -146,14 +146,14 @@ namespace Direct3D
 	void Device::DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minVertexIndex, 
 					int numVertices, int startIndex, int primCount )
 	{
-		HRESULT hr = m_Device->DrawIndexedPrimitive( (D3DPRIMITIVETYPE) primitiveType, baseVertexIndex,
+		HRESULT hr = m_Pointer->DrawIndexedPrimitive( (D3DPRIMITIVETYPE) primitiveType, baseVertexIndex,
 			minVertexIndex, numVertices, startIndex, primCount );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::Clear( ClearFlags clearFlags, int color, float zdepth, int stencil )
 	{
-		HRESULT hr = m_Device->Clear( 0, 0, (DWORD) clearFlags, (D3DCOLOR) color, zdepth, stencil );
+		HRESULT hr = m_Pointer->Clear( 0, 0, (DWORD) clearFlags, (D3DCOLOR) color, zdepth, stencil );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -164,19 +164,19 @@ namespace Direct3D
 
 	void Device::BeginScene()
 	{
-		HRESULT hr = m_Device->BeginScene();
+		HRESULT hr = m_Pointer->BeginScene();
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::EndScene()
 	{
-		HRESULT hr = m_Device->EndScene();
+		HRESULT hr = m_Pointer->EndScene();
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::Present()
 	{
-		HRESULT hr = m_Device->Present( 0, 0, 0, 0 );
+		HRESULT hr = m_Pointer->Present( 0, 0, 0, 0 );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -184,7 +184,7 @@ namespace Direct3D
 	{
 		IDirect3DSwapChain9* swapChain;
 
-		HRESULT hr = m_Device->GetSwapChain( 0, &swapChain );
+		HRESULT hr = m_Pointer->GetSwapChain( 0, &swapChain );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return;
@@ -198,19 +198,19 @@ namespace Direct3D
 
 	void Device::SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride )
 	{
-		HRESULT hr = m_Device->SetStreamSource( stream, streamData->InternalPointer, offsetInBytes, stride );
+		HRESULT hr = m_Pointer->SetStreamSource( stream, streamData->VbPointer, offsetInBytes, stride );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::TestCooperativeLevel()
 	{
-		HRESULT hr = m_Device->TestCooperativeLevel();
+		HRESULT hr = m_Pointer->TestCooperativeLevel();
 		GraphicsException::CheckHResult( hr );
 	}
 
 	CooperativeLevel Device::CheckCooperativeLevel()
 	{
-		HRESULT hr = m_Device->TestCooperativeLevel();
+		HRESULT hr = m_Pointer->TestCooperativeLevel();
 		return (CooperativeLevel) hr;
 	}
 
@@ -219,33 +219,33 @@ namespace Direct3D
 		D3DPRESENT_PARAMETERS d3dpp;
 
 		ConvertPresentParams( presentParams, d3dpp );
-		HRESULT hr = m_Device->Reset( &d3dpp );
+		HRESULT hr = m_Pointer->Reset( &d3dpp );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::SetTexture( int sampler, BaseTexture^ texture )
 	{
-		HRESULT hr = m_Device->SetTexture( sampler, texture->BasePointer );
+		HRESULT hr = m_Pointer->SetTexture( sampler, texture->BaseTexturePointer );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::SetRenderTarget( int rtIndex, Surface^ target )
 	{
-		HRESULT hr = m_Device->SetRenderTarget( rtIndex, target->InternalPointer );
+		HRESULT hr = m_Pointer->SetRenderTarget( rtIndex, target->SurfacePointer );
 		GraphicsException::CheckHResult( hr );
 	}
 	
 	void Device::SetPixelShader( PixelShader^ shader )
 	{
 		IDirect3DPixelShader9 *ptr = shader != nullptr ? shader->InternalPointer : NULL; 
-		HRESULT hr = m_Device->SetPixelShader( ptr );
+		HRESULT hr = m_Pointer->SetPixelShader( ptr );
 		GraphicsException::CheckHResult( hr );
 	}
 	
 	void Device::SetVertexShader( VertexShader^ shader )
 	{
 		IDirect3DVertexShader9 *ptr = shader != nullptr ? shader->InternalPointer : NULL; 
-		HRESULT hr = m_Device->SetVertexShader( ptr );
+		HRESULT hr = m_Pointer->SetVertexShader( ptr );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -253,18 +253,22 @@ namespace Direct3D
 	{
 		IDirect3DSurface9* buffer;
 
-		HRESULT hr = m_Device->GetBackBuffer( swapChain, backBuffer, D3DBACKBUFFER_TYPE_MONO, &buffer );
+		HRESULT hr = m_Pointer->GetBackBuffer( swapChain, backBuffer, D3DBACKBUFFER_TYPE_MONO, &buffer );
 		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew Surface( buffer );
 	}
 
 	bool Device::IsQuerySupported( QueryType type )
 	{
-		HRESULT hr = m_Device->CreateQuery( (D3DQUERYTYPE) type, NULL );
+		HRESULT hr = m_Pointer->CreateQuery( (D3DQUERYTYPE) type, NULL );
 		if( hr == D3DERR_NOTAVAILABLE )
 			return false;
 		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return false;
 
 		return true;
 	}

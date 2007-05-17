@@ -58,23 +58,8 @@ namespace SlimDX
 
 		ref class Device;
 
-		public ref class VertexDeclaration sealed : public DirectXObject
+		public ref class VertexDeclaration sealed : public DirectXObject<IDirect3DVertexDeclaration9>
 		{
-		private:
-			IDirect3DVertexDeclaration9* m_Decl;
-
-		internal:
-			property IDirect3DVertexDeclaration9* InternalPointer
-			{
-				IDirect3DVertexDeclaration9* get() { return m_Decl; }
-			}
-
-			property IUnknown* ComPointer
-			{
-				virtual IUnknown* get() override { return m_Decl; }
-				virtual void set( IUnknown* value ) override { m_Decl = (IDirect3DVertexDeclaration9*) value; }
-			}
-
 		public:
 			VertexDeclaration( Device^ device, array<VertexElement>^ elements );
 		};

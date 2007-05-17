@@ -122,23 +122,8 @@ namespace SlimDX
 			float ComputationProcessingPercent;
 		};
 
-		public ref class Query : public DirectXObject
+		public ref class Query : public DirectXObject<IDirect3DQuery9>
 		{
-		private:
-			IDirect3DQuery9* m_Query;
-
-		internal:
-			property IDirect3DQuery9* InternalPointer
-			{
-				IDirect3DQuery9* get() { return m_Query; }
-			}
-
-			property IUnknown* ComPointer
-			{
-				virtual IUnknown* get() override { return m_Query; }
-				virtual void set( IUnknown* value ) override { m_Query = (IDirect3DQuery9*) value; }
-			}
-
 		public:
 			Query( IDirect3DQuery9* query );
 			Query( Device^ device, QueryType type );

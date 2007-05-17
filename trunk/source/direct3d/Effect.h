@@ -205,20 +205,11 @@ namespace SlimDX
 		{
 		};
 		
-		public ref class BaseEffect abstract : public DirectXObject
+		public ref class BaseEffect abstract : public DirectXObject<ID3DXBaseEffect>
 		{
-		private:
-			ID3DXBaseEffect* m_BaseEffect;
-
 		protected:
-			BaseEffect( ID3DXBaseEffect* pointer ) : m_BaseEffect( pointer )
+			BaseEffect( ID3DXBaseEffect* pointer ) : DirectXObject( pointer )
 			{ }
-
-		internal:
-			property ID3DXBaseEffect* BasePointer
-			{
-				ID3DXBaseEffect* get() { return m_BaseEffect; }
-			}
 
 		public:
 			EffectHandle^ GetAnnotation( EffectHandle^ handle, int index );
@@ -266,18 +257,10 @@ namespace SlimDX
 		public ref class Effect sealed : public BaseEffect
 		{
 		private:
-			ID3DXEffect* m_Effect;
-
 		internal:
-			property ID3DXEffect* InternalPointer
+			property ID3DXEffect* EffectPointer
 			{
-				ID3DXEffect* get() { return m_Effect; }
-			}
-
-			property IUnknown* ComPointer
-			{
-				virtual IUnknown* get() override { return m_Effect; }
-				virtual void set( IUnknown* value ) override { m_Effect = (ID3DXEffect*) value; }
+				ID3DXEffect* get() { return (ID3DXEffect*) m_Pointer; }
 			}
 
 		public:

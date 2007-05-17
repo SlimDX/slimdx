@@ -32,24 +32,10 @@ namespace SlimDX
 	{
 		public ref class VertexBuffer sealed : public Resource
 		{
-		private:
-			IDirect3DVertexBuffer9* m_Buffer;
-
 		internal:
-			property IDirect3DVertexBuffer9* InternalPointer
+			property IDirect3DVertexBuffer9* VbPointer
 			{
-				IDirect3DVertexBuffer9* get() { return m_Buffer; }
-			}
-
-			property IDirect3DResource9* ResourcePointer
-			{
-				virtual IDirect3DResource9* get() override { return m_Buffer; }
-			}
-
-			property IUnknown* ComPointer
-			{
-				virtual IUnknown* get() override { return m_Buffer; }
-				virtual void set( IUnknown* value ) override { m_Buffer = (IDirect3DVertexBuffer9*) value; }
+				IDirect3DVertexBuffer9* get() { return (IDirect3DVertexBuffer9*) m_Pointer; }
 			}
 
 		public:

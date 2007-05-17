@@ -36,7 +36,8 @@ namespace SlimDX
 {
 namespace Direct3D
 {
-	ConstantTable::ConstantTable( IDirect3DDevice9* device,ID3DXConstantTable* constantTable ) : m_Device(device),m_ConstantTable( constantTable )
+	ConstantTable::ConstantTable( IDirect3DDevice9* device,ID3DXConstantTable* constantTable )
+		: DirectXObject(constantTable), m_Device(device)
 	{
 		m_Device->AddRef();
 	}
@@ -49,7 +50,7 @@ namespace Direct3D
 	EffectHandle^ ConstantTable::GetConstant(SlimDX::Direct3D::EffectHandle ^handle, int index)
 	{
 		D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;
-		D3DXHANDLE result = m_ConstantTable->GetConstant( parentHandle, index );
+		D3DXHANDLE result = m_Pointer->GetConstant( parentHandle, index );
 		
 		if( result == NULL )
 			return nullptr;
@@ -62,7 +63,7 @@ namespace Direct3D
 		pin_ptr<unsigned char> pinnedName = &rawName[0];
 		
 		D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;
-		D3DXHANDLE result = m_ConstantTable->GetConstantByName( parentHandle, (const char*) pinnedName );
+		D3DXHANDLE result = m_Pointer->GetConstantByName( parentHandle, (const char*) pinnedName );
 		
 		if( result == NULL )
 			return nullptr;
@@ -72,14 +73,14 @@ namespace Direct3D
 	void ConstantTable::SetValue( EffectHandle^ constant,Vector4 value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		HRESULT hr = m_ConstantTable->SetVector( m_Device, handle, (const D3DXVECTOR4*) &value );
+		HRESULT hr = m_Pointer->SetVector( m_Device, handle, (const D3DXVECTOR4*) &value );
 		GraphicsException::CheckHResult( hr );
 	}
 	
 	void ConstantTable::SetValue( EffectHandle^ constant,Matrix value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		HRESULT hr = m_ConstantTable->SetMatrix( m_Device, handle, (const D3DXMATRIX*) &value );
+		HRESULT hr = m_Pointer->SetMatrix( m_Device, handle, (const D3DXMATRIX*) &value );
 		GraphicsException::CheckHResult( hr );
 	}
 }

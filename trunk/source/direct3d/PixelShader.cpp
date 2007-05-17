@@ -35,13 +35,14 @@ namespace SlimDX
 {
 namespace Direct3D
 {
-	PixelShader::PixelShader( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable ) : m_PixelShader( pixelShader )
+	PixelShader::PixelShader( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable ) : DirectXObject( pixelShader )
 	{
 		IDirect3DDevice9* device;
 		HRESULT hr = pixelShader->GetDevice(&device);
 		GraphicsException::CheckHResult( hr );
 		
 		m_ConstantTable = gcnew ConstantTable( device, constantTable );
+		device->Release();
 	}
 
 	PixelShader^ PixelShader::FromString( Device^ device, String^ sourceCode, String^ entryPoint, String^ profile, ShaderFlags flags, [Out] String^ %compilationErrors )

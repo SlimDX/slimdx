@@ -39,7 +39,7 @@ namespace Direct3D
 		ID3DXMesh* mesh;
 		pin_ptr<const VertexElement> pinned_elements = &elements[0];
 
-		HRESULT hr = m_BaseMesh->CloneMesh( (DWORD) flags, (const D3DVERTEXELEMENT9*) pinned_elements,
+		HRESULT hr = m_Pointer->CloneMesh( (DWORD) flags, (const D3DVERTEXELEMENT9*) pinned_elements,
 			device->InternalPointer, &mesh );
 		GraphicsException::CheckHResult( hr );
 
@@ -48,11 +48,11 @@ namespace Direct3D
 
 	void BaseMesh::DrawSubset( int subset )
 	{
-		HRESULT hr = m_BaseMesh->DrawSubset( subset );
+		HRESULT hr = m_Pointer->DrawSubset( subset );
 		GraphicsException::CheckHResult( hr );
 	}
 
-	Mesh::Mesh( ID3DXMesh* mesh ) : BaseMesh( mesh ), m_Mesh( mesh )
+	Mesh::Mesh( ID3DXMesh* mesh ) : BaseMesh( mesh )
 	{
 	}
 
@@ -130,7 +130,7 @@ namespace Direct3D
 
 	void Mesh::ComputeTangentFrame( TangentOptions options )
 	{
-		HRESULT hr = D3DXComputeTangentFrame( m_Mesh, (DWORD) options );
+		HRESULT hr = D3DXComputeTangentFrame( MeshPointer, (DWORD) options );
 		GraphicsException::CheckHResult( hr );
 	}
 }

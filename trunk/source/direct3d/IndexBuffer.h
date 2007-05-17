@@ -32,24 +32,10 @@ namespace SlimDX
 	{
 		public ref class IndexBuffer sealed : public Resource
 		{
-		private:
-			IDirect3DIndexBuffer9* m_Buffer;
-
 		internal:
-			property IDirect3DIndexBuffer9* InternalPointer
+			property IDirect3DIndexBuffer9* IbPointer
 			{
-				IDirect3DIndexBuffer9* get() { return m_Buffer; }
-			}
-
-			property IDirect3DResource9* ResourcePointer
-			{
-				virtual IDirect3DResource9* get() override { return m_Buffer; }
-			}
-
-			property IUnknown* ComPointer
-			{
-				virtual IUnknown* get() override { return m_Buffer; }
-				virtual void set( IUnknown* value ) override { m_Buffer = (IDirect3DIndexBuffer9*) value; }
+				IDirect3DIndexBuffer9* get() { return (IDirect3DIndexBuffer9*) m_Pointer; }
 			}
 
 		public:

@@ -34,7 +34,7 @@ namespace Direct3D
 	Device^ Resource::GetDevice()
 	{
 		IDirect3DDevice9* device;
-		HRESULT hr = ResourcePointer->GetDevice( &device );
+		HRESULT hr = m_Pointer->GetDevice( &device );
 		GraphicsException::CheckHResult( hr );
 
 		return gcnew Device( device );

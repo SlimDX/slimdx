@@ -25,29 +25,33 @@
 
 namespace SlimDX
 {
+	template<typename T>
 	public ref class DirectXObject abstract
 	{
-	internal:
-		virtual property IUnknown* ComPointer
-		{
-			IUnknown* get() abstract;
-			void set( IUnknown* value ) abstract;
-		}
-
 	protected:
-		//the destructor code
-		void Destruct()
-		{
-			ComPointer->Release();
-			ComPointer = NULL;
-		}
-
 		DirectXObject()
 		{ }
 
+		DirectXObject( T* pointer ) : m_Pointer( pointer )
+		{ }
+
+		T* m_Pointer;
+
+		//the destructor code
+		void Destruct()
+		{
+			m_Pointer->Release();
+			m_Pointer = NULL;
+		}
+
+	internal:
+		property T* InternalPointer
+		{
+			T* get() { return m_Pointer; }
+		}
+
 	public:
 		static property bool AutoReleaseEnabled;
-
 		static DirectXObject()
 		{
 			AutoReleaseEnabled = true;
@@ -74,7 +78,7 @@ namespace SlimDX
 		{
 			bool get()
 			{
-				return ComPointer == NULL;
+				return m_Pointer == NULL;
 			}
 		}
 	};

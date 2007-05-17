@@ -98,20 +98,11 @@ namespace SlimDX
 
 		ref class Mesh;
 
-		public ref class BaseMesh abstract : public DirectXObject
+		public ref class BaseMesh abstract : public DirectXObject<ID3DXBaseMesh>
 		{
-		private:
-			ID3DXBaseMesh* m_BaseMesh;
-
 		protected:
-			BaseMesh( ID3DXBaseMesh* baseMesh ) : m_BaseMesh( baseMesh )
+			BaseMesh( ID3DXBaseMesh* baseMesh ) : DirectXObject( baseMesh )
 			{ }
-
-		internal:
-			property ID3DXBaseMesh* BasePointer
-			{
-				ID3DXBaseMesh* get() { return m_BaseMesh; }
-			}
 
 		public:
 			Mesh^ Clone( Device^ device, MeshFlags flags, array<VertexElement>^ elements  );
@@ -121,19 +112,10 @@ namespace SlimDX
 
 		public ref class Mesh : public BaseMesh
 		{
-		private:
-			ID3DXMesh* m_Mesh;
-
 		internal:
-			property ID3DXMesh* InternalPointer
+			property ID3DXMesh* MeshPointer
 			{
-				ID3DXMesh* get() { return m_Mesh; }
-			}
-
-			property IUnknown* ComPointer
-			{
-				virtual IUnknown* get() override { return m_Mesh; }
-				virtual void set( IUnknown* value ) override { m_Mesh = (ID3DXMesh*) value; }
+				ID3DXMesh* get() { return (ID3DXMesh*) m_Pointer; }
 			}
 
 		public:

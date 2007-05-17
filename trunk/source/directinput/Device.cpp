@@ -43,9 +43,10 @@ namespace DirectInput
 		return result;
 	}
 
-	Device::Device( IDirectInputDevice8W* device )
+	Device::Device( IDirectInputDevice8W* device ) : DirectXObject( device )
 	{
-		m_Device = device;
+		if( device == NULL )
+			throw gcnew ArgumentNullException( "device" );
 	}
 
 	Device::Device( Guid subsystem )
@@ -53,7 +54,7 @@ namespace DirectInput
 		IDirectInputDevice8W* device;
 		HRESULT hr = DirectInput::InternalPointer->CreateDevice( *(GUID*) &subsystem, &device, NULL );
 
-		m_Device = device;
+		m_Pointer = device;
 
 		if( subsystem == SystemGuid::Keyboard )
 			SetDataFormat( DeviceDataFormat::Keyboard );
@@ -70,15 +71,15 @@ namespace DirectInput
 		switch( format )
 		{
 		case DeviceDataFormat::Keyboard:
-			hr = m_Device->SetDataFormat( &c_dfDIKeyboard );
+			hr = m_Pointer->SetDataFormat( &c_dfDIKeyboard );
 			break;
 
 		case DeviceDataFormat::Mouse:
-			hr = m_Device->SetDataFormat( &c_dfDIMouse2 );
+			hr = m_Pointer->SetDataFormat( &c_dfDIMouse2 );
 			break;
 
 		case DeviceDataFormat::Joystick:
-			hr = m_Device->SetDataFormat( &c_dfDIJoystick2 );
+			hr = m_Pointer->SetDataFormat( &c_dfDIJoystick2 );
 			break;
 
 		default:
@@ -88,29 +89,29 @@ namespace DirectInput
 
 	void Device::SetCooperativeLevel( IntPtr handle, CooperativeLevel flags )
 	{
-		HRESULT hr = m_Device->SetCooperativeLevel( (HWND) handle.ToPointer(), (DWORD) flags );
+		HRESULT hr = m_Pointer->SetCooperativeLevel( (HWND) handle.ToPointer(), (DWORD) flags );
 	}
 
 	void Device::Acquire()
 	{
-		HRESULT hr = m_Device->Acquire();
+		HRESULT hr = m_Pointer->Acquire();
 	}
 
 	void Device::Unacquire()
 	{
-		HRESULT hr = m_Device->Unacquire();
+		HRESULT hr = m_Pointer->Unacquire();
 	}
 
 	void Device::Poll()
 	{
-		HRESULT hr = m_Device->Poll();
+		HRESULT hr = m_Pointer->Poll();
 	}
 
 	MouseState Device::CurrentMouseState::get()
 	{
 		DIMOUSESTATE2 state;
 
-		HRESULT hr = m_Device->GetDeviceState( sizeof( MouseState ), (DIMOUSESTATE2*) &state );
+		HRESULT hr = m_Pointer->GetDeviceState( sizeof( MouseState ), (DIMOUSESTATE2*) &state );
 
 		//convert to a managed structure
 		MouseState result;
