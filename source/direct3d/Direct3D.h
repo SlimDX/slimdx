@@ -25,6 +25,8 @@ using namespace System;
 using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
 
+#include "CapsEnums.h"
+
 namespace SlimDX
 {
 	namespace Direct3D
@@ -77,14 +79,96 @@ namespace SlimDX
 			initonly AdapterDetails^ Details;
 		};
 
-		public value class Caps
+		public value class VertexShaderCaps20
+		{
+			int Caps;
+			int DynamicFlowControlDepth;
+			int NumTemps;
+			int StaticFlowControlDepth;
+		};
+
+		public value class PixelShaderCaps20
+		{
+			int Caps;
+			int DynamicFlowControlDepth;
+			int NumTemps;
+			int StaticFlowControlDepth;
+			int NumInstructionSlots;
+		};
+
+		public value class DeviceCapabilities
 		{
 		internal:
-			Caps( int adapter, DeviceType deviceType );
+			DeviceCapabilities( const D3DCAPS9& caps );
 
 		public:
+			DeviceType DeviceType;
+			int AdapterOrdinal;
+			Caps Caps;
+			Caps2 Caps2;
+			Caps3 Caps3;
+			int PresentationIntervals;
+			CursorCaps CursorCaps;
+			DeviceCaps DeviceCaps;
+			PrimitiveMiscCaps PrimitiveMiscCaps;
+			RasterCaps RasterCaps;
+			CompareCaps ZCompareCaps;
+			BlendCaps SourceBlendCaps;
+			BlendCaps DestBlendCaps;
+			CompareCaps AlphaCompareCaps;
+			ShadeCaps ShadeCaps;
+			TextureCaps TextureCaps;
+			int TextureFilterCaps;
+			int CubeTextureFilterCaps;
+			int VolumeTextureFilterCaps;
+			int TextureAddressCaps;
+			int VolumeTextureAddressCaps;
+			LineCaps LineCaps;
+			int MaxTextureWidth;
+			int MaxTextureHeight;
+			int MaxVolumeExtent;
+			int MaxTextureRepeat;
+			int MaxTextureAspectRatio;
+			int MaxAnisotropy;
+			float MaxVertexW;
+			float GuardBandLeft;
+			float GuardBandTop;
+			float GuardBandRight;
+			float GuardBandBottom;
+			float ExtentsAdjust;
+			int StencilCaps;
+			int FVFCaps;
+			int TextureOpCaps;
+			int MaxTextureBlendStages;
+			int MaxSimultaneousTextures;
+			int VertexProcessingCaps;
+			int MaxActiveLights;
+			int MaxUserClipPlanes;
+			int MaxVertexBlendMatrices;
+			int MaxVertexBlendMatrixIndex;
+			float MaxPointSize;
+			int MaxPrimitiveCount;
+			int MaxVertexIndex;
+			int MaxStreams;
+			int MaxStreamStride;
 			initonly Version^ VertexShaderVersion;
+			int MaxVertexShaderConst;
 			initonly Version^ PixelShaderVersion;
+			float PixelShader1xMaxValue;
+			int DevCaps2;
+			int MasterAdapterOrdinal;
+			int AdapterOrdinalInGroup;
+			int NumberOfAdaptersInGroup;
+			int DeclTypes;
+			int NumSimultaneousRTs;
+			int StretchRectFilterCaps;
+			VertexShaderCaps20 VS20Caps;
+			PixelShaderCaps20 D3DPSHADERCAPS2_0;
+			int VertexTextureFilterCaps;
+			int MaxVShaderInstructionsExecuted;
+			int MaxPShaderInstructionsExecuted;
+			int MaxVertexShader30InstructionSlots;
+			int MaxPixelShader30InstructionSlots;
 		};
 
 		public ref class AdapterList sealed// : public IEnumerable<AdapterInformation^>
@@ -142,7 +226,7 @@ namespace SlimDX
 			static bool CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, 
 				Format renderTargetFormat, DepthFormat depthStencilFormat );
 
-			static Caps GetDeviceCaps( int adapter, DeviceType deviceType );
+			static DeviceCapabilities GetDeviceCaps( int adapter, DeviceType deviceType );
 		};
 	}
 }
