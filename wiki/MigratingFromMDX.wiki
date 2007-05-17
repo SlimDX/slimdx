@@ -6,5 +6,11 @@ Specifically, this page should help call out _intentional_ differences or omissi
 
 = Math Library Differences =
 
-*Removed non-static methods*
+*Removed non-static methods:*
 Most (perhaps eventually all) non-static "operation" methods on math objects have been removed in favor of static methods. This means methods like Matrix::Transpose, Vector3::Dot, Vector3::Cross, et cetera, are all static.
+
+= Direct3D Differences =
+
+*Removed CustomVertex:*
+These were not deemed to be necessary, and it's preferred that applications define the vertex structures that they are using. These are just endless combinations of pieces of vertices, and really only suitable for FVF based vertices anyway, and those are basically dead.
+
