@@ -1,0 +1,10 @@
+#summary Notes to facilitate migration from MDX 1.1 and 2.0.
+= Introduction =
+This page is intended to be a repository of information regarding migration to the SlimDX API from Microsoft's MDX API. A similar page might eventually exist for MigratingFromXNA, if there is sufficient interest.
+
+Specifically, this page should help call out _intentional_ differences or omissions from the MDX API, which will hopefully prevent us from being inundated with bug reports about "missing method X."
+
+= Math Library Differences =
+
+*Removed non-static methods*
+Most (perhaps eventually all) non-static "operation" methods on math objects have been removed in favor of static methods. This means methods like Matrix::Transpose, Vector3::Dot, Vector3::Cross, et cetera, are all static.
