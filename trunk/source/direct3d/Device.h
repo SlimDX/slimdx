@@ -137,6 +137,8 @@ namespace SlimDX
 				void set( SlimDX::Direct3D::VertexDeclaration^ value );
 			}
 
+			bool IsQuerySupported( QueryType type );
+
 			void TestCooperativeLevel();
 			CooperativeLevel CheckCooperativeLevel();
 			void Reset( PresentParameters^ presentParams );

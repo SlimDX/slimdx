@@ -19,35 +19,25 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include <d3d9.h>
+#include <d3dx9.h>
 
-using namespace System;
+#include "../DirectXObject.h"
+
+#include "Device.h"
+#include "Resource.h"
 
 namespace SlimDX
 {
-	namespace Direct3D
+namespace Direct3D
+{
+	Device^ Resource::GetDevice()
 	{
-		public enum class ResourceType : Int32
-		{
-			Surface = D3DRTYPE_SURFACE,
-			Volume = D3DRTYPE_VOLUME,
-			Texture = D3DRTYPE_TEXTURE,
-			VolumeTexture = D3DRTYPE_VOLUMETEXTURE,
-			CubeTexture = D3DRTYPE_CUBETEXTURE,
-			VertexBuffer = D3DRTYPE_VERTEXBUFFER,
-			IndexBuffer = D3DRTYPE_INDEXBUFFER,
-		};
+		IDirect3DDevice9* device;
+		HRESULT hr = ResourcePointer->GetDevice( &device );
+		GraphicsException::CheckHResult( hr );
 
-		public ref class Resource abstract : public DirectXObject
-		{
-		internal:
-			virtual property IDirect3DResource9* ResourcePointer
-			{
-				IDirect3DResource9* get() abstract;
-			}
-
-		public:
-			Device^ GetDevice();
-		};
+		return gcnew Device( device );
 	}
+}
 }
