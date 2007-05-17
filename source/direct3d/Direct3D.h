@@ -26,6 +26,7 @@ using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
 
 #include "CapsEnums.h"
+#include "GraphicsException.h"
 
 namespace SlimDX
 {
