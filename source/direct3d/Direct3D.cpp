@@ -108,24 +108,28 @@ namespace Direct3D
 			renderTargetFormat, depthStencilFormat, result );
 	}
 
-	DeviceCapabilities Direct3D::GetDeviceCaps( int adapter, DeviceType deviceType )
+	Capabilities Direct3D::GetDeviceCaps( int adapter, DeviceType deviceType )
 	{
 		D3DCAPS9 caps;
 		Direct3D::InternalPointer->GetDeviceCaps( adapter, (D3DDEVTYPE) deviceType, &caps );
-		return DeviceCapabilities( caps );
+		return Capabilities( caps );
 	}
 
 
-	DeviceCapabilities::DeviceCapabilities( const D3DCAPS9& caps )
+	Capabilities::Capabilities( const D3DCAPS9& caps )
 	{
 		DeviceType = (SlimDX::Direct3D::DeviceType) caps.DeviceType;
 		AdapterOrdinal = caps.AdapterOrdinal;
+
 		Caps = (SlimDX::Direct3D::Caps) caps.Caps;
 		Caps2 = (SlimDX::Direct3D::Caps2) caps.Caps2;
 		Caps3 = (SlimDX::Direct3D::Caps3) caps.Caps3;
 		PresentationIntervals = caps.PresentationIntervals;
+
 		CursorCaps = (SlimDX::Direct3D::CursorCaps) caps.CursorCaps;
+
 		DeviceCaps = (SlimDX::Direct3D::DeviceCaps) caps.DevCaps;
+
 		PrimitiveMiscCaps = (SlimDX::Direct3D::PrimitiveMiscCaps) caps.PrimitiveMiscCaps;
 		RasterCaps = (SlimDX::Direct3D::RasterCaps) caps.RasterCaps;
 		ZCompareCaps = (CompareCaps) caps.ZCmpCaps;
@@ -134,11 +138,74 @@ namespace Direct3D
 		AlphaCompareCaps = (CompareCaps) caps.AlphaCmpCaps;
 		ShadeCaps = (SlimDX::Direct3D::ShadeCaps) caps.ShadeCaps;
 		TextureCaps = (SlimDX::Direct3D::TextureCaps) caps.TextureCaps;
+		TextureFilterCaps = (FilterCaps) caps.TextureFilterCaps;
+		CubeTextureFilterCaps = (FilterCaps) caps.CubeTextureFilterCaps;
+		VolumeTextureFilterCaps = (FilterCaps) caps.VertexTextureFilterCaps;
+		TextureAddressCaps = (SlimDX::Direct3D::TextureAddressCaps) caps.TextureAddressCaps;
+		VolumeTextureAddressCaps = (SlimDX::Direct3D::TextureAddressCaps) caps.VolumeTextureAddressCaps;
+
+		LineCaps = (SlimDX::Direct3D::LineCaps) caps.LineCaps;
+
+		MaxTextureWidth = caps.MaxTextureWidth;
+		MaxTextureHeight = caps.MaxTextureHeight;
+		MaxVolumeExtent = caps.MaxVolumeExtent;
+
+		MaxTextureRepeat = caps.MaxTextureRepeat;
+		MaxTextureAspectRatio = caps.MaxTextureAspectRatio;
+		MaxAnisotropy = caps.MaxAnisotropy;
+		MaxVertexW = caps.MaxVertexW;
+
+		GuardBandLeft = caps.GuardBandLeft;
+		GuardBandTop = caps.GuardBandTop;
+		GuardBandRight = caps.GuardBandRight;
+		GuardBandBottom = caps.GuardBandBottom;
+
+		ExtentsAdjust = caps.ExtentsAdjust;
+		StencilCaps = (SlimDX::Direct3D::StencilCaps) caps.StencilCaps;
+
+		FVFCaps = (VertexFormatCaps) caps.FVFCaps;
+		TextureOpCaps = (SlimDX::Direct3D::TextureOpCaps) caps.TextureOpCaps;
+		MaxTextureBlendStages = caps.MaxTextureBlendStages;
+		MaxSimultaneousTextures = caps.MaxSimultaneousTextures;
+
+		VertexProcessingCaps = (SlimDX::Direct3D::VertexProcessingCaps) caps.VertexProcessingCaps;
+		MaxActiveLights = caps.MaxActiveLights;
+		MaxUserClipPlanes = caps.MaxUserClipPlanes;
+		MaxVertexBlendMatrices = caps.MaxVertexBlendMatrices;
+		MaxVertexBlendMatrixIndex = caps.MaxVertexBlendMatrixIndex;
+
+		MaxPointSize = caps.MaxPointSize;
+
+		MaxPrimitiveCount = caps.MaxPrimitiveCount;
+		MaxVertexIndex = caps.MaxVertexIndex;
+		MaxStreams = caps.MaxStreams;
+		MaxStreamStride = caps.MaxStreamStride;
+
 		VertexShaderVersion = gcnew Version( D3DSHADER_VERSION_MAJOR( caps.VertexShaderVersion ), 
 			D3DSHADER_VERSION_MINOR( caps.VertexShaderVersion ) );
+		MaxVertexShaderConstants = caps.MaxVertexShaderConst;
+
 		PixelShaderVersion = gcnew Version( D3DSHADER_VERSION_MAJOR( caps.PixelShaderVersion ), 
 			D3DSHADER_VERSION_MINOR( caps.PixelShaderVersion ) );
+		PixelShader1xMaxValue = caps.PixelShader1xMaxValue;
 
+		DeviceCaps2 = (DevCaps2) caps.DevCaps2;
+
+		MaxNPatchTesselationLevel = caps.MaxNpatchTessellationLevel;
+
+		MasterAdapterOrdinal = caps.MasterAdapterOrdinal;
+		AdapterOrdinalInGroup = caps.AdapterOrdinalInGroup;
+		NumberOfAdaptersInGroup = caps.NumberOfAdaptersInGroup;
+		DeclTypes = (DeclTypeCaps) caps.DeclTypes;
+		NumSimultaneousRTs = caps.NumSimultaneousRTs;
+		StretchRectFilterCaps = (FilterCaps) caps.StretchRectFilterCaps;
+		VS20Caps = *(VertexShader20Caps*) &caps.VS20Caps;
+		PS20Caps = *(PixelShader20Caps*) &caps.PS20Caps;
+		VertexTextureFilterCaps = (FilterCaps) caps.VertexTextureFilterCaps;
+		MaxVShaderInstructionsExecuted = caps.MaxVShaderInstructionsExecuted;
+		MaxPShaderInstructionsExecuted = caps.MaxPShaderInstructionsExecuted;
+		MaxVertexShader30InstructionSlots = caps.MaxVertexShader30InstructionSlots;
+		MaxPixelShader30InstructionSlots = caps.MaxPixelShader30InstructionSlots;
 	}
 }
 }
