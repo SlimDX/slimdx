@@ -40,6 +40,47 @@ namespace Direct3D
 		m_Surface = surface;
 	}
 
+	Surface^ Surface::CreateRenderTarget( Device^ device, int width, int height, Format format,
+		MultiSampleType multiSampleType, int multiSampleQuality, bool lockable )
+	{
+		IDirect3DSurface9* surface;
+
+		HRESULT hr = device->InternalPointer->CreateRenderTarget( width, height, (D3DFORMAT) format,
+			(D3DMULTISAMPLE_TYPE) multiSampleType, multiSampleQuality, lockable, &surface, NULL );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Surface( surface );
+	}
+
+	Surface^ Surface::CreateOffscreenPlain( Device^ device, int width, int height, Format format, Pool pool )
+	{
+		IDirect3DSurface9* surface;
+
+		HRESULT hr = device->InternalPointer->CreateOffscreenPlainSurface( width, height,
+			(D3DFORMAT) format, (D3DPOOL) pool, &surface, NULL );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Surface( surface );
+	}
+
+	Surface^ Surface::CreateDepthStencil( Device^ device, int width, int height, Format format,
+		MultiSampleType multiSampleType, int multiSampleQuality, bool discard )
+	{
+		IDirect3DSurface9* surface;
+
+		HRESULT hr = device->InternalPointer->CreateDepthStencilSurface( width, height, (D3DFORMAT) format,
+			(D3DMULTISAMPLE_TYPE) multiSampleType, multiSampleQuality, discard, &surface, NULL );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Surface( surface );
+	}
+
 	SurfaceDescription Surface::GetDesc()
 	{
 		SurfaceDescription desc;
