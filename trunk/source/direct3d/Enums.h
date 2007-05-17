@@ -185,12 +185,23 @@ namespace SlimDX
 		[Flags]
 		public enum class VertexFormats : Int32
 		{
-			None = 0,
+			PositionMask = D3DFVF_POSITION_MASK,
 			Position = D3DFVF_XYZ,
-			PositionW = D3DFVF_XYZRHW,
+			PositionRhw = D3DFVF_XYZRHW,
+			PositionBlend1 = D3DFVF_XYZB1,
+			PositionBlend2 = D3DFVF_XYZB2,
+			PositionBlend3 = D3DFVF_XYZB3,
+			PositionBlend4 = D3DFVF_XYZB4,
+			PositionBlend5 = D3DFVF_XYZB5,
+			PositionW = D3DFVF_XYZW,
+
 			Normal = D3DFVF_NORMAL,
-			PositionNormal = Position | Normal,
+			PointSize = D3DFVF_PSIZE,
 			Diffuse = D3DFVF_DIFFUSE,
+			Specular = D3DFVF_SPECULAR,
+
+			TextureCountMask = D3DFVF_TEXCOUNT_MASK,
+			TextureCountShift = D3DFVF_TEXCOUNT_SHIFT,
 			Texture0 = D3DFVF_TEX0,
 			Texture1 = D3DFVF_TEX1,
 			Texture2 = D3DFVF_TEX2,
@@ -200,6 +211,9 @@ namespace SlimDX
 			Texture6 = D3DFVF_TEX6,
 			Texture7 = D3DFVF_TEX7,
 			Texture8 = D3DFVF_TEX8,
+
+			LastBetaUByte4 = D3DFVF_LASTBETA_UBYTE4,
+			LastBetaColor = D3DFVF_LASTBETA_D3DCOLOR,
 		};
 
 		public enum class PrimitiveType : Int32
@@ -422,7 +436,7 @@ namespace SlimDX
 			DriverInternalError = D3DERR_DRIVERINTERNALERROR,
 		};
 
-		public enum class QueryType
+		public enum class QueryType : Int32
 		{
 			VCache = D3DQUERYTYPE_VCACHE,
 			ResourceManager = D3DQUERYTYPE_RESOURCEMANAGER,
