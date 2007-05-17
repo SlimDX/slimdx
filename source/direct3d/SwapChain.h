@@ -27,27 +27,51 @@ namespace SlimDX
 {
 	namespace Direct3D
 	{
-		public enum class ResourceType : Int32
+		value class DisplayMode;
+		ref class Surface;
+
+		public value class RasterStatus
 		{
-			Surface = D3DRTYPE_SURFACE,
-			Volume = D3DRTYPE_VOLUME,
-			Texture = D3DRTYPE_TEXTURE,
-			VolumeTexture = D3DRTYPE_VOLUMETEXTURE,
-			CubeTexture = D3DRTYPE_CUBETEXTURE,
-			VertexBuffer = D3DRTYPE_VERTEXBUFFER,
-			IndexBuffer = D3DRTYPE_INDEXBUFFER,
+		public:
+			bool InVBlank;
+			int ScanLine;
 		};
 
-		public ref class Resource abstract : public DirectXObject
+		public ref class SwapChain : public DirectXObject
 		{
+		private:
+			IDirect3DSwapChain9* m_SwapChain;
+
 		internal:
-			virtual property IDirect3DResource9* ResourcePointer
+			property IDirect3DSwapChain9* InternalPointer
 			{
-				IDirect3DResource9* get() abstract;
+				IDirect3DSwapChain9* get() { return m_SwapChain; }
+			}
+
+			property IUnknown* ComPointer
+			{
+				virtual IUnknown* get() override { return m_SwapChain; }
+				virtual void set( IUnknown* value ) override { m_SwapChain = (IDirect3DSwapChain9*) value; }
 			}
 
 		public:
+			SwapChain( IDirect3DSwapChain9* swapChain );
+
+			property SlimDX::Direct3D::DisplayMode DisplayMode
+			{
+				SlimDX::Direct3D::DisplayMode get();
+			}
+
+			property SlimDX::Direct3D::RasterStatus RasterStatus
+			{
+				SlimDX::Direct3D::RasterStatus get();
+			}
+
 			Device^ GetDevice();
+			Surface^ GetBackBuffer( int index );
+			void GetFrontBufferData( Surface^ destSurface );
+
+			void Present( SlimDX::Direct3D::Present flags );
 		};
 	}
 }

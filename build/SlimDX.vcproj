@@ -229,7 +229,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d\Query.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d\RenderStateManager.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Resource.cpp"
 					>
 				</File>
 				<File
@@ -238,6 +246,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d\Surface.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\SwapChain.cpp"
 					>
 				</File>
 				<File
@@ -397,6 +409,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d\Query.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d\RenderStateManager.h"
 					>
 				</File>
@@ -410,6 +426,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d\Surface.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\SwapChain.h"
 					>
 				</File>
 				<File

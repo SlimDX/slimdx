@@ -35,6 +35,8 @@
 #include "Texture.h"
 #include "PixelShader.h"
 #include "VertexShader.h"
+#include "Query.h"
+#include "SwapChain.h"
 #include "RenderStateManager.h"
 #include "TransformManager.h"
 #include "D3DX.h"
@@ -184,6 +186,8 @@ namespace Direct3D
 
 		HRESULT hr = m_Device->GetSwapChain( 0, &swapChain );
 		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return;
 
 		hr = swapChain->Present( 0, 0, 0, 0, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
@@ -253,6 +257,16 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 
 		return gcnew Surface( buffer );
+	}
+
+	bool Device::IsQuerySupported( QueryType type )
+	{
+		HRESULT hr = m_Device->CreateQuery( (D3DQUERYTYPE) type, NULL );
+		if( hr == D3DERR_NOTAVAILABLE )
+			return false;
+		GraphicsException::CheckHResult( hr );
+
+		return true;
 	}
 }
 }
