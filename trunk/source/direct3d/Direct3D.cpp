@@ -108,21 +108,37 @@ namespace Direct3D
 			renderTargetFormat, depthStencilFormat, result );
 	}
 
-	Caps Direct3D::GetDeviceCaps( int adapter, DeviceType deviceType )
-	{
-		return Caps( adapter, deviceType );
-	}
-
-
-	Caps::Caps( int adapter, DeviceType deviceType )
+	DeviceCapabilities Direct3D::GetDeviceCaps( int adapter, DeviceType deviceType )
 	{
 		D3DCAPS9 caps;
 		Direct3D::InternalPointer->GetDeviceCaps( adapter, (D3DDEVTYPE) deviceType, &caps );
+		return DeviceCapabilities( caps );
+	}
 
+
+	DeviceCapabilities::DeviceCapabilities( const D3DCAPS9& caps )
+	{
+		DeviceType = (SlimDX::Direct3D::DeviceType) caps.DeviceType;
+		AdapterOrdinal = caps.AdapterOrdinal;
+		Caps = (SlimDX::Direct3D::Caps) caps.Caps;
+		Caps2 = (SlimDX::Direct3D::Caps2) caps.Caps2;
+		Caps3 = (SlimDX::Direct3D::Caps3) caps.Caps3;
+		PresentationIntervals = caps.PresentationIntervals;
+		CursorCaps = (SlimDX::Direct3D::CursorCaps) caps.CursorCaps;
+		DeviceCaps = (SlimDX::Direct3D::DeviceCaps) caps.DevCaps;
+		PrimitiveMiscCaps = (SlimDX::Direct3D::PrimitiveMiscCaps) caps.PrimitiveMiscCaps;
+		RasterCaps = (SlimDX::Direct3D::RasterCaps) caps.RasterCaps;
+		ZCompareCaps = (CompareCaps) caps.ZCmpCaps;
+		SourceBlendCaps = (BlendCaps) caps.SrcBlendCaps;
+		DestBlendCaps = (BlendCaps) caps.DestBlendCaps;
+		AlphaCompareCaps = (CompareCaps) caps.AlphaCmpCaps;
+		ShadeCaps = (SlimDX::Direct3D::ShadeCaps) caps.ShadeCaps;
+		TextureCaps = (SlimDX::Direct3D::TextureCaps) caps.TextureCaps;
 		VertexShaderVersion = gcnew Version( D3DSHADER_VERSION_MAJOR( caps.VertexShaderVersion ), 
 			D3DSHADER_VERSION_MINOR( caps.VertexShaderVersion ) );
 		PixelShaderVersion = gcnew Version( D3DSHADER_VERSION_MAJOR( caps.PixelShaderVersion ), 
 			D3DSHADER_VERSION_MINOR( caps.PixelShaderVersion ) );
+
 	}
 }
 }

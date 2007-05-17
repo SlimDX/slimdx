@@ -361,6 +361,10 @@
 				Name="Direct3D"
 				>
 				<File
+					RelativePath="..\source\direct3d\CapsEnums.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d\ConstantTable.h"
 					>
 				</File>
