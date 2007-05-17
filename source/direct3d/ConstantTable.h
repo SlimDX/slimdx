@@ -31,23 +31,10 @@ namespace SlimDX
 	{
 		ref class EffectHandle;
 	
-		public ref class ConstantTable : public DirectXObject
+		public ref class ConstantTable : public DirectXObject<ID3DXConstantTable>
 		{
 		private:
 			IDirect3DDevice9* m_Device;
-			ID3DXConstantTable* m_ConstantTable;
-
-		internal:
-			property ID3DXConstantTable* InternalPointer
-			{
-				ID3DXConstantTable* get() { return m_ConstantTable; }
-			}
-
-			property IUnknown* ComPointer
-			{
-				virtual IUnknown* get() override { return m_ConstantTable; }
-				virtual void set( IUnknown* value ) override { m_ConstantTable = (ID3DXConstantTable*) value; }
-			}
 
 		public:
 			ConstantTable( IDirect3DDevice9* device, ID3DXConstantTable* constantTable );

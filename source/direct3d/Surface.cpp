@@ -37,7 +37,7 @@ namespace Direct3D
 		if( surface == NULL )
 			throw gcnew ArgumentNullException( "surface" );
 
-		m_Surface = surface;
+		m_Pointer = surface;
 	}
 
 	Surface^ Surface::CreateRenderTarget( Device^ device, int width, int height, Format format,
@@ -85,7 +85,7 @@ namespace Direct3D
 	{
 		SurfaceDescription desc;
 
-		HRESULT hr = m_Surface->GetDesc( (D3DSURFACE_DESC*) &desc );
+		HRESULT hr = SurfacePointer->GetDesc( (D3DSURFACE_DESC*) &desc );
 		GraphicsException::CheckHResult( hr );
 
 		return desc;
@@ -95,7 +95,7 @@ namespace Direct3D
 	{
 		D3DLOCKED_RECT lockedRect;
 
-		HRESULT hr = m_Surface->LockRect( &lockedRect, NULL, (DWORD) flags );
+		HRESULT hr = SurfacePointer->LockRect( &lockedRect, NULL, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
@@ -105,7 +105,7 @@ namespace Direct3D
 
 	void Surface::UnlockRectangle()
 	{
-		HRESULT hr = m_Surface->UnlockRect();
+		HRESULT hr = SurfacePointer->UnlockRect();
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -113,7 +113,7 @@ namespace Direct3D
 	{
 		HDC hdc;
 		
-		HRESULT hr = m_Surface->GetDC( &hdc );
+		HRESULT hr = SurfacePointer->GetDC( &hdc );
 		GraphicsException::CheckHResult( hr );
 
 		IntPtr ptr( hdc );
@@ -122,7 +122,7 @@ namespace Direct3D
 
 	void Surface::ReleaseDC( IntPtr hdc )
 	{
-		HRESULT hr = m_Surface->ReleaseDC( (HDC) hdc.ToPointer() );
+		HRESULT hr = SurfacePointer->ReleaseDC( (HDC) hdc.ToPointer() );
 		GraphicsException::CheckHResult( hr );
 	}
 }

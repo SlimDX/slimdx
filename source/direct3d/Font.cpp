@@ -39,12 +39,10 @@ namespace SlimDX
 {
 namespace Direct3D
 {
-	Font::Font( ID3DXFont* font )
+	Font::Font( ID3DXFont* font ) : DirectXObject( font )
 	{
 		if( font == NULL )
 			throw gcnew ArgumentNullException( "font" );
-
-		m_Font = font;
 	}
 
 	Font::Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,
@@ -58,7 +56,7 @@ namespace Direct3D
 			(DWORD) outputPrecision, (DWORD) quality, (DWORD) pitchAndFamily, (LPCWSTR) pinned_name, &font );
 		GraphicsException::CheckHResult( hr );
 
-		m_Font = font;
+		m_Pointer = font;
 	}
 
 	int Font::DrawText( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, int color )
@@ -67,7 +65,7 @@ namespace Direct3D
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
 
-		return m_Font->DrawTextW( spritePtr, (LPCWSTR) pinned_text, text->Length, &nativeRect, (DWORD) format, color );
+		return m_Pointer->DrawTextW( spritePtr, (LPCWSTR) pinned_text, text->Length, &nativeRect, (DWORD) format, color );
 	}
 
 	int Font::DrawText( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, Color color )
@@ -92,7 +90,7 @@ namespace Direct3D
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
 		RECT nativeRect;
 
-		m_Font->DrawTextW( spritePtr, (LPCWSTR) pinned_text, text->Length, &nativeRect, 
+		m_Pointer->DrawTextW( spritePtr, (LPCWSTR) pinned_text, text->Length, &nativeRect, 
 			(DWORD) (format | DrawTextFormat::CalcRect), 0 );
 	
 		return System::Drawing::Rectangle( nativeRect.left, nativeRect.top, 
@@ -101,32 +99,32 @@ namespace Direct3D
 
 	void Font::PreloadCharacters( int first, int last )
 	{
-		HRESULT hr = m_Font->PreloadCharacters( first, last );
+		HRESULT hr = m_Pointer->PreloadCharacters( first, last );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Font::PreloadGlyphs( int first, int last )
 	{
-		HRESULT hr = m_Font->PreloadGlyphs( first, last );
+		HRESULT hr = m_Pointer->PreloadGlyphs( first, last );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Font::PreloadText( String^ text )
 	{
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
-		HRESULT hr = m_Font->PreloadTextW( (LPCWSTR) pinned_text, text->Length );
+		HRESULT hr = m_Pointer->PreloadTextW( (LPCWSTR) pinned_text, text->Length );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Font::OnLostDevice()
 	{
-		HRESULT hr = m_Font->OnLostDevice();
+		HRESULT hr = m_Pointer->OnLostDevice();
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Font::OnResetDevice()
 	{
-		HRESULT hr = m_Font->OnResetDevice();
+		HRESULT hr = m_Pointer->OnResetDevice();
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -134,7 +132,7 @@ namespace Direct3D
 	{
 		D3DXFONT_DESC desc;
 		
-		HRESULT hr = m_Font->GetDesc( &desc );
+		HRESULT hr = m_Pointer->GetDesc( &desc );
 		GraphicsException::CheckHResult( hr );
 
 		FontDescription outDesc;
@@ -154,7 +152,7 @@ namespace Direct3D
 
 	IntPtr Font::DeviceContext::get()
 	{
-		return (IntPtr) m_Font->GetDC();
+		return (IntPtr) m_Pointer->GetDC();
 	}
 }
 }

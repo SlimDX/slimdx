@@ -35,7 +35,7 @@ namespace SlimDX
 		EffectHandle^ BaseEffect::GetAnnotation( EffectHandle^ handle, int index )
 		{
 			D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;
-			D3DXHANDLE annotation = m_BaseEffect->GetAnnotation( parentHandle, index );
+			D3DXHANDLE annotation = m_Pointer->GetAnnotation( parentHandle, index );
 
 			if( annotation == NULL )
 				return nullptr;
@@ -48,7 +48,7 @@ namespace SlimDX
 			pin_ptr<unsigned char> pinned_name = &nameBytes[0];
 
 			D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;
-			D3DXHANDLE annotation = m_BaseEffect->GetAnnotationByName( parentHandle, (LPCSTR) pinned_name );
+			D3DXHANDLE annotation = m_Pointer->GetAnnotationByName( parentHandle, (LPCSTR) pinned_name );
 
 			if( annotation == NULL )
 				return nullptr;
@@ -58,7 +58,7 @@ namespace SlimDX
 		EffectHandle^ BaseEffect::GetParameter( EffectHandle^ parameter, int index )
 		{
 			D3DXHANDLE parentHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
-			D3DXHANDLE handle = m_BaseEffect->GetParameter( parentHandle, index );
+			D3DXHANDLE handle = m_Pointer->GetParameter( parentHandle, index );
 
 			if( handle == NULL )
 				return nullptr;
@@ -71,7 +71,7 @@ namespace SlimDX
 			pin_ptr<unsigned char> pinned_name = &nameBytes[0];
 
 			D3DXHANDLE parentHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
-			D3DXHANDLE handle = m_BaseEffect->GetParameterByName( parentHandle, (const char*) pinned_name );
+			D3DXHANDLE handle = m_Pointer->GetParameterByName( parentHandle, (const char*) pinned_name );
 
 			if( handle == NULL )
 				return nullptr;
@@ -84,7 +84,7 @@ namespace SlimDX
 			pin_ptr<unsigned char> pinned_semantic = &semanticBytes[0];
 
 			D3DXHANDLE parentHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
-			D3DXHANDLE handle = m_BaseEffect->GetParameterBySemantic( parentHandle, (const char*) pinned_semantic );
+			D3DXHANDLE handle = m_Pointer->GetParameterBySemantic( parentHandle, (const char*) pinned_semantic );
 
 			if( handle == NULL )
 				return nullptr;
@@ -94,7 +94,7 @@ namespace SlimDX
 		EffectHandle^ BaseEffect::GetParameterElement( EffectHandle^ parameter, int index )
 		{
 			D3DXHANDLE parentHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
-			D3DXHANDLE handle = m_BaseEffect->GetParameterElement( parentHandle, index );
+			D3DXHANDLE handle = m_Pointer->GetParameterElement( parentHandle, index );
 
 			if( handle == NULL )
 				return nullptr;
@@ -105,7 +105,7 @@ namespace SlimDX
 		{
 			D3DXPARAMETER_DESC desc;
 
-			HRESULT hr = m_BaseEffect->GetParameterDesc( parameter->InternalHandle, &desc );
+			HRESULT hr = m_Pointer->GetParameterDesc( parameter->InternalHandle, &desc );
 			GraphicsException::CheckHResult( hr );
 
 			ParameterDescription outDesc;
@@ -126,7 +126,7 @@ namespace SlimDX
 
 		EffectHandle^ BaseEffect::GetFunction( int index )
 		{
-			D3DXHANDLE handle = m_BaseEffect->GetFunction( index );
+			D3DXHANDLE handle = m_Pointer->GetFunction( index );
 
 			if( handle == NULL )
 				return nullptr;
@@ -138,7 +138,7 @@ namespace SlimDX
 			array<Byte>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 			pin_ptr<unsigned char> pinned_name = &nameBytes[0];
 
-			D3DXHANDLE handle = m_BaseEffect->GetFunctionByName( (const char*) pinned_name );
+			D3DXHANDLE handle = m_Pointer->GetFunctionByName( (const char*) pinned_name );
 
 			if( handle == NULL )
 				return nullptr;
@@ -149,7 +149,7 @@ namespace SlimDX
 		{
 			D3DXFUNCTION_DESC desc;
 
-			HRESULT hr = m_BaseEffect->GetFunctionDesc( handle->InternalHandle, &desc );
+			HRESULT hr = m_Pointer->GetFunctionDesc( handle->InternalHandle, &desc );
 			GraphicsException::CheckHResult( hr );
 
 			FunctionDescription outDesc;
@@ -161,7 +161,7 @@ namespace SlimDX
 
 		EffectHandle^ BaseEffect::GetTechnique( int index )
 		{
-			D3DXHANDLE handle = m_BaseEffect->GetTechnique( index );
+			D3DXHANDLE handle = m_Pointer->GetTechnique( index );
 
 			if( handle == NULL )
 				return nullptr;
@@ -173,7 +173,7 @@ namespace SlimDX
 			array<Byte>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 			pin_ptr<unsigned char> pinned_name = &nameBytes[0];
 
-			D3DXHANDLE handle = m_BaseEffect->GetTechniqueByName( (const char*) pinned_name );
+			D3DXHANDLE handle = m_Pointer->GetTechniqueByName( (const char*) pinned_name );
 
 			if( handle == NULL )
 				return nullptr;
@@ -184,7 +184,7 @@ namespace SlimDX
 		{
 			D3DXTECHNIQUE_DESC desc;
 
-			HRESULT hr = m_BaseEffect->GetTechniqueDesc( handle->InternalHandle, &desc );
+			HRESULT hr = m_Pointer->GetTechniqueDesc( handle->InternalHandle, &desc );
 			GraphicsException::CheckHResult( hr );
 
 			TechniqueDescription outDesc;
@@ -199,7 +199,7 @@ namespace SlimDX
 		{
 			D3DXEFFECT_DESC desc;
 
-			HRESULT hr = m_BaseEffect->GetDesc( &desc );
+			HRESULT hr = m_Pointer->GetDesc( &desc );
 			GraphicsException::CheckHResult( hr );
 
 			EffectDescription outDesc;
@@ -214,7 +214,7 @@ namespace SlimDX
 		void BaseEffect::SetValue( EffectHandle^ param, bool value )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			HRESULT hr = m_BaseEffect->SetBool( param->InternalHandle, value );
+			HRESULT hr = m_Pointer->SetBool( param->InternalHandle, value );
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -223,7 +223,7 @@ namespace SlimDX
 		void BaseEffect::SetValue( EffectHandle^ param, int value )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			HRESULT hr = m_BaseEffect->SetInt( handle, value );
+			HRESULT hr = m_Pointer->SetInt( handle, value );
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -231,14 +231,14 @@ namespace SlimDX
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
 			pin_ptr<int> pinned_value = &values[0];
-			HRESULT hr = m_BaseEffect->SetIntArray( handle, pinned_value, values->Length );
+			HRESULT hr = m_Pointer->SetIntArray( handle, pinned_value, values->Length );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ param, float value )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			HRESULT hr = m_BaseEffect->SetFloat( handle, value );
+			HRESULT hr = m_Pointer->SetFloat( handle, value );
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -246,14 +246,14 @@ namespace SlimDX
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
 			pin_ptr<float> pinned_values = &values[0];
-			HRESULT hr = m_BaseEffect->SetFloatArray( handle, pinned_values, values->Length );
+			HRESULT hr = m_Pointer->SetFloatArray( handle, pinned_values, values->Length );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ param, Vector4 value )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			HRESULT hr = m_BaseEffect->SetVector( handle, (const D3DXVECTOR4*) &value );
+			HRESULT hr = m_Pointer->SetVector( handle, (const D3DXVECTOR4*) &value );
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -261,14 +261,14 @@ namespace SlimDX
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
 			pin_ptr<Vector4> pinned_value = &values[0];
-			HRESULT hr = m_BaseEffect->SetVectorArray( handle, (const D3DXVECTOR4*) pinned_value, values->Length );
+			HRESULT hr = m_Pointer->SetVectorArray( handle, (const D3DXVECTOR4*) pinned_value, values->Length );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ param, ColorValue value )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			HRESULT hr = m_BaseEffect->SetVector( handle, (const D3DXVECTOR4*) &value );
+			HRESULT hr = m_Pointer->SetVector( handle, (const D3DXVECTOR4*) &value );
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -276,14 +276,14 @@ namespace SlimDX
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
 			pin_ptr<ColorValue> pinned_value = &values[0];
-			HRESULT hr = m_BaseEffect->SetVectorArray( handle, (const D3DXVECTOR4*) pinned_value, values->Length );
+			HRESULT hr = m_Pointer->SetVectorArray( handle, (const D3DXVECTOR4*) pinned_value, values->Length );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ param, Matrix value )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			HRESULT hr = m_BaseEffect->SetMatrix( handle, (const D3DXMATRIX*) &value );
+			HRESULT hr = m_Pointer->SetMatrix( handle, (const D3DXMATRIX*) &value );
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -291,7 +291,7 @@ namespace SlimDX
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
 			pin_ptr<Matrix> pinned_value = &values[0];
-			HRESULT hr = m_BaseEffect->SetMatrixArray( handle, (const D3DXMATRIX*) pinned_value, values->Length );
+			HRESULT hr = m_Pointer->SetMatrixArray( handle, (const D3DXMATRIX*) pinned_value, values->Length );
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -299,17 +299,17 @@ namespace SlimDX
 		{
 			IDirect3DBaseTexture9* texture = NULL;
 			if( value != nullptr )
-				texture = static_cast<IDirect3DBaseTexture9*>( value->ResourcePointer );
+				texture = value->BaseTexturePointer;
 
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			HRESULT hr = m_BaseEffect->SetTexture( handle, texture );
+			HRESULT hr = m_Pointer->SetTexture( handle, texture );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void BaseEffect::SetValueTranspose( EffectHandle^ param, Matrix value )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			HRESULT hr = m_BaseEffect->SetMatrixTranspose( handle, (const D3DXMATRIX*) &value );
+			HRESULT hr = m_Pointer->SetMatrixTranspose( handle, (const D3DXMATRIX*) &value );
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -317,7 +317,7 @@ namespace SlimDX
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
 			pin_ptr<Matrix> pinned_value = &values[0];
-			HRESULT hr = m_BaseEffect->SetMatrixTransposeArray( handle, (const D3DXMATRIX*) pinned_value, values->Length );
+			HRESULT hr = m_Pointer->SetMatrixTransposeArray( handle, (const D3DXMATRIX*) pinned_value, values->Length );
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -326,7 +326,7 @@ namespace SlimDX
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
 			LPCSTR data = 0;
 
-			HRESULT hr = m_BaseEffect->GetString(handle,&data);
+			HRESULT hr = m_Pointer->GetString(handle,&data);
 			GraphicsException::CheckHResult( hr );
 
 			return (gcnew String(data));
@@ -336,8 +336,6 @@ namespace SlimDX
 		{
 			if( effect == NULL )
 				throw gcnew ArgumentNullException( "effect" );
-
-			m_Effect = effect;
 		}
 
 		Effect^ Effect::FromMemory( Device ^device, array<Byte>^ memory, array<Macro>^ preprocessorDefines,
@@ -472,7 +470,7 @@ namespace SlimDX
 		{
 			unsigned int passCount;
 
-			HRESULT hr = m_Effect->Begin( &passCount, (DWORD) flags );
+			HRESULT hr = EffectPointer->Begin( &passCount, (DWORD) flags );
 			GraphicsException::CheckHResult( hr );
 
 			return passCount;
@@ -480,31 +478,31 @@ namespace SlimDX
 
 		void Effect::End()
 		{
-			HRESULT hr = m_Effect->End();
+			HRESULT hr = EffectPointer->End();
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void Effect::BeginPass( int pass )
 		{
-			HRESULT hr = m_Effect->BeginPass( pass );
+			HRESULT hr = EffectPointer->BeginPass( pass );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void Effect::EndPass()
 		{
-			HRESULT hr = m_Effect->EndPass();
+			HRESULT hr = EffectPointer->EndPass();
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void Effect::BeginParameterBlock()
 		{
-			HRESULT hr = m_Effect->BeginParameterBlock();
+			HRESULT hr = EffectPointer->BeginParameterBlock();
 			GraphicsException::CheckHResult( hr );
 		}
 
 		EffectHandle^ Effect::EndParameterBlock()
 		{
-			D3DXHANDLE handle = m_Effect->EndParameterBlock();
+			D3DXHANDLE handle = EffectPointer->EndParameterBlock();
 			if( handle == NULL )
 				return nullptr;
 			return gcnew EffectHandle( handle );
@@ -513,20 +511,20 @@ namespace SlimDX
 		void Effect::ApplyParameterBlock( EffectHandle^ parameterBlock )
 		{
 			D3DXHANDLE handle = parameterBlock != nullptr ? parameterBlock->InternalHandle : nullptr;
-			HRESULT hr = m_Effect->ApplyParameterBlock( handle );
+			HRESULT hr = EffectPointer->ApplyParameterBlock( handle );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void Effect::DeleteParameterBlock( EffectHandle^ parameterBlock )
 		{
 			D3DXHANDLE handle = parameterBlock != nullptr ? parameterBlock->InternalHandle : nullptr;
-			HRESULT hr = m_Effect->DeleteParameterBlock( handle );
+			HRESULT hr = EffectPointer->DeleteParameterBlock( handle );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void Effect::CommitChanges()
 		{
-			HRESULT hr = m_Effect->CommitChanges();
+			HRESULT hr = EffectPointer->CommitChanges();
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -535,7 +533,7 @@ namespace SlimDX
 			D3DXHANDLE handle;
 			D3DXHANDLE parentHandle = technique != nullptr ? technique->InternalHandle : nullptr;
 
-			HRESULT hr = m_Effect->FindNextValidTechnique( parentHandle, &handle );
+			HRESULT hr = EffectPointer->FindNextValidTechnique( parentHandle, &handle );
 			GraphicsException::CheckHResult( hr );
 
 			if( handle == NULL )
@@ -546,12 +544,12 @@ namespace SlimDX
 		bool Effect::ValidateTechnique( EffectHandle^ technique )
 		{
 			D3DXHANDLE handle = technique != nullptr ? technique->InternalHandle : nullptr;
-			return FAILED( m_Effect->ValidateTechnique( handle ) );
+			return FAILED( EffectPointer->ValidateTechnique( handle ) );
 		}
 
 		EffectHandle^ Effect::Technique::get()
 		{
-			D3DXHANDLE handle = m_Effect->GetCurrentTechnique();
+			D3DXHANDLE handle = EffectPointer->GetCurrentTechnique();
 			if( handle == NULL )
 				return nullptr;
 			return gcnew EffectHandle( handle );
@@ -560,19 +558,19 @@ namespace SlimDX
 		void Effect::Technique::set( EffectHandle^ value )
 		{
 			D3DXHANDLE handle = value != nullptr ? value->InternalHandle : nullptr;
-			HRESULT hr = m_Effect->SetTechnique( handle );
+			HRESULT hr = EffectPointer->SetTechnique( handle );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void Effect::OnLostDevice()
 		{
-			HRESULT hr = m_Effect->OnLostDevice();
+			HRESULT hr = EffectPointer->OnLostDevice();
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void Effect::OnResetDevice()
 		{
-			HRESULT hr = m_Effect->OnResetDevice();
+			HRESULT hr = EffectPointer->OnResetDevice();
 			GraphicsException::CheckHResult( hr );
 		}
 	}

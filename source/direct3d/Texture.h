@@ -33,37 +33,18 @@ namespace SlimDX
 		public ref class BaseTexture abstract : public Resource
 		{
 		internal:
-			virtual property IDirect3DBaseTexture9* BasePointer
+			property IDirect3DBaseTexture9* BaseTexturePointer
 			{
-				IDirect3DBaseTexture9* get() abstract;
+				IDirect3DBaseTexture9* get() { return (IDirect3DBaseTexture9*) m_Pointer; }
 			}
 		};
 
 		public ref class Texture : public BaseTexture
 		{
-		private:
-			IDirect3DTexture9* m_Texture;
-
 		internal:
-			property IDirect3DTexture9* InternalPointer
+			property IDirect3DTexture9* TexturePointer
 			{
-				IDirect3DTexture9* get() { return m_Texture; }
-			}
-
-			property IDirect3DBaseTexture9* BasePointer
-			{
-				virtual IDirect3DBaseTexture9* get() override { return m_Texture; }
-			}
-
-			property IDirect3DResource9* ResourcePointer
-			{
-				virtual IDirect3DResource9* get() override { return m_Texture; }
-			}
-
-			property IUnknown* ComPointer
-			{
-				virtual IUnknown* get() override { return m_Texture; }
-				virtual void set( IUnknown* value ) override { m_Texture = (IDirect3DTexture9*) value; }
+				IDirect3DTexture9* get() { return (IDirect3DTexture9*) m_Pointer; }
 			}
 
 		public:
@@ -94,29 +75,10 @@ namespace SlimDX
 
 		public ref class CubeTexture : public BaseTexture
 		{
-		private:
-			IDirect3DCubeTexture9* m_Texture;
-
 		internal:
-			property IDirect3DCubeTexture9* InternalPointer
+			property IDirect3DCubeTexture9* TexturePointer
 			{
-				IDirect3DCubeTexture9* get() { return m_Texture; }
-			}
-
-			property IDirect3DBaseTexture9* BasePointer
-			{
-				virtual IDirect3DBaseTexture9* get() override { return m_Texture; }
-			}
-
-			property IDirect3DResource9* ResourcePointer
-			{
-				virtual IDirect3DResource9* get() override { return m_Texture; }
-			}
-
-			property IUnknown* ComPointer
-			{
-				virtual IUnknown* get() override { return m_Texture; }
-				virtual void set( IUnknown* value ) override { m_Texture = (IDirect3DCubeTexture9*) value; }
+				IDirect3DCubeTexture9* get() { return (IDirect3DCubeTexture9*) m_Pointer; }
 			}
 
 		public:
@@ -144,29 +106,10 @@ namespace SlimDX
 
 		public ref class VolumeTexture : public BaseTexture
 		{
-		private:
-			IDirect3DVolumeTexture9* m_Texture;
-
 		internal:
-			property IDirect3DVolumeTexture9* InternalPointer
+			property IDirect3DVolumeTexture9* TexturePointer
 			{
-				IDirect3DVolumeTexture9* get() { return m_Texture; }
-			}
-
-			property IDirect3DBaseTexture9* BasePointer
-			{
-				virtual IDirect3DBaseTexture9* get() override { return m_Texture; }
-			}
-
-			property IDirect3DResource9* ResourcePointer
-			{
-				virtual IDirect3DResource9* get() override { return m_Texture; }
-			}
-
-			property IUnknown* ComPointer
-			{
-				virtual IUnknown* get() override { return m_Texture; }
-				virtual void set( IUnknown* value ) override { m_Texture = (IDirect3DVolumeTexture9*) value; }
+				IDirect3DVolumeTexture9* get() { return (IDirect3DVolumeTexture9*) m_Pointer; }
 			}
 
 		public:

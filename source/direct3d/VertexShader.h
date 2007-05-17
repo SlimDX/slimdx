@@ -29,23 +29,10 @@ namespace SlimDX
 	{	
 		ref class ConstantTable;
 		
-		public ref class VertexShader : public DirectXObject
+		public ref class VertexShader : public DirectXObject<IDirect3DVertexShader9>
 		{
 		private:
-			IDirect3DVertexShader9* m_VertexShader;
 			ConstantTable^ m_ConstantTable;
-
-		internal:
-			property IDirect3DVertexShader9* InternalPointer
-			{
-				IDirect3DVertexShader9* get() { return m_VertexShader; }
-			}
-
-			property IUnknown* ComPointer
-			{
-				virtual IUnknown* get() override { return m_VertexShader; }
-				virtual void set( IUnknown* value ) override { m_VertexShader = (IDirect3DVertexShader9*) value; }
-			}
 
 		public:
 			VertexShader( IDirect3DVertexShader9* VertexShader, ID3DXConstantTable* constantTable );

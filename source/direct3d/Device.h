@@ -81,28 +81,14 @@ namespace SlimDX
 		ref class RenderStateManager;
 		ref class TransformManager;
 
-		public ref class Device : public DirectXObject
+		public ref class Device : public DirectXObject<IDirect3DDevice9>
 		{
 		private:
-			IDirect3DDevice9* m_Device;
-
 			RenderStateManager^ m_RenderState;
 			TransformManager^ m_Transforms;
 			IndexBuffer^ m_Indices;
 			VertexFormats m_VertexFormat;
 			VertexDeclaration^ m_VertexDecl;
-
-		internal:
-			property IDirect3DDevice9* InternalPointer
-			{
-				IDirect3DDevice9* get() { return m_Device; }
-			}
-
-			property IUnknown* ComPointer
-			{
-				virtual IUnknown* get() override { return m_Device; }
-				virtual void set( IUnknown* value ) override { m_Device = (IDirect3DDevice9*) value; }
-			}
 
 		public:
 			Device( IDirect3DDevice9* device );

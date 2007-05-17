@@ -35,7 +35,7 @@ namespace Direct3D
 		if( buffer == NULL )
 			throw gcnew ArgumentNullException( "buffer" );
 
-		m_Buffer = buffer;
+		m_Pointer = buffer;
 	}
 
 	VertexBuffer::VertexBuffer( Device^ device, int sizeBytes, Usage usage, VertexFormats format, Pool pool )
@@ -45,13 +45,13 @@ namespace Direct3D
 			(DWORD) format, (D3DPOOL) pool, &vb, NULL );
 		GraphicsException::CheckHResult( hr );
 		
-		m_Buffer = vb;
+		m_Pointer = vb;
 	}
 
 	GraphicsStream^ VertexBuffer::Lock( int offset, int size, LockFlags flags )
 	{
 		void* lockedPtr;
-		HRESULT hr = m_Buffer->Lock( offset, size, &lockedPtr, (DWORD) flags );
+		HRESULT hr = VbPointer->Lock( offset, size, &lockedPtr, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
@@ -61,7 +61,7 @@ namespace Direct3D
 
 	void VertexBuffer::Unlock()
 	{
-		m_Buffer->Unlock();
+		VbPointer->Unlock();
 	}
 }
 }

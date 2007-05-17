@@ -32,13 +32,16 @@ namespace Direct3D
 {
 	VertexDeclaration::VertexDeclaration( Device^ device, array<VertexElement>^ elements )
 	{
+		if( elements == nullptr )
+			throw gcnew ArgumentNullException( "elements" );
+
 		pin_ptr<VertexElement> pinnedElements = &elements[0];
 		IDirect3DVertexDeclaration9* decl;
 
 		HRESULT hr = device->InternalPointer->CreateVertexDeclaration( (const D3DVERTEXELEMENT9*) pinnedElements, &decl );
 		GraphicsException::CheckHResult( hr );
 
-		m_Decl = decl;
+		m_Pointer = decl;
 	}
 }
 }

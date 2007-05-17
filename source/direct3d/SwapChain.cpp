@@ -38,13 +38,13 @@ namespace Direct3D
 		if( swapChain == NULL )
 			throw gcnew ArgumentNullException( "swapChain" );
 
-		m_SwapChain = swapChain;
+		m_Pointer = swapChain;
 	}
 
 	Surface^ SwapChain::GetBackBuffer( int index )
 	{
 		IDirect3DSurface9* surface;
-		HRESULT hr = m_SwapChain->GetBackBuffer( index, D3DBACKBUFFER_TYPE_MONO, &surface );
+		HRESULT hr = m_Pointer->GetBackBuffer( index, D3DBACKBUFFER_TYPE_MONO, &surface );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -57,14 +57,14 @@ namespace Direct3D
 		if( destSurface == nullptr )
 			throw gcnew ArgumentNullException( "destSurface" );
 
-		HRESULT hr = m_SwapChain->GetFrontBufferData( destSurface->InternalPointer );
+		HRESULT hr = m_Pointer->GetFrontBufferData( destSurface->SurfacePointer );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	Device^ SwapChain::GetDevice()
 	{
 		IDirect3DDevice9* device;
-		HRESULT hr = m_SwapChain->GetDevice( &device );
+		HRESULT hr = m_Pointer->GetDevice( &device );
 		GraphicsException::CheckHResult( hr );
 
 		return gcnew Device( device );
@@ -73,7 +73,7 @@ namespace Direct3D
 	SlimDX::Direct3D::DisplayMode SwapChain::DisplayMode::get()
 	{
 		SlimDX::Direct3D::DisplayMode mode;
-		HRESULT hr = m_SwapChain->GetDisplayMode( (D3DDISPLAYMODE*) &mode );
+		HRESULT hr = m_Pointer->GetDisplayMode( (D3DDISPLAYMODE*) &mode );
 		GraphicsException::CheckHResult( hr );
 
 		return mode;
@@ -82,7 +82,7 @@ namespace Direct3D
 	SlimDX::Direct3D::RasterStatus SwapChain::RasterStatus::get()
 	{
 		D3DRASTER_STATUS status;
-		HRESULT hr = m_SwapChain->GetRasterStatus( &status );
+		HRESULT hr = m_Pointer->GetRasterStatus( &status );
 		GraphicsException::CheckHResult( hr );
 
 		SlimDX::Direct3D::RasterStatus result;
@@ -93,7 +93,7 @@ namespace Direct3D
 
 	void SwapChain::Present( SlimDX::Direct3D::Present flags )
 	{
-		HRESULT hr = m_SwapChain->Present( 0, 0, 0, 0, (DWORD) flags );
+		HRESULT hr = m_Pointer->Present( 0, 0, 0, 0, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
 	}
 }

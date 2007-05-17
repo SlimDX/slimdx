@@ -60,23 +60,8 @@ namespace SlimDX
 			}
 		};
 
-		public ref class Device : public DirectXObject
+		public ref class Device : public DirectXObject<IDirectInputDevice8W>
 		{
-		private:
-			IDirectInputDevice8W* m_Device;
-
-		internal:
-			property IDirectInputDevice8W* InternalPointer
-			{
-				IDirectInputDevice8W* get() { return m_Device; }
-			}
-
-			property IUnknown* ComPointer
-			{
-				virtual IUnknown* get() override { return m_Device; }
-				virtual void set( IUnknown* value ) override { m_Device = (IDirectInputDevice8*) value; }
-			}
-			
 		public:
 			Device( IDirectInputDevice8W* device );
 			Device( Guid subsystem );

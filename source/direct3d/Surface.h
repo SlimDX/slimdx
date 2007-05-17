@@ -45,24 +45,10 @@ namespace SlimDX
 
 		public ref class Surface : public Resource
 		{
-		private:
-			IDirect3DSurface9* m_Surface;
-
 		internal:
-			property IDirect3DSurface9* InternalPointer
+			property IDirect3DSurface9* SurfacePointer
 			{
-				IDirect3DSurface9* get() { return m_Surface; }
-			}
-
-			property IDirect3DResource9* ResourcePointer
-			{
-				virtual IDirect3DResource9* get() override { return m_Surface; }
-			}
-
-			property IUnknown* ComPointer
-			{
-				virtual IUnknown* get() override { return m_Surface; }
-				virtual void set( IUnknown* value ) override { m_Surface = (IDirect3DSurface9*) value; }
+				IDirect3DSurface9* get() { return (IDirect3DSurface9*) m_Pointer; }
 			}
 
 		public:

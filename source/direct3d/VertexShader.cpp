@@ -35,13 +35,14 @@ namespace SlimDX
 {
 namespace Direct3D
 {
-	VertexShader::VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable ) : m_VertexShader( vertexShader )
+	VertexShader::VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable ) : DirectXObject( vertexShader )
 	{
 		IDirect3DDevice9* device;
 		HRESULT hr = vertexShader->GetDevice(&device);
 		GraphicsException::CheckHResult( hr );
 		
 		m_ConstantTable = gcnew ConstantTable( device, constantTable );
+		device->Release();
 	}
 
 	VertexShader^ VertexShader::FromString( Device^ device, String^ sourceCode, String^ entryPoint, String^ profile, ShaderFlags flags, [Out] String^ %compilationErrors )

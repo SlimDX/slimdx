@@ -37,23 +37,8 @@ namespace SlimDX
 			int ScanLine;
 		};
 
-		public ref class SwapChain : public DirectXObject
+		public ref class SwapChain : public DirectXObject<IDirect3DSwapChain9>
 		{
-		private:
-			IDirect3DSwapChain9* m_SwapChain;
-
-		internal:
-			property IDirect3DSwapChain9* InternalPointer
-			{
-				IDirect3DSwapChain9* get() { return m_SwapChain; }
-			}
-
-			property IUnknown* ComPointer
-			{
-				virtual IUnknown* get() override { return m_SwapChain; }
-				virtual void set( IUnknown* value ) override { m_SwapChain = (IDirect3DSwapChain9*) value; }
-			}
-
 		public:
 			SwapChain( IDirect3DSwapChain9* swapChain );
 

@@ -40,7 +40,7 @@ namespace Direct3D
 		if( texture == NULL )
 			throw gcnew ArgumentNullException( "texture" );
 
-		m_Texture = texture;
+		m_Pointer = texture;
 	}
 
 	Texture::Texture( Device^ device, int width, int height, int numLevels, Usage usage, Format format, Pool pool )
@@ -50,7 +50,7 @@ namespace Direct3D
 			(D3DFORMAT) format, (D3DPOOL) pool, &texture, NULL );
 		GraphicsException::CheckHResult( hr );
 
-		m_Texture = texture;
+		m_Pointer = texture;
 	}
 
 	Texture^ Texture::FromMemory( Device^ device, array<Byte>^ memory, int width, int height, int numLevels,
@@ -123,7 +123,7 @@ namespace Direct3D
 	GraphicsStream^ Texture::LockRectangle( int level, LockFlags flags )
 	{
 		D3DLOCKED_RECT lockedRect;
-		HRESULT hr = m_Texture->LockRect( level, &lockedRect, NULL, (DWORD) flags );
+		HRESULT hr = TexturePointer->LockRect( level, &lockedRect, NULL, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
@@ -133,14 +133,14 @@ namespace Direct3D
 
 	void Texture::UnlockRectangle( int level )
 	{
-		HRESULT hr = m_Texture->UnlockRect( level );
+		HRESULT hr = TexturePointer->UnlockRect( level );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	SurfaceDescription Texture::GetLevelDesc( int level )
 	{
 		SurfaceDescription desc;
-		HRESULT hr = m_Texture->GetLevelDesc( level, (D3DSURFACE_DESC*) &desc );
+		HRESULT hr = TexturePointer->GetLevelDesc( level, (D3DSURFACE_DESC*) &desc );
 		GraphicsException::CheckHResult( hr );
 		return desc;
 	}
@@ -148,7 +148,7 @@ namespace Direct3D
 	Surface^ Texture::GetSurfaceLevel( int level )
 	{
 		IDirect3DSurface9* surface;
-		HRESULT hr = m_Texture->GetSurfaceLevel( level, &surface );
+		HRESULT hr = TexturePointer->GetSurfaceLevel( level, &surface );
 		GraphicsException::CheckHResult( hr );
 		return gcnew Surface( surface );
 	}
@@ -158,7 +158,7 @@ namespace Direct3D
 		if( texture == NULL )
 			throw gcnew ArgumentNullException( "texture" );
 
-		m_Texture = texture;
+		m_Pointer = texture;
 	}
 
 	CubeTexture::CubeTexture( Device^ device, int edgeLength, int numLevels, Usage usage, Format format, Pool pool )
@@ -168,7 +168,7 @@ namespace Direct3D
 			(D3DFORMAT) format, (D3DPOOL) pool, &texture, NULL );
 		GraphicsException::CheckHResult( hr );
 
-		m_Texture = texture;
+		m_Pointer = texture;
 	}
 
 	CubeTexture^ CubeTexture::FromMemory( Device^ device, array<Byte>^ memory, int size, int numLevels,
@@ -241,7 +241,7 @@ namespace Direct3D
 	GraphicsStream^ CubeTexture::LockRectangle( CubeMapFace face, int level, LockFlags flags )
 	{
 		D3DLOCKED_RECT lockedRect;
-		HRESULT hr = m_Texture->LockRect( (D3DCUBEMAP_FACES) face, level, &lockedRect, NULL, (DWORD) flags );
+		HRESULT hr = TexturePointer->LockRect( (D3DCUBEMAP_FACES) face, level, &lockedRect, NULL, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
@@ -251,7 +251,7 @@ namespace Direct3D
 
 	void CubeTexture::UnlockRectangle( CubeMapFace face, int level )
 	{
-		HRESULT hr = m_Texture->UnlockRect( (D3DCUBEMAP_FACES) face, level );
+		HRESULT hr = TexturePointer->UnlockRect( (D3DCUBEMAP_FACES) face, level );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -261,7 +261,7 @@ namespace Direct3D
 		if( texture == NULL )
 			throw gcnew ArgumentNullException( "texture" );
 
-		m_Texture = texture;
+		m_Pointer = texture;
 	}
 
 	VolumeTexture::VolumeTexture( Device^ device, int width, int height, int depth, int numLevels, Usage usage, Format format, Pool pool )
@@ -271,7 +271,7 @@ namespace Direct3D
 			(DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, &texture, NULL );
 		GraphicsException::CheckHResult( hr );
 
-		m_Texture = texture;
+		m_Pointer = texture;
 	}
 
 	VolumeTexture^ VolumeTexture::FromMemory( Device^ device, array<Byte>^ memory, int width, int height, int depth,

@@ -38,14 +38,8 @@ namespace SlimDX
 			IndexBuffer = D3DRTYPE_INDEXBUFFER,
 		};
 
-		public ref class Resource abstract : public DirectXObject
+		public ref class Resource abstract : public DirectXObject<IDirect3DResource9>
 		{
-		internal:
-			virtual property IDirect3DResource9* ResourcePointer
-			{
-				IDirect3DResource9* get() abstract;
-			}
-
 		public:
 			Device^ GetDevice();
 		};

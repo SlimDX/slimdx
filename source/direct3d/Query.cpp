@@ -36,7 +36,7 @@ namespace Direct3D
 		if( query == NULL )
 			throw gcnew ArgumentNullException( "surface" );
 
-		m_Query = query;
+		m_Pointer = query;
 	}
 
 	Query::Query( Device^ device, QueryType type )
@@ -45,23 +45,23 @@ namespace Direct3D
 		HRESULT hr = device->InternalPointer->CreateQuery( (D3DQUERYTYPE) type, &query );
 		GraphicsException::CheckHResult( hr );
 
-		m_Query = query;
+		m_Pointer = query;
 	}
 
 	int Query::DataSize::get()
 	{
-		return m_Query->GetDataSize();
+		return m_Pointer->GetDataSize();
 	}
 
 	QueryType Query::Type::get()
 	{
-		return (QueryType) m_Query->GetType();
+		return (QueryType) m_Pointer->GetType();
 	}
 
 	Device^ Query::GetDevice()
 	{
 		IDirect3DDevice9* device;
-		HRESULT hr = m_Query->GetDevice( &device );
+		HRESULT hr = m_Pointer->GetDevice( &device );
 		GraphicsException::CheckHResult( hr );
 
 		return gcnew Device( device );
@@ -69,13 +69,13 @@ namespace Direct3D
 
 	void Query::Issue( SlimDX::Direct3D::Issue flags )
 	{
-		HRESULT hr = m_Query->Issue( (DWORD) flags );
+		HRESULT hr = m_Pointer->Issue( (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	bool Query::CheckStatus( bool flush )
 	{
-		HRESULT hr = m_Query->GetData( NULL, 0, flush ? D3DGETDATA_FLUSH : 0 );
+		HRESULT hr = m_Pointer->GetData( NULL, 0, flush ? D3DGETDATA_FLUSH : 0 );
 		
 		switch( hr )
 		{
@@ -174,7 +174,7 @@ namespace Direct3D
 		{
 			//need to marshal BOOL (int) to bool
 			BOOL value;
-			hr = m_Query->GetData( &value, sizeof(BOOL), flags );
+			hr = m_Pointer->GetData( &value, sizeof(BOOL), flags );
 			GraphicsException::CheckHResult( hr );
 			//we know that T is a bool, but the runtime does not
 			return (T) (value > 0);
@@ -182,7 +182,7 @@ namespace Direct3D
 		else
 		{
 			T data;
-			hr = m_Query->GetData( &data, Marshal::SizeOf( T::typeid ), flags );
+			hr = m_Pointer->GetData( &data, Marshal::SizeOf( T::typeid ), flags );
 			GraphicsException::CheckHResult( hr );
 			return data;
 		}

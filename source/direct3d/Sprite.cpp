@@ -35,12 +35,10 @@ namespace SlimDX
 {
 namespace Direct3D
 {
-	Sprite::Sprite( ID3DXSprite* sprite )
+	Sprite::Sprite( ID3DXSprite* sprite ) : DirectXObject( sprite )
 	{
 		if( sprite == NULL )
 			throw gcnew ArgumentNullException( "sprite" );
-
-		m_Sprite = sprite;
 	}
 
 	Sprite::Sprite( Device^ device )
@@ -50,36 +48,36 @@ namespace Direct3D
 		HRESULT hr = D3DXCreateSprite( device->InternalPointer, &sprite );
 		GraphicsException::CheckHResult( hr );
 
-		m_Sprite = sprite;
+		m_Pointer = sprite;
 	}
 
 	void Sprite::Begin( SpriteFlags flags )
 	{
-		HRESULT hr = m_Sprite->Begin( (DWORD) flags );
+		HRESULT hr = m_Pointer->Begin( (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Sprite::End()
 	{
-		HRESULT hr = m_Sprite->End();
+		HRESULT hr = m_Pointer->End();
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Sprite::Flush()
 	{
-		HRESULT hr = m_Sprite->Flush();
+		HRESULT hr = m_Pointer->Flush();
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Sprite::OnLostDevice()
 	{
-		HRESULT hr = m_Sprite->OnLostDevice();
+		HRESULT hr = m_Pointer->OnLostDevice();
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Sprite::OnResetDevice()
 	{
-		HRESULT hr = m_Sprite->OnResetDevice();
+		HRESULT hr = m_Pointer->OnResetDevice();
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -87,7 +85,7 @@ namespace Direct3D
 	{
 		IDirect3DDevice9* device;
 
-		HRESULT hr = m_Sprite->GetDevice( &device );
+		HRESULT hr = m_Pointer->GetDevice( &device );
 		GraphicsException::CheckHResult( hr );
 
 		return gcnew Device( device );
@@ -97,7 +95,7 @@ namespace Direct3D
 	{
 		Matrix result;
 
-		HRESULT hr = m_Sprite->GetTransform( (D3DXMATRIX*) &result );
+		HRESULT hr = m_Pointer->GetTransform( (D3DXMATRIX*) &result );
 		GraphicsException::CheckHResult( hr );
 
 		return result;
@@ -105,19 +103,19 @@ namespace Direct3D
 
 	void Sprite::SetTransform( Matrix transform )
 	{
-		HRESULT hr = m_Sprite->SetTransform( (const D3DXMATRIX*) &transform );
+		HRESULT hr = m_Pointer->SetTransform( (const D3DXMATRIX*) &transform );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Sprite::SetWorldViewLH( Matrix world, Matrix view )
 	{
-		HRESULT hr = m_Sprite->SetWorldViewLH( (const D3DXMATRIX*) &world, (const D3DXMATRIX*) &view );
+		HRESULT hr = m_Pointer->SetWorldViewLH( (const D3DXMATRIX*) &world, (const D3DXMATRIX*) &view );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Sprite::SetWorldViewRH( Matrix world, Matrix view )
 	{
-		HRESULT hr = m_Sprite->SetWorldViewRH( (const D3DXMATRIX*) &world, (const D3DXMATRIX*) &view );
+		HRESULT hr = m_Pointer->SetWorldViewRH( (const D3DXMATRIX*) &world, (const D3DXMATRIX*) &view );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -125,7 +123,7 @@ namespace Direct3D
 	{
 		RECT rect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
 
-		HRESULT hr = m_Sprite->Draw( texture->InternalPointer, &rect, (const D3DXVECTOR3*) &center,
+		HRESULT hr = m_Pointer->Draw( texture->TexturePointer, &rect, (const D3DXVECTOR3*) &center,
 			(const D3DXVECTOR3*) &position, color );
 		GraphicsException::CheckHResult( hr );
 	}
@@ -139,7 +137,7 @@ namespace Direct3D
 	{
 		RECT rect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
 
-		HRESULT hr = m_Sprite->Draw( texture->InternalPointer, &rect, NULL, NULL, color );
+		HRESULT hr = m_Pointer->Draw( texture->TexturePointer, &rect, NULL, NULL, color );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -150,7 +148,7 @@ namespace Direct3D
 
 	void Sprite::Draw( Texture^ texture, Vector3 center, Vector3 position, int color )
 	{
-		HRESULT hr = m_Sprite->Draw( texture->InternalPointer, NULL, (const D3DXVECTOR3*) &center,
+		HRESULT hr = m_Pointer->Draw( texture->TexturePointer, NULL, (const D3DXVECTOR3*) &center,
 			(const D3DXVECTOR3*) &position, color );
 		GraphicsException::CheckHResult( hr );
 	}
@@ -162,7 +160,7 @@ namespace Direct3D
 
 	void Sprite::Draw( Texture^ texture, int color )
 	{
-		HRESULT hr = m_Sprite->Draw( texture->InternalPointer, NULL, NULL, NULL, color );
+		HRESULT hr = m_Pointer->Draw( texture->TexturePointer, NULL, NULL, NULL, color );
 		GraphicsException::CheckHResult( hr );
 	}
 

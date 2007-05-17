@@ -147,23 +147,8 @@ namespace SlimDX
 			String^ FaceName;
 		};
 
-		public ref class Font : public DirectXObject
+		public ref class Font : public DirectXObject<ID3DXFont>
 		{
-		private:
-			ID3DXFont* m_Font;
-
-		internal:
-			property ID3DXFont* InternalPointer
-			{
-				ID3DXFont* get() { return m_Font; }
-			}
-
-			property IUnknown* ComPointer
-			{
-				virtual IUnknown* get() override { return m_Font; }
-				virtual void set( IUnknown* value ) override { m_Font = (ID3DXFont*) value; }
-			}
-
 		public:
 			Font( ID3DXFont* font );
 			Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,
