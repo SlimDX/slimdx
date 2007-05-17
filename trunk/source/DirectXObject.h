@@ -25,8 +25,20 @@
 
 namespace SlimDX
 {
+	//This provides a common base for all the DirectXObject template types, and allows
+	//them to access a single set of config functions
+	public ref class DirectXBase abstract
+	{
+	public:
+		static property bool AutoReleaseEnabled;
+		static DirectXBase()
+		{
+			AutoReleaseEnabled = true;
+		}
+	};
+
 	template<typename T>
-	public ref class DirectXObject abstract
+	public ref class DirectXObject abstract : public DirectXBase
 	{
 	protected:
 		DirectXObject()
@@ -51,12 +63,6 @@ namespace SlimDX
 		}
 
 	public:
-		static property bool AutoReleaseEnabled;
-		static DirectXObject()
-		{
-			AutoReleaseEnabled = true;
-		}
-
 		virtual ~DirectXObject()
 		{
 			Destruct();
