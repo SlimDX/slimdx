@@ -59,7 +59,7 @@ namespace Direct3D
 		m_Pointer = font;
 	}
 
-	int Font::DrawText( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, int color )
+	int Font::DrawString( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, int color )
 	{
 		ID3DXSprite* spritePtr = sprite != nullptr ? sprite->InternalPointer : NULL;
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
@@ -68,20 +68,20 @@ namespace Direct3D
 		return m_Pointer->DrawTextW( spritePtr, (LPCWSTR) pinned_text, text->Length, &nativeRect, (DWORD) format, color );
 	}
 
-	int Font::DrawText( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, Color color )
+	int Font::DrawString( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, Color color )
 	{
-		return DrawText( sprite, text, rect, format, color.ToArgb() );
+		return DrawString( sprite, text, rect, format, color.ToArgb() );
 	}
 
-	int Font::DrawText( Sprite^ sprite, String^ text, int x, int y, int color )
+	int Font::DrawString( Sprite^ sprite, String^ text, int x, int y, int color )
 	{
 		System::Drawing::Rectangle rect( x, y, 0, 0 );
-		return DrawText( sprite, text, rect, DrawTextFormat::NoClip, color );
+		return DrawString( sprite, text, rect, DrawTextFormat::NoClip, color );
 	}
 
-	int Font::DrawText( Sprite^ sprite, String^ text, int x, int y, Color color )
+	int Font::DrawString( Sprite^ sprite, String^ text, int x, int y, Color color )
 	{
-		return DrawText( sprite, text, x, y, color.ToArgb() );
+		return DrawString( sprite, text, x, y, color.ToArgb() );
 	}
 
 	System::Drawing::Rectangle Font::MeasureString( Sprite^ sprite, String^ text, DrawTextFormat format )

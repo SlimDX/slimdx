@@ -53,13 +53,13 @@ namespace Engine
 			effect.SetValue("time", waterTime);
 
 			//render the effect
-			device.RenderState.AlphaBlendEnable = true;
+			device.SetRenderState(RenderState.AlphaBlendEnable, true);
 			effect.Begin(0);
 			effect.BeginPass(0);
 			mesh.DrawSubset(0);
 			effect.EndPass();
 			effect.End();
-			device.RenderState.AlphaBlendEnable = false;
+			device.SetRenderState(RenderState.AlphaBlendEnable, false);
 		}
 		public void Render(Device device, Texture waterTexture)
 		{

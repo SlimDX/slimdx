@@ -30,6 +30,21 @@ namespace SlimDX
 {
 	namespace Direct3D
 	{
+		public value class ImageInformation
+		{
+		public:
+			int Width;
+			int Height;
+			int Depth;
+			int MipLevels;
+			Format Format;
+			ResourceType ResourceType;
+			ImageFileFormat ImageFileFormat;
+
+			static ImageInformation FromFile( String^ fileName );
+			static ImageInformation FromMemory( array<Byte>^ memory );
+		};
+
 		public ref class BaseTexture abstract : public Resource
 		{
 		internal:

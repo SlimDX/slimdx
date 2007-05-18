@@ -38,7 +38,7 @@ namespace Direct3D
 		m_Pointer = buffer;
 	}
 
-	VertexBuffer::VertexBuffer( Device^ device, int sizeBytes, Usage usage, VertexFormats format, Pool pool )
+	VertexBuffer::VertexBuffer( Device^ device, int sizeBytes, Usage usage, VertexFormat format, Pool pool )
 	{
 		IDirect3DVertexBuffer9* vb;
 		HRESULT hr = device->InternalPointer->CreateVertexBuffer( sizeBytes, (DWORD) usage, 

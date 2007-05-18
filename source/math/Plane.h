@@ -37,5 +37,6 @@ namespace SlimDX
 		void Normalize();
 		static Plane Transform( Plane coord, Matrix transform );
 		float Dot( Vector3 point );
+		float Dot( Vector4 point );
 	};
 }

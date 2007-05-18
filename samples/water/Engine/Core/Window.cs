@@ -43,7 +43,7 @@ namespace Engine
 			presentParams.BackBufferHeight = this.Height;
 			presentParams.BackBufferWidth = this.Width;
 			presentParams.SwapEffect = SwapEffect.Discard; //How the backbuffer and the current display will be swapped
-			presentParams.AutoDepthStencilFormat = DepthFormat.D24S8; //24 bits for the depth and 8 bits for the stencil
+			presentParams.AutoDepthStencilFormat = Format.D24S8; //24 bits for the depth and 8 bits for the stencil
 			presentParams.EnableAutoDepthStencil = true; //Let direct3d handle the depth buffers for the application
 			presentParams.Windowed = true;
 			if(fullScreen == true)
@@ -61,7 +61,7 @@ namespace Engine
 				new Vector3(0.0f, 0.0f, 0.0f),
 				new Vector3(0.0f, 1.0f, 0.0f));
 
-			device.Transform.Projection = matProj;
+			device.SetTransform( TransformState.Projection, matProj );
 			//device.Transform.View = matView;
 
 			//TODO: Figure out how to replace this correctly

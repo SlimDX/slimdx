@@ -39,6 +39,7 @@ namespace SlimDX
 		static Vector3 Normalize( Vector3 vec );
 
 		static Vector3 TransformCoordinate( Vector3 coord, Matrix transform );
+		static Vector3 TransformNormal( Vector3 normal, Matrix transform );
 
 		static float Dot( Vector3 lhs, Vector3 rhs );
 		static Vector3 Cross( Vector3 lhs, Vector3 rhs );

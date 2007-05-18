@@ -153,21 +153,6 @@ namespace SlimDX
 			Unknown = D3DFMT_UNKNOWN,
 		};
 
-		public enum class DepthFormat : Int32
-		{
-			D15S1 = D3DFMT_D15S1,
-			D16 = D3DFMT_D16,
-			D16Lockable = D3DFMT_D16_LOCKABLE,
-			D24S8 = D3DFMT_D24S8,
-			D24SingleS8 = D3DFMT_D24FS8,
-			D24X4S4 = D3DFMT_D24X4S4,
-			D24X8 = D3DFMT_D24X8,
-			D32 = D3DFMT_D32,
-			D32SingleLockable = D3DFMT_D32F_LOCKABLE,
-			L16 = D3DFMT_L16,
-			Unknown = D3DFMT_UNKNOWN
-		};
-
 		[Flags]
 		public enum class CreateFlags : Int32
 		{
@@ -235,7 +220,7 @@ namespace SlimDX
 		};
 
 		[Flags]
-		public enum class VertexFormats : Int32
+		public enum class VertexFormat : Int32
 		{
 			PositionMask = D3DFVF_POSITION_MASK,
 			Position = D3DFVF_XYZ,
@@ -266,6 +251,8 @@ namespace SlimDX
 
 			LastBetaUByte4 = D3DFVF_LASTBETA_UBYTE4,
 			LastBetaColor = D3DFVF_LASTBETA_D3DCOLOR,
+
+			PositionNormal = Position | Normal
 		};
 
 		public enum class PrimitiveType : Int32
@@ -408,6 +395,7 @@ namespace SlimDX
 			Video = D3DPRESENTFLAG_VIDEO
 		};
 
+		[Flags]
 		public enum class PresentInterval : Int32
 		{
 			Default = D3DPRESENT_INTERVAL_DEFAULT,
@@ -458,17 +446,17 @@ namespace SlimDX
 		{
 			Zero = D3DBLEND_ZERO,
 			One = D3DBLEND_ONE,
-			SrcColor = D3DBLEND_SRCCOLOR,
-			InvSrcColor = D3DBLEND_INVSRCCOLOR,
-			SrcAlpha = D3DBLEND_SRCALPHA,
-			InvSrcAlpha = D3DBLEND_INVSRCALPHA,
+			SourceColor = D3DBLEND_SRCCOLOR,
+			InvSourceColor = D3DBLEND_INVSRCCOLOR,
+			SourceAlpha = D3DBLEND_SRCALPHA,
+			InvSourceAlpha = D3DBLEND_INVSRCALPHA,
 			DestAlpha = D3DBLEND_DESTALPHA,
 			InvDestAlpha = D3DBLEND_INVDESTALPHA,
 			DestColor = D3DBLEND_DESTCOLOR,
 			InvDestColor = D3DBLEND_INVDESTCOLOR,
-			SrcAlphaSat = D3DBLEND_SRCALPHASAT,
-			BothSrcAlpha = D3DBLEND_BOTHSRCALPHA,
-			BothInvSrcAlpha = D3DBLEND_BOTHINVSRCALPHA,
+			SourceAlphaSat = D3DBLEND_SRCALPHASAT,
+			BothSourceAlpha = D3DBLEND_BOTHSRCALPHA,
+			BothInvSourceAlpha = D3DBLEND_BOTHINVSRCALPHA,
 			BlendFactor = D3DBLEND_BLENDFACTOR,
 			InvBlendFactor = D3DBLEND_INVBLENDFACTOR,
 		};
@@ -504,6 +492,253 @@ namespace SlimDX
 			PixelTimings = D3DQUERYTYPE_PIXELTIMINGS,
 			BandwidthTimings = D3DQUERYTYPE_BANDWIDTHTIMINGS,
 			CacheUtilization = D3DQUERYTYPE_CACHEUTILIZATION,
+		};
+
+		public enum class FillMode : Int32
+		{
+			Point = D3DFILL_POINT,
+			Wireframe = D3DFILL_WIREFRAME,
+			Solid = D3DFILL_SOLID
+		};
+
+		public enum class RenderState : Int32
+		{
+			ZEnable = D3DRS_ZENABLE,
+			FillMode = D3DRS_FILLMODE,
+			ShadeMode = D3DRS_SHADEMODE,
+			ZWriteEnable = D3DRS_ZWRITEENABLE,
+			AlphaTestEnable = D3DRS_ALPHATESTENABLE,
+			LastPixel = D3DRS_LASTPIXEL,
+			SourceBlend = D3DRS_SRCBLEND,
+			DestBlend = D3DRS_DESTBLEND,
+			CullMode = D3DRS_CULLMODE,
+			ZFunc = D3DRS_ZFUNC,
+			AlphaRef = D3DRS_ALPHAREF,
+			AlphaFunc = D3DRS_ALPHAFUNC,
+			DitherEnable = D3DRS_DITHERENABLE,
+			AlphaBlendEnable = D3DRS_ALPHABLENDENABLE,
+			FogEnable = D3DRS_FOGENABLE,
+			SpecularEnable = D3DRS_SPECULARENABLE,
+			FogColor = D3DRS_FOGCOLOR,
+			FogTableMode = D3DRS_FOGTABLEMODE,
+			FogStart = D3DRS_FOGSTART,
+			FogEnd = D3DRS_FOGEND,
+			FogDensity = D3DRS_FOGDENSITY,
+			RangeFogEnable = D3DRS_RANGEFOGENABLE,
+			StencilEnable = D3DRS_STENCILENABLE,
+			StencilFail = D3DRS_STENCILFAIL,
+			StencilZFail = D3DRS_STENCILZFAIL,
+			StencilPass = D3DRS_STENCILPASS,
+			StencilFunc = D3DRS_STENCILFUNC,
+			StencilRef = D3DRS_STENCILREF,
+			StencilMask = D3DRS_STENCILMASK,
+			StencilWriteMask = D3DRS_STENCILWRITEMASK,
+			TextureFactor = D3DRS_TEXTUREFACTOR,
+			Wrap0 = D3DRS_WRAP0,
+			Wrap1 = D3DRS_WRAP1,
+			Wrap2 = D3DRS_WRAP2,
+			Wrap3 = D3DRS_WRAP3,
+			Wrap4 = D3DRS_WRAP4,
+			Wrap5 = D3DRS_WRAP5,
+			Wrap6 = D3DRS_WRAP6,
+			Wrap7 = D3DRS_WRAP7,
+			Clipping = D3DRS_CLIPPING,
+			Lighting = D3DRS_LIGHTING,
+			Ambient = D3DRS_AMBIENT,
+			FogVertexMode = D3DRS_FOGVERTEXMODE,
+			ColorVertex = D3DRS_COLORVERTEX,
+			LocalViewer = D3DRS_LOCALVIEWER,
+			NormalizeNormals = D3DRS_NORMALIZENORMALS,
+			DiffuseMaterialSource = D3DRS_DIFFUSEMATERIALSOURCE,
+			SpecularMaterialSource = D3DRS_SPECULARMATERIALSOURCE,
+			AmbientMaterialSource = D3DRS_AMBIENTMATERIALSOURCE,
+			EmissiveMaterialSource = D3DRS_EMISSIVEMATERIALSOURCE,
+			VertexBlend = D3DRS_VERTEXBLEND,
+			ClipPlaneEnable = D3DRS_CLIPPLANEENABLE,
+			PointSize = D3DRS_POINTSIZE,
+			PointSizeMin = D3DRS_POINTSIZE_MIN,
+			PointSpriteEnable = D3DRS_POINTSPRITEENABLE,
+			PointScaleEnable = D3DRS_POINTSCALEENABLE,
+			PointScaleA = D3DRS_POINTSCALE_A,
+			PointScaleB = D3DRS_POINTSCALE_B,
+			PointScaleC = D3DRS_POINTSCALE_C,
+			MultiSampleAntialias = D3DRS_MULTISAMPLEANTIALIAS,
+			MultiSampleMask = D3DRS_MULTISAMPLEMASK,
+			PatchEdgeStyle = D3DRS_PATCHEDGESTYLE,
+			DebugMonitorToken = D3DRS_DEBUGMONITORTOKEN,
+			PointSizeMax = D3DRS_POINTSIZE_MAX,
+			IndexedVertexBlendEnable = D3DRS_INDEXEDVERTEXBLENDENABLE,
+			ColorWriteEnable = D3DRS_COLORWRITEENABLE,
+			TweenFactor = D3DRS_TWEENFACTOR,
+			BlendOp = D3DRS_BLENDOP,
+			PositionDegree = D3DRS_POSITIONDEGREE,
+			NormalDegree = D3DRS_NORMALDEGREE,
+			ScissorTestEnable = D3DRS_SCISSORTESTENABLE,
+			SlopeScaleDepthBias = D3DRS_SLOPESCALEDEPTHBIAS,
+			AntialiasedLineEnable = D3DRS_ANTIALIASEDLINEENABLE,
+			MinTessellationLevel = D3DRS_MINTESSELLATIONLEVEL,
+			MaxTessellationLevel = D3DRS_MAXTESSELLATIONLEVEL,
+			AdaptiveTessX = D3DRS_ADAPTIVETESS_X,
+			AdaptiveTessY = D3DRS_ADAPTIVETESS_Y,
+			AdaptiveTessZ = D3DRS_ADAPTIVETESS_Z,
+			AdaptiveTessW = D3DRS_ADAPTIVETESS_W,
+			EnableAdaptiveTessellation = D3DRS_ENABLEADAPTIVETESSELLATION,
+			TwoSidedStencilMode = D3DRS_TWOSIDEDSTENCILMODE,
+			CcwStencilFail = D3DRS_CCW_STENCILFAIL,
+			CcwStencilZFail = D3DRS_CCW_STENCILZFAIL,
+			CcwStencilPass = D3DRS_CCW_STENCILPASS,
+			CcwStencilFunc = D3DRS_CCW_STENCILFUNC,
+			ColorWriteEnable1 = D3DRS_COLORWRITEENABLE1,
+			ColorWriteEnable2 = D3DRS_COLORWRITEENABLE2,
+			ColorWriteEnable3 = D3DRS_COLORWRITEENABLE3,
+			BlendFactor = D3DRS_BLENDFACTOR,
+			SrgbWriteEnable = D3DRS_SRGBWRITEENABLE,
+			DepthBias = D3DRS_DEPTHBIAS,
+			Wrap8 = D3DRS_WRAP8,
+			Wrap9 = D3DRS_WRAP9,
+			Wrap10 = D3DRS_WRAP10,
+			Wrap11 = D3DRS_WRAP11,
+			Wrap12 = D3DRS_WRAP12,
+			Wrap13 = D3DRS_WRAP13,
+			Wrap14 = D3DRS_WRAP14,
+			Wrap15 = D3DRS_WRAP15,
+			SeparateAlphaBlendEnable = D3DRS_SEPARATEALPHABLENDENABLE,
+			SourceBlendAlpha = D3DRS_SRCBLENDALPHA,
+			DestBlendAlpha = D3DRS_DESTBLENDALPHA,
+			BlendOpAlpha = D3DRS_BLENDOPALPHA,
+		};
+
+		public enum class TransformState : Int32
+		{
+			View = D3DTS_VIEW,
+			Projection = D3DTS_PROJECTION,
+			World = D3DTS_WORLD,
+			World1 = D3DTS_WORLD1,
+			World2 = D3DTS_WORLD2,
+			World3 = D3DTS_WORLD3,
+			Texture0 = D3DTS_TEXTURE0,
+			Texture1 = D3DTS_TEXTURE1,
+			Texture2 = D3DTS_TEXTURE2,
+			Texture3 = D3DTS_TEXTURE3,
+			Texture4 = D3DTS_TEXTURE4,
+			Texture5 = D3DTS_TEXTURE5,
+			Texture6 = D3DTS_TEXTURE6,
+			Texture7 = D3DTS_TEXTURE7,
+		};
+
+		public enum class TextureStage : Int32
+		{
+			ColorOp = D3DTSS_COLOROP,
+			ColorArg1 = D3DTSS_COLORARG1,
+			ColorArg2 = D3DTSS_COLORARG2,
+			AlphaOp = D3DTSS_ALPHAOP,
+			AlphaArg1 = D3DTSS_ALPHAARG1,
+			AlphaArg2 = D3DTSS_ALPHAARG2,
+			BumpEnvMat00 = D3DTSS_BUMPENVMAT00,
+			BumpEnvMat01 = D3DTSS_BUMPENVMAT01,
+			BumpEnvMat10 = D3DTSS_BUMPENVMAT10,
+			BumpEnvMat11 = D3DTSS_BUMPENVMAT11,
+			TexCoordIndex = D3DTSS_TEXCOORDINDEX,
+			BumpEnvLScale = D3DTSS_BUMPENVLSCALE,
+			BumpEnvLOffset = D3DTSS_BUMPENVLOFFSET,
+			TextureTransformFlags = D3DTSS_TEXTURETRANSFORMFLAGS,
+			ColorArg0 = D3DTSS_COLORARG0,
+			AlphaArg0 = D3DTSS_ALPHAARG0,
+			ResultArg = D3DTSS_RESULTARG,
+			Constant = D3DTSS_CONSTANT,
+		};
+
+		public enum class TextureArgument : Int32
+		{
+			SelectMask = D3DTA_SELECTMASK,
+			Diffuse = D3DTA_DIFFUSE,
+			Current = D3DTA_CURRENT,
+			Texture = D3DTA_TEXTURE,
+			TFactor = D3DTA_TFACTOR,
+			Specular = D3DTA_SPECULAR,
+			Temp = D3DTA_TEMP,
+			Constant = D3DTA_CONSTANT,
+			Complement = D3DTA_COMPLEMENT,
+			AlphaReplicate = D3DTA_ALPHAREPLICATE,
+		};
+
+		public enum class TextureOperation : Int32
+		{
+			Disable = D3DTOP_DISABLE,
+			SelectArg1 = D3DTOP_SELECTARG1,
+			SelectArg2 = D3DTOP_SELECTARG2,
+
+			Modulate = D3DTOP_MODULATE,
+			Modulate2X = D3DTOP_MODULATE2X,
+			Modulate4X = D3DTOP_MODULATE4X,
+
+			Add = D3DTOP_ADD,
+			AddSigned = D3DTOP_ADDSIGNED,
+			AddSigned2X = D3DTOP_ADDSIGNED2X,
+			Subtract = D3DTOP_SUBTRACT,
+			AddSmooth = D3DTOP_ADDSMOOTH,
+
+			BlendDiffuseAlpha = D3DTOP_BLENDDIFFUSEALPHA,
+			BlendTextureAlpha = D3DTOP_BLENDTEXTUREALPHA,
+			BlendFactorAlpha = D3DTOP_BLENDFACTORALPHA,
+
+			BlendTextureAlphaPM = D3DTOP_BLENDTEXTUREALPHAPM,
+			BlendCurrentAlpha = D3DTOP_BLENDCURRENTALPHA,
+
+			Premodulate = D3DTOP_PREMODULATE,
+			ModulateAlphaAddColor = D3DTOP_MODULATEALPHA_ADDCOLOR,
+			ModulateColorAddAlpha = D3DTOP_MODULATECOLOR_ADDALPHA,
+			ModulateInvAlphaAddColor = D3DTOP_MODULATEINVALPHA_ADDCOLOR,
+			ModulateInvColorAddAlpha = D3DTOP_MODULATEINVCOLOR_ADDALPHA,
+
+			BumpEnvMap = D3DTOP_BUMPENVMAP,
+			BumpEnvMapLuminanceD3DTOP_BUMPENVMAPLUMINANCE,
+
+			DotProduct3 = D3DTOP_DOTPRODUCT3,
+
+			MultiplyAdd = D3DTOP_MULTIPLYADD,
+			Lerp = D3DTOP_LERP,
+		};
+
+		public enum class SamplerState : Int32
+		{
+			AddressU = D3DSAMP_ADDRESSU,
+			AddressV = D3DSAMP_ADDRESSV,
+			AddressW = D3DSAMP_ADDRESSW,
+			BorderColor = D3DSAMP_BORDERCOLOR,
+			MagFilter = D3DSAMP_MAGFILTER,
+			MinFilter = D3DSAMP_MINFILTER,
+			MipFilter = D3DSAMP_MIPFILTER,
+			MipMapLodBias = D3DSAMP_MIPMAPLODBIAS,
+			MaxMipLevel = D3DSAMP_MAXMIPLEVEL,
+			MaxAnisotropy = D3DSAMP_MAXANISOTROPY,
+			SrgbTexture = D3DSAMP_SRGBTEXTURE,
+			ElementIndex = D3DSAMP_ELEMENTINDEX,
+			DMapOffset = D3DSAMP_DMAPOFFSET,
+		};
+
+		public enum class ResourceType : Int32
+		{
+			Surface = D3DRTYPE_SURFACE,
+			Volume = D3DRTYPE_VOLUME,
+			Texture = D3DRTYPE_TEXTURE,
+			VolumeTexture = D3DRTYPE_VOLUMETEXTURE,
+			CubeTexture = D3DRTYPE_CUBETEXTURE,
+			VertexBuffer = D3DRTYPE_VERTEXBUFFER,
+			IndexBuffer = D3DRTYPE_INDEXBUFFER,
+		};
+
+		public enum class ImageFileFormat : Int32
+		{
+			Bmp = D3DXIFF_BMP,
+			Jpg = D3DXIFF_JPG,
+			Tga = D3DXIFF_TGA,
+			Png = D3DXIFF_PNG,
+			Dds = D3DXIFF_DDS,
+			Ppm = D3DXIFF_PPM,
+			Dib = D3DXIFF_DIB,
+			Hdr = D3DXIFF_HDR,
+			Pfm = D3DXIFF_PFM,
 		};
 	}
 }

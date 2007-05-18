@@ -32,6 +32,8 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
+	value class Matrix;
+
 	namespace Direct3D
 	{
 		//TODO: Consider moving these
@@ -39,10 +41,45 @@ namespace SlimDX
 		{
 		public:
 			float Alpha, Red, Green, Blue;
+
+			ColorValue( float alpha, float red, float green, float blue )
+			{
+				Alpha = alpha;
+				Red = red;
+				Green = green;
+				Blue = blue;
+			}
+
+			ColorValue( float red, float green, float blue )
+			{
+				Alpha = 1.0f;
+				Red = red;
+				Green = green;
+				Blue = blue;
+			}
+
+			static ColorValue FromColor( System::Drawing::Color color )
+			{
+				ColorValue value;
+
+				value.Alpha = color.A / 255.0f;
+				value.Red = color.R / 255.0f;
+				value.Green = color.G / 255.0f;
+				value.Blue = color.B / 255.0f;
+
+				return value;
+			}
+
+			int ToArgb()
+			{
+				//TODO: Write this
+				return 0;
+			}
 		};
 
 		public value class Material
 		{
+		public:
 			ColorValue Diffuse;
 			ColorValue Ambient;
 			ColorValue Specular;
@@ -73,7 +110,7 @@ namespace SlimDX
 			IntPtr DeviceWindowHandle;
 			bool Windowed;
 			bool EnableAutoDepthStencil;
-			DepthFormat AutoDepthStencilFormat;
+			Format AutoDepthStencilFormat;
 			PresentFlag PresentFlag;
 
 			int FullScreenRefreshRateInHz;
@@ -86,34 +123,19 @@ namespace SlimDX
 		ref class Surface;
 		ref class PixelShader;
 		ref class VertexShader;
-		ref class RenderStateManager;
-		ref class TransformManager;
 
 		public ref class Device : public DirectXObject<IDirect3DDevice9>
 		{
 		private:
-			RenderStateManager^ m_RenderState;
-			TransformManager^ m_Transforms;
 			IndexBuffer^ m_Indices;
-			VertexFormats m_VertexFormat;
+			VertexFormat m_VertexFormat;
 			VertexDeclaration^ m_VertexDecl;
 
 		public:
 			Device( IDirect3DDevice9* device );
 			Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams );
-			~Device();
 
 			// --- Properties ---
-
-			property RenderStateManager^ RenderState
-			{
-				RenderStateManager^ get() { return m_RenderState; }
-			}
-
-			property TransformManager^ Transform
-			{
-				TransformManager^ get() { return m_Transforms; }
-			}
 
 			property IndexBuffer^ Indices
 			{
@@ -121,10 +143,10 @@ namespace SlimDX
 				void set( IndexBuffer^ value );
 			}
 
-			property VertexFormats VertexFormat
+			property VertexFormat VertexFormat
 			{
-				VertexFormats get() { return m_VertexFormat; }
-				void set( VertexFormats value );
+				SlimDX::Direct3D::VertexFormat get() { return m_VertexFormat; }
+				void set( SlimDX::Direct3D::VertexFormat value );
 			}
 
 			property SlimDX::Direct3D::VertexDeclaration^ VertexDeclaration
@@ -137,6 +159,12 @@ namespace SlimDX
 			{
 				bool get();
 				void set( bool value );
+			}
+
+			property Material Material
+			{
+				SlimDX::Direct3D::Material get();
+				void set( SlimDX::Direct3D::Material value );
 			}
 
 			property Viewport Viewport
@@ -176,6 +204,15 @@ namespace SlimDX
 			Surface^ GetBackBuffer( int swapChain, int backBuffer );
 			Surface^ GetDepthStencilSurface();
 
+			void SetRenderState( RenderState state, int value );
+			void SetRenderState( RenderState state, bool value );
+			void SetRenderState( RenderState state, float value );
+			generic<typename T> where T : Enum
+			void SetRenderState( RenderState state, T value );
+
+			void SetTransform( TransformState state, Matrix value );
+			void SetTextureStageState( int stage, TextureStage type, int value );
+			void SetSamplerState( int sampler, SamplerState type, int value );
 			void SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride );
 			void SetStreamSourceFreq( int stream, int frequency );
 			void SetTexture( int sampler, BaseTexture^ texture );

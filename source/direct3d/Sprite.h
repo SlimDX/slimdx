@@ -59,8 +59,12 @@ namespace SlimDX
 
 			Device^ GetDevice();
 
-			Matrix GetTransform();
-			void SetTransform( Matrix transform );
+			property Matrix Transform
+			{
+				Matrix get();
+				void set( Matrix value );
+			}
+
 			void SetWorldViewLH( Matrix world, Matrix view );
 			void SetWorldViewRH( Matrix world, Matrix view );
 

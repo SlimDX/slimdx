@@ -37,8 +37,6 @@
 #include "VertexShader.h"
 #include "Query.h"
 #include "SwapChain.h"
-#include "RenderStateManager.h"
-#include "TransformManager.h"
 #include "D3DX.h"
 
 namespace SlimDX
@@ -68,9 +66,6 @@ namespace Direct3D
 	{
 		if( device == NULL )
 			throw gcnew ArgumentNullException( "device" );
-
-		m_RenderState = gcnew RenderStateManager( this );
-		m_Transforms = gcnew TransformManager( this );
 	}
 
 	Device::Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams )
@@ -84,14 +79,6 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 
 		m_Pointer = device;
-		m_RenderState = gcnew RenderStateManager( this );
-		m_Transforms = gcnew TransformManager( this );
-	}
-
-	Device::~Device()
-	{
-		delete m_RenderState;
-		delete m_Transforms;
 	}
 
 	void Device::Indices::set( IndexBuffer^ value )
@@ -107,7 +94,7 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 	}
 
-	void Device::VertexFormat::set( VertexFormats value )
+	void Device::VertexFormat::set( SlimDX::Direct3D::VertexFormat value )
 	{
 		m_VertexFormat = value;
 		HRESULT hr = m_Pointer->SetFVF( (DWORD) value );
@@ -196,6 +183,50 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 	}
 
+	void Device::SetRenderState( RenderState state, int value )
+	{
+		HRESULT hr = m_Pointer->SetRenderState( (D3DRENDERSTATETYPE) state, value );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::SetRenderState( RenderState state, bool value )
+	{
+		BOOL boolValue = value ? TRUE : FALSE;
+		HRESULT hr = m_Pointer->SetRenderState( (D3DRENDERSTATETYPE) state, boolValue );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::SetRenderState( RenderState state, float value )
+	{
+		HRESULT hr = m_Pointer->SetRenderState( (D3DRENDERSTATETYPE) state, *(DWORD*) &value );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	generic<typename T>
+	void Device::SetRenderState( RenderState state, T value )
+	{
+		HRESULT hr = m_Pointer->SetRenderState( (D3DRENDERSTATETYPE) state, (int) value );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::SetTransform( TransformState state, Matrix value )
+	{
+		HRESULT hr = m_Pointer->SetTransform( (D3DTRANSFORMSTATETYPE) state, (const D3DMATRIX*) &value );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::SetTextureStageState( int stage, TextureStage type, int value )
+	{
+		HRESULT hr = m_Pointer->SetTextureStageState( stage, (D3DTEXTURESTAGESTATETYPE) type, value );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::SetSamplerState( int stage, SamplerState type, int value )
+	{
+		HRESULT hr = m_Pointer->SetSamplerState( stage, (D3DSAMPLERSTATETYPE) type, value );
+		GraphicsException::CheckHResult( hr );
+	}
+
 	void Device::SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride )
 	{
 		HRESULT hr = m_Pointer->SetStreamSource( stream, streamData->VbPointer, offsetInBytes, stride );
@@ -205,6 +236,22 @@ namespace Direct3D
 	void Device::SetStreamSourceFreq( int stream, int frequency )
 	{
 		HRESULT hr = m_Pointer->SetStreamSourceFreq( stream, frequency );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	SlimDX::Direct3D::Material Device::Material::get()
+	{
+		SlimDX::Direct3D::Material material;
+
+		HRESULT hr = m_Pointer->GetMaterial( (D3DMATERIAL9*) &material );
+		GraphicsException::CheckHResult( hr );
+
+		return material;
+	}
+
+	void Device::Material::set( SlimDX::Direct3D::Material material )
+	{
+		HRESULT hr = m_Pointer->SetMaterial( (const D3DMATERIAL9*) &material );
 		GraphicsException::CheckHResult( hr );
 	}
 

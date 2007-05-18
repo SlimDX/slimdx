@@ -40,7 +40,7 @@ namespace SlimDX
 
 		public:
 			VertexBuffer( IDirect3DVertexBuffer9* buffer );
-			VertexBuffer( Device^ device, int sizeBytes, Usage usage, VertexFormats format, Pool pool );
+			VertexBuffer( Device^ device, int sizeBytes, Usage usage, VertexFormat format, Pool pool );
 
 			GraphicsStream^ Lock( int offset, int size, LockFlags flags );
 			GraphicsStream^ Lock( int offset, LockFlags flags ) { return Lock( offset, 0, flags ); }
