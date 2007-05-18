@@ -39,6 +39,13 @@ namespace SlimDX
 		return result;
 	}
 
+	Matrix Matrix::RotationYawPitchRoll( float yaw, float pitch, float roll )
+	{
+		Matrix result;
+		D3DXMatrixRotationYawPitchRoll( (D3DXMATRIX*) &result, yaw, pitch, roll );
+		return result;
+	}
+
 	Matrix Matrix::Translation( float x, float y, float z )
 	{
 		Matrix result;

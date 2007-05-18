@@ -22,9 +22,9 @@
 #pragma once
 
 using namespace System;
-using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
 
+#include "Enums.h"
 #include "CapsEnums.h"
 #include "GraphicsException.h"
 
@@ -48,6 +48,7 @@ namespace SlimDX
 			AdapterDetails( unsigned int adapter );
 
 		public:
+			initonly int Adapter;
 			initonly String^ Description;
 			initonly int DeviceId;
 			initonly Guid DeviceIdentifier;
@@ -113,7 +114,7 @@ namespace SlimDX
 			Caps Caps;
 			Caps2 Caps2;
 			Caps3 Caps3;
-			int PresentationIntervals;
+			int PresentInterval;
 
 			CursorCaps CursorCaps;
 
@@ -179,7 +180,7 @@ namespace SlimDX
 			//DX9 Specific caps
 			DevCaps2 DeviceCaps2;
 
-			float MaxNPatchTesselationLevel;
+			float MaxNPatchTessellationLevel;
 
 			int MasterAdapterOrdinal;
 			int AdapterOrdinalInGroup;
@@ -196,8 +197,45 @@ namespace SlimDX
 			int MaxPixelShader30InstructionSlots;
 		};
 
-		public ref class AdapterList sealed// : public IEnumerable<AdapterInformation^>
+		public ref class AdapterList sealed : public System::Collections::IEnumerable
 		{
+		private:
+			ref class AdapterEnumerator : public System::Collections::IEnumerator
+			{
+			private:
+				int m_Position;
+				int m_Count;
+
+			public:
+				AdapterEnumerator( int count ) : m_Count( count )
+				{ }
+
+				virtual void Reset() sealed
+				{
+					m_Position = -1;
+				}
+
+				virtual bool MoveNext() sealed
+				{
+					++m_Position;
+					if( m_Position >= m_Count )
+						return false;
+
+					return true;
+				}
+
+				property Object^ Current
+				{
+					virtual Object^ get()
+					{
+						if( m_Position < 0 || m_Position >= m_Count )
+							throw gcnew InvalidOperationException();
+
+						return gcnew AdapterInformation( m_Position );
+					}
+				}
+			};
+
 		internal:
 			AdapterList( unsigned int adapterCount ) { Count = (int) adapterCount; }
 
@@ -213,6 +251,11 @@ namespace SlimDX
 
 					return gcnew AdapterInformation( index );
 				}
+			}
+
+			virtual System::Collections::IEnumerator^ GetEnumerator()
+			{
+				return gcnew AdapterEnumerator( Count );
 			}
 		};
 
@@ -241,15 +284,27 @@ namespace SlimDX
 				Adapters = gcnew AdapterList( m_Direct3D->GetAdapterCount() );
 			}
 
+			static bool CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat,
+				Usage usage, ResourceType resourceType, Format checkFormat, [Out] int% result );
+			static bool CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat,
+				Usage usage, ResourceType resourceType, Format checkFormat );
+
 			static bool CheckDeviceType( int adapter, DeviceType deviceType, Format adapterFormat, 
 				Format backBufferFormat, bool windowed, [Out] int% result );
 			static bool CheckDeviceType( int adapter, DeviceType deviceType, Format adapterFormat, 
 				Format backBufferFormat, bool windowed );
 
 			static bool CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, 
-				Format renderTargetFormat, DepthFormat depthStencilFormat, [Out] int% result );
+				Format renderTargetFormat, Format depthStencilFormat, [Out] int% result );
 			static bool CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, 
-				Format renderTargetFormat, DepthFormat depthStencilFormat );
+				Format renderTargetFormat, Format depthStencilFormat );
+
+			static bool CheckDeviceMultiSampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
+				bool windowed, MultiSampleType multiSampleType, [Out] int% qualityLevels, [Out] int% result );
+			static bool CheckDeviceMultiSampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
+				bool windowed, MultiSampleType multiSampleType, [Out] int% qualityLevels );
+			static bool CheckDeviceMultiSampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
+				bool windowed, MultiSampleType multiSampleType );
 
 			static Capabilities GetDeviceCaps( int adapter, DeviceType deviceType );
 		};

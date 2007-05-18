@@ -20,6 +20,11 @@ namespace SlimDX
 		return A * point.X + B * point.Y + C * point.Z + D;
 	}
 
+	float Plane::Dot( Vector4 point )
+	{
+		return A * point.X + B * point.Y + C * point.Z + point.Z * D;
+	}
+
 	Plane Plane::Transform( SlimDX::Plane plane, SlimDX::Matrix transform )
 	{
 		Plane result;

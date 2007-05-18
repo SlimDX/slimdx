@@ -23,9 +23,9 @@ namespace Engine
 			entityManager.Add(new Fountain(window.D3DDevice));
 			entityManager.Add(new Water(window.D3DDevice));
 
-			window.D3DDevice.RenderState.DiffuseMaterialSource = ColorSource.Color1;
-			window.D3DDevice.RenderState.SourceBlend = Blend.One;
-			window.D3DDevice.RenderState.DestBlend = Blend.One;
+			window.D3DDevice.SetRenderState(RenderState.DiffuseMaterialSource, ColorSource.Color1);
+			window.D3DDevice.SetRenderState(RenderState.SourceBlend, Blend.One);
+			window.D3DDevice.SetRenderState(RenderState.DestBlend, Blend.One);
 		}
 		private void Update()
 		{

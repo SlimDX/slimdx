@@ -27,17 +27,6 @@ namespace SlimDX
 {
 	namespace Direct3D
 	{
-		public enum class ResourceType : Int32
-		{
-			Surface = D3DRTYPE_SURFACE,
-			Volume = D3DRTYPE_VOLUME,
-			Texture = D3DRTYPE_TEXTURE,
-			VolumeTexture = D3DRTYPE_VOLUMETEXTURE,
-			CubeTexture = D3DRTYPE_CUBETEXTURE,
-			VertexBuffer = D3DRTYPE_VERTEXBUFFER,
-			IndexBuffer = D3DRTYPE_INDEXBUFFER,
-		};
-
 		public ref class Resource abstract : public DirectXObject<IDirect3DResource9>
 		{
 		public:

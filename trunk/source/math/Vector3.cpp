@@ -81,4 +81,11 @@ namespace SlimDX
 		D3DXVec3TransformCoord( (D3DXVECTOR3*) &result, (const D3DXVECTOR3*) &coord, (const D3DXMATRIX*) &transform );
 		return result;
 	}
+
+	Vector3 Vector3::TransformNormal( Vector3 normal, Matrix transform )
+	{
+		Vector3 result;
+		D3DXVec3TransformNormal( (D3DXVECTOR3*) &result, (const D3DXVECTOR3*) &normal, (const D3DXMATRIX*) &transform );
+		return result;
+	}
 }

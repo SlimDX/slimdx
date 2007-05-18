@@ -39,6 +39,7 @@ namespace Direct3D
 		HRESULT hr = Direct3D::InternalPointer->GetAdapterIdentifier( adapter, flags, &ident );
 		GraphicsException::CheckHResult( hr );
 		
+		Adapter = adapter;
 		DriverName = gcnew String( ident.Driver );
 		Description = gcnew String( ident.Description );
 		DeviceName = gcnew String( ident.DeviceName );
@@ -75,6 +76,22 @@ namespace Direct3D
 	}
 
 
+	bool Direct3D::CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat,
+		Usage usage, ResourceType resourceType, Format checkFormat, [Out] int% result )
+	{
+		HRESULT hr = m_Direct3D->CheckDeviceFormat( adapter, (D3DDEVTYPE) deviceType, (D3DFORMAT) adapterFormat,
+			(DWORD) usage, (D3DRESOURCETYPE) resourceType, (D3DFORMAT) checkFormat );
+		result = hr;
+		return hr == S_OK;
+	}
+
+	bool Direct3D::CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat,
+		Usage usage, ResourceType resourceType, Format checkFormat )
+	{
+		int result;
+		return CheckDeviceFormat( adapter, deviceType, adapterFormat, usage, resourceType, checkFormat, result );
+	}
+
 	bool Direct3D::CheckDeviceType( int adapter, DeviceType deviceType, Format adapterFormat, 
 		Format backBufferFormat, bool windowed, [Out] int% result )
 	{
@@ -92,7 +109,7 @@ namespace Direct3D
 	}
 
 	bool Direct3D::CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, 
-		Format renderTargetFormat, DepthFormat depthStencilFormat, [Out] int% result )
+		Format renderTargetFormat, Format depthStencilFormat, [Out] int% result )
 	{
 		HRESULT hr = m_Direct3D->CheckDepthStencilMatch( adapter, (D3DDEVTYPE) deviceType,
 			(D3DFORMAT) adapterFormat, (D3DFORMAT) renderTargetFormat, (D3DFORMAT) depthStencilFormat );
@@ -101,11 +118,40 @@ namespace Direct3D
 	}
 
 	bool Direct3D::CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, 
-		Format renderTargetFormat, DepthFormat depthStencilFormat )
+		Format renderTargetFormat, Format depthStencilFormat )
 	{
 		int result;
 		return CheckDepthStencilMatch( adapter, deviceType, adapterFormat,
 			renderTargetFormat, depthStencilFormat, result );
+	}
+
+	bool Direct3D::CheckDeviceMultiSampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
+		bool windowed, MultiSampleType multiSampleType, [Out] int% qualityLevels, [Out] int% result )
+	{
+		DWORD levels;
+
+		HRESULT hr = m_Direct3D->CheckDeviceMultiSampleType( adapter, (D3DDEVTYPE) deviceType, (D3DFORMAT) surfaceFormat,
+			windowed, (D3DMULTISAMPLE_TYPE) multiSampleType, (DWORD*) &levels );
+
+		qualityLevels = levels;
+		result = hr;
+		return hr == S_OK;
+	}
+
+	bool Direct3D::CheckDeviceMultiSampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
+		bool windowed, MultiSampleType multiSampleType, [Out] int% qualityLevels )
+	{
+		int result;
+		return CheckDeviceMultiSampleType( adapter, deviceType, surfaceFormat,
+			windowed, multiSampleType, qualityLevels, result );
+	}
+
+	bool Direct3D::CheckDeviceMultiSampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
+		bool windowed, MultiSampleType multiSampleType )
+	{
+		int levels, result;
+		return CheckDeviceMultiSampleType( adapter, deviceType, surfaceFormat, windowed,
+			multiSampleType, levels, result );
 	}
 
 	Capabilities Direct3D::GetDeviceCaps( int adapter, DeviceType deviceType )
@@ -124,7 +170,7 @@ namespace Direct3D
 		Caps = (SlimDX::Direct3D::Caps) caps.Caps;
 		Caps2 = (SlimDX::Direct3D::Caps2) caps.Caps2;
 		Caps3 = (SlimDX::Direct3D::Caps3) caps.Caps3;
-		PresentationIntervals = caps.PresentationIntervals;
+		PresentInterval = caps.PresentationIntervals;
 
 		CursorCaps = (SlimDX::Direct3D::CursorCaps) caps.CursorCaps;
 
@@ -191,7 +237,7 @@ namespace Direct3D
 
 		DeviceCaps2 = (DevCaps2) caps.DevCaps2;
 
-		MaxNPatchTesselationLevel = caps.MaxNpatchTessellationLevel;
+		MaxNPatchTessellationLevel = caps.MaxNpatchTessellationLevel;
 
 		MasterAdapterOrdinal = caps.MasterAdapterOrdinal;
 		AdapterOrdinalInGroup = caps.AdapterOrdinalInGroup;

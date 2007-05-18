@@ -155,10 +155,10 @@ namespace SlimDX
 				CharacterSet charSet, Precision outputPrecision, FontQuality quality,
 				PitchAndFamily pitchAndFamily, String^ faceName );
 
-			int DrawText( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, int color );
-			int DrawText( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, Color color );
-			int DrawText( Sprite^ sprite, String^ text, int x, int y, int color );
-			int DrawText( Sprite^ sprite, String^ text, int x, int y, Color color );
+			int DrawString( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, int color );
+			int DrawString( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, Color color );
+			int DrawString( Sprite^ sprite, String^ text, int x, int y, int color );
+			int DrawString( Sprite^ sprite, String^ text, int x, int y, Color color );
 
 			System::Drawing::Rectangle MeasureString( Sprite^ sprite, String^ text, DrawTextFormat format );
 

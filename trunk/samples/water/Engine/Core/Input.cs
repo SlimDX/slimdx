@@ -110,7 +110,7 @@ namespace Engine
 			matView = Matrix.LookAtLH(new Vector3(vecPos.X, vecPos.Y, vecPos.Z), 
 									  new Vector3(0.0f, 0.0f, 0.0f),
 									  new Vector3(0.0f, 1.0f, 0.0f));
-			device.Transform.View = matView;
+			device.SetTransform(SlimDX.Direct3D.TransformState.View, matView);
 		}
 		public void Dispose()
 		{

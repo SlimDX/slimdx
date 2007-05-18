@@ -233,10 +233,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d\RenderStateManager.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\source\direct3d\Resource.cpp"
 					>
 				</File>
@@ -254,10 +250,6 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d\Texture.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\TransformManager.cpp"
 					>
 				</File>
 				<File
@@ -421,10 +413,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d\RenderStateManager.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\direct3d\Resource.h"
 					>
 				</File>
@@ -442,10 +430,6 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d\Texture.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\TransformManager.h"
 					>
 				</File>
 				<File

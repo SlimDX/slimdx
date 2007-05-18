@@ -35,6 +35,28 @@ namespace SlimDX
 {
 namespace Direct3D
 {
+	ImageInformation ImageInformation::FromFile( String^ fileName )
+	{
+		ImageInformation info;
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+
+		HRESULT hr = D3DXGetImageInfoFromFile( pinnedName, (D3DXIMAGE_INFO*) &info );
+		GraphicsException::CheckHResult( hr );
+
+		return info;
+	}
+
+	ImageInformation ImageInformation::FromMemory( array<Byte>^ memory )
+	{
+		ImageInformation info;
+		pin_ptr<const unsigned char> pinnedMemory = &memory[0];
+
+		HRESULT hr = D3DXGetImageInfoFromFileInMemory( pinnedMemory, memory->Length, (D3DXIMAGE_INFO*) &info );
+		GraphicsException::CheckHResult( hr );
+
+		return info;
+	}
+
 	Texture::Texture( IDirect3DTexture9* texture )
 	{
 		if( texture == NULL )
@@ -57,9 +79,9 @@ namespace Direct3D
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
 		IDirect3DTexture9* texture;
-		pin_ptr<unsigned char> pinned_memory = &memory[0];
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
-		D3DXCreateTextureFromFileInMemoryEx( device->InternalPointer, pinned_memory, memory->Length, width, height, numLevels,
+		D3DXCreateTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, width, height, numLevels,
 			(DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter,
 			(D3DCOLOR) colorKey, 0, 0, &texture );
 
@@ -99,9 +121,9 @@ namespace Direct3D
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
 		IDirect3DTexture9* texture;
-		pin_ptr<const wchar_t> pinned_name = PtrToStringChars( fileName );
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
-		HRESULT hr = D3DXCreateTextureFromFileEx( device->InternalPointer, pinned_name, width, height, 
+		HRESULT hr = D3DXCreateTextureFromFileEx( device->InternalPointer, pinnedName, width, height, 
 			numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter, 
 			colorKey, NULL, NULL, &texture );
 		GraphicsException::CheckHResult( hr );
@@ -175,9 +197,9 @@ namespace Direct3D
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
 		IDirect3DCubeTexture9* texture;
-		pin_ptr<unsigned char> pinned_memory = &memory[0];
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
-		D3DXCreateCubeTextureFromFileInMemoryEx( device->InternalPointer, pinned_memory, memory->Length, size, numLevels,
+		D3DXCreateCubeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, size, numLevels,
 			(DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter,
 			(D3DCOLOR) colorKey, 0, 0, &texture );
 
@@ -217,9 +239,9 @@ namespace Direct3D
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
 		IDirect3DCubeTexture9* texture;
-		pin_ptr<const wchar_t> pinned_name = PtrToStringChars( fileName );
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
-		HRESULT hr = D3DXCreateCubeTextureFromFileEx( device->InternalPointer, pinned_name, size, 
+		HRESULT hr = D3DXCreateCubeTextureFromFileEx( device->InternalPointer, pinnedName, size, 
 			numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter, 
 			colorKey, NULL, NULL, &texture );
 		GraphicsException::CheckHResult( hr );
@@ -278,9 +300,9 @@ namespace Direct3D
 		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
 		IDirect3DVolumeTexture9* texture;
-		pin_ptr<unsigned char> pinned_memory = &memory[0];
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
-		D3DXCreateVolumeTextureFromFileInMemoryEx( device->InternalPointer, pinned_memory, memory->Length,
+		D3DXCreateVolumeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length,
 			width, height, depth, numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool,
 			(DWORD) filter, (DWORD) mipFilter, (D3DCOLOR) colorKey, 0, 0, &texture );
 
@@ -321,9 +343,9 @@ namespace Direct3D
 		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
 		IDirect3DVolumeTexture9* texture;
-		pin_ptr<const wchar_t> pinned_name = PtrToStringChars( fileName );
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
-		HRESULT hr = D3DXCreateVolumeTextureFromFileEx( device->InternalPointer, pinned_name, width, height,
+		HRESULT hr = D3DXCreateVolumeTextureFromFileEx( device->InternalPointer, pinnedName, width, height,
 			depth, numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter,
 			(DWORD) mipFilter, colorKey, NULL, NULL, &texture );
 		GraphicsException::CheckHResult( hr );

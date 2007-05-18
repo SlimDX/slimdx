@@ -45,6 +45,7 @@ namespace SlimDX
 		static Matrix Transpose( Matrix mat );
 
 		static Matrix RotationAxis( Vector3 axis, float angle );
+		static Matrix RotationYawPitchRoll( float yaw, float pitch, float roll );
 
 		static Matrix Translation( float x, float y, float z );
 		static Matrix Translation( Vector3 translation );

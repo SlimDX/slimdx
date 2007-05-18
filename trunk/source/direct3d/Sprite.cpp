@@ -91,7 +91,7 @@ namespace Direct3D
 		return gcnew Device( device );
 	}
 
-	Matrix Sprite::GetTransform()
+	Matrix Sprite::Transform::get()
 	{
 		Matrix result;
 
@@ -101,9 +101,9 @@ namespace Direct3D
 		return result;
 	}
 
-	void Sprite::SetTransform( Matrix transform )
+	void Sprite::Transform::set( Matrix value )
 	{
-		HRESULT hr = m_Pointer->SetTransform( (const D3DXMATRIX*) &transform );
+		HRESULT hr = m_Pointer->SetTransform( (const D3DXMATRIX*) &value );
 		GraphicsException::CheckHResult( hr );
 	}
 
