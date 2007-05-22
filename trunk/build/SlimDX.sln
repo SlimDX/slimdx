@@ -30,6 +30,7 @@ Global
 		{7C00F00A-831E-4BCE-82A5-83BFD3893CE6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{7C00F00A-831E-4BCE-82A5-83BFD3893CE6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{7C00F00A-831E-4BCE-82A5-83BFD3893CE6}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{7C00F00A-831E-4BCE-82A5-83BFD3893CE6}.Debug|Win32.Build.0 = Debug|Any CPU
 		{7C00F00A-831E-4BCE-82A5-83BFD3893CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C00F00A-831E-4BCE-82A5-83BFD3893CE6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7C00F00A-831E-4BCE-82A5-83BFD3893CE6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
