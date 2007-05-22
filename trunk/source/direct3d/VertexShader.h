@@ -21,14 +21,14 @@
 */
 #pragma once
 
+#include "ConstantTable.h"
+
 using namespace System;
 
 namespace SlimDX
 {
 	namespace Direct3D
 	{	
-		ref class ConstantTable;
-		
 		public ref class VertexShader : public DirectXObject<IDirect3DVertexShader9>
 		{
 		private:
@@ -36,6 +36,11 @@ namespace SlimDX
 
 		public:
 			VertexShader( IDirect3DVertexShader9* VertexShader, ID3DXConstantTable* constantTable );
+			
+			~VertexShader()
+			{
+				delete m_ConstantTable;
+			}
 			
 			property ConstantTable^ Constants
 			{

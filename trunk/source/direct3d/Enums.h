@@ -222,6 +222,8 @@ namespace SlimDX
 		[Flags]
 		public enum class VertexFormat : Int32
 		{
+			None = 0,
+			
 			PositionMask = D3DFVF_POSITION_MASK,
 			Position = D3DFVF_XYZ,
 			PositionRhw = D3DFVF_XYZRHW,
