@@ -264,6 +264,15 @@ namespace SlimDX
 		private:
 			static IDirect3D9* m_Direct3D;
 
+			static void OnExit(Object^ sender,EventArgs^ e)
+			{
+				if(m_Direct3D != NULL)
+				{
+					m_Direct3D->Release();
+					m_Direct3D = NULL;
+				}
+			}
+
 		internal:
 			static property IDirect3D9* InternalPointer
 			{
@@ -282,6 +291,9 @@ namespace SlimDX
 
 				CheckWhql = false;
 				Adapters = gcnew AdapterList( m_Direct3D->GetAdapterCount() );
+				
+				System::AppDomain::CurrentDomain->DomainUnload += gcnew System::EventHandler( OnExit );
+				System::AppDomain::CurrentDomain->ProcessExit += gcnew System::EventHandler( OnExit );
 			}
 
 			static bool CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat,
