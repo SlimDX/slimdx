@@ -41,6 +41,8 @@ namespace SlimDX
 		}
 
 		void Invert();
+		bool Decompose( [Out] Vector3% scale, [Out] Quaternion% rotation, [Out] Vector3% translation );
+
 		static Matrix Invert( Matrix mat );
 		static Matrix Transpose( Matrix mat );
 

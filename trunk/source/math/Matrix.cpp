@@ -25,6 +25,22 @@ namespace SlimDX
 		return result;
 	}
 
+	bool Matrix::Decompose( [Out] Vector3% scale, [Out] Quaternion% rotation, [Out] Vector3% translation )
+	{
+		Vector3 localScale, localTrans;
+		Quaternion localRot;
+		pin_ptr<Matrix> pinnedThis = this;
+
+		HRESULT hr = D3DXMatrixDecompose( (D3DXVECTOR3*) &localScale, (D3DXQUATERNION*) &localRot,
+			(D3DXVECTOR3*) &localTrans, (D3DXMATRIX*) pinnedThis );
+
+		scale = localScale;
+		rotation = localRot;
+		translation = localTrans;
+
+		return hr == S_OK;
+	}
+
 	Matrix Matrix::Transpose( Matrix mat )
 	{
 		Matrix result;
