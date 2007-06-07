@@ -31,7 +31,6 @@
 #include "Effect.h"
 #include "Device.h"
 
-
 namespace SlimDX
 {
 namespace Direct3D
@@ -68,6 +67,13 @@ namespace Direct3D
 		if( result == NULL )
 			return nullptr;
 		return gcnew EffectHandle( result );
+	}
+	
+	int ConstantTable::GetSamplerIndex( EffectHandle^ sampler )
+	{
+		D3DXHANDLE handle = sampler != nullptr ? sampler->InternalHandle : NULL;
+		int result = m_Pointer->GetSamplerIndex( handle );
+		return result;
 	}
 	
 	void ConstantTable::SetValue( EffectHandle^ constant,Vector4 value )

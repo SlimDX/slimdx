@@ -30,7 +30,7 @@ namespace SlimDX
 	namespace Direct3D
 	{
 		ref class EffectHandle;
-	
+		
 		public ref class ConstantTable : public DirectXObject<ID3DXConstantTable>
 		{
 		private:
@@ -42,6 +42,8 @@ namespace SlimDX
 			
 			EffectHandle^ GetConstant( EffectHandle^ handle,int index );
 			EffectHandle^ GetConstant( EffectHandle^ handle,String^ name );
+			
+			int GetSamplerIndex( EffectHandle^ sampler );
 			
 			void SetValue( EffectHandle^ constant, Vector4 value );
 			void SetValue( EffectHandle^ constant, Matrix value );
