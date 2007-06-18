@@ -41,7 +41,15 @@ namespace SlimDX
 
 		Quaternion(float x,float y,float z,float w);
 
+		float Magnitude();
+		void Normalize();
+
+		static Quaternion Normalize( Quaternion quat );
+
+		static Quaternion RotationAxis( Vector3 axis, float angle );
 		static Quaternion RotationYawPitchRoll( float yaw, float pitch, float roll );
+
+		static Quaternion Slerp( Quaternion q1, Quaternion q2, float t);
 
 		static Quaternion operator * (Quaternion lhs, Quaternion rhs);
 	};
