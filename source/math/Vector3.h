@@ -26,6 +26,11 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
+    namespace Direct3D
+    {
+        value class Viewport;
+    }
+
 	[StructLayout( LayoutKind::Sequential )]
 	public value class Vector3
 	{
@@ -44,6 +49,9 @@ namespace SlimDX
 		static float Dot( Vector3 lhs, Vector3 rhs );
 		static Vector3 Cross( Vector3 lhs, Vector3 rhs );
 		static Vector3 Lerp( Vector3 start, Vector3 end, float factor );
+
+        Vector3 Project( Direct3D::Viewport viewport, Matrix projection, Matrix view, Matrix world );
+        Vector3 Unproject( Direct3D::Viewport viewport, Matrix projection, Matrix view, Matrix world );
 
 		static Vector3 operator + ( Vector3 lhs, Vector3 rhs );
 		static Vector3 operator - ( Vector3 lhs, Vector3 rhs );
