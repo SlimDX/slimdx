@@ -29,6 +29,7 @@ using namespace System::Runtime::InteropServices;
 #include "Enums.h"
 #include "Direct3D.h"
 #include "Vertex.h"
+#include "MiscTypes.h"
 
 namespace SlimDX
 {
@@ -36,64 +37,6 @@ namespace SlimDX
 
 	namespace Direct3D
 	{
-		//TODO: Consider moving these
-		public value class ColorValue
-		{
-		public:
-			float Alpha, Red, Green, Blue;
-
-			ColorValue( float alpha, float red, float green, float blue )
-			{
-				Alpha = alpha;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			ColorValue( float red, float green, float blue )
-			{
-				Alpha = 1.0f;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			static ColorValue FromColor( System::Drawing::Color color )
-			{
-				ColorValue value;
-
-				value.Alpha = color.A / 255.0f;
-				value.Red = color.R / 255.0f;
-				value.Green = color.G / 255.0f;
-				value.Blue = color.B / 255.0f;
-
-				return value;
-			}
-
-			int ToArgb()
-			{
-				//TODO: Write this
-				return 0;
-			}
-		};
-
-		public value class Material
-		{
-		public:
-			ColorValue Diffuse;
-			ColorValue Ambient;
-			ColorValue Specular;
-			ColorValue Emissive;
-			float Power;
-		};
-
-		public value class Viewport
-		{
-			int X, Y;
-			int Width, Height;
-			float MinZ, MaxZ;
-		};
-
 		[StructLayout( LayoutKind::Sequential )]
 		public ref class PresentParameters
 		{

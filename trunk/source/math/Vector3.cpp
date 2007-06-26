@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <d3dx9.h>
 
+#include "../Direct3D/MiscTypes.h"
 #include "Math.h"
 
 namespace SlimDX
@@ -88,4 +89,26 @@ namespace SlimDX
 		D3DXVec3TransformNormal( (D3DXVECTOR3*) &result, (const D3DXVECTOR3*) &normal, (const D3DXMATRIX*) &transform );
 		return result;
 	}
+
+    Vector3 Vector3::Project( Direct3D::Viewport viewport, Matrix projection, Matrix view, Matrix world )
+    {
+        Vector3 result;
+        pin_ptr<Vector3> pinnedThis = this;
+
+        D3DXVec3Project( (D3DXVECTOR3*) &result, (D3DXVECTOR3*) pinnedThis, (D3DVIEWPORT9*) &viewport,
+            (D3DXMATRIX*) &projection, (D3DXMATRIX*) &view, (D3DXMATRIX*) &world );
+
+        return result;
+    }
+
+    Vector3 Vector3::Unproject( Direct3D::Viewport viewport, Matrix projection, Matrix view, Matrix world )
+    {
+        Vector3 result;
+        pin_ptr<Vector3> pinnedThis = this;
+
+        D3DXVec3Unproject( (D3DXVECTOR3*) &result, (D3DXVECTOR3*) pinnedThis, (D3DVIEWPORT9*) &viewport,
+            (D3DXMATRIX*) &projection, (D3DXMATRIX*) &view, (D3DXMATRIX*) &world );
+
+        return result;
+    }
 }

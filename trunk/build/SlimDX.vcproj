@@ -405,6 +405,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d\MiscTypes.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d\PixelShader.h"
 					>
 				</File>
