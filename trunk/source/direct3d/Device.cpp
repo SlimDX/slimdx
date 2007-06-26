@@ -205,14 +205,7 @@ namespace Direct3D
 	generic<typename T>
 	void Device::SetRenderState( RenderState state, T value )
 	{
-		HRESULT hr = m_Pointer->SetRenderState( (D3DRENDERSTATETYPE) state, (int) value );
-		GraphicsException::CheckHResult( hr );
-	}
-
-	void Device::SetTransform( TransformState state, Matrix value )
-	{
-		HRESULT hr = m_Pointer->SetTransform( (D3DTRANSFORMSTATETYPE) state, (const D3DMATRIX*) &value );
-		GraphicsException::CheckHResult( hr );
+		SetRenderState( state, (int) value );
 	}
 
 	void Device::SetTextureStageState( int stage, TextureStage type, int value )
@@ -221,9 +214,45 @@ namespace Direct3D
 		GraphicsException::CheckHResult( hr );
 	}
 
-	void Device::SetSamplerState( int stage, SamplerState type, int value )
+    void Device::SetTextureStageState( int stage, TextureStage type, TextureOperation texOp )
+    {
+        SetTextureStageState( stage, type, (int) texOp );
+    }
+
+    void Device::SetTextureStageState( int stage, TextureStage type, TextureArgument texArg )
+    {
+        SetTextureStageState( stage, type, (int) texArg );
+    }
+
+    void Device::SetTextureStageState( int stage, TextureStage type, TextureTransform texTransform )
+    {
+        SetTextureStageState( stage, type, (int) texTransform );
+    }
+
+    void Device::SetTextureStageState( int stage, TextureStage type, float value )
+    {
+        SetTextureStageState( stage, type, *(int*) &value );
+    }
+
+	void Device::SetSamplerState( int sampler, SamplerState type, int value )
 	{
-		HRESULT hr = m_Pointer->SetSamplerState( stage, (D3DSAMPLERSTATETYPE) type, value );
+		HRESULT hr = m_Pointer->SetSamplerState( sampler, (D3DSAMPLERSTATETYPE) type, value );
+		GraphicsException::CheckHResult( hr );
+	}
+
+    void Device::SetSamplerState( int sampler, SamplerState type, TextureAddress texAddr )
+    {
+        SetSamplerState( sampler, type, (int) texAddr );
+    }
+
+    void Device::SetSamplerState( int sampler, SamplerState type, TextureFilter texFilter )
+    {
+        SetSamplerState( sampler, type, (int) texFilter );
+    }
+
+	void Device::SetTransform( TransformState state, Matrix value )
+	{
+		HRESULT hr = m_Pointer->SetTransform( (D3DTRANSFORMSTATETYPE) state, (const D3DMATRIX*) &value );
 		GraphicsException::CheckHResult( hr );
 	}
 

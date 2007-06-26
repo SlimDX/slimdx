@@ -76,17 +76,32 @@ namespace Direct3D
 	}
 
 
-    void Direct3D::Initialize()
+	void Direct3D::Initialize()
 	{
-	    m_Direct3D = Direct3DCreate9( D3D_SDK_VERSION );
-	    if( m_Direct3D == NULL )
-		    throw gcnew DirectXException( -1, "Could not create Direct3D instance." );
+		if( m_Direct3D != NULL )
+			return;
+
+		m_Direct3D = Direct3DCreate9( D3D_SDK_VERSION );
+		if( m_Direct3D == NULL )
+			throw gcnew DirectXException( -1, "Could not create Direct3D instance." );
 
 		CheckWhql = false;
 		Adapters = gcnew AdapterList( m_Direct3D->GetAdapterCount() );
 		
 		System::AppDomain::CurrentDomain->DomainUnload += gcnew System::EventHandler( OnExit );
 		System::AppDomain::CurrentDomain->ProcessExit += gcnew System::EventHandler( OnExit );
+	}
+
+	void Direct3D::Terminate()
+	{
+		if( m_Direct3D == NULL )
+            return;
+
+		m_Direct3D->Release();
+		m_Direct3D = NULL;
+
+		System::AppDomain::CurrentDomain->DomainUnload -= gcnew System::EventHandler( OnExit );
+		System::AppDomain::CurrentDomain->ProcessExit -= gcnew System::EventHandler( OnExit );
 	}
 
 	bool Direct3D::CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat,

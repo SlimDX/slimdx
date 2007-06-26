@@ -650,6 +650,16 @@ namespace SlimDX
 			Constant = D3DTSS_CONSTANT,
 		};
 
+        [Flags]
+        public enum class TextureCoordIndex : Int32
+        {
+            PassThru = D3DTSS_TCI_PASSTHRU,
+            CameraSpaceNormal = D3DTSS_TCI_CAMERASPACENORMAL,
+            CameraSpacePosition = D3DTSS_TCI_CAMERASPACEPOSITION,
+            CameraSpaceReflectionVector = D3DTSS_TCI_CAMERASPACEREFLECTIONVECTOR,
+            SphereMap = D3DTSS_TCI_SPHEREMAP,
+        };
+
 		public enum class TextureArgument : Int32
 		{
 			SelectMask = D3DTA_SELECTMASK,
@@ -726,6 +736,16 @@ namespace SlimDX
             Clamp = D3DTADDRESS_CLAMP,
             Border = D3DTADDRESS_BORDER,
             MirrorOnce = D3DTADDRESS_MIRRORONCE,
+        };
+
+        public enum class TextureTransform : Int32
+        {
+            Disable = D3DTTFF_DISABLE,
+            Count1 = D3DTTFF_COUNT1,
+            Count2 = D3DTTFF_COUNT2,
+            Count3 = D3DTTFF_COUNT3,
+            Count4 = D3DTTFF_COUNT4,
+            Projected = D3DTTFF_PROJECTED,
         };
 
 		public enum class ResourceType : Int32

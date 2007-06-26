@@ -266,11 +266,7 @@ namespace SlimDX
 
 			static void OnExit(Object^ sender,EventArgs^ e)
 			{
-				if(m_Direct3D != NULL)
-				{
-					m_Direct3D->Release();
-					m_Direct3D = NULL;
-				}
+				Terminate();
 			}
 
 		internal:
@@ -284,6 +280,7 @@ namespace SlimDX
 			static property AdapterList^ Adapters;
 
             static void Initialize();
+            static void Terminate();
 
 			static bool CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat,
 				Usage usage, ResourceType resourceType, Format checkFormat, [Out] int% result );

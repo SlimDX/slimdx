@@ -207,12 +207,21 @@ namespace SlimDX
 			void SetRenderState( RenderState state, int value );
 			void SetRenderState( RenderState state, bool value );
 			void SetRenderState( RenderState state, float value );
+            //TODO: Make this accept only the enums that are legal, rather than everything in the world
 			generic<typename T> where T : Enum
 			void SetRenderState( RenderState state, T value );
 
-			void SetTransform( TransformState state, Matrix value );
 			void SetTextureStageState( int stage, TextureStage type, int value );
+            void SetTextureStageState( int stage, TextureStage type, TextureOperation texOp );
+            void SetTextureStageState( int stage, TextureStage type, TextureArgument texArg );
+            void SetTextureStageState( int stage, TextureStage type, TextureTransform texTransform );
+            void SetTextureStageState( int stage, TextureStage type, float value );
+
 			void SetSamplerState( int sampler, SamplerState type, int value );
+            void SetSamplerState( int sampler, SamplerState type, TextureAddress texAddr );
+            void SetSamplerState( int sampler, SamplerState type, TextureFilter texFilter );
+
+            void SetTransform( TransformState state, Matrix value );
 			void SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride );
 			void SetStreamSourceFreq( int stream, int frequency );
 			void SetTexture( int sampler, BaseTexture^ texture );
