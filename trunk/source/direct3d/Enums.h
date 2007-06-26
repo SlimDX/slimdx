@@ -719,6 +719,15 @@ namespace SlimDX
 			DMapOffset = D3DSAMP_DMAPOFFSET,
 		};
 
+        public enum class TextureAddress : Int32
+        {
+            Wrap = D3DTADDRESS_WRAP,
+            Mirror = D3DTADDRESS_MIRROR,
+            Clamp = D3DTADDRESS_CLAMP,
+            Border = D3DTADDRESS_BORDER,
+            MirrorOnce = D3DTADDRESS_MIRRORONCE,
+        };
+
 		public enum class ResourceType : Int32
 		{
 			Surface = D3DRTYPE_SURFACE,

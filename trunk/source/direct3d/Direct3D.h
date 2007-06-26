@@ -283,18 +283,7 @@ namespace SlimDX
 			static property bool CheckWhql;
 			static property AdapterList^ Adapters;
 
-			static Direct3D()
-			{
-				m_Direct3D = Direct3DCreate9( D3D_SDK_VERSION );
-				if( m_Direct3D == NULL )
-					throw gcnew DirectXException( -1, "Could not create Direct3D instance." );
-
-				CheckWhql = false;
-				Adapters = gcnew AdapterList( m_Direct3D->GetAdapterCount() );
-				
-				System::AppDomain::CurrentDomain->DomainUnload += gcnew System::EventHandler( OnExit );
-				System::AppDomain::CurrentDomain->ProcessExit += gcnew System::EventHandler( OnExit );
-			}
+            static void Initialize();
 
 			static bool CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat,
 				Usage usage, ResourceType resourceType, Format checkFormat, [Out] int% result );
