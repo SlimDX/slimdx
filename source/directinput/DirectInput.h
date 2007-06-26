@@ -49,6 +49,11 @@ namespace SlimDX
 		private:
 			static IDirectInput8W* m_DirectInput;
 
+			static void OnExit(Object^ sender,EventArgs^ e)
+			{
+				Terminate();
+			}
+
 		internal:
 			static property IDirectInput8W* InternalPointer
 			{
@@ -57,6 +62,7 @@ namespace SlimDX
 
 		public:
 			static void Initialize();
+            static void Terminate();
 
 			Device^ CreateDevice( Guid subsystem );
 		};

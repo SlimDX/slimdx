@@ -74,6 +74,9 @@ namespace DirectInput
 
     void DirectInput::Initialize()
 	{
+        if( m_DirectInput != NULL )
+            return;
+
 		IDirectInput8W* dinput;
 		IntPtr hInstance = Marshal::GetHINSTANCE( DirectInput::typeid->Module );
 
@@ -84,6 +87,21 @@ namespace DirectInput
 			throw gcnew DirectXException( -1, "Could not create DirectInput instance." );
 
 		m_DirectInput = dinput;
+		
+		System::AppDomain::CurrentDomain->DomainUnload += gcnew System::EventHandler( OnExit );
+		System::AppDomain::CurrentDomain->ProcessExit += gcnew System::EventHandler( OnExit );
+	}
+
+	void DirectInput::Terminate()
+	{
+		if( m_DirectInput == NULL )
+            return;
+
+		m_DirectInput->Release();
+		m_DirectInput = NULL;
+
+		System::AppDomain::CurrentDomain->DomainUnload -= gcnew System::EventHandler( OnExit );
+		System::AppDomain::CurrentDomain->ProcessExit -= gcnew System::EventHandler( OnExit );
 	}
 
 	Device^ DirectInput::CreateDevice( Guid subsystem )
