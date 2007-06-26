@@ -76,17 +76,102 @@ namespace Direct3D
 		return result;
 	}
 	
-	void ConstantTable::SetValue( EffectHandle^ constant,Vector4 value )
+	void ConstantTable::SetValue( EffectHandle^ constant, bool value )
+	{
+		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
+		HRESULT hr = m_Pointer->SetBool( m_Device, constant->InternalHandle, value );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	//implementing set for bool array is REALLY ANNOYING.
+
+	void ConstantTable::SetValue( EffectHandle^ constant, int value )
+	{
+		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
+		HRESULT hr = m_Pointer->SetInt( m_Device, handle, value );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void ConstantTable::SetValue( EffectHandle^ constant, array<int>^ values )
+	{
+		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
+		pin_ptr<int> pinned_value = &values[0];
+		HRESULT hr = m_Pointer->SetIntArray( m_Device, handle, pinned_value, values->Length );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void ConstantTable::SetValue( EffectHandle^ constant, float value )
+	{
+		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
+		HRESULT hr = m_Pointer->SetFloat( m_Device, handle, value );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void ConstantTable::SetValue( EffectHandle^ constant, array<float>^ values )
+	{
+		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
+		pin_ptr<float> pinned_values = &values[0];
+		HRESULT hr = m_Pointer->SetFloatArray( m_Device, handle, pinned_values, values->Length );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void ConstantTable::SetValue( EffectHandle^ constant, Vector4 value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = m_Pointer->SetVector( m_Device, handle, (const D3DXVECTOR4*) &value );
 		GraphicsException::CheckHResult( hr );
 	}
-	
-	void ConstantTable::SetValue( EffectHandle^ constant,Matrix value )
+
+	void ConstantTable::SetValue( EffectHandle^ constant, array<Vector4>^ values )
+	{
+		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
+		pin_ptr<Vector4> pinned_value = &values[0];
+		HRESULT hr = m_Pointer->SetVectorArray( m_Device, handle, (const D3DXVECTOR4*) pinned_value, values->Length );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void ConstantTable::SetValue( EffectHandle^ constant, ColorValue value )
+	{
+		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
+		HRESULT hr = m_Pointer->SetVector( m_Device, handle, (const D3DXVECTOR4*) &value );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void ConstantTable::SetValue( EffectHandle^ constant, array<ColorValue>^ values )
+	{
+		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
+		pin_ptr<ColorValue> pinned_value = &values[0];
+		HRESULT hr = m_Pointer->SetVectorArray( m_Device, handle, (const D3DXVECTOR4*) pinned_value, values->Length );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void ConstantTable::SetValue( EffectHandle^ constant, Matrix value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = m_Pointer->SetMatrix( m_Device, handle, (const D3DXMATRIX*) &value );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void ConstantTable::SetValue( EffectHandle^ constant, array<Matrix>^ values )
+	{
+		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
+		pin_ptr<Matrix> pinned_value = &values[0];
+		HRESULT hr = m_Pointer->SetMatrixArray( m_Device, handle, (const D3DXMATRIX*) pinned_value, values->Length );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void ConstantTable::SetValueTranspose( EffectHandle^ constant, Matrix value )
+	{
+		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
+		HRESULT hr = m_Pointer->SetMatrixTranspose( m_Device, handle, (const D3DXMATRIX*) &value );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void ConstantTable::SetValueTranspose( EffectHandle^ constant, array<Matrix>^ values )
+	{
+		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
+		pin_ptr<Matrix> pinned_value = &values[0];
+		HRESULT hr = m_Pointer->SetMatrixTransposeArray( m_Device, handle, (const D3DXMATRIX*) pinned_value, values->Length );
 		GraphicsException::CheckHResult( hr );
 	}
 }

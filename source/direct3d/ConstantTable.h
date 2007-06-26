@@ -24,6 +24,7 @@
 using namespace System;
 
 #include "../math/Math.h"
+#include "MiscTypes.h"
 
 namespace SlimDX
 {
@@ -44,9 +45,25 @@ namespace SlimDX
 			EffectHandle^ GetConstant( EffectHandle^ handle,String^ name );
 			
 			int GetSamplerIndex( EffectHandle^ sampler );
+
+            //TODO: The following functions:
+            //GetBufferPointer, GetBufferSize, GetConstantDesc, GetConstantElement,
+            //GetDesc, SetDefaults, SetBoolArray (also in BaseEffect)
 			
+			void SetValue( EffectHandle^ constant, bool value );
+			//void SetValue( EffectHandle^ constant, array<bool>^ value );
+			void SetValue( EffectHandle^ constant, int value );
+			void SetValue( EffectHandle^ constant, array<int>^ values );
+			void SetValue( EffectHandle^ constant, float value );
+			void SetValue( EffectHandle^ constant, array<float>^ values );
 			void SetValue( EffectHandle^ constant, Vector4 value );
+			void SetValue( EffectHandle^ constant, array<Vector4>^ values );
+			void SetValue( EffectHandle^ constant, ColorValue value );
+			void SetValue( EffectHandle^ constant, array<ColorValue>^ values );
 			void SetValue( EffectHandle^ constant, Matrix value );
+			void SetValue( EffectHandle^ constant, array<Matrix>^ values );
+			void SetValueTranspose( EffectHandle^ constant, Matrix value );
+			void SetValueTranspose( EffectHandle^ constant, array<Matrix>^ values );
 		};
 	}
 }
