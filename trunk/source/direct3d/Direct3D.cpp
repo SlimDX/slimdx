@@ -22,6 +22,10 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#if D3DX_SDK_VERSION != 33
+#error You are not compiling against the April 2007 SDK. Change the linker settings to delay load the correct DLLs and update this code.
+#endif
+
 #include "GraphicsException.h"
 #include "Enums.h"
 
@@ -81,7 +85,15 @@ namespace Direct3D
 		if( m_Direct3D != NULL )
 			return;
 
-		m_Direct3D = Direct3DCreate9( D3D_SDK_VERSION );
+        try
+        {
+		    m_Direct3D = Direct3DCreate9( D3D_SDK_VERSION );
+        }
+        catch( SEHException^ ex )
+        {
+            throw gcnew Direct3D9NotFoundException( "Direct3D 9 was not found. Reinstalling DirectX may fix the problem.", ex );
+        }
+
 		if( m_Direct3D == NULL )
 			throw gcnew DirectXException( -1, "Could not create Direct3D instance." );
 
@@ -90,6 +102,17 @@ namespace Direct3D
 		
 		System::AppDomain::CurrentDomain->DomainUnload += gcnew System::EventHandler( OnExit );
 		System::AppDomain::CurrentDomain->ProcessExit += gcnew System::EventHandler( OnExit );
+
+        //probe for D3DX
+        try
+        {
+            BOOL d3dx = D3DXCheckVersion( D3D_SDK_VERSION, D3DX_SDK_VERSION );
+        }
+        catch( SEHException^ ex )
+        {
+            throw gcnew Direct3DX9NotFoundException( "Direct3DX 9 was not found. Please install "
+                "the latest DirectX end-user redistributable from Microsoft.", ex );
+        }
 	}
 
 	void Direct3D::Terminate()

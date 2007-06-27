@@ -113,6 +113,9 @@ namespace SlimDX
 
 		DEFINE_GRAPHICS_EXCEPTION( OutOfMemory, E_OUTOFMEMORY, "Out of memory." );
 
+        DEFINE_GRAPHICS_EXCEPTION( Direct3D9NotFound, E_FAIL, "Direct3D 9 not found." );
+        DEFINE_GRAPHICS_EXCEPTION( Direct3DX9NotFound, E_FAIL, "Direct3DX 9 not found." );
+
 		inline GraphicsException^ GraphicsException::GetExceptionFromHResult( HRESULT hr )
 		{
 			GraphicsException^ ex;
