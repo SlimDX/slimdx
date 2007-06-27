@@ -22,6 +22,11 @@ namespace SlimDX
 	{
 		return (float) Math::Sqrt( (X * X) + (Y * Y) + (Z * Z) + (W * W) );
 	}
+	
+	float Quaternion::MagnitudeSquared()
+	{
+		return (X * X) + (Y * Y) + (Z * Z) + (W * W);
+	}
 
 	void Quaternion::Normalize()
 	{
@@ -38,10 +43,24 @@ namespace SlimDX
 		return quat;
 	}
 
+	Quaternion Quaternion::Conjugate( Quaternion quat )
+	{
+		Quaternion result;
+		D3DXQuaternionConjugate( (D3DXQUATERNION*) &result, (D3DXQUATERNION*) &quat );
+		return result;
+	}
+
 	Quaternion Quaternion::RotationAxis( Vector3 axis, float angle )
 	{
 		Quaternion result;
 		D3DXQuaternionRotationAxis( (D3DXQUATERNION*) &result, (D3DXVECTOR3*) &axis, angle );
+		return result;
+	}
+	
+	Quaternion Quaternion::RotationMatrix( Matrix matrix )
+	{
+		Quaternion result;
+		D3DXQuaternionRotationMatrix( (D3DXQUATERNION*) &result, (D3DXMATRIX*) &matrix );
 		return result;
 	}
 
@@ -49,6 +68,13 @@ namespace SlimDX
 	{
 		Quaternion result;
 		D3DXQuaternionRotationYawPitchRoll( (D3DXQUATERNION*) &result, yaw, pitch, roll );
+		return result;
+	}
+
+	Quaternion Quaternion::Invert( Quaternion quat )
+	{
+		Quaternion result;
+		D3DXQuaternionInverse( (D3DXQUATERNION*) &result, (D3DXQUATERNION*) &quat );
 		return result;
 	}
 
