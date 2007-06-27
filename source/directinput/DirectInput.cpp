@@ -80,11 +80,20 @@ namespace DirectInput
 		IDirectInput8W* dinput;
 		IntPtr hInstance = Marshal::GetHINSTANCE( DirectInput::typeid->Module );
 
-		HRESULT hr = DirectInput8Create( (HINSTANCE) hInstance.ToPointer(), DIRECTINPUT_VERSION, 
-			IID_IDirectInput8, (void**) &dinput, NULL );
-		//TODO: Include proper HRESULT checks
-		if( FAILED( hr ) || dinput == NULL )
-			throw gcnew DirectXException( -1, "Could not create DirectInput instance." );
+        try
+        {
+		    HRESULT hr = DirectInput8Create( (HINSTANCE) hInstance.ToPointer(), DIRECTINPUT_VERSION, 
+			    IID_IDirectInput8, (void**) &dinput, NULL );
+		    //TODO: Include proper HRESULT checks
+		    if( FAILED( hr ) || dinput == NULL )
+			    throw gcnew DirectXException( -1, "Could not create DirectInput instance." );
+        }
+        catch( SEHException^ ex )
+        {
+            //throw gcnew DirectInput8NotFoundException( "DirectInput 8 was not found. Reinstalling DirectX may fix the problem.", ex );
+            //DI doesn't have its own exceptions yet
+            throw ex;
+        }
 
 		m_DirectInput = dinput;
 		

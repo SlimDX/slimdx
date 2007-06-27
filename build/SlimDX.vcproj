@@ -61,6 +61,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="$(NoInherit) dxguid.lib d3d9.lib d3dx9.lib dinput8.lib xinput.lib"
 				LinkIncremental="2"
+				DelayLoadDLLs="d3d9.dll;d3dx9_33.dll;dinput8.dll"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				TargetMachine="1"
