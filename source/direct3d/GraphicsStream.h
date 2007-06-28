@@ -31,6 +31,8 @@ namespace SlimDX
 	private:
 		initonly char* m_Buffer;
 		Int64 m_Position;
+		Int64 m_Size;
+		bool m_OwnsBuffer;
 
 		initonly bool m_CanRead;
 		initonly bool m_CanWrite;
@@ -39,10 +41,12 @@ namespace SlimDX
 		GraphicsStream( void* buffer, bool canRead, bool canWrite );
 
 	public:
+		~GraphicsStream();
+		!GraphicsStream();
+		
 		virtual void Close() override;
 		virtual Int64 Seek( Int64 offset, SeekOrigin origin ) override;
 
-		//Write functions
 		virtual void Write( array<Byte>^ buffer, int offset, int count ) override;
 
 		generic<typename T> where T : value class
@@ -54,11 +58,14 @@ namespace SlimDX
 		generic<typename T> where T : value class
 		void Write( array<T>^ data ) { Write( data, 0, 0 ); }
 
-		//TODO: Write all the read functions
-		virtual int Read( array<Byte>^ buffer, int offset, int count ) override { return 0; }
-		/*T Read();
-		void Read( array<T>^ buffer, int count, int writeOffset );
-		array<T>^ Read( int count );*/
+
+		virtual int Read( array<Byte>^ buffer, int offset, int count ) override;
+		
+		generic<typename T> where T : value class
+		T Read();
+		
+		generic<typename T> where T : value class
+		array<T>^ Read( int count );
 
 		virtual void Flush() override
 		{
