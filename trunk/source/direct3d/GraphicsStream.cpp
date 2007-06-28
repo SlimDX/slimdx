@@ -23,7 +23,6 @@
 #include <d3dx9.h>
 
 #include "../Utils.h"
-#include "Device.h"
 #include "GraphicsStream.h"
 
 using namespace System::Runtime::InteropServices;

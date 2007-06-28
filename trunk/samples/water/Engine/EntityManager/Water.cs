@@ -1,6 +1,7 @@
 using System;
 using SlimDX;
 using SlimDX.Direct3D;
+using SlimDX.Direct3D9;
 using System.Runtime.InteropServices;
 
 namespace Engine

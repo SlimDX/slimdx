@@ -21,60 +21,31 @@
 */
 #pragma once
 
-/*
-This header serves as a storage point for types which are needed in multiple
-places but don't really have a proper home. ALL of the contents of this file
-should be considered to be misplaced for now.
-*/
+#include "ConstantTable.h"
+
 namespace SlimDX
 {
-    namespace Direct3D
-    {
-		public value class ColorValue
+	namespace Direct3D9
+	{	
+		public ref class PixelShader : public DirectXObject<IDirect3DPixelShader9>
 		{
+		private:
+			ConstantTable^ m_ConstantTable;
+
 		public:
-			float Alpha, Red, Green, Blue;
-
-			ColorValue( float alpha, float red, float green, float blue )
+			PixelShader( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable );
+			
+			~PixelShader()
 			{
-				Alpha = alpha;
-				Red = red;
-				Green = green;
-				Blue = blue;
+				delete m_ConstantTable;
 			}
-
-			ColorValue( float red, float green, float blue )
+			
+			property ConstantTable^ Constants
 			{
-				Alpha = 1.0f;
-				Red = red;
-				Green = green;
-				Blue = blue;
+				ConstantTable^ get() { return m_ConstantTable; }
 			}
-
-			static ColorValue FromColor( System::Drawing::Color color )
-			{
-				ColorValue value;
-
-				value.Alpha = color.A / 255.0f;
-				value.Red = color.R / 255.0f;
-				value.Green = color.G / 255.0f;
-				value.Blue = color.B / 255.0f;
-
-				return value;
-			}
-
-			int ToArgb()
-			{
-				//TODO: Write this
-				return 0;
-			}
+			
+			static PixelShader^ FromString( Device^ device, String^ sourceCode, String^ entryPoint, String^ profile, ShaderFlags flags, [Out] String^ %compilationErrors );
 		};
-
-		public value class Viewport
-		{
-			int X, Y;
-			int Width, Height;
-			float MinZ, MaxZ;
-		};
-    }
+	}
 }

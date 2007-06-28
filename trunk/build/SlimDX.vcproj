@@ -194,75 +194,7 @@
 				Name="Direct3D"
 				>
 				<File
-					RelativePath="..\source\direct3d\ConstantTable.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Device.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Direct3D.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Effect.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Font.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\source\direct3d\GraphicsStream.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\IndexBuffer.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Mesh.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\PixelShader.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Query.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Resource.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Sprite.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Surface.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\SwapChain.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Texture.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Vertex.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\VertexBuffer.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\VertexShader.cpp"
 					>
 				</File>
 			</Filter>
@@ -332,6 +264,82 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Direct3D 9"
+				>
+				<File
+					RelativePath="..\source\direct3d9\ConstantTable.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Device.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Direct3D.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Effect.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Font.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\IndexBuffer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Mesh.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\PixelShader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Query.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Resource.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Sprite.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Surface.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\SwapChain.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Texture.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Vertex.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\VertexBuffer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\VertexShader.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Direct3D 10"
+				>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -358,38 +366,6 @@
 				Name="Direct3D"
 				>
 				<File
-					RelativePath="..\source\direct3d\CapsEnums.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\ConstantTable.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\D3DX.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Device.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Direct3D.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Effect.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Enums.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Font.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\direct3d\GraphicsException.h"
 					>
 				</File>
@@ -398,55 +374,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d\IndexBuffer.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Mesh.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\direct3d\MiscTypes.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\PixelShader.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Query.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Resource.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Sprite.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Surface.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\SwapChain.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Texture.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\Vertex.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\VertexBuffer.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\VertexShader.h"
 					>
 				</File>
 			</Filter>
@@ -505,6 +433,94 @@
 					RelativePath="..\source\math\Vector4.h"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="Direct3D 9"
+				>
+				<File
+					RelativePath="..\source\direct3d9\CapsEnums.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ConstantTable.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\D3DX.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Device.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Direct3D.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Effect.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Enums.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Font.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\IndexBuffer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Mesh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\PixelShader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Query.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Resource.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Sprite.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Surface.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\SwapChain.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Texture.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Vertex.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\VertexBuffer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\VertexShader.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Direct3D 10"
+				>
 			</Filter>
 		</Filter>
 	</Files>
