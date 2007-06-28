@@ -21,60 +21,30 @@
 */
 #pragma once
 
-/*
-This header serves as a storage point for types which are needed in multiple
-places but don't really have a proper home. ALL of the contents of this file
-should be considered to be misplaced for now.
-*/
+#include "Resource.h"
+#include "../Direct3D/GraphicsStream.h"
+
+using namespace SlimDX::Direct3D;
+
 namespace SlimDX
 {
-    namespace Direct3D
-    {
-		public value class ColorValue
+	namespace Direct3D9
+	{
+		public ref class IndexBuffer sealed : public Resource
 		{
+		internal:
+			property IDirect3DIndexBuffer9* IbPointer
+			{
+				IDirect3DIndexBuffer9* get() { return (IDirect3DIndexBuffer9*) m_Pointer; }
+			}
+
 		public:
-			float Alpha, Red, Green, Blue;
+			IndexBuffer( IDirect3DIndexBuffer9* buffer );
+			IndexBuffer( Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit );
 
-			ColorValue( float alpha, float red, float green, float blue )
-			{
-				Alpha = alpha;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			ColorValue( float red, float green, float blue )
-			{
-				Alpha = 1.0f;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			static ColorValue FromColor( System::Drawing::Color color )
-			{
-				ColorValue value;
-
-				value.Alpha = color.A / 255.0f;
-				value.Red = color.R / 255.0f;
-				value.Green = color.G / 255.0f;
-				value.Blue = color.B / 255.0f;
-
-				return value;
-			}
-
-			int ToArgb()
-			{
-				//TODO: Write this
-				return 0;
-			}
+			GraphicsStream^ Lock( int offset, int size, LockFlags flags );
+			GraphicsStream^ Lock( int offset, LockFlags flags )	{ return Lock( offset, 0, flags ); }
+			void Unlock();
 		};
-
-		public value class Viewport
-		{
-			int X, Y;
-			int Width, Height;
-			float MinZ, MaxZ;
-		};
-    }
+	}
 }

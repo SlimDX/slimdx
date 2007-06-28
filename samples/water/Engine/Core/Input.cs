@@ -28,7 +28,7 @@ namespace Engine
 		}
 		#endregion
 		#region Methods
-		public Input(System.IntPtr handle, SlimDX.Direct3D.Device device)
+		public Input(System.IntPtr handle, SlimDX.Direct3D9.Device device)
 		{
 			vecPos = new Vector3(450.0f, 350.0f, 750.0f);
 			kbDevice = new SlimDX.DirectInput.Device(SystemGuid.Keyboard);
@@ -79,7 +79,7 @@ namespace Engine
 				mouseStates[3] = true;
 			mouse = mouseDevice.CurrentMouseState;
 		}
-		public void UpdateCamera(SlimDX.Direct3D.Device device)
+		public void UpdateCamera(SlimDX.Direct3D9.Device device)
 		{
 			PollMouse();
 			PollKeyboard();
@@ -110,7 +110,7 @@ namespace Engine
 			matView = Matrix.LookAtLH(new Vector3(vecPos.X, vecPos.Y, vecPos.Z), 
 									  new Vector3(0.0f, 0.0f, 0.0f),
 									  new Vector3(0.0f, 1.0f, 0.0f));
-			device.SetTransform(SlimDX.Direct3D.TransformState.View, matView);
+			device.SetTransform(SlimDX.Direct3D9.TransformState.View, matView);
 		}
 		public void Dispose()
 		{

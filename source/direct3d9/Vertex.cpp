@@ -19,62 +19,29 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include <d3d9.h>
+#include <d3dx9.h>
+#include <dxerr.h>
 
-/*
-This header serves as a storage point for types which are needed in multiple
-places but don't really have a proper home. ALL of the contents of this file
-should be considered to be misplaced for now.
-*/
+#include "Device.h"
+#include "Vertex.h"
+
 namespace SlimDX
 {
-    namespace Direct3D
-    {
-		public value class ColorValue
-		{
-		public:
-			float Alpha, Red, Green, Blue;
+namespace Direct3D9
+{
+	VertexDeclaration::VertexDeclaration( Device^ device, array<VertexElement>^ elements )
+	{
+		if( elements == nullptr )
+			throw gcnew ArgumentNullException( "elements" );
 
-			ColorValue( float alpha, float red, float green, float blue )
-			{
-				Alpha = alpha;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
+		pin_ptr<VertexElement> pinnedElements = &elements[0];
+		IDirect3DVertexDeclaration9* decl;
 
-			ColorValue( float red, float green, float blue )
-			{
-				Alpha = 1.0f;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
+		HRESULT hr = device->InternalPointer->CreateVertexDeclaration( (const D3DVERTEXELEMENT9*) pinnedElements, &decl );
+		GraphicsException::CheckHResult( hr );
 
-			static ColorValue FromColor( System::Drawing::Color color )
-			{
-				ColorValue value;
-
-				value.Alpha = color.A / 255.0f;
-				value.Red = color.R / 255.0f;
-				value.Green = color.G / 255.0f;
-				value.Blue = color.B / 255.0f;
-
-				return value;
-			}
-
-			int ToArgb()
-			{
-				//TODO: Write this
-				return 0;
-			}
-		};
-
-		public value class Viewport
-		{
-			int X, Y;
-			int Width, Height;
-			float MinZ, MaxZ;
-		};
-    }
+		m_Pointer = decl;
+	}
+}
 }

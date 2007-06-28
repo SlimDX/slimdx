@@ -19,62 +19,25 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include <d3d9.h>
+#include <d3dx9.h>
 
-/*
-This header serves as a storage point for types which are needed in multiple
-places but don't really have a proper home. ALL of the contents of this file
-should be considered to be misplaced for now.
-*/
+#include "../DirectXObject.h"
+
+#include "Device.h"
+#include "Resource.h"
+
 namespace SlimDX
 {
-    namespace Direct3D
-    {
-		public value class ColorValue
-		{
-		public:
-			float Alpha, Red, Green, Blue;
+namespace Direct3D9
+{
+	Device^ Resource::GetDevice()
+	{
+		IDirect3DDevice9* device;
+		HRESULT hr = m_Pointer->GetDevice( &device );
+		GraphicsException::CheckHResult( hr );
 
-			ColorValue( float alpha, float red, float green, float blue )
-			{
-				Alpha = alpha;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			ColorValue( float red, float green, float blue )
-			{
-				Alpha = 1.0f;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			static ColorValue FromColor( System::Drawing::Color color )
-			{
-				ColorValue value;
-
-				value.Alpha = color.A / 255.0f;
-				value.Red = color.R / 255.0f;
-				value.Green = color.G / 255.0f;
-				value.Blue = color.B / 255.0f;
-
-				return value;
-			}
-
-			int ToArgb()
-			{
-				//TODO: Write this
-				return 0;
-			}
-		};
-
-		public value class Viewport
-		{
-			int X, Y;
-			int Width, Height;
-			float MinZ, MaxZ;
-		};
-    }
+		return gcnew Device( device );
+	}
+}
 }

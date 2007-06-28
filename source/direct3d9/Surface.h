@@ -21,60 +21,49 @@
 */
 #pragma once
 
-/*
-This header serves as a storage point for types which are needed in multiple
-places but don't really have a proper home. ALL of the contents of this file
-should be considered to be misplaced for now.
-*/
+#include "Resource.h"
+
 namespace SlimDX
 {
-    namespace Direct3D
-    {
-		public value class ColorValue
+	ref class GraphicsStream;
+
+	namespace Direct3D9
+	{
+		public value class SurfaceDescription
 		{
+			Format Format;
+			ResourceType Type;
+			Usage Usage;
+			Pool Pool;
+			MultiSampleType MultiSampleType;
+			int MultiSampleQuality;
+			int Width;
+			int Height;
+		};
+
+		public ref class Surface : public Resource
+		{
+		internal:
+			property IDirect3DSurface9* SurfacePointer
+			{
+				IDirect3DSurface9* get() { return (IDirect3DSurface9*) m_Pointer; }
+			}
+
 		public:
-			float Alpha, Red, Green, Blue;
+			Surface( IDirect3DSurface9* Surface );
 
-			ColorValue( float alpha, float red, float green, float blue )
-			{
-				Alpha = alpha;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
+			Surface^ CreateRenderTarget( Device^ device, int width, int height, Format format,
+				MultiSampleType multiSampleType, int multiSampleQuality, bool lockable );
+			Surface^ CreateOffscreenPlain( Device^ device, int width, int height, Format format, Pool pool );
+			Surface^ CreateDepthStencil( Device^ device, int width, int height, Format format,
+				MultiSampleType multiSampleType, int multiSampleQuality, bool discard );
 
-			ColorValue( float red, float green, float blue )
-			{
-				Alpha = 1.0f;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
+			GraphicsStream^ LockRectangle( LockFlags flags );
+			void UnlockRectangle();
 
-			static ColorValue FromColor( System::Drawing::Color color )
-			{
-				ColorValue value;
-
-				value.Alpha = color.A / 255.0f;
-				value.Red = color.R / 255.0f;
-				value.Green = color.G / 255.0f;
-				value.Blue = color.B / 255.0f;
-
-				return value;
-			}
-
-			int ToArgb()
-			{
-				//TODO: Write this
-				return 0;
-			}
+			SurfaceDescription GetDesc();
+			IntPtr GetDC();
+			void ReleaseDC( IntPtr hdc );
 		};
-
-		public value class Viewport
-		{
-			int X, Y;
-			int Width, Height;
-			float MinZ, MaxZ;
-		};
-    }
+	}
 }

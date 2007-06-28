@@ -21,60 +21,45 @@
 */
 #pragma once
 
-/*
-This header serves as a storage point for types which are needed in multiple
-places but don't really have a proper home. ALL of the contents of this file
-should be considered to be misplaced for now.
-*/
+#include "../DirectXObject.h"
+#include "../Direct3D/GraphicsException.h"
+
 namespace SlimDX
 {
-    namespace Direct3D
-    {
-		public value class ColorValue
+	namespace Direct3D9
+	{
+		public value class VertexElement
 		{
 		public:
-			float Alpha, Red, Green, Blue;
+			short Stream;
+			short Offset;
+			DeclarationType Type;
+			DeclarationMethod Method;
+			DeclarationUsage Usage;
+			Byte UsageIndex;
 
-			ColorValue( float alpha, float red, float green, float blue )
+			static initonly VertexElement VertexDeclarationEnd;
+
+			static VertexElement()
 			{
-				Alpha = alpha;
-				Red = red;
-				Green = green;
-				Blue = blue;
+				VertexDeclarationEnd = VertexElement( 255, 0, DeclarationType::Unused, 
+					DeclarationMethod::Default, DeclarationUsage::Position, 0 );
 			}
 
-			ColorValue( float red, float green, float blue )
+			VertexElement( short stream, short offset, DeclarationType declType, 
+				DeclarationMethod declMethod, DeclarationUsage declUsage, Byte usageIndex )
+				: Stream( stream ), Offset( offset ), Type( declType ),
+				Method( declMethod ), Usage( declUsage ), UsageIndex( usageIndex )
 			{
-				Alpha = 1.0f;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			static ColorValue FromColor( System::Drawing::Color color )
-			{
-				ColorValue value;
-
-				value.Alpha = color.A / 255.0f;
-				value.Red = color.R / 255.0f;
-				value.Green = color.G / 255.0f;
-				value.Blue = color.B / 255.0f;
-
-				return value;
-			}
-
-			int ToArgb()
-			{
-				//TODO: Write this
-				return 0;
 			}
 		};
 
-		public value class Viewport
+		ref class Device;
+
+		public ref class VertexDeclaration sealed : public DirectXObject<IDirect3DVertexDeclaration9>
 		{
-			int X, Y;
-			int Width, Height;
-			float MinZ, MaxZ;
+		public:
+			VertexDeclaration( Device^ device, array<VertexElement>^ elements );
 		};
-    }
+	}
 }
