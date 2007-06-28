@@ -33,14 +33,30 @@ namespace SlimDX
 	GraphicsStream::GraphicsStream( void* buffer, bool canRead, bool canWrite )
 	{
 		m_Buffer = (char*) buffer;
+		m_Position = 0;
+		m_Size = 0;
+		
+		m_OwnsBuffer = false;
+		
 		m_CanRead = canRead;
 		m_CanWrite = canWrite;
-		m_Position = 0;
+	}
+
+	GraphicsStream::~GraphicsStream()
+	{
+		if(m_OwnsBuffer)
+			delete[] m_Buffer;
+		this->!GraphicsStream();
+	}
+	
+	GraphicsStream::!GraphicsStream()
+	{
+		Stream::Close();
 	}
 
 	void GraphicsStream::Close()
 	{
-		Stream::Close();
+		this->!GraphicsStream();
 	}
 
 	Int64 GraphicsStream::Seek( Int64 offset, SeekOrigin origin )
@@ -58,11 +74,14 @@ namespace SlimDX
 			break;
 
 		case SeekOrigin::End:
-			throw gcnew NotSupportedException();
+			targetPosition = m_Size - offset;
+			break;
 		}
 
 		if( targetPosition < 0 )
-			throw gcnew InvalidOperationException();
+			throw gcnew InvalidOperationException("Cannot seek beyond the beginning of the stream.");
+		if( targetPosition >= m_Size )
+			throw gcnew InvalidOperationException("Cannot seek beyond the end of the stream.");
 
 		m_Position = targetPosition;
 		return m_Position;
@@ -111,5 +130,51 @@ namespace SlimDX
 		int size = count * Marshal::SizeOf( T::typeid );
 		pin_ptr<T> pinnedData = &data[startIndex];
 		memcpy( m_Buffer + Position, pinnedData, size );
+	}
+	
+	int GraphicsStream::Read( array<Byte>^ buffer, int offset, int count )
+	{
+		if( !m_CanRead )
+			throw gcnew NotSupportedException();
+		if( buffer == nullptr )
+			throw gcnew ArgumentNullException( "buffer" );
+		if( offset < 0 || offset >= buffer->Length )
+			throw gcnew ArgumentOutOfRangeException( "offset" );
+		if( count < 0 || offset + count > buffer->Length )
+			throw gcnew ArgumentOutOfRangeException( "count" );
+
+		pin_ptr<Byte> pinnedBuffer = &buffer[offset];
+		memcpy( pinnedBuffer, m_Buffer + m_Position, count );
+
+		m_Position += count;
+		return count;
+	}
+	
+	generic<typename T> where T : value class
+	T GraphicsStream::Read( )
+	{
+		if( !m_CanRead )
+			throw gcnew NotSupportedException();
+
+		T result;
+		int size = Marshal::SizeOf( T::typeid );
+		memcpy( &result, m_Buffer + m_Position, size );
+		m_Position += size;
+		return (result);
+	}
+	
+	generic<typename T> where T : value class
+	array<T>^ GraphicsStream::Read( int count )
+	{
+		if( !m_CanRead )
+			throw gcnew NotSupportedException();
+			
+		array<T>^ result = gcnew array<T>( count );
+		int elementSize = Marshal::SizeOf( T::typeid );
+		
+		pin_ptr<T> pinnedBuffer = &result[0];
+		memcpy( pinnedBuffer, m_Buffer + m_Position, count * elementSize );
+		m_Position += count * elementSize;
+		return result;
 	}
 }
