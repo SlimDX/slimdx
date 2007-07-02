@@ -331,6 +331,15 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 	}
 
+    DisplayMode Device::GetDisplayMode( int swapChain )
+    {
+        DisplayMode displayMode;
+        HRESULT hr = m_Pointer->GetDisplayMode( swapChain, (D3DDISPLAYMODE*) &displayMode );
+        GraphicsException::CheckHResult( hr );
+
+        return displayMode;
+    }
+
 	Surface^ Device::GetBackBuffer( int swapChain, int backBuffer )
 	{
 		IDirect3DSurface9* buffer;

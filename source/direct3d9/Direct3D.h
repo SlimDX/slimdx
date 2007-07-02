@@ -62,26 +62,6 @@ namespace SlimDX
 			initonly int WhqlLevel;
 		};
 
-		public ref class AdapterInformation
-		{
-		internal:
-			initonly int m_Adapter;
-
-			AdapterInformation( unsigned int adapter );
-
-		public:
-			property int Adapter
-			{
-				int get() { return m_Adapter; }
-			}
-
-			property int Monitor { int get(); }
-			property DisplayMode CurrentDisplayMode { DisplayMode get(); }
-			//TODO: Enumerate display modes
-
-			initonly AdapterDetails^ Details;
-		};
-
 		public value class VertexShader20Caps
 		{
 		public:
@@ -198,65 +178,80 @@ namespace SlimDX
 			int MaxPixelShader30InstructionSlots;
 		};
 
-		public ref class AdapterList sealed : public System::Collections::IEnumerable
+        public ref class DisplayModeList sealed : public System::Collections::IEnumerable
 		{
 		private:
-			ref class AdapterEnumerator : public System::Collections::IEnumerator
-			{
-			private:
-				int m_Position;
-				int m_Count;
-
-			public:
-				AdapterEnumerator( int count ) : m_Count( count )
-				{ }
-
-				virtual void Reset() sealed
-				{
-					m_Position = -1;
-				}
-
-				virtual bool MoveNext() sealed
-				{
-					++m_Position;
-					if( m_Position >= m_Count )
-						return false;
-
-					return true;
-				}
-
-				property Object^ Current
-				{
-					virtual Object^ get()
-					{
-						if( m_Position < 0 || m_Position >= m_Count )
-							throw gcnew InvalidOperationException();
-
-						return gcnew AdapterInformation( m_Position );
-					}
-				}
-			};
+			array<DisplayMode>^ m_Modes;
 
 		internal:
-			AdapterList( unsigned int adapterCount ) { Count = (int) adapterCount; }
+			DisplayModeList( unsigned int adapter, Format format );
 
 		public:
-			initonly int Count;
+            property int Count
+            {
+                virtual int get() { return m_Modes->Length; }
+            }
 
-			property AdapterInformation^ default[int]
+            property DisplayMode default[int]
 			{
-				AdapterInformation^ get( int index )
+				DisplayMode get( int index )
 				{
-					if( index < 0 || index >= Count )
-						throw gcnew ArgumentOutOfRangeException( "index" );
-
-					return gcnew AdapterInformation( index );
+					return m_Modes[index];
 				}
 			}
 
 			virtual System::Collections::IEnumerator^ GetEnumerator()
 			{
-				return gcnew AdapterEnumerator( Count );
+                return m_Modes->GetEnumerator();
+			}
+		};
+
+		public ref class AdapterInformation
+		{
+		internal:
+			initonly int m_Adapter;
+
+			AdapterInformation( unsigned int adapter );
+
+		public:
+			property int Adapter
+			{
+				int get() { return m_Adapter; }
+			}
+
+			property IntPtr Monitor { IntPtr get(); }
+			property DisplayMode CurrentDisplayMode { DisplayMode get(); }
+            DisplayModeList^ GetDisplayModes( Format format );
+            Capabilities GetCaps( DeviceType type );
+
+			initonly AdapterDetails^ Details;
+		};
+
+        public ref class AdapterList sealed : public System::Collections::IEnumerable
+		{
+		private:
+            array<AdapterInformation^>^ m_Adapters;
+
+		internal:
+			AdapterList( unsigned int adapterCount );
+
+		public:
+            property int Count
+            {
+                virtual int get() { return m_Adapters->Length; }
+            }
+
+            property AdapterInformation^ default[int]
+			{
+				AdapterInformation^ get( int index )
+				{
+					return m_Adapters[index];
+				}
+			}
+
+			virtual System::Collections::IEnumerator^ GetEnumerator()
+			{
+                return m_Adapters->GetEnumerator();
 			}
 		};
 
@@ -305,6 +300,12 @@ namespace SlimDX
 			static bool CheckDeviceMultiSampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
 				bool windowed, MultiSampleType multiSampleType );
 
+            static int GetAdapterCount();
+            static DisplayMode GetAdapterDisplayMode( int adapter );
+            static AdapterDetails^ GetAdapterIdentifier( int adapter );
+            static int GetAdapterModeCount( int adapter, Format format );
+            static DisplayMode EnumAdapterModes( int adapter, Format format, int modeIndex );
+            static IntPtr GetAdapterMonitor( int adapter );
 			static Capabilities GetDeviceCaps( int adapter, DeviceType deviceType );
 		};
 	}
