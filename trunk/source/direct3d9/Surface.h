@@ -31,6 +31,7 @@ namespace SlimDX
 	{
 		public value class SurfaceDescription
 		{
+		public:
 			Format Format;
 			ResourceType Type;
 			Usage Usage;

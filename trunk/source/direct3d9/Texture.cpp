@@ -75,6 +75,37 @@ namespace Direct3D9
 		m_Pointer = texture;
 	}
 
+	/// <summary>
+	/// Checks texture-creation parameters.
+	/// </summary>
+	/// <param name="device">Device associated with the texture.</param>
+	/// <param name="width">Requested width of the texture.</param>
+	/// <param name="height">Requested height of the texture.</param>
+	/// <param name="numMipLevels">Requested number of mip-map levels for the texture.</param>
+	/// <param name="usage">Usage.None or Usage.RenderTarget.</param>
+	/// <param name="format">Requested format for the texture.</param>
+	/// <param name="pool">Memory class where the resource will be placed.</param>
+	/// <returns>A value type containing the proposed values to pass to the texture creation functions.</returns>
+	TextureRequirements Texture::CheckRequirements(Device^ device, int width, int height,
+        int numMipLevels, Usage usage, Format format, Pool pool)
+	{
+		TextureRequirements result;					// Result.
+		D3DFORMAT d3dFormat = (D3DFORMAT)format;	// Format.
+		HRESULT hr;									// Error code.
+
+		// Get texture requirements.
+		hr = D3DXCheckTextureRequirements(device->InternalPointer, (UINT *)&width, (UINT *)&height, (UINT *)&numMipLevels, (DWORD)usage, (D3DFORMAT *)&d3dFormat, (D3DPOOL)pool);
+		GraphicsException::CheckHResult(hr);
+
+		// Return proposed values.
+		result.Width = width;
+		result.Height = height;
+		result.Format = format;
+		result.NumOfMipLevels = numMipLevels;
+
+		return result;
+	}
+
 	Texture^ Texture::FromMemory( Device^ device, array<Byte>^ memory, int width, int height, int numLevels,
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
@@ -142,6 +173,43 @@ namespace Direct3D9
 	Texture^ Texture::FromFile( Device^ device, String^ fileName )
 	{
 		return Texture::FromFile( device, fileName, Usage::None, Pool::Managed );
+	}
+
+    //TODO: Evaluate if there's a nicer way to handle the interop mess here with Fill.
+
+	// Native callback used by FillTexture.
+	void WINAPI NativeD3DXFill2D(D3DXVECTOR4 *out, CONST D3DXVECTOR2 *pTexCoord, CONST D3DXVECTOR2 *pTexelSize, LPVOID data)
+	{
+		Fill2DCallback^ callback = nullptr;									// Our callback.
+		Vector2 coordinate = Vector2::Vector2(pTexCoord->x, pTexCoord->y);	// Managed coordinate.
+		Vector2 size = Vector2::Vector2(pTexelSize->x, pTexelSize->y);		// Managed size.
+		Vector4 result;														// Result vector.
+
+		// Get the delegate.
+		callback = safe_cast<Fill2DCallback^>(Marshal::GetDelegateForFunctionPointer(IntPtr::IntPtr(data), Fill2DCallback::typeid));			
+
+		// Call the callback delegate.
+		result = callback(coordinate, size);
+
+		// Return the 4D vector.
+		out->x = result.X;
+		out->y = result.Y;
+		out->z = result.Z;
+		out->w = result.W;
+	}
+
+	/// <summary>
+	/// Uses a user-provided function to fill each texel of each mip level of a given texture.
+	/// </summary>
+	/// <param name="callback">A function that uses the signature of the Fill2DCallback delegate.</param>
+	void Texture::Fill(Fill2DCallback^ callback)
+	{
+		HRESULT hr;		// Error code.
+
+		// Call the function.
+		hr = D3DXFillTexture(TexturePointer, NativeD3DXFill2D, Marshal::GetFunctionPointerForDelegate(callback).ToPointer());
+
+		GraphicsException::CheckHResult(hr);
 	}
 
     LockedRect Texture::LockRectangle( int level, System::Drawing::Rectangle rect, LockFlags flags )

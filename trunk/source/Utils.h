@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include <windows.h>
+
 using namespace System;
 using namespace System::IO;
 using namespace System::Diagnostics;
@@ -43,6 +45,32 @@ namespace SlimDX
 
 			disposed = true;
 			GC::SuppressFinalize( obj );
+		}
+
+		/// <summary>
+		/// Function to convert a GDI+ rectangle to a standard RECT.
+		/// </summary>
+		/// <param name="rect">Rectangle to convert.</param>
+		/// <param name="outrect">Output rectangle.</param>
+		static void ConvertRect(Drawing::Rectangle rect, RECT *outrect)
+		{
+			if (outrect == NULL)
+				throw gcnew ArgumentNullException("outrect");
+
+			outrect->left = rect.Left;
+			outrect->top = rect.Top;
+			outrect->right = rect.Right;
+			outrect->bottom = rect.Bottom;
+		}
+
+		/// <summary>
+		/// Function to convert a standard RECT to a GDI+ rectangle.
+		/// </summary>
+		/// <param name="rect">RECT to convert.</param>
+		/// <returns>A GDI+ rectangle structure.</returns>
+		static Drawing::Rectangle ConvertRect(RECT rect)
+		{
+			return Drawing::Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
 		}
 
 		static array<Byte>^ ReadStream( Stream^ stream, int readLength )
