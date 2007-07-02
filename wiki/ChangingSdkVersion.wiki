@@ -1,0 +1,13 @@
+#summary How to switch SlimDX to a different DX SDK version.
+#labels Featured
+
+= Introduction =
+
+SlimDX is regularly updated to the latest DirectX SDK version. For some developers, this may not be appropriate. This page details all the steps necessary to retarget the latest version of SlimDX to an older DX SDK.
+
+
+= Details =
+
+The only place where SlimDX currently depends directly on the SDK version is with delay loading. Unfortunately, we cannot ask the linker to delay load DLLs via the preprocessor; it has to be passed on the command line. This option can be found in VS under Linker->Input. Simply change it to reference the correct D3DX DLL. For example, the June 2007 DLL is version 34, and the April 2007 DLL is version 33.
+
+In order to prevent accidentally mismatching, the file direct3d9\Direct3D.cpp contains a preprocessor check that generates an error if the version is mismatched. Simply alter that code to expect the desired version.
