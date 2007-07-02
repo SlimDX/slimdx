@@ -1,4 +1,5 @@
 #summary Notes to facilitate migration from MDX 1.1 and 2.0.
+#labels Featured
 = Introduction =
 This page is intended to be a repository of information regarding migration to the SlimDX API from Microsoft's MDX API. A similar page might eventually exist for MigratingFromXNA, if there is sufficient interest.
 
@@ -13,4 +14,3 @@ Most (perhaps eventually all) non-static "operation" methods on math objects hav
 
 *Removed CustomVertex:*
 These were not deemed to be necessary, and it's preferred that applications define the vertex structures that they are using. These are just endless combinations of pieces of vertices, and really only suitable for FVF based vertices anyway, and those are basically dead.
-
