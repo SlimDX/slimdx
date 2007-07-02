@@ -156,6 +156,7 @@ namespace SlimDX
 			void Present();
 			void Present( SlimDX::Direct3D9::Present flags );
 
+            DisplayMode GetDisplayMode( int swapChain );
 			Surface^ GetBackBuffer( int swapChain, int backBuffer );
 			Surface^ GetDepthStencilSurface();
 

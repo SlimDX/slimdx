@@ -14,7 +14,7 @@ namespace Engine
 		private bool[] keyStates = {false, false, false, false, false, false};
 		private bool[] mouseStates = {false, false, false, false};
 		private Vector3 vecPos;
-		private static float angle = 0.0f;
+		//private static float angle = 0.0f;
 		private Matrix matView;
 		public Matrix MatView
 		{

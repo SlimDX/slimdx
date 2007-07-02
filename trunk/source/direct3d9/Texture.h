@@ -28,6 +28,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+        [StructLayout( LayoutKind::Sequential )]
 		public value class ImageInformation
 		{
 		public:
@@ -42,6 +43,35 @@ namespace SlimDX
 			static ImageInformation FromFile( String^ fileName );
 			static ImageInformation FromMemory( array<Byte>^ memory );
 		};
+
+        [StructLayout( LayoutKind::Sequential )]
+        public value class Box
+        {
+        public:
+            int Left;
+            int Top;
+            int Right;
+            int Bottom;
+            int Front;
+            int Back;
+        };
+
+        [StructLayout( LayoutKind::Sequential )]
+        public value class LockedRect
+        {
+        public:
+            int Pitch;
+            GraphicsStream^ Data;
+        };
+
+        [StructLayout( LayoutKind::Sequential )]
+        public value class LockedBox
+        {
+        public:
+            int RowPitch;
+            int SlicePitch;
+            GraphicsStream^ Data;
+        };
 
 		public ref class BaseTexture abstract : public Resource
 		{
@@ -79,7 +109,8 @@ namespace SlimDX
 			static Texture^ FromFile( Device^ device, String^ fileName, Usage usage, Pool pool );
 			static Texture^ FromFile( Device^ device, String^ fileName );
 
-			GraphicsStream^ LockRectangle( int level, LockFlags flags );
+			LockedRect LockRectangle( int level, LockFlags flags );
+            LockedRect LockRectangle( int level, System::Drawing::Rectangle rect, LockFlags flags );
 			void UnlockRectangle( int level );
 
 			SurfaceDescription GetLevelDesc( int level );
@@ -113,7 +144,8 @@ namespace SlimDX
 			static CubeTexture^ FromFile( Device^ device, String^ fileName, Usage usage, Pool pool );
 			static CubeTexture^ FromFile( Device^ device, String^ fileName );
 
-			GraphicsStream^ LockRectangle( CubeMapFace face, int level, LockFlags flags );
+			LockedRect LockRectangle( CubeMapFace face, int level, LockFlags flags );
+            LockedRect LockRectangle( CubeMapFace face, int level, System::Drawing::Rectangle rect, LockFlags flags );
 			void UnlockRectangle( CubeMapFace face, int level );
 		};
 
@@ -143,6 +175,9 @@ namespace SlimDX
 				int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static VolumeTexture^ FromFile( Device^ device, String^ fileName, Usage usage, Pool pool );
 			static VolumeTexture^ FromFile( Device^ device, String^ fileName );
+
+            LockedBox LockBox( int level, LockFlags flags );
+            LockedBox LockBox( int level, Box box, LockFlags flags );
 		};
 	}
 }

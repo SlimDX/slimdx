@@ -60,6 +60,16 @@ namespace Direct3D9
 		WhqlLevel = ident.WHQLLevel;
 	}
 
+    DisplayModeList::DisplayModeList( unsigned int adapter, Format format )
+    {
+        int count = Direct3D::GetAdapterModeCount( adapter, format );
+        m_Modes = gcnew array<DisplayMode>( count );
+
+        for( int i = 0; i < count; ++i )
+        {
+            m_Modes[i] = Direct3D::EnumAdapterModes( adapter, format, i );
+        }
+    }
 
 	AdapterInformation::AdapterInformation( unsigned int adapter )
 	{
@@ -67,18 +77,34 @@ namespace Direct3D9
 		Details = gcnew AdapterDetails( adapter );
 	}
 
-	int AdapterInformation::Monitor::get()
+	IntPtr AdapterInformation::Monitor::get()
 	{
-		return (int) Direct3D::InternalPointer->GetAdapterMonitor( m_Adapter );
+        return Direct3D::GetAdapterMonitor( m_Adapter );
 	}
 
 	DisplayMode AdapterInformation::CurrentDisplayMode::get()
 	{
-		DisplayMode displayMode;
-		HRESULT hr = Direct3D::InternalPointer->GetAdapterDisplayMode( m_Adapter, (D3DDISPLAYMODE*) &displayMode );
-		return displayMode;
+        return Direct3D::GetAdapterDisplayMode( m_Adapter );
 	}
 
+    Capabilities AdapterInformation::GetCaps( DeviceType type )
+    {
+        return Direct3D::GetDeviceCaps( m_Adapter, type );
+    }
+
+    DisplayModeList^ AdapterInformation::GetDisplayModes( Format format )
+    {
+        return gcnew DisplayModeList( m_Adapter, format );
+    }
+
+    AdapterList::AdapterList( unsigned int adapterCount )
+    {
+        m_Adapters = gcnew array<AdapterInformation^>( adapterCount );
+        for( unsigned int i = 0; i < adapterCount; ++i )
+        {
+            m_Adapters[i] = gcnew AdapterInformation( i );
+        }
+    }
 
 	void Direct3D::Initialize()
 	{
@@ -204,6 +230,41 @@ namespace Direct3D9
 		return CheckDeviceMultiSampleType( adapter, deviceType, surfaceFormat, windowed,
 			multiSampleType, levels, result );
 	}
+
+    int Direct3D::GetAdapterCount()
+    {
+        return m_Direct3D->GetAdapterCount();
+    }
+
+    DisplayMode Direct3D::GetAdapterDisplayMode( int adapter )
+    {
+        DisplayMode displayMode;
+        m_Direct3D->GetAdapterDisplayMode( adapter, (D3DDISPLAYMODE*) &displayMode );
+        return displayMode;
+    }
+
+    AdapterDetails^ Direct3D::GetAdapterIdentifier( int adapter )
+    {
+        return gcnew AdapterDetails( adapter );
+    }
+
+    int Direct3D::GetAdapterModeCount( int adapter, Format format )
+    {
+        return m_Direct3D->GetAdapterModeCount( adapter, (D3DFORMAT) format );
+    }
+
+    DisplayMode Direct3D::EnumAdapterModes( int adapter, Format format, int modeIndex )
+    {
+        DisplayMode displayMode;
+        HRESULT hr = m_Direct3D->EnumAdapterModes( adapter, (D3DFORMAT) format, modeIndex, (D3DDISPLAYMODE*) &displayMode );
+        GraphicsException::CheckHResult( hr );
+        return displayMode;
+    }
+
+    IntPtr Direct3D::GetAdapterMonitor( int adapter )
+    {
+        return IntPtr( m_Direct3D->GetAdapterMonitor( adapter ) );
+    }
 
 	Capabilities Direct3D::GetDeviceCaps( int adapter, DeviceType deviceType )
 	{
