@@ -72,6 +72,7 @@ namespace SlimDX
 
 		public value class Viewport
 		{
+		public:
 			int X, Y;
 			int Width, Height;
 			float MinZ, MaxZ;

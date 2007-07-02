@@ -771,5 +771,75 @@ namespace SlimDX
 			Hdr = D3DXIFF_HDR,
 			Pfm = D3DXIFF_PFM,
 		};
+
+		/// <summary>
+		/// Shading modes.
+		/// </summary>
+		public enum class ShadeMode : Int32
+		{
+			/// <summary>Flat shading.</summary>
+			Flat = D3DSHADE_FLAT,
+			/// <summary>Gouraud shading.</summary>
+			Gouraud = D3DSHADE_GOURAUD
+		};
+
+		/// <summary>
+		/// Comparison operations.
+		/// </summary>
+		public enum class Compare
+		{
+			/// <summary>Never accept</summary>
+			Never = D3DCMP_NEVER,
+			/// <summary>Accept if less than.</summary>
+			Less = D3DCMP_LESS,
+			/// <summary>Accept if equal.</summary>
+			Equal = D3DCMP_EQUAL,
+			/// <summary>Accept if equal or less than.</summary>
+			LessEqual = D3DCMP_LESSEQUAL,
+			/// <summary>Accept if greater than.</summary>
+			Greater = D3DCMP_GREATER,
+			/// <summary>Accept if not equal.</summary>
+			NotEqual = D3DCMP_NOTEQUAL,
+			/// <summary>Accept if greater than or equal</summary>
+			GreaterEqual = D3DCMP_GREATEREQUAL,
+			/// <summary>Always accept.</summary>
+			Always = D3DCMP_ALWAYS
+		};
+
+		/// <summary>
+		/// Stencil operations.
+		/// </summary>
+		public enum class StencilOperation
+		{
+			/// <summary>Keep the stencil value.</summary>
+			Keep = D3DSTENCILOP_KEEP,
+			/// <summary>Zero the stencil value.</summary>
+			Zero = D3DSTENCILOP_ZERO,
+			/// <summary>Replace the stencil value.</summary>
+			Replace = D3DSTENCILOP_REPLACE,
+			/// <summary>Increment and clamp stencil value.</summary>
+			IncrSat = D3DSTENCILOP_INCRSAT,
+			/// <summary>Decrement and clamp stencil value.</summary>
+			DecrSat = D3DSTENCILOP_DECRSAT,
+			/// <summary>Invert the stencil value.</summary>
+			Invert = D3DSTENCILOP_INVERT,
+			/// <summary>Increment the stencil value.</summary>
+			Incr = D3DSTENCILOP_INCR,
+			/// <summary>Decrement the stencil value.</summary>
+			Decr = D3DSTENCILOP_DECR
+		};
+
+		/// <summary>
+		/// ZBuffer usage types.
+		/// </summary>
+		public enum class ZBufferType
+		{
+			/// <summary>Used to enable the depth buffer.</summary>
+			UseZB_True = D3DZB_TRUE,
+			/// <summary>Used to disable the depth buffer.</summary>
+			UseZB_False = D3DZB_FALSE,
+			/// <summary>Used to enable a W-buffer.</summary>
+			UseWBuffer = D3DZB_USEW
+		};
 	}
 }

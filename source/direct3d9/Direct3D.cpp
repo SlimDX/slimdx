@@ -153,6 +153,41 @@ namespace Direct3D9
 		System::AppDomain::CurrentDomain->ProcessExit -= gcnew System::EventHandler( OnExit );
 	}
 
+	/// <summary>
+	/// Tests the device to see if it supports conversion from one display format to another.
+	/// </summary>
+	/// <param name="adapter">Index of the adapter to use.</param>
+	/// <param name="deviceType">One of the DeviceType members.</param>
+	/// <param name="sourceFormat">Format to convert from.</param>
+	/// <param name="targetFormat">Format to convert into.</param>
+	/// <param name="result">0 if successful.  Otherwise an HRESULT error code for the function.</param>
+	/// <returns>TRUE if successful, FALSE if not.</returns>
+	bool Direct3D::CheckDeviceFormatConversion(int adapter, DeviceType deviceType, Format sourceFormat, Format targetFormat, [Out] int% result)
+	{
+		HRESULT hr;		// Error code.
+
+		hr = m_Direct3D->CheckDeviceFormatConversion(adapter, (D3DDEVTYPE)deviceType, (D3DFORMAT)sourceFormat, (D3DFORMAT)targetFormat);
+
+		result = hr;
+
+		return SUCCEEDED(hr);
+	}
+
+	/// <summary>
+	/// Tests the device to see if it supports conversion from one display format to another.
+	/// </summary>
+	/// <param name="adapter">Index of the adapter to use.</param>
+	/// <param name="deviceType">One of the DeviceType members.</param>
+	/// <param name="sourceFormat">Format to convert from.</param>
+	/// <param name="targetFormat">Format to convert into.</param>
+	/// <returns>TRUE if successful, FALSE if not.</returns>
+	bool Direct3D::CheckDeviceFormatConversion(int adapter, DeviceType deviceType, Format sourceFormat, Format targetFormat)
+	{
+		int result = 0;		// Error result.
+
+		return CheckDeviceFormatConversion(adapter, deviceType, sourceFormat, targetFormat, result);
+	}
+
 	bool Direct3D::CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat,
 		Usage usage, ResourceType resourceType, Format checkFormat, [Out] int% result )
 	{
