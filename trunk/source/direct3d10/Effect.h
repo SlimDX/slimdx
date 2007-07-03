@@ -21,61 +21,31 @@
 */
 #pragma once
 
-/*
-This header serves as a storage point for types which are needed in multiple
-places but don't really have a proper home. ALL of the contents of this file
-should be considered to be misplaced for now.
-*/
+using namespace System;
+
+#include "../DirectXObject.h"
+
+#include "Enums.h"
+
 namespace SlimDX
 {
-	namespace Direct3D
+	namespace Direct3D10
 	{
-		public value class ColorValue
+		ref class Device;
+		ref class EffectTechnique;
+		ref class EffectVariable;
+		
+		public ref class Effect : public DirectXObject<ID3D10Effect>
 		{
 		public:
-			float Alpha, Red, Green, Blue;
+			Effect( ID3D10Effect* effect );
 
-			ColorValue( float alpha, float red, float green, float blue )
-			{
-				Alpha = alpha;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			ColorValue( float red, float green, float blue )
-			{
-				Alpha = 1.0f;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			static ColorValue FromColor( System::Drawing::Color color )
-			{
-				ColorValue value;
-
-				value.Alpha = color.A / 255.0f;
-				value.Red = color.R / 255.0f;
-				value.Green = color.G / 255.0f;
-				value.Blue = color.B / 255.0f;
-
-				return value;
-			}
-
-			int ToArgb()
-			{
-				//TODO: Write this
-				return 0;
-			}
-		};
-
-		public value class Viewport
-		{
-		public:
-			int X, Y;
-			int Width, Height;
-			float MinZ, MaxZ;
+			EffectTechnique^ GetTechniqueByName( String^ name );
+			
+			EffectVariable^ GetVariableByName( String^ name );
+			EffectVariable^ GetVariableBySemantic( String^ name );
+			
+			static Effect^ FromFile( Device^ device, String^ fileName, String^ profile );
 		};
 	}
-}
+};

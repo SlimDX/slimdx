@@ -19,49 +19,45 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <d3d9.h>
-#include <d3dx9.h>
 
-#include "../Utils.h"
+#include <d3d10.h>
+#include <d3dx10.h>
+
+#include "GraphicsException.h"
+
+#include "ShaderResourceView.h"
 #include "Device.h"
-#include "IndexBuffer.h"
+#include "Resource.h"
+#include "Texture2D.h"
 
 namespace SlimDX
 {
-namespace Direct3D9
-{
-	IndexBuffer::IndexBuffer( IDirect3DIndexBuffer9* buffer )
+namespace Direct3D10
+{ 
+	ShaderResourceView::ShaderResourceView( ID3D10ShaderResourceView* view ) : ResourceView( view )
 	{
-		if( buffer == NULL )
-			throw gcnew ArgumentNullException( "buffer" );
-
-		m_Pointer = buffer;
 	}
-
-	IndexBuffer::IndexBuffer( Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit )
+	
+	ShaderResourceView::ShaderResourceView( Device^ device, Texture2D^ resource )
 	{
-		IDirect3DIndexBuffer9* ib;
-		D3DFORMAT format = sixteenBit ? D3DFMT_INDEX16 : D3DFMT_INDEX32;
-		HRESULT hr = device->InternalPointer->CreateIndexBuffer( sizeBytes, (DWORD) usage, format, (D3DPOOL) pool, &ib, NULL );
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+		if( resource == nullptr )
+			throw gcnew ArgumentNullException( "resource" );
+		
+		D3D10_SHADER_RESOURCE_VIEW_DESC viewDesc;
+		ZeroMemory( &viewDesc, sizeof( viewDesc ) );
+		viewDesc.Format = (DXGI_FORMAT) resource->Format;
+		Format = resource->Format;
+		viewDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;
+		Dimension = ResourceViewDimension::Texture2D;
+		viewDesc.Texture2D.MipLevels = resource->MipLevels;
+		
+		ID3D10ShaderResourceView *view;
+		HRESULT hr = device->DevicePointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
 		GraphicsException::CheckHResult( hr );
-
-		m_Pointer = ib;
-	}
-
-	GraphicsStream^ IndexBuffer::Lock( int offset, int size, LockFlags flags )
-	{
-		void* lockedPtr;
-		HRESULT hr = IbPointer->Lock( offset, size, &lockedPtr, (DWORD) flags );
-		GraphicsException::CheckHResult( hr );
-
-		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		GraphicsStream^ stream = gcnew GraphicsStream( lockedPtr, 0, true, !readOnly );
-		return stream;
-	}
-
-	void IndexBuffer::Unlock()
-	{
-		IbPointer->Unlock();
+		
+		m_Pointer = view;
 	}
 }
 }

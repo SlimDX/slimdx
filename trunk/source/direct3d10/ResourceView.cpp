@@ -19,63 +19,45 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-/*
-This header serves as a storage point for types which are needed in multiple
-places but don't really have a proper home. ALL of the contents of this file
-should be considered to be misplaced for now.
-*/
+#include <d3d10.h>
+#include <d3dx10.h>
+
+#include "ResourceView.h"
+
 namespace SlimDX
 {
-	namespace Direct3D
+namespace Direct3D10
+{ 
+	ResourceView::ResourceView()
 	{
-		public value class ColorValue
-		{
-		public:
-			float Alpha, Red, Green, Blue;
-
-			ColorValue( float alpha, float red, float green, float blue )
-			{
-				Alpha = alpha;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			ColorValue( float red, float green, float blue )
-			{
-				Alpha = 1.0f;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			static ColorValue FromColor( System::Drawing::Color color )
-			{
-				ColorValue value;
-
-				value.Alpha = color.A / 255.0f;
-				value.Red = color.R / 255.0f;
-				value.Green = color.G / 255.0f;
-				value.Blue = color.B / 255.0f;
-
-				return value;
-			}
-
-			int ToArgb()
-			{
-				//TODO: Write this
-				return 0;
-			}
-		};
-
-		public value class Viewport
-		{
-		public:
-			int X, Y;
-			int Width, Height;
-			float MinZ, MaxZ;
-		};
+		Format = Format::Unknown;
+		Dimension = ResourceViewDimension::Unknown;
+		ElementOffset = 0;
+		ElementWidth = 0;
+		MipSlice = 0;
+		FirstArraySlice = 0;
+		ArraySize = 0;
+		FirstDepthSlice = 0;
+		DepthSize = 0;
 	}
+	
+	ResourceView::ResourceView( ID3D10ShaderResourceView* view ) : DirectXObject( view )
+	{
+		D3D10_SHADER_RESOURCE_VIEW_DESC desc;
+		view->GetDesc( &desc );
+		
+		Format = (SlimDX::Direct3D10::Format) desc.Format;
+		Dimension = (ResourceViewDimension) desc.ViewDimension;
+		
+		//@TODO D3D10: Figure out the proper way to set these.
+		ElementOffset = 0;
+		ElementWidth = 0;
+		MipSlice = 0;
+		FirstArraySlice = 0;
+		ArraySize = 0;
+		FirstDepthSlice = 0;
+		DepthSize = 0;
+	}
+}
 }

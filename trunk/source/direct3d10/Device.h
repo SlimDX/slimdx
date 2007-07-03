@@ -21,61 +21,58 @@
 */
 #pragma once
 
-/*
-This header serves as a storage point for types which are needed in multiple
-places but don't really have a proper home. ALL of the contents of this file
-should be considered to be misplaced for now.
-*/
+using namespace System;
+
+#include "Enums.h"
+#include "InputElement.h"
+
 namespace SlimDX
 {
-	namespace Direct3D
+	namespace Direct3D10
 	{
-		public value class ColorValue
+		ref class Buffer;
+		ref class InputAssemblerWrapper;
+		ref class InputLayout;
+		ref class OutputMergerWrapper;
+		ref class RasterizerWrapper;
+		ref class RenderTargetView;
+		ref class Resource;
+		ref class SwapChain;
+		value class RenderTargetViewDescription;
+		value class SwapChainDescription;
+
+		public ref class Device
 		{
+			IDXGIFactory* m_Factory;
+			ID3D10Device* m_Device;
+		
+		protected:
+			void Destruct();
+
+		internal:
+			property IDXGIFactory* FactoryPointer
+			{
+				IDXGIFactory* get() { return m_Factory; }
+			}
+
+			property ID3D10Device* DevicePointer
+			{
+				ID3D10Device* get() { return m_Device; }
+			}
+		
 		public:
-			float Alpha, Red, Green, Blue;
+		  initonly InputAssemblerWrapper^ InputAssembler;
+			initonly RasterizerWrapper^ Rasterizer;
+			initonly OutputMergerWrapper^ OutputMerger;
+			
+			Device( DriverType driverType, DeviceCreationFlags flags );
 
-			ColorValue( float alpha, float red, float green, float blue )
-			{
-				Alpha = alpha;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
+			~Device();
+			!Device();
 
-			ColorValue( float red, float green, float blue )
-			{
-				Alpha = 1.0f;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			static ColorValue FromColor( System::Drawing::Color color )
-			{
-				ColorValue value;
-
-				value.Alpha = color.A / 255.0f;
-				value.Red = color.R / 255.0f;
-				value.Green = color.G / 255.0f;
-				value.Blue = color.B / 255.0f;
-
-				return value;
-			}
-
-			int ToArgb()
-			{
-				//TODO: Write this
-				return 0;
-			}
-		};
-
-		public value class Viewport
-		{
-		public:
-			int X, Y;
-			int Width, Height;
-			float MinZ, MaxZ;
+			void ClearRenderTargetView( RenderTargetView^ view );
+			
+			void Draw( int vertexCount, int firstVertexIndex );
 		};
 	}
-}
+};

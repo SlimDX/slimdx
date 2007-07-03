@@ -29,13 +29,25 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	GraphicsStream::GraphicsStream( void* buffer, bool canRead, bool canWrite )
+	GraphicsStream::GraphicsStream( void* buffer, Int64 sizeInBytes, bool canRead, bool canWrite )
 	{
 		m_Buffer = (char*) buffer;
 		m_Position = 0;
-		m_Size = 0;
+		m_Size = sizeInBytes;
 		
 		m_OwnsBuffer = false;
+		
+		m_CanRead = canRead;
+		m_CanWrite = canWrite;
+	}
+	
+	GraphicsStream::GraphicsStream( Int64 sizeInBytes, bool canRead, bool canWrite )
+	{
+		m_Buffer = new char[ (int) sizeInBytes ];
+		m_Position = 0;
+		m_Size = sizeInBytes;
+		
+		m_OwnsBuffer = true;
 		
 		m_CanRead = canRead;
 		m_CanWrite = canWrite;
@@ -43,14 +55,18 @@ namespace SlimDX
 
 	GraphicsStream::~GraphicsStream()
 	{
-		if(m_OwnsBuffer)
-			delete[] m_Buffer;
-		this->!GraphicsStream();
 	}
 	
 	GraphicsStream::!GraphicsStream()
 	{
+		if(m_OwnsBuffer)
+				delete[] m_Buffer;
 		Stream::Close();
+	}
+
+	char* GraphicsStream::RawPointer::get()
+	{
+		return (m_Buffer);
 	}
 
 	void GraphicsStream::Close()
@@ -73,13 +89,15 @@ namespace SlimDX
 			break;
 
 		case SeekOrigin::End:
+			if(m_Size == 0)
+				throw gcnew NotSupportedException( "Stream size unknown; SeekOrigin::End is not supported." );
 			targetPosition = m_Size - offset;
 			break;
 		}
 
 		if( targetPosition < 0 )
 			throw gcnew InvalidOperationException("Cannot seek beyond the beginning of the stream.");
-		if( targetPosition >= m_Size )
+		if( targetPosition > m_Size )
 			throw gcnew InvalidOperationException("Cannot seek beyond the end of the stream.");
 
 		m_Position = targetPosition;
@@ -175,5 +193,22 @@ namespace SlimDX
 		memcpy( pinnedBuffer, m_Buffer + m_Position, count * elementSize );
 		m_Position += count * elementSize;
 		return result;
+	}
+	
+	void GraphicsStream::Flush()
+	{
+		throw gcnew NotSupportedException("GraphicsStream objects cannot be flushed.");
+	}
+
+	void GraphicsStream::SetLength( Int64 value )
+	{
+		throw gcnew NotSupportedException("GraphicsStream objects cannot be resized.");
+	}
+	
+	Int64 GraphicsStream::Length::get()
+	{
+		if( m_Size == 0)
+			throw gcnew NotSupportedException("Stream size unknown; cannot query length.");
+		return m_Size;
 	}
 }

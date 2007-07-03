@@ -19,63 +19,39 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-/*
-This header serves as a storage point for types which are needed in multiple
-places but don't really have a proper home. ALL of the contents of this file
-should be considered to be misplaced for now.
-*/
+#include <d3d10.h>
+#include <d3dx10.h>
+#include <vcclr.h>
+
+#include "GraphicsException.h"
+
+#include "Texture2D.h"
+#include "Device.h"
+
 namespace SlimDX
 {
-	namespace Direct3D
+namespace Direct3D10
+{ 
+	Texture2D::Texture2D( ID3D10Texture2D* texture ) : Resource( texture )
 	{
-		public value class ColorValue
-		{
-		public:
-			float Alpha, Red, Green, Blue;
-
-			ColorValue( float alpha, float red, float green, float blue )
-			{
-				Alpha = alpha;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			ColorValue( float red, float green, float blue )
-			{
-				Alpha = 1.0f;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			static ColorValue FromColor( System::Drawing::Color color )
-			{
-				ColorValue value;
-
-				value.Alpha = color.A / 255.0f;
-				value.Red = color.R / 255.0f;
-				value.Green = color.G / 255.0f;
-				value.Blue = color.B / 255.0f;
-
-				return value;
-			}
-
-			int ToArgb()
-			{
-				//TODO: Write this
-				return 0;
-			}
-		};
-
-		public value class Viewport
-		{
-		public:
-			int X, Y;
-			int Width, Height;
-			float MinZ, MaxZ;
-		};
+		D3D10_TEXTURE2D_DESC desc;
+		texture->GetDesc( &desc );
+		MipLevels = desc.MipLevels;
+		Format = (SlimDX::Direct3D10::Format) desc.Format;
 	}
+	
+	Texture2D^ Texture2D::FromFile( Device^ device, String^ fileName )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+
+		ID3D10Resource* texture = 0;
+		HRESULT hr = D3DX10CreateTextureFromFile( device->DevicePointer, pinnedName, NULL, NULL, &texture, NULL ); 
+		GraphicsException::CheckHResult( hr );
+		
+		if( texture == NULL )
+			return nullptr;
+		return gcnew Texture2D( (ID3D10Texture2D*) texture );
+	}
+}
 }

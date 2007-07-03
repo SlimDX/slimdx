@@ -19,49 +19,45 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <d3d9.h>
-#include <d3dx9.h>
 
-#include "../Utils.h"
-#include "Device.h"
-#include "VertexBuffer.h"
+#include <d3d10.h>
+#include <d3dx10.h>
+
+#include "GraphicsException.h"
+
+#include "RasterizerWrapper.h"
 
 namespace SlimDX
 {
-namespace Direct3D9
-{
-	VertexBuffer::VertexBuffer( IDirect3DVertexBuffer9* buffer )
+namespace Direct3D10
+{ 
+	RasterizerWrapper::RasterizerWrapper( ID3D10Device* device )
 	{
-		if( buffer == NULL )
-			throw gcnew ArgumentNullException( "buffer" );
-
-		m_Pointer = buffer;
+		if( device == NULL )
+			throw gcnew ArgumentNullException( "device" );
+		m_Device = device;
+	}
+	
+	void RasterizerWrapper::SetViewports( SlimDX::Direct3D::Viewport viewport )
+	{
+		D3D10_VIEWPORT nativeVP = { viewport.X, viewport.Y, viewport.Width, viewport.Height, viewport.MinZ, viewport.MaxZ };
+		m_Device->RSSetViewports( 1, &nativeVP );
 	}
 
-	VertexBuffer::VertexBuffer( Device^ device, int sizeBytes, Usage usage, VertexFormat format, Pool pool )
+	void RasterizerWrapper::SetViewports( ... array<SlimDX::Direct3D::Viewport>^ viewports )
 	{
-		IDirect3DVertexBuffer9* vb;
-		HRESULT hr = device->InternalPointer->CreateVertexBuffer( sizeBytes, (DWORD) usage, 
-			(DWORD) format, (D3DPOOL) pool, &vb, NULL );
-		GraphicsException::CheckHResult( hr );
+		D3D10_VIEWPORT nativeVPs[D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE];
+		for( int i = 0; i < viewports->Length; ++i )
+		{
+			nativeVPs[ i ].TopLeftX = viewports[ i ].X;
+			nativeVPs[ i ].TopLeftY = viewports[ i ].Y;
+			nativeVPs[ i ].Width = viewports[ i ].Width;
+			nativeVPs[ i ].Height = viewports[ i ].Height;
+			nativeVPs[ i ].MinDepth = viewports[ i ].MinZ;
+			nativeVPs[ i ].MaxDepth = viewports[ i ].MaxZ;
+		}
 		
-		m_Pointer = vb;
-	}
-
-	GraphicsStream^ VertexBuffer::Lock( int offset, int size, LockFlags flags )
-	{
-		void* lockedPtr;
-		HRESULT hr = VbPointer->Lock( offset, size, &lockedPtr, (DWORD) flags );
-		GraphicsException::CheckHResult( hr );
-
-		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		GraphicsStream^ stream = gcnew GraphicsStream( lockedPtr, 0, true, !readOnly );
-		return stream;
-	}
-
-	void VertexBuffer::Unlock()
-	{
-		VbPointer->Unlock();
+		m_Device->RSSetViewports( viewports->Length, nativeVPs );
 	}
 }
 }

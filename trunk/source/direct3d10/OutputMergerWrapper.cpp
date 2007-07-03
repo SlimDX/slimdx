@@ -19,63 +19,39 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-/*
-This header serves as a storage point for types which are needed in multiple
-places but don't really have a proper home. ALL of the contents of this file
-should be considered to be misplaced for now.
-*/
+#include <d3d10.h>
+#include <d3dx10.h>
+
+#include "GraphicsException.h"
+
+#include "OutputMergerWrapper.h"
+#include "DepthStencilView.h"
+#include "RenderTargetView.h"
+
 namespace SlimDX
 {
-	namespace Direct3D
+namespace Direct3D10
+{ 
+	OutputMergerWrapper::OutputMergerWrapper( ID3D10Device* device )
 	{
-		public value class ColorValue
-		{
-		public:
-			float Alpha, Red, Green, Blue;
-
-			ColorValue( float alpha, float red, float green, float blue )
-			{
-				Alpha = alpha;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			ColorValue( float red, float green, float blue )
-			{
-				Alpha = 1.0f;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			static ColorValue FromColor( System::Drawing::Color color )
-			{
-				ColorValue value;
-
-				value.Alpha = color.A / 255.0f;
-				value.Red = color.R / 255.0f;
-				value.Green = color.G / 255.0f;
-				value.Blue = color.B / 255.0f;
-
-				return value;
-			}
-
-			int ToArgb()
-			{
-				//TODO: Write this
-				return 0;
-			}
-		};
-
-		public value class Viewport
-		{
-		public:
-			int X, Y;
-			int Width, Height;
-			float MinZ, MaxZ;
-		};
+		if( device == NULL )
+			throw gcnew ArgumentNullException( "device" );
+		m_Device = device;
 	}
+	
+	void OutputMergerWrapper::SetRenderTargets( RenderTargetView^ renderTargetView )
+	{
+		ID3D10RenderTargetView *nativeRTV[] = { (ID3D10RenderTargetView*) renderTargetView->InternalPointer };
+		m_Device->OMSetRenderTargets( 1, nativeRTV, NULL );
+	}
+
+	void OutputMergerWrapper::SetRenderTargets( ... array<RenderTargetView^>^ renderTargets )
+	{
+		ID3D10RenderTargetView* nativeRTVs[D3D10_SIMULTANEOUS_RENDER_TARGET_COUNT];
+		for( int i = 0; i < renderTargets->Length; ++i )
+			nativeRTVs[ i ] = (ID3D10RenderTargetView*) renderTargets[ i ]->InternalPointer;
+		m_Device->OMSetRenderTargets( renderTargets->Length, nativeRTVs, NULL );
+	}
+}
 }

@@ -38,9 +38,16 @@ namespace SlimDX
 		initonly bool m_CanWrite;
 
 	internal:
-		GraphicsStream( void* buffer, bool canRead, bool canWrite );
+		GraphicsStream( void* buffer, Int64 sizeInBytes, bool canRead, bool canWrite );
 
+		property char* RawPointer
+		{
+			char* get();
+		}
+	
 	public:
+		GraphicsStream( Int64 sizeInBytes, bool canRead, bool canWrite );
+		
 		~GraphicsStream();
 		!GraphicsStream();
 		
@@ -67,15 +74,9 @@ namespace SlimDX
 		generic<typename T> where T : value class
 		array<T>^ Read( int count );
 
-		virtual void Flush() override
-		{
-			throw gcnew NotSupportedException();
-		}
+		virtual void Flush() override;
 
-		virtual void SetLength( Int64 value ) override
-		{
-			throw gcnew NotSupportedException();
-		}
+		virtual void SetLength( Int64 value ) override;
 
 		property bool CanRead
 		{
@@ -94,7 +95,7 @@ namespace SlimDX
 
 		property Int64 Length
 		{
-			virtual Int64 get() override { throw gcnew NotSupportedException(); }
+			virtual Int64 get() override;
 		}
 
 		property Int64 Position
