@@ -266,7 +266,7 @@ namespace Direct3D9
 
 		LockedRect outRect;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		outRect.Data = gcnew GraphicsStream( lockedRect.pBits, true, !readOnly );
+		outRect.Data = gcnew GraphicsStream( lockedRect.pBits, 0, true, !readOnly );
 		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}
@@ -281,7 +281,8 @@ namespace Direct3D9
 
 		LockedRect outRect;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		outRect.Data = gcnew GraphicsStream( lockedRect.pBits, true, !readOnly );
+
+		outRect.Data = gcnew GraphicsStream( lockedRect.pBits, 0, true, !readOnly );
 		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}
@@ -333,7 +334,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		return gcnew GraphicsStream(buffer->GetBufferPointer(), true, true);
+		return gcnew GraphicsStream(buffer->GetBufferPointer(), 0, true, true);
 	}
 
 	/// <summary>
@@ -478,7 +479,7 @@ namespace Direct3D9
 
 		LockedRect outRect;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		outRect.Data = gcnew GraphicsStream( lockedRect.pBits, true, !readOnly );
+		outRect.Data = gcnew GraphicsStream( lockedRect.pBits, 0, true, !readOnly );
 		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}
@@ -493,7 +494,8 @@ namespace Direct3D9
 
 		LockedRect outRect;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		outRect.Data = gcnew GraphicsStream( lockedRect.pBits, true, !readOnly );
+
+		outRect.Data = gcnew GraphicsStream( lockedRect.pBits, 0, true, !readOnly );
 		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}
@@ -635,7 +637,7 @@ namespace Direct3D9
 
 		LockedBox outBox;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		outBox.Data = gcnew GraphicsStream( lockedBox.pBits, true, !readOnly );
+		outBox.Data = gcnew GraphicsStream( lockedBox.pBits, 0, true, !readOnly );
 		outBox.RowPitch = lockedBox.RowPitch;
 		outBox.SlicePitch = lockedBox.SlicePitch;
 		return outBox;
@@ -651,7 +653,7 @@ namespace Direct3D9
 
 		LockedBox outBox;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		outBox.Data = gcnew GraphicsStream( lockedBox.pBits, true, !readOnly );
+		outBox.Data = gcnew GraphicsStream( lockedBox.pBits, 0, true, !readOnly );
 		outBox.RowPitch = lockedBox.RowPitch;
 		outBox.SlicePitch = lockedBox.SlicePitch;
 		return outBox;

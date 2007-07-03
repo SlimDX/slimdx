@@ -59,9 +59,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit) dxguid.lib d3d9.lib d3dx9.lib dinput8.lib xinput.lib"
+				AdditionalDependencies="$(NoInherit) dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib"
 				LinkIncremental="2"
-				DelayLoadDLLs="d3d9.dll;d3dx9_34.dll;dinput8.dll"
+				DelayLoadDLLs="d3d9.dll;d3dx9_34.dll;d3d10.dll;dxgi.dll;dinput8.dll"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				TargetMachine="1"
@@ -135,8 +135,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit) dxguid.lib d3d9.lib d3dx9.lib dinput8.lib xinput.lib"
+				AdditionalDependencies="$(NoInherit) dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib"
 				LinkIncremental="1"
+				DelayLoadDLLs="d3d9.dll;d3dx9_34.dll;d3d10.dll;dxgi.dll;dinput8.dll"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -339,6 +340,154 @@
 			<Filter
 				Name="Direct3D 10"
 				>
+				<File
+					RelativePath="..\source\direct3d10\Buffer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\DepthStencilView.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Device.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)2.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)2.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Effect.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectPass.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectResourceVariable.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectTechnique.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectVariable.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\InputAssemblerWrapper.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\InputLayout.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\OutputMergerWrapper.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\RasterizerWrapper.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\RenderTargetView.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Resource.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ResourceView.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderBytecode.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderResourceView.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\SwapChain.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Texture2D.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -521,6 +670,118 @@
 			<Filter
 				Name="Direct3D 10"
 				>
+				<File
+					RelativePath="..\source\direct3d10\Buffer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\DepthStencilView.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Device.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Effect.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectPass.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectResourceVariable.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectTechnique.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectVariable.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Enums.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\GraphicsException.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\InputAssemblerWrapper.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\InputElement.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\InputLayout.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\OutputMergerWrapper.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\RasterizerWrapper.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Rational.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\RenderTargetView.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\RenderTargetViewOptions.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Resource.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ResourceView.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\SampleDescription.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderBytecode.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderMacro.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderResourceView.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\SwapChain.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\SwapChainDescription.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Texture2D.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\VertexBufferBinding.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 	</Files>

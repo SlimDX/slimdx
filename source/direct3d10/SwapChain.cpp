@@ -19,49 +19,52 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <d3d9.h>
-#include <d3dx9.h>
 
-#include "../Utils.h"
+#include <d3d10.h>
+#include <d3dx10.h>
+
+#include "GraphicsException.h"
+
+#include "SwapChain.h"
 #include "Device.h"
-#include "IndexBuffer.h"
+#include "Texture2D.h"
+#include "SwapChainDescription.h"
 
 namespace SlimDX
 {
-namespace Direct3D9
-{
-	IndexBuffer::IndexBuffer( IDirect3DIndexBuffer9* buffer )
+namespace Direct3D10
+{ 
+	SwapChain::SwapChain( Device^ device, SwapChainDescription description )
 	{
-		if( buffer == NULL )
-			throw gcnew ArgumentNullException( "buffer" );
-
-		m_Pointer = buffer;
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+			
+		IDXGISwapChain *swapChain = 0;
+		HRESULT hr = device->FactoryPointer->CreateSwapChain( device->DevicePointer, (DXGI_SWAP_CHAIN_DESC*) &description, &swapChain );
+		GraphicsException::CheckHResult( hr );
+		
+		m_Pointer = swapChain;
 	}
 
-	IndexBuffer::IndexBuffer( Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit )
+	Texture2D^ SwapChain::GetBuffer( int index )
 	{
-		IDirect3DIndexBuffer9* ib;
-		D3DFORMAT format = sixteenBit ? D3DFMT_INDEX16 : D3DFMT_INDEX32;
-		HRESULT hr = device->InternalPointer->CreateIndexBuffer( sizeBytes, (DWORD) usage, format, (D3DPOOL) pool, &ib, NULL );
+		ID3D10Texture2D *texture;
+		HRESULT hr = m_Pointer->GetBuffer( index, __uuidof( ID3D10Texture2D ), (void**) &texture );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = ib;
+		return gcnew Texture2D( texture );
 	}
 
-	GraphicsStream^ IndexBuffer::Lock( int offset, int size, LockFlags flags )
+	PresentResult SwapChain::Present( int syncInterval, PresentFlags flags )
 	{
-		void* lockedPtr;
-		HRESULT hr = IbPointer->Lock( offset, size, &lockedPtr, (DWORD) flags );
+		HRESULT hr = m_Pointer->Present( syncInterval, (UINT) flags );
+		if( hr == S_OK )
+			return PresentResult::Okay;
+		else if( hr == DXGI_STATUS_OCCLUDED )
+			return PresentResult::Occluded;
+		
 		GraphicsException::CheckHResult( hr );
-
-		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		GraphicsStream^ stream = gcnew GraphicsStream( lockedPtr, 0, true, !readOnly );
-		return stream;
-	}
-
-	void IndexBuffer::Unlock()
-	{
-		IbPointer->Unlock();
+		return PresentResult::Failed;
 	}
 }
 }

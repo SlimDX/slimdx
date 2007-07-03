@@ -19,63 +19,38 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-/*
-This header serves as a storage point for types which are needed in multiple
-places but don't really have a proper home. ALL of the contents of this file
-should be considered to be misplaced for now.
-*/
+#include <d3d10.h>
+#include <d3dx10.h>
+
+#include "GraphicsException.h"
+
+#include "EffectTechnique.h"
+#include "EffectPass.h"
+
 namespace SlimDX
 {
-	namespace Direct3D
+namespace Direct3D10
+{ 
+	EffectTechnique::EffectTechnique( ID3D10EffectTechnique* technique )
 	{
-		public value class ColorValue
-		{
-		public:
-			float Alpha, Red, Green, Blue;
-
-			ColorValue( float alpha, float red, float green, float blue )
-			{
-				Alpha = alpha;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			ColorValue( float red, float green, float blue )
-			{
-				Alpha = 1.0f;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			static ColorValue FromColor( System::Drawing::Color color )
-			{
-				ColorValue value;
-
-				value.Alpha = color.A / 255.0f;
-				value.Red = color.R / 255.0f;
-				value.Green = color.G / 255.0f;
-				value.Blue = color.B / 255.0f;
-
-				return value;
-			}
-
-			int ToArgb()
-			{
-				//TODO: Write this
-				return 0;
-			}
-		};
-
-		public value class Viewport
-		{
-		public:
-			int X, Y;
-			int Width, Height;
-			float MinZ, MaxZ;
-		};
+		if( technique == NULL )
+			throw gcnew ArgumentNullException( "technique" );
+		m_Pointer = technique;
+	
+		D3D10_TECHNIQUE_DESC desc;
+		HRESULT hr = m_Pointer->GetDesc( &desc );
+		GraphicsException::CheckHResult( hr );
+		
+		Name = gcnew String( desc.Name );
+		PassCount = desc.Passes;
+		AnnotationCount = desc.Annotations;
 	}
+	
+	EffectPass^ EffectTechnique::GetPassByIndex( int index )
+	{
+		ID3D10EffectPass* pass = m_Pointer->GetPassByIndex( index );
+		return gcnew EffectPass( pass );
+	}
+}
 }

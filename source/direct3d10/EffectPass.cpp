@@ -19,63 +19,40 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-/*
-This header serves as a storage point for types which are needed in multiple
-places but don't really have a proper home. ALL of the contents of this file
-should be considered to be misplaced for now.
-*/
+#include <d3d10.h>
+#include <d3dx10.h>
+
+#include "GraphicsException.h"
+
+#include "EffectPass.h"
+#include "ShaderBytecode.h"
+
 namespace SlimDX
 {
-	namespace Direct3D
+namespace Direct3D10
+{ 
+	EffectPass::EffectPass( ID3D10EffectPass* pass )
 	{
-		public value class ColorValue
-		{
-		public:
-			float Alpha, Red, Green, Blue;
-
-			ColorValue( float alpha, float red, float green, float blue )
-			{
-				Alpha = alpha;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			ColorValue( float red, float green, float blue )
-			{
-				Alpha = 1.0f;
-				Red = red;
-				Green = green;
-				Blue = blue;
-			}
-
-			static ColorValue FromColor( System::Drawing::Color color )
-			{
-				ColorValue value;
-
-				value.Alpha = color.A / 255.0f;
-				value.Red = color.R / 255.0f;
-				value.Green = color.G / 255.0f;
-				value.Blue = color.B / 255.0f;
-
-				return value;
-			}
-
-			int ToArgb()
-			{
-				//TODO: Write this
-				return 0;
-			}
-		};
-
-		public value class Viewport
-		{
-		public:
-			int X, Y;
-			int Width, Height;
-			float MinZ, MaxZ;
-		};
+		if( pass == NULL )
+			throw gcnew ArgumentNullException( "pass" );
+		m_Pointer = pass;
+		
+		D3D10_PASS_DESC desc;
+		HRESULT hr = m_Pointer->GetDesc( &desc );
+		GraphicsException::CheckHResult( hr );
+		
+		Name = gcnew String( desc.Name );
+		AnnotationCount = desc.Annotations;
+		Signature = gcnew ShaderBytecode( desc.pIAInputSignature, desc.IAInputSignatureSize );
+		StencilReference = desc.StencilRef;
+		SampleMask = desc.SampleMask;
+		BlendFactor = SlimDX::Direct3D::ColorValue( desc.BlendFactor[3], desc.BlendFactor[0], desc.BlendFactor[1], desc.BlendFactor[2] );
 	}
+	
+	void EffectPass::Apply()
+	{
+		m_Pointer->Apply(0);
+	}
+}
 }
