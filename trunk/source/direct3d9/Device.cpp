@@ -19,6 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#define DIRECTINPUT_VERSION 0x0800
 #include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -214,25 +215,25 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 	}
 
-    void Device::SetTextureStageState( int stage, TextureStage type, TextureOperation texOp )
-    {
-        SetTextureStageState( stage, type, (int) texOp );
-    }
+	void Device::SetTextureStageState( int stage, TextureStage type, TextureOperation texOp )
+	{
+		SetTextureStageState( stage, type, (int) texOp );
+	}
 
-    void Device::SetTextureStageState( int stage, TextureStage type, TextureArgument texArg )
-    {
-        SetTextureStageState( stage, type, (int) texArg );
-    }
+	void Device::SetTextureStageState( int stage, TextureStage type, TextureArgument texArg )
+	{
+		SetTextureStageState( stage, type, (int) texArg );
+	}
 
-    void Device::SetTextureStageState( int stage, TextureStage type, TextureTransform texTransform )
-    {
-        SetTextureStageState( stage, type, (int) texTransform );
-    }
+	void Device::SetTextureStageState( int stage, TextureStage type, TextureTransform texTransform )
+	{
+		SetTextureStageState( stage, type, (int) texTransform );
+	}
 
-    void Device::SetTextureStageState( int stage, TextureStage type, float value )
-    {
-        SetTextureStageState( stage, type, *(int*) &value );
-    }
+	void Device::SetTextureStageState( int stage, TextureStage type, float value )
+	{
+		SetTextureStageState( stage, type, *(int*) &value );
+	}
 
 	void Device::SetSamplerState( int sampler, SamplerState type, int value )
 	{
@@ -240,15 +241,15 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 	}
 
-    void Device::SetSamplerState( int sampler, SamplerState type, TextureAddress texAddr )
-    {
-        SetSamplerState( sampler, type, (int) texAddr );
-    }
+	void Device::SetSamplerState( int sampler, SamplerState type, TextureAddress texAddr )
+	{
+		SetSamplerState( sampler, type, (int) texAddr );
+	}
 
-    void Device::SetSamplerState( int sampler, SamplerState type, TextureFilter texFilter )
-    {
-        SetSamplerState( sampler, type, (int) texFilter );
-    }
+	void Device::SetSamplerState( int sampler, SamplerState type, TextureFilter texFilter )
+	{
+		SetSamplerState( sampler, type, (int) texFilter );
+	}
 
 	void Device::SetTransform( TransformState state, Matrix value )
 	{
@@ -330,15 +331,6 @@ namespace Direct3D9
 		HRESULT hr = m_Pointer->SetVertexShader( ptr );
 		GraphicsException::CheckHResult( hr );
 	}
-
-    DisplayMode Device::GetDisplayMode( int swapChain )
-    {
-        DisplayMode displayMode;
-        HRESULT hr = m_Pointer->GetDisplayMode( swapChain, (D3DDISPLAYMODE*) &displayMode );
-        GraphicsException::CheckHResult( hr );
-
-        return displayMode;
-    }
 
 	Surface^ Device::GetBackBuffer( int swapChain, int backBuffer )
 	{
@@ -437,6 +429,23 @@ namespace Direct3D9
 	{
 		HRESULT hr = m_Pointer->SetViewport( (const D3DVIEWPORT9*) &value );
 		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::ScissorRect::set(Drawing::Rectangle rect)
+	{
+		RECT scissorRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
+		HRESULT hr = m_Pointer->SetScissorRect(&scissorRect);
+		GraphicsException::CheckHResult(hr);
+	}
+
+	Drawing::Rectangle Device::ScissorRect::get()
+	{
+		RECT scissorRect;		// Scissor rectangle.
+
+		HRESULT hr = m_Pointer->GetScissorRect(&scissorRect);
+		GraphicsException::CheckHResult(hr);
+
+		return Utils::ConvertRect(scissorRect);
 	}
 }
 }
