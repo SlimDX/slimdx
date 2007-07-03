@@ -35,6 +35,43 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	/// <summary>
+	/// Function to extract image information from a stream.
+	/// </summary>
+	/// <param name="stream">Stream containing the image.</param>
+	/// <param name="peek">TRUE to preserve the stream position, FALSE will move the stream pointer.</param>
+	/// <returns>Information about the image.</returns>
+	ImageInformation ImageInformation::FromStream(Stream^ stream, bool peek)
+	{
+		array<Byte>^ buffer = nullptr;			// Buffer for the data.
+		Int64 prevPosition = 0;				// Previous stream position.
+
+		if (stream == nullptr)
+			throw gcnew ArgumentNullException("stream");
+
+		if (peek)
+			prevPosition = stream->Position;
+
+		// Create buffer.
+		buffer = Utils::ReadStream( stream, (int) stream->Length );
+
+		if (peek)
+			stream->Position = prevPosition;
+
+		// Extract from the byte buffer.
+		return FromMemory(buffer);
+	}
+
+	/// <summary>
+	/// Function to extract image information from a stream.
+	/// </summary>
+	/// <param name="stream">Stream containing the image.</param>
+	/// <returns>Information about the image.</returns>
+	ImageInformation ImageInformation::FromStream(Stream^ stream)
+	{
+		return FromStream(stream, true);
+	}
+
 	ImageInformation ImageInformation::FromFile( String^ fileName )
 	{
 		ImageInformation info;
@@ -87,7 +124,7 @@ namespace Direct3D9
 	/// <param name="pool">Memory class where the resource will be placed.</param>
 	/// <returns>A value type containing the proposed values to pass to the texture creation functions.</returns>
 	TextureRequirements Texture::CheckRequirements(Device^ device, int width, int height,
-        int numMipLevels, Usage usage, Format format, Pool pool)
+		int numMipLevels, Usage usage, Format format, Pool pool)
 	{
 		TextureRequirements result;					// Result.
 		D3DFORMAT d3dFormat = (D3DFORMAT)format;	// Format.
@@ -158,8 +195,8 @@ namespace Direct3D9
 			numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter, 
 			colorKey, NULL, NULL, &texture );
 		GraphicsException::CheckHResult( hr );
-        if( FAILED( hr ) )
-            return nullptr;
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew Texture( texture );
 	}
@@ -175,7 +212,7 @@ namespace Direct3D9
 		return Texture::FromFile( device, fileName, Usage::None, Pool::Managed );
 	}
 
-    //TODO: Evaluate if there's a nicer way to handle the interop mess here with Fill.
+	//TODO: Evaluate if there's a nicer way to handle the interop mess here with Fill.
 
 	// Native callback used by FillTexture.
 	void WINAPI NativeD3DXFill2D(D3DXVECTOR4 *out, CONST D3DXVECTOR2 *pTexCoord, CONST D3DXVECTOR2 *pTexelSize, LPVOID data)
@@ -212,34 +249,34 @@ namespace Direct3D9
 		GraphicsException::CheckHResult(hr);
 	}
 
-    LockedRect Texture::LockRectangle( int level, System::Drawing::Rectangle rect, LockFlags flags )
-    {
+	LockedRect Texture::LockRectangle( int level, System::Drawing::Rectangle rect, LockFlags flags )
+	{
 		D3DLOCKED_RECT lockedRect;
-        RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
+		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
 		HRESULT hr = TexturePointer->LockRect( level, &lockedRect, &nativeRect, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
-        if( FAILED( hr ) )
-            return LockedRect();
+		if( FAILED( hr ) )
+			return LockedRect();
 
-        LockedRect outRect;
+		LockedRect outRect;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		outRect.Data = gcnew GraphicsStream( lockedRect.pBits, true, !readOnly );
-        outRect.Pitch = lockedRect.Pitch;
+		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
-    }
+	}
 
 	LockedRect Texture::LockRectangle( int level, LockFlags flags )
 	{
 		D3DLOCKED_RECT lockedRect;
 		HRESULT hr = TexturePointer->LockRect( level, &lockedRect, NULL, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
-        if( FAILED( hr ) )
-            return LockedRect();
+		if( FAILED( hr ) )
+			return LockedRect();
 
-        LockedRect outRect;
+		LockedRect outRect;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		outRect.Data = gcnew GraphicsStream( lockedRect.pBits, true, !readOnly );
-        outRect.Pitch = lockedRect.Pitch;
+		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}
 
@@ -262,9 +299,50 @@ namespace Direct3D9
 		IDirect3DSurface9* surface;
 		HRESULT hr = TexturePointer->GetSurfaceLevel( level, &surface );
 		GraphicsException::CheckHResult( hr );
-        if( FAILED( hr ) )
-            return nullptr;
+		if( FAILED( hr ) )
+			return nullptr;
 		return gcnew Surface( surface );
+	}
+
+	/// <summary>
+	/// Function to save the texture to a stream.
+	/// </summary>
+	/// <param name="format">File format used to encode the image.</param>
+	/// <returns>A graphics stream containing the texture data.</returns>
+	GraphicsStream^ Texture::SaveToStream(ImageFileFormat format)
+	{
+		HRESULT hr;															// Error code.
+		ID3DXBuffer *buffer = NULL;											// Buffer to hold the encoded image.
+		
+		hr = D3DXSaveTextureToFileInMemory(&buffer, (D3DXIMAGE_FILEFORMAT)format, BaseTexturePointer, NULL);
+		GraphicsException::CheckHResult(hr);
+
+		// Clean up on failure.
+		if (FAILED(hr))
+		{
+			if (buffer != NULL)
+				buffer->Release();
+			buffer = NULL;
+
+			return nullptr;
+		}
+
+		return gcnew GraphicsStream(buffer->GetBufferPointer(), true, true);
+	}
+
+	/// <summary>
+	/// Function to save the texture to a file.
+	/// </summary>
+	/// <param name="fileName">Filename and path for the texture.</param>
+	/// <param name="format">File format used to encode the image.</param>
+	void Texture::SaveToFile(String^ fileName, ImageFileFormat format)
+	{
+		HRESULT hr;															// Error code.
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fileName);		// Native name.
+
+		hr = D3DXSaveTextureToFile(pinnedName, (D3DXIMAGE_FILEFORMAT)format, BaseTexturePointer, NULL);
+
+		GraphicsException::CheckHResult(hr);
 	}
 
 	CubeTexture::CubeTexture( IDirect3DCubeTexture9* texture )
@@ -285,6 +363,26 @@ namespace Direct3D9
 		m_Pointer = texture;
 	}
 
+	CubeTextureRequirements CubeTexture::CheckRequirements(Device^ device, int size,
+		int numMipLevels, Usage usage, Format format, Pool pool)
+	{
+		CubeTextureRequirements result;					// Result.
+		D3DFORMAT d3dFormat = (D3DFORMAT)format;	// Format.
+		HRESULT hr;									// Error code.
+
+		// Get texture requirements.
+		hr = D3DXCheckCubeTextureRequirements(device->InternalPointer, (UINT *)&size, (UINT *)&numMipLevels,
+			(DWORD)usage, (D3DFORMAT *)&d3dFormat, (D3DPOOL)pool);
+		GraphicsException::CheckHResult(hr);
+
+		// Return proposed values.
+		result.Size = size;
+		result.Format = format;
+		result.NumOfMipLevels = numMipLevels;
+
+		return result;
+	}
+
 	CubeTexture^ CubeTexture::FromMemory( Device^ device, array<Byte>^ memory, int size, int numLevels,
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
@@ -294,9 +392,9 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateCubeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, size, numLevels,
 			(DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter,
 			(D3DCOLOR) colorKey, 0, 0, &texture );
-        GraphicsException::CheckHResult( hr );
-        if( FAILED( hr ) )
-            return nullptr;
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew CubeTexture( texture );
 	}
@@ -340,8 +438,8 @@ namespace Direct3D9
 			numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter, 
 			colorKey, NULL, NULL, &texture );
 		GraphicsException::CheckHResult( hr );
-        if( FAILED( hr ) )
-            return nullptr;
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew CubeTexture( texture );
 	}
@@ -357,34 +455,34 @@ namespace Direct3D9
 		return CubeTexture::FromFile( device, fileName, Usage::None, Pool::Managed );
 	}
 
-    LockedRect CubeTexture::LockRectangle( CubeMapFace face, int level, System::Drawing::Rectangle rect, LockFlags flags )
-    {
+	LockedRect CubeTexture::LockRectangle( CubeMapFace face, int level, System::Drawing::Rectangle rect, LockFlags flags )
+	{
 		D3DLOCKED_RECT lockedRect;
-        RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
+		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
 		HRESULT hr = TexturePointer->LockRect( (D3DCUBEMAP_FACES) face, level, &lockedRect, &nativeRect, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
-        if( FAILED( hr ) )
-            return LockedRect();
+		if( FAILED( hr ) )
+			return LockedRect();
 
-        LockedRect outRect;
+		LockedRect outRect;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		outRect.Data = gcnew GraphicsStream( lockedRect.pBits, true, !readOnly );
-        outRect.Pitch = lockedRect.Pitch;
+		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
-    }
+	}
 
 	LockedRect CubeTexture::LockRectangle( CubeMapFace face, int level, LockFlags flags )
 	{
 		D3DLOCKED_RECT lockedRect;
 		HRESULT hr = TexturePointer->LockRect( (D3DCUBEMAP_FACES) face, level, &lockedRect, NULL, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
-        if( FAILED( hr ) )
-            return LockedRect();
+		if( FAILED( hr ) )
+			return LockedRect();
 
-        LockedRect outRect;
+		LockedRect outRect;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		outRect.Data = gcnew GraphicsStream( lockedRect.pBits, true, !readOnly );
-        outRect.Pitch = lockedRect.Pitch;
+		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}
 
@@ -413,6 +511,28 @@ namespace Direct3D9
 		m_Pointer = texture;
 	}
 
+	VolumeTextureRequirements VolumeTexture::CheckRequirements(Device^ device, int width, int height, int depth,
+		int numMipLevels, Usage usage, Format format, Pool pool)
+	{
+		VolumeTextureRequirements result;					// Result.
+		D3DFORMAT d3dFormat = (D3DFORMAT)format;	// Format.
+		HRESULT hr;									// Error code.
+
+		// Get texture requirements.
+		hr = D3DXCheckVolumeTextureRequirements(device->InternalPointer, (UINT *)&width, (UINT *)&height, (UINT*) &depth,
+			(UINT *)&numMipLevels, (DWORD)usage, (D3DFORMAT *)&d3dFormat, (D3DPOOL)pool);
+		GraphicsException::CheckHResult(hr);
+
+		// Return proposed values.
+		result.Width = width;
+		result.Height = height;
+		result.Depth = depth;
+		result.Format = format;
+		result.NumOfMipLevels = numMipLevels;
+
+		return result;
+	}
+
 	VolumeTexture^ VolumeTexture::FromMemory( Device^ device, array<Byte>^ memory, int width, int height, int depth,
 		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
@@ -422,9 +542,9 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateVolumeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length,
 			width, height, depth, numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool,
 			(DWORD) filter, (DWORD) mipFilter, (D3DCOLOR) colorKey, 0, 0, &texture );
-        GraphicsException::CheckHResult( hr );
-        if( FAILED( hr ) )
-            return nullptr;
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew VolumeTexture( texture );
 	}
@@ -469,8 +589,8 @@ namespace Direct3D9
 			depth, numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter,
 			(DWORD) mipFilter, colorKey, NULL, NULL, &texture );
 		GraphicsException::CheckHResult( hr );
-        if( FAILED( hr ) )
-            return nullptr;
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew VolumeTexture( texture );
 	}
@@ -486,36 +606,36 @@ namespace Direct3D9
 		return VolumeTexture::FromFile( device, fileName, Usage::None, Pool::Managed );
 	}
 
-    LockedBox VolumeTexture::LockBox( int level, Box box, LockFlags flags )
-    {
-        D3DLOCKED_BOX lockedBox;
-        HRESULT hr = TexturePointer->LockBox( level, &lockedBox, (D3DBOX*) &box, (DWORD) flags );
+	LockedBox VolumeTexture::LockBox( int level, Box box, LockFlags flags )
+	{
+		D3DLOCKED_BOX lockedBox;
+		HRESULT hr = TexturePointer->LockBox( level, &lockedBox, (D3DBOX*) &box, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
-        if( FAILED( hr ) )
-            return LockedBox();
+		if( FAILED( hr ) )
+			return LockedBox();
 
-        LockedBox outBox;
+		LockedBox outBox;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		outBox.Data = gcnew GraphicsStream( lockedBox.pBits, true, !readOnly );
-        outBox.RowPitch = lockedBox.RowPitch;
-        outBox.SlicePitch = lockedBox.SlicePitch;
+		outBox.RowPitch = lockedBox.RowPitch;
+		outBox.SlicePitch = lockedBox.SlicePitch;
 		return outBox;
-    }
+	}
 
-    LockedBox VolumeTexture::LockBox( int level, LockFlags flags )
-    {
-        D3DLOCKED_BOX lockedBox;
-        HRESULT hr = TexturePointer->LockBox( level, &lockedBox, NULL, (DWORD) flags );
+	LockedBox VolumeTexture::LockBox( int level, LockFlags flags )
+	{
+		D3DLOCKED_BOX lockedBox;
+		HRESULT hr = TexturePointer->LockBox( level, &lockedBox, NULL, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
-        if( FAILED( hr ) )
-            return LockedBox();
+		if( FAILED( hr ) )
+			return LockedBox();
 
-        LockedBox outBox;
+		LockedBox outBox;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		outBox.Data = gcnew GraphicsStream( lockedBox.pBits, true, !readOnly );
-        outBox.RowPitch = lockedBox.RowPitch;
-        outBox.SlicePitch = lockedBox.SlicePitch;
+		outBox.RowPitch = lockedBox.RowPitch;
+		outBox.SlicePitch = lockedBox.SlicePitch;
 		return outBox;
-    }
+	}
 }
 }
