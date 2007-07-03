@@ -167,11 +167,17 @@ namespace Direct3D9
 		return Texture::FromMemory( device, memory, Usage::None, Pool::Managed );
 	}
 
+	Texture^ Texture::FromStream( Device^ device, Stream^ stream, int sizeBytes, int width, int height, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, sizeBytes );
+		return Texture::FromMemory( device, data, width, height, numLevels, usage, format, pool, filter, mipFilter, colorKey );
+	}
+
 	Texture^ Texture::FromStream( Device^ device, Stream^ stream, int width, int height, int numLevels,
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
-		return Texture::FromMemory( device, data, width, height, numLevels, usage, format, pool, filter, mipFilter, colorKey );
+        return Texture::FromStream( device, stream, 0, width, height, numLevels, usage, format, pool, filter, mipFilter, colorKey );
 	}
 
 	Texture^ Texture::FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool )
@@ -410,11 +416,17 @@ namespace Direct3D9
 		return CubeTexture::FromMemory( device, memory, Usage::None, Pool::Managed );
 	}
 
+	CubeTexture^ CubeTexture::FromStream( Device^ device, Stream^ stream, int sizeBytes, int size, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, sizeBytes );
+		return CubeTexture::FromMemory( device, data, size, numLevels, usage, format, pool, filter, mipFilter, colorKey );
+	}
+
 	CubeTexture^ CubeTexture::FromStream( Device^ device, Stream^ stream, int size, int numLevels,
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
-		return CubeTexture::FromMemory( device, data, size, numLevels, usage, format, pool, filter, mipFilter, colorKey );
+		return CubeTexture::FromStream( device, stream, 0, size, numLevels, usage, format, pool, filter, mipFilter, colorKey );
 	}
 
 	CubeTexture^ CubeTexture::FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool )
@@ -560,12 +572,19 @@ namespace Direct3D9
 		return VolumeTexture::FromMemory( device, memory, Usage::None, Pool::Managed );
 	}
 
+	VolumeTexture^ VolumeTexture::FromStream( Device^ device, Stream^ stream, int sizeBytes, int width, int height, int depth,
+		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, sizeBytes );
+		return VolumeTexture::FromMemory( device, data, width, height, depth, numLevels,
+			usage, format, pool, filter, mipFilter, colorKey );
+	}
+
 	VolumeTexture^ VolumeTexture::FromStream( Device^ device, Stream^ stream, int width, int height, int depth,
 		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
-		return VolumeTexture::FromMemory( device, data, width, height, depth, numLevels,
-			usage, format, pool, filter, mipFilter, colorKey );
+        return VolumeTexture::FromStream( device, stream, 0, width, height, depth,
+            numLevels, usage, format, pool, filter, mipFilter, colorKey );
 	}
 
 	VolumeTexture^ VolumeTexture::FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool )

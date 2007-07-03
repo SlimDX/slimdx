@@ -176,6 +176,8 @@ namespace SlimDX
 			static Texture^ FromMemory( Device^ device, array<Byte>^ memory, Usage usage, Pool pool );
 			static Texture^ FromMemory( Device^ device, array<Byte>^ memory );
 
+			static Texture^ FromStream( Device^ device, Stream^ stream, int sizeBytes, int width, int height, int numLevels,
+				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static Texture^ FromStream( Device^ device, Stream^ stream, int width, int height, int numLevels,
 				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static Texture^ FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool );
@@ -234,6 +236,8 @@ namespace SlimDX
 			static CubeTexture^ FromMemory( Device^ device, array<Byte>^ memory, Usage usage, Pool pool );
 			static CubeTexture^ FromMemory( Device^ device, array<Byte>^ memory );
 
+			static CubeTexture^ FromStream( Device^ device, Stream^ stream, int sizeBytes, int size, int numLevels,
+				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static CubeTexture^ FromStream( Device^ device, Stream^ stream, int size, int numLevels,
 				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static CubeTexture^ FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool );
@@ -269,6 +273,8 @@ namespace SlimDX
 			static VolumeTexture^ FromMemory( Device^ device, array<Byte>^ memory, Usage usage, Pool pool );
 			static VolumeTexture^ FromMemory( Device^ device, array<Byte>^ memory );
 
+			static VolumeTexture^ FromStream( Device^ device, Stream^ stream, int sizeBytes, int width, int height, int depth,
+				int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static VolumeTexture^ FromStream( Device^ device, Stream^ stream, int width, int height, int depth,
 				int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static VolumeTexture^ FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool );
