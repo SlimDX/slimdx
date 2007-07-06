@@ -97,7 +97,7 @@ namespace SlimDX
 
 		if( targetPosition < 0 )
 			throw gcnew InvalidOperationException("Cannot seek beyond the beginning of the stream.");
-		if( targetPosition > m_Size )
+		if( targetPosition > m_Size && m_Size > 0)
 			throw gcnew InvalidOperationException("Cannot seek beyond the end of the stream.");
 
 		m_Position = targetPosition;

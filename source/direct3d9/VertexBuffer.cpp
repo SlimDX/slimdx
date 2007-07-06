@@ -35,15 +35,37 @@ namespace Direct3D9
 		if( buffer == NULL )
 			throw gcnew ArgumentNullException( "buffer" );
 
+		D3DVERTEXBUFFER_DESC desc;
+		HRESULT hr = buffer->GetDesc( &desc );
+		GraphicsException::CheckHResult( hr );
+		
+		Format = (SlimDX::Direct3D9::Format) desc.Format;
+		Type = (ResourceType) desc.Type;
+		Usage = (SlimDX::Direct3D9::Usage) desc.Usage;
+		Pool = (SlimDX::Direct3D9::Pool) desc.Pool;
+		SizeInBytes = desc.Size;
+		FVF = (VertexFormat) desc.FVF;
+		
 		m_Pointer = buffer;
 	}
 
-	VertexBuffer::VertexBuffer( Device^ device, int sizeBytes, Usage usage, VertexFormat format, Pool pool )
+	VertexBuffer::VertexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool )
 	{
 		IDirect3DVertexBuffer9* vb;
 		HRESULT hr = device->InternalPointer->CreateVertexBuffer( sizeBytes, (DWORD) usage, 
 			(DWORD) format, (D3DPOOL) pool, &vb, NULL );
 		GraphicsException::CheckHResult( hr );
+		
+		D3DVERTEXBUFFER_DESC desc;
+		hr = vb->GetDesc( &desc );
+		GraphicsException::CheckHResult( hr );
+		
+		Format = (SlimDX::Direct3D9::Format) desc.Format;
+		Type = (ResourceType) desc.Type;
+		Usage = (SlimDX::Direct3D9::Usage) desc.Usage;
+		Pool = (SlimDX::Direct3D9::Pool) desc.Pool;
+		SizeInBytes = desc.Size;
+		FVF = (VertexFormat) desc.FVF;
 		
 		m_Pointer = vb;
 	}
@@ -53,10 +75,17 @@ namespace Direct3D9
 		void* lockedPtr;
 		HRESULT hr = VbPointer->Lock( offset, size, &lockedPtr, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
-
+		
+		int lockedSize = size == 0 ? SizeInBytes : size;
+		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		GraphicsStream^ stream = gcnew GraphicsStream( lockedPtr, 0, true, !readOnly );
+		GraphicsStream^ stream = gcnew GraphicsStream( lockedPtr, lockedSize, true, !readOnly );
 		return stream;
+	}
+	
+	GraphicsStream^ VertexBuffer::Lock( int offset, LockFlags flags )
+	{
+		return Lock( offset, 0, flags );
 	}
 
 	void VertexBuffer::Unlock()
