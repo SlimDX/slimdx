@@ -70,8 +70,6 @@ namespace SlimDX
 			~Device();
 			!Device();
 
-			void ClearRenderTargetView( RenderTargetView^ view );
-			
 			void Draw( int vertexCount, int firstVertexIndex );
 		};
 	}

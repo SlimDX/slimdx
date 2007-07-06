@@ -75,12 +75,6 @@ namespace Direct3D10
 		m_Factory->Release();
 	}
 	
-	void Device::ClearRenderTargetView( RenderTargetView^ view )
-	{
-		float color[4] = { 1.0f, 0, 0, 1.0f };
-		m_Device->ClearRenderTargetView( (ID3D10RenderTargetView*) view->InternalPointer, color );
-	}
-	
 	void Device::Draw( int vertexCount, int firstVertexIndex )
 	{
 		m_Device->Draw( vertexCount, firstVertexIndex );

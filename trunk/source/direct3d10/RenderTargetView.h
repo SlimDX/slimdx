@@ -23,6 +23,8 @@
 
 using namespace System;
 
+#include "../direct3d/MiscTypes.h"
+
 #include "ResourceView.h"
 
 namespace SlimDX
@@ -36,6 +38,8 @@ namespace SlimDX
 		{
 		public:
 			RenderTargetView( Device^ device, Resource^ resource );
+			
+			void Clear( Direct3D::ColorValue color );
 		};
 	}
 };
