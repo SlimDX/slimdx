@@ -393,6 +393,10 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\EffectMatrixVariable.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\EffectPass.cpp"
 					>
 				</File>
@@ -684,6 +688,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Effect.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectMatrixVariable.h"
 					>
 				</File>
 				<File

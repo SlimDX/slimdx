@@ -23,33 +23,22 @@
 
 using namespace System;
 
+#include "../math/Math.h"
+
 #include "Enums.h"
+#include "EffectVariable.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		ref class EffectMatrixVariable;
-		ref class EffectResourceVariable;
-		
-		public ref class EffectVariable
-		{
-		protected:
-			ID3D10EffectVariable* m_Pointer;
-			
+		public ref class EffectMatrixVariable : EffectVariable
+		{	
 		internal:
-			EffectVariable( ID3D10EffectVariable* variable );
+			EffectMatrixVariable( ID3D10EffectMatrixVariable* variable );
 			
 		public:
-			initonly String^ Name;
-			initonly String^ Semantic;
-			initonly EffectVariableFlags Flags;
-			initonly int AnnotationCount;
-			initonly int BufferOffset;
-			initonly int ExplicitBindPoint;
-			
-			EffectMatrixVariable^ AsMatrix();
-			EffectResourceVariable^ AsResource();
+			void SetMatrix( Matrix matrix );
 		};
 	}
 };
