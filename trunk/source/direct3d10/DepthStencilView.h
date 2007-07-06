@@ -23,6 +23,7 @@
 
 using namespace System;
 
+#include "Enums.h"
 #include "ResourceView.h"
 
 namespace SlimDX
@@ -36,6 +37,8 @@ namespace SlimDX
 		{
 		public:
 			DepthStencilView( Device^ device, Resource^ resource );
+			
+			void Clear( DepthStencilClearFlags flags, float depthValue, Byte stencilValue );
 		};
 	}
 };
