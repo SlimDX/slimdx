@@ -51,7 +51,14 @@ namespace SlimDX
 			Write = D3D10_CPU_ACCESS_WRITE,
 			Read = D3D10_CPU_ACCESS_READ
 		};
-
+		
+		[Flags]
+		public enum class DepthStencilClearFlags : Int32
+		{
+			Depth = D3D10_CLEAR_DEPTH,
+			Stencil = D3D10_CLEAR_STENCIL
+		};
+		
 		[Flags]
 		public enum class DeviceCreationFlags : Int32
 		{

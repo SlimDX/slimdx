@@ -44,5 +44,12 @@ namespace Direct3D10
 		
 		m_Pointer = view;
 	}
+	
+	void DepthStencilView::Clear( DepthStencilClearFlags flags, float depthValue, Byte stencilValue )
+	{
+		ID3D10Device* device;
+		m_Pointer->GetDevice( &device );
+		device->ClearDepthStencilView( (ID3D10DepthStencilView*) m_Pointer, (D3D10_CLEAR_FLAG) flags, depthValue, stencilValue );
+	}
 }
 }
