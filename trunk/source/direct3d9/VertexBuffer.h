@@ -37,11 +37,18 @@ namespace SlimDX
 			}
 
 		public:
+			initonly Format Format;
+			initonly ResourceType Type;
+			initonly Usage Usage;
+			initonly Pool Pool;
+			initonly int SizeInBytes;
+			initonly VertexFormat FVF;
+			
 			VertexBuffer( IDirect3DVertexBuffer9* buffer );
-			VertexBuffer( Device^ device, int sizeBytes, Usage usage, VertexFormat format, Pool pool );
+			VertexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool );
 
 			GraphicsStream^ Lock( int offset, int size, LockFlags flags );
-			GraphicsStream^ Lock( int offset, LockFlags flags ) { return Lock( offset, 0, flags ); }
+			GraphicsStream^ Lock( int offset, LockFlags flags );
 			void Unlock();
 		};
 	}
