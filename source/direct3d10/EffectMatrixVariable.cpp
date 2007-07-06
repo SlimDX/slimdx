@@ -26,42 +26,20 @@
 #include "GraphicsException.h"
 
 #include "EffectMatrixVariable.h"
-#include "EffectResourceVariable.h"
-#include "EffectVariable.h"
+
 
 namespace SlimDX
 {
 namespace Direct3D10
 { 
-	EffectVariable::EffectVariable( ID3D10EffectVariable* variable )
+	EffectMatrixVariable::EffectMatrixVariable( ID3D10EffectMatrixVariable* variable ) : EffectVariable( variable )
 	{
-		if( variable == NULL )
-			throw gcnew ArgumentNullException( "variable" );
-		m_Pointer = variable;
-		
-		D3D10_EFFECT_VARIABLE_DESC desc;
-		HRESULT hr = m_Pointer->GetDesc( &desc );
-		
-		Name = gcnew String( desc.Name );
-		Semantic = gcnew String( desc.Semantic );
-		Flags = ( EffectVariableFlags ) desc.Flags;
-		AnnotationCount = desc.Annotations;
-		BufferOffset = desc.BufferOffset;
-		ExplicitBindPoint = desc.ExplicitBindPoint;
 	}
 	
-	EffectMatrixVariable^ EffectVariable::AsMatrix()
+	void EffectMatrixVariable::SetMatrix( Matrix matrix )
 	{
-		//@TODO D3D10: Test variable->IsValid() to ensure cast was safe, and throw if it fails.
-		ID3D10EffectMatrixVariable* variable = m_Pointer->AsMatrix();
-		return gcnew EffectMatrixVariable( variable );
-	}
-	
-	EffectResourceVariable^ EffectVariable::AsResource()
-	{
-		//@TODO D3D10: Test variable->IsValid() to ensure cast was safe, and throw if it fails.
-		ID3D10EffectShaderResourceVariable* variable = m_Pointer->AsShaderResource();
-		return gcnew EffectResourceVariable( variable );
+		HRESULT hr = ( ( ID3D10EffectMatrixVariable* ) m_Pointer )->SetMatrix( (float*) &matrix );
+		GraphicsException::CheckHResult( hr );
 	}
 }
 }
