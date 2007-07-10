@@ -53,10 +53,10 @@ namespace SlimDX
 		public:
 			Surface( IDirect3DSurface9* Surface );
 
-			Surface^ CreateRenderTarget( Device^ device, int width, int height, Format format,
+			static Surface^ CreateRenderTarget( Device^ device, int width, int height, Format format,
 				MultiSampleType multiSampleType, int multiSampleQuality, bool lockable );
-			Surface^ CreateOffscreenPlain( Device^ device, int width, int height, Format format, Pool pool );
-			Surface^ CreateDepthStencil( Device^ device, int width, int height, Format format,
+			static Surface^ CreateOffscreenPlain( Device^ device, int width, int height, Format format, Pool pool );
+			static Surface^ CreateDepthStencil( Device^ device, int width, int height, Format format,
 				MultiSampleType multiSampleType, int multiSampleQuality, bool discard );
 
 			GraphicsStream^ LockRectangle( LockFlags flags );
