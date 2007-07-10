@@ -50,8 +50,11 @@ namespace SlimDX
 		static Vector3 Cross( Vector3 lhs, Vector3 rhs );
 		static Vector3 Lerp( Vector3 start, Vector3 end, float factor );
 
-        Vector3 Project( Direct3D::Viewport viewport, Matrix projection, Matrix view, Matrix world );
-        Vector3 Unproject( Direct3D::Viewport viewport, Matrix projection, Matrix view, Matrix world );
+		Vector3 Project( Direct3D::Viewport viewport, Matrix projection, Matrix view, Matrix world );
+		Vector3 Unproject( Direct3D::Viewport viewport, Matrix projection, Matrix view, Matrix world );
+		
+		static Vector3 Minimize( Vector3 left, Vector3 right );
+		static Vector3 Maximize( Vector3 left, Vector3 right );
 
 		static Vector3 operator + ( Vector3 lhs, Vector3 rhs );
 		static Vector3 operator - ( Vector3 lhs, Vector3 rhs );

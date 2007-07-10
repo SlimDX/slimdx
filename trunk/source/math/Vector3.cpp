@@ -90,25 +90,39 @@ namespace SlimDX
 		return result;
 	}
 
-    Vector3 Vector3::Project( Direct3D::Viewport viewport, Matrix projection, Matrix view, Matrix world )
-    {
-        Vector3 result;
-        pin_ptr<Vector3> pinnedThis = this;
+	Vector3 Vector3::Project( Direct3D::Viewport viewport, Matrix projection, Matrix view, Matrix world )
+	{
+		Vector3 result;
+		pin_ptr<Vector3> pinnedThis = this;
 
-        D3DXVec3Project( (D3DXVECTOR3*) &result, (D3DXVECTOR3*) pinnedThis, (D3DVIEWPORT9*) &viewport,
-            (D3DXMATRIX*) &projection, (D3DXMATRIX*) &view, (D3DXMATRIX*) &world );
+		D3DXVec3Project( (D3DXVECTOR3*) &result, (D3DXVECTOR3*) pinnedThis, (D3DVIEWPORT9*) &viewport,
+			(D3DXMATRIX*) &projection, (D3DXMATRIX*) &view, (D3DXMATRIX*) &world );
 
-        return result;
-    }
+		return result;
+	}
 
-    Vector3 Vector3::Unproject( Direct3D::Viewport viewport, Matrix projection, Matrix view, Matrix world )
-    {
-        Vector3 result;
-        pin_ptr<Vector3> pinnedThis = this;
+	Vector3 Vector3::Unproject( Direct3D::Viewport viewport, Matrix projection, Matrix view, Matrix world )
+	{
+		Vector3 result;
+		pin_ptr<Vector3> pinnedThis = this;
 
-        D3DXVec3Unproject( (D3DXVECTOR3*) &result, (D3DXVECTOR3*) pinnedThis, (D3DVIEWPORT9*) &viewport,
-            (D3DXMATRIX*) &projection, (D3DXMATRIX*) &view, (D3DXMATRIX*) &world );
+		D3DXVec3Unproject( (D3DXVECTOR3*) &result, (D3DXVECTOR3*) pinnedThis, (D3DVIEWPORT9*) &viewport,
+			(D3DXMATRIX*) &projection, (D3DXMATRIX*) &view, (D3DXMATRIX*) &world );
 
-        return result;
-    }
+		return result;
+	}
+	
+	Vector3 Vector3::Minimize( Vector3 left, Vector3 right )
+	{
+		Vector3 result;
+		D3DXVec3Minimize( (D3DXVECTOR3*) &result, (D3DXVECTOR3*) &left, (D3DXVECTOR3*) &right );
+		return result;
+	}
+	
+	Vector3 Vector3::Maximize( Vector3 left, Vector3 right )
+	{
+		Vector3 result;
+		D3DXVec3Maximize( (D3DXVECTOR3*) &result, (D3DXVECTOR3*) &left, (D3DXVECTOR3*) &right );
+		return result;
+	}
 }
