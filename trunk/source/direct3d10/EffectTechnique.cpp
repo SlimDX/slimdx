@@ -27,6 +27,7 @@
 
 #include "EffectTechnique.h"
 #include "EffectPass.h"
+#include "EffectVariable.h"
 
 namespace SlimDX
 {
@@ -42,14 +43,40 @@ namespace Direct3D10
 		HRESULT hr = m_Pointer->GetDesc( &desc );
 		GraphicsException::CheckHResult( hr );
 		
-		Name = gcnew String( desc.Name );
-		PassCount = desc.Passes;
-		AnnotationCount = desc.Annotations;
+		m_Name = gcnew String( desc.Name );
+		m_PassCount = desc.Passes;
+		m_AnnotationCount = desc.Annotations;
+	}
+	
+	EffectVariable^ EffectTechnique::GetAnnotationByIndex( int index )
+	{
+		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByIndex( index );
+		//@TODO D3D10: Check for null and throw "not found"
+		return gcnew EffectVariable( variable );
+	}
+	
+	EffectVariable^ EffectTechnique::GetAnnotationByName( String^ name )
+	{
+		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByName( (LPCSTR) pinnedName );
+		//@TODO D3D10: Check for null and throw "not found"
+		return gcnew EffectVariable( variable );
 	}
 	
 	EffectPass^ EffectTechnique::GetPassByIndex( int index )
 	{
 		ID3D10EffectPass* pass = m_Pointer->GetPassByIndex( index );
+		//@TODO D3D10: Check for null and throw "not found"
+		return gcnew EffectPass( pass );
+	}
+	
+	EffectPass^ EffectTechnique::GetPassByName( String^ name )
+	{
+		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+		ID3D10EffectPass* pass = m_Pointer->GetPassByName( (LPCSTR) pinnedName );
+		//@TODO D3D10: Check for null and throw "not found"
 		return gcnew EffectPass( pass );
 	}
 }

@@ -75,6 +75,11 @@ namespace Direct3D10
 		m_Factory->Release();
 	}
 	
+	void Device::ClearState()
+	{
+		m_Device->ClearState();
+	}
+	
 	void Device::Draw( int vertexCount, int firstVertexIndex )
 	{
 		m_Device->Draw( vertexCount, firstVertexIndex );

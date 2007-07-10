@@ -29,22 +29,61 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
+		ref class EffectVariable;
 		ref class ShaderBytecode;
 		
 		public ref class EffectPass
 		{
 			ID3D10EffectPass *m_Pointer;
+			String^ m_Name;
+			int m_AnnotationCount;
+			ShaderBytecode^ m_Signature;
+			int m_StencilReference;
+			int m_SampleMask;
+			SlimDX::Direct3D::ColorValue m_BlendFactor;
+			
 			
 		internal:
 			EffectPass( ID3D10EffectPass* pass );
 			
 		public:
-			initonly String^ Name;
-			initonly int AnnotationCount;
-			initonly ShaderBytecode^ Signature;
-			initonly int StencilReference;
-			initonly int SampleMask;
-			initonly SlimDX::Direct3D::ColorValue BlendFactor;
+			property String^ Name
+			{
+				String^ get() { return m_Name; }
+			}
+			
+			property int AnnotationCount
+			{
+				int get() { return m_AnnotationCount; }
+			}
+			
+			property ShaderBytecode^ Signature
+			{
+				ShaderBytecode^ get() { return m_Signature; }
+			}
+			
+			property int StencilReference
+			{
+				int get() { return m_StencilReference; }
+			}
+			
+			property int SampleMask
+			{
+				int get() { return m_SampleMask; }
+			}
+			
+			property SlimDX::Direct3D::ColorValue BlendFactor
+			{
+				SlimDX::Direct3D::ColorValue get() { return m_BlendFactor; }
+			}
+			
+			property bool IsValid
+			{
+				bool get() { return m_Pointer->IsValid() ? true : false; }
+			}
+			
+			EffectVariable^ GetAnnotationByIndex( int index );
+			EffectVariable^ GetAnnotationByName( String^ name );
 			
 			void Apply();
 		};

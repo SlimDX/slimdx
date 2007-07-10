@@ -37,6 +37,24 @@ namespace Direct3D10
 { 
 	Effect::Effect( ID3D10Effect* effect ) : DirectXObject( effect )
 	{
+		D3D10_EFFECT_DESC desc;
+		HRESULT hr = effect->GetDesc( &desc );
+		GraphicsException::CheckHResult( hr );
+		
+		m_IsChildEffect = desc.IsChildEffect ? true : false;
+		m_ConstantBufferCount = desc.ConstantBuffers;
+		m_SharedConstantBufferCount = desc.SharedConstantBuffers;
+		m_GlobalVariableCount = desc.GlobalVariables;
+		m_TechniqueCount = desc.Techniques;
+	}
+
+	EffectTechnique^ Effect::GetTechniqueByIndex( int index )
+	{
+		ID3D10EffectTechnique* technique;
+
+		technique = m_Pointer->GetTechniqueByIndex( index );
+		//@TODO D3D10: Throw TechniqueNotFound if not found
+		return gcnew EffectTechnique( technique );
 	}
 
 	EffectTechnique^ Effect::GetTechniqueByName( System::String^ name )
@@ -46,7 +64,17 @@ namespace Direct3D10
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
 		technique = m_Pointer->GetTechniqueByName( (LPCSTR) pinnedName );
+		//@TODO D3D10: Throw TechniqueNotFound if not fount
 		return gcnew EffectTechnique( technique );
+	}
+	
+	EffectVariable^ Effect::GetVariableByIndex( int index )
+	{
+		ID3D10EffectVariable* variable;
+		
+		variable = m_Pointer->GetVariableByIndex( index );
+		//@TODO D3D10: Throw VariableNotFound if not found.
+		return gcnew EffectVariable( variable );
 	}
 	
 	EffectVariable^ Effect::GetVariableByName( System::String^ name )
@@ -56,6 +84,7 @@ namespace Direct3D10
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
 		variable = m_Pointer->GetVariableByName( (LPCSTR) pinnedName );
+		//@TODO D3D10: Throw VariableNotFound if not found.
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -66,7 +95,14 @@ namespace Direct3D10
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
 		variable = m_Pointer->GetVariableBySemantic( (LPCSTR) pinnedName );
+		//@TODO D3D10: Throw VariableNotFound if not found.
 		return gcnew EffectVariable( variable );
+	}
+	
+	void Effect::Optimize()
+	{
+		HRESULT hr = m_Pointer->Optimize();
+		GraphicsException::CheckHResult( hr );
 	}
 
 	Effect^ Effect::FromFile( Device^ device, String ^fileName, String^ profile )

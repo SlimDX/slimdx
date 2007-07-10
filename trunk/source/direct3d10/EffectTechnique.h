@@ -28,21 +28,44 @@ namespace SlimDX
 	namespace Direct3D10
 	{
 		ref class EffectPass;
+		ref class EffectVariable;
 		
 		public ref class EffectTechnique
 		{
 			ID3D10EffectTechnique *m_Pointer;
+			String^ m_Name;
+			int m_PassCount;
+			int m_AnnotationCount;
 			
 		internal:
 			EffectTechnique( ID3D10EffectTechnique* technique );
 			
 		public:
+			property String^ Name
+			{
+				String^ get() { return m_Name; }
+			}
 			
-			initonly String^ Name;
-			initonly int PassCount;
-			initonly int AnnotationCount;
+			property int AnnotationCount 
+		  {
+				int get() { return m_AnnotationCount; }
+			}
+			
+			property int PassCount
+			{
+				int get() { return m_PassCount; }
+			}
+			
+			property bool IsValid
+			{
+				bool get() { return m_Pointer->IsValid() ? true : false; }
+			}
+			
+			EffectVariable^ GetAnnotationByIndex( int index );
+			EffectVariable^ GetAnnotationByName( String^ name );
 			
 			EffectPass^ GetPassByIndex( int index );
+			EffectPass^ GetPassByName( String^ name );
 		};
 	}
 };
