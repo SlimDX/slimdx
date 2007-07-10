@@ -10,6 +10,9 @@ Specifically, this page should help call out _intentional_ differences or omissi
 *Removed non-static methods:*
 Most (perhaps eventually all) non-static "operation" methods on math objects have been removed in favor of static methods. This means methods like Matrix::Transpose, Vector3::Dot, Vector3::Cross, et cetera, are all static.
 
+* Removed Zero member from Vector classes
+Vector2.Zero, Vector3.Zero, and Vector4.Zero have been removed. The same exact functionality can be obtained by using new Vector2(), new Vector3(), or new Vector4().
+
 = Direct3D Differences =
 
 *Removed CustomVertex:*
