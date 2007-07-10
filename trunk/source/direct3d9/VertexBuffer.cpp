@@ -39,12 +39,12 @@ namespace Direct3D9
 		HRESULT hr = buffer->GetDesc( &desc );
 		GraphicsException::CheckHResult( hr );
 		
-		Format = (SlimDX::Direct3D9::Format) desc.Format;
-		Type = (ResourceType) desc.Type;
-		Usage = (SlimDX::Direct3D9::Usage) desc.Usage;
-		Pool = (SlimDX::Direct3D9::Pool) desc.Pool;
+		Format = ( SlimDX::Direct3D9::Format ) desc.Format;
+		Type = ( ResourceType ) desc.Type;
+		Usage = ( SlimDX::Direct3D9::Usage ) desc.Usage;
+		Pool = ( SlimDX::Direct3D9::Pool ) desc.Pool;
 		SizeInBytes = desc.Size;
-		FVF = (VertexFormat) desc.FVF;
+		FVF = ( VertexFormat ) desc.FVF;
 		
 		m_Pointer = buffer;
 	}
@@ -60,12 +60,12 @@ namespace Direct3D9
 		hr = vb->GetDesc( &desc );
 		GraphicsException::CheckHResult( hr );
 		
-		Format = (SlimDX::Direct3D9::Format) desc.Format;
-		Type = (ResourceType) desc.Type;
-		Usage = (SlimDX::Direct3D9::Usage) desc.Usage;
-		Pool = (SlimDX::Direct3D9::Pool) desc.Pool;
+		Format = ( SlimDX::Direct3D9::Format ) desc.Format;
+		Type = ( ResourceType ) desc.Type;
+		Usage = ( SlimDX::Direct3D9::Usage ) desc.Usage;
+		Pool = ( SlimDX::Direct3D9::Pool ) desc.Pool;
 		SizeInBytes = desc.Size;
-		FVF = (VertexFormat) desc.FVF;
+		FVF = ( VertexFormat ) desc.FVF;
 		
 		m_Pointer = vb;
 	}
