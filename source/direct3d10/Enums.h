@@ -43,7 +43,38 @@ namespace SlimDX
 			RenderTarget = D3D10_BIND_RENDER_TARGET,
 			DepthStencil = D3D10_BIND_DEPTH_STENCIL
 		};
-
+		
+		public enum class BlendOperation : Int32
+		{
+			Add = D3D10_BLEND_OP_ADD,
+			Subtract = D3D10_BLEND_OP_SUBTRACT,
+			ReverseSubtract = D3D10_BLEND_OP_REV_SUBTRACT,
+			Minimum = D3D10_BLEND_OP_MIN,
+			Maximum = D3D10_BLEND_OP_MAX
+		};
+		
+		public enum class BlendOption : Int32
+		{//@TODO D3D10: These names kind of suck, should they be expanded to .NET guideline-compliance?
+		 //             Also what's up with "src1" crap for dual output blending? Learn about that.
+			Zero = D3D10_BLEND_ZERO,
+			One = D3D10_BLEND_ONE,
+			SrcColor = D3D10_BLEND_SRC_COLOR,
+			InvSrcColor = D3D10_BLEND_INV_SRC_COLOR,
+			SrcAlpha = D3D10_BLEND_SRC_ALPHA,
+			InvSrcAlpha = D3D10_BLEND_INV_SRC_ALPHA,
+			DestAlpha = D3D10_BLEND_DEST_ALPHA,
+			InvDestAlpha = D3D10_BLEND_INV_DEST_ALPHA,
+			DestColor = D3D10_BLEND_DEST_COLOR,
+			InvDestColor = D3D10_BLEND_INV_DEST_COLOR,
+			SrcAlphaSaturate = D3D10_BLEND_SRC_ALPHA_SAT,
+			BlendFactor = D3D10_BLEND_BLEND_FACTOR,
+			InvBlendFactor = D3D10_BLEND_INV_BLEND_FACTOR,
+			Src1Color = D3D10_BLEND_SRC1_COLOR,
+			InvSrc1Color = D3D10_BLEND_INV_SRC1_COLOR,
+			Src1Alpha = D3D10_BLEND_SRC1_ALPHA,
+			InvSrc1Alpha = D3D10_BLEND_INV_SRC1_ALPHA
+		};
+		
 		[Flags]
 		public enum class CpuAccessFlags : Int32
 		{

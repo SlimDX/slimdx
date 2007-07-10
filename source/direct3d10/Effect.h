@@ -37,13 +37,64 @@ namespace SlimDX
 		
 		public ref class Effect : public DirectXObject<ID3D10Effect>
 		{
-		public:
+			bool m_IsChildEffect;
+			int m_ConstantBufferCount;
+			int m_SharedConstantBufferCount;
+			int m_GlobalVariableCount;
+			int m_TechniqueCount;
+		
+		internal:
 			Effect( ID3D10Effect* effect );
-
+		
+		public:
+			property bool IsChildEffect
+			{
+				bool get() { return m_IsChildEffect; }
+			}
+			
+			property int ConstantBufferCount
+			{
+				int get() { return m_ConstantBufferCount; }
+			}
+			
+			property int SharedConstantBufferCount
+			{
+				int get() { return m_SharedConstantBufferCount; }
+			}
+			
+			property int SharedGlobalVariablesCount
+			{
+				int get() { return m_GlobalVariableCount; }
+			}
+			
+			property int TechniqueCount
+			{
+				int get() { return m_TechniqueCount; }
+			}
+			
+			property bool IsOptimized
+			{
+				bool get() { return m_Pointer->IsOptimized() ? true : false; }
+			}
+			
+			property bool IsPooled
+			{
+				bool get() { return m_Pointer->IsPool() ? true : false; }
+			}
+			
+			property bool IsValid
+			{
+				bool get() { return m_Pointer->IsValid() ? true : false; }
+			}
+			
+			EffectTechnique^ GetTechniqueByIndex( int index );
 			EffectTechnique^ GetTechniqueByName( String^ name );
 			
+			EffectVariable^ GetVariableByIndex( int index );
 			EffectVariable^ GetVariableByName( String^ name );
 			EffectVariable^ GetVariableBySemantic( String^ name );
+			
+			void Optimize();
 			
 			static Effect^ FromFile( Device^ device, String^ fileName, String^ profile );
 		};

@@ -36,17 +36,60 @@ namespace SlimDX
 		{
 		protected:
 			ID3D10EffectVariable* m_Pointer;
+			String^ m_Name;
+			String^ m_Semantic;
+			EffectVariableFlags m_Flags;
+			int m_AnnotationCount;
+			int m_BufferOffset;
+			int m_ExplicitBindPoint;
 			
 		internal:
 			EffectVariable( ID3D10EffectVariable* variable );
 			
 		public:
-			initonly String^ Name;
-			initonly String^ Semantic;
-			initonly EffectVariableFlags Flags;
-			initonly int AnnotationCount;
-			initonly int BufferOffset;
-			initonly int ExplicitBindPoint;
+			property String^ Name
+			{
+				String^ get() { return m_Name; }
+			}
+			
+			property String^ Semantic
+			{
+				String^ get() { return m_Semantic; }
+			}
+			
+			property EffectVariableFlags Flags
+			{
+				EffectVariableFlags get() { return m_Flags; }
+			}
+			
+			property int AnnotationCount
+			{
+				int get() { return m_AnnotationCount; }
+			}
+			
+			property int BufferOffset
+			{
+				int get() { return m_BufferOffset; }
+			}
+			
+			property int ExplicitBindPoint
+			{
+				int get() { return m_ExplicitBindPoint; }
+			}
+			
+			property bool IsValid
+			{
+				bool get() { return m_Pointer->IsValid() ? true : false; }
+			}
+			
+			EffectVariable^ GetAnnotationByIndex( int index );
+			EffectVariable^ GetAnnotationByName( String^ name );
+			
+			EffectVariable^ GetElement( int index );
+			
+			EffectVariable^ GetMemberByIndex( int index );
+			EffectVariable^ GetMemberByName( String^ name );
+			EffectVariable^ GetMemberBySemantic( String^ name );
 			
 			EffectMatrixVariable^ AsMatrix();
 			EffectResourceVariable^ AsResource();

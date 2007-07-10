@@ -22,10 +22,12 @@
 
 #include <d3d10.h>
 #include <d3dx10.h>
+#include <vcclr.h>
 
 #include "GraphicsException.h"
 
 #include "EffectPass.h"
+#include "EffectVariable.h"
 #include "ShaderBytecode.h"
 
 namespace SlimDX
@@ -42,17 +44,34 @@ namespace Direct3D10
 		HRESULT hr = m_Pointer->GetDesc( &desc );
 		GraphicsException::CheckHResult( hr );
 		
-		Name = gcnew String( desc.Name );
-		AnnotationCount = desc.Annotations;
-		Signature = gcnew ShaderBytecode( desc.pIAInputSignature, desc.IAInputSignatureSize );
-		StencilReference = desc.StencilRef;
-		SampleMask = desc.SampleMask;
-		BlendFactor = SlimDX::Direct3D::ColorValue( desc.BlendFactor[3], desc.BlendFactor[0], desc.BlendFactor[1], desc.BlendFactor[2] );
+		m_Name = gcnew String( desc.Name );
+		m_AnnotationCount = desc.Annotations;
+		m_Signature = gcnew ShaderBytecode( desc.pIAInputSignature, desc.IAInputSignatureSize );
+		m_StencilReference = desc.StencilRef;
+		m_SampleMask = desc.SampleMask;
+		m_BlendFactor = SlimDX::Direct3D::ColorValue( desc.BlendFactor[3], desc.BlendFactor[0], desc.BlendFactor[1], desc.BlendFactor[2] );
+	}
+	
+	EffectVariable^ EffectPass::GetAnnotationByIndex( int index )
+	{
+		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByIndex( index );
+		//@TODO D3D10: Check for null and throw "not found"
+		return gcnew EffectVariable( variable );
+	}
+	
+	EffectVariable^ EffectPass::GetAnnotationByName( String^ name )
+	{
+		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByName( (LPCSTR) pinnedName );
+		//@TODO D3D10: Check for null and throw "not found"
+		return gcnew EffectVariable( variable );
 	}
 	
 	void EffectPass::Apply()
 	{
-		m_Pointer->Apply(0);
+		HRESULT hr = m_Pointer->Apply(0);
+		GraphicsException::CheckHResult( hr );
 	}
 }
 }

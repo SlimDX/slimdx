@@ -69,7 +69,9 @@ namespace SlimDX
 
 			~Device();
 			!Device();
-
+			
+			void ClearState();
+			
 			void Draw( int vertexCount, int firstVertexIndex );
 		};
 	}

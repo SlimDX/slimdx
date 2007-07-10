@@ -22,6 +22,7 @@
 
 #include <d3d10.h>
 #include <d3dx10.h>
+#include <vcclr.h>
 
 #include "GraphicsException.h"
 
@@ -42,12 +43,64 @@ namespace Direct3D10
 		D3D10_EFFECT_VARIABLE_DESC desc;
 		HRESULT hr = m_Pointer->GetDesc( &desc );
 		
-		Name = gcnew String( desc.Name );
-		Semantic = gcnew String( desc.Semantic );
-		Flags = ( EffectVariableFlags ) desc.Flags;
-		AnnotationCount = desc.Annotations;
-		BufferOffset = desc.BufferOffset;
-		ExplicitBindPoint = desc.ExplicitBindPoint;
+		m_Name = gcnew String( desc.Name );
+		m_Semantic = gcnew String( desc.Semantic );
+		m_Flags = ( EffectVariableFlags ) desc.Flags;
+		m_AnnotationCount = desc.Annotations;
+		m_BufferOffset = desc.BufferOffset;
+		m_ExplicitBindPoint = desc.ExplicitBindPoint;
+	}
+	
+	EffectVariable^ EffectVariable::GetAnnotationByIndex( int index )
+	{
+		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByIndex( index );
+		//@TODO D3D10: Check for null and throw "not found"
+		return gcnew EffectVariable( variable );
+	}
+	
+	EffectVariable^ EffectVariable::GetAnnotationByName( String^ name )
+	{
+		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByName( (LPCSTR) pinnedName );
+		//@TODO D3D10: Check for null and throw "not found"
+		return gcnew EffectVariable( variable );
+	}
+	
+	EffectVariable^ EffectVariable::GetElement( int index )
+	{
+		//@TODO D3D10: Throw if improper type (not array).
+		ID3D10EffectVariable* variable = m_Pointer->GetElement( index );
+		//@TODO D3D10: Check for null and throw "not found"
+		return gcnew EffectVariable( variable );
+	}
+	
+	EffectVariable^ EffectVariable::GetMemberByIndex( int index )
+	{
+		//@TODO D3D10: Throw if improper type (not structure).
+		ID3D10EffectVariable* variable = m_Pointer->GetMemberByIndex( index );
+		//@TODO D3D10: Check for null and throw "not found"
+		return gcnew EffectVariable( variable );
+	}
+	
+	EffectVariable^ EffectVariable::GetMemberByName( String^ name )
+	{
+		//@TODO D3D10: Throw if improper type (not structure).
+		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+		ID3D10EffectVariable* variable = m_Pointer->GetMemberByName( (LPCSTR) pinnedName );
+		//@TODO D3D10: Check for null and throw "not found"
+		return gcnew EffectVariable( variable );
+	}
+	
+	EffectVariable^ EffectVariable::GetMemberBySemantic( String^ name )
+	{
+		//@TODO D3D10: Throw if improper type (not structure).
+		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+		ID3D10EffectVariable* variable = m_Pointer->GetMemberBySemantic( (LPCSTR) pinnedName );
+		//@TODO D3D10: Check for null and throw "not found"
+		return gcnew EffectVariable( variable );
 	}
 	
 	EffectMatrixVariable^ EffectVariable::AsMatrix()
