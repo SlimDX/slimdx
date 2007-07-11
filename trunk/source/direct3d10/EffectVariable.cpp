@@ -28,6 +28,7 @@
 
 #include "EffectMatrixVariable.h"
 #include "EffectResourceVariable.h"
+#include "EffectScalarVariable.h"
 #include "EffectVariable.h"
 
 namespace SlimDX
@@ -42,6 +43,7 @@ namespace Direct3D10
 		
 		D3D10_EFFECT_VARIABLE_DESC desc;
 		HRESULT hr = m_Pointer->GetDesc( &desc );
+		GraphicsException::CheckHResult( hr );
 		
 		m_Name = gcnew String( desc.Name );
 		m_Semantic = gcnew String( desc.Semantic );
@@ -115,6 +117,13 @@ namespace Direct3D10
 		//@TODO D3D10: Test variable->IsValid() to ensure cast was safe, and throw if it fails.
 		ID3D10EffectShaderResourceVariable* variable = m_Pointer->AsShaderResource();
 		return gcnew EffectResourceVariable( variable );
+	}
+	
+	EffectScalarVariable^ EffectVariable::AsScalar()
+	{
+		//@TODO D3D10: Test variable->IsValid() to ensure cast was safe, and throw if it fails.
+		ID3D10EffectScalarVariable* variable = m_Pointer->AsScalar();
+		return gcnew EffectScalarVariable( variable );
 	}
 }
 }
