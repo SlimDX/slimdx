@@ -176,6 +176,18 @@
 			RelativePath="System.Drawing.dll"
 			AssemblyName="System.Drawing, Version=2.0.0.0, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
 		/>
+		<AssemblyReference
+			RelativePath="System.Data.dll"
+			AssemblyName="System.Data, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=x86"
+		/>
+		<AssemblyReference
+			RelativePath="System.Windows.Forms.dll"
+			AssemblyName="System.Windows.Forms, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
+		/>
+		<AssemblyReference
+			RelativePath="System.XML.dll"
+			AssemblyName="System.Xml, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
+		/>
 	</References>
 	<Files>
 		<Filter
@@ -268,6 +280,10 @@
 			<Filter
 				Name="Direct3D 9"
 				>
+				<File
+					RelativePath="..\source\direct3d9\BaseTexture.cpp"
+					>
+				</File>
 				<File
 					RelativePath="..\source\direct3d9\ConstantTable.cpp"
 					>
@@ -402,6 +418,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\EffectResourceVariable.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectScalarVariable.cpp"
 					>
 				</File>
 				<File
@@ -591,6 +611,10 @@
 				Name="Direct3D 9"
 				>
 				<File
+					RelativePath="..\source\direct3d9\BaseTexture.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\CapsEnums.h"
 					>
 				</File>
@@ -700,6 +724,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\EffectResourceVariable.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectScalarVariable.h"
 					>
 				</File>
 				<File
