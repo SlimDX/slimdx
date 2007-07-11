@@ -21,6 +21,7 @@
 */
 #pragma once
 
+#include "BaseTexture.h"
 #include "Resource.h"
 #include "Surface.h"
 #include "../math/Math.h"
@@ -134,15 +135,6 @@ namespace SlimDX
 			SlimDX::Direct3D9::Format Format;
 			/// <summary>Proposed number of mip-map levels for the texture.</summary>
 			int NumOfMipLevels;
-		};
-
-		public ref class BaseTexture abstract : public Resource
-		{
-		internal:
-			property IDirect3DBaseTexture9* BaseTexturePointer
-			{
-				IDirect3DBaseTexture9* get() { return (IDirect3DBaseTexture9*) m_Pointer; }
-			}
 		};
 
 		public ref class Texture : public BaseTexture

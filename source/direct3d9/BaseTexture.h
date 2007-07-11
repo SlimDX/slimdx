@@ -21,33 +21,40 @@
 */
 #pragma once
 
-#include "../DirectXObject.h"
-
 #include "Enums.h"
+#include "Resource.h"
 
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		ref class Device;
-		
-		public ref class Resource abstract : public DirectXObject<IDirect3DResource9>
+		public ref class BaseTexture abstract : public Resource
 		{
-		public:
-			property int Priority
+		internal:
+			property IDirect3DBaseTexture9* BaseTexturePointer
 			{
-				int get() { return m_Pointer->GetPriority(); }
-				void set(int value) { m_Pointer->SetPriority( value ); }
-			};
+				IDirect3DBaseTexture9* get() { return (IDirect3DBaseTexture9*) m_Pointer; }
+			}
 		
-			property SlimDX::Direct3D9::ResourceType ResourceType
+		public:
+			property TextureFilter AutoMipGenerationFilter
 			{
-				SlimDX::Direct3D9::ResourceType get() { return ( SlimDX::Direct3D9::ResourceType ) m_Pointer->GetType(); }
+				TextureFilter get() { return ( TextureFilter ) BaseTexturePointer->GetAutoGenFilterType(); }
+				void set(TextureFilter value) { BaseTexturePointer->SetAutoGenFilterType( (D3DTEXTUREFILTERTYPE) value ); }
 			}
 			
-			Device^ GetDevice();
+			property int LevelCount
+			{
+				int get() { return BaseTexturePointer->GetLevelCount(); }
+			}
 			
-			void Preload();
+			property int LevelOfDetail
+			{
+				int get() { return BaseTexturePointer->GetLOD(); }
+				void set(int value) { BaseTexturePointer->SetLOD( value ); }
+			}
+			
+			void GenerateMipSublevels();
 		};
 	}
 }

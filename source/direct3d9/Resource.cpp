@@ -39,5 +39,10 @@ namespace Direct3D9
 
 		return gcnew Device( device );
 	}
+	
+	void Resource::Preload()
+	{
+		m_Pointer->PreLoad();
+	}
 }
 }
