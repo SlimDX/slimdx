@@ -31,6 +31,7 @@ namespace SlimDX
 	{
 		ref class EffectMatrixVariable;
 		ref class EffectResourceVariable;
+		ref class EffectScalarVariable;
 		
 		public ref class EffectVariable
 		{
@@ -93,6 +94,7 @@ namespace SlimDX
 			
 			EffectMatrixVariable^ AsMatrix();
 			EffectResourceVariable^ AsResource();
+			EffectScalarVariable^ AsScalar();
 		};
 	}
 };
