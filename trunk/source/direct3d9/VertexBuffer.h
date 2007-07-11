@@ -38,7 +38,6 @@ namespace SlimDX
 
 		public:
 			initonly Format Format;
-			initonly ResourceType Type;
 			initonly Usage Usage;
 			initonly Pool Pool;
 			initonly int SizeInBytes;

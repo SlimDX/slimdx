@@ -19,35 +19,18 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include <d3d9.h>
+#include <d3dx9.h>
 
-#include "../DirectXObject.h"
-
-#include "Enums.h"
+#include "BaseTexture.h"
 
 namespace SlimDX
 {
-	namespace Direct3D9
+namespace Direct3D9
+{
+	void BaseTexture::GenerateMipSublevels()
 	{
-		ref class Device;
-		
-		public ref class Resource abstract : public DirectXObject<IDirect3DResource9>
-		{
-		public:
-			property int Priority
-			{
-				int get() { return m_Pointer->GetPriority(); }
-				void set(int value) { m_Pointer->SetPriority( value ); }
-			};
-		
-			property SlimDX::Direct3D9::ResourceType ResourceType
-			{
-				SlimDX::Direct3D9::ResourceType get() { return ( SlimDX::Direct3D9::ResourceType ) m_Pointer->GetType(); }
-			}
-			
-			Device^ GetDevice();
-			
-			void Preload();
-		};
+		BaseTexturePointer->GenerateMipSubLevels();
 	}
+}
 }

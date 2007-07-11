@@ -40,7 +40,6 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 		
 		Format = ( SlimDX::Direct3D9::Format ) desc.Format;
-		Type = ( ResourceType ) desc.Type;
 		Usage = ( SlimDX::Direct3D9::Usage ) desc.Usage;
 		Pool = ( SlimDX::Direct3D9::Pool ) desc.Pool;
 		SizeInBytes = desc.Size;
@@ -61,7 +60,6 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 		
 		Format = ( SlimDX::Direct3D9::Format ) desc.Format;
-		Type = ( ResourceType ) desc.Type;
 		Usage = ( SlimDX::Direct3D9::Usage ) desc.Usage;
 		Pool = ( SlimDX::Direct3D9::Pool ) desc.Pool;
 		SizeInBytes = desc.Size;
