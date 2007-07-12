@@ -331,6 +331,13 @@ namespace Direct3D9
 		HRESULT hr = m_Pointer->SetVertexShader( ptr );
 		GraphicsException::CheckHResult( hr );
 	}
+	
+	void Device::SetDepthStencilSurface( Surface^ target )
+	{	
+		IDirect3DSurface9* surface = target != nullptr ? target->SurfacePointer : NULL;
+		HRESULT hr = m_Pointer->SetDepthStencilSurface( surface );
+		GraphicsException::CheckHResult( hr );
+	}
 
 	Surface^ Device::GetBackBuffer( int swapChain, int backBuffer )
 	{
