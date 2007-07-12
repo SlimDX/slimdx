@@ -72,7 +72,13 @@ namespace SlimDX
 			
 			void ClearState();
 			
-			void Draw( int vertexCount, int firstVertexIndex );
+			void Draw( int vertexCount, int startVertexLocation );
+			void DrawAuto();
+			void DrawIndexed( int indexCount, int startIndexLocation, int baseVertexLocation );
+			void DrawIndexedInstanced( int indexCountPerInstance, int instanceCount, int startIndexLocation, int baseVertexLocation, int startInstanceLocation );
+			void DrawInstanced( int vertexCountPerInstance, int instanceCount, int startVertexLocation, int startInstanceLocation );
+		
+			void Flush();
 		};
 	}
 };
