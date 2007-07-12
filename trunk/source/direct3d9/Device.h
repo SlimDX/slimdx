@@ -190,6 +190,8 @@ namespace SlimDX
 			void SetPixelShader( PixelShader^ pixelShader );
 			void SetVertexShader( VertexShader^ vertexShader );
 			
+			void SetDepthStencilSurface( Surface^ target );
+			
 			void DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount );
 			void DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minVertexIndex, 
 				int numVertices, int startIndex, int primCount );
