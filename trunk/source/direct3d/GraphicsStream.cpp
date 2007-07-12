@@ -149,6 +149,11 @@ namespace SlimDX
 		memcpy( m_Buffer + Position, pinnedData, size );
 	}
 	
+	void GraphicsStream::Write( IntPtr source, Int64 byteCount )
+	{
+		memcpy( m_Buffer + m_Position, source.ToPointer(), byteCount );
+	}
+	
 	int GraphicsStream::Read( array<Byte>^ buffer, int offset, int count )
 	{
 		if( !m_CanRead )
