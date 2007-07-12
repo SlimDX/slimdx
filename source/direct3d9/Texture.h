@@ -24,6 +24,8 @@
 #include "BaseTexture.h"
 #include "Resource.h"
 #include "Surface.h"
+#include "../direct3d/LockedBox.h"
+#include "../direct3d/LockedRect.h"
 #include "../math/Math.h"
 
 namespace SlimDX
@@ -71,23 +73,6 @@ namespace SlimDX
 			int Bottom;
 			int Front;
 			int Back;
-		};
-
-		[StructLayout( LayoutKind::Sequential )]
-		public value class LockedRect
-		{
-		public:
-			int Pitch;
-			GraphicsStream^ Data;
-		};
-
-		[StructLayout( LayoutKind::Sequential )]
-		public value class LockedBox
-		{
-		public:
-			int RowPitch;
-			int SlicePitch;
-			GraphicsStream^ Data;
 		};
 
 		/// <summary>
@@ -277,8 +262,8 @@ namespace SlimDX
 			static VolumeTexture^ FromFile( Device^ device, String^ fileName, Usage usage, Pool pool );
 			static VolumeTexture^ FromFile( Device^ device, String^ fileName );
 
-			LockedBox LockBox( int level, LockFlags flags );
-			LockedBox LockBox( int level, Box box, LockFlags flags );
+			SlimDX::Direct3D::LockedBox LockBox( int level, LockFlags flags );
+			SlimDX::Direct3D::LockedBox LockBox( int level, Box box, LockFlags flags );
 		};
 	}
 }

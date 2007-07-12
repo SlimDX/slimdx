@@ -547,6 +547,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d\LockedBox.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\LockedRect.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d\MiscTypes.h"
 					>
 				</File>

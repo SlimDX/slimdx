@@ -37,8 +37,43 @@ namespace Direct3D10
 	{
 		D3D10_TEXTURE2D_DESC desc;
 		texture->GetDesc( &desc );
-		MipLevels = desc.MipLevels;
-		Format = (SlimDX::Direct3D10::Format) desc.Format;
+		m_Width = desc.Width;
+		m_Height = desc.Height;
+		m_MipLevels = desc.MipLevels;
+		m_ArraySize = desc.ArraySize;
+		m_Format = ( SlimDX::Direct3D10::Format ) desc.Format;
+		m_SampleDesc.Count = desc.SampleDesc.Count;
+		m_SampleDesc.Quality = desc.SampleDesc.Quality;
+		m_Usage = ( ResourceUsage ) desc.Usage;
+		m_BindFlags = ( SlimDX::Direct3D10::BindFlags ) desc.BindFlags;
+		m_AccessFlags = ( CpuAccessFlags ) desc.CPUAccessFlags;
+		m_OptionFlags = ( ResourceOptionFlags ) desc.MiscFlags;
+	}
+	
+	Texture2D::Texture2D( Device^ device, int width, int height, int mipLevels, int arraySize, SlimDX::Direct3D10::Format format,
+		int sampleCount, int sampleQuality, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,
+		ResourceOptionFlags optionFlags )
+	{
+		Construct( device, width, height, mipLevels, arraySize, format, sampleCount, sampleQuality, usage, bindFlags, accessFlags, optionFlags );
+	}
+	
+	SlimDX::Direct3D::LockedRect Texture2D::Map( int subResource, MapMode mode, MapFlags flags )
+	{
+		D3D10_MAPPED_TEXTURE2D mappedRect;
+		HRESULT hr = ( (ID3D10Texture2D*) m_Pointer )->Map( subResource, (D3D10_MAP) mode, (UINT) flags, &mappedRect );
+		GraphicsException::CheckHResult( hr );
+		
+		bool readOnly = mode == MapMode::Read;
+		SlimDX::Direct3D::LockedRect rect;
+		rect.Pitch = mappedRect.RowPitch;
+		rect.Data = gcnew GraphicsStream( mappedRect.pData, 0, true, !readOnly );
+		
+		return rect;
+	}
+
+	void Texture2D::Unmap( int subResource )
+	{
+		( (ID3D10Texture2D*) m_Pointer )->Unmap( subResource );
 	}
 	
 	Texture2D^ Texture2D::FromFile( Device^ device, String^ fileName )
@@ -52,6 +87,42 @@ namespace Direct3D10
 		if( texture == NULL )
 			return nullptr;
 		return gcnew Texture2D( (ID3D10Texture2D*) texture );
+	}
+	
+	void Texture2D::Construct( Device^ device, int width, int height, int mipLevels, int arraySize, SlimDX::Direct3D10::Format format,
+		int sampleCount, int sampleQuality, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,
+		ResourceOptionFlags optionFlags )
+	{
+		D3D10_TEXTURE2D_DESC desc;
+		ZeroMemory( &desc, sizeof( desc ) );
+		desc.Width = width;
+		desc.Height = height;
+		desc.MipLevels = mipLevels;
+		desc.ArraySize = arraySize;
+		desc.Format = ( DXGI_FORMAT ) format;
+		desc.SampleDesc.Count = sampleCount;
+		desc.SampleDesc.Quality = sampleQuality;
+		desc.Usage = ( D3D10_USAGE ) usage;
+		desc.BindFlags = ( UINT ) bindFlags;
+		desc.CPUAccessFlags = ( UINT ) accessFlags;
+		desc.MiscFlags = ( UINT ) optionFlags;
+	
+		ID3D10Texture2D* texture = 0;
+		HRESULT hr = device->DevicePointer->CreateTexture2D( &desc, NULL, &texture );
+		GraphicsException::CheckHResult( hr );
+		
+		m_Pointer = texture;
+		m_Width = width;
+		m_Height = height;
+		m_MipLevels = mipLevels;
+		m_ArraySize = arraySize;
+		m_Format = format;
+		m_SampleDesc.Count = sampleCount;
+		m_SampleDesc.Quality = sampleQuality;
+		m_Usage = usage;
+		m_BindFlags = bindFlags;
+		m_AccessFlags = accessFlags;
+		m_OptionFlags = optionFlags;
 	}
 }
 }
