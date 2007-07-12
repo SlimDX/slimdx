@@ -80,9 +80,34 @@ namespace Direct3D10
 		m_Device->ClearState();
 	}
 	
-	void Device::Draw( int vertexCount, int firstVertexIndex )
+	void Device::Draw( int vertexCount, int startVertexLocation )
 	{
-		m_Device->Draw( vertexCount, firstVertexIndex );
-	}	
+		m_Device->Draw( vertexCount, startVertexLocation );
+	}
+	
+	void Device::DrawAuto()
+	{
+		m_Device->DrawAuto();
+	}
+	
+	void Device::DrawIndexed( int indexCount, int startIndexLocation, int baseVertexLocation )
+	{
+		m_Device->DrawIndexed( indexCount, startIndexLocation, baseVertexLocation );
+	}
+	
+	void Device::DrawIndexedInstanced( int indexCountPerInstance, int instanceCount, int startIndexLocation, int baseVertexLocation, int startInstanceLocation )
+	{
+		m_Device->DrawIndexedInstanced( indexCountPerInstance, instanceCount, startIndexLocation, baseVertexLocation, startInstanceLocation );
+	}
+	
+	void Device::DrawInstanced( int vertexCountPerInstance, int instanceCount, int startVertexLocation, int startInstanceLocation )
+	{
+		m_Device->DrawInstanced( vertexCountPerInstance, instanceCount, startVertexLocation, startInstanceLocation );
+	}
+	
+	void Device::Flush()
+	{
+		m_Device->Flush();
+	}
 }
 }
