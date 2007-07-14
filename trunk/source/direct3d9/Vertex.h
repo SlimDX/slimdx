@@ -22,7 +22,7 @@
 #pragma once
 
 #include "../DirectXObject.h"
-#include "../Direct3D/GraphicsException.h"
+#include "GraphicsException.h"
 
 namespace SlimDX
 {
