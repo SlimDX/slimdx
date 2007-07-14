@@ -28,9 +28,9 @@ using namespace System::Runtime::Serialization;
 
 namespace SlimDX
 {
-	namespace Direct3D
+	namespace Direct3D9
 	{
-		public ref class GraphicsException : public DirectXException
+		public ref class GraphicsException : public SlimDX::DirectXException
 		{
 		public:
 			static GraphicsException()
