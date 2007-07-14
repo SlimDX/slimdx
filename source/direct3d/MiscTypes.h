@@ -65,8 +65,19 @@ namespace SlimDX
 
 			int ToArgb()
 			{
-				//TODO: Write this
-				return 0;
+				unsigned int a, r, g, b;
+
+				a = (unsigned int) (Alpha * 255.0f);
+				r = (unsigned int) (Red * 255.0f);
+				g = (unsigned int) (Green * 255.0f);
+				b = (unsigned int) (Blue * 255.0f);
+
+				unsigned int value = b;
+				value += g << 8;
+				value += r << 16;
+				value += a << 24;
+
+				return (int) value;
 			}
 		};
 
