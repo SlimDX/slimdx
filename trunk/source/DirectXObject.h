@@ -22,18 +22,24 @@
 #pragma once
 
 #include "Utils.h"
+#include "ObjectTracker.h"
 
 namespace SlimDX
 {
 	//This provides a common base for all the DirectXObject template types, and allows
-	//them to access a single set of config functions
+	//them to access a single set of config settings.
 	public ref class DirectXBase abstract
 	{
 	public:
-		static property bool AutoReleaseEnabled;
+		static property bool EnableObjectTracking;
+
 		static DirectXBase()
 		{
-			AutoReleaseEnabled = true;
+#ifdef _DEBUG
+			EnableObjectTracking = true;
+#else
+			EnableObjectTracking = false;
+#endif
 		}
 	};
 
@@ -42,18 +48,26 @@ namespace SlimDX
 	{
 	protected:
 		DirectXObject()
-		{ }
+		{
+			if( EnableObjectTracking )
+				ObjectTracker::Add( this );
+		}
 
 		DirectXObject( T* pointer ) : m_Pointer( pointer )
-		{ }
+		{
+			if( EnableObjectTracking )
+				ObjectTracker::Add( this );
+		}
 
 		T* m_Pointer;
 
-		//the destructor code
 		void Destruct()
 		{
 			m_Pointer->Release();
 			m_Pointer = NULL;
+
+			if( EnableObjectTracking )
+				ObjectTracker::Remove( this );
 		}
 
 	internal:
@@ -68,16 +82,9 @@ namespace SlimDX
 			Destruct();
 		}
 
-		!DirectXObject()
+		void DisposeHandler( Object^ sender, EventArgs^ e )
 		{
-			if( AutoReleaseEnabled )
-			{
-				Destruct();
-			}
-			else
-			{
-				Utils::ReportNotDisposed( this );
-			}
+			Destruct();
 		}
 
 		property bool Disposed

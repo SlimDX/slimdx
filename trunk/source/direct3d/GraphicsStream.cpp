@@ -151,7 +151,7 @@ namespace SlimDX
 	
 	void GraphicsStream::Write( IntPtr source, Int64 byteCount )
 	{
-		memcpy( m_Buffer + m_Position, source.ToPointer(), byteCount );
+		memcpy( m_Buffer + m_Position, source.ToPointer(), (size_t) byteCount );
 	}
 	
 	int GraphicsStream::Read( array<Byte>^ buffer, int offset, int count )

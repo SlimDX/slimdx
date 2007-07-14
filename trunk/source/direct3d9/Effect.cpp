@@ -423,10 +423,10 @@ namespace SlimDX
 		{
 			ID3DXEffect* effect;
 			ID3DXBuffer* errorBuffer;
-			pin_ptr<const wchar_t> pinned_name = PtrToStringChars( fileName );
+			pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
 			//TODO: Fix some of these parameters
-			HRESULT hr = D3DXCreateEffectFromFile( device->InternalPointer, pinned_name, NULL, NULL,
+			HRESULT hr = D3DXCreateEffectFromFile( device->InternalPointer, pinnedName, NULL, NULL,
 				(DWORD) flags, NULL, &effect, &errorBuffer );
 			
 			if( errorBuffer != NULL )

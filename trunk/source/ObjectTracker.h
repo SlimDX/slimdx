@@ -21,36 +21,30 @@
 */
 #pragma once
 
-#include <windows.h>
-
 using namespace System;
-using namespace System::IO;
+using namespace System::Collections::Generic;
 using namespace System::Diagnostics;
 
 namespace SlimDX
 {
-	ref class DirectXBase;
-
-	ref class Utils sealed
+	ref class ObjectTracker
 	{
+	private:
+		static Dictionary<IDisposable^, StackTrace^>^ m_TrackedObjects;
+
+		static void OnExit( Object^ sender, EventArgs^ e );
+
 	public:
-		static void ReportNotDisposed( SlimDX::DirectXBase^ obj );
-		static void MarkDisposed( bool %disposed, Object^ obj );
+		static ObjectTracker()
+		{
+			m_TrackedObjects = gcnew Dictionary<IDisposable^, StackTrace^>();
 
-		/// <summary>
-		/// Function to convert a GDI+ rectangle to a standard RECT.
-		/// </summary>
-		/// <param name="rect">Rectangle to convert.</param>
-		/// <param name="outrect">Output rectangle.</param>
-		static void ConvertRect(Drawing::Rectangle rect, RECT *outrect);
+			AppDomain::CurrentDomain->DomainUnload += gcnew EventHandler( OnExit );
+			AppDomain::CurrentDomain->ProcessExit += gcnew EventHandler( OnExit );
+		}
 
-		/// <summary>
-		/// Function to convert a standard RECT to a GDI+ rectangle.
-		/// </summary>
-		/// <param name="rect">RECT to convert.</param>
-		/// <returns>A GDI+ rectangle structure.</returns>
-		static Drawing::Rectangle ConvertRect(RECT rect);
-
-		static array<Byte>^ ReadStream( Stream^ stream, int readLength );
+		static void Add( IDisposable^ obj );
+		static void Remove( IDisposable^ obj );
+		static void ReportLeaks();
 	};
 }
