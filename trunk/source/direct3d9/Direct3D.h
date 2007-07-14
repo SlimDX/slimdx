@@ -27,8 +27,6 @@ using namespace System::Runtime::InteropServices;
 #include "CapsEnums.h"
 #include "GraphicsException.h"
 
-using namespace SlimDX::Direct3D;
-
 namespace SlimDX
 {
 	namespace Direct3D9
