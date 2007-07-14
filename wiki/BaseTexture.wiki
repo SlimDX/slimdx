@@ -1,6 +1,0 @@
-#summary Summary of the status of the BaseTexture class.
-#labels Class-Status
-
-= Overview =
-
-BaseTexture is *complete*. No functionality is missing.
