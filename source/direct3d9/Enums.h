@@ -77,7 +77,7 @@ namespace SlimDX
 			NoMoreObjects = D3DXFERR_NOMOREOBJECTS,
 			NoMoreData = D3DXFERR_NOMOREDATA,
 			BadCacheFile = D3DXFERR_BADCACHEFILE,
-	};
+		};
 
 		public enum class Format : Int32
 		{
@@ -223,7 +223,7 @@ namespace SlimDX
 		public enum class VertexFormat : Int32
 		{
 			None = 0,
-			
+
 			PositionMask = D3DFVF_POSITION_MASK,
 			Position = D3DFVF_XYZ,
 			PositionRhw = D3DFVF_XYZRHW,
@@ -650,15 +650,15 @@ namespace SlimDX
 			Constant = D3DTSS_CONSTANT,
 		};
 
-        [Flags]
-        public enum class TextureCoordIndex : Int32
-        {
-            PassThru = D3DTSS_TCI_PASSTHRU,
-            CameraSpaceNormal = D3DTSS_TCI_CAMERASPACENORMAL,
-            CameraSpacePosition = D3DTSS_TCI_CAMERASPACEPOSITION,
-            CameraSpaceReflectionVector = D3DTSS_TCI_CAMERASPACEREFLECTIONVECTOR,
-            SphereMap = D3DTSS_TCI_SPHEREMAP,
-        };
+		[Flags]
+		public enum class TextureCoordIndex : Int32
+		{
+			PassThru = D3DTSS_TCI_PASSTHRU,
+			CameraSpaceNormal = D3DTSS_TCI_CAMERASPACENORMAL,
+			CameraSpacePosition = D3DTSS_TCI_CAMERASPACEPOSITION,
+			CameraSpaceReflectionVector = D3DTSS_TCI_CAMERASPACEREFLECTIONVECTOR,
+			SphereMap = D3DTSS_TCI_SPHEREMAP,
+		};
 
 		public enum class TextureArgument : Int32
 		{
@@ -729,24 +729,24 @@ namespace SlimDX
 			DMapOffset = D3DSAMP_DMAPOFFSET,
 		};
 
-        public enum class TextureAddress : Int32
-        {
-            Wrap = D3DTADDRESS_WRAP,
-            Mirror = D3DTADDRESS_MIRROR,
-            Clamp = D3DTADDRESS_CLAMP,
-            Border = D3DTADDRESS_BORDER,
-            MirrorOnce = D3DTADDRESS_MIRRORONCE,
-        };
+		public enum class TextureAddress : Int32
+		{
+			Wrap = D3DTADDRESS_WRAP,
+			Mirror = D3DTADDRESS_MIRROR,
+			Clamp = D3DTADDRESS_CLAMP,
+			Border = D3DTADDRESS_BORDER,
+			MirrorOnce = D3DTADDRESS_MIRRORONCE,
+		};
 
-        public enum class TextureTransform : Int32
-        {
-            Disable = D3DTTFF_DISABLE,
-            Count1 = D3DTTFF_COUNT1,
-            Count2 = D3DTTFF_COUNT2,
-            Count3 = D3DTTFF_COUNT3,
-            Count4 = D3DTTFF_COUNT4,
-            Projected = D3DTTFF_PROJECTED,
-        };
+		public enum class TextureTransform : Int32
+		{
+			Disable = D3DTTFF_DISABLE,
+			Count1 = D3DTTFF_COUNT1,
+			Count2 = D3DTTFF_COUNT2,
+			Count3 = D3DTTFF_COUNT3,
+			Count4 = D3DTTFF_COUNT4,
+			Projected = D3DTTFF_PROJECTED,
+		};
 
 		public enum class ResourceType : Int32
 		{
@@ -840,6 +840,49 @@ namespace SlimDX
 			UseZB_False = D3DZB_FALSE,
 			/// <summary>Used to enable a W-buffer.</summary>
 			UseWBuffer = D3DZB_USEW
+		};
+
+		//enums related to effects
+		public enum class ParameterClass : Int32
+		{
+			Scalar = D3DXPC_SCALAR,
+			Vector = D3DXPC_VECTOR,
+			MatrixRows = D3DXPC_MATRIX_ROWS,
+			MatrixColumns = D3DXPC_MATRIX_COLUMNS,
+			Object = D3DXPC_OBJECT,
+			Struct = D3DXPC_STRUCT,
+		};
+
+		public enum class ParameterType : Int32
+		{
+			Void = D3DXPT_VOID,
+			Bool = D3DXPT_BOOL,
+			Int = D3DXPT_INT,
+			Float = D3DXPT_FLOAT,
+			String = D3DXPT_STRING,
+			Texture = D3DXPT_TEXTURE,
+			Texture1D = D3DXPT_TEXTURE1D,
+			Texture2D = D3DXPT_TEXTURE2D,
+			Texture3D = D3DXPT_TEXTURE3D,
+			TextureCube = D3DXPT_TEXTURECUBE,
+			Sampler = D3DXPT_SAMPLER,
+			Sampler1D = D3DXPT_SAMPLER1D,
+			Sampler2D = D3DXPT_SAMPLER2D,
+			Sampler3D = D3DXPT_SAMPLER3D,
+			SamplerCube = D3DXPT_SAMPLERCUBE,
+			PixelShader = D3DXPT_PIXELSHADER,
+			VertexShader = D3DXPT_VERTEXSHADER,
+			PixelFragment = D3DXPT_PIXELFRAGMENT,
+			VertexFragment = D3DXPT_VERTEXFRAGMENT,
+			X = D3DX_PARAMETER_ANNOTATION
+		};
+
+		[Flags]
+		public enum class ParameterFlags : Int32
+		{
+			Shared = D3DX_PARAMETER_SHARED,
+			Literal = D3DX_PARAMETER_LITERAL,
+			Annotation = D3DX_PARAMETER_ANNOTATION,
 		};
 	}
 }

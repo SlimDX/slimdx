@@ -31,49 +31,6 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		//enums related to effects
-		public enum class ParameterClass : Int32
-		{
-			Scalar = D3DXPC_SCALAR,
-			Vector = D3DXPC_VECTOR,
-			MatrixRows = D3DXPC_MATRIX_ROWS,
-			MatrixColumns = D3DXPC_MATRIX_COLUMNS,
-			Object = D3DXPC_OBJECT,
-			Struct = D3DXPC_STRUCT,
-		};
-
-		public enum class ParameterType : Int32
-		{
-			Void = D3DXPT_VOID,
-			Bool = D3DXPT_BOOL,
-			Int = D3DXPT_INT,
-			Float = D3DXPT_FLOAT,
-			String = D3DXPT_STRING,
-			Texture = D3DXPT_TEXTURE,
-			Texture1D = D3DXPT_TEXTURE1D,
-			Texture2D = D3DXPT_TEXTURE2D,
-			Texture3D = D3DXPT_TEXTURE3D,
-			TextureCube = D3DXPT_TEXTURECUBE,
-			Sampler = D3DXPT_SAMPLER,
-			Sampler1D = D3DXPT_SAMPLER1D,
-			Sampler2D = D3DXPT_SAMPLER2D,
-			Sampler3D = D3DXPT_SAMPLER3D,
-			SamplerCube = D3DXPT_SAMPLERCUBE,
-			PixelShader = D3DXPT_PIXELSHADER,
-			VertexShader = D3DXPT_VERTEXSHADER,
-			PixelFragment = D3DXPT_PIXELFRAGMENT,
-			VertexFragment = D3DXPT_VERTEXFRAGMENT,
-			X = D3DX_PARAMETER_ANNOTATION
-		};
-
-		[Flags]
-		public enum class ParameterFlags : Int32
-		{
-			Shared = D3DX_PARAMETER_SHARED,
-			Literal = D3DX_PARAMETER_LITERAL,
-			Annotation = D3DX_PARAMETER_ANNOTATION,
-		};
-
 		//description structures for various things
 		public value class EffectDescription
 		{
@@ -234,7 +191,7 @@ namespace SlimDX
 			}
 
 			void SetValue( EffectHandle^ param, bool value );
-			//void SetValue( EffectHandle^ param, array<bool>^ value );
+			void SetValue( EffectHandle^ param, array<bool>^ values );
 			void SetValue( EffectHandle^ param, int value );
 			void SetValue( EffectHandle^ param, array<int>^ values );
 			void SetValue( EffectHandle^ param, float value );

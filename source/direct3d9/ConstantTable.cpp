@@ -1,3 +1,4 @@
+
 /*
 * Copyright (c) 2007 SlimDX Group
 * 
@@ -27,8 +28,9 @@
 #include "../DirectXObject.h"
 #include "../Utils.h"
 
-#include "ConstantTable.h"
 #include "Effect.h"
+#include "../Direct3D/GraphicsStream.h"
+#include "ConstantTable.h"
 #include "Device.h"
 
 namespace SlimDX
@@ -69,13 +71,44 @@ namespace Direct3D9
 		return gcnew EffectHandle( result );
 	}
 	
+	EffectHandle^ ConstantTable::GetConstantElement( EffectHandle^ handle, int index )
+	{
+		D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;
+		D3DXHANDLE result = m_Pointer->GetConstantElement( parentHandle, index );
+		
+		if( result == NULL )
+			return nullptr;
+		return gcnew EffectHandle( result );
+	}
+
 	int ConstantTable::GetSamplerIndex( EffectHandle^ sampler )
 	{
 		D3DXHANDLE handle = sampler != nullptr ? sampler->InternalHandle : NULL;
 		int result = m_Pointer->GetSamplerIndex( handle );
 		return result;
 	}
-	
+
+	GraphicsStream^ ConstantTable::GetBuffer()
+	{
+		DWORD size = m_Pointer->GetBufferSize();
+		void* pointer = m_Pointer->GetBufferPointer();
+		if( pointer == NULL )
+			return nullptr;
+
+		return gcnew GraphicsStream( pointer, size, true, true );
+	}
+
+	int ConstantTable::GetBufferSize()
+	{
+		return m_Pointer->GetBufferSize();
+	}
+
+	void ConstantTable::SetDefaults()
+	{
+		HRESULT hr = m_Pointer->SetDefaults( m_Device );
+		GraphicsException::CheckHResult( hr );
+	}
+
 	void ConstantTable::SetValue( EffectHandle^ constant, bool value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
@@ -83,7 +116,18 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 	}
 
-	//implementing set for bool array is REALLY ANNOYING.
+	void ConstantTable::SetValue( EffectHandle^ param, array<bool>^ values )
+	{
+		//implementing set for bool array is REALLY ANNOYING.
+		//Win32 uses BOOL, which is an int
+		array<BOOL>^ expandedArray = gcnew array<BOOL>( values->Length );
+		Array::Copy( values, expandedArray, values->Length );
+
+		D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+		pin_ptr<BOOL> pinnedValue = &expandedArray[0];
+		HRESULT hr = m_Pointer->SetBoolArray( m_Device, handle, pinnedValue, values->Length );
+		GraphicsException::CheckHResult( hr );
+	}
 
 	void ConstantTable::SetValue( EffectHandle^ constant, int value )
 	{
