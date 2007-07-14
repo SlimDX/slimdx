@@ -44,6 +44,8 @@ namespace Direct3D9
 		IDirect3DQuery9* query;
 		HRESULT hr = device->InternalPointer->CreateQuery( (D3DQUERYTYPE) type, &query );
 		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to create Query." );
 
 		m_Pointer = query;
 	}
@@ -63,6 +65,8 @@ namespace Direct3D9
 		IDirect3DDevice9* device;
 		HRESULT hr = m_Pointer->GetDevice( &device );
 		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew Device( device );
 	}
@@ -173,7 +177,7 @@ namespace Direct3D9
 		if( type == QueryType::Event || type == QueryType::TimestampDisjoint )
 		{
 			//need to marshal BOOL (int) to bool
-			BOOL value;
+			BOOL value = FALSE;
 			hr = m_Pointer->GetData( &value, sizeof(BOOL), flags );
 			GraphicsException::CheckHResult( hr );
 			//we know that T is a bool, but the runtime does not
