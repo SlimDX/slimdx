@@ -24,12 +24,46 @@
 #include "../math/Math.h"
 #include "../Direct3D/MiscTypes.h"
 
+using namespace System::Runtime::InteropServices;
 using namespace SlimDX::Direct3D;
 
 namespace SlimDX
 {
+	ref class GraphicsStream;
+
 	namespace Direct3D9
 	{
+		enum class RegisterSet : Int32
+		{
+			Bool = D3DXRS_BOOL,
+			Int4 = D3DXRS_INT4,
+			Float4 = D3DXRS_FLOAT4,
+			Sampler = D3DXRS_SAMPLER,
+		};
+
+		value class ConstantTableDescription
+		{
+			String^ Creator;
+			Version^ Version;
+			int Constants;
+		};
+
+		value class ConstantDescription
+		{
+			String^ Name;
+			RegisterSet RegisterSet;
+			int RegisterIndex;
+			int RegisterCount;
+			ParameterClass Class;
+			ParameterType Type;
+			int Rows;
+			int Columns;
+			int Elements;
+			int StructMembers;
+			int Bytes;
+			//TODO: default value?
+		};
+
 		ref class EffectHandle;
 		
 		public ref class ConstantTable : public DirectXObject<ID3DXConstantTable>
@@ -41,17 +75,22 @@ namespace SlimDX
 			ConstantTable( IDirect3DDevice9* device, ID3DXConstantTable* constantTable );
 			~ConstantTable();
 			
-			EffectHandle^ GetConstant( EffectHandle^ handle,int index );
-			EffectHandle^ GetConstant( EffectHandle^ handle,String^ name );
+			EffectHandle^ GetConstant( EffectHandle^ handle, int index );
+			EffectHandle^ GetConstant( EffectHandle^ handle, String^ name );
+			EffectHandle^ GetConstantElement( EffectHandle^ handle, int index );
 			
 			int GetSamplerIndex( EffectHandle^ sampler );
 
             //TODO: The following functions:
-            //GetBufferPointer, GetBufferSize, GetConstantDesc, GetConstantElement,
-            //GetDesc, SetDefaults, SetBoolArray (also in BaseEffect)
+            //GetConstantDesc, GetDesc, SetBoolArray (also in BaseEffect)
 			
+			GraphicsStream^ GetBuffer();
+			int GetBufferSize();
+
+			void SetDefaults();
+
 			void SetValue( EffectHandle^ constant, bool value );
-			//void SetValue( EffectHandle^ constant, array<bool>^ value );
+			void SetValue( EffectHandle^ constant, array<bool>^ value );
 			void SetValue( EffectHandle^ constant, int value );
 			void SetValue( EffectHandle^ constant, array<int>^ values );
 			void SetValue( EffectHandle^ constant, float value );

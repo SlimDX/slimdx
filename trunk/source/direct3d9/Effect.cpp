@@ -218,7 +218,18 @@ namespace SlimDX
 			GraphicsException::CheckHResult( hr );
 		}
 
-		//implementing set for bool array is REALLY ANNOYING.
+		void BaseEffect::SetValue( EffectHandle^ param, array<bool>^ values )
+		{
+			//implementing set for bool array is REALLY ANNOYING.
+			//Win32 uses BOOL, which is an int
+			array<BOOL>^ expandedArray = gcnew array<BOOL>( values->Length );
+			Array::Copy( values, expandedArray, values->Length );
+
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			pin_ptr<BOOL> pinnedValue = &expandedArray[0];
+			HRESULT hr = m_Pointer->SetBoolArray( handle, pinnedValue, values->Length );
+			GraphicsException::CheckHResult( hr );
+		}
 
 		void BaseEffect::SetValue( EffectHandle^ param, int value )
 		{
@@ -230,8 +241,8 @@ namespace SlimDX
 		void BaseEffect::SetValue( EffectHandle^ param, array<int>^ values )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			pin_ptr<int> pinned_value = &values[0];
-			HRESULT hr = m_Pointer->SetIntArray( handle, pinned_value, values->Length );
+			pin_ptr<int> pinnedValue = &values[0];
+			HRESULT hr = m_Pointer->SetIntArray( handle, pinnedValue, values->Length );
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -245,8 +256,8 @@ namespace SlimDX
 		void BaseEffect::SetValue( EffectHandle^ param, array<float>^ values )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			pin_ptr<float> pinned_values = &values[0];
-			HRESULT hr = m_Pointer->SetFloatArray( handle, pinned_values, values->Length );
+			pin_ptr<float> pinnedValues = &values[0];
+			HRESULT hr = m_Pointer->SetFloatArray( handle, pinnedValues, values->Length );
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -260,8 +271,8 @@ namespace SlimDX
 		void BaseEffect::SetValue( EffectHandle^ param, array<Vector4>^ values )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			pin_ptr<Vector4> pinned_value = &values[0];
-			HRESULT hr = m_Pointer->SetVectorArray( handle, (const D3DXVECTOR4*) pinned_value, values->Length );
+			pin_ptr<Vector4> pinnedValue = &values[0];
+			HRESULT hr = m_Pointer->SetVectorArray( handle, (const D3DXVECTOR4*) pinnedValue, values->Length );
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -275,8 +286,8 @@ namespace SlimDX
 		void BaseEffect::SetValue( EffectHandle^ param, array<ColorValue>^ values )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			pin_ptr<ColorValue> pinned_value = &values[0];
-			HRESULT hr = m_Pointer->SetVectorArray( handle, (const D3DXVECTOR4*) pinned_value, values->Length );
+			pin_ptr<ColorValue> pinnedValue = &values[0];
+			HRESULT hr = m_Pointer->SetVectorArray( handle, (const D3DXVECTOR4*) pinnedValue, values->Length );
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -290,8 +301,8 @@ namespace SlimDX
 		void BaseEffect::SetValue( EffectHandle^ param, array<Matrix>^ values )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			pin_ptr<Matrix> pinned_value = &values[0];
-			HRESULT hr = m_Pointer->SetMatrixArray( handle, (const D3DXMATRIX*) pinned_value, values->Length );
+			pin_ptr<Matrix> pinnedValue = &values[0];
+			HRESULT hr = m_Pointer->SetMatrixArray( handle, (const D3DXMATRIX*) pinnedValue, values->Length );
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -316,8 +327,8 @@ namespace SlimDX
 		void BaseEffect::SetValueTranspose( EffectHandle^ param, array<Matrix>^ values )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			pin_ptr<Matrix> pinned_value = &values[0];
-			HRESULT hr = m_Pointer->SetMatrixTransposeArray( handle, (const D3DXMATRIX*) pinned_value, values->Length );
+			pin_ptr<Matrix> pinnedValue = &values[0];
+			HRESULT hr = m_Pointer->SetMatrixTransposeArray( handle, (const D3DXMATRIX*) pinnedValue, values->Length );
 			GraphicsException::CheckHResult( hr );
 		}
 
