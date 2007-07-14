@@ -200,7 +200,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\SlimDX.cpp"
+				RelativePath="..\source\ObjectTracker.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\Utils.cpp"
 				>
 			</File>
 			<Filter
@@ -208,6 +212,10 @@
 				>
 				<File
 					RelativePath="..\source\direct3d\GraphicsStream.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Performance.cpp"
 					>
 				</File>
 			</Filter>
@@ -532,6 +540,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\ObjectTracker.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\Utils.h"
 				>
 			</File>
@@ -556,6 +568,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d\MiscTypes.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d\Performance.h"
 					>
 				</File>
 			</Filter>

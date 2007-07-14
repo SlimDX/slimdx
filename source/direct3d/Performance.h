@@ -19,4 +19,33 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "Utils.h"
+#pragma once
+
+namespace SlimDX
+{
+	namespace Direct3D
+	{
+		[Flags]
+		public enum class PerformanceOptions : Int32
+		{
+			None = 0,
+			DoNotAllowProfiling = 1,
+		};
+
+		public ref class Performance sealed
+		{
+			static int BeginEvent( int color, String^ name );
+			static int BeginEvent( System::Drawing::Color color, String^ name );
+			static int EndEvent();
+
+			static bool GetStatus();
+			static bool QueryRepeatFrame();
+
+			static void SetMarker( int color, String^ name );
+			static void SetMarker( System::Drawing::Color color, String^ name );
+			static void SetOptions( PerformanceOptions options );
+			static void SetRegion( int color, String^ name );
+			static void SetRegion( System::Drawing::Color color, String^ name );
+		};
+	}
+}
