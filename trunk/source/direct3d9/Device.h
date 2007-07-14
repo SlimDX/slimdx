@@ -9,7 +9,7 @@
 * furnished to do so, subject to the following conditions:
 * 
 * The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
+* all copies or substantial portions of the Software.`
 * 
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -78,6 +78,7 @@ namespace SlimDX
 		ref class Surface;
 		ref class PixelShader;
 		ref class VertexShader;
+		ref class SwapChain;
 
 		public ref class Device : public DirectXObject<IDirect3DDevice9>
 		{
@@ -148,7 +149,6 @@ namespace SlimDX
 			// --- Methods ---
 
 			bool IsQuerySupported( QueryType type );
-			Capabilities GetDeviceCaps();
 			int ValidateDevice();
 
 			void TestCooperativeLevel();
@@ -164,11 +164,23 @@ namespace SlimDX
 
 			Surface^ GetBackBuffer( int swapChain, int backBuffer );
 			Surface^ GetDepthStencilSurface();
+			Surface^ GetRenderTarget( int index );
+			SwapChain^ GetSwapChain( int swapChainIndex );
+			IndexBuffer^ GetIndices();
+
+			generic<typename T> where T : value class
+			T GetRenderState( RenderState state );
+			int GetRenderState( RenderState state );
+			
+			Capabilities GetDeviceCaps();
+			System::Drawing::Rectangle GetScissorRect();
+			bool GetSoftwareVertexProcessing();
+			void GetStreamSource( int stream, [Out] VertexBuffer^% streamData, [Out] int% offsetBytes, [Out] int% stride );
+			int GetStreamSourceFreq( int stream );
 
 			void SetRenderState( RenderState state, int value );
 			void SetRenderState( RenderState state, bool value );
 			void SetRenderState( RenderState state, float value );
-			//TODO: Make this accept only the enums that are legal, rather than everything in the world
 			generic<typename T> where T : Enum
 			void SetRenderState( RenderState state, T value );
 
@@ -188,8 +200,7 @@ namespace SlimDX
 			void SetTexture( int sampler, BaseTexture^ texture );
 			void SetRenderTarget( int rtIndex, Surface^ target );
 			void SetPixelShader( PixelShader^ pixelShader );
-			void SetVertexShader( VertexShader^ vertexShader );
-			
+			void SetVertexShader( VertexShader^ vertexShader );			
 			void SetDepthStencilSurface( Surface^ target );
 			
 			void DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount );

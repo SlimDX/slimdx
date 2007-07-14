@@ -19,7 +19,6 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#define DIRECTINPUT_VERSION 0x0800
 #include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -453,6 +452,102 @@ namespace Direct3D9
 		GraphicsException::CheckHResult(hr);
 
 		return Utils::ConvertRect(scissorRect);
+	}
+
+	Surface^ Device::GetRenderTarget( int index )
+	{
+		IDirect3DSurface9* surface;
+
+		HRESULT hr = m_Pointer->GetRenderTarget( index, &surface );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Surface( surface );
+	}
+
+	generic<typename T>
+	T Device::GetRenderState( RenderState state )
+	{
+		DWORD value = 0;
+		HRESULT hr = m_Pointer->GetRenderState( (D3DRENDERSTATETYPE) state, &value );
+		GraphicsException::CheckHResult( hr );
+
+		return (T) value;
+	}
+	
+	int Device::GetRenderState( RenderState state )
+	{
+		return GetRenderState<int>( state );
+	}
+
+	System::Drawing::Rectangle Device::GetScissorRect()
+	{
+		RECT nativeRect = {0};
+		HRESULT hr = m_Pointer->GetScissorRect( &nativeRect );
+		GraphicsException::CheckHResult( hr );
+
+		return System::Drawing::Rectangle( nativeRect.left, nativeRect.top,
+			nativeRect.right - nativeRect.left, nativeRect.bottom - nativeRect.top );
+	}
+
+	bool Device::GetSoftwareVertexProcessing()
+	{
+		return m_Pointer->GetSoftwareVertexProcessing() > 0;
+	}
+
+	void Device::GetStreamSource( int stream, [Out] VertexBuffer^% streamData, [Out] int% offsetBytes, [Out] int% stride )
+	{
+		IDirect3DVertexBuffer9* localVb;
+		UINT localOffset, localStride;
+
+		HRESULT hr = m_Pointer->GetStreamSource( stream, &localVb, &localOffset, &localStride );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+		{
+			streamData = nullptr;
+			offsetBytes = 0;
+			stride = 0;
+			return;
+		}
+
+		streamData = gcnew VertexBuffer( localVb );
+		offsetBytes = localOffset;
+		stride = localStride;
+	}
+
+	int Device::GetStreamSourceFreq( int stream )
+	{
+		UINT localFreq = 0;
+
+		HRESULT hr = m_Pointer->GetStreamSourceFreq( stream, &localFreq );
+		GraphicsException::CheckHResult( hr );
+		
+		return localFreq;
+	}
+
+	SwapChain^ Device::GetSwapChain( int swapChainIndex )
+	{
+		IDirect3DSwapChain9* swapChain;
+
+		HRESULT hr = m_Pointer->GetSwapChain( swapChainIndex, &swapChain );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew SwapChain( swapChain );
+	}
+
+	IndexBuffer^ Device::GetIndices()
+	{
+		IDirect3DIndexBuffer9* indices;
+
+		HRESULT hr = m_Pointer->GetIndices( &indices );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew IndexBuffer( indices );
 	}
 }
 }
