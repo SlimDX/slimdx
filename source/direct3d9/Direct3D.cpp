@@ -26,7 +26,7 @@
 #error You are not compiling against the June 2007 SDK. Change the linker settings to delay load the correct DLLs and update this code.
 #endif
 
-#include "../Direct3D/GraphicsException.h"
+#include "GraphicsException.h"
 #include "Enums.h"
 
 #include "Direct3D.h"
@@ -60,16 +60,16 @@ namespace Direct3D9
 		WhqlLevel = ident.WHQLLevel;
 	}
 
-    DisplayModeList::DisplayModeList( unsigned int adapter, Format format )
-    {
-        int count = Direct3D::GetAdapterModeCount( adapter, format );
-        m_Modes = gcnew array<DisplayMode>( count );
+	DisplayModeList::DisplayModeList( unsigned int adapter, Format format )
+	{
+		int count = Direct3D::GetAdapterModeCount( adapter, format );
+		m_Modes = gcnew array<DisplayMode>( count );
 
-        for( int i = 0; i < count; ++i )
-        {
-            m_Modes[i] = Direct3D::EnumAdapterModes( adapter, format, i );
-        }
-    }
+		for( int i = 0; i < count; ++i )
+		{
+			m_Modes[i] = Direct3D::EnumAdapterModes( adapter, format, i );
+		}
+	}
 
 	AdapterInformation::AdapterInformation( unsigned int adapter )
 	{
@@ -79,7 +79,7 @@ namespace Direct3D9
 
 	IntPtr AdapterInformation::Monitor::get()
 	{
-        return Direct3D::GetAdapterMonitor( m_Adapter );
+		return Direct3D::GetAdapterMonitor( m_Adapter );
 	}
 
 	DisplayMode AdapterInformation::CurrentDisplayMode::get()

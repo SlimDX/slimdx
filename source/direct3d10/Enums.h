@@ -149,7 +149,7 @@ namespace SlimDX
 			Pooled = D3D10_EFFECT_VARIABLE_POOLED,
 			ExplicitBindPoint = D3D10_EFFECT_VARIABLE_EXPLICIT_BIND_POINT,
 		};
-
+		
 		public enum class Format : Int32
 		{
 			Unknown = DXGI_FORMAT_UNKNOWN,

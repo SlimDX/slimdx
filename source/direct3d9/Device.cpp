@@ -26,7 +26,7 @@
 #include "../DirectXObject.h"
 #include "../Utils.h"
 #include "../math/Math.h"
-#include "../Direct3D/GraphicsException.h"
+#include "GraphicsException.h"
 
 #include "Device.h"
 #include "Direct3D.h"

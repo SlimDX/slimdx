@@ -36,9 +36,6 @@ namespace SlimDX
 			static GraphicsException()
 			{
 				LastError = S_OK;
-
-				EnableForDeviceState = true;
-				EnableForStillDrawing = true;
 			}
 
 			GraphicsException() : DirectXException(E_FAIL, "A Direct3D exception occurred.")
@@ -54,9 +51,6 @@ namespace SlimDX
 
 			static property int LastError;
 
-			static property bool EnableForDeviceState;
-			static property bool EnableForStillDrawing;
-
 			static GraphicsException^ GetExceptionFromHResult( HRESULT hr );
 			static void CheckHResult( HRESULT hr );
 		};
@@ -70,7 +64,13 @@ namespace SlimDX
 		ExName ## Exception ( String^ message, Exception^ innerException ) : GraphicsException( message, innerException ) { } \
 		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : GraphicsException(info, context) { }\
 	}
-
+		
+		DEFINE_GRAPHICS_EXCEPTION( FileNotFound, D3D10_ERROR_FILE_NOT_FOUND, "File not found." );
+		DEFINE_GRAPHICS_EXCEPTION( TooManyStateObjects, D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS, "Too many state objects." );
+		
+		DEFINE_GRAPHICS_EXCEPTION( InvalidCall, D3DERR_INVALIDCALL, "Invalid call." );
+		DEFINE_GRAPHICS_EXCEPTION( WasStillDrawing, D3DERR_WASSTILLDRAWING, "Was still drawing." );
+		
 		DEFINE_GRAPHICS_EXCEPTION( OutOfMemory, E_OUTOFMEMORY, "Out of memory." );
 
 		inline GraphicsException^ GraphicsException::GetExceptionFromHResult( HRESULT hr )
@@ -92,6 +92,12 @@ namespace SlimDX
 
 			switch( hr )
 			{
+			GENERATE_EXCEPTION(D3D10_ERROR_FILE_NOT_FOUND, FileNotFound);
+			GENERATE_EXCEPTION(D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS, TooManyStateObjects);
+			
+			GENERATE_EXCEPTION(D3DERR_INVALIDCALL, InvalidCall);
+			GENERATE_EXCEPTION(D3DERR_WASSTILLDRAWING, WasStillDrawing);
+			
 			GENERATE_EXCEPTION(E_OUTOFMEMORY, OutOfMemory);
 
 			default:

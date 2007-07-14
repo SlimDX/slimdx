@@ -117,5 +117,19 @@ namespace Direct3D10
 
 		return gcnew Effect( effect );
 	}
+	
+	Effect^ Effect::FromString( Device^ device, String^ code, String^ profile )
+	{
+		array<unsigned char>^ codeBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( code );
+		pin_ptr<unsigned char> pinnedCode = &codeBytes[0];
+		array<unsigned char>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
+		pin_ptr<unsigned char> pinnedProfile = &profileBytes[0];
+		ID3D10Effect* effect;
+		
+		HRESULT hr = D3DX10CreateEffectFromMemory( pinnedCode, code->Length, "n/a", NULL, NULL, (LPCSTR) pinnedProfile, 0, 0, device->DevicePointer, NULL, NULL, &effect, NULL, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		return gcnew Effect( effect );
+	}
 }
 }

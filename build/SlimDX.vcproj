@@ -551,10 +551,6 @@
 				Name="Direct3D"
 				>
 				<File
-					RelativePath="..\source\direct3d\GraphicsException.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\direct3d\GraphicsStream.h"
 					>
 				</File>
@@ -668,6 +664,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Font.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\GraphicsException.h"
 					>
 				</File>
 				<File
