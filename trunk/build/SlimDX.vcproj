@@ -59,7 +59,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit) dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib"
+				AdditionalDependencies="$(NoInherit) user32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib"
 				LinkIncremental="2"
 				DelayLoadDLLs="d3d9.dll;d3dx9_34.dll;d3d10.dll;dxgi.dll;dinput8.dll"
 				GenerateDebugInformation="true"
@@ -197,6 +197,10 @@
 			>
 			<File
 				RelativePath="..\source\AssemblyInfo.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\DirectX.cpp"
 				>
 			</File>
 			<File
@@ -527,6 +531,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\source\DirectX.h"
+				>
+			</File>
 			<File
 				RelativePath="..\source\DirectXObject.h"
 				>

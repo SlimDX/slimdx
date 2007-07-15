@@ -25,6 +25,7 @@ using namespace System;
 using namespace System::Runtime::Serialization;
 
 #include "../Exceptions.h"
+#include <dxerr.h>
 
 namespace SlimDX
 {
@@ -45,9 +46,11 @@ namespace SlimDX
 			{ }
 			GraphicsException(String^ message) : DirectXException(E_FAIL, message)
 			{ }
-			GraphicsException( int errorCode, String^ message ) : DirectXException( errorCode, message )
+			GraphicsException(int errorCode ) : DirectXException( errorCode, gcnew String( DXGetErrorDescription( errorCode ) ) )
 			{ }
-			GraphicsException( String^ message, Exception^ innerException ) : DirectXException( message, innerException )
+			GraphicsException(int errorCode, String^ message) : DirectXException( errorCode, message )
+			{ }
+			GraphicsException(String^ message, Exception^ innerException) : DirectXException( message, innerException )
 			{ }
 			GraphicsException(SerializationInfo^ info, StreamingContext context) : DirectXException(info, context)
 			{ }
@@ -61,7 +64,17 @@ namespace SlimDX
 			static void CheckHResult( HRESULT hr );
 		};
 
-#define DEFINE_GRAPHICS_EXCEPTION( ExName, ErrorCode, Message ) \
+#define DEFINE_GRAPHICS_EXCEPTION( ExName, ErrorCode ) \
+	public ref class ExName ## Exception : public GraphicsException \
+	{ \
+		public: \
+		ExName ## Exception () : GraphicsException( ErrorCode ) { } \
+		ExName ## Exception ( String^ message ) : GraphicsException( ErrorCode, message ) { } \
+		ExName ## Exception ( String^ message, Exception^ innerException ) : GraphicsException( message, innerException ) { } \
+		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : GraphicsException(info, context) { }\
+	}
+
+#define DEFINE_CUSTOM_GRAPHICS_EXCEPTION( ExName, ErrorCode, Message ) \
 	public ref class ExName ## Exception : public GraphicsException \
 	{ \
 		public: \
@@ -71,50 +84,50 @@ namespace SlimDX
 		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : GraphicsException(info, context) { }\
 	}
 
-		DEFINE_GRAPHICS_EXCEPTION( WrongTextureFormat, D3DERR_WRONGTEXTUREFORMAT, "Wrong texture format." );
-		DEFINE_GRAPHICS_EXCEPTION( UnsupportedColorOperation, D3DERR_UNSUPPORTEDCOLOROPERATION, "Unsupported color operation." );
-		DEFINE_GRAPHICS_EXCEPTION( UnsupportedColorArgument, D3DERR_UNSUPPORTEDCOLORARG, "Unsupported color argument." );
-		DEFINE_GRAPHICS_EXCEPTION( UnsupportedAlphaOperation, D3DERR_UNSUPPORTEDALPHAOPERATION, "Unsupported alpha operation." );
-		DEFINE_GRAPHICS_EXCEPTION( UnsupportedAlphaArgument, D3DERR_UNSUPPORTEDALPHAARG, "Unsupported alpha argument." );
-		DEFINE_GRAPHICS_EXCEPTION( TooManyOperations, D3DERR_TOOMANYOPERATIONS, "Too many operations." );
-		DEFINE_GRAPHICS_EXCEPTION( ConflictingTextureFilter, D3DERR_CONFLICTINGTEXTUREFILTER, "Conflicting texture filter." );
-		DEFINE_GRAPHICS_EXCEPTION( UnsupportedFactorValue, D3DERR_UNSUPPORTEDFACTORVALUE, "Unsupported factor value." );
-		DEFINE_GRAPHICS_EXCEPTION( ConflictingTexturePalette, D3DERR_CONFLICTINGTEXTUREPALETTE, "Conflicting texture palette." );
-		DEFINE_GRAPHICS_EXCEPTION( DriverInternalError, D3DERR_DRIVERINTERNALERROR, "Driver internal error." );
-		DEFINE_GRAPHICS_EXCEPTION( NotFound, D3DERR_NOTFOUND, "Not found." );
-		DEFINE_GRAPHICS_EXCEPTION( MoreData, D3DERR_MOREDATA, "More data." );
-		DEFINE_GRAPHICS_EXCEPTION( DeviceLost, D3DERR_DEVICELOST, "Device lost." );
-		DEFINE_GRAPHICS_EXCEPTION( DeviceNotReset, D3DERR_DEVICENOTRESET, "Device not reset." );
-		DEFINE_GRAPHICS_EXCEPTION( NotAvailable, D3DERR_NOTAVAILABLE, "Not available." );
-		DEFINE_GRAPHICS_EXCEPTION( OutOfVideoMemory, D3DERR_OUTOFVIDEOMEMORY, "Out of video memory." );
-		DEFINE_GRAPHICS_EXCEPTION( InvalidDevice, D3DERR_INVALIDDEVICE, "Invalid device." );
-		DEFINE_GRAPHICS_EXCEPTION( InvalidCall, D3DERR_INVALIDCALL, "Invalid call." );
-		DEFINE_GRAPHICS_EXCEPTION( DriverInvalidCall, D3DERR_DRIVERINVALIDCALL, "Driver invalid call." );
-		DEFINE_GRAPHICS_EXCEPTION( WasStillDrawing, D3DERR_WASSTILLDRAWING, "Was still drawing." );
+		DEFINE_GRAPHICS_EXCEPTION( WrongTextureFormat, D3DERR_WRONGTEXTUREFORMAT );
+		DEFINE_GRAPHICS_EXCEPTION( UnsupportedColorOperation, D3DERR_UNSUPPORTEDCOLOROPERATION );
+		DEFINE_GRAPHICS_EXCEPTION( UnsupportedColorArgument, D3DERR_UNSUPPORTEDCOLORARG );
+		DEFINE_GRAPHICS_EXCEPTION( UnsupportedAlphaOperation, D3DERR_UNSUPPORTEDALPHAOPERATION );
+		DEFINE_GRAPHICS_EXCEPTION( UnsupportedAlphaArgument, D3DERR_UNSUPPORTEDALPHAARG );
+		DEFINE_GRAPHICS_EXCEPTION( TooManyOperations, D3DERR_TOOMANYOPERATIONS );
+		DEFINE_GRAPHICS_EXCEPTION( ConflictingTextureFilter, D3DERR_CONFLICTINGTEXTUREFILTER );
+		DEFINE_GRAPHICS_EXCEPTION( UnsupportedFactorValue, D3DERR_UNSUPPORTEDFACTORVALUE );
+		DEFINE_GRAPHICS_EXCEPTION( ConflictingTexturePalette, D3DERR_CONFLICTINGTEXTUREPALETTE );
+		DEFINE_GRAPHICS_EXCEPTION( DriverInternalError, D3DERR_DRIVERINTERNALERROR );
+		DEFINE_GRAPHICS_EXCEPTION( NotFound, D3DERR_NOTFOUND );
+		DEFINE_GRAPHICS_EXCEPTION( MoreData, D3DERR_MOREDATA );
+		DEFINE_GRAPHICS_EXCEPTION( DeviceLost, D3DERR_DEVICELOST );
+		DEFINE_GRAPHICS_EXCEPTION( DeviceNotReset, D3DERR_DEVICENOTRESET );
+		DEFINE_GRAPHICS_EXCEPTION( NotAvailable, D3DERR_NOTAVAILABLE );
+		DEFINE_GRAPHICS_EXCEPTION( OutOfVideoMemory, D3DERR_OUTOFVIDEOMEMORY );
+		DEFINE_GRAPHICS_EXCEPTION( InvalidDevice, D3DERR_INVALIDDEVICE );
+		DEFINE_GRAPHICS_EXCEPTION( InvalidCall, D3DERR_INVALIDCALL );
+		DEFINE_GRAPHICS_EXCEPTION( DriverInvalidCall, D3DERR_DRIVERINVALIDCALL );
+		DEFINE_GRAPHICS_EXCEPTION( WasStillDrawing, D3DERR_WASSTILLDRAWING );
 
-		DEFINE_GRAPHICS_EXCEPTION( BadObject, D3DXFERR_BADOBJECT, "Bad object." );
-		DEFINE_GRAPHICS_EXCEPTION( BadValue, D3DXFERR_BADVALUE, "Bad value." );
-		DEFINE_GRAPHICS_EXCEPTION( BadType, D3DXFERR_BADTYPE, "Bad type." );
-		DEFINE_GRAPHICS_EXCEPTION( XNotFound, D3DXFERR_NOTFOUND, "Not found." );
-		DEFINE_GRAPHICS_EXCEPTION( NotDoneYet, D3DXFERR_NOTDONEYET, "Not done yet." );
-		DEFINE_GRAPHICS_EXCEPTION( FileNotFound, D3DXFERR_FILENOTFOUND, "File not found." );
-		DEFINE_GRAPHICS_EXCEPTION( ResourceNotFound, D3DXFERR_RESOURCENOTFOUND, "Resource not found." );
-		DEFINE_GRAPHICS_EXCEPTION( BadResource, D3DXFERR_BADRESOURCE, "Bad resource." );
-		DEFINE_GRAPHICS_EXCEPTION( BadFileType, D3DXFERR_BADFILETYPE, "Bad file type." );
-		DEFINE_GRAPHICS_EXCEPTION( BadFileVersion, D3DXFERR_BADFILEVERSION, "Bad file version." );
-		DEFINE_GRAPHICS_EXCEPTION( BadFileFloatSize, D3DXFERR_BADFILEFLOATSIZE, "Bad file float size." );
-		DEFINE_GRAPHICS_EXCEPTION( BadFile, D3DXFERR_BADFILE, "Bad file." );
-		DEFINE_GRAPHICS_EXCEPTION( ParseError, D3DXFERR_PARSEERROR, "Parse error." );
-		DEFINE_GRAPHICS_EXCEPTION( BadArraySize, D3DXFERR_BADARRAYSIZE, "Bad array size." );
-		DEFINE_GRAPHICS_EXCEPTION( BadDataReference, D3DXFERR_BADDATAREFERENCE, "Bad data reference." );
-		DEFINE_GRAPHICS_EXCEPTION( NoMoreObjects, D3DXFERR_NOMOREOBJECTS, "No more objects." );
-		DEFINE_GRAPHICS_EXCEPTION( NoMoreData, D3DXFERR_NOMOREDATA, "No more data." );
-		DEFINE_GRAPHICS_EXCEPTION( BadCacheFile, D3DXFERR_BADCACHEFILE, "Bad cache file." );
+		DEFINE_GRAPHICS_EXCEPTION( BadObject, D3DXFERR_BADOBJECT );
+		DEFINE_GRAPHICS_EXCEPTION( BadValue, D3DXFERR_BADVALUE );
+		DEFINE_GRAPHICS_EXCEPTION( BadType, D3DXFERR_BADTYPE );
+		DEFINE_GRAPHICS_EXCEPTION( XNotFound, D3DXFERR_NOTFOUND );
+		DEFINE_GRAPHICS_EXCEPTION( NotDoneYet, D3DXFERR_NOTDONEYET );
+		DEFINE_GRAPHICS_EXCEPTION( FileNotFound, D3DXFERR_FILENOTFOUND );
+		DEFINE_GRAPHICS_EXCEPTION( ResourceNotFound, D3DXFERR_RESOURCENOTFOUND );
+		DEFINE_GRAPHICS_EXCEPTION( BadResource, D3DXFERR_BADRESOURCE );
+		DEFINE_GRAPHICS_EXCEPTION( BadFileType, D3DXFERR_BADFILETYPE );
+		DEFINE_GRAPHICS_EXCEPTION( BadFileVersion, D3DXFERR_BADFILEVERSION );
+		DEFINE_GRAPHICS_EXCEPTION( BadFileFloatSize, D3DXFERR_BADFILEFLOATSIZE );
+		DEFINE_GRAPHICS_EXCEPTION( BadFile, D3DXFERR_BADFILE );
+		DEFINE_GRAPHICS_EXCEPTION( ParseError, D3DXFERR_PARSEERROR );
+		DEFINE_GRAPHICS_EXCEPTION( BadArraySize, D3DXFERR_BADARRAYSIZE );
+		DEFINE_GRAPHICS_EXCEPTION( BadDataReference, D3DXFERR_BADDATAREFERENCE );
+		DEFINE_GRAPHICS_EXCEPTION( NoMoreObjects, D3DXFERR_NOMOREOBJECTS );
+		DEFINE_GRAPHICS_EXCEPTION( NoMoreData, D3DXFERR_NOMOREDATA );
+		DEFINE_GRAPHICS_EXCEPTION( BadCacheFile, D3DXFERR_BADCACHEFILE );
 
-		DEFINE_GRAPHICS_EXCEPTION( OutOfMemory, E_OUTOFMEMORY, "Out of memory." );
+		DEFINE_CUSTOM_GRAPHICS_EXCEPTION( OutOfMemory, E_OUTOFMEMORY, "Out of memory." );
 
-        DEFINE_GRAPHICS_EXCEPTION( Direct3D9NotFound, E_FAIL, "Direct3D 9 not found." );
-        DEFINE_GRAPHICS_EXCEPTION( Direct3DX9NotFound, E_FAIL, "Direct3DX 9 not found." );
+        DEFINE_CUSTOM_GRAPHICS_EXCEPTION( Direct3D9NotFound, E_FAIL, "Direct3D 9 not found." );
+        DEFINE_CUSTOM_GRAPHICS_EXCEPTION( Direct3DX9NotFound, E_FAIL, "Direct3DX 9 not found." );
 
 		inline GraphicsException^ GraphicsException::GetExceptionFromHResult( HRESULT hr )
 		{
@@ -180,7 +193,7 @@ namespace SlimDX
 			GENERATE_EXCEPTION(E_OUTOFMEMORY, OutOfMemory);
 
 			default:
-				ex = gcnew GraphicsException( E_FAIL, "A graphics exception occurred." );
+				ex = gcnew GraphicsException( "A graphics exception occurred." );
 			}
 
 			ex->HResult = hr;
