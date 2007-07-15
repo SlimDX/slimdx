@@ -39,6 +39,7 @@ namespace SlimDX
 		{
 		public:
 			SwapChain( IDirect3DSwapChain9* swapChain );
+			SwapChain( Device^ device, PresentParameters^ presentParams );
 
 			property SlimDX::Direct3D9::DisplayMode DisplayMode
 			{
