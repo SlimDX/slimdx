@@ -33,10 +33,32 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	//grab this function from Device.cpp
+	void ConvertPresentParams( PresentParameters^ presentParams, D3DPRESENT_PARAMETERS& d3dpp );
+
 	SwapChain::SwapChain( IDirect3DSwapChain9* swapChain )
 	{
 		if( swapChain == NULL )
 			throw gcnew ArgumentNullException( "swapChain" );
+
+		m_Pointer = swapChain;
+	}
+
+	SwapChain::SwapChain( Device^ device, PresentParameters^ presentParams )
+	{
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+		if( presentParams == nullptr )
+			throw gcnew ArgumentNullException( "presentParams" );
+
+		D3DPRESENT_PARAMETERS d3dpp;
+		ConvertPresentParams( presentParams, d3dpp );
+
+		IDirect3DSwapChain9* swapChain;
+		HRESULT hr = device->InternalPointer->CreateAdditionalSwapChain( &d3dpp, &swapChain );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to create swap chain." );
 
 		m_Pointer = swapChain;
 	}
