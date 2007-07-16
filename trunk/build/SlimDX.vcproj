@@ -559,6 +559,10 @@
 				Name="Direct3D"
 				>
 				<File
+					RelativePath="..\source\direct3d9\CapsEnums.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d\GraphicsStream.h"
 					>
 				</File>
@@ -640,10 +644,6 @@
 				>
 				<File
 					RelativePath="..\source\direct3d9\BaseTexture.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d9\CapsEnums.h"
 					>
 				</File>
 				<File
