@@ -179,7 +179,8 @@ namespace SlimDX
 			NPatches = D3DUSAGE_NPATCHES,
 			Points = D3DUSAGE_POINTS,
 			RenderTarget = D3DUSAGE_RENDERTARGET,
-			WriteOnly = D3DUSAGE_WRITEONLY
+			WriteOnly = D3DUSAGE_WRITEONLY,
+			SoftwareProcessing = D3DUSAGE_SOFTWAREPROCESSING
 		};
 
 		public enum class Pool : Int32
@@ -704,7 +705,7 @@ namespace SlimDX
 			ModulateInvColorAddAlpha = D3DTOP_MODULATEINVCOLOR_ADDALPHA,
 
 			BumpEnvMap = D3DTOP_BUMPENVMAP,
-			BumpEnvMapLuminanceD3DTOP_BUMPENVMAPLUMINANCE,
+			BumpEnvMapLuminance = D3DTOP_BUMPENVMAPLUMINANCE,
 
 			DotProduct3 = D3DTOP_DOTPRODUCT3,
 
