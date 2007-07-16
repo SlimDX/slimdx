@@ -457,6 +457,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\RasterizerState.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\RasterizerWrapper.cpp"
 					>
 				</File>
@@ -792,6 +796,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\OutputMergerWrapper.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\RasterizerState.h"
 					>
 				</File>
 				<File

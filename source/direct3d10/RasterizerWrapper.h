@@ -29,6 +29,8 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
+		ref class RasterizerState;
+		
 		public ref class RasterizerWrapper
 		{
 			ID3D10Device* m_Device;
@@ -37,6 +39,11 @@ namespace SlimDX
 			RasterizerWrapper( ID3D10Device* device );
 			
 		public:
+			property RasterizerState^ State
+			{
+				void set( RasterizerState^ value );
+			}
+		
 			void SetViewports( SlimDX::Direct3D::Viewport viewport );
 			void SetViewports( ... array<SlimDX::Direct3D::Viewport>^ viewports );
 		};

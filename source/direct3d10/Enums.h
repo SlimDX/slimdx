@@ -83,6 +83,13 @@ namespace SlimDX
 			Read = D3D10_CPU_ACCESS_READ
 		};
 		
+		public enum class CullMode : Int32 
+		{
+			None = D3D10_CULL_NONE,
+			Front = D3D10_CULL_FRONT,
+			Back = D3D10_CULL_BACK
+		};
+		
 		[Flags]
 		public enum class DepthStencilClearFlags : Int32
 		{
@@ -148,6 +155,12 @@ namespace SlimDX
 			Annotation = D3D10_EFFECT_VARIABLE_ANNOTATION,
 			Pooled = D3D10_EFFECT_VARIABLE_POOLED,
 			ExplicitBindPoint = D3D10_EFFECT_VARIABLE_EXPLICIT_BIND_POINT,
+		};
+		
+		public enum class FillMode : Int32
+		{
+			Wireframe = D3D10_FILL_WIREFRAME,
+			Solid = D3D10_FILL_SOLID
 		};
 		
 		public enum class Format : Int32
