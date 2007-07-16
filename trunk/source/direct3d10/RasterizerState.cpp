@@ -25,48 +25,40 @@
 
 #include "GraphicsException.h"
 
-#include "RasterizerWrapper.h"
 #include "RasterizerState.h"
+#include "Device.h"
 
 namespace SlimDX
 {
 namespace Direct3D10
 { 
-	RasterizerWrapper::RasterizerWrapper( ID3D10Device* device )
-	{
-		if( device == NULL )
-			throw gcnew ArgumentNullException( "device" );
-		m_Device = device;
-	}
 	
-	void RasterizerWrapper::State::set( RasterizerState^ value )
-	{
-		if( value == nullptr )
-			m_Device->RSSetState( NULL ); //@TODO: Confirm that this is kosher.
-		else
-			m_Device->RSSetState( value->InternalPointer );
-	}
-	
-	void RasterizerWrapper::SetViewports( SlimDX::Direct3D::Viewport viewport )
-	{
-		D3D10_VIEWPORT nativeVP = { viewport.X, viewport.Y, viewport.Width, viewport.Height, viewport.MinZ, viewport.MaxZ };
-		m_Device->RSSetViewports( 1, &nativeVP );
-	}
 
-	void RasterizerWrapper::SetViewports( ... array<SlimDX::Direct3D::Viewport>^ viewports )
+	RasterizerState::RasterizerState( Device^ device,SlimDX::Direct3D10::FillMode fillMode, SlimDX::Direct3D10::CullMode cullMode,
+		bool frontIsCounterClockwise, int depthBias, float depthBiasClamp, float slopeScaledDepthBias,
+		bool enableDepthClip, bool enableScissor, bool enableMultisample, bool enableAntialiasedLine )
 	{
-		D3D10_VIEWPORT nativeVPs[D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE];
-		for( int i = 0; i < viewports->Length; ++i )
-		{
-			nativeVPs[ i ].TopLeftX = viewports[ i ].X;
-			nativeVPs[ i ].TopLeftY = viewports[ i ].Y;
-			nativeVPs[ i ].Width = viewports[ i ].Width;
-			nativeVPs[ i ].Height = viewports[ i ].Height;
-			nativeVPs[ i ].MinDepth = viewports[ i ].MinZ;
-			nativeVPs[ i ].MaxDepth = viewports[ i ].MaxZ;
-		}
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
 		
-		m_Device->RSSetViewports( viewports->Length, nativeVPs );
+		D3D10_RASTERIZER_DESC desc;
+		ZeroMemory( &desc, sizeof( desc ) );
+		desc.FillMode = ( D3D10_FILL_MODE ) fillMode;
+		desc.CullMode = ( D3D10_CULL_MODE ) cullMode;
+		desc.FrontCounterClockwise = frontIsCounterClockwise;
+		desc.DepthBias = depthBias;
+		desc.DepthBiasClamp = depthBiasClamp;
+		desc.SlopeScaledDepthBias = slopeScaledDepthBias;
+		desc.DepthClipEnable = enableDepthClip;
+		desc.ScissorEnable = enableScissor;
+		desc.MultisampleEnable = enableMultisample;
+		desc.AntialiasedLineEnable = enableAntialiasedLine;
+		
+		ID3D10RasterizerState* state = 0;
+		HRESULT hr = device->DevicePointer->CreateRasterizerState( &desc, &state );
+		GraphicsException::CheckHResult( hr );
+		
+		m_Pointer = state;
 	}
 }
 }
