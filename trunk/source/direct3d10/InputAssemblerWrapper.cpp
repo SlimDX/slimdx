@@ -39,7 +39,7 @@ namespace Direct3D10
 			throw gcnew ArgumentNullException( "device" );
 		m_Device = device;
 	}
-	
+
 	void InputAssemblerWrapper::SetInputLayout( InputLayout^ value)
 	{
 		m_Device->IASetInputLayout( value->InternalPointer );
@@ -48,6 +48,11 @@ namespace Direct3D10
 	void InputAssemblerWrapper::SetPrimitiveTopology( PrimitiveTopology value)
 	{
 		m_Device->IASetPrimitiveTopology( (D3D10_PRIMITIVE_TOPOLOGY) value );
+	}
+	
+	void InputAssemblerWrapper::SetIndexBuffer( Buffer^ indexBuffer, Format format, int offset )
+	{
+		m_Device->IASetIndexBuffer( (ID3D10Buffer*) indexBuffer->InternalPointer, ( DXGI_FORMAT ) format, offset );
 	}
 	
 	void InputAssemblerWrapper::SetVertexBuffers( int slot, VertexBufferBinding vertexBufferBinding )

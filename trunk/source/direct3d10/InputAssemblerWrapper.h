@@ -30,6 +30,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
+		ref class Buffer;
 		ref class InputLayout;
 		
 		public ref class InputAssemblerWrapper
@@ -42,6 +43,8 @@ namespace SlimDX
 		public:
 			void SetInputLayout( InputLayout^ layout );
 			void SetPrimitiveTopology( PrimitiveTopology topology );
+			
+			void SetIndexBuffer( Buffer^ indexBuffer, Format format, int offset );
 			
 			void SetVertexBuffers( int slot, VertexBufferBinding vertexBufferBinding );
 			void SetVertexBuffers( int firstSlot, ... array<VertexBufferBinding>^ vertexBufferBindings );
