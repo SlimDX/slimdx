@@ -47,6 +47,13 @@ namespace Direct3D10
 			m_Device->RSSetState( value->InternalPointer );
 	}
 	
+	RasterizerState^ RasterizerWrapper::State::get()
+	{
+		ID3D10RasterizerState* state = 0;
+		m_Device->RSGetState( &state );
+		return gcnew RasterizerState( state );
+	}
+	
 	void RasterizerWrapper::SetViewports( SlimDX::Direct3D::Viewport viewport )
 	{
 		D3D10_VIEWPORT nativeVP = { viewport.X, viewport.Y, viewport.Width, viewport.Height, viewport.MinZ, viewport.MaxZ };

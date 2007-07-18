@@ -32,8 +32,28 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
+	RasterizerState::RasterizerState( ID3D10RasterizerState* state )
+	{
+		if( state == NULL )
+			throw gcnew ArgumentNullException( "state" );
+		
+		D3D10_RASTERIZER_DESC desc;
+		state->GetDesc( &desc );
+		
+		m_FillMode = ( SlimDX::Direct3D10::FillMode ) desc.FillMode;
+		m_CullMode = ( SlimDX::Direct3D10::CullMode ) desc.CullMode;
+		m_FrontCounterClockwise = desc.FrontCounterClockwise ? true : false;
+		m_DepthBias = desc.DepthBias;
+		m_DepthBiasClamp = desc.DepthBiasClamp;
+		m_SlopeScaledDepthBias = desc.SlopeScaledDepthBias;
+		m_EnableDepthClip = desc.DepthClipEnable ? true : false;
+		m_EnableScissor = desc.ScissorEnable ? true : false;
+		m_EnableMultisample = desc.MultisampleEnable ? true : false;
+		m_EnableAntialiasedLine = desc.AntialiasedLineEnable ? true : false;
+		
+		m_Pointer = state;
+	}
 	
-
 	RasterizerState::RasterizerState( Device^ device,SlimDX::Direct3D10::FillMode fillMode, SlimDX::Direct3D10::CullMode cullMode,
 		bool frontIsCounterClockwise, int depthBias, float depthBiasClamp, float slopeScaledDepthBias,
 		bool enableDepthClip, bool enableScissor, bool enableMultisample, bool enableAntialiasedLine )
@@ -53,6 +73,17 @@ namespace Direct3D10
 		desc.ScissorEnable = enableScissor;
 		desc.MultisampleEnable = enableMultisample;
 		desc.AntialiasedLineEnable = enableAntialiasedLine;
+		
+		m_FillMode = ( SlimDX::Direct3D10::FillMode ) desc.FillMode;
+		m_CullMode = ( SlimDX::Direct3D10::CullMode ) desc.CullMode;
+		m_FrontCounterClockwise = desc.FrontCounterClockwise ? true : false;
+		m_DepthBias = desc.DepthBias;
+		m_DepthBiasClamp = desc.DepthBiasClamp;
+		m_SlopeScaledDepthBias = desc.SlopeScaledDepthBias;
+		m_EnableDepthClip = desc.DepthClipEnable ? true : false;
+		m_EnableScissor = desc.ScissorEnable ? true : false;
+		m_EnableMultisample = desc.MultisampleEnable ? true : false;
+		m_EnableAntialiasedLine = desc.AntialiasedLineEnable ? true : false;
 		
 		ID3D10RasterizerState* state = 0;
 		HRESULT hr = device->DevicePointer->CreateRasterizerState( &desc, &state );

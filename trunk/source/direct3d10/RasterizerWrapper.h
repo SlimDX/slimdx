@@ -42,6 +42,7 @@ namespace SlimDX
 			property RasterizerState^ State
 			{
 				void set( RasterizerState^ value );
+				RasterizerState^ get();
 			}
 		
 			void SetViewports( SlimDX::Direct3D::Viewport viewport );

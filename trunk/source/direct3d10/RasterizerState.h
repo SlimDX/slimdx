@@ -45,7 +45,10 @@ namespace SlimDX
 			bool m_EnableScissor;
 			bool m_EnableMultisample;
 			bool m_EnableAntialiasedLine;
-			
+		
+		internal:
+			RasterizerState( ID3D10RasterizerState* state );
+		
 		public:
 			property SlimDX::Direct3D10::FillMode FillMode
 			{
