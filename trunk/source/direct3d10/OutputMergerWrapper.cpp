@@ -26,6 +26,7 @@
 #include "GraphicsException.h"
 
 #include "OutputMergerWrapper.h"
+#include "DepthStencilState.h"
 #include "DepthStencilView.h"
 #include "RenderTargetView.h"
 
@@ -38,6 +39,22 @@ namespace Direct3D10
 		if( device == NULL )
 			throw gcnew ArgumentNullException( "device" );
 		m_Device = device;
+	}
+	
+	void OutputMergerWrapper::DepthStencilState::set( SlimDX::Direct3D10::DepthStencilState^ value )
+	{
+		if( value == nullptr )
+			m_Device->OMSetDepthStencilState( NULL, 0 ); //@TODO: Confirm that this is kosher.
+		else
+			m_Device->OMSetDepthStencilState( value->InternalPointer, 0 );
+	}
+	
+	SlimDX::Direct3D10::DepthStencilState^ OutputMergerWrapper::DepthStencilState::get()
+	{
+		ID3D10DepthStencilState* state = 0;
+		int stencilRef = 0;
+		m_Device->OMGetDepthStencilState( &state, (UINT*) &stencilRef );
+		return gcnew SlimDX::Direct3D10::DepthStencilState( state );
 	}
 	
 	void OutputMergerWrapper::SetRenderTargets( RenderTargetView^ renderTargetView )

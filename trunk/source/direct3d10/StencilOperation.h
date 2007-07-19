@@ -23,30 +23,17 @@
 
 using namespace System;
 
+#include "Enums.h"
+
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		ref class DepthStencilState;
-		ref class DepthStencilView;
-		ref class RenderTargetView;
-		
-		public ref class OutputMergerWrapper
+		public value class StencilOperationDescription
 		{
-			ID3D10Device* m_Device;
-			
-		internal:
-			OutputMergerWrapper( ID3D10Device* device );
-			
 		public:
-			property SlimDX::Direct3D10::DepthStencilState^ DepthStencilState
-			{
-				void set( SlimDX::Direct3D10::DepthStencilState^ value );
-				SlimDX::Direct3D10::DepthStencilState^ get();
-			}
+			StencilOperation FailureOperation
 			
-			void SetRenderTargets( RenderTargetView^ renderTargetView );
-			void SetRenderTargets( ... array<RenderTargetView^>^ renderTargetViews );
 		};
 	}
 };

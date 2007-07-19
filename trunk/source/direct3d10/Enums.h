@@ -75,6 +75,18 @@ namespace SlimDX
 			InvSrc1Alpha = D3D10_BLEND_INV_SRC1_ALPHA
 		};
 		
+		public enum class Comparison : Int32
+		{
+			Never = D3D10_COMPARISON_NEVER,
+			Less = D3D10_COMPARISON_LESS,
+			Equal = D3D10_COMPARISON_EQUAL,
+			LessEqual = D3D10_COMPARISON_LESS_EQUAL,
+			Greater = D3D10_COMPARISON_GREATER,
+			NotEqual = D3D10_COMPARISON_NOT_EQUAL,
+			GreaterEqual = D3D10_COMPARISON_GREATER_EQUAL,
+			Always = D3D10_COMPARISON_ALWAYS
+		};
+		
 		[Flags]
 		public enum class CpuAccessFlags : Int32
 		{
@@ -95,6 +107,12 @@ namespace SlimDX
 		{
 			Depth = D3D10_CLEAR_DEPTH,
 			Stencil = D3D10_CLEAR_STENCIL
+		};
+		
+		public enum class DepthWriteMask : Int32
+		{
+			Zero = D3D10_DEPTH_WRITE_MASK_ZERO,
+			All = D3D10_DEPTH_WRITE_MASK_ALL
 		};
 		
 		[Flags]
@@ -386,6 +404,18 @@ namespace SlimDX
 			OptimizationLevel1 = D3D10_SHADER_OPTIMIZATION_LEVEL1,
 			OptimizationLevel2 = D3D10_SHADER_OPTIMIZATION_LEVEL2,
 			OptimizationLevel3 = D3D10_SHADER_OPTIMIZATION_LEVEL3
+		};
+		
+		public enum class StencilOperation
+		{
+			Keep = D3D10_STENCIL_OP_KEEP,
+			Zero = D3D10_STENCIL_OP_ZERO,
+			Replace = D3D10_STENCIL_OP_REPLACE,
+			IncrementAndClamp = D3D10_STENCIL_OP_INCR_SAT,
+			DecrementAndClamp = D3D10_STENCIL_OP_DECR_SAT,
+			Invert = D3D10_STENCIL_OP_INVERT,
+			Increment = D3D10_STENCIL_OP_INCR,
+			Decrement = D3D10_STENCIL_OP_DECR
 		};
 
 		public enum class SurfaceUsage : Int32
