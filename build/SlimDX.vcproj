@@ -373,6 +373,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\DepthStencilState.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\DepthStencilView.cpp"
 					>
 				</File>
@@ -736,6 +740,10 @@
 				>
 				<File
 					RelativePath="..\source\direct3d10\Buffer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\DepthStencilState.h"
 					>
 				</File>
 				<File
