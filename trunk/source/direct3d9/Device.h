@@ -66,7 +66,7 @@ namespace SlimDX
 			bool Windowed;
 			bool EnableAutoDepthStencil;
 			Format AutoDepthStencilFormat;
-			PresentFlag PresentFlag;
+			PresentFlags PresentFlags;
 
 			int FullScreenRefreshRateInHz;
 			PresentInterval PresentationInterval;

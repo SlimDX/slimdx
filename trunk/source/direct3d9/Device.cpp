@@ -52,7 +52,7 @@ namespace Direct3D9
 		d3dpp.BackBufferHeight = presentParams->BackBufferHeight;
 		d3dpp.BackBufferWidth = presentParams->BackBufferWidth;
 		d3dpp.EnableAutoDepthStencil = presentParams->EnableAutoDepthStencil;
-		d3dpp.Flags = (DWORD) presentParams->PresentFlag;
+		d3dpp.Flags = (DWORD) presentParams->PresentFlags;
 		d3dpp.FullScreen_RefreshRateInHz = presentParams->FullScreenRefreshRateInHz;
 		d3dpp.hDeviceWindow = (HWND) presentParams->DeviceWindowHandle.ToPointer();
 		d3dpp.MultiSampleQuality = presentParams->MultiSampleQuality;
