@@ -50,6 +50,7 @@ namespace SlimDX {
 		/// Bitmask of the device digital buttons
 		/// </summary>
 		public enum class GamepadButtonFlags : UInt16 {
+			None = 0,
 			DPadUp = XINPUT_GAMEPAD_DPAD_UP,
 			DPadDown = XINPUT_GAMEPAD_DPAD_DOWN,
 			DPadLeft = XINPUT_GAMEPAD_DPAD_LEFT,
@@ -126,6 +127,7 @@ namespace SlimDX {
 		/// Flags that indicate the keyboard state at the time of the input event.
 		/// </summary>
 		public enum class KeyStrokeFlags : UInt16 {
+			None = 0,
 			KeyDown = XINPUT_KEYSTROKE_KEYDOWN,
 			KeyUp = XINPUT_KEYSTROKE_KEYUP,
 			Repeat = XINPUT_KEYSTROKE_REPEAT
@@ -240,6 +242,7 @@ namespace SlimDX {
 		/// Features of the controller. 
 		/// </summary>
 		public enum class CapabilitiesFlags : UInt16 {
+			None = 0,
 			/// <summary>
 			/// The device has an integrated voice device.
 			/// </summary>

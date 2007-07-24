@@ -34,6 +34,7 @@ namespace SlimDX
 
 		public ref class Performance sealed
 		{
+		public:
 			static int BeginEvent( int color, String^ name );
 			static int BeginEvent( System::Drawing::Color color, String^ name );
 			static int EndEvent();

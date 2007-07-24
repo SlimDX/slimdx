@@ -187,7 +187,7 @@ namespace SlimDX
 		public:
             property int Count
             {
-                virtual int get() { return m_Modes->Length; }
+                int get() { return m_Modes->Length; }
             }
 
             property DisplayMode default[int]

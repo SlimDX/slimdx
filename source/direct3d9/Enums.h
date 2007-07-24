@@ -156,6 +156,7 @@ namespace SlimDX
 		[Flags]
 		public enum class CreateFlags : Int32
 		{
+			None = 0,
 			AdapterGroupDevice = D3DCREATE_ADAPTERGROUP_DEVICE,
 			DisableDriverManagement = D3DCREATE_DISABLE_DRIVER_MANAGEMENT,
 			DisableDriverManagementEx = D3DCREATE_DISABLE_DRIVER_MANAGEMENT_EX,
@@ -369,6 +370,7 @@ namespace SlimDX
 		[Flags]
 		public enum class ClearFlags : Int32
 		{
+			None = 0,
 			Stencil = D3DCLEAR_STENCIL,
 			Target = D3DCLEAR_TARGET,
 			ZBuffer = D3DCLEAR_ZBUFFER
@@ -389,7 +391,7 @@ namespace SlimDX
 		};
 
 		[Flags]
-		public enum class PresentFlag : Int32
+		public enum class PresentFlags : Int32
 		{
 			DeviceClip = D3DPRESENTFLAG_DEVICECLIP,
 			DiscardDepthStencil = D3DPRESENTFLAG_DISCARD_DEPTHSTENCIL,
@@ -412,6 +414,7 @@ namespace SlimDX
 		[Flags]
 		public enum class Present : Int32
 		{
+			None = 0,
 			DoNotWait = D3DPRESENT_DONOTWAIT,
 			LinearContent = D3DPRESENT_LINEAR_CONTENT
 		};
@@ -881,6 +884,7 @@ namespace SlimDX
 		[Flags]
 		public enum class ParameterFlags : Int32
 		{
+			None = 0,
 			Shared = D3DX_PARAMETER_SHARED,
 			Literal = D3DX_PARAMETER_LITERAL,
 			Annotation = D3DX_PARAMETER_ANNOTATION,

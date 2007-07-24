@@ -169,9 +169,9 @@ namespace SlimDX
 			IndexBuffer^ GetIndices();
 
 			generic<typename T> where T : value class
-			T GetRenderState( RenderState state );
+				T GetRenderState( RenderState state );
 			int GetRenderState( RenderState state );
-			
+
 			Capabilities GetDeviceCaps();
 			System::Drawing::Rectangle GetScissorRect();
 			bool GetSoftwareVertexProcessing();
@@ -182,7 +182,7 @@ namespace SlimDX
 			void SetRenderState( RenderState state, bool value );
 			void SetRenderState( RenderState state, float value );
 			generic<typename T> where T : Enum
-			void SetRenderState( RenderState state, T value );
+				void SetRenderState( RenderState state, T value );
 
 			void SetTextureStageState( int stage, TextureStage type, int value );
 			void SetTextureStageState( int stage, TextureStage type, TextureOperation texOp );
@@ -202,13 +202,13 @@ namespace SlimDX
 			void SetPixelShader( PixelShader^ pixelShader );
 			void SetVertexShader( VertexShader^ vertexShader );			
 			void SetDepthStencilSurface( Surface^ target );
-			
+
 			void DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount );
 			void DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minVertexIndex, 
 				int numVertices, int startIndex, int primCount );
 
 			generic<typename T> where T : value class
-			void DrawUserPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount, array<T>^ data );
+				void DrawUserPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount, array<T>^ data );
 		};
 	}
 }
