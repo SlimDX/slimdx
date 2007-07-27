@@ -332,7 +332,77 @@ namespace SlimDX
 			GraphicsException::CheckHResult( hr );
 		}
 
-		String^ BaseEffect::GetValueString( EffectHandle^ param )
+        bool BaseEffect::GetBool( EffectHandle^ param )
+        {
+            return false;
+        }
+
+        array<bool>^ BaseEffect::GetBoolArray( EffectHandle^ param, int count )
+        {
+            return nullptr;
+        }
+
+        int BaseEffect::GetInt( EffectHandle^ param )
+        {
+            return 0;
+        }
+
+        array<int>^ BaseEffect::GetIntArray( EffectHandle^ param, int count )
+        {
+            return nullptr;
+        }
+
+        float BaseEffect::GetFloat( EffectHandle^ param )
+        {
+            return 0.0f;
+        }
+
+        array<float>^ BaseEffect::GetFloatArray( EffectHandle^ param, int count )
+        {
+            return nullptr;
+        }
+
+        Vector4 BaseEffect::GetVector( EffectHandle^ param )
+        {
+            return Vector4();
+        }
+
+        array<Vector4>^ BaseEffect::GetVectorArray( EffectHandle^ param, int count )
+        {
+            return nullptr;
+        }
+
+        ColorValue BaseEffect::GetColor( EffectHandle^ param )
+        {
+            return ColorValue();
+        }
+
+        array<ColorValue>^ BaseEffect::GetColorArray( EffectHandle^ param, int count )
+        {
+            return nullptr;
+        }
+
+        Matrix BaseEffect::GetMatrix( EffectHandle^ param )
+        {
+            return Matrix();
+        }
+
+        array<Matrix>^ BaseEffect::GetMatrixArray( EffectHandle^ param, int count )
+        {
+            return nullptr;
+        }
+
+        Matrix BaseEffect::GetMatrixTranspose( EffectHandle^ param )
+        {
+            return Matrix();
+        }
+
+        array<Matrix>^ BaseEffect::GetMatrixTransposeArray( EffectHandle^ param, int count )
+        {
+            return nullptr;
+        }
+
+        String^ BaseEffect::GetValueString( EffectHandle^ param )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
 			LPCSTR data = 0;
@@ -342,6 +412,11 @@ namespace SlimDX
 
 			return (gcnew String(data));
 		}
+
+        GraphicsStream^ BaseEffect::GetValue( EffectHandle^ param, int bytes )
+        {
+            return nullptr;
+        }
 
 		Effect::Effect( ID3DXEffect* effect ) : BaseEffect( effect )
 		{
