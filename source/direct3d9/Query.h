@@ -71,13 +71,13 @@ namespace SlimDX
 		public value class ResourceStats
 		{
 		public:
-			bool bThrashing;
+			bool Thrashing;
 			int ApproxBytesDownloaded;
-			int NumEvicts;
-			int NumVidCreates;
-			int LastPri;
-			int NumUsed;
-			int NumUsedInVidMem;
+			int NumberEvicted;
+			int NumberVidCreated;
+			int LastPriority;
+			int NumberUsed;
+			int NumberUsedInVidMem;
 			int WorkingSet;
 			int WorkingSetBytes;
 			int TotalManaged;
