@@ -29,6 +29,8 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
+    ref class GraphicsStream;
+
 	namespace Direct3D9
 	{
 		//description structures for various things
@@ -206,8 +208,23 @@ namespace SlimDX
 			void SetValueTranspose( EffectHandle^ param, Matrix value );
 			void SetValueTranspose( EffectHandle^ param, array<Matrix>^ values );
 
-			//TODO: Implement the rest of the get methods...
+            bool GetBool( EffectHandle^ param );
+            array<bool>^ GetBoolArray( EffectHandle^ param, int count );
+            int GetInt( EffectHandle^ param );
+            array<int>^ GetIntArray( EffectHandle^ param, int count );
+            float GetFloat( EffectHandle^ param );
+            array<float>^ GetFloatArray( EffectHandle^ param, int count );
+            Vector4 GetVector( EffectHandle^ param );
+            array<Vector4>^ GetVectorArray( EffectHandle^ param, int count );
+            ColorValue GetColor( EffectHandle^ param );
+            array<ColorValue>^ GetColorArray( EffectHandle^ param, int count );
+            Matrix GetMatrix( EffectHandle^ param );
+            array<Matrix>^ GetMatrixArray( EffectHandle^ param, int count );
+            Matrix GetMatrixTranspose( EffectHandle^ param );
+            array<Matrix>^ GetMatrixTransposeArray( EffectHandle^ param, int count );
+
 			String^ GetValueString( EffectHandle^ param );
+            GraphicsStream^ GetValue( EffectHandle^ param, int bytes );
 		};
 
 		public ref class Effect sealed : public BaseEffect
