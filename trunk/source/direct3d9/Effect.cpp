@@ -332,77 +332,112 @@ namespace SlimDX
 			GraphicsException::CheckHResult( hr );
 		}
 
-        bool BaseEffect::GetBool( EffectHandle^ param )
-        {
-            return false;
-        }
+		bool BaseEffect::GetBool( EffectHandle^ param )
+		{
+			BOOL value = FALSE;
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			HRESULT hr = m_Pointer->GetBool( handle, &value );
+			GraphicsException::CheckHResult( hr );
 
-        array<bool>^ BaseEffect::GetBoolArray( EffectHandle^ param, int count )
-        {
-            return nullptr;
-        }
+			return value < 0;
+		}
 
-        int BaseEffect::GetInt( EffectHandle^ param )
-        {
-            return 0;
-        }
+		array<bool>^ BaseEffect::GetBoolArray( EffectHandle^ param, int count )
+		{
+			return nullptr;
+		}
 
-        array<int>^ BaseEffect::GetIntArray( EffectHandle^ param, int count )
-        {
-            return nullptr;
-        }
+		int BaseEffect::GetInt( EffectHandle^ param )
+		{
+			int value = 0;
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			HRESULT hr = m_Pointer->GetInt( handle, &value );
+			GraphicsException::CheckHResult( hr );
 
-        float BaseEffect::GetFloat( EffectHandle^ param )
-        {
-            return 0.0f;
-        }
+			return value;
+		}
 
-        array<float>^ BaseEffect::GetFloatArray( EffectHandle^ param, int count )
-        {
-            return nullptr;
-        }
+		array<int>^ BaseEffect::GetIntArray( EffectHandle^ param, int count )
+		{
+			return nullptr;
+		}
 
-        Vector4 BaseEffect::GetVector( EffectHandle^ param )
-        {
-            return Vector4();
-        }
+		float BaseEffect::GetFloat( EffectHandle^ param )
+		{
+			float value = 0.0f;
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			HRESULT hr = m_Pointer->GetFloat( handle, &value );
+			GraphicsException::CheckHResult( hr );
 
-        array<Vector4>^ BaseEffect::GetVectorArray( EffectHandle^ param, int count )
-        {
-            return nullptr;
-        }
+			return value;
+		}
 
-        ColorValue BaseEffect::GetColor( EffectHandle^ param )
-        {
-            return ColorValue();
-        }
+		array<float>^ BaseEffect::GetFloatArray( EffectHandle^ param, int count )
+		{
+			return nullptr;
+		}
 
-        array<ColorValue>^ BaseEffect::GetColorArray( EffectHandle^ param, int count )
-        {
-            return nullptr;
-        }
+		Vector4 BaseEffect::GetVector( EffectHandle^ param )
+		{
+			Vector4 value = Vector4();
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			HRESULT hr = m_Pointer->GetVector( handle, (D3DXVECTOR4*) &value );
+			GraphicsException::CheckHResult( hr );
 
-        Matrix BaseEffect::GetMatrix( EffectHandle^ param )
-        {
-            return Matrix();
-        }
+			return value;
+		}
 
-        array<Matrix>^ BaseEffect::GetMatrixArray( EffectHandle^ param, int count )
-        {
-            return nullptr;
-        }
+		array<Vector4>^ BaseEffect::GetVectorArray( EffectHandle^ param, int count )
+		{
+			return nullptr;
+		}
 
-        Matrix BaseEffect::GetMatrixTranspose( EffectHandle^ param )
-        {
-            return Matrix();
-        }
+		ColorValue BaseEffect::GetColor( EffectHandle^ param )
+		{
+			ColorValue value = ColorValue();
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			HRESULT hr = m_Pointer->GetVector( handle, (D3DXVECTOR4*) &value );
+			GraphicsException::CheckHResult( hr );
 
-        array<Matrix>^ BaseEffect::GetMatrixTransposeArray( EffectHandle^ param, int count )
-        {
-            return nullptr;
-        }
+			return value;
+		}
 
-        String^ BaseEffect::GetValueString( EffectHandle^ param )
+		array<ColorValue>^ BaseEffect::GetColorArray( EffectHandle^ param, int count )
+		{
+			return nullptr;
+		}
+
+		Matrix BaseEffect::GetMatrix( EffectHandle^ param )
+		{
+			Matrix value = Matrix();
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			HRESULT hr = m_Pointer->GetMatrix( handle, (D3DXMATRIX*) &value );
+			GraphicsException::CheckHResult( hr );
+
+			return value;
+		}
+
+		array<Matrix>^ BaseEffect::GetMatrixArray( EffectHandle^ param, int count )
+		{
+			return nullptr;
+		}
+
+		Matrix BaseEffect::GetMatrixTranspose( EffectHandle^ param )
+		{
+			Matrix value = Matrix();
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			HRESULT hr = m_Pointer->GetMatrixTranspose( handle, (D3DXMATRIX*) &value );
+			GraphicsException::CheckHResult( hr );
+
+			return value;
+		}
+
+		array<Matrix>^ BaseEffect::GetMatrixTransposeArray( EffectHandle^ param, int count )
+		{
+			return nullptr;
+		}
+
+		String^ BaseEffect::GetValueString( EffectHandle^ param )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
 			LPCSTR data = 0;
@@ -413,10 +448,10 @@ namespace SlimDX
 			return (gcnew String(data));
 		}
 
-        GraphicsStream^ BaseEffect::GetValue( EffectHandle^ param, int bytes )
-        {
-            return nullptr;
-        }
+		GraphicsStream^ BaseEffect::GetValue( EffectHandle^ param, int bytes )
+		{
+			return nullptr;
+		}
 
 		Effect::Effect( ID3DXEffect* effect ) : BaseEffect( effect )
 		{
