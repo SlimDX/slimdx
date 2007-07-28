@@ -57,18 +57,32 @@ namespace Direct3D10
 		return gcnew SlimDX::Direct3D10::DepthStencilState( state );
 	}
 	
-	void OutputMergerWrapper::SetRenderTargets( RenderTargetView^ renderTargetView )
+	void OutputMergerWrapper::SetTargets( RenderTargetView^ renderTargetView )
 	{
+		SetTargets( nullptr, renderTargetView );
+	}
+	
+	void OutputMergerWrapper::SetTargets( DepthStencilView^ depthStencilView, RenderTargetView^ renderTargetView )
+	{
+		ID3D10DepthStencilView *nativeDSV = depthStencilView == nullptr ? NULL : (ID3D10DepthStencilView*) depthStencilView->InternalPointer;
 		ID3D10RenderTargetView *nativeRTV[] = { (ID3D10RenderTargetView*) renderTargetView->InternalPointer };
-		m_Device->OMSetRenderTargets( 1, nativeRTV, NULL );
+		
+		m_Device->OMSetRenderTargets( 1, nativeRTV, nativeDSV );
 	}
 
-	void OutputMergerWrapper::SetRenderTargets( ... array<RenderTargetView^>^ renderTargets )
+	void OutputMergerWrapper::SetTargets( ... array<RenderTargetView^>^ renderTargets )
 	{
+		SetTargets( nullptr, renderTargets );
+	}
+
+	void OutputMergerWrapper::SetTargets( DepthStencilView^ depthStencilView, ... array<RenderTargetView^>^ renderTargets )
+	{
+		ID3D10DepthStencilView *nativeDSV = depthStencilView == nullptr ? NULL : (ID3D10DepthStencilView*) depthStencilView->InternalPointer;
 		ID3D10RenderTargetView* nativeRTVs[D3D10_SIMULTANEOUS_RENDER_TARGET_COUNT];
+		
 		for( int i = 0; i < renderTargets->Length; ++i )
 			nativeRTVs[ i ] = (ID3D10RenderTargetView*) renderTargets[ i ]->InternalPointer;
-		m_Device->OMSetRenderTargets( renderTargets->Length, nativeRTVs, NULL );
+		m_Device->OMSetRenderTargets( renderTargets->Length, nativeRTVs, nativeDSV );
 	}
 }
 }

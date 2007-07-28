@@ -45,8 +45,10 @@ namespace SlimDX
 				SlimDX::Direct3D10::DepthStencilState^ get();
 			}
 			
-			void SetRenderTargets( RenderTargetView^ renderTargetView );
-			void SetRenderTargets( ... array<RenderTargetView^>^ renderTargetViews );
+			void SetTargets( RenderTargetView^ renderTargetView );
+			void SetTargets( DepthStencilView^ depthStencilView, RenderTargetView^ renderTargetView );
+			void SetTargets( ... array<RenderTargetView^>^ renderTargetViews );
+			void SetTargets( DepthStencilView^ depthStencilView, ... array<RenderTargetView^>^ renderTargetViews );
 		};
 	}
 };
