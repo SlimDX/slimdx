@@ -30,6 +30,7 @@
 #include "EffectResourceVariable.h"
 #include "EffectScalarVariable.h"
 #include "EffectVariable.h"
+#include "EffectVectorVariable.h"
 
 namespace SlimDX
 {
@@ -124,6 +125,13 @@ namespace Direct3D10
 		//@TODO D3D10: Test variable->IsValid() to ensure cast was safe, and throw if it fails.
 		ID3D10EffectScalarVariable* variable = m_Pointer->AsScalar();
 		return gcnew EffectScalarVariable( variable );
+	}
+	
+	EffectVectorVariable^ EffectVariable::AsVector()
+	{
+		//@TODO D3D10: Test variable->IsValid() to ensure cast was safe, and throw if it fails.
+		ID3D10EffectVectorVariable* variable = m_Pointer->AsVector();
+		return gcnew EffectVectorVariable( variable );
 	}
 }
 }
