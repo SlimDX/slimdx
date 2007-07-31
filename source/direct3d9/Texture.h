@@ -189,6 +189,7 @@ namespace SlimDX
 			LockedRect LockRectangle( int level, System::Drawing::Rectangle rect, LockFlags flags );
 			void UnlockRectangle( int level );
 
+			void AddDirtyRect( System::Drawing::Rectangle rect );
 			SurfaceDescription GetLevelDesc( int level );
 			Surface^ GetSurfaceLevel( int level );
 		};
@@ -228,6 +229,10 @@ namespace SlimDX
 			LockedRect LockRectangle( CubeMapFace face, int level, LockFlags flags );
 			LockedRect LockRectangle( CubeMapFace face, int level, System::Drawing::Rectangle rect, LockFlags flags );
 			void UnlockRectangle( CubeMapFace face, int level );
+
+			void AddDirtyRect( CubeMapFace face, System::Drawing::Rectangle rect );
+			SurfaceDescription GetLevelDesc( int level );
+			Surface^ GetCubeMapSurface( CubeMapFace face, int level );
 		};
 
 		public ref class VolumeTexture : public BaseTexture
@@ -264,6 +269,12 @@ namespace SlimDX
 
 			SlimDX::Direct3D::LockedBox LockBox( int level, LockFlags flags );
 			SlimDX::Direct3D::LockedBox LockBox( int level, Box box, LockFlags flags );
+			void UnlockBox( int level );
+
+			void AddDirtyBox( Box box );
+			//TODO: Implement the following
+			//VolumeDescription GetLevelDesc( int level );
+			//Volume^ GetVolumeLevel( int level );
 		};
 	}
 }

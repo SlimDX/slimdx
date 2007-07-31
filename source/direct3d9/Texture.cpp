@@ -177,7 +177,7 @@ namespace Direct3D9
 	Texture^ Texture::FromStream( Device^ device, Stream^ stream, int width, int height, int numLevels,
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
-        return Texture::FromStream( device, stream, 0, width, height, numLevels, usage, format, pool, filter, mipFilter, colorKey );
+		return Texture::FromStream( device, stream, 0, width, height, numLevels, usage, format, pool, filter, mipFilter, colorKey );
 	}
 
 	Texture^ Texture::FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool )
@@ -290,6 +290,13 @@ namespace Direct3D9
 	void Texture::UnlockRectangle( int level )
 	{
 		HRESULT hr = TexturePointer->UnlockRect( level );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Texture::AddDirtyRect( System::Drawing::Rectangle rect )
+	{
+		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
+		HRESULT hr = TexturePointer->AddDirtyRect( &nativeRect );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -506,6 +513,31 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 	}
 
+	void CubeTexture::AddDirtyRect( CubeMapFace face, System::Drawing::Rectangle rect )
+	{
+		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
+		HRESULT hr = TexturePointer->AddDirtyRect( (D3DCUBEMAP_FACES) face, &nativeRect );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	SurfaceDescription CubeTexture::GetLevelDesc( int level )
+	{
+		SurfaceDescription desc;
+		HRESULT hr = TexturePointer->GetLevelDesc( level, (D3DSURFACE_DESC*) &desc );
+		GraphicsException::CheckHResult( hr );
+		return desc;
+	}
+
+	Surface^ CubeTexture::GetCubeMapSurface( CubeMapFace face, int level )
+	{
+		IDirect3DSurface9* surface;
+		HRESULT hr = TexturePointer->GetCubeMapSurface( (D3DCUBEMAP_FACES) face, level, &surface );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+		return gcnew Surface( surface );
+	}
+
 
 	VolumeTexture::VolumeTexture( IDirect3DVolumeTexture9* texture )
 	{
@@ -585,8 +617,8 @@ namespace Direct3D9
 	VolumeTexture^ VolumeTexture::FromStream( Device^ device, Stream^ stream, int width, int height, int depth,
 		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
-        return VolumeTexture::FromStream( device, stream, 0, width, height, depth,
-            numLevels, usage, format, pool, filter, mipFilter, colorKey );
+		return VolumeTexture::FromStream( device, stream, 0, width, height, depth,
+			numLevels, usage, format, pool, filter, mipFilter, colorKey );
 	}
 
 	VolumeTexture^ VolumeTexture::FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool )
@@ -657,6 +689,18 @@ namespace Direct3D9
 		outBox.RowPitch = lockedBox.RowPitch;
 		outBox.SlicePitch = lockedBox.SlicePitch;
 		return outBox;
+	}
+
+	void VolumeTexture::UnlockBox( int level )
+	{
+		HRESULT hr = TexturePointer->UnlockBox( level );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void VolumeTexture::AddDirtyBox( Box box )
+	{
+		HRESULT hr = TexturePointer->AddDirtyBox( (D3DBOX*) &box );
+		GraphicsException::CheckHResult( hr );
 	}
 }
 }
