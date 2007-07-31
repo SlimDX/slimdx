@@ -24,7 +24,7 @@
 using namespace System;
 
 #include "../DirectXObject.h"
-#include "../direct3d/GraphicsStream.h"
+#include "../direct3d/..\DataStream.h"
 #include "../direct3d/LockedRect.h"
 
 #include "Enums.h"

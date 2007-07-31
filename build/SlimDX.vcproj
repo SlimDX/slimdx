@@ -200,6 +200,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\DataStream.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\source\DirectX.cpp"
 				>
 			</File>
@@ -214,10 +218,6 @@
 			<Filter
 				Name="Direct3D"
 				>
-				<File
-					RelativePath="..\source\direct3d\GraphicsStream.cpp"
-					>
-				</File>
 				<File
 					RelativePath="..\source\direct3d\Performance.cpp"
 					>
@@ -548,6 +548,10 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath="..\source\DataStream.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\DirectX.h"
 				>
 			</File>
@@ -576,10 +580,6 @@
 				>
 				<File
 					RelativePath="..\source\direct3d9\CapsEnums.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d\GraphicsStream.h"
 					>
 				</File>
 				<File

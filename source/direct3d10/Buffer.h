@@ -24,7 +24,7 @@
 using namespace System;
 
 #include "../DirectXObject.h"
-#include "../direct3d/GraphicsStream.h"
+#include "../direct3d/..\DataStream.h"
 
 #include "Enums.h"
 #include "Resource.h"
@@ -75,9 +75,9 @@ namespace SlimDX
 			}
 		
 			Buffer( Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
-			Buffer( Device^ device, int sizeInBytes, GraphicsStream^ data, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
+			Buffer( Device^ device, int sizeInBytes, DataStream^ data, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
 			
-			GraphicsStream^ Map( MapMode mode, MapFlags flags );
+			DataStream^ Map( MapMode mode, MapFlags flags );
 			void Unmap();
 		};
 	}
