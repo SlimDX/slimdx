@@ -258,7 +258,8 @@ namespace Direct3D9
 
 	void Device::SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride )
 	{
-		HRESULT hr = m_Pointer->SetStreamSource( stream, streamData->VbPointer, offsetInBytes, stride );
+        IDirect3DVertexBuffer9* vbPointer = streamData != nullptr ? streamData->VbPointer : NULL;
+		HRESULT hr = m_Pointer->SetStreamSource( stream, vbPointer, offsetInBytes, stride );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -307,13 +308,15 @@ namespace Direct3D9
 
 	void Device::SetTexture( int sampler, BaseTexture^ texture )
 	{
-		HRESULT hr = m_Pointer->SetTexture( sampler, texture->BaseTexturePointer );
+        IDirect3DBaseTexture9* texturePointer = texture != nullptr ? texture->BaseTexturePointer : NULL;
+		HRESULT hr = m_Pointer->SetTexture( sampler, texturePointer );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::SetRenderTarget( int rtIndex, Surface^ target )
 	{
-		HRESULT hr = m_Pointer->SetRenderTarget( rtIndex, target->SurfacePointer );
+        IDirect3DSurface9* surfacePointer = target != nullptr ? target->SurfacePointer : NULL;
+		HRESULT hr = m_Pointer->SetRenderTarget( rtIndex, surfacePointer );
 		GraphicsException::CheckHResult( hr );
 	}
 	
