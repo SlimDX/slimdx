@@ -317,6 +317,16 @@ namespace SlimDX
 			GraphicsException::CheckHResult( hr );
 		}
 
+		void BaseEffect::SetValue( EffectHandle^ param, String^ value )
+		{
+			array<unsigned char>^ valueBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( value );
+			pin_ptr<unsigned char> pinnedValue = &valueBytes[0];
+
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			HRESULT hr = m_Pointer->SetString( handle, (LPCSTR) pinnedValue );
+			GraphicsException::CheckHResult( hr );
+		}
+
 		void BaseEffect::SetValueTranspose( EffectHandle^ param, Matrix value )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
@@ -636,16 +646,24 @@ namespace SlimDX
 
 		void Effect::ApplyParameterBlock( EffectHandle^ parameterBlock )
 		{
-			D3DXHANDLE handle = parameterBlock != nullptr ? parameterBlock->InternalHandle : nullptr;
+			D3DXHANDLE handle = parameterBlock != nullptr ? parameterBlock->InternalHandle : NULL;
 			HRESULT hr = EffectPointer->ApplyParameterBlock( handle );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void Effect::DeleteParameterBlock( EffectHandle^ parameterBlock )
 		{
-			D3DXHANDLE handle = parameterBlock != nullptr ? parameterBlock->InternalHandle : nullptr;
+			D3DXHANDLE handle = parameterBlock != nullptr ? parameterBlock->InternalHandle : NULL;
 			HRESULT hr = EffectPointer->DeleteParameterBlock( handle );
 			GraphicsException::CheckHResult( hr );
+		}
+
+		bool Effect::IsParameterUsed( EffectHandle^ parameter, EffectHandle^ technique )
+		{
+			D3DXHANDLE paramHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
+			D3DXHANDLE techHandle = technique != nullptr ? technique->InternalHandle : NULL;
+			BOOL used = EffectPointer->IsParameterUsed( paramHandle, techHandle );
+			return used > 0;
 		}
 
 		void Effect::CommitChanges()
@@ -657,7 +675,7 @@ namespace SlimDX
 		EffectHandle^ Effect::FindNextValidTechnique( EffectHandle^ technique )
 		{
 			D3DXHANDLE handle;
-			D3DXHANDLE parentHandle = technique != nullptr ? technique->InternalHandle : nullptr;
+			D3DXHANDLE parentHandle = technique != nullptr ? technique->InternalHandle : NULL;
 
 			HRESULT hr = EffectPointer->FindNextValidTechnique( parentHandle, &handle );
 			GraphicsException::CheckHResult( hr );
@@ -669,7 +687,7 @@ namespace SlimDX
 
 		bool Effect::ValidateTechnique( EffectHandle^ technique )
 		{
-			D3DXHANDLE handle = technique != nullptr ? technique->InternalHandle : nullptr;
+			D3DXHANDLE handle = technique != nullptr ? technique->InternalHandle : NULL;
 			return FAILED( EffectPointer->ValidateTechnique( handle ) );
 		}
 
@@ -683,7 +701,7 @@ namespace SlimDX
 
 		void Effect::Technique::set( EffectHandle^ value )
 		{
-			D3DXHANDLE handle = value != nullptr ? value->InternalHandle : nullptr;
+			D3DXHANDLE handle = value != nullptr ? value->InternalHandle : NULL;
 			HRESULT hr = EffectPointer->SetTechnique( handle );
 			GraphicsException::CheckHResult( hr );
 		}
