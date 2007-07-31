@@ -205,6 +205,7 @@ namespace SlimDX
 			void SetValue( EffectHandle^ param, Matrix value );
 			void SetValue( EffectHandle^ param, array<Matrix>^ values );
 			void SetValue( EffectHandle^ param, BaseTexture^ value );
+			void SetValue( EffectHandle^ param, String^ value );
 			void SetValueTranspose( EffectHandle^ param, Matrix value );
 			void SetValueTranspose( EffectHandle^ param, array<Matrix>^ values );
 
@@ -278,6 +279,7 @@ namespace SlimDX
 			void ApplyParameterBlock( EffectHandle^ parameterBlock );
 			void DeleteParameterBlock( EffectHandle^ parameterBlock );
 
+			bool IsParameterUsed( EffectHandle^ parameter, EffectHandle^ technique );
 			void CommitChanges();
 
 			EffectHandle^ FindNextValidTechnique( EffectHandle^ technique );
