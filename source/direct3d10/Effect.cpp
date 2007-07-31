@@ -53,7 +53,8 @@ namespace Direct3D10
 		ID3D10EffectTechnique* technique;
 
 		technique = m_Pointer->GetTechniqueByIndex( index );
-		//@TODO D3D10: Throw TechniqueNotFound if not found
+		if( technique == NULL )
+			throw gcnew ArgumentException( String::Format( "Index '{0}' does not identify any technique in the effect.", index ) );
 		return gcnew EffectTechnique( technique );
 	}
 
@@ -64,7 +65,8 @@ namespace Direct3D10
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
 		technique = m_Pointer->GetTechniqueByName( (LPCSTR) pinnedName );
-		//@TODO D3D10: Throw TechniqueNotFound if not fount
+		if( technique == NULL )
+			throw gcnew ArgumentException( String::Format( "Name '{0}' does not identify any technique in the effect.", name ) );
 		return gcnew EffectTechnique( technique );
 	}
 	
@@ -73,7 +75,8 @@ namespace Direct3D10
 		ID3D10EffectVariable* variable;
 		
 		variable = m_Pointer->GetVariableByIndex( index );
-		//@TODO D3D10: Throw VariableNotFound if not found.
+		if( variable == NULL )
+			throw gcnew ArgumentException( String::Format( "Index '{0}' does not identify any variable in the effect.", index ) );
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -84,7 +87,8 @@ namespace Direct3D10
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
 		variable = m_Pointer->GetVariableByName( (LPCSTR) pinnedName );
-		//@TODO D3D10: Throw VariableNotFound if not found.
+		if( variable == NULL )
+			throw gcnew ArgumentException( String::Format( "Name '{0}' does not identify any variable in the effect.", name ) );
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -95,7 +99,8 @@ namespace Direct3D10
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
 		variable = m_Pointer->GetVariableBySemantic( (LPCSTR) pinnedName );
-		//@TODO D3D10: Throw VariableNotFound if not found.
+		if( variable == NULL )
+			throw gcnew ArgumentException( String::Format( "Semantic '{0}' does not identify any variable in the effect.", name ) );
 		return gcnew EffectVariable( variable );
 	}
 	

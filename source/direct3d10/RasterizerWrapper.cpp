@@ -42,7 +42,7 @@ namespace Direct3D10
 	void RasterizerWrapper::State::set( RasterizerState^ value )
 	{
 		if( value == nullptr )
-			m_Device->RSSetState( NULL ); //@TODO: Confirm that this is kosher.
+			m_Device->RSSetState( NULL );
 		else
 			m_Device->RSSetState( value->InternalPointer );
 	}
