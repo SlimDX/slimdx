@@ -293,6 +293,10 @@
 				Name="Direct3D 9"
 				>
 				<File
+					RelativePath="..\source\direct3d9\BaseEffect.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\BaseTexture.cpp"
 					>
 				</File>
@@ -310,6 +314,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Effect.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\EffectCompiler.cpp"
 					>
 				</File>
 				<File
@@ -659,6 +667,10 @@
 				Name="Direct3D 9"
 				>
 				<File
+					RelativePath="..\source\direct3d9\BaseEffect.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\BaseTexture.h"
 					>
 				</File>
@@ -680,6 +692,14 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Effect.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\EffectCompiler.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\EffectHandle.h"
 					>
 				</File>
 				<File
