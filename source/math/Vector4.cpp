@@ -5,8 +5,12 @@
 
 namespace SlimDX
 {
-	Vector4::Vector4( float x, float y, float z, float w ) : X( x ), Y( y ), Z( z ), W( w )
+	Vector4::Vector4( float x, float y, float z, float w )
 	{
+		X = x;
+		Y = y;
+		Z = z;
+		W = w;
 	}
 
 	float Vector4::Length()

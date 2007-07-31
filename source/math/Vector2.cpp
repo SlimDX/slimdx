@@ -5,8 +5,10 @@
 
 namespace SlimDX
 {
-	Vector2::Vector2( float x, float y ) : X( x ), Y( y )
+	Vector2::Vector2( float x, float y )
 	{
+		X = x;
+		Y = y;
 	}
 
 	Vector2 Vector2::operator + ( Vector2 lhs, Vector2 rhs )

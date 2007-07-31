@@ -30,7 +30,8 @@ namespace SlimDX
 	public value class Vector2
 	{
 	public:
-		float X, Y;
+		property float X;
+		property float Y;
 
 		Vector2( float x, float y );
 

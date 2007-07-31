@@ -32,7 +32,10 @@ namespace SlimDX
 	public value class Plane
 	{
 	public:
-		float A, B, C, D;
+		property float A;
+		property float B;
+		property float C;
+		property float D;
 
 		void Normalize();
 		static Plane Transform( Plane coord, Matrix transform );

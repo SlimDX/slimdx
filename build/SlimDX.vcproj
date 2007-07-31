@@ -364,6 +364,10 @@
 					RelativePath="..\source\direct3d9\VertexShader.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d9\Volume.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Direct3D 10"
@@ -732,6 +736,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\VertexShader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Volume.h"
 					>
 				</File>
 			</Filter>

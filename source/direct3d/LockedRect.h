@@ -25,9 +25,10 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
+	ref class GraphicsStream;
+
 	namespace Direct3D
 	{
-		ref class SlimDX::GraphicsStream;
 		
 		[StructLayout( LayoutKind::Sequential )]
 		public value class LockedRect

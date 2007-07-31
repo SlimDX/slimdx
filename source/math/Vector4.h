@@ -30,7 +30,10 @@ namespace SlimDX
 	public value class Vector4
 	{
 	public:
-		float X, Y, Z, W;
+		property float X;
+		property float Y;
+		property float Z;
+		property float W;
 
 		Vector4( float x, float y, float z, float w );
 

@@ -24,6 +24,7 @@
 #include "BaseTexture.h"
 #include "Resource.h"
 #include "Surface.h"
+#include "Volume.h"
 #include "../direct3d/LockedBox.h"
 #include "../direct3d/LockedRect.h"
 #include "../math/Math.h"
@@ -61,18 +62,6 @@ namespace SlimDX
 			/// <param name="stream">Stream containing the image.</param>
 			/// <returns>Information about the image.</returns>
 			static ImageInformation FromStream(Stream^ stream);
-		};
-
-		[StructLayout( LayoutKind::Sequential )]
-		public value class Box
-		{
-		public:
-			int Left;
-			int Top;
-			int Right;
-			int Bottom;
-			int Front;
-			int Back;
 		};
 
 		/// <summary>

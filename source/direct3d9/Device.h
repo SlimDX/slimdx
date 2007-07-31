@@ -53,23 +53,23 @@ namespace SlimDX
 		public ref class PresentParameters
 		{
 		public:
-			int BackBufferWidth;
-			int BackBufferHeight;
-			Format BackBufferFormat;
-			int BackBufferCount;
+			property int BackBufferWidth;
+			property int BackBufferHeight;
+			property Format BackBufferFormat;
+			property int BackBufferCount;
 
-			MultiSampleType MultiSample;
-			int MultiSampleQuality;
+			property MultiSampleType MultiSample;
+			property int MultiSampleQuality;
 
-			SwapEffect SwapEffect;
-			IntPtr DeviceWindowHandle;
-			bool Windowed;
-			bool EnableAutoDepthStencil;
-			Format AutoDepthStencilFormat;
-			PresentFlags PresentFlags;
+			property SwapEffect SwapEffect;
+			property IntPtr DeviceWindowHandle;
+			property bool Windowed;
+			property bool EnableAutoDepthStencil;
+			property Format AutoDepthStencilFormat;
+			property PresentFlags PresentFlags;
 
-			int FullScreenRefreshRateInHz;
-			PresentInterval PresentationInterval;
+			property int FullScreenRefreshRateInHz;
+			property PresentInterval PresentationInterval;
 		};
 
 		ref class IndexBuffer;
