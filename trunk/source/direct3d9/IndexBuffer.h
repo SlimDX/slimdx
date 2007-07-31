@@ -22,7 +22,7 @@
 #pragma once
 
 #include "Resource.h"
-#include "../Direct3D/GraphicsStream.h"
+#include "../Direct3D/..\DataStream.h"
 
 using namespace SlimDX::Direct3D;
 

@@ -29,7 +29,7 @@
 #include "../Utils.h"
 
 #include "Effect.h"
-#include "../Direct3D/GraphicsStream.h"
+#include "../Direct3D/..\DataStream.h"
 #include "ConstantTable.h"
 #include "Device.h"
 

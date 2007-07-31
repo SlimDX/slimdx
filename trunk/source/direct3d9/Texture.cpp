@@ -28,7 +28,7 @@
 
 #include "Device.h"
 #include "D3DX.h"
-#include "../Direct3D/GraphicsStream.h"
+#include "../Direct3D/..\DataStream.h"
 #include "Texture.h"
 
 namespace SlimDX
