@@ -51,7 +51,8 @@ namespace Direct3D10
 	EffectVariable^ EffectTechnique::GetAnnotationByIndex( int index )
 	{
 		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByIndex( index );
-		//@TODO D3D10: Check for null and throw "not found"
+		if( variable == NULL )
+			throw gcnew ArgumentException( String::Format( "Index '{0}' does not identify any annotation on the technique.", index ) );
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -60,14 +61,16 @@ namespace Direct3D10
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByName( (LPCSTR) pinnedName );
-		//@TODO D3D10: Check for null and throw "not found"
+		if( variable == NULL )
+			throw gcnew ArgumentException( String::Format( "Name '{0}' does not identify any annotation on the techinque.", name ) );
 		return gcnew EffectVariable( variable );
 	}
 	
 	EffectPass^ EffectTechnique::GetPassByIndex( int index )
 	{
 		ID3D10EffectPass* pass = m_Pointer->GetPassByIndex( index );
-		//@TODO D3D10: Check for null and throw "not found"
+		if( pass == NULL )
+			throw gcnew ArgumentException( String::Format( "Index '{0}' does not identify any pass in the technique.", index ) );
 		return gcnew EffectPass( pass );
 	}
 	
@@ -76,7 +79,8 @@ namespace Direct3D10
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 		ID3D10EffectPass* pass = m_Pointer->GetPassByName( (LPCSTR) pinnedName );
-		//@TODO D3D10: Check for null and throw "not found"
+		if( pass == NULL )
+			throw gcnew ArgumentException( String::Format( "Name '{0}' does not identify any pass in the technique.", name ) );
 		return gcnew EffectPass( pass );
 	}
 }

@@ -57,7 +57,8 @@ namespace Direct3D10
 	EffectVariable^ EffectVariable::GetAnnotationByIndex( int index )
 	{
 		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByIndex( index );
-		//@TODO D3D10: Check for null and throw "not found"
+		if( variable == NULL || !variable->IsValid() )
+			throw gcnew ArgumentException( String::Format( "Index '{0}' does not identify any annotation on the variable.", index ) );
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -66,7 +67,8 @@ namespace Direct3D10
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByName( (LPCSTR) pinnedName );
-		//@TODO D3D10: Check for null and throw "not found"
+		if( variable == NULL || !variable->IsValid() )
+			throw gcnew ArgumentException( String::Format( "Name '{0}' does not identify any annotation on the variable.", name ) );
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -108,29 +110,33 @@ namespace Direct3D10
 	
 	EffectMatrixVariable^ EffectVariable::AsMatrix()
 	{
-		//@TODO D3D10: Test variable->IsValid() to ensure cast was safe, and throw if it fails.
 		ID3D10EffectMatrixVariable* variable = m_Pointer->AsMatrix();
+		if( variable == NULL || !variable->IsValid() )
+			throw gcnew InvalidOperationException( "The variable is not convertable to a matrix." );
 		return gcnew EffectMatrixVariable( variable );
 	}
 	
 	EffectResourceVariable^ EffectVariable::AsResource()
 	{
-		//@TODO D3D10: Test variable->IsValid() to ensure cast was safe, and throw if it fails.
 		ID3D10EffectShaderResourceVariable* variable = m_Pointer->AsShaderResource();
+		if( variable == NULL || !variable->IsValid() )
+			throw gcnew InvalidOperationException( "The variable is not convertable to a resource." );
 		return gcnew EffectResourceVariable( variable );
 	}
 	
 	EffectScalarVariable^ EffectVariable::AsScalar()
 	{
-		//@TODO D3D10: Test variable->IsValid() to ensure cast was safe, and throw if it fails.
 		ID3D10EffectScalarVariable* variable = m_Pointer->AsScalar();
+		if( variable == NULL || !variable->IsValid() );
+			throw gcnew InvalidOperationException( "The variable is not convertable to a scalar." );
 		return gcnew EffectScalarVariable( variable );
 	}
 	
 	EffectVectorVariable^ EffectVariable::AsVector()
 	{
-		//@TODO D3D10: Test variable->IsValid() to ensure cast was safe, and throw if it fails.
 		ID3D10EffectVectorVariable* variable = m_Pointer->AsVector();
+		if( variable == NULL || !variable->IsValid() )
+			throw gcnew InvalidOperationException( "The variable is not convertable to a resource." );
 		return gcnew EffectVectorVariable( variable );
 	}
 }

@@ -44,7 +44,7 @@ namespace Direct3D10
 	void OutputMergerWrapper::DepthStencilState::set( SlimDX::Direct3D10::DepthStencilState^ value )
 	{
 		if( value == nullptr )
-			m_Device->OMSetDepthStencilState( NULL, 0 ); //@TODO: Confirm that this is kosher.
+			m_Device->OMSetDepthStencilState( NULL, 0 );
 		else
 			m_Device->OMSetDepthStencilState( value->InternalPointer, 0 );
 	}
