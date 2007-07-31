@@ -43,7 +43,7 @@ namespace SlimDX
 			CpuAccessFlags m_AccessFlags;
 			ResourceOptionFlags m_OptionFlags;
 			
-			void Construct( Device^ device, int sizeInBytes, GraphicsStream^ data, ResourceUsage usage, BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
+			void Construct( Device^ device, int sizeInBytes, DataStream^ data, ResourceUsage usage, BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
 		
 		internal:
 			Buffer( ID3D10Buffer* buffer );

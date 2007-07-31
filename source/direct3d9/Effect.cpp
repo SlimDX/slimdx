@@ -458,7 +458,7 @@ namespace SlimDX
 			return gcnew String(data);
 		}
 
-		GraphicsStream^ BaseEffect::GetValue( EffectHandle^ param, int bytes )
+		DataStream^ BaseEffect::GetValue( EffectHandle^ param, int bytes )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
 			void* data = NULL;

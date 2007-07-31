@@ -51,21 +51,21 @@ namespace Direct3D10
 		Construct(device,sizeInBytes,nullptr,usage,bindFlags,accessFlags,optionFlags);
 	}
 	
-	Buffer::Buffer( Device^ device, int sizeInBytes, GraphicsStream^ data, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
+	Buffer::Buffer( Device^ device, int sizeInBytes, DataStream^ data, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
 	{		
 		if( data == nullptr )
 			throw gcnew ArgumentNullException( "data" );
 		Construct(device,sizeInBytes,data,usage,bindFlags,accessFlags,optionFlags);
 	}
 	
-	GraphicsStream^ Buffer::Map( MapMode mode, MapFlags flags )
+	DataStream^ Buffer::Map( MapMode mode, MapFlags flags )
 	{
 		void* mappedPtr;
 		HRESULT hr = ( (ID3D10Buffer*) m_Pointer )->Map( (D3D10_MAP) mode, (UINT) flags, &mappedPtr );
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = mode == MapMode::Read;
-		GraphicsStream^ stream = gcnew GraphicsStream( mappedPtr, SizeInBytes, true, !readOnly );
+		DataStream^ stream = gcnew DataStream( mappedPtr, SizeInBytes, true, !readOnly );
 		return stream;
 	}
 
@@ -74,7 +74,7 @@ namespace Direct3D10
 		( (ID3D10Buffer*) m_Pointer )->Unmap();
 	}
 	
-	void Buffer::Construct( Device^ device, int sizeInBytes, GraphicsStream^ data, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
+	void Buffer::Construct( Device^ device, int sizeInBytes, DataStream^ data, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
 	{	
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );

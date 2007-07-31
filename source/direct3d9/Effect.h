@@ -29,7 +29,7 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	ref class GraphicsStream;
+	ref class DataStream;
 
 	namespace Direct3D9
 	{
@@ -226,7 +226,7 @@ namespace SlimDX
 			//BaseTexture^ GetTexture( EffectHandle^ param );
 
 			String^ GetString( EffectHandle^ param );
-			GraphicsStream^ GetValue( EffectHandle^ param, int bytes );
+			DataStream^ GetValue( EffectHandle^ param, int bytes );
 		};
 
 		public ref class Effect sealed : public BaseEffect

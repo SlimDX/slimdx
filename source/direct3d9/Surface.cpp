@@ -100,7 +100,7 @@ namespace Direct3D9
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		LockedRect outRect;
-		outRect.Data = gcnew GraphicsStream( lockedRect.pBits, 0, true, !readOnly );
+		outRect.Data = gcnew DataStream( lockedRect.pBits, 0, true, !readOnly );
 		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}
@@ -115,7 +115,7 @@ namespace Direct3D9
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		LockedRect outRect;
-		outRect.Data = gcnew GraphicsStream( lockedRect.pBits, 0, true, !readOnly );
+		outRect.Data = gcnew DataStream( lockedRect.pBits, 0, true, !readOnly );
 		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}

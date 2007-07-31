@@ -25,7 +25,7 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	ref class GraphicsStream;
+	ref class DataStream;
 
 	namespace Direct3D
 	{
@@ -35,7 +35,7 @@ namespace SlimDX
 		{
 		public:
 			int Pitch;
-			SlimDX::GraphicsStream^ Data;
+			SlimDX::DataStream^ Data;
 		};
 	}
 }
