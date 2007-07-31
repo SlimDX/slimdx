@@ -259,6 +259,7 @@ namespace Direct3D9
 	{
 		D3DLOCKED_RECT lockedRect;
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
+
 		HRESULT hr = TexturePointer->LockRect( level, &lockedRect, &nativeRect, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
@@ -266,6 +267,7 @@ namespace Direct3D9
 
 		LockedRect outRect;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
+
 		outRect.Data = gcnew GraphicsStream( lockedRect.pBits, 0, true, !readOnly );
 		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
@@ -274,6 +276,7 @@ namespace Direct3D9
 	LockedRect Texture::LockRectangle( int level, LockFlags flags )
 	{
 		D3DLOCKED_RECT lockedRect;
+
 		HRESULT hr = TexturePointer->LockRect( level, &lockedRect, NULL, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )

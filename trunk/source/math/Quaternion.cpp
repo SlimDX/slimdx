@@ -5,15 +5,20 @@
 
 namespace SlimDX
 {
-	Quaternion::Quaternion(float x,float y,float z,float w)
-		: X(x), Y(y), Z(z), W(w)
+	Quaternion::Quaternion(float x, float y, float z, float w)
 	{
+		X = x;
+		Y = y;
+		Z = z;
+		W = w;
 	}
 
 	Quaternion Quaternion::Identity::get()
 	{
 		Quaternion result;
-		result.X = result.Y = result.Z = 0.0f;
+		result.X = 0.0f;
+		result.Y = 0.0f;
+		result.Z = 0.0f;
 		result.W = 1.0f;
 		return result;
 	}

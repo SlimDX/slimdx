@@ -91,7 +91,7 @@ namespace Direct3D9
 		return desc;
 	}
 
-	GraphicsStream^ Surface::LockRectangle( LockFlags flags )
+	LockedRect Surface::LockRectangle( LockFlags flags )
 	{
 		D3DLOCKED_RECT lockedRect;
 
@@ -99,8 +99,25 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		GraphicsStream^ stream = gcnew GraphicsStream( lockedRect.pBits, 0, true, !readOnly );
-		return stream;
+		LockedRect outRect;
+		outRect.Data = gcnew GraphicsStream( lockedRect.pBits, 0, true, !readOnly );
+		outRect.Pitch = lockedRect.Pitch;
+		return outRect;
+	}
+
+	LockedRect Surface::LockRectangle( System::Drawing::Rectangle rect, LockFlags flags )
+	{
+		D3DLOCKED_RECT lockedRect;
+		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
+
+		HRESULT hr = SurfacePointer->LockRect( &lockedRect, &nativeRect, (DWORD) flags );
+		GraphicsException::CheckHResult( hr );
+
+		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
+		LockedRect outRect;
+		outRect.Data = gcnew GraphicsStream( lockedRect.pBits, 0, true, !readOnly );
+		outRect.Pitch = lockedRect.Pitch;
+		return outRect;
 	}
 
 	void Surface::UnlockRectangle()

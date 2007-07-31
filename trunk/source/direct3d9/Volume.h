@@ -21,45 +21,56 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::InteropServices;
-
-#include <d3dx9.h>
+#include "Resource.h"
+#include "../direct3d/LockedBox.h"
 
 namespace SlimDX
 {
-	[StructLayout( LayoutKind::Sequential )]
-	public value class Quaternion
+	ref class GraphicsStream;
+
+	namespace Direct3D9
 	{
-	public:
-		property float X;
-		property float Y;
-		property float Z;
-		property float W;
-
-		static property Quaternion Identity
+		[StructLayout( LayoutKind::Sequential )]
+		public value class Box
 		{
-			Quaternion get();
-		}
+		public:
+			int Left;
+			int Top;
+			int Right;
+			int Bottom;
+			int Front;
+			int Back;
+		};
 
-		Quaternion(float x,float y,float z,float w);
+		[StructLayout( LayoutKind::Sequential )]
+		public value class VolumeDescription
+		{
+			Format Format;
+			ResourceType Type;
+			Usage Usage;
+			Pool Pool;
 
-		float Magnitude();
-		float MagnitudeSquared();
-		
-		void Normalize();
+			int Width;
+			int Height;
+			int Depth;
+		};
 
-		static Quaternion Normalize( Quaternion quat );
-		static Quaternion Conjugate( Quaternion quat );
+		public ref class Volume : public Resource
+		{
+		internal:
+			property IDirect3DVolume9* VolumePointer
+			{
+				IDirect3DVolume9* get() { return (IDirect3DVolume9*) m_Pointer; }
+			}
 
-		static Quaternion RotationAxis( Vector3 axis, float angle );
-		static Quaternion RotationMatrix( Matrix matrix );
-		static Quaternion RotationYawPitchRoll( float yaw, float pitch, float roll );
+		public:
+			Volume( IDirect3DVolume9* volume );
 
-		static Quaternion Invert( Quaternion quat );
+			LockedBox LockBox( LockFlags flags );
+			LockedBox LockBox( Box box, LockFlags flags );
+			void UnlockBox();
 
-		static Quaternion Slerp( Quaternion q1, Quaternion q2, float t);
-
-		static Quaternion operator * (Quaternion lhs, Quaternion rhs);
-	};
+			VolumeDescription GetDesc();
+		};
+	}
 }

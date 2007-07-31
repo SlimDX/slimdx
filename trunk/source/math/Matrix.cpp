@@ -8,7 +8,11 @@ namespace SlimDX
 	Matrix Matrix::Identity::get()
 	{
 		Matrix result;
-		result.M11 = result.M22 = result.M33 = result.M44 = 1;
+		result.M11 = 1.0f;
+		result.M22 = 1.0f;
+		result.M33 = 1.0f;
+		result.M44 = 1.0f;
+
 		return result;
 	}
 

@@ -437,7 +437,7 @@ namespace SlimDX
 			return nullptr;
 		}
 
-		String^ BaseEffect::GetValueString( EffectHandle^ param )
+		String^ BaseEffect::GetString( EffectHandle^ param )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
 			LPCSTR data = 0;
@@ -445,11 +445,16 @@ namespace SlimDX
 			HRESULT hr = m_Pointer->GetString(handle,&data);
 			GraphicsException::CheckHResult( hr );
 
-			return (gcnew String(data));
+			return gcnew String(data);
 		}
 
 		GraphicsStream^ BaseEffect::GetValue( EffectHandle^ param, int bytes )
 		{
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			void* data = NULL;
+
+			HRESULT hr = m_Pointer->GetValue( handle, data, bytes );
+
 			return nullptr;
 		}
 

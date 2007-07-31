@@ -22,6 +22,7 @@
 #pragma once
 
 #include "Resource.h"
+#include "../direct3d/LockedRect.h"
 
 namespace SlimDX
 {
@@ -59,7 +60,8 @@ namespace SlimDX
 			static Surface^ CreateDepthStencil( Device^ device, int width, int height, Format format,
 				MultiSampleType multiSampleType, int multiSampleQuality, bool discard );
 
-			GraphicsStream^ LockRectangle( LockFlags flags );
+			LockedRect LockRectangle( LockFlags flags );
+			LockedRect LockRectangle( System::Drawing::Rectangle rect, LockFlags flags );
 			void UnlockRectangle();
 
 			SurfaceDescription GetDesc();

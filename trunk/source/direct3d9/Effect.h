@@ -222,8 +222,9 @@ namespace SlimDX
 			array<Matrix>^ GetMatrixArray( EffectHandle^ param, int count );
 			Matrix GetMatrixTranspose( EffectHandle^ param );
 			array<Matrix>^ GetMatrixTransposeArray( EffectHandle^ param, int count );
+			//BaseTexture^ GetTexture( EffectHandle^ param );
 
-			String^ GetValueString( EffectHandle^ param );
+			String^ GetString( EffectHandle^ param );
 			GraphicsStream^ GetValue( EffectHandle^ param, int bytes );
 		};
 

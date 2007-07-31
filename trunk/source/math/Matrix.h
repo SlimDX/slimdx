@@ -30,10 +30,10 @@ namespace SlimDX
 	public value class Matrix
 	{
 	public:
-		float M11, M12, M13, M14;
-		float M21, M22, M23, M24;
-		float M31, M32, M33, M34;
-		float M41, M42, M43, M44;
+		property float M11; property float M12; property float M13; property float M14;
+		property float M21; property float M22; property float M23; property float M24;
+		property float M31; property float M32; property float M33; property float M34;
+		property float M41; property float M42; property float M43; property float M44;
 
 		static property Matrix Identity
 		{
