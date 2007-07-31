@@ -36,34 +36,23 @@ namespace Direct3D10
 	{
 		D3D10_BUFFER_DESC desc;
 		buffer->GetDesc(&desc);
-		SizeInBytes = desc.ByteWidth;
-		Usage = (SlimDX::Direct3D10::ResourceUsage) desc.Usage;
-		BindFlags = (SlimDX::Direct3D10::BindFlags) desc.BindFlags;
-		AccessFlags = (SlimDX::Direct3D10::CpuAccessFlags) desc.CPUAccessFlags;
-		OptionFlags = (SlimDX::Direct3D10::ResourceOptionFlags) desc.MiscFlags;
+		
+		m_SizeInBytes = desc.ByteWidth;
+		m_Usage = (SlimDX::Direct3D10::ResourceUsage) desc.Usage;
+		m_BindFlags = (SlimDX::Direct3D10::BindFlags) desc.BindFlags;
+		m_AccessFlags = (SlimDX::Direct3D10::CpuAccessFlags) desc.CPUAccessFlags;
+		m_OptionFlags = (SlimDX::Direct3D10::ResourceOptionFlags) desc.MiscFlags;
 	}
 	
 	Buffer::Buffer( Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
 	{
-		SizeInBytes = sizeInBytes;
-		Usage = usage;
-		BindFlags = bindFlags;
-		AccessFlags = accessFlags;
-		OptionFlags = optionFlags;
-		
 		if( sizeInBytes <= 0 )
 			throw gcnew ArgumentException( "sizeInBytes must be greater than zero.", "sizeInBytes" );
 		Construct(device,sizeInBytes,nullptr,usage,bindFlags,accessFlags,optionFlags);
 	}
 	
 	Buffer::Buffer( Device^ device, int sizeInBytes, GraphicsStream^ data, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
-	{
-		SizeInBytes = sizeInBytes;
-		Usage = usage;
-		BindFlags = bindFlags;
-		AccessFlags = accessFlags;
-		OptionFlags = optionFlags;
-		
+	{		
 		if( data == nullptr )
 			throw gcnew ArgumentNullException( "data" );
 		Construct(device,sizeInBytes,data,usage,bindFlags,accessFlags,optionFlags);
@@ -89,6 +78,12 @@ namespace Direct3D10
 	{	
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
+		
+		m_SizeInBytes = sizeInBytes;
+		m_Usage = usage;
+		m_BindFlags = bindFlags;
+		m_AccessFlags = accessFlags;
+		m_OptionFlags = optionFlags;
 		
 		D3D10_BUFFER_DESC desc;
 		ZeroMemory( &desc, sizeof(desc) );

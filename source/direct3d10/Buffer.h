@@ -37,16 +37,43 @@ namespace SlimDX
 		
 		public ref class Buffer : public Resource
 		{
+			int m_SizeInBytes;
+			ResourceUsage m_Usage;
+			BindFlags m_BindFlags;
+			CpuAccessFlags m_AccessFlags;
+			ResourceOptionFlags m_OptionFlags;
+			
 			void Construct( Device^ device, int sizeInBytes, GraphicsStream^ data, ResourceUsage usage, BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
+		
+		internal:
+			Buffer( ID3D10Buffer* buffer );
 			
 		public:
-			initonly int SizeInBytes;
-			initonly ResourceUsage Usage;
-			initonly BindFlags BindFlags;
-			initonly CpuAccessFlags AccessFlags;
-			initonly ResourceOptionFlags OptionFlags;
+			property int SizeInBytes
+			{
+				int get() { return m_SizeInBytes; }
+			}
+			
+			property ResourceUsage Usage
+			{
+				ResourceUsage get() { return m_Usage; }
+			}
+			
+			property SlimDX::Direct3D10::BindFlags BindFlags
+			{
+				SlimDX::Direct3D10::BindFlags get() { return m_BindFlags; }
+			}
+			
+			property CpuAccessFlags AccessFlags
+			{
+				CpuAccessFlags get() { return m_AccessFlags; }
+			}
+			
+			property ResourceOptionFlags OptionFlags
+			{
+				ResourceOptionFlags get() { return m_OptionFlags; }
+			}
 		
-			Buffer( ID3D10Buffer* buffer );
 			Buffer( Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
 			Buffer( Device^ device, int sizeInBytes, GraphicsStream^ data, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
 			
