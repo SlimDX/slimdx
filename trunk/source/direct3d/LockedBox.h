@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace Direct3D
 	{
-		ref class SlimDX::GraphicsStream;
+		ref class SlimDX::DataStream;
 		
 		[StructLayout( LayoutKind::Sequential )]
 		public value class LockedBox
@@ -35,7 +35,7 @@ namespace SlimDX
 		public:
 			int RowPitch;
 			int SlicePitch;
-			SlimDX::GraphicsStream^ Data;
+			SlimDX::DataStream^ Data;
 		};
 	}
 }

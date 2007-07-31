@@ -26,7 +26,7 @@ using namespace System::IO;
 
 namespace SlimDX
 {
-	public ref class GraphicsStream : public Stream
+	public ref class DataStream : public Stream
 	{
 	private:
 		initonly char* m_Buffer;
@@ -38,7 +38,7 @@ namespace SlimDX
 		initonly bool m_CanWrite;
 
 	internal:
-		GraphicsStream( void* buffer, Int64 sizeInBytes, bool canRead, bool canWrite );
+		DataStream( void* buffer, Int64 sizeInBytes, bool canRead, bool canWrite );
 
 		property char* RawPointer
 		{
@@ -46,10 +46,10 @@ namespace SlimDX
 		}
 	
 	public:
-		GraphicsStream( Int64 sizeInBytes, bool canRead, bool canWrite );
+		DataStream( Int64 sizeInBytes, bool canRead, bool canWrite );
 		
-		~GraphicsStream();
-		!GraphicsStream();
+		~DataStream();
+		!DataStream();
 		
 		virtual void Close() override;
 		virtual Int64 Seek( Int64 offset, SeekOrigin origin ) override;

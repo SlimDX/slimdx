@@ -26,7 +26,7 @@
 
 namespace SlimDX
 {
-	ref class GraphicsStream;
+	ref class DataStream;
 
 	namespace Direct3D9
 	{

@@ -29,7 +29,7 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	GraphicsStream::GraphicsStream( void* buffer, Int64 sizeInBytes, bool canRead, bool canWrite )
+	DataStream::DataStream( void* buffer, Int64 sizeInBytes, bool canRead, bool canWrite )
 	{
 		m_Buffer = (char*) buffer;
 		m_Position = 0;
@@ -41,7 +41,7 @@ namespace SlimDX
 		m_CanWrite = canWrite;
 	}
 	
-	GraphicsStream::GraphicsStream( Int64 sizeInBytes, bool canRead, bool canWrite )
+	DataStream::DataStream( Int64 sizeInBytes, bool canRead, bool canWrite )
 	{
 		m_Buffer = new char[ (int) sizeInBytes ];
 		m_Position = 0;
@@ -53,28 +53,28 @@ namespace SlimDX
 		m_CanWrite = canWrite;
 	}
 
-	GraphicsStream::~GraphicsStream()
+	DataStream::~DataStream()
 	{
 	}
 	
-	GraphicsStream::!GraphicsStream()
+	DataStream::!DataStream()
 	{
 		if(m_OwnsBuffer)
 				delete[] m_Buffer;
 		Stream::Close();
 	}
 
-	char* GraphicsStream::RawPointer::get()
+	char* DataStream::RawPointer::get()
 	{
 		return (m_Buffer);
 	}
 
-	void GraphicsStream::Close()
+	void DataStream::Close()
 	{
-		this->!GraphicsStream();
+		this->!DataStream();
 	}
 
-	Int64 GraphicsStream::Seek( Int64 offset, SeekOrigin origin )
+	Int64 DataStream::Seek( Int64 offset, SeekOrigin origin )
 	{
 		Int64 targetPosition;
 
@@ -104,7 +104,7 @@ namespace SlimDX
 		return m_Position;
 	}
 
-	void GraphicsStream::Write( array<Byte>^ buffer, int offset, int count )
+	void DataStream::Write( array<Byte>^ buffer, int offset, int count )
 	{
 		if( !m_CanWrite )
 			throw gcnew NotSupportedException();
@@ -122,7 +122,7 @@ namespace SlimDX
 	}
 
 	generic<typename T> where T : value class
-	void GraphicsStream::Write( T value )
+	void DataStream::Write( T value )
 	{
 		if( !m_CanWrite )
 			throw gcnew NotSupportedException();
@@ -133,7 +133,7 @@ namespace SlimDX
 	}
 
 	generic<typename T> where T : value class
-	void GraphicsStream::Write( array<T>^ data, int startIndex, int count )
+	void DataStream::Write( array<T>^ data, int startIndex, int count )
 	{
 		if( startIndex < 0 || startIndex > data->Length - 1 )
 			throw gcnew ArgumentOutOfRangeException( "startIndex" );
@@ -149,12 +149,12 @@ namespace SlimDX
 		memcpy( m_Buffer + Position, pinnedData, size );
 	}
 	
-	void GraphicsStream::Write( IntPtr source, Int64 byteCount )
+	void DataStream::Write( IntPtr source, Int64 byteCount )
 	{
 		memcpy( m_Buffer + m_Position, source.ToPointer(), (size_t) byteCount );
 	}
 	
-	int GraphicsStream::Read( array<Byte>^ buffer, int offset, int count )
+	int DataStream::Read( array<Byte>^ buffer, int offset, int count )
 	{
 		if( !m_CanRead )
 			throw gcnew NotSupportedException();
@@ -173,7 +173,7 @@ namespace SlimDX
 	}
 	
 	generic<typename T> where T : value class
-	T GraphicsStream::Read( )
+	T DataStream::Read( )
 	{
 		if( !m_CanRead )
 			throw gcnew NotSupportedException();
@@ -186,7 +186,7 @@ namespace SlimDX
 	}
 	
 	generic<typename T> where T : value class
-	array<T>^ GraphicsStream::Read( int count )
+	array<T>^ DataStream::Read( int count )
 	{
 		if( !m_CanRead )
 			throw gcnew NotSupportedException();
@@ -200,17 +200,17 @@ namespace SlimDX
 		return result;
 	}
 	
-	void GraphicsStream::Flush()
+	void DataStream::Flush()
 	{
-		throw gcnew NotSupportedException("GraphicsStream objects cannot be flushed.");
+		throw gcnew NotSupportedException("DataStream objects cannot be flushed.");
 	}
 
-	void GraphicsStream::SetLength( Int64 value )
+	void DataStream::SetLength( Int64 value )
 	{
-		throw gcnew NotSupportedException("GraphicsStream objects cannot be resized.");
+		throw gcnew NotSupportedException("DataStream objects cannot be resized.");
 	}
 	
-	Int64 GraphicsStream::Length::get()
+	Int64 DataStream::Length::get()
 	{
 		if( m_Size == 0)
 			throw gcnew NotSupportedException("Stream size unknown; cannot query length.");

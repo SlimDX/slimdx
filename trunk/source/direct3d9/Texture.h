@@ -159,7 +159,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="format">File format used to encode the image.</param>
 			/// <returns>A graphics stream containing the texture data.</returns>
-			GraphicsStream^ SaveToStream(ImageFileFormat format);
+			DataStream^ SaveToStream(ImageFileFormat format);
 
 			/// <summary>
 			/// Function to save the texture to a file.

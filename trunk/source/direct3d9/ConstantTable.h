@@ -29,7 +29,7 @@ using namespace SlimDX::Direct3D;
 
 namespace SlimDX
 {
-	ref class GraphicsStream;
+	ref class DataStream;
 
 	namespace Direct3D9
 	{
@@ -84,7 +84,7 @@ namespace SlimDX
             //TODO: The following functions:
             //GetConstantDesc, GetDesc, SetBoolArray (also in BaseEffect)
 			
-			GraphicsStream^ GetBuffer();
+			DataStream^ GetBuffer();
 			int GetBufferSize();
 
 			void SetDefaults();

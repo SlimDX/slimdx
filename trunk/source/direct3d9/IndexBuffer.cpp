@@ -48,14 +48,14 @@ namespace Direct3D9
 		m_Pointer = ib;
 	}
 
-	GraphicsStream^ IndexBuffer::Lock( int offset, int size, LockFlags flags )
+	DataStream^ IndexBuffer::Lock( int offset, int size, LockFlags flags )
 	{
 		void* lockedPtr;
 		HRESULT hr = IbPointer->Lock( offset, size, &lockedPtr, (DWORD) flags );
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		GraphicsStream^ stream = gcnew GraphicsStream( lockedPtr, 0, true, !readOnly );
+		DataStream^ stream = gcnew DataStream( lockedPtr, 0, true, !readOnly );
 		return stream;
 	}
 

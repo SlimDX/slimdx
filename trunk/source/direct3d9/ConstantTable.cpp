@@ -88,14 +88,14 @@ namespace Direct3D9
 		return result;
 	}
 
-	GraphicsStream^ ConstantTable::GetBuffer()
+	DataStream^ ConstantTable::GetBuffer()
 	{
 		DWORD size = m_Pointer->GetBufferSize();
 		void* pointer = m_Pointer->GetBufferPointer();
 		if( pointer == NULL )
 			return nullptr;
 
-		return gcnew GraphicsStream( pointer, size, true, true );
+		return gcnew DataStream( pointer, size, true, true );
 	}
 
 	int ConstantTable::GetBufferSize()

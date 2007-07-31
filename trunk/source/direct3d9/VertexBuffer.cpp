@@ -68,7 +68,7 @@ namespace Direct3D9
 		m_Pointer = vb;
 	}
 
-	GraphicsStream^ VertexBuffer::Lock( int offset, int size, LockFlags flags )
+	DataStream^ VertexBuffer::Lock( int offset, int size, LockFlags flags )
 	{
 		void* lockedPtr;
 		HRESULT hr = VbPointer->Lock( offset, size, &lockedPtr, (DWORD) flags );
@@ -77,11 +77,11 @@ namespace Direct3D9
 		int lockedSize = size == 0 ? SizeInBytes : size;
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		GraphicsStream^ stream = gcnew GraphicsStream( lockedPtr, lockedSize, true, !readOnly );
+		DataStream^ stream = gcnew DataStream( lockedPtr, lockedSize, true, !readOnly );
 		return stream;
 	}
 	
-	GraphicsStream^ VertexBuffer::Lock( int offset, LockFlags flags )
+	DataStream^ VertexBuffer::Lock( int offset, LockFlags flags )
 	{
 		return Lock( offset, 0, flags );
 	}
