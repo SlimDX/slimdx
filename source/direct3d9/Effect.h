@@ -72,7 +72,7 @@ namespace SlimDX
 			String^ Definition;
 		};
 
-		public ref class EffectPool : public DirectXObject<ID3DXEffectPool>
+		public ref class EffectPool sealed : public DirectXObject<ID3DXEffectPool>
 		{
 		public:
 			EffectPool();

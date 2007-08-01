@@ -675,6 +675,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d9\Buffer.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\ConstantTable.h"
 					>
 				</File>

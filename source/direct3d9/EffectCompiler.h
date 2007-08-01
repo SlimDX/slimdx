@@ -21,15 +21,28 @@
 */
 #pragma once
 
-using namespace System::IO;
-using namespace System::Runtime::InteropServices;
-
 #include "Effect.h"
+#include "Buffer.h"
+#include "ConstantTable.h"
 
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		public ref class ShaderBytecode sealed : public BufferWrapper
+		{
+		public:
+			ShaderBytecode( ID3DXBuffer* buffer ) : BufferWrapper( buffer )
+			{ }
+		};
+
+		public ref class EffectBytecode sealed : public BufferWrapper
+		{
+		public:
+			EffectBytecode( ID3DXBuffer* buffer ) : BufferWrapper( buffer )
+			{ }
+		};
+
 		public ref class EffectCompiler sealed : public BaseEffect
 		{
 		internal:
@@ -40,6 +53,15 @@ namespace SlimDX
 
 		public:
 			EffectCompiler( ID3DXEffectCompiler* compiler );
+
+			ShaderBytecode^ CompileShader( EffectHandle^ functionHandle, String^ target, ShaderFlags flags,
+				[Out] String^% compilationErrors, [Out] ConstantTable^% constantTable );
+			ShaderBytecode^ CompileShader( EffectHandle^ functionHandle, String^ target, ShaderFlags flags,
+				[Out] String^% compilationErrors );
+			ShaderBytecode^ CompileShader( EffectHandle^ functionHandle, String^ target, ShaderFlags flags );
+
+			EffectBytecode^ CompileEffect( ShaderFlags flags, [Out] String^% compilationErrors );
+			EffectBytecode^ CompileEffect( ShaderFlags flags );
 
 			void SetLiteral( EffectHandle^ handle, bool literal );
 			bool GetLiteral( EffectHandle^ handle );

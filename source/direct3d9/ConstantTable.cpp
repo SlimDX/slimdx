@@ -37,6 +37,10 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	ConstantTable::ConstantTable( ID3DXConstantTable* table ) : DirectXObject( table )
+	{
+	}
+
 	ConstantTable::ConstantTable( IDirect3DDevice9* device,ID3DXConstantTable* constantTable )
 		: DirectXObject(constantTable), m_Device(device)
 	{
