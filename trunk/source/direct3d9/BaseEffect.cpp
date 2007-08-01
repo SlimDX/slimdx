@@ -195,6 +195,48 @@ namespace SlimDX
 			return outDesc;
 		}
 
+		EffectHandle^ BaseEffect::GetPass( EffectHandle^ handle, int index )
+		{
+			D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
+			D3DXHANDLE pass = m_Pointer->GetPass( nativeHandle, index );
+
+			if( pass == NULL )
+				return nullptr;
+			return gcnew EffectHandle( pass );
+		}
+
+		EffectHandle^ BaseEffect::GetPass( EffectHandle^ handle, String^ name )
+		{
+			array<Byte>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+
+			D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
+			D3DXHANDLE pass = m_Pointer->GetPassByName( nativeHandle, (const char*) pinnedName );
+
+			if( pass == NULL )
+				return nullptr;
+			return gcnew EffectHandle( pass );
+		}
+
+		PassDescription BaseEffect::GetPassDescription( EffectHandle^ handle )
+		{
+			D3DXPASS_DESC desc;
+			D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
+
+			HRESULT hr = m_Pointer->GetPassDesc( nativeHandle, &desc );
+			GraphicsException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				return PassDescription();
+
+			PassDescription passDesc;
+			passDesc.Name = gcnew String( desc.Name );
+			passDesc.Annotations = desc.Annotations;
+			passDesc.VertexShaderFunction = IntPtr( (void*) desc.pVertexShaderFunction );
+			passDesc.PixelShaderFunction = IntPtr( (void*) desc.pPixelShaderFunction );
+
+			return passDesc;
+		}
+
 		EffectDescription BaseEffect::Description::get()
 		{
 			D3DXEFFECT_DESC desc;
@@ -430,6 +472,29 @@ namespace SlimDX
 		array<Matrix>^ BaseEffect::GetMatrixArray( EffectHandle^ param, int count )
 		{
 			return nullptr;
+		}
+
+		BaseTexture^ BaseEffect::GetTexture( EffectHandle^ param )
+		{
+			IDirect3DBaseTexture9* texture = NULL;
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			HRESULT hr = m_Pointer->GetTexture( handle, &texture );
+			GraphicsException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				return nullptr;
+
+			switch( texture->GetType() )
+			{
+			case D3DRTYPE_TEXTURE:
+				return gcnew Texture( (IDirect3DTexture9*) texture );
+			case D3DRTYPE_VOLUMETEXTURE:
+				return gcnew VolumeTexture( (IDirect3DVolumeTexture9*) texture );
+			case D3DRTYPE_CUBETEXTURE:
+				return gcnew CubeTexture( (IDirect3DCubeTexture9*) texture );
+
+			default:
+				return nullptr;
+			}
 		}
 
 		Matrix BaseEffect::GetMatrixTranspose( EffectHandle^ param )

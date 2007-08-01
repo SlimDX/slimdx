@@ -59,6 +59,16 @@ namespace SlimDX
 			int Annotations;
 		};
 
+		public value class PassDescription
+		{
+		public:
+			String^ Name;
+			int Annotations;
+			//TODO: Convert these to something else?
+			IntPtr VertexShaderFunction;
+			IntPtr PixelShaderFunction;
+		};
+
 		public value class ParameterDescription
 		{
 		public:
@@ -100,6 +110,10 @@ namespace SlimDX
 			EffectHandle^ GetTechnique( String^ name );
 			TechniqueDescription GetTechniqueDescription( EffectHandle^ handle );
 
+			EffectHandle^ GetPass( EffectHandle^ technique, int index );
+			EffectHandle^ GetPass( EffectHandle^ technique, String^ name );
+			PassDescription GetPassDescription( EffectHandle^ handle );
+
 			property EffectDescription Description
 			{
 				EffectDescription get();
@@ -136,7 +150,7 @@ namespace SlimDX
 			array<Matrix>^ GetMatrixArray( EffectHandle^ param, int count );
 			Matrix GetMatrixTranspose( EffectHandle^ param );
 			array<Matrix>^ GetMatrixTransposeArray( EffectHandle^ param, int count );
-			//BaseTexture^ GetTexture( EffectHandle^ param );
+			BaseTexture^ GetTexture( EffectHandle^ param );
 
 			String^ GetString( EffectHandle^ param );
 			DataStream^ GetValue( EffectHandle^ param, int bytes );
