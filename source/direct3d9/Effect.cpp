@@ -25,6 +25,7 @@
 
 #include "Device.h"
 #include "Effect.h"
+#include "Buffer.h"
 
 namespace SlimDX
 {
@@ -66,14 +67,13 @@ namespace SlimDX
 			ID3DXEffectPool* pointer;
 			HRESULT hr = D3DXCreateEffectPool( &pointer );
 			if( FAILED( hr ) )
-				throw gcnew InvalidCallException();
+				throw gcnew GraphicsException();
 
 			m_Pointer = pointer;
 		}
 
 		//helper function to resolve array<Macro>^ to D3DXMACRO*
-		//pin down the array before calling this
-		D3DXMACRO* MarshalMacros( array<Macro>^ macros, [Out] array<GCHandle>^% handles )
+		D3DXMACRO* Macro::Marshal( array<Macro>^ macros, [Out] array<GCHandle>^% handles )
 		{
 			if( macros == nullptr )
 			{
@@ -97,6 +97,18 @@ namespace SlimDX
 			}
 
 			return result;
+		}
+
+		void Macro::Unmarshal( D3DXMACRO* macros, array<GCHandle>^ handles )
+		{
+			delete macros;
+			if( handles != nullptr )
+			{
+				for( int i = 0; i < handles->Length; ++i )
+				{
+					handles[i].Free();
+				}
+			}
 		}
 
 		Effect::Effect( ID3DXEffect* effect ) : BaseEffect( effect )
@@ -125,40 +137,17 @@ namespace SlimDX
 			ID3DXInclude* include = includeFile != nullptr ? includeFile->Shim : NULL;
 			ID3DXEffectPool* effectPool = pool != nullptr ? pool->InternalPointer : NULL;
 			array<GCHandle>^ handles;
-			D3DXMACRO* macros = MarshalMacros( preprocessorDefines, handles );
+			D3DXMACRO* macros = Macro::Marshal( preprocessorDefines, handles );
 
 			HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinnedData, memory->Length, macros, include,
 				skipString, (DWORD) flags, effectPool, &effect, &errorBuffer );
 			
 			//clean up after marshaling macros
-			delete macros;
-			if( handles != nullptr )
-			{
-				for( int i = 0; i < handles->Length; ++i )
-				{
-					handles[i].Free();
-				}
-			}
-
+			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			if( errorBuffer != NULL )
-			{
-				compilationErrors = gcnew String( (const char*) errorBuffer->GetBufferPointer() );
-			}
-			else
-			{
-				compilationErrors = String::Empty;
-			}
+			compilationErrors = BufferWrapper::MakeString( errorBuffer );
 			
-			// CheckHResult() is not used because we need to include the compiler errors.
-			if( DirectXException::EnableExceptions && FAILED(hr) )
-			{
-				GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( hr );
-				ex->Data->Add( "CompilationErrors", compilationErrors );
-				throw ex;
-			}
-
-			SetLastError( hr );			
+			GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );	
 			if( FAILED( hr ) )
 				return nullptr;
 
@@ -228,41 +217,17 @@ namespace SlimDX
 			ID3DXInclude* include = includeFile != nullptr ? includeFile->Shim : NULL;
 			ID3DXEffectPool* effectPool = pool != nullptr ? pool->InternalPointer : NULL;
 			array<GCHandle>^ handles;
-			D3DXMACRO* macros = MarshalMacros( preprocessorDefines, handles );
+			D3DXMACRO* macros = Macro::Marshal( preprocessorDefines, handles );
 
 			HRESULT hr = D3DXCreateEffectFromFileEx( device->InternalPointer, pinnedName, macros, include,
 				skipString, (DWORD) flags, effectPool, &effect, &errorBuffer );
 			
 			//clean up after marshaling macros
-			delete macros;
-			if( handles != nullptr )
-			{
-				for( int i = 0; i < handles->Length; ++i )
-				{
-					handles[i].Free();
-				}
-			}
-
+			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			if( errorBuffer != NULL )
-			{
-				compilationErrors = gcnew String( (const char*) errorBuffer->GetBufferPointer() );
-			}
-			else
-			{
-				compilationErrors = String::Empty;
-			}
+			compilationErrors = BufferWrapper::MakeString( errorBuffer );
 			
-			// CheckHResult() is not used because we need to include the compiler errors.
-			if( DirectXException::EnableExceptions && FAILED(hr) )
-			{
-				GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( hr );
-				ex->Data->Add( "CompilationErrors", compilationErrors );
-				throw ex;
-			}
-
-			SetLastError( hr );
-			
+			GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );
 			if( effect == NULL)
 				return nullptr;
 			return gcnew Effect( effect );
