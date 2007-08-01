@@ -27,6 +27,7 @@ using namespace System::Runtime::InteropServices;
 #include "../math/Math.h"
 #include "Device.h"
 #include "BaseEffect.h"
+#include <vcclr.h>
 
 namespace SlimDX
 {
@@ -34,40 +35,49 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
-        //class IncludeShim;
+		class IncludeShim;
 
-        public ref class Include abstract
+		public ref class Include abstract
 		{
-        internal:
-            //IncludeShim* m_Shim;
+		internal:
+			IncludeShim* Shim;
 
-        protected:
-            Include();
+		protected:
+			Include();
 
-        public:
-            virtual void Open() abstract;
-            virtual void Close() abstract;
+		public:
+			~Include();
+			!Include();
+
+			virtual void Open() = 0;
+			virtual void Close() = 0;
 		};
 
-        /*class IncludeShim : public ID3DXInclude
-        {
-        private:
-            gcroot<Include> m_WrappedInterface;
+		class IncludeShim : public ID3DXInclude
+		{
+		private:
+			gcroot<Include^> m_WrappedInterface;
 
-        internal:
-            IncludeShim( Include^ wrappedInterface );
+		public:
+			IncludeShim( Include^ wrappedInterface );
 
-        public:
-            HRESULT WINAPI Open( D3DXINCLUDE_TYPE includeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID* ppData, UINT* pBytes );
-            HRESULT WINAPI Close( LPCVOID pData );
-        };*/
+			HRESULT WINAPI Open( D3DXINCLUDE_TYPE includeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID* ppData, UINT* pBytes );
+			HRESULT WINAPI Close( LPCVOID pData );
+		};
 
 		public value class Macro
 		{
+		public:
+			String^ Name;
+			String^ Definition;
 		};
 
-		public ref class EffectPool
+		public ref class EffectPool : public DirectXObject<ID3DXEffectPool>
 		{
+		public:
+			EffectPool();
+
+			//ID3DXEffectPool has no methods
 		};
 		
 		public ref class Effect sealed : public BaseEffect
