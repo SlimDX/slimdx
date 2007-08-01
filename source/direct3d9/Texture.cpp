@@ -326,7 +326,7 @@ namespace Direct3D9
 	/// </summary>
 	/// <param name="format">File format used to encode the image.</param>
 	/// <returns>A graphics stream containing the texture data.</returns>
-	DataStream^ Texture::SaveToStream(ImageFileFormat format)
+	BufferWrapper^ Texture::Save(ImageFileFormat format)
 	{
 		HRESULT hr;															// Error code.
 		ID3DXBuffer *buffer = NULL;											// Buffer to hold the encoded image.
@@ -344,7 +344,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		return gcnew DataStream(buffer->GetBufferPointer(), 0, true, true);
+		return gcnew BufferWrapper( buffer );
 	}
 
 	/// <summary>
