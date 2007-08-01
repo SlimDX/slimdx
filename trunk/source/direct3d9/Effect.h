@@ -34,9 +34,33 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
-		public ref class Include abstract
+        //class IncludeShim;
+
+        public ref class Include abstract
 		{
+        internal:
+            //IncludeShim* m_Shim;
+
+        protected:
+            Include();
+
+        public:
+            virtual void Open() abstract;
+            virtual void Close() abstract;
 		};
+
+        /*class IncludeShim : public ID3DXInclude
+        {
+        private:
+            gcroot<Include> m_WrappedInterface;
+
+        internal:
+            IncludeShim( Include^ wrappedInterface );
+
+        public:
+            HRESULT WINAPI Open( D3DXINCLUDE_TYPE includeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID* ppData, UINT* pBytes );
+            HRESULT WINAPI Close( LPCVOID pData );
+        };*/
 
 		public value class Macro
 		{
