@@ -45,10 +45,10 @@ namespace SlimDX
 		EffectHandle^ BaseEffect::GetAnnotation( EffectHandle^ handle, String^ name )
 		{
 			array<Byte>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
-			pin_ptr<unsigned char> pinned_name = &nameBytes[0];
+			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
 			D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;
-			D3DXHANDLE annotation = m_Pointer->GetAnnotationByName( parentHandle, (LPCSTR) pinned_name );
+			D3DXHANDLE annotation = m_Pointer->GetAnnotationByName( parentHandle, (LPCSTR) pinnedName );
 
 			if( annotation == NULL )
 				return nullptr;
@@ -68,10 +68,10 @@ namespace SlimDX
 		EffectHandle^ BaseEffect::GetParameter( EffectHandle^ parameter, String^ name )
 		{
 			array<Byte>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
-			pin_ptr<unsigned char> pinned_name = &nameBytes[0];
+			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
 			D3DXHANDLE parentHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
-			D3DXHANDLE handle = m_Pointer->GetParameterByName( parentHandle, (const char*) pinned_name );
+			D3DXHANDLE handle = m_Pointer->GetParameterByName( parentHandle, (const char*) pinnedName );
 
 			if( handle == NULL )
 				return nullptr;
@@ -81,10 +81,10 @@ namespace SlimDX
 		EffectHandle^ BaseEffect::GetParameterBySemantic( EffectHandle^ parameter, String^ semantic )
 		{
 			array<Byte>^ semanticBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( semantic );
-			pin_ptr<unsigned char> pinned_semantic = &semanticBytes[0];
+			pin_ptr<unsigned char> pinnedSemantic = &semanticBytes[0];
 
 			D3DXHANDLE parentHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
-			D3DXHANDLE handle = m_Pointer->GetParameterBySemantic( parentHandle, (const char*) pinned_semantic );
+			D3DXHANDLE handle = m_Pointer->GetParameterBySemantic( parentHandle, (const char*) pinnedSemantic );
 
 			if( handle == NULL )
 				return nullptr;
@@ -136,9 +136,9 @@ namespace SlimDX
 		EffectHandle^ BaseEffect::GetFunction( String^ name )
 		{
 			array<Byte>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
-			pin_ptr<unsigned char> pinned_name = &nameBytes[0];
+			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-			D3DXHANDLE handle = m_Pointer->GetFunctionByName( (const char*) pinned_name );
+			D3DXHANDLE handle = m_Pointer->GetFunctionByName( (const char*) pinnedName );
 
 			if( handle == NULL )
 				return nullptr;
@@ -171,9 +171,9 @@ namespace SlimDX
 		EffectHandle^ BaseEffect::GetTechnique( String^ name )
 		{
 			array<Byte>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
-			pin_ptr<unsigned char> pinned_name = &nameBytes[0];
+			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-			D3DXHANDLE handle = m_Pointer->GetTechniqueByName( (const char*) pinned_name );
+			D3DXHANDLE handle = m_Pointer->GetTechniqueByName( (const char*) pinnedName );
 
 			if( handle == NULL )
 				return nullptr;

@@ -43,6 +43,7 @@ namespace SlimDX
 		Include::!Include()
 		{
 			delete Shim;
+			Shim = NULL;
 		}
 
 		IncludeShim::IncludeShim( Include^ wrappedInterface )
@@ -110,7 +111,7 @@ namespace SlimDX
 		{
 			ID3DXEffect* effect;
 			ID3DXBuffer* errorBuffer;
-			pin_ptr<unsigned char> pinned_data = &memory[0];
+			pin_ptr<unsigned char> pinnedData = &memory[0];
 
 			LPCSTR skipString = NULL;
 			pin_ptr<Byte> pinnedSkip;
@@ -126,7 +127,7 @@ namespace SlimDX
 			array<GCHandle>^ handles;
 			D3DXMACRO* macros = MarshalMacros( preprocessorDefines, handles );
 
-			HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinned_data, memory->Length, macros, include,
+			HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinnedData, memory->Length, macros, include,
 				skipString, (DWORD) flags, effectPool, &effect, &errorBuffer );
 			
 			//clean up after marshaling macros
@@ -157,10 +158,10 @@ namespace SlimDX
 				throw ex;
 			}
 
-			SetLastError( hr );
-			
-			if( effect == NULL)
+			SetLastError( hr );			
+			if( FAILED( hr ) )
 				return nullptr;
+
 			return gcnew Effect( effect );
 		}
 

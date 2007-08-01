@@ -38,6 +38,126 @@ namespace Direct3D9
 		m_Pointer = compiler;
 	}
 
+	ShaderBytecode^ EffectCompiler::CompileShader( EffectHandle^ functionHandle, String^ target, ShaderFlags flags,
+		[Out] String^% compilationErrors, [Out] ConstantTable^% constantTable )
+	{
+		D3DXHANDLE handle = functionHandle != nullptr ? functionHandle->InternalHandle : NULL;
+		array<Byte>^ targetBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( target );
+		pin_ptr<unsigned char> pinnedTarget = &targetBytes[0];
+
+		ID3DXBuffer* errorBuffer;
+		ID3DXBuffer* shader;
+		ID3DXConstantTable* table;
+
+		HRESULT hr = CompilerPointer->CompileShader( handle, (LPCSTR) pinnedTarget, (DWORD) flags, &shader, &errorBuffer, &table );
+
+		//marshal errors if necessary
+		if( errorBuffer != NULL )
+		{
+			compilationErrors = gcnew String( (const char*) errorBuffer->GetBufferPointer() );
+		}
+		else
+		{
+			compilationErrors = String::Empty;
+		}
+			
+		// CheckHResult() is not used because we need to include the compiler errors.
+		if( DirectXException::EnableExceptions && FAILED(hr) )
+		{
+			GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( hr );
+			ex->Data->Add( "CompilationErrors", compilationErrors );
+			throw ex;
+		}
+
+		SetLastError( hr );		
+		if( FAILED( hr ) )
+			return nullptr;
+
+		constantTable = gcnew ConstantTable( table );
+		return gcnew ShaderBytecode( shader );
+	}
+
+	ShaderBytecode^ EffectCompiler::CompileShader( EffectHandle^ functionHandle, String^ target, ShaderFlags flags,
+		[Out] String^% compilationErrors )
+	{
+		D3DXHANDLE handle = functionHandle != nullptr ? functionHandle->InternalHandle : NULL;
+		array<Byte>^ targetBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( target );
+		pin_ptr<unsigned char> pinnedTarget = &targetBytes[0];
+
+		ID3DXBuffer* errorBuffer;
+		ID3DXBuffer* shader;
+
+		HRESULT hr = CompilerPointer->CompileShader( handle, (LPCSTR) pinnedTarget, (DWORD) flags, &shader, &errorBuffer, NULL );
+
+		//marshal errors if necessary
+		if( errorBuffer != NULL )
+		{
+			compilationErrors = gcnew String( (const char*) errorBuffer->GetBufferPointer() );
+		}
+		else
+		{
+			compilationErrors = String::Empty;
+		}
+			
+		// CheckHResult() is not used because we need to include the compiler errors.
+		if( DirectXException::EnableExceptions && FAILED(hr) )
+		{
+			GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( hr );
+			ex->Data->Add( "CompilationErrors", compilationErrors );
+			throw ex;
+		}
+
+		SetLastError( hr );		
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew ShaderBytecode( shader );
+	}
+
+	ShaderBytecode^ EffectCompiler::CompileShader( EffectHandle^ functionHandle, String^ target, ShaderFlags flags )
+	{
+		String^ errors;
+		return CompileShader( functionHandle, target, flags, errors );
+	}
+
+	EffectBytecode^ EffectCompiler::CompileEffect( ShaderFlags flags, [Out] String^% compilationErrors )
+	{
+		ID3DXBuffer* effect;
+		ID3DXBuffer* errorBuffer;
+
+		HRESULT hr = CompilerPointer->CompileEffect( (DWORD) flags, &effect, &errorBuffer );
+
+		//marshal errors if necessary
+		if( errorBuffer != NULL )
+		{
+			compilationErrors = gcnew String( (const char*) errorBuffer->GetBufferPointer() );
+		}
+		else
+		{
+			compilationErrors = String::Empty;
+		}
+			
+		// CheckHResult() is not used because we need to include the compiler errors.
+		if( DirectXException::EnableExceptions && FAILED(hr) )
+		{
+			GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( hr );
+			ex->Data->Add( "CompilationErrors", compilationErrors );
+			throw ex;
+		}
+
+		SetLastError( hr );		
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew EffectBytecode( effect );
+	}
+
+	EffectBytecode^ EffectCompiler::CompileEffect( ShaderFlags flags )
+	{
+		String^ errors;
+		return CompileEffect( flags, errors );
+	}
+
 	void EffectCompiler::SetLiteral( EffectHandle^ handle, bool literal )
 	{
 		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;

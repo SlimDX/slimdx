@@ -72,6 +72,7 @@ namespace SlimDX
 			IDirect3DDevice9* m_Device;
 
 		public:
+			ConstantTable( ID3DXConstantTable* table );
 			ConstantTable( IDirect3DDevice9* device, ID3DXConstantTable* constantTable );
 			~ConstantTable();
 			
