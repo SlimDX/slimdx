@@ -38,6 +38,67 @@ namespace Direct3D9
 		m_Pointer = compiler;
 	}
 
+	EffectCompiler::EffectCompiler( String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
+	{
+		InitThis( System::Text::ASCIIEncoding::ASCII->GetBytes( data ), defines, includeFile, flags, errors );
+	}
+
+	EffectCompiler::EffectCompiler( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
+	{
+		InitThis( data, defines, includeFile, flags, errors );
+	}
+
+	void EffectCompiler::InitThis( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
+	{
+		ID3DXEffectCompiler* compiler;
+		ID3DXBuffer* errorBuffer;
+		pin_ptr<Byte> pinnedData = &data[0];
+
+		ID3DXInclude* include = includeFile != nullptr ? includeFile->Shim : NULL;
+		array<GCHandle>^ handles;
+		D3DXMACRO* macros = Macro::Marshal( defines, handles );
+
+		HRESULT hr = D3DXCreateEffectCompiler( (LPCSTR) pinnedData, data->Length, macros, include,
+			(DWORD) flags, &compiler, &errorBuffer );
+		
+		//clean up after marshaling macros
+		Macro::Unmarshal( macros, handles );
+		//marshal errors if necessary
+		errors = BufferWrapper::MakeString( errorBuffer );
+		
+		GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException();
+
+		m_Pointer = compiler;
+	}
+
+	EffectCompiler^ EffectCompiler::FromFile( String^ fileName, array<Macro>^ defines,
+		Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
+	{
+		ID3DXEffectCompiler* compiler;
+		ID3DXBuffer* errorBuffer;
+		pin_ptr<const wchar_t> pinnedFile = PtrToStringChars( fileName );
+
+		ID3DXInclude* include = includeFile != nullptr ? includeFile->Shim : NULL;
+		array<GCHandle>^ handles;
+		D3DXMACRO* macros = Macro::Marshal( defines, handles );
+
+		HRESULT hr = D3DXCreateEffectCompilerFromFile( (LPCTSTR) pinnedFile, macros, include,
+			(DWORD) flags, &compiler, &errorBuffer );
+		
+		//clean up after marshaling macros
+		Macro::Unmarshal( macros, handles );
+		//marshal errors if necessary
+		errors = BufferWrapper::MakeString( errorBuffer );
+		
+		GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew EffectCompiler( compiler );
+	}
+
 	ShaderBytecode^ EffectCompiler::CompileShader( EffectHandle^ functionHandle, String^ target, ShaderFlags flags,
 		[Out] String^% compilationErrors, [Out] ConstantTable^% constantTable )
 	{

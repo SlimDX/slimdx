@@ -67,6 +67,11 @@ namespace SlimDX
 
 		public value class Macro
 		{
+		internal:
+			//helper function to resolve array<Macro>^ to D3DXMACRO*
+			static D3DXMACRO* Marshal( array<Macro>^ macros, [Out] array<GCHandle>^% handles );
+			static void Unmarshal( D3DXMACRO* macros, array<GCHandle>^ handles );
+
 		public:
 			String^ Name;
 			String^ Definition;

@@ -78,6 +78,7 @@ namespace SlimDX
 		public ref class BaseEffect abstract : public DirectXObject<ID3DXBaseEffect>
 		{
 		protected:
+			BaseEffect() { }
 			BaseEffect( ID3DXBaseEffect* pointer ) : DirectXObject( pointer )
 			{ }
 

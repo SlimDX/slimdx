@@ -45,6 +45,9 @@ namespace SlimDX
 
 		public ref class EffectCompiler sealed : public BaseEffect
 		{
+		private:
+			void InitThis( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
+
 		internal:
 			property ID3DXEffectCompiler* CompilerPointer
 			{
@@ -53,6 +56,11 @@ namespace SlimDX
 
 		public:
 			EffectCompiler( ID3DXEffectCompiler* compiler );
+			EffectCompiler( String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
+			EffectCompiler( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
+
+			static EffectCompiler^ FromFile( String^ fileName, array<Macro>^ defines,
+				Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
 
 			ShaderBytecode^ CompileShader( EffectHandle^ functionHandle, String^ target, ShaderFlags flags,
 				[Out] String^% compilationErrors, [Out] ConstantTable^% constantTable );

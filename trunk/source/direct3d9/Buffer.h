@@ -29,6 +29,19 @@ namespace SlimDX
 	{
 		public ref class BufferWrapper abstract : public DirectXObject<ID3DXBuffer>
 		{
+		internal:
+			static String^ MakeString( ID3DXBuffer* buffer )
+			{
+				if( buffer != NULL )
+				{
+					return gcnew String( (const char*) buffer->GetBufferPointer() );
+				}
+				else
+				{
+					return String::Empty;
+				}
+			}
+
 		public:
 			BufferWrapper( ID3DXBuffer* buffer ) : DirectXObject<ID3DXBuffer>( buffer )
 			{ }
@@ -36,6 +49,11 @@ namespace SlimDX
 			DataStream^ GetData()
 			{
 				return gcnew DataStream( m_Pointer->GetBufferPointer(), m_Pointer->GetBufferSize(), true, true );
+			}
+
+			virtual String^ ToString() override
+			{
+				return gcnew String( (const char*) m_Pointer->GetBufferPointer() );
 			}
 		};
 	}
