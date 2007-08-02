@@ -22,8 +22,8 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#if D3DX_SDK_VERSION != 34
-#error You are not compiling against the June 2007 SDK. Change the linker settings to delay load the correct DLLs and update this code.
+#if D3DX_SDK_VERSION != 35
+#error You are not compiling against the August 2007 SDK. Change the linker settings to delay load the correct DLLs and update this code.
 #endif
 
 #include "GraphicsException.h"
