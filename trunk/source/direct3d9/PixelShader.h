@@ -33,6 +33,7 @@ namespace SlimDX
 			ConstantTable^ m_ConstantTable;
 
 		public:
+			PixelShader( IDirect3DPixelShader9* pixelShader );
 			PixelShader( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable );
 			
 			~PixelShader()

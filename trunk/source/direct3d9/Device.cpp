@@ -269,6 +269,12 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 	}
 
+	void Device::MultiplyTransform( TransformState state, Matrix value )
+	{
+		HRESULT hr = m_Pointer->MultiplyTransform( (D3DTRANSFORMSTATETYPE) state, (const D3DMATRIX*) &value );
+		GraphicsException::CheckHResult( hr );
+	}
+
 	void Device::SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride )
 	{
 		IDirect3DVertexBuffer9* vbPointer = streamData != nullptr ? streamData->VbPointer : NULL;
@@ -744,6 +750,83 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 		
 		return displayMode;
+	}
+
+	void Device::EvictManagedResources()
+	{
+		HRESULT hr = m_Pointer->EvictManagedResources();
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::SetDialogBoxMode( bool enableDialogs )
+	{
+		HRESULT hr = m_Pointer->SetDialogBoxMode( enableDialogs );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::LightEnable( int lightIndex, bool enable )
+	{
+		HRESULT hr = m_Pointer->LightEnable( lightIndex, enable );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	bool Device::GetLightEnable( int lightIndex )
+	{
+		BOOL enabled = FALSE;
+		HRESULT hr = m_Pointer->GetLightEnable( lightIndex, &enabled );
+		GraphicsException::CheckHResult( hr );
+
+		return enabled > 0;
+	}
+
+	void Device::SetCursorPosition( int x, int y, bool immediateUpdate )
+	{
+		DWORD flags = immediateUpdate ? D3DCURSOR_IMMEDIATE_UPDATE : 0;
+		m_Pointer->SetCursorPosition( x, y, flags );
+	}
+
+	void Device::SetCursorProperties( int hotspotX, int hotspotY, Surface^ cursorBitmap )
+	{
+		IDirect3DSurface9* surface = cursorBitmap != nullptr ? cursorBitmap->SurfacePointer : NULL;
+		HRESULT hr = m_Pointer->SetCursorProperties( hotspotX, hotspotY, surface );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::CurrentTexturePalette::set( int value )
+	{
+		HRESULT hr = m_Pointer->SetCurrentTexturePalette( value );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	int Device::CurrentTexturePalette::get()
+	{
+		unsigned int palette = 0;
+		HRESULT hr = m_Pointer->GetCurrentTexturePalette( &palette );
+		GraphicsException::CheckHResult( hr );
+
+		return (int) palette;
+	}
+
+	VertexShader^ Device::GetVertexShader()
+	{
+		IDirect3DVertexShader9* vs;
+		HRESULT hr = m_Pointer->GetVertexShader( &vs );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew VertexShader( vs );
+	}
+
+	PixelShader^ Device::GetPixelShader()
+	{
+		IDirect3DPixelShader9* ps;
+		HRESULT hr = m_Pointer->GetPixelShader( &ps );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew PixelShader( ps );
 	}
 }
 }

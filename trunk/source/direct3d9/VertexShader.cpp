@@ -35,8 +35,21 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	VertexShader::VertexShader( IDirect3DVertexShader9* vertexShader ) : DirectXObject( vertexShader )
+	{
+		if( vertexShader == NULL )
+			throw gcnew ArgumentNullException( "vertexShader" );
+
+		m_ConstantTable = nullptr;
+	}
+
 	VertexShader::VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable ) : DirectXObject( vertexShader )
 	{
+		if( vertexShader == NULL )
+			throw gcnew ArgumentNullException( "vertexShader" );
+		if( constantTable == NULL )
+			throw gcnew ArgumentNullException( "constantTable" );
+
 		IDirect3DDevice9* device;
 		HRESULT hr = vertexShader->GetDevice(&device);
 		GraphicsException::CheckHResult( hr );

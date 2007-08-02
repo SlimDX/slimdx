@@ -178,11 +178,18 @@ namespace SlimDX
 				void set( float value );
 			}
 
+			property int CurrentTexturePalette
+			{
+				int get();
+				void set( int value );
+			}
+
 			// --- Methods ---
 
 			bool IsQuerySupported( QueryType type );
-			int ValidateDevice();
+			void EvictManagedResources();
 
+			int ValidateDevice();
 			void TestCooperativeLevel();
 			CooperativeLevel CheckCooperativeLevel();
 			void Reset( PresentParameters^ presentParams );
@@ -199,6 +206,8 @@ namespace SlimDX
 			Surface^ GetRenderTarget( int index );
 			SwapChain^ GetSwapChain( int swapChainIndex );
 			IndexBuffer^ GetIndices();
+			VertexShader^ GetVertexShader();
+			PixelShader^ GetPixelShader();
 			DisplayMode GetDisplayMode( int swapChain );
 
 			generic<typename T> where T : value class
@@ -226,7 +235,18 @@ namespace SlimDX
 			void SetSamplerState( int sampler, SamplerState type, TextureAddress texAddr );
 			void SetSamplerState( int sampler, SamplerState type, TextureFilter texFilter );
 
+			void LightEnable( int lightIndex, bool enable );
+			bool GetLightEnable( int lightIndex );
+			//void SetLight( int lightIndex, Light lightData );
+			//Light GetLight( int lightIndex );
+
+			void SetCursorPosition( int x, int y, bool immediateUpdate );
+			void SetCursorPosition( System::Drawing::Point position, bool immediateUpdate ) { SetCursorPosition( position.X, position.Y, immediateUpdate ); }
+			void SetCursorProperties( int hotspotX, int hotspotY, Surface^ cursorBitmap );
+			void SetCursorProperties( System::Drawing::Point position, Surface^ cursorBitmap ) { SetCursorProperties( position.X, position.Y, cursorBitmap ); }
+
 			void SetTransform( TransformState state, Matrix value );
+			void MultiplyTransform( TransformState state, Matrix value );
 			void SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride );
 			void SetStreamSourceFreq( int stream, int frequency );
 			void SetTexture( int sampler, BaseTexture^ texture );
@@ -234,6 +254,7 @@ namespace SlimDX
 			void SetPixelShader( PixelShader^ pixelShader );
 			void SetVertexShader( VertexShader^ vertexShader );			
 			void SetDepthStencilSurface( Surface^ target );
+			void SetDialogBoxMode( bool enableDialogs );
 
 			void SetVertexShaderConstant( int startRegister, array<bool>^ data, int offset, int count );
 			void SetVertexShaderConstant( int startRegister, array<float>^ data, int offset, int count );
