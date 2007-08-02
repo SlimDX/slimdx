@@ -33,7 +33,8 @@ namespace SlimDX
 			ConstantTable^ m_ConstantTable;
 
 		public:
-			VertexShader( IDirect3DVertexShader9* VertexShader, ID3DXConstantTable* constantTable );
+			VertexShader( IDirect3DVertexShader9* vertexShader );
+			VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable );
 			
 			~VertexShader()
 			{
