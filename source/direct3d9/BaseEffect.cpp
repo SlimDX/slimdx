@@ -411,7 +411,16 @@ namespace SlimDX
 
 		array<int>^ BaseEffect::GetIntArray( EffectHandle^ param, int count )
 		{
-			return nullptr;
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			array<int>^ data = gcnew array<int>( count );
+			pin_ptr<int> pinnedData = &data[0];
+
+			HRESULT hr = m_Pointer->GetIntArray( handle, pinnedData, count );
+			GraphicsException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				return nullptr;
+
+			return data;
 		}
 
 		float BaseEffect::GetFloat( EffectHandle^ param )
@@ -426,7 +435,16 @@ namespace SlimDX
 
 		array<float>^ BaseEffect::GetFloatArray( EffectHandle^ param, int count )
 		{
-			return nullptr;
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			array<float>^ data = gcnew array<float>( count );
+			pin_ptr<float> pinnedData = &data[0];
+
+			HRESULT hr = m_Pointer->GetFloatArray( handle, pinnedData, count );
+			GraphicsException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				return nullptr;
+
+			return data;
 		}
 
 		Vector4 BaseEffect::GetVector( EffectHandle^ param )
@@ -441,7 +459,16 @@ namespace SlimDX
 
 		array<Vector4>^ BaseEffect::GetVectorArray( EffectHandle^ param, int count )
 		{
-			return nullptr;
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			array<Vector4>^ data = gcnew array<Vector4>( count );
+			pin_ptr<Vector4> pinnedData = &data[0];
+
+			HRESULT hr = m_Pointer->GetVectorArray( handle, (D3DXVECTOR4*) pinnedData, count );
+			GraphicsException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				return nullptr;
+
+			return data;
 		}
 
 		ColorValue BaseEffect::GetColor( EffectHandle^ param )
@@ -456,7 +483,16 @@ namespace SlimDX
 
 		array<ColorValue>^ BaseEffect::GetColorArray( EffectHandle^ param, int count )
 		{
-			return nullptr;
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			array<ColorValue>^ data = gcnew array<ColorValue>( count );
+			pin_ptr<ColorValue> pinnedData = &data[0];
+
+			HRESULT hr = m_Pointer->GetVectorArray( handle, (D3DXVECTOR4*) pinnedData, count );
+			GraphicsException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				return nullptr;
+
+			return data;
 		}
 
 		Matrix BaseEffect::GetMatrix( EffectHandle^ param )
@@ -471,7 +507,16 @@ namespace SlimDX
 
 		array<Matrix>^ BaseEffect::GetMatrixArray( EffectHandle^ param, int count )
 		{
-			return nullptr;
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			array<Matrix>^ data = gcnew array<Matrix>( count );
+			pin_ptr<Matrix> pinnedData = &data[0];
+
+			HRESULT hr = m_Pointer->GetMatrixArray( handle, (D3DXMATRIX*) pinnedData, count );
+			GraphicsException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				return nullptr;
+
+			return data;
 		}
 
 		BaseTexture^ BaseEffect::GetTexture( EffectHandle^ param )
@@ -509,7 +554,16 @@ namespace SlimDX
 
 		array<Matrix>^ BaseEffect::GetMatrixTransposeArray( EffectHandle^ param, int count )
 		{
-			return nullptr;
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			array<Matrix>^ data = gcnew array<Matrix>( count );
+			pin_ptr<Matrix> pinnedData = &data[0];
+
+			HRESULT hr = m_Pointer->GetMatrixTransposeArray( handle, (D3DXMATRIX*) pinnedData, count );
+			GraphicsException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				return nullptr;
+
+			return data;
 		}
 
 		String^ BaseEffect::GetString( EffectHandle^ param )
@@ -526,11 +580,14 @@ namespace SlimDX
 		DataStream^ BaseEffect::GetValue( EffectHandle^ param, int bytes )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			void* data = NULL;
+			void* data = new char[bytes];
 
 			HRESULT hr = m_Pointer->GetValue( handle, data, bytes );
+			GraphicsException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				return nullptr;
 
-			return nullptr;
+			return gcnew DataStream( data, bytes, true, true );
 		}
 	}
 }
