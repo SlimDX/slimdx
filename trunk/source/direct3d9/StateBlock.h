@@ -21,39 +21,31 @@
 */
 #pragma once
 
-#include <windows.h>
-
-using namespace System;
-using namespace System::IO;
-using namespace System::Diagnostics;
+#include "../DirectXObject.h"
 
 namespace SlimDX
 {
-	ref class DirectXBase;
-
-	ref class Utils sealed
+	namespace Direct3D9
 	{
-	public:
-		static void ReportNotDisposed( SlimDX::DirectXBase^ obj );
-		static void MarkDisposed( bool %disposed, Object^ obj );
+		ref class Device;
 
-		/// <summary>
-		/// Function to convert a GDI+ rectangle to a standard RECT.
-		/// </summary>
-		/// <param name="rect">Rectangle to convert.</param>
-		/// <param name="outrect">Output rectangle.</param>
-		static void ConvertRect(Drawing::Rectangle rect, RECT *outrect);
+		public enum class StateBlockType : Int32
+		{
+			All = D3DSBT_ALL,
+			PixelState = D3DSBT_PIXELSTATE,
+			VertexState = D3DSBT_VERTEXSTATE,
+		};
 
-		/// <summary>
-		/// Function to convert a standard RECT to a GDI+ rectangle.
-		/// </summary>
-		/// <param name="rect">RECT to convert.</param>
-		/// <returns>A GDI+ rectangle structure.</returns>
-		static Drawing::Rectangle ConvertRect(RECT rect);
+		public ref class StateBlock : DirectXObject<IDirect3DStateBlock9>
+		{
+		public:
+			StateBlock( IDirect3DStateBlock9* stateBlock );
+			StateBlock( Device^ device, StateBlockType type );
 
-		static array<Byte>^ ReadStream( Stream^ stream, int readLength );
+			void Apply();
+			void Capture();
 
-		generic<typename T>
-		static void CheckArrayBounds( array<T>^ data, int offset, int% count );
-	};
+			Device^ GetDevice();
+		};
+	}
 }

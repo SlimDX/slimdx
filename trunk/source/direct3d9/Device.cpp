@@ -37,6 +37,7 @@
 #include "VertexShader.h"
 #include "Query.h"
 #include "SwapChain.h"
+#include "StateBlock.h"
 #include "D3DX.h"
 
 namespace SlimDX
@@ -131,10 +132,22 @@ namespace Direct3D9
 	}
 
 	void Device::DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minVertexIndex, 
-					int numVertices, int startIndex, int primCount )
+		int numVertices, int startIndex, int primCount )
 	{
 		HRESULT hr = m_Pointer->DrawIndexedPrimitive( (D3DPRIMITIVETYPE) primitiveType, baseVertexIndex,
 			minVertexIndex, numVertices, startIndex, primCount );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	generic<typename S, typename T>
+	void Device::DrawIndexedUserPrimitives( PrimitiveType primitiveType, int minVertexIndex, int numVertices, int primitiveCount,
+		array<S>^ indexData, Format indexDataFormat, array<T>^ vertexData, int vertexStride )
+	{
+		pin_ptr<S> pinnedIndices = &indexData[0];
+		pin_ptr<T> pinnedVertices = &vertexData[0];
+
+		HRESULT hr = m_Pointer->DrawIndexedPrimitiveUP( (D3DPRIMITIVETYPE) primitiveType, minVertexIndex, numVertices,
+			primitiveCount, pinnedIndices, (D3DFORMAT) indexDataFormat, pinnedVertices, vertexStride );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -484,16 +497,6 @@ namespace Direct3D9
 		return GetRenderState<int>( state );
 	}
 
-	System::Drawing::Rectangle Device::GetScissorRect()
-	{
-		RECT nativeRect = {0};
-		HRESULT hr = m_Pointer->GetScissorRect( &nativeRect );
-		GraphicsException::CheckHResult( hr );
-
-		return System::Drawing::Rectangle( nativeRect.left, nativeRect.top,
-			nativeRect.right - nativeRect.left, nativeRect.bottom - nativeRect.top );
-	}
-
 	bool Device::GetSoftwareVertexProcessing()
 	{
 		return m_Pointer->GetSoftwareVertexProcessing() > 0;
@@ -551,6 +554,196 @@ namespace Direct3D9
 			return nullptr;
 
 		return gcnew IndexBuffer( indices );
+	}
+
+	void Device::ProcessVertices( int sourceStartIndex, int destIndex, int vertexCount, VertexBuffer^ destBuffer,
+		SlimDX::Direct3D9::VertexDeclaration^ vertexDecl, LockFlags flags )
+	{
+		IDirect3DVertexBuffer9* vb = destBuffer->VbPointer;
+		IDirect3DVertexDeclaration9* decl = vertexDecl != nullptr ? vertexDecl->InternalPointer : NULL;
+
+		HRESULT hr = m_Pointer->ProcessVertices( sourceStartIndex, destIndex, vertexCount, vb, decl, (DWORD) flags );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::SetVertexShaderConstant( int startRegister, array<bool>^ data, int offset, int count )
+	{
+		array<BOOL>^ boolData = gcnew array<BOOL>( data->Length );
+		data->CopyTo( boolData, data->Length );
+		pin_ptr<BOOL> pinnedData = &boolData[0];
+
+		Utils::CheckArrayBounds( data, offset, count );
+		HRESULT hr = m_Pointer->SetVertexShaderConstantB( startRegister, pinnedData + offset, count );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::SetVertexShaderConstant( int startRegister, array<float>^ data, int offset, int count )
+	{
+		pin_ptr<float> pinnedData = &data[0];
+
+		Utils::CheckArrayBounds( data, offset, count );
+		HRESULT hr = m_Pointer->SetVertexShaderConstantF( startRegister, pinnedData + offset, count );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::SetVertexShaderConstant( int startRegister, array<int>^ data, int offset, int count )
+	{
+		pin_ptr<int> pinnedData = &data[0];
+
+		Utils::CheckArrayBounds( data, offset, count );
+		HRESULT hr = m_Pointer->SetVertexShaderConstantI( startRegister, pinnedData + offset, count );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::SetPixelShaderConstant( int startRegister, array<bool>^ data, int offset, int count )
+	{
+		array<BOOL>^ boolData = gcnew array<BOOL>( data->Length );
+		data->CopyTo( boolData, data->Length );
+		pin_ptr<BOOL> pinnedData = &boolData[0];
+
+		Utils::CheckArrayBounds( data, offset, count );
+		HRESULT hr = m_Pointer->SetPixelShaderConstantB( startRegister, pinnedData + offset, count );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::SetPixelShaderConstant( int startRegister, array<float>^ data, int offset, int count )
+	{
+		pin_ptr<float> pinnedData = &data[0];
+
+		Utils::CheckArrayBounds( data, offset, count );
+		HRESULT hr = m_Pointer->SetPixelShaderConstantF( startRegister, pinnedData + offset, count );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::SetPixelShaderConstant( int startRegister, array<int>^ data, int offset, int count )
+	{
+		pin_ptr<int> pinnedData = &data[0];
+
+		Utils::CheckArrayBounds( data, offset, count );
+		HRESULT hr = m_Pointer->SetPixelShaderConstantI( startRegister, pinnedData + offset, count );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::StretchRect( Surface^ source, System::Drawing::Rectangle sourceRect, Surface^ dest,
+		System::Drawing::Rectangle destRect, TextureFilter filter )
+	{
+		RECT nativeSourceRect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
+		RECT nativeDestRect = { destRect.Left, destRect.Top, destRect.Right, destRect.Bottom };
+
+		HRESULT hr = m_Pointer->StretchRect( source->SurfacePointer, &nativeSourceRect, dest->SurfacePointer,
+			&nativeDestRect, (D3DTEXTUREFILTERTYPE) filter );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::UpdateSurface( Surface^ source, System::Drawing::Rectangle sourceRect,
+		Surface^ dest, System::Drawing::Point destPoint )
+	{
+		RECT nativeSourceRect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
+		POINT nativeDestPoint = { destPoint.X, destPoint.Y };
+
+		HRESULT hr = m_Pointer->UpdateSurface( source->SurfacePointer, &nativeSourceRect,
+			dest->SurfacePointer, &nativeDestPoint );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::UpdateTexture( BaseTexture^ sourceTexture, BaseTexture^ destTexture )
+	{
+		HRESULT hr = m_Pointer->UpdateTexture( sourceTexture->BaseTexturePointer, destTexture->BaseTexturePointer );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::ColorFill( Surface^ destSurface, System::Drawing::Rectangle destRect, int color )
+	{
+		RECT nativeDestRect = { destRect.Left, destRect.Top, destRect.Right, destRect.Bottom };
+
+		HRESULT hr = m_Pointer->ColorFill( destSurface->SurfacePointer, &nativeDestRect, (D3DCOLOR) color );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::ColorFill( Surface^ destSurface, System::Drawing::Rectangle destRect, System::Drawing::Color color )
+	{
+		ColorFill( destSurface, destRect, color.ToArgb() );
+	}
+
+	void Device::BeginStateBlock()
+	{
+		HRESULT hr = m_Pointer->BeginStateBlock();
+		GraphicsException::CheckHResult( hr );
+	}
+
+	StateBlock^ Device::EndStateBlock()
+	{
+		IDirect3DStateBlock9* stateBlock;
+		HRESULT hr = m_Pointer->EndStateBlock( &stateBlock );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew StateBlock( stateBlock );
+	}
+
+	int Device::SwapChainCount::get()
+	{
+		return m_Pointer->GetNumberOfSwapChains();
+	}
+
+	float Device::NPatchMode::get()
+	{
+		return m_Pointer->GetNPatchMode();
+	}
+
+	void Device::NPatchMode::set( float value )
+	{
+		HRESULT hr = m_Pointer->SetNPatchMode( value );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::DrawTriPatch( int handle, array<float>^ numSegments, TriPatchInfo info )
+	{
+		pin_ptr<float> pinnedSegments = &numSegments[0];
+
+		HRESULT hr = m_Pointer->DrawTriPatch( handle, pinnedSegments, (D3DTRIPATCH_INFO*) &info );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::DrawTriPatch( int handle, array<float>^ numSegments )
+	{
+		pin_ptr<float> pinnedSegments = &numSegments[0];
+
+		HRESULT hr = m_Pointer->DrawTriPatch( handle, pinnedSegments, NULL );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::DrawRectPatch( int handle, array<float>^ numSegments, RectPatchInfo info )
+	{
+		pin_ptr<float> pinnedSegments = &numSegments[0];
+
+		HRESULT hr = m_Pointer->DrawRectPatch( handle, pinnedSegments, (D3DRECTPATCH_INFO*) &info );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::DrawRectPatch( int handle, array<float>^ numSegments )
+	{
+		pin_ptr<float> pinnedSegments = &numSegments[0];
+
+		HRESULT hr = m_Pointer->DrawRectPatch( handle, pinnedSegments, NULL );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::DeletePatch( int handle )
+	{
+		HRESULT hr = m_Pointer->DeletePatch( handle );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	DisplayMode Device::GetDisplayMode( int swapChain )
+	{
+		DisplayMode displayMode;
+
+		HRESULT hr = m_Pointer->GetDisplayMode( swapChain, (D3DDISPLAYMODE*) &displayMode );
+		GraphicsException::CheckHResult( hr );
+		
+		return displayMode;
 	}
 }
 }

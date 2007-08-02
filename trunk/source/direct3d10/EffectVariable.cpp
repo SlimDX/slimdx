@@ -127,7 +127,7 @@ namespace Direct3D10
 	EffectScalarVariable^ EffectVariable::AsScalar()
 	{
 		ID3D10EffectScalarVariable* variable = m_Pointer->AsScalar();
-		if( variable == NULL || !variable->IsValid() );
+		if( variable == NULL || !variable->IsValid() )
 			throw gcnew InvalidOperationException( "The variable is not convertable to a scalar." );
 		return gcnew EffectScalarVariable( variable );
 	}

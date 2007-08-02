@@ -42,14 +42,34 @@ namespace SlimDX
 		public value class Material
 		{
 		public:
-			ColorValue Diffuse;
-			ColorValue Ambient;
-			ColorValue Specular;
-			ColorValue Emissive;
-			float Power;
+			property ColorValue Diffuse;
+			property ColorValue Ambient;
+			property ColorValue Specular;
+			property ColorValue Emissive;
+			property float Power;
 		};
 
 		[StructLayout( LayoutKind::Sequential )]
+		public value class TriPatchInfo
+		{
+			int StartVertexOffset;
+			int NumVertices;
+			Basis Basis;
+			Degree Degree;
+		};
+
+		[StructLayout( LayoutKind::Sequential )]
+		public value class RectPatchInfo
+		{
+			int StartVertexOffsetWidth;
+			int StartVertexOffsetHeight;
+			int Width;
+			int Height;
+			int Stride;
+			Basis Basis;
+			Degree Degree;
+		};
+
 		public ref class PresentParameters
 		{
 		public:
@@ -79,6 +99,7 @@ namespace SlimDX
 		ref class PixelShader;
 		ref class VertexShader;
 		ref class SwapChain;
+		ref class StateBlock;
 
 		public ref class Device : public DirectXObject<IDirect3DDevice9>
 		{
@@ -146,6 +167,17 @@ namespace SlimDX
 				void set( bool show );
 			}
 
+			property int SwapChainCount
+			{
+				int get();
+			}
+
+			property float NPatchMode
+			{
+				float get();
+				void set( float value );
+			}
+
 			// --- Methods ---
 
 			bool IsQuerySupported( QueryType type );
@@ -167,13 +199,13 @@ namespace SlimDX
 			Surface^ GetRenderTarget( int index );
 			SwapChain^ GetSwapChain( int swapChainIndex );
 			IndexBuffer^ GetIndices();
+			DisplayMode GetDisplayMode( int swapChain );
 
 			generic<typename T> where T : value class
 				T GetRenderState( RenderState state );
 			int GetRenderState( RenderState state );
 
 			Capabilities GetDeviceCaps();
-			System::Drawing::Rectangle GetScissorRect();
 			bool GetSoftwareVertexProcessing();
 			void GetStreamSource( int stream, [Out] VertexBuffer^% streamData, [Out] int% offsetBytes, [Out] int% stride );
 			int GetStreamSourceFreq( int stream );
@@ -203,12 +235,50 @@ namespace SlimDX
 			void SetVertexShader( VertexShader^ vertexShader );			
 			void SetDepthStencilSurface( Surface^ target );
 
+			void SetVertexShaderConstant( int startRegister, array<bool>^ data, int offset, int count );
+			void SetVertexShaderConstant( int startRegister, array<float>^ data, int offset, int count );
+			void SetVertexShaderConstant( int startRegister, array<int>^ data, int offset, int count );
+			void SetVertexShaderConstant( int startRegister, array<bool>^ data ) { SetVertexShaderConstant( startRegister, data, 0, 0 ); }
+			void SetVertexShaderConstant( int startRegister, array<float>^ data ) { SetVertexShaderConstant( startRegister, data, 0, 0 ); }
+			void SetVertexShaderConstant( int startRegister, array<int>^ data ) { SetVertexShaderConstant( startRegister, data, 0, 0 ); }
+
+			void SetPixelShaderConstant( int startRegister, array<bool>^ data, int offset, int count );
+			void SetPixelShaderConstant( int startRegister, array<float>^ data, int offset, int count );
+			void SetPixelShaderConstant( int startRegister, array<int>^ data, int offset, int count );
+			void SetPixelShaderConstant( int startRegister, array<bool>^ data ) { SetPixelShaderConstant( startRegister, data, 0, 0 ); }
+			void SetPixelShaderConstant( int startRegister, array<float>^ data ) { SetPixelShaderConstant( startRegister, data, 0, 0 ); }
+			void SetPixelShaderConstant( int startRegister, array<int>^ data ) { SetPixelShaderConstant( startRegister, data, 0, 0 ); }
+
+			void BeginStateBlock();
+			StateBlock^ EndStateBlock();
+
+			void ProcessVertices( int sourceStartIndex, int destIndex, int vertexCount, VertexBuffer^ destBuffer,
+				SlimDX::Direct3D9::VertexDeclaration^ vertexDecl, LockFlags flags );
+
 			void DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount );
 			void DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minVertexIndex, 
 				int numVertices, int startIndex, int primCount );
 
 			generic<typename T> where T : value class
-				void DrawUserPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount, array<T>^ data );
+			void DrawUserPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount, array<T>^ data );
+
+			generic<typename S, typename T> where S : value class where T : value class
+			void DrawIndexedUserPrimitives( PrimitiveType primitiveType, int minVertexIndex, int numVertices, int primitiveCount,
+				array<S>^ indexData, Format indexDataFormat, array<T>^ vertexData, int vertexStride );
+
+			void DrawTriPatch( int handle, array<float>^ numSegments, TriPatchInfo info );
+			void DrawTriPatch( int handle, array<float>^ numSegments );
+			void DrawRectPatch( int handle, array<float>^ numSegments, RectPatchInfo info );
+			void DrawRectPatch( int handle, array<float>^ numSegments );
+			void DeletePatch( int handle );
+
+			void StretchRect( Surface^ source, System::Drawing::Rectangle sourceRect, Surface^ dest,
+				System::Drawing::Rectangle destRect, TextureFilter filter );
+			void UpdateSurface( Surface^ source, System::Drawing::Rectangle sourceRect,
+				Surface^ dest, System::Drawing::Point destPoint );
+			void UpdateTexture( BaseTexture^ sourceTexture, BaseTexture^ destTexture );
+			void ColorFill( Surface^ destSurface, System::Drawing::Rectangle destRect, int color );
+			void ColorFill( Surface^ destSurface, System::Drawing::Rectangle destRect, System::Drawing::Color color );
 		};
 	}
 }

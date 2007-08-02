@@ -89,4 +89,16 @@ namespace SlimDX
 
 		return buffer;
 	}
+
+	generic<typename T>
+	void Utils::CheckArrayBounds( array<T>^ data, int offset, int% count )
+	{
+		if( count == 0 )
+			count = data->Length - offset;
+
+		if( offset < 0 || offset >= data->Length )
+			throw gcnew ArgumentOutOfRangeException( "offset" );
+		if( count < 0 || count > data->Length - offset )
+			throw gcnew ArgumentOutOfRangeException( "count" );
+	}
 }
