@@ -23,7 +23,6 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../Utils.h"
 #include "../DirectXObject.h"
 #include "../math/Math.h"
 
