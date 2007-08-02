@@ -19,41 +19,58 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include <windows.h>
+#include <d3d9.h>
+#include <d3dx9.h>
 
-using namespace System;
-using namespace System::IO;
-using namespace System::Diagnostics;
+#include "Device.h"
+#include "StateBlock.h"
 
 namespace SlimDX
 {
-	ref class DirectXBase;
-
-	ref class Utils sealed
+namespace Direct3D9
+{
+	StateBlock::StateBlock( IDirect3DStateBlock9* stateBlock )
 	{
-	public:
-		static void ReportNotDisposed( SlimDX::DirectXBase^ obj );
-		static void MarkDisposed( bool %disposed, Object^ obj );
+		if( stateBlock == NULL )
+			throw gcnew ArgumentNullException( "stateBlock" );
 
-		/// <summary>
-		/// Function to convert a GDI+ rectangle to a standard RECT.
-		/// </summary>
-		/// <param name="rect">Rectangle to convert.</param>
-		/// <param name="outrect">Output rectangle.</param>
-		static void ConvertRect(Drawing::Rectangle rect, RECT *outrect);
+		m_Pointer = stateBlock;
+	}
 
-		/// <summary>
-		/// Function to convert a standard RECT to a GDI+ rectangle.
-		/// </summary>
-		/// <param name="rect">RECT to convert.</param>
-		/// <returns>A GDI+ rectangle structure.</returns>
-		static Drawing::Rectangle ConvertRect(RECT rect);
+	StateBlock::StateBlock( Device^ device, StateBlockType type )
+	{
+		IDirect3DStateBlock9* stateBlock;
 
-		static array<Byte>^ ReadStream( Stream^ stream, int readLength );
+		HRESULT hr = device->InternalPointer->CreateStateBlock( (D3DSTATEBLOCKTYPE) type, &stateBlock );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException();
 
-		generic<typename T>
-		static void CheckArrayBounds( array<T>^ data, int offset, int% count );
-	};
+		m_Pointer = stateBlock;
+	}
+
+	void StateBlock::Apply()
+	{
+		HRESULT hr = m_Pointer->Apply();
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void StateBlock::Capture()
+	{
+		HRESULT hr = m_Pointer->Apply();
+		GraphicsException::CheckHResult( hr );
+	}
+
+	Device^ StateBlock::GetDevice()
+	{
+		IDirect3DDevice9* device;
+		HRESULT hr = m_Pointer->GetDevice( &device );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Device( device );
+	}
+}
 }

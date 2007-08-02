@@ -349,6 +349,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d9\StateBlock.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\Surface.cpp"
 					>
 				</File>
@@ -740,6 +744,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Sprite.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\StateBlock.h"
 					>
 				</File>
 				<File

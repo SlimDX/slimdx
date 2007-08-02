@@ -312,7 +312,10 @@ namespace SlimDX
 			None = 0,
 			NoOverwrite = D3DLOCK_NOOVERWRITE,
 			NoSystemLock = D3DLOCK_NOSYSLOCK,
-			ReadOnly = D3DLOCK_READONLY
+			ReadOnly = D3DLOCK_READONLY,
+
+			//this just exists for ProcessVertices
+			DoNotCopyData = D3DPV_DONOTCOPYDATA,
 		};
 
 		public enum class DeclarationMethod : Byte
@@ -900,6 +903,21 @@ namespace SlimDX
 			Shared = D3DX_PARAMETER_SHARED,
 			Literal = D3DX_PARAMETER_LITERAL,
 			Annotation = D3DX_PARAMETER_ANNOTATION,
+		};
+
+		public enum class Basis : Int32
+		{
+			Bezier = D3DBASIS_BEZIER,
+			BSpline = D3DBASIS_BSPLINE,
+			CatmullRom = D3DBASIS_CATMULL_ROM,
+		};
+
+		public enum class Degree : Int32
+		{
+			Linear = D3DDEGREE_LINEAR,
+			Quadratic = D3DDEGREE_QUADRATIC,
+			Cubic = D3DDEGREE_CUBIC,
+			Quintic = D3DDEGREE_QUINTIC,
 		};
 	}
 }
