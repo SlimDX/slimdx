@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../direct3d/MiscTypes.h"
+#include "../direct3d/ColorValue.h"
 
 #include "ResourceView.h"
 

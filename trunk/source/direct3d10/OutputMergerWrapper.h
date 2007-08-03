@@ -23,10 +23,13 @@
 
 using namespace System;
 
+#include "../Direct3D/ColorValue.h"
+
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
+		ref class BlendState;
 		ref class DepthStencilState;
 		ref class DepthStencilView;
 		ref class RenderTargetView;
@@ -43,6 +46,30 @@ namespace SlimDX
 			{
 				void set( SlimDX::Direct3D10::DepthStencilState^ value );
 				SlimDX::Direct3D10::DepthStencilState^ get();
+			}
+			
+			property int DepthStencilReference
+			{
+				void set( int value );
+				int get();
+			}
+			
+			property SlimDX::Direct3D10::BlendState^ BlendState
+			{
+				void set( SlimDX::Direct3D10::BlendState^ value );
+				SlimDX::Direct3D10::BlendState^ get();
+			}
+			
+			property Direct3D::ColorValue BlendFactor
+			{
+				void set( Direct3D::ColorValue value );
+				Direct3D::ColorValue get();
+			}
+			
+			property int BlendSampleMask
+			{
+				void set( int value );
+				int get();
 			}
 			
 			void SetTargets( RenderTargetView^ renderTargetView );

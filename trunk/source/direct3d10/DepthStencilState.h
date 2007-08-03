@@ -26,6 +26,7 @@ using namespace System;
 #include "../DirectXObject.h"
 
 #include "Enums.h"
+#include "DepthStencilStateDescription.h"
 
 namespace SlimDX
 {
@@ -35,99 +36,86 @@ namespace SlimDX
 		
 		public ref class DepthStencilState : DirectXObject<ID3D10DepthStencilState>
 		{
-			bool m_EnableDepth;
-			DepthWriteMask m_DepthWriteMask;
-			Comparison m_DepthComparison;
-			bool m_EnableStencil;
-			Byte m_StencilReadMask;
-			Byte m_StencilWriteMask;
-			Comparison m_FrontStencilComparison;
-			StencilOperation m_FrontStencilFailureOp;
-			StencilOperation m_FrontStencilDepthFailureOp;
-			StencilOperation m_FrontStencilPassOp;
-			Comparison m_BackStencilComparison;
-			StencilOperation m_BackStencilFailureOp;
-			StencilOperation m_BackStencilDepthFailureOp;
-			StencilOperation m_BackStencilPassOp;
+			DepthStencilStateDescription^ m_Description;
 		
 		internal:
 			DepthStencilState( ID3D10DepthStencilState* state );
 		
 		public:
-			property bool EnableDepth
+			property bool DepthEnabled
 			{
-				bool get() { return m_EnableDepth; }
+				bool get() { return m_Description->DepthEnabled; }
 			}
 			
 			property SlimDX::Direct3D10::DepthWriteMask DepthWriteMask
 			{
-				SlimDX::Direct3D10::DepthWriteMask get() { return m_DepthWriteMask; }
+				SlimDX::Direct3D10::DepthWriteMask get() { return m_Description->DepthWriteMask; }
 			}
 			
 			property Comparison DepthComparison
 			{
-				Comparison get() { return m_DepthComparison; }
+				Comparison get() { return m_Description->DepthComparison; }
 			}
 			
-			property bool EnableStencil
+			property bool StencilEnabled
 			{
-				bool get() { return m_EnableStencil; }
+				bool get() { return m_Description->StencilEnabled; }
 			}
 			
 			property Byte StencilReadMask
 			{
-				Byte get() { return m_StencilReadMask; }
+				Byte get() { return m_Description->StencilReadMask; }
 			}
 			
 			property Byte StencilWriteMask
 			{
-				Byte get() { return m_StencilWriteMask; }
+				Byte get() { return m_Description->StencilWriteMask; }
 			}
 			
 			property Comparison FrontStencilComparison
 			{
-				Comparison get() { return m_FrontStencilComparison; }
+				Comparison get() { return m_Description->FrontStencilComparison; }
 			}
 			
 			property StencilOperation FrontStencilFailureOperation
 			{
-				StencilOperation get() { return m_FrontStencilFailureOp; }
+				StencilOperation get() { return m_Description->FrontStencilFailureOperation; }
 			}
 			
 			property StencilOperation FrontStencilDepthFailureOperation
 			{
-				StencilOperation get() { return m_FrontStencilDepthFailureOp; }
+				StencilOperation get() { return m_Description->FrontStencilDepthFailureOperation; }
 			}
 			
 			property StencilOperation FrontStencilPassOperation
 			{
-				StencilOperation get() { return m_FrontStencilPassOp; }
+				StencilOperation get() { return m_Description->FrontStencilPassOperation; }
 			}
 			
 			property Comparison BackStencilComparison
 			{
-				Comparison get() { return m_BackStencilComparison; }
+				Comparison get() { return m_Description->BackStencilComparison; }
 			}
 			
 			property StencilOperation BackStencilFailureOperation
 			{
-				StencilOperation get() { return m_BackStencilFailureOp; }
+				StencilOperation get() { return m_Description->BackStencilFailureOperation; }
 			}
 			
 			property StencilOperation BackStencilDepthFailureOperation
 			{
-				StencilOperation get() { return m_BackStencilDepthFailureOp; }
+				StencilOperation get() { return m_Description->BackStencilDepthFailureOperation; }
 			}
 			
 			property StencilOperation BackStencilPassOperation
 			{
-				StencilOperation get() { return m_BackStencilPassOp; }
+				StencilOperation get() { return m_Description->BackStencilPassOperation; }
 			}
 			
-			DepthStencilState( Device^ device, bool enableDepth, SlimDX::Direct3D10::DepthWriteMask depthWriteMask, Comparison depthComparison,
-				bool enableStencil, Byte stencilReadMask, Byte stencilWriteMask,
-				Comparison frontComparison, StencilOperation frontFailOp, StencilOperation frontDepthFailOp, StencilOperation frontPassOp,
-				Comparison backComparison, StencilOperation backFailOp, StencilOperation backDepthFailOp, StencilOperation backPassOp );
+			
+			DepthStencilState( Device^ device, DepthStencilStateDescription^ description );
+			
+			DepthStencilStateDescription^ CloneDescription();
 		};
 	}
 };

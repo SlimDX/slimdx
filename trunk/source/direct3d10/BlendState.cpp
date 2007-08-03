@@ -19,34 +19,52 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-using namespace System;
+#include <d3d10.h>
+#include <d3dx10.h>
 
-#include "../direct3d/Viewport.h"
+#include "GraphicsException.h"
+
+#include "BlendState.h"
+#include "Device.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+namespace Direct3D10
+{ 
+	BlendState::BlendState( ID3D10BlendState* state ) : DirectXObject( state )
 	{
-		ref class RasterizerState;
+		if( state == NULL )
+			throw gcnew ArgumentNullException( "state" );
 		
-		public ref class RasterizerWrapper
-		{
-			ID3D10Device* m_Device;
-			
-		internal:
-			RasterizerWrapper( ID3D10Device* device );
-			
-		public:
-			property RasterizerState^ State
-			{
-				void set( RasterizerState^ value );
-				RasterizerState^ get();
-			}
-		
-			void SetViewports( Direct3D::Viewport viewport );
-			void SetViewports( ... array<Direct3D::Viewport>^ viewports );
-		};
+		D3D10_BLEND_DESC desc;
+		state->GetDesc( &desc );
+		m_Description = gcnew BlendStateDescription( desc );
 	}
-};
+	
+	BlendState::BlendState( Device^ device, BlendStateDescription^ description )
+	{
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+		if( description == nullptr )
+			throw gcnew ArgumentNullException( "description" );
+	
+		D3D10_BLEND_DESC desc;
+		m_Description = description;
+		m_Description->FillNativeObject( desc );
+		
+		ID3D10BlendState* state;
+		HRESULT hr = device->DevicePointer->CreateBlendState( &desc, &state );
+		GraphicsException::CheckHResult( hr );
+		
+		m_Pointer = state;
+	}
+	
+	BlendStateDescription^ BlendState::CloneDescription()
+	{
+		D3D10_BLEND_DESC desc;
+		m_Pointer->GetDesc( &desc );
+		return gcnew BlendStateDescription( desc );
+	}
+}
+}

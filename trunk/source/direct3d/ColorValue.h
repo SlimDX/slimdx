@@ -80,13 +80,5 @@ namespace SlimDX
 				return (int) value;
 			}
 		};
-
-		public value class Viewport
-		{
-		public:
-			int X, Y;
-			int Width, Height;
-			float MinZ, MaxZ;
-		};
 	}
 }

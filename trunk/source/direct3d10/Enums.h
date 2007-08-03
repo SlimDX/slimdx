@@ -54,25 +54,35 @@ namespace SlimDX
 		};
 		
 		public enum class BlendOption : Int32
-		{//@TODO D3D10: These names kind of suck, should they be expanded to .NET guideline-compliance?
-		 //             Also what's up with "src1" crap for dual output blending? Learn about that.
+		{
 			Zero = D3D10_BLEND_ZERO,
 			One = D3D10_BLEND_ONE,
-			SrcColor = D3D10_BLEND_SRC_COLOR,
-			InvSrcColor = D3D10_BLEND_INV_SRC_COLOR,
-			SrcAlpha = D3D10_BLEND_SRC_ALPHA,
-			InvSrcAlpha = D3D10_BLEND_INV_SRC_ALPHA,
-			DestAlpha = D3D10_BLEND_DEST_ALPHA,
-			InvDestAlpha = D3D10_BLEND_INV_DEST_ALPHA,
-			DestColor = D3D10_BLEND_DEST_COLOR,
-			InvDestColor = D3D10_BLEND_INV_DEST_COLOR,
-			SrcAlphaSaturate = D3D10_BLEND_SRC_ALPHA_SAT,
+			SourceColor = D3D10_BLEND_SRC_COLOR,
+			InverseSourceColor = D3D10_BLEND_INV_SRC_COLOR,
+			SourceAlpha = D3D10_BLEND_SRC_ALPHA,
+			InverseSourceAlpha = D3D10_BLEND_INV_SRC_ALPHA,
+			DestinationAlpha = D3D10_BLEND_DEST_ALPHA,
+			InverseDestinationAlpha = D3D10_BLEND_INV_DEST_ALPHA,
+			DestinationColor = D3D10_BLEND_DEST_COLOR,
+			InverseDestinationColor = D3D10_BLEND_INV_DEST_COLOR,
+			SourceAlphaSaturate = D3D10_BLEND_SRC_ALPHA_SAT,
 			BlendFactor = D3D10_BLEND_BLEND_FACTOR,
-			InvBlendFactor = D3D10_BLEND_INV_BLEND_FACTOR,
-			Src1Color = D3D10_BLEND_SRC1_COLOR,
-			InvSrc1Color = D3D10_BLEND_INV_SRC1_COLOR,
-			Src1Alpha = D3D10_BLEND_SRC1_ALPHA,
-			InvSrc1Alpha = D3D10_BLEND_INV_SRC1_ALPHA
+			InverseBlendFactor = D3D10_BLEND_INV_BLEND_FACTOR,
+			SecondarySourceColor = D3D10_BLEND_SRC1_COLOR,
+			InverseSecondarySourceColor = D3D10_BLEND_INV_SRC1_COLOR,
+			SecondarySourceAlpha = D3D10_BLEND_SRC1_ALPHA,
+			InverseSecondarySourceAlpha = D3D10_BLEND_INV_SRC1_ALPHA
+		};
+		
+		[Flags]
+		public enum class ColorWriteMaskFlags
+		{
+			None = 0,
+			Red = D3D10_COLOR_WRITE_ENABLE_RED,
+			Green = D3D10_COLOR_WRITE_ENABLE_GREEN,
+			Blue = D3D10_COLOR_WRITE_ENABLE_BLUE,
+			Alpha = D3D10_COLOR_WRITE_ENABLE_ALPHA,
+			All = D3D10_COLOR_WRITE_ENABLE_ALL
 		};
 		
 		public enum class Comparison : Int32
