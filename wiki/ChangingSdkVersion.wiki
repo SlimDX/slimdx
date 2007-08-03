@@ -8,6 +8,8 @@ SlimDX is regularly updated to the latest DirectX SDK version. For some develope
 
 = Details =
 
-The only place where SlimDX currently depends directly on the SDK version is with delay loading. Unfortunately, we cannot ask the linker to delay load DLLs via the preprocessor; it has to be passed on the command line. This option can be found in VS under Linker->Input. Simply change it to reference the correct D3DX DLL. For example, the June 2007 DLL is version 34, and the April 2007 DLL is version 33.
+SlimDX currently depends directly on the SDK version in order to support delay loading. Unfortunately, we cannot ask the linker to delay load DLLs via the preprocessor; it has to be passed on the command line. This option can be found in VS under Linker->Input. Simply change it to reference the correct D3DX DLL. For example, the June 2007 DLL is version 34, and the April 2007 DLL is version 33.
 
 In order to prevent accidentally mismatching, the file direct3d9\Direct3D.cpp contains a preprocessor check that generates an error if the version is mismatched. Simply alter that code to expect the desired version.
+
+As of the August 2007 SDK, we now have XAudio 2 code in the repository. If you're working against an SDK that predates XAudio 2, you can disable it by going into the project properties under C++->Preprocessor and removing the "WRAP_XAUDIO2" entry from Preprocessor Definitions. This will disable all XAudio 2 support and allow SlimDX to build cleanly against older SDKs.
