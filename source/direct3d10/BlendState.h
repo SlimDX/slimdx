@@ -25,8 +25,8 @@ using namespace System;
 
 #include "../DirectXObject.h"
 
+#include "BlendStateDescription.h"
 #include "Enums.h"
-#include "RasterizerStateDescription.h"
 
 namespace SlimDX
 {
@@ -34,68 +34,63 @@ namespace SlimDX
 	{	
 		ref class Device;
 		
-		public ref class RasterizerState : DirectXObject<ID3D10RasterizerState>
+		public ref class BlendState : DirectXObject<ID3D10BlendState>
 		{
-			RasterizerStateDescription^ m_Description;
+			BlendStateDescription^ m_Description;
 		
 		internal:
-			RasterizerState( ID3D10RasterizerState* state );
+			BlendState( ID3D10BlendState* state );
 		
 		public:
-			property SlimDX::Direct3D10::FillMode FillMode
+			property bool AlphaToCoverageEnabled
 			{
-				SlimDX::Direct3D10::FillMode get() { return m_Description->FillMode; }
+				bool get() { return m_Description->AlphaToCoverageEnabled; }
 			}
 			
-			property SlimDX::Direct3D10::CullMode CullMode
+			property array<bool>^ RenderTargetBlendEnabled
 			{
-				SlimDX::Direct3D10::CullMode get() { return m_Description->CullMode; }
+				array<bool>^ get() { return m_Description->RenderTargetBlendEnabled; }
 			}
 			
-			property bool FrontIsCounterClockwise
+			property BlendOption SourceBlend
 			{
-				bool get() { return m_Description->FrontIsCounterClockwise; }
+				BlendOption get() { return m_Description->SourceBlend; }
 			}
 			
-			property int DepthBias
+			property BlendOption DestinationBlend
 			{
-				int get() { return m_Description->DepthBias; }
+				BlendOption get() { return m_Description->DestinationBlend; }
 			}
 			
-			property float DepthBiasClamp
+			property SlimDX::Direct3D10::BlendOperation BlendOperation
 			{
-				float get() { return m_Description->DepthBiasClamp; }
+				SlimDX::Direct3D10::BlendOperation get() { return m_Description->BlendOperation; }
 			}
 			
-			property float SlopeScaledDepthBias
+			property BlendOption SourceAlphaBlend
 			{
-				float get() { return m_Description->SlopeScaledDepthBias; }
+				BlendOption get() { return m_Description->SourceAlphaBlend; }
 			}
 			
-			property bool DepthClipEnabled
+			property BlendOption DestinationAlphaBlend
 			{
-				bool get() { return m_Description->DepthClipEnabled; }
+				BlendOption get() { return m_Description->DestinationAlphaBlend; }
 			}
 			
-			property bool ScissorEnabled
+			property SlimDX::Direct3D10::BlendOperation AlphaBlendOperation
 			{
-				bool get() { return m_Description->ScissorEnabled; }
+				SlimDX::Direct3D10::BlendOperation get() { return m_Description->AlphaBlendOperation; }
 			}
 			
-			property bool MultisampleEnabled
+			property array<ColorWriteMaskFlags>^ RenderTargetWriteMask
 			{
-				bool get() { return m_Description->MultisampleEnabled; }
-			}
-			
-			property bool AntialiasedLineEnabled
-			{
-				bool get() { return m_Description->AntialiasedLineEnabled; }
+				array<ColorWriteMaskFlags>^ get() { return m_Description->RenderTargetWriteMask; }
 			}
 			
 			
-			RasterizerState( Device^ device, RasterizerStateDescription^ description );
+			BlendState( Device^ device, BlendStateDescription^ description );
 			
-			RasterizerStateDescription^ CloneDescription();
+			BlendStateDescription^ CloneDescription();
 		};
 	}
 };

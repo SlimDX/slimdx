@@ -389,11 +389,23 @@
 				Name="Direct3D 10"
 				>
 				<File
+					RelativePath="..\source\direct3d10\BlendState.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\BlendStateDescription.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\Buffer.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\DepthStencilState.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\DepthStencilStateDescription.cpp"
 					>
 				</File>
 				<File
@@ -486,6 +498,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\RasterizerState.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\RasterizerStateDescription.cpp"
 					>
 				</File>
 				<File
@@ -631,6 +647,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d\ColorValue.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d\LockedBox.h"
 					>
 				</File>
@@ -639,11 +659,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d\MiscTypes.h"
+					RelativePath="..\source\direct3d\Performance.h"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d\Performance.h"
+					RelativePath="..\source\direct3d\Viewport.h"
 					>
 				</File>
 			</Filter>
@@ -823,11 +843,23 @@
 				Name="Direct3D 10"
 				>
 				<File
+					RelativePath="..\source\direct3d10\BlendState.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\BlendStateDescription.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\Buffer.h"
 					>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\DepthStencilState.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\DepthStencilStateDescription.h"
 					>
 				</File>
 				<File
@@ -896,6 +928,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\RasterizerState.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\RasterizerStateDescription.h"
 					>
 				</File>
 				<File

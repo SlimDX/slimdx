@@ -21,32 +21,21 @@
 */
 #pragma once
 
-using namespace System;
-
-#include "../direct3d/Viewport.h"
-
+/*
+This header serves as a storage point for types which are needed in multiple
+places but don't really have a proper home. ALL of the contents of this file
+should be considered to be misplaced for now.
+*/
 namespace SlimDX
 {
-	namespace Direct3D10
+	namespace Direct3D
 	{
-		ref class RasterizerState;
-		
-		public ref class RasterizerWrapper
+		public value class Viewport
 		{
-			ID3D10Device* m_Device;
-			
-		internal:
-			RasterizerWrapper( ID3D10Device* device );
-			
 		public:
-			property RasterizerState^ State
-			{
-				void set( RasterizerState^ value );
-				RasterizerState^ get();
-			}
-		
-			void SetViewports( Direct3D::Viewport viewport );
-			void SetViewports( ... array<Direct3D::Viewport>^ viewports );
+			int X, Y;
+			int Width, Height;
+			float MinZ, MaxZ;
 		};
 	}
-};
+}

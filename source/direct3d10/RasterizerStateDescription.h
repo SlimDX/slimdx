@@ -23,30 +23,32 @@
 
 using namespace System;
 
-#include "../direct3d/Viewport.h"
+#include "Enums.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
-	{
-		ref class RasterizerState;
-		
-		public ref class RasterizerWrapper
+	{	
+		public ref class RasterizerStateDescription
 		{
-			ID3D10Device* m_Device;
-			
 		internal:
-			RasterizerWrapper( ID3D10Device* device );
+			RasterizerStateDescription( const D3D10_RASTERIZER_DESC& desc );
+			
+			void FillNativeObject( D3D10_RASTERIZER_DESC& desc);
 			
 		public:
-			property RasterizerState^ State
-			{
-				void set( RasterizerState^ value );
-				RasterizerState^ get();
-			}
-		
-			void SetViewports( Direct3D::Viewport viewport );
-			void SetViewports( ... array<Direct3D::Viewport>^ viewports );
+			FillMode FillMode;
+			CullMode CullMode;
+			bool FrontIsCounterClockwise;
+			int DepthBias;
+			float DepthBiasClamp;
+			float SlopeScaledDepthBias;
+			bool DepthClipEnabled;
+			bool ScissorEnabled;
+			bool MultisampleEnabled;
+			bool AntialiasedLineEnabled;
+			
+			RasterizerStateDescription();
 		};
 	}
 };

@@ -39,57 +39,32 @@ namespace Direct3D10
 		
 		D3D10_RASTERIZER_DESC desc;
 		state->GetDesc( &desc );
-		
-		m_FillMode = ( SlimDX::Direct3D10::FillMode ) desc.FillMode;
-		m_CullMode = ( SlimDX::Direct3D10::CullMode ) desc.CullMode;
-		m_FrontCounterClockwise = desc.FrontCounterClockwise ? true : false;
-		m_DepthBias = desc.DepthBias;
-		m_DepthBiasClamp = desc.DepthBiasClamp;
-		m_SlopeScaledDepthBias = desc.SlopeScaledDepthBias;
-		m_EnableDepthClip = desc.DepthClipEnable ? true : false;
-		m_EnableScissor = desc.ScissorEnable ? true : false;
-		m_EnableMultisample = desc.MultisampleEnable ? true : false;
-		m_EnableAntialiasedLine = desc.AntialiasedLineEnable ? true : false;
-		
-		m_Pointer = state;
+		m_Description = gcnew RasterizerStateDescription( desc );
 	}
 	
-	RasterizerState::RasterizerState( Device^ device,SlimDX::Direct3D10::FillMode fillMode, SlimDX::Direct3D10::CullMode cullMode,
-		bool frontIsCounterClockwise, int depthBias, float depthBiasClamp, float slopeScaledDepthBias,
-		bool enableDepthClip, bool enableScissor, bool enableMultisample, bool enableAntialiasedLine )
+	RasterizerState::RasterizerState( Device^ device, RasterizerStateDescription^ description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
+		if( description == nullptr )
+			throw gcnew ArgumentNullException( "description" );
 		
 		D3D10_RASTERIZER_DESC desc;
-		ZeroMemory( &desc, sizeof( desc ) );
-		desc.FillMode = ( D3D10_FILL_MODE ) fillMode;
-		desc.CullMode = ( D3D10_CULL_MODE ) cullMode;
-		desc.FrontCounterClockwise = frontIsCounterClockwise;
-		desc.DepthBias = depthBias;
-		desc.DepthBiasClamp = depthBiasClamp;
-		desc.SlopeScaledDepthBias = slopeScaledDepthBias;
-		desc.DepthClipEnable = enableDepthClip;
-		desc.ScissorEnable = enableScissor;
-		desc.MultisampleEnable = enableMultisample;
-		desc.AntialiasedLineEnable = enableAntialiasedLine;
+		m_Description = description;
+		m_Description->FillNativeObject( desc );
 		
-		m_FillMode = ( SlimDX::Direct3D10::FillMode ) desc.FillMode;
-		m_CullMode = ( SlimDX::Direct3D10::CullMode ) desc.CullMode;
-		m_FrontCounterClockwise = desc.FrontCounterClockwise ? true : false;
-		m_DepthBias = desc.DepthBias;
-		m_DepthBiasClamp = desc.DepthBiasClamp;
-		m_SlopeScaledDepthBias = desc.SlopeScaledDepthBias;
-		m_EnableDepthClip = desc.DepthClipEnable ? true : false;
-		m_EnableScissor = desc.ScissorEnable ? true : false;
-		m_EnableMultisample = desc.MultisampleEnable ? true : false;
-		m_EnableAntialiasedLine = desc.AntialiasedLineEnable ? true : false;
-		
-		ID3D10RasterizerState* state = 0;
+		ID3D10RasterizerState* state;
 		HRESULT hr = device->DevicePointer->CreateRasterizerState( &desc, &state );
 		GraphicsException::CheckHResult( hr );
 		
 		m_Pointer = state;
+	}
+	
+	RasterizerStateDescription^ RasterizerState::CloneDescription()
+	{
+		D3D10_RASTERIZER_DESC desc;
+		m_Pointer->GetDesc( &desc );
+		return gcnew RasterizerStateDescription( desc );
 	}
 }
 }

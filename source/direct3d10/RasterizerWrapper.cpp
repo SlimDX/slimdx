@@ -54,13 +54,13 @@ namespace Direct3D10
 		return gcnew RasterizerState( state );
 	}
 	
-	void RasterizerWrapper::SetViewports( SlimDX::Direct3D::Viewport viewport )
+	void RasterizerWrapper::SetViewports( Direct3D::Viewport viewport )
 	{
 		D3D10_VIEWPORT nativeVP = { viewport.X, viewport.Y, viewport.Width, viewport.Height, viewport.MinZ, viewport.MaxZ };
 		m_Device->RSSetViewports( 1, &nativeVP );
 	}
 
-	void RasterizerWrapper::SetViewports( ... array<SlimDX::Direct3D::Viewport>^ viewports )
+	void RasterizerWrapper::SetViewports( ... array<Direct3D::Viewport>^ viewports )
 	{
 		D3D10_VIEWPORT nativeVPs[D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE];
 		for( int i = 0; i < viewports->Length; ++i )

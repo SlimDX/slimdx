@@ -23,30 +23,36 @@
 
 using namespace System;
 
-#include "../direct3d/Viewport.h"
+#include "Enums.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
-	{
-		ref class RasterizerState;
-		
-		public ref class RasterizerWrapper
+	{	
+		public ref class DepthStencilStateDescription
 		{
-			ID3D10Device* m_Device;
-			
 		internal:
-			RasterizerWrapper( ID3D10Device* device );
+			DepthStencilStateDescription( const D3D10_DEPTH_STENCIL_DESC& desc );
+			
+			void FillNativeObject( D3D10_DEPTH_STENCIL_DESC& desc);
 			
 		public:
-			property RasterizerState^ State
-			{
-				void set( RasterizerState^ value );
-				RasterizerState^ get();
-			}
-		
-			void SetViewports( Direct3D::Viewport viewport );
-			void SetViewports( ... array<Direct3D::Viewport>^ viewports );
+			bool DepthEnabled;
+			DepthWriteMask DepthWriteMask;
+			Comparison DepthComparison;
+			bool StencilEnabled;
+			Byte StencilReadMask;
+			Byte StencilWriteMask;
+			Comparison FrontStencilComparison;
+			StencilOperation FrontStencilFailureOperation;
+			StencilOperation FrontStencilDepthFailureOperation;
+			StencilOperation FrontStencilPassOperation;
+			Comparison BackStencilComparison;
+			StencilOperation BackStencilFailureOperation;
+			StencilOperation BackStencilDepthFailureOperation;
+			StencilOperation BackStencilPassOperation;
+			
+			DepthStencilStateDescription();
 		};
 	}
 };
