@@ -1,8 +1,8 @@
 #include <windows.h>
 #include <d3dx9.h>
 
-#include "../Direct3D/MiscTypes.h"
 #include "Math.h"
+#include "../Direct3D/Viewport.h"
 
 namespace SlimDX
 {

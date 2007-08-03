@@ -29,7 +29,8 @@ using namespace System::Runtime::InteropServices;
 #include "Enums.h"
 #include "Direct3D.h"
 #include "Vertex.h"
-#include "../Direct3D/MiscTypes.h"
+#include "../Direct3D/ColorValue.h"
+#include "../Direct3D/Viewport.h"
 
 using namespace SlimDX::Direct3D;
 

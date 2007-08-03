@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../direct3d/MiscTypes.h"
+#include "../Direct3D/ColorValue.h"
 
 namespace SlimDX
 {
