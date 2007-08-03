@@ -33,18 +33,20 @@ namespace SlimDX
 {
 	namespace XAudio2
 	{
+		ref class XAudio2;
+
 		public ref class SubmixVoice : Voice
 		{
-		private:
-			IXAudio2SubmixVoice* m_Pointer;
-
 		internal:
-			property IXAudio2SubmixVoice* InternalPointer
+			property IXAudio2SubmixVoice* SubmixVoicePointer
 			{
-				IXAudio2SubmixVoice* get() { return m_Pointer; }
+				IXAudio2SubmixVoice* get() { return (IXAudio2SubmixVoice*) m_Pointer; }
 			}
 
 		public:
+			SubmixVoice( XAudio2^ xaudio2, int inputChannels, int inputSampleRate, int processingStage );
+			
+			//This class has no methods of its own.
 		};
 	}
 }
