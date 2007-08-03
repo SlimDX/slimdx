@@ -9,7 +9,7 @@
 * furnished to do so, subject to the following conditions:
 * 
 * The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.`
+* all copies or substantial portions of the Software.
 * 
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -20,6 +20,8 @@
 * THE SOFTWARE.
 */
 #pragma once
+
+#ifdef WRAP_XAUDIO2
 
 using namespace System;
 
@@ -76,6 +78,26 @@ namespace SlimDX
 		};
 
 		[Flags]
+		public enum class VoiceFlags : Int32
+		{
+			//Used in IXAudio2::CreateSourceVoice()
+			NoPitch = XAUDIO2_VOICE_NOPITCH,
+			NoSource = XAUDIO2_VOICE_NOSRC,
+			UseFilter = XAUDIO2_VOICE_USEFILTER,
+			Music = XAUDIO2_VOICE_MUSIC,
+
+			//Used in IXAudio2Voice::Start() and Stop()
+			PlayTails = XAUDIO2_PLAY_TAILS,
+			FlushBuffers = XAUDIO2_FLUSH_BUFFERS,
+		};
+
+		[Flags]
+		public enum class BufferFlags : Int32
+		{
+			EndOfStream = XAUDIO2_END_OF_STREAM,
+		};
+
+		[Flags]
 		public enum class Speaker : Int32
 		{
 			FrontLeft = SPEAKER_FRONT_LEFT,
@@ -127,3 +149,5 @@ namespace SlimDX
 		};
 	}
 }
+
+#endif //WRAP_XAUDIO2

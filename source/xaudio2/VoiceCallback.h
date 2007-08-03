@@ -21,16 +21,58 @@
 */
 #pragma once
 
+#ifdef WRAP_XAUDIO2
+
+#include <vcclr.h>
+
 using namespace System;
 
 namespace SlimDX
 {
-	public ref class DirectX sealed
+	namespace XAudio2
 	{
-	public:
-		static String^ GetErrorString( int errorCode );
-		static String^ GetErrorDescription( int errorCode );
+		class VoiceCallbackShim;
 
-		static int Trace( int errorCode, String^ message, bool messageBox );
-	};
+		public ref class VoiceCallback abstract
+		{
+		internal:
+			VoiceCallbackShim* Shim;
+
+		protected:
+			VoiceCallback();
+
+		public:
+			~VoiceCallback();
+			!VoiceCallback();
+
+			virtual void OnVoiceProcessingPassStart() = 0;
+			virtual void OnVoiceProcessingPassEnd() = 0;
+
+			virtual void OnStreamEnd() = 0;
+
+			virtual void OnBufferStart( Object^ bufferContext ) = 0;
+			virtual void OnBufferEnd( Object^ bufferContext ) = 0;
+			virtual void OnLoopEnd( Object^ bufferContext ) = 0;
+		};
+
+		class VoiceCallbackShim : public IXAudio2VoiceCallback
+		{
+		private:
+			gcroot<VoiceCallback^> m_WrappedInterface;
+
+		public:
+			VoiceCallbackShim( VoiceCallback^ wrappedInterface );
+
+			virtual void WINAPI OnVoiceProcessingPassStart();
+			virtual void WINAPI OnVoiceProcessingPassEnd();
+
+			virtual void WINAPI OnStreamEnd();
+
+			virtual void WINAPI OnBufferStart( void* pBufferContext );
+			virtual void WINAPI OnBufferEnd( void* pBufferContext );
+			virtual void WINAPI OnLoopEnd( void* pBufferContext );
+		};
+	}
 }
+
+#endif //WRAP_XAUDIO2

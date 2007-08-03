@@ -21,16 +21,10 @@
 */
 #pragma once
 
-using namespace System;
+#ifdef WRAP_XAUDIO2
 
-namespace SlimDX
-{
-	public ref class DirectX sealed
-	{
-	public:
-		static String^ GetErrorString( int errorCode );
-		static String^ GetErrorDescription( int errorCode );
+#include <xaudio2.h>
 
-		static int Trace( int errorCode, String^ message, bool messageBox );
-	};
-}
+#include "SubmixVoice.h"
+
+#endif //WRAP_XAUDIO2

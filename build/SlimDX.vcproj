@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;D3D_DEBUG_INFO"
+				PreprocessorDefinitions="WIN32;_DEBUG;D3D_DEBUG_INFO;WRAP_XAUDIO2"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				GenerateXMLDocumentationFiles="true"
@@ -565,6 +565,26 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\xaudio2\MasteringVoice.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\SourceVoice.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\SubmixVoice.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\Voice.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\VoiceCallback.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\xaudio2\XAudio2.cpp"
 					>
 				</File>
@@ -948,6 +968,26 @@
 				</File>
 				<File
 					RelativePath="..\source\xaudio2\Enums.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\MasteringVoice.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\SourceVoice.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\SubmixVoice.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\Voice.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\VoiceCallback.h"
 					>
 				</File>
 				<File

@@ -21,16 +21,32 @@
 */
 #pragma once
 
+#ifdef WRAP_XAUDIO2
+
+#include "../DirectXObject.h"
+#include "Enums.h"
+#include "Voice.h"
+
 using namespace System;
 
 namespace SlimDX
 {
-	public ref class DirectX sealed
+	namespace XAudio2
 	{
-	public:
-		static String^ GetErrorString( int errorCode );
-		static String^ GetErrorDescription( int errorCode );
+		public ref class MasteringVoice : Voice
+		{
+		private:
+			IXAudio2MasteringVoice* m_Pointer;
 
-		static int Trace( int errorCode, String^ message, bool messageBox );
-	};
+		internal:
+			property IXAudio2MasteringVoice* InternalPointer
+			{
+				IXAudio2MasteringVoice* get() { return m_Pointer; }
+			}
+
+		public:
+		};
+	}
 }
+
+#endif //WRAP_XAUDIO2
