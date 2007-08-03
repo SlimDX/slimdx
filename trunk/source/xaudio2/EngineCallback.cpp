@@ -19,6 +19,8 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#ifdef WRAP_XAUDIO2
+
 #include <xaudio2.h>
 #include <vcclr.h>
 
@@ -65,3 +67,5 @@ namespace XAudio2
 	}
 }
 }
+
+#endif //WRAP_XAUDIO2

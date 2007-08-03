@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#ifdef WRAP_XAUDIO2
+
 using namespace System;
 using namespace System::Runtime::Serialization;
 
@@ -29,7 +31,7 @@ using namespace System::Runtime::Serialization;
 
 namespace SlimDX
 {
-	namespace Direct3D9
+	namespace XAudio2
 	{
 		public ref class AudioException : public SlimDX::DirectXException
 		{
@@ -59,12 +61,68 @@ namespace SlimDX
 			static void CheckHResult( HRESULT hr, String^ dataKey, Object^ dataValue );
 		};
 
+#define DEFINE_AUDIO_EXCEPTION( ExName, ErrorCode ) \
+	public ref class ExName ## Exception : public AudioException \
+	{ \
+		public: \
+		ExName ## Exception () : AudioException( ErrorCode ) { } \
+		ExName ## Exception ( String^ message ) : AudioException( ErrorCode, message ) { } \
+		ExName ## Exception ( String^ message, Exception^ innerException ) : AudioException( message, innerException ) { } \
+		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : AudioException(info, context) { }\
+	}
+
+#define DEFINE_CUSTOM_AUDIO_EXCEPTION( ExName, ErrorCode, Message ) \
+	public ref class ExName ## Exception : public AudioException \
+	{ \
+		public: \
+		ExName ## Exception () : AudioException( ErrorCode, Message ) { } \
+		ExName ## Exception ( String^ message ) : AudioException( ErrorCode, message ) { } \
+		ExName ## Exception ( String^ message, Exception^ innerException ) : AudioException( message, innerException ) { } \
+		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : AudioException(info, context) { }\
+	}
+
+		DEFINE_AUDIO_EXCEPTION( NotInitialized, XAUDIO2_E_NOT_INITIALIZED );
+		DEFINE_AUDIO_EXCEPTION( AlreadyInitialized, XAUDIO2_E_ALREADY_INITIALIZED );
+		DEFINE_AUDIO_EXCEPTION( InvalidArgument, XAUDIO2_E_INVALID_ARGUMENT );
+		DEFINE_AUDIO_EXCEPTION( InvalidFlags, XAUDIO2_E_INVALID_FLAGS );
+		DEFINE_AUDIO_EXCEPTION( InvalidPointer, XAUDIO2_E_INVALID_POINTER );
+		DEFINE_AUDIO_EXCEPTION( InvalidIndex, XAUDIO2_E_INVALID_INDEX );
+		DEFINE_AUDIO_EXCEPTION( InvalidCall, XAUDIO2_E_INVALID_CALL );
+		DEFINE_AUDIO_EXCEPTION( StillinUse, XAUDIO2_E_STILL_IN_USE );
+		DEFINE_AUDIO_EXCEPTION( Unsupported, XAUDIO2_E_UNSUPPORTED );
+		DEFINE_AUDIO_EXCEPTION( XmaDecoderError, XAUDIO2_E_XMA_DECODER_ERROR );
+		DEFINE_AUDIO_EXCEPTION( EffectCreationFailed, XAUDIO2_E_EFFECT_CREATION_FAILED );
+		DEFINE_AUDIO_EXCEPTION( DeviceInvalidated, XAUDIO2_E_DEVICE_INVALIDATED );
+
+		DEFINE_CUSTOM_AUDIO_EXCEPTION( XAudio2NotFound, E_FAIL, "XAudio 2 not found." );
+
 		inline AudioException^ AudioException::GetExceptionFromHResult( HRESULT hr )
 		{
 			AudioException^ ex;
 
-			//TODO: exception selection
-			ex = gcnew AudioException();
+#			define GENERATE_EXCEPTION(type, errCase) \
+			case errCase:\
+				ex = gcnew type ## Exception ();\
+				break;
+
+			switch( hr )
+			{
+			GENERATE_EXCEPTION( NotInitialized, XAUDIO2_E_NOT_INITIALIZED );
+			GENERATE_EXCEPTION( AlreadyInitialized, XAUDIO2_E_ALREADY_INITIALIZED );
+			GENERATE_EXCEPTION( InvalidArgument, XAUDIO2_E_INVALID_ARGUMENT );
+			GENERATE_EXCEPTION( InvalidFlags, XAUDIO2_E_INVALID_FLAGS );
+			GENERATE_EXCEPTION( InvalidPointer, XAUDIO2_E_INVALID_POINTER );
+			GENERATE_EXCEPTION( InvalidIndex, XAUDIO2_E_INVALID_INDEX );
+			GENERATE_EXCEPTION( InvalidCall, XAUDIO2_E_INVALID_CALL );
+			GENERATE_EXCEPTION( StillinUse, XAUDIO2_E_STILL_IN_USE );
+			GENERATE_EXCEPTION( Unsupported, XAUDIO2_E_UNSUPPORTED );
+			GENERATE_EXCEPTION( XmaDecoderError, XAUDIO2_E_XMA_DECODER_ERROR );
+			GENERATE_EXCEPTION( EffectCreationFailed, XAUDIO2_E_EFFECT_CREATION_FAILED );
+			GENERATE_EXCEPTION( DeviceInvalidated, XAUDIO2_E_DEVICE_INVALIDATED );
+
+			default:
+				ex = gcnew AudioException();
+			}
 
 			ex->HResult = hr;
 			return ex;
@@ -93,3 +151,5 @@ namespace SlimDX
 		}
 	}
 }
+
+#endif //WRAP_XAUDIO2
