@@ -32,9 +32,17 @@ namespace SlimDX
 {
 	namespace XAudio2
 	{
+		public value class EffectDescriptor
+		{
+			//TODO: Figure out a proper type for this
+			IntPtr Effect;
+			bool InitialState;
+			int OutputChannels;
+		};
+
 		public ref class Voice abstract
 		{
-		private:
+		protected:
 			IXAudio2Voice* m_Pointer;
 
 		internal:

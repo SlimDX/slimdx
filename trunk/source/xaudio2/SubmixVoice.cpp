@@ -26,5 +26,24 @@
 #include <xaudio2.h>
 
 #include "SubmixVoice.h"
+#include "XAudio2.h"
+#include "AudioException.h"
+
+namespace SlimDX
+{
+	namespace XAudio2
+	{
+		SubmixVoice::SubmixVoice( XAudio2^ xaudio2, int inputChannels, int inputSampleRate, int processingStage )
+		{
+			IXAudio2SubmixVoice* voice;
+			HRESULT hr = xaudio2->InternalPointer->CreateSubmixVoice( &voice, inputChannels, inputSampleRate, 0, processingStage, NULL, NULL );
+			AudioException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				throw gcnew AudioException();
+
+			m_Pointer = voice;
+		}
+	}
+}
 
 #endif //WRAP_XAUDIO2

@@ -33,18 +33,22 @@ namespace SlimDX
 {
 	namespace XAudio2
 	{
+		ref class XAudio2;
+
 		public ref class MasteringVoice : Voice
 		{
-		private:
-			IXAudio2MasteringVoice* m_Pointer;
-
 		internal:
-			property IXAudio2MasteringVoice* InternalPointer
+			property IXAudio2MasteringVoice* MasteringVoicePointer
 			{
-				IXAudio2MasteringVoice* get() { return m_Pointer; }
+				IXAudio2MasteringVoice* get() { return (IXAudio2MasteringVoice*) m_Pointer; }
 			}
 
 		public:
+			MasteringVoice( XAudio2^ xaudio2, int inputChannels, int inputSampleRate, int processingStage );
+			/*MasteringVoice( XAudio2^ xaudio2, int inputChannels, int inputSampleRate, int processingStage,
+				array<Voice^>^ voiceSends, array<EffectDescriptor>^ effectChain );*/
+
+			//This class has no methods of its own.
 		};
 	}
 }

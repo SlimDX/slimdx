@@ -26,5 +26,30 @@
 #include <xaudio2.h>
 
 #include "MasteringVoice.h"
+#include "XAudio2.h"
+#include "AudioException.h"
+
+namespace SlimDX
+{
+	namespace XAudio2
+	{
+		MasteringVoice::MasteringVoice( XAudio2^ xaudio2, int inputChannels, int inputSampleRate, int processingStage )
+		{
+			IXAudio2MasteringVoice* voice;
+			HRESULT hr = xaudio2->InternalPointer->CreateMasteringVoice( &voice, inputChannels, inputSampleRate, 0, processingStage, NULL );
+			AudioException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				throw gcnew AudioException();
+
+			m_Pointer = voice;
+		}
+
+		/*MasteringVoice::MasteringVoice( XAudio2^ xaudio2, int inputChannels, int inputSampleRate, int processingStage,
+			array<Voice^>^ voiceSends, array<EffectDescriptor>^ effectChain )
+		{
+
+		}*/
+	}
+}
 
 #endif //WRAP_XAUDIO2
