@@ -137,7 +137,7 @@ namespace Direct3D9
         catch( SEHException^ ex )
         {
             throw gcnew Direct3DX9NotFoundException( "Direct3DX 9 was not found. Please install "
-                "the latest DirectX end-user redistributable from Microsoft.", ex );
+                "the latest DirectX end-user redistributable package from Microsoft.", ex );
         }
 	}
 

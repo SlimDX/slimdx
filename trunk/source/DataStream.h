@@ -45,6 +45,8 @@ namespace SlimDX
 			char* get();
 		}
 	
+		void TakeOwnership() { m_OwnsBuffer = true; }
+
 	public:
 		DataStream( Int64 sizeInBytes, bool canRead, bool canWrite );
 		

@@ -587,7 +587,9 @@ namespace SlimDX
 			if( FAILED( hr ) )
 				return nullptr;
 
-			return gcnew DataStream( data, bytes, true, true );
+			DataStream^ ds = gcnew DataStream( data, bytes, true, true );
+			ds->TakeOwnership();
+			return ds;
 		}
 	}
 }
