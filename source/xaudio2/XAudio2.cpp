@@ -25,6 +25,9 @@
 
 //XA2 BUG: Idiots missed a closing paren and so nothing compiles with this on.
 //#define XAUDIO2_HELPER_FUNCTIONS
+
+#include <windows.h>
+#include <mmreg.h>
 #include <xaudio2.h>
 
 #include "../DirectXObject.h"

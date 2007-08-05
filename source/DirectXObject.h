@@ -41,6 +41,9 @@ namespace SlimDX
 			EnableObjectTracking = false;
 #endif
 		}
+
+		virtual ~DirectXBase()
+		{ }
 	};
 
 	template<typename T>

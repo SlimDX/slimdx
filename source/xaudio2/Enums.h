@@ -137,7 +137,9 @@ namespace SlimDX
 			SevenPointOneSurround = SPEAKER_7POINT1_SURROUND,
 		};
 
-		public enum class WaveFormat
+		//warning C4369: 'Extensible' : enumerator value '65534' cannot be represented as 'short', value is '-2'
+#pragma warning(disable: 4369)
+		public enum class WaveFormat : Int16
 		{
 			Pcm = WAVE_FORMAT_PCM,
 			AdPcm = WAVE_FORMAT_ADPCM,
@@ -147,6 +149,7 @@ namespace SlimDX
 			WmaSpdif = WAVE_FORMAT_WMASPDIF,
 			Extensible = WAVE_FORMAT_EXTENSIBLE,
 		};
+#pragma warning(default: 4369)
 	}
 }
 

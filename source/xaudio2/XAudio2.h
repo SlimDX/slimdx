@@ -55,23 +55,23 @@ namespace SlimDX
 			Int32 ActiveXmaStreams;
 		};
 
-		[StructLayout( LayoutKind::Sequential, Pack = 2 )]
+		[StructLayout( LayoutKind::Explicit, Pack = 2)]
 		public value class WaveFormatEx
 		{
-			WaveFormat FormatTag;
-			short Channels;
-			int SamplesPerSecond;
-			int AverageBytesPerSecond;
-			short BlockAlign;
-			short BitsPerSample;
-			short Size;
-		};
-
-		[StructLayout( LayoutKind::Explicit, Pack = 2)]
-		public value class WaveFormatExtensible
-		{
 			[FieldOffset( 0 )]
-			WaveFormatEx Format;
+			WaveFormat FormatTag;
+			[FieldOffset( 2 )]
+			short Channels;
+			[FieldOffset( 4 )]
+			int SamplesPerSecond;
+			[FieldOffset( 8 )]
+			int AverageBytesPerSecond;
+			[FieldOffset( 12 )]
+			short BlockAlign;
+			[FieldOffset( 14 )]
+			short BitsPerSample;
+			[FieldOffset( 16 )]
+			short Size;
 
 			[FieldOffset( 18 )]
 			short ValidBitsPerSample;
@@ -92,7 +92,7 @@ namespace SlimDX
 			String^ DeviceId;
 			String^ DisplayName;
 			DeviceRole Role;
-			WaveFormatExtensible OutputFormat;
+			WaveFormatEx OutputFormat;
 		};
 
 		public ref class XAudio2 : DirectXObject<IXAudio2>
