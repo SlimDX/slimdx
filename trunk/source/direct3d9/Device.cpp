@@ -63,6 +63,28 @@ namespace Direct3D9
 		d3dpp.Windowed = presentParams->Windowed;
 	}
 
+	PresentParameters::PresentParameters()
+	{
+		//set sane defaults
+		BackBufferWidth = 640;
+		BackBufferHeight = 480;
+		BackBufferFormat = Format::X8R8G8B8;
+		BackBufferCount = 1;
+
+		MultiSample = MultiSampleType::None;
+		MultiSampleQuality = 0;
+
+		SwapEffect = SlimDX::Direct3D9::SwapEffect::Discard;
+		DeviceWindowHandle = IntPtr::Zero;
+		Windowed = true;
+		EnableAutoDepthStencil = true;
+		AutoDepthStencilFormat = Format::D24S8;
+		PresentFlags = SlimDX::Direct3D9::PresentFlags::None;
+
+		FullScreenRefreshRateInHz = 0;
+		PresentationInterval = PresentInterval::Immediate;
+	}
+
 	Device::Device( IDirect3DDevice9* device ) : DirectXObject( device )
 	{
 		if( device == NULL )

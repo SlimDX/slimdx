@@ -74,6 +74,8 @@ namespace SlimDX
 		public ref class PresentParameters
 		{
 		public:
+			PresentParameters();
+
 			property int BackBufferWidth;
 			property int BackBufferHeight;
 			property Format BackBufferFormat;
