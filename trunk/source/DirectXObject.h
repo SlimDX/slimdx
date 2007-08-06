@@ -41,9 +41,6 @@ namespace SlimDX
 			EnableObjectTracking = false;
 #endif
 		}
-
-		virtual ~DirectXBase()
-		{ }
 	};
 
 	template<typename T>
@@ -53,13 +50,13 @@ namespace SlimDX
 		DirectXObject()
 		{
 			if( EnableObjectTracking )
-				ObjectTracker::Add( this );
+				ObjectTracker::Add( safe_cast<IDisposable^>( this ) );
 		}
 
 		DirectXObject( T* pointer ) : m_Pointer( pointer )
 		{
 			if( EnableObjectTracking )
-				ObjectTracker::Add( this );
+				ObjectTracker::Add( safe_cast<IDisposable^>( this ) );
 		}
 
 		T* m_Pointer;
@@ -70,7 +67,7 @@ namespace SlimDX
 			m_Pointer = NULL;
 
 			if( EnableObjectTracking )
-				ObjectTracker::Remove( this );
+				ObjectTracker::Remove( safe_cast<IDisposable^>( this ) );
 		}
 
 	internal:
@@ -80,14 +77,10 @@ namespace SlimDX
 		}
 
 	public:
-		virtual ~DirectXObject()
-		{
-			Destruct();
-		}
-
 		void DisposeHandler( Object^ sender, EventArgs^ e )
 		{
-			Destruct();
+			IDisposable^ disposable = safe_cast<IDisposable^>( this );
+			disposable->Dispose();
 		}
 
 		property bool Disposed

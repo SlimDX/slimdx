@@ -146,13 +146,14 @@ namespace SlimDX
 			String^ FaceName;
 		};
 
-		public ref class Font : public DirectXObject<ID3DXFont>
+		public ref class Font sealed : public DirectXObject<ID3DXFont>
 		{
 		public:
 			Font( ID3DXFont* font );
 			Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,
 				CharacterSet charSet, Precision outputPrecision, FontQuality quality,
 				PitchAndFamily pitchAndFamily, String^ faceName );
+			~Font() { Destruct(); }
 
 			int DrawString( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, int color );
 			int DrawString( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, Color color );

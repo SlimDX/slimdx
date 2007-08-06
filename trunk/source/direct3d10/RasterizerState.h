@@ -42,6 +42,8 @@ namespace SlimDX
 			RasterizerState( ID3D10RasterizerState* state );
 		
 		public:
+			~RasterizerState() { Destruct(); }
+
 			property SlimDX::Direct3D10::FillMode FillMode
 			{
 				SlimDX::Direct3D10::FillMode get() { return m_Description->FillMode; }

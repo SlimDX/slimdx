@@ -58,6 +58,7 @@ namespace SlimDX
 			EffectCompiler( ID3DXEffectCompiler* compiler );
 			EffectCompiler( String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
 			EffectCompiler( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
+			~EffectCompiler() { Destruct(); }
 
 			static EffectCompiler^ FromFile( String^ fileName, array<Macro>^ defines,
 				Include^ includeFile, ShaderFlags flags, [Out] String^% errors );

@@ -39,6 +39,7 @@ namespace SlimDX
 		{
 		public:
 			SwapChain( Device^ device, SwapChainDescription description );
+			~SwapChain() { Destruct(); }
 
 			Texture2D^ GetBuffer( int index );
 

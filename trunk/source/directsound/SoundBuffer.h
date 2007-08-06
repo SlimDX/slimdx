@@ -39,7 +39,7 @@ namespace SlimDX
 		public value class BufferDescription
 		{
 		internal:
-			void Marshal( DSBUFFERDESC& desc, [Out] GCHandle% pinHandle );
+			void Marshal( DSBUFFERDESC& desc );
 
 		public:
 			property int SizeInBytes;
@@ -68,6 +68,7 @@ namespace SlimDX
 		public:
 			SoundBuffer( IDirectSoundBuffer* buffer );
 			SoundBuffer( DirectSound^ dsound, BufferDescription desc );
+			~SoundBuffer() { Destruct(); }
 
 			void Initialize( DirectSound^ dsound, BufferDescription desc );
 			//void AcquireResources( 

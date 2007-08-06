@@ -35,11 +35,12 @@ namespace SlimDX
 			int ScanLine;
 		};
 
-		public ref class SwapChain : public DirectXObject<IDirect3DSwapChain9>
+		public ref class SwapChain sealed : public DirectXObject<IDirect3DSwapChain9>
 		{
 		public:
 			SwapChain( IDirect3DSwapChain9* swapChain );
 			SwapChain( Device^ device, PresentParameters^ presentParams );
+			~SwapChain() { Destruct(); }
 
 			property SlimDX::Direct3D9::DisplayMode DisplayMode
 			{
