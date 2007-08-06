@@ -55,6 +55,20 @@ namespace SlimDX
 		return result;
 	}
 
+	Quaternion Quaternion::Exponential( Quaternion quat )
+	{
+		Quaternion result;
+		D3DXQuaternionExp( (D3DXQUATERNION*) &result, (D3DXQUATERNION*) &quat );
+		return result;
+	}
+
+	Quaternion Quaternion::Logarithm( Quaternion quat )
+	{
+		Quaternion result;
+		D3DXQuaternionLn( (D3DXQUATERNION*) &result, (D3DXQUATERNION*) &quat );
+		return result;
+	}
+
 	Quaternion Quaternion::RotationAxis( Vector3 axis, float angle )
 	{
 		Quaternion result;
@@ -76,6 +90,14 @@ namespace SlimDX
 		return result;
 	}
 
+	Quaternion Quaternion::BaryCentric( Quaternion q1, Quaternion q2, Quaternion q3, float f, float g )
+	{
+		Quaternion result;
+		D3DXQuaternionBaryCentric( (D3DXQUATERNION*) &result, (D3DXQUATERNION*) &q1,\
+			(D3DXQUATERNION*) &q2, (D3DXQUATERNION*) &q3, f, g );
+		return result;
+	}
+
 	Quaternion Quaternion::Invert( Quaternion quat )
 	{
 		Quaternion result;
@@ -90,10 +112,63 @@ namespace SlimDX
 		return result;
 	}
 
+	Quaternion Quaternion::Squad( Quaternion q1, Quaternion a, Quaternion b, Quaternion c, float t )
+	{
+		Quaternion result;
+		D3DXQuaternionSquad( (D3DXQUATERNION*) &result, (D3DXQUATERNION*) &q1, (D3DXQUATERNION*) &a,
+			(D3DXQUATERNION*) &b, (D3DXQUATERNION*) &c, t );
+		return result;
+	}
+
+	float Quaternion::Dot(Quaternion lhs, Quaternion rhs)
+	{
+		return D3DXQuaternionDot( (const D3DXQUATERNION*) &lhs, (const D3DXQUATERNION*) &rhs );
+	}
+
 	Quaternion Quaternion::operator * (Quaternion lhs, Quaternion rhs)
 	{
 		Quaternion result;
 		D3DXQuaternionMultiply( (D3DXQUATERNION*) &result, (const D3DXQUATERNION*) &lhs, (const D3DXQUATERNION*) &rhs );
+		return result;
+	}
+
+	Quaternion Quaternion::operator * (Quaternion lhs, float rhs)
+	{
+		Quaternion result;
+		result.X = lhs.X * rhs;
+		result.Y = lhs.Y * rhs;
+		result.Z = lhs.Z * rhs;
+		result.W = lhs.W * rhs;
+		return result;
+	}
+
+	Quaternion Quaternion::operator / (Quaternion lhs, float rhs)
+	{
+		Quaternion result;
+		result.X = lhs.X / rhs;
+		result.Y = lhs.Y / rhs;
+		result.Z = lhs.Z / rhs;
+		result.W = lhs.W / rhs;
+		return result;
+	}
+
+	Quaternion Quaternion::operator + (Quaternion lhs, Quaternion rhs)
+	{
+		Quaternion result;
+		result.X = lhs.X + rhs.X;
+		result.Y = lhs.Y + rhs.Y;
+		result.Z = lhs.Z + rhs.Z;
+		result.W = lhs.W + rhs.W;
+		return result;
+	}
+
+	Quaternion Quaternion::operator - (Quaternion lhs, Quaternion rhs)
+	{
+		Quaternion result;
+		result.X = lhs.X * rhs.X;
+		result.Y = lhs.Y * rhs.Y;
+		result.Z = lhs.Z * rhs.Z;
+		result.W = lhs.W * rhs.W;
 		return result;
 	}
 }

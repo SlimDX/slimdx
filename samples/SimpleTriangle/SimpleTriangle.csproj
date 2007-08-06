@@ -29,6 +29,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="RenderForm.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="RenderForm.Designer.cs">
       <DependentUpon>RenderForm.cs</DependentUpon>
