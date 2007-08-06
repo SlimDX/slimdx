@@ -24,7 +24,7 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
-#include "../Exceptions.h."
+#include "../Exceptions.h"
 
 namespace SlimDX
 {
@@ -35,11 +35,6 @@ namespace SlimDX
 		public:
 			static property Guid Keyboard { Guid get(); }
 			static property Guid Mouse { Guid get(); }
-			static property Guid Joystick { Guid get(); }
-			/*static property Guid MouseEm { Guid get(); }
-			static property Guid MouseEm2 { Guid get(); }
-			static property Guid KeyboardEm { Guid get(); }
-			static property Guid KeyboardEm2 { Guid get(); }*/
 		};
 
 		ref class Device;
