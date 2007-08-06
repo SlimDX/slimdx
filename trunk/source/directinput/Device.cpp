@@ -60,8 +60,6 @@ namespace DirectInput
 			SetDataFormat( DeviceDataFormat::Keyboard );
 		else if( subsystem == SystemGuid::Mouse )
 			SetDataFormat( DeviceDataFormat::Mouse );
-		else if( subsystem == SystemGuid::Joystick )
-			SetDataFormat( DeviceDataFormat::Joystick );
 	}
 
 	void Device::SetDataFormat( DeviceDataFormat format )

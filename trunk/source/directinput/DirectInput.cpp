@@ -23,6 +23,7 @@
 #include <windows.h>
 #include <dinput.h>
 
+#include "InputException.h"
 #include "DirectInput.h"
 #include "Device.h"
 
@@ -47,31 +48,6 @@ namespace DirectInput
 		return FromGUID( GUID_SysMouse );
 	}
 
-	Guid SystemGuid::Joystick::get()
-	{
-		return FromGUID( GUID_Joystick );
-	}
-
-	/*Guid SystemGuid::MouseEm::get()
-	{
-		return FromGUID( GUID_SysMouseEm );
-	}
-
-	Guid SystemGuid::MouseEm2::get()
-	{
-		return FromGUID( GUID_SysMouseEm2 );
-	}
-
-	Guid SystemGuid::KeyboardEm::get()
-	{
-		return FromGUID( GUID_SysKeyboardEm );
-	}
-
-	Guid SystemGuid::KeyboardEm2::get()
-	{
-		return FromGUID( GUID_SysKeyboardEm2 );
-	}*/
-
     void DirectInput::Initialize()
 	{
         if( m_DirectInput != NULL )
@@ -84,16 +60,16 @@ namespace DirectInput
         {
 		    HRESULT hr = DirectInput8Create( (HINSTANCE) hInstance.ToPointer(), DIRECTINPUT_VERSION, 
 			    IID_IDirectInput8, (void**) &dinput, NULL );
-		    //TODO: Include proper HRESULT checks
-		    if( FAILED( hr ) || dinput == NULL )
-			    throw gcnew DirectXException( -1, "Could not create DirectInput instance." );
+
+			InputException::CheckHResult( hr );
         }
         catch( SEHException^ ex )
         {
-            //throw gcnew DirectInput8NotFoundException( "DirectInput 8 was not found. Reinstalling DirectX may fix the problem.", ex );
-            //DI doesn't have its own exceptions yet
-            throw ex;
+            throw gcnew DirectInput8NotFoundException( "DirectInput 8 was not found. Reinstalling DirectX may fix the problem.", ex );
         }
+
+		if( dinput == NULL )
+			throw gcnew DirectXException( -1, "Could not create DirectInput instance." );
 
 		m_DirectInput = dinput;
 		

@@ -694,6 +694,10 @@
 					RelativePath="..\source\directinput\DirectInput.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\directinput\InputException.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="XInput"
