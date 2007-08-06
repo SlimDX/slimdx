@@ -37,7 +37,7 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	void BufferDescription::Marshal( DSBUFFERDESC& desc, [Out] GCHandle% pinHandle )
+	void BufferDescription::Marshal( DSBUFFERDESC& desc )
 	{
 		desc.dwSize = sizeof(DSBUFFERDESC);
 		desc.dwFlags = (DWORD) this->Flags;
@@ -45,15 +45,9 @@ namespace DirectSound
 		desc.dwReserved = 0;
 
 		if( this->Format == nullptr )
-		{
 			desc.lpwfxFormat = NULL;
-			pinHandle = GCHandle();
-		}
 		else
-		{
-			pinHandle = GCHandle::Alloc( this->Format, GCHandleType::Pinned );
-			desc.lpwfxFormat = (WAVEFORMATEX*) pinHandle.AddrOfPinnedObject().ToPointer();
-		}
+			desc.lpwfxFormat = this->Format->InternalPointer;
 	}
 
 	SoundBuffer::SoundBuffer( IDirectSoundBuffer* buffer ) : DirectXObject( (IDirectSoundBuffer8*) buffer )
@@ -67,17 +61,13 @@ namespace DirectSound
 	SoundBuffer::SoundBuffer( DirectSound^ dsound, BufferDescription desc )
 	{
 		DSBUFFERDESC nativeDesc;
-		GCHandle handle;
-		desc.Marshal( nativeDesc, handle );
+		desc.Marshal( nativeDesc );
 
 		IDirectSoundBuffer* buffer;
 		HRESULT hr = dsound->InternalPointer->CreateSoundBuffer( &nativeDesc, &buffer, NULL );
 		SoundException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			throw gcnew SoundException();
-
-		if( handle.IsAllocated )
-			handle.Free();
 
 		m_Pointer = (IDirectSoundBuffer8*) buffer;
 		DetermineSupport();
@@ -102,17 +92,13 @@ namespace DirectSound
 	void SoundBuffer::Initialize( DirectSound^ dsound, BufferDescription desc )
 	{
 		DSBUFFERDESC nativeDesc;
-		GCHandle handle;
-		desc.Marshal( nativeDesc, handle );
+		desc.Marshal( nativeDesc );
 
 		IDirectSoundBuffer* buffer;
 		HRESULT hr = dsound->InternalPointer->CreateSoundBuffer( &nativeDesc, &buffer, NULL );
 		SoundException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			throw gcnew SoundException();
-
-		if( handle.IsAllocated )
-			handle.Free();
 
 		m_Pointer = (IDirectSoundBuffer8*) buffer;
 		DetermineSupport();

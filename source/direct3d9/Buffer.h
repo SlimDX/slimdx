@@ -49,6 +49,11 @@ namespace SlimDX
 					throw gcnew ArgumentNullException( "buffer" );
 			}
 
+			virtual ~BufferWrapper()
+			{
+				Destruct();
+			}
+
 			property int Size
 			{
 				int get() { return m_Pointer->GetBufferSize(); }

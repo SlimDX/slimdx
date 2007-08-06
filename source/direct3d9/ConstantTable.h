@@ -66,7 +66,7 @@ namespace SlimDX
 
 		ref class EffectHandle;
 		
-		public ref class ConstantTable : public DirectXObject<ID3DXConstantTable>
+		public ref class ConstantTable sealed : public DirectXObject<ID3DXConstantTable>
 		{
 		private:
 			IDirect3DDevice9* m_Device;

@@ -81,6 +81,7 @@ namespace SlimDX
 		{
 		public:
 			EffectPool();
+			~EffectPool() { Destruct(); }
 
 			//ID3DXEffectPool has no methods
 		};

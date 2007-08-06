@@ -49,6 +49,7 @@ namespace Direct3D9
 
 	ConstantTable::~ConstantTable()
 	{
+		Destruct();
 		m_Device->Release();
 	}
 	

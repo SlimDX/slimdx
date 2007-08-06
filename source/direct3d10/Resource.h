@@ -38,6 +38,8 @@ namespace SlimDX
 			Resource(ID3D10Resource *resource);
 			
 		public:
+			virtual ~Resource() { Destruct(); }
+
 			/// <summary>
 			/// Gets or sets the resource's eviction priority.
 			/// </summary>

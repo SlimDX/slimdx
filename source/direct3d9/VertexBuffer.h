@@ -45,7 +45,7 @@ namespace SlimDX
 			
 			VertexBuffer( IDirect3DVertexBuffer9* buffer );
 			VertexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool );
-
+			
 			DataStream^ Lock( int offset, int size, LockFlags flags );
 			DataStream^ Lock( int offset, LockFlags flags );
 			void Unlock();

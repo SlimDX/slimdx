@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{	
-		public ref class VertexShader : public DirectXObject<IDirect3DVertexShader9>
+		public ref class VertexShader sealed : public DirectXObject<IDirect3DVertexShader9>
 		{
 		private:
 			ConstantTable^ m_ConstantTable;
@@ -38,6 +38,7 @@ namespace SlimDX
 			
 			~VertexShader()
 			{
+				Destruct();
 				delete m_ConstantTable;
 			}
 			

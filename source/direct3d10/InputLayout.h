@@ -37,6 +37,7 @@ namespace SlimDX
 		{
 		public:
 			InputLayout( Device^ device, array<InputElement>^ elements, ShaderBytecode^ compiledShader );
+			~InputLayout() { Destruct(); }
 		};
 	}
 };

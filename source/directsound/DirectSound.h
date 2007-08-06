@@ -59,12 +59,13 @@ namespace SlimDX
 			int Reserved2;
 		};
 
-		public ref class DirectSound : DirectXObject<IDirectSound8>
+		public ref class DirectSound sealed : DirectXObject<IDirectSound8>
 		{
 		public:
 			DirectSound( IDirectSound8* dsound );
 			DirectSound();
 			DirectSound( Guid device );
+			~DirectSound() { Destruct(); }
 
 			void Initialize();
 			void Initialize( Guid device );

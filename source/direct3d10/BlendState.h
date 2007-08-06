@@ -42,6 +42,8 @@ namespace SlimDX
 			BlendState( ID3D10BlendState* state );
 		
 		public:
+			~BlendState() { Destruct(); }
+
 			property bool AlphaToCoverageEnabled
 			{
 				bool get() { return m_Description->AlphaToCoverageEnabled; }

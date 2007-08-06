@@ -61,7 +61,7 @@ namespace SlimDX
 			}
 		
 		public:
-		  initonly InputAssemblerWrapper^ InputAssembler;
+			initonly InputAssemblerWrapper^ InputAssembler;
 			initonly RasterizerWrapper^ Rasterizer;
 			initonly OutputMergerWrapper^ OutputMerger;
 			

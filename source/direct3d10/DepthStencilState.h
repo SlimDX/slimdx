@@ -42,6 +42,8 @@ namespace SlimDX
 			DepthStencilState( ID3D10DepthStencilState* state );
 		
 		public:
+			~DepthStencilState() { Destruct(); }
+
 			property bool DepthEnabled
 			{
 				bool get() { return m_Description->DepthEnabled; }

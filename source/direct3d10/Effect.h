@@ -47,6 +47,8 @@ namespace SlimDX
 			Effect( ID3D10Effect* effect );
 		
 		public:
+			virtual ~Effect() { Destruct(); }
+
 			property bool IsChildEffect
 			{
 				bool get() { return m_IsChildEffect; }

@@ -93,6 +93,8 @@ namespace SlimDX
 			{ }
 
 		public:
+			virtual ~BaseEffect() { Destruct(); }
+
 			EffectHandle^ GetAnnotation( EffectHandle^ handle, int index );
 			EffectHandle^ GetAnnotation( EffectHandle^ handle, String^ name );
 

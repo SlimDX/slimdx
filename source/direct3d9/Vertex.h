@@ -60,6 +60,7 @@ namespace SlimDX
 		{
 		public:
 			VertexDeclaration( Device^ device, array<VertexElement>^ elements );
+			~VertexDeclaration() { Destruct(); }
 		};
 	}
 }

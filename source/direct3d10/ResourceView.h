@@ -38,6 +38,8 @@ namespace SlimDX
 			ResourceView( ID3D10ShaderResourceView* view );
 			
 		public:
+			virtual ~ResourceView() { Destruct(); }
+
 			initonly Format Format;
 			initonly ResourceViewDimension Dimension;
 			

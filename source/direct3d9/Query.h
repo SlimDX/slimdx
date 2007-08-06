@@ -120,11 +120,12 @@ namespace SlimDX
 			float ComputationProcessingPercent;
 		};
 
-		public ref class Query : public DirectXObject<IDirect3DQuery9>
+		public ref class Query sealed : public DirectXObject<IDirect3DQuery9>
 		{
 		public:
 			Query( IDirect3DQuery9* query );
 			Query( Device^ device, QueryType type );
+			~Query() { Destruct(); }
 
 			property QueryType Type
 			{

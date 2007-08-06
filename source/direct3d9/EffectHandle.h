@@ -103,5 +103,6 @@ namespace SlimDX
 			{
 				return gcnew EffectHandle( name );
 			}
-		};    }
+		};
+	}
 }

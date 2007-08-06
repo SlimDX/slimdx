@@ -34,6 +34,8 @@ namespace SlimDX
 		public ref class Resource abstract : public DirectXObject<IDirect3DResource9>
 		{
 		public:
+			virtual ~Resource() { Destruct(); }
+
 			property int Priority
 			{
 				int get() { return m_Pointer->GetPriority(); }

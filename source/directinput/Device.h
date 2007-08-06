@@ -65,6 +65,7 @@ namespace SlimDX
 		public:
 			Device( IDirectInputDevice8W* device );
 			Device( Guid subsystem );
+			virtual ~Device() { Destruct(); }
 
 			void SetDataFormat( DeviceDataFormat format );
 			
