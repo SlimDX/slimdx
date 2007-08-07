@@ -22,61 +22,87 @@
 #pragma once
 
 using namespace System;
+using namespace System::Windows::Forms;
 
 #include "../DirectXObject.h"
+#include "DeviceState.h"
+#include "Enums.h"
 
 namespace SlimDX
 {
 	namespace DirectInput
 	{
-		[Flags]
-		public enum class CooperativeLevel : Int32
-		{
-			Exclusive = DISCL_EXCLUSIVE,
-			NonExclusive = DISCL_NONEXCLUSIVE,
-			Foreground = DISCL_FOREGROUND,
-			Background = DISCL_BACKGROUND,
-			NoWinKey = DISCL_NOWINKEY,
-		};
-
-		public enum class DeviceDataFormat : Int32
-		{
-			Keyboard,
-			Mouse,
-			Joystick
-		};
-
-		public value class MouseState
-		{
-		internal:
-			array<Byte>^ buttons;
-
-		public:
-			int X, Y, Z;
-
-			property array<Byte>^ Buttons
-			{
-				array<Byte>^ get() { return buttons; }
-			}
-		};
-
+		/// <summary>
+		/// Used to gain and release access to Microsoft DirectInput devices, manage device
+		/// properties and information, set behavior, perform initialization, create and
+		/// play force-feedback effects, and open a device's control panel.
+		/// </summary>
 		public ref class Device : public DirectXObject<IDirectInputDevice8W>
 		{
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::Device"/> class.
+			/// </summary>
+			/// <param name="device">A pointer to an unmanaged DirectInput device.</param>
 			Device( IDirectInputDevice8W* device );
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::Device"/> class.
+			/// </summary>
+			/// <param name="subsystem">The subsystem identifier.</param>
 			Device( Guid subsystem );
+
+			/// <summary>
+			/// Disposes of managed and unmanaged resources contained by this class.
+			/// </summary>
 			virtual ~Device() { Destruct(); }
-
-			void SetDataFormat( DeviceDataFormat format );
 			
-			void SetCooperativeLevel( IntPtr handle, CooperativeLevel flags );
+			/// <summary>
+			/// Obtains access to the input device.
+			/// </summary>
 			void Acquire();
-			void Unacquire();
 
+			/// <summary>
+			/// Releases access to the device.
+			/// </summary>
+			void Unacquire();
+			
+			/// <summary>
+			/// Sets the device's cooperative level.
+			/// </summary>
+			/// <param name="handle">A handle of a window to associate with the device.</param>
+			/// <param name="flags">Flags that describe the cooperative level of the device.</param>
+			void SetCooperativeLevel( IntPtr handle, CooperativeLevel flags );
+
+			/// <summary>
+			/// Sets the device's cooperative level.
+			/// </summary>
+			/// <param name="control">A control to associate with the device.</param>
+			/// <param name="flags">Flags that describe the cooperative level of the device.</param>
+			void SetCooperativeLevel( Control^ control, CooperativeLevel flags );
+
+			/// <summary>
+			/// Sets the data format for the DirectInput device.
+			/// </summary>
+			/// <param name="format">The data format for the device.</param>
+			void SetDataFormat( DeviceDataFormat format );
+
+			// TODO: Overload for SetDataFormat that accepts a custom DataFormat
+
+			/// <summary>
+			/// Retrieves data from polled objects on a DirectInput device.
+			/// </summary>
 			void Poll();
 
-			//device state retrieval
-			property MouseState CurrentMouseState { MouseState get(); }
+			/// <summary>
+			/// Gets the current keyboard state.
+			/// </summary>
+			property KeyboardState^ CurrentKeyboardState { KeyboardState^ get(); }
+
+			/// <summary>
+			/// Gets the current mouse state.
+			/// </summary>
+			property MouseState^ CurrentMouseState { MouseState^ get(); }
 		};
 	}
 }

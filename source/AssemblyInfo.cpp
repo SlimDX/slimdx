@@ -31,11 +31,11 @@ using namespace System::Security::Permissions;
 // associated with an assembly.
 //
 [assembly:AssemblyTitleAttribute("SlimDX")];
-[assembly:AssemblyDescriptionAttribute("")];
+[assembly:AssemblyDescriptionAttribute("Provides a managed wrapper around Microsoft DirectX.")];
 [assembly:AssemblyConfigurationAttribute("")];
-[assembly:AssemblyCompanyAttribute("")];
+[assembly:AssemblyCompanyAttribute("SlimDX")];
 [assembly:AssemblyProductAttribute("SlimDX")];
-[assembly:AssemblyCopyrightAttribute("Copyright (c)  2007")];
+[assembly:AssemblyCopyrightAttribute("Copyright © 2007 SlimDX")];
 [assembly:AssemblyTrademarkAttribute("")];
 [assembly:AssemblyCultureAttribute("")];
 

@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle( "SimpleTriangle" )]
-[assembly: AssemblyDescription( "" )]
+[assembly: AssemblyDescription("A sample of how to draw a simple triangle using SlimDX.")]
 [assembly: AssemblyConfiguration( "" )]
-[assembly: AssemblyCompany( "Hewlett-Packard" )]
+[assembly: AssemblyCompany("SlimDX")]
 [assembly: AssemblyProduct( "SimpleTriangle" )]
-[assembly: AssemblyCopyright( "Copyright © Hewlett-Packard 2007" )]
+[assembly: AssemblyCopyright("Copyright © SlimDX")]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]
 
