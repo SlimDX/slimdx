@@ -24,25 +24,14 @@
 
 #include "../DirectXObject.h"
 #include "../Utils.h"
-
 #include "DirectInput.h"
 #include "Device.h"
+#include "InputException.h"
 
 namespace SlimDX
 {
 namespace DirectInput
 {
-	GUID ToGUID( Guid guid )
-	{
-		//TODO: This is fucking crazy
-		GUID result;
-		array<Byte>^ bytes = guid.ToByteArray();
-		pin_ptr<unsigned char> pinned_bytes = &bytes[0];
-		memcpy( &result, pinned_bytes, sizeof(GUID) );
-
-		return result;
-	}
-
 	Device::Device( IDirectInputDevice8W* device ) : DirectXObject( device )
 	{
 		if( device == NULL )
@@ -53,6 +42,7 @@ namespace DirectInput
 	{
 		IDirectInputDevice8W* device;
 		HRESULT hr = DirectInput::InternalPointer->CreateDevice( *(GUID*) &subsystem, &device, NULL );
+		InputException::CheckHResult( hr );
 
 		m_Pointer = device;
 
@@ -83,42 +73,63 @@ namespace DirectInput
 		default:
 			hr = S_OK;
 		}
+
+		InputException::CheckHResult( hr );
 	}
 
 	void Device::SetCooperativeLevel( IntPtr handle, CooperativeLevel flags )
 	{
-		HRESULT hr = m_Pointer->SetCooperativeLevel( (HWND) handle.ToPointer(), (DWORD) flags );
+		HRESULT hr = m_Pointer->SetCooperativeLevel( ( HWND )handle.ToPointer(), ( DWORD )flags );
+		InputException::CheckHResult( hr );
+	}
+
+	void Device::SetCooperativeLevel( Control^ control, CooperativeLevel flags )
+	{
+		SetCooperativeLevel( control->Handle, flags );
 	}
 
 	void Device::Acquire()
 	{
 		HRESULT hr = m_Pointer->Acquire();
+		InputException::CheckHResult( hr );
 	}
 
 	void Device::Unacquire()
 	{
 		HRESULT hr = m_Pointer->Unacquire();
+		InputException::CheckHResult( hr );
 	}
 
 	void Device::Poll()
 	{
 		HRESULT hr = m_Pointer->Poll();
+		InputException::CheckHResult( hr );
 	}
 
-	MouseState Device::CurrentMouseState::get()
+	MouseState^ Device::CurrentMouseState::get()
 	{
 		DIMOUSESTATE2 state;
+		HRESULT hr = m_Pointer->GetDeviceState( sizeof( DIMOUSESTATE2 ), (DIMOUSESTATE2*) &state );
+		InputException::CheckHResult( hr );
 
-		HRESULT hr = m_Pointer->GetDeviceState( sizeof( MouseState ), (DIMOUSESTATE2*) &state );
+		MouseState^ result = gcnew MouseState( state.lX, state.lY, state.lZ );
+		
+		for( int i = 0; i < 8; i++ )
+			result->Buttons[i] = state.rgbButtons[i] & 0x80;
 
-		//convert to a managed structure
-		MouseState result;
-		result.X = state.lX;
-		result.Y = state.lY;
-		result.Z = state.lZ;
-		result.buttons = gcnew array<Byte>( 8 );
-		for( int i = 0; i < 8; ++i )
-			result.buttons[i] = state.rgbButtons[i];
+		return result;
+	}
+
+	KeyboardState^ Device::CurrentKeyboardState::get()
+	{
+		BYTE keys[256];
+		HRESULT hr = m_Pointer->GetDeviceState( sizeof( BYTE ) * 256, keys );
+		InputException::CheckHResult( hr );
+
+		KeyboardState^ result = gcnew KeyboardState();
+		
+		for( int i = 0; i < 256; i++ )
+			result->Keys[i] = keys[i];
 
 		return result;
 	}

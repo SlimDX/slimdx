@@ -65,6 +65,8 @@
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				TargetMachine="1"
+				KeyFile=""
+				KeyContainer="SlimDX.con"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -691,7 +693,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\directinput\DeviceState.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\DirectInput.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\Enums.h"
 					>
 				</File>
 				<File
