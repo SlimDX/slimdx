@@ -37,31 +37,89 @@ namespace SlimDX
 {
 	namespace DirectInput
 	{
+		/// <summary>
+		/// Provides standard access to all DirectInput exceptions, errors, and result codes.
+		/// </summary>
 		public ref class InputException : public SlimDX::DirectXException
 		{
 		public:
+			/// <summary>
+			/// Initializes the <see cref="SlimDX::DirectInput::InputException"/> class.
+			/// </summary>
 			static InputException()
 			{
 				LastError = S_OK;
 			}
 
+			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::InputException"/> class.
+			/// </summary>
 			InputException() : DirectXException(E_FAIL, "A Direct3D exception occurred.")
 			{ }
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::InputException"/> class.
+			/// </summary>
+			/// <param name="message">The error message.</param>
 			InputException(String^ message) : DirectXException(E_FAIL, message)
 			{ }
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::InputException"/> class.
+			/// </summary>
+			/// <param name="errorCode">The DirectInput error code.</param>
 			InputException(int errorCode ) : DirectXException( errorCode, gcnew String( DXGetErrorDescription( errorCode ) ) )
 			{ }
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::InputException"/> class.
+			/// </summary>
+			/// <param name="errorCode">The DirectInput error code.</param>
+			/// <param name="message">The error message.</param>
 			InputException(int errorCode, String^ message) : DirectXException( errorCode, message )
 			{ }
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::InputException"/> class.
+			/// </summary>
+			/// <param name="message">The error message.</param>
+			/// <param name="innerException">The wrapped exception.</param>
 			InputException(String^ message, Exception^ innerException) : DirectXException( message, innerException )
 			{ }
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::InputException"/> class.
+			/// </summary>
+			/// <param name="info">Serialization information.</param>
+			/// <param name="context">Streaming context information.</param>
 			InputException(SerializationInfo^ info, StreamingContext context) : DirectXException(info, context)
 			{ }
 
+			/// <summary>
+			/// Gets or sets the last error code.
+			/// </summary>
 			static property int LastError;
 
+			/// <summary>
+			/// Retrieves the exception that corresponds to the specified result code.
+			/// </summary>
+			/// <param name="hr">The result code.</param>
 			static InputException^ GetExceptionFromHResult( HRESULT hr );
+
+			/// <summary>
+			/// Checks the specified result code. If it specifies an error, an exception matching that
+			/// error will be thrown.
+			/// </summary>
+			/// <param name="hr">The result code.</param>
 			static void CheckHResult( HRESULT hr );
+
+			/// <summary>
+			/// Checks the specified result code. If it specifies an error, an exception matching that
+			/// error will be thrown.
+			/// </summary>
+			/// <param name="hr">The result code.</param>
+			/// <param name="dataKey">The data key.</param>
+			/// <param name="dataValue">The data value.</param>
 			static void CheckHResult( HRESULT hr, String^ dataKey, Object^ dataValue );
 		};
 

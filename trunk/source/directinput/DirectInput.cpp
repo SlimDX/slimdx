@@ -31,7 +31,7 @@ namespace SlimDX
 {
 namespace DirectInput
 {
-	Guid FromGUID( const GUID& guid )
+	Guid SystemGuid::FromGUID( const GUID& guid )
 	{
 		Guid result( guid.Data1, guid.Data2, guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], 
 			guid.Data4[3], guid.Data4[4], guid.Data4[5], guid.Data4[6], guid.Data4[7] );
@@ -40,12 +40,12 @@ namespace DirectInput
 
 	Guid SystemGuid::Keyboard::get()
 	{
-		return FromGUID( GUID_SysKeyboard );
+		return SystemGuid::FromGUID( GUID_SysKeyboard );
 	}
 
 	Guid SystemGuid::Mouse::get()
 	{
-		return FromGUID( GUID_SysMouse );
+		return SystemGuid::FromGUID( GUID_SysMouse );
 	}
 
     void DirectInput::Initialize()
@@ -87,11 +87,6 @@ namespace DirectInput
 
 		System::AppDomain::CurrentDomain->DomainUnload -= gcnew System::EventHandler( OnExit );
 		System::AppDomain::CurrentDomain->ProcessExit -= gcnew System::EventHandler( OnExit );
-	}
-
-	Device^ DirectInput::CreateDevice( Guid subsystem )
-	{
-		return gcnew Device( subsystem );
 	}
 }
 }

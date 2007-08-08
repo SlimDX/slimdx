@@ -28,6 +28,159 @@ namespace SlimDX
 	namespace DirectInput
 	{
 		/// <summary>
+		/// Specifies the main type of a DirectInput device.
+		/// </summary>
+		public enum class DeviceType : Int32
+		{
+			/// <summary>
+			/// A first-person action game device.
+			/// </summary>
+			FirstPerson = DI8DEVTYPE_1STPERSON,
+
+			/// <summary>
+			/// A device that does not fall into any other category.
+			/// </summary>
+			Other = DI8DEVTYPE_DEVICE,
+
+			/// <summary>
+			/// Input device used to control another type of device from within the context of
+			/// the application.
+			/// </summary>
+			ControlDevice = DI8DEVTYPE_DEVICECTRL,
+
+			/// <summary>
+			/// A device for steering.
+			/// </summary>
+			Driving = DI8DEVTYPE_DRIVING,
+
+			/// <summary>
+			/// Controller for a flight simulation.
+			/// </summary>
+			Flight = DI8DEVTYPE_FLIGHT,
+
+			/// <summary>
+			/// A console game pad.
+			/// </summary>
+			GamePad = DI8DEVTYPE_GAMEPAD,
+
+			/// <summary>
+			/// A generic joystick.
+			/// </summary>
+			Joystick = DI8DEVTYPE_JOYSTICK,
+
+			/// <summary>
+			/// A keyboard or keyboard-like device.
+			/// </summary>
+			Keyboard = DI8DEVTYPE_KEYBOARD,
+
+			/// <summary>
+			/// A mouse or mouse-like device.
+			/// </summary>
+			Mouse = DI8DEVTYPE_MOUSE,
+
+			/// <summary>
+			/// A remote-control device.
+			/// </summary>
+			Remote = DI8DEVTYPE_REMOTE,
+
+			/// <summary>
+			/// A screen pointer device.
+			/// </summary>
+			ScreenPointer = DI8DEVTYPE_SCREENPOINTER,
+
+			/// <summary>
+			/// A specialized device with functionality unsuitable for main control of an application,
+			/// such as pedals with a wheel.
+			/// </summary>
+			Supplemental = DI8DEVTYPE_SUPPLEMENTAL
+		};
+
+		/// <summary>
+		/// Specifies the flags that can be associated with a DirectInput device.
+		/// </summary>
+		[Flags]
+		public enum class DeviceFlags : Int32
+		{
+			/// <summary>
+			/// The device is a duplicate of another DirectInput device.
+			/// </summary>
+			Alias = DIDC_ALIAS,
+
+			/// <summary>
+			/// The device is physically attached to the user's computer.
+			/// </summary>
+			Attached = DIDC_ATTACHED,
+
+			/// <summary>
+			/// The device supports deadband for at least one force-feedback condition.
+			/// </summary>
+			DeadBand = DIDC_DEADBAND,
+
+			/// <summary>
+			/// Specifies that the device's data is coming from a user mode device interface.
+			/// </summary>
+			Emulated = DIDC_EMULATED,
+
+			/// <summary>
+			/// The device supports force-feedback.
+			/// </summary>
+			ForceFeedback = DIDC_FORCEFEEDBACK,
+
+			/// <summary>
+			/// The force-feedback system supports the fade parameter for at least one effect.
+			/// </summary>
+			ForceFeedbackFade = DIDC_FFFADE,
+
+			/// <summary>
+			/// The force-feedback system supports the attack parameter for at least one effect.
+			/// </summary>
+			ForceFeedbackAttack = DIDC_FFATTACK,
+
+			/// <summary>
+			/// The device is a fictious device created by a device driver so that is can generate
+			/// mouse and keyboard events.
+			/// </summary>
+			Hidden = DIDC_HIDDEN,
+
+			/// <summary>
+			/// The device is a placeholder.
+			/// </summary>
+			Phantom = DIDC_PHANTOM,
+
+			/// <summary>
+			/// At least one object in the current data format is polled, rather than interrupt driven.
+			/// </summary>
+			PolledDataFormat = DIDC_POLLEDDATAFORMAT,
+
+			/// <summary>
+			/// At least one object on the device is polled, rather than interrupt driven.
+			/// </summary>
+			PolledDevice = DIDC_POLLEDDEVICE,
+
+			/// <summary>
+			/// The force-feedback system supports two coefficient values for conditions.
+			/// </summary>
+			PositiveNegativeCoefficients = DIDC_POSNEGCOEFFICIENTS,
+
+			/// <summary>
+			/// The force-feedback system supports a maximum saturation for both positive and negative
+			/// force output for at least one condition.
+			/// </summary>
+			PositiveNegativeSaturation = DIDC_POSNEGSATURATION,
+
+			/// <summary>
+			/// The force-feedback system supports the saturation of condition effects for at least
+			/// one condition.
+			/// </summary>
+			Saturation = DIDC_SATURATION,
+
+			/// <summary>
+			/// The force-feedback system supports the start delay parameter for at least one effect.
+			/// </summary>
+			StartDelay = DIDC_STARTDELAY
+		};
+
+		/// <summary>
 		/// Specifies the cooperative level for a DirectInput device.
 		/// </summary>
 		[Flags]

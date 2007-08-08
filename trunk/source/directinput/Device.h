@@ -27,6 +27,7 @@ using namespace System::Windows::Forms;
 #include "../DirectXObject.h"
 #include "DeviceState.h"
 #include "Enums.h"
+#include "DeviceInfo.h"
 
 namespace SlimDX
 {
@@ -93,6 +94,16 @@ namespace SlimDX
 			/// Retrieves data from polled objects on a DirectInput device.
 			/// </summary>
 			void Poll();
+
+			/// <summary>
+			/// Gets the capabilities of the device.
+			/// </summary>
+			property Capabilities^ Caps { Capabilities^ get(); }
+
+			/// <summary>
+			/// Obtains information about the device's identity.
+			/// </summary>
+			property DeviceInstance^ DeviceInformation { DeviceInstance^ get(); }
 
 			/// <summary>
 			/// Gets the current keyboard state.
