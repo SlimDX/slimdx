@@ -30,15 +30,31 @@ namespace SlimDX
 {
 	namespace DirectInput
 	{
+		/// <summary>
+		/// Contains system-defined identifiers for DirectInput devices.
+		/// </summary>
 		public ref class SystemGuid sealed
 		{
+		internal:
+			static Guid FromGUID( const GUID &guid );
+
 		public:
+			/// <summary>
+			/// Gets the system keyboard identifier.
+			/// </summary>
 			static property Guid Keyboard { Guid get(); }
+
+			/// <summary>
+			/// Gets the system mouse identifier.
+			/// </summary>
 			static property Guid Mouse { Guid get(); }
 		};
 
 		ref class Device;
 
+		/// <summary>
+		/// Provides an interface to DirectInput.
+		/// </summary>
 		public ref class DirectInput
 		{
 		private:
@@ -56,10 +72,16 @@ namespace SlimDX
 			}
 
 		public:
+			/// <summary>
+			/// Called by the application to initialize DirectInput. This method must be
+			/// called before any other DirectInput methods.
+			/// </summary>
 			static void Initialize();
-            static void Terminate();
 
-			Device^ CreateDevice( Guid subsystem );
+			/// <summary>
+			/// Called by the application to release DirectInput and free any resources.
+			/// </summary>
+            static void Terminate();
 		};
 	}
 }

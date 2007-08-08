@@ -133,5 +133,23 @@ namespace DirectInput
 
 		return result;
 	}
+
+	Capabilities^ Device::Caps::get()
+	{
+		DIDEVCAPS caps;
+		HRESULT hr = m_Pointer->GetCapabilities( &caps );
+		InputException::CheckHResult( hr );
+
+		return gcnew Capabilities( caps );
+	}
+
+	DeviceInstance^ Device::DeviceInformation::get()
+	{
+		DIDEVICEINSTANCE deviceInstance;
+		HRESULT hr = m_Pointer->GetDeviceInfo( &deviceInstance );
+		InputException::CheckHResult( hr );
+
+		return gcnew DeviceInstance( deviceInstance );
+	}
 }
 }

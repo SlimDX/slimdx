@@ -251,6 +251,10 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath="..\source\directinput\DeviceInfo.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\DirectInput.cpp"
 					>
 				</File>
@@ -690,6 +694,10 @@
 				>
 				<File
 					RelativePath="..\source\directinput\Device.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DeviceInfo.h"
 					>
 				</File>
 				<File
