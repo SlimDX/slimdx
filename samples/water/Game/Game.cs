@@ -7,7 +7,6 @@ namespace Engine
 		static void InitSystems()
 		{
 			SlimDX.Direct3D9.Direct3D.Initialize();
-			SlimDX.DirectInput.DirectInput.Initialize();
 		}
 
 		static void RunGame()
