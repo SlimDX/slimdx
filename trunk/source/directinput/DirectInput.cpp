@@ -18,10 +18,10 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
-*/
-//#define 
+*/ 
 #include <windows.h>
 #include <dinput.h>
+#include <vcclr.h>
 
 #include "InputException.h"
 #include "DirectInput.h"
@@ -37,6 +37,16 @@ namespace DirectInput
 			guid.Data4[3], guid.Data4[4], guid.Data4[5], guid.Data4[6], guid.Data4[7] );
 		return result;
 	}
+
+	GUID SystemGuid::ToGUID( Guid guid )
+    {
+		GUID result;
+		array<Byte>^ bytes = guid.ToByteArray();
+		pin_ptr<unsigned char> pinned_bytes = &bytes[0];
+		memcpy( &result, pinned_bytes, sizeof(GUID) );
+		
+		return result;
+    }
 
 	Guid SystemGuid::Keyboard::get()
 	{
@@ -87,6 +97,38 @@ namespace DirectInput
 
 		System::AppDomain::CurrentDomain->DomainUnload -= gcnew System::EventHandler( OnExit );
 		System::AppDomain::CurrentDomain->ProcessExit -= gcnew System::EventHandler( OnExit );
+	}
+
+	void DirectInput::RunControlPanel()
+	{
+		HRESULT hr = m_DirectInput->RunControlPanel( NULL, 0 );
+		InputException::CheckHResult( hr );
+	}
+
+	void DirectInput::RunControlPanel( Control^ parent )
+	{
+		HRESULT hr = m_DirectInput->RunControlPanel( ( HWND )parent->Handle.ToPointer(), 0 );
+		InputException::CheckHResult( hr );
+	}
+
+	bool DirectInput::IsDeviceAttached( Guid device )
+	{
+		HRESULT hr = m_DirectInput->GetDeviceStatus( SystemGuid::ToGUID( device ) );
+		InputException::CheckHResult( hr );
+
+		return hr == DI_OK;
+	}
+
+	Guid DirectInput::FindDevice( Guid deviceClass, String^ name )
+	{
+		GUID result;
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( name );
+
+		HRESULT hr = m_DirectInput->FindDevice( SystemGuid::ToGUID( deviceClass ),
+			( LPCTSTR )pinnedName, &result );
+		InputException::CheckHResult( hr );
+
+		return SystemGuid::FromGUID( result );
 	}
 }
 }

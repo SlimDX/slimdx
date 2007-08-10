@@ -22,6 +22,7 @@
 #pragma once
 
 using namespace System;
+using namespace System::Windows::Forms;
 using namespace System::Runtime::InteropServices;
 
 #include "../Exceptions.h"
@@ -37,6 +38,7 @@ namespace SlimDX
 		{
 		internal:
 			static Guid FromGUID( const GUID &guid );
+			static GUID ToGUID( Guid guid );
 
 		public:
 			/// <summary>
@@ -50,8 +52,6 @@ namespace SlimDX
 			static property Guid Mouse { Guid get(); }
 		};
 
-		ref class Device;
-
 		/// <summary>
 		/// Provides an interface to DirectInput.
 		/// </summary>
@@ -60,10 +60,18 @@ namespace SlimDX
 		private:
 			static IDirectInput8W* m_DirectInput;
 
-			static void OnExit(Object^ sender,EventArgs^ e)
+			static void OnExit( Object^ sender, EventArgs^ e )
 			{
 				Terminate();
 			}
+
+			static DirectInput()
+			{
+				Initialize();
+			}
+
+			static void Terminate();
+			static void Initialize();
 
 		internal:
 			static property IDirectInput8W* InternalPointer
@@ -73,15 +81,29 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Called by the application to initialize DirectInput. This method must be
-			/// called before any other DirectInput methods.
+			/// Runs Control Panel to enable the user to install a new
+			/// input device or modify configurations.
 			/// </summary>
-			static void Initialize();
+			static void RunControlPanel();
 
 			/// <summary>
-			/// Called by the application to release DirectInput and free any resources.
+			/// Runs Control Panel to enable the user to install a new
+			/// input device or modify configurations.
 			/// </summary>
-            static void Terminate();
+			/// <param name="parent">The parent control.</param>
+			static void RunControlPanel( Control^ parent );
+
+			/// <summary>
+			/// Gets a value indicating whether the specified device is
+			/// attached to the user's system.
+			/// </summary>
+			static bool IsDeviceAttached( Guid device );
+
+			/// <summary>
+			/// Retrieves the instance identifier of a device that
+			/// has been newly attached to the system.
+			/// </summary>
+			static Guid FindDevice( Guid deviceClass, String^ name );
 		};
 	}
 }
