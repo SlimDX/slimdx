@@ -65,14 +65,6 @@ namespace SlimDX
 				Terminate();
 			}
 
-			static DirectInput()
-			{
-				Initialize();
-			}
-
-			static void Terminate();
-			static void Initialize();
-
 		internal:
 			static property IDirectInput8W* InternalPointer
 			{
@@ -80,6 +72,17 @@ namespace SlimDX
 			}
 
 		public:
+			/// <summary>
+			/// Called by the application to initialize DirectInput. This method must be called before
+			/// any other DirectInput methods.
+			/// </summary>
+			static void Terminate();
+
+			/// <summary>
+			/// Called by the application to release DirectInput and free resources.
+			/// </summary>
+			static void Initialize();
+
 			/// <summary>
 			/// Runs Control Panel to enable the user to install a new
 			/// input device or modify configurations.
