@@ -69,6 +69,7 @@ namespace Engine
 			for(int i = 0; i < 4; i++)
 				mouseStates[i] = false;
 
+            mouse = mouseDevice.CurrentMouseState;
 			if(mouse.X > 0)
 				mouseStates[0] = true;
 			if(mouse.X < 0)
@@ -77,7 +78,6 @@ namespace Engine
 				mouseStates[2] = true;
 			if(mouse.Y < 0)
 				mouseStates[3] = true;
-			mouse = mouseDevice.CurrentMouseState;
 		}
 		public void UpdateCamera(SlimDX.Direct3D9.Device device)
 		{
