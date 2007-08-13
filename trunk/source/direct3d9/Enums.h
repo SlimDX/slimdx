@@ -919,5 +919,12 @@ namespace SlimDX
 			Cubic = D3DDEGREE_CUBIC,
 			Quintic = D3DDEGREE_QUINTIC,
 		};
+
+		public enum class LightType : Int32
+		{
+			Point = D3DLIGHT_POINT,
+			Spot = D3DLIGHT_SPOT,
+			Directional = D3DLIGHT_DIRECTIONAL,
+		};
 	}
 }

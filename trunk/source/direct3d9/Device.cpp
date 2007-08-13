@@ -25,7 +25,6 @@
 
 #include "../DirectXObject.h"
 #include "../Utils.h"
-#include "../math/Math.h"
 #include "GraphicsException.h"
 
 #include "Device.h"
@@ -799,6 +798,21 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 
 		return enabled > 0;
+	}
+
+	void Device::SetLight( int lightIndex, Light lightData )
+	{
+		HRESULT hr = m_Pointer->SetLight( lightIndex, (D3DLIGHT9*) &lightData );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	Light Device::GetLight( int lightIndex )
+	{
+		Light light;
+		HRESULT hr = m_Pointer->GetLight( lightIndex, (D3DLIGHT9*) &light );
+		GraphicsException::CheckHResult( hr );
+		
+		return light;
 	}
 
 	void Device::SetCursorPosition( int x, int y, bool immediateUpdate )

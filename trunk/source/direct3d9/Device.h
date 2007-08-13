@@ -31,6 +31,7 @@ using namespace System::Runtime::InteropServices;
 #include "Vertex.h"
 #include "../Direct3D/ColorValue.h"
 #include "../Direct3D/Viewport.h"
+#include "../math/Math.h"
 
 using namespace SlimDX::Direct3D;
 
@@ -69,6 +70,24 @@ namespace SlimDX
 			int Stride;
 			Basis Basis;
 			Degree Degree;
+		};
+
+		[StructLayout( LayoutKind::Sequential )]
+		public value class Light
+		{
+			LightType Type;
+			ColorValue Diffuse;
+			ColorValue Specular;
+			ColorValue Ambient;
+			Vector3 Position;
+			Vector3 Direction;
+			float Range;
+			float Falloff;
+			float Attenuation0;
+			float Attenuation1;
+			float Attenuation2;
+			float Theta;
+			float Phi;
 		};
 
 		public ref class PresentParameters
@@ -241,8 +260,8 @@ namespace SlimDX
 
 			void LightEnable( int lightIndex, bool enable );
 			bool GetLightEnable( int lightIndex );
-			//void SetLight( int lightIndex, Light lightData );
-			//Light GetLight( int lightIndex );
+			void SetLight( int lightIndex, Light lightData );
+			Light GetLight( int lightIndex );
 
 			void SetCursorPosition( int x, int y, bool immediateUpdate );
 			void SetCursorPosition( System::Drawing::Point position, bool immediateUpdate ) { SetCursorPosition( position.X, position.Y, immediateUpdate ); }
