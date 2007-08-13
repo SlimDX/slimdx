@@ -1,6 +1,9 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xilath", "Xilath.csproj", "{7C00F00A-831E-4BCE-82A5-83BFD3893CE6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTriangle", "SimpleTriangle\SimpleTriangle.csproj", "{6B9DCB0F-5C97-4729-A826-385BB06AFAC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xilath", "water\Xilath.csproj", "{7C00F00A-831E-4BCE-82A5-83BFD3893CE6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,6 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B9DCB0F-5C97-4729-A826-385BB06AFAC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B9DCB0F-5C97-4729-A826-385BB06AFAC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B9DCB0F-5C97-4729-A826-385BB06AFAC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B9DCB0F-5C97-4729-A826-385BB06AFAC6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7C00F00A-831E-4BCE-82A5-83BFD3893CE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7C00F00A-831E-4BCE-82A5-83BFD3893CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C00F00A-831E-4BCE-82A5-83BFD3893CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU

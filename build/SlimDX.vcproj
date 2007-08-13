@@ -351,6 +351,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d9\RenderToSurface.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\Resource.cpp"
 					>
 				</File>
@@ -834,6 +838,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Query.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\RenderToSurface.h"
 					>
 				</File>
 				<File
