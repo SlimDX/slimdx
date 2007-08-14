@@ -61,6 +61,7 @@ namespace SlimDX
 		[Flags]
 		public enum class PlayFlags : Int32
 		{
+			None = 0,
 			Looping = DSBPLAY_LOOPING,
 
 			Hardware = DSBPLAY_LOCHARDWARE,
@@ -74,11 +75,12 @@ namespace SlimDX
 		[Flags]
 		public enum class BufferFlags : Int32
 		{
+			None = 0,
 			PrimaryBuffer = DSBCAPS_PRIMARYBUFFER,
 			Static = DSBCAPS_STATIC,
 			Hardware = DSBCAPS_LOCHARDWARE,
 			Software = DSBCAPS_LOCSOFTWARE,
-			Cotnrol3D = DSBCAPS_CTRL3D,
+			Control3D = DSBCAPS_CTRL3D,
 			ControlFrequency = DSBCAPS_CTRLFREQUENCY,
 			ControlPan = DSBCAPS_CTRLPAN,
 			ControlVolume = DSBCAPS_CTRLVOLUME,
@@ -94,6 +96,7 @@ namespace SlimDX
 		[Flags]
 		public enum class BufferStatus : Int32
 		{
+			None = 0,
 			Playing = DSBSTATUS_PLAYING,
 			BufferLost = DSBSTATUS_BUFFERLOST,
 			Looping = DSBSTATUS_LOOPING,
@@ -105,6 +108,7 @@ namespace SlimDX
 		[Flags]
 		public enum class LockFlags : Int32
 		{
+			None = 0,
 			FromWriteCursor = DSBLOCK_FROMWRITECURSOR,
 			EntireBuffer = DSBLOCK_ENTIREBUFFER,
 		};

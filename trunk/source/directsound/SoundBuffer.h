@@ -58,17 +58,20 @@ namespace SlimDX
 			int PlayCpuOverhead;
 		};
 
-		public ref class SoundBuffer : DirectXObject<IDirectSoundBuffer8>
+		public ref class SoundBuffer : DirectXObject<IDirectSoundBuffer>
 		{
 		private:
-			bool m_SupportsNewMethods;
+			//While I believe the IDirectSoundBuffer can be safely cast to one of these, it's not
+			//guaranteed to be safe to do so, so we'll just do the Right Thing (tm) and use QueryInterface
+			//to get it and store it separately.
+			IDirectSoundBuffer8* m_DS8Pointer;
 
-			void DetermineSupport();
+			void SetDS8Pointer();
 
 		public:
 			SoundBuffer( IDirectSoundBuffer* buffer );
 			SoundBuffer( DirectSound^ dsound, BufferDescription desc );
-			~SoundBuffer() { Destruct(); }
+			~SoundBuffer();
 
 			void Initialize( DirectSound^ dsound, BufferDescription desc );
 			//void AcquireResources( 
