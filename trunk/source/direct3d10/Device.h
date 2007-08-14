@@ -37,6 +37,7 @@ namespace SlimDX
 		ref class RasterizerWrapper;
 		ref class RenderTargetView;
 		ref class Resource;
+		ref class StreamOutputWrapper;
 		ref class SwapChain;
 		value class RenderTargetViewDescription;
 		value class SwapChainDescription;
@@ -64,6 +65,7 @@ namespace SlimDX
 			initonly InputAssemblerWrapper^ InputAssembler;
 			initonly RasterizerWrapper^ Rasterizer;
 			initonly OutputMergerWrapper^ OutputMerger;
+			initonly StreamOutputWrapper^ StreamOutput;
 			
 			Device( DriverType driverType, DeviceCreationFlags flags );
 
