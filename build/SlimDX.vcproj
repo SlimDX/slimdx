@@ -557,6 +557,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\StreamOutputWrapper.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\SwapChain.cpp"
 					>
 					<FileConfiguration
@@ -1018,6 +1022,14 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\ShaderResourceView.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\StreamOutputBufferBinding.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\StreamOutputWrapper.h"
 					>
 				</File>
 				<File

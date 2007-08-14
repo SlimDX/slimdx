@@ -33,6 +33,7 @@
 #include "RasterizerWrapper.h"
 #include "RenderTargetView.h"
 #include "Resource.h"
+#include "StreamOutputWrapper.h"
 #include "SwapChain.h"
 #include "SwapChainDescription.h"
 
@@ -57,6 +58,7 @@ namespace Direct3D10
 		InputAssembler = gcnew InputAssemblerWrapper( m_Device );
 		Rasterizer = gcnew RasterizerWrapper( m_Device );
 		OutputMerger = gcnew OutputMergerWrapper( m_Device );
+		StreamOutput = gcnew StreamOutputWrapper( m_Device );
 	}
 
 	Device::~Device()
