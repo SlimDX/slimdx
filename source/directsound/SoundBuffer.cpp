@@ -55,7 +55,7 @@ namespace DirectSound
 		if( buffer == NULL )
 			throw gcnew ArgumentNullException( "buffer" );
 
-		DetermineSupport();
+		SetDS8Pointer();
 	}
 
 	SoundBuffer::SoundBuffer( DirectSound^ dsound, BufferDescription desc )
@@ -69,23 +69,33 @@ namespace DirectSound
 		if( FAILED( hr ) )
 			throw gcnew SoundException();
 
-		m_Pointer = (IDirectSoundBuffer8*) buffer;
-		DetermineSupport();
+		m_Pointer = buffer;
+		SetDS8Pointer();
 	}
 
-	void SoundBuffer::DetermineSupport()
+	SoundBuffer::~SoundBuffer()
+	{
+		if( m_DS8Pointer != NULL )
+		{
+			m_DS8Pointer->Release();
+			m_DS8Pointer = NULL;
+		}
+
+		Destruct();
+	}
+
+	void SoundBuffer::SetDS8Pointer()
 	{
 		IDirectSoundBuffer8* buffer;
 		HRESULT hr = m_Pointer->QueryInterface( IID_IDirectSoundBuffer8, (void**) &buffer );
 		
 		if( SUCCEEDED( hr ) )
 		{
-			m_SupportsNewMethods = true;
-			buffer->Release();
+			m_DS8Pointer = buffer;
 		}
 		else
 		{
-			m_SupportsNewMethods = false;
+			m_DS8Pointer = NULL;
 		}
 	}
 
@@ -101,7 +111,7 @@ namespace DirectSound
 			throw gcnew SoundException();
 
 		m_Pointer = (IDirectSoundBuffer8*) buffer;
-		DetermineSupport();
+		SetDS8Pointer();
 	}
 
 	void SoundBuffer::Restore()
