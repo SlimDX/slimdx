@@ -23,6 +23,8 @@
 
 namespace SlimDX
 {
+	ref class DataStream;
+
 	namespace Direct3D9
 	{
 		[Flags]
@@ -95,6 +97,8 @@ namespace SlimDX
 		};
 
 		ref class Mesh;
+		ref class VertexBuffer;
+		ref class IndexBuffer;
 
 		public ref class BaseMesh abstract : public DirectXObject<ID3DXBaseMesh>
 		{
@@ -106,7 +110,27 @@ namespace SlimDX
 			Mesh^ Clone( Device^ device, MeshFlags flags, array<VertexElement>^ elements  );
 			virtual ~BaseMesh() { Destruct(); }
 
+			Device^ GetDevice();
+			IndexBuffer^ GetIndexBuffer();
+			VertexBuffer^ GetVertexBuffer();
+
+			DataStream^ LockIndexBuffer( LockFlags flags );
+			void UnlockIndexBuffer();
+
+			DataStream^ LockVertexBuffer( LockFlags flags );
+			void UnlockVertexBuffer();
+
+			array<int>^ GenerateAdjacency( float epsilon );
+			array<int>^ ConvertAdjacencyToPointReps( array<int>^ adjacency );
+			array<int>^ ConvertPointRepsToAdjacency( array<int>^ adjacency );
+
 			void DrawSubset( int subset );
+
+			property int FaceCount { int get(); }
+			property int VertexCount { int get(); }
+			property VertexFormat VertexFormat { SlimDX::Direct3D9::VertexFormat get(); }
+			property int BytesPerVertex { int get(); }
+			property MeshFlags CreationOptions { MeshFlags get(); }
 		};
 
 		public ref class Mesh : public BaseMesh
@@ -130,6 +154,9 @@ namespace SlimDX
 
 			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<Material>^% materials );
 			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags );
+
+			//DataStream^ LockAttributeTable( LockFlags flags );
+			//void UnlockAttributeTable();
 
 			void ComputeTangentFrame( TangentOptions options );
 		};
