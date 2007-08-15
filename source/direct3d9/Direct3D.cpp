@@ -304,10 +304,11 @@ namespace Direct3D9
 	Capabilities Direct3D::GetDeviceCaps( int adapter, DeviceType deviceType )
 	{
 		D3DCAPS9 caps;
-		Direct3D::InternalPointer->GetDeviceCaps( adapter, (D3DDEVTYPE) deviceType, &caps );
+		HRESULT hr = Direct3D::InternalPointer->GetDeviceCaps( adapter, (D3DDEVTYPE) deviceType, &caps );
+		GraphicsException::CheckHResult( hr );
+
 		return Capabilities( caps );
 	}
-
 
 	Capabilities::Capabilities( const D3DCAPS9& caps )
 	{
