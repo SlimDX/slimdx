@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleSound", "..\samples\S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTriangle", "..\samples\SimpleTriangle\SimpleTriangle.csproj", "{6B9DCB0F-5C97-4729-A826-385BB06AFAC6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTri", "..\samples\MiniTri\MiniTri.csproj", "{7956A35D-3385-4E7B-B9E2-DD33BFCEE379}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,16 @@ Global
 		{6B9DCB0F-5C97-4729-A826-385BB06AFAC6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6B9DCB0F-5C97-4729-A826-385BB06AFAC6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6B9DCB0F-5C97-4729-A826-385BB06AFAC6}.Release|Win32.ActiveCfg = Release|Any CPU
+		{7956A35D-3385-4E7B-B9E2-DD33BFCEE379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7956A35D-3385-4E7B-B9E2-DD33BFCEE379}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7956A35D-3385-4E7B-B9E2-DD33BFCEE379}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7956A35D-3385-4E7B-B9E2-DD33BFCEE379}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7956A35D-3385-4E7B-B9E2-DD33BFCEE379}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{7956A35D-3385-4E7B-B9E2-DD33BFCEE379}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7956A35D-3385-4E7B-B9E2-DD33BFCEE379}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7956A35D-3385-4E7B-B9E2-DD33BFCEE379}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7956A35D-3385-4E7B-B9E2-DD33BFCEE379}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7956A35D-3385-4E7B-B9E2-DD33BFCEE379}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
