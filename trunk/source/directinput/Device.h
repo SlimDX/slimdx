@@ -28,6 +28,7 @@ using namespace System::Windows::Forms;
 #include "DeviceState.h"
 #include "Enums.h"
 #include "DeviceInfo.h"
+#include "DataFormat.h"
 
 namespace SlimDX
 {
@@ -88,7 +89,26 @@ namespace SlimDX
 			/// <param name="format">The data format for the device.</param>
 			void SetDataFormat( DeviceDataFormat format );
 
-			// TODO: Overload for SetDataFormat that accepts a custom DataFormat
+			/// <summary>
+			/// Sets the data format for the DirectInput device.
+			/// </summary>
+			/// <param name="format">The data format for the device.</param>
+			void SetDataFormat( DataFormat format );
+
+			/// <summary>
+			/// Runs the DirectInput control panel associated with this device. If the
+			/// device does not have a control panel associated with it, the default
+			/// device control panel is launched.
+			/// </summary>
+			void RunControlPanel();
+
+			/// <summary>
+			/// Runs the DirectInput control panel associated with this device. If the
+			/// device does not have a control panel associated with it, the default
+			/// device control panel is launched.
+			/// </summary>
+			/// <param name="parent">The parent control.</param>
+			void RunControlPanel( Control^ parent );
 
 			/// <summary>
 			/// Retrieves data from polled objects on a DirectInput device.

@@ -28,6 +28,22 @@ namespace SlimDX
 	namespace DirectInput
 	{
 		/// <summary>
+		/// Specifies other attributes of a data format.
+		/// </summary>
+		public enum class DataFormatFlags : Int32
+		{
+			/// <summary>
+			/// The axes are in absolute mode.
+			/// </summary>
+			AbsoluteAxis = DIDF_ABSAXIS,
+
+			/// <summary>
+			/// The axes are in relative mode.
+			/// </summary>
+			RelativeAxis = DIDF_RELAXIS
+		};
+
+		/// <summary>
 		/// Specifies the main type of a DirectInput device.
 		/// </summary>
 		public enum class DeviceType : Int32
