@@ -39,6 +39,11 @@ namespace DirectInput
 		usagePage = deviceInstance.wUsagePage;
 		instanceName = gcnew String( deviceInstance.tszInstanceName );
 		productName = gcnew String( deviceInstance.tszProductName );
+
+		if( ( deviceInstance.dwDevType & DIDEVTYPE_HID ) != 0 )
+			hid = true;
+		else
+			hid = false;
 	}
 
 	Capabilities::Capabilities( const DIDEVCAPS &caps )
@@ -54,6 +59,11 @@ namespace DirectInput
 		flags = ( DeviceFlags )caps.dwFlags;
 		type = ( DeviceType )caps.dwDevType;
 		subType = caps.dwDevType >> 8;
+
+		if( ( caps.dwDevType & DIDEVTYPE_HID ) != 0 )
+			hid = true;
+		else
+			hid = false;
 	}
 }
 }

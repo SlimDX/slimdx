@@ -36,6 +36,75 @@ namespace SlimDX
 		private:
 			Guid guid;
 			int offset;
+			ObjectDeviceType type;
+			int instanceNumber;
+			ObjectDataFormatFlags flags;
+
+		internal:
+			DIOBJECTDATAFORMAT ToUnmanaged();
+
+		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::ObjectDataFormat"/> class.
+		    /// </summary>
+			ObjectDataFormat();
+			
+			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::ObjectDataFormat"/> class.
+		    /// </summary>
+			ObjectDataFormat( Guid guid, int offset, ObjectDeviceType type, int instanceNumber,
+				ObjectDataFormatFlags flags );
+
+			/// <summary>
+			/// Gets or sets the unique identifier for the axis, button, or other input
+			/// source. When requesting a data format, making this member equal to
+			/// <see cref="System::Guid::Empty"/> indicates that any type of object
+			/// is permissible.
+		    /// </summary>
+			property Guid InstanceGuid
+			{
+				Guid get() { return guid; }
+				void set( Guid value ) { guid = value; }
+			}
+
+			/// <summary>
+			/// Gets or sets the offset within the data packet where the data for the input
+			/// source is stored. This value must be a multiple of 4 for axes data. It can
+			/// be byte-aligned for buttons.
+		    /// </summary>
+			property int Offset
+			{
+				int get() { return offset; }
+				void set( int value ) { offset = value; }
+			}
+
+			/// <summary>
+			/// Gets or sets the device type that describes the object.
+		    /// </summary>
+			property ObjectDeviceType Type
+			{
+				ObjectDeviceType get() { return type; }
+				void set( ObjectDeviceType value ) { type = value; }
+			}
+
+			/// <summary>
+			/// Gets or sets the object instance number. Setting this value to -1
+			/// indicates that any object instance is permissible.
+		    /// </summary>
+			property int InstanceNumber
+			{
+				int get() { return instanceNumber; }
+				void set( int value ) { instanceNumber = value; }
+			}
+
+			/// <summary>
+			/// Gets or sets extra flags for the object data format.
+		    /// </summary>
+			property ObjectDataFormatFlags Flags
+			{
+				ObjectDataFormatFlags get() { return flags; }
+				void set( ObjectDataFormatFlags value ) { flags = value; }
+			}
 		};
 
 		/// <summary>
@@ -48,21 +117,19 @@ namespace SlimDX
 			int dataSize;
 			List<ObjectDataFormat^>^ objectDataFormats;
 
+		internal:
+			DIDATAFORMAT ToUnmanaged();
+
 		public:
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::DataFormat"/> class.
 			/// </summary>
-			DataFormat() { objectDataFormats = gcnew List<ObjectDataFormat^>(); }
+			DataFormat();
 
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::DataFormat"/> class.
 			/// </summary>
-			DataFormat( DataFormatFlags flags, int dataSize )
-			{
-				objectDataFormats = gcnew List<ObjectDataFormat^>();
-				this->dataSize = dataSize;
-				this->flags = flags;
-			}
+			DataFormat( DataFormatFlags flags, int dataSize );
 
 			/// <summary>
 			/// Gets or sets the flags describing other attributes of the data format.

@@ -44,6 +44,7 @@ namespace SlimDX
 			String^ productName;
 			int usage;
 			int usagePage;
+			bool hid;
 
 		internal:
 			DeviceInstance( const DIDEVICEINSTANCE &deviceInstance );
@@ -125,6 +126,14 @@ namespace SlimDX
 			{
 				int get() { return usagePage; }
 			}
+
+			/// <summary>
+			/// Gets a value indicating whether the device is a Human Interface Device.
+			/// </summary>
+			property bool HumanInterfaceDevice
+			{
+				bool get() { return hid; }
+			}
 		};
 
 		/// <summary>
@@ -144,6 +153,7 @@ namespace SlimDX
 			int ffDriverVersion;
 			int firmwareRevision;
 			int hardwareRevision;
+			bool hid;
 
 		internal:
 			Capabilities( const DIDEVCAPS &caps );
@@ -236,6 +246,14 @@ namespace SlimDX
 			property int HardwareRevision
 			{
 				int get() { return hardwareRevision; }
+			}
+
+			/// <summary>
+			/// Gets a value indicating whether the device is a Human Interface Device.
+			/// </summary>
+			property bool HumanInterfaceDevice
+			{
+				bool get() { return hid; }
 			}
 		};
 
