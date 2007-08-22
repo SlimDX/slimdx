@@ -77,6 +77,10 @@ namespace DirectInput
 		InputException::CheckHResult( hr );
 	}
 
+	void Device::SetDataFormat( DataFormat format )
+	{
+	}
+
 	void Device::SetCooperativeLevel( IntPtr handle, CooperativeLevel flags )
 	{
 		HRESULT hr = m_Pointer->SetCooperativeLevel( ( HWND )handle.ToPointer(), ( DWORD )flags );
@@ -103,6 +107,18 @@ namespace DirectInput
 	void Device::Poll()
 	{
 		HRESULT hr = m_Pointer->Poll();
+		InputException::CheckHResult( hr );
+	}
+
+	void Device::RunControlPanel()
+	{
+		HRESULT hr = m_Pointer->RunControlPanel( NULL, 0 );
+		InputException::CheckHResult( hr );
+	}
+
+	void Device::RunControlPanel( Control^ parent )
+	{
+		HRESULT hr = m_Pointer->RunControlPanel( ( HWND )parent->Handle.ToPointer(), 0 );
 		InputException::CheckHResult( hr );
 	}
 

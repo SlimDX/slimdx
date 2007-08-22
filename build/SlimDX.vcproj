@@ -701,6 +701,10 @@
 				Name="DirectInput"
 				>
 				<File
+					RelativePath="..\source\directinput\DataFormat.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\Device.h"
 					>
 				</File>
