@@ -28,6 +28,95 @@ namespace SlimDX
 	namespace DirectInput
 	{
 		/// <summary>
+		/// Specifies the device type of an object data format.
+		/// </summary>
+		[Flags]
+		public enum class ObjectDeviceType : Int32
+		{
+			/// <summary>
+		    /// The object must be an absolute axis.
+		    /// </summary>
+			AbsoluteAxis = DIDFT_ABSAXIS,
+
+			/// <summary>
+		    /// The object must be an absolute or relative axis.
+		    /// </summary>
+			Axis = DIDFT_AXIS,
+
+			/// <summary>
+		    /// The object must be a relative axis.
+		    /// </summary>
+			RelativeAxis = DIDFT_RELAXIS,
+
+			/// <summary>
+		    /// The object must be a toggle or push button.
+		    /// </summary>
+			Button = DIDFT_BUTTON,
+
+			/// <summary>
+		    /// The object must contain a force-feedback actuator.
+		    /// </summary>
+			ForceFeedbackActuator = DIDFT_FFACTUATOR,
+
+			/// <summary>
+		    /// The object must be a valid force-feedback effect trigger.
+		    /// </summary>
+			ForceFeedbackEffectTrigger = DIDFT_FFEFFECTTRIGGER,
+
+			/// <summary>
+		    /// The object must be a Point-Of-View controller.
+		    /// </summary>
+			PointOfViewController = DIDFT_POV,
+
+			/// <summary>
+		    /// The object must be a push button.
+		    /// </summary>
+			PushButton = DIDFT_PSHBUTTON,
+
+			/// <summary>
+		    /// The object must be a toggle button.
+		    /// </summary>
+			ToggleButton = DIDFT_TGLBUTTON,
+
+			/// <summary>
+		    /// The object must be a type defined by the manufacturer.
+		    /// </summary>
+			VendorDefined = DIDFT_VENDORDEFINED
+		};
+
+		/// <summary>
+		/// Specifies other attributes of an object data format.
+		/// </summary>
+		[Flags]
+		public enum class ObjectDataFormatFlags : Int32
+		{
+			/// <summary>
+		    /// No extra flags specified.
+		    /// </summary>
+			None = 0,
+
+			/// <summary>
+		    /// The object must report acceleration information.
+		    /// </summary>
+			Acceleration,
+
+			/// <summary>
+		    /// The object must report force information.
+		    /// </summary>
+			Force,
+
+			/// <summary>
+		    /// The object must report position information.
+		    /// </summary>
+			Position,
+
+			/// <summary>
+		    /// The object must report velocity information.
+		    /// </summary>
+			Velocity
+		};
+
+		/// <summary>
 		/// Specifies other attributes of a data format.
 		/// </summary>
 		public enum class DataFormatFlags : Int32

@@ -229,6 +229,10 @@
 				Name="DirectInput"
 				>
 				<File
+					RelativePath="..\source\directinput\DataFormat.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\Device.cpp"
 					>
 					<FileConfiguration
