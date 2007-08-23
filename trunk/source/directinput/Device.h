@@ -29,6 +29,7 @@ using namespace System::Windows::Forms;
 #include "Enums.h"
 #include "DeviceInfo.h"
 #include "DataFormat.h"
+#include "BufferedData.h"
 
 namespace SlimDX
 {
@@ -93,7 +94,7 @@ namespace SlimDX
 			/// Sets the data format for the DirectInput device.
 			/// </summary>
 			/// <param name="format">The data format for the device.</param>
-			void SetDataFormat( DataFormat format );
+			void SetDataFormat( DataFormat^ format );
 
 			/// <summary>
 			/// Runs the DirectInput control panel associated with this device. If the
@@ -109,6 +110,16 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="parent">The parent control.</param>
 			void RunControlPanel( Control^ parent );
+
+			/// <summary>
+			/// Gets the current device state.
+			/// </summary>
+			array<Byte>^ GetCurrentState( int size );
+
+			/// <summary>
+			/// Retrieves buffered data from the device.
+			/// </summary>
+			Collection<BufferedData^>^ GetBufferedData( int size );
 
 			/// <summary>
 			/// Retrieves data from polled objects on a DirectInput device.

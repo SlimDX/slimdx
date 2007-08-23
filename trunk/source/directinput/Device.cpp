@@ -77,8 +77,16 @@ namespace DirectInput
 		InputException::CheckHResult( hr );
 	}
 
-	void Device::SetDataFormat( DataFormat format )
+	void Device::SetDataFormat( DataFormat^ format )
 	{
+		DIDATAFORMAT dataFormat = format->ToUnmanaged();
+		HRESULT hr = m_Pointer->SetDataFormat( &dataFormat );
+		
+		for( unsigned int i = 0; i < dataFormat.dwNumObjs; i++ )
+			delete dataFormat.rgodf[i].pguid;
+		delete[] dataFormat.rgodf;
+
+		InputException::CheckHResult( hr );
 	}
 
 	void Device::SetCooperativeLevel( IntPtr handle, CooperativeLevel flags )
@@ -120,6 +128,35 @@ namespace DirectInput
 	{
 		HRESULT hr = m_Pointer->RunControlPanel( ( HWND )parent->Handle.ToPointer(), 0 );
 		InputException::CheckHResult( hr );
+	}
+
+	Collection<BufferedData^>^ Device::GetBufferedData( int size )
+	{
+		List<BufferedData^>^ list = gcnew List<BufferedData^>();
+
+		DIDEVICEOBJECTDATA *data = new DIDEVICEOBJECTDATA[size];
+		HRESULT hr = m_Pointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), data, ( LPDWORD )&size, 0 );
+		InputException::CheckHResult( hr );
+
+		for( int i = 0; i < size; i++ )
+			list->Add( gcnew BufferedData( data[i] ) );
+
+		delete[] data;
+
+		return gcnew Collection<BufferedData^>( list );
+	}
+
+	array<Byte>^ Device::GetCurrentState( int size )
+	{
+		BYTE *bytes = new BYTE[size];
+		HRESULT hr = m_Pointer->GetDeviceState( size, bytes );
+		InputException::CheckHResult( hr );
+
+		array<Byte>^ ret = gcnew array<Byte>( size );
+		for( int i = 0; i < size; i++ )
+			ret[i] = bytes[i];
+
+		return ret;
 	}
 
 	MouseState^ Device::CurrentMouseState::get()
