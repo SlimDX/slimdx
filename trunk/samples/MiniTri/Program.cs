@@ -32,8 +32,8 @@ namespace MiniTri
 		static Device Device;
 		static VertexBuffer Vertices;
 
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        static extern bool PeekMessage(out Message msg, IntPtr hWnd, uint messageFilterMin, uint messageFilterMax, uint flags);
+		[DllImport( "User32.dll", CharSet = CharSet.Auto )]
+		static extern bool PeekMessage( out Message msg, IntPtr hWnd, uint messageFilterMin, uint messageFilterMax, uint flags );
 
 		private static bool AppStillIdle
 		{
@@ -86,7 +86,7 @@ namespace MiniTri
 				Vertices.Unlock();
 
 				//main loop
-				Application.Idle += new EventHandler(Application_Idle);
+				Application.Idle += new EventHandler( Application_Idle );
 				Application.Run( RenderForm );
 
 				//dispose stuff

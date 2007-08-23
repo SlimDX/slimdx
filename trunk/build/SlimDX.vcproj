@@ -363,6 +363,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d9\Shader.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\Sprite.cpp"
 					>
 				</File>
@@ -858,6 +862,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Resource.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Shader.h"
 					>
 				</File>
 				<File
