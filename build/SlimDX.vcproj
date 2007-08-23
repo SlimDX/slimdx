@@ -229,6 +229,10 @@
 				Name="DirectInput"
 				>
 				<File
+					RelativePath="..\source\directinput\BufferedData.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\DataFormat.cpp"
 					>
 				</File>
@@ -708,6 +712,10 @@
 			<Filter
 				Name="DirectInput"
 				>
+				<File
+					RelativePath="..\source\directinput\BufferedData.h"
+					>
+				</File>
 				<File
 					RelativePath="..\source\directinput\DataFormat.h"
 					>

@@ -61,7 +61,7 @@ namespace SlimDX
 			/// <see cref="System::Guid::Empty"/> indicates that any type of object
 			/// is permissible.
 		    /// </summary>
-			property Guid InstanceGuid
+			property Guid SourceGuid
 			{
 				Guid get() { return guid; }
 				void set( Guid value ) { guid = value; }

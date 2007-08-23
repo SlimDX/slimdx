@@ -45,6 +45,17 @@ namespace DirectInput
 	DIOBJECTDATAFORMAT ObjectDataFormat::ToUnmanaged()
 	{
 		DIOBJECTDATAFORMAT format;
+
+		GUID *guid = new GUID( SystemGuid::ToGUID( SourceGuid ) );
+		format.pguid = guid;
+		format.dwOfs = Offset;
+		format.dwType = ( DWORD )Type;
+		if( InstanceNumber == -1 )
+			format.dwType |= DIDFT_ANYINSTANCE;
+		else
+			format.dwType |= DIDFT_MAKEINSTANCE( InstanceNumber );
+		format.dwFlags = ( DWORD )Flags;
+
 		return format;
 	}
 
@@ -63,6 +74,19 @@ namespace DirectInput
 	DIDATAFORMAT DataFormat::ToUnmanaged()
 	{
 		DIDATAFORMAT format;
+
+		format.dwDataSize = DataSize;
+		format.dwFlags = ( DWORD )Flags;
+		format.dwNumObjs = ObjectDataFormats->Count;
+		format.dwObjSize = sizeof( DIOBJECTDATAFORMAT );
+		format.dwSize = sizeof( DIDATAFORMAT );
+
+		DIOBJECTDATAFORMAT* objectFormats = new DIOBJECTDATAFORMAT[ObjectDataFormats->Count];
+		for( int i = 0; i < ObjectDataFormats->Count; i++ )
+			objectFormats[i] = ObjectDataFormats[i]->ToUnmanaged();
+
+		format.rgodf = objectFormats;
+
 		return format;
 	}
 }
