@@ -396,7 +396,19 @@ namespace SlimDX
 
 		array<bool>^ BaseEffect::GetBoolArray( EffectHandle^ param, int count )
 		{
-			return nullptr;
+			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+			array<BOOL>^ data = gcnew array<BOOL>( count );
+			pin_ptr<BOOL> pinnedData = &data[0];
+
+			HRESULT hr = m_Pointer->GetBoolArray( handle, pinnedData, count );
+			GraphicsException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				return nullptr;
+
+            //now we go from BOOL to bool
+            array<bool>^ boolData = gcnew array<bool>( count );
+            Array::Copy( data, boolData, count );
+            return boolData;
 		}
 
 		int BaseEffect::GetInt( EffectHandle^ param )
