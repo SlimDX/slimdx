@@ -106,8 +106,16 @@ namespace SimpleTriangle
 		[STAThread]
 		static void Main()
 		{
-			//NOTE: This Initialize call is *required* in all SlimDX based D3D9 apps.
-			Direct3D.Initialize();
+			try
+			{
+				//NOTE: This Initialize call is *required* in all SlimDX based D3D9 apps.
+				Direct3D.Initialize();
+			}
+			catch( DirectXException ex )
+			{
+				MessageBox.Show( ex.Message );
+				return;
+			}
 
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault( false );
