@@ -27,7 +27,7 @@ using namespace System::Runtime::InteropServices;
 #include "../math/Math.h"
 #include "Device.h"
 #include "BaseEffect.h"
-#include <vcclr.h>
+#include "Shader.h"
 
 namespace SlimDX
 {
@@ -35,48 +35,6 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
-		class IncludeShim;
-
-		public ref class Include abstract
-		{
-		internal:
-			IncludeShim* Shim;
-
-		protected:
-			Include();
-
-		public:
-			~Include();
-			!Include();
-
-			virtual void Open() = 0;
-			virtual void Close() = 0;
-		};
-
-		class IncludeShim : public ID3DXInclude
-		{
-		private:
-			gcroot<Include^> m_WrappedInterface;
-
-		public:
-			IncludeShim( Include^ wrappedInterface );
-
-			HRESULT WINAPI Open( D3DXINCLUDE_TYPE includeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID* ppData, UINT* pBytes );
-			HRESULT WINAPI Close( LPCVOID pData );
-		};
-
-		public value class Macro
-		{
-		internal:
-			//helper function to resolve array<Macro>^ to D3DXMACRO*
-			static D3DXMACRO* Marshal( array<Macro>^ macros, [Out] array<GCHandle>^% handles );
-			static void Unmarshal( D3DXMACRO* macros, array<GCHandle>^ handles );
-
-		public:
-			String^ Name;
-			String^ Definition;
-		};
-
 		public ref class EffectPool sealed : public DirectXObject<ID3DXEffectPool>
 		{
 		public:
@@ -85,7 +43,7 @@ namespace SlimDX
 
 			//ID3DXEffectPool has no methods
 		};
-		
+
 		public ref class Effect sealed : public BaseEffect
 		{
 		internal:

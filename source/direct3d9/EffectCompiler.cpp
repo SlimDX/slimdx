@@ -197,7 +197,7 @@ namespace Direct3D9
 		{
 			compilationErrors = String::Empty;
 		}
-			
+		
 		// CheckHResult() is not used because we need to include the compiler errors.
 		if( DirectXException::EnableExceptions && FAILED(hr) )
 		{

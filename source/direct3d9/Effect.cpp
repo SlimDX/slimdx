@@ -21,7 +21,6 @@
 */
 #include <d3d9.h>
 #include <d3dx9.h>
-#include <vcclr.h>
 
 #include "Device.h"
 #include "Effect.h"
@@ -31,37 +30,6 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		Include::Include()
-		{
-			Shim = new IncludeShim( this );
-		}
-
-		Include::~Include()
-		{
-			this->!Include();
-		}
-
-		Include::!Include()
-		{
-			delete Shim;
-			Shim = NULL;
-		}
-
-		IncludeShim::IncludeShim( Include^ wrappedInterface )
-		{
-			m_WrappedInterface = wrappedInterface;
-		}
-
-		HRESULT IncludeShim::Open( D3DXINCLUDE_TYPE includeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID* ppData, UINT* pBytes )
-		{
-			return E_FAIL;
-		}
-
-		HRESULT IncludeShim::Close( LPCVOID pData )
-		{
-			return E_FAIL;
-		}
-
 		EffectPool::EffectPool()
 		{
 			ID3DXEffectPool* pointer;
@@ -70,45 +38,6 @@ namespace SlimDX
 				throw gcnew GraphicsException();
 
 			m_Pointer = pointer;
-		}
-
-		//helper function to resolve array<Macro>^ to D3DXMACRO*
-		D3DXMACRO* Macro::Marshal( array<Macro>^ macros, [Out] array<GCHandle>^% handles )
-		{
-			if( macros == nullptr )
-			{
-				handles = nullptr;
-				return NULL;
-			}
-
-			D3DXMACRO* result = new D3DXMACRO[macros->Length];
-			handles = gcnew array<GCHandle>( macros->Length * 2 );
-
-			for( int i = 0; i < macros->Length; ++i )
-			{
-				array<Byte>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( macros[i].Name );
-				array<Byte>^ defBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( macros[i].Definition );
-
-				handles[2 * i] = GCHandle::Alloc( nameBytes, GCHandleType::Pinned );
-				handles[2 * i + 1] = GCHandle::Alloc( defBytes, GCHandleType::Pinned );
-
-				result[i].Name = (LPCSTR) handles[2 * i].AddrOfPinnedObject().ToPointer();
-				result[i].Definition = (LPCSTR) handles[2 * i + 1].AddrOfPinnedObject().ToPointer();
-			}
-
-			return result;
-		}
-
-		void Macro::Unmarshal( D3DXMACRO* macros, array<GCHandle>^ handles )
-		{
-			delete macros;
-			if( handles != nullptr )
-			{
-				for( int i = 0; i < handles->Length; ++i )
-				{
-					handles[i].Free();
-				}
-			}
 		}
 
 		Effect::Effect( ID3DXEffect* effect ) : BaseEffect( effect )

@@ -24,18 +24,12 @@
 #include "Effect.h"
 #include "Buffer.h"
 #include "ConstantTable.h"
+#include "Shader.h"
 
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public ref class ShaderBytecode sealed : public BufferWrapper
-		{
-		public:
-			ShaderBytecode( ID3DXBuffer* buffer ) : BufferWrapper( buffer )
-			{ }
-		};
-
 		public ref class EffectBytecode sealed : public BufferWrapper
 		{
 		public:
