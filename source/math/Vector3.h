@@ -31,8 +31,6 @@ namespace SlimDX
         value class Viewport;
     }
 
-    value class Vector4;
-
 	[StructLayout( LayoutKind::Sequential )]
 	public value class Vector3
 	{

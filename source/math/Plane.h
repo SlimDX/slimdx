@@ -37,9 +37,17 @@ namespace SlimDX
 		property float C;
 		property float D;
 
+		static Plane FromPointNormal( Vector3 point, Vector3 normal );
+		static Plane FromPoints( Vector3 p1, Vector3 p2, Vector3 p3 );
+
 		void Normalize();
-		static Plane Transform( Plane coord, Matrix transform );
+
+		static Plane Transform( Plane plane, Matrix transform );
+		static bool IntersectLine( Plane plane, Vector3 start, Vector3 end, [Out] Vector3% intersectPoint );
+
 		float Dot( Vector3 point );
 		float Dot( Vector4 point );
+
+		static Plane operator * ( Plane plane, float scale );
 	};
 }
