@@ -79,6 +79,13 @@ namespace SlimDX
 		return vec * scale;
 	}
 
+	Vector4 Vector3::Transform( Vector3 vec, Matrix transform )
+	{
+		Vector4 result;
+		D3DXVec3Transform( (D3DXVECTOR4*) &result, (const D3DXVECTOR3*) &vec, (const D3DXMATRIX*) &transform );
+		return result;
+	}
+
 	Vector3 Vector3::TransformCoordinate( Vector3 coord, Matrix transform )
 	{
 		Vector3 result;

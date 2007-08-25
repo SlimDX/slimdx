@@ -31,6 +31,8 @@ namespace SlimDX
         value class Viewport;
     }
 
+    value class Vector4;
+
 	[StructLayout( LayoutKind::Sequential )]
 	public value class Vector3
 	{
@@ -45,6 +47,7 @@ namespace SlimDX
 		void Normalize();
 		static Vector3 Normalize( Vector3 vec );
 
+        static Vector4 Transform( Vector3 vec, Matrix transform );
 		static Vector3 TransformCoordinate( Vector3 coord, Matrix transform );
 		static Vector3 TransformNormal( Vector3 normal, Matrix transform );
 
