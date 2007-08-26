@@ -123,7 +123,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = BufferWrapper::MakeString( errorBuffer );
+			errors = BufferWrapper::ConvertToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )
@@ -157,7 +157,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = BufferWrapper::MakeString( errorBuffer );
+			errors = BufferWrapper::ConvertToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )
@@ -192,7 +192,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = BufferWrapper::MakeString( errorBuffer );
+			errors = BufferWrapper::ConvertToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )
@@ -236,7 +236,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = BufferWrapper::MakeString( errorBuffer );
+			errors = BufferWrapper::ConvertToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )
@@ -281,7 +281,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = BufferWrapper::MakeString( errorBuffer );
+			errors = BufferWrapper::ConvertToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )
@@ -317,7 +317,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = BufferWrapper::MakeString( errorBuffer );
+			errors = BufferWrapper::ConvertToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )

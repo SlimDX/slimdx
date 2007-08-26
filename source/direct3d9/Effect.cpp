@@ -74,7 +74,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			compilationErrors = BufferWrapper::MakeString( errorBuffer );
+			compilationErrors = BufferWrapper::ConvertToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );	
 			if( FAILED( hr ) )
@@ -154,7 +154,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			compilationErrors = BufferWrapper::MakeString( errorBuffer );
+			compilationErrors = BufferWrapper::ConvertToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );
 			if( effect == NULL)

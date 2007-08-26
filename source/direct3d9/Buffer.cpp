@@ -19,43 +19,46 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include <d3d9.h>
+#include <d3dx9.h>
 
-#include "../DataStream.h"
+#include "../DirectXObject.h"
+#include "GraphicsException.h"
+#include "Buffer.h"
 
 namespace SlimDX
 {
-	namespace Direct3D9
+namespace Direct3D9
+{
+	BufferWrapper::BufferWrapper( ID3DXBuffer* buffer ) : DirectXObject<ID3DXBuffer>( buffer )
 	{
-		public ref class BufferWrapper : public DirectXObject<ID3DXBuffer>
-		{
-		internal:
-			static String^ ConvertToString( ID3DXBuffer* buffer );
-
-		public:
-			BufferWrapper( ID3DXBuffer* buffer );
-			BufferWrapper( int size );
-			virtual ~BufferWrapper() { Destruct(); }
-
-			property int Size
-			{
-				int get() { return m_Pointer->GetBufferSize(); }
-			}
-
-			property IntPtr DataPointer
-			{
-				IntPtr get() { return IntPtr( m_Pointer->GetBufferPointer() ); }
-			}
-
-			DataStream^ GetData()
-			{
-				return gcnew DataStream( m_Pointer->GetBufferPointer(), m_Pointer->GetBufferSize(), true, true );
-			}
-
-			virtual String^ ToString() override
-			{
-				return gcnew String( (const char*) m_Pointer->GetBufferPointer() );
-			}
-		};
+		if( buffer == NULL )
+			throw gcnew ArgumentNullException( "buffer" );
 	}
+
+	BufferWrapper::BufferWrapper( int size )
+	{
+		ID3DXBuffer* buffer;
+		HRESULT hr = D3DXCreateBuffer( size, &buffer );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException();
+
+		m_Pointer = buffer;
+	}
+
+	String^ BufferWrapper::ConvertToString( ID3DXBuffer* buffer )
+	{
+		if( buffer != NULL )
+		{
+			String^ string = gcnew String( (const char*) buffer->GetBufferPointer() );
+			buffer->Release();
+			return string;
+		}
+		else
+		{
+			return String::Empty;
+		}
+	}
+}
 }
