@@ -64,7 +64,7 @@ namespace Direct3D9
 		//clean up after marshaling macros
 		Macro::Unmarshal( macros, handles );
 		//marshal errors if necessary
-		errors = BufferWrapper::MakeString( errorBuffer );
+		errors = BufferWrapper::ConvertToString( errorBuffer );
 		
 		GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 		if( FAILED( hr ) )
@@ -90,7 +90,7 @@ namespace Direct3D9
 		//clean up after marshaling macros
 		Macro::Unmarshal( macros, handles );
 		//marshal errors if necessary
-		errors = BufferWrapper::MakeString( errorBuffer );
+		errors = BufferWrapper::ConvertToString( errorBuffer );
 		
 		GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 		if( FAILED( hr ) )
@@ -113,14 +113,7 @@ namespace Direct3D9
 		HRESULT hr = CompilerPointer->CompileShader( handle, (LPCSTR) pinnedTarget, (DWORD) flags, &shader, &errorBuffer, &table );
 
 		//marshal errors if necessary
-		if( errorBuffer != NULL )
-		{
-			compilationErrors = gcnew String( (const char*) errorBuffer->GetBufferPointer() );
-		}
-		else
-		{
-			compilationErrors = String::Empty;
-		}
+		compilationErrors = BufferWrapper::ConvertToString( errorBuffer );
 			
 		// CheckHResult() is not used because we need to include the compiler errors.
 		if( DirectXException::EnableExceptions && FAILED(hr) )

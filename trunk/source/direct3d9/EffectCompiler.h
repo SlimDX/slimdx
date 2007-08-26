@@ -35,6 +35,9 @@ namespace SlimDX
 		public:
 			EffectBytecode( ID3DXBuffer* buffer ) : BufferWrapper( buffer )
 			{ }
+
+			EffectBytecode( int size ) : BufferWrapper( size )
+			{ }
 		};
 
 		public ref class EffectCompiler sealed : public BaseEffect

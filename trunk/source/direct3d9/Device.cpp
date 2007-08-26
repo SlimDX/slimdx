@@ -77,7 +77,7 @@ namespace Direct3D9
 		DeviceWindowHandle = IntPtr::Zero;
 		Windowed = true;
 		EnableAutoDepthStencil = true;
-		AutoDepthStencilFormat = Format::D24S8;
+		AutoDepthStencilFormat = Format::D24X8;
 		PresentFlags = SlimDX::Direct3D9::PresentFlags::None;
 
 		FullScreenRefreshRateInHz = 0;
