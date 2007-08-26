@@ -159,6 +159,15 @@ namespace DirectInput
 		return ret;
 	}
 
+	JoystickState^ Device::CurrentJoystickState::get()
+	{
+		DIJOYSTATE2 state;
+		HRESULT hr = m_Pointer->GetDeviceState( sizeof( DIJOYSTATE2 ), ( DIJOYSTATE2* )&state );
+		InputException::CheckHResult( hr );
+
+		return gcnew JoystickState( state );
+	}
+
 	MouseState^ Device::CurrentMouseState::get()
 	{
 		DIMOUSESTATE2 state;
@@ -182,7 +191,12 @@ namespace DirectInput
 		KeyboardState^ result = gcnew KeyboardState();
 		
 		for( int i = 0; i < 256; i++ )
-			result->Keys[i] = keys[i];
+		{
+			if( keys[i] )
+				result->keys[i] = true;
+			else
+				result->keys[i] = false;
+		}
 
 		return result;
 	}

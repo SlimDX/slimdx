@@ -264,6 +264,7 @@ namespace SlimDX
 		{
 		private:
 			DeviceSubType() { }
+
 		public:
 			/// <summary>
 			/// A device that does not provide the minimum number of device objects for

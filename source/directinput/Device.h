@@ -112,7 +112,7 @@ namespace SlimDX
 			void RunControlPanel( Control^ parent );
 
 			/// <summary>
-			/// Gets the current device state.
+			/// Retrieves the current device state.
 			/// </summary>
 			array<Byte>^ GetCurrentState( int size );
 
@@ -135,6 +135,11 @@ namespace SlimDX
 			/// Obtains information about the device's identity.
 			/// </summary>
 			property DeviceInstance^ DeviceInformation { DeviceInstance^ get(); }
+
+			/// <summary>
+			/// Gets the current joystick state.
+			/// </summary>
+			property JoystickState^ CurrentJoystickState { JoystickState^ get(); }
 
 			/// <summary>
 			/// Gets the current keyboard state.
