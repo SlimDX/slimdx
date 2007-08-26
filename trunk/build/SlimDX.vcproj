@@ -259,7 +259,15 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath="..\source\directinput\DeviceConstants.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\DeviceInfo.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DeviceState.cpp"
 					>
 				</File>
 				<File
@@ -748,6 +756,10 @@
 				</File>
 				<File
 					RelativePath="..\source\directinput\Device.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DeviceConstants.h"
 					>
 				</File>
 				<File
