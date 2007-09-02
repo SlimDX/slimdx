@@ -747,6 +747,10 @@
 				Name="DirectInput"
 				>
 				<File
+					RelativePath="..\source\directinput\Attributes.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\BufferedData.h"
 					>
 				</File>
