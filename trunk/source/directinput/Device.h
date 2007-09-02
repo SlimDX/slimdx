@@ -22,11 +22,13 @@
 #pragma once
 
 using namespace System;
+using namespace System::Reflection;
 using namespace System::Windows::Forms;
 
 #include "../DirectXObject.h"
 #include "DeviceState.h"
 #include "Enums.h"
+#include "Attributes.h"
 #include "DeviceInfo.h"
 #include "DataFormat.h"
 #include "BufferedData.h"
@@ -97,6 +99,12 @@ namespace SlimDX
 			void SetDataFormat( DataFormat^ format );
 
 			/// <summary>
+			/// Sets the data format for the DirectInput device.
+			/// </summary>
+			/// <param name="type">The data format type for the device.</param>
+			void SetDataFormat( Type^ type );
+
+			/// <summary>
 			/// Runs the DirectInput control panel associated with this device. If the
 			/// device does not have a control panel associated with it, the default
 			/// device control panel is launched.
@@ -114,7 +122,8 @@ namespace SlimDX
 			/// <summary>
 			/// Retrieves the current device state.
 			/// </summary>
-			array<Byte>^ GetCurrentState( int size );
+			generic<typename T> where T : gcnew()
+			T GetCurrentState();
 
 			/// <summary>
 			/// Retrieves buffered data from the device.

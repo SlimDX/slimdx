@@ -172,6 +172,7 @@ namespace SlimDX
 		DEFINE_INPUT_EXCEPTION( Unsupported, DIERR_UNSUPPORTED );
 		DEFINE_INPUT_EXCEPTION( AccessDenied, E_ACCESSDENIED );
 
+		DEFINE_CUSTOM_INPUT_EXCEPTION( BufferOverflow, DI_BUFFEROVERFLOW, "The data buffer overflowed. Some data may have been lost." );
 		DEFINE_CUSTOM_INPUT_EXCEPTION( Handle, E_HANDLE, "The handle is not a valid top-level window." );
 		DEFINE_CUSTOM_INPUT_EXCEPTION( Pending, E_PENDING, "Data is not yet available." );
 		DEFINE_CUSTOM_INPUT_EXCEPTION( Pointer, E_POINTER, "Invalid pointer." );
@@ -215,6 +216,10 @@ namespace SlimDX
 			GENERATE_EXCEPTION(DIERR_REPORTFULL, ReportFull);
 			GENERATE_EXCEPTION(DIERR_UNPLUGGED, Unplugged);
 			GENERATE_EXCEPTION(DIERR_UNSUPPORTED, Unsupported);
+			GENERATE_EXCEPTION(DI_BUFFEROVERFLOW, BufferOverflow);
+			GENERATE_EXCEPTION(E_HANDLE, Handle);
+			GENERATE_EXCEPTION(E_PENDING, Pending);
+			GENERATE_EXCEPTION(E_POINTER, Pointer);
 
 			default:
 				ex = gcnew InputException( "An input exception occurred." );
@@ -226,15 +231,19 @@ namespace SlimDX
 
 		inline void InputException::CheckHResult( HRESULT hr, String^ dataKey, Object^ dataValue )
 		{
-			if( DirectXException::EnableExceptions && FAILED(hr) )
+			if( DirectXException::EnableExceptions )
 			{
 				InputException^ ex = InputException::GetExceptionFromHResult( (hr) );
-				//don't throw if an exception wasn't returned for some reason (e.g. it's part of a disabled subset)
-				if( ex != nullptr )
+
+				if( FAILED( hr ) || hr == DI_BUFFEROVERFLOW )
 				{
-					if( dataKey != nullptr )
-						ex->Data->Add( dataKey, dataValue );
-					throw ex;
+					//don't throw if an exception wasn't returned for some reason (e.g. it's part of a disabled subset)
+					if( ex != nullptr )
+					{
+						if( dataKey != nullptr )
+							ex->Data->Add( dataKey, dataValue );
+						throw ex;
+					}
 				}
 			}
 
