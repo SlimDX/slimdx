@@ -22,6 +22,7 @@
 #pragma once
 
 using namespace System;
+using namespace System::Collections::ObjectModel;
 using namespace System::Reflection;
 using namespace System::Windows::Forms;
 
@@ -30,8 +31,9 @@ using namespace System::Windows::Forms;
 #include "Enums.h"
 #include "Attributes.h"
 #include "DeviceInfo.h"
-#include "DataFormat.h"
 #include "BufferedData.h"
+#include "Guids.h"
+#include "Properties.h"
 
 namespace SlimDX
 {
@@ -42,8 +44,12 @@ namespace SlimDX
 		/// properties and information, set behavior, perform initialization, create and
 		/// play force-feedback effects, and open a device's control panel.
 		/// </summary>
+		generic<typename DataFormat>
 		public ref class Device : public DirectXObject<IDirectInputDevice8W>
 		{
+		private:
+			DeviceProperties^ properties;
+
 		public:
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::Device"/> class.
@@ -87,24 +93,6 @@ namespace SlimDX
 			void SetCooperativeLevel( Control^ control, CooperativeLevel flags );
 
 			/// <summary>
-			/// Sets the data format for the DirectInput device.
-			/// </summary>
-			/// <param name="format">The data format for the device.</param>
-			void SetDataFormat( DeviceDataFormat format );
-
-			/// <summary>
-			/// Sets the data format for the DirectInput device.
-			/// </summary>
-			/// <param name="format">The data format for the device.</param>
-			void SetDataFormat( DataFormat^ format );
-
-			/// <summary>
-			/// Sets the data format for the DirectInput device.
-			/// </summary>
-			/// <param name="type">The data format type for the device.</param>
-			void SetDataFormat( Type^ type );
-
-			/// <summary>
 			/// Runs the DirectInput control panel associated with this device. If the
 			/// device does not have a control panel associated with it, the default
 			/// device control panel is launched.
@@ -122,18 +110,23 @@ namespace SlimDX
 			/// <summary>
 			/// Retrieves the current device state.
 			/// </summary>
-			generic<typename T> where T : gcnew()
-			T GetCurrentState();
+			[EnvironmentPermission(SecurityAction::LinkDemand, Unrestricted=true)]
+			DataFormat GetCurrentState();
 
 			/// <summary>
 			/// Retrieves buffered data from the device.
 			/// </summary>
-			Collection<BufferedData^>^ GetBufferedData( int size );
+			Collection<BufferedData<DataFormat>^>^ GetBufferedData();
 
 			/// <summary>
 			/// Retrieves data from polled objects on a DirectInput device.
 			/// </summary>
 			void Poll();
+
+			/// <summary>
+			/// Gets a set of properties that control the behavior of the device.
+			/// </summary>
+			property DeviceProperties^ Properties { DeviceProperties^ get(); }
 
 			/// <summary>
 			/// Gets the capabilities of the device.
@@ -146,19 +139,14 @@ namespace SlimDX
 			property DeviceInstance^ DeviceInformation { DeviceInstance^ get(); }
 
 			/// <summary>
-			/// Gets the current joystick state.
+			/// Occurs when the device's data buffer overflows.
 			/// </summary>
-			property JoystickState^ CurrentJoystickState { JoystickState^ get(); }
+			event EventHandler^ BufferOverflow;
 
 			/// <summary>
-			/// Gets the current keyboard state.
+			/// Occurs when the device is lost.
 			/// </summary>
-			property KeyboardState^ CurrentKeyboardState { KeyboardState^ get(); }
-
-			/// <summary>
-			/// Gets the current mouse state.
-			/// </summary>
-			property MouseState^ CurrentMouseState { MouseState^ get(); }
+			event EventHandler^ DeviceLost;
 		};
 	}
 }

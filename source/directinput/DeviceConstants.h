@@ -296,7 +296,7 @@ namespace SlimDX
 		/// <summary>
 		/// Defines possible keyboard key codes.
 		/// </summary>
-		public enum class Keys : Int32
+		public enum class Key : Int32
 		{
 			/// <summary>
 			/// The number 0.
@@ -739,99 +739,99 @@ namespace SlimDX
 			NoConvert,
 
 			/// <summary>
-			/// The NumLock key.
+			/// The NumberLock key.
 			/// </summary>
-			NumLock,
+			NumberLock,
 
 			/// <summary>
-			/// The number 0 on the NumPad.
+			/// The number 0 on the NumberPad.
 			/// </summary>
-			NumPad0,
+			NumberPad0,
 
 			/// <summary>
-			/// The number 1 on the NumPad.
+			/// The number 1 on the NumberPad.
 			/// </summary>
-			NumPad1,
+			NumberPad1,
 
 			/// <summary>
-			/// The number 2 on the NumPad.
+			/// The number 2 on the NumberPad.
 			/// </summary>
-			NumPad2,
+			NumberPad2,
 
 			/// <summary>
-			/// The number 3 on the NumPad.
+			/// The number 3 on the NumberPad.
 			/// </summary>
-			NumPad3,
+			NumberPad3,
 
 			/// <summary>
-			/// The number 4 on the NumPad.
+			/// The number 4 on the NumberPad.
 			/// </summary>
-			NumPad4,
+			NumberPad4,
 
 			/// <summary>
-			/// The number 5 on the NumPad.
+			/// The number 5 on the NumberPad.
 			/// </summary>
-			NumPad5,
+			NumberPad5,
 
 			/// <summary>
-			/// The number 6 on the NumPad.
+			/// The number 6 on the NumberPad.
 			/// </summary>
-			NumPad6,
+			NumberPad6,
 
 			/// <summary>
-			/// The number 7 on the NumPad.
+			/// The number 7 on the NumberPad.
 			/// </summary>
-			NumPad7,
+			NumberPad7,
 
 			/// <summary>
-			/// The number 8 on the NumPad.
+			/// The number 8 on the NumberPad.
 			/// </summary>
-			NumPad8,
+			NumberPad8,
 
 			/// <summary>
-			/// The number 9 on the NumPad.
+			/// The number 9 on the NumberPad.
 			/// </summary>
-			NumPad9,
+			NumberPad9,
 
 			/// <summary>
-			/// The comma key on the NumPad.
+			/// The comma key on the NumberPad.
 			/// </summary>
-			NumPadComma,
+			NumberPadComma,
 
 			/// <summary>
-			/// The Enter key on the NumPad.
+			/// The Enter key on the NumberPad.
 			/// </summary>
-			NumPadEnter,
+			NumberPadEnter,
 
 			/// <summary>
-			/// The equals key on the NumPad.
+			/// The equals key on the NumberPad.
 			/// </summary>
-			NumPadEquals,
+			NumberPadEquals,
 
 			/// <summary>
-			/// The minus key on the NumPad.
+			/// The minus key on the NumberPad.
 			/// </summary>
-			NumPadMinus,
+			NumberPadMinus,
 
 			/// <summary>
-			/// The period key on the NumPad.
+			/// The period key on the NumberPad.
 			/// </summary>
-			NumPadPeriod,
+			NumberPadPeriod,
 
 			/// <summary>
-			/// The plus key on the NumPad.
+			/// The plus key on the NumberPad.
 			/// </summary>
-			NumPadPlus,
+			NumberPadPlus,
 
 			/// <summary>
-			/// The slash key on the NumPad.
+			/// The slash key on the NumberPad.
 			/// </summary>
-			NumPadSlash,
+			NumberPadSlash,
 
 			/// <summary>
-			/// The asterisk key on the NumPad.
+			/// The asterisk key on the NumberPad.
 			/// </summary>
-			NumPadStar,
+			NumberPadStar,
 
 			/// <summary>
 			/// The British and German OEM102 key.
@@ -1025,8 +1025,8 @@ namespace SlimDX
 			DeviceConstantConverter() { }
 
 		public:
-			static int KeysToDIK( Keys key );
-			static int KeysToDIKEYBOARD( Keys key );
+			static int KeyToDIK( Key key );
+			static int KeyToDIKEYBOARD( Key key );
 			static int MouseToDIMOFS( MouseObjects mouse );
 			static int MouseToDIMOUSE( MouseObjects mouse );
 		};

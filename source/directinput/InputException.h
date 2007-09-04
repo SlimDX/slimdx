@@ -172,11 +172,10 @@ namespace SlimDX
 		DEFINE_INPUT_EXCEPTION( Unsupported, DIERR_UNSUPPORTED );
 		DEFINE_INPUT_EXCEPTION( AccessDenied, E_ACCESSDENIED );
 
-		DEFINE_CUSTOM_INPUT_EXCEPTION( BufferOverflow, DI_BUFFEROVERFLOW, "The data buffer overflowed. Some data may have been lost." );
 		DEFINE_CUSTOM_INPUT_EXCEPTION( Handle, E_HANDLE, "The handle is not a valid top-level window." );
 		DEFINE_CUSTOM_INPUT_EXCEPTION( Pending, E_PENDING, "Data is not yet available." );
 		DEFINE_CUSTOM_INPUT_EXCEPTION( Pointer, E_POINTER, "Invalid pointer." );
-		DEFINE_CUSTOM_INPUT_EXCEPTION( DirectInput8NotFound, E_FAIL, "DirectInput 8 not found." );
+		DEFINE_CUSTOM_INPUT_EXCEPTION( DirectInput8NotFound, E_FAIL, "DirectInput 8 was not found. Reinstalling DirectX may fix the problem." );
 
 		inline InputException^ InputException::GetExceptionFromHResult( HRESULT hr )
 		{
@@ -216,7 +215,6 @@ namespace SlimDX
 			GENERATE_EXCEPTION(DIERR_REPORTFULL, ReportFull);
 			GENERATE_EXCEPTION(DIERR_UNPLUGGED, Unplugged);
 			GENERATE_EXCEPTION(DIERR_UNSUPPORTED, Unsupported);
-			GENERATE_EXCEPTION(DI_BUFFEROVERFLOW, BufferOverflow);
 			GENERATE_EXCEPTION(E_HANDLE, Handle);
 			GENERATE_EXCEPTION(E_PENDING, Pending);
 			GENERATE_EXCEPTION(E_POINTER, Pointer);
@@ -231,19 +229,15 @@ namespace SlimDX
 
 		inline void InputException::CheckHResult( HRESULT hr, String^ dataKey, Object^ dataValue )
 		{
-			if( DirectXException::EnableExceptions )
+			if( DirectXException::EnableExceptions && FAILED( hr ) )
 			{
 				InputException^ ex = InputException::GetExceptionFromHResult( (hr) );
-
-				if( FAILED( hr ) || hr == DI_BUFFEROVERFLOW )
+				//don't throw if an exception wasn't returned for some reason (e.g. it's part of a disabled subset)
+				if( ex != nullptr )
 				{
-					//don't throw if an exception wasn't returned for some reason (e.g. it's part of a disabled subset)
-					if( ex != nullptr )
-					{
-						if( dataKey != nullptr )
-							ex->Data->Add( dataKey, dataValue );
-						throw ex;
-					}
+					if( dataKey != nullptr )
+						ex->Data->Add( dataKey, dataValue );
+					throw ex;
 				}
 			}
 

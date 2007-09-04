@@ -22,6 +22,7 @@
 #pragma once
 
 using namespace System;
+using namespace System::Reflection;
 
 namespace SlimDX
 {
@@ -30,19 +31,21 @@ namespace SlimDX
 		/// <summary>
 		/// Contains buffered device information.
 		/// </summary>
+		generic<typename DataFormat>
 		public ref class BufferedData
 		{
 		private:
-			int offset;
-			int data;
+			DataFormat data;
 			int timeStamp;
 			int sequence;
 			GCHandle handle;
 			Object^ appData;
 
+			[EnvironmentPermission(SecurityAction::LinkDemand, Unrestricted=true)]
 			void Destruct();
 
 		internal:
+			[EnvironmentPermission(SecurityAction::LinkDemand, Unrestricted=true)]
 			BufferedData( const DIDEVICEOBJECTDATA &data );
 
 		public:
@@ -54,16 +57,18 @@ namespace SlimDX
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::BufferedData"/> class.
 			/// </summary>
-			BufferedData( int offset, int data, int timeStamp, int sequence, Object^ applicationData );	
+			BufferedData( DataFormat data );	
 
 			/// <summary>
 			/// Disposes of unmanaged resources.
 			/// </summary>
+			[EnvironmentPermission(SecurityAction::LinkDemand, Unrestricted=true)]
 			!BufferedData();
 
 			/// <summary>
 			/// Disposes of managed resources.
 			/// </summary>
+			[EnvironmentPermission(SecurityAction::LinkDemand, Unrestricted=true)]
 			~BufferedData();
 
 			/// <summary>
@@ -74,38 +79,13 @@ namespace SlimDX
 			static int CompareSequence( int sequence1, int sequence2 );
 
 			/// <summary>
-			/// Gets the offset into the current data format of the object whose data is being reported;
-			/// that is, the location in which the data would have been stored if the data had been obtained
-			/// by a call to the GetCurrentState method. If the device
-			/// accessed is a mouse, keyboard, or joystick device, the offset is one of the mouse, keyboard,
-			/// joystick constants.
-			///
-			/// If data is being sent to the device, the offset is the instance ID of the object to which the
-			/// data is being sent.
-			/// </summary>
-			property int Offset
-			{
-				int get() { return offset; }
-				void set( int value ) { offset = value; }
-			}
-
-			/// <summary>
 			/// Gets or sets the data obtained from or sent to the device. For axis input, the data reflects
-			/// the absolute or relative mode of the object. For button input, see the
-			/// <see cref="SlimDX::DirectInput::BufferedData::ButtonData"/> property.
+			/// the absolute or relative mode of the object.
 			/// </summary>
-			property int Data
+			property DataFormat Data
 			{
-				int get() { return data; }
-				void set( int value ) { data = value; }
-			}
-
-			/// <summary>
-			/// Gets the data obtained from a button object.
-			/// </summary>
-			property int ButtonData
-			{
-				int get() { return ( data >> 7 ) & 1; }
+				DataFormat get() { return data; }
+				void set( DataFormat value ) { data = value; }
 			}
 
 			/// <summary>

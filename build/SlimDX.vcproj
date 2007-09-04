@@ -233,10 +233,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\directinput\DataFormat.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\source\directinput\Device.cpp"
 					>
 					<FileConfiguration
@@ -272,6 +268,10 @@
 				</File>
 				<File
 					RelativePath="..\source\directinput\DirectInput.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\Properties.cpp"
 					>
 				</File>
 			</Filter>
@@ -755,10 +755,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\directinput\DataFormat.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\directinput\Device.h"
 					>
 				</File>
@@ -783,7 +779,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\directinput\Guids.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\InputException.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\Properties.h"
 					>
 				</File>
 			</Filter>

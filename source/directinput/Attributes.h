@@ -31,29 +31,31 @@ namespace SlimDX
 		/// Indicates that a type is a data format specification for DirectInput.
 		/// </summary>
 		[AttributeUsage(AttributeTargets::Class | AttributeTargets::Struct)]
-		public ref class DataFormatAttribute : public Attribute
+		public ref class DataFormatAttribute sealed : public Attribute
 		{
 		private:
 			DataFormatFlags flags;
-
-		internal:
-			property DataFormatFlags Flags
-			{
-				DataFormatFlags get() { return flags; }
-			}
 
 		public:
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::DataFormatAttribute"/> class.
 			/// </summary>
 			DataFormatAttribute( DataFormatFlags flags ) : flags( flags ) { }
+
+			/// <summary>
+			/// Gets or sets the flags describing other attributes of the data format.
+			/// </summary>
+			property DataFormatFlags Flags
+			{
+				DataFormatFlags get() { return flags; }
+			}
 		};
 
 		/// <summary>
 		/// Indicates that a type is a data format specification for DirectInput.
 		/// </summary>
 		[AttributeUsage(AttributeTargets::Field)]
-		public ref class DataObjectAttribute : public Attribute
+		public ref class DataObjectAttribute sealed : public Attribute
 		{
 		private:
 			Guid sourceGuid;
@@ -79,7 +81,6 @@ namespace SlimDX
 				instanceNumber = -1;
 				type = ( ObjectDeviceType )0;
 				flags = ObjectDataFormatFlags::None;
-				offset = 0;
 			}
 
 			/// <summary>

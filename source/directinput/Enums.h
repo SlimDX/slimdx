@@ -28,6 +28,22 @@ namespace SlimDX
 	namespace DirectInput
 	{
 		/// <summary>
+		/// Specifies the axis mode for the device.
+		/// </summary>
+		public enum class DeviceAxisMode : Int32
+		{
+			/// <summary>
+			/// The axis works with absolute data.
+			/// </summary>
+			Absolute = DIPROPAXISMODE_ABS,
+
+			/// <summary>
+			/// The axis works with relative data.
+			/// </summary>
+			Relative = DIPROPAXISMODE_REL
+		};
+
+		/// <summary>
 		/// Specifies the device type of an object data format.
 		/// </summary>
 		[Flags]
