@@ -22,6 +22,7 @@
 #pragma once
 
 using namespace System;
+using namespace System::Security::Permissions;
 using namespace System::Windows::Forms;
 using namespace System::Runtime::InteropServices;
 
@@ -31,27 +32,6 @@ namespace SlimDX
 {
 	namespace DirectInput
 	{
-		/// <summary>
-		/// Contains system-defined identifiers for DirectInput devices.
-		/// </summary>
-		public ref class SystemGuid sealed
-		{
-		internal:
-			static Guid FromGUID( const GUID &guid );
-			static GUID ToGUID( Guid guid );
-
-		public:
-			/// <summary>
-			/// Gets the system keyboard identifier.
-			/// </summary>
-			static property Guid Keyboard { Guid get(); }
-
-			/// <summary>
-			/// Gets the system mouse identifier.
-			/// </summary>
-			static property Guid Mouse { Guid get(); }
-		};
-
 		/// <summary>
 		/// Provides an interface to DirectInput.
 		/// </summary>
@@ -76,11 +56,13 @@ namespace SlimDX
 			/// Called by the application to initialize DirectInput. This method must be called before
 			/// any other DirectInput methods.
 			/// </summary>
+			[EnvironmentPermission(SecurityAction::LinkDemand, Unrestricted=true)]
 			static void Terminate();
 
 			/// <summary>
 			/// Called by the application to release DirectInput and free resources.
 			/// </summary>
+			[EnvironmentPermission(SecurityAction::LinkDemand, Unrestricted=true)]
 			static void Initialize();
 
 			/// <summary>

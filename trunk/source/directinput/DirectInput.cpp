@@ -31,33 +31,6 @@ namespace SlimDX
 {
 namespace DirectInput
 {
-	Guid SystemGuid::FromGUID( const GUID& guid )
-	{
-		Guid result( guid.Data1, guid.Data2, guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], 
-			guid.Data4[3], guid.Data4[4], guid.Data4[5], guid.Data4[6], guid.Data4[7] );
-		return result;
-	}
-
-	GUID SystemGuid::ToGUID( Guid guid )
-    {
-		GUID result;
-		array<Byte>^ bytes = guid.ToByteArray();
-		pin_ptr<unsigned char> pinned_bytes = &bytes[0];
-		memcpy( &result, pinned_bytes, sizeof(GUID) );
-		
-		return result;
-    }
-
-	Guid SystemGuid::Keyboard::get()
-	{
-		return SystemGuid::FromGUID( GUID_SysKeyboard );
-	}
-
-	Guid SystemGuid::Mouse::get()
-	{
-		return SystemGuid::FromGUID( GUID_SysMouse );
-	}
-
     void DirectInput::Initialize()
 	{
         if( m_DirectInput != NULL )

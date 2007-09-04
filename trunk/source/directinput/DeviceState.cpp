@@ -33,6 +33,16 @@ namespace SlimDX
 {
 namespace DirectInput
 {
+	JoystickState::JoystickState()
+	{
+		sliders = gcnew array<int>( 2 );
+		povs = gcnew array<int>( 4 );
+		buttons = gcnew array<bool>( 128 );
+		vsliders = gcnew array<int>( 2 );
+		fsliders = gcnew array<int>( 2 );
+		asliders = gcnew array<int>( 2 );
+	}
+
 	JoystickState::JoystickState( const DIJOYSTATE2 &joystate )
 	{
 		x = joystate.lX;

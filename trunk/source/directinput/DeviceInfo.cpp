@@ -23,6 +23,7 @@
 #include <dinput.h>
 #include "DirectInput.h"
 #include "DeviceInfo.h"
+#include "Guids.h"
 
 namespace SlimDX
 {

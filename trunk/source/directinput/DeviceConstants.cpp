@@ -53,575 +53,575 @@ namespace DirectInput
 		return DIJOFS_POV( pov );
 	}
 
-	int DeviceConstantConverter::KeysToDIK( Keys key )
+	int DeviceConstantConverter::KeyToDIK( Key key )
 	{
 		switch( key )
 		{
-		case Keys::D0:
+		case Key::D0:
 			return DIK_0;
 			break;
 
-		case Keys::D1:
+		case Key::D1:
 			return DIK_1;
 			break;
 
-		case Keys::D2:
+		case Key::D2:
 			return DIK_2;
 			break;
 
-		case Keys::D3:
+		case Key::D3:
 			return DIK_3;
 			break;
 
-		case Keys::D4:
+		case Key::D4:
 			return DIK_4;
 			break;
 
-		case Keys::D5:
+		case Key::D5:
 			return DIK_5;
 			break;
 
-		case Keys::D6:
+		case Key::D6:
 			return DIK_6;
 			break;
 
-		case Keys::D7:
+		case Key::D7:
 			return DIK_7;
 			break;
 
-		case Keys::D8:
+		case Key::D8:
 			return DIK_8;
 			break;
 
-		case Keys::D9:
+		case Key::D9:
 			return DIK_9;
 			break;
 
-		case Keys::A:
+		case Key::A:
 			return DIK_A;
 			break;
 
-		case Keys::B:
+		case Key::B:
 			return DIK_B;
 			break;
 
-		case Keys::C:
+		case Key::C:
 			return DIK_C;
 			break;
 
-		case Keys::D:
+		case Key::D:
 			return DIK_D;
 			break;
 
-		case Keys::E:
+		case Key::E:
 			return DIK_E;
 			break;
 
-		case Keys::F:
+		case Key::F:
 			return DIK_F;
 			break;
 
-		case Keys::G:
+		case Key::G:
 			return DIK_G;
 			break;
 
-		case Keys::H:
+		case Key::H:
 			return DIK_H;
 			break;
 
-		case Keys::I:
+		case Key::I:
 			return DIK_I;
 			break;
 
-		case Keys::J:
+		case Key::J:
 			return DIK_J;
 			break;
 
-		case Keys::K:
+		case Key::K:
 			return DIK_K;
 			break;
 
-		case Keys::L:
+		case Key::L:
 			return DIK_L;
 			break;
 
-		case Keys::M:
+		case Key::M:
 			return DIK_M;
 			break;
 
-		case Keys::N:
+		case Key::N:
 			return DIK_N;
 			break;
 
-		case Keys::O:
+		case Key::O:
 			return DIK_O;
 			break;
 
-		case Keys::P:
+		case Key::P:
 			return DIK_P;
 			break;
 
-		case Keys::Q:
+		case Key::Q:
 			return DIK_Q;
 			break;
 
-		case Keys::R:
+		case Key::R:
 			return DIK_R;
 			break;
 
-		case Keys::S:
+		case Key::S:
 			return DIK_S;
 			break;
 
-		case Keys::T:
+		case Key::T:
 			return DIK_T;
 			break;
 
-		case Keys::U:
+		case Key::U:
 			return DIK_U;
 			break;
 
-		case Keys::V:
+		case Key::V:
 			return DIK_V;
 			break;
 
-		case Keys::W:
+		case Key::W:
 			return DIK_W;
 			break;
 
-		case Keys::X:
+		case Key::X:
 			return DIK_X;
 			break;
 
-		case Keys::Y:
+		case Key::Y:
 			return DIK_Y;
 			break;
 
-		case Keys::Z:
+		case Key::Z:
 			return DIK_Z;
 			break;
 
-		case Keys::AbntC1:
+		case Key::AbntC1:
 			return DIK_ABNT_C1;
 			break;
 
-		case Keys::AbntC2:
+		case Key::AbntC2:
 			return DIK_ABNT_C2;
 			break;
 
-		case Keys::Apostrophe:
+		case Key::Apostrophe:
 			return DIK_APOSTROPHE;
 			break;
 
-		case Keys::Applications:
+		case Key::Applications:
 			return DIK_APPS;
 			break;
 
-		case Keys::At:
+		case Key::At:
 			return DIK_AT;
 			break;
 
-		case Keys::Ax:
+		case Key::Ax:
 			return DIK_AX;
 			break;
 
-		case Keys::BackSpace:
+		case Key::BackSpace:
 			return DIK_BACKSPACE;
 			break;
 
-		case Keys::BackSlash:
+		case Key::BackSlash:
 			return DIK_BACKSLASH;
 			break;
 
-		case Keys::Calculator:
+		case Key::Calculator:
 			return DIK_CALCULATOR;
 			break;
 
-		case Keys::CapsLock:
+		case Key::CapsLock:
 			return DIK_CAPSLOCK;
 			break;
 
-		case Keys::Colon:
+		case Key::Colon:
 			return DIK_COLON;
 			break;
 
-		case Keys::Comma:
+		case Key::Comma:
 			return DIK_COMMA;
 			break;
 
-		case Keys::Convert:
+		case Key::Convert:
 			return DIK_CONVERT;
 			break;
 
-		case Keys::Delete:
+		case Key::Delete:
 			return DIK_DELETE;
 			break;
 
-		case Keys::DownArrow:
+		case Key::DownArrow:
 			return DIK_DOWNARROW;
 			break;
 
-		case Keys::End:
+		case Key::End:
 			return DIK_END;
 			break;
 
-		case Keys::Equals:
+		case Key::Equals:
 			return DIK_EQUALS;
 			break;
 
-		case Keys::Escape:
+		case Key::Escape:
 			return DIK_ESCAPE;
 			break;
 
-		case Keys::F1:
+		case Key::F1:
 			return DIK_F1;
 			break;
 
-		case Keys::F2:
+		case Key::F2:
 			return DIK_F2;
 			break;
 
-		case Keys::F3:
+		case Key::F3:
 			return DIK_F3;
 			break;
 
-		case Keys::F4:
+		case Key::F4:
 			return DIK_F4;
 			break;
 
-		case Keys::F5:
+		case Key::F5:
 			return DIK_F5;
 			break;
 
-		case Keys::F6:
+		case Key::F6:
 			return DIK_F6;
 			break;
 
-		case Keys::F7:
+		case Key::F7:
 			return DIK_F7;
 			break;
 
-		case Keys::F8:
+		case Key::F8:
 			return DIK_F8;
 			break;
 
-		case Keys::F9:
+		case Key::F9:
 			return DIK_F9;
 			break;
 
-		case Keys::F10:
+		case Key::F10:
 			return DIK_F10;
 			break;
 
-		case Keys::F11:
+		case Key::F11:
 			return DIK_F11;
 			break;
 
-		case Keys::F12:
+		case Key::F12:
 			return DIK_F12;
 			break;
 
-		case Keys::F13:
+		case Key::F13:
 			return DIK_F13;
 			break;
 
-		case Keys::F14:
+		case Key::F14:
 			return DIK_F14;
 			break;
 
-		case Keys::F15:
+		case Key::F15:
 			return DIK_F15;
 			break;
 
-		case Keys::Grave:
+		case Key::Grave:
 			return DIK_GRAVE;
 			break;
 
-		case Keys::Home:
+		case Key::Home:
 			return DIK_HOME;
 			break;
 
-		case Keys::Insert:
+		case Key::Insert:
 			return DIK_INSERT;
 			break;
 
-		case Keys::Kana:
+		case Key::Kana:
 			return DIK_KANA;
 			break;
 
-		case Keys::Kanji:
+		case Key::Kanji:
 			return DIK_KANJI;
 			break;
 
-		case Keys::LeftBracket:
+		case Key::LeftBracket:
 			return DIK_LBRACKET;
 			break;
 
-		case Keys::LeftControl:
+		case Key::LeftControl:
 			return DIK_LCONTROL;
 			break;
 
-		case Keys::LeftArrow:
+		case Key::LeftArrow:
 			return DIK_LEFTARROW;
 			break;
 
-		case Keys::LeftAlt:
+		case Key::LeftAlt:
 			return DIK_LMENU;
 			break;
 
-		case Keys::LeftShift:
+		case Key::LeftShift:
 			return DIK_LSHIFT;
 			break;
 
-		case Keys::LeftWindowsKey:
+		case Key::LeftWindowsKey:
 			return DIK_LWIN;
 			break;
 
-		case Keys::Mail:
+		case Key::Mail:
 			return DIK_MAIL;
 			break;
 
-		case Keys::MediaSelect:
+		case Key::MediaSelect:
 			return DIK_MEDIASELECT;
 			break;
 
-		case Keys::MediaStop:
+		case Key::MediaStop:
 			return DIK_MEDIASTOP;
 			break;
 
-		case Keys::Minus:
+		case Key::Minus:
 			return DIK_MINUS;
 			break;
 
-		case Keys::Mute:
+		case Key::Mute:
 			return DIK_MUTE;
 			break;
 
-		case Keys::MyComputer:
+		case Key::MyComputer:
 			return DIK_MYCOMPUTER;
 			break;
 
-		case Keys::NextTrack:
+		case Key::NextTrack:
 			return DIK_NEXTTRACK;
 			break;
 
-		case Keys::NoConvert:
+		case Key::NoConvert:
 			return DIK_NOCONVERT;
 			break;
 
-		case Keys::NumLock:
+		case Key::NumberLock:
 			return DIK_NUMLOCK;
 			break;
 
-		case Keys::NumPad0:
+		case Key::NumberPad0:
 			return DIK_NUMPAD0;
 			break;
 
-		case Keys::NumPad1:
+		case Key::NumberPad1:
 			return DIK_NUMPAD1;
 			break;
 
-		case Keys::NumPad2:
+		case Key::NumberPad2:
 			return DIK_NUMPAD2;
 			break;
 
-		case Keys::NumPad3:
+		case Key::NumberPad3:
 			return DIK_NUMPAD3;
 			break;
 
-		case Keys::NumPad4:
+		case Key::NumberPad4:
 			return DIK_NUMPAD4;
 			break;
 
-		case Keys::NumPad5:
+		case Key::NumberPad5:
 			return DIK_NUMPAD5;
 			break;
 
-		case Keys::NumPad6:
+		case Key::NumberPad6:
 			return DIK_NUMPAD6;
 			break;
 
-		case Keys::NumPad7:
+		case Key::NumberPad7:
 			return DIK_NUMPAD7;
 			break;
 
-		case Keys::NumPad8:
+		case Key::NumberPad8:
 			return DIK_NUMPAD8;
 			break;
 
-		case Keys::NumPad9:
+		case Key::NumberPad9:
 			return DIK_NUMPAD9;
 			break;
 
-		case Keys::NumPadComma:
+		case Key::NumberPadComma:
 			return DIK_NUMPADCOMMA;
 			break;
 
-		case Keys::NumPadEnter:
+		case Key::NumberPadEnter:
 			return DIK_NUMPADENTER;
 			break;
 
-		case Keys::NumPadMinus:
+		case Key::NumberPadMinus:
 			return DIK_NUMPADMINUS;
 			break;
 
-		case Keys::NumPadPeriod:
+		case Key::NumberPadPeriod:
 			return DIK_NUMPADPERIOD;
 			break;
 
-		case Keys::NumPadPlus:
+		case Key::NumberPadPlus:
 			return DIK_NUMPADPLUS;
 			break;
 
-		case Keys::NumPadSlash:
+		case Key::NumberPadSlash:
 			return DIK_NUMPADSLASH;
 			break;
 
-		case Keys::NumPadStar:
+		case Key::NumberPadStar:
 			return DIK_NUMPADSTAR;
 			break;
 
-		case Keys::OEM102:
+		case Key::OEM102:
 			return DIK_OEM_102;
 			break;
 
-		case Keys::PageDown:
+		case Key::PageDown:
 			return DIK_NEXT;
 			break;
 
-		case Keys::PageUp:
+		case Key::PageUp:
 			return DIK_PRIOR;
 			break;
 
-		case Keys::Pause:
+		case Key::Pause:
 			return DIK_PAUSE;
 			break;
 
-		case Keys::Period:
+		case Key::Period:
 			return DIK_PERIOD;
 			break;
 
-		case Keys::PlayPause:
+		case Key::PlayPause:
 			return DIK_PLAYPAUSE;
 			break;
 
-		case Keys::Power:
+		case Key::Power:
 			return DIK_POWER;
 			break;
 
-		case Keys::PreviousTrack:
+		case Key::PreviousTrack:
 			return DIK_PREVTRACK;
 			break;
 
-		case Keys::RightBracket:
+		case Key::RightBracket:
 			return DIK_RBRACKET;
 			break;
 
-		case Keys::RightControl:
+		case Key::RightControl:
 			return DIK_RCONTROL;
 			break;
 
-		case Keys::Return:
+		case Key::Return:
 			return DIK_RETURN;
 			break;
 
-		case Keys::RightArrow:
+		case Key::RightArrow:
 			return DIK_RIGHTARROW;
 			break;
 
-		case Keys::RightAlt:
+		case Key::RightAlt:
 			return DIK_RMENU;
 			break;
 
-		case Keys::RightShift:
+		case Key::RightShift:
 			return DIK_RSHIFT;
 			break;
 
-		case Keys::RightWindowsKey:
+		case Key::RightWindowsKey:
 			return DIK_RWIN;
 			break;
 
-		case Keys::ScrollLock:
+		case Key::ScrollLock:
 			return DIK_SCROLL;
 			break;
 
-		case Keys::Semicolon:
+		case Key::Semicolon:
 			return DIK_SEMICOLON;
 			break;
 
-		case Keys::Slash:
+		case Key::Slash:
 			return DIK_SLASH;
 			break;
 
-		case Keys::Sleep:
+		case Key::Sleep:
 			return DIK_SLEEP;
 			break;
 
-		case Keys::Space:
+		case Key::Space:
 			return DIK_SPACE;
 			break;
 
-		case Keys::Stop:
+		case Key::Stop:
 			return DIK_STOP;
 			break;
 
-		case Keys::PrintScreen:
+		case Key::PrintScreen:
 			return DIK_SYSRQ;
 			break;
 
-		case Keys::Tab:
+		case Key::Tab:
 			return DIK_TAB;
 			break;
 
-		case Keys::Underline:
+		case Key::Underline:
 			return DIK_UNDERLINE;
 			break;
 
-		case Keys::Unlabeled:
+		case Key::Unlabeled:
 			return DIK_UNLABELED;
 			break;
 
-		case Keys::UpArrow:
+		case Key::UpArrow:
 			return DIK_UPARROW;
 			break;
 
-		case Keys::VolumeDown:
+		case Key::VolumeDown:
 			return DIK_VOLUMEDOWN;
 			break;
 
-		case Keys::VolumeUp:
+		case Key::VolumeUp:
 			return DIK_VOLUMEUP;
 			break;
 
-		case Keys::Wake:
+		case Key::Wake:
 			return DIK_WAKE;
 			break;
 
-		case Keys::WebBack:
+		case Key::WebBack:
 			return DIK_WEBBACK;
 			break;
 
-		case Keys::WebFavorites:
+		case Key::WebFavorites:
 			return DIK_WEBFAVORITES;
 			break;
 
-		case Keys::WebForward:
+		case Key::WebForward:
 			return DIK_WEBFORWARD;
 			break;
 
-		case Keys::WebHome:
+		case Key::WebHome:
 			return DIK_WEBHOME;
 			break;
 
-		case Keys::WebSearch:
+		case Key::WebSearch:
 			return DIK_WEBSEARCH;
 			break;
 			
-		case Keys::WebStop:
+		case Key::WebStop:
 			return DIK_WEBSTOP;
 			break;
 
-		case Keys::Yen:
+		case Key::Yen:
 			return DIK_YEN;
 			break;
 		}
@@ -629,575 +629,575 @@ namespace DirectInput
 		throw gcnew ArgumentException( "The specified key does not exist." );
 	}
 
-	int DeviceConstantConverter::KeysToDIKEYBOARD( Keys key )
+	int DeviceConstantConverter::KeyToDIKEYBOARD( Key key )
 	{
 		switch( key )
 		{
-		case Keys::D0:
+		case Key::D0:
 			return DIKEYBOARD_0;
 			break;
 
-		case Keys::D1:
+		case Key::D1:
 			return DIKEYBOARD_1;
 			break;
 
-		case Keys::D2:
+		case Key::D2:
 			return DIKEYBOARD_2;
 			break;
 
-		case Keys::D3:
+		case Key::D3:
 			return DIKEYBOARD_3;
 			break;
 
-		case Keys::D4:
+		case Key::D4:
 			return DIKEYBOARD_4;
 			break;
 
-		case Keys::D5:
+		case Key::D5:
 			return DIKEYBOARD_5;
 			break;
 
-		case Keys::D6:
+		case Key::D6:
 			return DIKEYBOARD_6;
 			break;
 
-		case Keys::D7:
+		case Key::D7:
 			return DIKEYBOARD_7;
 			break;
 
-		case Keys::D8:
+		case Key::D8:
 			return DIKEYBOARD_8;
 			break;
 
-		case Keys::D9:
+		case Key::D9:
 			return DIKEYBOARD_9;
 			break;
 
-		case Keys::A:
+		case Key::A:
 			return DIKEYBOARD_A;
 			break;
 
-		case Keys::B:
+		case Key::B:
 			return DIKEYBOARD_B;
 			break;
 
-		case Keys::C:
+		case Key::C:
 			return DIKEYBOARD_C;
 			break;
 
-		case Keys::D:
+		case Key::D:
 			return DIKEYBOARD_D;
 			break;
 
-		case Keys::E:
+		case Key::E:
 			return DIKEYBOARD_E;
 			break;
 
-		case Keys::F:
+		case Key::F:
 			return DIKEYBOARD_F;
 			break;
 
-		case Keys::G:
+		case Key::G:
 			return DIKEYBOARD_G;
 			break;
 
-		case Keys::H:
+		case Key::H:
 			return DIKEYBOARD_H;
 			break;
 
-		case Keys::I:
+		case Key::I:
 			return DIKEYBOARD_I;
 			break;
 
-		case Keys::J:
+		case Key::J:
 			return DIKEYBOARD_J;
 			break;
 
-		case Keys::K:
+		case Key::K:
 			return DIKEYBOARD_K;
 			break;
 
-		case Keys::L:
+		case Key::L:
 			return DIKEYBOARD_L;
 			break;
 
-		case Keys::M:
+		case Key::M:
 			return DIKEYBOARD_M;
 			break;
 
-		case Keys::N:
+		case Key::N:
 			return DIKEYBOARD_N;
 			break;
 
-		case Keys::O:
+		case Key::O:
 			return DIKEYBOARD_O;
 			break;
 
-		case Keys::P:
+		case Key::P:
 			return DIKEYBOARD_P;
 			break;
 
-		case Keys::Q:
+		case Key::Q:
 			return DIKEYBOARD_Q;
 			break;
 
-		case Keys::R:
+		case Key::R:
 			return DIKEYBOARD_R;
 			break;
 
-		case Keys::S:
+		case Key::S:
 			return DIKEYBOARD_S;
 			break;
 
-		case Keys::T:
+		case Key::T:
 			return DIKEYBOARD_T;
 			break;
 
-		case Keys::U:
+		case Key::U:
 			return DIKEYBOARD_U;
 			break;
 
-		case Keys::V:
+		case Key::V:
 			return DIKEYBOARD_V;
 			break;
 
-		case Keys::W:
+		case Key::W:
 			return DIKEYBOARD_W;
 			break;
 
-		case Keys::X:
+		case Key::X:
 			return DIKEYBOARD_X;
 			break;
 
-		case Keys::Y:
+		case Key::Y:
 			return DIKEYBOARD_Y;
 			break;
 
-		case Keys::Z:
+		case Key::Z:
 			return DIKEYBOARD_Z;
 			break;
 
-		case Keys::AbntC1:
+		case Key::AbntC1:
 			return DIKEYBOARD_ABNT_C1;
 			break;
 
-		case Keys::AbntC2:
+		case Key::AbntC2:
 			return DIKEYBOARD_ABNT_C2;
 			break;
 
-		case Keys::Apostrophe:
+		case Key::Apostrophe:
 			return DIKEYBOARD_APOSTROPHE;
 			break;
 
-		case Keys::Applications:
+		case Key::Applications:
 			return DIKEYBOARD_APPS;
 			break;
 
-		case Keys::At:
+		case Key::At:
 			return DIKEYBOARD_AT;
 			break;
 
-		case Keys::Ax:
+		case Key::Ax:
 			return DIKEYBOARD_AX;
 			break;
 
-		case Keys::BackSpace:
+		case Key::BackSpace:
 			return DIKEYBOARD_BACK;
 			break;
 
-		case Keys::BackSlash:
+		case Key::BackSlash:
 			return DIKEYBOARD_BACKSLASH;
 			break;
 
-		case Keys::Calculator:
+		case Key::Calculator:
 			return DIKEYBOARD_CALCULATOR;
 			break;
 
-		case Keys::CapsLock:
+		case Key::CapsLock:
 			return DIKEYBOARD_CAPITAL;
 			break;
 
-		case Keys::Colon:
+		case Key::Colon:
 			return DIKEYBOARD_COLON;
 			break;
 
-		case Keys::Comma:
+		case Key::Comma:
 			return DIKEYBOARD_COMMA;
 			break;
 
-		case Keys::Convert:
+		case Key::Convert:
 			return DIKEYBOARD_CONVERT;
 			break;
 
-		case Keys::Delete:
+		case Key::Delete:
 			return DIKEYBOARD_DELETE;
 			break;
 
-		case Keys::DownArrow:
+		case Key::DownArrow:
 			return DIKEYBOARD_DOWN;
 			break;
 
-		case Keys::End:
+		case Key::End:
 			return DIKEYBOARD_END;
 			break;
 
-		case Keys::Equals:
+		case Key::Equals:
 			return DIKEYBOARD_EQUALS;
 			break;
 
-		case Keys::Escape:
+		case Key::Escape:
 			return DIKEYBOARD_ESCAPE;
 			break;
 
-		case Keys::F1:
+		case Key::F1:
 			return DIKEYBOARD_F1;
 			break;
 
-		case Keys::F2:
+		case Key::F2:
 			return DIKEYBOARD_F2;
 			break;
 
-		case Keys::F3:
+		case Key::F3:
 			return DIKEYBOARD_F3;
 			break;
 
-		case Keys::F4:
+		case Key::F4:
 			return DIKEYBOARD_F4;
 			break;
 
-		case Keys::F5:
+		case Key::F5:
 			return DIKEYBOARD_F5;
 			break;
 
-		case Keys::F6:
+		case Key::F6:
 			return DIKEYBOARD_F6;
 			break;
 
-		case Keys::F7:
+		case Key::F7:
 			return DIKEYBOARD_F7;
 			break;
 
-		case Keys::F8:
+		case Key::F8:
 			return DIKEYBOARD_F8;
 			break;
 
-		case Keys::F9:
+		case Key::F9:
 			return DIKEYBOARD_F9;
 			break;
 
-		case Keys::F10:
+		case Key::F10:
 			return DIKEYBOARD_F10;
 			break;
 
-		case Keys::F11:
+		case Key::F11:
 			return DIKEYBOARD_F11;
 			break;
 
-		case Keys::F12:
+		case Key::F12:
 			return DIKEYBOARD_F12;
 			break;
 
-		case Keys::F13:
+		case Key::F13:
 			return DIKEYBOARD_F13;
 			break;
 
-		case Keys::F14:
+		case Key::F14:
 			return DIKEYBOARD_F14;
 			break;
 
-		case Keys::F15:
+		case Key::F15:
 			return DIKEYBOARD_F15;
 			break;
 
-		case Keys::Grave:
+		case Key::Grave:
 			return DIKEYBOARD_GRAVE;
 			break;
 
-		case Keys::Home:
+		case Key::Home:
 			return DIKEYBOARD_HOME;
 			break;
 
-		case Keys::Insert:
+		case Key::Insert:
 			return DIKEYBOARD_INSERT;
 			break;
 
-		case Keys::Kana:
+		case Key::Kana:
 			return DIKEYBOARD_KANA;
 			break;
 
-		case Keys::Kanji:
+		case Key::Kanji:
 			return DIKEYBOARD_KANJI;
 			break;
 
-		case Keys::LeftBracket:
+		case Key::LeftBracket:
 			return DIKEYBOARD_LBRACKET;
 			break;
 
-		case Keys::LeftControl:
+		case Key::LeftControl:
 			return DIKEYBOARD_LCONTROL;
 			break;
 
-		case Keys::LeftArrow:
+		case Key::LeftArrow:
 			return DIKEYBOARD_LEFT;
 			break;
 
-		case Keys::LeftAlt:
+		case Key::LeftAlt:
 			return DIKEYBOARD_LMENU;
 			break;
 
-		case Keys::LeftShift:
+		case Key::LeftShift:
 			return DIKEYBOARD_LSHIFT;
 			break;
 
-		case Keys::LeftWindowsKey:
+		case Key::LeftWindowsKey:
 			return DIKEYBOARD_LWIN;
 			break;
 
-		case Keys::Mail:
+		case Key::Mail:
 			return DIKEYBOARD_MAIL;
 			break;
 
-		case Keys::MediaSelect:
+		case Key::MediaSelect:
 			return DIKEYBOARD_MEDIASELECT;
 			break;
 
-		case Keys::MediaStop:
+		case Key::MediaStop:
 			return DIKEYBOARD_MEDIASTOP;
 			break;
 
-		case Keys::Minus:
+		case Key::Minus:
 			return DIKEYBOARD_MINUS;
 			break;
 
-		case Keys::Mute:
+		case Key::Mute:
 			return DIKEYBOARD_MUTE;
 			break;
 
-		case Keys::MyComputer:
+		case Key::MyComputer:
 			return DIKEYBOARD_MYCOMPUTER;
 			break;
 
-		case Keys::NextTrack:
+		case Key::NextTrack:
 			return DIKEYBOARD_NEXTTRACK;
 			break;
 
-		case Keys::NoConvert:
+		case Key::NoConvert:
 			return DIKEYBOARD_NOCONVERT;
 			break;
 
-		case Keys::NumLock:
+		case Key::NumberLock:
 			return DIKEYBOARD_NUMLOCK;
 			break;
 
-		case Keys::NumPad0:
+		case Key::NumberPad0:
 			return DIKEYBOARD_NUMPAD0;
 			break;
 
-		case Keys::NumPad1:
+		case Key::NumberPad1:
 			return DIKEYBOARD_NUMPAD1;
 			break;
 
-		case Keys::NumPad2:
+		case Key::NumberPad2:
 			return DIKEYBOARD_NUMPAD2;
 			break;
 
-		case Keys::NumPad3:
+		case Key::NumberPad3:
 			return DIKEYBOARD_NUMPAD3;
 			break;
 
-		case Keys::NumPad4:
+		case Key::NumberPad4:
 			return DIKEYBOARD_NUMPAD4;
 			break;
 
-		case Keys::NumPad5:
+		case Key::NumberPad5:
 			return DIKEYBOARD_NUMPAD5;
 			break;
 
-		case Keys::NumPad6:
+		case Key::NumberPad6:
 			return DIKEYBOARD_NUMPAD6;
 			break;
 
-		case Keys::NumPad7:
+		case Key::NumberPad7:
 			return DIKEYBOARD_NUMPAD7;
 			break;
 
-		case Keys::NumPad8:
+		case Key::NumberPad8:
 			return DIKEYBOARD_NUMPAD8;
 			break;
 
-		case Keys::NumPad9:
+		case Key::NumberPad9:
 			return DIKEYBOARD_NUMPAD9;
 			break;
 
-		case Keys::NumPadComma:
+		case Key::NumberPadComma:
 			return DIKEYBOARD_NUMPADCOMMA;
 			break;
 
-		case Keys::NumPadEnter:
+		case Key::NumberPadEnter:
 			return DIKEYBOARD_NUMPADENTER;
 			break;
 
-		case Keys::NumPadMinus:
+		case Key::NumberPadMinus:
 			return DIKEYBOARD_SUBTRACT;
 			break;
 
-		case Keys::NumPadPeriod:
+		case Key::NumberPadPeriod:
 			return DIKEYBOARD_DECIMAL;
 			break;
 
-		case Keys::NumPadPlus:
+		case Key::NumberPadPlus:
 			return DIKEYBOARD_ADD;
 			break;
 
-		case Keys::NumPadSlash:
+		case Key::NumberPadSlash:
 			return DIKEYBOARD_DIVIDE;
 			break;
 
-		case Keys::NumPadStar:
+		case Key::NumberPadStar:
 			return DIKEYBOARD_MULTIPLY;
 			break;
 
-		case Keys::OEM102:
+		case Key::OEM102:
 			return DIKEYBOARD_OEM_102;
 			break;
 
-		case Keys::PageDown:
+		case Key::PageDown:
 			return DIKEYBOARD_NEXT;
 			break;
 
-		case Keys::PageUp:
+		case Key::PageUp:
 			return DIKEYBOARD_PRIOR;
 			break;
 
-		case Keys::Pause:
+		case Key::Pause:
 			return DIKEYBOARD_PAUSE;
 			break;
 
-		case Keys::Period:
+		case Key::Period:
 			return DIKEYBOARD_PERIOD;
 			break;
 
-		case Keys::PlayPause:
+		case Key::PlayPause:
 			return DIKEYBOARD_PLAYPAUSE;
 			break;
 
-		case Keys::Power:
+		case Key::Power:
 			return DIKEYBOARD_POWER;
 			break;
 
-		case Keys::PreviousTrack:
+		case Key::PreviousTrack:
 			return DIKEYBOARD_PREVTRACK;
 			break;
 
-		case Keys::RightBracket:
+		case Key::RightBracket:
 			return DIKEYBOARD_RBRACKET;
 			break;
 
-		case Keys::RightControl:
+		case Key::RightControl:
 			return DIKEYBOARD_RCONTROL;
 			break;
 
-		case Keys::Return:
+		case Key::Return:
 			return DIKEYBOARD_RETURN;
 			break;
 
-		case Keys::RightArrow:
+		case Key::RightArrow:
 			return DIKEYBOARD_RIGHT;
 			break;
 
-		case Keys::RightAlt:
+		case Key::RightAlt:
 			return DIKEYBOARD_RMENU;
 			break;
 
-		case Keys::RightShift:
+		case Key::RightShift:
 			return DIKEYBOARD_RSHIFT;
 			break;
 
-		case Keys::RightWindowsKey:
+		case Key::RightWindowsKey:
 			return DIKEYBOARD_RWIN;
 			break;
 
-		case Keys::ScrollLock:
+		case Key::ScrollLock:
 			return DIKEYBOARD_SCROLL;
 			break;
 
-		case Keys::Semicolon:
+		case Key::Semicolon:
 			return DIKEYBOARD_SEMICOLON;
 			break;
 
-		case Keys::Slash:
+		case Key::Slash:
 			return DIKEYBOARD_SLASH;
 			break;
 
-		case Keys::Sleep:
+		case Key::Sleep:
 			return DIKEYBOARD_SLEEP;
 			break;
 
-		case Keys::Space:
+		case Key::Space:
 			return DIKEYBOARD_SPACE;
 			break;
 
-		case Keys::Stop:
+		case Key::Stop:
 			return DIKEYBOARD_STOP;
 			break;
 
-		case Keys::PrintScreen:
+		case Key::PrintScreen:
 			return DIKEYBOARD_SYSRQ;
 			break;
 
-		case Keys::Tab:
+		case Key::Tab:
 			return DIKEYBOARD_TAB;
 			break;
 
-		case Keys::Underline:
+		case Key::Underline:
 			return DIKEYBOARD_UNDERLINE;
 			break;
 
-		case Keys::Unlabeled:
+		case Key::Unlabeled:
 			return DIKEYBOARD_UNLABELED;
 			break;
 
-		case Keys::UpArrow:
+		case Key::UpArrow:
 			return DIKEYBOARD_UP;
 			break;
 
-		case Keys::VolumeDown:
+		case Key::VolumeDown:
 			return DIKEYBOARD_VOLUMEDOWN;
 			break;
 
-		case Keys::VolumeUp:
+		case Key::VolumeUp:
 			return DIKEYBOARD_VOLUMEUP;
 			break;
 
-		case Keys::Wake:
+		case Key::Wake:
 			return DIKEYBOARD_WAKE;
 			break;
 
-		case Keys::WebBack:
+		case Key::WebBack:
 			return DIKEYBOARD_WEBBACK;
 			break;
 
-		case Keys::WebFavorites:
+		case Key::WebFavorites:
 			return DIKEYBOARD_WEBFAVORITES;
 			break;
 
-		case Keys::WebForward:
+		case Key::WebForward:
 			return DIKEYBOARD_WEBFORWARD;
 			break;
 
-		case Keys::WebHome:
+		case Key::WebHome:
 			return DIKEYBOARD_WEBHOME;
 			break;
 
-		case Keys::WebSearch:
+		case Key::WebSearch:
 			return DIKEYBOARD_WEBSEARCH;
 			break;
 			
-		case Keys::WebStop:
+		case Key::WebStop:
 			return DIKEYBOARD_WEBSTOP;
 			break;
 
-		case Keys::Yen:
+		case Key::Yen:
 			return DIKEYBOARD_YEN;
 			break;
 		}

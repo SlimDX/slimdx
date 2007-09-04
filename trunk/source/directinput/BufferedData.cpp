@@ -32,42 +32,188 @@ namespace SlimDX
 {
 namespace DirectInput
 {
-	BufferedData::BufferedData( const DIDEVICEOBJECTDATA &objectData )
+	generic<typename DataFormat>
+	BufferedData<DataFormat>::BufferedData( const DIDEVICEOBJECTDATA &objectData )
 	{
-		offset = objectData.dwOfs;
-		data = objectData.dwData;
+		Type^ type = DataFormat::typeid;
+
+		if( type == KeyboardState::typeid )
+		{
+			KeyboardState^ result = gcnew KeyboardState();
+			if( objectData.dwData )
+				result->keys[objectData.dwOfs] = true;
+			else
+				result->keys[objectData.dwOfs] = false;
+			data = ( DataFormat )result;
+		}
+		else if( type == MouseState::typeid )
+		{
+			MouseState^ result = gcnew MouseState( 0, 0, 0 );
+			if( objectData.dwOfs == DIMOFS_BUTTON0 )
+			{
+				if( objectData.dwData )
+					result->buttons[0] = true;
+				else
+					result->buttons[0] = false;
+			}
+			else if( objectData.dwOfs == DIMOFS_BUTTON1 )
+			{
+				if( objectData.dwData )
+					result->buttons[1] = true;
+				else
+					result->buttons[1] = false;
+			}
+			else if( objectData.dwOfs == DIMOFS_BUTTON2 )
+			{
+				if( objectData.dwData )
+					result->buttons[2] = true;
+				else
+					result->buttons[2] = false;
+			}
+			else if( objectData.dwOfs == DIMOFS_BUTTON3 )
+			{
+				if( objectData.dwData )
+					result->buttons[3] = true;
+				else
+					result->buttons[3] = false;
+			}
+			else if( objectData.dwOfs == DIMOFS_BUTTON4 )
+			{
+				if( objectData.dwData )
+					result->buttons[4] = true;
+				else
+					result->buttons[4] = false;
+			}
+			else if( objectData.dwOfs == DIMOFS_BUTTON5 )
+			{
+				if( objectData.dwData )
+					result->buttons[5] = true;
+				else
+					result->buttons[5] = false;
+			}
+			else if( objectData.dwOfs == DIMOFS_BUTTON6 )
+			{
+				if( objectData.dwData )
+					result->buttons[6] = true;
+				else
+					result->buttons[6] = false;
+			}
+			else if( objectData.dwOfs == DIMOFS_BUTTON7 )
+			{
+				if( objectData.dwData )
+					result->buttons[7] = true;
+				else
+					result->buttons[7] = false;
+			}
+			else if( objectData.dwOfs == DIMOFS_X )
+				result->x = objectData.dwData;
+			else if( objectData.dwOfs == DIMOFS_Y )
+				result->y = objectData.dwData;
+			else if( objectData.dwOfs == DIMOFS_Z )
+				result->z = objectData.dwData;
+
+			data = ( DataFormat )result;
+		}
+		else if( type == JoystickState::typeid )
+		{
+			JoystickState^ result = gcnew JoystickState();
+
+			if( objectData.dwOfs == DIJOFS_RX )
+				result->rx = objectData.dwData;
+			else if( objectData.dwOfs == DIJOFS_RY )
+				result->ry = objectData.dwData;
+			else if( objectData.dwOfs == DIJOFS_RZ )
+				result->rz = objectData.dwData;
+			else if( objectData.dwOfs == DIJOFS_X )
+				result->x = objectData.dwData;
+			else if( objectData.dwOfs == DIJOFS_Y )
+				result->y = objectData.dwData;
+			else if( objectData.dwOfs == DIJOFS_Z )
+				result->z = objectData.dwData;
+			else if( objectData.dwOfs == DIJOFS_SLIDER( 0 ) )
+				result->sliders[0] = objectData.dwData;
+			else if( objectData.dwOfs == DIJOFS_SLIDER( 1 ) )
+				result->sliders[1] = objectData.dwData;
+			else
+			{
+				bool found = false;
+				for( int i = 0; i < 4; i++ )
+				{
+					if( objectData.dwOfs == DIJOFS_POV( i ) )
+					{
+						result->povs[i] = objectData.dwData;
+						found = true;
+						break;
+					}
+				}
+
+				if( !found )
+				{
+					for( int i = 0; i < 128; i++ )
+					{
+						if( objectData.dwOfs == DIJOFS_BUTTON( i ) )
+						{
+							if( objectData.dwData )
+								result->buttons[i] = true;
+							else
+								result->buttons[i] = false;
+							break;
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			array<FieldInfo^>^ fields = type->GetFields();
+			for each( FieldInfo^ field in fields )
+			{
+				int o = Marshal::OffsetOf( type, field->Name ).ToInt32();
+				if( o == objectData.dwOfs )
+				{
+					field->SetValue( data, objectData.dwData );
+					break;
+				}
+			}
+		}
+
 		timeStamp = objectData.dwTimeStamp;
 		sequence = objectData.dwSequence;
 		handle = GCHandle::FromIntPtr( ( IntPtr )( ( UIntPtr )objectData.uAppData ).ToPointer() );
 		appData = handle.Target;
 	}
 
-	BufferedData::BufferedData()
+	generic<typename DataFormat>
+	BufferedData<DataFormat>::BufferedData()
 	{
 	}
 
-	BufferedData::BufferedData( int offset, int data, int timeStamp, int sequence, Object^ applicationData )
-		: offset( offset ), data( data ), timeStamp( timeStamp ), sequence( sequence ), appData( applicationData )
+	generic<typename DataFormat>
+	BufferedData<DataFormat>::BufferedData( DataFormat data ) : data( data )
 	{
 	}
 
-	BufferedData::!BufferedData()
-	{
-		Destruct();
-	}
-
-	BufferedData::~BufferedData()
+	generic<typename DataFormat>
+	BufferedData<DataFormat>::!BufferedData()
 	{
 		Destruct();
 	}
 
-	void BufferedData::Destruct()
+	generic<typename DataFormat>
+	BufferedData<DataFormat>::~BufferedData()
+	{
+		Destruct();
+	}
+
+	generic<typename DataFormat>
+	void BufferedData<DataFormat>::Destruct()
 	{
 		if( handle.IsAllocated )
 			handle.Free();
 	}
 
-	int BufferedData::CompareSequence( int sequence1, int sequence2 )
+	generic<typename DataFormat>
+	int BufferedData<DataFormat>::CompareSequence( int sequence1, int sequence2 )
 	{
 		if( DISEQUENCE_COMPARE( sequence1, >, sequence2 ) )
 			return 1;

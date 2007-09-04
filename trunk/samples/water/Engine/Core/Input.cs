@@ -8,8 +8,8 @@ namespace Engine
 	public class Input
 	{
 		#region Members
-		private SlimDX.DirectInput.Device kbDevice;
-		private SlimDX.DirectInput.Device mouseDevice;
+		private SlimDX.DirectInput.Device<KeyboardState> kbDevice;
+		private SlimDX.DirectInput.Device<MouseState> mouseDevice;
 		private MouseState mouse;
 		private bool[] keyStates = {false, false, false, false, false, false};
 		private bool[] mouseStates = {false, false, false, false};
@@ -31,8 +31,8 @@ namespace Engine
 		public Input(System.IntPtr handle, SlimDX.Direct3D9.Device device)
 		{
 			vecPos = new Vector3(450.0f, 350.0f, 750.0f);
-			kbDevice = new SlimDX.DirectInput.Device(SystemGuid.Keyboard);
-			mouseDevice = new SlimDX.DirectInput.Device(SystemGuid.Mouse);
+			kbDevice = new SlimDX.DirectInput.Device<KeyboardState>(SystemGuid.Keyboard);
+			mouseDevice = new SlimDX.DirectInput.Device<MouseState>(SystemGuid.Mouse);
 			//mouseDevice.Properties.AxisModeAbsolute = false;
 			kbDevice.SetCooperativeLevel(handle, CooperativeLevel.NonExclusive | CooperativeLevel.Background);
 			mouseDevice.SetCooperativeLevel(handle, CooperativeLevel.NonExclusive | CooperativeLevel.Background);
@@ -69,7 +69,7 @@ namespace Engine
 			for(int i = 0; i < 4; i++)
 				mouseStates[i] = false;
 
-            mouse = mouseDevice.CurrentMouseState;
+            mouse = mouseDevice.GetCurrentState();
 			if(mouse.X > 0)
 				mouseStates[0] = true;
 			if(mouse.X < 0)

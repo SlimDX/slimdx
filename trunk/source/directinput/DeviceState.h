@@ -35,7 +35,7 @@ namespace SlimDX
 		/// </summary>
 		public ref class JoystickState
 		{
-		private:
+		internal:
 			int x;
 			int y;
 			int z;
@@ -67,7 +67,7 @@ namespace SlimDX
 			int frz;
 			array<int>^ fsliders;
 
-		internal:
+			JoystickState();
 			JoystickState( const DIJOYSTATE2 &joystate );
 
 		public:
@@ -325,9 +325,9 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the state of the specified key.
 			/// </summary>
-			property bool default [Keys]
+			property bool default [Key]
 			{
-				bool get( Keys index ) { return keys[(int)index]; }
+				bool get( Key index ) { return keys[DeviceConstantConverter::KeyToDIK( index )]; }
 			}
 		};
 
@@ -336,13 +336,12 @@ namespace SlimDX
 		/// </summary>
 		public ref class MouseState
 		{
-		private:
+		internal:
 			array<bool>^ buttons;
 			int x;
 			int y;
 			int z;
 
-		internal:
 			MouseState( int x, int y, int z ) : x(x), y(y), z(z)
 			{
 				buttons = gcnew array<bool>( 8 );
