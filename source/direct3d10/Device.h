@@ -44,8 +44,14 @@ namespace SlimDX
 
 		public ref class Device
 		{
+		private:
 			IDXGIFactory* m_Factory;
 			ID3D10Device* m_Device;
+
+			InputAssemblerWrapper^ inputAssembler;
+            RasterizerWrapper^ rasterizer;
+            OutputMergerWrapper^ outputMerger;
+            StreamOutputWrapper^ streamOutput;
 		
 		protected:
 			void Destruct();
@@ -62,10 +68,33 @@ namespace SlimDX
 			}
 		
 		public:
-			initonly InputAssemblerWrapper^ InputAssembler;
-			initonly RasterizerWrapper^ Rasterizer;
-			initonly OutputMergerWrapper^ OutputMerger;
-			initonly StreamOutputWrapper^ StreamOutput;
+			property InputAssemblerWrapper^ InputAssembler
+            {
+                InputAssemblerWrapper^ get() { return inputAssembler; }
+			protected:
+                void set( InputAssemblerWrapper^ value ) { inputAssembler = value; }
+            }
+
+            property RasterizerWrapper^ Rasterizer
+            {
+                RasterizerWrapper^ get() { return rasterizer; }
+			protected:
+                void set( RasterizerWrapper^ value ) { rasterizer = value; }
+            }
+
+            property OutputMergerWrapper^ OutputMerger
+            {
+                OutputMergerWrapper^ get() { return outputMerger; }
+			protected:
+                void set( OutputMergerWrapper^ value ) { outputMerger = value; }
+            }
+
+            property StreamOutputWrapper^ StreamOutput
+            {
+                StreamOutputWrapper^ get() { return streamOutput; }
+			protected:
+                void set( StreamOutputWrapper^ value ) { streamOutput = value; }
+            }
 			
 			Device( DriverType driverType, DeviceCreationFlags flags );
 

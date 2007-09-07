@@ -34,23 +34,106 @@ namespace SlimDX
 		[StructLayout( LayoutKind::Sequential )]
 		public value class SwapChainDescription
 		{
+		private:
+			int width;
+            int height;
+            Rational refreshRate;
+            Format format;
+            DisplayModeScanlineOrdering scanlineOrdering;
+            DisplayModeScaling scaling;
+            int sampleCount;
+            int sampleQuality;
+            SurfaceUsage usage;
+            int bufferCount;
+            IntPtr outputHandle;
+            bool windowed;
+            SwapEffect swapEffect;
+            SwapChainFlags flags;
+
 		public:
-			int Width;
-			int Height;
-			Rational RefreshRate;
-			Format Format;
-			DisplayModeScanlineOrdering ScanlineOrdering;
-			DisplayModeScaling Scaling;
-			
-			int SampleCount;
-			int SampleQuality;
-			
-			SurfaceUsage Usage;
-			int BufferCount;
-			IntPtr OutputHandle;
-			bool Windowed;
-			SwapEffect SwapEffect;
-			SwapChainFlags Flags;
+			property int Width
+            {
+                int get() { return width; }
+                void set( int value ) { width = value; }
+            }
+
+            property int Height
+            {
+                int get() { return height; }
+                void set( int value ) { height = value; }
+            }
+
+            property Rational RefreshRate
+            {
+                Rational get() { return refreshRate; }
+                void set( Rational value ) { refreshRate = value; }
+            }
+
+            property SlimDX::Direct3D10::Format Format
+            {
+                SlimDX::Direct3D10::Format get() { return format; }
+                void set( SlimDX::Direct3D10::Format value ) { format = value; }
+            }
+
+            property DisplayModeScanlineOrdering ScanlineOrdering
+            {
+                DisplayModeScanlineOrdering get() { return scanlineOrdering; }
+                void set( DisplayModeScanlineOrdering value ) { scanlineOrdering = value; }
+            }
+
+            property DisplayModeScaling Scaling
+            {
+                DisplayModeScaling get() { return scaling; }
+                void set( DisplayModeScaling value ) { scaling = value; }
+            }
+
+            property int SampleCount
+            {
+                int get() { return sampleCount; }
+                void set( int value ) { sampleCount = value; }
+            }
+
+            property int SampleQuality
+            {
+                int get() { return sampleQuality; }
+                void set( int value ) { sampleQuality = value; }
+            }
+
+            property SurfaceUsage Usage
+            {
+                SurfaceUsage get() { return usage; }
+                void set( SurfaceUsage value ) { usage = value; }
+            }
+
+            property int BufferCount
+            {
+                int get() { return bufferCount; }
+                void set( int value ) { bufferCount = value; }
+            }
+
+            property IntPtr OutputHandle
+            {
+                IntPtr get() { return outputHandle; }
+                void set( IntPtr value ) { outputHandle = value; }
+            }
+
+            property bool Windowed
+            {
+                bool get() { return windowed; }
+                void set( bool value ) { windowed = value; }
+            }
+
+            property SlimDX::Direct3D10::SwapEffect SwapEffect
+            {
+                SlimDX::Direct3D10::SwapEffect get() { return swapEffect; }
+                void set( SlimDX::Direct3D10::SwapEffect value ) { swapEffect = value; }
+            }
+
+            property SwapChainFlags Flags
+            {
+                SwapChainFlags get() { return flags; }
+                void set( SwapChainFlags value ) { flags = value; }
+            }
 		};
 	}
 };

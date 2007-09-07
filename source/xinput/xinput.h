@@ -33,16 +33,30 @@ namespace SlimDX {
 		/// <remarks>
 		/// The left motor is the low-frequency rumble motor. The right motor is the high-frequency rumble motor. The two motors are not the same, and they create different vibration effects.
 		/// </remarks>
-		public value class Vibration {
+		public value class Vibration
+		{
+		private:
+			UInt16 leftMotorSpeed;
+			UInt16 rightMotorSpeed;
+
 		public:
 			/// <summary>
 			/// Speed of the left motor. Valid values are in the range 0 to 65,535. Zero signifies no motor use; 65,535 signifies 100 percent motor use.
 			/// </summary>
-			UInt16 LeftMotorSpeed;
+			property UInt16 LeftMotorSpeed
+            {
+                UInt16 get() { return leftMotorSpeed; }
+                void set( UInt16 value ) { leftMotorSpeed = value; }
+            }
+
 			/// <summary>
 			/// Speed of the right motor. Valid values are in the range 0 to 65,535. Zero signifies no motor use; 65,535 signifies 100 percent motor use.
 			/// </summary>
-			UInt16 RightMotorSpeed;
+            property UInt16 RightMotorSpeed
+            {
+                UInt16 get() { return rightMotorSpeed; }
+                void set( UInt16 value ) { rightMotorSpeed = value; }
+            }
 		};
 
 		[Flags]
@@ -77,45 +91,91 @@ namespace SlimDX {
 		/// The constants GamepadLeftThumbDeadZone or GamepadRightThumbDeadZone can be used as a positive and negative value to filter a
 		/// thumbstick input.
 		/// </remarks>
-		public value class GamePad {
+		public value class GamePad
+		{
+		private:
+			GamepadButtonFlags buttons;
+            Byte leftTrigger;
+            Byte rightTrigger;
+            Int16 leftThumbX;
+            Int16 leftThumbY;
+            Int16 rightThumbX;
+            Int16 rightThumbY;
+
 		public:
 			/// <summary>
 			/// Bitmask of the device digital buttons
 			/// </summary>
-			GamepadButtonFlags Buttons;
+			property GamepadButtonFlags Buttons
+            {
+                GamepadButtonFlags get() { return buttons; }
+                void set( GamepadButtonFlags value ) { buttons = value; }
+            }
+
 			/// <summary>
 			/// The current value of the left trigger analog control. The value is between 0 and 255.
 			/// </summary>
-			Byte LeftTrigger;
+            property Byte LeftTrigger
+            {
+                Byte get() { return leftTrigger; }
+                void set( Byte value ) { leftTrigger = value; }
+            }
+
 			/// <summary>
 			/// The current value of the right trigger analog control. The value is between 0 and 255.
 			/// </summary>
-			Byte RightTrigger;
+            property Byte RightTrigger
+            {
+                Byte get() { return rightTrigger; }
+                void set( Byte value ) { rightTrigger = value; }
+            }
+
 			/// <summary>
 			/// Right thumbstick y-axis value. The value is between -32768 and 32767.
 			/// </summary>
-			Int16 LeftThumbX;
+            property Int16 LeftThumbX
+            {
+                Int16 get() { return leftThumbX; }
+                void set( Int16 value ) { leftThumbX = value; }
+            }
+
 			/// <summary>
 			/// Left thumbstick y-axis value. The value is between -32768 and 32767.
 			/// </summary>
-			Int16 LeftThumbY;
+            property Int16 LeftThumbY
+            {
+                Int16 get() { return leftThumbY; }
+                void set( Int16 value ) { leftThumbY = value; }
+            }
+
 			/// <summary>
 			/// Right thumbstick x-axis value. The value is between -32768 and 32767.
 			/// </summary>
-			Int16 RightThumbX;
+            property Int16 RightThumbX
+            {
+                Int16 get() { return rightThumbX; }
+                void set( Int16 value ) { rightThumbX = value; }
+            }
+
 			/// <summary>
 			/// Right thumbstick y-axis value. The value is between -32768 and 32767.
 			/// </summary>
-			Int16 RightThumbY;
+            property Int16 RightThumbY
+            {
+                Int16 get() { return rightThumbY; }
+                void set( Int16 value ) { rightThumbY = value; }
+            }
 
 			/// <summary>
 			/// Can be used as a positive and negative value to filter the left thumbstick input.
 			/// </summary>
 			static const Int16 GamepadLeftThumbDeadZone = XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
+
 			/// <summary>
 			/// Can be used as a positive and negative value to filter the right thumbstick input.
 			/// </summary>
 			static const Int16 GamepadRightThumbDeadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
+
 			/// <summary>
 			/// This constantmay be used as the value which LeftTrigger and RightTrigger must be greater than to register as pressed.
 			/// </summary>
@@ -175,45 +235,91 @@ namespace SlimDX {
 		/// <summary>
 		/// Specifies keystroke data returned by Controller.GetKeystroke
 		/// </summary>
-		public value class KeyStroke {
+		public value class KeyStroke
+		{
+		private:
+			GamepadKeyCodes virtualKey;
+            Char unicode;
+            KeyStrokeFlags flags;
+            Byte userIndex;
+            Byte hidCode;
+
 		public:
 			/// <summary>
 			/// Virtual-key code of the key, button, or stick movement.
 			/// </summary>
-			GamepadKeyCodes VirtualKey;
+			property GamepadKeyCodes VirtualKey
+            {
+                GamepadKeyCodes get() { return virtualKey; }
+                void set( GamepadKeyCodes value ) { virtualKey = value; }
+            }
+
 			/// <summary>
 			/// Unused and should be zero.
 			/// </summary>
-			Char Unicode;
+            property Char Unicode
+            {
+                Char get() { return unicode; }
+                void set( Char value ) { unicode = value; }
+            }
+
 			/// <summary>
 			/// Combination of flags that indicate the keyboard state at the time of the input event.
 			/// </summary>
-			KeyStrokeFlags Flags;
+            property KeyStrokeFlags Flags
+            {
+                KeyStrokeFlags get() { return flags; }
+                void set( KeyStrokeFlags value ) { flags = value; }
+            }
+
 			/// <summary>
 			/// Index of the signed-in gamer associated with the device. Can be a value in the range 0–3.
 			/// </summary>
-			Byte UserIndex;
+            property Byte UserIndex
+            {
+                Byte get() { return userIndex; }
+                void set( Byte value ) { userIndex = value; }
+            }
+
 			/// <summary>
 			/// HID code corresponding to the input. If there is no corresponding HID code, this value is zero.
 			/// </summary>
-			Byte HidCode;
+            property Byte HidCode
+            {
+                Byte get() { return hidCode; }
+                void set( Byte value ) { hidCode = value; }
+            }
 		};
 
 		[StructLayout(LayoutKind::Sequential)]
 		/// <summary>
 		/// Represents the state of a controller.
 		/// </summary>
-		public value class State {
+		public value class State
+		{
+		private:
+			UInt32 packetNumber;
+            GamePad gamepad;
+
 		public:
 			/// <summary>
 			/// State packet number. The packet number indicates whether there have been any changes in the state of the controller.
 			/// If the PacketNumber member is the same in sequentially returned State structures, the controller state has not changed. 
 			/// </summary>
-			UInt32 PacketNumber;
+			property UInt32 PacketNumber
+            {
+                UInt32 get() { return packetNumber; }
+                void set( UInt32 value ) { packetNumber = value; }
+            }
+
 			/// <summary>
 			/// GamePad structure containing the current state of an Xbox 360 Controller. 
 			/// </summary>
-			GamePad Gamepad;
+            property GamePad Gamepad
+            {
+                GamePad get() { return gamepad; }
+                void set( GamePad value ) { gamepad = value; }
+            }
 		};
 
 		/// <summary>
@@ -258,28 +364,60 @@ namespace SlimDX {
 		/// whether or not the control is supported by the device. For proportional controls, such as thumbsticks, the value indicates the resolution for that control.
 		/// Some number of the least significant bits may not be set, indicating that the control does not provide resolution to that level.
 		/// </remarks>
-		public value class Capabilities {
+		public value class Capabilities
+		{
+		private:
+            DeviceType type;
+            DeviceSubType subType;
+            CapabilitiesFlags flags;
+            GamePad gamepad;
+            Vibration vibration;
+
 		public:
 			/// <summary>
 			/// Controller type.
 			/// </summary>
-			DeviceType Type;
+			property DeviceType Type
+            {
+                DeviceType get() { return type; }
+                void set( DeviceType value ) { type = value; }
+            }
+
 			/// <summary>
 			/// Subtype of the game controller. 
 			/// </summary>
-			DeviceSubType SubType;
+            property DeviceSubType SubType
+            {
+                DeviceSubType get() { return subType; }
+                void set( DeviceSubType value ) { subType = value; }
+            }
+
 			/// <summary>
 			/// Features of the controller. 
 			/// </summary>
-			CapabilitiesFlags Flags;
+            property CapabilitiesFlags Flags
+            {
+                CapabilitiesFlags get() { return flags; }
+                void set( CapabilitiesFlags value ) { flags = value; }
+            }
+
 			/// <summary>
 			/// GamePad structure that describes available controller features and control resolutions. 
 			/// </summary>
-			GamePad Gamepad;
+            property GamePad Gamepad
+            {
+                GamePad get() { return gamepad; }
+                void set( GamePad value ) { gamepad = value; }
+            }
+
 			/// <summary>
 			/// Vibration structure that describes available vibration functionality and resolutions. 
 			/// </summary>
-			Vibration Vibration;
+            property SlimDX::XInput::Vibration Vibration
+            {
+                SlimDX::XInput::Vibration get() { return vibration; }
+                void set( SlimDX::XInput::Vibration value ) { vibration = value; }
+            }
 		};
 
 		/// <summary>

@@ -133,17 +133,78 @@ namespace SlimDX
 
 		public value class FontDescription
 		{
+		private:
+			int height;
+            int width;
+            FontWeight weight;
+            int mipLevels;
+            bool italic;
+            CharacterSet charSet;
+            Precision outputPrecision;
+            FontQuality quality;
+            PitchAndFamily pitchAndFamily;
+            String^ faceName;
+
 		public:
-			int Height;
-			int Width;
-			FontWeight Weight;
-			int MipLevels;
-			bool Italic;
-			CharacterSet CharSet;
-			Precision OutputPrecision;
-			FontQuality Quality;
-			PitchAndFamily PitchAndFamily;
-			String^ FaceName;
+			property int Height
+            {
+                int get() { return height; }
+                void set( int value ) { height = value; }
+            }
+
+            property int Width
+            {
+                int get() { return width; }
+                void set( int value ) { width = value; }
+            }
+
+            property FontWeight Weight
+            {
+                FontWeight get() { return weight; }
+                void set( FontWeight value ) { weight = value; }
+            }
+
+            property int MipLevels
+            {
+                int get() { return mipLevels; }
+                void set( int value ) { mipLevels = value; }
+            }
+
+            property bool Italic
+            {
+                bool get() { return italic; }
+                void set( bool value ) { italic = value; }
+            }
+
+            property CharacterSet CharSet
+            {
+                CharacterSet get() { return charSet; }
+                void set( CharacterSet value ) { charSet = value; }
+            }
+
+            property Precision OutputPrecision
+            {
+                Precision get() { return outputPrecision; }
+                void set( Precision value ) { outputPrecision = value; }
+            }
+
+            property FontQuality Quality
+            {
+                FontQuality get() { return quality; }
+                void set( FontQuality value ) { quality = value; }
+            }
+
+			property SlimDX::Direct3D9::PitchAndFamily PitchAndFamily
+            {
+                SlimDX::Direct3D9::PitchAndFamily get() { return pitchAndFamily; }
+                void set( SlimDX::Direct3D9::PitchAndFamily value ) { pitchAndFamily = value; }
+            }
+
+            property String^ FaceName
+            {
+                String^ get() { return faceName; }
+                void set( String^ value ) { faceName = value; }
+            }
 		};
 
 		public ref class Font sealed : public DirectXObject<ID3DXFont>

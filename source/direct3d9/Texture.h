@@ -37,14 +37,57 @@ namespace SlimDX
 		[StructLayout( LayoutKind::Sequential )]
 		public value class ImageInformation
 		{
+		private:
+			int width;
+            int height;
+            int depth;
+            int mipLevels;
+            Format format;
+            ResourceType resourceType;
+            ImageFileFormat imageFileFormat;
+
 		public:
-			int Width;
-			int Height;
-			int Depth;
-			int MipLevels;
-			Format Format;
-			ResourceType ResourceType;
-			ImageFileFormat ImageFileFormat;
+			property int Width
+            {
+                int get() { return width; }
+                void set( int value ) { width = value; }
+            }
+
+            property int Height
+            {
+                int get() { return height; }
+                void set( int value ) { height = value; }
+            }
+
+            property int Depth
+            {
+                int get() { return depth; }
+                void set( int value ) { depth = value; }
+            }
+
+            property int MipLevels
+            {
+                int get() { return mipLevels; }
+                void set( int value ) { mipLevels = value; }
+            }
+
+			property SlimDX::Direct3D9::Format Format
+            {
+                SlimDX::Direct3D9::Format get() { return format; }
+                void set( SlimDX::Direct3D9::Format value ) { format = value; }
+            }
+
+            property SlimDX::Direct3D9::ResourceType ResourceType
+            {
+                SlimDX::Direct3D9::ResourceType get() { return resourceType; }
+                void set( SlimDX::Direct3D9::ResourceType value ) { resourceType = value; }
+            }
+
+            property SlimDX::Direct3D9::ImageFileFormat ImageFileFormat
+            {
+                SlimDX::Direct3D9::ImageFileFormat get() { return imageFileFormat; }
+                void set( SlimDX::Direct3D9::ImageFileFormat value ) { imageFileFormat = value; }
+            }
 
 			static ImageInformation FromFile( String^ fileName );
 			static ImageInformation FromMemory( array<Byte>^ memory );
@@ -75,41 +118,140 @@ namespace SlimDX
 
 		public value class TextureRequirements
 		{
+		private:
+			int width;
+            int height;
+            SlimDX::Direct3D9::Format format;
+            int numOfMipLevels;
+
 		public:
-			/// <summary>Proposed width of the texture.</summary>
-			int Width;
-			/// <summary>Proposed height of the texture.</summary>
-			int Height;
-			/// <summary>Proposed format of the texture.</summary>
-			SlimDX::Direct3D9::Format Format;
-			/// <summary>Proposed number of mip-map levels for the texture.</summary>
-			int NumOfMipLevels;
+			/// <summary>
+			/// Proposed width of the texture.
+			/// </summary>
+			property int Width
+            {
+                int get() { return width; }
+                void set( int value ) { width = value; }
+            }
+
+			/// <summary>
+			/// Proposed height of the texture.
+			/// </summary>
+            property int Height
+            {
+                int get() { return height; }
+                void set( int value ) { height = value; }
+            }
+
+			/// <summary>
+			/// Proposed format of the texture.
+			/// </summary>
+            property SlimDX::Direct3D9::Format Format
+            {
+                SlimDX::Direct3D9::Format get() { return format; }
+                void set( SlimDX::Direct3D9::Format value ) { format = value; }
+            }
+
+			/// <summary>
+			/// Proposed number of mip-map levels for the texture.
+			/// </summary>
+            property int NumOfMipLevels
+            {
+                int get() { return numOfMipLevels; }
+                void set( int value ) { numOfMipLevels = value; }
+            }
 		};
 
 		public value class CubeTextureRequirements
 		{
+		private:
+			int size;
+            Format format;
+            int numOfMipLevels;
+
 		public:
-			/// <summary>Proposed size of the texture.</summary>
-			int Size;
-			/// <summary>Proposed format of the texture.</summary>
-			Format Format;
-			/// <summary>Proposed number of mip-map levels for the texture.</summary>
-			int NumOfMipLevels;
+			/// <summary>
+			/// Proposed size of the texture.
+			/// </summary>
+			property int Size
+            {
+                int get() { return size; }
+                void set( int value ) { size = value; }
+            }
+
+			/// <summary>
+			/// Proposed format of the texture.
+			/// </summary>
+            property SlimDX::Direct3D9::Format Format
+            {
+                SlimDX::Direct3D9::Format get() { return format; }
+                void set( SlimDX::Direct3D9::Format value ) { format = value; }
+            }
+
+			/// <summary>
+			/// Proposed number of mip-map levels for the texture.
+			/// </summary>
+            property int NumOfMipLevels
+            {
+                int get() { return numOfMipLevels; }
+                void set( int value ) { numOfMipLevels = value; }
+            }
 		};
 
 		public value class VolumeTextureRequirements
 		{
+		private:
+			int width;
+            int height;
+            int depth;
+            SlimDX::Direct3D9::Format format;
+            int numOfMipLevels;
+
 		public:
-			/// <summary>Proposed width of the texture.</summary>
-			int Width;
-			/// <summary>Proposed height of the texture.</summary>
-			int Height;
-			/// <summary>Proposed depth of the texture.</summary>
-			int Depth;
-			/// <summary>Proposed format of the texture.</summary>
-			SlimDX::Direct3D9::Format Format;
-			/// <summary>Proposed number of mip-map levels for the texture.</summary>
-			int NumOfMipLevels;
+			/// <summary>
+			/// Proposed width of the texture.
+			/// </summary>
+			property int Width
+            {
+                int get() { return width; }
+                void set( int value ) { width = value; }
+            }
+
+			/// <summary>
+			/// Proposed height of the texture.
+			/// </summary>
+            property int Height
+            {
+                int get() { return height; }
+                void set( int value ) { height = value; }
+            }
+
+			/// <summary>
+			/// Proposed depth of the texture.
+			/// </summary>
+            property int Depth
+            {
+                int get() { return depth; }
+                void set( int value ) { depth = value; }
+            }
+
+			/// <summary>
+			/// Proposed format of the texture.
+			/// </summary>
+            property SlimDX::Direct3D9::Format Format
+            {
+                SlimDX::Direct3D9::Format get() { return format; }
+                void set( SlimDX::Direct3D9::Format value ) { format = value; }
+            }
+
+			/// <summary>
+			/// Proposed number of mip-map levels for the texture.
+			/// </summary>
+            property int NumOfMipLevels
+            {
+                int get() { return numOfMipLevels; }
+                void set( int value ) { numOfMipLevels = value; }
+            }
 		};
 
 		public ref class Texture : public BaseTexture

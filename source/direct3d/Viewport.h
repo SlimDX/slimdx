@@ -32,10 +32,50 @@ namespace SlimDX
 	{
 		public value class Viewport
 		{
+		private:
+			int x;
+			int y;
+			int width;
+			int height;
+			float minZ;
+			float maxZ;
+
 		public:
-			int X, Y;
-			int Width, Height;
-			float MinZ, MaxZ;
+			property int X
+			{
+				int get() { return x; }
+				void set( int value ) { x = value; }
+			}
+
+			property int Y
+			{
+				int get() { return y; }
+				void set( int value ) { y = value; }
+			}
+
+			property int Width
+			{
+				int get() { return width; }
+				void set( int value ) { width = value; }
+			}
+
+			property int Height
+			{
+				int get() { return height; }
+				void set( int value ) { height = value; }
+			}
+
+			property float MinZ
+			{
+				float get() { return minZ; }
+				void set( float value ) { minZ = value; }
+			}
+
+			property float MaxZ
+			{
+				float get() { return maxZ; }
+				void set( float value ) { maxZ = value; }
+			}
 		};
 	}
 }

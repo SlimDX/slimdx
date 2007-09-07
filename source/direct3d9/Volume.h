@@ -33,13 +33,50 @@ namespace SlimDX
 		[StructLayout( LayoutKind::Sequential )]
 		public value class Box
 		{
+		private:
+			int left;
+            int top;
+            int right;
+            int bottom;
+            int front;
+            int back;
+
 		public:
-			int Left;
-			int Top;
-			int Right;
-			int Bottom;
-			int Front;
-			int Back;
+			property int Left
+            {
+                int get() { return left; }
+                void set( int value ) { left = value; }
+            }
+
+            property int Top
+            {
+                int get() { return top; }
+                void set( int value ) { top = value; }
+            }
+
+            property int Right
+            {
+                int get() { return right; }
+                void set( int value ) { right = value; }
+            }
+
+            property int Bottom
+            {
+                int get() { return bottom; }
+                void set( int value ) { bottom = value; }
+            }
+
+            property int Front
+            {
+                int get() { return front; }
+                void set( int value ) { front = value; }
+            }
+
+            property int Back
+            {
+                int get() { return back; }
+                void set( int value ) { back = value; }
+            }
 		};
 
 		[StructLayout( LayoutKind::Sequential )]

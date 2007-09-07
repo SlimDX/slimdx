@@ -30,6 +30,13 @@ namespace SlimDX
 	{
 		public ref class VertexBuffer sealed : public Resource
 		{
+		private:
+			Format format;
+            Usage usage;
+            Pool pool;
+            int sizeInBytes;
+            VertexFormat fVF;
+
 		internal:
 			property IDirect3DVertexBuffer9* VbPointer
 			{
@@ -37,11 +44,40 @@ namespace SlimDX
 			}
 
 		public:
-			initonly Format Format;
-			initonly Usage Usage;
-			initonly Pool Pool;
-			initonly int SizeInBytes;
-			initonly VertexFormat FVF;
+			property SlimDX::Direct3D9::Format Format
+            {
+                SlimDX::Direct3D9::Format get() { return format; }
+			protected:
+                void set( SlimDX::Direct3D9::Format value ) { format = value; }
+            }
+
+            property SlimDX::Direct3D9::Usage Usage
+            {
+                SlimDX::Direct3D9::Usage get() { return usage; }
+			protected:
+                void set( SlimDX::Direct3D9::Usage value ) { usage = value; }
+            }
+
+            property SlimDX::Direct3D9::Pool Pool
+            {
+                SlimDX::Direct3D9::Pool get() { return pool; }
+			protected:
+                void set( SlimDX::Direct3D9::Pool value ) { pool = value; }
+            }
+
+            property int SizeInBytes
+            {
+                int get() { return sizeInBytes; }
+			protected:
+                void set( int value ) { sizeInBytes = value; }
+            }
+
+            property VertexFormat FVF
+            {
+                VertexFormat get() { return fVF; }
+			protected:
+                void set( VertexFormat value ) { fVF = value; }
+            }
 			
 			VertexBuffer( IDirect3DVertexBuffer9* buffer );
 			VertexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool );

@@ -35,6 +35,13 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	Guid FromGUID( const GUID &guid )
+	{
+		Guid result( guid.Data1, guid.Data2, guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], 
+			guid.Data4[3], guid.Data4[4], guid.Data4[5], guid.Data4[6], guid.Data4[7] );
+		return result;
+	}
+
 	AdapterDetails::AdapterDetails( unsigned int adapter )
 	{
 		D3DADAPTER_IDENTIFIER9 ident;
@@ -53,10 +60,7 @@ namespace Direct3D9
 		DeviceId = ident.DeviceId;
 		SubSystemId = ident.SubSysId;
 		Revision = ident.Revision;
-		DeviceIdentifier = Guid( ident.DeviceIdentifier.Data1, ident.DeviceIdentifier.Data2, ident.DeviceIdentifier.Data3,
-			ident.DeviceIdentifier.Data4[0], ident.DeviceIdentifier.Data4[1], ident.DeviceIdentifier.Data4[2],
-			ident.DeviceIdentifier.Data4[3], ident.DeviceIdentifier.Data4[4], ident.DeviceIdentifier.Data4[5],
-			ident.DeviceIdentifier.Data4[6], ident.DeviceIdentifier.Data4[7] );
+		DeviceIdentifier = FromGUID( ident.DeviceIdentifier );
 		WhqlLevel = ident.WHQLLevel;
 	}
 

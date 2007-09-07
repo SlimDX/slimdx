@@ -31,9 +31,22 @@ namespace SlimDX
 		[StructLayout( LayoutKind::Sequential )]
 		public value class SampleDescription
 		{
+		private:
+			int count;
+            int quality;
+
 		public:
-			int Count;
-			int Quality;
+			property int Count
+            {
+                int get() { return count; }
+                void set( int value ) { count = value; }
+            }
+
+            property int Quality
+            {
+                int get() { return quality; }
+                void set( int value ) { quality = value; }
+            }
 		};
 	}
 };

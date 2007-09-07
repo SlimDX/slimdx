@@ -41,7 +41,7 @@ namespace SlimDX
 			if( FAILED( hr ) )
 				throw gcnew AudioException();
 
-			m_Pointer = voice;
+			Pointer = voice;
 		}
 	}
 }

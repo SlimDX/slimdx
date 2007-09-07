@@ -34,9 +34,22 @@ namespace SlimDX
 
 		public value class FragmentDescription
 		{
+		private:
+			String^ name;
+            int target;
+
 		public:
-			String^ Name;
-			int Target;
+			property String^ Name
+            {
+                String^ get() { return name; }
+                void set( String^ value ) { name = value; }
+            }
+
+            property int Target
+            {
+                int get() { return target; }
+                void set( int value ) { target = value; }
+            }
 		};
 
 		public ref class ShaderFragments sealed : public BufferWrapper
