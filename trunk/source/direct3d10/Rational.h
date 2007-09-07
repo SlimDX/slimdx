@@ -29,11 +29,24 @@ namespace SlimDX
 	{
 		public value class Rational
 		{
+		private:
+			int numerator;
+            int denominator;
+
 		public:
-			int Numerator;
-			int Denominator;
+			property int Numerator
+            {
+                int get() { return numerator; }
+                void set( int value ) { numerator = value; }
+            }
+
+            property int Denominator
+            {
+                int get() { return denominator; }
+                void set( int value ) { denominator = value; }
+            }
 			
-			Rational( int numerator, int denominator ) : Numerator( numerator), Denominator( denominator )
+			Rational( int numerator, int denominator ) : numerator( numerator), denominator( denominator )
 			{
 			}
 		};

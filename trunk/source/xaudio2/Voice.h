@@ -42,8 +42,15 @@ namespace SlimDX
 
 		public ref class Voice abstract
 		{
-		protected:
+		private:
 			IXAudio2Voice* m_Pointer;
+
+		protected:
+			property IXAudio2Voice* Pointer
+			{
+				IXAudio2Voice* get() { return m_Pointer; }
+				void set( IXAudio2Voice* value ) { m_Pointer = value; }
+			}
 
 		internal:
 			property IXAudio2Voice* InternalPointer

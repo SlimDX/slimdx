@@ -31,12 +31,25 @@ namespace SlimDX
 		
 		public value class StreamOutputBufferBinding
 		{
+		private:
+			Buffer^ buffer;
+            int offset;
+
 		public:
-			Buffer^ Buffer;
-			int Offset;
+			property SlimDX::Direct3D10::Buffer^ Buffer
+            {
+                SlimDX::Direct3D10::Buffer^ get() { return buffer; }
+                void set( SlimDX::Direct3D10::Buffer^ value ) { buffer = value; }
+            }
+
+            property int Offset
+            {
+                int get() { return offset; }
+                void set( int value ) { offset = value; }
+            }
 			
 			StreamOutputBufferBinding( SlimDX::Direct3D10::Buffer^ buffer, int offset )
-				: Buffer( buffer ), Offset( offset )
+				: buffer( buffer ), offset( offset )
 			{
 			}
 		};

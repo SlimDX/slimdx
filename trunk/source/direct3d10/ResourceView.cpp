@@ -31,7 +31,7 @@ namespace Direct3D10
 { 
 	ResourceView::ResourceView()
 	{
-		Format = Format::Unknown;
+		Format = SlimDX::Direct3D10::Format::Unknown;
 		Dimension = ResourceViewDimension::Unknown;
 		ElementOffset = 0;
 		ElementWidth = 0;

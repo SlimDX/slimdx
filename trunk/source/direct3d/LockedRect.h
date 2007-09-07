@@ -33,9 +33,22 @@ namespace SlimDX
 		[StructLayout( LayoutKind::Sequential )]
 		public value class LockedRect
 		{
+		private:
+			int pitch;
+			SlimDX::DataStream^ data;
+
 		public:
-			int Pitch;
-			SlimDX::DataStream^ Data;
+			property int Pitch
+			{
+				int get() { return pitch; }
+				void set( int value ) { pitch = value; }
+			}
+
+			property SlimDX::DataStream^ Data
+			{
+				SlimDX::DataStream^ get() { return data; }
+				void set( SlimDX::DataStream^ value ) { data = value; }
+			}
 		};
 	}
 }

@@ -34,9 +34,16 @@ namespace SlimDX
 	{
 		public ref class WaveFormatEx
 		{
-		protected:
+		private:
 			WAVEFORMATEX* m_Format;
 			DataStream^ m_ExtraData;
+
+		protected:
+			property WAVEFORMATEX* Format
+			{
+				WAVEFORMATEX* get() { return m_Format; }
+				void set( WAVEFORMATEX* value ) { m_Format = value; }
+			}
 
 			void InitializeMe( bool extensible, int extraDataBytes );
 			WaveFormatEx( bool extensible, int extraDataBytes );
@@ -93,6 +100,8 @@ namespace SlimDX
 			property DataStream^ ExtraData
 			{
 				DataStream^ get() { return m_ExtraData; }
+			protected:
+				void set( DataStream^ value ) { m_ExtraData = value; }
 			}
 		};
 
@@ -101,7 +110,7 @@ namespace SlimDX
 		internal:
 			property WAVEFORMATEXTENSIBLE* ExtensiblePointer
 			{
-				WAVEFORMATEXTENSIBLE* get() { return (WAVEFORMATEXTENSIBLE*) m_Format; }
+				WAVEFORMATEXTENSIBLE* get() { return (WAVEFORMATEXTENSIBLE*) Format; }
 			}
 
 		public:

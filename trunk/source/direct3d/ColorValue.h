@@ -32,8 +32,33 @@ namespace SlimDX
 	{
 		public value class ColorValue
 		{
+		private:
+			float alpha, red, green, blue;
+
 		public:
-			float Alpha, Red, Green, Blue;
+			property float Alpha
+            {
+                float get() { return alpha; }
+                void set( float value ) { alpha = value; }
+            }
+
+			property float Red
+            {
+                float get() { return red; }
+                void set( float value ) { red = value; }
+            }
+
+			property float Green
+            {
+                float get() { return green; }
+                void set( float value ) { green = value; }
+            }
+
+			property float Blue
+            {
+                float get() { return blue; }
+                void set( float value ) { blue = value; }
+            }
 
 			ColorValue( float alpha, float red, float green, float blue )
 			{

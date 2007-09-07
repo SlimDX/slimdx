@@ -119,11 +119,11 @@ namespace DirectSound
 		if( format->Format.wFormatTag != WAVE_FORMAT_EXTENSIBLE )
 			throw gcnew ArgumentException( "format" );
 
-		m_Format = (WAVEFORMATEX*) format;
+		Format = (WAVEFORMATEX*) format;
 
-		if( m_Format->cbSize > 22 )
+		if( Format->cbSize > 22 )
 		{
-			m_ExtraData = gcnew DataStream( ((char*) m_Format) + sizeof(WAVEFORMATEXTENSIBLE), m_Format->cbSize - 22, true, true );
+			ExtraData = gcnew DataStream( ((char*) Format) + sizeof(WAVEFORMATEXTENSIBLE), Format->cbSize - 22, true, true );
 		}
 	};
 

@@ -33,6 +33,17 @@ namespace SlimDX
 	{
 		public ref class ResourceView : public DirectXObject<ID3D10View>
 		{
+		private:
+			Format format;
+            ResourceViewDimension dimension;
+            int elementOffset;
+            int elementWidth;
+            int mipSlice;
+            int firstArraySlice;
+            int arraySize;
+            int firstDepthSlice;
+            int depthSize;
+
 		protected:
 			ResourceView();
 			ResourceView( ID3D10ShaderResourceView* view );
@@ -40,18 +51,68 @@ namespace SlimDX
 		public:
 			virtual ~ResourceView() { Destruct(); }
 
-			initonly Format Format;
-			initonly ResourceViewDimension Dimension;
-			
-			initonly int ElementOffset;
-			initonly int ElementWidth;
-			
-			initonly int MipSlice;
-			initonly int FirstArraySlice;
-			initonly int ArraySize;
-			
-			initonly int FirstDepthSlice;
-			initonly int DepthSize;
+			property SlimDX::Direct3D10::Format Format
+            {
+				SlimDX::Direct3D10::Format get() { return format; }
+			protected:
+                void set( SlimDX::Direct3D10::Format value ) { format = value; }
+            }
+
+            property ResourceViewDimension Dimension
+            {
+                ResourceViewDimension get() { return dimension; }
+			protected:
+                void set( ResourceViewDimension value ) { dimension = value; }
+            }
+
+            property int ElementOffset
+            {
+                int get() { return elementOffset; }
+			protected:
+                void set( int value ) { elementOffset = value; }
+            }
+
+            property int ElementWidth
+            {
+                int get() { return elementWidth; }
+			protected:
+                void set( int value ) { elementWidth = value; }
+            }
+
+            property int MipSlice
+            {
+                int get() { return mipSlice; }
+			protected:
+                void set( int value ) { mipSlice = value; }
+            }
+
+            property int FirstArraySlice
+            {
+                int get() { return firstArraySlice; }
+			protected:
+                void set( int value ) { firstArraySlice = value; }
+            }
+
+            property int ArraySize
+            {
+                int get() { return arraySize; }
+			protected:
+                void set( int value ) { arraySize = value; }
+            }
+
+            property int FirstDepthSlice
+            {
+                int get() { return firstDepthSlice; }
+			protected:
+                void set( int value ) { firstDepthSlice = value; }
+            }
+
+            property int DepthSize
+            {
+                int get() { return depthSize; }
+			protected:
+                void set( int value ) { depthSize = value; }
+            }
 		};
 	}
 };

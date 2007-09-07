@@ -32,10 +32,29 @@ namespace SlimDX
 		[StructLayout( LayoutKind::Sequential )]
 		public value class LockedBox
 		{
+		private:
+			int rowPitch;
+			int slicePitch;
+			SlimDX::DataStream^ data;
+
 		public:
-			int RowPitch;
-			int SlicePitch;
-			SlimDX::DataStream^ Data;
+			property int RowPitch
+			{
+				int get() { return rowPitch; }
+				void set( int value ) { rowPitch = value; }
+			}
+
+			property int SlicePitch
+			{
+				int get() { return slicePitch; }
+				void set( int value ) { slicePitch = value; }
+			}
+
+			property SlimDX::DataStream^ Data
+			{
+				SlimDX::DataStream^ get() { return data; }
+				void set( SlimDX::DataStream^ value ) { data = value; }
+			}
 		};
 	}
 }

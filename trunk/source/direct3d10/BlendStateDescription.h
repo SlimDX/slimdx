@@ -31,21 +31,76 @@ namespace SlimDX
 	{	
 		public ref class BlendStateDescription
 		{
+		private:
+			bool alphaToCoverageEnabled;
+            array<bool>^ renderTargetBlendEnabled;
+            BlendOption sourceBlend;
+            BlendOption destinationBlend;
+            SlimDX::Direct3D10::BlendOperation blendOperation;
+            BlendOption sourceAlphaBlend;
+            BlendOption destinationAlphaBlend;
+            SlimDX::Direct3D10::BlendOperation alphaBlendOperation;
+            array<ColorWriteMaskFlags>^ renderTargetWriteMask;
+
 		internal:
 			BlendStateDescription( const D3D10_BLEND_DESC& desc );
 			
 			void FillNativeObject( D3D10_BLEND_DESC& desc);
 			
 		public:
-			bool AlphaToCoverageEnabled;
-			array<bool>^ RenderTargetBlendEnabled;
-			BlendOption SourceBlend;
-			BlendOption DestinationBlend;
-			SlimDX::Direct3D10::BlendOperation BlendOperation;
-			BlendOption SourceAlphaBlend;
-			BlendOption DestinationAlphaBlend;
-			SlimDX::Direct3D10::BlendOperation AlphaBlendOperation;
-			array<ColorWriteMaskFlags>^ RenderTargetWriteMask;
+			property bool AlphaToCoverageEnabled
+            {
+                bool get() { return alphaToCoverageEnabled; }
+                void set( bool value ) { alphaToCoverageEnabled = value; }
+            }
+
+            property array<bool>^ RenderTargetBlendEnabled
+            {
+                array<bool>^ get() { return renderTargetBlendEnabled; }
+                void set( array<bool>^ value ) { renderTargetBlendEnabled = value; }
+            }
+
+            property BlendOption SourceBlend
+            {
+                BlendOption get() { return sourceBlend; }
+                void set( BlendOption value ) { sourceBlend = value; }
+            }
+
+            property BlendOption DestinationBlend
+            {
+                BlendOption get() { return destinationBlend; }
+                void set( BlendOption value ) { destinationBlend = value; }
+            }
+
+            property SlimDX::Direct3D10::BlendOperation BlendOperation
+            {
+                SlimDX::Direct3D10::BlendOperation get() { return blendOperation; }
+                void set( SlimDX::Direct3D10::BlendOperation value ) { blendOperation = value; }
+            }
+
+            property BlendOption SourceAlphaBlend
+            {
+                BlendOption get() { return sourceAlphaBlend; }
+                void set( BlendOption value ) { sourceAlphaBlend = value; }
+            }
+
+            property BlendOption DestinationAlphaBlend
+            {
+                BlendOption get() { return destinationAlphaBlend; }
+                void set( BlendOption value ) { destinationAlphaBlend = value; }
+            }
+
+            property SlimDX::Direct3D10::BlendOperation AlphaBlendOperation
+            {
+                SlimDX::Direct3D10::BlendOperation get() { return alphaBlendOperation; }
+                void set( SlimDX::Direct3D10::BlendOperation value ) { alphaBlendOperation = value; }
+            }
+
+            property array<ColorWriteMaskFlags>^ RenderTargetWriteMask
+            {
+                array<ColorWriteMaskFlags>^ get() { return renderTargetWriteMask; }
+                void set( array<ColorWriteMaskFlags>^ value ) { renderTargetWriteMask = value; }
+            }
 			
 			BlendStateDescription();
 		};

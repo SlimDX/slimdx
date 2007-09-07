@@ -40,7 +40,7 @@ namespace SlimDX
 		internal:
 			property IXAudio2SubmixVoice* SubmixVoicePointer
 			{
-				IXAudio2SubmixVoice* get() { return (IXAudio2SubmixVoice*) m_Pointer; }
+				IXAudio2SubmixVoice* get() { return (IXAudio2SubmixVoice*) Pointer; }
 			}
 
 		public:

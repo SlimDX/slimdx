@@ -41,7 +41,7 @@ namespace SlimDX
 			if( FAILED( hr ) )
 				throw gcnew AudioException();
 
-			m_Pointer = voice;
+			Pointer = voice;
 		}
 
 		/*MasteringVoice::MasteringVoice( XAudio2^ xaudio2, int inputChannels, int inputSampleRate, int processingStage,

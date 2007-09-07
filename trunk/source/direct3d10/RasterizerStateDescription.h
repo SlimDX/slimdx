@@ -31,22 +31,83 @@ namespace SlimDX
 	{	
 		public ref class RasterizerStateDescription
 		{
+		private:
+			FillMode fillMode;
+            CullMode cullMode;
+            bool frontIsCounterClockwise;
+            int depthBias;
+            float depthBiasClamp;
+            float slopeScaledDepthBias;
+            bool depthClipEnabled;
+            bool scissorEnabled;
+            bool multisampleEnabled;
+            bool antialiasedLineEnabled;
+
 		internal:
 			RasterizerStateDescription( const D3D10_RASTERIZER_DESC& desc );
 			
 			void FillNativeObject( D3D10_RASTERIZER_DESC& desc);
 			
 		public:
-			FillMode FillMode;
-			CullMode CullMode;
-			bool FrontIsCounterClockwise;
-			int DepthBias;
-			float DepthBiasClamp;
-			float SlopeScaledDepthBias;
-			bool DepthClipEnabled;
-			bool ScissorEnabled;
-			bool MultisampleEnabled;
-			bool AntialiasedLineEnabled;
+			property SlimDX::Direct3D10::FillMode FillMode
+            {
+                SlimDX::Direct3D10::FillMode get() { return fillMode; }
+                void set( SlimDX::Direct3D10::FillMode value ) { fillMode = value; }
+            }
+
+            property SlimDX::Direct3D10::CullMode CullMode
+            {
+                SlimDX::Direct3D10::CullMode get() { return cullMode; }
+                void set( SlimDX::Direct3D10::CullMode value ) { cullMode = value; }
+            }
+
+            property bool FrontIsCounterClockwise
+            {
+                bool get() { return frontIsCounterClockwise; }
+                void set( bool value ) { frontIsCounterClockwise = value; }
+            }
+
+            property int DepthBias
+            {
+                int get() { return depthBias; }
+                void set( int value ) { depthBias = value; }
+            }
+
+            property float DepthBiasClamp
+            {
+                float get() { return depthBiasClamp; }
+                void set( float value ) { depthBiasClamp = value; }
+            }
+
+            property float SlopeScaledDepthBias
+            {
+                float get() { return slopeScaledDepthBias; }
+                void set( float value ) { slopeScaledDepthBias = value; }
+            }
+
+            property bool DepthClipEnabled
+            {
+                bool get() { return depthClipEnabled; }
+                void set( bool value ) { depthClipEnabled = value; }
+            }
+
+            property bool ScissorEnabled
+            {
+                bool get() { return scissorEnabled; }
+                void set( bool value ) { scissorEnabled = value; }
+            }
+
+            property bool MultisampleEnabled
+            {
+                bool get() { return multisampleEnabled; }
+                void set( bool value ) { multisampleEnabled = value; }
+            }
+
+            property bool AntialiasedLineEnabled
+            {
+                bool get() { return antialiasedLineEnabled; }
+                void set( bool value ) { antialiasedLineEnabled = value; }
+            }
 			
 			RasterizerStateDescription();
 		};

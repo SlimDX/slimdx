@@ -30,13 +30,50 @@ namespace SlimDX
 	{
 		public value class VertexElement
 		{
+		private:
+			short stream;
+            short offset;
+            DeclarationType type;
+            DeclarationMethod method;
+            DeclarationUsage usage;
+            Byte usageIndex;
+
 		public:
-			short Stream;
-			short Offset;
-			DeclarationType Type;
-			DeclarationMethod Method;
-			DeclarationUsage Usage;
-			Byte UsageIndex;
+			property short Stream
+            {
+                short get() { return stream; }
+                void set( short value ) { stream = value; }
+            }
+
+            property short Offset
+            {
+                short get() { return offset; }
+                void set( short value ) { offset = value; }
+            }
+
+            property DeclarationType Type
+            {
+                DeclarationType get() { return type; }
+                void set( DeclarationType value ) { type = value; }
+            }
+
+            property DeclarationMethod Method
+            {
+                DeclarationMethod get() { return method; }
+                void set( DeclarationMethod value ) { method = value; }
+            }
+
+            property DeclarationUsage Usage
+            {
+                DeclarationUsage get() { return usage; }
+                void set( DeclarationUsage value ) { usage = value; }
+            }
+
+            property Byte UsageIndex
+            {
+                Byte get() { return usageIndex; }
+                void set( Byte value ) { usageIndex = value; }
+            }
 
 			static initonly VertexElement VertexDeclarationEnd;
 
@@ -48,8 +85,8 @@ namespace SlimDX
 
 			VertexElement( short stream, short offset, DeclarationType declType, 
 				DeclarationMethod declMethod, DeclarationUsage declUsage, Byte usageIndex )
-				: Stream( stream ), Offset( offset ), Type( declType ),
-				Method( declMethod ), Usage( declUsage ), UsageIndex( usageIndex )
+				: stream( stream ), offset( offset ), type( declType ),
+				method( declMethod ), usage( declUsage ), usageIndex( usageIndex )
 			{
 			}
 		};

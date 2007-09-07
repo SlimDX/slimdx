@@ -38,7 +38,7 @@ namespace Direct3D10
 	
 	void EffectMatrixVariable::SetMatrix( Matrix matrix )
 	{
-		HRESULT hr = ( ( ID3D10EffectMatrixVariable* ) m_Pointer )->SetMatrix( (float*) &matrix );
+		HRESULT hr = ( ( ID3D10EffectMatrixVariable* ) Pointer )->SetMatrix( (float*) &matrix );
 		GraphicsException::CheckHResult( hr );
 	}
 }

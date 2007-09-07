@@ -38,14 +38,14 @@ namespace Direct3D10
 	
 	void EffectResourceVariable::SetResource( ShaderResourceView^ view )
 	{
-		HRESULT hr = ( ( ID3D10EffectShaderResourceVariable* ) m_Pointer )->SetResource( (ID3D10ShaderResourceView*) view->InternalPointer );
+		HRESULT hr = ( ( ID3D10EffectShaderResourceVariable* ) Pointer )->SetResource( (ID3D10ShaderResourceView*) view->InternalPointer );
 		GraphicsException::CheckHResult( hr );
 	}
 	
 	ShaderResourceView^ EffectResourceVariable::GetResource()
 	{
 		ID3D10ShaderResourceView* view = 0;
-		HRESULT hr = ( ( ID3D10EffectShaderResourceVariable* ) m_Pointer )->GetResource( &view );
+		HRESULT hr = ( ( ID3D10EffectShaderResourceVariable* ) Pointer )->GetResource( &view );
 		GraphicsException::CheckHResult( hr );
 		
 		return gcnew ShaderResourceView( view );

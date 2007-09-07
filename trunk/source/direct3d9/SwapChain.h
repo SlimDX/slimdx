@@ -30,9 +30,22 @@ namespace SlimDX
 
 		public value class RasterStatus
 		{
+		private:
+			bool inVBlank;
+            int scanLine;
+
 		public:
-			bool InVBlank;
-			int ScanLine;
+			property bool InVBlank
+            {
+                bool get() { return inVBlank; }
+                void set( bool value ) { inVBlank = value; }
+            }
+
+            property int ScanLine
+            {
+                int get() { return scanLine; }
+                void set( int value ) { scanLine = value; }
+            }
 		};
 
 		public ref class SwapChain sealed : public DirectXObject<IDirect3DSwapChain9>

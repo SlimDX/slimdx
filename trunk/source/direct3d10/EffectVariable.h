@@ -36,7 +36,7 @@ namespace SlimDX
 		
 		public ref class EffectVariable
 		{
-		protected:
+		private:
 			ID3D10EffectVariable* m_Pointer;
 			String^ m_Name;
 			String^ m_Semantic;
@@ -44,6 +44,13 @@ namespace SlimDX
 			int m_AnnotationCount;
 			int m_BufferOffset;
 			int m_ExplicitBindPoint;
+
+		protected:
+			property ID3D10EffectVariable* Pointer
+			{
+				ID3D10EffectVariable* get() { return m_Pointer; }
+				void set( ID3D10EffectVariable* value ) { m_Pointer = value; }
+			}
 			
 		internal:
 			EffectVariable( ID3D10EffectVariable* variable );
@@ -52,31 +59,43 @@ namespace SlimDX
 			property String^ Name
 			{
 				String^ get() { return m_Name; }
+			protected:
+				void set( String^ value ) { m_Name = value; }
 			}
 			
 			property String^ Semantic
 			{
 				String^ get() { return m_Semantic; }
+			protected:
+				void set( String^ value ) { m_Semantic = value; }
 			}
 			
 			property EffectVariableFlags Flags
 			{
 				EffectVariableFlags get() { return m_Flags; }
+			protected:
+				void set( EffectVariableFlags value ) { m_Flags = value; }
 			}
 			
 			property int AnnotationCount
 			{
 				int get() { return m_AnnotationCount; }
+			protected:
+				void set( int value ) { m_AnnotationCount = value; }
 			}
 			
 			property int BufferOffset
 			{
 				int get() { return m_BufferOffset; }
+			protected:
+				void set( int value ) { m_BufferOffset = value; }
 			}
 			
 			property int ExplicitBindPoint
 			{
 				int get() { return m_ExplicitBindPoint; }
+			protected:
+				void set( int value ) { m_ExplicitBindPoint = value; }
 			}
 			
 			property bool IsValid

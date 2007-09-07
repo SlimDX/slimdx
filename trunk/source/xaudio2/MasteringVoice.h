@@ -40,7 +40,7 @@ namespace SlimDX
 		internal:
 			property IXAudio2MasteringVoice* MasteringVoicePointer
 			{
-				IXAudio2MasteringVoice* get() { return (IXAudio2MasteringVoice*) m_Pointer; }
+				IXAudio2MasteringVoice* get() { return (IXAudio2MasteringVoice*) Pointer; }
 			}
 
 		public:

@@ -31,26 +31,111 @@ namespace SlimDX
 	{	
 		public ref class DepthStencilStateDescription
 		{
+		private:
+			bool depthEnabled;
+            DepthWriteMask depthWriteMask;
+            Comparison depthComparison;
+            bool stencilEnabled;
+            Byte stencilReadMask;
+            Byte stencilWriteMask;
+            Comparison frontStencilComparison;
+            StencilOperation frontStencilFailureOperation;
+            StencilOperation frontStencilDepthFailureOperation;
+            StencilOperation frontStencilPassOperation;
+            Comparison backStencilComparison;
+            StencilOperation backStencilFailureOperation;
+            StencilOperation backStencilDepthFailureOperation;
+            StencilOperation backStencilPassOperation;
+
 		internal:
 			DepthStencilStateDescription( const D3D10_DEPTH_STENCIL_DESC& desc );
 			
 			void FillNativeObject( D3D10_DEPTH_STENCIL_DESC& desc);
 			
 		public:
-			bool DepthEnabled;
-			DepthWriteMask DepthWriteMask;
-			Comparison DepthComparison;
-			bool StencilEnabled;
-			Byte StencilReadMask;
-			Byte StencilWriteMask;
-			Comparison FrontStencilComparison;
-			StencilOperation FrontStencilFailureOperation;
-			StencilOperation FrontStencilDepthFailureOperation;
-			StencilOperation FrontStencilPassOperation;
-			Comparison BackStencilComparison;
-			StencilOperation BackStencilFailureOperation;
-			StencilOperation BackStencilDepthFailureOperation;
-			StencilOperation BackStencilPassOperation;
+			property bool DepthEnabled
+            {
+                bool get() { return depthEnabled; }
+                void set( bool value ) { depthEnabled = value; }
+            }
+
+            property DepthWriteMask DepthWriteMask
+            {
+				SlimDX::Direct3D10::DepthWriteMask get() { return depthWriteMask; }
+				void set( SlimDX::Direct3D10::DepthWriteMask value ) { depthWriteMask = value; }
+            }
+
+            property Comparison DepthComparison
+            {
+                Comparison get() { return depthComparison; }
+                void set( Comparison value ) { depthComparison = value; }
+            }
+
+            property bool StencilEnabled
+            {
+                bool get() { return stencilEnabled; }
+                void set( bool value ) { stencilEnabled = value; }
+            }
+
+            property Byte StencilReadMask
+            {
+                Byte get() { return stencilReadMask; }
+                void set( Byte value ) { stencilReadMask = value; }
+            }
+
+            property Byte StencilWriteMask
+            {
+                Byte get() { return stencilWriteMask; }
+                void set( Byte value ) { stencilWriteMask = value; }
+            }
+
+            property Comparison FrontStencilComparison
+            {
+                Comparison get() { return frontStencilComparison; }
+                void set( Comparison value ) { frontStencilComparison = value; }
+            }
+
+            property StencilOperation FrontStencilFailureOperation
+            {
+                StencilOperation get() { return frontStencilFailureOperation; }
+                void set( StencilOperation value ) { frontStencilFailureOperation = value; }
+            }
+
+            property StencilOperation FrontStencilDepthFailureOperation
+            {
+                StencilOperation get() { return frontStencilDepthFailureOperation; }
+                void set( StencilOperation value ) { frontStencilDepthFailureOperation = value; }
+            }
+
+            property StencilOperation FrontStencilPassOperation
+            {
+                StencilOperation get() { return frontStencilPassOperation; }
+                void set( StencilOperation value ) { frontStencilPassOperation = value; }
+            }
+
+            property Comparison BackStencilComparison
+            {
+                Comparison get() { return backStencilComparison; }
+                void set( Comparison value ) { backStencilComparison = value; }
+            }
+
+            property StencilOperation BackStencilFailureOperation
+            {
+                StencilOperation get() { return backStencilFailureOperation; }
+                void set( StencilOperation value ) { backStencilFailureOperation = value; }
+            }
+
+            property StencilOperation BackStencilDepthFailureOperation
+            {
+                StencilOperation get() { return backStencilDepthFailureOperation; }
+                void set( StencilOperation value ) { backStencilDepthFailureOperation = value; }
+            }
+
+            property StencilOperation BackStencilPassOperation
+            {
+                StencilOperation get() { return backStencilPassOperation; }
+                void set( StencilOperation value ) { backStencilPassOperation = value; }
+            }
 			
 			DepthStencilStateDescription();
 		};
