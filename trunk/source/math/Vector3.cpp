@@ -21,6 +21,8 @@ namespace SlimDX
 	void Vector3::Normalize()
 	{
 		float length = Length();
+		if( length == 0 )
+			return;
 		X /= length;
 		Y /= length;
 		Z /= length;

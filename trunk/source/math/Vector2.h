@@ -35,6 +35,13 @@ namespace SlimDX
 
 		Vector2( float x, float y );
 
+		float Length();
+		void Normalize();
+		static Vector2 Normalize( Vector2 v );
+
+		Vector2 Minimize( Vector2 left, Vector2 right );
+		Vector2 Maximize( Vector2 left, Vector2 right );
+
 		static Vector2 operator + ( Vector2 lhs, Vector2 rhs );
 		static Vector2 operator - ( Vector2 lhs, Vector2 rhs );
 		static Vector2 operator * ( Vector2 vec, float scale );
