@@ -47,35 +47,35 @@ namespace SlimDX
 			property SlimDX::Direct3D9::Format Format
             {
                 SlimDX::Direct3D9::Format get() { return format; }
-			protected:
+			private:
                 void set( SlimDX::Direct3D9::Format value ) { format = value; }
             }
 
             property SlimDX::Direct3D9::Usage Usage
             {
                 SlimDX::Direct3D9::Usage get() { return usage; }
-			protected:
+			private:
                 void set( SlimDX::Direct3D9::Usage value ) { usage = value; }
             }
 
             property SlimDX::Direct3D9::Pool Pool
             {
                 SlimDX::Direct3D9::Pool get() { return pool; }
-			protected:
+			private:
                 void set( SlimDX::Direct3D9::Pool value ) { pool = value; }
             }
 
             property int SizeInBytes
             {
                 int get() { return sizeInBytes; }
-			protected:
+			private:
                 void set( int value ) { sizeInBytes = value; }
             }
 
             property VertexFormat FVF
             {
                 VertexFormat get() { return fVF; }
-			protected:
+			private:
                 void set( VertexFormat value ) { fVF = value; }
             }
 			

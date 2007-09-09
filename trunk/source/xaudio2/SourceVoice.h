@@ -37,14 +37,6 @@ namespace SlimDX
 		{
 		private:
 			IXAudio2SourceVoice* m_Pointer;
-
-		internal:
-			property IXAudio2SourceVoice* InternalPointer
-			{
-				IXAudio2SourceVoice* get() { return m_Pointer; }
-			}
-
-		public:
 		};
 	}
 }

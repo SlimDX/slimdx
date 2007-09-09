@@ -32,7 +32,6 @@ namespace SlimDX
 	DataStream::DataStream( void* buffer, Int64 sizeInBytes, bool canRead, bool canWrite )
 	{
 		m_Buffer = (char*) buffer;
-		m_Position = 0;
 		m_Size = sizeInBytes;
 		
 		m_OwnsBuffer = false;
@@ -44,7 +43,6 @@ namespace SlimDX
 	DataStream::DataStream( Int64 sizeInBytes, bool canRead, bool canWrite )
 	{
 		m_Buffer = new char[ (int) sizeInBytes ];
-		m_Position = 0;
 		m_Size = sizeInBytes;
 		
 		m_OwnsBuffer = true;
@@ -55,6 +53,7 @@ namespace SlimDX
 
 	DataStream::~DataStream()
 	{
+		Stream::~Stream();
 	}
 	
 	DataStream::!DataStream()

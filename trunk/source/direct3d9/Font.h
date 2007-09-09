@@ -212,7 +212,7 @@ namespace SlimDX
 		public:
 			Font( ID3DXFont* font );
 			Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,
-				CharacterSet charSet, Precision outputPrecision, FontQuality quality,
+				CharacterSet characterSet, Precision outputPrecision, FontQuality quality,
 				PitchAndFamily pitchAndFamily, String^ faceName );
 			~Font() { Destruct(); }
 

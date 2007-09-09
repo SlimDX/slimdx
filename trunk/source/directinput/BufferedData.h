@@ -41,11 +41,9 @@ namespace SlimDX
 			GCHandle handle;
 			Object^ appData;
 
-			[EnvironmentPermission(SecurityAction::LinkDemand, Unrestricted=true)]
 			void Destruct();
 
 		internal:
-			[EnvironmentPermission(SecurityAction::LinkDemand, Unrestricted=true)]
 			BufferedData( const DIDEVICEOBJECTDATA &data );
 
 		public:
@@ -62,21 +60,12 @@ namespace SlimDX
 			/// <summary>
 			/// Disposes of unmanaged resources.
 			/// </summary>
-			[EnvironmentPermission(SecurityAction::LinkDemand, Unrestricted=true)]
 			!BufferedData();
 
 			/// <summary>
 			/// Disposes of managed resources.
 			/// </summary>
-			[EnvironmentPermission(SecurityAction::LinkDemand, Unrestricted=true)]
 			~BufferedData();
-
-			/// <summary>
-			/// Compares two sequence numbers, compensating for potential wraparound. If the first is
-			/// greater than the second, 1 is returned. If the second is greater than the first, -1 is
-			/// returned. If they are equal, 0 is returned.
-			/// </summary>
-			static int CompareSequence( int sequence1, int sequence2 );
 
 			/// <summary>
 			/// Gets or sets the data obtained from or sent to the device. For axis input, the data reflects
@@ -99,9 +88,7 @@ namespace SlimDX
 
 			/// <summary>
 			/// Gets the DirectInput sequence number for the event. All input events are assigned an increasing
-			/// sequence number. Because this value can wrap around, use the 
-			/// <see cref="SlimDX::DirectInput::BufferedData::CompareSequence"/> method to reliably compare
-			/// two sequence values.
+			/// sequence number.
 			/// </summary>
 			property int Sequence
 			{

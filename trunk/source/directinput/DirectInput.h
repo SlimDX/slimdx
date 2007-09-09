@@ -22,7 +22,6 @@
 #pragma once
 
 using namespace System;
-using namespace System::Security::Permissions;
 using namespace System::Windows::Forms;
 using namespace System::Runtime::InteropServices;
 
@@ -56,13 +55,11 @@ namespace SlimDX
 			/// Called by the application to initialize DirectInput. This method must be called before
 			/// any other DirectInput methods.
 			/// </summary>
-			[EnvironmentPermission(SecurityAction::LinkDemand, Unrestricted=true)]
 			static void Terminate();
 
 			/// <summary>
 			/// Called by the application to release DirectInput and free resources.
 			/// </summary>
-			[EnvironmentPermission(SecurityAction::LinkDemand, Unrestricted=true)]
 			static void Initialize();
 
 			/// <summary>

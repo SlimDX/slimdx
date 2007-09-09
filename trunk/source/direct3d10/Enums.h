@@ -453,6 +453,9 @@ namespace SlimDX
 		///@TODO D3D10: Not so sure about this. Can this be moved to the shared utils?
 		ref class Utils sealed
 		{
+		private:
+			Utils() { }
+
 			static int ElementSizeOf( Format format )
 			{
 				const int size8 = sizeof( System::Byte );

@@ -33,6 +33,9 @@ namespace SlimDX
 
 	ref class Utils sealed
 	{
+	private:
+		Utils() { }
+
 	public:
 		static void ReportNotDisposed( SlimDX::DirectXBase^ obj );
 		static void MarkDisposed( bool %disposed, Object^ obj );

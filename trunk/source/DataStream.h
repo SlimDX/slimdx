@@ -67,7 +67,7 @@ namespace SlimDX
 		generic<typename T> where T : value class
 		void Write( array<T>^ data ) { Write( data, 0, 0 ); }
 		
-		void Write( IntPtr source, Int64 byteCount );
+		void Write( IntPtr source, Int64 count );
 
 		virtual int Read( array<Byte>^ buffer, int offset, int count ) override;
 		

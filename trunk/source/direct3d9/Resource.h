@@ -33,6 +33,9 @@ namespace SlimDX
 		
 		public ref class Resource abstract : public DirectXObject<IDirect3DResource9>
 		{
+		protected:
+			Resource() { }
+
 		public:
 			virtual ~Resource() { Destruct(); }
 

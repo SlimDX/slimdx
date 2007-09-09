@@ -110,7 +110,6 @@ namespace SlimDX
 			/// <summary>
 			/// Retrieves the current device state.
 			/// </summary>
-			[EnvironmentPermission(SecurityAction::LinkDemand, Unrestricted=true)]
 			DataFormat GetCurrentState();
 
 			/// <summary>

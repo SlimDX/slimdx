@@ -32,7 +32,8 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	Buffer::Buffer( ID3D10Buffer* buffer ) : Resource( buffer )
+	// Commented out 9/07/07 due to not being used (internal)
+	/*Buffer::Buffer( ID3D10Buffer* buffer ) : Resource( buffer )
 	{
 		D3D10_BUFFER_DESC desc;
 		buffer->GetDesc(&desc);
@@ -42,7 +43,7 @@ namespace Direct3D10
 		m_BindFlags = (SlimDX::Direct3D10::BindFlags) desc.BindFlags;
 		m_AccessFlags = (SlimDX::Direct3D10::CpuAccessFlags) desc.CPUAccessFlags;
 		m_OptionFlags = (SlimDX::Direct3D10::ResourceOptionFlags) desc.MiscFlags;
-	}
+	}*/
 	
 	Buffer::Buffer( Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
 	{

@@ -37,12 +37,6 @@ namespace SlimDX
 
 		public ref class SubmixVoice : Voice
 		{
-		internal:
-			property IXAudio2SubmixVoice* SubmixVoicePointer
-			{
-				IXAudio2SubmixVoice* get() { return (IXAudio2SubmixVoice*) Pointer; }
-			}
-
 		public:
 			SubmixVoice( XAudio2^ xaudio2, int inputChannels, int inputSampleRate, int processingStage );
 			
