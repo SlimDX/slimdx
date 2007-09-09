@@ -211,17 +211,5 @@ namespace DirectInput
 		if( handle.IsAllocated )
 			handle.Free();
 	}
-
-	generic<typename DataFormat>
-	int BufferedData<DataFormat>::CompareSequence( int sequence1, int sequence2 )
-	{
-		if( DISEQUENCE_COMPARE( sequence1, >, sequence2 ) )
-			return 1;
-
-		if( DISEQUENCE_COMPARE( sequence1, <, sequence2 ) )
-			return -1;
-
-		return 0;
-	}
 }
 }

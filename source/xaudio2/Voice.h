@@ -46,19 +46,13 @@ namespace SlimDX
 			IXAudio2Voice* m_Pointer;
 
 		protected:
+			Voice() { }
+
 			property IXAudio2Voice* Pointer
 			{
 				IXAudio2Voice* get() { return m_Pointer; }
 				void set( IXAudio2Voice* value ) { m_Pointer = value; }
 			}
-
-		internal:
-			property IXAudio2Voice* InternalPointer
-			{
-				IXAudio2Voice* get() { return m_Pointer; }
-			}
-
-		public:
 		};
 	}
 }

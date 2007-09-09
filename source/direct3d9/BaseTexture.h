@@ -30,6 +30,9 @@ namespace SlimDX
 	{
 		public ref class BaseTexture abstract : public Resource
 		{
+		protected:
+			BaseTexture() { }
+
 		internal:
 			property IDirect3DBaseTexture9* BaseTexturePointer
 			{

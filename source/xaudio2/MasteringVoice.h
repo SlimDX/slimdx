@@ -37,12 +37,6 @@ namespace SlimDX
 
 		public ref class MasteringVoice : Voice
 		{
-		internal:
-			property IXAudio2MasteringVoice* MasteringVoicePointer
-			{
-				IXAudio2MasteringVoice* get() { return (IXAudio2MasteringVoice*) Pointer; }
-			}
-
 		public:
 			MasteringVoice( XAudio2^ xaudio2, int inputChannels, int inputSampleRate, int processingStage );
 			/*MasteringVoice( XAudio2^ xaudio2, int inputChannels, int inputSampleRate, int processingStage,

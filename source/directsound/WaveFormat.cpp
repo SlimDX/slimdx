@@ -63,6 +63,7 @@ namespace DirectSound
 
 	WaveFormatEx::~WaveFormatEx()
 	{
+		delete m_ExtraData;
 		this->!WaveFormatEx();
 	}
 

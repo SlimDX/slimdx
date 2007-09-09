@@ -604,7 +604,7 @@ namespace SlimDX
             property Version^ VertexShaderVersion
             {
                Version^ get() { return vertexShaderVersion; }
-			protected:
+			private:
                 void set( Version^ value ) { vertexShaderVersion = value; }
             }
 
@@ -617,7 +617,7 @@ namespace SlimDX
             property Version^ PixelShaderVersion
             {
                 Version^ get() { return pixelShaderVersion; }
-			protected:
+			private:
                 void set( Version^ value ) { pixelShaderVersion = value; }
             }
 
@@ -786,7 +786,7 @@ namespace SlimDX
 		public:
             property int Count
             {
-                virtual int get() { return m_Adapters->Length; }
+                int get() { return m_Adapters->Length; }
             }
 
             property AdapterInformation^ default[int]

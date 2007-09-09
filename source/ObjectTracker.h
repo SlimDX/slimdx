@@ -30,6 +30,8 @@ namespace SlimDX
 	ref class ObjectTracker
 	{
 	private:
+		ObjectTracker() { }
+
 		static Dictionary<IDisposable^, StackTrace^>^ m_TrackedObjects;
 
 		static void OnExit( Object^ sender, EventArgs^ e );

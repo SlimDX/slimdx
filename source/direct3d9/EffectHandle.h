@@ -48,7 +48,6 @@ namespace SlimDX
 			{
 				m_Handle = handle;
 				m_StringData = IntPtr::Zero;
-				m_HasString = false;
 			}
 
 			EffectHandle( String^ name )
