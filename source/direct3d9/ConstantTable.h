@@ -33,7 +33,7 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
-		enum class RegisterSet : Int32
+		public enum class RegisterSet : Int32
 		{
 			Bool = D3DXRS_BOOL,
 			Int4 = D3DXRS_INT4,
@@ -41,15 +41,17 @@ namespace SlimDX
 			Sampler = D3DXRS_SAMPLER,
 		};
 
-		value class ConstantTableDescription
+		public value class ConstantTableDescription
 		{
+		public:
 			String^ Creator;
 			Version^ Version;
 			int Constants;
 		};
 
-		value class ConstantDescription
+		public value class ConstantDescription
 		{
+		public:
 			String^ Name;
 			RegisterSet RegisterSet;
 			int RegisterIndex;
@@ -79,11 +81,15 @@ namespace SlimDX
 			EffectHandle^ GetConstant( EffectHandle^ handle, int index );
 			EffectHandle^ GetConstant( EffectHandle^ handle, String^ name );
 			EffectHandle^ GetConstantElement( EffectHandle^ handle, int index );
+			ConstantDescription GetConstantDescription( EffectHandle^ handle );
+			array<ConstantDescription>^ GetConstantDescriptionArray( EffectHandle^ handle );
 			
 			int GetSamplerIndex( EffectHandle^ sampler );
 
-            //TODO: The following functions:
-            //GetConstantDesc, GetDesc, SetBoolArray (also in BaseEffect)
+			property ConstantTableDescription Description
+			{
+				ConstantTableDescription get();
+			}
 			
 			DataStream^ GetBuffer();
 			int GetBufferSize();

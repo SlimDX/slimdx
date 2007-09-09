@@ -24,6 +24,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <vcclr.h>
+#include <memory>
 
 #include "../DirectXObject.h"
 #include "../Utils.h"
@@ -84,6 +85,74 @@ namespace Direct3D9
 		if( result == NULL )
 			return nullptr;
 		return gcnew EffectHandle( result );
+	}
+
+	ConstantDescription ConstantTable::GetConstantDescription( EffectHandle^ handle )
+	{
+		D3DXCONSTANT_DESC nativeDesc;
+		ConstantDescription desc;
+
+		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
+		unsigned int count = 1;
+
+		HRESULT hr = m_Pointer->GetConstantDesc( nativeHandle, &nativeDesc, &count );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return desc;
+
+		desc.Name = gcnew String( nativeDesc.Name );
+		desc.RegisterSet = (RegisterSet) nativeDesc.RegisterSet;
+		desc.RegisterIndex = nativeDesc.RegisterIndex;
+		desc.RegisterCount = nativeDesc.RegisterCount;
+		desc.Class = (ParameterClass) nativeDesc.Class;
+		desc.Type = (ParameterType) nativeDesc.Type;
+		desc.Rows = nativeDesc.Rows;
+		desc.Columns = nativeDesc.Columns;
+		desc.Elements = nativeDesc.Elements;
+		desc.StructMembers = nativeDesc.StructMembers;
+		desc.Bytes = nativeDesc.Bytes;
+
+		return desc;
+	}
+
+	array<ConstantDescription>^ ConstantTable::GetConstantDescriptionArray( EffectHandle^ handle )
+	{
+		//TODO: Check that the logic here is actually correct. The SDK doesn't bother to explain.
+		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
+		unsigned int count = 0;
+
+		//Determine the count
+		HRESULT hr = m_Pointer->GetConstantDesc( nativeHandle, NULL, &count );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		//Get the actual data
+		std::auto_ptr<D3DXCONSTANT_DESC> nativeDescArray = new D3DXCONSTANT_DESC[count];
+		hr = m_Pointer->GetConstantDesc( nativeHandle, nativeDescArray.get(), &count );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		//Marshal the data
+		array<ConstantDescription>^ descArray = gcnew array<ConstantDescription>( count );
+		for( unsigned int i = 0; i < count; ++i )
+		{
+			const D3DXCONSTANT_DESC* nativeDesc = nativeDescArray.get() + i;
+			descArray[i].Name = gcnew String( nativeDesc->Name );
+			descArray[i].RegisterSet = (RegisterSet) nativeDesc->RegisterSet;
+			descArray[i].RegisterIndex = nativeDesc->RegisterIndex;
+			descArray[i].RegisterCount = nativeDesc->RegisterCount;
+			descArray[i].Class = (ParameterClass) nativeDesc->Class;
+			descArray[i].Type = (ParameterType) nativeDesc->Type;
+			descArray[i].Rows = nativeDesc->Rows;
+			descArray[i].Columns = nativeDesc->Columns;
+			descArray[i].Elements = nativeDesc->Elements;
+			descArray[i].StructMembers = nativeDesc->StructMembers;
+			descArray[i].Bytes = nativeDesc->Bytes;
+		}
+
+		return descArray;
 	}
 
 	int ConstantTable::GetSamplerIndex( EffectHandle^ sampler )
@@ -222,6 +291,22 @@ namespace Direct3D9
 		pin_ptr<Matrix> pinned_value = &values[0];
 		HRESULT hr = m_Pointer->SetMatrixTransposeArray( m_Device, handle, (const D3DXMATRIX*) pinned_value, values->Length );
 		GraphicsException::CheckHResult( hr );
+	}
+
+	ConstantTableDescription ConstantTable::Description::get()
+	{
+		D3DXCONSTANTTABLE_DESC nativeDesc;
+		ConstantTableDescription desc;
+
+		HRESULT hr = m_Pointer->GetDesc( &nativeDesc );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return desc;
+
+		desc.Creator = gcnew String( nativeDesc.Creator );
+		desc.Version = gcnew Version( D3DSHADER_VERSION_MAJOR( nativeDesc.Version ), D3DSHADER_VERSION_MINOR( nativeDesc.Version ) );
+		desc.Constants = nativeDesc.Constants;
+		return desc;
 	}
 }
 }
