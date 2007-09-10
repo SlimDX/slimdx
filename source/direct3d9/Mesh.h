@@ -85,15 +85,17 @@ namespace SlimDX
 
 		public value class EffectDefault
 		{
-			String^ ParamName;
-			EffectDefaultType Type;
-			array<Byte>^ Value;
+		public:
+			property String^ ParamName;
+			property EffectDefaultType Type;
+			property array<Byte>^ Value;
 		};
 
 		public value class EffectInstance
 		{
-			String^ EffectFilename;
-			array<EffectDefault>^ Defaults;
+		public:
+			property String^ EffectFilename;
+			property array<EffectDefault>^ Defaults;
 		};
 
 		ref class Mesh;

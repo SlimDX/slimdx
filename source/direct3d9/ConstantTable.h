@@ -44,26 +44,28 @@ namespace SlimDX
 		public value class ConstantTableDescription
 		{
 		public:
-			String^ Creator;
-			Version^ Version;
-			int Constants;
+			property String^ Creator;
+			property Version^ Version;
+			property int Constants;
 		};
 
 		public value class ConstantDescription
 		{
 		public:
-			String^ Name;
-			RegisterSet RegisterSet;
-			int RegisterIndex;
-			int RegisterCount;
-			ParameterClass Class;
-			ParameterType Type;
-			int Rows;
-			int Columns;
-			int Elements;
-			int StructMembers;
-			int Bytes;
+			property String^ Name;
+			property RegisterSet RegisterSet;
+			property int RegisterIndex;
+			property int RegisterCount;
+			property ParameterClass Class;
+			property ParameterType Type;
+			property int Rows;
+			property int Columns;
+			property int Elements;
+			property int StructMembers;
+			property int Bytes;
 			//TODO: default value?
+
+			void Initialize( const D3DXCONSTANT_DESC& desc );
 		};
 
 		ref class EffectHandle;

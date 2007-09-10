@@ -330,7 +330,7 @@ namespace Direct3D9
 
 		PrimitiveMiscCaps = (SlimDX::Direct3D9::PrimitiveMiscCaps) caps.PrimitiveMiscCaps;
 		RasterCaps = (SlimDX::Direct3D9::RasterCaps) caps.RasterCaps;
-		ZCompareCaps = (CompareCaps) caps.ZCmpCaps;
+		DepthCompareCaps = (CompareCaps) caps.ZCmpCaps;
 		SourceBlendCaps = (BlendCaps) caps.SrcBlendCaps;
 		DestBlendCaps = (BlendCaps) caps.DestBlendCaps;
 		AlphaCompareCaps = (CompareCaps) caps.AlphaCmpCaps;
