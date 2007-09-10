@@ -54,40 +54,43 @@ namespace SlimDX
 		[StructLayout( LayoutKind::Sequential )]
 		public value class TriPatchInfo
 		{
-			int StartVertexOffset;
-			int NumVertices;
-			Basis Basis;
-			Degree Degree;
+		public:
+			property int StartVertexOffset;
+			property int NumVertices;
+			property Basis Basis;
+			property Degree Degree;
 		};
 
 		[StructLayout( LayoutKind::Sequential )]
 		public value class RectPatchInfo
 		{
-			int StartVertexOffsetWidth;
-			int StartVertexOffsetHeight;
-			int Width;
-			int Height;
-			int Stride;
-			Basis Basis;
-			Degree Degree;
+		public:
+			property int StartVertexOffsetWidth;
+			property int StartVertexOffsetHeight;
+			property int Width;
+			property int Height;
+			property int Stride;
+			property Basis Basis;
+			property Degree Degree;
 		};
 
 		[StructLayout( LayoutKind::Sequential )]
 		public value class Light
 		{
-			LightType Type;
-			ColorValue Diffuse;
-			ColorValue Specular;
-			ColorValue Ambient;
-			Vector3 Position;
-			Vector3 Direction;
-			float Range;
-			float Falloff;
-			float Attenuation0;
-			float Attenuation1;
-			float Attenuation2;
-			float Theta;
-			float Phi;
+		public:
+			property LightType Type;
+			property ColorValue Diffuse;
+			property ColorValue Specular;
+			property ColorValue Ambient;
+			property Vector3 Position;
+			property Vector3 Direction;
+			property float Range;
+			property float Falloff;
+			property float Attenuation0;
+			property float Attenuation1;
+			property float Attenuation2;
+			property float Theta;
+			property float Phi;
 		};
 
 		public ref class PresentParameters

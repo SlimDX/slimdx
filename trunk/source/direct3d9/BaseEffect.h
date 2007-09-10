@@ -37,201 +37,51 @@ namespace SlimDX
 		//description structures for various things
 		public value class EffectDescription
 		{
-		private:
-			String^ creator;
-            int parameters;
-            int techniques;
-            int functions;
-
 		public:
-			property String^ Creator
-            {
-                String^ get() { return creator; }
-                void set( String^ value ) { creator = value; }
-            }
-
-            property int Parameters
-            {
-                int get() { return parameters; }
-                void set( int value ) { parameters = value; }
-            }
-
-            property int Techniques
-            {
-                int get() { return techniques; }
-                void set( int value ) { techniques = value; }
-            }
-
-            property int Functions
-            {
-                int get() { return functions; }
-                void set( int value ) { functions = value; }
-            }
+			property String^ Creator;
+            property int Parameters;
+            property int Techniques;
+            property int Functions;
 		};
 
 		public value class TechniqueDescription
 		{
-		private:
-			String^ name;
-            int passes;
-            int annotations;
-
 		public:
-			property String^ Name
-            {
-                String^ get() { return name; }
-                void set( String^ value ) { name = value; }
-            }
-
-            property int Passes
-            {
-                int get() { return passes; }
-                void set( int value ) { passes = value; }
-            }
-
-            property int Annotations
-            {
-                int get() { return annotations; }
-                void set( int value ) { annotations = value; }
-            }
+			property String^ Name;
+            property int Passes;
+            property int Annotations;
 		};
 
 		public value class FunctionDescription
 		{
-		private:
-			String^ name;
-            int annotations;
-
 		public:
-			property String^ Name
-            {
-                String^ get() { return name; }
-                void set( String^ value ) { name = value; }
-            }
-
-            property int Annotations
-            {
-                int get() { return annotations; }
-                void set( int value ) { annotations = value; }
-            }
+			property String^ Name;
+            property int Annotations;
 		};
 
 		public value class PassDescription
 		{
-		private:
-			String^ name;
-            int annotations;
-            IntPtr vertexShaderFunction;
-            IntPtr pixelShaderFunction;
-
 		public:
-			property String^ Name
-            {
-                String^ get() { return name; }
-                void set( String^ value ) { name = value; }
-            }
-
-            property int Annotations
-            {
-                int get() { return annotations; }
-                void set( int value ) { annotations = value; }
-            }
-
-			// TODO: Convert these to something else?
-            property IntPtr VertexShaderFunction
-            {
-                IntPtr get() { return vertexShaderFunction; }
-                void set( IntPtr value ) { vertexShaderFunction = value; }
-            }
-
-            property IntPtr PixelShaderFunction
-            {
-                IntPtr get() { return pixelShaderFunction; }
-                void set( IntPtr value ) { pixelShaderFunction = value; }
-            }
+			property String^ Name;
+            property int Annotations;
+            property IntPtr VertexShaderFunction;
+            property IntPtr PixelShaderFunction;
 		};
 
 		public value class ParameterDescription
 		{
-		private:
-			String^ name;
-            String^ semantic;
-            ParameterClass pclass;
-            ParameterType type;
-            int rows;
-            int columns;
-            int elements;
-            int annotations;
-            int structMembers;
-            ParameterFlags flags;
-            int bytes;
-
 		public:
-			property String^ Name
-            {
-                String^ get() { return name; }
-                void set( String^ value ) { name = value; }
-            }
-
-            property String^ Semantic
-            {
-                String^ get() { return semantic; }
-                void set( String^ value ) { semantic = value; }
-            }
-
-            property ParameterClass Class
-            {
-                ParameterClass get() { return pclass; }
-                void set( ParameterClass value ) { pclass = value; }
-            }
-
-            property ParameterType Type
-            {
-                ParameterType get() { return type; }
-                void set( ParameterType value ) { type = value; }
-            }
-
-            property int Rows
-            {
-                int get() { return rows; }
-                void set( int value ) { rows = value; }
-            }
-
-            property int Columns
-            {
-                int get() { return columns; }
-                void set( int value ) { columns = value; }
-            }
-
-            property int Elements
-            {
-                int get() { return elements; }
-                void set( int value ) { elements = value; }
-            }
-
-            property int Annotations
-            {
-                int get() { return annotations; }
-                void set( int value ) { annotations = value; }
-            }
-
-            property int StructMembers
-            {
-                int get() { return structMembers; }
-                void set( int value ) { structMembers = value; }
-            }
-
-            property ParameterFlags Flags
-            {
-                ParameterFlags get() { return flags; }
-                void set( ParameterFlags value ) { flags = value; }
-            }
-
-            property int Bytes
-            {
-                int get() { return bytes; }
-                void set( int value ) { bytes = value; }
-            }
+			property String^ Name;
+            property String^ Semantic;
+            property ParameterClass Class;
+            property ParameterType Type;
+            property int Rows;
+            property int Columns;
+            property int Elements;
+            property int Annotations;
+            property int StructMembers;
+            property ParameterFlags Flags;
+            property int Bytes;
 		};
 
 		public ref class BaseEffect abstract : public DirectXObject<ID3DXBaseEffect>

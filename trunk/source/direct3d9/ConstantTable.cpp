@@ -38,6 +38,21 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	void ConstantDescription::Initialize( const D3DXCONSTANT_DESC& desc )
+	{
+		Name = gcnew String( desc.Name );
+		RegisterSet = (SlimDX::Direct3D9::RegisterSet) desc.RegisterSet;
+		RegisterIndex = desc.RegisterIndex;
+		RegisterCount = desc.RegisterCount;
+		Class = (ParameterClass) desc.Class;
+		Type = (ParameterType) desc.Type;
+		Rows = desc.Rows;
+		Columns = desc.Columns;
+		Elements = desc.Elements;
+		StructMembers = desc.StructMembers;
+		Bytes = desc.Bytes;
+	}
+
 	ConstantTable::ConstantTable( ID3DXConstantTable* table ) : DirectXObject( table )
 	{
 	}
@@ -100,18 +115,7 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			return desc;
 
-		desc.Name = gcnew String( nativeDesc.Name );
-		desc.RegisterSet = (RegisterSet) nativeDesc.RegisterSet;
-		desc.RegisterIndex = nativeDesc.RegisterIndex;
-		desc.RegisterCount = nativeDesc.RegisterCount;
-		desc.Class = (ParameterClass) nativeDesc.Class;
-		desc.Type = (ParameterType) nativeDesc.Type;
-		desc.Rows = nativeDesc.Rows;
-		desc.Columns = nativeDesc.Columns;
-		desc.Elements = nativeDesc.Elements;
-		desc.StructMembers = nativeDesc.StructMembers;
-		desc.Bytes = nativeDesc.Bytes;
-
+		desc.Initialize( nativeDesc );
 		return desc;
 	}
 
@@ -139,17 +143,7 @@ namespace Direct3D9
 		for( unsigned int i = 0; i < count; ++i )
 		{
 			const D3DXCONSTANT_DESC* nativeDesc = nativeDescArray.get() + i;
-			descArray[i].Name = gcnew String( nativeDesc->Name );
-			descArray[i].RegisterSet = (RegisterSet) nativeDesc->RegisterSet;
-			descArray[i].RegisterIndex = nativeDesc->RegisterIndex;
-			descArray[i].RegisterCount = nativeDesc->RegisterCount;
-			descArray[i].Class = (ParameterClass) nativeDesc->Class;
-			descArray[i].Type = (ParameterType) nativeDesc->Type;
-			descArray[i].Rows = nativeDesc->Rows;
-			descArray[i].Columns = nativeDesc->Columns;
-			descArray[i].Elements = nativeDesc->Elements;
-			descArray[i].StructMembers = nativeDesc->StructMembers;
-			descArray[i].Bytes = nativeDesc->Bytes;
+			descArray[i].Initialize( *nativeDesc );
 		}
 
 		return descArray;
