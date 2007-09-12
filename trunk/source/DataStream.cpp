@@ -53,24 +53,21 @@ namespace SlimDX
 
 	DataStream::~DataStream()
 	{
-		Stream::~Stream();
+		DataStream::!DataStream();
 	}
 	
 	DataStream::!DataStream()
 	{
 		if(m_OwnsBuffer)
-				delete[] m_Buffer;
-		Stream::Close();
+		{
+			delete[] m_Buffer;
+			m_OwnsBuffer = false;
+		}
 	}
 
 	char* DataStream::RawPointer::get()
 	{
 		return (m_Buffer);
-	}
-
-	void DataStream::Close()
-	{
-		this->!DataStream();
 	}
 
 	Int64 DataStream::Seek( Int64 offset, SeekOrigin origin )

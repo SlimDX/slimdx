@@ -53,7 +53,6 @@ namespace SlimDX
 		~DataStream();
 		!DataStream();
 		
-		virtual void Close() override;
 		virtual Int64 Seek( Int64 offset, SeekOrigin origin ) override;
 
 		virtual void Write( array<Byte>^ buffer, int offset, int count ) override;
