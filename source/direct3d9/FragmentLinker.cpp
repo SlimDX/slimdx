@@ -157,7 +157,7 @@ namespace Direct3D9
 		return gcnew Device( device );
 	}
 
-	FragmentDescription FragmentLinker::GetFragmentDesc( EffectHandle^ name )
+	FragmentDescription FragmentLinker::GetFragmentDescription( EffectHandle^ name )
 	{
 		D3DXHANDLE handle = name != nullptr ? name->InternalHandle : NULL;
 		D3DXFRAGMENT_DESC desc;

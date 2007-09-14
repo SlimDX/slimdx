@@ -322,7 +322,7 @@ namespace SlimDX
 			void UnlockRectangle( int level );
 
 			void AddDirtyRect( System::Drawing::Rectangle rect );
-			SurfaceDescription GetLevelDesc( int level );
+			SurfaceDescription GetLevelDescription( int level );
 			Surface^ GetSurfaceLevel( int level );
 		};
 
@@ -363,7 +363,7 @@ namespace SlimDX
 			void UnlockRectangle( CubeMapFace face, int level );
 
 			void AddDirtyRect( CubeMapFace face, System::Drawing::Rectangle rect );
-			SurfaceDescription GetLevelDesc( int level );
+			SurfaceDescription GetLevelDescription( int level );
 			Surface^ GetCubeMapSurface( CubeMapFace face, int level );
 		};
 

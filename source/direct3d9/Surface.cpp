@@ -81,7 +81,7 @@ namespace Direct3D9
 		return gcnew Surface( surface );
 	}
 
-	SurfaceDescription Surface::GetDesc()
+	SurfaceDescription Surface::Description::get()
 	{
 		SurfaceDescription desc;
 
