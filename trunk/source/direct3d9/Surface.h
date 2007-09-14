@@ -113,7 +113,11 @@ namespace SlimDX
 			LockedRect LockRectangle( System::Drawing::Rectangle rect, LockFlags flags );
 			void UnlockRectangle();
 
-			SurfaceDescription GetDesc();
+			property SurfaceDescription Description
+			{
+				SurfaceDescription get();
+			}
+
 			IntPtr GetDC();
 			void ReleaseDC( IntPtr hdc );
 		};

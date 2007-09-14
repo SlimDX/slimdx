@@ -303,7 +303,7 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 	}
 
-	SurfaceDescription Texture::GetLevelDesc( int level )
+	SurfaceDescription Texture::GetLevelDescription( int level )
 	{
 		SurfaceDescription desc;
 		HRESULT hr = TexturePointer->GetLevelDesc( level, (D3DSURFACE_DESC*) &desc );
@@ -523,7 +523,7 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 	}
 
-	SurfaceDescription CubeTexture::GetLevelDesc( int level )
+	SurfaceDescription CubeTexture::GetLevelDescription( int level )
 	{
 		SurfaceDescription desc;
 		HRESULT hr = TexturePointer->GetLevelDesc( level, (D3DSURFACE_DESC*) &desc );

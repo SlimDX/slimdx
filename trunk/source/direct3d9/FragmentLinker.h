@@ -70,7 +70,7 @@ namespace SlimDX
 			ShaderFragments^ GetAllFragments();
 			Device^ GetDevice();
 
-			FragmentDescription GetFragmentDesc( EffectHandle^ name );
+			FragmentDescription GetFragmentDescription( EffectHandle^ name );
 			EffectHandle^ GetFragmentHandle( int index );
 			EffectHandle^ GetFragmentHandle( String^ name );
 

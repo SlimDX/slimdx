@@ -41,7 +41,7 @@ namespace Direct3D9
 		m_Pointer = (IDirect3DResource9*) volume;
 	}
 
-	VolumeDescription Volume::GetDesc()
+	VolumeDescription Volume::Description::get()
 	{
 		VolumeDescription desc;
 

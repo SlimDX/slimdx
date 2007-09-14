@@ -107,7 +107,10 @@ namespace SlimDX
 			LockedBox LockBox( Box box, LockFlags flags );
 			void UnlockBox();
 
-			VolumeDescription GetDesc();
+			property VolumeDescription Description
+			{
+				VolumeDescription get();
+			}
 		};
 	}
 }
