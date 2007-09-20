@@ -49,7 +49,7 @@ namespace MiniTri
 		{
 			while ( AppStillIdle )
 			{
-				Device.Clear( ClearFlags.Target | ClearFlags.ZBuffer | ClearFlags.Stencil, Color.Black, 1.0f, 0 );
+				Device.Clear( ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0 );
 				Device.BeginScene();
 				Device.SetStreamSource( 0, Vertices, 0, 20 );
 				Device.VertexFormat = VertexFormat.PositionRhw | VertexFormat.Diffuse;

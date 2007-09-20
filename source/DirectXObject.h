@@ -66,7 +66,8 @@ namespace SlimDX
 
 		void Destruct()
 		{
-			m_Pointer->Release();
+			if( m_Pointer != NULL )
+			    m_Pointer->Release();
 			m_Pointer = NULL;
 
 			if( EnableObjectTracking )

@@ -778,6 +778,15 @@ namespace SlimDX
 			IndexBuffer = D3DRTYPE_INDEXBUFFER,
 		};
 
+		[Flags]
+		public enum class ColorWriteEnable : Int32
+		{
+			Alpha = D3DCOLORWRITEENABLE_ALPHA,
+			Blue = D3DCOLORWRITEENABLE_BLUE,
+			Green = D3DCOLORWRITEENABLE_GREEN,
+			Red = D3DCOLORWRITEENABLE_RED
+		};
+
 		public enum class ImageFileFormat : Int32
 		{
 			Bmp = D3DXIFF_BMP,

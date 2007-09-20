@@ -30,10 +30,14 @@ namespace SlimDX
 {
 	namespace Direct3D
 	{
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class ColorValue
 		{
 		private:
-			float alpha, red, green, blue;
+			float red;
+			float green;
+			float blue;
+			float alpha;
 
 		public:
 			property float Alpha
