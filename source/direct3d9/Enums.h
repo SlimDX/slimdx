@@ -935,5 +935,14 @@ namespace SlimDX
 			Spot = D3DLIGHT_SPOT,
 			Directional = D3DLIGHT_DIRECTIONAL,
 		};
+
+		public enum class BlendOperation : Int32
+		{
+			Add = D3DBLENDOP_ADD,
+			Subtract = D3DBLENDOP_SUBTRACT,
+			ReverseSubtract = D3DBLENDOP_REVSUBTRACT,
+			Minimum = D3DBLENDOP_MIN,
+			Maximum = D3DBLENDOP_MAX,
+		};
 	}
 }
