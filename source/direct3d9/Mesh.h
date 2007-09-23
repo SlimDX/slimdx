@@ -83,16 +83,29 @@ namespace SlimDX
 			Dword = D3DXEDT_DWORD,
 		};
 
+		public value class ExtendedMaterial
+		{
+		internal:
+			static array<ExtendedMaterial>^ FromBuffer( ID3DXBuffer* buffer );
+
+		public:
+			Material MaterialD3D;
+			String^ TextureFilename;
+		};
+
 		public value class EffectDefault
 		{
 		public:
-			property String^ ParamName;
+			property String^ ParameterName;
 			property EffectDefaultType Type;
-			property array<Byte>^ Value;
+			property DataStream^ Value;
 		};
 
 		public value class EffectInstance
 		{
+		internal:
+			static array<EffectInstance>^ FromBuffer( ID3DXBuffer* buffer );
+
 		public:
 			property String^ EffectFilename;
 			property array<EffectDefault>^ Defaults;
@@ -101,10 +114,13 @@ namespace SlimDX
 		ref class Mesh;
 		ref class VertexBuffer;
 		ref class IndexBuffer;
+		ref class BufferWrapper;
+		enum class VertexFormat;
 
 		public ref class BaseMesh abstract : public DirectXObject<ID3DXBaseMesh>
 		{
 		protected:
+			BaseMesh() { }
 			BaseMesh( ID3DXBaseMesh* baseMesh ) : DirectXObject( baseMesh )
 			{ }
 
@@ -145,16 +161,29 @@ namespace SlimDX
 
 		public:
 			Mesh( ID3DXMesh* mesh );
+			Mesh( Device^ device, int numFaces, int numVertices, MeshFlags options, array<VertexElement>^ vertexDecl );
+			Mesh( Device^ device, int numFaces, int numVertices, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf );
+			virtual ~Mesh() { }
 			
-			/*static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<Int32>% adjacency,
-				[Out] array<Material>% materials, [Out] array<IntPtr>% effectInstances );*/
-			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<Material>^% materials );
+			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] BufferWrapper^% adjacency,
+				[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
+				[Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );
 			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags );
 
-			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<Material>^% materials );
+			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] BufferWrapper^% adjacency,
+				[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
+				[Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );
 			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags );
 
-			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<Material>^% materials );
+			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] BufferWrapper^% adjacency,
+				[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
+				[Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );
 			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags );
 
 			//DataStream^ LockAttributeTable( LockFlags flags );
