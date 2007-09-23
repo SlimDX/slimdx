@@ -25,24 +25,10 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		value class VertexElement;
-		enum class VertexFormat;
-		enum class Format;
-
-		public ref class D3DX sealed
+		public ref class AnimationController sealed : public DirectXObject<ID3DXAnimationController>
 		{
 		public:
-			literal int Default = D3DX_DEFAULT;
-			literal int DefaultNonPowerOf2 = D3DX_DEFAULT_NONPOW2;
-			literal int FromFile = D3DX_FROM_FILE;
-			literal int FormatFromFile = D3DFMT_FROM_FILE;
-
-			static int GetDeclarationVertexSize( array<VertexElement>^ elements, int stream );
-			static int GetFVFVertexSize( VertexFormat fvf );
-
-			static Format MakeFourCC( Byte c1, Byte c2, Byte c3, Byte c4 );
-
-			static bool DebugMute( bool mute );
+			~AnimationController() { Destruct(); }
 		};
 	}
 }

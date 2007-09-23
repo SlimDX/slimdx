@@ -50,5 +50,10 @@ namespace SlimDX
 			int fourcc = (c4 << 24) | (c3 << 16) | (c2 << 8) | (c1);
 			return (Format) fourcc;
 		}
+
+		bool D3DX::DebugMute( bool mute )
+		{
+			return D3DXDebugMute( mute ) > 0;
+		}
 	}
 }

@@ -316,6 +316,10 @@
 				Name="Direct3D 9"
 				>
 				<File
+					RelativePath="..\source\direct3d9\AnimationController.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\BaseEffect.cpp"
 					>
 				</File>
@@ -407,6 +411,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Shader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\SkinInfo.cpp"
 					>
 				</File>
 				<File
@@ -844,6 +852,10 @@
 				Name="Direct3D 9"
 				>
 				<File
+					RelativePath="..\source\direct3d9\AnimationController.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\external\atir2vb.h"
 					>
 				</File>
@@ -933,6 +945,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Shader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\SkinInfo.h"
 					>
 				</File>
 				<File
