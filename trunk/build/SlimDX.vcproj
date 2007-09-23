@@ -844,6 +844,10 @@
 				Name="Direct3D 9"
 				>
 				<File
+					RelativePath="..\source\direct3d9\external\atir2vb.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\BaseEffect.h"
 					>
 				</File>

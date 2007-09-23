@@ -202,6 +202,7 @@ namespace SlimDX
 			property DisplayMode CurrentDisplayMode { DisplayMode get(); }
             DisplayModeList^ GetDisplayModes( Format format );
             Capabilities GetCaps( DeviceType type );
+			bool SupportsR2VB( DeviceType type );
 
 			property AdapterDetails^ Details
 			{
@@ -314,6 +315,9 @@ namespace SlimDX
             static DisplayMode EnumAdapterModes( int adapter, Format format, int modeIndex );
             static IntPtr GetAdapterMonitor( int adapter );
 			static Capabilities GetDeviceCaps( int adapter, DeviceType deviceType );
+			
+			//Extensions
+			static bool SupportsR2VB( int adapter, DeviceType deviceType );
 		};
 	}
 }

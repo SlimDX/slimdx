@@ -44,5 +44,11 @@ namespace SlimDX
 		{
 			return (int) D3DXGetFVFVertexSize( (DWORD) fvf );
 		}
+
+		Format D3DX::MakeFourCC( Byte c1, Byte c2, Byte c3, Byte c4 )
+		{
+			int fourcc = (c4 << 24) | (c3 << 16) | (c2 << 8) | (c1);
+			return (Format) fourcc;
+		}
 	}
 }

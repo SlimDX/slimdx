@@ -23,6 +23,8 @@
 
 using namespace System;
 
+#include "external/atir2vb.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
@@ -150,6 +152,9 @@ namespace SlimDX
 			Index16 = D3DFMT_INDEX16,
 			Index32 = D3DFMT_INDEX32,
 
+			//extensions
+			ATI_R2VB = R2VB_FOURCC_R2VB,
+
 			Unknown = D3DFMT_UNKNOWN,
 		};
 
@@ -181,7 +186,20 @@ namespace SlimDX
 			Points = D3DUSAGE_POINTS,
 			RenderTarget = D3DUSAGE_RENDERTARGET,
 			WriteOnly = D3DUSAGE_WRITEONLY,
-			SoftwareProcessing = D3DUSAGE_SOFTWAREPROCESSING
+			SoftwareProcessing = D3DUSAGE_SOFTWAREPROCESSING,
+
+			//Query usage
+			QueryLegacyBumpMap = D3DUSAGE_QUERY_LEGACYBUMPMAP,
+			QuerySrgbRead = D3DUSAGE_QUERY_SRGBREAD,
+			QueryFilter = D3DUSAGE_QUERY_FILTER,
+			QuerySrgbWrite = D3DUSAGE_QUERY_SRGBWRITE,
+			QueryPostPixelShaderBlending = D3DUSAGE_QUERY_POSTPIXELSHADER_BLENDING,
+			QueryVertexTexture = D3DUSAGE_QUERY_VERTEXTEXTURE,
+			QueryWrapAndMip = D3DUSAGE_QUERY_WRAPANDMIP,
+			QueryDisplacementMap = D3DUSAGE_DMAP,
+
+			//Extensions
+			R2VBTarget = RenderTarget | QueryDisplacementMap,
 		};
 
 		public enum class Pool : Int32
@@ -950,6 +968,17 @@ namespace SlimDX
 			Direct3D7 = 700,
 			Direct3D8 = 800,
 			Direct3D9 = 900,
+		};
+
+		public enum class R2VBSampler : Int32
+		{
+			OverrideDMap = R2VB_VSMP_OVR_DMAP,
+			OverrideVtx0 = R2VB_VSMP_OVR_VTX0,
+			OverrideVtx1 = R2VB_VSMP_OVR_VTX1,
+			OverrideVtx2 = R2VB_VSMP_OVR_VTX2,
+			OverrideVtx3 = R2VB_VSMP_OVR_VTX3,
+
+			Count = R2VB_VSMP_NUM,
 		};
 	}
 }

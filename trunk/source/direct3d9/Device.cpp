@@ -43,6 +43,8 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	//ATI R2VB functions
+
 	//quick utility function
 	void ConvertPresentParams( PresentParameters^ presentParams, D3DPRESENT_PARAMETERS& d3dpp )
 	{
@@ -880,6 +882,24 @@ namespace Direct3D9
 	{
 		LPCSTR profile = D3DXGetPixelShaderProfile( m_Pointer );
 		return gcnew String( profile );
+	}
+
+	void Device::SetR2VBMode( bool enableR2VB )
+	{
+		SetRenderState( RenderState::PointSize, (int) r2vbGlbEnable_Set( enableR2VB ) );
+	}
+
+	void Device::BindRenderTargetToVertexStream( R2VBSampler sampler, Texture^ r2vbTarget, int stream, int stride, VertexBuffer^ dummyVb )
+	{
+		SetTexture( D3DDMAPSAMPLER, r2vbTarget );
+		SetRenderState( RenderState::PointSize, (int) r2vbVStrm2SmpMap_Set( stream, (int) sampler ) );
+		SetStreamSource( stream, dummyVb, 0, stride );
+	}
+
+	void Device::RestoreVertexStream( int stream )
+	{
+		SetRenderState( RenderState::PointSize, (int) r2vbVStrm2SmpMap_Set( stream, R2VB_VSMP_OVR_DIS ) );
+		SetTexture( D3DDMAPSAMPLER, nullptr );
 	}
 }
 }

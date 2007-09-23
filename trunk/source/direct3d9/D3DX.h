@@ -27,6 +27,7 @@ namespace SlimDX
 	{
 		value class VertexElement;
 		enum class VertexFormat;
+		enum class Format;
 
 		public ref class D3DX sealed
 		{
@@ -38,6 +39,8 @@ namespace SlimDX
 
 			static int GetDeclarationVertexSize( array<VertexElement>^ elements, int stream );
 			static int GetFVFVertexSize( VertexFormat fvf );
+
+			static Format MakeFourCC( Byte c1, Byte c2, Byte c3, Byte c4 );
 		};
 	}
 }
