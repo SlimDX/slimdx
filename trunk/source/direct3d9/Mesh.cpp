@@ -31,12 +31,67 @@
 #include "Device.h"
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
+#include "Buffer.h"
 #include "Mesh.h"
 
 namespace SlimDX
 {
 namespace Direct3D9
 {
+	//Utility function to convert from D3D color to SlimDX color. Can't put it in ColorValue because
+	//that thing is shared between D3D 9 and D3D 10.
+	ColorValue ConvertColor( const D3DCOLORVALUE& color )
+	{
+		ColorValue cv;
+		cv.Red = color.r;
+		cv.Green = color.g;
+		cv.Blue = color.b;
+		cv.Alpha = color.a;
+
+		return cv;
+	}
+
+
+	array<ExtendedMaterial>^ ExtendedMaterial::FromBuffer( ID3DXBuffer* buffer )
+	{
+		const D3DXMATERIAL* source  = (const D3DXMATERIAL*) buffer->GetBufferPointer();
+		int count = buffer->GetBufferSize() / sizeof(D3DXMATERIAL);
+
+		array<ExtendedMaterial>^ dest = gcnew array<ExtendedMaterial>( count );
+		for( int i = 0; i < count; ++i )
+		{
+			dest[i].MaterialD3D.Diffuse = ConvertColor( source[i].MatD3D.Diffuse );
+			dest[i].MaterialD3D.Ambient = ConvertColor( source[i].MatD3D.Ambient );
+			dest[i].MaterialD3D.Specular = ConvertColor( source[i].MatD3D.Specular );
+			dest[i].MaterialD3D.Emissive = ConvertColor( source[i].MatD3D.Emissive );
+			dest[i].MaterialD3D.Power = source[i].MatD3D.Power;
+			dest[i].TextureFilename = gcnew String( source[i].pTextureFilename );
+		}
+
+		return dest;
+	}
+
+	array<EffectInstance>^ EffectInstance::FromBuffer( ID3DXBuffer* buffer )
+	{
+		const D3DXEFFECTINSTANCE* source  = (const D3DXEFFECTINSTANCE*) buffer->GetBufferPointer();
+		int count = buffer->GetBufferSize() / sizeof(D3DXEFFECTINSTANCE);
+
+		array<EffectInstance>^ dest = gcnew array<EffectInstance>( count );
+		for( int i = 0; i < count; ++i )
+		{
+			dest[i].EffectFilename = gcnew String( source[i].pEffectFilename );
+			dest[i].Defaults = gcnew array<EffectDefault>( source[i].NumDefaults );
+			for( unsigned int x = 0; x < source[i].NumDefaults; ++x )
+			{
+				dest[i].Defaults[x].ParameterName = gcnew String( source[i].pDefaults[x].pParamName );
+				dest[i].Defaults[x].Type = (EffectDefaultType) source[i].pDefaults[x].Type;
+				dest[i].Defaults[x].Value = gcnew DataStream( source[i].pDefaults[x].pValue, source[i].pDefaults[x].NumBytes, true, false );
+			}
+		}
+
+		return dest;
+	}
+
 	Mesh^ BaseMesh::Clone( Device^ device, MeshFlags flags, array<VertexElement>^ elements )
 	{
 		ID3DXMesh* mesh;
@@ -203,20 +258,108 @@ namespace Direct3D9
 	{
 	}
 
-	Mesh^ Mesh::FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<Material>^% materials )
+	Mesh::Mesh( Device^ device, int numFaces, int numVertices, MeshFlags options, array<VertexElement>^ vertexDecl )
 	{
 		ID3DXMesh* mesh;
-		ID3DXBuffer* materialBuf;
+		pin_ptr<VertexElement> pinnedDecl = &vertexDecl[0];
+
+		HRESULT hr = D3DXCreateMesh( numFaces, numVertices, (DWORD) options, (D3DVERTEXELEMENT9*) pinnedDecl, device->InternalPointer, &mesh );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException();
+
+		m_Pointer = mesh;
+	}
+
+	Mesh::Mesh( Device^ device, int numFaces, int numVertices, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf )
+	{
+		ID3DXMesh* mesh;
+
+		HRESULT hr = D3DXCreateMeshFVF( numFaces, numVertices, (DWORD) options, (DWORD) fvf, device->InternalPointer, &mesh );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException();
+
+		m_Pointer = mesh;
+	}
+
+	Mesh^ Mesh::FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] BufferWrapper^% adjacency,
+		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances )
+	{
+		ID3DXMesh* mesh;
+		ID3DXBuffer* adjacencyBuffer;
+		ID3DXBuffer* materialBuffer;
+		ID3DXBuffer* instanceBuffer;
+		DWORD materialCount;
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+		
+		HRESULT hr = D3DXLoadMeshFromXInMemory( pinnedMemory, memory->Length, (DWORD) flags, device->InternalPointer,
+			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+		{
+			adjacency = nullptr;
+			materials = nullptr;
+			effectInstances = nullptr;
+			return nullptr;
+		}
+
+		adjacency = gcnew BufferWrapper( adjacencyBuffer );
+		materials = ExtendedMaterial::FromBuffer( materialBuffer );
+		effectInstances = EffectInstance::FromBuffer( instanceBuffer );
+
+		materialBuffer->Release();
+		instanceBuffer->Release();
+
+		return gcnew Mesh( mesh );
+	}
+
+	Mesh^ Mesh::FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
+		[Out] array<EffectInstance>^% effectInstances )
+	{
+		ID3DXMesh* mesh;
+		ID3DXBuffer* materialBuffer;
+		ID3DXBuffer* instanceBuffer;
+		DWORD materialCount;
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+		
+		HRESULT hr = D3DXLoadMeshFromXInMemory( pinnedMemory, memory->Length, (DWORD) flags, device->InternalPointer,
+			NULL, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+		{
+			materials = nullptr;
+			effectInstances = nullptr;
+			return nullptr;
+		}
+
+		materials = ExtendedMaterial::FromBuffer( materialBuffer );
+		effectInstances = EffectInstance::FromBuffer( instanceBuffer );
+
+		materialBuffer->Release();
+		instanceBuffer->Release();
+
+		return gcnew Mesh( mesh );
+	}
+
+	Mesh^ Mesh::FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials )
+	{
+		ID3DXMesh* mesh;
+		ID3DXBuffer* materialBuffer;
 		DWORD materialCount;
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 		
 		HRESULT hr = D3DXLoadMeshFromXInMemory( pinnedMemory, memory->Length, (DWORD) flags,
-			device->InternalPointer, NULL, &materialBuf, NULL, &materialCount, &mesh );
+			device->InternalPointer, NULL, &materialBuffer, NULL, &materialCount, &mesh );
 		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+		{
+			materials = nullptr;
+			return nullptr;
+		}
 
-		materials = gcnew array<Material>( materialCount );
-		pin_ptr<Material> pinnedMaterials = &materials[0];
-		memcpy( pinnedMaterials, materialBuf->GetBufferPointer(), materialBuf->GetBufferSize() );
+		materials = ExtendedMaterial::FromBuffer( materialBuffer );
+		materialBuffer->Release();
 
 		return gcnew Mesh( mesh );
 	}
@@ -233,7 +376,21 @@ namespace Direct3D9
 		return gcnew Mesh( mesh );
 	}
 
-	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<Material>^% materials )
+	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] BufferWrapper^% adjacency,
+		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		return Mesh::FromMemory( device, data, flags, adjacency, materials, effectInstances );
+	}
+
+	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
+		[Out] array<EffectInstance>^% effectInstances )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		return Mesh::FromMemory( device, data, flags, materials, effectInstances );
+	}
+
+	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials )
 	{
 		array<Byte>^ data = Utils::ReadStream( stream, 0 );
 		return Mesh::FromMemory( device, data, flags, materials );
@@ -245,20 +402,78 @@ namespace Direct3D9
 		return Mesh::FromMemory( device, data, flags );
 	}
 
-	Mesh^ Mesh::FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<Material>^% materials )
+	Mesh^ Mesh::FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] BufferWrapper^% adjacency,
+		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances )
 	{
 		ID3DXMesh* mesh;
-		ID3DXBuffer* materialBuf;
+		ID3DXBuffer* adjacencyBuffer;
+		ID3DXBuffer* materialBuffer;
+		ID3DXBuffer* instanceBuffer;
+		DWORD materialCount;
+		pin_ptr<const wchar_t> pinnedFileName = PtrToStringChars( fileName );
+		
+		HRESULT hr = D3DXLoadMeshFromX( pinnedFileName, (DWORD) flags, device->InternalPointer,
+			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+		{
+			adjacency = nullptr;
+			materials = nullptr;
+			effectInstances = nullptr;
+			return nullptr;
+		}
+
+		adjacency = gcnew BufferWrapper( adjacencyBuffer );
+		materials = ExtendedMaterial::FromBuffer( materialBuffer );
+		effectInstances = EffectInstance::FromBuffer( instanceBuffer );
+
+		materialBuffer->Release();
+		instanceBuffer->Release();
+
+		return gcnew Mesh( mesh );
+	}
+
+	Mesh^ Mesh::FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
+		[Out] array<EffectInstance>^% effectInstances )
+	{
+		ID3DXMesh* mesh;
+		ID3DXBuffer* materialBuffer;
+		ID3DXBuffer* instanceBuffer;
+		DWORD materialCount;
+		pin_ptr<const wchar_t> pinnedFileName = PtrToStringChars( fileName );
+		
+		HRESULT hr = D3DXLoadMeshFromX( pinnedFileName, (DWORD) flags, device->InternalPointer,
+			NULL, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+		{
+			materials = nullptr;
+			effectInstances = nullptr;
+			return nullptr;
+		}
+
+		materials = ExtendedMaterial::FromBuffer( materialBuffer );
+		effectInstances = EffectInstance::FromBuffer( instanceBuffer );
+
+		materialBuffer->Release();
+		instanceBuffer->Release();
+
+		return gcnew Mesh( mesh );
+	}
+
+	Mesh^ Mesh::FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials )
+	{
+		ID3DXMesh* mesh;
+		ID3DXBuffer* materialBuffer;
 		DWORD materialCount;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 		
 		HRESULT hr = D3DXLoadMeshFromXW( (LPCWSTR) pinnedName, (DWORD) flags, device->InternalPointer,
-			NULL, &materialBuf, NULL, &materialCount, &mesh );
+			NULL, &materialBuffer, NULL, &materialCount, &mesh );
 		GraphicsException::CheckHResult( hr );
 
-		materials = gcnew array<Material>( materialCount );
-		pin_ptr<Material> pinnedMaterials = &materials[0];
-		memcpy( pinnedMaterials, materialBuf->GetBufferPointer(), materialBuf->GetBufferSize() );
+		materials = ExtendedMaterial::FromBuffer( materialBuffer );
+		materialBuffer->Release();
 
 		return gcnew Mesh( mesh );
 	}
