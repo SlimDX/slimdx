@@ -944,5 +944,12 @@ namespace SlimDX
 			Minimum = D3DBLENDOP_MIN,
 			Maximum = D3DBLENDOP_MAX,
 		};
+
+		public enum class DriverLevel : Int32
+		{
+			Direct3D7 = 700,
+			Direct3D8 = 800,
+			Direct3D9 = 900,
+		};
 	}
 }

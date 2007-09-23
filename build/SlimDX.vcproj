@@ -350,6 +350,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d9\D3DX.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\Device.cpp"
 					>
 				</File>

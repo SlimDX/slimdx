@@ -214,6 +214,9 @@ namespace SlimDX
 
 			bool IsQuerySupported( QueryType type );
 			void EvictManagedResources();
+			DriverLevel GetDriverLevel();
+			String^ GetVertexShaderProfile();
+			String^ GetPixelShaderProfile();
 
 			int ValidateDevice();
 			void TestCooperativeLevel();

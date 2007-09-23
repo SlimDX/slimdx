@@ -19,25 +19,30 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+
+#include <d3d9.h>
+#include <d3dx9.h>
+
+#include "Enums.h"
+#include "Vertex.h"
+#include "D3DX.h"
 
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		value class VertexElement;
-		enum class VertexFormat;
-
-		public ref class D3DX sealed
+		int D3DX::GetDeclarationVertexSize( array<VertexElement>^ elements, int stream )
 		{
-		public:
-			literal int Default = D3DX_DEFAULT;
-			literal int DefaultNonPowerOf2 = D3DX_DEFAULT_NONPOW2;
-			literal int FromFile = D3DX_FROM_FILE;
-			literal int FormatFromFile = D3DFMT_FROM_FILE;
+			if( elements == nullptr )
+				throw gcnew ArgumentNullException( "elements" );
 
-			static int GetDeclarationVertexSize( array<VertexElement>^ elements, int stream );
-			static int GetFVFVertexSize( VertexFormat fvf );
-		};
+			pin_ptr<VertexElement> pinnedElements = &elements[0];
+			return (int) D3DXGetDeclVertexSize( (const D3DVERTEXELEMENT9*) pinnedElements, stream );
+		}
+
+		int D3DX::GetFVFVertexSize( VertexFormat fvf )
+		{
+			return (int) D3DXGetFVFVertexSize( (DWORD) fvf );
+		}
 	}
 }

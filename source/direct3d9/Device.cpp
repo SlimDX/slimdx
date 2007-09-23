@@ -864,5 +864,22 @@ namespace Direct3D9
 
 		return gcnew PixelShader( ps );
 	}
+
+	DriverLevel Device::GetDriverLevel()
+	{
+		return (DriverLevel) D3DXGetDriverLevel( m_Pointer );
+	}
+
+	String^ Device::GetVertexShaderProfile()
+	{
+		LPCSTR profile = D3DXGetVertexShaderProfile( m_Pointer );
+		return gcnew String( profile );
+	}
+
+	String^ Device::GetPixelShaderProfile()
+	{
+		LPCSTR profile = D3DXGetPixelShaderProfile( m_Pointer );
+		return gcnew String( profile );
+	}
 }
 }
