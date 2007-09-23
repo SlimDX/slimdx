@@ -96,6 +96,11 @@ namespace Direct3D9
         return Direct3D::GetDeviceCaps( m_Adapter, type );
     }
 
+	bool AdapterInformation::SupportsR2VB( DeviceType type )
+	{
+		return Direct3D::SupportsR2VB( m_Adapter, type );
+	}
+
     DisplayModeList^ AdapterInformation::GetDisplayModes( Format format )
     {
         return gcnew DisplayModeList( m_Adapter, format );
@@ -312,6 +317,11 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 
 		return Capabilities( caps );
+	}
+
+	bool Direct3D::SupportsR2VB( int adapter, DeviceType deviceType )
+	{
+		return CheckDeviceFormat( adapter, deviceType, Format::X8R8G8B8, Usage::None, ResourceType::Surface, Format::ATI_R2VB );
 	}
 
 	Capabilities::Capabilities( const D3DCAPS9& caps )

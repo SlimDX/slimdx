@@ -120,6 +120,7 @@ namespace SlimDX
 		ref class IndexBuffer;
 		ref class VertexBuffer;
 		ref class BaseTexture;
+		ref class Texture;
 		ref class Surface;
 		ref class PixelShader;
 		ref class VertexShader;
@@ -214,6 +215,7 @@ namespace SlimDX
 
 			bool IsQuerySupported( QueryType type );
 			void EvictManagedResources();
+
 			DriverLevel GetDriverLevel();
 			String^ GetVertexShaderProfile();
 			String^ GetPixelShaderProfile();
@@ -329,6 +331,11 @@ namespace SlimDX
 			void UpdateTexture( BaseTexture^ sourceTexture, BaseTexture^ destTexture );
 			void ColorFill( Surface^ destSurface, System::Drawing::Rectangle destRect, int color );
 			void ColorFill( Surface^ destSurface, System::Drawing::Rectangle destRect, System::Drawing::Color color );
+
+			//ATI R2VB functionality, based on work by Oliver 'acid2' Charles
+			void SetR2VBMode( bool enableR2VB );
+			void BindRenderTargetToVertexStream( R2VBSampler sampler, Texture^ r2vbTarget, int stream, int stride, VertexBuffer^ dummyVb );
+			void RestoreVertexStream( int stream );
 		};
 	}
 }
