@@ -54,6 +54,7 @@ namespace SlimDX
 
 		public:
 			Effect( ID3DXEffect* effect );
+			virtual ~Effect() { }
 
 			//FromMemory
 			static Effect^ FromMemory( Device^ device, array<Byte>^ memory, array<Macro>^ preprocessorDefines, Include^ includeFile,

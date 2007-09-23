@@ -65,7 +65,7 @@
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				TargetMachine="1"
-				KeyFile="slimdxKey.snk"
+				KeyFile=""
 				KeyContainer=""
 			/>
 			<Tool
@@ -142,7 +142,7 @@
 				DelayLoadDLLs="d3d9.dll;d3dx9_35.dll;d3dx10_35.dll;d3d10.dll;dxgi.dll;dinput8.dll;dsound.dll"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
-				KeyFile="slimdxKey.snk"
+				KeyFile=""
 			/>
 			<Tool
 				Name="VCALinkTool"
