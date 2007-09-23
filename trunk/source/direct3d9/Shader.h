@@ -77,11 +77,28 @@ namespace SlimDX
 			String^ Definition;
 		};
 
+		public value class ShaderSemantic
+		{
+		public:
+			DeclarationUsage Usage;
+			int UsageIndex;
+		};
+
 		public ref class ShaderBytecode sealed : public BufferWrapper
 		{
 		public:
 			ShaderBytecode( ID3DXBuffer* buffer ) : BufferWrapper( buffer )
 			{ }
+
+			ConstantTable^ GetConstantTable();
+			array<ShaderSemantic>^ GetInputSemantics();
+			array<ShaderSemantic>^ GetOutputSemantics();
+			array<String^>^ GetSamplers();
+
+			property int Version
+			{
+				int get();
+			}
 		};
 
 		public ref class Shader sealed
@@ -118,6 +135,10 @@ namespace SlimDX
 			static ShaderBytecode^ CompileFromFile( String^ fileName, array<Macro>^ defines,
 				Include^ includeFile, String^ functionName, String^ profile, ShaderFlags flags,
 				[Out] String^% errors );
+
+			static int MajorVersion( int version );
+			static int MinorVersion( int version );
+			static Version^ ParseVersion( int version );
 		};
 	}
 }

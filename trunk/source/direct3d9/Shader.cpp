@@ -22,6 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <vcclr.h>
+#include <memory>
 
 #include "Device.h"
 #include "Buffer.h"
@@ -103,6 +104,91 @@ namespace SlimDX
 					handles[i].Free();
 				}
 			}
+		}
+
+		ConstantTable^ ShaderBytecode::GetConstantTable()
+		{
+			ID3DXConstantTable* constantTable;
+			HRESULT hr = D3DXGetShaderConstantTable( (const DWORD*) m_Pointer->GetBufferPointer(), &constantTable );
+			GraphicsException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				return nullptr;
+
+			return gcnew ConstantTable( constantTable );
+		}
+
+		array<ShaderSemantic>^ ShaderBytecode::GetInputSemantics()
+		{
+			UINT count = 0;
+			const DWORD* function = (const DWORD*) m_Pointer->GetBufferPointer();
+
+			HRESULT hr = D3DXGetShaderInputSemantics( function, NULL, &count );
+			GraphicsException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				return nullptr;
+			
+			array<ShaderSemantic>^ inputs = gcnew array<ShaderSemantic>( count );
+			pin_ptr<ShaderSemantic> pinnedInputs = &inputs[0];
+
+			hr = D3DXGetShaderInputSemantics( function, (D3DXSEMANTIC*) pinnedInputs, &count );
+			GraphicsException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				return nullptr;
+			
+			return inputs;
+		}
+
+		array<ShaderSemantic>^ ShaderBytecode::GetOutputSemantics()
+		{
+			UINT count = 0;
+			const DWORD* function = (const DWORD*) m_Pointer->GetBufferPointer();
+
+			HRESULT hr = D3DXGetShaderOutputSemantics( function, NULL, &count );
+			GraphicsException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				return nullptr;
+			
+			array<ShaderSemantic>^ outputs = gcnew array<ShaderSemantic>( count );
+			pin_ptr<ShaderSemantic> pinnedOutputs = &outputs[0];
+
+			hr = D3DXGetShaderOutputSemantics( function, (D3DXSEMANTIC*) pinnedOutputs, &count );
+			GraphicsException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				return nullptr;
+			
+			return outputs;
+		}
+
+		array<String^>^ ShaderBytecode::GetSamplers()
+		{
+			UINT count = 0;
+			const DWORD* function = (const DWORD*) m_Pointer->GetBufferPointer();
+
+			HRESULT hr = D3DXGetShaderSamplers( function, NULL, &count );
+			GraphicsException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				return nullptr;
+			
+			std::auto_ptr<LPCSTR> samplers = new LPCSTR[count];
+
+			hr = D3DXGetShaderSamplers( function, samplers.get(), &count );
+			GraphicsException::CheckHResult( hr );
+			if( FAILED( hr ) )
+				return nullptr;
+			
+			array<String^>^ outputSamplers = gcnew array<String^>( count );
+			for( UINT i = 0; i < count; ++i )
+			{
+				outputSamplers[i] = gcnew String( samplers.get()[i] );
+			}
+
+			return outputSamplers;
+		}
+
+		int ShaderBytecode::Version::get()
+		{
+			const DWORD* function = (const DWORD*) m_Pointer->GetBufferPointer();
+			return (int) D3DXGetShaderVersion( function );
 		}
 
 		//D3DXAssembleShader
@@ -326,6 +412,21 @@ namespace SlimDX
 			}
 
 			return gcnew ShaderBytecode( shaderBuffer );
+		}
+
+		int Shader::MajorVersion( int version )
+		{
+			return D3DSHADER_VERSION_MAJOR( version );
+		}
+
+		int Shader::MinorVersion( int version )
+		{
+			return D3DSHADER_VERSION_MINOR( version );
+		}
+
+		Version^ Shader::ParseVersion( int version )
+		{
+			return gcnew Version( MajorVersion( version ), MinorVersion( version ) );
 		}
 	}
 }
