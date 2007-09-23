@@ -892,14 +892,27 @@ namespace Direct3D9
 	void Device::BindRenderTargetToVertexStream( R2VBSampler sampler, Texture^ r2vbTarget, int stream, int stride, VertexBuffer^ dummyVb )
 	{
 		SetTexture( D3DDMAPSAMPLER, r2vbTarget );
+		if( GraphicsException::LastError != S_OK )
+			return;
+
 		SetRenderState( RenderState::PointSize, (int) r2vbVStrm2SmpMap_Set( stream, (int) sampler ) );
+		if( GraphicsException::LastError != S_OK )
+			return;
+
 		SetStreamSource( stream, dummyVb, 0, stride );
+		if( GraphicsException::LastError != S_OK )
+			return;
 	}
 
 	void Device::RestoreVertexStream( int stream )
 	{
 		SetRenderState( RenderState::PointSize, (int) r2vbVStrm2SmpMap_Set( stream, R2VB_VSMP_OVR_DIS ) );
+		if( GraphicsException::LastError != S_OK )
+			return;
+
 		SetTexture( D3DDMAPSAMPLER, nullptr );
+		if( GraphicsException::LastError != S_OK )
+			return;
 	}
 }
 }
