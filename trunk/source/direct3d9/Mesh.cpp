@@ -142,6 +142,24 @@ namespace Direct3D9
 		return gcnew VertexBuffer( vb );
 	}
 
+	array<AttributeRange>^ BaseMesh::GetAttributeTable()
+	{
+		DWORD count = 0;
+		HRESULT hr = m_Pointer->GetAttributeTable( NULL, &count );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		array<AttributeRange>^ attribTable = gcnew array<AttributeRange>( count );
+		pin_ptr<AttributeRange> pinnedTable = &attribTable[0];
+		hr = m_Pointer->GetAttributeTable( (D3DXATTRIBUTERANGE*) pinnedTable, &count );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return attribTable;
+	}
+
 	DataStream^ BaseMesh::LockIndexBuffer( LockFlags flags )
 	{
 		void* data;

@@ -111,6 +111,16 @@ namespace SlimDX
 			property array<EffectDefault>^ Defaults;
 		};
 
+		public value class AttributeRange
+		{
+		public:
+			property int AttribId;
+			property int FaceStart;
+			property int FaceCount;
+			property int VertexStart;
+			property int VertexCount;
+		};
+
 		ref class Mesh;
 		ref class VertexBuffer;
 		ref class IndexBuffer;
@@ -131,6 +141,7 @@ namespace SlimDX
 			Device^ GetDevice();
 			IndexBuffer^ GetIndexBuffer();
 			VertexBuffer^ GetVertexBuffer();
+			array<AttributeRange>^ GetAttributeTable();
 
 			DataStream^ LockIndexBuffer( LockFlags flags );
 			void UnlockIndexBuffer();
