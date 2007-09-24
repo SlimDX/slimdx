@@ -99,6 +99,20 @@ namespace Direct3D9
 		HRESULT hr = m_Pointer->CloneMesh( (DWORD) flags, (const D3DVERTEXELEMENT9*) pinned_elements,
 			device->InternalPointer, &mesh );
 		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Mesh( mesh );
+	}
+
+	Mesh^ BaseMesh::Clone( Device^ device, MeshFlags flags, SlimDX::Direct3D9::VertexFormat fvf )
+	{
+		ID3DXMesh* mesh;
+
+		HRESULT hr = m_Pointer->CloneMeshFVF( (DWORD) flags, (DWORD) fvf, device->InternalPointer, &mesh );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew Mesh( mesh );
 	}
@@ -140,6 +154,22 @@ namespace Direct3D9
 			return nullptr;
 
 		return gcnew VertexBuffer( vb );
+	}
+
+	array<VertexElement>^ BaseMesh::GetDeclaration()
+	{
+		D3DVERTEXELEMENT9 elementBuffer[MAX_FVF_DECL_SIZE];
+		HRESULT hr = m_Pointer->GetDeclaration( elementBuffer );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		int count = D3DXGetDeclLength( elementBuffer );
+		array<VertexElement>^ elements = gcnew array<VertexElement>( count );
+		pin_ptr<VertexElement> pinnedElements = &elements[0];
+		memcpy( pinnedElements, elementBuffer, count * sizeof(D3DVERTEXELEMENT9) );
+
+		return elements;
 	}
 
 	array<AttributeRange>^ BaseMesh::GetAttributeTable()
@@ -244,6 +274,14 @@ namespace Direct3D9
 			return nullptr;
 
 		return adjacency;
+	}
+
+	void BaseMesh::UpdateSemantics( array<VertexElement>^ elements )
+	{
+		pin_ptr<VertexElement> pinnedElements = &elements[0];
+
+		HRESULT hr = m_Pointer->UpdateSemantics( (D3DVERTEXELEMENT9*) pinnedElements );
+		GraphicsException::CheckHResult( hr );
 	}
 
 	int BaseMesh::FaceCount::get()

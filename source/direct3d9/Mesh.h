@@ -135,12 +135,14 @@ namespace SlimDX
 			{ }
 
 		public:
-			Mesh^ Clone( Device^ device, MeshFlags flags, array<VertexElement>^ elements  );
+			Mesh^ Clone( Device^ device, MeshFlags flags, array<VertexElement>^ elements );
+			Mesh^ Clone( Device^ device, MeshFlags flags, VertexFormat fvf );
 			virtual ~BaseMesh() { Destruct(); }
 
 			Device^ GetDevice();
 			IndexBuffer^ GetIndexBuffer();
 			VertexBuffer^ GetVertexBuffer();
+			array<VertexElement>^ GetDeclaration();
 			array<AttributeRange>^ GetAttributeTable();
 
 			DataStream^ LockIndexBuffer( LockFlags flags );
@@ -152,6 +154,7 @@ namespace SlimDX
 			array<int>^ GenerateAdjacency( float epsilon );
 			array<int>^ ConvertAdjacencyToPointReps( array<int>^ adjacency );
 			array<int>^ ConvertPointRepsToAdjacency( array<int>^ adjacency );
+			void UpdateSemantics( array<VertexElement>^ elements );
 
 			void DrawSubset( int subset );
 
