@@ -39,32 +39,32 @@ namespace SlimDX
 			/// <summary>
 			/// The rotational X axis.
 			/// </summary>
-			static const int XAxisRotation = DIJOFS_RX;
+			literal int XAxisRotation = DIJOFS_RX;
 
 			/// <summary>
 			/// The rotational X axis.
 			/// </summary>
-			static const int YAxisRotation = DIJOFS_RY;
+			literal int YAxisRotation = DIJOFS_RY;
 
 			/// <summary>
 			/// The rotational X axis.
 			/// </summary>
-			static const int ZAxisRotation = DIJOFS_RZ;
+			literal int ZAxisRotation = DIJOFS_RZ;
 
 			/// <summary>
 			/// The rotational X axis.
 			/// </summary>
-			static const int XAxis = DIJOFS_X;
+			literal int XAxis = DIJOFS_X;
 
 			/// <summary>
 			/// The rotational X axis.
 			/// </summary>
-			static const int YAxis = DIJOFS_Y;
+			literal int YAxis = DIJOFS_Y;
 
 			/// <summary>
 			/// The rotational X axis.
 			/// </summary>
-			static const int ZAxis = DIJOFS_Z;
+			literal int ZAxis = DIJOFS_Z;
 
 			/// <summary>
 			/// Provides scan codes for the specified button.
@@ -94,137 +94,137 @@ namespace SlimDX
 			/// <summary>
 			/// Refers to any axis.
 			/// </summary>
-			static const int Axis1 = DIAXIS_ANY_1;
+			literal int Axis1 = DIAXIS_ANY_1;
 
 			/// <summary>
 			/// Refers to any axis.
 			/// </summary>
-			static const int Axis2 = DIAXIS_ANY_2;
+			literal int Axis2 = DIAXIS_ANY_2;
 
 			/// <summary>
 			/// Refers to any axis.
 			/// </summary>
-			static const int Axis3 = DIAXIS_ANY_3;
+			literal int Axis3 = DIAXIS_ANY_3;
 
 			/// <summary>
 			/// Refers to any accelerator.
 			/// </summary>
-			static const int Accelerator1 = DIAXIS_ANY_A_1;
+			literal int Accelerator1 = DIAXIS_ANY_A_1;
 
 			/// <summary>
 			/// Refers to any accelerator.
 			/// </summary>
-			static const int Accelerator2 = DIAXIS_ANY_A_2;
+			literal int Accelerator2 = DIAXIS_ANY_A_2;
 
 			/// <summary>
 			/// Refers to any brake.
 			/// </summary>
-			static const int Brake1 = DIAXIS_ANY_B_1;
+			literal int Brake1 = DIAXIS_ANY_B_1;
 
 			/// <summary>
 			/// Refers to any brake.
 			/// </summary>
-			static const int Brake2 = DIAXIS_ANY_B_2;
+			literal int Brake2 = DIAXIS_ANY_B_2;
 
 			/// <summary>
 			/// Refers to any clutch.
 			/// </summary>
-			static const int Clutch1 = DIAXIS_ANY_C_1;
+			literal int Clutch1 = DIAXIS_ANY_C_1;
 
 			/// <summary>
 			/// Refers to any clutch.
 			/// </summary>
-			static const int Clutch2 = DIAXIS_ANY_C_2;
+			literal int Clutch2 = DIAXIS_ANY_C_2;
 
 			/// <summary>
 			/// Refers to any r-axis.
 			/// </summary>
-			static const int RAxis1 = DIAXIS_ANY_R_1;
+			literal int RAxis1 = DIAXIS_ANY_R_1;
 
 			/// <summary>
 			/// Refers to any r-axis.
 			/// </summary>
-			static const int RAxis2 = DIAXIS_ANY_R_2;
+			literal int RAxis2 = DIAXIS_ANY_R_2;
 
 			/// <summary>
 			/// Refers to any s-axis.
 			/// </summary>
-			static const int SAxis1 = DIAXIS_ANY_S_1;
+			literal int SAxis1 = DIAXIS_ANY_S_1;
 
 			/// <summary>
 			/// Refers to any s-axis.
 			/// </summary>
-			static const int SAxis2 = DIAXIS_ANY_S_2;
+			literal int SAxis2 = DIAXIS_ANY_S_2;
 
 			/// <summary>
 			/// Refers to any u-axis.
 			/// </summary>
-			static const int UAxis1 = DIAXIS_ANY_U_1;
+			literal int UAxis1 = DIAXIS_ANY_U_1;
 
 			/// <summary>
 			/// Refers to any u-axis.
 			/// </summary>
-			static const int UAxis2 = DIAXIS_ANY_U_2;
+			literal int UAxis2 = DIAXIS_ANY_U_2;
 
 			/// <summary>
 			/// Refers to any v-axis.
 			/// </summary>
-			static const int VAxis1 = DIAXIS_ANY_V_1;
+			literal int VAxis1 = DIAXIS_ANY_V_1;
 
 			/// <summary>
 			/// Refers to any v-axis.
 			/// </summary>
-			static const int VAxis2 = DIAXIS_ANY_V_2;
+			literal int VAxis2 = DIAXIS_ANY_V_2;
 
 			/// <summary>
 			/// Refers to any x-axis.
 			/// </summary>
-			static const int XAxis1 = DIAXIS_ANY_X_1;
+			literal int XAxis1 = DIAXIS_ANY_X_1;
 
 			/// <summary>
 			/// Refers to any x-axis.
 			/// </summary>
-			static const int XAxis2 = DIAXIS_ANY_X_2;
+			literal int XAxis2 = DIAXIS_ANY_X_2;
 
 			/// <summary>
 			/// Refers to any y-axis.
 			/// </summary>
-			static const int YAxis1 = DIAXIS_ANY_Y_1;
+			literal int YAxis1 = DIAXIS_ANY_Y_1;
 
 			/// <summary>
 			/// Refers to any y-axis.
 			/// </summary>
-			static const int YAxis2 = DIAXIS_ANY_Y_2;
+			literal int YAxis2 = DIAXIS_ANY_Y_2;
 
 			/// <summary>
 			/// Refers to any z-axis.
 			/// </summary>
-			static const int ZAxis1 = DIAXIS_ANY_Z_1;
+			literal int ZAxis1 = DIAXIS_ANY_Z_1;
 
 			/// <summary>
 			/// Refers to any z-axis.
 			/// </summary>
-			static const int ZAxis2 = DIAXIS_ANY_Z_2;
+			literal int ZAxis2 = DIAXIS_ANY_Z_2;
 
 			/// <summary>
 			/// Refers to any point-of-view controller.
 			/// </summary>
-			static const int PointOfView1 = DIPOV_ANY_1;
+			literal int PointOfView1 = DIPOV_ANY_1;
 
 			/// <summary>
 			/// Refers to any point-of-view controller.
 			/// </summary>
-			static const int PointOfView2 = DIPOV_ANY_2;
+			literal int PointOfView2 = DIPOV_ANY_2;
 
 			/// <summary>
 			/// Refers to any point-of-view controller.
 			/// </summary>
-			static const int PointOfView3 = DIPOV_ANY_3;
+			literal int PointOfView3 = DIPOV_ANY_3;
 
 			/// <summary>
 			/// Refers to any point-of-view controller.
 			/// </summary>
-			static const int PointOfView4 = DIPOV_ANY_4;
+			literal int PointOfView4 = DIPOV_ANY_4;
 
 			/// <summary>
 			/// Refers to any button.

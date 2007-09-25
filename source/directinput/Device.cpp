@@ -41,6 +41,21 @@ namespace DirectInput
 	}
 
 	generic<typename DataFormat>
+	Device<DataFormat>::Device( IntPtr device )
+	{
+		if( device == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "device" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) device.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_IDirectInputDevice8W, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew InputException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = (IDirectInputDevice8W*) pointer;
+	}
+
+	generic<typename DataFormat>
 	Device<DataFormat>::Device( Guid subsystem )
 	{
 		IDirectInputDevice8W* device;
@@ -365,6 +380,12 @@ namespace DirectInput
 		InputException::CheckHResult( hr );
 
 		return gcnew DeviceInstance( deviceInstance );
+	}
+
+	generic<typename DataFormat>
+	IntPtr Device<DataFormat>::NativePointer::get()
+	{
+		return IntPtr(m_Pointer);
 	}
 }
 }

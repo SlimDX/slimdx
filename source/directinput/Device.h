@@ -50,18 +50,21 @@ namespace SlimDX
 		private:
 			DeviceProperties^ properties;
 
-		public:
-			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::Device"/> class.
-			/// </summary>
-			/// <param name="device">A pointer to an unmanaged DirectInput device.</param>
+		internal:
 			Device( IDirectInputDevice8W* device );
 
+		public:
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::Device"/> class.
 			/// </summary>
 			/// <param name="subsystem">The subsystem identifier.</param>
 			Device( Guid subsystem );
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::Device"/> class.
+			/// </summary>
+			/// <param name="device">A pointer to a previously created DirectInput device.</param>
+			Device( IntPtr device );
 
 			/// <summary>
 			/// Disposes of managed and unmanaged resources contained by this class.
@@ -136,6 +139,11 @@ namespace SlimDX
 			/// Obtains information about the device's identity.
 			/// </summary>
 			property DeviceInstance^ DeviceInformation { DeviceInstance^ get(); }
+
+			/// <summary>
+			/// Gets a pointer to the native DirectInput interface.
+			/// </summary>
+			property IntPtr NativePointer { IntPtr get(); }
 
 			/// <summary>
 			/// Occurs when the device's data buffer overflows.

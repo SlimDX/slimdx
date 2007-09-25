@@ -67,18 +67,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="Close():System.Void">
-            <Messages>
-             <Message TypeName="DisposeMethodsShouldCallBaseClassDispose" Category="Microsoft.Usage" CheckId="CA2215" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>DataStream.Close():Void</Item>
-              </Issue>
-              <Issue>
-               <Item>DataStream.Close():Void</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="Dispose(System.Boolean):System.Void">
             <Messages>
              <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Created="2007-09-07 21:39:13Z">
@@ -548,6 +536,24 @@
            </Message>
           </Messages>
           <Members>
+           <Member Name="Maximize(SlimDX.Vector2,SlimDX.Vector2):SlimDX.Vector2">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2007-09-25 23:01:15Z" FixCategory="Breaking">
+              <Issue>
+               <Item>Vector2.Maximize(Vector2, Vector2):Vector2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Minimize(SlimDX.Vector2,SlimDX.Vector2):SlimDX.Vector2">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2007-09-25 23:01:15Z" FixCategory="Breaking">
+              <Issue>
+               <Item>Vector2.Minimize(Vector2, Vector2):Vector2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="op_Addition(SlimDX.Vector2,SlimDX.Vector2):SlimDX.Vector2">
             <Messages>
              <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2007-09-07 21:39:13Z">
@@ -2450,6 +2456,18 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="AttributeRange">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-09-25 23:01:15Z">
+            <Issue Name="Equals">
+             <Item>SlimDX.Direct3D9.AttributeRange</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>SlimDX.Direct3D9.AttributeRange</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="BadArraySizeException">
           <Members>
            <Member Name=".ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
@@ -2645,6 +2663,18 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="Clone(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.VertexFormat):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>BaseMesh.Clone(Device, MeshFlags, VertexFormat):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="GetDevice():SlimDX.Direct3D9.Device">
             <Messages>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2007-09-07 21:39:13Z">
@@ -2679,6 +2709,15 @@
            <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-09-07 21:39:13Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>Blend</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="BlendOperation">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-09-25 23:01:15Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
+             <Item>BlendOperation</Item>
             </Issue>
            </Message>
           </Messages>
@@ -2783,62 +2822,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="MaxPixelShader30InstructionSlots">
-            <Accessors>
-             <Accessor Name="set_MaxPixelShader30InstructionSlots(System.Int32):System.Void">
-              <Messages>
-               <Message Id="value" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2007-09-07 21:39:13Z" FixCategory="Breaking">
-                <Issue>
-                 <Item>value</Item>
-                 <Item>Capabilities.set_MaxPixelShader30InstructionSlots(Int32):Void</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="MaxPShaderInstructionsExecuted">
-            <Accessors>
-             <Accessor Name="set_MaxPShaderInstructionsExecuted(System.Int32):System.Void">
-              <Messages>
-               <Message Id="value" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2007-09-07 21:39:13Z" FixCategory="Breaking">
-                <Issue>
-                 <Item>value</Item>
-                 <Item>Capabilities.set_MaxPShaderInstructionsExecuted(Int32):Void</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="MaxVertexShader30InstructionSlots">
-            <Accessors>
-             <Accessor Name="set_MaxVertexShader30InstructionSlots(System.Int32):System.Void">
-              <Messages>
-               <Message Id="value" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2007-09-07 21:39:13Z" FixCategory="Breaking">
-                <Issue>
-                 <Item>value</Item>
-                 <Item>Capabilities.set_MaxVertexShader30InstructionSlots(Int32):Void</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="MaxVShaderInstructionsExecuted">
-            <Accessors>
-             <Accessor Name="set_MaxVShaderInstructionsExecuted(System.Int32):System.Void">
-              <Messages>
-               <Message Id="value" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2007-09-07 21:39:13Z" FixCategory="Breaking">
-                <Issue>
-                 <Item>value</Item>
-                 <Item>Capabilities.set_MaxVShaderInstructionsExecuted(Int32):Void</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
            <Member Name="NumSimultaneousRTs">
             <Messages>
              <Message Id="Num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2007-09-07 21:39:13Z">
@@ -2902,6 +2885,15 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="ColorWriteEnable">
+          <Messages>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-09-25 23:01:15Z">
+            <Issue>
+             <Item>ColorWriteEnable</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="Compare">
           <Messages>
            <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-09-07 21:39:13Z" FixCategory="NonBreaking">
@@ -2939,22 +2931,20 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="ConstantDescription">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-09-25 23:01:15Z">
+            <Issue Name="Equals">
+             <Item>SlimDX.Direct3D9.ConstantDescription</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>SlimDX.Direct3D9.ConstantDescription</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="ConstantTable">
           <Members>
-           <Member Name="Dispose(System.Boolean):System.Void">
-            <Messages>
-             <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Dispose</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2007-09-07 21:39:13Z">
-              <Issue Name="DisposeBoolSignature">
-               <Item>ConstantTable.Dispose(Boolean):Void</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="GetBuffer():SlimDX.DataStream">
             <Messages>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2007-09-07 21:39:13Z">
@@ -2985,6 +2975,18 @@
             </Messages>
            </Member>
           </Members>
+         </Type>
+         <Type Name="ConstantTableDescription">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-09-25 23:01:15Z">
+            <Issue Name="Equals">
+             <Item>SlimDX.Direct3D9.ConstantTableDescription</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>SlimDX.Direct3D9.ConstantTableDescription</Item>
+            </Issue>
+           </Message>
+          </Messages>
          </Type>
          <Type Name="CreateFlags">
           <Messages>
@@ -3145,6 +3147,35 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="D3DX">
+          <Messages>
+           <Message TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053" Created="2007-09-25 23:01:15Z">
+            <Issue>
+             <Item>D3DX</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="GetFVFVertexSize(SlimDX.Direct3D9.VertexFormat):System.Int32">
+            <Messages>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2007-09-25 23:01:15Z">
+              <Issue Name="Member">
+               <Item>D3DX.GetFVFVertexSize(VertexFormat):Int32</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="MakeFourCC(System.Byte,System.Byte,System.Byte,System.Byte):SlimDX.Direct3D9.Format">
+            <Messages>
+             <Message TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>MakeFourCC</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="D3DXFileErrorCode">
           <Messages>
            <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-09-07 21:39:13Z" FixCategory="NonBreaking">
@@ -3249,6 +3280,24 @@
          </Type>
          <Type Name="Device">
           <Members>
+           <Member Name="BindRenderTargetToVertexStream(SlimDX.Direct3D9.R2VBSampler,SlimDX.Direct3D9.Texture,System.Int32,System.Int32,SlimDX.Direct3D9.VertexBuffer):System.Void">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>r2vbTarget</Item>
+               <Item>Device.BindRenderTargetToVertexStream(R2VBSampler, Texture, Int32, Int32, VertexBuffer):Void</Item>
+               <Item>SlimDX.Direct3D9.Texture</Item>
+               <Item>SlimDX.Direct3D9.BaseTexture</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="ShortAcronymsShouldBeUppercase" Category="Microsoft.Naming" CheckId="CA1706" Created="2007-09-25 23:01:15Z">
+              <Issue Name="Parameter">
+               <Item>Vb</Item>
+               <Item>dummyVb</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="DrawIndexedPrimitives(SlimDX.Direct3D9.PrimitiveType,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32):System.Void">
             <Messages>
              <Message Id="3#num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2007-09-07 21:39:13Z">
@@ -3344,6 +3393,15 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="GetDriverLevel():SlimDX.Direct3D9.DriverLevel">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2007-09-25 23:01:15Z">
+              <Issue Certainty="50">
+               <Item>GetDriverLevel</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="GetIndices():SlimDX.Direct3D9.IndexBuffer">
             <Messages>
              <Message Id="Indices" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2007-09-07 21:39:13Z">
@@ -3365,6 +3423,15 @@
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2007-09-07 21:39:13Z">
               <Issue Certainty="50">
                <Item>GetPixelShader</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetPixelShaderProfile():System.String">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2007-09-25 23:01:15Z">
+              <Issue Certainty="50">
+               <Item>GetPixelShaderProfile</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3426,6 +3493,15 @@
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2007-09-07 21:39:13Z">
               <Issue Certainty="50">
                <Item>GetVertexShader</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetVertexShaderProfile():System.String">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2007-09-25 23:01:15Z">
+              <Issue Certainty="50">
+               <Item>GetVertexShaderProfile</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3929,6 +4005,15 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="DriverLevel">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-09-25 23:01:15Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
+             <Item>DriverLevel</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="DuplicateNamedFragmentException">
           <Members>
            <Member Name=".ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
@@ -4090,15 +4175,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="Dispose(System.Boolean):System.Void">
-            <Messages>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2007-09-07 21:39:13Z">
-              <Issue Name="DisposeBoolSignature">
-               <Item>EffectCompiler.Dispose(Boolean):Void</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="FromFile(System.String,SlimDX.Direct3D9.Macro[],SlimDX.Direct3D9.Include,SlimDX.Direct3D9.ShaderFlags,System.String&amp;):SlimDX.Direct3D9.EffectCompiler">
             <Messages>
              <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-07 21:39:13Z">
@@ -4203,19 +4279,44 @@
             </Issue>
            </Message>
           </Messages>
-         </Type>
-         <Type Name="EffectPool">
           <Members>
-           <Member Name="Dispose(System.Boolean):System.Void">
+           <Member Name="Defaults">
             <Messages>
-             <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2007-09-07 21:39:13Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2007-09-25 23:01:15Z">
               <Issue>
-               <Item>Dispose</Item>
+               <Item>EffectInstance.Defaults:EffectDefault[]</Item>
               </Issue>
              </Message>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2007-09-07 21:39:13Z">
-              <Issue Name="DisposeBoolSignature">
-               <Item>EffectPool.Dispose(Boolean):Void</Item>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ExtendedMaterial">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-09-25 23:01:15Z">
+            <Issue Name="Equals">
+             <Item>SlimDX.Direct3D9.ExtendedMaterial</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>SlimDX.Direct3D9.ExtendedMaterial</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="MaterialD3D">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>MaterialD3D</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="TextureFilename">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>TextureFilename</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4262,16 +4363,11 @@
          </Type>
          <Type Name="Font">
           <Members>
-           <Member Name="Dispose(System.Boolean):System.Void">
+           <Member Name=".ctor(ID3DXFont*)">
             <Messages>
-             <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2007-09-07 21:39:13Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-09-25 23:01:15Z">
               <Issue>
-               <Item>Dispose</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2007-09-07 21:39:13Z">
-              <Issue Name="DisposeBoolSignature">
-               <Item>Font.Dispose(Boolean):Void</Item>
+               <Item>Font.Font(ID3DXFont*)</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4316,6 +4412,15 @@
          </Type>
          <Type Name="Format">
           <Members>
+           <Member Name="ATI_R2VB">
+            <Messages>
+             <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2007-09-25 23:01:15Z">
+              <Issue Name="Member">
+               <Item>ATI_R2VB</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="CxV8U8">
             <Messages>
              <Message Id="Member" TypeName="ShortAcronymsShouldBeUppercase" Category="Microsoft.Naming" CheckId="CA1706" Created="2007-09-07 21:39:13Z">
@@ -4342,20 +4447,6 @@
          </Type>
          <Type Name="FragmentLinker">
           <Members>
-           <Member Name="Dispose(System.Boolean):System.Void">
-            <Messages>
-             <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Dispose</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2007-09-07 21:39:13Z">
-              <Issue Name="DisposeBoolSignature">
-               <Item>FragmentLinker.Dispose(Boolean):Void</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="Gather(System.Byte[],SlimDX.Direct3D9.Macro[],SlimDX.Direct3D9.Include,SlimDX.Direct3D9.ShaderFlags,System.String&amp;):SlimDX.Direct3D9.ShaderFragments">
             <Messages>
              <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-07 21:39:13Z">
@@ -4648,16 +4739,11 @@
          </Type>
          <Type Name="Line">
           <Members>
-           <Member Name="Dispose(System.Boolean):System.Void">
+           <Member Name=".ctor(ID3DXLine*)">
             <Messages>
-             <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2007-09-07 21:39:13Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-09-25 23:01:15Z">
               <Issue>
-               <Item>Dispose</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2007-09-07 21:39:13Z">
-              <Issue Name="DisposeBoolSignature">
-               <Item>Line.Dispose(Boolean):Void</Item>
+               <Item>Line.Line(ID3DXLine*)</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4950,6 +5036,42 @@
          </Type>
          <Type Name="Mesh">
           <Members>
+           <Member Name=".ctor(SlimDX.Direct3D9.Device,System.Int32,System.Int32,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.VertexElement[])">
+            <Messages>
+             <Message Id="1#num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2007-09-25 23:01:15Z">
+              <Issue Name="Parameter">
+               <Item>Mesh.Mesh(Device, Int32, Int32, MeshFlags, VertexElement[])</Item>
+               <Item>num</Item>
+               <Item>numFaces</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2007-09-25 23:01:15Z">
+              <Issue Name="Parameter">
+               <Item>Mesh.Mesh(Device, Int32, Int32, MeshFlags, VertexElement[])</Item>
+               <Item>num</Item>
+               <Item>numVertices</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name=".ctor(SlimDX.Direct3D9.Device,System.Int32,System.Int32,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.VertexFormat)">
+            <Messages>
+             <Message Id="1#num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2007-09-25 23:01:15Z">
+              <Issue Name="Parameter">
+               <Item>Mesh.Mesh(Device, Int32, Int32, MeshFlags, VertexFormat)</Item>
+               <Item>num</Item>
+               <Item>numFaces</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2007-09-25 23:01:15Z">
+              <Issue Name="Parameter">
+               <Item>Mesh.Mesh(Device, Int32, Int32, MeshFlags, VertexFormat)</Item>
+               <Item>num</Item>
+               <Item>numVertices</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="FromFile(SlimDX.Direct3D9.Device,System.String,SlimDX.Direct3D9.MeshFlags):SlimDX.Direct3D9.Mesh">
             <Messages>
              <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2007-09-07 21:39:13Z">
@@ -4962,17 +5084,66 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="FromFile(SlimDX.Direct3D9.Device,System.String,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.Material[]&amp;):SlimDX.Direct3D9.Mesh">
+           <Member Name="FromFile(SlimDX.Direct3D9.Device,System.String,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.BufferWrapper&amp;,SlimDX.Direct3D9.ExtendedMaterial[]&amp;,SlimDX.Direct3D9.EffectInstance[]&amp;):SlimDX.Direct3D9.Mesh">
             <Messages>
-             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-07 21:39:13Z">
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>adjacency</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
               <Issue>
                <Item>materials</Item>
               </Issue>
              </Message>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2007-09-07 21:39:13Z">
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>effectInstances</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2007-09-25 23:01:15Z">
               <Issue>
                <Item>device</Item>
-               <Item>Mesh.FromFile(Device, String, MeshFlags, Material[]&amp;):Mesh</Item>
+               <Item>Mesh.FromFile(Device, String, MeshFlags, BufferWrapper&amp;, ExtendedMaterial[]&amp;, EffectInstance[]&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromFile(SlimDX.Direct3D9.Device,System.String,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.ExtendedMaterial[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>materials</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.FromFile(Device, String, MeshFlags, ExtendedMaterial[]&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromFile(SlimDX.Direct3D9.Device,System.String,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.ExtendedMaterial[]&amp;,SlimDX.Direct3D9.EffectInstance[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>materials</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>effectInstances</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.FromFile(Device, String, MeshFlags, ExtendedMaterial[]&amp;, EffectInstance[]&amp;):Mesh</Item>
                <Item>SlimDX.Direct3D9.Device</Item>
                <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
               </Issue>
@@ -4991,28 +5162,110 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="FromMemory(SlimDX.Direct3D9.Device,System.Byte[],SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.Material[]&amp;):SlimDX.Direct3D9.Mesh">
+           <Member Name="FromMemory(SlimDX.Direct3D9.Device,System.Byte[],SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.BufferWrapper&amp;,SlimDX.Direct3D9.ExtendedMaterial[]&amp;,SlimDX.Direct3D9.EffectInstance[]&amp;):SlimDX.Direct3D9.Mesh">
             <Messages>
-             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-07 21:39:13Z">
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>adjacency</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
               <Issue>
                <Item>materials</Item>
               </Issue>
              </Message>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2007-09-07 21:39:13Z">
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>effectInstances</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2007-09-25 23:01:15Z">
               <Issue>
                <Item>device</Item>
-               <Item>Mesh.FromMemory(Device, Byte[], MeshFlags, Material[]&amp;):Mesh</Item>
+               <Item>Mesh.FromMemory(Device, Byte[], MeshFlags, BufferWrapper&amp;, ExtendedMaterial[]&amp;, EffectInstance[]&amp;):Mesh</Item>
                <Item>SlimDX.Direct3D9.Device</Item>
                <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="FromStream(SlimDX.Direct3D9.Device,System.IO.Stream,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.Material[]&amp;):SlimDX.Direct3D9.Mesh">
+           <Member Name="FromMemory(SlimDX.Direct3D9.Device,System.Byte[],SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.ExtendedMaterial[]&amp;):SlimDX.Direct3D9.Mesh">
             <Messages>
-             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-07 21:39:13Z">
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
               <Issue>
                <Item>materials</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.FromMemory(Device, Byte[], MeshFlags, ExtendedMaterial[]&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromMemory(SlimDX.Direct3D9.Device,System.Byte[],SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.ExtendedMaterial[]&amp;,SlimDX.Direct3D9.EffectInstance[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>materials</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>effectInstances</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.FromMemory(Device, Byte[], MeshFlags, ExtendedMaterial[]&amp;, EffectInstance[]&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromStream(SlimDX.Direct3D9.Device,System.IO.Stream,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.BufferWrapper&amp;,SlimDX.Direct3D9.ExtendedMaterial[]&amp;,SlimDX.Direct3D9.EffectInstance[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>adjacency</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>materials</Item>
+              </Issue>
+             </Message>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>effectInstances</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromStream(SlimDX.Direct3D9.Device,System.IO.Stream,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.ExtendedMaterial[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>materials</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromStream(SlimDX.Direct3D9.Device,System.IO.Stream,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.ExtendedMaterial[]&amp;,SlimDX.Direct3D9.EffectInstance[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>materials</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>effectInstances</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5150,6 +5403,16 @@
             </Messages>
            </Member>
           </Members>
+         </Type>
+         <Type Name="MeshOptimizeFlags">
+          <Messages>
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-09-25 23:01:15Z">
+            <Issue>
+             <Item>SlimDX.Direct3D9.MeshOptimizeFlags</Item>
+             <Item>Flags</Item>
+            </Issue>
+           </Message>
+          </Messages>
          </Type>
          <Type Name="MoreDataException">
           <Members>
@@ -5381,20 +5644,6 @@
          </Type>
          <Type Name="PixelShader">
           <Members>
-           <Member Name="Dispose(System.Boolean):System.Void">
-            <Messages>
-             <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Dispose</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2007-09-07 21:39:13Z">
-              <Issue Name="DisposeBoolSignature">
-               <Item>PixelShader.Dispose(Boolean):Void</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="FromString(SlimDX.Direct3D9.Device,System.String,System.String,System.String,SlimDX.Direct3D9.ShaderFlags,System.String&amp;):SlimDX.Direct3D9.PixelShader">
             <Messages>
              <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-07 21:39:13Z">
@@ -5426,12 +5675,44 @@
            </Message>
           </Messages>
           <Members>
-           <Member Name="NumTemps">
+           <Member Name="caps">
             <Messages>
-             <Message Id="Num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2007-09-07 21:39:13Z">
+             <Message Id="Member" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2007-09-25 23:01:15Z">
               <Issue Name="Member">
-               <Item>Num</Item>
-               <Item>PixelShader20Caps.NumTemps:Int32</Item>
+               <Item>caps</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="dynamicFlowControlDepth">
+            <Messages>
+             <Message Id="Member" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2007-09-25 23:01:15Z">
+              <Issue Name="Member">
+               <Item>dynamicFlowControlDepth</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="numTemps">
+            <Messages>
+             <Message Id="Member" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2007-09-25 23:01:15Z">
+              <Issue Name="Member">
+               <Item>numTemps</Item>
+              </Issue>
+             </Message>
+             <Message Id="num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2007-09-25 23:01:15Z">
+              <Issue Name="Member">
+               <Item>num</Item>
+               <Item>PixelShader20Caps.numTemps:Int32</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="staticFlowControlDepth">
+            <Messages>
+             <Message Id="Member" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2007-09-25 23:01:15Z">
+              <Issue Name="Member">
+               <Item>staticFlowControlDepth</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5580,16 +5861,11 @@
          </Type>
          <Type Name="Query">
           <Members>
-           <Member Name="Dispose(System.Boolean):System.Void">
+           <Member Name=".ctor(IDirect3DQuery9*)">
             <Messages>
-             <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2007-09-07 21:39:13Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-09-25 23:01:15Z">
               <Issue>
-               <Item>Dispose</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2007-09-07 21:39:13Z">
-              <Issue Name="DisposeBoolSignature">
-               <Item>Query.Dispose(Boolean):Void</Item>
+               <Item>Query.Query(IDirect3DQuery9*)</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5722,16 +5998,11 @@
          </Type>
          <Type Name="RenderToSurface">
           <Members>
-           <Member Name="Dispose(System.Boolean):System.Void">
+           <Member Name=".ctor(ID3DXRenderToSurface*)">
             <Messages>
-             <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2007-09-07 21:39:13Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-09-25 23:01:15Z">
               <Issue>
-               <Item>Dispose</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2007-09-07 21:39:13Z">
-              <Issue Name="DisposeBoolSignature">
-               <Item>RenderToSurface.Dispose(Boolean):Void</Item>
+               <Item>RenderToSurface.RenderToSurface(ID3DXRenderToSurface*)</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5944,6 +6215,19 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="ShaderBytecode">
+          <Members>
+           <Member Name="GetConstantTable():SlimDX.Direct3D9.ConstantTable">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2007-09-25 23:01:15Z">
+              <Issue Certainty="50">
+               <Item>GetConstantTable</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="ShaderFlags">
           <Messages>
            <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-09-07 21:39:13Z" FixCategory="Breaking">
@@ -5958,6 +6242,38 @@
             </Issue>
            </Message>
           </Messages>
+         </Type>
+         <Type Name="ShaderSemantic">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-09-25 23:01:15Z">
+            <Issue Name="Equals">
+             <Item>SlimDX.Direct3D9.ShaderSemantic</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>SlimDX.Direct3D9.ShaderSemantic</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="Usage">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>Usage</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="UsageIndex">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2007-09-25 23:01:15Z">
+              <Issue>
+               <Item>UsageIndex</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
          <Type Name="SkinningNotSupportedException">
           <Members>
@@ -5975,20 +6291,6 @@
          </Type>
          <Type Name="Sprite">
           <Members>
-           <Member Name="Dispose(System.Boolean):System.Void">
-            <Messages>
-             <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Dispose</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2007-09-07 21:39:13Z">
-              <Issue Name="DisposeBoolSignature">
-               <Item>Sprite.Dispose(Boolean):Void</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="GetDevice():SlimDX.Direct3D9.Device">
             <Messages>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2007-09-07 21:39:13Z">
@@ -6024,20 +6326,6 @@
          </Type>
          <Type Name="StateBlock">
           <Members>
-           <Member Name="Dispose(System.Boolean):System.Void">
-            <Messages>
-             <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Dispose</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2007-09-07 21:39:13Z">
-              <Issue Name="DisposeBoolSignature">
-               <Item>StateBlock.Dispose(Boolean):Void</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="GetDevice():SlimDX.Direct3D9.Device">
             <Messages>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2007-09-07 21:39:13Z">
@@ -6151,15 +6439,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="GetDesc():SlimDX.Direct3D9.SurfaceDescription">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2007-09-07 21:39:13Z">
-              <Issue Certainty="50">
-               <Item>GetDesc</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="SurfaceDescription">
@@ -6198,20 +6477,6 @@
          </Type>
          <Type Name="SwapChain">
           <Members>
-           <Member Name="Dispose(System.Boolean):System.Void">
-            <Messages>
-             <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Dispose</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2007-09-07 21:39:13Z">
-              <Issue Name="DisposeBoolSignature">
-               <Item>SwapChain.Dispose(Boolean):Void</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="GetDevice():SlimDX.Direct3D9.Device">
             <Messages>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2007-09-07 21:39:13Z">
@@ -6504,6 +6769,18 @@
             </Issue>
            </Message>
           </Messages>
+          <Members>
+           <Member Name="NumVertices">
+            <Messages>
+             <Message Id="Num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2007-09-25 23:01:15Z">
+              <Issue Name="Member">
+               <Item>Num</Item>
+               <Item>TriPatchInfo.NumVertices:Int32</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
          <Type Name="UnsupportedAlphaArgumentException">
           <Members>
@@ -6609,24 +6886,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="VertexDeclaration">
-          <Members>
-           <Member Name="Dispose(System.Boolean):System.Void">
-            <Messages>
-             <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Dispose</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2007-09-07 21:39:13Z">
-              <Issue Name="DisposeBoolSignature">
-               <Item>VertexDeclaration.Dispose(Boolean):Void</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="VertexElement">
           <Messages>
            <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-09-07 21:39:13Z">
@@ -6671,20 +6930,6 @@
          </Type>
          <Type Name="VertexShader">
           <Members>
-           <Member Name="Dispose(System.Boolean):System.Void">
-            <Messages>
-             <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Dispose</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2007-09-07 21:39:13Z">
-              <Issue Name="DisposeBoolSignature">
-               <Item>VertexShader.Dispose(Boolean):Void</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="FromString(SlimDX.Direct3D9.Device,System.String,System.String,System.String,SlimDX.Direct3D9.ShaderFlags,System.String&amp;):SlimDX.Direct3D9.VertexShader">
             <Messages>
              <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-09-07 21:39:13Z">
@@ -6756,19 +7001,6 @@
               <Issue Name="Member">
                <Item>Num</Item>
                <Item>VertexStats.NumRenderedTriangles:Int32</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Volume">
-          <Members>
-           <Member Name="GetDesc():SlimDX.Direct3D9.VolumeDescription">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2007-09-07 21:39:13Z">
-              <Issue Certainty="50">
-               <Item>GetDesc</Item>
               </Issue>
              </Message>
             </Messages>
@@ -7003,254 +7235,11 @@
          </Type>
          <Type Name="AnyControl">
           <Members>
-           <Member Name="Accelerator1">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Accelerator1</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Accelerator2">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Accelerator2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Axis1">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Axis1</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Axis2">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Axis2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Axis3">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Axis3</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Brake1">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Brake1</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Brake2">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Brake2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="Button(System.Int32):System.Int32">
             <Messages>
              <Message Id="0#" TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719" Created="2007-09-07 21:39:13Z">
               <Issue>
                <Item>button</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Clutch1">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Clutch1</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Clutch2">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Clutch2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="PointOfView1">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>PointOfView1</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="PointOfView2">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>PointOfView2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="PointOfView3">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>PointOfView3</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="PointOfView4">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>PointOfView4</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="RAxis1">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>RAxis1</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="RAxis2">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>RAxis2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="SAxis1">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>SAxis1</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="SAxis2">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>SAxis2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="UAxis1">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>UAxis1</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="UAxis2">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>UAxis2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="VAxis1">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>VAxis1</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="VAxis2">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>VAxis2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="XAxis1">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>XAxis1</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="XAxis2">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>XAxis2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="YAxis1">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>YAxis1</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="YAxis2">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>YAxis2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="ZAxis1">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>ZAxis1</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="ZAxis2">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>ZAxis2</Item>
               </Issue>
              </Message>
             </Messages>
@@ -7624,245 +7613,38 @@
          </Type>
          <Type Name="DeviceSubType">
           <Members>
-           <Member Name="CombinedPedals">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>CombinedPedals</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="CommunicationSelections">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>CommunicationSelections</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="ControlDeviceUnknown">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>ControlDeviceUnknown</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="DrivingHandheld">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>DrivingHandheld</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="DualPedals">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>DualPedals</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="FirstPersonShooter">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>FirstPersonShooter</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="FirstPersonUnknown">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>FirstPersonUnknown</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="FlightStick">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>FlightStick</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="FlightYoke">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>FlightYoke</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Hardwired">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Hardwired</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Japanese106Keyboard">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Japanese106Keyboard</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="JapaneseAXKeyboard">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>JapaneseAXKeyboard</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="JapaneseJ3100Keyboard">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>JapaneseJ3100Keyboard</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="JapaneseNEC106Keyboard">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>JapaneseNEC106Keyboard</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="JapaneseNECKeyboard">
             <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>JapaneseNECKeyboard</Item>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2007-09-25 23:01:15Z">
+              <Issue Name="Member">
+               <Item>DeviceSubType.JapaneseNECKeyboard</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
            <Member Name="JapaneseNECLaptopKeyboard">
             <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>JapaneseNECLaptopKeyboard</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Limited">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Limited</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Nokia1050Keyboard">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Nokia1050Keyboard</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Nokia9140Keyboard">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Nokia9140Keyboard</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="OlivettiKeyboard">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>OlivettiKeyboard</Item>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2007-09-25 23:01:15Z">
+              <Issue Name="Member">
+               <Item>DeviceSubType.JapaneseNECLaptopKeyboard</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
            <Member Name="PCATKeyboard">
             <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>PCATKeyboard</Item>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2007-09-25 23:01:15Z">
+              <Issue Name="Member">
+               <Item>DeviceSubType.PCATKeyboard</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
            <Member Name="PCXTKeyboard">
             <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>PCXTKeyboard</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="RemoteControlledFlight">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>RemoteControlledFlight</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="SixDegreesOfFreedom">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>SixDegreesOfFreedom</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="StandardGamePad">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>StandardGamePad</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="StandardKeyboard">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>StandardKeyboard</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="ThreePedals">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>ThreePedals</Item>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2007-09-25 23:01:15Z">
+              <Issue Name="Member">
+               <Item>DeviceSubType.PCXTKeyboard</Item>
               </Issue>
              </Message>
             </Messages>
@@ -8107,6 +7889,13 @@
           </Members>
          </Type>
          <Type Name="JoystickObjects">
+          <Messages>
+           <Message TypeName="StaticHolderTypesShouldBeSealed" Category="Microsoft.Design" CheckId="CA1052" Created="2007-09-25 23:01:15Z">
+            <Issue>
+             <Item>JoystickObjects</Item>
+            </Issue>
+           </Message>
+          </Messages>
           <Members>
            <Member Name="Button(System.Int32):System.Int32">
             <Messages>
@@ -8144,60 +7933,6 @@
              <Message Id="0#" TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719" Created="2007-09-07 21:39:13Z">
               <Issue>
                <Item>slider</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="XAxis">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>XAxis</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="XAxisRotation">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>XAxisRotation</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="YAxis">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>YAxis</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="YAxisRotation">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>YAxisRotation</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="ZAxis">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>ZAxis</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="ZAxisRotation">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>ZAxisRotation</Item>
               </Issue>
              </Message>
             </Messages>
@@ -8817,20 +8552,6 @@
            </Message>
           </Messages>
           <Members>
-           <Member Name="Dispose(System.Boolean):System.Void">
-            <Messages>
-             <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>Dispose</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2007-09-07 21:39:13Z">
-              <Issue Name="DisposeBoolSignature">
-               <Item>DirectSound.Dispose(Boolean):Void</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="GetCapabilities():SlimDX.DirectSound.Capabilities">
             <Messages>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2007-09-07 21:39:13Z">
@@ -9927,35 +9648,6 @@
             </Issue>
            </Message>
           </Messages>
-          <Members>
-           <Member Name="GamepadLeftThumbDeadZone">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>GamepadLeftThumbDeadZone</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="GamepadRightThumbDeadZone">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>GamepadRightThumbDeadZone</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="GamepadTriggerThreshold">
-            <Messages>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2007-09-07 21:39:13Z">
-              <Issue>
-               <Item>GamepadTriggerThreshold</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
          </Type>
          <Type Name="GamepadButtonFlags">
           <Messages>
@@ -10125,12 +9817,6 @@
    <Rule TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011">
     <Resolution Name="Default">Consider changing the type of parameter '{0}' in {1} from {2} to its base type {3}. This method appears to only require base class members in its implementation. Suppress this violation if there is a compelling reason to require the more derived type in the method signature.</Resolution>
    </Rule>
-   <Rule TypeName="DisposeMethodsShouldCallBaseClassDispose" Category="Microsoft.Usage" CheckId="CA2215">
-    <Resolution Name="Default">Change {0} so that it calls its base class Dispose method for all code paths. Place the call in a finally block to ensure that resources are cleaned up when an exception is raised.</Resolution>
-   </Rule>
-   <Rule TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047">
-    <Resolution Name="Default">Make '{0}' private, public, or internal (Friend in VB, public private in C++).</Resolution>
-   </Rule>
    <Rule TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051">
     <Resolution Name="Default">Make '{0}' private or internal (Friend in VB, public private in C++) and provide a public or protected property to access it.</Resolution>
    </Rule>
@@ -10171,6 +9857,7 @@
     <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter '{1}' in any call to it.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
+    <Resolution Name="Member">Correct the casing of member name '{0}'.</Resolution>
     <Resolution Name="Parameter">Correct the casing of parameter name '{0}'.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
@@ -10186,9 +9873,6 @@
    </Rule>
    <Rule TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711">
     <Resolution Name="Default">Rename '{0}' so that it does not end in '{1}'.</Resolution>
-   </Rule>
-   <Rule TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063">
-    <Resolution Name="DisposeBoolSignature">Ensure that {0} is declared as protected, virtual, and unsealed.</Resolution>
    </Rule>
    <Rule TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032">
     <Resolution Name="Accessibility">Change the accessibility of {0} to {1}.</Resolution>
@@ -10207,9 +9891,6 @@
    </Rule>
    <Rule TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223">
     <Resolution Name="Default">'{0}' should differ from other members by more than its return type.</Resolution>
-   </Rule>
-   <Rule TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211">
-    <Resolution Name="Default">Consider making '{0}' non-public or a constant.</Resolution>
    </Rule>
    <Rule TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717">
     <Resolution Name="Default">If the name '{0}' is plural, change it to its singular form.</Resolution>
@@ -10246,6 +9927,9 @@
    <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
     <Resolution Name="Default">{0} declares a local, '{1}', of type {2}, which is never used or is only assigned to. Use this local or remove it.</Resolution>
    </Rule>
+   <Rule TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025">
+    <Resolution Name="Default">Consider implementing a version of '{0}' that accepts a parameter array argument.</Resolution>
+   </Rule>
    <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
     <Resolution Name="Default">Parameter '{0}' of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
    </Rule>
@@ -10256,6 +9940,9 @@
    </Rule>
    <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
     <Resolution Name="Default">{0} makes a call to {1} that does not explicitly provide an IFormatProvider. This should be replaced with a call to {2}.</Resolution>
+   </Rule>
+   <Rule TypeName="StaticHolderTypesShouldBeSealed" Category="Microsoft.Design" CheckId="CA1052">
+    <Resolution Name="Default">Mark '{0}' as sealed.</Resolution>
    </Rule>
    <Rule TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053">
     <Resolution Name="Default">Remove the public constructors from '{0}'.</Resolution>
