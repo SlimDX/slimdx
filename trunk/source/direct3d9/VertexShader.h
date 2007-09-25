@@ -27,13 +27,16 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{	
-		public ref class VertexShader sealed : public DirectXObject<IDirect3DVertexShader9>
+		public ref class VertexShader : public DirectXObject<IDirect3DVertexShader9>
 		{
 		private:
 			ConstantTable^ m_ConstantTable;
 
-		public:
+		internal:
 			VertexShader( IDirect3DVertexShader9* vertexShader );
+
+		public:
+			VertexShader( IntPtr vertexShader );
 			VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable );
 			
 			~VertexShader()

@@ -27,10 +27,13 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public ref class Line sealed : DirectXObject<ID3DXLine>
+		public ref class Line : DirectXObject<ID3DXLine>
 		{
-		public:
+		internal:
 			Line( ID3DXLine* line );
+
+		public:
+			Line( IntPtr line );
 			Line( Device^ device );
 			~Line() { Destruct(); }
 

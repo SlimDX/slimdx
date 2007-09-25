@@ -36,6 +36,20 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "buffer" );
 	}
 
+	BufferWrapper::BufferWrapper( IntPtr buffer )
+	{
+		if( buffer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "buffer" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) buffer.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXBuffer, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = (ID3DXBuffer*) pointer;
+	}
+
 	BufferWrapper::BufferWrapper( int size )
 	{
 		ID3DXBuffer* buffer;

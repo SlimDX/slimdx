@@ -48,7 +48,7 @@ namespace SlimDX
             }
 		};
 
-		public ref class SwapChain sealed : public DirectXObject<IDirect3DSwapChain9>
+		public ref class SwapChain : public DirectXObject<IDirect3DSwapChain9>
 		{
 		public:
 			SwapChain( IDirect3DSwapChain9* swapChain );

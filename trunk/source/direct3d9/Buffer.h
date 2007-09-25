@@ -32,8 +32,10 @@ namespace SlimDX
 		internal:
 			static String^ ConvertToString( ID3DXBuffer* buffer );
 
-		public:
 			BufferWrapper( ID3DXBuffer* buffer );
+
+		public:
+			BufferWrapper( IntPtr buffer );
 			BufferWrapper( int size );
 			virtual ~BufferWrapper() { Destruct(); }
 

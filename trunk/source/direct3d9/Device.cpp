@@ -90,6 +90,22 @@ namespace Direct3D9
 	{
 		if( device == NULL )
 			throw gcnew ArgumentNullException( "device" );
+		
+		device->AddRef();
+	}
+
+	Device::Device( IntPtr device )
+	{
+		if( device == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "device" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) device.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_IDirect3DDevice9, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = (IDirect3DDevice9*) pointer;
 	}
 
 	Device::Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams )

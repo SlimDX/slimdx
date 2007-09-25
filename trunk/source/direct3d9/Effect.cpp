@@ -46,6 +46,20 @@ namespace SlimDX
 				throw gcnew ArgumentNullException( "effect" );
 		}
 
+		Effect::Effect( IntPtr effect )
+		{
+			if( effect == IntPtr::Zero )
+				throw gcnew ArgumentNullException( "effect" );
+
+			void* pointer;
+			IUnknown* unknown = (IUnknown*) effect.ToPointer();
+			HRESULT hr = unknown->QueryInterface( IID_ID3DXEffect, &pointer );
+			if( FAILED( hr ) )
+				throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+
+			m_Pointer = (ID3DXEffect*) pointer;
+		}
+
 		Effect^ Effect::FromMemory( Device^ device, array<Byte>^ memory, array<Macro>^ preprocessorDefines,
 			Include ^includeFile, String^ skipConstants, ShaderFlags flags, EffectPool^ pool,
 			[Out] String^ %compilationErrors )

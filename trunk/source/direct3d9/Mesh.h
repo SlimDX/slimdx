@@ -83,6 +83,18 @@ namespace SlimDX
 			Dword = D3DXEDT_DWORD,
 		};
 
+		[Flags]
+		public enum class MeshOptimizeFlags
+		{
+			Compact = D3DXMESHOPT_COMPACT,
+			AttributeSort = D3DXMESHOPT_ATTRSORT,
+			VertexCache = D3DXMESHOPT_VERTEXCACHE,
+			StripReorder = D3DXMESHOPT_STRIPREORDER,
+			IgnoreVertices = D3DXMESHOPT_IGNOREVERTS,
+			DoNotSplit = D3DXMESHOPT_DONOTSPLIT,
+			DeviceIndependent = D3DXMESHOPT_DEVICEINDEPENDENT,
+		};
+
 		public value class ExtendedMaterial
 		{
 		internal:
@@ -200,8 +212,55 @@ namespace SlimDX
 			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );
 			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags );
 
-			//DataStream^ LockAttributeTable( LockFlags flags );
-			//void UnlockAttributeTable();
+			/*static Mesh^ CreateBox( Device^ device, float width, float height, float depth, [Out] BufferWrapper^% adjacency );
+			static Mesh^ CreateBox( Device^ device, float width, float height, float depth );
+
+			static Mesh^ CreateCylinder( Device^ device, float radius1, float radius2, float length, int slices, int stacks, [Out] BufferWrapper^% adjacency );
+			static Mesh^ CreateCylinder( Device^ device, float radius1, float radius2, float length, int slices, int stacks );
+
+			static Mesh^ CreateSphere( Device^ device, float radius, int slices, int stacks, [Out] BufferWrapper^% adjacency );
+			static Mesh^ CreateSphere( Device^ device, float radius, int slices, int stacks );
+
+			static Mesh^ CreateTeapot( Device^ device, [Out] BufferWrapper^% adjacency );
+			static Mesh^ CreateTeapot( Device^ device );
+
+			//TODO: CreateText overload that returns glyph metrics
+			static Mesh^ CreateText( Device^ device, IntPtr hDC, String^ text, float deviation, float extrusion, [Out] BufferWrapper^% adjacency );
+			static Mesh^ CreateText( Device^ device, IntPtr hDC, String^ text, float deviation, float extrusion );
+
+			static Mesh^ CreateTorus( Device^ device, float innerRadius, float outerRadius, int sides, int rings, [Out] BufferWrapper^% adjacency );
+			static Mesh^ CreateTorus( Device^ device, float innerRadius, float outerRadius, int sides, int rings );
+
+			//DataStream^ LockAttributeBuffer( LockFlags flags );
+			//void UnlockAttributeBuffer();
+
+			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut,
+				[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap,
+				[Out] BufferWrapper^% vertexRemap );
+			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut );
+			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn );
+
+			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
+				[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap,
+				[Out] BufferWrapper^% vertexRemap );
+			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut );
+			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn );
+
+			void Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut,
+				[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			void Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap,
+				[Out] BufferWrapper^% vertexRemap );
+			void Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut );
+			void Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn );
+
+			void Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
+				[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			void Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap,
+				[Out] BufferWrapper^% vertexRemap );
+			void Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut );
+			void Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn );*/
 
 			void ComputeTangentFrame( TangentOptions options );
 		};

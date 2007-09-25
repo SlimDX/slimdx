@@ -43,6 +43,20 @@ namespace Direct3D9
 		m_ConstantTable = nullptr;
 	}
 
+	PixelShader::PixelShader( IntPtr pixelShader )
+	{
+		if( pixelShader == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pixelShader" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) pixelShader.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_IDirect3DPixelShader9, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = (IDirect3DPixelShader9*) pointer;
+	}
+
 	PixelShader::PixelShader( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable ) : DirectXObject( pixelShader )
 	{
 		if( pixelShader == NULL )

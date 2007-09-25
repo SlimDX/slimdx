@@ -93,7 +93,7 @@ namespace SlimDX
 
 		ref class Device;
 
-		public ref class VertexDeclaration sealed : public DirectXObject<IDirect3DVertexDeclaration9>
+		public ref class VertexDeclaration : public DirectXObject<IDirect3DVertexDeclaration9>
 		{
 		public:
 			VertexDeclaration( Device^ device, array<VertexElement>^ elements );

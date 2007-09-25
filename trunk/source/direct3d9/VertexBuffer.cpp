@@ -44,8 +44,36 @@ namespace Direct3D9
 		Pool = ( SlimDX::Direct3D9::Pool ) desc.Pool;
 		SizeInBytes = desc.Size;
 		FVF = ( VertexFormat ) desc.FVF;
-		
+
 		m_Pointer = buffer;
+	}
+
+	VertexBuffer::VertexBuffer( IntPtr buffer )
+	{
+		if( buffer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "buffer" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) buffer.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_IDirect3DVertexBuffer9, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+
+		IDirect3DVertexBuffer9* vbPtr = (IDirect3DVertexBuffer9*) pointer;
+
+		D3DVERTEXBUFFER_DESC desc;
+		hr = vbPtr->GetDesc( &desc );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Could not get vertex buffer description." );
+		
+		Format = ( SlimDX::Direct3D9::Format ) desc.Format;
+		Usage = ( SlimDX::Direct3D9::Usage ) desc.Usage;
+		Pool = ( SlimDX::Direct3D9::Pool ) desc.Pool;
+		SizeInBytes = desc.Size;
+		FVF = ( VertexFormat ) desc.FVF;
+
+		m_Pointer = vbPtr;
 	}
 
 	VertexBuffer::VertexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool )

@@ -32,7 +32,7 @@ namespace SlimDX
 			DoNotAllowProfiling = 1,
 		};
 
-		public ref class Performance sealed
+		public ref class Performance
 		{
 		public:
 			static int BeginEvent( int color, String^ name );

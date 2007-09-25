@@ -38,6 +38,21 @@ namespace Direct3D9
 		m_Pointer = buffer;
 	}
 
+	IndexBuffer::IndexBuffer( IntPtr buffer )
+	{
+		if( buffer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "buffer" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) buffer.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_IDirect3DIndexBuffer9, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+
+		IDirect3DIndexBuffer9* ibPtr = (IDirect3DIndexBuffer9*) pointer;
+		m_Pointer = ibPtr;
+	}
+
 	IndexBuffer::IndexBuffer( Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit )
 	{
 		IDirect3DIndexBuffer9* ib;

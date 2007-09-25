@@ -57,6 +57,20 @@ namespace Direct3D9
 	{
 	}
 
+	ConstantTable::ConstantTable( IntPtr table )
+	{
+		if( table == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "table" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) table.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXConstantTable, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = (ID3DXConstantTable*) pointer;
+	}
+
 	ConstantTable::ConstantTable( IDirect3DDevice9* device,ID3DXConstantTable* constantTable )
 		: DirectXObject(constantTable), m_Device(device)
 	{

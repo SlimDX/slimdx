@@ -30,7 +30,7 @@ namespace SlimDX
 		value class VertexElement;
 		enum class VertexFormat;
 
-		public ref class BoneCombination sealed
+		public ref class BoneCombination
 		{
 		public:
 			property int AttribId;
@@ -41,7 +41,7 @@ namespace SlimDX
 			property array<int>^ BoneIds;
 		};
 
-		public ref class SkinInfo sealed : public DirectXObject<ID3DXSkinInfo>
+		public ref class SkinInfo : public DirectXObject<ID3DXSkinInfo>
 		{
 		public:
 			SkinInfo( ID3DXSkinInfo* skinInfo );

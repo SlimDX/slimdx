@@ -29,7 +29,7 @@ namespace SlimDX
 		enum class VertexFormat;
 		enum class Format;
 
-		public ref class D3DX sealed
+		public ref class D3DX
 		{
 		public:
 			literal int Default = D3DX_DEFAULT;

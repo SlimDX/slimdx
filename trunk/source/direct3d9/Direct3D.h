@@ -154,7 +154,7 @@ namespace SlimDX
 			Capabilities( const D3DCAPS9& caps );
 		};
 
-        public ref class DisplayModeList sealed : public System::Collections::IEnumerable
+        public ref class DisplayModeList : public System::Collections::IEnumerable
 		{
 		private:
 			array<DisplayMode>^ m_Modes;
@@ -212,7 +212,7 @@ namespace SlimDX
 			}
 		};
 
-        public ref class AdapterList sealed : public System::Collections::IEnumerable
+        public ref class AdapterList : public System::Collections::IEnumerable
 		{
 		private:
             array<AdapterInformation^>^ m_Adapters;

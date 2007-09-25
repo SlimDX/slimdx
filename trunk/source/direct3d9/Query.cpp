@@ -39,6 +39,20 @@ namespace Direct3D9
 		m_Pointer = query;
 	}
 
+	Query::Query( IntPtr query )
+	{
+		if( query == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "query" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) query.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_IDirect3DQuery9, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = (IDirect3DQuery9*) pointer;
+	}
+
 	Query::Query( Device^ device, QueryType type )
 	{
 		IDirect3DQuery9* query;
