@@ -102,6 +102,20 @@ namespace Direct3D9
 		m_Pointer = texture;
 	}
 
+	Texture::Texture( IntPtr texture )
+	{
+		if( texture == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "texture" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) texture.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_IDirect3DTexture9, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = (IDirect3DTexture9*) pointer;
+	}
+
 	Texture::Texture( Device^ device, int width, int height, int numLevels, Usage usage, Format format, Pool pool )
 	{
 		IDirect3DTexture9* texture;
@@ -370,6 +384,20 @@ namespace Direct3D9
 		m_Pointer = texture;
 	}
 
+	CubeTexture::CubeTexture( IntPtr cubeTexture )
+	{
+		if( cubeTexture == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "cubeTexture" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) cubeTexture.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_IDirect3DCubeTexture9, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = (IDirect3DCubeTexture9*) pointer;
+	}
+
 	CubeTexture::CubeTexture( Device^ device, int edgeLength, int numLevels, Usage usage, Format format, Pool pool )
 	{
 		IDirect3DCubeTexture9* texture;
@@ -548,6 +576,20 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "texture" );
 
 		m_Pointer = texture;
+	}
+
+	VolumeTexture::VolumeTexture( IntPtr volumeTexture )
+	{
+		if( volumeTexture == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "volumeTexture" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) volumeTexture.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_IDirect3DVolumeTexture9, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = (IDirect3DVolumeTexture9*) pointer;
 	}
 
 	VolumeTexture::VolumeTexture( Device^ device, int width, int height, int depth, int numLevels, Usage usage, Format format, Pool pool )

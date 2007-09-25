@@ -37,6 +37,20 @@ namespace SlimDX
 				throw gcnew ArgumentNullException( "pointer" );
 		}
 
+		RenderToSurface::RenderToSurface( IntPtr rts )
+		{
+			if( rts == IntPtr::Zero )
+				throw gcnew ArgumentNullException( "rts" );
+
+			void* pointer;
+			IUnknown* unknown = (IUnknown*) rts.ToPointer();
+			HRESULT hr = unknown->QueryInterface( IID_ID3DXRenderToSurface, &pointer );
+			if( FAILED( hr ) )
+				throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+
+			m_Pointer = (ID3DXRenderToSurface*) pointer;
+		}
+
 		RenderToSurface::RenderToSurface( Device^ device, int width, int height, Format format )
 		{
 			ID3DXRenderToSurface* rtsPointer;

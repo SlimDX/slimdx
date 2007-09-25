@@ -35,7 +35,7 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
-		public ref class EffectPool sealed : public DirectXObject<ID3DXEffectPool>
+		public ref class EffectPool : public DirectXObject<ID3DXEffectPool>
 		{
 		public:
 			EffectPool();
@@ -44,7 +44,7 @@ namespace SlimDX
 			//ID3DXEffectPool has no methods
 		};
 
-		public ref class Effect sealed : public BaseEffect
+		public ref class Effect : public BaseEffect
 		{
 		internal:
 			property ID3DXEffect* EffectPointer
@@ -52,8 +52,10 @@ namespace SlimDX
 				ID3DXEffect* get() { return (ID3DXEffect*) m_Pointer; }
 			}
 
-		public:
 			Effect( ID3DXEffect* effect );
+
+		public:
+			Effect( IntPtr effect );
 			virtual ~Effect() { }
 
 			//FromMemory

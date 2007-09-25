@@ -27,13 +27,16 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{	
-		public ref class PixelShader sealed : public DirectXObject<IDirect3DPixelShader9>
+		public ref class PixelShader : public DirectXObject<IDirect3DPixelShader9>
 		{
 		private:
 			ConstantTable^ m_ConstantTable;
 
-		public:
+		internal:
 			PixelShader( IDirect3DPixelShader9* pixelShader );
+
+		public:
+			PixelShader( IntPtr pixelShader );
 			PixelShader( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable );
 			
 			~PixelShader()

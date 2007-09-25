@@ -36,7 +36,7 @@ namespace SlimDX
 			VertexState = D3DSBT_VERTEXSTATE,
 		};
 
-		public ref class StateBlock sealed : DirectXObject<IDirect3DStateBlock9>
+		public ref class StateBlock : DirectXObject<IDirect3DStateBlock9>
 		{
 		public:
 			StateBlock( IDirect3DStateBlock9* stateBlock );

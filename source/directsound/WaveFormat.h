@@ -105,7 +105,7 @@ namespace SlimDX
 			}
 		};
 
-		public ref class WaveFormatExtensible sealed : public WaveFormatEx
+		public ref class WaveFormatExtensible : public WaveFormatEx
 		{
 		internal:
 			property WAVEFORMATEXTENSIBLE* ExtensiblePointer

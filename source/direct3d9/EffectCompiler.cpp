@@ -38,6 +38,20 @@ namespace Direct3D9
 		m_Pointer = compiler;
 	}
 
+	EffectCompiler::EffectCompiler( IntPtr compiler )
+	{
+		if( compiler == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "compiler" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) compiler.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXEffectCompiler, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = (ID3DXEffectCompiler*) pointer;
+	}
+
 	EffectCompiler::EffectCompiler( String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
 	{
 		InitThis( System::Text::ASCIIEncoding::ASCII->GetBytes( data ), defines, includeFile, flags, errors );

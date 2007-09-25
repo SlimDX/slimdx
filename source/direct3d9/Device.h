@@ -41,6 +41,7 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
+		[StructLayout( LayoutKind::Sequential )]
 		public value class Material
 		{
 		public:
@@ -134,8 +135,11 @@ namespace SlimDX
 			VertexFormat m_VertexFormat;
 			VertexDeclaration^ m_VertexDecl;
 
-		public:
+		internal:
 			Device( IDirect3DDevice9* device );
+
+		public:
+			Device( IntPtr device );
 			Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams );
 			virtual ~Device() { Destruct(); }
 

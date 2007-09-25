@@ -146,10 +146,13 @@ namespace SlimDX
             property String^ FaceName;
 		};
 
-		public ref class Font sealed : public DirectXObject<ID3DXFont>
+		public ref class Font : public DirectXObject<ID3DXFont>
 		{
-		public:
+		internal:
 			Font( ID3DXFont* font );
+
+		public:
+			Font( IntPtr font );
 			Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,
 				CharacterSet characterSet, Precision outputPrecision, FontQuality quality,
 				PitchAndFamily pitchAndFamily, String^ faceName );

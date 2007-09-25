@@ -30,7 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// Defines possible joystick object codes.
 		/// </summary>
-		public ref class JoystickObjects sealed
+		public ref class JoystickObjects
 		{
 		private:
 			JoystickObjects() { }

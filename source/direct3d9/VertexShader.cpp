@@ -43,6 +43,20 @@ namespace Direct3D9
 		m_ConstantTable = nullptr;
 	}
 
+	VertexShader::VertexShader( IntPtr vertexShader )
+	{
+		if( vertexShader == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "vertexShader" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) vertexShader.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_IDirect3DVertexShader9, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = (IDirect3DVertexShader9*) pointer;
+	}
+
 	VertexShader::VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable ) : DirectXObject( vertexShader )
 	{
 		if( vertexShader == NULL )

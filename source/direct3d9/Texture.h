@@ -262,8 +262,10 @@ namespace SlimDX
 				IDirect3DTexture9* get() { return (IDirect3DTexture9*) m_Pointer; }
 			}
 
-		public:
 			Texture( IDirect3DTexture9* texture );
+
+		public:
+			Texture( IntPtr texture );
 			Texture( Device^ device, int width, int height, int numLevels, Usage usage, Format format, Pool pool );
 
 			/// <summary>
@@ -334,8 +336,10 @@ namespace SlimDX
 				IDirect3DCubeTexture9* get() { return (IDirect3DCubeTexture9*) m_Pointer; }
 			}
 
-		public:
 			CubeTexture( IDirect3DCubeTexture9* texture );
+
+		public:
+			CubeTexture( IntPtr cubeTexture );
 			CubeTexture( Device^ device, int edgeLength, int numLevels, Usage usage, Format format, Pool pool );
 
 			static CubeTextureRequirements CheckRequirements(Device^ device, int size,
@@ -375,8 +379,10 @@ namespace SlimDX
 				IDirect3DVolumeTexture9* get() { return (IDirect3DVolumeTexture9*) m_Pointer; }
 			}
 
-		public:
 			VolumeTexture( IDirect3DVolumeTexture9* texture );
+
+		public:
+			VolumeTexture( IntPtr volumeTexture );
 			VolumeTexture( Device^ device, int width, int height, int depth, int numLevels, Usage usage, Format format, Pool pool );
 
 			static VolumeTextureRequirements CheckRequirements(Device^ device, int width, int height, int depth,

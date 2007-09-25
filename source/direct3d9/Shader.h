@@ -84,7 +84,7 @@ namespace SlimDX
 			int UsageIndex;
 		};
 
-		public ref class ShaderBytecode sealed : public BufferWrapper
+		public ref class ShaderBytecode : public BufferWrapper
 		{
 		public:
 			ShaderBytecode( ID3DXBuffer* buffer ) : BufferWrapper( buffer )
@@ -101,7 +101,7 @@ namespace SlimDX
 			}
 		};
 
-		public ref class Shader sealed
+		public ref class Shader
 		{
 		public:
 			//D3DXAssembleShader

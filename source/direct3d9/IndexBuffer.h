@@ -30,7 +30,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public ref class IndexBuffer sealed : public Resource
+		public ref class IndexBuffer : public Resource
 		{
 		internal:
 			property IDirect3DIndexBuffer9* IbPointer
@@ -38,8 +38,10 @@ namespace SlimDX
 				IDirect3DIndexBuffer9* get() { return (IDirect3DIndexBuffer9*) m_Pointer; }
 			}
 
-		public:
 			IndexBuffer( IDirect3DIndexBuffer9* buffer );
+
+		public:
+			IndexBuffer( IntPtr buffer );
 			IndexBuffer( Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit );
 
 			DataStream^ Lock( int offset, int size, LockFlags flags );

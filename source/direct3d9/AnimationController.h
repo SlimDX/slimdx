@@ -25,7 +25,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public ref class AnimationController sealed : public DirectXObject<ID3DXAnimationController>
+		public ref class AnimationController : public DirectXObject<ID3DXAnimationController>
 		{
 		public:
 			~AnimationController() { Destruct(); }

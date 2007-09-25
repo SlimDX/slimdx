@@ -39,7 +39,7 @@ namespace SlimDX
             property int Target;
 		};
 
-		public ref class ShaderFragments sealed : public BufferWrapper
+		public ref class ShaderFragments : public BufferWrapper
 		{
 		public:
 			ShaderFragments( ID3DXBuffer* buffer ) : BufferWrapper( buffer )
@@ -49,7 +49,7 @@ namespace SlimDX
 			{ }
 		};
 
-		public ref class FragmentLinker sealed : public DirectXObject<ID3DXFragmentLinker>
+		public ref class FragmentLinker : public DirectXObject<ID3DXFragmentLinker>
 		{
 		public:
 			FragmentLinker( ID3DXFragmentLinker* linker );

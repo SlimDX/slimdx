@@ -28,7 +28,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public ref class VertexBuffer sealed : public Resource
+		public ref class VertexBuffer : public Resource
 		{
 		private:
 			Format format;
@@ -43,7 +43,16 @@ namespace SlimDX
 				IDirect3DVertexBuffer9* get() { return (IDirect3DVertexBuffer9*) m_Pointer; }
 			}
 
+			VertexBuffer( IDirect3DVertexBuffer9* buffer );
+
 		public:
+			VertexBuffer( IntPtr buffer );
+			VertexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool );
+			
+			DataStream^ Lock( int offset, int size, LockFlags flags );
+			DataStream^ Lock( int offset, LockFlags flags );
+			void Unlock();
+
 			property SlimDX::Direct3D9::Format Format
             {
                 SlimDX::Direct3D9::Format get() { return format; }
@@ -78,13 +87,6 @@ namespace SlimDX
 			private:
                 void set( VertexFormat value ) { fVF = value; }
             }
-			
-			VertexBuffer( IDirect3DVertexBuffer9* buffer );
-			VertexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool );
-			
-			DataStream^ Lock( int offset, int size, LockFlags flags );
-			DataStream^ Lock( int offset, LockFlags flags );
-			void Unlock();
 		};
 	}
 }

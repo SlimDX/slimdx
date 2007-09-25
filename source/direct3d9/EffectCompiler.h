@@ -30,7 +30,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public ref class EffectBytecode sealed : public BufferWrapper
+		public ref class EffectBytecode : public BufferWrapper
 		{
 		public:
 			EffectBytecode( ID3DXBuffer* buffer ) : BufferWrapper( buffer )
@@ -40,7 +40,7 @@ namespace SlimDX
 			{ }
 		};
 
-		public ref class EffectCompiler sealed : public BaseEffect
+		public ref class EffectCompiler : public BaseEffect
 		{
 		private:
 			void InitThis( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
@@ -51,8 +51,10 @@ namespace SlimDX
 				ID3DXEffectCompiler* get() { return (ID3DXEffectCompiler*) m_Pointer; }
 			}
 
-		public:
 			EffectCompiler( ID3DXEffectCompiler* compiler );
+
+		public:
+			EffectCompiler( IntPtr compiler );
 			EffectCompiler( String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
 			EffectCompiler( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
 			virtual ~EffectCompiler() { }

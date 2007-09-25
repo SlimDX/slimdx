@@ -45,6 +45,20 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "font" );
 	}
 
+	Font::Font( IntPtr font )
+	{
+		if( font == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "font" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) font.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXFont, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = (ID3DXFont*) pointer;
+	}
+
 	Font::Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,
 		CharacterSet charSet, Precision outputPrecision, FontQuality quality,
 		PitchAndFamily pitchAndFamily, String^ faceName )

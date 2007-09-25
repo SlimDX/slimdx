@@ -39,6 +39,20 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "line" );
 	}
 
+	Line::Line( IntPtr line )
+	{
+		if( line == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "line" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) line.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXLine, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = (ID3DXLine*) pointer;
+	}
+
 	Line::Line( Device^ device )
 	{
 		ID3DXLine* line;
