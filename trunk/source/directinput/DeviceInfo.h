@@ -270,139 +270,139 @@ namespace SlimDX
 			/// A device that does not provide the minimum number of device objects for
 			/// action mapping.
 			/// </summary>
-			static const int Limited = DI8DEVTYPE_LIMITEDGAMESUBTYPE;
+			literal int Limited = DI8DEVTYPE_LIMITEDGAMESUBTYPE;
 
 			/// <summary>
 			/// Unknown subtype for a first-person device.
 			/// </summary>
-			static const int FirstPersonUnknown = DI8DEVTYPE1STPERSON_UNKNOWN;
+			literal int FirstPersonUnknown = DI8DEVTYPE1STPERSON_UNKNOWN;
 
 			/// <summary>
 			/// Device designed for first-person person shooter games.
 			/// </summary>
-			static const int FirstPersonShooter = DI8DEVTYPE1STPERSON_SHOOTER;
+			literal int FirstPersonShooter = DI8DEVTYPE1STPERSON_SHOOTER;
 
 			/// <summary>
 			/// Device with six degrees of freedom; that is, three lateral axes and three rotation axes.
 			/// </summary>
-			static const int SixDegreesOfFreedom = DI8DEVTYPE1STPERSON_SIXDOF;
+			literal int SixDegreesOfFreedom = DI8DEVTYPE1STPERSON_SIXDOF;
 
 			/// <summary>
 			/// Control used to make communications selections.
 			/// </summary>
-			static const int CommunicationSelections = DI8DEVTYPEDEVICECTRL_COMMSSELECTION;
+			literal int CommunicationSelections = DI8DEVTYPEDEVICECTRL_COMMSSELECTION;
 
 			/// <summary>
 			/// Device that must use its default configuration and cannot be remapped.
 			/// </summary>
-			static const int Hardwired = DI8DEVTYPEDEVICECTRL_COMMSSELECTION_HARDWIRED;
+			literal int Hardwired = DI8DEVTYPEDEVICECTRL_COMMSSELECTION_HARDWIRED;
 
 			/// <summary>
 			/// Unknown subtype for a control device.
 			/// </summary>
-			static const int ControlDeviceUnknown = DI8DEVTYPEDEVICECTRL_UNKNOWN;
+			literal int ControlDeviceUnknown = DI8DEVTYPEDEVICECTRL_UNKNOWN;
 
 			/// <summary>
 			/// Steering device that reports accelerations and break pedal values from a single axis.
 			/// </summary>
-			static const int CombinedPedals = DI8DEVTYPEDRIVING_COMBINEDPEDALS;
+			literal int CombinedPedals = DI8DEVTYPEDRIVING_COMBINEDPEDALS;
 
 			/// <summary>
 			/// Steering device that reports accelerations and break pedal values from separate axes.
 			/// </summary>
-			static const int DualPedals = DI8DEVTYPEDRIVING_DUALPEDALS;
+			literal int DualPedals = DI8DEVTYPEDRIVING_DUALPEDALS;
 
 			/// <summary>
 			/// Hand-held steering device.
 			/// </summary>
-			static const int DrivingHandheld = DI8DEVTYPEDRIVING_HANDHELD;
+			literal int DrivingHandheld = DI8DEVTYPEDRIVING_HANDHELD;
 
 			/// <summary>
 			/// Steering device that reports acceleration, break, and clutch pedal values from
 			/// separate axes.
 			/// </summary>
-			static const int ThreePedals = DI8DEVTYPEDRIVING_THREEPEDALS;
+			literal int ThreePedals = DI8DEVTYPEDRIVING_THREEPEDALS;
 
 			/// <summary>
 			/// Flight device based upon a remote control for model aircraft.
 			/// </summary>
-			static const int RemoteControlledFlight = DI8DEVTYPEFLIGHT_RC;
+			literal int RemoteControlledFlight = DI8DEVTYPEFLIGHT_RC;
 
 			/// <summary>
 			/// A joystick for flight simulators.
 			/// </summary>
-			static const int FlightStick = DI8DEVTYPEFLIGHT_STICK;
+			literal int FlightStick = DI8DEVTYPEFLIGHT_STICK;
 
 			/// <summary>
 			/// A yoke for flight simulators.
 			/// </summary>
-			static const int FlightYoke = DI8DEVTYPEFLIGHT_YOKE;
+			literal int FlightYoke = DI8DEVTYPEFLIGHT_YOKE;
 
 			/// <summary>
 			/// Standard game pad that provides the minimum number of objects for
 			/// action mapping.
 			/// </summary>
-			static const int StandardGamePad = DI8DEVTYPEGAMEPAD_STANDARD;
+			literal int StandardGamePad = DI8DEVTYPEGAMEPAD_STANDARD;
 
 			/// <summary>
 			/// IBM PC/XT 83-key keyboard.
 			/// </summary>
-			static const int PCXTKeyboard = DI8DEVTYPEKEYBOARD_PCXT;
+			literal int PCXTKeyboard = DI8DEVTYPEKEYBOARD_PCXT;
 
 			/// <summary>
 			/// Olivetti 102-key keyboard.
 			/// </summary>
-			static const int OlivettiKeyboard = DI8DEVTYPEKEYBOARD_OLIVETTI;
+			literal int OlivettiKeyboard = DI8DEVTYPEKEYBOARD_OLIVETTI;
 
 			/// <summary>
 			/// IBM PC/AT 84-key keyboard.
 			/// </summary>
-			static const int PCATKeyboard = DI8DEVTYPEKEYBOARD_PCAT;
+			literal int PCATKeyboard = DI8DEVTYPEKEYBOARD_PCAT;
 
 			/// <summary>
 			/// IBM PC Enhanced 101/102-key keyboard or Microsoft Natural keyboard.
 			/// </summary>
-			static const int StandardKeyboard = DI8DEVTYPEKEYBOARD_PCENH;
+			literal int StandardKeyboard = DI8DEVTYPEKEYBOARD_PCENH;
 
 			/// <summary>
 			/// Nokia 1050 keyboard.
 			/// </summary>
-			static const int Nokia1050Keyboard = DI8DEVTYPEKEYBOARD_NOKIA1050;
+			literal int Nokia1050Keyboard = DI8DEVTYPEKEYBOARD_NOKIA1050;
 
 			/// <summary>
 			/// Nokia 9140 keyboard.
 			/// </summary>
-			static const int Nokia9140Keyboard = DI8DEVTYPEKEYBOARD_NOKIA9140;
+			literal int Nokia9140Keyboard = DI8DEVTYPEKEYBOARD_NOKIA9140;
 
 			/// <summary>
 			/// Japanse NEC PC98 keyboard.
 			/// </summary>
-			static const int JapaneseNECKeyboard = DI8DEVTYPEKEYBOARD_NEC98;
+			literal int JapaneseNECKeyboard = DI8DEVTYPEKEYBOARD_NEC98;
 
 			/// <summary>
 			/// Japanese NEC PC98 laptop keyboard.
 			/// </summary>
-			static const int JapaneseNECLaptopKeyboard = DI8DEVTYPEKEYBOARD_NEC98LAPTOP;
+			literal int JapaneseNECLaptopKeyboard = DI8DEVTYPEKEYBOARD_NEC98LAPTOP;
 
 			/// <summary>
 			/// Japanese NEC PC98 106-key keyboard.
 			/// </summary>
-			static const int JapaneseNEC106Keyboard = DI8DEVTYPEKEYBOARD_NEC98106;
+			literal int JapaneseNEC106Keyboard = DI8DEVTYPEKEYBOARD_NEC98106;
 
 			/// <summary>
 			/// Japanese 106-key keyboard.
 			/// </summary>
-			static const int Japanese106Keyboard = DI8DEVTYPEKEYBOARD_JAPAN106;
+			literal int Japanese106Keyboard = DI8DEVTYPEKEYBOARD_JAPAN106;
 
 			/// <summary>
 			/// Japanese AX keyboard.
 			/// </summary>
-			static const int JapaneseAXKeyboard = DI8DEVTYPEKEYBOARD_JAPANAX;
+			literal int JapaneseAXKeyboard = DI8DEVTYPEKEYBOARD_JAPANAX;
 
 			/// <summary>
 			/// Japanese J3100 keyboard.
 			/// </summary>
-			static const int JapaneseJ3100Keyboard = DI8DEVTYPEKEYBOARD_J3100;
+			literal int JapaneseJ3100Keyboard = DI8DEVTYPEKEYBOARD_J3100;
 		};
 	}
 }

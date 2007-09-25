@@ -169,17 +169,17 @@ namespace SlimDX {
 			/// <summary>
 			/// Can be used as a positive and negative value to filter the left thumbstick input.
 			/// </summary>
-			static const Int16 GamepadLeftThumbDeadZone = XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
+			literal Int16 GamepadLeftThumbDeadZone = XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
 
 			/// <summary>
 			/// Can be used as a positive and negative value to filter the right thumbstick input.
 			/// </summary>
-			static const Int16 GamepadRightThumbDeadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
+			literal Int16 GamepadRightThumbDeadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
 
 			/// <summary>
 			/// This constantmay be used as the value which LeftTrigger and RightTrigger must be greater than to register as pressed.
 			/// </summary>
-			static const Byte GamepadTriggerThreshold = XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
+			literal Byte GamepadTriggerThreshold = XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
 		};
 
 		[Flags]
