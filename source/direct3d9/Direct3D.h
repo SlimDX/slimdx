@@ -72,10 +72,10 @@ namespace SlimDX
 		public value class PixelShader20Caps
 		{
 		public:
-			property int caps;
-            property int dynamicFlowControlDepth;
-            property int numTemps;
-            property int staticFlowControlDepth;
+			property int Caps;
+            property int DynamicFlowControlDepth;
+            property int NumTemps;
+            property int StaticFlowControlDepth;
 		};
 
 		public value class Capabilities
