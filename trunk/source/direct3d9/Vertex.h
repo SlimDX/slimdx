@@ -98,6 +98,11 @@ namespace SlimDX
 		public:
 			VertexDeclaration( Device^ device, array<VertexElement>^ elements );
 			~VertexDeclaration() { Destruct(); }
+
+			property array<VertexElement>^ Elements
+			{
+				array<VertexElement>^ get();
+			}
 		};
 	}
 }
