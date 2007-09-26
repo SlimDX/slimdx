@@ -43,5 +43,25 @@ namespace Direct3D9
 
 		m_Pointer = decl;
 	}
+
+	array<VertexElement>^ VertexDeclaration::Elements::get()
+	{
+		unsigned int count = 0;
+
+		HRESULT hr = m_Pointer->GetDeclaration( 0, &count );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		array<VertexElement>^ decl = gcnew array<VertexElement>( count );
+		pin_ptr<VertexElement> pinnedDecl = &decl[0];
+
+		hr = m_Pointer->GetDeclaration( (D3DVERTEXELEMENT9*) pinnedDecl, &count );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return decl;
+	}
 }
 }
