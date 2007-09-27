@@ -78,13 +78,13 @@ namespace SlimDX
 			String = OUT_STRING_PRECIS,
 			Character = OUT_CHARACTER_PRECIS,
 			Stroke = OUT_STROKE_PRECIS,
-			Tt = OUT_TT_PRECIS,
+			TrueType = OUT_TT_PRECIS,
 			Device = OUT_DEVICE_PRECIS,
 			Raster = OUT_RASTER_PRECIS,
-			TtOnly = OUT_TT_ONLY_PRECIS,
+			TrueTypeOnly = OUT_TT_ONLY_PRECIS,
 			Outline = OUT_OUTLINE_PRECIS,
 			ScreenOutline = OUT_SCREEN_OUTLINE_PRECIS,
-			PsOnly = OUT_PS_ONLY_PRECIS,
+			PostScriptOnly = OUT_PS_ONLY_PRECIS,
 		};
 
 		public enum class FontQuality : Int32

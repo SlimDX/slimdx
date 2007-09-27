@@ -54,7 +54,7 @@ namespace Direct3D10
 
 		technique = m_Pointer->GetTechniqueByIndex( index );
 		if( technique == NULL )
-			throw gcnew ArgumentException( String::Format( "Index '{0}' does not identify any technique in the effect.", index ) );
+			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Index '{0}' does not identify any technique in the effect.", index ) );
 		return gcnew EffectTechnique( technique );
 	}
 
@@ -66,7 +66,7 @@ namespace Direct3D10
 
 		technique = m_Pointer->GetTechniqueByName( (LPCSTR) pinnedName );
 		if( technique == NULL )
-			throw gcnew ArgumentException( String::Format( "Name '{0}' does not identify any technique in the effect.", name ) );
+			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Name '{0}' does not identify any technique in the effect.", name ) );
 		return gcnew EffectTechnique( technique );
 	}
 	
@@ -76,7 +76,7 @@ namespace Direct3D10
 		
 		variable = m_Pointer->GetVariableByIndex( index );
 		if( variable == NULL )
-			throw gcnew ArgumentException( String::Format( "Index '{0}' does not identify any variable in the effect.", index ) );
+			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Index '{0}' does not identify any variable in the effect.", index ) );
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -88,7 +88,7 @@ namespace Direct3D10
 
 		variable = m_Pointer->GetVariableByName( (LPCSTR) pinnedName );
 		if( variable == NULL )
-			throw gcnew ArgumentException( String::Format( "Name '{0}' does not identify any variable in the effect.", name ) );
+			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Name '{0}' does not identify any variable in the effect.", name ) );
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -100,7 +100,7 @@ namespace Direct3D10
 
 		variable = m_Pointer->GetVariableBySemantic( (LPCSTR) pinnedName );
 		if( variable == NULL )
-			throw gcnew ArgumentException( String::Format( "Semantic '{0}' does not identify any variable in the effect.", name ) );
+			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Semantic '{0}' does not identify any variable in the effect.", name ) );
 		return gcnew EffectVariable( variable );
 	}
 	

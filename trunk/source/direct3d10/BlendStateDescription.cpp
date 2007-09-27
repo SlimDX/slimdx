@@ -41,12 +41,12 @@ namespace Direct3D10
 		DestinationAlphaBlend = BlendOption::Zero;
 		AlphaBlendOperation = SlimDX::Direct3D10::BlendOperation::Add;
 		
-		RenderTargetBlendEnabled = gcnew array<bool>(8);
-		RenderTargetWriteMask = gcnew array<ColorWriteMaskFlags>(8);
+		renderTargetBlendEnabled = gcnew Collection<bool>();
+		renderTargetWriteMask = gcnew Collection<ColorWriteMaskFlags>();
 		for(int i = 0; i < 8; ++i)
 		{
-			RenderTargetBlendEnabled[i] = false;
-			RenderTargetWriteMask[i] = ColorWriteMaskFlags::All;
+			RenderTargetBlendEnabled->Add( false );
+			RenderTargetWriteMask->Add( ColorWriteMaskFlags::All );
 		}
 	}
 
@@ -60,12 +60,12 @@ namespace Direct3D10
 		DestinationAlphaBlend = (BlendOption) desc.DestBlend;
 		AlphaBlendOperation = (SlimDX::Direct3D10::BlendOperation) desc.BlendOp;
 		
-		RenderTargetBlendEnabled = gcnew array<bool>(8);
-		RenderTargetWriteMask = gcnew array<ColorWriteMaskFlags>(8);
-	  for(int i = 0; i < 8; ++i)
+		renderTargetBlendEnabled = gcnew Collection<bool>();
+		renderTargetWriteMask = gcnew Collection<ColorWriteMaskFlags>();
+		for(int i = 0; i < 8; ++i)
 		{
-			RenderTargetBlendEnabled[i] = desc.BlendEnable[i] ? true : false;
-			RenderTargetWriteMask[i] = (ColorWriteMaskFlags) desc.RenderTargetWriteMask[i];
+			RenderTargetBlendEnabled->Add( false );
+			RenderTargetWriteMask->Add( ColorWriteMaskFlags::All );
 		}
 	}
 	

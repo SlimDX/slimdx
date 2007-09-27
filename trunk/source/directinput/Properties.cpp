@@ -251,7 +251,7 @@ namespace DirectInput
 		HRESULT hr;
 		dip.diph.dwSize = sizeof( DIPROPSTRING );
 		dip.diph.dwHeaderSize = sizeof( DIPROPHEADER );
-		dip.diph.dwObj = 0;
+		dip.diph.dwObj = ( DWORD )key;
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_KEYNAME, &dip.diph );
@@ -377,7 +377,7 @@ namespace DirectInput
 		HRESULT hr;
 		dip.diph.dwSize = sizeof( DIPROPDWORD );
 		dip.diph.dwHeaderSize = sizeof( DIPROPHEADER );
-		dip.diph.dwObj = 0;
+		dip.diph.dwObj = ( DWORD )key;
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_SCANCODE, &dip.diph );

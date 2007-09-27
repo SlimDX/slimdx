@@ -194,7 +194,7 @@ namespace Direct3D9
 	void ConstantTable::SetValue( EffectHandle^ constant, bool value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		HRESULT hr = m_Pointer->SetBool( m_Device, constant->InternalHandle, value );
+		HRESULT hr = m_Pointer->SetBool( m_Device, handle, value );
 		GraphicsException::CheckHResult( hr );
 	}
 

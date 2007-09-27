@@ -30,7 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// Defines possible joystick object codes.
 		/// </summary>
-		public ref class JoystickObjects
+		public ref class JoystickObjects sealed
 		{
 		private:
 			JoystickObjects() { }
@@ -501,12 +501,12 @@ namespace SlimDX
 			/// <summary>
 			/// The Japanese At key.
 			/// </summary>
-			At,
+			AT,
 
 			/// <summary>
 			/// The Japanese Ax key.
 			/// </summary>
-			Ax,
+			AX,
 
 			/// <summary>
 			/// The BackSpace.

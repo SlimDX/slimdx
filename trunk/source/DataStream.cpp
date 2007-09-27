@@ -34,8 +34,6 @@ namespace SlimDX
 		m_Buffer = (char*) buffer;
 		m_Size = sizeInBytes;
 		
-		m_OwnsBuffer = false;
-		
 		m_CanRead = canRead;
 		m_CanWrite = canWrite;
 	}

@@ -217,11 +217,11 @@ namespace DirectInput
 			return DIK_APPS;
 			break;
 
-		case Key::At:
+		case Key::AT:
 			return DIK_AT;
 			break;
 
-		case Key::Ax:
+		case Key::AX:
 			return DIK_AX;
 			break;
 
@@ -793,11 +793,11 @@ namespace DirectInput
 			return DIKEYBOARD_APPS;
 			break;
 
-		case Key::At:
+		case Key::AT:
 			return DIKEYBOARD_AT;
 			break;
 
-		case Key::Ax:
+		case Key::AX:
 			return DIKEYBOARD_AX;
 			break;
 

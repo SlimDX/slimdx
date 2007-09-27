@@ -35,7 +35,7 @@ namespace SlimDX
 
 		for each( KeyValuePair<IDisposable^, StackTrace^> pair in m_TrackedObjects )
 		{
-			output += String::Format( "Object of type {0} was not disposed. Stack trace of object creation:\n", pair.Key->GetType() );
+			output += String::Format( CultureInfo::InvariantCulture, "Object of type {0} was not disposed. Stack trace of object creation:\n", pair.Key->GetType() );
 			for each( StackFrame^ frame in pair.Value->GetFrames() )
 			{
 				if( frame->GetFileLineNumber() == 0 )
@@ -46,12 +46,12 @@ namespace SlimDX
 					continue;
 				}
 
-				output += String::Format( "\t{0}({1},{2}): {3}\n", frame->GetFileName(),
+				output += String::Format( CultureInfo::InvariantCulture, "\t{0}({1},{2}): {3}\n", frame->GetFileName(),
 					frame->GetFileLineNumber(), frame->GetFileColumnNumber(), frame->GetMethod() );
 			}
 		}
 
-		output += String::Format( "Total of {0} objects leaked.\n", m_TrackedObjects->Count );
+		output += String::Format( CultureInfo::InvariantCulture, "Total of {0} objects leaked.\n", m_TrackedObjects->Count );
 		Debug::Write( output );
 	}
 

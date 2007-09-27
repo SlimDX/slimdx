@@ -456,12 +456,12 @@ namespace SlimDX
 		private:
 			Utils() { }
 
+			literal int size8 = sizeof( System::Byte );
+			literal int size16 = sizeof( System::Int16 );
+			literal int size32 = sizeof( System::Int32 );
+
 			static int ElementSizeOf( Format format )
 			{
-				const int size8 = sizeof( System::Byte );
-				const int size16 = sizeof( System::Int16 );
-				const int size32 = sizeof( System::Int32 );
-				
 				switch( format )
 				{
 					case Format::R32G32B32A32_Typeless:

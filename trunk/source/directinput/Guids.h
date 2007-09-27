@@ -32,6 +32,9 @@ namespace SlimDX
 		/// </summary>
 		public ref class SystemGuid sealed
 		{
+		private:
+			SystemGuid() { }
+
 		internal:
 			static Guid FromGUID( const GUID &guid )
 			{
@@ -73,6 +76,9 @@ namespace SlimDX
 		/// </summary>
 		public ref class ObjectGuid sealed
 		{
+		private:
+			ObjectGuid() { }
+
 		public:
 			static property Guid XAxis
 			{

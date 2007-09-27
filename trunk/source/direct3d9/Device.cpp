@@ -55,7 +55,7 @@ namespace Direct3D9
 		d3dpp.BackBufferWidth = presentParams->BackBufferWidth;
 		d3dpp.EnableAutoDepthStencil = presentParams->EnableAutoDepthStencil;
 		d3dpp.Flags = (DWORD) presentParams->PresentFlags;
-		d3dpp.FullScreen_RefreshRateInHz = presentParams->FullScreenRefreshRateInHz;
+		d3dpp.FullScreen_RefreshRateInHz = presentParams->FullScreenRefreshRateInHertz;
 		d3dpp.hDeviceWindow = (HWND) presentParams->DeviceWindowHandle.ToPointer();
 		d3dpp.MultiSampleQuality = presentParams->MultiSampleQuality;
 		d3dpp.MultiSampleType = (D3DMULTISAMPLE_TYPE) presentParams->MultiSample;
@@ -82,7 +82,7 @@ namespace Direct3D9
 		AutoDepthStencilFormat = Format::D24X8;
 		PresentFlags = SlimDX::Direct3D9::PresentFlags::None;
 
-		FullScreenRefreshRateInHz = 0;
+		FullScreenRefreshRateInHertz = 0;
 		PresentationInterval = PresentInterval::Immediate;
 	}
 
@@ -92,6 +92,10 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "device" );
 		
 		device->AddRef();
+
+		driverLevel = GetDriverLevel();
+		vertexShaderProfile = GetVertexShaderProfile();
+		pixelShaderProfile = GetPixelShaderProfile();
 	}
 
 	Device::Device( IntPtr device )
@@ -106,6 +110,10 @@ namespace Direct3D9
 			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
 
 		m_Pointer = (IDirect3DDevice9*) pointer;
+
+		driverLevel = GetDriverLevel();
+		vertexShaderProfile = GetVertexShaderProfile();
+		pixelShaderProfile = GetPixelShaderProfile();
 	}
 
 	Device::Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams )
@@ -119,19 +127,10 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 
 		m_Pointer = device;
-	}
 
-	void Device::Indices::set( IndexBuffer^ value )
-	{
-		m_Indices = value;
-
-		HRESULT hr;
-		if( value != nullptr )
-			 hr = m_Pointer->SetIndices( value->IbPointer );
-		else
-			hr = m_Pointer->SetIndices( NULL );
-
-		GraphicsException::CheckHResult( hr );
+		driverLevel = GetDriverLevel();
+		vertexShaderProfile = GetVertexShaderProfile();
+		pixelShaderProfile = GetPixelShaderProfile();
 	}
 
 	void Device::VertexFormat::set( SlimDX::Direct3D9::VertexFormat value )
@@ -542,11 +541,6 @@ namespace Direct3D9
 		return GetRenderState<int>( state );
 	}
 
-	bool Device::GetSoftwareVertexProcessing()
-	{
-		return m_Pointer->GetSoftwareVertexProcessing() > 0;
-	}
-
 	void Device::GetStreamSource( int stream, [Out] VertexBuffer^% streamData, [Out] int% offsetBytes, [Out] int% stride )
 	{
 		IDirect3DVertexBuffer9* localVb;
@@ -599,6 +593,17 @@ namespace Direct3D9
 			return nullptr;
 
 		return gcnew IndexBuffer( indices );
+	}
+
+	void Device::SetIndices( IndexBuffer^ indices )
+	{
+		HRESULT hr;
+		if( indices != nullptr )
+			 hr = m_Pointer->SetIndices( indices->IbPointer );
+		else
+			hr = m_Pointer->SetIndices( NULL );
+
+		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::ProcessVertices( int sourceStartIndex, int destIndex, int vertexCount, VertexBuffer^ destBuffer,
@@ -885,7 +890,7 @@ namespace Direct3D9
 
 	DriverLevel Device::GetDriverLevel()
 	{
-		return (DriverLevel) D3DXGetDriverLevel( m_Pointer );
+		return (SlimDX::Direct3D9::DriverLevel) D3DXGetDriverLevel( m_Pointer );
 	}
 
 	String^ Device::GetVertexShaderProfile()

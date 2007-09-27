@@ -24,15 +24,18 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
-namespace SlimDX {
-	namespace XInput {
-		[StructLayout(LayoutKind::Sequential)]
+namespace SlimDX
+{
+	namespace XInput
+	{
 		/// <summary>
 		/// Specifies motor speed levels for the vibration function of a controller.
 		/// </summary>
 		/// <remarks>
-		/// The left motor is the low-frequency rumble motor. The right motor is the high-frequency rumble motor. The two motors are not the same, and they create different vibration effects.
+		/// The left motor is the low-frequency rumble motor. The right motor is the high-frequency rumble motor. 
+		/// The two motors are not the same, and they create different vibration effects.
 		/// </remarks>
+		[StructLayout(LayoutKind::Sequential)]
 		public value class Vibration
 		{
 		private:
@@ -41,7 +44,8 @@ namespace SlimDX {
 
 		public:
 			/// <summary>
-			/// Speed of the left motor. Valid values are in the range 0 to 65,535. Zero signifies no motor use; 65,535 signifies 100 percent motor use.
+			/// Speed of the left motor. Valid values are in the range 0 to 65,535. Zero signifies no motor use; 
+			/// 65,535 signifies 100 percent motor use.
 			/// </summary>
 			property UInt16 LeftMotorSpeed
             {
@@ -50,7 +54,8 @@ namespace SlimDX {
             }
 
 			/// <summary>
-			/// Speed of the right motor. Valid values are in the range 0 to 65,535. Zero signifies no motor use; 65,535 signifies 100 percent motor use.
+			/// Speed of the right motor. Valid values are in the range 0 to 65,535. Zero signifies no motor use; 
+			/// 65,535 signifies 100 percent motor use.
 			/// </summary>
             property UInt16 RightMotorSpeed
             {
@@ -59,11 +64,12 @@ namespace SlimDX {
             }
 		};
 
-		[Flags]
 		/// <summary>
 		/// Bitmask of the device digital buttons
 		/// </summary>
-		public enum class GamepadButtonFlags : UInt16 {
+		[Flags]
+		public enum class GamepadButtonFlags : UInt16
+		{
 			None = 0,
 			DPadUp = XINPUT_GAMEPAD_DPAD_UP,
 			DPadDown = XINPUT_GAMEPAD_DPAD_DOWN,
@@ -80,8 +86,7 @@ namespace SlimDX {
 			X = XINPUT_GAMEPAD_X,
 			Y = XINPUT_GAMEPAD_Y,
 		};
-
-		[StructLayout(LayoutKind::Sequential)]
+		
 		/// <summary>
 		/// Describes the current state of the Xbox 360 Controller.
 		/// </summary>
@@ -91,6 +96,7 @@ namespace SlimDX {
 		/// The constants GamepadLeftThumbDeadZone or GamepadRightThumbDeadZone can be used as a positive and negative value to filter a
 		/// thumbstick input.
 		/// </remarks>
+		[StructLayout(LayoutKind::Sequential)]
 		public value class GamePad
 		{
 		private:
@@ -182,11 +188,12 @@ namespace SlimDX {
 			literal Byte GamepadTriggerThreshold = XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
 		};
 
-		[Flags]
 		/// <summary>
 		/// Flags that indicate the keyboard state at the time of the input event.
 		/// </summary>
-		public enum class KeyStrokeFlags : UInt16 {
+		[Flags]
+		public enum class KeyStrokeFlags : UInt16
+		{
 			None = 0,
 			KeyDown = XINPUT_KEYSTROKE_KEYDOWN,
 			KeyUp = XINPUT_KEYSTROKE_KEYUP,
@@ -196,7 +203,8 @@ namespace SlimDX {
 		/// <summary>
 		/// Controller input virtual key codes
 		/// </summary>
-		public enum class GamepadKeyCodes : UInt16 {
+		public enum class GamepadKeyCodes : UInt16
+		{
 			A = VK_PAD_A,
 			B = VK_PAD_B,
 			X = VK_PAD_X,
@@ -231,10 +239,11 @@ namespace SlimDX {
 			RightThumbDownRight = VK_PAD_RTHUMB_DOWNRIGHT
 		};
 
-		[StructLayout(LayoutKind::Sequential)]
+		
 		/// <summary>
 		/// Specifies keystroke data returned by Controller.GetKeystroke
 		/// </summary>
+		[StructLayout(LayoutKind::Sequential)]
 		public value class KeyStroke
 		{
 		private:
@@ -290,11 +299,11 @@ namespace SlimDX {
                 void set( Byte value ) { hidCode = value; }
             }
 		};
-
-		[StructLayout(LayoutKind::Sequential)]
+		
 		/// <summary>
 		/// Represents the state of a controller.
 		/// </summary>
+		[StructLayout(LayoutKind::Sequential)]
 		public value class State
 		{
 		private:
@@ -325,7 +334,8 @@ namespace SlimDX {
 		/// <summary>
 		/// Controller type.
 		/// </summary>
-		public enum class DeviceType : Byte {
+		public enum class DeviceType : Byte
+		{
 			/// <summary>
 			/// The device is a game controller.
 			/// </summary>
@@ -335,7 +345,8 @@ namespace SlimDX {
 		/// <summary>
 		/// Subtype of the game controller.
 		/// </summary>
-		public enum class DeviceSubType : Byte {
+		public enum class DeviceSubType : Byte
+		{
 			ArcadeStick = XINPUT_DEVSUBTYPE_ARCADE_STICK,
 			Gamepad = XINPUT_DEVSUBTYPE_GAMEPAD,
 			Wheel = XINPUT_DEVSUBTYPE_WHEEL,
@@ -343,19 +354,21 @@ namespace SlimDX {
 			FlightStick = XINPUT_DEVSUBTYPE_FLIGHT_SICK
 		};
 
-		[Flags]
+		
 		/// <summary>
 		/// Features of the controller. 
 		/// </summary>
-		public enum class CapabilitiesFlags : UInt16 {
+		[Flags]
+		public enum class CapabilitiesFlags : UInt16
+		{
 			None = 0,
+
 			/// <summary>
 			/// The device has an integrated voice device.
 			/// </summary>
 			VoiceSupported = XINPUT_CAPS_VOICE_SUPPORTED
 		};
-
-		[StructLayout(LayoutKind::Sequential)]
+		
 		/// <summary>
 		/// Describes the capabilities of a connected controller.
 		/// </summary>
@@ -364,6 +377,7 @@ namespace SlimDX {
 		/// whether or not the control is supported by the device. For proportional controls, such as thumbsticks, the value indicates the resolution for that control.
 		/// Some number of the least significant bits may not be set, indicating that the control does not provide resolution to that level.
 		/// </remarks>
+		[StructLayout(LayoutKind::Sequential)]
 		public value class Capabilities
 		{
 		private:
@@ -423,11 +437,12 @@ namespace SlimDX {
 		/// <summary>
 		/// Flags for battery type
 		/// </summary>
-		public enum class BatteryType : Byte {
+		public enum class BatteryType : Byte
+		{
 			Disconnected = BATTERY_TYPE_DISCONNECTED,
 			Wired = BATTERY_TYPE_WIRED,
 			Alkaline = BATTERY_TYPE_ALKALINE,
-			NiMH = BATTERY_TYPE_NIMH,
+			NickelMetalHydride = BATTERY_TYPE_NIMH,
 			Unknown = BATTERY_TYPE_UNKNOWN
 		};
 
@@ -437,14 +452,16 @@ namespace SlimDX {
 		/// <remarks>
 		/// These are only valid for wireless, connected devices, with known battery types. The amount of use time remaining depends on the type of device.
 		/// </remarks>
-		public enum class BatteryLevel : Byte {
+		public enum class BatteryLevel : Byte
+		{
 			Empty = BATTERY_LEVEL_EMPTY,
 			Low = BATTERY_LEVEL_LOW,
 			Medium = BATTERY_LEVEL_MEDIUM,
 			Full = BATTERY_LEVEL_FULL
 		};
 
-		public value class BatteryInformation {
+		public value class BatteryInformation
+		{
 			BatteryType Type;
 			BatteryLevel Level;
 		};
@@ -452,7 +469,8 @@ namespace SlimDX {
 		/// <summary>
 		/// Flags that identify the device type.
 		/// </summary>
-		public enum class DeviceQueryType : Int32 {
+		public enum class DeviceQueryType : Int32
+		{
 			Any = 0,
 			GamePad = XINPUT_FLAG_GAMEPAD
 		};
@@ -460,7 +478,8 @@ namespace SlimDX {
 		/// <summary>
 		/// Devices that support batteries.
 		/// </summary>
-		public enum class BatteryDeviceType : Byte {
+		public enum class BatteryDeviceType : Byte
+		{
 			Gamepad = BATTERY_DEVTYPE_GAMEPAD,
 			Headset = BATTERY_DEVTYPE_HEADSET
 		};
@@ -468,7 +487,8 @@ namespace SlimDX {
 		/// <summary>
 		/// Index of the signed-in gamer associated with the device.
 		/// </summary>
-		public enum class UserIndex : UInt32 {
+		public enum class UserIndex : UInt32
+		{
 			Any = XUSER_INDEX_ANY,
 			One = 0,
 			Two = 1,
@@ -480,35 +500,44 @@ namespace SlimDX {
 		/// <summary>
 		/// 
 		/// </summary>
-		public ref class Controller {
+		public ref class Controller
+		{
+		private:
+			UInt32 userIndex;
+
 		public:
 			/// <summary>
 			/// Initializes a new instance of Controller
 			/// </summary>
 			/// <param name="userIndex">Index of the user's controller.</param>
 			Controller(UserIndex userIndex);
+
 			/// <summary>
 			/// Retrieves the current state of the specified controller.
 			/// </summary>
 			/// <param name="currentState">Out reference to State structure that receives the current state of the controller.</param>
 			void GetState([Out] State% currentState);
+
 			/// <summary>
 			/// Sends data to a connected controller. This function is used to activate the vibration function of a controller.
 			/// </summary>
 			/// <param name="vibration">Reference structure containing the vibration information to send to the controller.</param>
 			void SetState(Vibration% vibration);
+
 			/// <summary>
 			/// Retrieves the capabilities and features of a connected controller.
 			/// </summary>
 			/// <param name="flag">Input flags that identify the device type.</param>
 			/// <param name="capabilities">Out reference to Capabilities structure that receives the controller capabilities.</param>
 			void GetCapabilities(DeviceQueryType flag, [Out] Capabilities% capabilities);
+
 			/// <summary>
 			/// Retrieves the sound rendering and sound capture device GUIDs that are associated with the headset connected to the specified controller.
 			/// </summary>
 			/// <param name="soundRenderGuid">Out reference to Guid structure that receives the GUID of the headset sound rendering device.</param>
 			/// <param name="soundCaptureGuid">Out reference to Guid structure that receives the GUID of the headset sound capture device.</param>
 			void GetDirectSoundAudioDeviceGuids([Out] Guid% soundRenderGuid, [Out] Guid% soundCaptureGuid);
+
 			/// <summary>
 			/// Retrieves a gamepad input event.
 			/// </summary>
@@ -516,6 +545,7 @@ namespace SlimDX {
 			/// <param name="keystroke">Out reference to KeyStroke structure that receives an input event.</param>
 			/// <returns>False if no new keys have been pressed.</returns>
 			bool GetKeystroke(DeviceQueryType flag, [Out] KeyStroke% keystroke);
+
 			/// <summary>
 			/// Gets information on the controllers battery.
 			/// </summary>
@@ -523,7 +553,6 @@ namespace SlimDX {
 			/// <param name="batteryInfo">Out reference to BatteryInformation structure that receives the battery status information.</param>
 			void GetBatteryInformation(BatteryDeviceType flag, [Out] BatteryInformation% batteryInfo);
 
-		public:
 			/// <summary>
 			/// Tests if the controller is currently connected. 
 			/// </summary>
@@ -534,8 +563,6 @@ namespace SlimDX {
 			/// or Xbox Guide button to power on the controller.
 			/// </remarks>
 			property bool IsConnected { bool get(); }
-		private:
-			UInt32 userIndex;
 		};
 	}
 }

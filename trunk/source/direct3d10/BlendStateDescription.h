@@ -22,6 +22,7 @@
 #pragma once
 
 using namespace System;
+using namespace System::Collections::ObjectModel;
 
 #include "Enums.h"
 
@@ -33,14 +34,14 @@ namespace SlimDX
 		{
 		private:
 			bool alphaToCoverageEnabled;
-            array<bool>^ renderTargetBlendEnabled;
+            Collection<bool>^ renderTargetBlendEnabled;
             BlendOption sourceBlend;
             BlendOption destinationBlend;
             SlimDX::Direct3D10::BlendOperation blendOperation;
             BlendOption sourceAlphaBlend;
             BlendOption destinationAlphaBlend;
             SlimDX::Direct3D10::BlendOperation alphaBlendOperation;
-            array<ColorWriteMaskFlags>^ renderTargetWriteMask;
+            Collection<ColorWriteMaskFlags>^ renderTargetWriteMask;
 
 		internal:
 			BlendStateDescription( const D3D10_BLEND_DESC& desc );
@@ -54,10 +55,9 @@ namespace SlimDX
                 void set( bool value ) { alphaToCoverageEnabled = value; }
             }
 
-            property array<bool>^ RenderTargetBlendEnabled
+            property Collection<bool>^ RenderTargetBlendEnabled
             {
-                array<bool>^ get() { return renderTargetBlendEnabled; }
-                void set( array<bool>^ value ) { renderTargetBlendEnabled = value; }
+                Collection<bool>^ get() { return gcnew Collection<bool>( renderTargetBlendEnabled ); }
             }
 
             property BlendOption SourceBlend
@@ -96,10 +96,9 @@ namespace SlimDX
                 void set( SlimDX::Direct3D10::BlendOperation value ) { alphaBlendOperation = value; }
             }
 
-            property array<ColorWriteMaskFlags>^ RenderTargetWriteMask
+            property Collection<ColorWriteMaskFlags>^ RenderTargetWriteMask
             {
-                array<ColorWriteMaskFlags>^ get() { return renderTargetWriteMask; }
-                void set( array<ColorWriteMaskFlags>^ value ) { renderTargetWriteMask = value; }
+                Collection<ColorWriteMaskFlags>^ get() { return gcnew Collection<ColorWriteMaskFlags>( renderTargetWriteMask ); }
             }
 			
 			BlendStateDescription();

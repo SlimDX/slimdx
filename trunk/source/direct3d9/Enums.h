@@ -381,7 +381,7 @@ namespace SlimDX
 			PointSize = D3DDECLUSAGE_PSIZE,
 			TextureCoordinate = D3DDECLUSAGE_TEXCOORD,
 			Tangent = D3DDECLUSAGE_TANGENT,
-			BiNormal = D3DDECLUSAGE_BINORMAL,
+			Binormal = D3DDECLUSAGE_BINORMAL,
 			TessellateFactor = D3DDECLUSAGE_TESSFACTOR,
 			PositionTransformed = D3DDECLUSAGE_POSITIONT,
 			Color = D3DDECLUSAGE_COLOR,
@@ -609,7 +609,7 @@ namespace SlimDX
 			IndexedVertexBlendEnable = D3DRS_INDEXEDVERTEXBLENDENABLE,
 			ColorWriteEnable = D3DRS_COLORWRITEENABLE,
 			TweenFactor = D3DRS_TWEENFACTOR,
-			BlendOp = D3DRS_BLENDOP,
+			BlendOperation = D3DRS_BLENDOP,
 			PositionDegree = D3DRS_POSITIONDEGREE,
 			NormalDegree = D3DRS_NORMALDEGREE,
 			ScissorTestEnable = D3DRS_SCISSORTESTENABLE,
@@ -644,7 +644,7 @@ namespace SlimDX
 			SeparateAlphaBlendEnable = D3DRS_SEPARATEALPHABLENDENABLE,
 			SourceBlendAlpha = D3DRS_SRCBLENDALPHA,
 			DestBlendAlpha = D3DRS_DESTBLENDALPHA,
-			BlendOpAlpha = D3DRS_BLENDOPALPHA,
+			BlendOperationAlpha = D3DRS_BLENDOPALPHA,
 		};
 
 		public enum class TransformState : Int32
@@ -667,10 +667,10 @@ namespace SlimDX
 
 		public enum class TextureStage : Int32
 		{
-			ColorOp = D3DTSS_COLOROP,
+			ColorOperation = D3DTSS_COLOROP,
 			ColorArg1 = D3DTSS_COLORARG1,
 			ColorArg2 = D3DTSS_COLORARG2,
-			AlphaOp = D3DTSS_ALPHAOP,
+			AlphaOperation = D3DTSS_ALPHAOP,
 			AlphaArg1 = D3DTSS_ALPHAARG1,
 			AlphaArg2 = D3DTSS_ALPHAARG2,
 			BumpEnvMat00 = D3DTSS_BUMPENVMAT00,

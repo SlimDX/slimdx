@@ -114,7 +114,7 @@ namespace SlimDX
 			property Format AutoDepthStencilFormat;
 			property PresentFlags PresentFlags;
 
-			property int FullScreenRefreshRateInHz;
+			property int FullScreenRefreshRateInHertz;
 			property PresentInterval PresentationInterval;
 		};
 
@@ -131,9 +131,15 @@ namespace SlimDX
 		public ref class Device : public DirectXObject<IDirect3DDevice9>
 		{
 		private:
-			IndexBuffer^ m_Indices;
 			VertexFormat m_VertexFormat;
 			VertexDeclaration^ m_VertexDecl;
+			DriverLevel driverLevel;
+			String^ vertexShaderProfile;
+			String^ pixelShaderProfile;
+
+			DriverLevel GetDriverLevel();
+			String^ GetVertexShaderProfile();
+			String^ GetPixelShaderProfile();
 
 		internal:
 			Device( IDirect3DDevice9* device );
@@ -144,12 +150,6 @@ namespace SlimDX
 			virtual ~Device() { Destruct(); }
 
 			// --- Properties ---
-
-			property IndexBuffer^ Indices
-			{
-				IndexBuffer^ get() { return m_Indices; }
-				void set( IndexBuffer^ value );
-			}
 
 			property VertexFormat VertexFormat
 			{
@@ -215,14 +215,25 @@ namespace SlimDX
 				void set( int value );
 			}
 
+			property DriverLevel DriverLevel
+			{
+				SlimDX::Direct3D9::DriverLevel get() { return driverLevel; }
+			}
+
+			property String^ VertexShaderProfile
+			{
+				String^ get() { return vertexShaderProfile; }
+			}
+
+			property String^ PixelShaderProfile
+			{
+				String^ get() { return pixelShaderProfile; }
+			}
+
 			// --- Methods ---
 
 			bool IsQuerySupported( QueryType type );
 			void EvictManagedResources();
-
-			DriverLevel GetDriverLevel();
-			String^ GetVertexShaderProfile();
-			String^ GetPixelShaderProfile();
 
 			int ValidateDevice();
 			void TestCooperativeLevel();
@@ -250,7 +261,6 @@ namespace SlimDX
 			int GetRenderState( RenderState state );
 
 			Capabilities GetDeviceCaps();
-			bool GetSoftwareVertexProcessing();
 			void GetStreamSource( int stream, [Out] VertexBuffer^% streamData, [Out] int% offsetBytes, [Out] int% stride );
 			int GetStreamSourceFreq( int stream );
 
@@ -261,9 +271,9 @@ namespace SlimDX
 				void SetRenderState( RenderState state, T value );
 
 			void SetTextureStageState( int stage, TextureStage type, int value );
-			void SetTextureStageState( int stage, TextureStage type, TextureOperation texOp );
-			void SetTextureStageState( int stage, TextureStage type, TextureArgument texArg );
-			void SetTextureStageState( int stage, TextureStage type, TextureTransform texTransform );
+			void SetTextureStageState( int stage, TextureStage type, TextureOperation textureOperation );
+			void SetTextureStageState( int stage, TextureStage type, TextureArgument textureArgument );
+			void SetTextureStageState( int stage, TextureStage type, TextureTransform textureTransform );
 			void SetTextureStageState( int stage, TextureStage type, float value );
 
 			void SetSamplerState( int sampler, SamplerState type, int value );
@@ -290,6 +300,7 @@ namespace SlimDX
 			void SetVertexShader( VertexShader^ vertexShader );			
 			void SetDepthStencilSurface( Surface^ target );
 			void SetDialogBoxMode( bool enableDialogs );
+			void SetIndices( IndexBuffer^ indices );
 
 			void SetVertexShaderConstant( int startRegister, array<bool>^ data, int offset, int count );
 			void SetVertexShaderConstant( int startRegister, array<float>^ data, int offset, int count );
@@ -338,7 +349,7 @@ namespace SlimDX
 
 			//ATI R2VB functionality, based on work by Oliver 'acid2' Charles
 			void SetR2VBMode( bool enableR2VB );
-			void BindRenderTargetToVertexStream( R2VBSampler sampler, Texture^ r2vbTarget, int stream, int stride, VertexBuffer^ dummyVb );
+			void BindRenderTargetToVertexStream( R2VBSampler sampler, Texture^ r2vbTarget, int stream, int stride, VertexBuffer^ dummyVertexBuffer );
 			void RestoreVertexStream( int stream );
 		};
 	}
