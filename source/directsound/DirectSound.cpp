@@ -64,17 +64,19 @@ namespace DirectSound
 	{
 		HRESULT hr = m_Pointer->Initialize( NULL );
 		SoundException::CheckHResult( hr );
+		caps = GetCapabilities();
 	}
 
 	void DirectSound::Initialize( Guid device )
 	{
 		HRESULT hr = m_Pointer->Initialize( (GUID*) &device );
 		SoundException::CheckHResult( hr );
+		caps = GetCapabilities();
 	}
 
 	Capabilities DirectSound::GetCapabilities()
 	{
-		Capabilities caps;
+		SlimDX::DirectSound::Capabilities caps;
 		HRESULT hr = m_Pointer->GetCaps( (DSCAPS*) &caps );
 		SoundException::CheckHResult( hr );
 		

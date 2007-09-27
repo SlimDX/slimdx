@@ -95,7 +95,7 @@ namespace SlimDX
 			ClipPlanesScaledPoints = D3DPMISCCAPS_CLIPPLANESCALEDPOINTS,
 			ClipTLVerts = D3DPMISCCAPS_CLIPTLVERTS,
 			TssArgTemp = D3DPMISCCAPS_TSSARGTEMP,
-			BlendOp = D3DPMISCCAPS_BLENDOP,
+			BlendOperation = D3DPMISCCAPS_BLENDOP,
 			NullReference = D3DPMISCCAPS_NULLREFERENCE,
 			IndependentWriteMasks = D3DPMISCCAPS_INDEPENDENTWRITEMASKS,
 			PerStateConstant = D3DPMISCCAPS_PERSTAGECONSTANT,
@@ -243,7 +243,7 @@ namespace SlimDX
 		};
 
 		[Flags]
-		public enum class TextureOpCaps : Int32
+		public enum class TextureOperationCaps : Int32
 		{
 			Disable = D3DTEXOPCAPS_DISABLE,
 			SelectArg1 = D3DTEXOPCAPS_SELECTARG1,

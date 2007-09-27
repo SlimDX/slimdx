@@ -48,7 +48,7 @@ namespace Direct3D10
 	Buffer::Buffer( Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
 	{
 		if( sizeInBytes <= 0 )
-			throw gcnew ArgumentException( "sizeInBytes must be greater than zero.", "sizeInBytes" );
+			throw gcnew ArgumentException( "The sizeInBytes parameter must be greater than zero.", "sizeInBytes" );
 		Construct(device,sizeInBytes,nullptr,usage,bindFlags,accessFlags,optionFlags);
 	}
 	

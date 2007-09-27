@@ -26,8 +26,8 @@ namespace SlimDX
 {
 	void Utils::ReportNotDisposed( DirectXBase^ obj )
 	{
-		String^ message = String::Format( "Object of type {0} not disposed.", obj->GetType()->ToString() );
-		//Debug::WriteLine( message );
+		String^ message = String::Format( CultureInfo::InvariantCulture, "Object of type {0} not disposed.", obj->GetType()->ToString() );
+		Debug::WriteLine( message );
 	}
 	
 	void Utils::MarkDisposed( bool %disposed, Object^ obj )

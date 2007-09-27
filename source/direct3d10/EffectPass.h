@@ -22,6 +22,7 @@
 #pragma once
 
 using namespace System;
+using namespace System::Globalization;
 
 #include "../Direct3D/ColorValue.h"
 

@@ -298,7 +298,12 @@ namespace DirectInput
 			MouseState^ result = gcnew MouseState( state.lX, state.lY, state.lZ );
 			result = gcnew MouseState( state.lX, state.lY, state.lZ );
 			for( int i = 0; i < 8; i++ )
-				result->Buttons[i] = state.rgbButtons[i] & 0x80;
+			{
+				if( state.rgbButtons[i] & 0x80 )
+					result->buttons[i] = true;
+				else
+					result->buttons[i] = false;
+			}
 
 			return ( DataFormat )result;
 		}

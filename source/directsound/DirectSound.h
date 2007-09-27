@@ -61,6 +61,10 @@ namespace SlimDX
 
 		public ref class DirectSound : DirectXObject<IDirectSound8>
 		{
+		private:
+			Capabilities caps;
+			Capabilities GetCapabilities();
+
 		public:
 			DirectSound( IDirectSound8* dsound );
 			DirectSound();
@@ -70,12 +74,15 @@ namespace SlimDX
 			void Initialize();
 			void Initialize( Guid device );
 
-			Capabilities GetCapabilities();
-
 			void SetCooperativeLevel( IntPtr windowHandle, CooperativeLevel coopLevel );
 			void SetSpeakerConfig( Speaker speakerSet, SpeakerGeometry geometry );
 			void GetSpeakerConfig( [Out] Speaker% speakerSet, [Out] SpeakerGeometry% geometry );
 			bool VerifyCertification();
+
+			property Capabilities Capabilities
+			{
+				SlimDX::DirectSound::Capabilities get() { return caps; }
+			}
 		};
 	}
 }

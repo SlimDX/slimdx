@@ -141,7 +141,7 @@ namespace Direct3D9
         //probe for D3DX
         try
         {
-            BOOL d3dx = D3DXCheckVersion( D3D_SDK_VERSION, D3DX_SDK_VERSION );
+            D3DXCheckVersion( D3D_SDK_VERSION, D3DX_SDK_VERSION );
         }
         catch( SEHException^ ex )
         {
@@ -372,7 +372,7 @@ namespace Direct3D9
 		StencilCaps = (SlimDX::Direct3D9::StencilCaps) caps.StencilCaps;
 
 		FVFCaps = (VertexFormatCaps) caps.FVFCaps;
-		TextureOpCaps = (SlimDX::Direct3D9::TextureOpCaps) caps.TextureOpCaps;
+		TextureOperationCaps = (SlimDX::Direct3D9::TextureOperationCaps) caps.TextureOpCaps;
 		MaxTextureBlendStages = caps.MaxTextureBlendStages;
 		MaxSimultaneousTextures = caps.MaxSimultaneousTextures;
 

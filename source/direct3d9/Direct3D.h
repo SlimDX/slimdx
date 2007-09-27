@@ -117,7 +117,7 @@ namespace SlimDX
             property float ExtentsAdjust;
             property StencilCaps StencilCaps;
             property VertexFormatCaps FVFCaps;
-            property TextureOpCaps TextureOpCaps;
+            property TextureOperationCaps TextureOperationCaps;
             property int MaxTextureBlendStages;
             property int MaxSimultaneousTextures;
             property VertexProcessingCaps VertexProcessingCaps;
@@ -240,9 +240,10 @@ namespace SlimDX
 			}
 		};
 
-		public ref class Direct3D
+		public ref class Direct3D sealed
 		{
 		private:
+			Direct3D() { }
 			static IDirect3D9* m_Direct3D;
 
 			static void OnExit(Object^ sender,EventArgs^ e)

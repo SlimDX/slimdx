@@ -73,15 +73,15 @@ namespace SlimDX
 			static void Unmarshal( D3DXMACRO* macros, array<GCHandle>^ handles );
 
 		public:
-			String^ Name;
-			String^ Definition;
+			property String^ Name;
+			property String^ Definition;
 		};
 
 		public value class ShaderSemantic
 		{
 		public:
-			DeclarationUsage Usage;
-			int UsageIndex;
+			property DeclarationUsage Usage;
+			property int UsageIndex;
 		};
 
 		public ref class ShaderBytecode : public BufferWrapper
@@ -101,8 +101,11 @@ namespace SlimDX
 			}
 		};
 
-		public ref class Shader
+		public ref class Shader sealed
 		{
+		private:
+			Shader() { }
+
 		public:
 			//D3DXAssembleShader
 			static ShaderBytecode^ Assemble( array<Byte>^ sourceData, array<Macro>^ defines,

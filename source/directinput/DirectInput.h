@@ -34,9 +34,10 @@ namespace SlimDX
 		/// <summary>
 		/// Provides an interface to DirectInput.
 		/// </summary>
-		public ref class DirectInput
+		public ref class DirectInput sealed
 		{
 		private:
+			DirectInput() { }
 			static IDirectInput8W* m_DirectInput;
 
 			static void OnExit( Object^ sender, EventArgs^ e )

@@ -49,9 +49,9 @@ namespace SlimDX
 				bool get() { return m_Description->AlphaToCoverageEnabled; }
 			}
 			
-			property array<bool>^ RenderTargetBlendEnabled
+			property Collection<bool>^ RenderTargetBlendEnabled
 			{
-				array<bool>^ get() { return m_Description->RenderTargetBlendEnabled; }
+				Collection<bool>^ get() { return m_Description->RenderTargetBlendEnabled; }
 			}
 			
 			property BlendOption SourceBlend
@@ -84,9 +84,9 @@ namespace SlimDX
 				SlimDX::Direct3D10::BlendOperation get() { return m_Description->AlphaBlendOperation; }
 			}
 			
-			property array<ColorWriteMaskFlags>^ RenderTargetWriteMask
+			property Collection<ColorWriteMaskFlags>^ RenderTargetWriteMask
 			{
-				array<ColorWriteMaskFlags>^ get() { return m_Description->RenderTargetWriteMask; }
+				Collection<ColorWriteMaskFlags>^ get() { return m_Description->RenderTargetWriteMask; }
 			}
 			
 			

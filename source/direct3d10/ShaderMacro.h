@@ -32,8 +32,8 @@ namespace SlimDX
 		public value class ShaderMacro
 		{
 		public:
-			String^ Name;
-			String^ Value;
+			property String^ Name;
+			property String^ Value;
 		};
 	}
 };

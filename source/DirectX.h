@@ -27,6 +27,9 @@ namespace SlimDX
 {
 	public ref class DirectX sealed
 	{
+	private:
+		DirectX() { }
+
 	public:
 		static String^ GetErrorString( int errorCode );
 		static String^ GetErrorDescription( int errorCode );

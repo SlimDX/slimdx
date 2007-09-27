@@ -32,8 +32,11 @@ namespace SlimDX
 			DoNotAllowProfiling = 1,
 		};
 
-		public ref class Performance
+		public ref class Performance sealed
 		{
+		private:
+			Performance() { }
+
 		public:
 			static int BeginEvent( int color, String^ name );
 			static int BeginEvent( System::Drawing::Color color, String^ name );

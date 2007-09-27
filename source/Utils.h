@@ -24,6 +24,7 @@
 #include <windows.h>
 
 using namespace System;
+using namespace System::Globalization;
 using namespace System::IO;
 using namespace System::Diagnostics;
 

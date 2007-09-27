@@ -74,49 +74,49 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the state of each point-of-view controller on the joystick.
 			/// </summary>
-			property array<int>^ PointOfViewControllers
+			array<int>^ GetPointOfViewControllers()
 			{
-				array<int>^ get() { return povs; }
+				return povs;
 			}
 
 			/// <summary>
 			/// Gets the position of each slider on the joystick.
 			/// </summary>
-			property array<int>^ Sliders
+			array<int>^ GetSliders()
 			{
-				array<int>^ get() { return sliders; }
+				return sliders;
 			}
 
 			/// <summary>
 			/// Gets the velocity of each slider on the joystick.
 			/// </summary>
-			property array<int>^ VelocitySliders
+			array<int>^ GetVelocitySliders()
 			{
-				array<int>^ get() { return vsliders; }
+				return vsliders;
 			}
 
 			/// <summary>
 			/// Gets the acceleration of each slider on the joystick.
 			/// </summary>
-			property array<int>^ AccelerationSliders
+			array<int>^ GetAccelerationSliders()
 			{
-				array<int>^ get() { return asliders; }
+				return asliders;
 			}
 
 			/// <summary>
 			/// Gets the force of each slider on the joystick.
 			/// </summary>
-			property array<int>^ ForceSliders
+			array<int>^ GetForceSliders()
 			{
-				array<int>^ get() { return fsliders; }
+				return fsliders;
 			}
 
 			/// <summary>
 			/// Gets the state of each button on the joystick.
 			/// </summary>
-			property array<bool>^ Buttons
+			array<bool>^ GetButtons()
 			{
-				array<bool>^ get() { return buttons; }
+				return buttons;
 			}
 
 			/// <summary>
@@ -375,9 +375,9 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the state of the mouse buttons.
 			/// </summary>
-			property array<bool>^ Buttons
+			array<bool>^ GetButtons()
 			{
-				array<bool>^ get() { return buttons; }
+				return buttons;
 			}
 		};
 	}

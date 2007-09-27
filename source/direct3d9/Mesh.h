@@ -33,20 +33,20 @@ namespace SlimDX
 			Use32Bit = D3DXMESH_32BIT,
 			DoNotClip = D3DXMESH_DONOTCLIP,
 			Points = D3DXMESH_POINTS,
-			RtPatches = D3DXMESH_RTPATCHES,
+			RTPatches = D3DXMESH_RTPATCHES,
 			NPatches = D3DXMESH_NPATCHES,
-			VbSystemMem = D3DXMESH_VB_SYSTEMMEM,
-			VbManaged = D3DXMESH_VB_MANAGED,
-			VbWriteOnly = D3DXMESH_VB_WRITEONLY,
-			VbDynamic = D3DXMESH_VB_DYNAMIC,
-			VbSoftware = D3DXMESH_VB_SOFTWAREPROCESSING,
-			IbSystemMem = D3DXMESH_IB_SYSTEMMEM,
-			IbManaged = D3DXMESH_IB_MANAGED,
-			IbWriteOnly = D3DXMESH_IB_WRITEONLY,
-			IbDynamic = D3DXMESH_IB_DYNAMIC,
-			IbSoftware = D3DXMESH_IB_SOFTWAREPROCESSING,
+			VertexBufferSystemMem = D3DXMESH_VB_SYSTEMMEM,
+			VertexBufferManaged = D3DXMESH_VB_MANAGED,
+			VertexBufferWriteOnly = D3DXMESH_VB_WRITEONLY,
+			VertexBufferDynamic = D3DXMESH_VB_DYNAMIC,
+			VertexBufferSoftware = D3DXMESH_VB_SOFTWAREPROCESSING,
+			IndexBufferSystemMem = D3DXMESH_IB_SYSTEMMEM,
+			IndexBufferManaged = D3DXMESH_IB_MANAGED,
+			IndexBufferbWriteOnly = D3DXMESH_IB_WRITEONLY,
+			IndexBufferDynamic = D3DXMESH_IB_DYNAMIC,
+			IndexBufferSoftware = D3DXMESH_IB_SOFTWAREPROCESSING,
 
-			VbShare = D3DXMESH_VB_SHARE,
+			VertexBufferShare = D3DXMESH_VB_SHARE,
 
 			UseHardwareOnly = D3DXMESH_USEHWONLY,
 
@@ -101,8 +101,8 @@ namespace SlimDX
 			static array<ExtendedMaterial>^ FromBuffer( ID3DXBuffer* buffer );
 
 		public:
-			Material MaterialD3D;
-			String^ TextureFilename;
+			property Material MaterialD3D;
+			property String^ TextureFilename;
 		};
 
 		public value class EffectDefault

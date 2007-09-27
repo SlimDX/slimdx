@@ -256,7 +256,7 @@ namespace SlimDX
 		void BaseEffect::SetValue( EffectHandle^ param, bool value )
 		{
 			D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
-			HRESULT hr = m_Pointer->SetBool( param->InternalHandle, value );
+			HRESULT hr = m_Pointer->SetBool( handle, value );
 			GraphicsException::CheckHResult( hr );
 		}
 
