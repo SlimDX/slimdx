@@ -39,6 +39,7 @@ namespace SlimDX
 			
 		public:
 			void Set( Vector4 value );
+			void Set( array<Vector4>^ value );
 		};
 	}
 };

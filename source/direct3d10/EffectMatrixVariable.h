@@ -39,6 +39,7 @@ namespace SlimDX
 			
 		public:
 			void SetMatrix( Matrix matrix );
+			void SetMatrix( array<Matrix>^ matrices );
 		};
 	}
 };

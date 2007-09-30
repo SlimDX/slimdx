@@ -41,5 +41,12 @@ namespace Direct3D10
 		HRESULT hr = ( ( ID3D10EffectMatrixVariable* ) Pointer )->SetMatrix( (float*) &matrix );
 		GraphicsException::CheckHResult( hr );
 	}
+	
+	void EffectMatrixVariable::SetMatrix( array<Matrix>^ matrices )
+	{
+		pin_ptr<Matrix> pinnedMatrices = &matrices[0];
+		HRESULT hr = ( (ID3D10EffectMatrixVariable*) Pointer )->SetMatrixArray( (float*) pinnedMatrices, 0, matrices->Length );
+		GraphicsException::CheckHResult( hr );
+	}
 }
 }
