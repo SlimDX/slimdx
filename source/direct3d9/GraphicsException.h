@@ -33,7 +33,6 @@ namespace SlimDX
 	{
 		public ref class GraphicsException : public SlimDX::DirectXException
 		{
-		public:
 			static GraphicsException()
 			{
 				LastError = S_OK;
@@ -41,6 +40,8 @@ namespace SlimDX
 				EnableForDeviceState = true;
 				EnableForStillDrawing = true;
 			}
+			
+		public:
 
 			GraphicsException() : DirectXException(E_FAIL, "A Direct3D exception occurred.")
 			{ }

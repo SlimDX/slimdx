@@ -35,12 +35,12 @@ namespace SlimDX
 	{
 		public ref class AudioException : public SlimDX::DirectXException
 		{
-		public:
 			static AudioException()
 			{
 				LastError = S_OK;
 			}
-
+			
+		public:
 			AudioException() : DirectXException(E_FAIL, "An XAudio2 exception occurred.")
 			{ }
 			AudioException(String^ message) : DirectXException(E_FAIL, message)

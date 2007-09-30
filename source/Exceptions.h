@@ -28,14 +28,14 @@ namespace SlimDX
 {
 	public ref class DirectXException : public Exception
 	{
-	public:
-		static property bool EnableExceptions;
-		property int ErrorCode;
-
 		static DirectXException()
 		{
 			EnableExceptions = true;
 		}
+		
+	public:
+		static property bool EnableExceptions;
+		property int ErrorCode;
 
 		DirectXException() : Exception("A DirectX exception occurred.") {
 			ErrorCode = E_FAIL;

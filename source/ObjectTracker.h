@@ -30,14 +30,6 @@ namespace SlimDX
 {
 	ref class ObjectTracker
 	{
-	private:
-		ObjectTracker() { }
-
-		static Dictionary<IDisposable^, StackTrace^>^ m_TrackedObjects;
-
-		static void OnExit( Object^ sender, EventArgs^ e );
-
-	public:
 		static ObjectTracker()
 		{
 			m_TrackedObjects = gcnew Dictionary<IDisposable^, StackTrace^>();
@@ -45,7 +37,14 @@ namespace SlimDX
 			AppDomain::CurrentDomain->DomainUnload += gcnew EventHandler( OnExit );
 			AppDomain::CurrentDomain->ProcessExit += gcnew EventHandler( OnExit );
 		}
+	
+		ObjectTracker() { }
 
+		static Dictionary<IDisposable^, StackTrace^>^ m_TrackedObjects;
+
+		static void OnExit( Object^ sender, EventArgs^ e );
+
+	public:
 		static void Add( IDisposable^ obj );
 		static void Remove( IDisposable^ obj );
 		static void ReportLeaks();

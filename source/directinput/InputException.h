@@ -42,7 +42,6 @@ namespace SlimDX
 		/// </summary>
 		public ref class InputException : public SlimDX::DirectXException
 		{
-		public:
 			/// <summary>
 			/// Initializes the <see cref="SlimDX::DirectInput::InputException"/> class.
 			/// </summary>
@@ -50,7 +49,8 @@ namespace SlimDX
 			{
 				LastError = S_OK;
 			}
-
+			
+		public:
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::InputException"/> class.
 			/// </summary>
