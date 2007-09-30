@@ -305,7 +305,7 @@ namespace SlimDX
 			None = 0,
 			DoNotWait = D3D10_MAP_FLAG_DO_NOT_WAIT
 		};
-
+	
 		[Flags]
 		public enum class PresentFlags : Int32
 		{
@@ -335,7 +335,15 @@ namespace SlimDX
 			TriangleListWithAdjacency = D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST_ADJ,
 			TriangleStripWithAdjacency = D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP_ADJ
 		};
-
+		
+		public enum class RegisterComponentType : Int32
+		{
+			Unknown = D3D10_REGISTER_COMPONENT_UNKNOWN,
+			UInt32 = D3D10_REGISTER_COMPONENT_UINT32,
+			SInt32 = D3D10_REGISTER_COMPONENT_SINT32,
+			Float32 = D3D10_REGISTER_COMPONENT_FLOAT32
+		};
+		
 		public enum class Residency : Int32
 		{
 			FullyResident = DXGI_RESIDENCY_FULLY_RESIDENT,
@@ -448,6 +456,23 @@ namespace SlimDX
 		{
 			Discard = DXGI_SWAP_EFFECT_DISCARD,
 			Sequential = DXGI_SWAP_EFFECT_SEQUENTIAL
+		};
+		
+		public enum class SystemValueType : Int32
+		{
+			Undefined = D3D10_NAME_UNDEFINED,
+			Position = D3D10_NAME_POSITION,
+			ClipDistance = D3D10_NAME_CLIP_DISTANCE,
+			CullDistance = D3D10_NAME_CULL_DISTANCE,
+			RenderTargetArrayIndex = D3D10_NAME_RENDER_TARGET_ARRAY_INDEX,
+			ViewportArrayIndex = D3D10_NAME_VIEWPORT_ARRAY_INDEX,
+			VertexID = D3D10_NAME_VERTEX_ID,
+			PrimitiveID = D3D10_NAME_PRIMITIVE_ID,
+			InstanceID = D3D10_NAME_INSTANCE_ID,
+			FrontFaceFlag = D3D10_NAME_IS_FRONT_FACE,
+			SampleIndex =D3D10_NAME_SAMPLE_INDEX,
+			Target = D3D10_NAME_TARGET,
+			Depth = D3D10_NAME_DEPTH
 		};
 		
 		///@TODO D3D10: Not so sure about this. Can this be moved to the shared utils?

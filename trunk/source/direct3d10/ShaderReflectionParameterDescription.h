@@ -24,28 +24,61 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
+#include "Enums.h"
+
 namespace SlimDX
 {
 	namespace Direct3D10
-	{
+	{	
 		[StructLayout( LayoutKind::Sequential )]
-		public value class SampleDescription
+		public value class ShaderReflectionParameterDescription
 		{
 		private:
-			int count;
-			int quality;
-
+			String^ semanticName;
+			UInt32 semanticIndex;
+			UInt32 registerIndex;
+			SystemValueType systemValueType;
+			RegisterComponentType componentType;
+			Byte mask;///TODO: Might be able to make these more specific; I think they represent whether x y z or w is ued, etc.
+			Byte readWriteMask;
+		
+		internal:
+			ShaderReflectionParameterDescription( const D3D10_SIGNATURE_PARAMETER_DESC& desc );
+		
 		public:
-			property int Count
+			property String^ SemanticName
 			{
-				int get() { return count; }
-				void set( int value ) { count = value; }
+				String^ get() { return semanticName; }
 			}
-
-			property int Quality
+			
+			property UInt32 SemanticIndex
 			{
-				int get() { return quality; }
-				void set( int value ) { quality = value; }
+				UInt32 get() { return semanticIndex; }
+			}
+			
+			property UInt32 Register
+			{
+				UInt32 get() { return semanticIndex; }
+			}
+			
+			property SystemValueType SystemType
+			{
+				SystemValueType get() { return systemValueType; }
+			}
+			
+			property RegisterComponentType ComponentType
+			{
+				RegisterComponentType get() { return componentType; }
+			}
+			
+			property Byte UsageMask
+			{
+				Byte get() { return mask; }
+			}
+			
+			property Byte ReadWriteMask
+			{
+				Byte get() { return readWriteMask; }
 			}
 		};
 	}
