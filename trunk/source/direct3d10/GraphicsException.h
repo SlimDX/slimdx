@@ -32,11 +32,12 @@ namespace SlimDX
 	{
 		public ref class GraphicsException : public DirectXException
 		{
-		public:
 			static GraphicsException()
 			{
 				LastError = S_OK;
 			}
+			
+		public:
 
 			GraphicsException() : DirectXException(E_FAIL, "A Direct3D exception occurred.")
 			{ }

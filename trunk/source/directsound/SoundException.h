@@ -33,12 +33,12 @@ namespace SlimDX
 	{
 		public ref class SoundException : public SlimDX::DirectXException
 		{
-		public:
 			static SoundException()
 			{
 				LastError = S_OK;
 			}
-
+			
+		public:
 			SoundException() : DirectXException(E_FAIL, "A DirectSound exception occurred.")
 			{ }
 			SoundException(String^ message) : DirectXException(E_FAIL, message)

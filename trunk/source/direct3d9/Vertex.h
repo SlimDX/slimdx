@@ -31,6 +31,12 @@ namespace SlimDX
 		public value class VertexElement
 		{
 		private:
+			static VertexElement()
+			{
+				VertexDeclarationEnd = VertexElement( 255, 0, DeclarationType::Unused, 
+					DeclarationMethod::Default, DeclarationUsage::Position, 0 );
+			}
+			
 			short stream;
             short offset;
             DeclarationType type;
@@ -76,12 +82,6 @@ namespace SlimDX
             }
 
 			static initonly VertexElement VertexDeclarationEnd;
-
-			static VertexElement()
-			{
-				VertexDeclarationEnd = VertexElement( 255, 0, DeclarationType::Unused, 
-					DeclarationMethod::Default, DeclarationUsage::Position, 0 );
-			}
 
 			VertexElement( short stream, short offset, DeclarationType declType, 
 				DeclarationMethod declMethod, DeclarationUsage declUsage, Byte usageIndex )

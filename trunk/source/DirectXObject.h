@@ -30,13 +30,7 @@ namespace SlimDX
 	//them to access a single set of config settings.
 	public ref class DirectXBase abstract
 	{
-	protected:
-		DirectXBase() { }
-
-	public:
-		static property bool EnableObjectTracking;
-
-		static DirectXBase()
+	  static DirectXBase()
 		{
 #ifdef _DEBUG
 			EnableObjectTracking = true;
@@ -44,6 +38,14 @@ namespace SlimDX
 			EnableObjectTracking = false;
 #endif
 		}
+		
+	protected:
+		DirectXBase() { }
+
+	public:
+		static property bool EnableObjectTracking;
+
+
 	};
 
 	template<typename T>
