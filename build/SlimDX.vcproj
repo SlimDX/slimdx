@@ -612,6 +612,32 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\ShaderReflection.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderReflectionParameterDescription.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\ShaderResourceView.cpp"
 					>
 				</File>
@@ -1117,6 +1143,14 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\ShaderMacro.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderReflection.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderReflectionParameterDescription.h"
 					>
 				</File>
 				<File

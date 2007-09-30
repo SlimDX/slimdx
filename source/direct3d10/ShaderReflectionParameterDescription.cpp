@@ -19,34 +19,27 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-using namespace System;
-using namespace System::Runtime::InteropServices;
+#include <d3d10.h>
+#include <d3dx10.h>
+
+#include "GraphicsException.h"
+
+#include "ShaderReflectionParameterDescription.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+namespace Direct3D10
+{ 
+	ShaderReflectionParameterDescription::ShaderReflectionParameterDescription( const D3D10_SIGNATURE_PARAMETER_DESC& desc )
 	{
-		[StructLayout( LayoutKind::Sequential )]
-		public value class SampleDescription
-		{
-		private:
-			int count;
-			int quality;
-
-		public:
-			property int Count
-			{
-				int get() { return count; }
-				void set( int value ) { count = value; }
-			}
-
-			property int Quality
-			{
-				int get() { return quality; }
-				void set( int value ) { quality = value; }
-			}
-		};
+		semanticName = gcnew String( desc.SemanticName );
+		semanticIndex = desc.SemanticIndex;
+		registerIndex = desc.Register;
+		systemValueType = (SystemValueType) desc.SystemValueType;
+		componentType = (RegisterComponentType) desc.ComponentType;
+		mask = desc.Mask;
+		readWriteMask = desc.ReadWriteMask;
 	}
-};
+}
+}
