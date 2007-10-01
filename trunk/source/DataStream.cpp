@@ -143,7 +143,7 @@ namespace SlimDX
 
 		int size = count * Marshal::SizeOf( T::typeid );
 		pin_ptr<T> pinnedData = &data[startIndex];
-		memcpy( m_Buffer + Position, pinnedData, size );
+		memcpy( m_Buffer + m_Position, pinnedData, size );
 		m_Position += size;
 	}
 	
