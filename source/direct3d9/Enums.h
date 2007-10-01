@@ -980,5 +980,85 @@ namespace SlimDX
 
 			Count = R2VB_VSMP_NUM,
 		};
+		
+		ref class EnumerationReflection sealed
+		{
+		private:
+			EnumerationReflection() { }
+			
+			literal int size8 = sizeof( System::Byte );
+			literal int size16 = sizeof( System::Int16 );
+			literal int size32 = sizeof( System::Int32 );
+		
+		internal:
+			static int SizeOfElement( Format format )
+			{	
+				switch( format )
+				{
+					case Format::R8G8B8:
+					case Format::A8R8G8B8:
+					case Format::X8R8G8B8:
+					case Format::R5G6B5:
+					case Format::X1R5G5B5:
+					case Format::A1R5G5B5:
+					case Format::A4R4G4B4:
+					case Format::R3G3B2:
+					case Format::A8:
+					case Format::A8R3G3B2:
+					case Format::X4R4G4B4:
+					case Format::A2B10G10R10:
+					case Format::A8B8G8R8:
+					case Format::X8B8G8R8:
+					case Format::G16R16:
+					case Format::A2R10G10B10:
+					case Format::A16B16G16R16:
+					case Format::A8P8:
+					case Format::P8:
+					case Format::L8:
+					case Format::A8L8:
+					case Format::A4L4:
+					case Format::V8U8:
+					case Format::L6V5U5:
+					case Format::X8L8V8U8:
+					case Format::Q8W8V8U8:
+					case Format::V16U16:
+					case Format::A2W10V10U10:
+					case Format::Uyvy:
+					case Format::Yuy2:
+					case Format::Dxt1:
+					case Format::Dxt2:
+					case Format::Dxt3:
+					case Format::Dxt4:
+					case Format::Dxt5:
+					case Format::Q16W16V16U16:
+					case Format::Multi2Argb8:
+					case Format::R16F:
+					case Format::G16R16F:
+					case Format::A16B16G16R16F:
+					case Format::R32F:
+					case Format::G32R32F:
+					case Format::A32B32G32R32F:
+					case Format::CxV8U8:
+					case Format::D15S1:
+					case Format::D16:
+					case Format::D16Lockable:
+					case Format::D24S8:
+					case Format::D24SingleS8:
+					case Format::D24X4S4:
+					case Format::D24X8:
+					case Format::D32:
+					case Format::D32SingleLockable:
+					case Format::L16:
+					case Format::VertexData:
+					case Format::Index16:
+					case Format::Index32:
+					case Format::ATI_R2VB:
+					case Format::Unknown:
+						return 0;
+					default:
+						return 0;
+				}
+			}
+		};
 	}
 }

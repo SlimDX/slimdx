@@ -75,7 +75,7 @@ namespace SlimDX
 		};
 		
 		[Flags]
-		public enum class ColorWriteMaskFlags
+		public enum class ColorWriteMaskFlags : Int32
 		{
 			None = 0,
 			Red = D3D10_COLOR_WRITE_ENABLE_RED,
@@ -424,7 +424,7 @@ namespace SlimDX
 			OptimizationLevel3 = D3D10_SHADER_OPTIMIZATION_LEVEL3
 		};
 		
-		public enum class StencilOperation
+		public enum class StencilOperation : Int32
 		{
 			Keep = D3D10_STENCIL_OP_KEEP,
 			Zero = D3D10_STENCIL_OP_ZERO,
@@ -475,17 +475,17 @@ namespace SlimDX
 			Depth = D3D10_NAME_DEPTH
 		};
 		
-		///@TODO D3D10: Not so sure about this. Can this be moved to the shared utils?
-		ref class Utils sealed
+		ref class EnumerationReflection sealed
 		{
 		private:
-			Utils() { }
-
+			EnumerationReflection() { }
+			
 			literal int size8 = sizeof( System::Byte );
 			literal int size16 = sizeof( System::Int16 );
 			literal int size32 = sizeof( System::Int32 );
 
-			static int ElementSizeOf( Format format )
+		internal:
+			static int SizeOfElement( Format format )
 			{
 				switch( format )
 				{
