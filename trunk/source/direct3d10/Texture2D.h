@@ -50,14 +50,11 @@ namespace SlimDX
 			CpuAccessFlags m_AccessFlags;
 			ResourceOptionFlags m_OptionFlags;
 			
-			void Construct( Device^ device, int width, int height, int mipLevels, int arraySize, SlimDX::Direct3D10::Format format,
-				int sampleCount, int sampleQuality, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,
-				ResourceOptionFlags optionFlags );
-			
 		internal:
 			Texture2D( ID3D10Texture2D* texture );
 			
 		public:
+			Texture2D( IntPtr texture );
 			Texture2D( Device^ device, int width, int height, int mipLevels, int arraySize, SlimDX::Direct3D10::Format format,
 				int sampleCount, int sampleQuality, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,
 				ResourceOptionFlags optionFlags );
@@ -123,6 +120,7 @@ namespace SlimDX
 			
 			
 			static Texture2D^ FromFile( Device^ device, String^ fileName );
+			static Texture2D^ FromStream( Device^ device, Stream^ stream, UInt32 sizeInBytes );
 		};
 	}
 };
