@@ -67,7 +67,7 @@ namespace SimpleTriangle
 			Device = new Device( 0, DeviceType.Hardware, RenderForm.Handle, CreateFlags.HardwareVertexProcessing, presentParams );
 
 			Vertices = new VertexBuffer( Device, 3 * Vertex.SizeBytes, Usage.WriteOnly, VertexFormat.None, Pool.Managed );
-			DataStream stream = Vertices.Lock( 0, LockFlags.None );
+			DataStream stream = Vertices.Lock( 0, 0, LockFlags.None );
 			stream.Write( BuildVertexData() );
 			Vertices.Unlock();
 		}

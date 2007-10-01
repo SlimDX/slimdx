@@ -56,7 +56,7 @@ namespace SlimDX
 		};
 
 		[StructLayout( LayoutKind::Explicit, Pack = 2)]
-		public value class WaveFormatEx
+		public value class WaveFormatExtended
 		{
 			[FieldOffset( 0 )]
 			WaveFormat FormatTag;
@@ -92,7 +92,7 @@ namespace SlimDX
 			String^ DeviceId;
 			String^ DisplayName;
 			DeviceRole Role;
-			WaveFormatEx OutputFormat;
+			WaveFormatExtended OutputFormat;
 		};
 
 		public ref class XAudio2 : DirectXObject<IXAudio2>

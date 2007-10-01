@@ -37,7 +37,7 @@ namespace SlimDX
             ResourceType type;
             Usage usage;
             Pool pool;
-            MultiSampleType multiSampleType;
+            MultisampleType multiSampleType;
             int multiSampleQuality;
             int width;
             int height;
@@ -67,13 +67,13 @@ namespace SlimDX
                 void set( SlimDX::Direct3D9::Pool value ) { pool = value; }
             }
 
-            property SlimDX::Direct3D9::MultiSampleType MultiSampleType
+            property SlimDX::Direct3D9::MultisampleType MultisampleType
             {
-                SlimDX::Direct3D9::MultiSampleType get() { return multiSampleType; }
-                void set( SlimDX::Direct3D9::MultiSampleType value ) { multiSampleType = value; }
+                SlimDX::Direct3D9::MultisampleType get() { return multiSampleType; }
+                void set( SlimDX::Direct3D9::MultisampleType value ) { multiSampleType = value; }
             }
 
-            property int MultiSampleQuality
+            property int MultisampleQuality
             {
                 int get() { return multiSampleQuality; }
                 void set( int value ) { multiSampleQuality = value; }
@@ -101,13 +101,13 @@ namespace SlimDX
 			}
 
 		public:
-			Surface( IDirect3DSurface9* Surface );
+			Surface( IDirect3DSurface9* surface );
 
 			static Surface^ CreateRenderTarget( Device^ device, int width, int height, Format format,
-				MultiSampleType multiSampleType, int multiSampleQuality, bool lockable );
+				MultisampleType multisampleType, int multisampleQuality, bool lockable );
 			static Surface^ CreateOffscreenPlain( Device^ device, int width, int height, Format format, Pool pool );
 			static Surface^ CreateDepthStencil( Device^ device, int width, int height, Format format,
-				MultiSampleType multiSampleType, int multiSampleQuality, bool discard );
+				MultisampleType multisampleType, int multisampleQuality, bool discard );
 
 			LockedRect LockRectangle( LockFlags flags );
 			LockedRect LockRectangle( System::Drawing::Rectangle rect, LockFlags flags );

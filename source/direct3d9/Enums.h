@@ -164,11 +164,11 @@ namespace SlimDX
 			None = 0,
 			AdapterGroupDevice = D3DCREATE_ADAPTERGROUP_DEVICE,
 			DisableDriverManagement = D3DCREATE_DISABLE_DRIVER_MANAGEMENT,
-			DisableDriverManagementEx = D3DCREATE_DISABLE_DRIVER_MANAGEMENT_EX,
+			DisableExtendedDriverManagement = D3DCREATE_DISABLE_DRIVER_MANAGEMENT_EX,
 			FpuPreserve = D3DCREATE_FPU_PRESERVE,
 			HardwareVertexProcessing = D3DCREATE_HARDWARE_VERTEXPROCESSING,
 			MixedVertexProcessing = D3DCREATE_MIXED_VERTEXPROCESSING,
-			MultiThreaded = D3DCREATE_MULTITHREADED,
+			Multithreaded = D3DCREATE_MULTITHREADED,
 			NoWindowChanges = D3DCREATE_NOWINDOWCHANGES,
 			PureDevice = D3DCREATE_PUREDEVICE,
 			SoftwareVertexProcessing = D3DCREATE_SOFTWARE_VERTEXPROCESSING,
@@ -452,7 +452,7 @@ namespace SlimDX
 			LinearContent = D3DPRESENT_LINEAR_CONTENT
 		};
 
-		public enum class MultiSampleType : Int32
+		public enum class MultisampleType : Int32
 		{
 			None = D3DMULTISAMPLE_NONE,
 			NonMaskable = D3DMULTISAMPLE_NONMASKABLE,
@@ -601,8 +601,8 @@ namespace SlimDX
 			PointScaleA = D3DRS_POINTSCALE_A,
 			PointScaleB = D3DRS_POINTSCALE_B,
 			PointScaleC = D3DRS_POINTSCALE_C,
-			MultiSampleAntialias = D3DRS_MULTISAMPLEANTIALIAS,
-			MultiSampleMask = D3DRS_MULTISAMPLEMASK,
+			MultisampleAntialias = D3DRS_MULTISAMPLEANTIALIAS,
+			MultisampleMask = D3DRS_MULTISAMPLEMASK,
 			PatchEdgeStyle = D3DRS_PATCHEDGESTYLE,
 			DebugMonitorToken = D3DRS_DEBUGMONITORTOKEN,
 			PointSizeMax = D3DRS_POINTSIZE_MAX,

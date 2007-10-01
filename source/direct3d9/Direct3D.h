@@ -65,7 +65,7 @@ namespace SlimDX
 		public:
 			property int Caps;
             property int DynamicFlowControlDepth;
-            property int NumTemps;
+            property int TempCount;
             property int StaticFlowControlDepth;
 		};
 
@@ -74,7 +74,7 @@ namespace SlimDX
 		public:
 			property int Caps;
             property int DynamicFlowControlDepth;
-            property int NumTemps;
+            property int TempCount;
             property int StaticFlowControlDepth;
 		};
 
@@ -140,7 +140,7 @@ namespace SlimDX
             property int AdapterOrdinalInGroup;
             property int NumberOfAdaptersInGroup;
             property DeclTypeCaps DeclTypes;
-            property int NumSimultaneousRTs;
+            property int SimultaneousRTCount;
             property FilterCaps StretchRectFilterCaps;
             property VertexShader20Caps VS20Caps;
             property PixelShader20Caps PS20Caps;
@@ -154,13 +154,13 @@ namespace SlimDX
 			Capabilities( const D3DCAPS9& caps );
 		};
 
-        public ref class DisplayModeList : public System::Collections::IEnumerable
+        public ref class DisplayModeCollection : public System::Collections::IEnumerable
 		{
 		private:
 			array<DisplayMode>^ m_Modes;
 
 		internal:
-			DisplayModeList( unsigned int adapter, Format format );
+			DisplayModeCollection( unsigned int adapter, Format format );
 
 		public:
             property int Count
@@ -200,7 +200,7 @@ namespace SlimDX
 
 			property IntPtr Monitor { IntPtr get(); }
 			property DisplayMode CurrentDisplayMode { DisplayMode get(); }
-            DisplayModeList^ GetDisplayModes( Format format );
+            DisplayModeCollection^ GetDisplayModes( Format format );
             Capabilities GetCaps( DeviceType type );
 			bool SupportsR2VB( DeviceType type );
 
@@ -212,13 +212,13 @@ namespace SlimDX
 			}
 		};
 
-        public ref class AdapterList : public System::Collections::IEnumerable
+        public ref class AdapterCollection : public System::Collections::IEnumerable
 		{
 		private:
             array<AdapterInformation^>^ m_Adapters;
 
 		internal:
-			AdapterList( unsigned int adapterCount );
+			AdapterCollection( unsigned int adapterCount );
 
 		public:
             property int Count
@@ -259,7 +259,12 @@ namespace SlimDX
 
 		public:
 			static property bool CheckWhql;
-			static property AdapterList^ Adapters;
+			static property AdapterCollection^ Adapters;
+
+			static property int AdapterCount
+			{
+				int get() { return m_Direct3D->GetAdapterCount(); }
+			}
 
             static void Initialize();
             static void Terminate();
@@ -302,14 +307,13 @@ namespace SlimDX
 			static bool CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, 
 				Format renderTargetFormat, Format depthStencilFormat );
 
-			static bool CheckDeviceMultiSampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
-				bool windowed, MultiSampleType multiSampleType, [Out] int% qualityLevels, [Out] int% result );
-			static bool CheckDeviceMultiSampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
-				bool windowed, MultiSampleType multiSampleType, [Out] int% qualityLevels );
-			static bool CheckDeviceMultiSampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
-				bool windowed, MultiSampleType multiSampleType );
+			static bool CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
+				bool windowed, MultisampleType multisampleType, [Out] int% qualityLevels, [Out] int% result );
+			static bool CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
+				bool windowed, MultisampleType multisampleType, [Out] int% qualityLevels );
+			static bool CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
+				bool windowed, MultisampleType multisampleType );
 
-            static int GetAdapterCount();
             static DisplayMode GetAdapterDisplayMode( int adapter );
             static AdapterDetails^ GetAdapterIdentifier( int adapter );
             static int GetAdapterModeCount( int adapter, Format format );

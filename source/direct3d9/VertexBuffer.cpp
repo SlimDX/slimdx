@@ -108,11 +108,6 @@ namespace Direct3D9
 		DataStream^ stream = gcnew DataStream( lockedPtr, lockedSize, true, !readOnly );
 		return stream;
 	}
-	
-	DataStream^ VertexBuffer::Lock( int offset, LockFlags flags )
-	{
-		return Lock( offset, 0, flags );
-	}
 
 	void VertexBuffer::Unlock()
 	{

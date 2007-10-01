@@ -45,7 +45,6 @@ namespace SlimDX
 			IndexBuffer( Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit );
 
 			DataStream^ Lock( int offset, int size, LockFlags flags );
-			DataStream^ Lock( int offset, LockFlags flags )	{ return Lock( offset, 0, flags ); }
 			void Unlock();
 		};
 	}

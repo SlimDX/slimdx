@@ -35,11 +35,16 @@ namespace SlimDX
 	{
 		public ref class AudioException : public SlimDX::DirectXException
 		{
+		private:
 			static AudioException()
 			{
 				LastError = S_OK;
 			}
-			
+
+		protected:
+			AudioException(SerializationInfo^ info, StreamingContext context) : DirectXException(info, context)
+			{ }
+
 		public:
 			AudioException() : DirectXException(E_FAIL, "An XAudio2 exception occurred.")
 			{ }
@@ -50,8 +55,6 @@ namespace SlimDX
 			AudioException(int errorCode, String^ message) : DirectXException( errorCode, message )
 			{ }
 			AudioException(String^ message, Exception^ innerException) : DirectXException( message, innerException )
-			{ }
-			AudioException(SerializationInfo^ info, StreamingContext context) : DirectXException(info, context)
 			{ }
 
 			static property int LastError;
@@ -64,21 +67,23 @@ namespace SlimDX
 #define DEFINE_AUDIO_EXCEPTION( ExName, ErrorCode ) \
 	public ref class ExName ## Exception : public AudioException \
 	{ \
-		public: \
+	protected: \
+		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : AudioException(info, context) { }\
+	public: \
 		ExName ## Exception () : AudioException( ErrorCode ) { } \
 		ExName ## Exception ( String^ message ) : AudioException( ErrorCode, message ) { } \
 		ExName ## Exception ( String^ message, Exception^ innerException ) : AudioException( message, innerException ) { } \
-		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : AudioException(info, context) { }\
 	}
 
 #define DEFINE_CUSTOM_AUDIO_EXCEPTION( ExName, ErrorCode, Message ) \
 	public ref class ExName ## Exception : public AudioException \
 	{ \
-		public: \
+	protected: \
+		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : AudioException(info, context) { }\
+	public: \
 		ExName ## Exception () : AudioException( ErrorCode, Message ) { } \
 		ExName ## Exception ( String^ message ) : AudioException( ErrorCode, message ) { } \
 		ExName ## Exception ( String^ message, Exception^ innerException ) : AudioException( message, innerException ) { } \
-		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : AudioException(info, context) { }\
 	}
 
 		DEFINE_AUDIO_EXCEPTION( NotInitialized, XAUDIO2_E_NOT_INITIALIZED );

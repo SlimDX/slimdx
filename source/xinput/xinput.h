@@ -68,7 +68,7 @@ namespace SlimDX
 		/// Bitmask of the device digital buttons
 		/// </summary>
 		[Flags]
-		public enum class GamepadButtonFlags : UInt16
+		public enum class GamepadButtons : UInt16
 		{
 			None = 0,
 			DPadUp = XINPUT_GAMEPAD_DPAD_UP,
@@ -100,7 +100,7 @@ namespace SlimDX
 		public value class GamePad
 		{
 		private:
-			GamepadButtonFlags buttons;
+			GamepadButtons buttons;
             Byte leftTrigger;
             Byte rightTrigger;
             Int16 leftThumbX;
@@ -112,10 +112,10 @@ namespace SlimDX
 			/// <summary>
 			/// Bitmask of the device digital buttons
 			/// </summary>
-			property GamepadButtonFlags Buttons
+			property GamepadButtons Buttons
             {
-                GamepadButtonFlags get() { return buttons; }
-                void set( GamepadButtonFlags value ) { buttons = value; }
+                GamepadButtons get() { return buttons; }
+                void set( GamepadButtons value ) { buttons = value; }
             }
 
 			/// <summary>

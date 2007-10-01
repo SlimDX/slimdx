@@ -180,11 +180,6 @@ namespace Direct3D9
 		return gcnew DataStream( pointer, size, true, true );
 	}
 
-	int ConstantTable::GetBufferSize()
-	{
-		return m_Pointer->GetBufferSize();
-	}
-
 	void ConstantTable::SetDefaults()
 	{
 		HRESULT hr = m_Pointer->SetDefaults( m_Device );

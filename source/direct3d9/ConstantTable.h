@@ -97,7 +97,11 @@ namespace SlimDX
 			}
 			
 			DataStream^ GetBuffer();
-			int GetBufferSize();
+
+			property int BufferSize
+			{
+				int get() { return m_Pointer->GetBufferSize(); }
+			}
 
 			void SetDefaults();
 

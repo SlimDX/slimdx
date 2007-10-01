@@ -28,29 +28,34 @@ namespace SlimDX
 {
 	public ref class DirectXException : public Exception
 	{
+	private:
 		static DirectXException()
 		{
 			EnableExceptions = true;
 		}
+
+	protected:
+		DirectXException(SerializationInfo^ info, StreamingContext context) : Exception(info, context) { }		
 		
 	public:
 		static property bool EnableExceptions;
 		property int ErrorCode;
 
-		DirectXException() : Exception("A DirectX exception occurred.") {
+		DirectXException() : Exception("A DirectX exception occurred.")
+		{
 			ErrorCode = E_FAIL;
 		}
-		DirectXException(String^ message) : Exception(message) {
+
+		DirectXException(String^ message) : Exception(message)
+		{
 			ErrorCode = E_FAIL;
 		}
+
 		DirectXException( int errorCode, String^ message ) : Exception( message )
 		{
 			ErrorCode = errorCode;
 		}
-		DirectXException( String^ message, Exception^ innerException ) : Exception( message, innerException )
-		{ }
 
-		DirectXException(SerializationInfo^ info, StreamingContext context) : Exception(info, context)
-		{ }
+		DirectXException( String^ message, Exception^ innerException ) : Exception( message, innerException ) { }
 	};
 }

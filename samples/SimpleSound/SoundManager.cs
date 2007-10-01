@@ -23,7 +23,7 @@ namespace SimpleSound
 
 			using( SoundBuffer buffer = new SoundBuffer( m_Sound, desc ) )
 			{
-				using( WaveFormatEx format = new WaveFormatEx() )
+                using (WaveFormatExtended format = new WaveFormatExtended())
 				{
 					format.FormatTag = WaveFormat.Pcm;
 					format.Channels = channels;

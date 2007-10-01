@@ -57,7 +57,7 @@ namespace SlimDX
 		{
 		public:
 			property int StartVertexOffset;
-			property int NumVertices;
+			property int VertexCount;
 			property Basis Basis;
 			property Degree Degree;
 		};
@@ -104,8 +104,8 @@ namespace SlimDX
 			property Format BackBufferFormat;
 			property int BackBufferCount;
 
-			property MultiSampleType MultiSample;
-			property int MultiSampleQuality;
+			property MultisampleType Multisample;
+			property int MultisampleQuality;
 
 			property SwapEffect SwapEffect;
 			property IntPtr DeviceWindowHandle;
@@ -324,19 +324,19 @@ namespace SlimDX
 
 			void DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount );
 			void DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minVertexIndex, 
-				int numVertices, int startIndex, int primCount );
+				int vertexCount, int startIndex, int primCount );
 
 			generic<typename T> where T : value class
 			void DrawUserPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount, array<T>^ data );
 
 			generic<typename S, typename T> where S : value class where T : value class
-			void DrawIndexedUserPrimitives( PrimitiveType primitiveType, int minVertexIndex, int numVertices, int primitiveCount,
+			void DrawIndexedUserPrimitives( PrimitiveType primitiveType, int minVertexIndex, int vertexCount, int primitiveCount,
 				array<S>^ indexData, Format indexDataFormat, array<T>^ vertexData, int vertexStride );
 
-			void DrawTriPatch( int handle, array<float>^ numSegments, TriPatchInfo info );
-			void DrawTriPatch( int handle, array<float>^ numSegments );
-			void DrawRectPatch( int handle, array<float>^ numSegments, RectPatchInfo info );
-			void DrawRectPatch( int handle, array<float>^ numSegments );
+			void DrawTriPatch( int handle, array<float>^ segmentCount, TriPatchInfo info );
+			void DrawTriPatch( int handle, array<float>^ segmentCount );
+			void DrawRectPatch( int handle, array<float>^ segmentCount, RectPatchInfo info );
+			void DrawRectPatch( int handle, array<float>^ segmentCount );
 			void DeletePatch( int handle );
 
 			void StretchRect( Surface^ source, System::Drawing::Rectangle sourceRect, Surface^ dest,

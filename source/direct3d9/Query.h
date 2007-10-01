@@ -354,13 +354,13 @@ namespace SlimDX
             int numExtraClippingTriangles;
 
 		public:
-			property int NumRenderedTriangles
+			property int RenderedTriangleCount
             {
                 int get() { return numRenderedTriangles; }
                 void set( int value ) { numRenderedTriangles = value; }
             }
 
-            property int NumExtraClippingTriangles
+            property int ExtraClippingTriangleCount
             {
                 int get() { return numExtraClippingTriangles; }
                 void set( int value ) { numExtraClippingTriangles = value; }

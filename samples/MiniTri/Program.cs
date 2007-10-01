@@ -74,7 +74,7 @@ namespace MiniTri
 
 				//create vertex buffer and fill it
 				Vertices = new VertexBuffer( Device, 3 * 20, Usage.WriteOnly, VertexFormat.None, Pool.Managed );
-				DataStream stream = Vertices.Lock( 0, LockFlags.None );
+				DataStream stream = Vertices.Lock( 0, 0, LockFlags.None );
 				Vertex[] vertexData = new Vertex[3];
 				vertexData[0].PositionRhw = new Vector4( 400.0f, 100.0f, 0.5f, 1.0f );
 				vertexData[0].Color = Color.Red.ToArgb();

@@ -155,7 +155,7 @@ namespace SlimDX
 			/// <summary>
 			/// Proposed number of mip-map levels for the texture.
 			/// </summary>
-            property int NumOfMipLevels
+            property int MipLevelCount
             {
                 int get() { return numOfMipLevels; }
                 void set( int value ) { numOfMipLevels = value; }
@@ -191,7 +191,7 @@ namespace SlimDX
 			/// <summary>
 			/// Proposed number of mip-map levels for the texture.
 			/// </summary>
-            property int NumOfMipLevels
+            property int MipLevelCount
             {
                 int get() { return numOfMipLevels; }
                 void set( int value ) { numOfMipLevels = value; }
@@ -247,7 +247,7 @@ namespace SlimDX
 			/// <summary>
 			/// Proposed number of mip-map levels for the texture.
 			/// </summary>
-            property int NumOfMipLevels
+            property int MipLevelCount
             {
                 int get() { return numOfMipLevels; }
                 void set( int value ) { numOfMipLevels = value; }
@@ -266,7 +266,7 @@ namespace SlimDX
 
 		public:
 			Texture( IntPtr texture );
-			Texture( Device^ device, int width, int height, int numLevels, Usage usage, Format format, Pool pool );
+			Texture( Device^ device, int width, int height, int levelCount, Usage usage, Format format, Pool pool );
 
 			/// <summary>
 			/// Checks texture-creation parameters.
@@ -274,27 +274,27 @@ namespace SlimDX
 			/// <param name="device">Device associated with the texture.</param>
 			/// <param name="width">Requested width of the texture.</param>
 			/// <param name="height">Requested height of the texture.</param>
-			/// <param name="numMipLevels">Requested number of mip-map levels for the texture.</param>
+			/// <param name="mipLevelCount">Requested number of mip-map levels for the texture.</param>
 			/// <param name="usage">Usage.None or Usage.RenderTarget.</param>
 			/// <param name="format">Requested format for the texture.</param>
 			/// <param name="pool">Memory class where the resource will be placed.</param>
 			/// <returns>A value type containing the proposed values to pass to the texture creation functions.</returns>
 			static TextureRequirements CheckRequirements(Device^ device, int width, int height,
-				int numMipLevels, Usage usage, Format format, Pool pool);
+				int mipLevelCount, Usage usage, Format format, Pool pool);
 
-			static Texture^ FromMemory( Device^ device, array<Byte>^ memory, int width, int height, int numLevels,
+			static Texture^ FromMemory( Device^ device, array<Byte>^ memory, int width, int height, int levelCount,
 				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static Texture^ FromMemory( Device^ device, array<Byte>^ memory, Usage usage, Pool pool );
 			static Texture^ FromMemory( Device^ device, array<Byte>^ memory );
 
-			static Texture^ FromStream( Device^ device, Stream^ stream, int sizeBytes, int width, int height, int numLevels,
+			static Texture^ FromStream( Device^ device, Stream^ stream, int sizeBytes, int width, int height, int levelCount,
 				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
-			static Texture^ FromStream( Device^ device, Stream^ stream, int width, int height, int numLevels,
+			static Texture^ FromStream( Device^ device, Stream^ stream, int width, int height, int levelCount,
 				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static Texture^ FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool );
 			static Texture^ FromStream( Device^ device, Stream^ stream );
 
-			static Texture^ FromFile( Device^ device, String^ fileName, int width, int height, int numLevels,
+			static Texture^ FromFile( Device^ device, String^ fileName, int width, int height, int levelCount,
 				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static Texture^ FromFile( Device^ device, String^ fileName, Usage usage, Pool pool );
 			static Texture^ FromFile( Device^ device, String^ fileName );
@@ -340,24 +340,24 @@ namespace SlimDX
 
 		public:
 			CubeTexture( IntPtr cubeTexture );
-			CubeTexture( Device^ device, int edgeLength, int numLevels, Usage usage, Format format, Pool pool );
+			CubeTexture( Device^ device, int edgeLength, int levelCount, Usage usage, Format format, Pool pool );
 
 			static CubeTextureRequirements CheckRequirements(Device^ device, int size,
-				int numMipLevels, Usage usage, Format format, Pool pool);
+				int mipLevelCount, Usage usage, Format format, Pool pool);
 
-			static CubeTexture^ FromMemory( Device^ device, array<Byte>^ memory, int size, int numLevels,
+			static CubeTexture^ FromMemory( Device^ device, array<Byte>^ memory, int size, int levelCount,
 				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static CubeTexture^ FromMemory( Device^ device, array<Byte>^ memory, Usage usage, Pool pool );
 			static CubeTexture^ FromMemory( Device^ device, array<Byte>^ memory );
 
-			static CubeTexture^ FromStream( Device^ device, Stream^ stream, int sizeBytes, int size, int numLevels,
+			static CubeTexture^ FromStream( Device^ device, Stream^ stream, int sizeBytes, int size, int levelCount,
 				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
-			static CubeTexture^ FromStream( Device^ device, Stream^ stream, int size, int numLevels,
+			static CubeTexture^ FromStream( Device^ device, Stream^ stream, int size, int levelCount,
 				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static CubeTexture^ FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool );
 			static CubeTexture^ FromStream( Device^ device, Stream^ stream );
 
-			static CubeTexture^ FromFile( Device^ device, String^ fileName, int size, int numLevels,
+			static CubeTexture^ FromFile( Device^ device, String^ fileName, int size, int levelCount,
 				Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static CubeTexture^ FromFile( Device^ device, String^ fileName, Usage usage, Pool pool );
 			static CubeTexture^ FromFile( Device^ device, String^ fileName );
@@ -383,25 +383,25 @@ namespace SlimDX
 
 		public:
 			VolumeTexture( IntPtr volumeTexture );
-			VolumeTexture( Device^ device, int width, int height, int depth, int numLevels, Usage usage, Format format, Pool pool );
+			VolumeTexture( Device^ device, int width, int height, int depth, int levelCount, Usage usage, Format format, Pool pool );
 
 			static VolumeTextureRequirements CheckRequirements(Device^ device, int width, int height, int depth,
-				int numMipLevels, Usage usage, Format format, Pool pool);
+				int mipLevelCount, Usage usage, Format format, Pool pool);
 
 			static VolumeTexture^ FromMemory( Device^ device, array<Byte>^ memory, int width, int height, int depth,
-				int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
+				int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static VolumeTexture^ FromMemory( Device^ device, array<Byte>^ memory, Usage usage, Pool pool );
 			static VolumeTexture^ FromMemory( Device^ device, array<Byte>^ memory );
 
 			static VolumeTexture^ FromStream( Device^ device, Stream^ stream, int sizeBytes, int width, int height, int depth,
-				int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
+				int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static VolumeTexture^ FromStream( Device^ device, Stream^ stream, int width, int height, int depth,
-				int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
+				int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static VolumeTexture^ FromStream( Device^ device, Stream^ stream, Usage usage, Pool pool );
 			static VolumeTexture^ FromStream( Device^ device, Stream^ stream );
 
 			static VolumeTexture^ FromFile( Device^ device, String^ fileName, int width, int height, int depth,
-				int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
+				int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static VolumeTexture^ FromFile( Device^ device, String^ fileName, Usage usage, Pool pool );
 			static VolumeTexture^ FromFile( Device^ device, String^ fileName );
 
