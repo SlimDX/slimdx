@@ -58,7 +58,7 @@ namespace Direct3D10
 			throw gcnew ArgumentNullException( "shaderBytecode" );
 		
 		ID3D10ShaderReflection* reflection;
-		HRESULT hr = D3DX10ReflectShader( shaderBytecode->Buffer, shaderBytecode->BufferLength, &reflection );
+		HRESULT hr = D3D10ReflectShader( shaderBytecode->Buffer, shaderBytecode->BufferLength, &reflection );
 		GraphicsException::CheckHResult( hr );
 		
 		m_Pointer = reflection;

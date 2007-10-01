@@ -50,11 +50,68 @@ namespace Direct3D10
 		m_OptionFlags = ( ResourceOptionFlags ) desc.MiscFlags;
 	}
 	
+	Texture2D::Texture2D( IntPtr texture )
+	{
+		if( texture == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "texture" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) texture.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_ID3D10Texture2D, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "QueryInterface() on user pointer failed." );
+
+		m_Pointer = (ID3D10Resource*) pointer;
+		
+		D3D10_TEXTURE2D_DESC desc;
+		((ID3D10Texture2D*)m_Pointer)->GetDesc( &desc );
+		m_Width = desc.Width;
+		m_Height = desc.Height;
+		m_MipLevels = desc.MipLevels;
+		m_ArraySize = desc.ArraySize;
+		m_Format = ( SlimDX::Direct3D10::Format ) desc.Format;
+		m_SampleDesc.Count = desc.SampleDesc.Count;
+		m_SampleDesc.Quality = desc.SampleDesc.Quality;
+		m_Usage = ( ResourceUsage ) desc.Usage;
+		m_BindFlags = ( SlimDX::Direct3D10::BindFlags ) desc.BindFlags;
+		m_AccessFlags = ( CpuAccessFlags ) desc.CPUAccessFlags;
+		m_OptionFlags = ( ResourceOptionFlags ) desc.MiscFlags;
+	}
+	
 	Texture2D::Texture2D( Device^ device, int width, int height, int mipLevels, int arraySize, SlimDX::Direct3D10::Format format,
 		int sampleCount, int sampleQuality, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,
 		ResourceOptionFlags optionFlags )
 	{
-		Construct( device, width, height, mipLevels, arraySize, format, sampleCount, sampleQuality, usage, bindFlags, accessFlags, optionFlags );
+		D3D10_TEXTURE2D_DESC desc;
+		ZeroMemory( &desc, sizeof( desc ) );
+		desc.Width = width;
+		desc.Height = height;
+		desc.MipLevels = mipLevels;
+		desc.ArraySize = arraySize;
+		desc.Format = ( DXGI_FORMAT ) format;
+		desc.SampleDesc.Count = sampleCount;
+		desc.SampleDesc.Quality = sampleQuality;
+		desc.Usage = ( D3D10_USAGE ) usage;
+		desc.BindFlags = ( UINT ) bindFlags;
+		desc.CPUAccessFlags = ( UINT ) accessFlags;
+		desc.MiscFlags = ( UINT ) optionFlags;
+	
+		ID3D10Texture2D* texture = 0;
+		HRESULT hr = device->DevicePointer->CreateTexture2D( &desc, NULL, &texture );
+		GraphicsException::CheckHResult( hr );
+		
+		m_Pointer = texture;
+		m_Width = width;
+		m_Height = height;
+		m_MipLevels = mipLevels;
+		m_ArraySize = arraySize;
+		m_Format = format;
+		m_SampleDesc.Count = sampleCount;
+		m_SampleDesc.Quality = sampleQuality;
+		m_Usage = usage;
+		m_BindFlags = bindFlags;
+		m_AccessFlags = accessFlags;
+		m_OptionFlags = optionFlags;	
 	}
 	
 	SlimDX::Direct3D::LockedRect Texture2D::Map( int subResource, MapMode mode, MapFlags flags )
@@ -89,40 +146,18 @@ namespace Direct3D10
 		return gcnew Texture2D( (ID3D10Texture2D*) texture );
 	}
 	
-	void Texture2D::Construct( Device^ device, int width, int height, int mipLevels, int arraySize, SlimDX::Direct3D10::Format format,
-		int sampleCount, int sampleQuality, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,
-		ResourceOptionFlags optionFlags )
+	Texture2D^ Texture2D::FromStream( Device^ device, Stream^ stream, UInt32 sizeInBytes )
 	{
-		D3D10_TEXTURE2D_DESC desc;
-		ZeroMemory( &desc, sizeof( desc ) );
-		desc.Width = width;
-		desc.Height = height;
-		desc.MipLevels = mipLevels;
-		desc.ArraySize = arraySize;
-		desc.Format = ( DXGI_FORMAT ) format;
-		desc.SampleDesc.Count = sampleCount;
-		desc.SampleDesc.Quality = sampleQuality;
-		desc.Usage = ( D3D10_USAGE ) usage;
-		desc.BindFlags = ( UINT ) bindFlags;
-		desc.CPUAccessFlags = ( UINT ) accessFlags;
-		desc.MiscFlags = ( UINT ) optionFlags;
-	
-		ID3D10Texture2D* texture = 0;
-		HRESULT hr = device->DevicePointer->CreateTexture2D( &desc, NULL, &texture );
+		array<Byte>^ memory = SlimDX::Utils::ReadStream( stream, sizeInBytes );
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+		
+		ID3D10Resource* texture;
+		HRESULT hr = D3DX10CreateTextureFromMemory( device->DevicePointer, pinnedMemory, sizeInBytes, NULL, NULL, &texture, NULL ); 
 		GraphicsException::CheckHResult( hr );
 		
-		m_Pointer = texture;
-		m_Width = width;
-		m_Height = height;
-		m_MipLevels = mipLevels;
-		m_ArraySize = arraySize;
-		m_Format = format;
-		m_SampleDesc.Count = sampleCount;
-		m_SampleDesc.Quality = sampleQuality;
-		m_Usage = usage;
-		m_BindFlags = bindFlags;
-		m_AccessFlags = accessFlags;
-		m_OptionFlags = optionFlags;
+		if( texture == NULL )
+			return nullptr;
+		return gcnew Texture2D( (ID3D10Texture2D*) texture );
 	}
 }
 }
