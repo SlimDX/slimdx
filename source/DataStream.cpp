@@ -129,6 +129,9 @@ namespace SlimDX
 	generic<typename T> where T : value class
 	void DataStream::Write( array<T>^ data, int startIndex, int count )
 	{
+		if( !m_CanWrite )
+			throw gcnew NotSupportedException();
+			
 		if( startIndex < 0 || startIndex > data->Length - 1 )
 			throw gcnew ArgumentOutOfRangeException( "startIndex" );
 		if( count < 0 )
@@ -141,11 +144,16 @@ namespace SlimDX
 		int size = count * Marshal::SizeOf( T::typeid );
 		pin_ptr<T> pinnedData = &data[startIndex];
 		memcpy( m_Buffer + Position, pinnedData, size );
+		m_Position += size;
 	}
 	
 	void DataStream::Write( IntPtr source, Int64 byteCount )
 	{
+		if( !m_CanWrite )
+			throw gcnew NotSupportedException();
+			
 		memcpy( m_Buffer + m_Position, source.ToPointer(), (size_t) byteCount );
+		m_Position += byteCount;
 	}
 	
 	int DataStream::Read( array<Byte>^ buffer, int offset, int count )
