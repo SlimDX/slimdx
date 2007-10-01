@@ -64,7 +64,7 @@ namespace Direct3D9
 		WhqlLevel = ident.WHQLLevel;
 	}
 
-	DisplayModeList::DisplayModeList( unsigned int adapter, Format format )
+	DisplayModeCollection::DisplayModeCollection( unsigned int adapter, Format format )
 	{
 		int count = Direct3D::GetAdapterModeCount( adapter, format );
 		m_Modes = gcnew array<DisplayMode>( count );
@@ -101,12 +101,12 @@ namespace Direct3D9
 		return Direct3D::SupportsR2VB( m_Adapter, type );
 	}
 
-    DisplayModeList^ AdapterInformation::GetDisplayModes( Format format )
+    DisplayModeCollection^ AdapterInformation::GetDisplayModes( Format format )
     {
-        return gcnew DisplayModeList( m_Adapter, format );
+        return gcnew DisplayModeCollection( m_Adapter, format );
     }
 
-    AdapterList::AdapterList( unsigned int adapterCount )
+    AdapterCollection::AdapterCollection( unsigned int adapterCount )
     {
         m_Adapters = gcnew array<AdapterInformation^>( adapterCount );
         for( unsigned int i = 0; i < adapterCount; ++i )
@@ -133,7 +133,7 @@ namespace Direct3D9
 			throw gcnew DirectXException( -1, "Could not create Direct3D instance." );
 
 		CheckWhql = false;
-		Adapters = gcnew AdapterList( m_Direct3D->GetAdapterCount() );
+		Adapters = gcnew AdapterCollection( m_Direct3D->GetAdapterCount() );
 		
 		System::AppDomain::CurrentDomain->DomainUnload += gcnew System::EventHandler( OnExit );
 		System::AppDomain::CurrentDomain->ProcessExit += gcnew System::EventHandler( OnExit );
@@ -246,8 +246,8 @@ namespace Direct3D9
 			renderTargetFormat, depthStencilFormat, result );
 	}
 
-	bool Direct3D::CheckDeviceMultiSampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
-		bool windowed, MultiSampleType multiSampleType, [Out] int% qualityLevels, [Out] int% result )
+	bool Direct3D::CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
+		bool windowed, MultisampleType multiSampleType, [Out] int% qualityLevels, [Out] int% result )
 	{
 		DWORD levels;
 
@@ -259,26 +259,21 @@ namespace Direct3D9
 		return hr == S_OK;
 	}
 
-	bool Direct3D::CheckDeviceMultiSampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
-		bool windowed, MultiSampleType multiSampleType, [Out] int% qualityLevels )
+	bool Direct3D::CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
+		bool windowed, MultisampleType multiSampleType, [Out] int% qualityLevels )
 	{
 		int result;
-		return CheckDeviceMultiSampleType( adapter, deviceType, surfaceFormat,
+		return CheckDeviceMultisampleType( adapter, deviceType, surfaceFormat,
 			windowed, multiSampleType, qualityLevels, result );
 	}
 
-	bool Direct3D::CheckDeviceMultiSampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
-		bool windowed, MultiSampleType multiSampleType )
+	bool Direct3D::CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
+		bool windowed, MultisampleType multiSampleType )
 	{
 		int levels, result;
-		return CheckDeviceMultiSampleType( adapter, deviceType, surfaceFormat, windowed,
+		return CheckDeviceMultisampleType( adapter, deviceType, surfaceFormat, windowed,
 			multiSampleType, levels, result );
 	}
-
-    int Direct3D::GetAdapterCount()
-    {
-        return m_Direct3D->GetAdapterCount();
-    }
 
     DisplayMode Direct3D::GetAdapterDisplayMode( int adapter )
     {
@@ -405,7 +400,7 @@ namespace Direct3D9
 		AdapterOrdinalInGroup = caps.AdapterOrdinalInGroup;
 		NumberOfAdaptersInGroup = caps.NumberOfAdaptersInGroup;
 		DeclTypes = (DeclTypeCaps) caps.DeclTypes;
-		NumSimultaneousRTs = caps.NumSimultaneousRTs;
+		SimultaneousRTCount = caps.NumSimultaneousRTs;
 		StretchRectFilterCaps = (FilterCaps) caps.StretchRectFilterCaps;
 		VS20Caps = *(VertexShader20Caps*) &caps.VS20Caps;
 		PS20Caps = *(PixelShader20Caps*) &caps.PS20Caps;

@@ -34,22 +34,22 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	WaveFormatEx::WaveFormatEx()
+	WaveFormatExtended::WaveFormatExtended()
 	{
 		InitializeMe( false, 0 );
 	}
 
-	WaveFormatEx::WaveFormatEx( int extraDataBytes )
+	WaveFormatExtended::WaveFormatExtended( int extraDataBytes )
 	{
 		InitializeMe( false, extraDataBytes );
 	}
 
-	WaveFormatEx::WaveFormatEx( bool extensible, int extraDataBytes )
+	WaveFormatExtended::WaveFormatExtended( bool extensible, int extraDataBytes )
 	{
 		InitializeMe( extensible, extraDataBytes );
 	}
 
-	WaveFormatEx::WaveFormatEx( WAVEFORMATEX* format )
+	WaveFormatExtended::WaveFormatExtended( WAVEFORMATEX* format )
 	{
 		if( format == NULL )
 			throw gcnew ArgumentNullException( "format" );
@@ -61,19 +61,19 @@ namespace DirectSound
 		}
 	}
 
-	WaveFormatEx::~WaveFormatEx()
+	WaveFormatExtended::~WaveFormatExtended()
 	{
 		delete m_ExtraData;
-		this->!WaveFormatEx();
+		this->!WaveFormatExtended();
 	}
 
-	WaveFormatEx::!WaveFormatEx()
+	WaveFormatExtended::!WaveFormatExtended()
 	{
 		m_ExtraData = nullptr;
 		delete m_Format;
 	}
 
-	void WaveFormatEx::InitializeMe( bool extensible, int extraDataBytes )
+	void WaveFormatExtended::InitializeMe( bool extensible, int extraDataBytes )
 	{
 		//22 is the size difference between WAVEFORMATEX and WAVEFORMATEXTENSIBLE
 		int extraSize = extensible ? 22 : 0;
@@ -97,7 +97,7 @@ namespace DirectSound
 		this->BitsPerSample = 0;
 	}
 
-	WaveFormatExtensible::WaveFormatExtensible() : WaveFormatEx( true, 0 )
+	WaveFormatExtensible::WaveFormatExtensible() : WaveFormatExtended( true, 0 )
 	{
 		//initialize extra members
 		this->ValidBitsPerSample = 0;
@@ -105,7 +105,7 @@ namespace DirectSound
 		memset( &ExtensiblePointer->SubFormat, 0, sizeof(GUID) );
 	}
 
-	WaveFormatExtensible::WaveFormatExtensible( int extraDataBytes ) : WaveFormatEx( true, extraDataBytes )
+	WaveFormatExtensible::WaveFormatExtensible( int extraDataBytes ) : WaveFormatExtended( true, extraDataBytes )
 	{
 		//initialize extra members
 		this->ValidBitsPerSample = 0;

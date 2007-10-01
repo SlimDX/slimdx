@@ -56,12 +56,12 @@ namespace SlimDX
 			/// Called by the application to initialize DirectInput. This method must be called before
 			/// any other DirectInput methods.
 			/// </summary>
-			static void Terminate();
+			static void Initialize();
 
 			/// <summary>
 			/// Called by the application to release DirectInput and free resources.
 			/// </summary>
-			static void Initialize();
+			static void Terminate();
 
 			/// <summary>
 			/// Runs Control Panel to enable the user to install a new

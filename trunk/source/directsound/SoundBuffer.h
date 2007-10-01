@@ -34,7 +34,7 @@ namespace SlimDX
 	namespace DirectSound
 	{
 		ref class DirectSound;
-		ref class WaveFormatEx;
+		ref class WaveFormatExtended;
 
 		public value class BufferDescription
 		{
@@ -44,7 +44,7 @@ namespace SlimDX
 		public:
 			property int SizeInBytes;
 			property BufferFlags Flags;
-			property WaveFormatEx^ Format;
+			property WaveFormatExtended^ Format;
 			property Guid AlgorithmFor3D;
 		};
 
@@ -83,8 +83,8 @@ namespace SlimDX
 			DataStream^ Lock( int offset, int sizeBytes, LockFlags flags, [Out] DataStream^% secondPart );
 			void Unlock( DataStream^ firstPart, DataStream^ secondPart );
 
-			void SetFormat( WaveFormatEx^ format );
-			WaveFormatEx^ GetFormat();
+			void SetFormat( WaveFormatExtended^ format );
+			WaveFormatExtended^ GetFormat();
 
 			property int CurrentWritePosition
 			{

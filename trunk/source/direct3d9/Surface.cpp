@@ -41,7 +41,7 @@ namespace Direct3D9
 	}
 
 	Surface^ Surface::CreateRenderTarget( Device^ device, int width, int height, Format format,
-		MultiSampleType multiSampleType, int multiSampleQuality, bool lockable )
+		MultisampleType multiSampleType, int multiSampleQuality, bool lockable )
 	{
 		IDirect3DSurface9* surface;
 
@@ -68,7 +68,7 @@ namespace Direct3D9
 	}
 
 	Surface^ Surface::CreateDepthStencil( Device^ device, int width, int height, Format format,
-		MultiSampleType multiSampleType, int multiSampleQuality, bool discard )
+		MultisampleType multiSampleType, int multiSampleQuality, bool discard )
 	{
 		IDirect3DSurface9* surface;
 

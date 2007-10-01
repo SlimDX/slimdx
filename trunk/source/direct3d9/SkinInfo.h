@@ -45,8 +45,8 @@ namespace SlimDX
 		{
 		public:
 			SkinInfo( ID3DXSkinInfo* skinInfo );
-			SkinInfo( int numVertices, array<VertexElement>^ vertexDecl, int numBones );
-			SkinInfo( int numVertices, VertexFormat fvf, int numBones );
+			SkinInfo( int vertexCount, array<VertexElement>^ vertexDecl, int numBones );
+			SkinInfo( int vertexCount, VertexFormat fvf, int numBones );
 			~SkinInfo() { Destruct(); }
 
 			int FindBoneVertexInfluenceIndex( int bone, int vertex );

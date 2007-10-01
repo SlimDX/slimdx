@@ -57,8 +57,8 @@ namespace Direct3D9
 		d3dpp.Flags = (DWORD) presentParams->PresentFlags;
 		d3dpp.FullScreen_RefreshRateInHz = presentParams->FullScreenRefreshRateInHertz;
 		d3dpp.hDeviceWindow = (HWND) presentParams->DeviceWindowHandle.ToPointer();
-		d3dpp.MultiSampleQuality = presentParams->MultiSampleQuality;
-		d3dpp.MultiSampleType = (D3DMULTISAMPLE_TYPE) presentParams->MultiSample;
+		d3dpp.MultiSampleQuality = presentParams->MultisampleQuality;
+		d3dpp.MultiSampleType = (D3DMULTISAMPLE_TYPE) presentParams->Multisample;
 		d3dpp.PresentationInterval = (UINT) presentParams->PresentationInterval;
 		d3dpp.SwapEffect = (D3DSWAPEFFECT) presentParams->SwapEffect;
 		d3dpp.Windowed = presentParams->Windowed;
@@ -72,8 +72,8 @@ namespace Direct3D9
 		BackBufferFormat = Format::X8R8G8B8;
 		BackBufferCount = 1;
 
-		MultiSample = MultiSampleType::None;
-		MultiSampleQuality = 0;
+		Multisample = MultisampleType::None;
+		MultisampleQuality = 0;
 
 		SwapEffect = SlimDX::Direct3D9::SwapEffect::Discard;
 		DeviceWindowHandle = IntPtr::Zero;

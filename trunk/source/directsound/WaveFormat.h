@@ -32,7 +32,7 @@ namespace SlimDX
 
 	namespace DirectSound
 	{
-		public ref class WaveFormatEx
+		public ref class WaveFormatExtended
 		{
 		private:
 			WAVEFORMATEX* m_Format;
@@ -46,7 +46,7 @@ namespace SlimDX
 			}
 
 			void InitializeMe( bool extensible, int extraDataBytes );
-			WaveFormatEx( bool extensible, int extraDataBytes );
+			WaveFormatExtended( bool extensible, int extraDataBytes );
 
 		internal:
 			property WAVEFORMATEX* InternalPointer
@@ -55,11 +55,11 @@ namespace SlimDX
 			}
 
 		public:
-			WaveFormatEx();
-			WaveFormatEx( int extraDataBytes );
-			WaveFormatEx( WAVEFORMATEX* format );
-			~WaveFormatEx();
-			!WaveFormatEx();
+			WaveFormatExtended();
+			WaveFormatExtended( int extraDataBytes );
+			WaveFormatExtended( WAVEFORMATEX* format );
+			~WaveFormatExtended();
+			!WaveFormatExtended();
 
 			property WaveFormat FormatTag
 			{
@@ -105,7 +105,7 @@ namespace SlimDX
 			}
 		};
 
-		public ref class WaveFormatExtensible : public WaveFormatEx
+		public ref class WaveFormatExtensible : public WaveFormatExtended
 		{
 		internal:
 			property WAVEFORMATEXTENSIBLE* ExtensiblePointer

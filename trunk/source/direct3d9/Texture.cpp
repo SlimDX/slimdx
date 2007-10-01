@@ -126,17 +126,6 @@ namespace Direct3D9
 		m_Pointer = texture;
 	}
 
-	/// <summary>
-	/// Checks texture-creation parameters.
-	/// </summary>
-	/// <param name="device">Device associated with the texture.</param>
-	/// <param name="width">Requested width of the texture.</param>
-	/// <param name="height">Requested height of the texture.</param>
-	/// <param name="numMipLevels">Requested number of mip-map levels for the texture.</param>
-	/// <param name="usage">Usage.None or Usage.RenderTarget.</param>
-	/// <param name="format">Requested format for the texture.</param>
-	/// <param name="pool">Memory class where the resource will be placed.</param>
-	/// <returns>A value type containing the proposed values to pass to the texture creation functions.</returns>
 	TextureRequirements Texture::CheckRequirements(Device^ device, int width, int height,
 		int numMipLevels, Usage usage, Format format, Pool pool)
 	{
@@ -152,7 +141,7 @@ namespace Direct3D9
 		result.Width = width;
 		result.Height = height;
 		result.Format = format;
-		result.NumOfMipLevels = numMipLevels;
+		result.MipLevelCount = numMipLevels;
 
 		return result;
 	}
@@ -423,7 +412,7 @@ namespace Direct3D9
 		// Return proposed values.
 		result.Size = size;
 		result.Format = format;
-		result.NumOfMipLevels = numMipLevels;
+		result.MipLevelCount = numMipLevels;
 
 		return result;
 	}
@@ -619,7 +608,7 @@ namespace Direct3D9
 		result.Height = height;
 		result.Depth = depth;
 		result.Format = format;
-		result.NumOfMipLevels = numMipLevels;
+		result.MipLevelCount = numMipLevels;
 
 		return result;
 	}

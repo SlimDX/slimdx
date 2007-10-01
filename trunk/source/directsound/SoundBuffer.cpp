@@ -169,13 +169,13 @@ namespace DirectSound
 		SoundException::CheckHResult( hr );
 	}
 
-	void SoundBuffer::SetFormat( WaveFormatEx^ format )
+	void SoundBuffer::SetFormat( WaveFormatExtended^ format )
 	{
 		HRESULT hr = m_Pointer->SetFormat( format->InternalPointer );
 		SoundException::CheckHResult( hr );
 	}
 
-	WaveFormatEx^ SoundBuffer::GetFormat()
+	WaveFormatExtended^ SoundBuffer::GetFormat()
 	{
 		WAVEFORMATEX* format;
 		DWORD size;
@@ -194,7 +194,7 @@ namespace DirectSound
 		if( format->wFormatTag == WAVE_FORMAT_EXTENSIBLE )
 			return gcnew WaveFormatExtensible( (WAVEFORMATEXTENSIBLE*) format );
 		else
-			return gcnew WaveFormatEx( format );
+			return gcnew WaveFormatExtended( format );
 	}
 
 	int SoundBuffer::CurrentPlayPosition::get()

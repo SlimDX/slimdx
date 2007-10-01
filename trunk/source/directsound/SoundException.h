@@ -33,10 +33,15 @@ namespace SlimDX
 	{
 		public ref class SoundException : public SlimDX::DirectXException
 		{
+		private:
 			static SoundException()
 			{
 				LastError = S_OK;
 			}
+
+		protected:
+			SoundException(SerializationInfo^ info, StreamingContext context) : DirectXException(info, context)
+			{ }
 			
 		public:
 			SoundException() : DirectXException(E_FAIL, "A DirectSound exception occurred.")
@@ -49,8 +54,6 @@ namespace SlimDX
 			{ }
 			SoundException(String^ message, Exception^ innerException) : DirectXException( message, innerException )
 			{ }
-			SoundException(SerializationInfo^ info, StreamingContext context) : DirectXException(info, context)
-			{ }
 
 			static property int LastError;
 
@@ -62,21 +65,23 @@ namespace SlimDX
 #define DEFINE_SOUND_EXCEPTION( ExName, ErrorCode ) \
 	public ref class ExName ## Exception : public SoundException \
 	{ \
-		public: \
+	protected: \
+		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : SoundException(info, context) { }\
+	public: \
 		ExName ## Exception () : SoundException( ErrorCode ) { } \
 		ExName ## Exception ( String^ message ) : SoundException( ErrorCode, message ) { } \
 		ExName ## Exception ( String^ message, Exception^ innerException ) : SoundException( message, innerException ) { } \
-		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : SoundException(info, context) { }\
 	}
 
 #define DEFINE_CUSTOM_SOUND_EXCEPTION( ExName, ErrorCode, Message ) \
 	public ref class ExName ## Exception : public SoundException \
 	{ \
-		public: \
+	protected: \
+		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : SoundException(info, context) { }\
+	public: \
 		ExName ## Exception () : SoundException( ErrorCode, Message ) { } \
 		ExName ## Exception ( String^ message ) : SoundException( ErrorCode, message ) { } \
 		ExName ## Exception ( String^ message, Exception^ innerException ) : SoundException( message, innerException ) { } \
-		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : SoundException(info, context) { }\
 	}
 
 		DEFINE_SOUND_EXCEPTION( Allocated, DSERR_ALLOCATED );

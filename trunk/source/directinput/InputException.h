@@ -42,6 +42,7 @@ namespace SlimDX
 		/// </summary>
 		public ref class InputException : public SlimDX::DirectXException
 		{
+		private:
 			/// <summary>
 			/// Initializes the <see cref="SlimDX::DirectInput::InputException"/> class.
 			/// </summary>
@@ -49,7 +50,16 @@ namespace SlimDX
 			{
 				LastError = S_OK;
 			}
-			
+
+		protected:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::InputException"/> class.
+			/// </summary>
+			/// <param name="info">Serialization information.</param>
+			/// <param name="context">Streaming context information.</param>
+			InputException(SerializationInfo^ info, StreamingContext context) : DirectXException(info, context)
+			{ }
+
 		public:
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::InputException"/> class.
@@ -88,14 +98,6 @@ namespace SlimDX
 			{ }
 
 			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::InputException"/> class.
-			/// </summary>
-			/// <param name="info">Serialization information.</param>
-			/// <param name="context">Streaming context information.</param>
-			InputException(SerializationInfo^ info, StreamingContext context) : DirectXException(info, context)
-			{ }
-
-			/// <summary>
 			/// Gets or sets the last error code.
 			/// </summary>
 			static property int LastError;
@@ -126,21 +128,23 @@ namespace SlimDX
 #define DEFINE_INPUT_EXCEPTION( ExName, ErrorCode ) \
 	public ref class ExName ## Exception : public InputException \
 	{ \
-		public: \
+	protected: \
+		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : InputException(info, context) { }\
+	public: \
 		ExName ## Exception () : InputException( ErrorCode ) { } \
 		ExName ## Exception ( String^ message ) : InputException( ErrorCode, message ) { } \
 		ExName ## Exception ( String^ message, Exception^ innerException ) : InputException( message, innerException ) { } \
-		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : InputException(info, context) { }\
 	}
 
 #define DEFINE_CUSTOM_INPUT_EXCEPTION( ExName, ErrorCode, Message ) \
 	public ref class ExName ## Exception : public InputException \
 	{ \
-		public: \
+	protected: \
+		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : InputException(info, context) { }\
+	public: \
 		ExName ## Exception () : InputException( ErrorCode, Message ) { } \
 		ExName ## Exception ( String^ message ) : InputException( ErrorCode, message ) { } \
 		ExName ## Exception ( String^ message, Exception^ innerException ) : InputException( message, innerException ) { } \
-		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : InputException(info, context) { }\
 	}
 
 		DEFINE_INPUT_EXCEPTION( DeviceAcquired, DIERR_ACQUIRED );

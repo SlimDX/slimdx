@@ -32,11 +32,16 @@ namespace SlimDX
 	{
 		public ref class GraphicsException : public DirectXException
 		{
+		private:
 			static GraphicsException()
 			{
 				LastError = S_OK;
 			}
-			
+
+		protected:
+			GraphicsException(SerializationInfo^ info, StreamingContext context) : DirectXException(info, context)
+			{ }
+
 		public:
 
 			GraphicsException() : DirectXException(E_FAIL, "A Direct3D exception occurred.")
@@ -46,8 +51,6 @@ namespace SlimDX
 			GraphicsException( int errorCode, String^ message ) : DirectXException( errorCode, message )
 			{ }
 			GraphicsException( String^ message, Exception^ innerException ) : DirectXException( message, innerException )
-			{ }
-			GraphicsException(SerializationInfo^ info, StreamingContext context) : DirectXException(info, context)
 			{ }
 
 			static property int LastError;
@@ -59,11 +62,12 @@ namespace SlimDX
 #define DEFINE_GRAPHICS_EXCEPTION( ExName, ErrorCode, Message ) \
 	public ref class ExName ## Exception : public GraphicsException \
 	{ \
-		public: \
+	protected: \
+		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : GraphicsException(info, context) { }\
+	public: \
 		ExName ## Exception () : GraphicsException( ErrorCode, Message ) { } \
 		ExName ## Exception ( String^ message ) : GraphicsException( ErrorCode, message ) { } \
 		ExName ## Exception ( String^ message, Exception^ innerException ) : GraphicsException( message, innerException ) { } \
-		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : GraphicsException(info, context) { }\
 	}
 		
 		DEFINE_GRAPHICS_EXCEPTION( FileNotFound, D3D10_ERROR_FILE_NOT_FOUND, "File not found." );
