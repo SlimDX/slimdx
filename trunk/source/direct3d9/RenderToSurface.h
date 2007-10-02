@@ -46,7 +46,9 @@ namespace SlimDX
 		public ref class RenderToSurface : public DirectXObject<ID3DXRenderToSurface>
 		{
 		internal:
+			/* Unused for now.
 			RenderToSurface( ID3DXRenderToSurface* pointer );
+			*/
 
 		public:
 			RenderToSurface( IntPtr rts );

@@ -149,7 +149,9 @@ namespace SlimDX
 		public ref class Font : public DirectXObject<ID3DXFont>
 		{
 		internal:
+			/* Unused for now.
 			Font( ID3DXFont* font );
+			*/
 
 		public:
 			Font( IntPtr font );

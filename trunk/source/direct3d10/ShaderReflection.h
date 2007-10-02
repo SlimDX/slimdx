@@ -22,6 +22,8 @@
 #pragma once
 
 using namespace System;
+using namespace System::Collections::Generic;
+using namespace System::Collections::ObjectModel;
 
 #include "../DirectXObject.h"
 
@@ -71,8 +73,8 @@ namespace SlimDX
 			UInt32 conversionInstructionCount;
 			UInt32 bitwiseInstructionCount;
 			
-			array<ShaderReflectionParameterDescription>^ inputParametersInfo;
-			array<ShaderReflectionParameterDescription>^ outputParametersInfo;
+			List<ShaderReflectionParameterDescription>^ inputParametersInfo;
+			List<ShaderReflectionParameterDescription>^ outputParametersInfo;
 			
 			void Construct();
 			
@@ -253,18 +255,24 @@ namespace SlimDX
 			//	UInt32 get() { return bitwiseInstructionCount; }
 			//}
 			
-			property array<ShaderReflectionParameterDescription>^ InputParameters
+			property ReadOnlyCollection<ShaderReflectionParameterDescription>^ InputParameters
 			{
-				array<ShaderReflectionParameterDescription>^ get() { return inputParametersInfo; }
+				ReadOnlyCollection<ShaderReflectionParameterDescription>^ get()
+				{
+					return gcnew ReadOnlyCollection<ShaderReflectionParameterDescription>( inputParametersInfo );
+				}
 			}
 			
-			property array<ShaderReflectionParameterDescription>^ OutputParameters
+			property ReadOnlyCollection<ShaderReflectionParameterDescription>^ OutputParameters
 			{
-				array<ShaderReflectionParameterDescription>^ get() { return outputParametersInfo; }
+				ReadOnlyCollection<ShaderReflectionParameterDescription>^ get()
+				{
+					return gcnew ReadOnlyCollection<ShaderReflectionParameterDescription>( outputParametersInfo );
+				}
 			}
 		
 			ShaderReflection( IntPtr reflection );
-			ShaderReflection( ShaderBytecode^ shaderByteCode );
+			ShaderReflection( ShaderBytecode^ shaderBytecode );
 			
 			virtual ~ShaderReflection() { Destruct(); }
 		};

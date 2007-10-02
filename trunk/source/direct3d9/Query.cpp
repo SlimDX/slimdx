@@ -31,6 +31,7 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	/* Unused for now.
 	Query::Query( IDirect3DQuery9* query )
 	{
 		if( query == NULL )
@@ -38,6 +39,7 @@ namespace Direct3D9
 
 		m_Pointer = query;
 	}
+	*/
 
 	Query::Query( IntPtr query )
 	{

@@ -135,7 +135,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies other attributes of a data format.
 		/// </summary>
-		public enum class DataFormatFlags : Int32
+		public enum class DataFormatFlag : Int32
 		{
 			/// <summary>
 			/// The axes are in absolute mode.

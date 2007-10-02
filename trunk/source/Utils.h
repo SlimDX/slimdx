@@ -38,6 +38,7 @@ namespace SlimDX
 		Utils() { }
 
 	public:
+		/* Unused for now
 		static void ReportNotDisposed( SlimDX::DirectXBase^ obj );
 		static void MarkDisposed( bool %disposed, Object^ obj );
 
@@ -47,6 +48,7 @@ namespace SlimDX
 		/// <param name="rect">Rectangle to convert.</param>
 		/// <param name="outrect">Output rectangle.</param>
 		static void ConvertRect(Drawing::Rectangle rect, RECT *outrect);
+		*/
 
 		/// <summary>
 		/// Function to convert a standard RECT to a GDI+ rectangle.

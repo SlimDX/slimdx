@@ -104,24 +104,24 @@ namespace Direct3D10
 		//conversionInstructionCount = description.ConversionInstructionCount;
 		//bitwiseInstructionCount = description.BitwiseInstructionCount;
 		
-		inputParametersInfo = gcnew array<ShaderReflectionParameterDescription>( inputParameters );
+		inputParametersInfo = gcnew List<ShaderReflectionParameterDescription>();
 		for( unsigned int inputIndex = 0; inputIndex < inputParameters; ++inputIndex )
 		{
 			D3D10_SIGNATURE_PARAMETER_DESC parameterDesc;
 			hr = 	((ID3D10ShaderReflection*) m_Pointer)->GetInputParameterDesc( inputIndex, &parameterDesc );
 			GraphicsException::CheckHResult( hr );
 			
-			inputParametersInfo[ inputIndex ] = ShaderReflectionParameterDescription( parameterDesc );
+			inputParametersInfo->Add( ShaderReflectionParameterDescription( parameterDesc ) );
 		}
 		
-		outputParametersInfo = gcnew array<ShaderReflectionParameterDescription>( outputParameters );
+		outputParametersInfo = gcnew List<ShaderReflectionParameterDescription>();
 		for( unsigned int outputIndex = 0; outputIndex < outputParameters; ++outputIndex )
 		{
 			D3D10_SIGNATURE_PARAMETER_DESC parameterDesc;
 			hr = 	((ID3D10ShaderReflection*) m_Pointer)->GetOutputParameterDesc( outputIndex, &parameterDesc );
 			GraphicsException::CheckHResult( hr );
 			
-			outputParametersInfo[ outputIndex ] = ShaderReflectionParameterDescription( parameterDesc );
+			outputParametersInfo->Add( ShaderReflectionParameterDescription( parameterDesc ) );
 		}
 	}
 }

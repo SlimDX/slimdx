@@ -30,7 +30,9 @@ namespace SlimDX
 		public ref class Line : DirectXObject<ID3DXLine>
 		{
 		internal:
+			/* Unused for now.
 			Line( ID3DXLine* line );
+			*/
 
 		public:
 			Line( IntPtr line );

@@ -445,7 +445,7 @@ namespace SlimDX
 			ReadOnly = DXGI_USAGE_READ_ONLY 
 		};
 		
-		public enum class SwapChainFlags : Int32
+		public enum class SwapChainFlag : Int32
 		{
 			None = 0,
 			NonPrerotated = DXGI_SWAP_CHAIN_FLAG_NONPREROTATED,
@@ -466,9 +466,9 @@ namespace SlimDX
 			CullDistance = D3D10_NAME_CULL_DISTANCE,
 			RenderTargetArrayIndex = D3D10_NAME_RENDER_TARGET_ARRAY_INDEX,
 			ViewportArrayIndex = D3D10_NAME_VIEWPORT_ARRAY_INDEX,
-			VertexID = D3D10_NAME_VERTEX_ID,
-			PrimitiveID = D3D10_NAME_PRIMITIVE_ID,
-			InstanceID = D3D10_NAME_INSTANCE_ID,
+			VertexId = D3D10_NAME_VERTEX_ID,
+			PrimitiveId = D3D10_NAME_PRIMITIVE_ID,
+			InstanceId = D3D10_NAME_INSTANCE_ID,
 			FrontFaceFlag = D3D10_NAME_IS_FRONT_FACE,
 			SampleIndex =D3D10_NAME_SAMPLE_INDEX,
 			Target = D3D10_NAME_TARGET,

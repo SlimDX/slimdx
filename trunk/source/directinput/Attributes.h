@@ -34,20 +34,20 @@ namespace SlimDX
 		public ref class DataFormatAttribute sealed : public Attribute
 		{
 		private:
-			DataFormatFlags flags;
+			DataFormatFlag flags;
 
 		public:
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::DataFormatAttribute"/> class.
 			/// </summary>
-			DataFormatAttribute( DataFormatFlags flags ) : flags( flags ) { }
+			DataFormatAttribute( DataFormatFlag flags ) : flags( flags ) { }
 
 			/// <summary>
 			/// Gets or sets the flags describing other attributes of the data format.
 			/// </summary>
-			property DataFormatFlags Flags
+			property DataFormatFlag Flags
 			{
-				DataFormatFlags get() { return flags; }
+				DataFormatFlag get() { return flags; }
 			}
 		};
 

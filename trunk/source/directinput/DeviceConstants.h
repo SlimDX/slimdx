@@ -69,17 +69,17 @@ namespace SlimDX
 			/// <summary>
 			/// Provides scan codes for the specified button.
 			/// </summary>
-			static int Button( int button );
+			static int Button( int buttonId );
 
 			/// <summary>
 			/// Provides scan codes for the specified slider.
 			/// </summary>
-			static int Slider( int slider );
+			static int Slider( int sliderId );
 
 			/// <summary>
 			/// Provides scan codes for the specified Point-Of-View controller.
 			/// </summary>
-			static int PointOfView( int pov );
+			static int PointOfView( int povId );
 		};
 
 		/// <summary>
@@ -229,13 +229,13 @@ namespace SlimDX
 			/// <summary>
 			/// Refers to any button.
 			/// </summary>
-			static int Button( int button );
+			static int Button( int buttonId );
 		};
 
 		/// <summary>
 		/// Defines possible mouse object codes.
 		/// </summary>
-		public enum class MouseObjects : Int32
+		public enum class MouseObject : Int32
 		{
 			/// <summary>
 			/// The first button.
@@ -1027,8 +1027,8 @@ namespace SlimDX
 		public:
 			static int KeyToDIK( Key key );
 			static int KeyToDIKEYBOARD( Key key );
-			static int MouseToDIMOFS( MouseObjects mouse );
-			static int MouseToDIMOUSE( MouseObjects mouse );
+			static int MouseToDIMOFS( MouseObject mouse );
+			static int MouseToDIMOUSE( MouseObject mouse );
 		};
 	}
 }

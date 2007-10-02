@@ -203,7 +203,7 @@ namespace SlimDX
 		/// <summary>
 		/// Controller input virtual key codes
 		/// </summary>
-		public enum class GamepadKeyCodes : UInt16
+		public enum class GamepadKeyCode : UInt16
 		{
 			A = VK_PAD_A,
 			B = VK_PAD_B,
@@ -247,7 +247,7 @@ namespace SlimDX
 		public value class KeyStroke
 		{
 		private:
-			GamepadKeyCodes virtualKey;
+			GamepadKeyCode virtualKey;
             Char unicode;
             KeyStrokeFlags flags;
             Byte userIndex;
@@ -257,10 +257,10 @@ namespace SlimDX
 			/// <summary>
 			/// Virtual-key code of the key, button, or stick movement.
 			/// </summary>
-			property GamepadKeyCodes VirtualKey
+			property GamepadKeyCode VirtualKey
             {
-                GamepadKeyCodes get() { return virtualKey; }
-                void set( GamepadKeyCodes value ) { virtualKey = value; }
+                GamepadKeyCode get() { return virtualKey; }
+                void set( GamepadKeyCode value ) { virtualKey = value; }
             }
 
 			/// <summary>

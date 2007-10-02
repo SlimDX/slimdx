@@ -22,6 +22,7 @@
 #pragma once
 
 using namespace System;
+using namespace System::Collections::Generic;
 using namespace System::Collections::ObjectModel;
 
 #include "Enums.h"
@@ -34,14 +35,14 @@ namespace SlimDX
 		{
 		private:
 			bool alphaToCoverageEnabled;
-            Collection<bool>^ renderTargetBlendEnabled;
+            List<bool>^ renderTargetBlendEnabled;
             BlendOption sourceBlend;
             BlendOption destinationBlend;
             SlimDX::Direct3D10::BlendOperation blendOperation;
             BlendOption sourceAlphaBlend;
             BlendOption destinationAlphaBlend;
             SlimDX::Direct3D10::BlendOperation alphaBlendOperation;
-            Collection<ColorWriteMaskFlags>^ renderTargetWriteMask;
+            List<ColorWriteMaskFlags>^ renderTargetWriteMask;
 
 		internal:
 			BlendStateDescription( const D3D10_BLEND_DESC& desc );
@@ -55,9 +56,9 @@ namespace SlimDX
                 void set( bool value ) { alphaToCoverageEnabled = value; }
             }
 
-            property Collection<bool>^ RenderTargetBlendEnabled
+            property ReadOnlyCollection<bool>^ RenderTargetBlendEnabled
             {
-                Collection<bool>^ get() { return gcnew Collection<bool>( renderTargetBlendEnabled ); }
+                ReadOnlyCollection<bool>^ get() { return gcnew ReadOnlyCollection<bool>( renderTargetBlendEnabled ); }
             }
 
             property BlendOption SourceBlend
@@ -96,9 +97,9 @@ namespace SlimDX
                 void set( SlimDX::Direct3D10::BlendOperation value ) { alphaBlendOperation = value; }
             }
 
-            property Collection<ColorWriteMaskFlags>^ RenderTargetWriteMask
+            property ReadOnlyCollection<ColorWriteMaskFlags>^ RenderTargetWriteMask
             {
-                Collection<ColorWriteMaskFlags>^ get() { return gcnew Collection<ColorWriteMaskFlags>( renderTargetWriteMask ); }
+                ReadOnlyCollection<ColorWriteMaskFlags>^ get() { return gcnew ReadOnlyCollection<ColorWriteMaskFlags>( renderTargetWriteMask ); }
             }
 			
 			BlendStateDescription();

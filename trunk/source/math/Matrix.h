@@ -61,12 +61,12 @@ namespace SlimDX
 		static Matrix RotationYawPitchRoll( float yaw, float pitch, float roll );
 
 		static Matrix Translation( float x, float y, float z );
-		static Matrix Translation( Vector3 translation );
-		static Matrix Translation( Vector3% translation );
+		static Matrix Translation( Vector3 amount );
+		static Matrix Translation( Vector3% amount );
 		
 		static Matrix Scaling ( float x, float y, float z );
-		static Matrix Scaling ( Vector3 scaling );
-		static Matrix Scaling ( Vector3% scaling );
+		static Matrix Scaling ( Vector3 scale );
+		static Matrix Scaling ( Vector3% scale );
 		
 		static Matrix AffineTransformation( float scaling, Vector3 rotationCenter, Quaternion rotation, Vector3 translation );
 		static Matrix AffineTransformation2D( float scaling, Vector2 rotationCenter, float rotation, Vector2 translation );

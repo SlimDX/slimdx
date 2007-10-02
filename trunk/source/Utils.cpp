@@ -24,12 +24,15 @@
 
 namespace SlimDX
 {
+	/* Unused for now.
 	void Utils::ReportNotDisposed( DirectXBase^ obj )
 	{
 		String^ message = String::Format( CultureInfo::InvariantCulture, "Object of type {0} not disposed.", obj->GetType()->ToString() );
 		Debug::WriteLine( message );
 	}
+	*/
 	
+	/* Unused for now.
 	void Utils::MarkDisposed( bool %disposed, Object^ obj )
 	{
 		if( disposed )
@@ -38,7 +41,9 @@ namespace SlimDX
 		disposed = true;
 		GC::SuppressFinalize( obj );
 	}
+	*/
 
+	/* Unused for now.
 	/// <summary>
 	/// Function to convert a GDI+ rectangle to a standard RECT.
 	/// </summary>
@@ -54,6 +59,7 @@ namespace SlimDX
 		outrect->right = rect.Right;
 		outrect->bottom = rect.Bottom;
 	}
+	*/
 
 	/// <summary>
 	/// Function to convert a standard RECT to a GDI+ rectangle.
