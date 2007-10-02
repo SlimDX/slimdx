@@ -42,7 +42,7 @@ namespace SlimDX
 
 		void Normalize();
 
-		static Plane Transform( Plane plane, Matrix transform );
+		static Plane Transform( Plane plane, Matrix transformation );
 		static bool IntersectLine( Plane plane, Vector3 start, Vector3 end, [Out] Vector3% intersectPoint );
 
 		float Dot( Vector3 point );

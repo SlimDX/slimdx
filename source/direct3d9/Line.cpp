@@ -33,11 +33,13 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	/* Unused for now.
 	Line::Line( ID3DXLine* line ) : DirectXObject( line )
 	{
 		if( line == NULL )
 			throw gcnew ArgumentNullException( "line" );
 	}
+	*/
 
 	Line::Line( IntPtr line )
 	{

@@ -26,6 +26,7 @@ using namespace System::Runtime::Serialization;
 
 namespace SlimDX
 {
+	[Serializable]
 	public ref class DirectXException : public Exception
 	{
 	private:

@@ -1205,51 +1205,51 @@ namespace DirectInput
 		throw gcnew ArgumentException( "The specified key does not exist." );
 	}
 
-	int DeviceConstantConverter::MouseToDIMOFS( MouseObjects mouse )
+	int DeviceConstantConverter::MouseToDIMOFS( MouseObject mouse )
 	{
 		switch( mouse )
 		{
-		case MouseObjects::Button1:
+		case MouseObject::Button1:
 			return DIMOFS_BUTTON0;
 			break;
 
-		case MouseObjects::Button2:
+		case MouseObject::Button2:
 			return DIMOFS_BUTTON1;
 			break;
 
-		case MouseObjects::Button3:
+		case MouseObject::Button3:
 			return DIMOFS_BUTTON2;
 			break;
 
-		case MouseObjects::Button4:
+		case MouseObject::Button4:
 			return DIMOFS_BUTTON3;
 			break;
 
-		case MouseObjects::Button5:
+		case MouseObject::Button5:
 			return DIMOFS_BUTTON4;
 			break;
 
-		case MouseObjects::Button6:
+		case MouseObject::Button6:
 			return DIMOFS_BUTTON5;
 			break;
 
-		case MouseObjects::Button7:
+		case MouseObject::Button7:
 			return DIMOFS_BUTTON6;
 			break;
 
-		case MouseObjects::Button8:
+		case MouseObject::Button8:
 			return DIMOFS_BUTTON7;
 			break;
 
-		case MouseObjects::XAxis:
+		case MouseObject::XAxis:
 			return DIMOFS_X;
 			break;
 
-		case MouseObjects::YAxis:
+		case MouseObject::YAxis:
 			return DIMOFS_Y;
 			break;
 
-		case MouseObjects::ZAxis:
+		case MouseObject::ZAxis:
 			return DIMOFS_Z;
 			break;
 		}
@@ -1257,51 +1257,51 @@ namespace DirectInput
 		throw gcnew ArgumentException( "The specified mouse object does not exist." );
 	}
 
-	int DeviceConstantConverter::MouseToDIMOUSE( MouseObjects mouse )
+	int DeviceConstantConverter::MouseToDIMOUSE( MouseObject mouse )
 	{
 		switch( mouse )
 		{
-		case MouseObjects::Button1:
+		case MouseObject::Button1:
 			return DIMOUSE_BUTTON0;
 			break;
 
-		case MouseObjects::Button2:
+		case MouseObject::Button2:
 			return DIMOUSE_BUTTON1;
 			break;
 
-		case MouseObjects::Button3:
+		case MouseObject::Button3:
 			return DIMOUSE_BUTTON2;
 			break;
 
-		case MouseObjects::Button4:
+		case MouseObject::Button4:
 			return DIMOUSE_BUTTON3;
 			break;
 
-		case MouseObjects::Button5:
+		case MouseObject::Button5:
 			return DIMOUSE_BUTTON4;
 			break;
 
-		case MouseObjects::Button6:
+		case MouseObject::Button6:
 			return DIMOUSE_BUTTON5;
 			break;
 
-		case MouseObjects::Button7:
+		case MouseObject::Button7:
 			return DIMOUSE_BUTTON6;
 			break;
 
-		case MouseObjects::Button8:
+		case MouseObject::Button8:
 			return DIMOUSE_BUTTON7;
 			break;
 
-		case MouseObjects::XAxis:
+		case MouseObject::XAxis:
 			return DIMOUSE_XAXIS;
 			break;
 
-		case MouseObjects::YAxis:
+		case MouseObject::YAxis:
 			return DIMOUSE_YAXIS;
 			break;
 
-		case MouseObjects::ZAxis:
+		case MouseObject::ZAxis:
 			return DIMOUSE_WHEEL;
 			break;
 		}

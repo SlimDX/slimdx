@@ -31,11 +31,13 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/* Unused for now.
 		RenderToSurface::RenderToSurface( ID3DXRenderToSurface* pointer ) : DirectXObject( pointer )
 		{
 			if( pointer == NULL )
 				throw gcnew ArgumentNullException( "pointer" );
 		}
+		*/
 
 		RenderToSurface::RenderToSurface( IntPtr rts )
 		{

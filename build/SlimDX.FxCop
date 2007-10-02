@@ -165,7 +165,7 @@
                <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.Marshal.SizeOf(System.Type) : Int32&#xD;&#xA;-&gt;SlimDX.DataStream.Read : T</Item>
               </Issue>
              </Message>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>DataStream.Read():T</Item>
                <Item>T</Item>
@@ -182,7 +182,7 @@
                <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.Marshal.SizeOf(System.Type) : Int32&#xD;&#xA;-&gt;SlimDX.DataStream.Read(System.Int32) : T[]</Item>
               </Issue>
              </Message>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>DataStream.Read(Int32):T[]</Item>
                <Item>T</Item>
@@ -254,8 +254,8 @@
          </Type>
          <Type Name="DirectXException">
           <Messages>
-           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Created="2007-10-01 21:38:08Z">
-            <Issue Level="Error">
+           <Message TypeName="ImplementISerializableCorrectly" Category="Microsoft.Usage" CheckId="CA2240" Created="2007-10-02 23:36:05Z">
+            <Issue>
              <Item>DirectXException</Item>
             </Issue>
            </Message>
@@ -320,21 +320,7 @@
             <Messages>
              <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Created="2007-10-01 21:38:08Z">
               <Issue Certainty="50">
-               <Item>scaling</Item>
-              </Issue>
-             </Message>
-             <Message Id="0#" TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>scaling</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Scaling(SlimDX.Vector3):SlimDX.Matrix">
-            <Messages>
-             <Message Id="0#" TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>scaling</Item>
+               <Item>scale</Item>
               </Issue>
              </Message>
             </Messages>
@@ -343,21 +329,7 @@
             <Messages>
              <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Created="2007-10-01 21:38:08Z">
               <Issue Certainty="50">
-               <Item>translation</Item>
-              </Issue>
-             </Message>
-             <Message Id="0#" TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>translation</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Translation(SlimDX.Vector3):SlimDX.Matrix">
-            <Messages>
-             <Message Id="0#" TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>translation</Item>
+               <Item>amount</Item>
               </Issue>
              </Message>
             </Messages>
@@ -391,15 +363,6 @@
               <Issue>
                <Item>Multiply</Item>
                <Item>Plane.op_Multiply(Plane, Single):Plane</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Transform(SlimDX.Plane,SlimDX.Matrix):SlimDX.Plane">
-            <Messages>
-             <Message Id="1#" TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>transform</Item>
               </Issue>
              </Message>
             </Messages>
@@ -482,37 +445,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Utils">
-          <Members>
-           <Member Name="ConvertRect(System.Drawing.Rectangle,tagRECT*):System.Void">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>Utils.ConvertRect(Rectangle, tagRECT*):Void</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="MarkDisposed(System.Boolean&amp;,System.Object):System.Void">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>Utils.MarkDisposed(Boolean&amp;, Object):Void</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="ReportNotDisposed(SlimDX.DirectXBase):System.Void">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>Utils.ReportNotDisposed(DirectXBase):Void</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Vector2">
           <Messages>
            <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
@@ -525,24 +457,6 @@
            </Message>
           </Messages>
           <Members>
-           <Member Name="Maximize(SlimDX.Vector2,SlimDX.Vector2):SlimDX.Vector2">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
-              <Issue>
-               <Item>Vector2.Maximize(Vector2, Vector2):Vector2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Minimize(SlimDX.Vector2,SlimDX.Vector2):SlimDX.Vector2">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
-              <Issue>
-               <Item>Vector2.Minimize(Vector2, Vector2):Vector2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="op_Addition(SlimDX.Vector2,SlimDX.Vector2):SlimDX.Vector2">
             <Messages>
              <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2007-10-01 21:38:08Z">
@@ -657,15 +571,6 @@
               <Issue>
                <Item>Vector3</Item>
                <Item>Vector3.op_Subtraction(Vector3, Vector3):Vector3</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Transform(SlimDX.Vector3,SlimDX.Matrix):SlimDX.Vector4">
-            <Messages>
-             <Message Id="1#" TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>transform</Item>
               </Issue>
              </Message>
             </Messages>
@@ -801,7 +706,7 @@
              <Item>BlendOption</Item>
             </Issue>
            </Message>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>BlendOption</Item>
             </Issue>
@@ -915,6 +820,19 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="EnumerationReflection">
+          <Members>
+           <Member Name="SizeOfElement(SlimDX.Direct3D10.Format):System.Int32">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-02 22:02:00Z">
+              <Issue>
+               <Item>EnumerationReflection.SizeOfElement(Format):Int32</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="FileNotFoundException">
           <Members>
            <Member Name=".ctor()">
@@ -1007,14 +925,14 @@
            </Member>
            <Member Name="BC1_UNorm_SRGB">
             <Messages>
-             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2007-10-01 21:38:08Z">
-              <Issue Name="Member">
-               <Item>Format.BC1_UNorm_SRGB</Item>
-              </Issue>
-             </Message>
              <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue Name="Member">
                <Item>BC1_UNorm_SRGB</Item>
+              </Issue>
+             </Message>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Status="Excluded" Created="2007-10-01 21:38:08Z">
+              <Issue Name="Member">
+               <Item>Format.BC1_UNorm_SRGB</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1039,14 +957,14 @@
            </Member>
            <Member Name="BC2_UNorm_SRGB">
             <Messages>
-             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2007-10-01 21:38:08Z">
-              <Issue Name="Member">
-               <Item>Format.BC2_UNorm_SRGB</Item>
-              </Issue>
-             </Message>
              <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue Name="Member">
                <Item>BC2_UNorm_SRGB</Item>
+              </Issue>
+             </Message>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Status="Excluded" Created="2007-10-01 21:38:08Z">
+              <Issue Name="Member">
+               <Item>Format.BC2_UNorm_SRGB</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1071,14 +989,14 @@
            </Member>
            <Member Name="BC3_UNorm_SRGB">
             <Messages>
-             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2007-10-01 21:38:08Z">
-              <Issue Name="Member">
-               <Item>Format.BC3_UNorm_SRGB</Item>
-              </Issue>
-             </Message>
              <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue Name="Member">
                <Item>BC3_UNorm_SRGB</Item>
+              </Issue>
+             </Message>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Status="Excluded" Created="2007-10-01 21:38:08Z">
+              <Issue Name="Member">
+               <Item>Format.BC3_UNorm_SRGB</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1715,14 +1633,14 @@
            </Member>
            <Member Name="R8G8B8A8_UNorm_SRGB">
             <Messages>
-             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2007-10-01 21:38:08Z">
-              <Issue Name="Member">
-               <Item>Format.R8G8B8A8_UNorm_SRGB</Item>
-              </Issue>
-             </Message>
              <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue Name="Member">
                <Item>R8G8B8A8_UNorm_SRGB</Item>
+              </Issue>
+             </Message>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Status="Excluded" Created="2007-10-01 21:38:08Z">
+              <Issue Name="Member">
+               <Item>Format.R8G8B8A8_UNorm_SRGB</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1757,6 +1675,13 @@
           </Members>
          </Type>
          <Type Name="GraphicsException">
+          <Messages>
+           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Created="2007-10-02 23:36:05Z">
+            <Issue Level="Error">
+             <Item>GraphicsException</Item>
+            </Issue>
+           </Message>
+          </Messages>
           <Members>
            <Member Name=".ctor()">
             <Messages>
@@ -1941,6 +1866,76 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="ShaderReflection">
+          <Members>
+           <Member Name=".ctor(ID3D10ShaderReflection*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-02 22:02:00Z">
+              <Issue>
+               <Item>ShaderReflection.ShaderReflection(ID3D10ShaderReflection*)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="bitwiseInstructionCount">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-10-02 22:02:00Z">
+              <Issue>
+               <Item>ShaderReflection.bitwiseInstructionCount</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="conversionInstructionCount">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-10-02 22:02:00Z">
+              <Issue>
+               <Item>ShaderReflection.conversionInstructionCount</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="flags">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-10-02 22:02:00Z">
+              <Issue>
+               <Item>ShaderReflection.flags</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="movcInstructionCount">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-10-02 22:02:00Z">
+              <Issue>
+               <Item>ShaderReflection.movcInstructionCount</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="movInstructionCount">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-10-02 22:02:00Z">
+              <Issue>
+               <Item>ShaderReflection.movInstructionCount</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ShaderReflectionParameterDescription">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-02 22:02:00Z">
+            <Issue Name="Equals">
+             <Item>SlimDX.Direct3D10.ShaderReflectionParameterDescription</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>SlimDX.Direct3D10.ShaderReflectionParameterDescription</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="StencilOperation">
           <Messages>
            <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
@@ -1969,7 +1964,7 @@
              <Item>SurfaceUsage</Item>
             </Issue>
            </Message>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SurfaceUsage</Item>
             </Issue>
@@ -1988,17 +1983,11 @@
            </Message>
           </Messages>
          </Type>
-         <Type Name="SwapChainFlags">
+         <Type Name="SystemValueType">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2007-10-02 22:02:00Z">
             <Issue>
-             <Item>SlimDX.Direct3D10.SwapChainFlags</Item>
-             <Item>Flags</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2007-10-01 21:38:08Z">
-            <Issue>
-             <Item>SwapChainFlags</Item>
+             <Item>SystemValueType</Item>
             </Issue>
            </Message>
           </Messages>
@@ -2013,19 +2002,6 @@
                <Item>2</Item>
                <Item>GraphicsException.GraphicsException(Int32, String)</Item>
                <Item>Too many state objects.</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Utils">
-          <Members>
-           <Member Name="ElementSizeOf(SlimDX.Direct3D10.Format):System.Int32">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>Utils.ElementSizeOf(Format):Int32</Item>
               </Issue>
              </Message>
             </Messages>
@@ -2506,7 +2482,7 @@
            </Member>
            <Member Name="GetRenderState(SlimDX.Direct3D9.RenderState):System.Int32">
             <Messages>
-             <Message TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>SlimDX.Direct3D9.Device.GetRenderState(SlimDX.Direct3D9.RenderState)</Item>
               </Issue>
@@ -2515,13 +2491,13 @@
            </Member>
            <Member Name="GetRenderState(SlimDX.Direct3D9.RenderState):T">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>Device.GetRenderState(RenderState):T</Item>
                <Item>T</Item>
               </Issue>
              </Message>
-             <Message TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>SlimDX.Direct3D9.Device.GetRenderState(SlimDX.Direct3D9.RenderState)</Item>
               </Issue>
@@ -2577,7 +2553,7 @@
            </Member>
            <Member Name="SetPixelShaderConstant(System.Int32,System.Boolean[],System.Int32,System.Int32):System.Void">
             <Messages>
-             <Message Id="offset*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Created="2007-10-01 21:38:08Z">
+             <Message Id="offset*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>offset*4</Item>
                <Item>Device.SetPixelShaderConstant(Int32, Boolean[], Int32, Int32):Void</Item>
@@ -2587,7 +2563,7 @@
            </Member>
            <Member Name="SetPixelShaderConstant(System.Int32,System.Int32[],System.Int32,System.Int32):System.Void">
             <Messages>
-             <Message Id="offset*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Created="2007-10-01 21:38:08Z">
+             <Message Id="offset*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>offset*4</Item>
                <Item>Device.SetPixelShaderConstant(Int32, Int32[], Int32, Int32):Void</Item>
@@ -2597,7 +2573,7 @@
            </Member>
            <Member Name="SetPixelShaderConstant(System.Int32,System.Single[],System.Int32,System.Int32):System.Void">
             <Messages>
-             <Message Id="offset*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Created="2007-10-01 21:38:08Z">
+             <Message Id="offset*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>offset*4</Item>
                <Item>Device.SetPixelShaderConstant(Int32, Single[], Int32, Int32):Void</Item>
@@ -2607,7 +2583,7 @@
            </Member>
            <Member Name="SetVertexShaderConstant(System.Int32,System.Boolean[],System.Int32,System.Int32):System.Void">
             <Messages>
-             <Message Id="offset*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Created="2007-10-01 21:38:08Z">
+             <Message Id="offset*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>offset*4</Item>
                <Item>Device.SetVertexShaderConstant(Int32, Boolean[], Int32, Int32):Void</Item>
@@ -2617,7 +2593,7 @@
            </Member>
            <Member Name="SetVertexShaderConstant(System.Int32,System.Int32[],System.Int32,System.Int32):System.Void">
             <Messages>
-             <Message Id="offset*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Created="2007-10-01 21:38:08Z">
+             <Message Id="offset*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>offset*4</Item>
                <Item>Device.SetVertexShaderConstant(Int32, Int32[], Int32, Int32):Void</Item>
@@ -2627,7 +2603,7 @@
            </Member>
            <Member Name="SetVertexShaderConstant(System.Int32,System.Single[],System.Int32,System.Int32):System.Void">
             <Messages>
-             <Message Id="offset*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Created="2007-10-01 21:38:08Z">
+             <Message Id="offset*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>offset*4</Item>
                <Item>Device.SetVertexShaderConstant(Int32, Single[], Int32, Int32):Void</Item>
@@ -3052,9 +3028,22 @@
           <Members>
            <Member Name="Defaults">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>EffectInstance.Defaults:EffectDefault[]</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="EnumerationReflection">
+          <Members>
+           <Member Name="SizeOfElement(SlimDX.Direct3D9.Format):System.Int32">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-02 22:02:00Z">
+              <Issue>
+               <Item>EnumerationReflection.SizeOfElement(Format):Int32</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3096,19 +3085,6 @@
             </Issue>
            </Message>
           </Messages>
-         </Type>
-         <Type Name="Font">
-          <Members>
-           <Member Name=".ctor(ID3DXFont*)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>Font.Font(ID3DXFont*)</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
          </Type>
          <Type Name="FontDescription">
           <Messages>
@@ -3255,6 +3231,13 @@
           </Messages>
          </Type>
          <Type Name="GraphicsException">
+          <Messages>
+           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Created="2007-10-02 23:36:05Z">
+            <Issue Level="Error">
+             <Item>GraphicsException</Item>
+            </Issue>
+           </Message>
+          </Messages>
           <Members>
            <Member Name=".ctor()">
             <Messages>
@@ -3385,15 +3368,6 @@
          </Type>
          <Type Name="Line">
           <Members>
-           <Member Name=".ctor(ID3DXLine*)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>Line.Line(ID3DXLine*)</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="GetDevice():SlimDX.Direct3D9.Device">
             <Messages>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -3983,15 +3957,6 @@
          </Type>
          <Type Name="Query">
           <Members>
-           <Member Name=".ctor(IDirect3DQuery9*)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>Query.Query(IDirect3DQuery9*)</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="GetData(System.Boolean):T">
             <Messages>
              <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
@@ -4001,7 +3966,7 @@
                <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.Marshal.SizeOf(System.Type) : Int32&#xD;&#xA;-&gt;SlimDX.Direct3D9.Query.GetData(System.Boolean) : T</Item>
               </Issue>
              </Message>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>Query.GetData(Boolean):T</Item>
                <Item>T</Item>
@@ -4064,15 +4029,6 @@
          </Type>
          <Type Name="RenderToSurface">
           <Members>
-           <Member Name=".ctor(ID3DXRenderToSurface*)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>RenderToSurface.RenderToSurface(ID3DXRenderToSurface*)</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="GetDevice():SlimDX.Direct3D9.Device">
             <Messages>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -4496,7 +4452,7 @@
          </Type>
          <Type Name="TextureTransform">
           <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>TextureTransform</Item>
             </Issue>
@@ -4562,7 +4518,7 @@
           <Members>
            <Member Name="Elements">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>VertexDeclaration.Elements:VertexElement[]</Item>
               </Issue>
@@ -4700,19 +4656,6 @@
        </Namespace>
        <Namespace Name="SlimDX.DirectInput">
         <Types>
-         <Type Name="AnyControl">
-          <Members>
-           <Member Name="Button(System.Int32):System.Int32">
-            <Messages>
-             <Message Id="0#" TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>button</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="BufferedData`1">
           <Members>
            <Member Name=".ctor(DIDEVICEOBJECTDATA*)">
@@ -4776,22 +4719,11 @@
            </Message>
           </Messages>
          </Type>
-         <Type Name="DataFormatFlags">
+         <Type Name="DataFormatFlag">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-02 23:25:27Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
-             <Item>DataFormatFlags</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
-            <Issue>
-             <Item>SlimDX.DirectInput.DataFormatFlags</Item>
-             <Item>Flags</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2007-10-01 21:38:08Z">
-            <Issue>
-             <Item>DataFormatFlags</Item>
+             <Item>DataFormatFlag</Item>
             </Issue>
            </Message>
           </Messages>
@@ -4893,16 +4825,16 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="MouseToDIMOFS(SlimDX.DirectInput.MouseObjects):System.Int32">
+           <Member Name="MouseToDIMOFS(SlimDX.DirectInput.MouseObject):System.Int32">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-02 23:25:27Z">
               <Issue>
-               <Item>DeviceConstantConverter.MouseToDIMOFS(MouseObjects):Int32</Item>
+               <Item>DeviceConstantConverter.MouseToDIMOFS(MouseObject):Int32</Item>
               </Issue>
              </Message>
-             <Message Id="System.ArgumentException.#ctor(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Excluded" Created="2007-10-01 21:38:08Z">
+             <Message Id="System.ArgumentException.#ctor(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Excluded" Created="2007-10-02 23:25:27Z">
               <Issue>
-               <Item>DeviceConstantConverter.MouseToDIMOFS(MouseObjects):Int32</Item>
+               <Item>DeviceConstantConverter.MouseToDIMOFS(MouseObject):Int32</Item>
                <Item>1</Item>
                <Item>ArgumentException.ArgumentException(String)</Item>
                <Item>The specified mouse object does not exist.</Item>
@@ -4910,16 +4842,16 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="MouseToDIMOUSE(SlimDX.DirectInput.MouseObjects):System.Int32">
+           <Member Name="MouseToDIMOUSE(SlimDX.DirectInput.MouseObject):System.Int32">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-02 23:25:27Z">
               <Issue>
-               <Item>DeviceConstantConverter.MouseToDIMOUSE(MouseObjects):Int32</Item>
+               <Item>DeviceConstantConverter.MouseToDIMOUSE(MouseObject):Int32</Item>
               </Issue>
              </Message>
-             <Message Id="System.ArgumentException.#ctor(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Excluded" Created="2007-10-01 21:38:08Z">
+             <Message Id="System.ArgumentException.#ctor(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Excluded" Created="2007-10-02 23:25:27Z">
               <Issue>
-               <Item>DeviceConstantConverter.MouseToDIMOUSE(MouseObjects):Int32</Item>
+               <Item>DeviceConstantConverter.MouseToDIMOUSE(MouseObject):Int32</Item>
                <Item>1</Item>
                <Item>ArgumentException.ArgumentException(String)</Item>
                <Item>The specified mouse object does not exist.</Item>
@@ -5105,6 +5037,13 @@
           </Members>
          </Type>
          <Type Name="InputException">
+          <Messages>
+           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Created="2007-10-02 23:36:05Z">
+            <Issue Level="Error">
+             <Item>InputException</Item>
+            </Issue>
+           </Message>
+          </Messages>
           <Members>
            <Member Name=".ctor()">
             <Messages>
@@ -5136,24 +5075,19 @@
           <Members>
            <Member Name="Button(System.Int32):System.Int32">
             <Messages>
-             <Message Id="button+48" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Created="2007-10-01 21:38:08Z">
+             <Message Id="buttonId+48" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2007-10-02 23:09:18Z">
               <Issue>
-               <Item>button+48</Item>
+               <Item>buttonId+48</Item>
                <Item>JoystickObjects.Button(Int32):Int32</Item>
-              </Issue>
-             </Message>
-             <Message Id="0#" TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>button</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
            <Member Name="PointOfView(System.Int32):System.Int32">
             <Messages>
-             <Message Id="pov*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Created="2007-10-01 21:38:08Z">
+             <Message Id="povId*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2007-10-02 23:09:18Z">
               <Issue>
-               <Item>pov*4</Item>
+               <Item>povId*4</Item>
                <Item>JoystickObjects.PointOfView(Int32):Int32</Item>
               </Issue>
              </Message>
@@ -5161,29 +5095,15 @@
            </Member>
            <Member Name="Slider(System.Int32):System.Int32">
             <Messages>
-             <Message Id="slider*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Created="2007-10-01 21:38:08Z">
+             <Message Id="sliderId*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2007-10-02 23:09:18Z">
               <Issue>
-               <Item>slider*4</Item>
+               <Item>sliderId*4</Item>
                <Item>JoystickObjects.Slider(Int32):Int32</Item>
-              </Issue>
-             </Message>
-             <Message Id="0#" TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>slider</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
           </Members>
-         </Type>
-         <Type Name="MouseObjects">
-          <Messages>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2007-10-01 21:38:08Z">
-            <Issue>
-             <Item>MouseObjects</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
          <Type Name="ObjectDataFormatFlags">
           <Messages>
@@ -5433,6 +5353,13 @@
           </Members>
          </Type>
          <Type Name="SoundException">
+          <Messages>
+           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Created="2007-10-02 23:36:05Z">
+            <Issue Level="Error">
+             <Item>SoundException</Item>
+            </Issue>
+           </Message>
+          </Messages>
           <Members>
            <Member Name=".ctor()">
             <Messages>
@@ -5468,6 +5395,13 @@
        <Namespace Name="SlimDX.XAudio2">
         <Types>
          <Type Name="AudioException">
+          <Messages>
+           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Created="2007-10-02 23:36:05Z">
+            <Issue Level="Error">
+             <Item>AudioException</Item>
+            </Issue>
+           </Message>
+          </Messages>
           <Members>
            <Member Name=".ctor()">
             <Messages>
@@ -5998,22 +5932,17 @@
            </Message>
           </Messages>
          </Type>
-         <Type Name="GamepadKeyCodes">
+         <Type Name="GamepadKeyCode">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-02 23:25:27Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
-             <Item>GamepadKeyCodes</Item>
+             <Item>GamepadKeyCode</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-02 23:25:27Z">
             <Issue Name="NotIntegral">
-             <Item>SlimDX.XInput.GamepadKeyCodes</Item>
+             <Item>SlimDX.XInput.GamepadKeyCode</Item>
              <Item>System.UInt16</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2007-10-01 21:38:08Z">
-            <Issue>
-             <Item>GamepadKeyCodes</Item>
             </Issue>
            </Message>
           </Messages>
@@ -6081,6 +6010,13 @@
           </Messages>
          </Type>
          <Type Name="XInputException">
+          <Messages>
+           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Created="2007-10-02 23:36:05Z">
+            <Issue Level="Error">
+             <Item>XInputException</Item>
+            </Issue>
+           </Message>
+          </Messages>
           <Members>
            <Member Name=".ctor()">
             <Messages>
@@ -6176,6 +6112,9 @@
    <Rule TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711">
     <Resolution Name="Default">Rename '{0}' so that it does not end in '{1}'.</Resolution>
    </Rule>
+   <Rule TypeName="ImplementISerializableCorrectly" Category="Microsoft.Usage" CheckId="CA2240">
+    <Resolution Name="Default">Add an implementation of GetObjectData to type '{0}'.</Resolution>
+   </Rule>
    <Rule TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705">
     <Resolution Name="Member">Correct the capitalization of member name '{0}'.</Resolution>
    </Rule>
@@ -6190,9 +6129,6 @@
    </Rule>
    <Rule TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223">
     <Resolution Name="Default">'{0}' should differ from other members by more than its return type.</Resolution>
-   </Rule>
-   <Rule TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717">
-    <Resolution Name="Default">If the name '{0}' is plural, change it to its singular form.</Resolution>
    </Rule>
    <Rule TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233">
     <Resolution Name="Default">Correct the potential overflow in the operation '{0}' in '{1}'.</Resolution>
@@ -6214,9 +6150,6 @@
    <Rule TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725">
     <Resolution Name="Default">Change parameter name '{0}' of method {1} to '{2}' in order to match the identifier as it has been declared in {3}.</Resolution>
    </Rule>
-   <Rule TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719">
-    <Resolution Name="Default">Change either member or parameter name '{0}' so that one differs from the other.</Resolution>
-   </Rule>
    <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
     <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>
    </Rule>
@@ -6228,6 +6161,7 @@
    </Rule>
    <Rule TypeName="ShortAcronymsShouldBeUppercase" Category="Microsoft.Naming" CheckId="CA1706">
     <Resolution Name="Member">Correct the capitalization of '{0}' in member name '{1}'.</Resolution>
+    <Resolution Name="MemberId">'Id' is an abbreviation and therefore is not subject to acronym casing guidelines. Correct the capitalization of 'ID' in member name '{0}' by changing it to 'Id'.</Resolution>
    </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name '{0}' conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>

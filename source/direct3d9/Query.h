@@ -390,7 +390,9 @@ namespace SlimDX
 		public ref class Query : public DirectXObject<IDirect3DQuery9>
 		{
 		internal:
+			/* Unused for now.
 			Query( IDirect3DQuery9* query );
+			*/
 
 		public:
 			Query( IntPtr query );
