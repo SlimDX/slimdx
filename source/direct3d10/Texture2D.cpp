@@ -146,7 +146,7 @@ namespace Direct3D10
 		return gcnew Texture2D( (ID3D10Texture2D*) texture );
 	}
 	
-	Texture2D^ Texture2D::FromStream( Device^ device, Stream^ stream, UInt32 sizeInBytes )
+	Texture2D^ Texture2D::FromStream( Device^ device, Stream^ stream, int sizeInBytes )
 	{
 		array<Byte>^ memory = SlimDX::Utils::ReadStream( stream, sizeInBytes );
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
