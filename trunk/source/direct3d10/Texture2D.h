@@ -120,7 +120,7 @@ namespace SlimDX
 			
 			
 			static Texture2D^ FromFile( Device^ device, String^ fileName );
-			static Texture2D^ FromStream( Device^ device, Stream^ stream, UInt32 sizeInBytes );
+			static Texture2D^ FromStream( Device^ device, Stream^ stream, int sizeInBytes );
 		};
 	}
 };
