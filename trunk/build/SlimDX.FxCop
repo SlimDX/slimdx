@@ -512,65 +512,536 @@
           </Members>
          </Type>
          <Type Name="Vector3">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>SlimDX.Vector3</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>SlimDX.Vector3</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
-           <Member Name="op_Addition(SlimDX.Vector3,SlimDX.Vector3):SlimDX.Vector3">
+           <Member Name="Add(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Void">
             <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2007-10-01 21:38:08Z">
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
               <Issue>
-               <Item>Add</Item>
-               <Item>Vector3.op_Addition(Vector3, Vector3):Vector3</Item>
+               <Item>result</Item>
               </Issue>
              </Message>
-             <Message TypeName="OverloadOperatorEqualsOnOverloadingAddAndSubtract" Category="Microsoft.Design" CheckId="CA1013" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>Vector3</Item>
-               <Item>Vector3.op_Addition(Vector3, Vector3):Vector3</Item>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>right</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="op_Multiply(SlimDX.Vector3,System.Single):SlimDX.Vector3">
+           <Member Name="Barycentric(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,System.Single,System.Single,SlimDX.Vector3&amp;):System.Void">
             <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2007-10-01 21:38:08Z">
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
               <Issue>
-               <Item>Multiply</Item>
-               <Item>Vector3.op_Multiply(Vector3, Single):Vector3</Item>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value2</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value3</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="op_Multiply(System.Single,SlimDX.Vector3):SlimDX.Vector3">
+           <Member Name="CatmullRom(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,System.Single,SlimDX.Vector3&amp;):System.Void">
             <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2007-10-01 21:38:08Z">
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
               <Issue>
-               <Item>Multiply</Item>
-               <Item>Vector3.op_Multiply(Single, Vector3):Vector3</Item>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value2</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value3</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value4</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="op_Subtraction(SlimDX.Vector3,SlimDX.Vector3):SlimDX.Vector3">
+           <Member Name="Clamp(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Void">
             <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2007-10-01 21:38:08Z">
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
               <Issue>
-               <Item>Subtract</Item>
-               <Item>Vector3.op_Subtraction(Vector3, Vector3):Vector3</Item>
+               <Item>result</Item>
               </Issue>
              </Message>
-             <Message TypeName="OverloadOperatorEqualsOnOverloadingAddAndSubtract" Category="Microsoft.Design" CheckId="CA1013" Created="2007-10-01 21:38:08Z">
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>min</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>max</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Cross(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
               <Issue>
-               <Item>Vector3</Item>
-               <Item>Vector3.op_Subtraction(Vector3, Vector3):Vector3</Item>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>right</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Distance(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Single">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="DistanceSquared(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Single">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Divide(SlimDX.Vector3&amp;,System.Single,SlimDX.Vector3&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>vector</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Dot(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Single">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>right</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Equals(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Boolean">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Hermite(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,System.Single,SlimDX.Vector3&amp;):System.Void">
+            <Messages>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>tangent1</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value2</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>tangent2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Lerp(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,System.Single,SlimDX.Vector3&amp;):System.Void">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>start</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>end</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Maximize(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Minimize(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Modulate(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>right</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Multiply(SlimDX.Vector3&amp;,System.Single,SlimDX.Vector3&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>vector</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Negate(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>value</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Normalize(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>vector</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Project(SlimDX.Vector3&amp;,SlimDX.Direct3D.Viewport&amp;,SlimDX.Matrix&amp;,SlimDX.Matrix&amp;,SlimDX.Matrix&amp;,SlimDX.Vector3&amp;):System.Void">
+            <Messages>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>vector</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>viewport</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>projection</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>view</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>world</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Reflect(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>vector</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>normal</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="SmoothStep(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,System.Single,SlimDX.Vector3&amp;):System.Void">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>start</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>end</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Subtract(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>right</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Transform(SlimDX.Vector3&amp;,SlimDX.Matrix&amp;,SlimDX.Vector4&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>vector</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>transformation</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Transform(SlimDX.Vector3&amp;,SlimDX.Quaternion&amp;,SlimDX.Vector4&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>vector</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>rotation</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="TransformCoordinate(SlimDX.Vector3&amp;,SlimDX.Matrix&amp;,SlimDX.Vector3&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>coordinate</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>transformation</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="TransformNormal(SlimDX.Vector3&amp;,SlimDX.Matrix&amp;,SlimDX.Vector3&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>normal</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>transform</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Unproject(SlimDX.Vector3&amp;,SlimDX.Direct3D.Viewport&amp;,SlimDX.Matrix&amp;,SlimDX.Matrix&amp;,SlimDX.Matrix&amp;,SlimDX.Vector3&amp;):System.Void">
+            <Messages>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>vector</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>viewport</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>projection</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>view</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+              <Issue Certainty="50">
+               <Item>world</Item>
               </Issue>
              </Message>
             </Messages>
@@ -6161,7 +6632,6 @@
    </Rule>
    <Rule TypeName="ShortAcronymsShouldBeUppercase" Category="Microsoft.Naming" CheckId="CA1706">
     <Resolution Name="Member">Correct the capitalization of '{0}' in member name '{1}'.</Resolution>
-    <Resolution Name="MemberId">'Id' is an abbreviation and therefore is not subject to acronym casing guidelines. Correct the capitalization of 'ID' in member name '{0}' by changing it to 'Id'.</Resolution>
    </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name '{0}' conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
