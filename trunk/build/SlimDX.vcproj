@@ -280,7 +280,11 @@
 				Name="XInput"
 				>
 				<File
-					RelativePath="..\source\xinput\xinput.cpp"
+					RelativePath="..\source\xinput\Controller.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\Gamepad.cpp"
 					>
 				</File>
 			</Filter>
@@ -834,11 +838,43 @@
 				Name="XInput"
 				>
 				<File
-					RelativePath="..\source\xinput\Exception.h"
+					RelativePath="..\source\xinput\BatteryInformation.h"
 					>
 				</File>
 				<File
-					RelativePath="..\source\xinput\xinput.h"
+					RelativePath="..\source\xinput\Capabilities.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\Controller.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\Enums.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\Gamepad.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\InputException.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\KeyStroke.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\State.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\Vibration.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\XInput.h"
 					>
 				</File>
 			</Filter>

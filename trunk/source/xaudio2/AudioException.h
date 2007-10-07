@@ -33,6 +33,7 @@ namespace SlimDX
 {
 	namespace XAudio2
 	{
+		[Serializable]
 		public ref class AudioException : public SlimDX::DirectXException
 		{
 		private:
@@ -65,6 +66,7 @@ namespace SlimDX
 		};
 
 #define DEFINE_AUDIO_EXCEPTION( ExName, ErrorCode ) \
+	[Serializable] \
 	public ref class ExName ## Exception : public AudioException \
 	{ \
 	protected: \
@@ -76,6 +78,7 @@ namespace SlimDX
 	}
 
 #define DEFINE_CUSTOM_AUDIO_EXCEPTION( ExName, ErrorCode, Message ) \
+	[Serializable] \
 	public ref class ExName ## Exception : public AudioException \
 	{ \
 	protected: \

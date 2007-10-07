@@ -182,7 +182,7 @@ namespace SlimDX
 			/// <summary>
 			/// A console game pad.
 			/// </summary>
-			GamePad = DI8DEVTYPE_GAMEPAD,
+			Gamepad = DI8DEVTYPE_GAMEPAD,
 
 			/// <summary>
 			/// A generic joystick.
