@@ -31,6 +31,7 @@ namespace SlimDX
 {
 	namespace DirectSound
 	{
+		[Serializable]
 		public ref class SoundException : public SlimDX::DirectXException
 		{
 		private:
@@ -63,6 +64,7 @@ namespace SlimDX
 		};
 
 #define DEFINE_SOUND_EXCEPTION( ExName, ErrorCode ) \
+	[Serializable] \
 	public ref class ExName ## Exception : public SoundException \
 	{ \
 	protected: \
@@ -74,6 +76,7 @@ namespace SlimDX
 	}
 
 #define DEFINE_CUSTOM_SOUND_EXCEPTION( ExName, ErrorCode, Message ) \
+	[Serializable] \
 	public ref class ExName ## Exception : public SoundException \
 	{ \
 	protected: \

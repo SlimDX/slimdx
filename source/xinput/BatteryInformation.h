@@ -22,13 +22,31 @@
 #pragma once
 
 using namespace System;
-using namespace System::Runtime::InteropServices;
 
-#include "Enums.h"
-#include "Gamepad.h"
-#include "KeyStroke.h"
-#include "State.h"
-#include "Vibration.h"
-#include "BatteryInformation.h"
-#include "Capabilities.h"
-#include "Controller.h"
+namespace SlimDX
+{
+	namespace XInput
+	{
+		public value class BatteryInformation
+		{
+		private:
+			BatteryType type;
+			BatteryLevel level;
+
+		public:
+			property BatteryType Type
+			{
+				BatteryType get() { return type; }
+			internal:
+				void set( BatteryType value ) { type = value; }
+			}
+
+			property BatteryLevel Level
+			{
+				BatteryLevel get() { return level; }
+			internal:
+				void set( BatteryLevel value ) { level = value; }
+			}
+		};
+	}
+}

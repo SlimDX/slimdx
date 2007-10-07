@@ -30,6 +30,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
+		[Serializable]
 		public ref class GraphicsException : public DirectXException
 		{
 		private:
@@ -60,6 +61,7 @@ namespace SlimDX
 		};
 
 #define DEFINE_GRAPHICS_EXCEPTION( ExName, ErrorCode, Message ) \
+	[Serializable] \
 	public ref class ExName ## Exception : public GraphicsException \
 	{ \
 	protected: \

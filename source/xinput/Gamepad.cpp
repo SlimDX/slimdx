@@ -19,49 +19,25 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include <windows.h>
+#include <xinput.h>
 
-#include "../Exceptions.h"
+#include "XInput.h"
+#include "InputException.h"
 
 namespace SlimDX
 {
 	namespace XInput
 	{
-		public ref class XInputException : public DirectXException
+		Gamepad::Gamepad( const XINPUT_GAMEPAD &gamepad )
 		{
-		protected:
-			XInputException(SerializationInfo^ info, StreamingContext context) : DirectXException(info, context)
-			{ }
-
-		public:
-			XInputException() : DirectXException(E_FAIL, "A XInput exception occurred.")
-			{ }
-
-			XInputException(String^ message) : DirectXException(E_FAIL, message)
-			{ }
-
-			XInputException( int errorCode, String^ message ) : DirectXException( errorCode, message )
-			{ }
-
-			XInputException( String^ message, Exception^ innerException ) : DirectXException( message, innerException )
-			{ }
-
-		internal:
-			static void CheckResult(UInt32 result)
-			{
-				if(result != ERROR_SUCCESS && result != ERROR_EMPTY)
-				{
-					if(DirectXException::EnableExceptions)
-					{
-						if(result == ERROR_DEVICE_NOT_CONNECTED)
-							throw gcnew XInputException(ERROR_DEVICE_NOT_CONNECTED, "Device not connected. If this is a wireless device it may not yet be powered on.");
-						else
-							throw gcnew XInputException(result, "A XInput exception occured.");
-					}
-					else
-						SetLastError(result);
-				}
-			}
-		};
+			buttons = (GamepadButtons)gamepad.wButtons;
+			leftTrigger = gamepad.bLeftTrigger;
+			rightTrigger = gamepad.bRightTrigger;
+			leftThumbX = gamepad.sThumbLX;
+			leftThumbY = gamepad.sThumbLY;
+			rightThumbX = gamepad.sThumbRX;
+			rightThumbY = gamepad.sThumbRY;
+		}
 	}
 }

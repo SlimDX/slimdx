@@ -22,13 +22,28 @@
 #pragma once
 
 using namespace System;
-using namespace System::Runtime::InteropServices;
 
-#include "Enums.h"
-#include "Gamepad.h"
-#include "KeyStroke.h"
-#include "State.h"
-#include "Vibration.h"
-#include "BatteryInformation.h"
-#include "Capabilities.h"
-#include "Controller.h"
+namespace SlimDX
+{
+	namespace XInput
+	{
+		/// <summary>
+		/// Represents the state of a controller.
+		/// </summary>
+		[StructLayout(LayoutKind::Sequential)]
+		public value class State
+		{
+		public:
+			/// <summary>
+			/// State packet number. The packet number indicates whether there have been any changes in the state of the controller.
+			/// If the PacketNumber member is the same in sequentially returned State structures, the controller state has not changed. 
+			/// </summary>
+			property UInt32 PacketNumber;
+
+			/// <summary>
+			/// Gamepad structure containing the current state of an Xbox 360 Controller. 
+			/// </summary>
+            property Gamepad Gamepad;
+		};
+	}
+}

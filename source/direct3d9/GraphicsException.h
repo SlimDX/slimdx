@@ -31,6 +31,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		[Serializable]
 		public ref class GraphicsException : public SlimDX::DirectXException
 		{
 		private:
@@ -70,6 +71,7 @@ namespace SlimDX
 		};
 
 #define DEFINE_GRAPHICS_EXCEPTION( ExName, ErrorCode ) \
+	[Serializable] \
 	public ref class ExName ## Exception : public GraphicsException \
 	{ \
 	protected: \
@@ -81,6 +83,7 @@ namespace SlimDX
 	}
 
 #define DEFINE_CUSTOM_GRAPHICS_EXCEPTION( ExName, ErrorCode, Message ) \
+	[Serializable] \
 	public ref class ExName ## Exception : public GraphicsException \
 	{ \
 	protected: \

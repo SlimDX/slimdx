@@ -1,0 +1,168 @@
+/*
+* Copyright (c) 2007 SlimDX Group
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
+#include <windows.h>
+#include <xinput.h>
+#include <dinput.h>
+
+#include "../DirectInput/Guids.h"
+#include "XInput.h"
+#include "InputException.h"
+
+namespace SlimDX
+{
+	namespace XInput
+	{
+		Controller::Controller(UserIndex userIndex)
+		{
+			XInputEnable(true);
+			this->userIndex = (UInt32)userIndex;
+		}
+
+		void Controller::GetState([Out] State% currentState)
+		{
+			pin_ptr<State> state = &currentState;
+			InputException::CheckResult(XInputGetState(userIndex, (XINPUT_STATE*)state));
+		}
+		
+		void Controller::SetVibration(Vibration% vibration)
+		{
+			pin_ptr<Vibration> vib = &vibration;
+			InputException::CheckResult(XInputSetState(userIndex, (XINPUT_VIBRATION*)vib));
+		}
+
+		void Controller::SetVibration(Vibration vibration)
+		{
+			InputException::CheckResult(XInputSetState(userIndex, (XINPUT_VIBRATION*)&vibration));
+		}
+		
+		void Controller::GetCapabilities(DeviceQueryType flags, SlimDX::XInput::Capabilities% capabilities)
+		{
+			XINPUT_CAPABILITIES caps;
+			InputException::CheckResult(XInputGetCapabilities(userIndex, (UInt32)flags, &caps));
+
+			capabilities.Type = (DeviceType)caps.Type;
+			capabilities.SubType = (DeviceSubType)caps.SubType;
+			capabilities.Gamepad = Gamepad( caps.Gamepad );
+			capabilities.Flags = (CapabilitiesFlags)caps.Flags;
+			capabilities.Vibration.LeftMotorSpeed = caps.Vibration.wLeftMotorSpeed;
+			capabilities.Vibration.RightMotorSpeed = caps.Vibration.wRightMotorSpeed;
+		}
+		
+		void Controller::GetDirectSoundAudioDeviceGuids(Guid% soundRenderGuid, Guid% soundCaptureGuid)
+		{
+			pin_ptr<Guid> renderGuid = &soundRenderGuid;
+			pin_ptr<Guid> captureGuid = &soundCaptureGuid;
+			InputException::CheckResult(XInputGetDSoundAudioDeviceGuids(userIndex, (GUID*)renderGuid, (GUID*)captureGuid));
+		}
+		
+		bool Controller::GetKeystroke(DeviceQueryType flags, KeyStroke% keystroke)
+		{
+			XINPUT_KEYSTROKE keys;
+			UInt32 result = XInputGetKeystroke(userIndex, (UInt32)flags, &keys);
+			InputException::CheckResult(result);
+
+			keystroke.VirtualKey = (GamepadKeyCode)keys.VirtualKey;
+			keystroke.Flags = (KeyStrokeFlags)keys.Flags;
+			keystroke.UserIndex = (UserIndex)keys.UserIndex;
+			keystroke.HidCode = keys.HidCode;
+
+			if(result == ERROR_EMPTY)
+				return false;
+
+			return true;
+		}
+
+		void Controller::GetBatteryInformation(BatteryDeviceType flag, [Out] BatteryInformation% batteryInfo)
+		{
+			XINPUT_BATTERY_INFORMATION info;
+			InputException::CheckResult( XInputGetBatteryInformation( userIndex, (Byte)flag, &info ) );
+
+			batteryInfo.Level = (BatteryLevel)info.BatteryLevel;
+			batteryInfo.Type = (BatteryType)info.BatteryType;
+		}
+
+		BatteryInformation Controller::GetBatteryInformation(BatteryDeviceType flag)
+		{
+			XINPUT_BATTERY_INFORMATION info;
+			InputException::CheckResult( XInputGetBatteryInformation( userIndex, (Byte)flag, &info ) );
+
+			BatteryInformation batteryInfo;
+			batteryInfo.Level = (BatteryLevel)info.BatteryLevel;
+			batteryInfo.Type = (BatteryType)info.BatteryType;
+			return batteryInfo;
+		}
+
+		bool Controller::IsConnected::get()
+		{
+			XINPUT_STATE state;
+			UInt32 result = XInputGetState(userIndex, &state);
+
+			if(result == ERROR_DEVICE_NOT_CONNECTED)
+				return false;
+			else if(result != ERROR_SUCCESS)
+				InputException::CheckResult(result);
+
+			return true;
+		}
+
+		State Controller::CurrentState::get()
+		{
+			State state;
+			InputException::CheckResult(XInputGetState(userIndex, (XINPUT_STATE*)&state));
+			return state;
+		}
+
+		Capabilities Controller::Capabilities::get()
+		{
+			SlimDX::XInput::Capabilities capabilities;
+			XINPUT_CAPABILITIES caps;
+			InputException::CheckResult(XInputGetCapabilities(userIndex, XINPUT_FLAG_GAMEPAD, &caps));
+
+			capabilities.Type = (DeviceType)caps.Type;
+			capabilities.SubType = (DeviceSubType)caps.SubType;
+			capabilities.Gamepad = Gamepad( caps.Gamepad );
+			capabilities.Flags = (CapabilitiesFlags)caps.Flags;
+			capabilities.Vibration.LeftMotorSpeed = caps.Vibration.wLeftMotorSpeed;
+			capabilities.Vibration.RightMotorSpeed = caps.Vibration.wRightMotorSpeed;
+
+			return capabilities;
+		}
+
+		Guid Controller::SoundRenderGuid::get()
+		{
+			GUID renderGuid;
+			GUID captureGuid;
+			InputException::CheckResult(XInputGetDSoundAudioDeviceGuids(userIndex, &renderGuid, &captureGuid));
+
+			return SlimDX::DirectInput::SystemGuid::FromGUID( renderGuid );
+		}
+
+		Guid Controller::SoundCaptureGuid::get()
+		{
+			GUID renderGuid;
+			GUID captureGuid;
+			InputException::CheckResult(XInputGetDSoundAudioDeviceGuids(userIndex, &renderGuid, &captureGuid));
+
+			return SlimDX::DirectInput::SystemGuid::FromGUID( captureGuid );
+		}
+	}
+}

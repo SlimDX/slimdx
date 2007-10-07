@@ -40,6 +40,7 @@ namespace SlimDX
 		/// <summary>
 		/// Provides standard access to all DirectInput exceptions, errors, and result codes.
 		/// </summary>
+		[Serializable]
 		public ref class InputException : public SlimDX::DirectXException
 		{
 		private:
@@ -126,6 +127,7 @@ namespace SlimDX
 		};
 
 #define DEFINE_INPUT_EXCEPTION( ExName, ErrorCode ) \
+	[Serializable] \
 	public ref class ExName ## Exception : public InputException \
 	{ \
 	protected: \
@@ -137,6 +139,7 @@ namespace SlimDX
 	}
 
 #define DEFINE_CUSTOM_INPUT_EXCEPTION( ExName, ErrorCode, Message ) \
+	[Serializable] \
 	public ref class ExName ## Exception : public InputException \
 	{ \
 	protected: \

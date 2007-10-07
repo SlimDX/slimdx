@@ -118,7 +118,7 @@
           <Members>
            <Member Name="Dispose(System.Boolean):System.Void">
             <Messages>
-             <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Created="2007-10-01 21:38:08Z">
+             <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item />
                <Item>DataStream.Dispose(Boolean):Void</Item>
@@ -1153,7 +1153,7 @@
         <Types>
          <Type Name="BindFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D10.BindFlags</Item>
              <Item>Flags</Item>
@@ -1202,7 +1202,7 @@
          </Type>
          <Type Name="ColorWriteMaskFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D10.ColorWriteMaskFlags</Item>
              <Item>Flags</Item>
@@ -1221,7 +1221,7 @@
          </Type>
          <Type Name="CpuAccessFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D10.CpuAccessFlags</Item>
              <Item>Flags</Item>
@@ -1240,7 +1240,7 @@
          </Type>
          <Type Name="DepthStencilClearFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D10.DepthStencilClearFlags</Item>
              <Item>Flags</Item>
@@ -1250,7 +1250,7 @@
          </Type>
          <Type Name="DeviceCreationFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D10.DeviceCreationFlags</Item>
              <Item>Flags</Item>
@@ -1260,7 +1260,7 @@
          </Type>
          <Type Name="EffectFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D10.EffectFlags</Item>
              <Item>Flags</Item>
@@ -1283,7 +1283,7 @@
          </Type>
          <Type Name="EffectVariableFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D10.EffectVariableFlags</Item>
              <Item>Flags</Item>
@@ -2146,13 +2146,6 @@
           </Members>
          </Type>
          <Type Name="GraphicsException">
-          <Messages>
-           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Created="2007-10-02 23:36:05Z">
-            <Issue Level="Error">
-             <Item>GraphicsException</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name=".ctor()">
             <Messages>
@@ -2210,7 +2203,7 @@
          </Type>
          <Type Name="MapFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D10.MapFlags</Item>
              <Item>Flags</Item>
@@ -2245,7 +2238,7 @@
          </Type>
          <Type Name="PresentFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D10.PresentFlags</Item>
              <Item>Flags</Item>
@@ -2276,7 +2269,7 @@
          </Type>
          <Type Name="ResourceOptionFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D10.ResourceOptionFlags</Item>
              <Item>Flags</Item>
@@ -2318,7 +2311,7 @@
              <Item>SlimDX.Direct3D10.ShaderFlags</Item>
             </Issue>
            </Message>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D10.ShaderFlags</Item>
              <Item>Flags</Item>
@@ -2687,7 +2680,7 @@
          </Type>
          <Type Name="ClearFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D9.ClearFlags</Item>
              <Item>Flags</Item>
@@ -2752,7 +2745,7 @@
          </Type>
          <Type Name="CreateFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D9.CreateFlags</Item>
              <Item>Flags</Item>
@@ -3702,13 +3695,6 @@
           </Messages>
          </Type>
          <Type Name="GraphicsException">
-          <Messages>
-           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Created="2007-10-02 23:36:05Z">
-            <Issue Level="Error">
-             <Item>GraphicsException</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name=".ctor()">
             <Messages>
@@ -3852,7 +3838,7 @@
          </Type>
          <Type Name="LockFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D9.LockFlags</Item>
              <Item>Flags</Item>
@@ -4225,7 +4211,7 @@
          </Type>
          <Type Name="MeshFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D9.MeshFlags</Item>
              <Item>Flags</Item>
@@ -4235,7 +4221,7 @@
          </Type>
          <Type Name="MeshOptimizeFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D9.MeshOptimizeFlags</Item>
              <Item>Flags</Item>
@@ -4273,7 +4259,7 @@
          </Type>
          <Type Name="ParameterFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D9.ParameterFlags</Item>
              <Item>Flags</Item>
@@ -4375,7 +4361,7 @@
          </Type>
          <Type Name="PresentFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D9.PresentFlags</Item>
              <Item>Flags</Item>
@@ -4707,7 +4693,7 @@
              <Item>SlimDX.Direct3D9.ShaderFlags</Item>
             </Issue>
            </Message>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D9.ShaderFlags</Item>
              <Item>Flags</Item>
@@ -4742,7 +4728,7 @@
          </Type>
          <Type Name="SpriteFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.Direct3D9.SpriteFlags</Item>
              <Item>Flags</Item>
@@ -5334,7 +5320,7 @@
          </Type>
          <Type Name="DeviceFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.DirectInput.DeviceFlags</Item>
              <Item>Flags</Item>
@@ -5508,13 +5494,6 @@
           </Members>
          </Type>
          <Type Name="InputException">
-          <Messages>
-           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Created="2007-10-02 23:36:05Z">
-            <Issue Level="Error">
-             <Item>InputException</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name=".ctor()">
             <Messages>
@@ -5578,7 +5557,7 @@
          </Type>
          <Type Name="ObjectDataFormatFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.DirectInput.ObjectDataFormatFlags</Item>
              <Item>Flags</Item>
@@ -5710,7 +5689,7 @@
          </Type>
          <Type Name="BufferFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.DirectSound.BufferFlags</Item>
              <Item>Flags</Item>
@@ -5783,7 +5762,7 @@
          </Type>
          <Type Name="LockFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.DirectSound.LockFlags</Item>
              <Item>Flags</Item>
@@ -5793,7 +5772,7 @@
          </Type>
          <Type Name="PlayFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.DirectSound.PlayFlags</Item>
              <Item>Flags</Item>
@@ -5824,13 +5803,6 @@
           </Members>
          </Type>
          <Type Name="SoundException">
-          <Messages>
-           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Created="2007-10-02 23:36:05Z">
-            <Issue Level="Error">
-             <Item>SoundException</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name=".ctor()">
             <Messages>
@@ -5866,13 +5838,6 @@
        <Namespace Name="SlimDX.XAudio2">
         <Types>
          <Type Name="AudioException">
-          <Messages>
-           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Created="2007-10-02 23:36:05Z">
-            <Issue Level="Error">
-             <Item>AudioException</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name=".ctor()">
             <Messages>
@@ -5890,7 +5855,7 @@
          </Type>
          <Type Name="BufferFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.XAudio2.BufferFlags</Item>
              <Item>Flags</Item>
@@ -5962,7 +5927,7 @@
          </Type>
          <Type Name="VoiceFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.XAudio2.VoiceFlags</Item>
              <Item>Flags</Item>
@@ -6190,7 +6155,7 @@
          </Type>
          <Type Name="XAudio2Flags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.XAudio2.XAudio2Flags</Item>
              <Item>Flags</Item>
@@ -6218,16 +6183,6 @@
        </Namespace>
        <Namespace Name="SlimDX.XInput">
         <Types>
-         <Type Name="BatteryDeviceType">
-          <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-01 21:38:08Z">
-            <Issue Name="NotInt32">
-             <Item>SlimDX.XInput.BatteryDeviceType</Item>
-             <Item>System.Byte</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="BatteryInformation">
           <Messages>
            <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
@@ -6236,26 +6191,6 @@
             </Issue>
             <Issue Name="op_Equality">
              <Item>SlimDX.XInput.BatteryInformation</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="BatteryLevel">
-          <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-01 21:38:08Z">
-            <Issue Name="NotInt32">
-             <Item>SlimDX.XInput.BatteryLevel</Item>
-             <Item>System.Byte</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="BatteryType">
-          <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-01 21:38:08Z">
-            <Issue Name="NotInt32">
-             <Item>SlimDX.XInput.BatteryType</Item>
-             <Item>System.Byte</Item>
             </Issue>
            </Message>
           </Messages>
@@ -6274,13 +6209,7 @@
          </Type>
          <Type Name="CapabilitiesFlags">
           <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-01 21:38:08Z">
-            <Issue Name="NotIntegral">
-             <Item>SlimDX.XInput.CapabilitiesFlags</Item>
-             <Item>System.UInt16</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.XInput.CapabilitiesFlags</Item>
              <Item>Flags</Item>
@@ -6290,9 +6219,19 @@
          </Type>
          <Type Name="Controller">
           <Members>
+           <Member Name="Capabilities">
+            <Messages>
+             <Message TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721" Status="Excluded" Created="2007-10-07 17:22:23Z">
+              <Issue>
+               <Item>GetCapabilities</Item>
+               <Item>Capabilities</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="GetBatteryInformation(SlimDX.XInput.BatteryDeviceType,SlimDX.XInput.BatteryInformation&amp;):System.Void">
             <Messages>
-             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-10-01 21:38:08Z">
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>batteryInfo</Item>
               </Issue>
@@ -6301,7 +6240,7 @@
            </Member>
            <Member Name="GetCapabilities(SlimDX.XInput.DeviceQueryType,SlimDX.XInput.Capabilities&amp;):System.Void">
             <Messages>
-             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-10-01 21:38:08Z">
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>capabilities</Item>
               </Issue>
@@ -6310,12 +6249,12 @@
            </Member>
            <Member Name="GetDirectSoundAudioDeviceGuids(System.Guid&amp;,System.Guid&amp;):System.Void">
             <Messages>
-             <Message Id="0#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-10-01 21:38:08Z">
+             <Message Id="0#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>soundRenderGuid</Item>
               </Issue>
              </Message>
-             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-10-01 21:38:08Z">
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>soundCaptureGuid</Item>
               </Issue>
@@ -6324,7 +6263,7 @@
            </Member>
            <Member Name="GetKeystroke(SlimDX.XInput.DeviceQueryType,SlimDX.XInput.KeyStroke&amp;):System.Boolean">
             <Messages>
-             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-10-01 21:38:08Z">
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>keystroke</Item>
               </Issue>
@@ -6333,16 +6272,16 @@
            </Member>
            <Member Name="GetState(SlimDX.XInput.State&amp;):System.Void">
             <Messages>
-             <Message Id="0#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-10-01 21:38:08Z">
+             <Message Id="0#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>currentState</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="SetState(SlimDX.XInput.Vibration&amp;):System.Void">
+           <Member Name="SetVibration(SlimDX.XInput.Vibration&amp;):System.Void">
             <Messages>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Created="2007-10-01 21:38:08Z">
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-07 17:22:23Z">
               <Issue Certainty="50">
                <Item>vibration</Item>
               </Issue>
@@ -6353,70 +6292,76 @@
          </Type>
          <Type Name="DeviceSubType">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>DeviceSubType</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-01 21:38:08Z">
-            <Issue Name="NotInt32">
-             <Item>SlimDX.XInput.DeviceSubType</Item>
-             <Item>System.Byte</Item>
             </Issue>
            </Message>
           </Messages>
          </Type>
          <Type Name="DeviceType">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>DeviceType</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-01 21:38:08Z">
-            <Issue Name="NotInt32">
-             <Item>SlimDX.XInput.DeviceType</Item>
-             <Item>System.Byte</Item>
-            </Issue>
-           </Message>
           </Messages>
          </Type>
-         <Type Name="GamePad">
+         <Type Name="Gamepad">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-07 17:22:23Z">
             <Issue Name="Equals">
-             <Item>SlimDX.XInput.GamePad</Item>
+             <Item>SlimDX.XInput.Gamepad</Item>
             </Issue>
             <Issue Name="op_Equality">
-             <Item>SlimDX.XInput.GamePad</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="GamepadButtons">
-          <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-01 21:38:08Z">
-            <Issue Name="NotIntegral">
-             <Item>SlimDX.XInput.GamepadButtons</Item>
-             <Item>System.UInt16</Item>
+             <Item>SlimDX.XInput.Gamepad</Item>
             </Issue>
            </Message>
           </Messages>
          </Type>
          <Type Name="GamepadKeyCode">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-02 23:25:27Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-10-02 23:25:27Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>GamepadKeyCode</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-02 23:25:27Z">
-            <Issue Name="NotIntegral">
-             <Item>SlimDX.XInput.GamepadKeyCode</Item>
-             <Item>System.UInt16</Item>
-            </Issue>
-           </Message>
           </Messages>
+         </Type>
+         <Type Name="InputException">
+          <Members>
+           <Member Name=".ctor()">
+            <Messages>
+             <Message Id="SlimDX.DirectXException.#ctor(System.Int32,System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Excluded" Created="2007-10-07 17:22:23Z">
+              <Issue>
+               <Item>InputException.InputException()</Item>
+               <Item>2</Item>
+               <Item>DirectXException.DirectXException(Int32, String)</Item>
+               <Item>An XInput exception occurred.</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CheckResult(System.UInt32):System.Void">
+            <Messages>
+             <Message Id="SlimDX.XInput.InputException.#ctor(System.Int32,System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Excluded" Created="2007-10-07 17:22:23Z">
+              <Issue>
+               <Item>InputException.CheckResult(UInt32):Void</Item>
+               <Item>2</Item>
+               <Item>InputException.InputException(Int32, String)</Item>
+               <Item>An XInput exception occured.</Item>
+              </Issue>
+              <Issue>
+               <Item>InputException.CheckResult(UInt32):Void</Item>
+               <Item>2</Item>
+               <Item>InputException.InputException(Int32, String)</Item>
+               <Item>Device not connected. If this is a wireless device it may not yet be powered on.</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
          <Type Name="KeyStroke">
           <Messages>
@@ -6432,13 +6377,7 @@
          </Type>
          <Type Name="KeyStrokeFlags">
           <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-01 21:38:08Z">
-            <Issue Name="NotIntegral">
-             <Item>SlimDX.XInput.KeyStrokeFlags</Item>
-             <Item>System.UInt16</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>SlimDX.XInput.KeyStrokeFlags</Item>
              <Item>Flags</Item>
@@ -6458,16 +6397,6 @@
            </Message>
           </Messages>
          </Type>
-         <Type Name="UserIndex">
-          <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-01 21:38:08Z">
-            <Issue Name="NotIntegral">
-             <Item>SlimDX.XInput.UserIndex</Item>
-             <Item>System.UInt32</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="Vibration">
           <Messages>
            <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
@@ -6479,47 +6408,6 @@
             </Issue>
            </Message>
           </Messages>
-         </Type>
-         <Type Name="XInputException">
-          <Messages>
-           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Created="2007-10-02 23:36:05Z">
-            <Issue Level="Error">
-             <Item>XInputException</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name=".ctor()">
-            <Messages>
-             <Message Id="SlimDX.DirectXException.#ctor(System.Int32,System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>XInputException.XInputException()</Item>
-               <Item>2</Item>
-               <Item>DirectXException.DirectXException(Int32, String)</Item>
-               <Item>A XInput exception occurred.</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="CheckResult(System.UInt32):System.Void">
-            <Messages>
-             <Message Id="SlimDX.XInput.XInputException.#ctor(System.Int32,System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>XInputException.CheckResult(UInt32):Void</Item>
-               <Item>2</Item>
-               <Item>XInputException.XInputException(Int32, String)</Item>
-               <Item>A XInput exception occured.</Item>
-              </Issue>
-              <Issue>
-               <Item>XInputException.CheckResult(UInt32):Void</Item>
-               <Item>2</Item>
-               <Item>XInputException.XInputException(Int32, String)</Item>
-               <Item>Device not connected. If this is a wireless device it may not yet be powered on.</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
          </Type>
         </Types>
        </Namespace>
@@ -6592,9 +6480,6 @@
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of '{0}' appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
    </Rule>
-   <Rule TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237">
-    <Resolution Name="Default">Add [Serializable] to '{0}' as this type implements ISerializable.</Resolution>
-   </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default">The 'this' parameter (or 'Me' in VB) of {0} is never used. Mark the member as static (or Shared in VB) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
    </Rule>
@@ -6623,6 +6508,9 @@
    </Rule>
    <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
     <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>
+   </Rule>
+   <Rule TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721">
+    <Resolution Name="Default">Method name '{0}' is confusing given the existence of property '{1}'. Rename or remove one of these members.</Resolution>
    </Rule>
    <Rule TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025">
     <Resolution Name="Default">Consider implementing a version of '{0}' that accepts a parameter array argument.</Resolution>
