@@ -57,7 +57,9 @@ namespace SlimDX
 			static property int LastError;
 
 			static GraphicsException^ GetExceptionFromHResult( HRESULT hr );
+			
 			static void CheckHResult( HRESULT hr );
+			static void CheckHResult( HRESULT hr, String^ dataKey, Object^ dataValue );
 		};
 
 #define DEFINE_GRAPHICS_EXCEPTION( ExName, ErrorCode, Message ) \
@@ -126,6 +128,22 @@ namespace SlimDX
 			}
 
 			GraphicsException::LastError = hr;
+		}
+		
+		inline void GraphicsException::CheckHResult( HRESULT hr, String^ dataKey, Object^ dataValue )
+		{
+			GraphicsException::LastError = hr;
+			if( DirectXException::EnableExceptions && FAILED(hr) )
+			{
+				GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( (hr) );
+				//don't throw if an exception wasn't returned for some reason (e.g. it's part of a disabled subset)
+				if( ex != nullptr )
+				{
+					if( dataKey != nullptr )
+						ex->Data->Add( dataKey, dataValue );
+					throw ex;
+				}
+			}
 		}
 	}
 }
