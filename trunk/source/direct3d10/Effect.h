@@ -22,7 +22,7 @@
 #pragma once
 
 using namespace System;
-using namespace System::Globalization;
+using namespace System::Runtime::InteropServices;
 
 #include "../DirectXObject.h"
 
@@ -101,6 +101,7 @@ namespace SlimDX
 			
 			static Effect^ FromFile( Device^ device, String^ fileName, String^ profile );
 			static Effect^ FromString( Device^ device, String^ code, String^ profile );
+			static Effect^ FromString( Device^ device, String^ code, String^ profile, [Out] String^ %compilationErrors  );
 		};
 	}
 };

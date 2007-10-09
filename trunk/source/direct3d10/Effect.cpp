@@ -125,15 +125,34 @@ namespace Direct3D10
 	
 	Effect^ Effect::FromString( Device^ device, String^ code, String^ profile )
 	{
+		String^ compilationErrors;
+		return (FromString( device, code, profile, compilationErrors ));
+	}
+	
+	Effect^ Effect::FromString( Device^ device, String^ code, String^ profile, [Out] String^ %compilationErrors  )
+	{
 		array<unsigned char>^ codeBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( code );
 		pin_ptr<unsigned char> pinnedCode = &codeBytes[0];
 		array<unsigned char>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 		pin_ptr<unsigned char> pinnedProfile = &profileBytes[0];
 		ID3D10Effect* effect;
+		ID3D10Blob* errorBlob;
 		
-		HRESULT hr = D3DX10CreateEffectFromMemory( pinnedCode, code->Length, "n/a", NULL, NULL, (LPCSTR) pinnedProfile, 0, 0, device->DevicePointer, NULL, NULL, &effect, NULL, NULL );
-		GraphicsException::CheckHResult( hr );
-
+		HRESULT hr = D3DX10CreateEffectFromMemory( pinnedCode, code->Length, "n/a", NULL, NULL, (LPCSTR) pinnedProfile, 0, 0, device->DevicePointer, NULL, NULL, &effect, &errorBlob, NULL );
+		
+		if( errorBlob != 0 )
+		{
+		  compilationErrors = gcnew String( (const char*) errorBlob->GetBufferPointer() );
+		  errorBlob->Release();
+		}
+		else
+		{
+			compilationErrors = String::Empty;
+		}
+		
+		GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );
+		if( effect == NULL)
+			return nullptr;
 		return gcnew Effect( effect );
 	}
 }
