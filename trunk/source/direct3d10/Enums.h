@@ -445,7 +445,8 @@ namespace SlimDX
 			ReadOnly = DXGI_USAGE_READ_ONLY 
 		};
 		
-		public enum class SwapChainFlag : Int32
+		[Flags]
+		public enum class SwapChainFlags : Int32
 		{
 			None = 0,
 			NonPrerotated = DXGI_SWAP_CHAIN_FLAG_NONPREROTATED,
