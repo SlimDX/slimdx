@@ -43,6 +43,8 @@ namespace SlimDX
 
 			Texture2D^ GetBuffer( int index );
 
+			void ResizeBuffers( int count, int width, int height, Format format, SwapChainFlags flags );
+
 			PresentResult Present( int syncInterval, PresentFlags flags );
 		};
 	}

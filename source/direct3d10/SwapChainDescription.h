@@ -48,7 +48,7 @@ namespace SlimDX
             IntPtr outputHandle;
             bool windowed;
             SwapEffect swapEffect;
-            SwapChainFlag flags;
+            SwapChainFlags flags;
 
 		public:
 			property int Width
@@ -129,10 +129,10 @@ namespace SlimDX
                 void set( SlimDX::Direct3D10::SwapEffect value ) { swapEffect = value; }
             }
 
-            property SwapChainFlag Flags
+            property SwapChainFlags Flags
             {
-                SwapChainFlag get() { return flags; }
-                void set( SwapChainFlag value ) { flags = value; }
+                SwapChainFlags get() { return flags; }
+                void set( SwapChainFlags value ) { flags = value; }
             }
 		};
 	}

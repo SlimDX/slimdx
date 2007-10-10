@@ -54,7 +54,13 @@ namespace Direct3D10
 
 		return gcnew Texture2D( texture );
 	}
-
+	
+	void SwapChain::ResizeBuffers( int count, int width, int height, Format format, SwapChainFlags flags )
+	{
+		HRESULT hr = m_Pointer->ResizeBuffers( count, width, height, (DXGI_FORMAT)format, (UINT)flags );
+		GraphicsException::CheckHResult( hr );
+	}
+	
 	PresentResult SwapChain::Present( int syncInterval, PresentFlags flags )
 	{
 		HRESULT hr = m_Pointer->Present( syncInterval, (UINT) flags );
