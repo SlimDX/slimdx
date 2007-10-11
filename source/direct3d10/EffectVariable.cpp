@@ -28,6 +28,7 @@
 
 #include "EffectMatrixVariable.h"
 #include "EffectResourceVariable.h"
+#include "EffectShaderVariable.h"
 #include "EffectScalarVariable.h"
 #include "EffectVariable.h"
 #include "EffectVectorVariable.h"
@@ -122,6 +123,14 @@ namespace Direct3D10
 		if( variable == NULL || !variable->IsValid() )
 			throw gcnew InvalidOperationException( "The variable is not convertable to a resource." );
 		return gcnew EffectResourceVariable( variable );
+	}
+	
+	EffectShaderVariable^ EffectVariable::AsShader()
+	{
+		ID3D10EffectShaderVariable* variable = m_Pointer->AsShader();
+		if( variable == NULL || !variable->IsValid() )
+			throw gcnew InvalidOperationException( "The variable is not convertable to a shader." );
+		return gcnew EffectShaderVariable( variable );
 	}
 	
 	EffectScalarVariable^ EffectVariable::AsScalar()

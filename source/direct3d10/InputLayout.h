@@ -31,12 +31,12 @@ namespace SlimDX
 	namespace Direct3D10
 	{
 		ref class Device;
-		ref class ShaderBytecode;
+		ref class ShaderSignature;
 		
 		public ref class InputLayout : public DirectXObject<ID3D10InputLayout>
 		{
 		public:
-			InputLayout( Device^ device, array<InputElement>^ elements, ShaderBytecode^ compiledShader );
+			InputLayout( Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature );
 			~InputLayout() { Destruct(); }
 		};
 	}

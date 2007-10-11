@@ -23,21 +23,35 @@
 
 using namespace System;
 
-#include "../DirectXObject.h"
+#include "../math/Math.h"
 
 #include "Enums.h"
-#include "Resource.h"
-
-#include "ShaderSignature.h"
+#include "EffectVariable.h"
+#include "ShaderDescription.h"
+#include "ShaderParameterDescription.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class ShaderBytecode : public ShaderSignature
-		{
+		ref class PixelShader;
+		ref class VertexShader;
+		ref class GeometryShader;
+		
+		public ref class EffectShaderVariable : EffectVariable
+		{	
 		internal:
-			ShaderBytecode( void* buffer, int length );
+			EffectShaderVariable( ID3D10EffectShaderVariable* variable );
+			
+		public:
+			PixelShader^ GetPixelShader(int index);
+			VertexShader^ GetVertexShader(int index);
+			GeometryShader^ GetGeometryShader(int index);
+			
+			ShaderParameterDescription GetInputParameterDescription( int shaderIndex, int parameterIndex );
+			ShaderParameterDescription GetOutputParameterDescription( int shaderIndex, int parameterIndex );
+			
+			ShaderDescription GetShaderDescription( int shaderIndex );
 		};
 	}
 };

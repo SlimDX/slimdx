@@ -30,7 +30,7 @@ using namespace System::Collections::ObjectModel;
 #include "Enums.h"
 #include "Resource.h"
 
-#include "ShaderReflectionParameterDescription.h"
+#include "ShaderParameterDescription.h"
 
 namespace SlimDX
 {
@@ -40,41 +40,41 @@ namespace SlimDX
 		
 		public ref class ShaderReflection : public DirectXObject<ID3D10ShaderReflection>
 		{
-			UInt32 version;
+			int version;
 			String^ creator;
-			UInt32 flags; //TODO: No idea what values this can take...?
-			UInt32 constantBuffers;
-			UInt32 boundResources;
-			UInt32 inputParameters;
-			UInt32 outputParameters;
-			UInt32 instructionCount;
-			UInt32 tempRegisterCount;
-			UInt32 tempArrayCount;
-			UInt32 defCount;
-			UInt32 dclCount;
-			UInt32 textureNormalInstructions;
-			UInt32 textureLoadInstructions;
-			UInt32 textureCompInstructions;
-			UInt32 textureBiasInstructions;
-			UInt32 textureGradientInstructions;
-			UInt32 floatInstructionCount;
-			UInt32 intInstructionCount;
-			UInt32 uint32InstructionCount;
-			UInt32 staticFlowControlCount;
-			UInt32 dynamicFlowControlCount;
-			UInt32 macroInstructionCount;
-			UInt32 arrayInstructionCount;
-			UInt32 cutInstructionCount;
-			UInt32 emitInstructionCount;
+			int flags; //TODO: No idea what values this can take...?
+			int constantBuffers;
+			int boundResources;
+			int inputParameters;
+			int outputParameters;
+			int instructionCount;
+			int tempRegisterCount;
+			int tempArrayCount;
+			int defCount;
+			int dclCount;
+			int textureNormalInstructions;
+			int textureLoadInstructions;
+			int textureCompInstructions;
+			int textureBiasInstructions;
+			int textureGradientInstructions;
+			int floatInstructionCount;
+			int intInstructionCount;
+			int uintInstructionCount;
+			int staticFlowControlCount;
+			int dynamicFlowControlCount;
+			int macroInstructionCount;
+			int arrayInstructionCount;
+			int cutInstructionCount;
+			int emitInstructionCount;
 			PrimitiveTopology geometryShaderOutputTopology;
-			UInt32 geometryShaderMaxOutputVertexCount;
-			UInt32 movInstructionCount;
-			UInt32 movcInstructionCount;
-			UInt32 conversionInstructionCount;
-			UInt32 bitwiseInstructionCount;
+			int geometryShaderMaxOutputVertexCount;
+			int movInstructionCount;
+			int movcInstructionCount;
+			int conversionInstructionCount;
+			int bitwiseInstructionCount;
 			
-			List<ShaderReflectionParameterDescription>^ inputParametersInfo;
-			List<ShaderReflectionParameterDescription>^ outputParametersInfo;
+			List<ShaderParameterDescription>^ inputParametersInfo;
+			List<ShaderParameterDescription>^ outputParametersInfo;
 			
 			void Construct();
 			
@@ -85,9 +85,9 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the version.
 			/// </summary>
-			property UInt32 Version
+			property int Version
 			{
-				UInt32 get() { return version; }
+				int get() { return version; }
 			}
 			
 			/// <summary>
@@ -101,128 +101,128 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the number of constant buffers.
 			/// </summary>
-			property UInt32 ConstantBufferCount
+			property int ConstantBufferCount
 			{
-				UInt32 get() { return constantBuffers; }
+				int get() { return constantBuffers; }
 			}
 			
 			/// <summary>
 			/// Gets the number of resource (textures and buffers) bound to a shader. 
 			/// </summary>
-			property UInt32 BoundResourcesCount
+			property int BoundResourcesCount
 			{
-				UInt32 get() { return boundResources; }
+				int get() { return boundResources; }
 			}
 			
 			/// <summary>
 			/// Gets the number of parameters in the input signature. 
 			/// </summary>
-			property UInt32 InputParameterCount
+			property int InputParameterCount
 			{
-				UInt32 get() { return inputParameters; }
+				int get() { return inputParameters; }
 			}
 			
 			/// <summary>
 			/// Gets the number of parameters in the output signature. 
 			/// </summary>
-			property UInt32 OutputParameterCount
+			property int OutputParameterCount
 			{
-				UInt32 get() { return outputParameters; }
+				int get() { return outputParameters; }
 			}
 			
-			property UInt32 InstructionCount
+			property int InstructionCount
 			{
-				UInt32 get() { return instructionCount; }
+				int get() { return instructionCount; }
 			}
 			
-			property UInt32 TemporaryRegisterCount
+			property int TemporaryRegisterCount
 			{
-				UInt32 get() { return tempRegisterCount; }
+				int get() { return tempRegisterCount; }
 			}
 			
-			property UInt32 TemporaryArrayCount
+			property int TemporaryArrayCount
 			{
-				UInt32 get() { return tempArrayCount; }
+				int get() { return tempArrayCount; }
 			}
 			
-			property UInt32 ConstantDefinitionCount
+			property int ConstantDefinitionCount
 			{
-				UInt32 get() { return defCount; }
+				int get() { return defCount; }
 			}
 			
-			property UInt32 InputOutputDeclarationCount
+			property int InputOutputDeclarationCount
 			{
-				UInt32 get() { return dclCount; }
+				int get() { return dclCount; }
 			}
 			
-			property UInt32 TextureNormalInstructionCount
+			property int TextureNormalInstructionCount
 			{
-				UInt32 get() { return textureNormalInstructions; }
+				int get() { return textureNormalInstructions; }
 			}
 			
-			property UInt32 TextureLoadInstructionCount
+			property int TextureLoadInstructionCount
 			{
-				UInt32 get() { return textureLoadInstructions; }
+				int get() { return textureLoadInstructions; }
 			}
 			
-			property UInt32 TextureCompInstructionCount
+			property int TextureCompInstructionCount
 			{
-				UInt32 get() { return textureCompInstructions; }
+				int get() { return textureCompInstructions; }
 			}
 			
-			property UInt32 TextureBiasInstructionCount
+			property int TextureBiasInstructionCount
 			{
-				UInt32 get() { return textureBiasInstructions; }
+				int get() { return textureBiasInstructions; }
 			}
 			
-			property UInt32 TextureGradientInstructionCount
+			property int TextureGradientInstructionCount
 			{
-				UInt32 get() { return textureGradientInstructions; }
+				int get() { return textureGradientInstructions; }
 			}
 			
-			property UInt32 FloatInstructionCount
+			property int FloatInstructionCount
 			{
-				UInt32 get() { return floatInstructionCount; }
+				int get() { return floatInstructionCount; }
 			}
 			
-			property UInt32 IntegerInstructionCount
+			property int IntegerInstructionCount
 			{
-				UInt32 get() { return intInstructionCount; }
+				int get() { return intInstructionCount; }
 			}
 			
-			property UInt32 UnsignedIntegerInstructionCount
+			property int UnsignedIntegerInstructionCount
 			{
-				UInt32 get() { return uint32InstructionCount; }
+				int get() { return intInstructionCount; }
 			}
 			
-			property UInt32 StaticFlowControlInstructionCount
+			property int StaticFlowControlInstructionCount
 			{
-				UInt32 get() { return staticFlowControlCount; }
+				int get() { return staticFlowControlCount; }
 			}
 			
-			property UInt32 DynamicFlowControlInstructionCount
+			property int DynamicFlowControlInstructionCount
 			{
-				UInt32 get() { return dynamicFlowControlCount; }
+				int get() { return dynamicFlowControlCount; }
 			}
 			
-			property UInt32 MacroInstructionCount
+			property int MacroInstructionCount
 			{
-				UInt32 get() { return macroInstructionCount; }
+				int get() { return macroInstructionCount; }
 			}
 			
-			property UInt32 ArrayInstructionCount
+			property int ArrayInstructionCount
 			{
-				UInt32 get() { return arrayInstructionCount; }
+				int get() { return arrayInstructionCount; }
 			}
 			
-			property UInt32 CutInstructionCount
+			property int CutInstructionCount
 			{
-				UInt32 get() { return cutInstructionCount; }
+				int get() { return cutInstructionCount; }
 			}
 			
-			property UInt32 EmitInstructionCount
+			property int EmitInstructionCount
 			{
-				UInt32 get() { return emitInstructionCount; }
+				int get() { return emitInstructionCount; }
 			}
 			
 			property PrimitiveTopology GeometryShaderOutputTopology
@@ -230,44 +230,44 @@ namespace SlimDX
 				PrimitiveTopology get() { return geometryShaderOutputTopology; }
 			}
 
-			property UInt32 GeometryShaderMaxOutputVertexCount
+			property int GeometryShaderMaxOutputVertexCount
 			{
-				UInt32 get() { return geometryShaderMaxOutputVertexCount; }
+				int get() { return geometryShaderMaxOutputVertexCount; }
 			}
 			
-			//property UInt32 MOVInstructionCount
+			//property int MOVInstructionCount
 			//{
-			//	UInt32 get() { return movInstructionCount; }
+			//	int get() { return movInstructionCount; }
 			//}
 			//
-			//property UInt32 MOVCInstructionCount
+			//property int MOVCInstructionCount
 			//{
-			//	UInt32 get() { return movcInstructionCount; }
+			//	int get() { return movcInstructionCount; }
 			//}
 			
-			//property UInt32 ConversionInstructionCount
+			//property int ConversionInstructionCount
 			//{
-			//	UInt32 get() { return conversionInstructionCount; }
+			//	int get() { return conversionInstructionCount; }
 			//}
 			//
-			//property UInt32 BitwiseInstructionCount
+			//property int BitwiseInstructionCount
 			//{
-			//	UInt32 get() { return bitwiseInstructionCount; }
+			//	int get() { return bitwiseInstructionCount; }
 			//}
 			
-			property ReadOnlyCollection<ShaderReflectionParameterDescription>^ InputParameters
+			property ReadOnlyCollection<ShaderParameterDescription>^ InputParameters
 			{
-				ReadOnlyCollection<ShaderReflectionParameterDescription>^ get()
+				ReadOnlyCollection<ShaderParameterDescription>^ get()
 				{
-					return gcnew ReadOnlyCollection<ShaderReflectionParameterDescription>( inputParametersInfo );
+					return gcnew ReadOnlyCollection<ShaderParameterDescription>( inputParametersInfo );
 				}
 			}
 			
-			property ReadOnlyCollection<ShaderReflectionParameterDescription>^ OutputParameters
+			property ReadOnlyCollection<ShaderParameterDescription>^ OutputParameters
 			{
-				ReadOnlyCollection<ShaderReflectionParameterDescription>^ get()
+				ReadOnlyCollection<ShaderParameterDescription>^ get()
 				{
-					return gcnew ReadOnlyCollection<ShaderReflectionParameterDescription>( outputParametersInfo );
+					return gcnew ReadOnlyCollection<ShaderParameterDescription>( outputParametersInfo );
 				}
 			}
 		

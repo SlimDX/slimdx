@@ -19,25 +19,18 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-using namespace System;
-
-#include "../DirectXObject.h"
-
-#include "Enums.h"
-#include "Resource.h"
+#include <d3d10.h>
+#include <d3dx10.h>
 
 #include "ShaderSignature.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+namespace Direct3D10
+{ 
+	ShaderSignature::ShaderSignature( void* buffer, int length ) : buffer( buffer ), length( length )
 	{
-		public ref class ShaderBytecode : public ShaderSignature
-		{
-		internal:
-			ShaderBytecode( void* buffer, int length );
-		};
 	}
-};
+}
+}

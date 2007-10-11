@@ -25,20 +25,21 @@ using namespace System;
 using namespace System::Globalization;
 
 #include "../Direct3D/ColorValue.h"
+#include "EffectPassShaderMapping.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
 		ref class EffectVariable;
-		ref class ShaderBytecode;
+		ref class ShaderSignature;
 		
 		public ref class EffectPass
 		{
 			ID3D10EffectPass *m_Pointer;
 			String^ m_Name;
 			int m_AnnotationCount;
-			ShaderBytecode^ m_Signature;
+			ShaderSignature^ m_Signature;
 			int m_StencilReference;
 			int m_SampleMask;
 			SlimDX::Direct3D::ColorValue m_BlendFactor;
@@ -58,9 +59,9 @@ namespace SlimDX
 				int get() { return m_AnnotationCount; }
 			}
 			
-			property ShaderBytecode^ Signature
+			property ShaderSignature^ Signature
 			{
-				ShaderBytecode^ get() { return m_Signature; }
+				ShaderSignature^ get() { return m_Signature; }
 			}
 			
 			property int StencilReference
@@ -83,10 +84,27 @@ namespace SlimDX
 				bool get() { return m_Pointer->IsValid() ? true : false; }
 			}
 			
+			property EffectPassShaderMapping PixelShaderDescription
+			{
+				EffectPassShaderMapping get();
+			}
+			
+			property EffectPassShaderMapping VertexShaderDescription
+			{
+				EffectPassShaderMapping get();
+			}
+			
+			property EffectPassShaderMapping GeometryShaderDescription
+			{
+				EffectPassShaderMapping get();
+			}
+			
 			EffectVariable^ GetAnnotationByIndex( int index );
 			EffectVariable^ GetAnnotationByName( String^ name );
 			
 			void Apply();
+		
+			
 		};
 	}
 };

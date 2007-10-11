@@ -46,10 +46,37 @@ namespace Direct3D10
 		
 		m_Name = gcnew String( desc.Name );
 		m_AnnotationCount = desc.Annotations;
-		m_Signature = gcnew ShaderBytecode( desc.pIAInputSignature, desc.IAInputSignatureSize );
+		m_Signature = gcnew ShaderSignature( desc.pIAInputSignature, desc.IAInputSignatureSize );
 		m_StencilReference = desc.StencilRef;
 		m_SampleMask = desc.SampleMask;
 		m_BlendFactor = SlimDX::Direct3D::ColorValue( desc.BlendFactor[3], desc.BlendFactor[0], desc.BlendFactor[1], desc.BlendFactor[2] );
+	}
+	
+	EffectPassShaderMapping EffectPass::PixelShaderDescription::get()
+	{
+		D3D10_PASS_SHADER_DESC description;
+		HRESULT hr = m_Pointer->GetPixelShaderDesc( &description );
+		GraphicsException::CheckHResult( hr );
+		
+		return EffectPassShaderMapping( description );
+	}
+	
+	EffectPassShaderMapping EffectPass::VertexShaderDescription::get()
+	{
+		D3D10_PASS_SHADER_DESC description;
+		HRESULT hr = m_Pointer->GetVertexShaderDesc( &description );
+		GraphicsException::CheckHResult( hr );
+		
+		return EffectPassShaderMapping( description );
+	}
+	
+	EffectPassShaderMapping EffectPass::GeometryShaderDescription::get()
+	{
+		D3D10_PASS_SHADER_DESC description;
+		HRESULT hr = m_Pointer->GetVertexShaderDesc( &description );
+		GraphicsException::CheckHResult( hr );
+		
+		return EffectPassShaderMapping( description );
 	}
 	
 	EffectVariable^ EffectPass::GetAnnotationByIndex( int index )
