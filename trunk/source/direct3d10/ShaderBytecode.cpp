@@ -29,18 +29,8 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	ShaderBytecode::ShaderBytecode( void* buffer, int bufferLength ) : m_Buffer( buffer ),m_BufferLength( bufferLength )
+	ShaderBytecode::ShaderBytecode( void* buffer, int length ) : ShaderSignature( buffer, length )
 	{
-	}
-	
-	void* ShaderBytecode::Buffer::get()
-	{
-		return m_Buffer;
-	}
-	
-	int ShaderBytecode::BufferLength::get()
-	{
-		return m_BufferLength;
 	}
 }
 }

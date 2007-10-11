@@ -19,25 +19,27 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-using namespace System;
+#include <d3d10.h>
+#include <d3dx10.h>
 
-#include "../DirectXObject.h"
+#include "GraphicsException.h"
 
-#include "Enums.h"
-#include "Resource.h"
-
-#include "ShaderSignature.h"
+#include "ShaderParameterDescription.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+namespace Direct3D10
+{ 
+	ShaderParameterDescription::ShaderParameterDescription( const D3D10_SIGNATURE_PARAMETER_DESC& desc )
 	{
-		public ref class ShaderBytecode : public ShaderSignature
-		{
-		internal:
-			ShaderBytecode( void* buffer, int length );
-		};
+		semanticName = gcnew String( desc.SemanticName );
+		semanticIndex = desc.SemanticIndex;
+		registerIndex = desc.Register;
+		systemValueType = (SystemValueType) desc.SystemValueType;
+		componentType = (RegisterComponentType) desc.ComponentType;
+		mask = desc.Mask;
+		readWriteMask = desc.ReadWriteMask;
 	}
-};
+}
+}

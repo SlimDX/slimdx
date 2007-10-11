@@ -33,7 +33,7 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	InputLayout::InputLayout( Device^ device, array<InputElement>^ elements, ShaderBytecode^ compiledShader )
+	InputLayout::InputLayout( Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
@@ -55,7 +55,7 @@ namespace Direct3D10
 		}
 
 		ID3D10InputLayout* layout;
-		HRESULT hr = device->DevicePointer->CreateInputLayout( nativeElements, elements->Length, compiledShader->Buffer, compiledShader->BufferLength, &layout );
+		HRESULT hr = device->DevicePointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->Buffer, shaderSignature->Length, &layout );
 		GraphicsException::CheckHResult( hr );
 
 		m_Pointer = layout;

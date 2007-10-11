@@ -28,16 +28,27 @@ using namespace System;
 #include "Enums.h"
 #include "Resource.h"
 
-#include "ShaderSignature.h"
-
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class ShaderBytecode : public ShaderSignature
+		public ref class ShaderSignature
 		{
+			void* buffer;
+			int length;
+		
 		internal:
-			ShaderBytecode( void* buffer, int length );
+			property void* Buffer
+			{
+				void* get() { return buffer; }
+			}
+			
+			property int Length
+			{
+				int get() { return length; }
+			}
+			
+			ShaderSignature( void* buffer, int length );
 		};
 	}
 };

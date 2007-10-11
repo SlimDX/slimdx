@@ -23,21 +23,30 @@
 
 using namespace System;
 
-#include "../DirectXObject.h"
-
-#include "Enums.h"
-#include "Resource.h"
-
-#include "ShaderSignature.h"
-
 namespace SlimDX
 {
 	namespace Direct3D10
-	{
-		public ref class ShaderBytecode : public ShaderSignature
+	{	
+		ref class EffectShaderVariable;
+		
+		public value class EffectPassShaderMapping
 		{
+			EffectShaderVariable^ shaderVariable;
+			int shaderIndex;
+			
 		internal:
-			ShaderBytecode( void* buffer, int length );
+			EffectPassShaderMapping( const D3D10_PASS_SHADER_DESC& description );
+			
+		public:
+			property EffectShaderVariable^ Shader
+			{
+				EffectShaderVariable^ get() { return shaderVariable; }
+			}
+			
+			property int Index
+			{
+				int get() { return shaderIndex; }
+			}
 		};
 	}
 };

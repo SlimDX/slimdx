@@ -25,21 +25,20 @@
 
 #include "GraphicsException.h"
 
-#include "ShaderReflectionParameterDescription.h"
+#include "ShaderDescription.h"
 
 namespace SlimDX
 {
 namespace Direct3D10
 { 
-	ShaderReflectionParameterDescription::ShaderReflectionParameterDescription( const D3D10_SIGNATURE_PARAMETER_DESC& desc )
+	ShaderDescription::ShaderDescription( const D3D10_EFFECT_SHADER_DESC& desc )
 	{
-		semanticName = gcnew String( desc.SemanticName );
-		semanticIndex = desc.SemanticIndex;
-		registerIndex = desc.Register;
-		systemValueType = (SystemValueType) desc.SystemValueType;
-		componentType = (RegisterComponentType) desc.ComponentType;
-		mask = desc.Mask;
-		readWriteMask = desc.ReadWriteMask;
+		streamOutputDeclaration = gcnew String( desc.SODecl );
+		isInline = desc.IsInline ? true : false;
+		inputParameterCount = desc.NumInputSignatureEntries;
+		outputParameterCount = desc.NumOutputSignatureEntries;
+		signature = gcnew ShaderSignature( (void*)desc.pInputSignature, desc.BytecodeLength - (desc.pInputSignature - desc.pBytecode) );
+		bytecode = gcnew ShaderBytecode( (void*)desc.pBytecode, desc.BytecodeLength );
 	}
 }
 }

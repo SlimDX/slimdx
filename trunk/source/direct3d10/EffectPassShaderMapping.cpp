@@ -19,25 +19,23 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-using namespace System;
+#include <d3d10.h>
+#include <d3dx10.h>
 
-#include "../DirectXObject.h"
+#include "GraphicsException.h"
 
-#include "Enums.h"
-#include "Resource.h"
-
-#include "ShaderSignature.h"
+#include "EffectPassShaderMapping.h"
+#include "EffectShaderVariable.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+namespace Direct3D10
+{ 
+	EffectPassShaderMapping::EffectPassShaderMapping( const D3D10_PASS_SHADER_DESC& desc )
 	{
-		public ref class ShaderBytecode : public ShaderSignature
-		{
-		internal:
-			ShaderBytecode( void* buffer, int length );
-		};
+		shaderVariable = gcnew EffectShaderVariable( desc.pShaderVariable );
+		shaderIndex = desc.ShaderIndex;
 	}
-};
+}
+}

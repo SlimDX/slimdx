@@ -58,7 +58,7 @@ namespace Direct3D10
 			throw gcnew ArgumentNullException( "shaderBytecode" );
 		
 		ID3D10ShaderReflection* reflection;
-		HRESULT hr = D3D10ReflectShader( shaderBytecode->Buffer, shaderBytecode->BufferLength, &reflection );
+		HRESULT hr = D3D10ReflectShader( shaderBytecode->Buffer, shaderBytecode->Length, &reflection );
 		GraphicsException::CheckHResult( hr );
 		
 		m_Pointer = reflection;
@@ -90,7 +90,7 @@ namespace Direct3D10
 		textureGradientInstructions = description.TextureGradientInstructions;
 		floatInstructionCount = description.FloatInstructionCount;
 		intInstructionCount = description.IntInstructionCount;
-		uint32InstructionCount = description.UintInstructionCount;
+		uintInstructionCount = description.UintInstructionCount;
 		staticFlowControlCount = description.StaticFlowControlCount;
 		dynamicFlowControlCount = description.DynamicFlowControlCount;
 		macroInstructionCount = description.MacroInstructionCount;
@@ -104,24 +104,24 @@ namespace Direct3D10
 		//conversionInstructionCount = description.ConversionInstructionCount;
 		//bitwiseInstructionCount = description.BitwiseInstructionCount;
 		
-		inputParametersInfo = gcnew List<ShaderReflectionParameterDescription>();
-		for( unsigned int inputIndex = 0; inputIndex < inputParameters; ++inputIndex )
+		inputParametersInfo = gcnew List<ShaderParameterDescription>();
+		for( int inputIndex = 0; inputIndex < inputParameters; ++inputIndex )
 		{
 			D3D10_SIGNATURE_PARAMETER_DESC parameterDesc;
 			hr = 	((ID3D10ShaderReflection*) m_Pointer)->GetInputParameterDesc( inputIndex, &parameterDesc );
 			GraphicsException::CheckHResult( hr );
 			
-			inputParametersInfo->Add( ShaderReflectionParameterDescription( parameterDesc ) );
+			inputParametersInfo->Add( ShaderParameterDescription( parameterDesc ) );
 		}
 		
-		outputParametersInfo = gcnew List<ShaderReflectionParameterDescription>();
-		for( unsigned int outputIndex = 0; outputIndex < outputParameters; ++outputIndex )
+		outputParametersInfo = gcnew List<ShaderParameterDescription>();
+		for( int outputIndex = 0; outputIndex < outputParameters; ++outputIndex )
 		{
 			D3D10_SIGNATURE_PARAMETER_DESC parameterDesc;
 			hr = 	((ID3D10ShaderReflection*) m_Pointer)->GetOutputParameterDesc( outputIndex, &parameterDesc );
 			GraphicsException::CheckHResult( hr );
 			
-			outputParametersInfo->Add( ShaderReflectionParameterDescription( parameterDesc ) );
+			outputParametersInfo->Add( ShaderParameterDescription( parameterDesc ) );
 		}
 	}
 }

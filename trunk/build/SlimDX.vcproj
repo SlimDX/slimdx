@@ -538,11 +538,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\EffectPassShaderMapping.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\EffectResourceVariable.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\EffectScalarVariable.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectShaderVariable.cpp"
 					>
 				</File>
 				<File
@@ -616,6 +624,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\ShaderDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderParameterDescription.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\ShaderReflection.cpp"
 					>
 					<FileConfiguration
@@ -638,11 +654,11 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\ShaderReflectionParameterDescription.cpp"
+					RelativePath="..\source\direct3d10\ShaderResourceView.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\ShaderResourceView.cpp"
+					RelativePath="..\source\direct3d10\ShaderSignature.cpp"
 					>
 				</File>
 				<File
@@ -1094,11 +1110,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\EffectPassShaderMapping.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\EffectResourceVariable.h"
 					>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\EffectScalarVariable.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectShaderVariable.h"
 					>
 				</File>
 				<File
@@ -1115,6 +1139,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Enums.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\GeometryShader.h"
 					>
 				</File>
 				<File
@@ -1135,6 +1163,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\OutputMergerWrapper.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\PixelShader.h"
 					>
 				</File>
 				<File
@@ -1178,7 +1210,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\ShaderDescription.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\ShaderMacro.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderParameterDescription.h"
 					>
 				</File>
 				<File
@@ -1186,11 +1226,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\ShaderReflectionParameterDescription.h"
+					RelativePath="..\source\direct3d10\ShaderResourceView.h"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\ShaderResourceView.h"
+					RelativePath="..\source\direct3d10\ShaderSignature.h"
 					>
 				</File>
 				<File
@@ -1215,6 +1255,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\VertexBufferBinding.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\VertexShader.h"
 					>
 				</File>
 			</Filter>

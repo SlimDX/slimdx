@@ -25,19 +25,17 @@ using namespace System;
 
 #include "../DirectXObject.h"
 
-#include "Enums.h"
-#include "Resource.h"
-
-#include "ShaderSignature.h"
-
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class ShaderBytecode : public ShaderSignature
+		public ref class PixelShader : public DirectXObject<ID3D10PixelShader>
 		{
 		internal:
-			ShaderBytecode( void* buffer, int length );
+			PixelShader(ID3D10PixelShader *shader) : DirectXObject( shader ) { }
+			
+		public:
+			virtual ~PixelShader() { Destruct(); }
 		};
 	}
 };

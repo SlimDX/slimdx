@@ -22,22 +22,64 @@
 #pragma once
 
 using namespace System;
-
-#include "../DirectXObject.h"
+using namespace System::Runtime::InteropServices;
 
 #include "Enums.h"
-#include "Resource.h"
-
-#include "ShaderSignature.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
-	{
-		public ref class ShaderBytecode : public ShaderSignature
+	{	
+		[StructLayout( LayoutKind::Sequential )]
+		public value class ShaderParameterDescription
 		{
+		private:
+			String^ semanticName;
+			UInt32 semanticIndex;
+			UInt32 registerIndex;
+			SystemValueType systemValueType;
+			RegisterComponentType componentType;
+			Byte mask;///TODO: Might be able to make these more specific; I think they represent whether x y z or w is ued, etc.
+			Byte readWriteMask;
+		
 		internal:
-			ShaderBytecode( void* buffer, int length );
+			ShaderParameterDescription( const D3D10_SIGNATURE_PARAMETER_DESC& desc );
+		
+		public:
+			property String^ SemanticName
+			{
+				String^ get() { return semanticName; }
+			}
+			
+			property UInt32 SemanticIndex
+			{
+				UInt32 get() { return semanticIndex; }
+			}
+			
+			property UInt32 Register
+			{
+				UInt32 get() { return semanticIndex; }
+			}
+			
+			property SystemValueType SystemType
+			{
+				SystemValueType get() { return systemValueType; }
+			}
+			
+			property RegisterComponentType ComponentType
+			{
+				RegisterComponentType get() { return componentType; }
+			}
+			
+			property Byte UsageMask
+			{
+				Byte get() { return mask; }
+			}
+			
+			property Byte ReadWriteMask
+			{
+				Byte get() { return readWriteMask; }
+			}
 		};
 	}
 };

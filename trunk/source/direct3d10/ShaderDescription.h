@@ -25,60 +25,56 @@ using namespace System;
 using namespace System::Runtime::InteropServices;
 
 #include "Enums.h"
+#include "ShaderBytecode.h"
+#include "ShaderSignature.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{	
 		[StructLayout( LayoutKind::Sequential )]
-		public value class ShaderReflectionParameterDescription
+		public value class ShaderDescription
 		{
 		private:
-			String^ semanticName;
-			UInt32 semanticIndex;
-			UInt32 registerIndex;
-			SystemValueType systemValueType;
-			RegisterComponentType componentType;
-			Byte mask;///TODO: Might be able to make these more specific; I think they represent whether x y z or w is ued, etc.
-			Byte readWriteMask;
+			ShaderSignature^ signature;
+			ShaderBytecode^ bytecode;
+			bool isInline;
+			String^ streamOutputDeclaration;
+			int inputParameterCount;
+			int outputParameterCount;
 		
 		internal:
-			ShaderReflectionParameterDescription( const D3D10_SIGNATURE_PARAMETER_DESC& desc );
+			ShaderDescription( const D3D10_EFFECT_SHADER_DESC & desc );
 		
 		public:
-			property String^ SemanticName
+			property ShaderSignature^ Signature
 			{
-				String^ get() { return semanticName; }
+				ShaderSignature^ get() { return signature; }
 			}
 			
-			property UInt32 SemanticIndex
+			property ShaderBytecode^ Bytecode
 			{
-				UInt32 get() { return semanticIndex; }
+				ShaderBytecode^ get() { return bytecode; }
 			}
 			
-			property UInt32 Register
+			property bool IsInline
 			{
-				UInt32 get() { return semanticIndex; }
+				bool get() { return isInline; }
 			}
 			
-			property SystemValueType SystemType
+			property int InputParameterCount
 			{
-				SystemValueType get() { return systemValueType; }
+				int get() { return inputParameterCount; }
 			}
 			
-			property RegisterComponentType ComponentType
+			property int OutputParameterCount
 			{
-				RegisterComponentType get() { return componentType; }
+			  int get() { return outputParameterCount; }
 			}
 			
-			property Byte UsageMask
+			property String^ StreamOutputDeclaration
 			{
-				Byte get() { return mask; }
-			}
-			
-			property Byte ReadWriteMask
-			{
-				Byte get() { return readWriteMask; }
+				String^ get() { return streamOutputDeclaration; }
 			}
 		};
 	}
