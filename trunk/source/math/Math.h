@@ -34,9 +34,9 @@ namespace SlimDX
 	value class Quaternion;
 }
 
+#include "Vector4.h"
 #include "Vector2.h"
 #include "Vector3.h"
-#include "Vector4.h"
 #include "Matrix.h"
 #include "Plane.h"
 #include "Quaternion.h"

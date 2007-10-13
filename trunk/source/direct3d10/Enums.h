@@ -486,6 +486,7 @@ namespace SlimDX
 			literal int size32 = sizeof( System::Int32 );
 
 		internal:
+			/* Unused.
 			static int SizeOfElement( Format format )
 			{
 				switch( format )
@@ -589,6 +590,7 @@ namespace SlimDX
 						return 0;
 				}
 			}
+			*/
 		};
 	}
 }

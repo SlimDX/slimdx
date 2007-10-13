@@ -1026,9 +1026,12 @@ namespace SlimDX
 
 		public:
 			static int KeyToDIK( Key key );
-			static int KeyToDIKEYBOARD( Key key );
+			
+			/* Unused.
 			static int MouseToDIMOFS( MouseObject mouse );
 			static int MouseToDIMOUSE( MouseObject mouse );
+			static int KeyToDIKEYBOARD( Key key );
+			*/
 		};
 	}
 }
