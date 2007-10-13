@@ -629,6 +629,7 @@ namespace DirectInput
 		throw gcnew ArgumentException( "The specified key does not exist." );
 	}
 
+	/* Unused.
 	int DeviceConstantConverter::KeyToDIKEYBOARD( Key key )
 	{
 		switch( key )
@@ -1204,7 +1205,9 @@ namespace DirectInput
 
 		throw gcnew ArgumentException( "The specified key does not exist." );
 	}
+	*/
 
+	/* Unused.
 	int DeviceConstantConverter::MouseToDIMOFS( MouseObject mouse )
 	{
 		switch( mouse )
@@ -1256,7 +1259,9 @@ namespace DirectInput
 
 		throw gcnew ArgumentException( "The specified mouse object does not exist." );
 	}
+	*/
 
+	/* Unused.
 	int DeviceConstantConverter::MouseToDIMOUSE( MouseObject mouse )
 	{
 		switch( mouse )
@@ -1308,5 +1313,6 @@ namespace DirectInput
 
 		throw gcnew ArgumentException( "The specified mouse object does not exist." );
 	}
+	*/
 }
 }

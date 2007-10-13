@@ -246,8 +246,10 @@ namespace SlimDX
 			int how;
 
 		internal:
+			/* Unused.
 			ObjectProperties( IDirectInputDevice8W* pointer, String^ name, Type^ dataFormat );
 			ObjectProperties( IDirectInputDevice8W* pointer, int value, bool isUsageCode );
+			*/
 
 		public:
 			/// <summary>

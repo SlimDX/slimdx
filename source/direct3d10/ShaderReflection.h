@@ -79,7 +79,9 @@ namespace SlimDX
 			void Construct();
 			
 		internal:
+			/* Unused.
 			ShaderReflection( ID3D10ShaderReflection* reflection );
+			*/
 				
 		public:
 			/// <summary>

@@ -33,6 +33,7 @@ namespace SlimDX
 {
 namespace DirectInput
 {
+	/* Unused.
 	ObjectProperties::ObjectProperties( IDirectInputDevice8W* pointer, String^ name, Type^ dataFormat )
 	{
 		this->pointer = pointer;
@@ -40,7 +41,9 @@ namespace DirectInput
 
 		obj = Marshal::OffsetOf( dataFormat, name ).ToInt32();
 	}
+	*/
 
+	/* Unused.
 	ObjectProperties::ObjectProperties( IDirectInputDevice8W* pointer, int value, bool isUsageCode )
 	{
 		this->pointer = pointer;
@@ -52,6 +55,7 @@ namespace DirectInput
 
 		obj = value;
 	}
+	*/
 
 	int ObjectProperties::LowerRange::get()
 	{
@@ -251,7 +255,7 @@ namespace DirectInput
 		HRESULT hr;
 		dip.diph.dwSize = sizeof( DIPROPSTRING );
 		dip.diph.dwHeaderSize = sizeof( DIPROPHEADER );
-		dip.diph.dwObj = ( DWORD )key;
+		dip.diph.dwObj = DeviceConstantConverter::KeyToDIK( key );
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_KEYNAME, &dip.diph );
@@ -377,7 +381,7 @@ namespace DirectInput
 		HRESULT hr;
 		dip.diph.dwSize = sizeof( DIPROPDWORD );
 		dip.diph.dwHeaderSize = sizeof( DIPROPHEADER );
-		dip.diph.dwObj = ( DWORD )key;
+		dip.diph.dwObj = DeviceConstantConverter::KeyToDIK( key );
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_SCANCODE, &dip.diph );

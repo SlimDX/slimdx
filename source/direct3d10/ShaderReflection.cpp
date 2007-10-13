@@ -32,10 +32,12 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
+	/* Unused.
 	ShaderReflection::ShaderReflection( ID3D10ShaderReflection* reflection ) : DirectXObject( reflection )
 	{
 		Construct();
 	}
+	*/
 	
 	ShaderReflection::ShaderReflection( IntPtr reflection )
 	{
