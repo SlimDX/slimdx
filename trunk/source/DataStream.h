@@ -49,6 +49,7 @@ namespace SlimDX
 
 	public:
 		DataStream( Int64 sizeInBytes, bool canRead, bool canWrite );
+		DataStream( IntPtr userBuffer, Int64 sizeInBytes, bool canRead, bool canWrite );
 		
 		~DataStream();
 		!DataStream();

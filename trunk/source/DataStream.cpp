@@ -49,6 +49,20 @@ namespace SlimDX
 		m_CanWrite = canWrite;
 	}
 
+	DataStream::DataStream( IntPtr userBuffer, Int64 sizeInBytes, bool canRead, bool canWrite )
+	{
+		if( userBuffer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "userBuffer" );
+		if( sizeInBytes < 1 )
+			throw gcnew ArgumentOutOfRangeException( "sizeInBytes" );
+
+		m_Buffer = (char*) userBuffer.ToPointer();
+		m_Size = sizeInBytes;
+
+		m_CanRead = canRead;
+		m_CanWrite = canWrite;
+	}
+
 	DataStream::~DataStream()
 	{
 		DataStream::!DataStream();
@@ -175,13 +189,18 @@ namespace SlimDX
 	}
 	
 	generic<typename T> where T : value class
-	T DataStream::Read( )
+	T DataStream::Read()
 	{
 		if( !m_CanRead )
 			throw gcnew NotSupportedException();
 
 		T result;
 		int size = Marshal::SizeOf( T::typeid );
+
+		//TODO: This may be the wrong exception to throw.
+		if( m_Length > 0 && m_Length - m_Position < size )
+			throw gcnew ArgumentNullException();
+
 		memcpy( &result, m_Buffer + m_Position, size );
 		m_Position += size;
 		return (result);
@@ -193,12 +212,15 @@ namespace SlimDX
 		if( !m_CanRead )
 			throw gcnew NotSupportedException();
 			
-		array<T>^ result = gcnew array<T>( count );
 		int elementSize = Marshal::SizeOf( T::typeid );
-		
+		int actualCount = count;
+		if( m_Length > 0 )
+			min( (m_Length - m_Position) / elementSize, count );
+		array<T>^ result = gcnew array<T>( actualCount );
+
 		pin_ptr<T> pinnedBuffer = &result[0];
-		memcpy( pinnedBuffer, m_Buffer + m_Position, count * elementSize );
-		m_Position += count * elementSize;
+		memcpy( pinnedBuffer, m_Buffer + m_Position, actualCount * elementSize );
+		m_Position += actualCount * elementSize;
 		return result;
 	}
 	
