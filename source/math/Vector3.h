@@ -40,14 +40,6 @@ namespace SlimDX
 	[StructLayout( LayoutKind::Sequential )]
 	public value class Vector3 : IEquatable<Vector3>
 	{
-	private:
-		static Vector3();
-
-		static Vector3 zero;
-		static Vector3 unitX;
-		static Vector3 unitY;
-		static Vector3 unitZ;
-
 	public:
 		/// <summary>
 		/// Gets or sets the X component of the vector.
@@ -71,25 +63,25 @@ namespace SlimDX
 		/// Gets a <see cref="SlimDX::Vector3"/> with all of its components set to zero.
 		/// </summary>
 		/// <value>A <see cref="SlimDX::Vector3"/> that has all of its components set to zero.</value>
-		static property Vector3 Zero { Vector3 get() { return zero; } }
+		static property Vector3 Zero { Vector3 get() { return Vector3(0, 0, 0); } }
 
 		/// <summary>
 		/// Gets the X unit <see cref="SlimDX::Vector3"/> (1, 0, 0).
 		/// </summary>
 		/// <value>A <see cref="SlimDX::Vector3"/> that has a value of (1, 0, 0).</value>
-		static property Vector3 UnitX { Vector3 get() { return unitX; } }
+		static property Vector3 UnitX { Vector3 get() { return Vector3(1, 0, 0); } }
 
 		/// <summary>
 		/// Gets the Y unit <see cref="SlimDX::Vector3"/> (0, 1, 0).
 		/// </summary>
 		/// <value>A <see cref="SlimDX::Vector3"/> that has a value of (0, 1, 0).</value>
-		static property Vector3 UnitY { Vector3 get() { return unitY; } }
+		static property Vector3 UnitY { Vector3 get() { return Vector3(0, 1, 0); } }
 
 		/// <summary>
 		/// Gets the Z unit <see cref="SlimDX::Vector3"/> (0, 0, 1).
 		/// </summary>
 		/// <value>A <see cref="SlimDX::Vector3"/> that has a value of (0, 0, 1).</value>
-		static property Vector3 UnitZ { Vector3 get() { return unitZ; } }
+		static property Vector3 UnitZ { Vector3 get() { return Vector3(0, 0, 1); } }
 
 		Vector3( float value );		
 		Vector3( Vector2 value, float z );		
