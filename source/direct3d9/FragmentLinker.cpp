@@ -74,7 +74,7 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew ShaderFragments( errorBuffer );
+		return gcnew ShaderFragments( fragmentBuffer );
 	}
 
 	ShaderFragments^ FragmentLinker::Gather( String^ sourceData, array<Macro>^ defines,
@@ -107,7 +107,7 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew ShaderFragments( errorBuffer );
+		return gcnew ShaderFragments( fragmentBuffer );
 	}
 
 	void FragmentLinker::AddFragments( array<int>^ fragments )
