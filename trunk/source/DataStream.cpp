@@ -198,7 +198,7 @@ namespace SlimDX
 		int size = Marshal::SizeOf( T::typeid );
 
 		//TODO: This may be the wrong exception to throw.
-		if( m_Length > 0 && m_Length - m_Position < size )
+		if( Length > 0 && Length - m_Position < size )
 			throw gcnew ArgumentNullException();
 
 		memcpy( &result, m_Buffer + m_Position, size );
@@ -214,8 +214,8 @@ namespace SlimDX
 			
 		int elementSize = Marshal::SizeOf( T::typeid );
 		int actualCount = count;
-		if( m_Length > 0 )
-			min( (m_Length - m_Position) / elementSize, count );
+		if( Length > 0 )
+			min( (Length - m_Position) / elementSize, count );
 		array<T>^ result = gcnew array<T>( actualCount );
 
 		pin_ptr<T> pinnedBuffer = &result[0];
