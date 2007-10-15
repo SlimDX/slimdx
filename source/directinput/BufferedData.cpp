@@ -211,5 +211,17 @@ namespace DirectInput
 		if( handle.IsAllocated )
 			handle.Free();
 	}
+
+	generic<typename DataFormat>
+	BufferedDataCollection<DataFormat>::BufferedDataCollection()
+	{
+		list = gcnew List<BufferedData<DataFormat>^>();
+	}
+
+	generic<typename DataFormat>
+	void BufferedDataCollection<DataFormat>::Add( BufferedData<DataFormat>^ data )
+	{
+		list->Add( data );
+	}
 }
 }

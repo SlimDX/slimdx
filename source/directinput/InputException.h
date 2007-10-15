@@ -50,6 +50,8 @@ namespace SlimDX
 			static InputException()
 			{
 				LastError = S_OK;
+
+				EnableForDeviceLost = true;
 			}
 
 		protected:
@@ -102,6 +104,8 @@ namespace SlimDX
 			/// Gets or sets the last error code.
 			/// </summary>
 			static property int LastError;
+
+			static property bool EnableForDeviceLost;
 
 			/// <summary>
 			/// Retrieves the exception that corresponds to the specified result code.
@@ -193,8 +197,19 @@ namespace SlimDX
 				ex = gcnew type ## Exception ();\
 				break;
 
+#			define GENERATE_EXCEPTION_IF(errCase, type, condition) \
+			case errCase:\
+				if(condition)\
+					ex = gcnew type ## Exception ();\
+				else\
+					return nullptr;\
+				break;
+
 			switch( hr )
 			{
+			GENERATE_EXCEPTION_IF(DIERR_INPUTLOST, InputLost, InputException::EnableForDeviceLost);
+			GENERATE_EXCEPTION_IF(DIERR_NOTACQUIRED, DeviceNotAcquired, InputException::EnableForDeviceLost);
+
 			GENERATE_EXCEPTION(DIERR_ACQUIRED, DeviceAcquired);
 			GENERATE_EXCEPTION(DIERR_ALREADYINITIALIZED, AlreadyInitialized);
 			GENERATE_EXCEPTION(DIERR_BADDRIVERVER, BadDriverVersion);
@@ -205,13 +220,11 @@ namespace SlimDX
 			GENERATE_EXCEPTION(DIERR_GENERIC, GenericInput);
 			GENERATE_EXCEPTION(DIERR_HASEFFECTS, HasEffects);
 			GENERATE_EXCEPTION(DIERR_INCOMPLETEEFFECT, IncompleteEffect);
-			GENERATE_EXCEPTION(DIERR_INPUTLOST, InputLost);
 			GENERATE_EXCEPTION(DIERR_INVALIDPARAM, InvalidParameter);
 			GENERATE_EXCEPTION(DIERR_MAPFILEFAIL, MapFileFail);
 			GENERATE_EXCEPTION(DIERR_MOREDATA, MoreData);
 			GENERATE_EXCEPTION(DIERR_NOAGGREGATION, NoAggregation);
 			GENERATE_EXCEPTION(DIERR_NOINTERFACE, NoInterface);
-			GENERATE_EXCEPTION(DIERR_NOTACQUIRED, DeviceNotAcquired);
 			GENERATE_EXCEPTION(DIERR_NOTBUFFERED, NotBuffered);
 			GENERATE_EXCEPTION(DIERR_NOTDOWNLOADED, NotDownloaded);
 			GENERATE_EXCEPTION(DIERR_NOTEXCLUSIVEACQUIRED, NotExclusiveAcquired);

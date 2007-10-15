@@ -161,12 +161,6 @@ namespace DirectInput
 	void Device<DataFormat>::Poll()
 	{
 		HRESULT hr = m_Pointer->Poll();
-		if( FAILED( hr ) )
-		{
-			hr = m_Pointer->Acquire();
-			while( hr == DIERR_INPUTLOST )
-				hr = m_Pointer->Acquire();
-		}
 		InputException::CheckHResult( hr );
 	}
 
@@ -185,49 +179,28 @@ namespace DirectInput
 	}
 
 	generic<typename DataFormat>
-	Collection<BufferedData<DataFormat>^>^ Device<DataFormat>::GetBufferedData()
+	BufferedDataCollection<DataFormat>^ Device<DataFormat>::GetBufferedData()
 	{
-		List<BufferedData<DataFormat>^>^ list = gcnew List<BufferedData<DataFormat>^>();
+		BufferedDataCollection<DataFormat>^ list = gcnew BufferedDataCollection<DataFormat>();
 
 		int size = INFINITE;
 		HRESULT hr = m_Pointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), NULL, ( LPDWORD )&size, DIGDD_PEEK );
-		bool deviceLost = false;
-		if( FAILED( hr ) )
-		{
-			if( hr == DIERR_INPUTLOST )
-				deviceLost = true;
-
-			hr = m_Pointer->Acquire();
-			while( hr == DIERR_INPUTLOST )
-				hr = m_Pointer->Acquire();
-		}
 		InputException::CheckHResult( hr );
 
 		if( hr == DI_BUFFEROVERFLOW && &Device::BufferOverflow != nullptr )
 			BufferOverflow( this, EventArgs::Empty );
 
-		if( deviceLost && &Device::DeviceLost != nullptr )
+		if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
 			DeviceLost( this, EventArgs::Empty );
 
 		DIDEVICEOBJECTDATA *data = new DIDEVICEOBJECTDATA[size];
 		hr = m_Pointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), data, ( LPDWORD )&size, 0 );
-		deviceLost = false;
-		if( FAILED( hr ) )
-		{
-			if( hr == DIERR_INPUTLOST )
-				deviceLost = true;
-
-			hr = m_Pointer->Acquire();
-			while( hr == DIERR_INPUTLOST )
-				hr = m_Pointer->Acquire();
-		}
+		InputException::CheckHResult( hr );
 
 		if( hr == DI_BUFFEROVERFLOW && &Device::BufferOverflow != nullptr )
 			BufferOverflow( this, EventArgs::Empty );
 
-		InputException::CheckHResult( hr );
-
-		if( deviceLost && &Device::DeviceLost != nullptr )
+		if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
 			DeviceLost( this, EventArgs::Empty );
 
 		delete[] data;
@@ -238,7 +211,7 @@ namespace DirectInput
 			list->Add( bufferedData );
 		}
 
-		return gcnew Collection<BufferedData<DataFormat>^>( list );
+		return list;
 	}
 
 	generic<typename DataFormat>
@@ -250,19 +223,9 @@ namespace DirectInput
 		{
 			BYTE keys[256];
 			HRESULT hr = m_Pointer->GetDeviceState( sizeof( BYTE ) * 256, keys );
-			bool deviceLost = false;
-			if( FAILED( hr ) )
-			{
-				if( hr == DIERR_INPUTLOST )
-					deviceLost = true;
-
-				hr = m_Pointer->Acquire();
-				while( hr == DIERR_INPUTLOST )
-					hr = m_Pointer->Acquire();
-			}
 			InputException::CheckHResult( hr );
 
-			if( deviceLost && &Device::DeviceLost != nullptr )
+			if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
 				DeviceLost( this, EventArgs::Empty );
 
 			KeyboardState^ state = gcnew KeyboardState();
@@ -280,19 +243,9 @@ namespace DirectInput
 		{
 			DIMOUSESTATE2 state;
 			HRESULT hr = m_Pointer->GetDeviceState( sizeof( DIMOUSESTATE2 ), ( DIMOUSESTATE2* )&state );
-			bool deviceLost = false;
-			if( FAILED( hr ) )
-			{
-				if( hr == DIERR_INPUTLOST )
-					deviceLost = true;
-
-				hr = m_Pointer->Acquire();
-				while( hr == DIERR_INPUTLOST )
-					hr = m_Pointer->Acquire();
-			}
 			InputException::CheckHResult( hr );
 
-			if( deviceLost && &Device::DeviceLost != nullptr )
+			if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
 				DeviceLost( this, EventArgs::Empty );
 
 			MouseState^ result = gcnew MouseState( state.lX, state.lY, state.lZ );
@@ -311,19 +264,9 @@ namespace DirectInput
 		{
 			DIJOYSTATE2 state;
 			HRESULT hr = m_Pointer->GetDeviceState( sizeof( DIJOYSTATE2 ), ( DIJOYSTATE2* )&state );
-			bool deviceLost = false;
-			if( FAILED( hr ) )
-			{
-				if( hr == DIERR_INPUTLOST )
-					deviceLost = true;
-
-				hr = m_Pointer->Acquire();
-				while( hr == DIERR_INPUTLOST )
-					hr = m_Pointer->Acquire();
-			}
 			InputException::CheckHResult( hr );
 
-			if( deviceLost && &Device::DeviceLost != nullptr )
+			if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
 				DeviceLost( this, EventArgs::Empty );
 
 			return ( DataFormat )gcnew JoystickState( state );
@@ -333,19 +276,9 @@ namespace DirectInput
 			int typeSize = Marshal::SizeOf( type );
 			BYTE *bytes = new BYTE[typeSize];
 			HRESULT hr = m_Pointer->GetDeviceState( sizeof( BYTE ) * typeSize, bytes );
-			bool deviceLost = false;
-			if( FAILED( hr ) )
-			{
-				if( hr == DIERR_INPUTLOST )
-					deviceLost = true;
-
-				hr = m_Pointer->Acquire();
-				while( hr == DIERR_INPUTLOST )
-					hr = m_Pointer->Acquire();
-			}
 			InputException::CheckHResult( hr );
 
-			if( deviceLost && &Device::DeviceLost != nullptr )
+			if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
 				DeviceLost( this, EventArgs::Empty );
 
 			DataFormat result = Activator::CreateInstance<DataFormat>();

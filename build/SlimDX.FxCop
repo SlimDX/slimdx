@@ -276,22 +276,106 @@
           </Members>
          </Type>
          <Type Name="Plane">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>SlimDX.Plane</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>SlimDX.Plane</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
-           <Member Name="IntersectLine(SlimDX.Plane,SlimDX.Vector3,SlimDX.Vector3,SlimDX.Vector3&amp;):System.Boolean">
+           <Member Name="Dot(SlimDX.Plane&amp;,SlimDX.Vector4&amp;):System.Single">
             <Messages>
-             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-10-01 21:38:08Z">
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>plane</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>point</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="DotCoordinate(SlimDX.Plane&amp;,SlimDX.Vector3&amp;):System.Single">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>plane</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>point</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="DotNormal(SlimDX.Plane&amp;,SlimDX.Vector3&amp;):System.Single">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>plane</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>point</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Equals(SlimDX.Plane&amp;,SlimDX.Plane&amp;):System.Boolean">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>value1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>value2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Intersects(SlimDX.Plane&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Boolean">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-15 20:36:30Z">
               <Issue>
                <Item>intersectPoint</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>plane</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>start</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>end</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Intersects(SlimDX.Plane,SlimDX.Vector3,SlimDX.Vector3,SlimDX.Vector3&amp;):System.Boolean">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue>
+               <Item>intersectPoint</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Normalize(SlimDX.Plane&amp;,SlimDX.Plane&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>plane</Item>
               </Issue>
              </Message>
             </Messages>
@@ -302,6 +386,72 @@
               <Issue>
                <Item>Multiply</Item>
                <Item>Plane.op_Multiply(Plane, Single):Plane</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="op_Multiply(System.Single,SlimDX.Plane):SlimDX.Plane">
+            <Messages>
+             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2007-10-15 20:36:30Z">
+              <Issue>
+               <Item>Multiply</Item>
+               <Item>Plane.op_Multiply(Single, Plane):Plane</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Transform(SlimDX.Plane&amp;,SlimDX.Matrix&amp;,SlimDX.Plane&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>plane</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>transformation</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Transform(SlimDX.Plane&amp;,SlimDX.Quaternion&amp;,SlimDX.Plane&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>plane</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>rotation</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Transform(SlimDX.Plane[],SlimDX.Matrix&amp;):SlimDX.Plane[]">
+            <Messages>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>transformation</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Transform(SlimDX.Plane[],SlimDX.Quaternion&amp;):SlimDX.Plane[]">
+            <Messages>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
+              <Issue Certainty="50">
+               <Item>rotation</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1237,7 +1387,7 @@
           <Members>
            <Member Name="FromString(SlimDX.Direct3D10.Device,System.String,System.String,System.String&amp;):SlimDX.Direct3D10.Effect">
             <Messages>
-             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-10-11 21:06:36Z">
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-11 21:06:36Z">
               <Issue>
                <Item>compilationErrors</Item>
               </Issue>
@@ -5559,17 +5709,17 @@
               <Issue>
                <Item>BufferedData`1.BufferedData`1(DIDEVICEOBJECTDATA*)</Item>
                <Item>GCHandle.FromIntPtr(IntPtr):GCHandle</Item>
-               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.FromIntPtr(System.IntPtr) : GCHandle&#xD;&#xA;-&gt;SlimDX.DirectInput.BufferedData`1.#ctor(optional(System.Runtime.CompilerServices.IsImplicitlyDereferenced) optional(IsConst) DIDEVICEOBJECTDATA*) : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.Device`1.GetBufferedData : Collection`1&lt;SlimDX.DirectInput.BufferedData`1&lt;type parameter.DataFormat&gt;&gt;</Item>
+               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.FromIntPtr(System.IntPtr) : GCHandle&#xD;&#xA;-&gt;SlimDX.DirectInput.BufferedData`1.#ctor(optional(System.Runtime.CompilerServices.IsImplicitlyDereferenced) optional(IsConst) DIDEVICEOBJECTDATA*) : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.Device`1.GetBufferedData : BufferedDataCollection`1&lt;type parameter.DataFormat&gt;</Item>
               </Issue>
               <Issue>
                <Item>BufferedData`1.BufferedData`1(DIDEVICEOBJECTDATA*)</Item>
                <Item>GCHandle.get_Target():Object</Item>
-               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.get_Target : Object&#xD;&#xA;-&gt;SlimDX.DirectInput.BufferedData`1.#ctor(optional(System.Runtime.CompilerServices.IsImplicitlyDereferenced) optional(IsConst) DIDEVICEOBJECTDATA*) : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.Device`1.GetBufferedData : Collection`1&lt;SlimDX.DirectInput.BufferedData`1&lt;type parameter.DataFormat&gt;&gt;</Item>
+               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.get_Target : Object&#xD;&#xA;-&gt;SlimDX.DirectInput.BufferedData`1.#ctor(optional(System.Runtime.CompilerServices.IsImplicitlyDereferenced) optional(IsConst) DIDEVICEOBJECTDATA*) : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.Device`1.GetBufferedData : BufferedDataCollection`1&lt;type parameter.DataFormat&gt;</Item>
               </Issue>
               <Issue>
                <Item>BufferedData`1.BufferedData`1(DIDEVICEOBJECTDATA*)</Item>
                <Item>Marshal.OffsetOf(Type, String):IntPtr</Item>
-               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.Marshal.OffsetOf(System.Type,System.String) : IntPtr&#xD;&#xA;-&gt;SlimDX.DirectInput.BufferedData`1.#ctor(optional(System.Runtime.CompilerServices.IsImplicitlyDereferenced) optional(IsConst) DIDEVICEOBJECTDATA*) : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.Device`1.GetBufferedData : Collection`1&lt;SlimDX.DirectInput.BufferedData`1&lt;type parameter.DataFormat&gt;&gt;</Item>
+               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.Marshal.OffsetOf(System.Type,System.String) : IntPtr&#xD;&#xA;-&gt;SlimDX.DirectInput.BufferedData`1.#ctor(optional(System.Runtime.CompilerServices.IsImplicitlyDereferenced) optional(IsConst) DIDEVICEOBJECTDATA*) : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.Device`1.GetBufferedData : BufferedDataCollection`1&lt;type parameter.DataFormat&gt;</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5641,15 +5791,9 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="GetBufferedData():System.Collections.ObjectModel.Collection`1&lt;SlimDX.DirectInput.BufferedData`1&lt;DataFormat&gt;&gt;">
+           <Member Name="GetBufferedData():SlimDX.DirectInput.BufferedDataCollection`1&lt;DataFormat&gt;">
             <Messages>
-             <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>Device`1.GetBufferedData():Collection`1&lt;SlimDX.DirectInput.BufferedData`1&lt;DataFormat&gt;&gt;</Item>
-               <Item>System.Collections.ObjectModel.Collection`1&lt;SlimDX.DirectInput.BufferedData`1&lt;DataFormat&gt;&gt;</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-15 20:36:30Z">
               <Issue Certainty="50">
                <Item>GetBufferedData</Item>
               </Issue>
@@ -6821,9 +6965,6 @@
    </Rule>
    <Rule TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700">
     <Resolution Name="Default">If '{0}' is not used in the current implementation, remove it. Otherwise give it a meaningful name.</Resolution>
-   </Rule>
-   <Rule TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006">
-    <Resolution Name="Default">Consider a design where {0} doesn't nest generic type '{1}'.</Resolution>
    </Rule>
    <Rule TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303">
     <Resolution Name="Default">{0} passes a literal as parameter {1} of a call to {2}. Retrieve the following string argument from a resource table instead: '{3}'</Resolution>
