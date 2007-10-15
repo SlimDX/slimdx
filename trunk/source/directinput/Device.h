@@ -22,7 +22,6 @@
 #pragma once
 
 using namespace System;
-using namespace System::Collections::ObjectModel;
 using namespace System::Reflection;
 using namespace System::Windows::Forms;
 
@@ -118,7 +117,7 @@ namespace SlimDX
 			/// <summary>
 			/// Retrieves buffered data from the device.
 			/// </summary>
-			Collection<BufferedData<DataFormat>^>^ GetBufferedData();
+			BufferedDataCollection<DataFormat>^ GetBufferedData();
 
 			/// <summary>
 			/// Retrieves data from polled objects on a DirectInput device.
