@@ -112,14 +112,34 @@ namespace Direct3D10
 
 	Effect^ Effect::FromFile( Device^ device, String ^fileName, String^ profile )
 	{
+		String^ compilationErrors;
+		return (FromFile( device, fileName, profile, compilationErrors ));
+	}
+	
+	Effect^ Effect::FromFile( Device^ device, String ^fileName, String^ profile, [Out] String^ %compilationErrors  )
+	{
 		pin_ptr<const wchar_t> pinnedFileName = PtrToStringChars( fileName );
 		array<unsigned char>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 		pin_ptr<unsigned char> pinnedProfile = &profileBytes[0];
 		ID3D10Effect* effect;
+		ID3D10Blob* errorBlob;
 
-		HRESULT hr = D3DX10CreateEffectFromFile( pinnedFileName, NULL, NULL, (LPCSTR) pinnedProfile, 0, 0, device->DevicePointer, NULL, NULL, &effect, NULL, NULL );
+		HRESULT hr = D3DX10CreateEffectFromFile( pinnedFileName, NULL, NULL, (LPCSTR) pinnedProfile, 0, 0, device->DevicePointer, NULL, NULL, &effect, &errorBlob, NULL );
 		GraphicsException::CheckHResult( hr );
 
+		if( errorBlob != 0 )
+		{
+		  compilationErrors = gcnew String( (const char*) errorBlob->GetBufferPointer() );
+		  errorBlob->Release();
+		}
+		else
+		{
+			compilationErrors = String::Empty;
+		}
+		
+		GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );
+		if( effect == NULL)
+			return nullptr;
 		return gcnew Effect( effect );
 	}
 	

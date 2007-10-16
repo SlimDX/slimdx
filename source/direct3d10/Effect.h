@@ -100,6 +100,7 @@ namespace SlimDX
 			void Optimize();
 			
 			static Effect^ FromFile( Device^ device, String^ fileName, String^ profile );
+			static Effect^ FromFile( Device^ device, String^ fileName, String^ profile, [Out] String^ %compilationErrors );
 			static Effect^ FromString( Device^ device, String^ code, String^ profile );
 			static Effect^ FromString( Device^ device, String^ code, String^ profile, [Out] String^ %compilationErrors  );
 		};
