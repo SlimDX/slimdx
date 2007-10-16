@@ -32,6 +32,7 @@
 #include "EffectScalarVariable.h"
 #include "EffectVariable.h"
 #include "EffectVectorVariable.h"
+#include "EffectStringVariable.h"
 
 namespace SlimDX
 {
@@ -147,6 +148,14 @@ namespace Direct3D10
 		if( variable == NULL || !variable->IsValid() )
 			throw gcnew InvalidOperationException( "The variable is not convertable to a resource." );
 		return gcnew EffectVectorVariable( variable );
+	}
+
+	EffectStringVariable^ EffectVariable::AsString()
+	{
+		ID3D10EffectStringVariable* variable = m_Pointer->AsString();
+		if( variable == NULL || !variable->IsValid() )
+			throw gcnew InvalidOperationException( "The variable is not convertable to a string." );
+		return gcnew EffectStringVariable( variable );
 	}
 }
 }
