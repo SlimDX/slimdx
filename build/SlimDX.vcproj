@@ -554,6 +554,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\EffectStringVariable.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\EffectTechnique.cpp"
 					>
 				</File>
@@ -1123,6 +1127,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\EffectShaderVariable.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectStringVariable.h"
 					>
 				</File>
 				<File
