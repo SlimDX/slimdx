@@ -103,31 +103,31 @@ namespace SlimDX
             float waitingForGPUOtherTimePercent;
 
 		public:
-			property float WaitingForGPUToUseApplicationResourceTimePercent
+			property float WaitingForGpuToUseApplicationResourceTimePercent
             {
                 float get() { return waitingForGPUToUseApplicationResourceTimePercent; }
                 void set( float value ) { waitingForGPUToUseApplicationResourceTimePercent = value; }
             }
 
-            property float WaitingForGPUToAcceptMoreCommandsTimePercent
+            property float WaitingForGpuToAcceptMoreCommandsTimePercent
             {
                 float get() { return waitingForGPUToAcceptMoreCommandsTimePercent; }
                 void set( float value ) { waitingForGPUToAcceptMoreCommandsTimePercent = value; }
             }
 
-            property float WaitingForGPUToStayWithinLatencyTimePercent
+            property float WaitingForGpuToStayWithinLatencyTimePercent
             {
                 float get() { return waitingForGPUToStayWithinLatencyTimePercent; }
                 void set( float value ) { waitingForGPUToStayWithinLatencyTimePercent = value; }
             }
 
-            property float WaitingForGPUExclusiveResourceTimePercent
+            property float WaitingForGpuExclusiveResourceTimePercent
             {
                 float get() { return waitingForGPUExclusiveResourceTimePercent; }
                 void set( float value ) { waitingForGPUExclusiveResourceTimePercent = value; }
             }
 
-            property float WaitingForGPUOtherTimePercent
+            property float WaitingForGpuOtherTimePercent
             {
                 float get() { return waitingForGPUOtherTimePercent; }
                 void set( float value ) { waitingForGPUOtherTimePercent = value; }
@@ -155,13 +155,13 @@ namespace SlimDX
                 void set( float value ) { pixelProcessingTimePercent = value; }
             }
 
-            property float OtherGPUProcessingTimePercent
+            property float OtherGpuProcessingTimePercent
             {
                 float get() { return otherGPUProcessingTimePercent; }
                 void set( float value ) { otherGPUProcessingTimePercent = value; }
             }
 
-            property float GPUIdleTimePercent
+            property float GpuIdleTimePercent
             {
                 float get() { return gPUIdleTimePercent; }
                 void set( float value ) { gPUIdleTimePercent = value; }
