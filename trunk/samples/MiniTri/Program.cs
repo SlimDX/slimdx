@@ -82,7 +82,7 @@ namespace MiniTri
 				vertexData[1].Color = Color.Blue.ToArgb();
 				vertexData[2].PositionRhw = new Vector4( 150.0f, 500.0f, 0.5f, 1.0f );
 				vertexData[2].Color = Color.Green.ToArgb();
-				stream.Write( vertexData );
+				stream.WriteRange( vertexData );
 				Vertices.Unlock();
 
 				//main loop

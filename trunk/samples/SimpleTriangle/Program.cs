@@ -68,7 +68,7 @@ namespace SimpleTriangle
 
 			Vertices = new VertexBuffer( Device, 3 * Vertex.SizeBytes, Usage.WriteOnly, VertexFormat.None, Pool.Managed );
 			DataStream stream = Vertices.Lock( 0, 0, LockFlags.None );
-			stream.Write( BuildVertexData() );
+			stream.WriteRange( BuildVertexData() );
 			Vertices.Unlock();
 		}
 
