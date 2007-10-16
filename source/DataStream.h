@@ -56,26 +56,26 @@ namespace SlimDX
 		
 		virtual Int64 Seek( Int64 offset, SeekOrigin origin ) override;
 
-		virtual void Write( array<Byte>^ buffer, int offset, int count ) override;
-
 		generic<typename T> where T : value class
 		void Write( T value );
 
-		generic<typename T> where T : value class
-		void Write( array<T>^ data, int startIndex, int count );
+		virtual void Write( array<Byte>^ buffer, int offset, int count ) override;
 
 		generic<typename T> where T : value class
-		void Write( array<T>^ data ) { Write( data, 0, 0 ); }
-		
-		void Write( IntPtr source, Int64 count );
+		void WriteRange( array<T>^ data, int startIndex, int count );
 
-		virtual int Read( array<Byte>^ buffer, int offset, int count ) override;
+		generic<typename T> where T : value class
+		void WriteRange( array<T>^ data ) { WriteRange( data, 0, 0 ); }
 		
+		void WriteRange( IntPtr source, Int64 count );
+
 		generic<typename T> where T : value class
 		T Read();
-		
+
+		virtual int Read( array<Byte>^ buffer, int offset, int count ) override;
+
 		generic<typename T> where T : value class
-		array<T>^ Read( int count );
+		array<T>^ ReadRange( int count );
 
 		virtual void Flush() override;
 

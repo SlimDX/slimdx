@@ -112,6 +112,17 @@ namespace SlimDX
 		return m_Position;
 	}
 
+	generic<typename T> where T : value class
+	void DataStream::Write( T value )
+	{
+		if( !m_CanWrite )
+			throw gcnew NotSupportedException();
+
+		int size = Marshal::SizeOf( T::typeid );
+		memcpy( m_Buffer + m_Position, &value, size );
+		m_Position += size;
+	}
+	
 	void DataStream::Write( array<Byte>^ buffer, int offset, int count )
 	{
 		if( !m_CanWrite )
@@ -130,18 +141,7 @@ namespace SlimDX
 	}
 
 	generic<typename T> where T : value class
-	void DataStream::Write( T value )
-	{
-		if( !m_CanWrite )
-			throw gcnew NotSupportedException();
-
-		int size = Marshal::SizeOf( T::typeid );
-		memcpy( m_Buffer + m_Position, &value, size );
-		m_Position += size;
-	}
-
-	generic<typename T> where T : value class
-	void DataStream::Write( array<T>^ data, int startIndex, int count )
+	void DataStream::WriteRange( array<T>^ data, int startIndex, int count )
 	{
 		if( !m_CanWrite )
 			throw gcnew NotSupportedException();
@@ -161,13 +161,31 @@ namespace SlimDX
 		m_Position += size;
 	}
 	
-	void DataStream::Write( IntPtr source, Int64 byteCount )
+	void DataStream::WriteRange( IntPtr source, Int64 byteCount )
 	{
 		if( !m_CanWrite )
 			throw gcnew NotSupportedException();
 			
 		memcpy( m_Buffer + m_Position, source.ToPointer(), (size_t) byteCount );
 		m_Position += byteCount;
+	}
+	
+  generic<typename T> where T : value class
+	T DataStream::Read()
+	{
+		if( !m_CanRead )
+			throw gcnew NotSupportedException();
+
+		T result;
+		int size = Marshal::SizeOf( T::typeid );
+
+		//TODO: This may be the wrong exception to throw.
+		if( Length > 0 && Length - m_Position < size )
+			throw gcnew ArgumentNullException();
+
+		memcpy( &result, m_Buffer + m_Position, size );
+		m_Position += size;
+		return (result);
 	}
 	
 	int DataStream::Read( array<Byte>^ buffer, int offset, int count )
@@ -187,27 +205,9 @@ namespace SlimDX
 		m_Position += count;
 		return count;
 	}
-	
+		
 	generic<typename T> where T : value class
-	T DataStream::Read()
-	{
-		if( !m_CanRead )
-			throw gcnew NotSupportedException();
-
-		T result;
-		int size = Marshal::SizeOf( T::typeid );
-
-		//TODO: This may be the wrong exception to throw.
-		if( Length > 0 && Length - m_Position < size )
-			throw gcnew ArgumentNullException();
-
-		memcpy( &result, m_Buffer + m_Position, size );
-		m_Position += size;
-		return (result);
-	}
-	
-	generic<typename T> where T : value class
-	array<T>^ DataStream::Read( int count )
+	array<T>^ DataStream::ReadRange( int count )
 	{
 		if( !m_CanRead )
 			throw gcnew NotSupportedException();
