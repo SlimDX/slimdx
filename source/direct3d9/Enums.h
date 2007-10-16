@@ -881,9 +881,9 @@ namespace SlimDX
 		public enum class ZBufferType
 		{
 			/// <summary>Used to enable the depth buffer.</summary>
-			UseZB_True = D3DZB_TRUE,
+			UseZBuffer = D3DZB_TRUE,
 			/// <summary>Used to disable the depth buffer.</summary>
-			UseZB_False = D3DZB_FALSE,
+			DontUseZBuffer = D3DZB_FALSE,
 			/// <summary>Used to enable a W-buffer.</summary>
 			UseWBuffer = D3DZB_USEW
 		};

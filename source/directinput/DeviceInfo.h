@@ -202,7 +202,7 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the number of Point-Of-View controllers available on the device.
 			/// </summary>
-			property int POVCount
+			property int PovCount
 			{
 				int get() { return povCount; }
 			}
@@ -377,17 +377,17 @@ namespace SlimDX
 			/// <summary>
 			/// Japanse NEC PC98 keyboard.
 			/// </summary>
-			literal int JapaneseNECKeyboard = DI8DEVTYPEKEYBOARD_NEC98;
+			literal int JapaneseNecKeyboard = DI8DEVTYPEKEYBOARD_NEC98;
 
 			/// <summary>
 			/// Japanese NEC PC98 laptop keyboard.
 			/// </summary>
-			literal int JapaneseNECLaptopKeyboard = DI8DEVTYPEKEYBOARD_NEC98LAPTOP;
+			literal int JapaneseNecLaptopKeyboard = DI8DEVTYPEKEYBOARD_NEC98LAPTOP;
 
 			/// <summary>
 			/// Japanese NEC PC98 106-key keyboard.
 			/// </summary>
-			literal int JapaneseNEC106Keyboard = DI8DEVTYPEKEYBOARD_NEC98106;
+			literal int JapaneseNec106Keyboard = DI8DEVTYPEKEYBOARD_NEC98106;
 
 			/// <summary>
 			/// Japanese 106-key keyboard.
