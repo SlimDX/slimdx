@@ -115,6 +115,11 @@ namespace SlimDX
 			DataFormat GetCurrentState();
 
 			/// <summary>
+			/// Retrieves the current device state.
+			/// </summary>
+			void GetCurrentState( DataFormat% data );
+
+			/// <summary>
 			/// Retrieves buffered data from the device.
 			/// </summary>
 			BufferedDataCollection<DataFormat>^ GetBufferedData();
