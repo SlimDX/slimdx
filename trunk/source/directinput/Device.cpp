@@ -215,6 +215,120 @@ namespace DirectInput
 	}
 
 	generic<typename DataFormat>
+	void Device<DataFormat>::GetCurrentState( DataFormat% data )
+	{
+		Type^ type = DataFormat::typeid;
+
+		if( type == KeyboardState::typeid )
+		{
+			BYTE keys[256];
+			HRESULT hr = m_Pointer->GetDeviceState( sizeof( BYTE ) * 256, keys );
+			InputException::CheckHResult( hr );
+
+			if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
+				DeviceLost( this, EventArgs::Empty );
+
+			KeyboardState^ state = ( KeyboardState^ )data;
+			for( int i = 0; i < 256; i++ )
+			{
+				if( keys[i] )
+					state->keys[i] = true;
+				else
+					state->keys[i] = false;
+			}
+		}
+		else if( type == MouseState::typeid )
+		{
+			DIMOUSESTATE2 state;
+			HRESULT hr = m_Pointer->GetDeviceState( sizeof( DIMOUSESTATE2 ), ( DIMOUSESTATE2* )&state );
+			InputException::CheckHResult( hr );
+
+			if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
+				DeviceLost( this, EventArgs::Empty );
+
+			MouseState^ result = ( MouseState^ )data;
+			for( int i = 0; i < 8; i++ )
+			{
+				if( state.rgbButtons[i] & 0x80 )
+					result->buttons[i] = true;
+				else
+					result->buttons[i] = false;
+			}
+		}
+		else if( type == JoystickState::typeid )
+		{
+			DIJOYSTATE2 joystate;
+			HRESULT hr = m_Pointer->GetDeviceState( sizeof( DIJOYSTATE2 ), ( DIJOYSTATE2* )&joystate );
+			InputException::CheckHResult( hr );
+
+			if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
+				DeviceLost( this, EventArgs::Empty );
+
+			JoystickState^ state = ( JoystickState^ )data;
+			state->x = joystate.lX;
+			state->y = joystate.lY;
+			state->z = joystate.lZ;
+			state->rx = joystate.lRx;
+			state->ry = joystate.lRy;
+			state->rz = joystate.lRz;
+			state->vx = joystate.lVX;
+			state->vy = joystate.lVY;
+			state->vz = joystate.lVZ;
+			state->vrx = joystate.lVRx;
+			state->vry = joystate.lVRy;
+			state->vrz = joystate.lVRz;
+			state->ax = joystate.lAX;
+			state->ay = joystate.lAY;
+			state->az = joystate.lAZ;
+			state->arx = joystate.lARx;
+			state->ary = joystate.lARy;
+			state->arz = joystate.lARz;
+			state->fx = joystate.lFX;
+			state->fy = joystate.lFY;
+			state->fz = joystate.lFZ;
+			state->frx = joystate.lFRx;
+			state->fry = joystate.lFRy;
+			state->frz = joystate.lFRz;
+
+			for( int i = 0; i < 2; i++ )
+			{
+				state->sliders[i] = joystate.rglSlider[i];
+				state->asliders[i] = joystate.rglASlider[i];
+				state->vsliders[i] = joystate.rglVSlider[i];
+				state->fsliders[i] = joystate.rglVSlider[i];
+			}
+
+			for( int i = 0; i < 4; i++ )
+				state->povs[i] = joystate.rgdwPOV[i];
+
+			for( int i = 0; i < 128; i++ )
+			{
+				if( joystate.rgbButtons[i] )
+					state->buttons[i] = true;
+				else
+					state->buttons[i] = false;
+			}
+		}
+		else
+		{
+			int typeSize = Marshal::SizeOf( type );
+			BYTE *bytes = new BYTE[typeSize];
+			HRESULT hr = m_Pointer->GetDeviceState( sizeof( BYTE ) * typeSize, bytes );
+			InputException::CheckHResult( hr );
+
+			if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
+				DeviceLost( this, EventArgs::Empty );
+
+			IntPtr pointerData( bytes );
+			GCHandle handle = GCHandle::Alloc( data, GCHandleType::Pinned );
+			memcpy( handle.AddrOfPinnedObject().ToPointer(), pointerData.ToPointer(), typeSize );
+			handle.Free();
+
+			delete[] bytes;
+		}
+	}
+
+	generic<typename DataFormat>
 	DataFormat Device<DataFormat>::GetCurrentState()
 	{
 		Type^ type = DataFormat::typeid;
@@ -249,7 +363,6 @@ namespace DirectInput
 				DeviceLost( this, EventArgs::Empty );
 
 			MouseState^ result = gcnew MouseState( state.lX, state.lY, state.lZ );
-			result = gcnew MouseState( state.lX, state.lY, state.lZ );
 			for( int i = 0; i < 8; i++ )
 			{
 				if( state.rgbButtons[i] & 0x80 )
