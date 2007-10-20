@@ -32,6 +32,9 @@ namespace SlimDX
 	{
 		public ref class D3D10ErrorCode : ErrorCode
 		{
+		internal:
+			D3D10ErrorCode() { }
+
 		public:
 			literal int FileNotFound = D3D10_ERROR_FILE_NOT_FOUND;
 			literal int TooManyUniqueStateObjects = D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS;
@@ -41,6 +44,9 @@ namespace SlimDX
 
 		public ref class D3DX10ErrorCode : ErrorCode
 		{
+		internal:
+			D3DX10ErrorCode() { }
+
 		public:
 			literal int CannotModifyIndexBuffer = D3DX10_ERR_CANNOT_MODIFY_INDEX_BUFFER;
 			literal int InvalidMesh = D3DX10_ERR_INVALID_MESH;

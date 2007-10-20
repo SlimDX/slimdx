@@ -32,6 +32,9 @@ namespace SlimDX
 	{
 		public ref class DIErrorCode : ErrorCode
 		{
+		internal:
+			DIErrorCode() { }
+
 		public:
 			literal int BufferOverflow = DI_BUFFEROVERFLOW;
 			literal int DownloadSkipped = DI_DOWNLOADSKIPPED;
