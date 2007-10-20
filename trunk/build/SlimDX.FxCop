@@ -112,18 +112,18 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="Read(System.Int32):T[]">
+           <Member Name="ReadRange(System.Int32):T[]">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-20 01:01:41Z">
               <Issue>
-               <Item>DataStream.Read(Int32):T[]</Item>
+               <Item>DataStream.ReadRange(Int32):T[]</Item>
                <Item>Marshal.SizeOf(Type):Int32</Item>
-               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.Marshal.SizeOf(System.Type) : Int32&#xD;&#xA;-&gt;SlimDX.DataStream.Read(System.Int32) : T[]</Item>
+               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.Marshal.SizeOf(System.Type) : Int32&#xD;&#xA;-&gt;SlimDX.DataStream.ReadRange(System.Int32) : T[]</Item>
               </Issue>
              </Message>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2007-10-20 01:01:41Z">
               <Issue>
-               <Item>DataStream.Read(Int32):T[]</Item>
+               <Item>DataStream.ReadRange(Int32):T[]</Item>
                <Item>T</Item>
               </Issue>
              </Message>
@@ -178,13 +178,13 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="Write(T[],System.Int32,System.Int32):System.Void">
+           <Member Name="WriteRange(T[],System.Int32,System.Int32):System.Void">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-20 01:01:41Z">
               <Issue>
-               <Item>DataStream.Write(T[], Int32, Int32):Void</Item>
+               <Item>DataStream.WriteRange(T[], Int32, Int32):Void</Item>
                <Item>Marshal.SizeOf(Type):Int32</Item>
-               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.Marshal.SizeOf(System.Type) : Int32&#xD;&#xA;-&gt;SlimDX.DataStream.Write(type parameter.T[],System.Int32,System.Int32) : Void</Item>
+               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.Marshal.SizeOf(System.Type) : Int32&#xD;&#xA;-&gt;SlimDX.DataStream.WriteRange(type parameter.T[],System.Int32,System.Int32) : Void</Item>
               </Issue>
              </Message>
             </Messages>
@@ -213,6 +213,15 @@
             </Messages>
            </Member>
           </Members>
+         </Type>
+         <Type Name="ErrorCode">
+          <Messages>
+           <Message TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053" Created="2007-10-20 01:01:41Z">
+            <Issue>
+             <Item>ErrorCode</Item>
+            </Issue>
+           </Message>
+          </Messages>
          </Type>
          <Type Name="Matrix">
           <Messages>
@@ -2135,6 +2144,15 @@
          </Type>
          <Type Name="Effect">
           <Members>
+           <Member Name="FromFile(SlimDX.Direct3D10.Device,System.String,System.String,System.String&amp;):SlimDX.Direct3D10.Effect">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-20 01:01:41Z">
+              <Issue>
+               <Item>compilationErrors</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="FromString(SlimDX.Direct3D10.Device,System.String,System.String,System.String&amp;):SlimDX.Direct3D10.Effect">
             <Messages>
              <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-11 21:06:36Z">
@@ -2187,6 +2205,19 @@
                <Item>EffectResourceVariable.SetResource(ShaderResourceView):Void</Item>
                <Item>SlimDX.Direct3D10.ShaderResourceView</Item>
                <Item>SlimDX.DirectXObject&lt;ID3D10View&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="EffectStringVariable">
+          <Members>
+           <Member Name="GetString():System.String">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-20 01:01:41Z">
+              <Issue Certainty="50">
+               <Item>GetString</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3842,15 +3873,6 @@
             </Messages>
            </Member>
           </Members>
-         </Type>
-         <Type Name="D3DXFileErrorCode">
-          <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
-            <Issue Name="NotFlagsNoZeroValue">
-             <Item>D3DXFileErrorCode</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
          <Type Name="DeclarationMethod">
           <Messages>
@@ -6479,6 +6501,37 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="GetCurrentState(DataFormat&amp;):System.Void">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-20 01:01:41Z">
+              <Issue>
+               <Item>Device`1.GetCurrentState(DataFormat&amp;):Void</Item>
+               <Item>GCHandle.AddrOfPinnedObject():IntPtr</Item>
+               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.AddrOfPinnedObject : IntPtr&#xD;&#xA;-&gt;SlimDX.DirectInput.Device`1.GetCurrentState(type parameter.DataFormat@) : Void</Item>
+              </Issue>
+              <Issue>
+               <Item>Device`1.GetCurrentState(DataFormat&amp;):Void</Item>
+               <Item>GCHandle.Alloc(Object, GCHandleType):GCHandle</Item>
+               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.Alloc(System.Object,System.Runtime.InteropServices.GCHandleType) : GCHandle&#xD;&#xA;-&gt;SlimDX.DirectInput.Device`1.GetCurrentState(type parameter.DataFormat@) : Void</Item>
+              </Issue>
+              <Issue>
+               <Item>Device`1.GetCurrentState(DataFormat&amp;):Void</Item>
+               <Item>GCHandle.Free():Void</Item>
+               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.Free : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.Device`1.GetCurrentState(type parameter.DataFormat@) : Void</Item>
+              </Issue>
+              <Issue>
+               <Item>Device`1.GetCurrentState(DataFormat&amp;):Void</Item>
+               <Item>Marshal.SizeOf(Type):Int32</Item>
+               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.Marshal.SizeOf(System.Type) : Int32&#xD;&#xA;-&gt;SlimDX.DirectInput.Device`1.GetCurrentState(type parameter.DataFormat@) : Void</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-20 01:01:41Z">
+              <Issue Level="CriticalWarning">
+               <Item>data</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
           </Members>
          </Type>
          <Type Name="DeviceConstantConverter">
@@ -7672,6 +7725,9 @@
    </Rule>
    <Rule TypeName="ShortAcronymsShouldBeUppercase" Category="Microsoft.Naming" CheckId="CA1706">
     <Resolution Name="Member">Correct the capitalization of '{0}' in member name '{1}'.</Resolution>
+   </Rule>
+   <Rule TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053">
+    <Resolution Name="Default">Remove the public constructors from '{0}'.</Resolution>
    </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name '{0}' conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>

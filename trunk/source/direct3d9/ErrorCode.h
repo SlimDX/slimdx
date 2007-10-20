@@ -32,6 +32,9 @@ namespace SlimDX
 	{
 		public ref class D3DErrorCode : ErrorCode
 		{
+		internal:
+			D3DErrorCode() { }
+
 		public:
 			literal int WrongTextureFormat = D3DERR_WRONGTEXTUREFORMAT;
 			literal int UnsupportedColorOperation = D3DERR_UNSUPPORTEDCOLOROPERATION;
@@ -61,6 +64,9 @@ namespace SlimDX
 
 		public ref class D3DXFileErrorCode : ErrorCode
 		{
+		internal:
+			D3DXFileErrorCode() { }
+
 		public:
 			literal int BadObject = D3DXFERR_BADOBJECT;
 			literal int BadValue = D3DXFERR_BADVALUE;
@@ -84,6 +90,9 @@ namespace SlimDX
 
 		public ref class D3DXErrorCode : ErrorCode
 		{
+		internal:
+			D3DXErrorCode() { }
+
 		public:
 			literal int CannotModifyIndexBuffer = D3DXERR_CANNOTMODIFYINDEXBUFFER;
 			literal int InvalidMesh = D3DXERR_INVALIDMESH;

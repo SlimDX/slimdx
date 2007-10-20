@@ -27,8 +27,8 @@ namespace SlimDX
 {
 	public ref class ErrorCode
 	{
-	protected:
-		ErrorCode() { }
+	internal:
+		ErrorCode() { };
 
 	public:
 		static bool Failed( int errorCode ) { return FAILED( errorCode ); }

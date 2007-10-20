@@ -32,6 +32,9 @@ namespace SlimDX
 	{
 		public ref class DSErrorCode : ErrorCode
 		{
+		internal:
+			DSErrorCode() { };
+
 		public:
 			literal int NoVirtualization = DS_NO_VIRTUALIZATION;
 			literal int AccessDenied = DSERR_ACCESSDENIED;
