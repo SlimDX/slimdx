@@ -26,6 +26,7 @@ using namespace System::Reflection;
 using namespace System::Windows::Forms;
 
 #include "../DirectXObject.h"
+#include "ErrorCode.h"
 #include "DeviceState.h"
 #include "Enums.h"
 #include "Attributes.h"

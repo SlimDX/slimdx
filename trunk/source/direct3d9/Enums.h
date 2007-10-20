@@ -29,58 +29,6 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public enum class D3DErrorCode : Int32
-		{
-			Ok = D3D_OK,
-
-			WrongTextureFormat = D3DERR_WRONGTEXTUREFORMAT,
-			UnsupportedColorOperation = D3DERR_UNSUPPORTEDCOLOROPERATION,
-			UnsupportedColorArgument = D3DERR_UNSUPPORTEDCOLORARG,
-			UnsupportedAlphaOperation = D3DERR_UNSUPPORTEDALPHAOPERATION,
-			UnsupportedAlphaArgument = D3DERR_UNSUPPORTEDALPHAARG,
-			TooManyOperations = D3DERR_TOOMANYOPERATIONS,
-			ConflictingTextureFilter = D3DERR_CONFLICTINGTEXTUREFILTER,
-			UnsupportedFactorValue = D3DERR_UNSUPPORTEDFACTORVALUE,
-			ConflictingRenderState = D3DERR_CONFLICTINGRENDERSTATE,
-			UnsupportedTextureFilter = D3DERR_UNSUPPORTEDTEXTUREFILTER,
-			ConflictingTexturePalette = D3DERR_CONFLICTINGTEXTUREPALETTE,
-			DriverInternalError = D3DERR_DRIVERINTERNALERROR,
-
-			NotFound = D3DERR_NOTFOUND,
-			MoreData = D3DERR_MOREDATA,
-			DeviceLost = D3DERR_DEVICELOST,
-			DeviceNotReset = D3DERR_DEVICENOTRESET,
-			NotAvailable = D3DERR_NOTAVAILABLE,
-			OutOfVideoMemory = D3DERR_OUTOFVIDEOMEMORY,
-			InvalidDevice = D3DERR_INVALIDDEVICE,
-			InvalidCall = D3DERR_INVALIDCALL,
-			DriverInvalidCall = D3DERR_DRIVERINVALIDCALL,
-			WasStillDrawing = D3DERR_WASSTILLDRAWING,
-			NoAutoGen = D3DOK_NOAUTOGEN,
-		};
-
-		public enum class D3DXFileErrorCode : Int32
-		{
-			BadObject = D3DXFERR_BADOBJECT,
-			BadValue = D3DXFERR_BADVALUE,
-			BadType = D3DXFERR_BADTYPE,
-			NotFound = D3DXFERR_NOTFOUND,
-			NotDoneYet = D3DXFERR_NOTDONEYET,
-			FileNotFound = D3DXFERR_FILENOTFOUND,
-			ResourceNotFound = D3DXFERR_RESOURCENOTFOUND,
-			BadResource = D3DXFERR_BADRESOURCE,
-			BadFileType = D3DXFERR_BADFILETYPE,
-			BadFileVersion = D3DXFERR_BADFILEVERSION,
-			BadFileFloatSize = D3DXFERR_BADFILEFLOATSIZE,
-			BadFile = D3DXFERR_BADFILE,
-			ParseError = D3DXFERR_PARSEERROR,
-			BadArraySize = D3DXFERR_BADARRAYSIZE,
-			BadDataReference = D3DXFERR_BADDATAREFERENCE,
-			NoMoreObjects = D3DXFERR_NOMOREOBJECTS,
-			NoMoreData = D3DXFERR_NOMOREDATA,
-			BadCacheFile = D3DXFERR_BADCACHEFILE,
-		};
-
 		public enum class Format : Int32
 		{
 			R8G8B8 = D3DFMT_R8G8B8,

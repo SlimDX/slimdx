@@ -24,6 +24,7 @@
 using namespace System;
 
 #include "Enums.h"
+#include "ErrorCode.h"
 #include "InputElement.h"
 
 namespace SlimDX
