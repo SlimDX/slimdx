@@ -23,26 +23,34 @@
 
 using namespace System;
 
+#include <d3d10.h>
+#include "../ErrorCode.h"
+
 namespace SlimDX
 {
-	public enum class ErrorCode : Int32
+	namespace Direct3D10
 	{
-		//success codes
-		Ok = S_OK,
-		False = S_FALSE,
+		public ref class D3D10ErrorCode : ErrorCode
+		{
+		public:
+			literal int FileNotFound = D3D10_ERROR_FILE_NOT_FOUND;
+			literal int TooManyUniqueStateObjects = D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS;
+			literal int InvalidCall = D3DERR_INVALIDCALL;
+			literal int WasStillDrawing = D3DERR_WASSTILLDRAWING;
+		};
 
-		//failure codes
-		Unexpected = E_UNEXPECTED,
-		NotImplemented = E_NOTIMPL,
-		OutOfMemory = E_OUTOFMEMORY,
-		InvalidArg = E_INVALIDARG,
-		NoInterface = E_NOINTERFACE,
-		InvalidPointer = E_POINTER,
-		InvalidHandle = E_HANDLE,
-		Aborted = E_ABORT,
-		Failed = E_FAIL,
-		AccessDenied = E_ACCESSDENIED,
-
-		Pending = E_PENDING
-	};
+		public ref class D3DX10ErrorCode : ErrorCode
+		{
+		public:
+			literal int CannotModifyIndexBuffer = D3DX10_ERR_CANNOT_MODIFY_INDEX_BUFFER;
+			literal int InvalidMesh = D3DX10_ERR_INVALID_MESH;
+			literal int CannotAttributeSort = D3DX10_ERR_CANNOT_ATTR_SORT;
+			literal int SkinningNotSupported = D3DX10_ERR_SKINNING_NOT_SUPPORTED;
+			literal int TooManyInfluences = D3DX10_ERR_TOO_MANY_INFLUENCES;
+			literal int InvalidData = D3DX10_ERR_INVALID_DATA;
+			literal int MeshHasNoData = D3DX10_ERR_LOADED_MESH_HAS_NO_DATA;
+			literal int DuplicatNamedFragment = D3DX10_ERR_DUPLICATE_NAMED_FRAGMENT;
+			literal int CannotRemoveLastItem = D3DX10_ERR_CANNOT_REMOVE_LAST_ITEM;
+		};
+	}
 }

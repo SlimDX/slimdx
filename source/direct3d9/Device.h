@@ -29,6 +29,7 @@ using namespace System::Runtime::InteropServices;
 #include "Enums.h"
 #include "Direct3D.h"
 #include "Vertex.h"
+#include "ErrorCode.h"
 #include "../Direct3D/ColorValue.h"
 #include "../Direct3D/Viewport.h"
 #include "../math/Math.h"

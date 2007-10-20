@@ -763,7 +763,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\DXEnums.h"
+				RelativePath="..\source\ErrorCode.h"
 				>
 			</File>
 			<File
@@ -839,6 +839,10 @@
 				</File>
 				<File
 					RelativePath="..\source\directinput\Enums.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\ErrorCode.h"
 					>
 				</File>
 				<File
@@ -983,6 +987,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Enums.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ErrorCode.h"
 					>
 				</File>
 				<File
@@ -1147,6 +1155,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Enums.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ErrorCode.h"
 					>
 				</File>
 				<File
@@ -1319,6 +1331,10 @@
 				</File>
 				<File
 					RelativePath="..\source\directsound\Enums.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directsound\ErrorCode.h"
 					>
 				</File>
 				<File

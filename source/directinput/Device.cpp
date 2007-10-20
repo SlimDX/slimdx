@@ -225,8 +225,12 @@ namespace DirectInput
 			HRESULT hr = m_Pointer->GetDeviceState( sizeof( BYTE ) * 256, keys );
 			InputException::CheckHResult( hr );
 
-			if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
-				DeviceLost( this, EventArgs::Empty );
+			if( hr == DIERR_INPUTLOST )
+			{
+				if( &Device::DeviceLost != nullptr )
+					DeviceLost( this, EventArgs::Empty );
+				return;
+			}
 
 			KeyboardState^ state = ( KeyboardState^ )data;
 			for( int i = 0; i < 256; i++ )
@@ -243,8 +247,12 @@ namespace DirectInput
 			HRESULT hr = m_Pointer->GetDeviceState( sizeof( DIMOUSESTATE2 ), ( DIMOUSESTATE2* )&state );
 			InputException::CheckHResult( hr );
 
-			if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
-				DeviceLost( this, EventArgs::Empty );
+			if( hr == DIERR_INPUTLOST )
+			{
+				if( &Device::DeviceLost != nullptr )
+					DeviceLost( this, EventArgs::Empty );
+				return;
+			}
 
 			MouseState^ result = ( MouseState^ )data;
 			for( int i = 0; i < 8; i++ )
@@ -261,8 +269,12 @@ namespace DirectInput
 			HRESULT hr = m_Pointer->GetDeviceState( sizeof( DIJOYSTATE2 ), ( DIJOYSTATE2* )&joystate );
 			InputException::CheckHResult( hr );
 
-			if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
-				DeviceLost( this, EventArgs::Empty );
+			if( hr == DIERR_INPUTLOST )
+			{
+				if( &Device::DeviceLost != nullptr )
+					DeviceLost( this, EventArgs::Empty );
+				return;
+			}
 
 			JoystickState^ state = ( JoystickState^ )data;
 			state->x = joystate.lX;
@@ -316,8 +328,12 @@ namespace DirectInput
 			HRESULT hr = m_Pointer->GetDeviceState( sizeof( BYTE ) * typeSize, bytes );
 			InputException::CheckHResult( hr );
 
-			if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
-				DeviceLost( this, EventArgs::Empty );
+			if( hr == DIERR_INPUTLOST )
+			{
+				if( &Device::DeviceLost != nullptr )
+					DeviceLost( this, EventArgs::Empty );
+				return;
+			}
 
 			IntPtr pointerData( bytes );
 			GCHandle handle = GCHandle::Alloc( data, GCHandleType::Pinned );
@@ -339,10 +355,15 @@ namespace DirectInput
 			HRESULT hr = m_Pointer->GetDeviceState( sizeof( BYTE ) * 256, keys );
 			InputException::CheckHResult( hr );
 
-			if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
-				DeviceLost( this, EventArgs::Empty );
-
 			KeyboardState^ state = gcnew KeyboardState();
+
+			if( hr == DIERR_INPUTLOST )
+			{
+				if( &Device::DeviceLost != nullptr )
+					DeviceLost( this, EventArgs::Empty );
+				return ( DataFormat )state;
+			}
+
 			for( int i = 0; i < 256; i++ )
 			{
 				if( keys[i] )
@@ -359,8 +380,12 @@ namespace DirectInput
 			HRESULT hr = m_Pointer->GetDeviceState( sizeof( DIMOUSESTATE2 ), ( DIMOUSESTATE2* )&state );
 			InputException::CheckHResult( hr );
 
-			if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
-				DeviceLost( this, EventArgs::Empty );
+			if( hr == DIERR_INPUTLOST )
+			{
+				if( &Device::DeviceLost != nullptr )
+					DeviceLost( this, EventArgs::Empty );
+				return ( DataFormat )gcnew MouseState( 0, 0, 0 );
+			}
 
 			MouseState^ result = gcnew MouseState( state.lX, state.lY, state.lZ );
 			for( int i = 0; i < 8; i++ )
@@ -379,8 +404,12 @@ namespace DirectInput
 			HRESULT hr = m_Pointer->GetDeviceState( sizeof( DIJOYSTATE2 ), ( DIJOYSTATE2* )&state );
 			InputException::CheckHResult( hr );
 
-			if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
-				DeviceLost( this, EventArgs::Empty );
+			if( hr == DIERR_INPUTLOST )
+			{
+				if( &Device::DeviceLost != nullptr )
+					DeviceLost( this, EventArgs::Empty );
+				return ( DataFormat )gcnew JoystickState();
+			}
 
 			return ( DataFormat )gcnew JoystickState( state );
 		}
@@ -391,8 +420,12 @@ namespace DirectInput
 			HRESULT hr = m_Pointer->GetDeviceState( sizeof( BYTE ) * typeSize, bytes );
 			InputException::CheckHResult( hr );
 
-			if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
-				DeviceLost( this, EventArgs::Empty );
+			if( hr == DIERR_INPUTLOST )
+			{
+				if( &Device::DeviceLost != nullptr )
+					DeviceLost( this, EventArgs::Empty );
+				return Activator::CreateInstance<DataFormat>();
+			}
 
 			DataFormat result = Activator::CreateInstance<DataFormat>();
 
