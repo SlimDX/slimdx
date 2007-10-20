@@ -125,7 +125,6 @@ namespace Direct3D10
 		ID3D10Blob* errorBlob;
 
 		HRESULT hr = D3DX10CreateEffectFromFile( pinnedFileName, NULL, NULL, (LPCSTR) pinnedProfile, 0, 0, device->DevicePointer, NULL, NULL, &effect, &errorBlob, NULL );
-		GraphicsException::CheckHResult( hr );
 
 		if( errorBlob != 0 )
 		{
