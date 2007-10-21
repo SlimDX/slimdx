@@ -47,7 +47,7 @@ namespace Direct3D9
 		IUnknown* unknown = (IUnknown*) buffer.ToPointer();
 		HRESULT hr = unknown->QueryInterface( IID_IDirect3DIndexBuffer9, &pointer );
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
 		IDirect3DIndexBuffer9* ibPtr = (IDirect3DIndexBuffer9*) pointer;
 		m_Pointer = ibPtr;

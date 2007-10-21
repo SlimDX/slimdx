@@ -49,6 +49,7 @@ namespace SlimDX
 			Sprite( ID3DXSprite* sprite );
 			Sprite( Device^ device );
 			~Sprite() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			void Begin( SpriteFlags flags );
 			void End();

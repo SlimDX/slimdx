@@ -111,7 +111,7 @@ namespace Direct3D9
 		IUnknown* unknown = (IUnknown*) texture.ToPointer();
 		HRESULT hr = unknown->QueryInterface( IID_IDirect3DTexture9, &pointer );
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
 		m_Pointer = (IDirect3DTexture9*) pointer;
 	}
@@ -383,7 +383,7 @@ namespace Direct3D9
 		IUnknown* unknown = (IUnknown*) cubeTexture.ToPointer();
 		HRESULT hr = unknown->QueryInterface( IID_IDirect3DCubeTexture9, &pointer );
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
 		m_Pointer = (IDirect3DCubeTexture9*) pointer;
 	}
@@ -577,7 +577,7 @@ namespace Direct3D9
 		IUnknown* unknown = (IUnknown*) volumeTexture.ToPointer();
 		HRESULT hr = unknown->QueryInterface( IID_IDirect3DVolumeTexture9, &pointer );
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
 		m_Pointer = (IDirect3DVolumeTexture9*) pointer;
 	}

@@ -54,8 +54,8 @@ namespace SlimDX
 			RenderToSurface( IntPtr rts );
 			RenderToSurface( Device^ device, int width, int height, Format format );
 			RenderToSurface( Device^ device, int width, int height, Format format, Format depthStencilFormat );
-
 			~RenderToSurface() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			void BeginScene( Surface^ renderSurface, Viewport viewport );
 			void EndScene( Filter mipFilter );

@@ -84,6 +84,8 @@ namespace SlimDX
 			*/
 				
 		public:
+			DXOBJECT_FUNCTIONS;
+
 			/// <summary>
 			/// Gets the version.
 			/// </summary>

@@ -52,7 +52,7 @@ namespace Direct3D9
 		IUnknown* unknown = (IUnknown*) pixelShader.ToPointer();
 		HRESULT hr = unknown->QueryInterface( IID_IDirect3DPixelShader9, &pointer );
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
 		m_Pointer = (IDirect3DPixelShader9*) pointer;
 	}

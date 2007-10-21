@@ -40,7 +40,9 @@ namespace Direct3D9
 		if( vertexShader == NULL )
 			throw gcnew ArgumentNullException( "vertexShader" );
 
-		m_ConstantTable = nullptr;
+		//m_ConstantTable = nullptr;
+		//Retrieve the constant table
+
 	}
 
 	VertexShader::VertexShader( IntPtr vertexShader )
@@ -52,7 +54,7 @@ namespace Direct3D9
 		IUnknown* unknown = (IUnknown*) vertexShader.ToPointer();
 		HRESULT hr = unknown->QueryInterface( IID_IDirect3DVertexShader9, &pointer );
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
 		m_Pointer = (IDirect3DVertexShader9*) pointer;
 	}

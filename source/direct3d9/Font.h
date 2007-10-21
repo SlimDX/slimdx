@@ -159,6 +159,7 @@ namespace SlimDX
 				CharacterSet characterSet, Precision outputPrecision, FontQuality quality,
 				PitchAndFamily pitchAndFamily, String^ faceName );
 			~Font() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			int DrawString( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, int color );
 			int DrawString( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, Color color );

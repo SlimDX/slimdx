@@ -56,7 +56,7 @@ namespace Direct3D9
 		IUnknown* unknown = (IUnknown*) font.ToPointer();
 		HRESULT hr = unknown->QueryInterface( IID_ID3DXFont, &pointer );
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
 		m_Pointer = (ID3DXFont*) pointer;
 	}
