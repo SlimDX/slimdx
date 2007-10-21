@@ -55,6 +55,7 @@ namespace SlimDX
 			FragmentLinker( ID3DXFragmentLinker* linker );
 			FragmentLinker( Device^ device, int cacheSize );
 			~FragmentLinker() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			static ShaderFragments^ Gather( array<Byte>^ sourceData, array<Macro>^ defines,
 				Include^ includeFile, ShaderFlags flags, [Out] String^% errors );

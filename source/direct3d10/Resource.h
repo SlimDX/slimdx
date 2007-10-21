@@ -39,6 +39,7 @@ namespace SlimDX
 			
 		public:
 			virtual ~Resource() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			/// <summary>
 			/// Gets or sets the resource's eviction priority.

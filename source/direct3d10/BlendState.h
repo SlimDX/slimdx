@@ -43,6 +43,7 @@ namespace SlimDX
 		
 		public:
 			~BlendState() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			property bool AlphaToCoverageEnabled
 			{

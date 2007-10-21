@@ -99,6 +99,7 @@ namespace SlimDX
 		{
 		public:
 			XAudio2( XAudio2Flags flags, EngineCallback^ callback, WindowsProcessorSpecifier processor );
+			DXOBJECT_FUNCTIONS;
 
 			static float AmplitudeRatioToDecibels( float volume );
 			static float DecibelsToAmplitudeRatio( float decibels );

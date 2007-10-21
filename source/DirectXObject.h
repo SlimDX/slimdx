@@ -44,8 +44,6 @@ namespace SlimDX
 
 	public:
 		static property bool EnableObjectTracking;
-
-
 	};
 
 	template<typename T>
@@ -55,13 +53,13 @@ namespace SlimDX
 		DirectXObject()
 		{
 			if( EnableObjectTracking )
-				ObjectTracker::Add( safe_cast<IDisposable^>( this ) );
+				ObjectTracker::Add( this );
 		}
 
 		DirectXObject( T* pointer ) : m_Pointer( pointer )
 		{
 			if( EnableObjectTracking )
-				ObjectTracker::Add( safe_cast<IDisposable^>( this ) );
+				ObjectTracker::Add( this );
 		}
 
 		T* m_Pointer;
@@ -73,7 +71,7 @@ namespace SlimDX
 			m_Pointer = NULL;
 
 			if( EnableObjectTracking )
-				ObjectTracker::Remove( safe_cast<IDisposable^>( this ) );
+				ObjectTracker::Remove( this );
 		}
 
 	internal:
@@ -83,18 +81,15 @@ namespace SlimDX
 		}
 
 	public:
-		void DisposeHandler( Object^ sender, EventArgs^ e )
-		{
-			IDisposable^ disposable = safe_cast<IDisposable^>( this );
-			disposable->Dispose();
-		}
+		virtual ~DirectXObject() { };
 
-		property bool Disposed
-		{
-			bool get()
-			{
-				return m_Pointer == NULL;
-			}
-		}
+		property bool Disposed { virtual bool get() abstract; }
+		property IntPtr ComPointer { virtual IntPtr get() abstract; }
+		virtual void DisposeHandler( Object^ sender, EventArgs^ e ) abstract;
 	};
 }
+
+#define DXOBJECT_FUNCTIONS \
+	property bool Disposed { virtual bool get() override { return m_Pointer == NULL; } } \
+	property IntPtr ComPointer { virtual IntPtr get() override{ return IntPtr( m_Pointer ); } } \
+	virtual void DisposeHandler( Object^ sender, EventArgs^ e ) override { delete this; }

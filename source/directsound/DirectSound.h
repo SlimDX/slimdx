@@ -71,6 +71,7 @@ namespace SlimDX
 			DirectSound();
 			DirectSound( Guid device );
 			~DirectSound() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			void Initialize();
 			void Initialize( Guid device );

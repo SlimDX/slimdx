@@ -38,6 +38,7 @@ namespace SlimDX
 		public:
 			VertexShader( IntPtr vertexShader );
 			VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable );
+			DXOBJECT_FUNCTIONS;
 			
 			~VertexShader()
 			{

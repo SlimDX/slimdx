@@ -152,9 +152,10 @@ namespace Direct3D9
 		IDirect3DTexture9* texture;
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
-		D3DXCreateTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, width, height, numLevels,
-			(DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter,
+		HRESULT hr = D3DXCreateTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, width,
+			height, numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter,
 			(D3DCOLOR) colorKey, 0, 0, &texture );
+		GraphicsException::CheckHResult( hr );
 
 		return gcnew Texture( texture );
 	}

@@ -59,6 +59,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="subsystem">The subsystem identifier.</param>
 			Device( Guid subsystem );
+			DXOBJECT_FUNCTIONS;
 
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::Device"/> class.

@@ -36,6 +36,7 @@ namespace SlimDX
 			
 		public:
 			virtual ~VertexShader() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 		};
 	}
 };

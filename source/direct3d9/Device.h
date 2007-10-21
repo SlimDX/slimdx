@@ -149,6 +149,7 @@ namespace SlimDX
 			Device( IntPtr device );
 			Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams );
 			virtual ~Device() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			// --- Properties ---
 
@@ -278,6 +279,7 @@ namespace SlimDX
 			void SetTextureStageState( int stage, TextureStage type, float value );
 
 			void SetSamplerState( int sampler, SamplerState type, int value );
+			void SetSamplerState( int sampler, SamplerState type, float value );
 			void SetSamplerState( int sampler, SamplerState type, TextureAddress texAddr );
 			void SetSamplerState( int sampler, SamplerState type, TextureFilter texFilter );
 

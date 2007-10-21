@@ -50,6 +50,7 @@ namespace SlimDX
 			
 		public:
 			virtual ~ResourceView() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			property SlimDX::Direct3D10::Format Format
             {

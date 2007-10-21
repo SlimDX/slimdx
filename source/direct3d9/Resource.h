@@ -38,6 +38,7 @@ namespace SlimDX
 
 		public:
 			virtual ~Resource() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			property int Priority
 			{

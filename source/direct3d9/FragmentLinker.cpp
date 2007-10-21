@@ -58,11 +58,15 @@ namespace Direct3D9
 		ID3DXBuffer* errorBuffer;
 		pin_ptr<const Byte> pinnedData = &sourceData[0];
 
-		ID3DXInclude* include = includeFile != nullptr ? includeFile->Shim : NULL;
+		IncludeShim includeShim = IncludeShim( includeFile );
+		ID3DXInclude* includePtr = NULL;
+		if( includeFile != nullptr )
+			includePtr = &includeShim;
+
 		array<GCHandle>^ handles;
 		D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
-		HRESULT hr = D3DXGatherFragments( (LPCSTR) pinnedData, sourceData->Length, macros, include,
+		HRESULT hr = D3DXGatherFragments( (LPCSTR) pinnedData, sourceData->Length, macros, includePtr,
 			(DWORD) flags, &fragmentBuffer, &errorBuffer );
 		
 		//clean up after marshaling macros
@@ -91,11 +95,15 @@ namespace Direct3D9
 		ID3DXBuffer* errorBuffer;
 		pin_ptr<const wchar_t> pinnedFile = PtrToStringChars( fileName );
 
-		ID3DXInclude* include = includeFile != nullptr ? includeFile->Shim : NULL;
+		IncludeShim includeShim = IncludeShim( includeFile );
+		ID3DXInclude* includePtr = NULL;
+		if( includeFile != nullptr )
+			includePtr = &includeShim;
+
 		array<GCHandle>^ handles;
 		D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
-		HRESULT hr = D3DXGatherFragmentsFromFile( (LPCTSTR) pinnedFile, macros, include,
+		HRESULT hr = D3DXGatherFragmentsFromFile( (LPCTSTR) pinnedFile, macros, includePtr,
 			(DWORD) flags, &fragmentBuffer, &errorBuffer );
 		
 		//clean up after marshaling macros

@@ -38,6 +38,7 @@ namespace SlimDX
 			BufferWrapper( IntPtr buffer );
 			BufferWrapper( int size );
 			virtual ~BufferWrapper() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			property int Size
 			{

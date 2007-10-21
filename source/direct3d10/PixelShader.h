@@ -36,6 +36,7 @@ namespace SlimDX
 			
 		public:
 			virtual ~PixelShader() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 		};
 	}
 };

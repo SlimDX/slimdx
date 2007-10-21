@@ -32,22 +32,6 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		Include::Include()
-		{
-			Shim = new IncludeShim( this );
-		}
-
-		Include::~Include()
-		{
-			this->!Include();
-		}
-
-		Include::!Include()
-		{
-			delete Shim;
-			Shim = NULL;
-		}
-
 		IncludeShim::IncludeShim( Include^ wrappedInterface )
 		{
 			m_WrappedInterface = wrappedInterface;
@@ -199,11 +183,15 @@ namespace SlimDX
 			ID3DXBuffer* errorBuffer;
 			pin_ptr<Byte> pinnedData = &sourceData[0];
 
-			ID3DXInclude* include = includeFile != nullptr ? includeFile->Shim : NULL;
+			IncludeShim includeShim = IncludeShim( includeFile );
+			ID3DXInclude* includePtr = NULL;
+			if( includeFile != nullptr )
+				includePtr = &includeShim;
+
 			array<GCHandle>^ handles;
 			D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
-			HRESULT hr = D3DXAssembleShader( (char*) pinnedData, sourceData->Length, macros, include,
+			HRESULT hr = D3DXAssembleShader( (char*) pinnedData, sourceData->Length, macros, includePtr,
 				(DWORD) flags, &shaderBuffer, &errorBuffer );
 
 			//clean up after marshaling macros
@@ -233,11 +221,15 @@ namespace SlimDX
 			ID3DXBuffer* errorBuffer;
 			pin_ptr<const wchar_t> pinnedFileName = PtrToStringChars( fileName );
 
-			ID3DXInclude* include = includeFile != nullptr ? includeFile->Shim : NULL;
+			IncludeShim includeShim = IncludeShim( includeFile );
+			ID3DXInclude* includePtr = NULL;
+			if( includeFile != nullptr )
+				includePtr = &includeShim;
+
 			array<GCHandle>^ handles;
 			D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
-			HRESULT hr = D3DXAssembleShaderFromFile( pinnedFileName, macros, include,
+			HRESULT hr = D3DXAssembleShaderFromFile( pinnedFileName, macros, includePtr,
 				(DWORD) flags, &shaderBuffer, &errorBuffer );
 
 			//clean up after marshaling macros
@@ -267,11 +259,15 @@ namespace SlimDX
 			array<Byte>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 			pin_ptr<Byte> pinnedProfile = &profileBytes[0];
 
-			ID3DXInclude* include = includeFile != nullptr ? includeFile->Shim : NULL;
+			IncludeShim includeShim = IncludeShim( includeFile );
+			ID3DXInclude* includePtr = NULL;
+			if( includeFile != nullptr )
+				includePtr = &includeShim;
+
 			array<GCHandle>^ handles;
 			D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
-			HRESULT hr = D3DXCompileShader( (char*) pinnedData, sourceData->Length, macros, include,
+			HRESULT hr = D3DXCompileShader( (char*) pinnedData, sourceData->Length, macros, includePtr,
 				(char*) pinnedFunction, (char*) pinnedProfile, (DWORD) flags,
 				&shaderBuffer, &errorBuffer, &constants );
 
@@ -311,11 +307,15 @@ namespace SlimDX
 			array<Byte>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 			pin_ptr<Byte> pinnedProfile = &profileBytes[0];
 
-			ID3DXInclude* include = includeFile != nullptr ? includeFile->Shim : NULL;
+			IncludeShim includeShim = IncludeShim( includeFile );
+			ID3DXInclude* includePtr = NULL;
+			if( includeFile != nullptr )
+				includePtr = &includeShim;
+
 			array<GCHandle>^ handles;
 			D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
-			HRESULT hr = D3DXCompileShader( (char*) pinnedData, sourceData->Length, macros, include,
+			HRESULT hr = D3DXCompileShader( (char*) pinnedData, sourceData->Length, macros, includePtr,
 				(char*) pinnedFunction, (char*) pinnedProfile, (DWORD) flags,
 				&shaderBuffer, &errorBuffer, NULL );
 
@@ -356,11 +356,15 @@ namespace SlimDX
 			array<Byte>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 			pin_ptr<Byte> pinnedProfile = &profileBytes[0];
 
-			ID3DXInclude* include = includeFile != nullptr ? includeFile->Shim : NULL;
+			IncludeShim includeShim = IncludeShim( includeFile );
+			ID3DXInclude* includePtr = NULL;
+			if( includeFile != nullptr )
+				includePtr = &includeShim;
+
 			array<GCHandle>^ handles;
 			D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
-			HRESULT hr = D3DXCompileShaderFromFile( pinnedFileName, macros, include,
+			HRESULT hr = D3DXCompileShaderFromFile( pinnedFileName, macros, includePtr,
 				(char*) pinnedFunction, (char*) pinnedProfile, (DWORD) flags,
 				&shaderBuffer, &errorBuffer, &constants );
 
@@ -392,11 +396,15 @@ namespace SlimDX
 			array<Byte>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 			pin_ptr<Byte> pinnedProfile = &profileBytes[0];
 
-			ID3DXInclude* include = includeFile != nullptr ? includeFile->Shim : NULL;
+			IncludeShim includeShim = IncludeShim( includeFile );
+			ID3DXInclude* includePtr = NULL;
+			if( includeFile != nullptr )
+				includePtr = &includeShim;
+
 			array<GCHandle>^ handles;
 			D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
-			HRESULT hr = D3DXCompileShaderFromFile( pinnedFileName, macros, include,
+			HRESULT hr = D3DXCompileShaderFromFile( pinnedFileName, macros, includePtr,
 				(char*) pinnedFunction, (char*) pinnedProfile, (DWORD) flags,
 				&shaderBuffer, &errorBuffer, NULL );
 

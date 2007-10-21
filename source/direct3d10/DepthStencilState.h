@@ -43,6 +43,7 @@ namespace SlimDX
 		
 		public:
 			~DepthStencilState() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			property bool DepthEnabled
 			{
