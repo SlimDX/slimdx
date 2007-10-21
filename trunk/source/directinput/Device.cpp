@@ -50,7 +50,7 @@ namespace DirectInput
 		IUnknown* unknown = (IUnknown*) device.ToPointer();
 		HRESULT hr = unknown->QueryInterface( IID_IDirectInputDevice8W, &pointer );
 		if( FAILED( hr ) )
-			throw gcnew InputException( "Failed to QueryInterface on user-supplied pointer." );
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
 		m_Pointer = (IDirectInputDevice8W*) pointer;
 	}

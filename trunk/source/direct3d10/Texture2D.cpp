@@ -59,7 +59,7 @@ namespace Direct3D10
 		IUnknown* unknown = (IUnknown*) texture.ToPointer();
 		HRESULT hr = unknown->QueryInterface( IID_ID3D10Texture2D, &pointer );
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException( "QueryInterface() on user pointer failed." );
+			throw gcnew InvalidCastException( "QueryInterface() on user pointer failed." );
 
 		m_Pointer = (ID3D10Resource*) pointer;
 		

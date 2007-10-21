@@ -38,6 +38,7 @@ namespace SlimDX
 			Line( IntPtr line );
 			Line( Device^ device );
 			~Line() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			void Begin();
 			void End();

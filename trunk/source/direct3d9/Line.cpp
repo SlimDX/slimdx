@@ -50,7 +50,7 @@ namespace Direct3D9
 		IUnknown* unknown = (IUnknown*) line.ToPointer();
 		HRESULT hr = unknown->QueryInterface( IID_ID3DXLine, &pointer );
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException( "Failed to QueryInterface on user-supplied pointer." );
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
 		m_Pointer = (ID3DXLine*) pointer;
 	}
