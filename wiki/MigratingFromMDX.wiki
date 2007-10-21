@@ -1,5 +1,7 @@
-#summary Notes to facilitate migration from MDX 1.1 and 2.0.
 #labels Featured
+= WARNING: This page is significantly out of sync with the actual differences between SlimDX and MDX. =
+
+#summary Notes to facilitate migration from MDX 1.1 and 2.0.
 = Introduction =
 This page is intended to be a repository of information regarding migration to the SlimDX API from Microsoft's MDX API. A similar page might eventually exist for MigratingFromXNA, if there is sufficient interest.
 
