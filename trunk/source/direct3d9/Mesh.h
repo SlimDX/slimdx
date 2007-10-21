@@ -150,6 +150,7 @@ namespace SlimDX
 			Mesh^ Clone( Device^ device, MeshFlags flags, array<VertexElement>^ elements );
 			Mesh^ Clone( Device^ device, MeshFlags flags, VertexFormat fvf );
 			virtual ~BaseMesh() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			Device^ GetDevice();
 			IndexBuffer^ GetIndexBuffer();

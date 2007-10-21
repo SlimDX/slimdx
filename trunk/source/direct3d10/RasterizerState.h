@@ -43,6 +43,7 @@ namespace SlimDX
 		
 		public:
 			~RasterizerState() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			property SlimDX::Direct3D10::FillMode FillMode
 			{

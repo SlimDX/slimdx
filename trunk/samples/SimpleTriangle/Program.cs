@@ -89,7 +89,7 @@ namespace SimpleTriangle
 		/// </summary>
 		public static void MainLoop()
 		{
-			Device.Clear( ClearFlags.Target | ClearFlags.ZBuffer | ClearFlags.Stencil, Color.Black, 1.0f, 0 );
+			Device.Clear( ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0 );
 			Device.BeginScene();
 
 			Device.SetStreamSource( 0, Vertices, 0, Vertex.SizeBytes );

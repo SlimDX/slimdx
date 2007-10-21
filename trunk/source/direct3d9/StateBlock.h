@@ -42,6 +42,7 @@ namespace SlimDX
 			StateBlock( IDirect3DStateBlock9* stateBlock );
 			StateBlock( Device^ device, StateBlockType type );
 			~StateBlock() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			void Apply();
 			void Capture();

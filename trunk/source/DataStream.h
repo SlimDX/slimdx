@@ -113,5 +113,10 @@ namespace SlimDX
 				Seek( value, SeekOrigin::Begin );
 			}
 		}
+
+		property IntPtr DataPointer
+		{
+			IntPtr get() { return IntPtr( m_Buffer ); }
+		}
 	};
 }

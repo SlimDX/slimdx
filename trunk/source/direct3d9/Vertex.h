@@ -98,6 +98,7 @@ namespace SlimDX
 		public:
 			VertexDeclaration( Device^ device, array<VertexElement>^ elements );
 			~VertexDeclaration() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			property array<VertexElement>^ Elements
 			{

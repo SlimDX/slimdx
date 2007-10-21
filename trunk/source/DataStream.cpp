@@ -199,10 +199,14 @@ namespace SlimDX
 		if( count < 0 || offset + count > buffer->Length )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 
-		pin_ptr<Byte> pinnedBuffer = &buffer[offset];
-		memcpy( pinnedBuffer, m_Buffer + m_Position, count );
+		int actualCount = count;
+		if( Length > 0 )
+			actualCount = min( (int) (Length - m_Position), count );
 
-		m_Position += count;
+		pin_ptr<Byte> pinnedBuffer = &buffer[offset];
+		memcpy( pinnedBuffer, m_Buffer + m_Position, actualCount );
+
+		m_Position += actualCount;
 		return count;
 	}
 		
@@ -215,7 +219,7 @@ namespace SlimDX
 		int elementSize = Marshal::SizeOf( T::typeid );
 		int actualCount = count;
 		if( Length > 0 )
-			min( (Length - m_Position) / elementSize, count );
+			actualCount = min( (int) (Length - m_Position) / elementSize, count );
 		array<T>^ result = gcnew array<T>( actualCount );
 
 		pin_ptr<T> pinnedBuffer = &result[0];

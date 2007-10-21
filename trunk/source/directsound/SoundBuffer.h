@@ -72,6 +72,7 @@ namespace SlimDX
 			SoundBuffer( IDirectSoundBuffer* buffer );
 			SoundBuffer( DirectSound^ dsound, BufferDescription desc );
 			~SoundBuffer();
+			DXOBJECT_FUNCTIONS;
 
 			void Initialize( DirectSound^ dsound, BufferDescription desc );
 			//void AcquireResources( 

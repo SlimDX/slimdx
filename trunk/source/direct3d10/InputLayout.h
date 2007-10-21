@@ -38,6 +38,7 @@ namespace SlimDX
 		public:
 			InputLayout( Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature );
 			~InputLayout() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 		};
 	}
 };

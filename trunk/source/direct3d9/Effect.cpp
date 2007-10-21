@@ -77,12 +77,16 @@ namespace SlimDX
 				skipString = (LPCSTR) pinnedSkip;
 			}
 
-			ID3DXInclude* include = includeFile != nullptr ? includeFile->Shim : NULL;
+			IncludeShim includeShim = IncludeShim( includeFile );
+			ID3DXInclude* includePtr = NULL;
+			if( includeFile != nullptr )
+				includePtr = &includeShim;
+
 			ID3DXEffectPool* effectPool = pool != nullptr ? pool->InternalPointer : NULL;
 			array<GCHandle>^ handles;
 			D3DXMACRO* macros = Macro::Marshal( preprocessorDefines, handles );
 
-			HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinnedData, memory->Length, macros, include,
+			HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinnedData, memory->Length, macros, includePtr,
 				skipString, (DWORD) flags, effectPool, &effect, &errorBuffer );
 			
 			//clean up after marshaling macros
@@ -157,12 +161,16 @@ namespace SlimDX
 				skipString = (LPCSTR) pinnedSkip;
 			}
 
-			ID3DXInclude* include = includeFile != nullptr ? includeFile->Shim : NULL;
+			IncludeShim includeShim = IncludeShim( includeFile );
+			ID3DXInclude* includePtr = NULL;
+			if( includeFile != nullptr )
+				includePtr = &includeShim;
+
 			ID3DXEffectPool* effectPool = pool != nullptr ? pool->InternalPointer : NULL;
 			array<GCHandle>^ handles;
 			D3DXMACRO* macros = Macro::Marshal( preprocessorDefines, handles );
 
-			HRESULT hr = D3DXCreateEffectFromFileEx( device->InternalPointer, pinnedName, macros, include,
+			HRESULT hr = D3DXCreateEffectFromFileEx( device->InternalPointer, pinnedName, macros, includePtr,
 				skipString, (DWORD) flags, effectPool, &effect, &errorBuffer );
 			
 			//clean up after marshaling macros

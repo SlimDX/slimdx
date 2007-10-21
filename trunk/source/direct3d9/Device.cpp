@@ -291,6 +291,12 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 	}
 
+	void Device::SetSamplerState( int sampler, SamplerState type, float value )
+	{
+		HRESULT hr = m_Pointer->SetSamplerState( sampler, (D3DSAMPLERSTATETYPE) type, *(int*) &value );
+		GraphicsException::CheckHResult( hr );
+	}
+
 	void Device::SetSamplerState( int sampler, SamplerState type, TextureAddress texAddr )
 	{
 		SetSamplerState( sampler, type, (int) texAddr );

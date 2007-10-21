@@ -54,6 +54,7 @@ namespace SlimDX
 			SwapChain( IDirect3DSwapChain9* swapChain );
 			SwapChain( Device^ device, PresentParameters^ presentParams );
 			~SwapChain() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			property SlimDX::Direct3D9::DisplayMode DisplayMode
 			{

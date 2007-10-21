@@ -49,6 +49,7 @@ namespace SlimDX
 		
 		public:
 			virtual ~Effect() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
 
 			property bool IsChildEffect
 			{

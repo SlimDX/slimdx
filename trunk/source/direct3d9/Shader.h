@@ -37,18 +37,8 @@ namespace SlimDX
 	{
 		class IncludeShim;
 
-		public ref class Include abstract
+		public interface struct Include
 		{
-		internal:
-			IncludeShim* Shim;
-
-		protected:
-			Include();
-
-		public:
-			~Include();
-			!Include();
-
 			virtual void Open() = 0;
 			virtual void Close() = 0;
 		};
