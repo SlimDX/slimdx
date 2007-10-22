@@ -98,7 +98,7 @@ namespace SlimDX
 		};
 
 		[Flags]
-		public enum class Speaker : Int32
+		public enum class Speakers : Int32
 		{
 			FrontLeft = SPEAKER_FRONT_LEFT,
 			FrontRight = SPEAKER_FRONT_RIGHT,

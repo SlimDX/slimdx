@@ -81,7 +81,7 @@ namespace SlimDX
 			short Reserved;
 
 			[FieldOffset( 20 )]
-			Speaker ChannelMask;
+			Speakers ChannelMask;
 
 			[FieldOffset( 24 )]
 			Guid SubFormat;

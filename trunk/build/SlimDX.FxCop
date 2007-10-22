@@ -3267,7 +3267,7 @@
              <Item>ResourcePriority</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue Name="NotIntegral">
              <Item>SlimDX.Direct3D10.ResourcePriority</Item>
              <Item>System.UInt32</Item>
@@ -3301,7 +3301,7 @@
          </Type>
          <Type Name="ShaderFlags">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
             <Issue Name="FlagsMultipleZeros">
              <Item>SlimDX.Direct3D10.ShaderFlags</Item>
             </Issue>
@@ -3519,6 +3519,51 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="AnimationController">
+          <Members>
+           <Member Name="AdvanceTime(System.Double,SlimDX.Direct3D9.AnimationCallback):System.Void">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-22 22:46:50Z">
+              <Issue>
+               <Item>AnimationController.AdvanceTime(Double, AnimationCallback):Void</Item>
+               <Item>Marshal.GetFunctionPointerForDelegate(Delegate):IntPtr</Item>
+               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(System.Delegate) : IntPtr&#xD;&#xA;-&gt;SlimDX.Direct3D9.AnimationController.AdvanceTime(System.Double,SlimDX.Direct3D9.AnimationCallback) : Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="AnimationOutputFlags">
+          <Messages>
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-22 22:46:50Z">
+            <Issue>
+             <Item>SlimDX.Direct3D9.AnimationOutputFlags</Item>
+             <Item>Flags</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="AnimationSet">
+          <Members>
+           <Member Name="GetCallback(System.Double,SlimDX.Direct3D9.CallbackSearchFlags,System.Double&amp;):SlimDX.Direct3D9.AnimationCallback">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-22 22:46:50Z">
+              <Issue>
+               <Item>AnimationSet.GetCallback(Double, CallbackSearchFlags, Double&amp;):AnimationCallback</Item>
+               <Item>Marshal.GetFunctionPointerForDelegate(Delegate):IntPtr</Item>
+               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(System.Delegate) : IntPtr&#xD;&#xA;-&gt;SlimDX.Direct3D9.AnimationSet.GetCallback(System.Double,SlimDX.Direct3D9.CallbackSearchFlags,System.Double@) : AnimationCallback</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-22 22:46:50Z">
+              <Issue>
+               <Item>callbackPosition</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="AttributeRange">
           <Messages>
            <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
@@ -3653,6 +3698,26 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="CallbackSearchFlags">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-22 22:46:50Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
+             <Item>CallbackSearchFlags</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-22 22:46:50Z">
+            <Issue>
+             <Item>SlimDX.Direct3D9.CallbackSearchFlags</Item>
+             <Item>Flags</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Excluded" Created="2007-10-22 22:46:50Z">
+            <Issue>
+             <Item>CallbackSearchFlags</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="Capabilities">
           <Messages>
            <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
@@ -3678,7 +3743,7 @@
          </Type>
          <Type Name="Caps2">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>Caps2</Item>
             </Issue>
@@ -3687,7 +3752,7 @@
          </Type>
          <Type Name="Caps3">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>Caps3</Item>
             </Issue>
@@ -3719,7 +3784,7 @@
          </Type>
          <Type Name="ColorWriteEnable">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>ColorWriteEnable</Item>
             </Issue>
@@ -3867,7 +3932,7 @@
          </Type>
          <Type Name="DeclarationMethod">
           <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-01 21:43:03Z">
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2007-10-01 21:43:03Z">
             <Issue Name="NotInt32">
              <Item>SlimDX.Direct3D9.DeclarationMethod</Item>
              <Item>System.Byte</Item>
@@ -3877,7 +3942,7 @@
          </Type>
          <Type Name="DeclarationType">
           <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-01 21:43:03Z">
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2007-10-01 21:43:03Z">
             <Issue Name="NotInt32">
              <Item>SlimDX.Direct3D9.DeclarationType</Item>
              <Item>System.Byte</Item>
@@ -3887,7 +3952,7 @@
          </Type>
          <Type Name="DeclarationUsage">
           <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-01 21:43:03Z">
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2007-10-01 21:43:03Z">
             <Issue Name="NotInt32">
              <Item>SlimDX.Direct3D9.DeclarationUsage</Item>
              <Item>System.Byte</Item>
@@ -3941,7 +4006,7 @@
          </Type>
          <Type Name="DevCaps2">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>DevCaps2</Item>
             </Issue>
@@ -4353,12 +4418,12 @@
          </Type>
          <Type Name="DrawTextFormat">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
             <Issue Name="FlagsMultipleZeros">
              <Item>SlimDX.Direct3D9.DrawTextFormat</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>DrawTextFormat</Item>
             </Issue>
@@ -4637,6 +4702,18 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="EventDescription">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-22 22:46:50Z">
+            <Issue Name="Equals">
+             <Item>SlimDX.Direct3D9.EventDescription</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>SlimDX.Direct3D9.EventDescription</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="ExtendedMaterial">
           <Messages>
            <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
@@ -4666,7 +4743,7 @@
              <Item>0x8, 0x10, 0x20, 0x40, 0x80, 0x100, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000, 0x100000, 0x800000, 0x1000000, 0x2000000, 0x4000000, 0x8000000, 0x10000000, 0x20000000, 0x40000000, 0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>Filter</Item>
             </Issue>
@@ -4838,7 +4915,7 @@
          </Type>
          <Type Name="FX">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>FX</Item>
             </Issue>
@@ -4908,7 +4985,7 @@
          </Type>
          <Type Name="Issue">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>Issue</Item>
             </Issue>
@@ -5478,12 +5555,12 @@
          </Type>
          <Type Name="PitchAndFamily">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
             <Issue Name="FlagsMultipleZeros">
              <Item>SlimDX.Direct3D9.PitchAndFamily</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>PitchAndFamily</Item>
             </Issue>
@@ -5525,7 +5602,7 @@
          </Type>
          <Type Name="Present">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>Present</Item>
             </Issue>
@@ -5550,13 +5627,13 @@
              <Item>0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
             <Issue Name="FlagsRename">
              <Item>SlimDX.Direct3D9.PresentInterval</Item>
              <Item>PresentInterval.Default</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>PresentInterval</Item>
             </Issue>
@@ -5861,7 +5938,7 @@
          </Type>
          <Type Name="ShaderFlags">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
             <Issue Name="FlagsMultipleZeros">
              <Item>SlimDX.Direct3D9.ShaderFlags</Item>
             </Issue>
@@ -6109,13 +6186,13 @@
          </Type>
          <Type Name="TextureCoordIndex">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
             <Issue Name="FlagsRename">
              <Item>SlimDX.Direct3D9.TextureCoordIndex</Item>
              <Item>TextureCoordIndex.PassThru</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>TextureCoordIndex</Item>
             </Issue>
@@ -6161,6 +6238,18 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="TrackDescription">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-22 22:46:50Z">
+            <Issue Name="Equals">
+             <Item>SlimDX.Direct3D9.TrackDescription</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>SlimDX.Direct3D9.TrackDescription</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="TransformState">
           <Messages>
            <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
@@ -6184,7 +6273,7 @@
          </Type>
          <Type Name="Usage">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>Usage</Item>
             </Issue>
@@ -6249,12 +6338,12 @@
              <Item>0x4000</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
             <Issue Name="FlagsMultipleZeros">
              <Item>SlimDX.Direct3D9.VertexFormat</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>VertexFormat</Item>
             </Issue>
@@ -6427,7 +6516,7 @@
          </Type>
          <Type Name="CooperativeLevel">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>CooperativeLevel</Item>
             </Issue>
@@ -6781,7 +6870,7 @@
          </Type>
          <Type Name="ObjectDeviceType">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>ObjectDeviceType</Item>
             </Issue>
@@ -7033,12 +7122,6 @@
              <Item>WaveFormat</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-01 21:38:08Z">
-            <Issue Name="NotInt32">
-             <Item>SlimDX.DirectSound.WaveFormat</Item>
-             <Item>System.Int16</Item>
-            </Issue>
-           </Message>
           </Messages>
          </Type>
         </Types>
@@ -7107,26 +7190,21 @@
            </Message>
           </Messages>
          </Type>
-         <Type Name="Speaker">
+         <Type Name="Speakers">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2007-10-22 22:58:02Z">
             <Issue>
-             <Item>SlimDX.XAudio2.Speaker</Item>
+             <Item>SlimDX.XAudio2.Speakers</Item>
              <Item>0x40000, 0x80000, 0x100000, 0x200000, 0x400000, 0x800000, 0x1000000, 0x2000000, 0x4000000, 0x8000000, 0x10000000, 0x20000000, 0x40000000, 0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2007-10-01 21:38:08Z">
-            <Issue>
-             <Item>Speaker</Item>
             </Issue>
            </Message>
           </Messages>
           <Members>
            <Member Name="Reserved">
             <Messages>
-             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Created="2007-10-22 22:58:02Z">
               <Issue>
-               <Item>Speaker.Reserved</Item>
+               <Item>Speakers.Reserved</Item>
               </Issue>
              </Message>
             </Messages>
@@ -7693,6 +7771,9 @@
    </Rule>
    <Rule TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223">
     <Resolution Name="Default">'{0}' should differ from other members by more than its return type.</Resolution>
+   </Rule>
+   <Rule TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717">
+    <Resolution Name="Default">If the name '{0}' is plural, change it to its singular form.</Resolution>
    </Rule>
    <Rule TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233">
     <Resolution Name="Default">Correct the potential overflow in the operation '{0}' in '{1}'.</Resolution>

@@ -114,8 +114,8 @@ namespace SlimDX
 		};
 
 		//warning C4369: 'Extensible' : enumerator value '65534' cannot be represented as 'short', value is '-2'
-#pragma warning(disable: 4369)
-		public enum class WaveFormat : Int16
+//#pragma warning(disable: 4369)
+		public enum class WaveFormat : Int32
 		{
 			Pcm = WAVE_FORMAT_PCM,
 			AdPcm = WAVE_FORMAT_ADPCM,
@@ -124,6 +124,6 @@ namespace SlimDX
 			DolbyAC3Spdif = WAVE_FORMAT_DOLBY_AC3_SPDIF,
 			Extensible = WAVE_FORMAT_EXTENSIBLE,
 		};
-#pragma warning(default: 4369)
+//#pragma warning(default: 4369)
 	}
 }
