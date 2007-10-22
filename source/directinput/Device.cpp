@@ -59,7 +59,7 @@ namespace DirectInput
 	Device<DataFormat>::Device( Guid subsystem )
 	{
 		IDirectInputDevice8W* device;
-		HRESULT hr = DirectInput::InternalPointer->CreateDevice( *(GUID*) &subsystem, &device, NULL );
+		HRESULT hr = DirectInput::InternalPointer->CreateDevice( SystemGuid::ToGUID( subsystem ), &device, NULL );
 		InputException::CheckHResult( hr );
 
 		m_Pointer = device;
@@ -464,12 +464,6 @@ namespace DirectInput
 		InputException::CheckHResult( hr );
 
 		return gcnew DeviceInstance( deviceInstance );
-	}
-
-	generic<typename DataFormat>
-	IntPtr Device<DataFormat>::NativePointer::get()
-	{
-		return IntPtr(m_Pointer);
 	}
 }
 }
