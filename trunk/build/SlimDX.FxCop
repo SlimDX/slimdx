@@ -214,15 +214,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="ErrorCode">
-          <Messages>
-           <Message TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053" Created="2007-10-20 01:01:41Z">
-            <Issue>
-             <Item>ErrorCode</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="Matrix">
           <Messages>
            <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
@@ -4894,6 +4885,15 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="Include">
+          <Messages>
+           <Message TypeName="IdentifiersShouldHaveCorrectPrefix" Category="Microsoft.Naming" CheckId="CA1715" Status="Excluded" Created="2007-10-22 00:39:08Z">
+            <Issue>
+             <Item>Include</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="InterfaceTimings">
           <Messages>
            <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
@@ -7670,6 +7670,9 @@
    <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
     <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter '{1}' in any call to it.</Resolution>
    </Rule>
+   <Rule TypeName="IdentifiersShouldHaveCorrectPrefix" Category="Microsoft.Naming" CheckId="CA1715">
+    <Resolution Name="Default">Prefix interface name '{0}' with 'I'.</Resolution>
+   </Rule>
    <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
     <Resolution Name="Member">Remove all underscores from member '{0}'.</Resolution>
    </Rule>
@@ -7725,9 +7728,6 @@
    </Rule>
    <Rule TypeName="ShortAcronymsShouldBeUppercase" Category="Microsoft.Naming" CheckId="CA1706">
     <Resolution Name="Member">Correct the capitalization of '{0}' in member name '{1}'.</Resolution>
-   </Rule>
-   <Rule TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053">
-    <Resolution Name="Default">Remove the public constructors from '{0}'.</Resolution>
    </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name '{0}' conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>

@@ -147,11 +147,6 @@ namespace SlimDX
 			property DeviceInstance^ DeviceInformation { DeviceInstance^ get(); }
 
 			/// <summary>
-			/// Gets a pointer to the native DirectInput interface.
-			/// </summary>
-			property IntPtr NativePointer { IntPtr get(); }
-
-			/// <summary>
 			/// Occurs when the device's data buffer overflows.
 			/// </summary>
 			event EventHandler^ BufferOverflow;
