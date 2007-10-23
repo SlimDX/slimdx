@@ -272,7 +272,7 @@ namespace Direct3D9
 		LockedRect outRect;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 
-		outRect.Data = gcnew DataStream( lockedRect.pBits, 0, true, !readOnly );
+		outRect.Data = gcnew DataStream( lockedRect.pBits, 0, true, !readOnly, false );
 		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}
@@ -289,7 +289,7 @@ namespace Direct3D9
 		LockedRect outRect;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 
-		outRect.Data = gcnew DataStream( lockedRect.pBits, 0, true, !readOnly );
+		outRect.Data = gcnew DataStream( lockedRect.pBits, 0, true, !readOnly, false );
 		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}
@@ -507,7 +507,7 @@ namespace Direct3D9
 
 		LockedRect outRect;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		outRect.Data = gcnew DataStream( lockedRect.pBits, 0, true, !readOnly );
+		outRect.Data = gcnew DataStream( lockedRect.pBits, 0, true, !readOnly, false );
 		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}
@@ -523,7 +523,7 @@ namespace Direct3D9
 		LockedRect outRect;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 
-		outRect.Data = gcnew DataStream( lockedRect.pBits, 0, true, !readOnly );
+		outRect.Data = gcnew DataStream( lockedRect.pBits, 0, true, !readOnly, false );
 		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}
@@ -704,7 +704,7 @@ namespace Direct3D9
 
 		LockedBox outBox;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		outBox.Data = gcnew DataStream( lockedBox.pBits, 0, true, !readOnly );
+		outBox.Data = gcnew DataStream( lockedBox.pBits, 0, true, !readOnly, false );
 		outBox.RowPitch = lockedBox.RowPitch;
 		outBox.SlicePitch = lockedBox.SlicePitch;
 		return outBox;
@@ -720,7 +720,7 @@ namespace Direct3D9
 
 		LockedBox outBox;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		outBox.Data = gcnew DataStream( lockedBox.pBits, 0, true, !readOnly );
+		outBox.Data = gcnew DataStream( lockedBox.pBits, 0, true, !readOnly, false );
 		outBox.RowPitch = lockedBox.RowPitch;
 		outBox.SlicePitch = lockedBox.SlicePitch;
 		return outBox;

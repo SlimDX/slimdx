@@ -66,7 +66,7 @@ namespace Direct3D10
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = mode == MapMode::Read;
-		DataStream^ stream = gcnew DataStream( mappedPtr, SizeInBytes, true, !readOnly );
+		DataStream^ stream = gcnew DataStream( mappedPtr, SizeInBytes, true, !readOnly, false );
 		return stream;
 	}
 

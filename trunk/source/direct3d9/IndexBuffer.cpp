@@ -70,7 +70,7 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		DataStream^ stream = gcnew DataStream( lockedPtr, 0, true, !readOnly );
+		DataStream^ stream = gcnew DataStream( lockedPtr, 0, true, !readOnly, false );
 		return stream;
 	}
 

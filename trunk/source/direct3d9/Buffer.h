@@ -52,7 +52,7 @@ namespace SlimDX
 
 			DataStream^ GetData()
 			{
-				return gcnew DataStream( m_Pointer->GetBufferPointer(), m_Pointer->GetBufferSize(), true, true );
+				return gcnew DataStream( m_Pointer->GetBufferPointer(), m_Pointer->GetBufferSize(), true, true, false );
 			}
 
 			virtual String^ ToString() override

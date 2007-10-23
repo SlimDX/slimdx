@@ -105,7 +105,7 @@ namespace Direct3D9
 		int lockedSize = size == 0 ? SizeInBytes : size;
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		DataStream^ stream = gcnew DataStream( lockedPtr, lockedSize, true, !readOnly );
+		DataStream^ stream = gcnew DataStream( lockedPtr, lockedSize, true, !readOnly, false );
 		return stream;
 	}
 

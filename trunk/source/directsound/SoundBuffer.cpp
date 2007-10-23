@@ -145,10 +145,10 @@ namespace DirectSound
 		if( FAILED( hr ) )
 			return nullptr;
 
-		DataStream^ stream1 = gcnew DataStream( buffer1, size1, true, true );
+		DataStream^ stream1 = gcnew DataStream( buffer1, size1, true, true, false );
 		if( buffer2 != NULL )
 		{
-			secondPart = gcnew DataStream( buffer2, size2, true, true );
+			secondPart = gcnew DataStream( buffer2, size2, true, true, false );
 		}
 
 		return stream1;
