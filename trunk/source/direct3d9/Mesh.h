@@ -98,7 +98,7 @@ namespace SlimDX
 		public value class ExtendedMaterial
 		{
 		internal:
-			static array<ExtendedMaterial>^ FromBuffer( ID3DXBuffer* buffer );
+			static array<ExtendedMaterial>^ FromBuffer( ID3DXBuffer* buffer, unsigned int count );
 
 		public:
 			property Material MaterialD3D;
@@ -116,7 +116,7 @@ namespace SlimDX
 		public value class EffectInstance
 		{
 		internal:
-			static array<EffectInstance>^ FromBuffer( ID3DXBuffer* buffer );
+			static array<EffectInstance>^ FromBuffer( ID3DXBuffer* buffer, unsigned int count );
 
 		public:
 			property String^ EffectFilename;

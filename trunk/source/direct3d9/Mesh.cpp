@@ -51,13 +51,12 @@ namespace Direct3D9
 	}
 
 
-	array<ExtendedMaterial>^ ExtendedMaterial::FromBuffer( ID3DXBuffer* buffer )
+	array<ExtendedMaterial>^ ExtendedMaterial::FromBuffer( ID3DXBuffer* buffer, unsigned int count )
 	{
 		const D3DXMATERIAL* source  = (const D3DXMATERIAL*) buffer->GetBufferPointer();
-		int count = buffer->GetBufferSize() / sizeof(D3DXMATERIAL);
 
 		array<ExtendedMaterial>^ dest = gcnew array<ExtendedMaterial>( count );
-		for( int i = 0; i < count; ++i )
+		for( unsigned int i = 0; i < count; ++i )
 		{
 			dest[i].MaterialD3D.Diffuse = ConvertColor( source[i].MatD3D.Diffuse );
 			dest[i].MaterialD3D.Ambient = ConvertColor( source[i].MatD3D.Ambient );
@@ -70,13 +69,12 @@ namespace Direct3D9
 		return dest;
 	}
 
-	array<EffectInstance>^ EffectInstance::FromBuffer( ID3DXBuffer* buffer )
+	array<EffectInstance>^ EffectInstance::FromBuffer( ID3DXBuffer* buffer, unsigned int count )
 	{
 		const D3DXEFFECTINSTANCE* source  = (const D3DXEFFECTINSTANCE*) buffer->GetBufferPointer();
-		int count = buffer->GetBufferSize() / sizeof(D3DXEFFECTINSTANCE);
 
 		array<EffectInstance>^ dest = gcnew array<EffectInstance>( count );
-		for( int i = 0; i < count; ++i )
+		for( unsigned int i = 0; i < count; ++i )
 		{
 			dest[i].EffectFilename = gcnew String( source[i].pEffectFilename );
 			dest[i].Defaults = gcnew array<EffectDefault>( source[i].NumDefaults );
@@ -360,8 +358,12 @@ namespace Direct3D9
 		}
 
 		adjacency = gcnew BufferWrapper( adjacencyBuffer );
-		materials = ExtendedMaterial::FromBuffer( materialBuffer );
-		effectInstances = EffectInstance::FromBuffer( instanceBuffer );
+		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
+
+		//figure out how many effect instances there are, and get them out of the buffer
+		DWORD instanceCount = 0;
+		hr = mesh->GetAttributeTable( NULL, &instanceCount );
+		effectInstances = EffectInstance::FromBuffer( instanceBuffer, instanceCount );
 
 		materialBuffer->Release();
 		instanceBuffer->Release();
@@ -388,8 +390,11 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		materials = ExtendedMaterial::FromBuffer( materialBuffer );
-		effectInstances = EffectInstance::FromBuffer( instanceBuffer );
+		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
+
+		DWORD instanceCount = 0;
+		hr = mesh->GetAttributeTable( NULL, &instanceCount );
+		effectInstances = EffectInstance::FromBuffer( instanceBuffer, instanceCount );
 
 		materialBuffer->Release();
 		instanceBuffer->Release();
@@ -413,7 +418,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		materials = ExtendedMaterial::FromBuffer( materialBuffer );
+		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
 		materialBuffer->Release();
 
 		return gcnew Mesh( mesh );
@@ -479,8 +484,11 @@ namespace Direct3D9
 		}
 
 		adjacency = gcnew BufferWrapper( adjacencyBuffer );
-		materials = ExtendedMaterial::FromBuffer( materialBuffer );
-		effectInstances = EffectInstance::FromBuffer( instanceBuffer );
+		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
+
+		DWORD instanceCount = 0;
+		hr = mesh->GetAttributeTable( NULL, &instanceCount );
+		effectInstances = EffectInstance::FromBuffer( instanceBuffer, instanceCount );
 
 		materialBuffer->Release();
 		instanceBuffer->Release();
@@ -507,8 +515,11 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		materials = ExtendedMaterial::FromBuffer( materialBuffer );
-		effectInstances = EffectInstance::FromBuffer( instanceBuffer );
+		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
+
+		DWORD instanceCount = 0;
+		hr = mesh->GetAttributeTable( NULL, &instanceCount );
+		effectInstances = EffectInstance::FromBuffer( instanceBuffer, instanceCount );
 
 		materialBuffer->Release();
 		instanceBuffer->Release();
@@ -527,7 +538,7 @@ namespace Direct3D9
 			NULL, &materialBuffer, NULL, &materialCount, &mesh );
 		GraphicsException::CheckHResult( hr );
 
-		materials = ExtendedMaterial::FromBuffer( materialBuffer );
+		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
 		materialBuffer->Release();
 
 		return gcnew Mesh( mesh );
