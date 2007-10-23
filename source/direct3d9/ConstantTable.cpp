@@ -177,7 +177,7 @@ namespace Direct3D9
 		if( pointer == NULL )
 			return nullptr;
 
-		return gcnew DataStream( pointer, size, true, true );
+		return gcnew DataStream( pointer, size, true, true, false );
 	}
 
 	void ConstantTable::SetDefaults()

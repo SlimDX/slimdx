@@ -57,7 +57,7 @@ namespace DirectSound
 		m_Format = format;
 		if( m_Format->cbSize > 0 )
 		{
-			m_ExtraData = gcnew DataStream( ((char*) m_Format) + sizeof(WAVEFORMATEX), m_Format->cbSize, true, true );
+			m_ExtraData = gcnew DataStream( ((char*) m_Format) + sizeof(WAVEFORMATEX), m_Format->cbSize, true, true, false );
 		}
 	}
 
@@ -85,7 +85,7 @@ namespace DirectSound
 		{
 			//set up the data stream to the extra data
 			int offset = sizeof(WAVEFORMATEX) + extraSize;
-			m_ExtraData = gcnew DataStream( data + offset, extraDataBytes, true, true );
+			m_ExtraData = gcnew DataStream( data + offset, extraDataBytes, true, true, false );
 		}
 
 		m_Format->cbSize = extraSize + extraDataBytes;
@@ -124,7 +124,7 @@ namespace DirectSound
 
 		if( Format->cbSize > 22 )
 		{
-			ExtraData = gcnew DataStream( ((char*) Format) + sizeof(WAVEFORMATEXTENSIBLE), Format->cbSize - 22, true, true );
+			ExtraData = gcnew DataStream( ((char*) Format) + sizeof(WAVEFORMATEXTENSIBLE), Format->cbSize - 22, true, true, false );
 		}
 	};
 

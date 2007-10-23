@@ -60,7 +60,7 @@ namespace Direct3D9
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		LockedBox outBox;
-		outBox.Data = gcnew DataStream( lockedBox.pBits, 0, true, !readOnly );
+		outBox.Data = gcnew DataStream( lockedBox.pBits, 0, true, !readOnly, false );
 		outBox.RowPitch = lockedBox.RowPitch;
 		outBox.SlicePitch = lockedBox.SlicePitch;
 		return outBox;
@@ -75,7 +75,7 @@ namespace Direct3D9
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		LockedBox outBox;
-		outBox.Data = gcnew DataStream( lockedBox.pBits, 0, true, !readOnly );
+		outBox.Data = gcnew DataStream( lockedBox.pBits, 0, true, !readOnly, false );
 		outBox.RowPitch = lockedBox.RowPitch;
 		outBox.SlicePitch = lockedBox.SlicePitch;
 		return outBox;

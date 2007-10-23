@@ -84,7 +84,7 @@ namespace Direct3D9
 			{
 				dest[i].Defaults[x].ParameterName = gcnew String( source[i].pDefaults[x].pParamName );
 				dest[i].Defaults[x].Type = (EffectDefaultType) source[i].pDefaults[x].Type;
-				dest[i].Defaults[x].Value = gcnew DataStream( source[i].pDefaults[x].pValue, source[i].pDefaults[x].NumBytes, true, false );
+				dest[i].Defaults[x].Value = gcnew DataStream( source[i].pDefaults[x].pValue, source[i].pDefaults[x].NumBytes, true, false, true );
 			}
 		}
 
@@ -204,7 +204,7 @@ namespace Direct3D9
 			size *= 2;
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		return gcnew DataStream( data, size, true, !readOnly );
+		return gcnew DataStream( data, size, true, !readOnly, false );
 	}
 
 	void BaseMesh::UnlockIndexBuffer()
@@ -225,7 +225,7 @@ namespace Direct3D9
 		int size = BytesPerVertex * VertexCount;
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		return gcnew DataStream( data, size, true, !readOnly );
+		return gcnew DataStream( data, size, true, !readOnly, false );
 	}
 
 	void BaseMesh::UnlockVertexBuffer()

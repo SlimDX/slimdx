@@ -29,13 +29,23 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	DataStream::DataStream( void* buffer, Int64 sizeInBytes, bool canRead, bool canWrite )
+	DataStream::DataStream( void* buffer, Int64 sizeInBytes, bool canRead, bool canWrite, bool makeCopy )
 	{
-		m_Buffer = (char*) buffer;
+		if( makeCopy )
+		{
+			m_Buffer = new char[(size_t) sizeInBytes];
+			memcpy( m_Buffer, buffer, (size_t) sizeInBytes );
+		}
+		else
+		{
+			m_Buffer = (char*) buffer;
+		}
+
 		m_Size = sizeInBytes;
 		
 		m_CanRead = canRead;
 		m_CanWrite = canWrite;
+		m_OwnsBuffer = makeCopy;
 	}
 	
 	DataStream::DataStream( Int64 sizeInBytes, bool canRead, bool canWrite )

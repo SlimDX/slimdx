@@ -38,7 +38,7 @@ namespace SlimDX
 		initonly bool m_CanWrite;
 
 	internal:
-		DataStream( void* buffer, Int64 sizeInBytes, bool canRead, bool canWrite );
+		DataStream( void* buffer, Int64 sizeInBytes, bool canRead, bool canWrite, bool makeCopy );
 
 		property char* RawPointer
 		{

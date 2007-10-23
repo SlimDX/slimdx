@@ -123,7 +123,7 @@ namespace Direct3D10
 		bool readOnly = mode == MapMode::Read;
 		SlimDX::Direct3D::LockedRect rect;
 		rect.Pitch = mappedRect.RowPitch;
-		rect.Data = gcnew DataStream( mappedRect.pData, 0, true, !readOnly );
+		rect.Data = gcnew DataStream( mappedRect.pData, 0, true, !readOnly, false );
 		
 		return rect;
 	}
