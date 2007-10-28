@@ -695,6 +695,10 @@
 					RelativePath="..\source\direct3d10\Texture2D.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d10\Texture3D.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="XAudio2"
@@ -1271,6 +1275,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Texture2D.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Texture3D.h"
 					>
 				</File>
 				<File
