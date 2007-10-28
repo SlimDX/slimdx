@@ -692,6 +692,10 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\Texture1D.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\Texture2D.cpp"
 					>
 				</File>
@@ -1271,6 +1275,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\SwapChainDescription.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Texture1D.h"
 					>
 				</File>
 				<File
