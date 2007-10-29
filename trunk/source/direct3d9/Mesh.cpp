@@ -58,11 +58,13 @@ namespace Direct3D9
 		array<ExtendedMaterial>^ dest = gcnew array<ExtendedMaterial>( count );
 		for( unsigned int i = 0; i < count; ++i )
 		{
-			dest[i].MaterialD3D.Diffuse = ConvertColor( source[i].MatD3D.Diffuse );
-			dest[i].MaterialD3D.Ambient = ConvertColor( source[i].MatD3D.Ambient );
-			dest[i].MaterialD3D.Specular = ConvertColor( source[i].MatD3D.Specular );
-			dest[i].MaterialD3D.Emissive = ConvertColor( source[i].MatD3D.Emissive );
-			dest[i].MaterialD3D.Power = source[i].MatD3D.Power;
+			Material m;
+			m.Diffuse = ConvertColor( source[i].MatD3D.Diffuse );
+			m.Ambient = ConvertColor( source[i].MatD3D.Ambient );
+			m.Specular = ConvertColor( source[i].MatD3D.Specular );
+			m.Emissive = ConvertColor( source[i].MatD3D.Emissive );
+			m.Power = source[i].MatD3D.Power;
+			dest[i].MaterialD3D = m;
 			dest[i].TextureFilename = gcnew String( source[i].pTextureFilename );
 		}
 
@@ -162,10 +164,13 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			return nullptr;
 
-		int count = D3DXGetDeclLength( elementBuffer );
+		//Apparently the returned decl does not include an End element. This is bizarre and confusing,
+		//not to mention completely unexpected. We patch it up here.
+		int count = D3DXGetDeclLength( elementBuffer ) + 1;
 		array<VertexElement>^ elements = gcnew array<VertexElement>( count );
 		pin_ptr<VertexElement> pinnedElements = &elements[0];
 		memcpy( pinnedElements, elementBuffer, count * sizeof(D3DVERTEXELEMENT9) );
+		elements[count - 1] = VertexElement::VertexDeclarationEnd;
 
 		return elements;
 	}
