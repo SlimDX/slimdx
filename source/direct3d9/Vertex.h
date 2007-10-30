@@ -95,7 +95,11 @@ namespace SlimDX
 
 		public ref class VertexDeclaration : public DirectXObject<IDirect3DVertexDeclaration9>
 		{
+		internal:
+			VertexDeclaration( IDirect3DVertexDeclaration9* decl );
+
 		public:
+			VertexDeclaration( IntPtr decl );
 			VertexDeclaration( Device^ device, array<VertexElement>^ elements );
 			~VertexDeclaration() { Destruct(); }
 			DXOBJECT_FUNCTIONS;

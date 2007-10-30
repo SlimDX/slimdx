@@ -30,6 +30,26 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	VertexDeclaration::VertexDeclaration( IDirect3DVertexDeclaration9* decl ) : DirectXObject( decl )
+	{
+		if( decl == NULL )
+			throw gcnew ArgumentNullException( "decl" );
+	}
+
+	VertexDeclaration::VertexDeclaration( IntPtr decl )
+	{
+		if( decl == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "decl" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) decl.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_IDirect3DVertexDeclaration9, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = (IDirect3DVertexDeclaration9*) pointer;
+	}
+
 	VertexDeclaration::VertexDeclaration( Device^ device, array<VertexElement>^ elements )
 	{
 		if( elements == nullptr )
