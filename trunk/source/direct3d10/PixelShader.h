@@ -35,6 +35,21 @@ namespace SlimDX
 			PixelShader(ID3D10PixelShader *shader) : DirectXObject( shader ) { }
 			
 		public:
+			PixelShader( IntPtr shader )
+			{
+				if( shader == IntPtr::Zero )
+					throw gcnew ArgumentNullException( "shader" );
+
+				void* pointer;
+				IUnknown* unknown = (IUnknown*) shader.ToPointer();
+				HRESULT hr = unknown->QueryInterface( IID_ID3D10PixelShader, &pointer );
+				if( FAILED( hr ) )
+					throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+				m_Pointer = (ID3D10PixelShader*) pointer;
+
+			}
+
 			virtual ~PixelShader() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 		};
