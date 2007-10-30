@@ -489,6 +489,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d9\MatrixStack.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\Mesh.cpp"
 					>
 				</File>
@@ -1159,6 +1163,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Line.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\MatrixStack.h"
 					>
 				</File>
 				<File
