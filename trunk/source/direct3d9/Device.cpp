@@ -92,10 +92,6 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "device" );
 		
 		device->AddRef();
-
-		driverLevel = GetDriverLevel();
-		vertexShaderProfile = GetVertexShaderProfile();
-		pixelShaderProfile = GetPixelShaderProfile();
 	}
 
 	Device::Device( IntPtr device )
@@ -110,10 +106,6 @@ namespace Direct3D9
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
 		m_Pointer = (IDirect3DDevice9*) pointer;
-
-		driverLevel = GetDriverLevel();
-		vertexShaderProfile = GetVertexShaderProfile();
-		pixelShaderProfile = GetPixelShaderProfile();
 	}
 
 	Device::Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams )
@@ -127,23 +119,25 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 
 		m_Pointer = device;
-
-		driverLevel = GetDriverLevel();
-		vertexShaderProfile = GetVertexShaderProfile();
-		pixelShaderProfile = GetPixelShaderProfile();
 	}
 
 	void Device::VertexFormat::set( SlimDX::Direct3D9::VertexFormat value )
 	{
-		m_VertexFormat = value;
 		HRESULT hr = m_Pointer->SetFVF( (DWORD) value );
 		GraphicsException::CheckHResult( hr );
 	}
 
+	SlimDX::Direct3D9::VertexFormat Device::VertexFormat::get()
+	{
+		DWORD fvf = 0;
+		HRESULT hr = m_Pointer->GetFVF( &fvf );
+		GraphicsException::CheckHResult( hr );
+
+		return (SlimDX::Direct3D9::VertexFormat) fvf;
+	}
+	
 	void Device::VertexDeclaration::set( SlimDX::Direct3D9::VertexDeclaration^ value )
 	{
-		m_VertexDecl = value;
-
 		HRESULT hr;
 		if( value != nullptr )
 			hr = m_Pointer->SetVertexDeclaration( value->InternalPointer );
@@ -151,6 +145,17 @@ namespace Direct3D9
 			hr = m_Pointer->SetVertexDeclaration( NULL );
 
 		GraphicsException::CheckHResult( hr );
+	}
+
+	SlimDX::Direct3D9::VertexDeclaration^ Device::VertexDeclaration::get()
+	{
+		IDirect3DVertexDeclaration9* decl;
+		HRESULT hr = m_Pointer->GetVertexDeclaration( &decl );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew SlimDX::Direct3D9::VertexDeclaration( decl );
 	}
 
 	void Device::DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount )
@@ -894,18 +899,18 @@ namespace Direct3D9
 		return gcnew PixelShader( ps );
 	}
 
-	DriverLevel Device::GetDriverLevel()
+	DriverLevel Device::DriverLevel::get()
 	{
 		return (SlimDX::Direct3D9::DriverLevel) D3DXGetDriverLevel( m_Pointer );
 	}
 
-	String^ Device::GetVertexShaderProfile()
+	String^ Device::VertexShaderProfile::get()
 	{
 		LPCSTR profile = D3DXGetVertexShaderProfile( m_Pointer );
 		return gcnew String( profile );
 	}
 
-	String^ Device::GetPixelShaderProfile()
+	String^ Device::PixelShaderProfile::get()
 	{
 		LPCSTR profile = D3DXGetPixelShaderProfile( m_Pointer );
 		return gcnew String( profile );
@@ -938,8 +943,36 @@ namespace Direct3D9
 			return;
 
 		SetTexture( D3DDMAPSAMPLER, nullptr );
-		if( FAILED( GraphicsException::LastError ) )
-			return;
+	}
+
+	void Device::SetClipPlane( int index, Plane clipPlane )
+	{
+		HRESULT hr = m_Pointer->SetClipPlane( index, (float*) &clipPlane );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	Plane Device::GetClipPlane( int index )
+	{
+		Plane plane;
+		HRESULT hr = m_Pointer->GetClipPlane( index, (float*) &plane );
+		GraphicsException::CheckHResult( hr );
+
+		return plane;
+	}
+
+	void Device::GetFrontBufferData( int swapChain, Surface^ destSurface )
+	{
+		IDirect3DSurface9* surface = destSurface != nullptr ? destSurface->SurfacePointer : NULL;
+		HRESULT hr = m_Pointer->GetFrontBufferData( swapChain, surface );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Device::GetRenderTargetData( Surface^ renderTarget, Surface^ destSurface )
+	{
+		IDirect3DSurface9* target = renderTarget != nullptr	? renderTarget->SurfacePointer : NULL;
+		IDirect3DSurface9* dest = destSurface != nullptr ? destSurface->SurfacePointer : NULL;
+		HRESULT hr = m_Pointer->GetRenderTargetData( target, dest );
+		GraphicsException::CheckHResult( hr );
 	}
 }
 }

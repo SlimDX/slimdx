@@ -131,17 +131,6 @@ namespace SlimDX
 
 		public ref class Device : public DirectXObject<IDirect3DDevice9>
 		{
-		private:
-			VertexFormat m_VertexFormat;
-			VertexDeclaration^ m_VertexDecl;
-			DriverLevel driverLevel;
-			String^ vertexShaderProfile;
-			String^ pixelShaderProfile;
-
-			DriverLevel GetDriverLevel();
-			String^ GetVertexShaderProfile();
-			String^ GetPixelShaderProfile();
-
 		internal:
 			Device( IDirect3DDevice9* device );
 
@@ -155,13 +144,13 @@ namespace SlimDX
 
 			property VertexFormat VertexFormat
 			{
-				SlimDX::Direct3D9::VertexFormat get() { return m_VertexFormat; }
+				SlimDX::Direct3D9::VertexFormat get();
 				void set( SlimDX::Direct3D9::VertexFormat value );
 			}
 
 			property SlimDX::Direct3D9::VertexDeclaration^ VertexDeclaration
 			{
-				SlimDX::Direct3D9::VertexDeclaration^ get() { return m_VertexDecl; }
+				SlimDX::Direct3D9::VertexDeclaration^ get();
 				void set( SlimDX::Direct3D9::VertexDeclaration^ value );
 			}
 
@@ -219,17 +208,17 @@ namespace SlimDX
 
 			property DriverLevel DriverLevel
 			{
-				SlimDX::Direct3D9::DriverLevel get() { return driverLevel; }
+				SlimDX::Direct3D9::DriverLevel get();
 			}
 
 			property String^ VertexShaderProfile
 			{
-				String^ get() { return vertexShaderProfile; }
+				String^ get();
 			}
 
 			property String^ PixelShaderProfile
 			{
-				String^ get() { return pixelShaderProfile; }
+				String^ get();
 			}
 
 			// --- Methods ---
@@ -257,6 +246,7 @@ namespace SlimDX
 			VertexShader^ GetVertexShader();
 			PixelShader^ GetPixelShader();
 			DisplayMode GetDisplayMode( int swapChain );
+			Plane GetClipPlane( int index );
 
 			generic<typename T> where T : value class
 				T GetRenderState( RenderState state );
@@ -265,6 +255,9 @@ namespace SlimDX
 			Capabilities GetDeviceCaps();
 			void GetStreamSource( int stream, [Out] VertexBuffer^% streamData, [Out] int% offsetBytes, [Out] int% stride );
 			int GetStreamSourceFreq( int stream );
+
+			void GetFrontBufferData( int swapChain, Surface^ destSurface );
+			void GetRenderTargetData( Surface^ renderTarget, Surface^ destSurface );
 
 			void SetRenderState( RenderState state, int value );
 			void SetRenderState( RenderState state, bool value );
@@ -304,6 +297,7 @@ namespace SlimDX
 			void SetDepthStencilSurface( Surface^ target );
 			void SetDialogBoxMode( bool enableDialogs );
 			void SetIndices( IndexBuffer^ indices );
+			void SetClipPlane( int index, Plane clipPlane );
 
 			void SetVertexShaderConstant( int startRegister, array<bool>^ data, int offset, int count );
 			void SetVertexShaderConstant( int startRegister, array<float>^ data, int offset, int count );
