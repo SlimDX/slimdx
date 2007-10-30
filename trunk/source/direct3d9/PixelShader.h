@@ -46,6 +46,7 @@ namespace SlimDX
 				delete m_ConstantTable;
 			}
 			
+			void RetrieveConstantTable();
 			property ConstantTable^ Constants
 			{
 				ConstantTable^ get() { return m_ConstantTable; }
