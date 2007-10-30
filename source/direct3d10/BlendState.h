@@ -42,6 +42,7 @@ namespace SlimDX
 			BlendState( ID3D10BlendState* state );
 		
 		public:
+			BlendState( IntPtr state );
 			~BlendState() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 

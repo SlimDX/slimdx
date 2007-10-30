@@ -32,7 +32,7 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	RasterizerState::RasterizerState( ID3D10RasterizerState* state )
+	RasterizerState::RasterizerState( ID3D10RasterizerState* state ) : DirectXObject( state )
 	{
 		if( state == NULL )
 			throw gcnew ArgumentNullException( "state" );
@@ -42,6 +42,24 @@ namespace Direct3D10
 		m_Description = gcnew RasterizerStateDescription( desc );
 	}
 	
+	RasterizerState::RasterizerState( IntPtr state )
+	{
+		if( state == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "state" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) state.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_ID3D10RasterizerState, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = (ID3D10RasterizerState*) pointer;
+
+		D3D10_RASTERIZER_DESC desc;
+		m_Pointer->GetDesc( &desc );
+		m_Description = gcnew RasterizerStateDescription( desc );
+	}
+
 	RasterizerState::RasterizerState( Device^ device, RasterizerStateDescription^ description )
 	{
 		if( device == nullptr )

@@ -42,6 +42,7 @@ namespace SlimDX
 			DepthStencilState( ID3D10DepthStencilState* state );
 		
 		public:
+			DepthStencilState( IntPtr state );
 			~DepthStencilState() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 

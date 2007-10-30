@@ -40,7 +40,35 @@ namespace Direct3D10
 		D3D10_EFFECT_DESC desc;
 		HRESULT hr = effect->GetDesc( &desc );
 		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to get description for effect." );
 		
+		m_IsChildEffect = desc.IsChildEffect ? true : false;
+		m_ConstantBufferCount = desc.ConstantBuffers;
+		m_SharedConstantBufferCount = desc.SharedConstantBuffers;
+		m_GlobalVariableCount = desc.GlobalVariables;
+		m_TechniqueCount = desc.Techniques;
+	}
+
+	Effect::Effect( IntPtr effect )
+	{
+		if( effect == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "effect" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) effect.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_ID3D10Effect, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = (ID3D10Effect*) pointer;
+
+		D3D10_EFFECT_DESC desc;
+		hr = m_Pointer->GetDesc( &desc );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException( "Failed to get description for effect." );
+
 		m_IsChildEffect = desc.IsChildEffect ? true : false;
 		m_ConstantBufferCount = desc.ConstantBuffers;
 		m_SharedConstantBufferCount = desc.SharedConstantBuffers;

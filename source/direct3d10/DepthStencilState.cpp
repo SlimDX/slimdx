@@ -42,6 +42,24 @@ namespace Direct3D10
 		m_Description = gcnew DepthStencilStateDescription( desc );
 	}
 	
+	DepthStencilState::DepthStencilState( IntPtr state )
+	{
+		if( state == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "state" );
+
+		void* pointer;
+		IUnknown* unknown = (IUnknown*) state.ToPointer();
+		HRESULT hr = unknown->QueryInterface( IID_ID3D10DepthStencilState, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = (ID3D10DepthStencilState*) pointer;
+
+		D3D10_DEPTH_STENCIL_DESC desc;
+		m_Pointer->GetDesc( &desc );
+		m_Description = gcnew DepthStencilStateDescription( desc );
+	}
+
 	DepthStencilState::DepthStencilState( Device^ device, DepthStencilStateDescription^ description )
 	{
 		if( device == nullptr )

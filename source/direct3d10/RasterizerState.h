@@ -96,6 +96,7 @@ namespace SlimDX
 			}
 			
 			
+			RasterizerState( IntPtr state );
 			RasterizerState( Device^ device, RasterizerStateDescription^ description );
 			
 			RasterizerStateDescription^ CloneDescription();

@@ -48,6 +48,7 @@ namespace SlimDX
 			Effect( ID3D10Effect* effect );
 		
 		public:
+			Effect( IntPtr effect );
 			virtual ~Effect() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 
