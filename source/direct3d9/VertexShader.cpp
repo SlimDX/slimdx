@@ -23,6 +23,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <vcclr.h>
+#include <memory>
 
 #include "../DirectXObject.h"
 #include "../Utils.h"
@@ -40,9 +41,7 @@ namespace Direct3D9
 		if( vertexShader == NULL )
 			throw gcnew ArgumentNullException( "vertexShader" );
 
-		//m_ConstantTable = nullptr;
-		//Retrieve the constant table
-
+		m_ConstantTable = nullptr;
 	}
 
 	VertexShader::VertexShader( IntPtr vertexShader )
@@ -115,6 +114,34 @@ namespace Direct3D9
 		if( vertexShader == NULL)
 			return nullptr;
 		return gcnew VertexShader( vertexShader, constantTable );
+	}
+
+	void VertexShader::RetrieveConstantTable()
+	{
+		if( m_ConstantTable != nullptr )
+			return;
+
+		//Retrieve the binary data
+		UINT size;
+		HRESULT hr = m_Pointer->GetFunction( NULL, &size );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return;
+
+		std::auto_ptr<char> data( new char[size] );
+		hr = m_Pointer->GetFunction( data.get(), &size );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return;
+
+		//Ask D3DX to give us the actual table
+		ID3DXConstantTable* constantTable;
+		hr = D3DXGetShaderConstantTable( (const DWORD*) data.get(), &constantTable );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+			return;
+
+		m_ConstantTable = gcnew ConstantTable( constantTable );
 	}
 }
 }
