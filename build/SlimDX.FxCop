@@ -215,60 +215,504 @@
           </Members>
          </Type>
          <Type Name="Matrix">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>SlimDX.Matrix</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>SlimDX.Matrix</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
+           <Member Name="AffineTransformation(System.Single,SlimDX.Vector3&amp;,SlimDX.Quaternion&amp;,SlimDX.Vector3&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>rotationCenter</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>rotation</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>translation</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="AffineTransformation2D(System.Single,SlimDX.Vector2&amp;,System.Single,SlimDX.Vector2&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>rotationCenter</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>translation</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Billboard(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>objectPosition</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>cameraPosition</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>cameraUpVector</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>cameraForwardVector</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="Decompose(SlimDX.Vector3&amp;,SlimDX.Quaternion&amp;,SlimDX.Vector3&amp;):System.Boolean">
             <Messages>
-             <Message Id="0#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-10-01 21:38:08Z">
+             <Message Id="0#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>scale</Item>
               </Issue>
              </Message>
-             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-10-01 21:38:08Z">
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>rotation</Item>
               </Issue>
              </Message>
-             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2007-10-01 21:38:08Z">
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>translation</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="op_Multiply(SlimDX.Matrix,SlimDX.Matrix):SlimDX.Matrix">
+           <Member Name="Equals(SlimDX.Matrix&amp;,SlimDX.Matrix&amp;):System.Boolean">
             <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>Multiply</Item>
-               <Item>Matrix.op_Multiply(Matrix, Matrix):Matrix</Item>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>value1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>value2</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="Scaling(SlimDX.Vector3&amp;):SlimDX.Matrix">
+           <Member Name="Invert(SlimDX.Matrix&amp;,SlimDX.Matrix&amp;):System.Void">
             <Messages>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Created="2007-10-01 21:38:08Z">
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>matrix</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="LookAtLH(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>eye</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>target</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>up</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="LookAtRH(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>eye</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>target</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>up</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Multiply(SlimDX.Matrix&amp;,SlimDX.Matrix&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>right</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="OrthoLH(System.Single,System.Single,System.Single,System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="OrthoOffCenterLH(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="6#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="OrthoOffCenterRH(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="6#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="OrthoRH(System.Single,System.Single,System.Single,System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="PerspectiveFovLH(System.Single,System.Single,System.Single,System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="PerspectiveFovRH(System.Single,System.Single,System.Single,System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="PerspectiveLH(System.Single,System.Single,System.Single,System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="PerspectiveOffCenterLH(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="6#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="PerspectiveOffCenterRH(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="6#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="PerspectiveRH(System.Single,System.Single,System.Single,System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Reflection(SlimDX.Plane&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>plane</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="RotationAxis(SlimDX.Vector3&amp;,System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>axis</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="RotationQuaternion(SlimDX.Quaternion&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>rotation</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="RotationX(System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="RotationY(System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="RotationYawPitchRoll(System.Single,System.Single,System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="RotationZ(System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Scaling(SlimDX.Vector3&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
               <Issue Certainty="50">
                <Item>scale</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="Translation(SlimDX.Vector3&amp;):SlimDX.Matrix">
+           <Member Name="Scaling(System.Single,System.Single,System.Single,SlimDX.Matrix&amp;):System.Void">
             <Messages>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Created="2007-10-01 21:38:08Z">
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Shadow(SlimDX.Vector4&amp;,SlimDX.Plane&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>light</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>plane</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Transformation(SlimDX.Vector3&amp;,SlimDX.Quaternion&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Quaternion&amp;,SlimDX.Vector3&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="6#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>scalingCenter</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>scalingRotation</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>scaling</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>rotationCenter</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>rotation</Item>
+              </Issue>
+             </Message>
+             <Message Id="5#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>translation</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Transformation2D(SlimDX.Vector2&amp;,System.Single,SlimDX.Vector2&amp;,SlimDX.Vector2&amp;,System.Single,SlimDX.Vector2&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="6#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>scalingCenter</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>scaling</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>rotationCenter</Item>
+              </Issue>
+             </Message>
+             <Message Id="5#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>translation</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Translation(SlimDX.Vector3&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
               <Issue Certainty="50">
                <Item>amount</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Translation(System.Single,System.Single,System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Transpose(SlimDX.Matrix&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
+              <Issue Certainty="50">
+               <Item>matrix</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4075,7 +4519,7 @@
            <Member Name="GetPixelShader():SlimDX.Direct3D9.PixelShader">
             <Messages>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue>
+              <Issue Certainty="50">
                <Item>GetPixelShader</Item>
               </Issue>
              </Message>
@@ -4127,7 +4571,7 @@
            <Member Name="GetVertexShader():SlimDX.Direct3D9.VertexShader">
             <Messages>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue>
+              <Issue Certainty="50">
                <Item>GetVertexShader</Item>
               </Issue>
              </Message>
@@ -5265,6 +5709,16 @@
             </Issue>
             <Issue Name="op_Equality">
              <Item>SlimDX.Direct3D9.Material</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="MatrixStack">
+          <Messages>
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-30 21:30:17Z">
+            <Issue>
+             <Item>SlimDX.Direct3D9.MatrixStack</Item>
+             <Item>Stack</Item>
             </Issue>
            </Message>
           </Messages>
@@ -7126,347 +7580,6 @@
          </Type>
         </Types>
        </Namespace>
-       <Namespace Name="SlimDX.XAudio2">
-        <Types>
-         <Type Name="AudioException">
-          <Members>
-           <Member Name=".ctor()">
-            <Messages>
-             <Message Id="SlimDX.DirectXException.#ctor(System.Int32,System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>AudioException.AudioException()</Item>
-               <Item>2</Item>
-               <Item>DirectXException.DirectXException(Int32, String)</Item>
-               <Item>An XAudio2 exception occurred.</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="BufferFlags">
-          <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
-            <Issue>
-             <Item>SlimDX.XAudio2.BufferFlags</Item>
-             <Item>Flags</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="DeviceDetails">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>SlimDX.XAudio2.DeviceDetails</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>SlimDX.XAudio2.DeviceDetails</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="EffectDescriptor">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>SlimDX.XAudio2.EffectDescriptor</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>SlimDX.XAudio2.EffectDescriptor</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="PerformanceData">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>SlimDX.XAudio2.PerformanceData</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>SlimDX.XAudio2.PerformanceData</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="Speakers">
-          <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2007-10-22 22:58:02Z">
-            <Issue>
-             <Item>SlimDX.XAudio2.Speakers</Item>
-             <Item>0x40000, 0x80000, 0x100000, 0x200000, 0x400000, 0x800000, 0x1000000, 0x2000000, 0x4000000, 0x8000000, 0x10000000, 0x20000000, 0x40000000, 0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="Reserved">
-            <Messages>
-             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Created="2007-10-22 22:58:02Z">
-              <Issue>
-               <Item>Speakers.Reserved</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="VoiceFlags">
-          <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
-            <Issue>
-             <Item>SlimDX.XAudio2.VoiceFlags</Item>
-             <Item>Flags</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="WaveFormat">
-          <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
-            <Issue Name="NotFlagsNoZeroValue">
-             <Item>WaveFormat</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2007-10-01 21:38:08Z">
-            <Issue Name="NotInt32">
-             <Item>SlimDX.XAudio2.WaveFormat</Item>
-             <Item>System.Int16</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="WaveFormatExtended">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>SlimDX.XAudio2.WaveFormatExtended</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>SlimDX.XAudio2.WaveFormatExtended</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="AverageBytesPerSecond">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>WaveFormatExtended.AverageBytesPerSecond</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="BitsPerSample">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>WaveFormatExtended.BitsPerSample</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="BlockAlign">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>WaveFormatExtended.BlockAlign</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="ChannelMask">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>WaveFormatExtended.ChannelMask</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Channels">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>WaveFormatExtended.Channels</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="FormatTag">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>WaveFormatExtended.FormatTag</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Reserved">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>WaveFormatExtended.Reserved</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="SamplesPerBlock">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>WaveFormatExtended.SamplesPerBlock</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="SamplesPerSecond">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>WaveFormatExtended.SamplesPerSecond</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Size">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>WaveFormatExtended.Size</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="SubFormat">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>WaveFormatExtended.SubFormat</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="ValidBitsPerSample">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>WaveFormatExtended.ValidBitsPerSample</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="WindowsProcessorSpecifier">
-          <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
-            <Issue Name="NotFlagsNoZeroValue">
-             <Item>WindowsProcessorSpecifier</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2007-10-01 21:38:08Z">
-            <Issue>
-             <Item>WindowsProcessorSpecifier</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="XAudio2">
-          <Messages>
-           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Status="Excluded" Created="2007-10-01 21:38:08Z">
-            <Issue>
-             <Item>XAudio2</Item>
-             <Item>SlimDX.XAudio2</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="AmplitudeRatioToDecibels(System.Single):System.Single">
-            <Messages>
-             <Message Id="volume" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
-              <Issue>
-               <Item>volume</Item>
-               <Item>XAudio2.AmplitudeRatioToDecibels(Single):Single</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="DecibelsToAmplitudeRatio(System.Single):System.Single">
-            <Messages>
-             <Message Id="decibels" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
-              <Issue>
-               <Item>decibels</Item>
-               <Item>XAudio2.DecibelsToAmplitudeRatio(Single):Single</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="FrequencyRatioToSemitones(System.Single):System.Single">
-            <Messages>
-             <Message Id="frequencyRatio" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
-              <Issue>
-               <Item>frequencyRatio</Item>
-               <Item>XAudio2.FrequencyRatioToSemitones(Single):Single</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="GetDeviceDetails(System.Int32):SlimDX.XAudio2.DeviceDetails">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
-              <Issue>
-               <Item>XAudio2.GetDeviceDetails(Int32):DeviceDetails</Item>
-              </Issue>
-             </Message>
-             <Message Id="index" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
-              <Issue>
-               <Item>index</Item>
-               <Item>XAudio2.GetDeviceDetails(Int32):DeviceDetails</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="SemitonesToFrequencyRatio(System.Single):System.Single">
-            <Messages>
-             <Message Id="semitones" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2007-10-01 21:38:08Z" FixCategory="Breaking">
-              <Issue>
-               <Item>semitones</Item>
-               <Item>XAudio2.SemitonesToFrequencyRatio(Single):Single</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="XAudio2Flags">
-          <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
-            <Issue>
-             <Item>SlimDX.XAudio2.XAudio2Flags</Item>
-             <Item>Flags</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="XAudio2NotFoundException">
-          <Members>
-           <Member Name=".ctor()">
-            <Messages>
-             <Message Id="SlimDX.XAudio2.AudioException.#ctor(System.Int32,System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>XAudio2NotFoundException.XAudio2NotFoundException()</Item>
-               <Item>2</Item>
-               <Item>AudioException.AudioException(Int32, String)</Item>
-               <Item>XAudio 2 not found.</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
        <Namespace Name="SlimDX.XInput">
         <Types>
          <Type Name="BatteryInformation">
@@ -7724,9 +7837,6 @@
    <Rule TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217">
     <Resolution Name="Default">{0} is marked with FlagsAttribute but a discrete member cannot be found for every settable bit that is used across the range of enum values. Remove FlagsAttribute from the type or define new members for the following (currently missing) values: {1}</Resolution>
    </Rule>
-   <Rule TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700">
-    <Resolution Name="Default">If '{0}' is not used in the current implementation, remove it. Otherwise give it a meaningful name.</Resolution>
-   </Rule>
    <Rule TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303">
     <Resolution Name="Default">{0} passes a literal as parameter {1} of a call to {2}. Retrieve the following string argument from a resource table instead: '{3}'</Resolution>
    </Rule>
@@ -7766,9 +7876,6 @@
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of '{0}' appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
    </Rule>
-   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
-    <Resolution Name="Default">The 'this' parameter (or 'Me' in VB) of {0} is never used. Mark the member as static (or Shared in VB) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
-   </Rule>
    <Rule TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223">
     <Resolution Name="Default">'{0}' should differ from other members by more than its return type.</Resolution>
    </Rule>
@@ -7803,9 +7910,6 @@
    </Rule>
    <Rule TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025">
     <Resolution Name="Default">Consider implementing a version of '{0}' that accepts a parameter array argument.</Resolution>
-   </Rule>
-   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
-    <Resolution Name="Default">Parameter '{0}' of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
    </Rule>
    <Rule TypeName="ShortAcronymsShouldBeUppercase" Category="Microsoft.Naming" CheckId="CA1706">
     <Resolution Name="Member">Correct the capitalization of '{0}' in member name '{1}'.</Resolution>
