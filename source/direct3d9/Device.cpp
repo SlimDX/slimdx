@@ -113,6 +113,9 @@ namespace Direct3D9
 		IDirect3DDevice9* device;
 		D3DPRESENT_PARAMETERS d3dpp;
 
+		if( Direct3D::InternalPointer == NULL )
+			throw gcnew Direct3DNotInitializedException();
+
 		ConvertPresentParams( presentParams, d3dpp );
 		HRESULT hr = Direct3D::InternalPointer->CreateDevice( adapter, (D3DDEVTYPE) deviceType, (HWND) controlHandle.ToPointer(), 
 			(DWORD) createFlags, (D3DPRESENT_PARAMETERS*) &d3dpp, &device );
