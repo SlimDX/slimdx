@@ -49,6 +49,7 @@ namespace SlimDX
 			WaveFormatExtended( bool extensible, int extraDataBytes );
 
 		internal:
+			WaveFormatExtended( WAVEFORMATEX* format );
 			property WAVEFORMATEX* InternalPointer
 			{
 				WAVEFORMATEX* get() { return m_Format; }
@@ -57,7 +58,6 @@ namespace SlimDX
 		public:
 			WaveFormatExtended();
 			WaveFormatExtended( int extraDataBytes );
-			WaveFormatExtended( WAVEFORMATEX* format );
 			~WaveFormatExtended();
 			!WaveFormatExtended();
 
@@ -108,6 +108,7 @@ namespace SlimDX
 		public ref class WaveFormatExtensible : public WaveFormatExtended
 		{
 		internal:
+			WaveFormatExtensible( WAVEFORMATEXTENSIBLE* format );
 			property WAVEFORMATEXTENSIBLE* ExtensiblePointer
 			{
 				WAVEFORMATEXTENSIBLE* get() { return (WAVEFORMATEXTENSIBLE*) Format; }
@@ -116,7 +117,6 @@ namespace SlimDX
 		public:
 			WaveFormatExtensible();
 			WaveFormatExtensible( int extraDataBytes );
-			WaveFormatExtensible( WAVEFORMATEXTENSIBLE* format );
 
 			//these properties are all the same field
 			property short ValidBitsPerSample

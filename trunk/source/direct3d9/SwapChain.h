@@ -50,8 +50,10 @@ namespace SlimDX
 
 		public ref class SwapChain : public DirectXObject<IDirect3DSwapChain9>
 		{
-		public:
+		internal:
 			SwapChain( IDirect3DSwapChain9* swapChain );
+
+		public:
 			SwapChain( Device^ device, PresentParameters^ presentParams );
 			~SwapChain() { Destruct(); }
 			DXOBJECT_FUNCTIONS;

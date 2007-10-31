@@ -122,7 +122,9 @@ namespace DirectInput
 		if( !handle.IsAllocated )
 			return nullptr;
 
-		return handle.Target;
+		Object^ obj =  handle.Target;
+		handle.Free();
+		return obj;
 	}
 
 	void ObjectProperties::ApplicationData::set( Object^ value )
@@ -134,11 +136,13 @@ namespace DirectInput
 		dip.diph.dwObj = obj;
 		dip.diph.dwHow = how;
 
-		GCHandle handle = GCHandle::Alloc( value );
+		GCHandle handle = GCHandle::Alloc( value, GCHandleType::Pinned );
 		dip.uData = ( UINT_PTR )handle.ToIntPtr( handle ).ToPointer();
 
 		hr = pointer->SetProperty( DIPROP_APPDATA, &dip.diph );
 		InputException::CheckHResult( hr );
+
+		handle.Free();
 	}
 
 	int ObjectProperties::DeadZone::get()
@@ -410,7 +414,9 @@ namespace DirectInput
 		if( !handle.IsAllocated )
 			return nullptr;
 
-		return handle.Target;
+		Object^ obj = handle.Target;
+		handle.Free();
+		return obj;
 	}
 
 	void DeviceProperties::ApplicationData::set( Object^ value )
@@ -422,11 +428,13 @@ namespace DirectInput
 		dip.diph.dwObj = 0;
 		dip.diph.dwHow = DIPH_DEVICE;
 
-		GCHandle handle = GCHandle::Alloc( value );
+		GCHandle handle = GCHandle::Alloc( value, GCHandleType::Pinned );
 		dip.uData = ( UINT_PTR )handle.ToIntPtr( handle ).ToPointer();
 
 		hr = pointer->SetProperty( DIPROP_APPDATA, &dip.diph );
 		InputException::CheckHResult( hr );
+
+		handle.Free();
 	}
 
 	bool DeviceProperties::AutoCenter::get()

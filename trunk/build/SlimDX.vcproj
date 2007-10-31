@@ -410,6 +410,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d9\AnimationFrame.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\AnimationSet.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\BaseEffect.cpp"
 					>
 				</File>
@@ -1091,6 +1099,14 @@
 				>
 				<File
 					RelativePath="..\source\direct3d9\AnimationController.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\AnimationFrame.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\AnimationSet.h"
 					>
 				</File>
 				<File

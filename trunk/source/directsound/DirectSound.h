@@ -66,8 +66,10 @@ namespace SlimDX
 			Capabilities caps;
 			Capabilities GetCapabilities();
 
-		public:
+		internal:
 			DirectSound( IDirectSound8* dsound );
+
+		public:
 			DirectSound();
 			DirectSound( Guid device );
 			~DirectSound() { Destruct(); }

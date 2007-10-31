@@ -55,6 +55,18 @@
         <Types>
          <Type Name="DataStream">
           <Members>
+           <Member Name=".ctor(System.IntPtr,System.Int64,System.Boolean,System.Boolean)">
+            <Messages>
+             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2007-10-31 21:47:02Z">
+              <Issue>
+               <Item>DataStream.DataStream(IntPtr, Int64, Boolean, Boolean)</Item>
+               <Item>m_OwnsBuffer</Item>
+               <Item>System.Boolean</Item>
+               <Item>false</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="Dispose(System.Boolean):System.Void">
             <Messages>
              <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -4305,16 +4317,9 @@
          </Type>
          <Type Name="AnimationSet">
           <Members>
-           <Member Name="GetCallback(System.Double,SlimDX.Direct3D9.CallbackSearchFlags,System.Double&amp;):SlimDX.Direct3D9.AnimationCallback">
+           <Member Name="GetCallback(System.Double,SlimDX.Direct3D9.CallbackSearchFlags,System.Double&amp;):System.IntPtr">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-22 22:46:50Z">
-              <Issue>
-               <Item>AnimationSet.GetCallback(Double, CallbackSearchFlags, Double&amp;):AnimationCallback</Item>
-               <Item>Marshal.GetFunctionPointerForDelegate(Delegate):IntPtr</Item>
-               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(System.Delegate) : IntPtr&#xD;&#xA;-&gt;SlimDX.Direct3D9.AnimationSet.GetCallback(System.Double,SlimDX.Direct3D9.CallbackSearchFlags,System.Double@) : AnimationCallback</Item>
-              </Issue>
-             </Message>
-             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-22 22:46:50Z">
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 21:12:23Z">
               <Issue>
                <Item>callbackPosition</Item>
               </Issue>
@@ -4420,6 +4425,19 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="BoneCombination">
+          <Members>
+           <Member Name="BoneIds">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2007-10-31 21:12:23Z">
+              <Issue>
+               <Item>BoneCombination.BoneIds:Int32[]</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="Box">
           <Messages>
            <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
@@ -4453,6 +4471,18 @@
             </Issue>
             <Issue Name="op_Equality">
              <Item>SlimDX.Direct3D9.CacheUtilization</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="CallbackKey">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-31 21:42:37Z">
+            <Issue Name="Equals">
+             <Item>SlimDX.Direct3D9.CallbackKey</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>SlimDX.Direct3D9.CallbackKey</Item>
             </Issue>
            </Message>
           </Messages>
@@ -4558,6 +4588,19 @@
             </Issue>
            </Message>
           </Messages>
+         </Type>
+         <Type Name="CompressedAnimationSet">
+          <Members>
+           <Member Name="GetCompressedData():SlimDX.Direct3D9.BufferWrapper">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-31 21:12:23Z">
+              <Issue Certainty="50">
+               <Item>GetCompressedData</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
          <Type Name="ConstantDescription">
           <Messages>
@@ -5137,6 +5180,22 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="Direct3DNotInitializedException">
+          <Members>
+           <Member Name=".ctor()">
+            <Messages>
+             <Message Id="SlimDX.Direct3D9.GraphicsException.#ctor(System.Int32,System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Created="2007-10-31 21:12:23Z">
+              <Issue>
+               <Item>Direct3DNotInitializedException.Direct3DNotInitializedException()</Item>
+               <Item>2</Item>
+               <Item>GraphicsException.GraphicsException(Int32, String)</Item>
+               <Item>Direct3D not initialized.</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="Direct3DX9NotFoundException">
           <Members>
            <Member Name=".ctor()">
@@ -5586,6 +5645,15 @@
          </Type>
          <Type Name="FragmentLinker">
           <Members>
+           <Member Name=".ctor(ID3DXFragmentLinker*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-31 21:36:36Z">
+              <Issue>
+               <Item>FragmentLinker.FragmentLinker(ID3DXFragmentLinker*)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="Gather(System.Byte[],SlimDX.Direct3D9.Macro[],SlimDX.Direct3D9.Include,SlimDX.Direct3D9.ShaderFlags,System.String&amp;):SlimDX.Direct3D9.ShaderFragments">
             <Messages>
              <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -5654,6 +5722,31 @@
              <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>errors</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Frame">
+          <Members>
+           <Member Name="CalculateBoundingSphere(SlimDX.Direct3D9.Frame,SlimDX.Vector3&amp;):System.Single">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 21:12:23Z">
+              <Issue>
+               <Item>objectCenter</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="RegisterNamedMatrices(SlimDX.Direct3D9.Frame,SlimDX.Direct3D9.AnimationController):System.Void">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-10-31 21:12:23Z">
+              <Issue>
+               <Item>controller</Item>
+               <Item>Frame.RegisterNamedMatrices(Frame, AnimationController):Void</Item>
+               <Item>SlimDX.Direct3D9.AnimationController</Item>
+               <Item>SlimDX.DirectXObject&lt;ID3DXAnimationController&gt;</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5729,6 +5822,17 @@
             </Issue>
            </Message>
           </Messages>
+          <Members>
+           <Member Name="Open(SlimDX.Direct3D9.IncludeType,System.String,System.IO.Stream&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 21:47:02Z">
+              <Issue>
+               <Item>stream</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
          <Type Name="InterfaceTimings">
           <Messages>
@@ -6240,6 +6344,15 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="MeshDataType">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-31 21:12:23Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
+             <Item>MeshDataType</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="MeshFlags">
           <Messages>
            <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -6309,6 +6422,19 @@
             </Issue>
            </Message>
           </Messages>
+         </Type>
+         <Type Name="PatchMesh">
+          <Members>
+           <Member Name="PatchCount">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2007-10-31 21:12:23Z" FixCategory="Breaking">
+              <Issue>
+               <Item>PatchMesh.PatchCount:Int32</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
          <Type Name="PipelineTimings">
           <Messages>
@@ -6574,11 +6700,35 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="RotationKey">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-31 21:42:37Z">
+            <Issue Name="Equals">
+             <Item>SlimDX.Direct3D9.RotationKey</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>SlimDX.Direct3D9.RotationKey</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="SamplerState">
           <Messages>
            <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>SamplerState</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ScaleKey">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-31 21:42:37Z">
+            <Issue Name="Equals">
+             <Item>SlimDX.Direct3D9.ScaleKey</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>SlimDX.Direct3D9.ScaleKey</Item>
             </Issue>
            </Message>
           </Messages>
@@ -6734,6 +6884,15 @@
          </Type>
          <Type Name="Sprite">
           <Members>
+           <Member Name=".ctor(ID3DXSprite*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-31 21:36:36Z">
+              <Issue>
+               <Item>Sprite.Sprite(ID3DXSprite*)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="GetDevice():SlimDX.Direct3D9.Device">
             <Messages>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -7028,6 +7187,18 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="TranslationKey">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-31 21:42:37Z">
+            <Issue Name="Equals">
+             <Item>SlimDX.Direct3D9.TranslationKey</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>SlimDX.Direct3D9.TranslationKey</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="TriPatchInfo">
           <Messages>
            <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
@@ -7174,6 +7345,19 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="Volume">
+          <Members>
+           <Member Name=".ctor(IDirect3DVolume9*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-31 21:36:36Z">
+              <Issue>
+               <Item>Volume.Volume(IDirect3DVolume9*)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="VolumeDescription">
           <Messages>
            <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
@@ -7249,6 +7433,11 @@
              <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>BufferedData`1.BufferedData`1(DIDEVICEOBJECTDATA*)</Item>
+               <Item>GCHandle.Free():Void</Item>
+               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.Free : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.BufferedData`1.#ctor(optional(System.Runtime.CompilerServices.IsImplicitlyDereferenced) optional(IsConst) DIDEVICEOBJECTDATA*) : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.Device`1.GetBufferedData : BufferedDataCollection`1&lt;type parameter.DataFormat&gt;</Item>
+              </Issue>
+              <Issue>
+               <Item>BufferedData`1.BufferedData`1(DIDEVICEOBJECTDATA*)</Item>
                <Item>GCHandle.FromIntPtr(IntPtr):GCHandle</Item>
                <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.FromIntPtr(System.IntPtr) : GCHandle&#xD;&#xA;-&gt;SlimDX.DirectInput.BufferedData`1.#ctor(optional(System.Runtime.CompilerServices.IsImplicitlyDereferenced) optional(IsConst) DIDEVICEOBJECTDATA*) : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.Device`1.GetBufferedData : BufferedDataCollection`1&lt;type parameter.DataFormat&gt;</Item>
               </Issue>
@@ -7261,22 +7450,6 @@
                <Item>BufferedData`1.BufferedData`1(DIDEVICEOBJECTDATA*)</Item>
                <Item>Marshal.OffsetOf(Type, String):IntPtr</Item>
                <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.Marshal.OffsetOf(System.Type,System.String) : IntPtr&#xD;&#xA;-&gt;SlimDX.DirectInput.BufferedData`1.#ctor(optional(System.Runtime.CompilerServices.IsImplicitlyDereferenced) optional(IsConst) DIDEVICEOBJECTDATA*) : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.Device`1.GetBufferedData : BufferedDataCollection`1&lt;type parameter.DataFormat&gt;</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Destruct():System.Void">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>BufferedData`1.Destruct():Void</Item>
-               <Item>GCHandle.Free():Void</Item>
-               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.Free : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.BufferedData`1.Destruct : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.BufferedData`1.!BufferedData`1 : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.BufferedData`1.Dispose(System.Boolean) : Void</Item>
-              </Issue>
-              <Issue>
-               <Item>BufferedData`1.Destruct():Void</Item>
-               <Item>GCHandle.Free():Void</Item>
-               <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.Free : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.BufferedData`1.Destruct : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.BufferedData`1.~BufferedData`1 : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.BufferedData`1.Dispose(System.Boolean) : Void</Item>
               </Issue>
              </Message>
             </Messages>
@@ -7427,6 +7600,11 @@
                <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
                 <Issue>
                  <Item>DeviceProperties.get_ApplicationData():Object</Item>
+                 <Item>GCHandle.Free():Void</Item>
+                 <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.Free : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.DeviceProperties.get_ApplicationData : Object</Item>
+                </Issue>
+                <Issue>
+                 <Item>DeviceProperties.get_ApplicationData():Object</Item>
                  <Item>GCHandle.FromIntPtr(IntPtr):GCHandle</Item>
                  <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.FromIntPtr(System.IntPtr) : GCHandle&#xD;&#xA;-&gt;SlimDX.DirectInput.DeviceProperties.get_ApplicationData : Object</Item>
                 </Issue>
@@ -7443,8 +7621,13 @@
                <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
                 <Issue>
                  <Item>DeviceProperties.set_ApplicationData(Object):Void</Item>
-                 <Item>GCHandle.Alloc(Object):GCHandle</Item>
-                 <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.Alloc(System.Object) : GCHandle&#xD;&#xA;-&gt;SlimDX.DirectInput.DeviceProperties.set_ApplicationData(System.Object) : Void</Item>
+                 <Item>GCHandle.Alloc(Object, GCHandleType):GCHandle</Item>
+                 <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.Alloc(System.Object,System.Runtime.InteropServices.GCHandleType) : GCHandle&#xD;&#xA;-&gt;SlimDX.DirectInput.DeviceProperties.set_ApplicationData(System.Object) : Void</Item>
+                </Issue>
+                <Issue>
+                 <Item>DeviceProperties.set_ApplicationData(Object):Void</Item>
+                 <Item>GCHandle.Free():Void</Item>
+                 <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.Free : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.DeviceProperties.set_ApplicationData(System.Object) : Void</Item>
                 </Issue>
                </Message>
               </Messages>
@@ -7655,6 +7838,11 @@
                <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
                 <Issue>
                  <Item>ObjectProperties.get_ApplicationData():Object</Item>
+                 <Item>GCHandle.Free():Void</Item>
+                 <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.Free : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.ObjectProperties.get_ApplicationData : Object</Item>
+                </Issue>
+                <Issue>
+                 <Item>ObjectProperties.get_ApplicationData():Object</Item>
                  <Item>GCHandle.FromIntPtr(IntPtr):GCHandle</Item>
                  <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.FromIntPtr(System.IntPtr) : GCHandle&#xD;&#xA;-&gt;SlimDX.DirectInput.ObjectProperties.get_ApplicationData : Object</Item>
                 </Issue>
@@ -7671,8 +7859,13 @@
                <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
                 <Issue>
                  <Item>ObjectProperties.set_ApplicationData(Object):Void</Item>
-                 <Item>GCHandle.Alloc(Object):GCHandle</Item>
-                 <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.Alloc(System.Object) : GCHandle&#xD;&#xA;-&gt;SlimDX.DirectInput.ObjectProperties.set_ApplicationData(System.Object) : Void</Item>
+                 <Item>GCHandle.Alloc(Object, GCHandleType):GCHandle</Item>
+                 <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.Alloc(System.Object,System.Runtime.InteropServices.GCHandleType) : GCHandle&#xD;&#xA;-&gt;SlimDX.DirectInput.ObjectProperties.set_ApplicationData(System.Object) : Void</Item>
+                </Issue>
+                <Issue>
+                 <Item>ObjectProperties.set_ApplicationData(Object):Void</Item>
+                 <Item>GCHandle.Free():Void</Item>
+                 <Item>&#xD;&#xA;-&gt;System.Runtime.InteropServices.GCHandle.Free : Void&#xD;&#xA;-&gt;SlimDX.DirectInput.ObjectProperties.set_ApplicationData(System.Object) : Void</Item>
                 </Issue>
                </Message>
               </Messages>
@@ -7782,6 +7975,15 @@
            </Message>
           </Messages>
           <Members>
+           <Member Name=".ctor(IDirectSound8*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-31 21:36:36Z">
+              <Issue>
+               <Item>DirectSound.DirectSound(IDirectSound8*)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="GetSpeakerConfig(SlimDX.DirectSound.Speaker&amp;,SlimDX.DirectSound.SpeakerGeometry&amp;):System.Void">
             <Messages>
              <Message Id="0#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -7836,6 +8038,15 @@
          </Type>
          <Type Name="SoundBuffer">
           <Members>
+           <Member Name=".ctor(IDirectSoundBuffer*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-10-31 21:36:36Z">
+              <Issue>
+               <Item>SoundBuffer.SoundBuffer(IDirectSoundBuffer*)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="GetFormat():SlimDX.DirectSound.WaveFormatExtended">
             <Messages>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:56:56Z">
@@ -8137,6 +8348,9 @@
    <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
     <Resolution Name="Default">Consider a design that does not require that '{0}' be an out parameter.</Resolution>
    </Rule>
+   <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+    <Resolution Name="Default">'{0}' appears to have no upstream public or protected callers.</Resolution>
+   </Rule>
    <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
     <Resolution Name="Default">It appears that field '{0}' is never used or is only ever assigned to. Use this field or remove it.</Resolution>
    </Rule>
@@ -8148,6 +8362,9 @@
    </Rule>
    <Rule TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122">
     <Resolution Name="Default">{0} calls into {1} which has a LinkDemand. By making this call, {1} is indirectly exposed to user code. Review the following call stack that might expose a way to circumvent security protection: {2}</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805">
+    <Resolution Name="Default">{0} initializes field {1} of type {2} to {3}. Remove this initialization as it will be done automatically by the runtime.</Resolution>
    </Rule>
    <Rule TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217">
     <Resolution Name="Default">{0} is marked with FlagsAttribute but a discrete member cannot be found for every settable bit that is used across the range of enum values. Remove FlagsAttribute from the type or define new members for the following (currently missing) values: {1}</Resolution>
@@ -8190,6 +8407,9 @@
    </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of '{0}' appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
+    <Resolution Name="Default">The 'this' parameter (or 'Me' in VB) of {0} is never used. Mark the member as static (or Shared in VB) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
    </Rule>
    <Rule TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223">
     <Resolution Name="Default">'{0}' should differ from other members by more than its return type.</Resolution>

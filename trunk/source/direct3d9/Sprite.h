@@ -45,8 +45,10 @@ namespace SlimDX
 
 		public ref class Sprite : public DirectXObject<ID3DXSprite>
 		{
-		public:
+		internal:
 			Sprite( ID3DXSprite* sprite );
+
+		public:
 			Sprite( Device^ device );
 			~Sprite() { Destruct(); }
 			DXOBJECT_FUNCTIONS;

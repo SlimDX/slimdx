@@ -35,12 +35,12 @@ namespace SlimDX
 			Points = D3DXMESH_POINTS,
 			RTPatches = D3DXMESH_RTPATCHES,
 			NPatches = D3DXMESH_NPATCHES,
-			VertexBufferSystemMem = D3DXMESH_VB_SYSTEMMEM,
+			VertexBufferSystemMemory = D3DXMESH_VB_SYSTEMMEM,
 			VertexBufferManaged = D3DXMESH_VB_MANAGED,
 			VertexBufferWriteOnly = D3DXMESH_VB_WRITEONLY,
 			VertexBufferDynamic = D3DXMESH_VB_DYNAMIC,
 			VertexBufferSoftware = D3DXMESH_VB_SOFTWAREPROCESSING,
-			IndexBufferSystemMem = D3DXMESH_IB_SYSTEMMEM,
+			IndexBufferSystemMemory = D3DXMESH_IB_SYSTEMMEM,
 			IndexBufferManaged = D3DXMESH_IB_MANAGED,
 			IndexBufferbWriteOnly = D3DXMESH_IB_WRITEONLY,
 			IndexBufferDynamic = D3DXMESH_IB_DYNAMIC,
@@ -51,7 +51,7 @@ namespace SlimDX
 			UseHardwareOnly = D3DXMESH_USEHWONLY,
 
 			// Helper options
-			SystemMem = D3DXMESH_SYSTEMMEM,
+			SystemMemory = D3DXMESH_SYSTEMMEM,
 			Managed = D3DXMESH_MANAGED,
 			WriteOnly = D3DXMESH_WRITEONLY,
 			Dynamic = D3DXMESH_DYNAMIC,
@@ -98,6 +98,8 @@ namespace SlimDX
 		public value class ExtendedMaterial
 		{
 		internal:
+			static D3DXMATERIAL ToUnmanaged( ExtendedMaterial material );
+			static ExtendedMaterial FromUnmanaged( const D3DXMATERIAL &material );
 			static array<ExtendedMaterial>^ FromBuffer( ID3DXBuffer* buffer, unsigned int count );
 
 		public:
@@ -116,6 +118,8 @@ namespace SlimDX
 		public value class EffectInstance
 		{
 		internal:
+			static EffectInstance FromUnmanaged( const D3DXEFFECTINSTANCE &effect );
+			static D3DXEFFECTINSTANCE ToUnmanaged( EffectInstance effect );
 			static array<EffectInstance>^ FromBuffer( ID3DXBuffer* buffer, unsigned int count );
 
 		public:
@@ -181,13 +185,13 @@ namespace SlimDX
 		public ref class Mesh : public BaseMesh
 		{
 		internal:
+			Mesh( ID3DXMesh* mesh );
 			property ID3DXMesh* MeshPointer
 			{
 				ID3DXMesh* get() { return (ID3DXMesh*) m_Pointer; }
 			}
 
 		public:
-			Mesh( ID3DXMesh* mesh );
 			Mesh( Device^ device, int faceCount, int vertexCount, MeshFlags options, array<VertexElement>^ vertexDecl );
 			Mesh( Device^ device, int faceCount, int vertexCount, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf );
 			virtual ~Mesh() { }
@@ -264,6 +268,35 @@ namespace SlimDX
 			void Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn );*/
 
 			void ComputeTangentFrame( TangentOptions options );
+		};
+
+		public ref class ProgressiveMesh : public BaseMesh
+		{
+		internal:
+			ProgressiveMesh( ID3DXPMesh* mesh ) : BaseMesh( mesh ) { }
+
+			property ID3DXPMesh* MeshPointer
+			{
+				ID3DXPMesh* get() { return (ID3DXPMesh*) m_Pointer; }
+			}
+
+		public:
+			virtual ~ProgressiveMesh() { }
+		};
+
+		public ref class PatchMesh : DirectXObject<ID3DXPatchMesh>
+		{
+		internal:
+			PatchMesh( ID3DXPatchMesh *mesh ) : DirectXObject( mesh ) { }
+
+		public:
+			virtual ~PatchMesh() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
+
+			property int PatchCount
+			{
+				int get() { return 0; }
+			}
 		};
 	}
 }

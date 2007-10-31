@@ -95,14 +95,13 @@ namespace SlimDX
 		public ref class Volume : public Resource
 		{
 		internal:
+			Volume( IDirect3DVolume9* volume );
 			property IDirect3DVolume9* VolumePointer
 			{
 				IDirect3DVolume9* get() { return (IDirect3DVolume9*) m_Pointer; }
 			}
 
 		public:
-			Volume( IDirect3DVolume9* volume );
-
 			LockedBox LockBox( LockFlags flags );
 			LockedBox LockBox( Box box, LockFlags flags );
 			void UnlockBox();

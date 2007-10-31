@@ -84,10 +84,11 @@ namespace SlimDX
 
 		public ref class ShaderBytecode : public BufferWrapper
 		{
-		public:
+		internal:
 			ShaderBytecode( ID3DXBuffer* buffer ) : BufferWrapper( buffer )
 			{ }
 
+		public:
 			ConstantTable^ GetConstantTable();
 			array<ShaderSemantic>^ GetInputSemantics();
 			array<ShaderSemantic>^ GetOutputSemantics();

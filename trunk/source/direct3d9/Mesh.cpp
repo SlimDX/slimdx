@@ -50,6 +50,45 @@ namespace Direct3D9
 		return cv;
 	}
 
+	D3DCOLORVALUE ConvertColor( ColorValue color )
+	{
+		D3DCOLORVALUE cv;
+		cv.r = color.Red;
+		cv.g = color.Green;
+		cv.b = color.Blue;
+		cv.a = color.Alpha;
+
+		return cv;
+	}
+
+	D3DXMATERIAL ExtendedMaterial::ToUnmanaged( ExtendedMaterial material )
+	{
+		D3DXMATERIAL result;
+		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( material.TextureFilename );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+
+		result.pTextureFilename = (LPSTR) pinnedName;
+		result.MatD3D.Ambient = ConvertColor( material.MaterialD3D.Ambient );
+		result.MatD3D.Diffuse = ConvertColor( material.MaterialD3D.Diffuse );
+		result.MatD3D.Specular = ConvertColor( material.MaterialD3D.Specular );
+		result.MatD3D.Emissive = ConvertColor( material.MaterialD3D.Emissive );
+		result.MatD3D.Power = material.MaterialD3D.Power;
+
+		return result;
+	}
+
+	ExtendedMaterial ExtendedMaterial::FromUnmanaged( const D3DXMATERIAL &material )
+	{
+		ExtendedMaterial result;
+		result.MaterialD3D.Diffuse = ConvertColor( material.MatD3D.Diffuse );
+		result.MaterialD3D.Ambient = ConvertColor( material.MatD3D.Ambient );
+		result.MaterialD3D.Specular = ConvertColor( material.MatD3D.Specular );
+		result.MaterialD3D.Emissive = ConvertColor( material.MatD3D.Emissive );
+		result.MaterialD3D.Power = material.MatD3D.Power;
+		result.TextureFilename = gcnew String( material.pTextureFilename );
+
+		return result;
+	}
 
 	array<ExtendedMaterial>^ ExtendedMaterial::FromBuffer( ID3DXBuffer* buffer, unsigned int count )
 	{
@@ -69,6 +108,47 @@ namespace Direct3D9
 		}
 
 		return dest;
+	}
+
+	EffectInstance EffectInstance::FromUnmanaged( const D3DXEFFECTINSTANCE &effect )
+	{
+		EffectInstance result;
+
+		result.EffectFilename = gcnew String( effect.pEffectFilename );
+		result.Defaults = gcnew array<EffectDefault>( effect.NumDefaults );
+
+		for( unsigned int i = 0; i < effect.NumDefaults; i++ )
+		{
+			result.Defaults[i].ParameterName = gcnew String( effect.pDefaults[i].pParamName );
+			result.Defaults[i].Type = (EffectDefaultType) effect.pDefaults[i].Type;
+			result.Defaults[i].Value = gcnew DataStream( effect.pDefaults[i].pValue, effect.pDefaults[i].NumBytes, true, false, true );
+		}
+
+		return result;
+	}
+
+	D3DXEFFECTINSTANCE EffectInstance::ToUnmanaged( EffectInstance effect )
+	{
+		D3DXEFFECTINSTANCE result;
+		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( effect.EffectFilename );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+		int count = effect.Defaults->Length;
+
+		result.pEffectFilename = (LPSTR) pinnedName;
+		result.pDefaults = new D3DXEFFECTDEFAULT[count];
+
+		for( int i = 0; i < effect.Defaults->Length; i++ )
+		{
+			array<unsigned char>^ nameBytes2 = System::Text::ASCIIEncoding::ASCII->GetBytes( effect.Defaults[i].ParameterName );
+			pin_ptr<unsigned char> pinnedName2 = &nameBytes2[0];
+
+			result.pDefaults[i].pParamName = (LPSTR) pinnedName2;
+			result.pDefaults[i].Type = (D3DXEFFECTDEFAULTTYPE) effect.Defaults[i].Type;
+			result.pDefaults[i].NumBytes = (DWORD) effect.Defaults[i].Value->Length;
+			result.pDefaults[i].pValue = effect.Defaults[i].Value->RawPointer;
+		}
+
+		return result;
 	}
 
 	array<EffectInstance>^ EffectInstance::FromBuffer( ID3DXBuffer* buffer, unsigned int count )

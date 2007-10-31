@@ -26,88 +26,13 @@
 #include "../DirectXObject.h"
 #include "../Math/Math.h"
 #include "GraphicsException.h"
+#include "AnimationSet.h"
 #include "AnimationController.h"
 
 namespace SlimDX
 {
 namespace Direct3D9
 {
-	AnimationSet::AnimationSet(ID3DXAnimationSet *set) : DirectXObject( set )
-	{
-	}
-
-	int AnimationSet::GetAnimationIndex( String^ name )
-	{
-		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
-		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
-		int result;
-
-		HRESULT hr = m_Pointer->GetAnimationIndexByName( (LPCSTR) pinnedName, (UINT*) &result );
-		GraphicsException::CheckHResult( hr );
-
-		return result;
-	}
-
-	String^ AnimationSet::GetAnimationName( int index )
-	{
-		LPCSTR result;
-		HRESULT hr = m_Pointer->GetAnimationNameByIndex( index, &result );
-		GraphicsException::CheckHResult( hr );
-
-		return gcnew String( result );
-	}
-
-	AnimationCallback^ AnimationSet::GetCallback( double position, CallbackSearchFlags flags, [Out] double% callbackPosition )
-	{
-		AnimationCallback^ callback;
-		pin_ptr<double> pinPosition = &callbackPosition;
-		void* functionPointer = Marshal::GetFunctionPointerForDelegate( callback ).ToPointer();
-
-		HRESULT hr = m_Pointer->GetCallback( position, ( DWORD )flags, pinPosition, &functionPointer );
-		GraphicsException::CheckHResult( hr );
-
-		return callback;
-	}
-
-	AnimationOutput^ AnimationSet::GetTransformation( double periodicPosition, int animation )
-	{
-		Vector3 scale;
-		Vector3 translation;
-		Quaternion rotation;
-
-		HRESULT hr = m_Pointer->GetSRT( periodicPosition, animation, (D3DXVECTOR3*) &scale, 
-			(D3DXQUATERNION*) &rotation, (D3DXVECTOR3*) &translation );
-		GraphicsException::CheckHResult( hr );
-
-		AnimationOutput^ output = gcnew AnimationOutput();
-		output->Flags = AnimationOutputFlags::Rotation | AnimationOutputFlags::Scale | AnimationOutputFlags::Translation;
-		output->Scaling = scale;
-		output->Translation = translation;
-		output->Rotation = rotation;
-
-		return output;
-	}
-
-	String^ AnimationSet::Name::get()
-	{
-		return gcnew String( m_Pointer->GetName() );
-	}
-
-	int AnimationSet::AnimationCount::get()
-	{
-		return m_Pointer->GetNumAnimations();
-	}
-
-	double AnimationSet::Period::get()
-	{
-		return m_Pointer->GetPeriod();
-	}
-
-	double AnimationSet::GetPeriodicPosition( double position )
-	{
-		return m_Pointer->GetPeriodicPosition( position );
-	}
-
 	AnimationController::AnimationController( ID3DXAnimationController *controller ) : DirectXObject( controller )
 	{
 	}
