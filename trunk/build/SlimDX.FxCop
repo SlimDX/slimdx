@@ -903,75 +903,390 @@
           </Members>
          </Type>
          <Type Name="Quaternion">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>SlimDX.Quaternion</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>SlimDX.Quaternion</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
-           <Member Name="op_Addition(SlimDX.Quaternion,SlimDX.Quaternion):SlimDX.Quaternion">
+           <Member Name="Add(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;):System.Void">
             <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2007-10-01 21:38:08Z">
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
               <Issue>
-               <Item>Add</Item>
-               <Item>Quaternion.op_Addition(Quaternion, Quaternion):Quaternion</Item>
+               <Item>result</Item>
               </Issue>
              </Message>
-             <Message TypeName="OverloadOperatorEqualsOnOverloadingAddAndSubtract" Category="Microsoft.Design" CheckId="CA1013" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>Quaternion</Item>
-               <Item>Quaternion.op_Addition(Quaternion, Quaternion):Quaternion</Item>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>right</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="op_Division(SlimDX.Quaternion,System.Single):SlimDX.Quaternion">
+           <Member Name="Barycentric(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;,System.Single,System.Single,SlimDX.Quaternion&amp;):System.Void">
             <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2007-10-01 21:38:08Z">
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
               <Issue>
-               <Item>Divide</Item>
-               <Item>Quaternion.op_Division(Quaternion, Single):Quaternion</Item>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>source1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>source2</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>source3</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="op_Multiply(SlimDX.Quaternion,SlimDX.Quaternion):SlimDX.Quaternion">
+           <Member Name="Concatenate(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;):System.Void">
             <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2007-10-01 21:38:08Z">
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
               <Issue>
-               <Item>Multiply</Item>
-               <Item>Quaternion.op_Multiply(Quaternion, Quaternion):Quaternion</Item>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>right</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="op_Multiply(SlimDX.Quaternion,System.Single):SlimDX.Quaternion">
+           <Member Name="Conjugate(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;):System.Void">
             <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2007-10-01 21:38:08Z">
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
               <Issue>
-               <Item>Multiply</Item>
-               <Item>Quaternion.op_Multiply(Quaternion, Single):Quaternion</Item>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>quaternion</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="op_Subtraction(SlimDX.Quaternion,SlimDX.Quaternion):SlimDX.Quaternion">
+           <Member Name="Divide(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;):System.Void">
             <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2007-10-01 21:38:08Z">
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
               <Issue>
-               <Item>Subtract</Item>
-               <Item>Quaternion.op_Subtraction(Quaternion, Quaternion):Quaternion</Item>
+               <Item>result</Item>
               </Issue>
              </Message>
-             <Message TypeName="OverloadOperatorEqualsOnOverloadingAddAndSubtract" Category="Microsoft.Design" CheckId="CA1013" Created="2007-10-01 21:38:08Z">
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>right</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Dot(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;):System.Single">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>right</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Equals(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;):System.Boolean">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>value1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>value2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Exponential(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
               <Issue>
-               <Item>Quaternion</Item>
-               <Item>Quaternion.op_Subtraction(Quaternion, Quaternion):Quaternion</Item>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>quaternion</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Invert(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>quaternion</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Lerp(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;,System.Single,SlimDX.Quaternion&amp;):System.Void">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>right</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Logarithm(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>quaternion</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Multiply(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>right</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Multiply(SlimDX.Quaternion&amp;,System.Single,SlimDX.Quaternion&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>quaternion</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Negate(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>quaternion</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Normalize(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>quaternion</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="RotationAxis(SlimDX.Vector3&amp;,System.Single,SlimDX.Quaternion&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>axis</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="RotationMatrix(SlimDX.Matrix&amp;,SlimDX.Quaternion&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>matrix</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="RotationYawPitchRoll(System.Single,System.Single,System.Single,SlimDX.Quaternion&amp;):System.Void">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Slerp(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;,System.Single,SlimDX.Quaternion&amp;):System.Void">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>right</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Squad(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;,System.Single,SlimDX.Quaternion&amp;):System.Void">
+            <Messages>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>source1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>source2</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>source3</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>source4</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="SquadSetup(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;):SlimDX.Quaternion[]">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>source1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>source2</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>source3</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>source4</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue>
+               <Item>SquadSetup</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="SquadSetup(SlimDX.Quaternion,SlimDX.Quaternion,SlimDX.Quaternion,SlimDX.Quaternion):SlimDX.Quaternion[]">
+            <Messages>
+             <Message TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue>
+               <Item>SquadSetup</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Subtract(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
+              <Issue Certainty="50">
+               <Item>right</Item>
               </Issue>
              </Message>
             </Messages>
@@ -7888,9 +8203,6 @@
    <Rule TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225">
     <Resolution Name="Default">Provide a method named '{0}' as a friendly alternate for operator {1}.</Resolution>
     <Resolution Name="Multiple">Provide a method named '{0}' or '{1}' as an alternate for operator {1}.</Resolution>
-   </Rule>
-   <Rule TypeName="OverloadOperatorEqualsOnOverloadingAddAndSubtract" Category="Microsoft.Design" CheckId="CA1013">
-    <Resolution Name="Default">Consider adding an overload of the equality operator for '{0}' that takes the same parameters as {1}.</Resolution>
    </Rule>
    <Rule TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815">
     <Resolution Name="Equals">'{0}' should override Equals.</Resolution>
