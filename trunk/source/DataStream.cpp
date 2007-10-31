@@ -69,6 +69,7 @@ namespace SlimDX
 		m_Buffer = (char*) userBuffer.ToPointer();
 		m_Size = sizeInBytes;
 
+		m_OwnsBuffer = false;
 		m_CanRead = canRead;
 		m_CanWrite = canWrite;
 	}
@@ -85,6 +86,8 @@ namespace SlimDX
 			delete[] m_Buffer;
 			m_OwnsBuffer = false;
 		}
+
+		m_Buffer = NULL;
 	}
 
 	char* DataStream::RawPointer::get()
