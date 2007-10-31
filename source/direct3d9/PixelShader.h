@@ -34,10 +34,10 @@ namespace SlimDX
 
 		internal:
 			PixelShader( IDirect3DPixelShader9* pixelShader );
+			PixelShader( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable );
 
 		public:
 			PixelShader( IntPtr pixelShader );
-			PixelShader( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable );
 			DXOBJECT_FUNCTIONS;
 			
 			~PixelShader()

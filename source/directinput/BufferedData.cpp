@@ -179,8 +179,9 @@ namespace DirectInput
 
 		timeStamp = objectData.dwTimeStamp;
 		sequence = objectData.dwSequence;
-		handle = GCHandle::FromIntPtr( ( IntPtr )( ( UIntPtr )objectData.uAppData ).ToPointer() );
+		GCHandle handle = GCHandle::FromIntPtr( ( IntPtr )( ( UIntPtr )objectData.uAppData ).ToPointer() );
 		appData = handle.Target;
+		handle.Free();
 	}
 
 	generic<typename DataFormat>
@@ -191,25 +192,6 @@ namespace DirectInput
 	generic<typename DataFormat>
 	BufferedData<DataFormat>::BufferedData( DataFormat data ) : data( data )
 	{
-	}
-
-	generic<typename DataFormat>
-	BufferedData<DataFormat>::!BufferedData()
-	{
-		Destruct();
-	}
-
-	generic<typename DataFormat>
-	BufferedData<DataFormat>::~BufferedData()
-	{
-		Destruct();
-	}
-
-	generic<typename DataFormat>
-	void BufferedData<DataFormat>::Destruct()
-	{
-		if( handle.IsAllocated )
-			handle.Free();
 	}
 
 	generic<typename DataFormat>

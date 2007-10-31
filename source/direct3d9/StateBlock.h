@@ -38,8 +38,10 @@ namespace SlimDX
 
 		public ref class StateBlock : DirectXObject<IDirect3DStateBlock9>
 		{
-		public:
+		internal:
 			StateBlock( IDirect3DStateBlock9* stateBlock );
+
+		public:
 			StateBlock( Device^ device, StateBlockType type );
 			~StateBlock() { Destruct(); }
 			DXOBJECT_FUNCTIONS;

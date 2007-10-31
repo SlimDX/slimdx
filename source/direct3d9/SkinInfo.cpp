@@ -26,11 +26,12 @@
 #include "../DirectXObject.h"
 
 #include "Device.h"
-//#include "SkinInfo.h"
+#include "SkinInfo.h"
 
 namespace SlimDX
 {
 namespace Direct3D9
 {
+
 }
 }

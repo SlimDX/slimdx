@@ -68,8 +68,10 @@ namespace SlimDX
 
 			void SetDS8Pointer();
 
-		public:
+		internal:
 			SoundBuffer( IDirectSoundBuffer* buffer );
+
+		public:
 			SoundBuffer( DirectSound^ dsound, BufferDescription desc );
 			~SoundBuffer();
 			DXOBJECT_FUNCTIONS;

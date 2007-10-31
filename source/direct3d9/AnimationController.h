@@ -28,6 +28,9 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		ref class AnimationSet;
+		ref class AnimationOutput;
+
 		public delegate void AnimationCallback( int track, Object^ data );
 
 		public enum class TransitionType : Int32
@@ -49,22 +52,6 @@ namespace SlimDX
 			TrackPosition = D3DXEVENT_TRACKPOSITION,
 			TrackEnable = D3DXEVENT_TRACKENABLE,
 			PriorityBlend = D3DXEVENT_PRIORITYBLEND
-		};
-
-		[Flags]
-		public enum class AnimationOutputFlags : Int32
-		{
-			None,
-			Transformation,
-			Translation,
-			Scale,
-			Rotation
-		};
-
-		public enum class CallbackSearchFlags : Int32
-		{
-			SearchExcludingInitialPosition = D3DXCALLBACK_SEARCH_EXCLUDING_INITIAL_POSITION,
-			SearchBehindInitialPosition = D3DXCALLBACK_SEARCH_BEHIND_INITIAL_POSITION
 		};
 
 		[StructLayout(LayoutKind::Sequential)]
@@ -91,37 +78,7 @@ namespace SlimDX
 			property float Speed;
 			property double Position;
 			property bool Enabled;
-		};
-
-		public ref class AnimationOutput
-		{
-		public:
-			property AnimationOutputFlags Flags;
-			property Matrix Transformation;
-			property Vector3 Scaling;
-			property Vector3 Translation;
-			property Quaternion Rotation;
-		};
-
-		public ref class AnimationSet : public DirectXObject<ID3DXAnimationSet>
-		{
-		internal:
-			AnimationSet( ID3DXAnimationSet* set );
-
-		public:
-			virtual ~AnimationSet() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
-
-			int GetAnimationIndex( String^ name );
-			String^ GetAnimationName( int index );
-			AnimationCallback^ GetCallback( double position, CallbackSearchFlags flags, [Out] double% callbackPosition );
-			AnimationOutput^ GetTransformation( double periodicPosition, int animation );
-			double GetPeriodicPosition( double position );
-
-			property String^ Name { String^ get(); }
-			property int AnimationCount { int get(); }
-			property double Period { double get(); }
-		};
+		};		
 
 		public ref class AnimationController : public DirectXObject<ID3DXAnimationController>
 		{

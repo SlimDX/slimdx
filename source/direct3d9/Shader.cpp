@@ -133,7 +133,7 @@ namespace SlimDX
 
 		void Macro::Unmarshal( D3DXMACRO* macros, array<GCHandle>^ handles )
 		{
-			delete macros;
+			delete[] macros;
 			if( handles != nullptr )
 			{
 				for( int i = 0; i < handles->Length; ++i )

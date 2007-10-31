@@ -38,10 +38,7 @@ namespace SlimDX
 			DataFormat data;
 			int timeStamp;
 			int sequence;
-			GCHandle handle;
 			Object^ appData;
-
-			void Destruct();
 
 		internal:
 			BufferedData( const DIDEVICEOBJECTDATA &data );
@@ -55,17 +52,7 @@ namespace SlimDX
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::BufferedData"/> class.
 			/// </summary>
-			BufferedData( DataFormat data );	
-
-			/// <summary>
-			/// Disposes of unmanaged resources.
-			/// </summary>
-			!BufferedData();
-
-			/// <summary>
-			/// Disposes of managed resources.
-			/// </summary>
-			~BufferedData();
+			BufferedData( DataFormat data );
 
 			/// <summary>
 			/// Gets or sets the data obtained from or sent to the device. For axis input, the data reflects

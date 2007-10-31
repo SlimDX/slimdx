@@ -41,18 +41,21 @@ namespace SlimDX
 
 		public ref class ShaderFragments : public BufferWrapper
 		{
-		public:
+		internal:
 			ShaderFragments( ID3DXBuffer* buffer ) : BufferWrapper( buffer )
 			{ }
 
+		public:
 			ShaderFragments( int size ) : BufferWrapper( size )
 			{ }
 		};
 
 		public ref class FragmentLinker : public DirectXObject<ID3DXFragmentLinker>
 		{
-		public:
+		internal:
 			FragmentLinker( ID3DXFragmentLinker* linker );
+
+		public:
 			FragmentLinker( Device^ device, int cacheSize );
 			~FragmentLinker() { Destruct(); }
 			DXOBJECT_FUNCTIONS;

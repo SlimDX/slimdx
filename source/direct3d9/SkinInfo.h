@@ -43,12 +43,17 @@ namespace SlimDX
 
 		public ref class SkinInfo : public DirectXObject<ID3DXSkinInfo>
 		{
-		public:
-			SkinInfo( ID3DXSkinInfo* skinInfo );
-			SkinInfo( int vertexCount, array<VertexElement>^ vertexDecl, int numBones );
-			SkinInfo( int vertexCount, VertexFormat fvf, int numBones );
-			~SkinInfo() { Destruct(); }
+		internal:
+			SkinInfo( ID3DXSkinInfo* skinInfo ) : DirectXObject( skinInfo ) { }
 
+		public:
+			//SkinInfo( int vertexCount, array<VertexElement>^ vertexDecl, int numBones );
+			//SkinInfo( BaseMesh^ mesh, int boneCount, array<BoneCombination^>^ boneCombinationTable );
+			//SkinInfo( int vertexCount, VertexFormat fvf, int numBones );
+			virtual ~SkinInfo() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
+
+			/*SkinInfo^ Clone();
 			int FindBoneVertexInfluenceIndex( int bone, int vertex );
 
 			void GetBoneInfluence( int bone, [Out] array<int>^% vertices, [Out] array<int>^% weights );
@@ -64,15 +69,14 @@ namespace SlimDX
 			void SetBoneOffsetMatrix( int bone, Matrix transform );
 
 			void Remap( array<int>^ remapData );
-			//void UpdateSkinnedMesh( Matrix boneTransform, Matrix boneTransformInverseTranspose, 
 
-			property int MinBoneInfluence
+			property int MinimumBoneInfluence
 			{
 				int get();
 				void set( int minimum );
 			}
 
-			property int MaxVertexInfluence
+			property int MaximumVertexInfluence
 			{
 				int get();
 			}
@@ -86,7 +90,7 @@ namespace SlimDX
 			{
 				SlimDX::Direct3D9::VertexFormat get();
 				void set( SlimDX::Direct3D9::VertexFormat format );
-			}
+			}*/
 		};
 	}
 }
