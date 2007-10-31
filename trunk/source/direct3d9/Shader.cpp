@@ -35,16 +35,69 @@ namespace SlimDX
 		IncludeShim::IncludeShim( Include^ wrappedInterface )
 		{
 			m_WrappedInterface = wrappedInterface;
+			m_stream = nullptr;
 		}
 
 		HRESULT IncludeShim::Open( D3DXINCLUDE_TYPE includeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID* ppData, UINT* pBytes )
 		{
-			return E_FAIL;
+			try
+			{
+				Stream^ stream;
+				m_WrappedInterface->Open( (IncludeType) includeType, gcnew String(pFileName), stream );
+				m_stream = stream;
+
+				if( stream != nullptr )
+				{
+					if(stream->GetType() == DataStream::typeid)
+					{
+						//Magic shortcut if we happen to get a DataStream
+						DataStream^ data = safe_cast<DataStream^>( stream );
+						*ppData = data->RawPointer;
+						*pBytes = (UINT) data->Length;
+					}
+					else
+					{
+						//Read the stream into a byte array and pin it
+						array<Byte>^ data = Utils::ReadStream( stream, 0 );
+						m_handle = GCHandle::Alloc( data, GCHandleType::Pinned );
+						*ppData = m_handle.AddrOfPinnedObject().ToPointer();
+						*pBytes = data->Length;
+					}
+				}
+				else
+				{
+					*ppData = NULL;
+					*pBytes = 0;
+				}
+
+				return S_OK;
+			}
+			catch( Exception^ )
+			{
+				return E_FAIL;
+			}
 		}
 
 		HRESULT IncludeShim::Close( LPCVOID pData )
 		{
-			return E_FAIL;
+			try
+			{
+				if( m_handle.IsAllocated )
+				{
+					m_handle.Free();
+				}
+
+				Stream^ stream = m_stream;
+				m_WrappedInterface->Close( stream );
+				delete stream;
+				m_stream = nullptr;
+
+				return S_OK;
+			}
+			catch( Exception^ )
+			{
+				return E_FAIL;
+			}
 		}
 
 		//helper function to resolve array<Macro>^ to D3DXMACRO*
