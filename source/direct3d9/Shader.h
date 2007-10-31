@@ -37,16 +37,24 @@ namespace SlimDX
 	{
 		class IncludeShim;
 
+		public enum class IncludeType : Int32
+		{
+			Local = D3DXINC_LOCAL,
+			System = D3DXINC_SYSTEM,
+		};
+
 		public interface struct Include
 		{
-			virtual void Open() = 0;
-			virtual void Close() = 0;
+			virtual void Open( IncludeType includeType, String^ fileName, [Out] Stream^% stream ) = 0;
+			virtual void Close( Stream^ stream ) = 0;
 		};
 
 		class IncludeShim : public ID3DXInclude
 		{
 		private:
 			gcroot<Include^> m_WrappedInterface;
+			gcroot<Stream^> m_stream;
+			GCHandle m_handle;
 
 		public:
 			IncludeShim( Include^ wrappedInterface );
