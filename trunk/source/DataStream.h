@@ -29,7 +29,7 @@ namespace SlimDX
 	public ref class DataStream : public Stream
 	{
 	private:
-		initonly char* m_Buffer;
+		char* m_Buffer;
 		Int64 m_Position;
 		Int64 m_Size;
 		bool m_OwnsBuffer;
