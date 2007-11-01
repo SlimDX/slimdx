@@ -38,7 +38,15 @@ namespace Demo
 			Application.SetCompatibleTextRenderingDefault(false);
 
 			Viewport viewport = new Viewport();
-			Engine = new Engine(viewport.pnMain);
+			try
+			{
+				Engine = new Engine(viewport.pnMain);
+			}
+			catch(SlimDX.Direct3D9.Direct3DX9NotFoundException ex)
+			{
+				MessageBox.Show(ex.Message, "Failed to load!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
 
 			while(viewport.Visible && !Engine.Input.Keyboard[Keys.Escape].Down)
 			{
