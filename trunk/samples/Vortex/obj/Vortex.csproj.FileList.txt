@@ -1,0 +1,17 @@
+bin\Debug\Vortex.exe
+bin\Debug\Vortex.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\Vortex.csproj.GenerateResource.Cache
+obj\Debug\Vortex.exe
+obj\Debug\Vortex.pdb
+bin\Release\Vortex.exe
+bin\Release\Vortex.pdb
+obj\Release\ResolveAssemblyReference.cache
+obj\Release\Vortex.Properties.Resources.resources
+obj\Release\Vortex.csproj.GenerateResource.Cache
+obj\Release\Vortex.exe
+obj\Release\Vortex.pdb
+obj\Debug\Demo.Viewport.resources
+obj\Debug\Demo.Properties.Resources.resources
+obj\Release\Demo.Properties.Resources.resources
+obj\Release\Demo.Viewport.resources
