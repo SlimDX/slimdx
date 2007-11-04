@@ -206,7 +206,7 @@ namespace SlimDX
 			if( FAILED( hr ) )
 				return nullptr;
 			
-			std::auto_ptr<LPCSTR> samplers = new LPCSTR[count];
+			std::auto_ptr<LPCSTR> samplers(new LPCSTR[count]);
 
 			hr = D3DXGetShaderSamplers( function, samplers.get(), &count );
 			GraphicsException::CheckHResult( hr );
