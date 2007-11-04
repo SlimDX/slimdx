@@ -146,7 +146,7 @@ namespace Direct3D9
 			return nullptr;
 
 		//Get the actual data
-		std::auto_ptr<D3DXCONSTANT_DESC> nativeDescArray = new D3DXCONSTANT_DESC[count];
+		std::auto_ptr<D3DXCONSTANT_DESC> nativeDescArray(new D3DXCONSTANT_DESC[count]);
 		hr = m_Pointer->GetConstantDesc( nativeHandle, nativeDescArray.get(), &count );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
