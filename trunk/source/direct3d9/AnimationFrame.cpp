@@ -371,6 +371,53 @@ namespace Direct3D9
 		return D3D_OK;
 	}
 
+	ILoadUserDataShim::ILoadUserDataShim( ILoadUserData^ wrappedInterface )
+	{
+		m_WrappedInterface = wrappedInterface;
+	}
+
+	HRESULT ILoadUserDataShim::LoadFrameChildData( LPD3DXFRAME pFrame, LPD3DXFILEDATA pXofChildData )
+	{
+		try
+		{
+			m_WrappedInterface->LoadFrameData( gcnew Frame( pFrame ), gcnew XFileData( pXofChildData ) );
+		}
+		catch( Exception^ )
+		{
+			return E_FAIL;
+		}
+
+		return D3D_OK;
+	}
+
+	HRESULT ILoadUserDataShim::LoadMeshChildData( LPD3DXMESHCONTAINER pMeshContainer, LPD3DXFILEDATA pXofChildData )
+	{
+		try
+		{
+			m_WrappedInterface->LoadMeshData( gcnew MeshContainer( pMeshContainer ), gcnew XFileData( pXofChildData ) );
+		}
+		catch( Exception^ )
+		{
+			return E_FAIL;
+		}
+
+		return D3D_OK;
+	}
+
+	HRESULT ILoadUserDataShim::LoadTopLevelData( LPD3DXFILEDATA pXofChildData )
+	{
+		try
+		{
+			m_WrappedInterface->LoadTopLevelData( gcnew XFileData( pXofChildData ) );
+		}
+		catch( Exception^ )
+		{
+			return E_FAIL;
+		}
+
+		return D3D_OK;
+	}
+
 	Frame::Frame( const D3DXFRAME &frame )
 	{
 		m_Pointer = new D3DXFRAME( frame );
@@ -524,6 +571,57 @@ namespace Direct3D9
 			Pointer->pFrameFirstChild = NULL;
 		else
 			Pointer->pFrameFirstChild = value->Pointer;
+	}
+
+	Frame^ Frame::LoadHierarchyFromX( Device^ device, String^ fileName, MeshFlags options, 
+		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
+	{
+		IAllocateHierarchyShim* allocatorShim = new IAllocateHierarchyShim( allocator );
+		ILoadUserDataShim* userDataLoaderShim = new ILoadUserDataShim( userDataLoader );
+		LPD3DXFRAME result;
+		LPD3DXANIMATIONCONTROLLER animationResult;
+
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+
+		HRESULT hr = D3DXLoadMeshHierarchyFromX( (LPCWSTR) pinnedName, (DWORD) options, device->InternalPointer,
+			allocatorShim, userDataLoaderShim, &result, &animationResult );
+		GraphicsException::CheckHResult( hr );
+
+		animationController = gcnew AnimationController( animationResult );
+
+		delete allocatorShim;
+		delete userDataLoaderShim;
+
+		return gcnew Frame( result );
+	}
+
+	Frame^ Frame::LoadHierarchyFromX( Device^ device, array<Byte>^ memory, MeshFlags options, 
+		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
+	{
+		IAllocateHierarchyShim* allocatorShim = new IAllocateHierarchyShim( allocator );
+		ILoadUserDataShim* userDataLoaderShim = new ILoadUserDataShim( userDataLoader );
+		LPD3DXFRAME result;
+		LPD3DXANIMATIONCONTROLLER animationResult;
+
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+
+		HRESULT hr = D3DXLoadMeshHierarchyFromXInMemory( (LPCVOID) pinnedMemory, memory->Length, (DWORD) options, 
+			device->InternalPointer, allocatorShim, userDataLoaderShim, &result, &animationResult );
+		GraphicsException::CheckHResult( hr );
+
+		animationController = gcnew AnimationController( animationResult );
+
+		delete allocatorShim;
+		delete userDataLoaderShim;
+
+		return gcnew Frame( result );
+	}
+
+	Frame^ Frame::LoadHierarchyFromX( Device^ device, Stream^ stream, MeshFlags options, 
+		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		return Frame::LoadHierarchyFromX( device, data, options, allocator, userDataLoader, animationController );
 	}
 }
 }

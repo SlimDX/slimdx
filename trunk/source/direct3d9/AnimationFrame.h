@@ -24,6 +24,8 @@
 using namespace System;
 using namespace System::Collections::ObjectModel;
 
+#include "XFile.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
@@ -153,6 +155,26 @@ namespace SlimDX
 			HRESULT WINAPI DestroyFrame( LPD3DXFRAME pFrameToFree );
 			HRESULT WINAPI DestroyMeshContainer( LPD3DXMESHCONTAINER pMeshContainerToFree );
 		};
+		
+		public interface struct ILoadUserData
+		{
+			virtual void LoadFrameData( Frame^ frame, XFileData^ data ) = 0;
+			virtual void LoadMeshData( MeshContainer^ meshContainer, XFileData^ data ) = 0;
+			virtual void LoadTopLevelData( XFileData^ data ) = 0;
+		};
+
+		class ILoadUserDataShim : public ID3DXLoadUserData
+		{
+		private:
+			gcroot<ILoadUserData^> m_WrappedInterface;
+
+		public:
+			ILoadUserDataShim( ILoadUserData^ wrappedInterface );
+
+			HRESULT WINAPI LoadFrameChildData( LPD3DXFRAME pFrame, LPD3DXFILEDATA pXofChildData );
+			HRESULT WINAPI LoadMeshChildData( LPD3DXMESHCONTAINER pMeshContainer, LPD3DXFILEDATA pXofChildData );
+			HRESULT WINAPI LoadTopLevelData( LPD3DXFILEDATA pXofChildData );
+		};
 
 		public ref class Frame
 		{
@@ -174,6 +196,13 @@ namespace SlimDX
 			Frame();
 			virtual ~Frame();
 			!Frame();
+
+			static Frame^ LoadHierarchyFromX( Device^ device, String^ fileName, MeshFlags options, 
+				IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController );
+			static Frame^ LoadHierarchyFromX( Device^ device, array<Byte>^ memory, MeshFlags options, 
+				IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController );
+			static Frame^ LoadHierarchyFromX( Device^ device, Stream^ stream, MeshFlags options, 
+				IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController );
 
 			void AppendChild( Frame^ child );
 			Frame^ FindChild( String^ name );

@@ -5739,6 +5739,49 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="LoadHierarchyFromX(SlimDX.Direct3D9.Device,System.Byte[],SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.IAllocateHierarchy,SlimDX.Direct3D9.ILoadUserData,SlimDX.Direct3D9.AnimationController&amp;):SlimDX.Direct3D9.Frame">
+            <Messages>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-02 21:35:27Z">
+              <Issue>
+               <Item>animationController</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-02 21:35:27Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Frame.LoadHierarchyFromX(Device, Byte[], MeshFlags, IAllocateHierarchy, ILoadUserData, AnimationController&amp;):Frame</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="LoadHierarchyFromX(SlimDX.Direct3D9.Device,System.IO.Stream,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.IAllocateHierarchy,SlimDX.Direct3D9.ILoadUserData,SlimDX.Direct3D9.AnimationController&amp;):SlimDX.Direct3D9.Frame">
+            <Messages>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-02 21:35:27Z">
+              <Issue>
+               <Item>animationController</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="LoadHierarchyFromX(SlimDX.Direct3D9.Device,System.String,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.IAllocateHierarchy,SlimDX.Direct3D9.ILoadUserData,SlimDX.Direct3D9.AnimationController&amp;):SlimDX.Direct3D9.Frame">
+            <Messages>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-02 21:35:27Z">
+              <Issue>
+               <Item>animationController</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-02 21:35:27Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Frame.LoadHierarchyFromX(Device, String, MeshFlags, IAllocateHierarchy, ILoadUserData, AnimationController&amp;):Frame</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="RegisterNamedMatrices(SlimDX.Direct3D9.Frame,SlimDX.Direct3D9.AnimationController):System.Void">
             <Messages>
              <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-10-31 21:12:23Z">
@@ -7422,6 +7465,94 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="XFile">
+          <Members>
+           <Member Name="CreateEnumerationObject(System.String,System.Runtime.InteropServices.CharSet):SlimDX.Direct3D9.XFileEnumerationObject">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidTypeNamesInParameters" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2007-11-02 21:35:27Z">
+              <Issue>
+               <Item>charSet</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CreateSaveObject(System.String,System.Runtime.InteropServices.CharSet,SlimDX.Direct3D9.XFileFormat):SlimDX.Direct3D9.XFileSaveObject">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidTypeNamesInParameters" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2007-11-02 21:35:27Z">
+              <Issue>
+               <Item>charSet</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="RegisterEnumerationTemplates(SlimDX.Direct3D9.XFileEnumerationObject):System.Void">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-02 21:35:27Z">
+              <Issue>
+               <Item>enumerationObject</Item>
+               <Item>XFile.RegisterEnumerationTemplates(XFileEnumerationObject):Void</Item>
+               <Item>SlimDX.Direct3D9.XFileEnumerationObject</Item>
+               <Item>SlimDX.DirectXObject&lt;ID3DXFileEnumObject&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="XFileData">
+          <Members>
+           <Member Name="GetEnumerationObject():SlimDX.Direct3D9.XFileEnumerationObject">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-11-02 21:35:27Z">
+              <Issue Certainty="50">
+               <Item>GetEnumerationObject</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="XFileEnumerationObject">
+          <Members>
+           <Member Name="GetFile():SlimDX.Direct3D9.XFile">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-11-02 21:35:27Z">
+              <Issue Certainty="50">
+               <Item>GetFile</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="XFileFormat">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-11-02 21:35:27Z" FixCategory="Breaking">
+            <Issue Name="FlagsRename">
+             <Item>SlimDX.Direct3D9.XFileFormat</Item>
+             <Item>XFileFormat.Binary</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-11-02 21:35:27Z">
+            <Issue>
+             <Item>XFileFormat</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="XFileSaveObject">
+          <Members>
+           <Member Name="GetFile():SlimDX.Direct3D9.XFile">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-11-02 21:35:27Z">
+              <Issue Certainty="50">
+               <Item>GetFile</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
         </Types>
        </Namespace>
        <Namespace Name="SlimDX.DirectInput">
@@ -8347,6 +8478,9 @@
    </Rule>
    <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
     <Resolution Name="Default">Consider a design that does not require that '{0}' be an out parameter.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidTypeNamesInParameters" Category="Microsoft.Naming" CheckId="CA1720">
+    <Resolution Name="Default">Remove the type identifier from parameter name '{0}'.</Resolution>
    </Rule>
    <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
     <Resolution Name="Default">'{0}' appears to have no upstream public or protected callers.</Resolution>
