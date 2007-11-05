@@ -59,7 +59,7 @@ namespace DirectInput
 	Device<DataFormat>::Device( Guid subsystem )
 	{
 		IDirectInputDevice8W* device;
-		HRESULT hr = DirectInput::InternalPointer->CreateDevice( SystemGuid::ToGUID( subsystem ), &device, NULL );
+		HRESULT hr = DirectInput::InternalPointer->CreateDevice( Utils::ToGUID( subsystem ), &device, NULL );
 		InputException::CheckHResult( hr );
 
 		m_Pointer = device;
@@ -106,7 +106,7 @@ namespace DirectInput
 			DIOBJECTDATAFORMAT *objectFormats = new DIOBJECTDATAFORMAT[objectAttributes->Count];
 			for( int i = 0; i < objectAttributes->Count; i++ )
 			{
-				GUID *guid = new GUID( SystemGuid::ToGUID( objectAttributes[i]->SourceGuid ) );
+				GUID *guid = new GUID( Utils::ToGUID( objectAttributes[i]->SourceGuid ) );
 				objectFormats[i].dwFlags = ( DWORD )objectAttributes[i]->Flags;
 				objectFormats[i].dwType = ( DWORD )objectAttributes[i]->Type;
 				objectFormats[i].pguid = guid;

@@ -31,9 +31,9 @@ namespace DirectInput
 {
 	DeviceInstance::DeviceInstance( const DIDEVICEINSTANCE &deviceInstance )
 	{
-		instanceGuid = SystemGuid::FromGUID( deviceInstance.guidInstance );
-		productGuid = SystemGuid::FromGUID( deviceInstance.guidProduct );
-		ffDriverGuid = SystemGuid::FromGUID( deviceInstance.guidFFDriver );
+Utils::FromGUID( deviceInstance.guidInstance );
+Utils::FromGUID( deviceInstance.guidProduct );
+Utils::FromGUID( deviceInstance.guidFFDriver );
 		type = ( DeviceType )deviceInstance.dwDevType;
 		subType = deviceInstance.dwDevType >> 8;
 		usage = deviceInstance.wUsage;

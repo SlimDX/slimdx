@@ -675,7 +675,7 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_GUIDANDPATH, &dip.diph );
 		InputException::CheckHResult( hr );
 
-		return SystemGuid::FromGUID( dip.guidClass );
+		return Utils::FromGUID( dip.guidClass );
 	}
 
 	String^ DeviceProperties::InterfacePath::get()

@@ -23,6 +23,8 @@
 
 using namespace System;
 
+#include "../Utils.h"
+
 namespace SlimDX
 {
 	namespace DirectInput
@@ -35,31 +37,13 @@ namespace SlimDX
 		private:
 			SystemGuid() { }
 
-		internal:
-			static Guid FromGUID( const GUID &guid )
-			{
-				Guid result( guid.Data1, guid.Data2, guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], 
-					guid.Data4[3], guid.Data4[4], guid.Data4[5], guid.Data4[6], guid.Data4[7] );
-				return result;
-			}
-
-			static GUID ToGUID( Guid guid )
-			{
-				GUID result;
-				array<Byte>^ bytes = guid.ToByteArray();
-				pin_ptr<unsigned char> pinned_bytes = &bytes[0];
-				memcpy( &result, pinned_bytes, sizeof(GUID) );
-		
-				return result;
-			}
-
 		public:
 			/// <summary>
 			/// Gets the system keyboard identifier.
 			/// </summary>
 			static property Guid Keyboard
 			{
-				Guid get() { return SystemGuid::FromGUID( GUID_SysKeyboard ); }
+				Guid get() { return Utils::FromGUID( GUID_SysKeyboard ); }
 			}
 
 			/// <summary>
@@ -67,7 +51,7 @@ namespace SlimDX
 			/// </summary>
 			static property Guid Mouse
 			{
-				Guid get() { return SystemGuid::FromGUID( GUID_SysMouse ); }
+				Guid get() { return Utils::FromGUID( GUID_SysMouse ); }
 			}
 		};
 
@@ -82,57 +66,57 @@ namespace SlimDX
 		public:
 			static property Guid XAxis
 			{
-				Guid get() { return SystemGuid::FromGUID( GUID_XAxis ); }
+				Guid get() { return Utils::FromGUID( GUID_XAxis ); }
 			}
 
 			static property Guid YAxis
 			{
-				Guid get() { return SystemGuid::FromGUID( GUID_YAxis ); }
+				Guid get() { return Utils::FromGUID( GUID_YAxis ); }
 			}
 
 			static property Guid ZAxis
 			{
-				Guid get() { return SystemGuid::FromGUID( GUID_ZAxis ); }
+				Guid get() { return Utils::FromGUID( GUID_ZAxis ); }
 			}
 
 			static property Guid RotationalXAxis
 			{
-				Guid get() { return SystemGuid::FromGUID( GUID_RxAxis ); }
+				Guid get() { return Utils::FromGUID( GUID_RxAxis ); }
 			}
 
 			static property Guid RotationalYAxis
 			{
-				Guid get() { return SystemGuid::FromGUID( GUID_RyAxis ); }
+				Guid get() { return Utils::FromGUID( GUID_RyAxis ); }
 			}
 
 			static property Guid RotationalZAxis
 			{
-				Guid get() { return SystemGuid::FromGUID( GUID_RzAxis ); }
+				Guid get() { return Utils::FromGUID( GUID_RzAxis ); }
 			}
 
 			static property Guid Slider
 			{
-				Guid get() { return SystemGuid::FromGUID( GUID_Slider ); }
+				Guid get() { return Utils::FromGUID( GUID_Slider ); }
 			}
 
 			static property Guid Button
 			{
-				Guid get() { return SystemGuid::FromGUID( GUID_Button ); }
+				Guid get() { return Utils::FromGUID( GUID_Button ); }
 			}
 
 			static property Guid Key
 			{
-				Guid get() { return SystemGuid::FromGUID( GUID_Key ); }
+				Guid get() { return Utils::FromGUID( GUID_Key ); }
 			}
 
 			static property Guid PovController
 			{
-				Guid get() { return SystemGuid::FromGUID( GUID_POV ); }
+				Guid get() { return Utils::FromGUID( GUID_POV ); }
 			}
 
 			static property Guid Unknown
 			{
-				Guid get() { return SystemGuid::FromGUID( GUID_Unknown ); }
+				Guid get() { return Utils::FromGUID( GUID_Unknown ); }
 			}
 		};
 	}

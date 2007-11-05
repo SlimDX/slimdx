@@ -567,6 +567,10 @@
 					RelativePath="..\source\direct3d9\Volume.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d9\XFile.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Direct3D 10"
@@ -1250,6 +1254,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Volume.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\XFile.h"
 					>
 				</File>
 			</Filter>
