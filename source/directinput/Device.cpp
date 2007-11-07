@@ -47,12 +47,12 @@ namespace DirectInput
 			throw gcnew ArgumentNullException( "device" );
 
 		void* pointer;
-		IUnknown* unknown = (IUnknown*) device.ToPointer();
+		IUnknown* unknown = static_cast<IUnknown*>( device.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_IDirectInputDevice8W, &pointer );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-		m_Pointer = (IDirectInputDevice8W*) pointer;
+		m_Pointer = static_cast<IDirectInputDevice8W*>( pointer );
 	}
 
 	generic<typename DataFormat>

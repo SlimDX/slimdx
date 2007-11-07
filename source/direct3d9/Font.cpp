@@ -53,12 +53,12 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "font" );
 
 		void* pointer;
-		IUnknown* unknown = (IUnknown*) font.ToPointer();
+		IUnknown* unknown = static_cast<IUnknown*>( font.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_ID3DXFont, &pointer );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-		m_Pointer = (ID3DXFont*) pointer;
+		m_Pointer = static_cast<ID3DXFont*>( pointer );
 	}
 
 	Font::Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,

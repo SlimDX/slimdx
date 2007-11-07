@@ -350,12 +350,12 @@ namespace Direct3D9
 	DataStream^ XFileData::Lock()
 	{
 		SIZE_T size;
-		void *data;
+		const void *data;
 
-		HRESULT hr = m_Pointer->Lock( &size, (LPCVOID*) &data );
+		HRESULT hr = m_Pointer->Lock( &size, &data );
 		GraphicsException::CheckHResult( hr );
 
-		return gcnew DataStream( data, size, true, true, true );
+		return gcnew DataStream( const_cast<void*>( data ), size, true, true, true );
 	}
 
 	void XFileData::Unlock()

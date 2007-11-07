@@ -100,12 +100,12 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "device" );
 
 		void* pointer;
-		IUnknown* unknown = (IUnknown*) device.ToPointer();
+		IUnknown* unknown = static_cast<IUnknown*>( device.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_IDirect3DDevice9, &pointer );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-		m_Pointer = (IDirect3DDevice9*) pointer;
+		m_Pointer = static_cast<IDirect3DDevice9*>( pointer );
 	}
 
 	Device::Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams )
@@ -117,8 +117,12 @@ namespace Direct3D9
 			throw gcnew Direct3DNotInitializedException();
 
 		ConvertPresentParams( presentParams, d3dpp );
-		HRESULT hr = Direct3D::InternalPointer->CreateDevice( adapter, (D3DDEVTYPE) deviceType, (HWND) controlHandle.ToPointer(), 
-			(DWORD) createFlags, (D3DPRESENT_PARAMETERS*) &d3dpp, &device );
+		HRESULT hr = Direct3D::InternalPointer->CreateDevice( adapter,
+			static_cast<D3DDEVTYPE>( deviceType ),
+			static_cast<HWND>( controlHandle.ToPointer() ), 
+			static_cast<DWORD>( createFlags ),
+			reinterpret_cast<D3DPRESENT_PARAMETERS*>( &d3dpp ),
+			&device );
 		GraphicsException::CheckHResult( hr );
 
 		m_Pointer = device;
@@ -251,13 +255,14 @@ namespace Direct3D9
 	void Device::SetRenderState( RenderState state, bool value )
 	{
 		BOOL boolValue = value ? TRUE : FALSE;
-		HRESULT hr = m_Pointer->SetRenderState( (D3DRENDERSTATETYPE) state, boolValue );
+		HRESULT hr = m_Pointer->SetRenderState( static_cast<D3DRENDERSTATETYPE>( state ), boolValue );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::SetRenderState( RenderState state, float value )
 	{
-		HRESULT hr = m_Pointer->SetRenderState( (D3DRENDERSTATETYPE) state, *(DWORD*) &value );
+		DWORD* dwValue = reinterpret_cast<DWORD*>( &value );
+		HRESULT hr = m_Pointer->SetRenderState( static_cast<D3DRENDERSTATETYPE>( state ), *dwValue );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -269,7 +274,7 @@ namespace Direct3D9
 
 	void Device::SetTextureStageState( int stage, TextureStage type, int value )
 	{
-		HRESULT hr = m_Pointer->SetTextureStageState( stage, (D3DTEXTURESTAGESTATETYPE) type, value );
+		HRESULT hr = m_Pointer->SetTextureStageState( stage, static_cast<D3DTEXTURESTAGESTATETYPE>( type ), value );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -290,40 +295,42 @@ namespace Direct3D9
 
 	void Device::SetTextureStageState( int stage, TextureStage type, float value )
 	{
-		SetTextureStageState( stage, type, *(int*) &value );
+		int* dwValue = reinterpret_cast<int*>( &value );
+		SetTextureStageState( stage, type, *dwValue );
 	}
 
 	void Device::SetSamplerState( int sampler, SamplerState type, int value )
 	{
-		HRESULT hr = m_Pointer->SetSamplerState( sampler, (D3DSAMPLERSTATETYPE) type, value );
+		HRESULT hr = m_Pointer->SetSamplerState( sampler, static_cast<D3DSAMPLERSTATETYPE>( type ), value );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::SetSamplerState( int sampler, SamplerState type, float value )
 	{
-		HRESULT hr = m_Pointer->SetSamplerState( sampler, (D3DSAMPLERSTATETYPE) type, *(int*) &value );
+		DWORD* dwValue = reinterpret_cast<DWORD*>( &value );
+		HRESULT hr = m_Pointer->SetSamplerState( sampler, static_cast<D3DSAMPLERSTATETYPE>( type ), *dwValue );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::SetSamplerState( int sampler, SamplerState type, TextureAddress texAddr )
 	{
-		SetSamplerState( sampler, type, (int) texAddr );
+		SetSamplerState( sampler, type, static_cast<int>( texAddr ) );
 	}
 
 	void Device::SetSamplerState( int sampler, SamplerState type, TextureFilter texFilter )
 	{
-		SetSamplerState( sampler, type, (int) texFilter );
+		SetSamplerState( sampler, type, static_cast<int>( texFilter ) );
 	}
 
 	void Device::SetTransform( TransformState state, Matrix value )
 	{
-		HRESULT hr = m_Pointer->SetTransform( (D3DTRANSFORMSTATETYPE) state, (const D3DMATRIX*) &value );
+		HRESULT hr = m_Pointer->SetTransform( static_cast<D3DTRANSFORMSTATETYPE>( state ), (const D3DMATRIX*) &value );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::MultiplyTransform( TransformState state, Matrix value )
 	{
-		HRESULT hr = m_Pointer->MultiplyTransform( (D3DTRANSFORMSTATETYPE) state, (const D3DMATRIX*) &value );
+		HRESULT hr = m_Pointer->MultiplyTransform( static_cast<D3DTRANSFORMSTATETYPE>( state ), (const D3DMATRIX*) &value );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -344,7 +351,7 @@ namespace Direct3D9
 	{
 		SlimDX::Direct3D9::Material material;
 
-		HRESULT hr = m_Pointer->GetMaterial( (D3DMATERIAL9*) &material );
+		HRESULT hr = m_Pointer->GetMaterial( reinterpret_cast<D3DMATERIAL9*>( &material ) );
 		GraphicsException::CheckHResult( hr );
 
 		return material;
@@ -352,7 +359,7 @@ namespace Direct3D9
 
 	void Device::Material::set( SlimDX::Direct3D9::Material material )
 	{
-		HRESULT hr = m_Pointer->SetMaterial( (const D3DMATERIAL9*) &material );
+		HRESULT hr = m_Pointer->SetMaterial( reinterpret_cast<const D3DMATERIAL9*>( &material ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -426,7 +433,7 @@ namespace Direct3D9
 
 	bool Device::IsQuerySupported( QueryType type )
 	{
-		HRESULT hr = m_Pointer->CreateQuery( (D3DQUERYTYPE) type, NULL );
+		HRESULT hr = m_Pointer->CreateQuery( static_cast<D3DQUERYTYPE>( type ), NULL );
 		if( hr == D3DERR_NOTAVAILABLE )
 			return false;
 		GraphicsException::CheckHResult( hr );
@@ -499,7 +506,7 @@ namespace Direct3D9
 	SlimDX::Direct3D::Viewport Device::Viewport::get()
 	{
 		SlimDX::Direct3D::Viewport viewport;
-		HRESULT hr = m_Pointer->GetViewport( (D3DVIEWPORT9*) &viewport );
+		HRESULT hr = m_Pointer->GetViewport( reinterpret_cast<D3DVIEWPORT9*>( &viewport ) );
 		GraphicsException::CheckHResult( hr );
 
 		return viewport;
@@ -507,7 +514,7 @@ namespace Direct3D9
 
 	void Device::Viewport::set( SlimDX::Direct3D::Viewport value )
 	{
-		HRESULT hr = m_Pointer->SetViewport( (const D3DVIEWPORT9*) &value );
+		HRESULT hr = m_Pointer->SetViewport( reinterpret_cast<const D3DVIEWPORT9*>( &value ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -544,7 +551,7 @@ namespace Direct3D9
 	T Device::GetRenderState( RenderState state )
 	{
 		DWORD value = 0;
-		HRESULT hr = m_Pointer->GetRenderState( (D3DRENDERSTATETYPE) state, &value );
+		HRESULT hr = m_Pointer->GetRenderState( static_cast<D3DRENDERSTATETYPE>( state ), &value );
 		GraphicsException::CheckHResult( hr );
 
 		return (T) value;
@@ -695,7 +702,7 @@ namespace Direct3D9
 		RECT nativeDestRect = { destRect.Left, destRect.Top, destRect.Right, destRect.Bottom };
 
 		HRESULT hr = m_Pointer->StretchRect( source->SurfacePointer, &nativeSourceRect, dest->SurfacePointer,
-			&nativeDestRect, (D3DTEXTUREFILTERTYPE) filter );
+			&nativeDestRect, static_cast<D3DTEXTUREFILTERTYPE>( filter ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -766,7 +773,7 @@ namespace Direct3D9
 	{
 		pin_ptr<float> pinnedSegments = &numSegments[0];
 
-		HRESULT hr = m_Pointer->DrawTriPatch( handle, pinnedSegments, (D3DTRIPATCH_INFO*) &info );
+		HRESULT hr = m_Pointer->DrawTriPatch( handle, pinnedSegments, reinterpret_cast<D3DTRIPATCH_INFO*>( &info ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -782,7 +789,7 @@ namespace Direct3D9
 	{
 		pin_ptr<float> pinnedSegments = &numSegments[0];
 
-		HRESULT hr = m_Pointer->DrawRectPatch( handle, pinnedSegments, (D3DRECTPATCH_INFO*) &info );
+		HRESULT hr = m_Pointer->DrawRectPatch( handle, pinnedSegments, reinterpret_cast<D3DRECTPATCH_INFO*>( &info ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -804,7 +811,7 @@ namespace Direct3D9
 	{
 		DisplayMode displayMode;
 
-		HRESULT hr = m_Pointer->GetDisplayMode( swapChain, (D3DDISPLAYMODE*) &displayMode );
+		HRESULT hr = m_Pointer->GetDisplayMode( swapChain, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
 		GraphicsException::CheckHResult( hr );
 		
 		return displayMode;
@@ -839,14 +846,14 @@ namespace Direct3D9
 
 	void Device::SetLight( int lightIndex, Light lightData )
 	{
-		HRESULT hr = m_Pointer->SetLight( lightIndex, (D3DLIGHT9*) &lightData );
+		HRESULT hr = m_Pointer->SetLight( lightIndex, reinterpret_cast<const D3DLIGHT9*>( &lightData ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	Light Device::GetLight( int lightIndex )
 	{
 		Light light;
-		HRESULT hr = m_Pointer->GetLight( lightIndex, (D3DLIGHT9*) &light );
+		HRESULT hr = m_Pointer->GetLight( lightIndex, reinterpret_cast<D3DLIGHT9*>( &light ) );
 		GraphicsException::CheckHResult( hr );
 		
 		return light;
@@ -950,14 +957,14 @@ namespace Direct3D9
 
 	void Device::SetClipPlane( int index, Plane clipPlane )
 	{
-		HRESULT hr = m_Pointer->SetClipPlane( index, (float*) &clipPlane );
+		HRESULT hr = m_Pointer->SetClipPlane( index, reinterpret_cast<const float*>( &clipPlane ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	Plane Device::GetClipPlane( int index )
 	{
 		Plane plane;
-		HRESULT hr = m_Pointer->GetClipPlane( index, (float*) &plane );
+		HRESULT hr = m_Pointer->GetClipPlane( index, reinterpret_cast<float*>( &plane ) );
 		GraphicsException::CheckHResult( hr );
 
 		return plane;

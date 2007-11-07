@@ -36,7 +36,7 @@ namespace SlimDX
 		internal:
 			property IDirect3DBaseTexture9* BaseTexturePointer
 			{
-				IDirect3DBaseTexture9* get() { return (IDirect3DBaseTexture9*) m_Pointer; }
+				IDirect3DBaseTexture9* get() { return static_cast<IDirect3DBaseTexture9*>( m_Pointer ); }
 			}
 		
 		public:

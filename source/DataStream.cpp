@@ -38,7 +38,7 @@ namespace SlimDX
 		}
 		else
 		{
-			m_Buffer = (char*) buffer;
+			m_Buffer = static_cast<char*>( buffer );
 		}
 
 		m_Size = sizeInBytes;
@@ -66,7 +66,7 @@ namespace SlimDX
 		if( sizeInBytes < 1 )
 			throw gcnew ArgumentOutOfRangeException( "sizeInBytes" );
 
-		m_Buffer = (char*) userBuffer.ToPointer();
+		m_Buffer = static_cast<char*>( userBuffer.ToPointer() );
 		m_Size = sizeInBytes;
 
 		m_OwnsBuffer = false;

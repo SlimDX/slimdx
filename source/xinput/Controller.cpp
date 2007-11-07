@@ -40,24 +40,24 @@ namespace SlimDX
 		void Controller::GetState([Out] State% currentState)
 		{
 			pin_ptr<State> state = &currentState;
-			InputException::CheckResult(XInputGetState(userIndex, (XINPUT_STATE*)state));
+			InputException::CheckResult(XInputGetState(userIndex, reinterpret_cast<XINPUT_STATE*>(state)));
 		}
 		
 		void Controller::SetVibration(Vibration% vibration)
 		{
 			pin_ptr<Vibration> vib = &vibration;
-			InputException::CheckResult(XInputSetState(userIndex, (XINPUT_VIBRATION*)vib));
+			InputException::CheckResult(XInputSetState(userIndex, reinterpret_cast<XINPUT_VIBRATION*>(vib)));
 		}
 
 		void Controller::SetVibration(Vibration vibration)
 		{
-			InputException::CheckResult(XInputSetState(userIndex, (XINPUT_VIBRATION*)&vibration));
+			InputException::CheckResult(XInputSetState(userIndex, reinterpret_cast<XINPUT_VIBRATION*>(&vibration)));
 		}
 		
 		void Controller::GetCapabilities(DeviceQueryType flags, SlimDX::XInput::Capabilities% capabilities)
 		{
 			XINPUT_CAPABILITIES caps;
-			InputException::CheckResult(XInputGetCapabilities(userIndex, (UInt32)flags, &caps));
+			InputException::CheckResult(XInputGetCapabilities(userIndex, static_cast<DWORD>(flags), &caps));
 
 			capabilities.Type = (DeviceType)caps.Type;
 			capabilities.SubType = (DeviceSubType)caps.SubType;
@@ -71,18 +71,19 @@ namespace SlimDX
 		{
 			pin_ptr<Guid> renderGuid = &soundRenderGuid;
 			pin_ptr<Guid> captureGuid = &soundCaptureGuid;
-			InputException::CheckResult(XInputGetDSoundAudioDeviceGuids(userIndex, (GUID*)renderGuid, (GUID*)captureGuid));
+			InputException::CheckResult(XInputGetDSoundAudioDeviceGuids(userIndex,
+				reinterpret_cast<GUID*>(renderGuid), reinterpret_cast<GUID*>(captureGuid)));
 		}
 		
 		bool Controller::GetKeystroke(DeviceQueryType flags, KeyStroke% keystroke)
 		{
 			XINPUT_KEYSTROKE keys;
-			UInt32 result = XInputGetKeystroke(userIndex, (UInt32)flags, &keys);
+			UInt32 result = XInputGetKeystroke(userIndex, static_cast<DWORD>(flags), &keys);
 			InputException::CheckResult(result);
 
-			keystroke.VirtualKey = (GamepadKeyCode)keys.VirtualKey;
-			keystroke.Flags = (KeyStrokeFlags)keys.Flags;
-			keystroke.UserIndex = (UserIndex)keys.UserIndex;
+			keystroke.VirtualKey = static_cast<GamepadKeyCode>(keys.VirtualKey);
+			keystroke.Flags = static_cast<KeyStrokeFlags>(keys.Flags);
+			keystroke.UserIndex = static_cast<UserIndex>(keys.UserIndex);
 			keystroke.HidCode = keys.HidCode;
 
 			if(result == ERROR_EMPTY)
@@ -94,20 +95,20 @@ namespace SlimDX
 		void Controller::GetBatteryInformation(BatteryDeviceType flag, [Out] BatteryInformation% batteryInfo)
 		{
 			XINPUT_BATTERY_INFORMATION info;
-			InputException::CheckResult( XInputGetBatteryInformation( userIndex, (Byte)flag, &info ) );
+			InputException::CheckResult( XInputGetBatteryInformation( userIndex, static_cast<BYTE>(flag), &info ) );
 
-			batteryInfo.Level = (BatteryLevel)info.BatteryLevel;
-			batteryInfo.Type = (BatteryType)info.BatteryType;
+			batteryInfo.Level = static_cast<BatteryLevel>(info.BatteryLevel);
+			batteryInfo.Type = static_cast<BatteryType>(info.BatteryType);
 		}
 
 		BatteryInformation Controller::GetBatteryInformation(BatteryDeviceType flag)
 		{
 			XINPUT_BATTERY_INFORMATION info;
-			InputException::CheckResult( XInputGetBatteryInformation( userIndex, (Byte)flag, &info ) );
+			InputException::CheckResult( XInputGetBatteryInformation( userIndex, static_cast<BYTE>(flag), &info ) );
 
 			BatteryInformation batteryInfo;
-			batteryInfo.Level = (BatteryLevel)info.BatteryLevel;
-			batteryInfo.Type = (BatteryType)info.BatteryType;
+			batteryInfo.Level = static_cast<BatteryLevel>(info.BatteryLevel);
+			batteryInfo.Type = static_cast<BatteryType>(info.BatteryType);
 			return batteryInfo;
 		}
 
@@ -127,7 +128,7 @@ namespace SlimDX
 		State Controller::CurrentState::get()
 		{
 			State state;
-			InputException::CheckResult(XInputGetState(userIndex, (XINPUT_STATE*)&state));
+			InputException::CheckResult(XInputGetState(userIndex, reinterpret_cast<XINPUT_STATE*>(&state)));
 			return state;
 		}
 
@@ -137,10 +138,10 @@ namespace SlimDX
 			XINPUT_CAPABILITIES caps;
 			InputException::CheckResult(XInputGetCapabilities(userIndex, XINPUT_FLAG_GAMEPAD, &caps));
 
-			capabilities.Type = (DeviceType)caps.Type;
-			capabilities.SubType = (DeviceSubType)caps.SubType;
+			capabilities.Type = static_cast<DeviceType>(caps.Type);
+			capabilities.SubType = static_cast<DeviceSubType>(caps.SubType);
 			capabilities.Gamepad = Gamepad( caps.Gamepad );
-			capabilities.Flags = (CapabilitiesFlags)caps.Flags;
+			capabilities.Flags = static_cast<CapabilitiesFlags>(caps.Flags);
 			capabilities.Vibration.LeftMotorSpeed = caps.Vibration.wLeftMotorSpeed;
 			capabilities.Vibration.RightMotorSpeed = caps.Vibration.wRightMotorSpeed;
 

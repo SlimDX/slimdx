@@ -38,14 +38,32 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "volume" );
 
 		//D3D BUG WAR: IDirect3DVolume9 does not inherit from IDirect3DResource9 like it's supposed to
-		m_Pointer = (IDirect3DResource9*) volume;
+		m_Pointer = reinterpret_cast<IDirect3DResource9*>( volume );
+	}
+
+	Volume::Volume( IntPtr volume )
+	{
+		if( volume == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "vertexShader" );
+
+		void* pointer;
+		IUnknown* unknown = static_cast<IUnknown*>( volume.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_IDirect3DVolume9, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<IDirect3DResource9*>( pointer );
+		
+		D3DRESOURCETYPE type = m_Pointer->GetType();
+		if( type != D3DRTYPE_VOLUME )
+			throw gcnew InvalidCastException( "Serious QueryInterface failure in Volume." );
 	}
 
 	VolumeDescription Volume::Description::get()
 	{
 		VolumeDescription desc;
 
-		HRESULT hr = VolumePointer->GetDesc( (D3DVOLUME_DESC*) &desc );
+		HRESULT hr = VolumePointer->GetDesc( reinterpret_cast<D3DVOLUME_DESC*>( &desc ) );
 		GraphicsException::CheckHResult( hr );
 
 		return desc;
@@ -55,7 +73,7 @@ namespace Direct3D9
 	{
 		D3DLOCKED_BOX lockedBox;
 
-		HRESULT hr = VolumePointer->LockBox( &lockedBox, NULL, (DWORD) flags );
+		HRESULT hr = VolumePointer->LockBox( &lockedBox, NULL, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
@@ -70,7 +88,7 @@ namespace Direct3D9
 	{
 		D3DLOCKED_BOX lockedBox;
 
-		HRESULT hr = VolumePointer->LockBox( &lockedBox, (D3DBOX*) &box, (DWORD) flags );
+		HRESULT hr = VolumePointer->LockBox( &lockedBox, reinterpret_cast<D3DBOX*>( &box ), static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;

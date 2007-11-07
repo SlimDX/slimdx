@@ -44,12 +44,12 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "buffer" );
 
 		void* pointer;
-		IUnknown* unknown = (IUnknown*) buffer.ToPointer();
+		IUnknown* unknown = static_cast<IUnknown*>( buffer.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_IDirect3DIndexBuffer9, &pointer );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-		IDirect3DIndexBuffer9* ibPtr = (IDirect3DIndexBuffer9*) pointer;
+		IDirect3DIndexBuffer9* ibPtr = static_cast<IDirect3DIndexBuffer9*>( pointer );
 		m_Pointer = ibPtr;
 	}
 

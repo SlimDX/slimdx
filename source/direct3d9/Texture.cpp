@@ -77,7 +77,7 @@ namespace Direct3D9
 		ImageInformation info;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
-		HRESULT hr = D3DXGetImageInfoFromFile( pinnedName, (D3DXIMAGE_INFO*) &info );
+		HRESULT hr = D3DXGetImageInfoFromFile( pinnedName, reinterpret_cast<D3DXIMAGE_INFO*>( &info ) );
 		GraphicsException::CheckHResult( hr );
 
 		return info;
@@ -108,12 +108,12 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "texture" );
 
 		void* pointer;
-		IUnknown* unknown = (IUnknown*) texture.ToPointer();
+		IUnknown* unknown = static_cast<IUnknown*>( texture.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_IDirect3DTexture9, &pointer );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-		m_Pointer = (IDirect3DTexture9*) pointer;
+		m_Pointer = static_cast<IDirect3DTexture9*>( pointer );
 	}
 
 	Texture::Texture( Device^ device, int width, int height, int numLevels, Usage usage, Format format, Pool pool )
@@ -310,7 +310,7 @@ namespace Direct3D9
 	SurfaceDescription Texture::GetLevelDescription( int level )
 	{
 		SurfaceDescription desc;
-		HRESULT hr = TexturePointer->GetLevelDesc( level, (D3DSURFACE_DESC*) &desc );
+		HRESULT hr = TexturePointer->GetLevelDesc( level, reinterpret_cast<D3DSURFACE_DESC*>( &desc ) );
 		GraphicsException::CheckHResult( hr );
 		return desc;
 	}
@@ -380,12 +380,12 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "cubeTexture" );
 
 		void* pointer;
-		IUnknown* unknown = (IUnknown*) cubeTexture.ToPointer();
+		IUnknown* unknown = static_cast<IUnknown*>( cubeTexture.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_IDirect3DCubeTexture9, &pointer );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-		m_Pointer = (IDirect3DCubeTexture9*) pointer;
+		m_Pointer = static_cast<IDirect3DCubeTexture9*>( pointer );
 	}
 
 	CubeTexture::CubeTexture( Device^ device, int edgeLength, int numLevels, Usage usage, Format format, Pool pool )
@@ -544,7 +544,7 @@ namespace Direct3D9
 	SurfaceDescription CubeTexture::GetLevelDescription( int level )
 	{
 		SurfaceDescription desc;
-		HRESULT hr = TexturePointer->GetLevelDesc( level, (D3DSURFACE_DESC*) &desc );
+		HRESULT hr = TexturePointer->GetLevelDesc( level, reinterpret_cast<D3DSURFACE_DESC*>( &desc ) );
 		GraphicsException::CheckHResult( hr );
 		return desc;
 	}
@@ -552,7 +552,7 @@ namespace Direct3D9
 	Surface^ CubeTexture::GetCubeMapSurface( CubeMapFace face, int level )
 	{
 		IDirect3DSurface9* surface;
-		HRESULT hr = TexturePointer->GetCubeMapSurface( (D3DCUBEMAP_FACES) face, level, &surface );
+		HRESULT hr = TexturePointer->GetCubeMapSurface( static_cast<D3DCUBEMAP_FACES>( face ), level, &surface );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -574,12 +574,12 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "volumeTexture" );
 
 		void* pointer;
-		IUnknown* unknown = (IUnknown*) volumeTexture.ToPointer();
+		IUnknown* unknown = static_cast<IUnknown*>( volumeTexture.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_IDirect3DVolumeTexture9, &pointer );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-		m_Pointer = (IDirect3DVolumeTexture9*) pointer;
+		m_Pointer = static_cast<IDirect3DVolumeTexture9*>( pointer );
 	}
 
 	VolumeTexture::VolumeTexture( Device^ device, int width, int height, int depth, int numLevels, Usage usage, Format format, Pool pool )
@@ -600,8 +600,14 @@ namespace Direct3D9
 		HRESULT hr;									// Error code.
 
 		// Get texture requirements.
-		hr = D3DXCheckVolumeTextureRequirements(device->InternalPointer, (UINT *)&width, (UINT *)&height, (UINT*) &depth,
-			(UINT *)&numMipLevels, (DWORD)usage, (D3DFORMAT *)&d3dFormat, (D3DPOOL)pool);
+		hr = D3DXCheckVolumeTextureRequirements(device->InternalPointer,
+			reinterpret_cast<UINT*>( &width ),
+			reinterpret_cast<UINT*>( &height ),
+			reinterpret_cast<UINT*>( &depth ),
+			reinterpret_cast<UINT*>( &numMipLevels ),
+			static_cast<DWORD>( usage ),
+			&d3dFormat,
+			static_cast<D3DPOOL>( pool ) );
 		GraphicsException::CheckHResult(hr);
 
 		// Return proposed values.
@@ -697,7 +703,8 @@ namespace Direct3D9
 	LockedBox VolumeTexture::LockBox( int level, Box box, LockFlags flags )
 	{
 		D3DLOCKED_BOX lockedBox;
-		HRESULT hr = TexturePointer->LockBox( level, &lockedBox, (D3DBOX*) &box, (DWORD) flags );
+		HRESULT hr = TexturePointer->LockBox( level, &lockedBox, reinterpret_cast<D3DBOX*>( &box ),
+			static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return LockedBox();
@@ -734,7 +741,7 @@ namespace Direct3D9
 
 	void VolumeTexture::AddDirtyBox( Box box )
 	{
-		HRESULT hr = TexturePointer->AddDirtyBox( (D3DBOX*) &box );
+		HRESULT hr = TexturePointer->AddDirtyBox( reinterpret_cast<D3DBOX*>( &box ) );
 		GraphicsException::CheckHResult( hr );
 	}
 }

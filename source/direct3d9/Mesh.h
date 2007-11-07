@@ -188,7 +188,7 @@ namespace SlimDX
 			Mesh( ID3DXMesh* mesh );
 			property ID3DXMesh* MeshPointer
 			{
-				ID3DXMesh* get() { return (ID3DXMesh*) m_Pointer; }
+				ID3DXMesh* get() { return static_cast<ID3DXMesh*>( m_Pointer ); }
 			}
 
 		public:
@@ -277,7 +277,7 @@ namespace SlimDX
 
 			property ID3DXPMesh* MeshPointer
 			{
-				ID3DXPMesh* get() { return (ID3DXPMesh*) m_Pointer; }
+				ID3DXPMesh* get() { return static_cast<ID3DXPMesh*>( m_Pointer ); }
 			}
 
 		public:

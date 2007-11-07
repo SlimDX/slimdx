@@ -56,12 +56,12 @@ namespace Direct3D10
 			throw gcnew ArgumentNullException( "effect" );
 
 		void* pointer;
-		IUnknown* unknown = (IUnknown*) effect.ToPointer();
+		IUnknown* unknown = static_cast<IUnknown*>( effect.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_ID3D10Effect, &pointer );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-		m_Pointer = (ID3D10Effect*) pointer;
+		m_Pointer = static_cast<ID3D10Effect*>( pointer );
 
 		D3D10_EFFECT_DESC desc;
 		hr = m_Pointer->GetDesc( &desc );

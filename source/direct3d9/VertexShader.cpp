@@ -50,12 +50,12 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "vertexShader" );
 
 		void* pointer;
-		IUnknown* unknown = (IUnknown*) vertexShader.ToPointer();
+		IUnknown* unknown = static_cast<IUnknown*>( vertexShader.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_IDirect3DVertexShader9, &pointer );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-		m_Pointer = (IDirect3DVertexShader9*) pointer;
+		m_Pointer = static_cast<IDirect3DVertexShader9*>( pointer );
 	}
 
 	VertexShader::VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable ) : DirectXObject( vertexShader )

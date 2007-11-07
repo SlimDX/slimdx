@@ -48,12 +48,12 @@ namespace Direct3D10
 			throw gcnew ArgumentNullException( "state" );
 
 		void* pointer;
-		IUnknown* unknown = (IUnknown*) state.ToPointer();
+		IUnknown* unknown = static_cast<IUnknown*>( state.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_ID3D10BlendState, &pointer );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-		m_Pointer = (ID3D10BlendState*) pointer;
+		m_Pointer = static_cast<ID3D10BlendState*>( pointer );
 
 		D3D10_BLEND_DESC desc;
 		m_Pointer->GetDesc( &desc );

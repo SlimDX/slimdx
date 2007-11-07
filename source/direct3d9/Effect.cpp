@@ -52,12 +52,12 @@ namespace SlimDX
 				throw gcnew ArgumentNullException( "effect" );
 
 			void* pointer;
-			IUnknown* unknown = (IUnknown*) effect.ToPointer();
+			IUnknown* unknown = static_cast<IUnknown*>( effect.ToPointer() );
 			HRESULT hr = unknown->QueryInterface( IID_ID3DXEffect, &pointer );
 			if( FAILED( hr ) )
 				throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-			m_Pointer = (ID3DXEffect*) pointer;
+			m_Pointer = static_cast<ID3DXEffect*>( pointer );
 		}
 
 		Effect^ Effect::FromMemory( Device^ device, array<Byte>^ memory, array<Macro>^ preprocessorDefines,

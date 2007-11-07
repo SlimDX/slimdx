@@ -95,7 +95,7 @@ namespace Direct3D9
 	SlimDX::Direct3D9::DisplayMode SwapChain::DisplayMode::get()
 	{
 		SlimDX::Direct3D9::DisplayMode mode;
-		HRESULT hr = m_Pointer->GetDisplayMode( (D3DDISPLAYMODE*) &mode );
+		HRESULT hr = m_Pointer->GetDisplayMode( reinterpret_cast<D3DDISPLAYMODE*>( &mode ) );
 		GraphicsException::CheckHResult( hr );
 
 		return mode;
@@ -115,7 +115,7 @@ namespace Direct3D9
 
 	void SwapChain::Present( SlimDX::Direct3D9::Present flags )
 	{
-		HRESULT hr = m_Pointer->Present( 0, 0, 0, 0, (DWORD) flags );
+		HRESULT hr = m_Pointer->Present( 0, 0, 0, 0, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 	}
 }

@@ -50,7 +50,7 @@ namespace SlimDX
 		internal:
 			property ID3DXEffect* EffectPointer
 			{
-				ID3DXEffect* get() { return (ID3DXEffect*) m_Pointer; }
+				ID3DXEffect* get() { return static_cast<ID3DXEffect*>( m_Pointer ); }
 			}
 
 			Effect( ID3DXEffect* effect );

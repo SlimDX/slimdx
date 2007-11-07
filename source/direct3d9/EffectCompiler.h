@@ -48,7 +48,7 @@ namespace SlimDX
 		internal:
 			property ID3DXEffectCompiler* CompilerPointer
 			{
-				ID3DXEffectCompiler* get() { return (ID3DXEffectCompiler*) m_Pointer; }
+				ID3DXEffectCompiler* get() { return static_cast<ID3DXEffectCompiler*>( m_Pointer ); }
 			}
 
 			EffectCompiler( ID3DXEffectCompiler* compiler );

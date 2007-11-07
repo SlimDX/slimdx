@@ -40,7 +40,7 @@ namespace SlimDX
 		internal:
 			property IDirect3DVertexBuffer9* VbPointer
 			{
-				IDirect3DVertexBuffer9* get() { return (IDirect3DVertexBuffer9*) m_Pointer; }
+				IDirect3DVertexBuffer9* get() { return static_cast<IDirect3DVertexBuffer9*>( m_Pointer ); }
 			}
 
 			VertexBuffer( IDirect3DVertexBuffer9* buffer );

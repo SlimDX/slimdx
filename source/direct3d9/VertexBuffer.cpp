@@ -54,12 +54,12 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "buffer" );
 
 		void* pointer;
-		IUnknown* unknown = (IUnknown*) buffer.ToPointer();
+		IUnknown* unknown = static_cast<IUnknown*>( buffer.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_IDirect3DVertexBuffer9, &pointer );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-		IDirect3DVertexBuffer9* vbPtr = (IDirect3DVertexBuffer9*) pointer;
+		IDirect3DVertexBuffer9* vbPtr = static_cast<IDirect3DVertexBuffer9*>( pointer );
 
 		D3DVERTEXBUFFER_DESC desc;
 		hr = vbPtr->GetDesc( &desc );

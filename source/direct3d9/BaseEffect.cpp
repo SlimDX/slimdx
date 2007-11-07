@@ -231,8 +231,8 @@ namespace SlimDX
 			PassDescription passDesc;
 			passDesc.Name = gcnew String( desc.Name );
 			passDesc.Annotations = desc.Annotations;
-			passDesc.VertexShaderFunction = IntPtr( (void*) desc.pVertexShaderFunction );
-			passDesc.PixelShaderFunction = IntPtr( (void*) desc.pPixelShaderFunction );
+			passDesc.VertexShaderFunction = IntPtr( const_cast<void*>( static_cast<const void*>( desc.pVertexShaderFunction ) ) );
+			passDesc.PixelShaderFunction = IntPtr( const_cast<void*>( static_cast<const void*>( desc.pPixelShaderFunction ) ) );
 
 			return passDesc;
 		}
@@ -543,11 +543,11 @@ namespace SlimDX
 			switch( texture->GetType() )
 			{
 			case D3DRTYPE_TEXTURE:
-				return gcnew Texture( (IDirect3DTexture9*) texture );
+				return gcnew Texture( static_cast<IDirect3DTexture9*>( texture ) );
 			case D3DRTYPE_VOLUMETEXTURE:
-				return gcnew VolumeTexture( (IDirect3DVolumeTexture9*) texture );
+				return gcnew VolumeTexture( static_cast<IDirect3DVolumeTexture9*>( texture ) );
 			case D3DRTYPE_CUBETEXTURE:
-				return gcnew CubeTexture( (IDirect3DCubeTexture9*) texture );
+				return gcnew CubeTexture( static_cast<IDirect3DCubeTexture9*>( texture ) );
 
 			default:
 				return nullptr;
