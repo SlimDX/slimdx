@@ -98,10 +98,12 @@ namespace SlimDX
 			Surface( IDirect3DSurface9* surface );
 			property IDirect3DSurface9* SurfacePointer
 			{
-				IDirect3DSurface9* get() { return (IDirect3DSurface9*) m_Pointer; }
+				IDirect3DSurface9* get() { return static_cast<IDirect3DSurface9*>( m_Pointer ); }
 			}
 
 		public:
+			Surface( IntPtr surface );
+
 			static Surface^ CreateRenderTarget( Device^ device, int width, int height, Format format,
 				MultisampleType multisampleType, int multisampleQuality, bool lockable );
 			static Surface^ CreateOffscreenPlain( Device^ device, int width, int height, Format format, Pool pool );

@@ -134,7 +134,7 @@ namespace SlimDX
 		internal:
 			property ID3DXCompressedAnimationSet* CASPointer
 			{
-				ID3DXCompressedAnimationSet* get() { return (ID3DXCompressedAnimationSet*) m_Pointer; }
+				ID3DXCompressedAnimationSet* get() { return static_cast<ID3DXCompressedAnimationSet*>( m_Pointer ); }
 			}
 
 		public:
@@ -155,7 +155,7 @@ namespace SlimDX
 		internal:
 			property ID3DXKeyframedAnimationSet* KASPointer
 			{
-				ID3DXKeyframedAnimationSet* get() { return (ID3DXKeyframedAnimationSet*) m_Pointer; }
+				ID3DXKeyframedAnimationSet* get() { return static_cast<ID3DXKeyframedAnimationSet*>( m_Pointer ); }
 			}
 
 		public:

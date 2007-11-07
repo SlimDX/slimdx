@@ -63,12 +63,12 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "table" );
 
 		void* pointer;
-		IUnknown* unknown = (IUnknown*) table.ToPointer();
+		IUnknown* unknown = static_cast<IUnknown*>( table.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_ID3DXConstantTable, &pointer );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-		m_Pointer = (ID3DXConstantTable*) pointer;
+		m_Pointer = static_cast<ID3DXConstantTable*>( pointer );
 	}
 
 	ConstantTable::ConstantTable( IDirect3DDevice9* device,ID3DXConstantTable* constantTable )

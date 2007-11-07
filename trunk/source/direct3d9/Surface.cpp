@@ -40,6 +40,20 @@ namespace Direct3D9
 		m_Pointer = surface;
 	}
 
+	Surface::Surface( IntPtr surface )
+	{
+		if( surface == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "vertexShader" );
+
+		void* pointer;
+		IUnknown* unknown = static_cast<IUnknown*>( surface.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_IDirect3DSurface9, &pointer );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<IDirect3DSurface9*>( pointer );
+	}
+
 	Surface^ Surface::CreateRenderTarget( Device^ device, int width, int height, Format format,
 		MultisampleType multiSampleType, int multiSampleQuality, bool lockable )
 	{
@@ -85,7 +99,7 @@ namespace Direct3D9
 	{
 		SurfaceDescription desc;
 
-		HRESULT hr = SurfacePointer->GetDesc( (D3DSURFACE_DESC*) &desc );
+		HRESULT hr = SurfacePointer->GetDesc( reinterpret_cast<D3DSURFACE_DESC*>( &desc ) );
 		GraphicsException::CheckHResult( hr );
 
 		return desc;
@@ -95,7 +109,7 @@ namespace Direct3D9
 	{
 		D3DLOCKED_RECT lockedRect;
 
-		HRESULT hr = SurfacePointer->LockRect( &lockedRect, NULL, (DWORD) flags );
+		HRESULT hr = SurfacePointer->LockRect( &lockedRect, NULL, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;

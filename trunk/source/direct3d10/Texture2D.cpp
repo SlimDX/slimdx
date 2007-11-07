@@ -56,12 +56,12 @@ namespace Direct3D10
 			throw gcnew ArgumentNullException( "texture" );
 
 		void* pointer;
-		IUnknown* unknown = (IUnknown*) texture.ToPointer();
+		IUnknown* unknown = static_cast<IUnknown*>( texture.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_ID3D10Texture2D, &pointer );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "QueryInterface() on user pointer failed." );
 
-		m_Pointer = (ID3D10Resource*) pointer;
+		m_Pointer = static_cast<ID3D10Resource*>( pointer );
 		
 		D3D10_TEXTURE2D_DESC desc;
 		((ID3D10Texture2D*)m_Pointer)->GetDesc( &desc );

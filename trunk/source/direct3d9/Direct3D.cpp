@@ -252,7 +252,7 @@ namespace Direct3D9
 		DWORD levels;
 
 		HRESULT hr = m_Direct3D->CheckDeviceMultiSampleType( adapter, (D3DDEVTYPE) deviceType, (D3DFORMAT) surfaceFormat,
-			windowed, (D3DMULTISAMPLE_TYPE) multiSampleType, (DWORD*) &levels );
+			windowed, (D3DMULTISAMPLE_TYPE) multiSampleType, static_cast<DWORD*>( &levels ) );
 
 		qualityLevels = levels;
 		result = hr;
@@ -278,7 +278,7 @@ namespace Direct3D9
     DisplayMode Direct3D::GetAdapterDisplayMode( int adapter )
     {
         DisplayMode displayMode;
-        m_Direct3D->GetAdapterDisplayMode( adapter, (D3DDISPLAYMODE*) &displayMode );
+        m_Direct3D->GetAdapterDisplayMode( adapter, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
         return displayMode;
     }
 
@@ -295,7 +295,8 @@ namespace Direct3D9
     DisplayMode Direct3D::EnumAdapterModes( int adapter, Format format, int modeIndex )
     {
         DisplayMode displayMode;
-        HRESULT hr = m_Direct3D->EnumAdapterModes( adapter, (D3DFORMAT) format, modeIndex, (D3DDISPLAYMODE*) &displayMode );
+        HRESULT hr = m_Direct3D->EnumAdapterModes( adapter, static_cast<D3DFORMAT>( format ),
+			modeIndex, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
         GraphicsException::CheckHResult( hr );
         return displayMode;
     }
@@ -402,8 +403,8 @@ namespace Direct3D9
 		DeclTypes = (DeclTypeCaps) caps.DeclTypes;
 		SimultaneousRTCount = caps.NumSimultaneousRTs;
 		StretchRectFilterCaps = (FilterCaps) caps.StretchRectFilterCaps;
-		VS20Caps = *(VertexShader20Caps*) &caps.VS20Caps;
-		PS20Caps = *(PixelShader20Caps*) &caps.PS20Caps;
+		VS20Caps = *reinterpret_cast<const VertexShader20Caps*>( &caps.VS20Caps );
+		PS20Caps = *reinterpret_cast<const PixelShader20Caps*>( &caps.PS20Caps );
 		VertexTextureFilterCaps = (FilterCaps) caps.VertexTextureFilterCaps;
 		MaxVShaderInstructionsExecuted = caps.MaxVShaderInstructionsExecuted;
 		MaxPShaderInstructionsExecuted = caps.MaxPShaderInstructionsExecuted;

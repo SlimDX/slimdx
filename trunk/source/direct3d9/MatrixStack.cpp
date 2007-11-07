@@ -130,7 +130,7 @@ namespace SlimDX
 		{
 			D3DXMATRIX* top = m_Pointer->GetTop();
 			Matrix result;
-			*(D3DXMATRIX*) &result = *top;
+			*reinterpret_cast<D3DXMATRIX*>( &result ) = *top;
 
 			return result;
 		}

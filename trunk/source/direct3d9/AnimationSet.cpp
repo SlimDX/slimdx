@@ -43,13 +43,13 @@ namespace Direct3D9
 	int AnimationSet::GetAnimationIndex( String^ name )
 	{
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
-		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
-		int result;
+		pin_ptr<const unsigned char> pinnedName = &nameBytes[0];
+		unsigned int result;
 
-		HRESULT hr = m_Pointer->GetAnimationIndexByName( (LPCSTR) pinnedName, (UINT*) &result );
+		HRESULT hr = m_Pointer->GetAnimationIndexByName( reinterpret_cast<LPCSTR>( pinnedName ), &result );
 		GraphicsException::CheckHResult( hr );
 
-		return result;
+		return (int) result;
 	}
 
 	String^ AnimationSet::GetAnimationName( int index )

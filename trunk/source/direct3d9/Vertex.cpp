@@ -42,12 +42,12 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "decl" );
 
 		void* pointer;
-		IUnknown* unknown = (IUnknown*) decl.ToPointer();
+		IUnknown* unknown = static_cast<IUnknown*>( decl.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_IDirect3DVertexDeclaration9, &pointer );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-		m_Pointer = (IDirect3DVertexDeclaration9*) pointer;
+		m_Pointer = static_cast<IDirect3DVertexDeclaration9*>( pointer );
 	}
 
 	VertexDeclaration::VertexDeclaration( Device^ device, array<VertexElement>^ elements )
@@ -76,7 +76,7 @@ namespace Direct3D9
 		array<VertexElement>^ decl = gcnew array<VertexElement>( count );
 		pin_ptr<VertexElement> pinnedDecl = &decl[0];
 
-		hr = m_Pointer->GetDeclaration( (D3DVERTEXELEMENT9*) pinnedDecl, &count );
+		hr = m_Pointer->GetDeclaration( reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedDecl ), &count );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;

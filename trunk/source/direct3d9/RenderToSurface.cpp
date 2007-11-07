@@ -45,12 +45,12 @@ namespace SlimDX
 				throw gcnew ArgumentNullException( "rts" );
 
 			void* pointer;
-			IUnknown* unknown = (IUnknown*) rts.ToPointer();
+			IUnknown* unknown = static_cast<IUnknown*>( rts.ToPointer() );
 			HRESULT hr = unknown->QueryInterface( IID_ID3DXRenderToSurface, &pointer );
 			if( FAILED( hr ) )
 				throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-			m_Pointer = (ID3DXRenderToSurface*) pointer;
+			m_Pointer = static_cast<ID3DXRenderToSurface*>( pointer );
 		}
 
 		RenderToSurface::RenderToSurface( Device^ device, int width, int height, Format format )
@@ -79,7 +79,7 @@ namespace SlimDX
 		void RenderToSurface::BeginScene( Surface^ renderSurface, Viewport viewport )
 		{
 			IDirect3DSurface9* surface = renderSurface->SurfacePointer;
-			HRESULT hr = m_Pointer->BeginScene( surface, (D3DVIEWPORT9*) &viewport );
+			HRESULT hr = m_Pointer->BeginScene( surface, reinterpret_cast<D3DVIEWPORT9*>( &viewport ) );
 			GraphicsException::CheckHResult( hr );
 		}
 

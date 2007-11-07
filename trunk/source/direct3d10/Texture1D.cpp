@@ -44,12 +44,12 @@ namespace Direct3D10
 			throw gcnew ArgumentNullException( "nativeObject" );
 
 		void* pointer;
-		IUnknown* unknown = (IUnknown*) nativeObject.ToPointer();
+		IUnknown* unknown = static_cast<IUnknown*>( nativeObject.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_ID3D10Texture1D, &pointer );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "QueryInterface() on user pointer failed." );
 
-		Construct( (ID3D10Texture1D*) pointer );
+		Construct( static_cast<ID3D10Texture1D*>( pointer ) );
 	}
 	
 	void Texture1D::Construct( ID3D10Texture1D* pointer )

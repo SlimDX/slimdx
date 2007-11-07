@@ -45,12 +45,12 @@ namespace Direct3D10
 			throw gcnew ArgumentNullException( "reflection" );
 
 		void* pointer;
-		IUnknown* unknown = (IUnknown*) reflection.ToPointer();
+		IUnknown* unknown = static_cast<IUnknown*>( reflection.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_ID3D10ShaderReflection, &pointer );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "QueryInterface() on user pointer failed." );
 
-		m_Pointer = (ID3D10ShaderReflection*) pointer;
+		m_Pointer = static_cast<ID3D10ShaderReflection*>( pointer );
 		Construct();
 	}
 	

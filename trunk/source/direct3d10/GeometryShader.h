@@ -41,12 +41,12 @@ namespace SlimDX
 					throw gcnew ArgumentNullException( "shader" );
 
 				void* pointer;
-				IUnknown* unknown = (IUnknown*) shader.ToPointer();
+				IUnknown* unknown = static_cast<IUnknown*>( shader.ToPointer() );
 				HRESULT hr = unknown->QueryInterface( IID_ID3D10GeometryShader, &pointer );
 				if( FAILED( hr ) )
 					throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-				m_Pointer = (ID3D10GeometryShader*) pointer;
+				m_Pointer = static_cast<ID3D10GeometryShader*>( pointer );
 
 			}
 

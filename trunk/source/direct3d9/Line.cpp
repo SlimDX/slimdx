@@ -47,12 +47,12 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "line" );
 
 		void* pointer;
-		IUnknown* unknown = (IUnknown*) line.ToPointer();
+		IUnknown* unknown = static_cast<IUnknown*>( line.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_ID3DXLine, &pointer );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-		m_Pointer = (ID3DXLine*) pointer;
+		m_Pointer = static_cast<ID3DXLine*>( pointer );
 	}
 
 	Line::Line( Device^ device )

@@ -265,7 +265,7 @@ namespace Direct3D9
 
 		array<AttributeRange>^ attribTable = gcnew array<AttributeRange>( count );
 		pin_ptr<AttributeRange> pinnedTable = &attribTable[0];
-		hr = m_Pointer->GetAttributeTable( (D3DXATTRIBUTERANGE*) pinnedTable, &count );
+		hr = m_Pointer->GetAttributeTable( reinterpret_cast<D3DXATTRIBUTERANGE*>( pinnedTable ), &count );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -323,7 +323,7 @@ namespace Direct3D9
 		array<int>^ adjacency = gcnew array<int>( 3 * FaceCount );
 		pin_ptr<int> pinnedAdj = &adjacency[0];
 
-		HRESULT hr = m_Pointer->GenerateAdjacency( epsilon, (DWORD*) pinnedAdj );
+		HRESULT hr = m_Pointer->GenerateAdjacency( epsilon, reinterpret_cast<DWORD*>( pinnedAdj ) );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -337,7 +337,8 @@ namespace Direct3D9
 		pin_ptr<int> pinnedAdj = &adjacency[0];
 		pin_ptr<int> pinnedPoints = &points[0];
 
-		HRESULT hr = m_Pointer->ConvertAdjacencyToPointReps( (const DWORD*) pinnedAdj, (DWORD*) pinnedPoints );
+		HRESULT hr = m_Pointer->ConvertAdjacencyToPointReps( reinterpret_cast<const DWORD*>( pinnedAdj ),
+			reinterpret_cast<DWORD*>( pinnedPoints ) );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -351,7 +352,8 @@ namespace Direct3D9
 		pin_ptr<int> pinnedAdj = &adjacency[0];
 		pin_ptr<int> pinnedPoints = &points[0];
 
-		HRESULT hr = m_Pointer->ConvertPointRepsToAdjacency( (const DWORD*) pinnedPoints, (DWORD*) pinnedAdj );
+		HRESULT hr = m_Pointer->ConvertPointRepsToAdjacency( reinterpret_cast<const DWORD*>( pinnedPoints ),
+			reinterpret_cast<DWORD*>( pinnedAdj ) );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -363,7 +365,7 @@ namespace Direct3D9
 	{
 		pin_ptr<VertexElement> pinnedElements = &elements[0];
 
-		HRESULT hr = m_Pointer->UpdateSemantics( (D3DVERTEXELEMENT9*) pinnedElements );
+		HRESULT hr = m_Pointer->UpdateSemantics( reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedElements ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -401,7 +403,8 @@ namespace Direct3D9
 		ID3DXMesh* mesh;
 		pin_ptr<VertexElement> pinnedDecl = &vertexDecl[0];
 
-		HRESULT hr = D3DXCreateMesh( numFaces, numVertices, (DWORD) options, (D3DVERTEXELEMENT9*) pinnedDecl, device->InternalPointer, &mesh );
+		HRESULT hr = D3DXCreateMesh( numFaces, numVertices, static_cast<DWORD>( options ),
+			reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedDecl ), device->InternalPointer, &mesh );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			throw gcnew GraphicsException();

@@ -50,12 +50,12 @@ namespace SlimDX
 				throw gcnew ArgumentNullException( "pixelShader" );
 
 			void* pointer;
-			IUnknown* unknown = (IUnknown*) pixelShader.ToPointer();
+			IUnknown* unknown = static_cast<IUnknown*>( pixelShader.ToPointer() );
 			HRESULT hr = unknown->QueryInterface( IID_IDirect3DPixelShader9, &pointer );
 			if( FAILED( hr ) )
 				throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-			m_Pointer = (IDirect3DPixelShader9*) pointer;
+			m_Pointer = static_cast<IDirect3DPixelShader9*>( pointer );
 		}
 
 		PixelShader::PixelShader( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable ) : DirectXObject( pixelShader )

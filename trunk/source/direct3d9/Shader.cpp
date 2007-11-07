@@ -167,7 +167,7 @@ namespace SlimDX
 			array<ShaderSemantic>^ inputs = gcnew array<ShaderSemantic>( count );
 			pin_ptr<ShaderSemantic> pinnedInputs = &inputs[0];
 
-			hr = D3DXGetShaderInputSemantics( function, (D3DXSEMANTIC*) pinnedInputs, &count );
+			hr = D3DXGetShaderInputSemantics( function, reinterpret_cast<D3DXSEMANTIC*>( pinnedInputs ), &count );
 			GraphicsException::CheckHResult( hr );
 			if( FAILED( hr ) )
 				return nullptr;
@@ -188,7 +188,7 @@ namespace SlimDX
 			array<ShaderSemantic>^ outputs = gcnew array<ShaderSemantic>( count );
 			pin_ptr<ShaderSemantic> pinnedOutputs = &outputs[0];
 
-			hr = D3DXGetShaderOutputSemantics( function, (D3DXSEMANTIC*) pinnedOutputs, &count );
+			hr = D3DXGetShaderOutputSemantics( function, reinterpret_cast<D3DXSEMANTIC*>( pinnedOutputs ), &count );
 			GraphicsException::CheckHResult( hr );
 			if( FAILED( hr ) )
 				return nullptr;
@@ -244,7 +244,7 @@ namespace SlimDX
 			array<GCHandle>^ handles;
 			D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
-			HRESULT hr = D3DXAssembleShader( (char*) pinnedData, sourceData->Length, macros, includePtr,
+			HRESULT hr = D3DXAssembleShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macros, includePtr,
 				(DWORD) flags, &shaderBuffer, &errorBuffer );
 
 			//clean up after marshaling macros
@@ -320,9 +320,9 @@ namespace SlimDX
 			array<GCHandle>^ handles;
 			D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
-			HRESULT hr = D3DXCompileShader( (char*) pinnedData, sourceData->Length, macros, includePtr,
-				(char*) pinnedFunction, (char*) pinnedProfile, (DWORD) flags,
-				&shaderBuffer, &errorBuffer, &constants );
+			HRESULT hr = D3DXCompileShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macros, includePtr,
+				reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
+				static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, &constants );
 
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
@@ -368,9 +368,9 @@ namespace SlimDX
 			array<GCHandle>^ handles;
 			D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
-			HRESULT hr = D3DXCompileShader( (char*) pinnedData, sourceData->Length, macros, includePtr,
-				(char*) pinnedFunction, (char*) pinnedProfile, (DWORD) flags,
-				&shaderBuffer, &errorBuffer, NULL );
+			HRESULT hr = D3DXCompileShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macros, includePtr,
+				reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
+				static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, NULL );
 
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
@@ -418,8 +418,8 @@ namespace SlimDX
 			D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
 			HRESULT hr = D3DXCompileShaderFromFile( pinnedFileName, macros, includePtr,
-				(char*) pinnedFunction, (char*) pinnedProfile, (DWORD) flags,
-				&shaderBuffer, &errorBuffer, &constants );
+				reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
+				static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, &constants );
 
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
@@ -458,8 +458,8 @@ namespace SlimDX
 			D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
 			HRESULT hr = D3DXCompileShaderFromFile( pinnedFileName, macros, includePtr,
-				(char*) pinnedFunction, (char*) pinnedProfile, (DWORD) flags,
-				&shaderBuffer, &errorBuffer, NULL );
+				reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
+				static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, NULL );
 
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
