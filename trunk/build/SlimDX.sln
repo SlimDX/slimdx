@@ -15,6 +15,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTri10", "..\samples\Min
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vortex", "..\samples\Vortex\Vortex.csproj", "{A9074E03-DF93-4180-BF74-6D8E87046BEE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{A2525864-A1CD-4EF2-A548-D44B524E4CDD}"
+	ProjectSection(SolutionItems) = preProject
+		SlimDX.proj = SlimDX.proj
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{794AF0A1-D398-4F8A-9637-A60E61E41F11}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\xsl\api-format.xsl = ..\docs\xsl\api-format.xsl
+		..\docs\xsl\api-structure.xsl = ..\docs\xsl\api-structure.xsl
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -27,9 +27,9 @@ namespace SlimDX
 {
 	namespace XInput
 	{
-		/// <summary>
-		/// 
-		/// </summary>
+		/// <remarks>
+		/// I don't know what this class does, but I'm using it as a test. 
+		/// </remarks>
 		public ref class Controller
 		{
 		private:
@@ -43,7 +43,8 @@ namespace SlimDX
 			Controller(UserIndex userIndex);
 
 			/// <summary>
-			/// Retrieves the current state of the specified controller.
+			/// Retrieves the current state of the specified controller. See also, unrelated: <see cref="SlimDX.Direct3D10.Buffer"/>.
+			/// You may also want to go back to the <wiki page="Main Page"/>.
 			/// </summary>
 			/// <param name="currentState">Out reference to State structure that receives the current state of the controller.</param>
 			void GetState([Out] State% currentState);

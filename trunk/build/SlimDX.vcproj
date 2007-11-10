@@ -121,9 +121,12 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;NDEBUG;D3D_DEBUG_INFO"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
+				GenerateXMLDocumentationFiles="true"
+				XMLDocumentationFileName="$(IntDir)\"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
