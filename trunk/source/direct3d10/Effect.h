@@ -35,6 +35,7 @@ namespace SlimDX
 		ref class Device;
 		ref class EffectTechnique;
 		ref class EffectVariable;
+		ref class EffectPool;
 		
 		public ref class Effect : public DirectXObject<ID3D10Effect>
 		{
@@ -101,10 +102,10 @@ namespace SlimDX
 			
 			void Optimize();
 			
-			static Effect^ FromFile( Device^ device, String^ fileName, String^ profile );
-			static Effect^ FromFile( Device^ device, String^ fileName, String^ profile, [Out] String^ %compilationErrors );
-			static Effect^ FromString( Device^ device, String^ code, String^ profile );
-			static Effect^ FromString( Device^ device, String^ code, String^ profile, [Out] String^ %compilationErrors  );
+			static Effect^ FromFile( Device^ device, String^ fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool );
+			static Effect^ FromFile( Device^ device, String^ fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] String^ %compilationErrors );
+			static Effect^ FromString( Device^ device, String^ code, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool );
+			static Effect^ FromString( Device^ device, String^ code, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] String^ %compilationErrors  );
 		};
 	}
 };

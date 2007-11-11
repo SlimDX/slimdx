@@ -677,6 +677,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\EffectPool.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\EffectResourceVariable.cpp"
 					>
 				</File>
@@ -1309,6 +1313,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\EffectPassShaderMapping.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectPool.h"
 					>
 				</File>
 				<File
