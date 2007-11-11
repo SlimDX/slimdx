@@ -220,12 +220,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="$(NoInherit) user32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib dsound.lib"
-				Version="2.0.0711.08"
+				Version="2.0.0000.11"
 				LinkIncremental="1"
 				DelayLoadDLLs="d3d9.dll;d3dx9_36.dll;d3dx10_36.dll;d3d10.dll;dxgi.dll;dinput8.dll;dsound.dll"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
-				KeyFile="Z:\slimdxKey.snk"
+				KeyFile="S:\slimdxKey.snk"
 			/>
 			<Tool
 				Name="VCALinkTool"
