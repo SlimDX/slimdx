@@ -84,7 +84,7 @@ namespace SlimDX
 		};
 
 		[Flags]
-		public enum class MeshOptimizeFlags
+		public enum class MeshOptimizeFlags : Int32
 		{
 			Compact = D3DXMESHOPT_COMPACT,
 			AttributeSort = D3DXMESHOPT_ATTRSORT,
@@ -93,6 +93,13 @@ namespace SlimDX
 			IgnoreVertices = D3DXMESHOPT_IGNOREVERTS,
 			DoNotSplit = D3DXMESHOPT_DONOTSPLIT,
 			DeviceIndependent = D3DXMESHOPT_DEVICEINDEPENDENT,
+		};
+
+		public enum class PatchMeshType : Int32
+		{
+			Rectangle = D3DXPATCHMESH_RECT,
+			Triangle = D3DXPATCHMESH_TRI,
+			NPatch = D3DXPATCHMESH_NPATCH
 		};
 
 		public value class ExtendedMaterial
@@ -135,6 +142,49 @@ namespace SlimDX
 			property int FaceCount;
 			property int VertexStart;
 			property int VertexCount;
+		};
+
+		public value class PatchInfo
+		{
+		public:
+			property PatchMeshType PatchType;
+			property Degree Degree;
+			property Basis Basis;
+		};
+
+		public value class DisplacementParameters
+		{
+		public:
+			property Texture^ Texture;
+			property TextureFilter MinFilter;
+			property TextureFilter MagFilter;
+			property TextureFilter MipFilter;
+			property TextureAddress Wrap;
+			property int LevelOfDetailBias;
+		};
+
+		ref class StreamShim : System::Runtime::InteropServices::ComTypes::IStream
+		{
+		private:
+			Stream^ m_WrappedStream;
+
+			long long position;
+			void SetSizeToPosition();
+
+		public:
+			StreamShim( Stream^ stream );
+
+			virtual void Clone( [Out] System::Runtime::InteropServices::ComTypes::IStream^% ppstm );
+			virtual void Commit( int grfCommitFlags );
+			virtual void CopyTo( System::Runtime::InteropServices::ComTypes::IStream^ pstm, long long cb, IntPtr pcbRead, IntPtr pcbWritten );
+			virtual void LockRegion( long long libOffset, long long cb, int dwLockType );
+			virtual void Read( [Out] array<unsigned char>^ pv, int cb, IntPtr pcbRead );
+			virtual void Revert();
+			virtual void Seek( long long dlibMove, int dwOrigin, IntPtr plibNewPosition );
+			virtual void SetSize( long long libNewSize );
+			virtual void Stat( [Out] System::Runtime::InteropServices::ComTypes::STATSTG% pstatstg, int grfStatFlag );
+			virtual void UnlockRegion( long long libOffset, long long cb, int dwLockType );
+			virtual void Write( array<unsigned char>^ pv, int cb, IntPtr pcbWritten );
 		};
 
 		ref class Mesh;
@@ -253,19 +303,19 @@ namespace SlimDX
 			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut );
 			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn );
 
-			void Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut,
+			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut,
 				[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
-			void Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap,
+			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap,
 				[Out] BufferWrapper^% vertexRemap );
-			void Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut );
-			void Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn );
+			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut );
+			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn );
 
-			void Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
+			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
 				[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
-			void Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap,
+			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap,
 				[Out] BufferWrapper^% vertexRemap );
-			void Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut );
-			void Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn );*/
+			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut );
+			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn );*/
 
 			void ComputeTangentFrame( TangentOptions options );
 		};
@@ -282,6 +332,34 @@ namespace SlimDX
 
 		public:
 			virtual ~ProgressiveMesh() { }
+
+			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags flags, array<VertexElement>^ vertexDeclaration );
+			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags flags, SlimDX::Direct3D9::VertexFormat format );
+
+			void GenerateVertexHistory( array<int>^ vertexHistory );
+			array<int>^ GetAdjacency();
+		
+			Mesh^ Optimize( MeshOptimizeFlags flags );
+			Mesh^ Optimize( MeshOptimizeFlags flags, [Out] array<int>^% adjacencyOut );
+			Mesh^ Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			Mesh^ Optimize( MeshOptimizeFlags flags, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+
+			void OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags );
+			void OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap );
+
+			void Save( Stream^ stream, array<ExtendedMaterial>^ materials, array<EffectInstance>^ effects );
+			void SetFaceCount( int faceCount );
+			void SetVertexCount( int vertexCount );
+
+			void TrimFaces( int newFaceMinimum, int newFaceMaximum );
+			void TrimFaces( int newFaceMinimum, int newFaceMaximum, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
+			void TrimVertices( int newVertexMinimum, int newVertexMaximum );
+			void TrimVertices( int newVertexMinimum, int newVertexMaximum, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
+
+			property int MaximumFaceCount { int get(); }
+			property int MaximumVertexCount { int get(); }
+			property int MinimumFaceCount { int get(); }
+			property int MinimumVertexCount { int get(); }
 		};
 
 		public ref class PatchMesh : DirectXObject<ID3DXPatchMesh>
@@ -290,13 +368,40 @@ namespace SlimDX
 			PatchMesh( ID3DXPatchMesh *mesh ) : DirectXObject( mesh ) { }
 
 		public:
+			PatchMesh( Device^ device, PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration );
 			virtual ~PatchMesh() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 
-			property int PatchCount
-			{
-				int get() { return 0; }
-			}
+			PatchMesh^ Clone( MeshFlags flags, array<VertexElement>^ vertexDeclaration );
+			void GenerateAdjacency( float tolerance );
+
+			array<VertexElement>^ GetDeclaration();
+			Device^ GetDevice();
+			IndexBuffer^ GetIndexBuffer();
+			VertexBuffer^ GetVertexBuffer();
+			PatchInfo GetPatchInfo();
+			void Optimize();
+
+			DisplacementParameters GetDisplacementParameters();
+			void SetDisplacementParameters( DisplacementParameters parameters );
+
+			DataStream^ LockAttributeBuffer( LockFlags flags );
+			void UnlockAttributeBuffer();
+
+			DataStream^ LockIndexBuffer( LockFlags flags );
+			void UnlockIndexBuffer();
+
+			DataStream^ LockVertexBuffer( LockFlags flags );
+			void UnlockVertexBuffer();
+
+			void GetTessellationSize( float tessellationLevel, bool adaptive, [Out] int% triangleCount, [Out] int% vertexCount );
+			void Tessellate( float tessellationLevel, Mesh^ mesh );
+			void Tessellate( Vector4 translation, int minimumLevel, int maximumLevel, Mesh^ mesh );
+
+			property int ControlVerticesPerPatch { int get(); }
+			property int PatchCount { int get(); }
+			property int VertexCount { int get(); }
+			property PatchMeshType Type { PatchMeshType get(); }
 		};
 	}
 }
