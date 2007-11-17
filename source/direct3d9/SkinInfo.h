@@ -32,8 +32,11 @@ namespace SlimDX
 
 		public ref class BoneCombination
 		{
+		internal:
+			D3DXBONECOMBINATION ToUnmanaged();
+
 		public:
-			property int AttribId;
+			property int AttributeId;
 			property int FaceStart;
 			property int FaceCount;
 			property int VertexStart;
@@ -47,17 +50,35 @@ namespace SlimDX
 			SkinInfo( ID3DXSkinInfo* skinInfo ) : DirectXObject( skinInfo ) { }
 
 		public:
-			//SkinInfo( int vertexCount, array<VertexElement>^ vertexDecl, int numBones );
-			//SkinInfo( BaseMesh^ mesh, int boneCount, array<BoneCombination^>^ boneCombinationTable );
-			//SkinInfo( int vertexCount, VertexFormat fvf, int numBones );
+			SkinInfo( int vertexCount, array<VertexElement>^ vertexDecl, int boneCount );
+			SkinInfo( BaseMesh^ mesh, int boneCount, array<BoneCombination^>^ boneCombinationTable );
+			SkinInfo( int vertexCount, VertexFormat fvf, int boneCount );
 			virtual ~SkinInfo() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 
-			/*SkinInfo^ Clone();
+			SkinInfo^ Clone();
+
+			Mesh^ ConvertToBlendedMesh( Mesh^ mesh, array<int>^ adjacencyIn, [Out] array<int>^ adjacencyOut,
+				[Out] array<int>^ faceRemap, [Out] BufferWrapper^% vertexRemap, [Out] int% maxVertexInfluence,
+				[Out] int% boneCombinationCount, [Out] BufferWrapper^% boneCombinationTable );
+
+			Mesh^ ConvertToBlendedMesh( Mesh^ mesh, array<int>^ adjacencyIn, [Out] array<int>^ adjacencyOut,
+				[Out] int% maxVertexInfluence, [Out] int% boneCombinationCount, 
+				[Out] BufferWrapper^% boneCombinationTable );
+
+			Mesh^ ConvertToIndexedBlendedMesh( Mesh^ mesh, int paletteSize, array<int>^ adjacencyIn, 
+				[Out] array<int>^ adjacencyOut, [Out] array<int>^ faceRemap, [Out] BufferWrapper^% vertexRemap, 
+				[Out] int% maxVertexInfluence, [Out] int% boneCombinationCount, 
+				[Out] BufferWrapper^% boneCombinationTable );
+
+			Mesh^ ConvertToIndexedBlendedMesh( Mesh^ mesh, int paletteSize, array<int>^ adjacencyIn, 
+				[Out] array<int>^ adjacencyOut, [Out] int% maxVertexInfluence, [Out] int% boneCombinationCount, 
+				[Out] BufferWrapper^% boneCombinationTable );
+
 			int FindBoneVertexInfluenceIndex( int bone, int vertex );
 
-			void GetBoneInfluence( int bone, [Out] array<int>^% vertices, [Out] array<int>^% weights );
-			void SetBoneInfluence( int bone, array<int>^ vertices, array<int>^ weights );
+			void GetBoneInfluence( int bone, [Out] array<int>^% vertices, [Out] array<float>^% weights );
+			void SetBoneInfluence( int bone, array<int>^ vertices, array<float>^ weights );
 
 			String^ GetBoneName( int bone );
 			void SetBoneName( int bone, String^ name );
@@ -68,29 +89,30 @@ namespace SlimDX
 			Matrix GetBoneOffsetMatrix( int bone );
 			void SetBoneOffsetMatrix( int bone, Matrix transform );
 
+			array<VertexElement>^ GetDeclaration();
+			void SetDeclaration( array<VertexElement>^ declaration );
+
+			int GetMaxFaceInfluences( IndexBuffer^ indexBuffer, int faceCount );
+			int GetBoneInfluenceCount( int bone );
+
 			void Remap( array<int>^ remapData );
 
-			property int MinimumBoneInfluence
-			{
-				int get();
-				void set( int minimum );
-			}
+			void UpdateSkinnedMesh( Matrix boneTransform, Matrix boneInvTranspose, DataStream^ source, DataStream^ destination );
 
-			property int MaximumVertexInfluence
-			{
-				int get();
-			}
+			property int MaximumVertexInfluences { int get(); }
+			property int BoneCount { int get(); }
 
-			property int BoneCount
+			property float MinimumBoneInfluence
 			{
-				int get();
+				float get();
+				void set( float value );
 			}
 
 			property VertexFormat VertexFormat
 			{
 				SlimDX::Direct3D9::VertexFormat get();
 				void set( SlimDX::Direct3D9::VertexFormat format );
-			}*/
+			}
 		};
 	}
 }
