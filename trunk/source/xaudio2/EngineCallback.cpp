@@ -53,7 +53,7 @@ namespace XAudio2
 
 	void EngineCallbackShim::OnCriticalError( HRESULT hr )
 	{
-		m_WrappedInterface->OnCriticalError( (int) hr );
+		m_WrappedInterface->OnCriticalError( static_cast<int>( hr ) );
 	}
 
 	void EngineCallbackShim::OnProcessingPassStart()

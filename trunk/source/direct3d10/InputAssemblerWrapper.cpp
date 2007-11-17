@@ -47,17 +47,17 @@ namespace Direct3D10
 	
 	void InputAssemblerWrapper::SetPrimitiveTopology( PrimitiveTopology value)
 	{
-		m_Device->IASetPrimitiveTopology( (D3D10_PRIMITIVE_TOPOLOGY) value );
+		m_Device->IASetPrimitiveTopology( static_cast<D3D10_PRIMITIVE_TOPOLOGY>( value ) );
 	}
 	
 	void InputAssemblerWrapper::SetIndexBuffer( Buffer^ indexBuffer, Format format, int offset )
 	{
-		m_Device->IASetIndexBuffer( (ID3D10Buffer*) indexBuffer->InternalPointer, ( DXGI_FORMAT ) format, offset );
+		m_Device->IASetIndexBuffer( static_cast<ID3D10Buffer*>( indexBuffer->InternalPointer ), static_cast<DXGI_FORMAT>( format ), offset );
 	}
 	
 	void InputAssemblerWrapper::SetVertexBuffers( int slot, VertexBufferBinding vertexBufferBinding )
 	{
-		ID3D10Buffer* buffers[] = { (ID3D10Buffer*) vertexBufferBinding.Buffer->InternalPointer };
+		ID3D10Buffer* buffers[] = { static_cast<ID3D10Buffer*>( vertexBufferBinding.Buffer->InternalPointer ) };
 		UINT strides[] = { vertexBufferBinding.Stride };
 		UINT offsets[] = { vertexBufferBinding.Offset };
 		
@@ -72,7 +72,7 @@ namespace Direct3D10
 		
 		for( int i = 0; i < vertexBufferBinding->Length; ++i )
 		{
-			buffers[i] = (ID3D10Buffer*) vertexBufferBinding[ i ].Buffer->InternalPointer;
+			buffers[i] = static_cast<ID3D10Buffer*>( vertexBufferBinding[ i ].Buffer->InternalPointer );
 			strides[i] = vertexBufferBinding[ i ].Stride;
 			offsets[i] = vertexBufferBinding[ i ].Offset;
 		}

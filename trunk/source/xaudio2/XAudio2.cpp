@@ -44,7 +44,7 @@ namespace XAudio2
 		IXAudio2* xa2;
 		IXAudio2EngineCallback* nativeCallback = callback != nullptr ? callback->Shim : NULL;
 
-		HRESULT hr = XAudio2Create( &xa2, (UINT32) flags, nativeCallback, (XAUDIO2_PROCESSOR) processor );
+		HRESULT hr = XAudio2Create( &xa2, static_cast<UINT32>( flags ), nativeCallback, static_cast<XAUDIO2_PROCESSOR>( processor ) );
 		AudioException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			throw gcnew AudioException();
@@ -80,7 +80,7 @@ namespace XAudio2
 	{
 		IXAudio2EngineCallback* nativeCallback = callback != nullptr ? callback->Shim : NULL;
 
-		HRESULT hr = m_Pointer->Initialize( 0, nativeCallback, (XAUDIO2_PROCESSOR) processor );
+		HRESULT hr = m_Pointer->Initialize( 0, nativeCallback, static_cast<XAUDIO2_PROCESSOR>( processor ) );
 		AudioException::CheckHResult( hr );
 	}
 
@@ -99,7 +99,7 @@ namespace XAudio2
 	DeviceDetails XAudio2::GetDeviceDetails( int index )
 	{
 		DeviceDetails details;
-		//HRESULT hr = m_Pointer->GetDeviceDetails( (XAUDIO2_DEVICE_DETAILS*) &details );
+		//HRESULT hr = m_Pointer->GetDeviceDetails( reinterpret_cast<XAUDIO2_DEVICE_DETAILS*>( &details ) );
 		//AudioException::CheckHResult( hr );
 
 		return details;
@@ -117,7 +117,7 @@ namespace XAudio2
 	SlimDX::XAudio2::PerformanceData XAudio2::PerformanceData::get()
 	{
 		SlimDX::XAudio2::PerformanceData data;
-		HRESULT hr = m_Pointer->GetPerformanceData( (XAUDIO2_PERFORMANCE_DATA*) &data );
+		HRESULT hr = m_Pointer->GetPerformanceData( reinterpret_cast<XAUDIO2_PERFORMANCE_DATA*>( &data ) );
 		AudioException::CheckHResult( hr );
 
 		return data;

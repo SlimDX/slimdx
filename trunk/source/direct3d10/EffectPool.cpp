@@ -74,13 +74,13 @@ namespace Direct3D10
 		ID3D10EffectPool* effectPool;
 		ID3D10Blob* errorBlob;
 
-		HRESULT hr = D3DX10CreateEffectPoolFromFile( pinnedFileName, NULL, NULL, (LPCSTR) pinnedProfile,
-			static_cast<UINT>(shaderFlags), static_cast< UINT>(effectFlags ), device->DevicePointer,
+		HRESULT hr = D3DX10CreateEffectPoolFromFile( pinnedFileName, NULL, NULL, reinterpret_cast<LPCSTR>( pinnedProfile ),
+			static_cast<UINT>(shaderFlags), static_cast<UINT>(effectFlags ), device->DevicePointer,
 			NULL, &effectPool, &errorBlob, NULL );
 
 		if( errorBlob != 0 )
 		{
-		  compilationErrors = gcnew String( (const char*) errorBlob->GetBufferPointer() );
+		  compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBlob->GetBufferPointer() ) );
 		  errorBlob->Release();
 		}
 		else
@@ -122,12 +122,12 @@ namespace Direct3D10
 		pin_ptr<unsigned char> pinnedData = &memory[0];
 
 		HRESULT hr = D3DX10CreateEffectPoolFromMemory( pinnedData, memory->Length, "<no file name>", NULL, NULL,
-			(LPCSTR) pinnedProfile, static_cast<UINT>(shaderFlags), static_cast< UINT>(effectFlags ), device->DevicePointer,
+			reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<UINT>(shaderFlags), static_cast< UINT>(effectFlags ), device->DevicePointer,
 			NULL, &effectPool, &errorBlob, NULL );
 
 		if( errorBlob != 0 )
 		{
-		  compilationErrors = gcnew String( (const char*) errorBlob->GetBufferPointer() );
+		  compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBlob->GetBufferPointer() ) );
 		  errorBlob->Release();
 		}
 		else

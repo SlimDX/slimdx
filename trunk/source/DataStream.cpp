@@ -50,7 +50,7 @@ namespace SlimDX
 	
 	DataStream::DataStream( Int64 sizeInBytes, bool canRead, bool canWrite )
 	{
-		m_Buffer = new char[ (int) sizeInBytes ];
+		m_Buffer = new char[ static_cast<int>( sizeInBytes ) ];
 		m_Size = sizeInBytes;
 		
 		m_OwnsBuffer = true;
@@ -179,7 +179,7 @@ namespace SlimDX
 		if( !m_CanWrite )
 			throw gcnew NotSupportedException();
 			
-		memcpy( m_Buffer + m_Position, source.ToPointer(), (size_t) byteCount );
+		memcpy( m_Buffer + m_Position, source.ToPointer(), static_cast<size_t>( byteCount ) );
 		m_Position += byteCount;
 	}
 	
@@ -214,7 +214,7 @@ namespace SlimDX
 
 		int actualCount = count;
 		if( Length > 0 )
-			actualCount = min( (int) (Length - m_Position), count );
+			actualCount = min( static_cast<int>(Length - m_Position), count );
 
 		pin_ptr<Byte> pinnedBuffer = &buffer[offset];
 		memcpy( pinnedBuffer, m_Buffer + m_Position, actualCount );
@@ -232,7 +232,7 @@ namespace SlimDX
 		int elementSize = Marshal::SizeOf( T::typeid );
 		int actualCount = count;
 		if( Length > 0 )
-			actualCount = min( (int) (Length - m_Position) / elementSize, count );
+			actualCount = min( static_cast<int>(Length - m_Position) / elementSize, count );
 		array<T>^ result = gcnew array<T>( actualCount );
 
 		pin_ptr<T> pinnedBuffer = &result[0];

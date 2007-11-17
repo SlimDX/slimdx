@@ -57,7 +57,7 @@ namespace DirectSound
 		m_Format = format;
 		if( m_Format->cbSize > 0 )
 		{
-			m_ExtraData = gcnew DataStream( ((char*) m_Format) + sizeof(WAVEFORMATEX), m_Format->cbSize, true, true, false );
+			m_ExtraData = gcnew DataStream( reinterpret_cast<char*>( m_Format ) + sizeof(WAVEFORMATEX), m_Format->cbSize, true, true, false );
 		}
 	}
 
@@ -79,7 +79,7 @@ namespace DirectSound
 		int extraSize = extensible ? 22 : 0;
 
 		char* data = new char[sizeof(WAVEFORMATEX) + extraSize + extraDataBytes];
-		m_Format = (WAVEFORMATEX*) data;
+		m_Format = reinterpret_cast<WAVEFORMATEX*>( data );
 
 		if( extraDataBytes > 0 )
 		{
@@ -101,7 +101,7 @@ namespace DirectSound
 	{
 		//initialize extra members
 		this->ValidBitsPerSample = 0;
-		this->ChannelMask = (Speaker) 0;
+		this->ChannelMask = static_cast<Speaker>( 0 );
 		memset( &ExtensiblePointer->SubFormat, 0, sizeof(GUID) );
 	}
 
@@ -109,7 +109,7 @@ namespace DirectSound
 	{
 		//initialize extra members
 		this->ValidBitsPerSample = 0;
-		this->ChannelMask = (Speaker) 0;
+		this->ChannelMask = static_cast<Speaker>( 0 );
 		memset( &ExtensiblePointer->SubFormat, 0, sizeof(GUID) );
 	}
 
@@ -120,11 +120,11 @@ namespace DirectSound
 		if( format->Format.wFormatTag != WAVE_FORMAT_EXTENSIBLE )
 			throw gcnew ArgumentException( "format" );
 
-		Format = (WAVEFORMATEX*) format;
+		Format = reinterpret_cast<WAVEFORMATEX*>( format );
 
 		if( Format->cbSize > 22 )
 		{
-			ExtraData = gcnew DataStream( ((char*) Format) + sizeof(WAVEFORMATEXTENSIBLE), Format->cbSize - 22, true, true, false );
+			ExtraData = gcnew DataStream( reinterpret_cast<char*>( Format ) + sizeof(WAVEFORMATEXTENSIBLE), Format->cbSize - 22, true, true, false );
 		}
 	};
 

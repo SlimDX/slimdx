@@ -40,14 +40,14 @@ namespace Direct3D9
 	AnimationController::AnimationController( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents )
 	{
 		HRESULT hr = D3DXCreateAnimationController( maxAnimationOutputs, maxAnimationSets, maxTracks, maxEvents,
-			( LPD3DXANIMATIONCONTROLLER* ) m_Pointer );
+			reinterpret_cast<LPD3DXANIMATIONCONTROLLER*>( m_Pointer ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void AnimationController::AdvanceTime( double time, AnimationCallback^ handler )
 	{
-		HRESULT hr = m_Pointer->AdvanceTime( time, ( LPD3DXANIMATIONCALLBACKHANDLER )
-			Marshal::GetFunctionPointerForDelegate( handler ).ToPointer() );
+		HRESULT hr = m_Pointer->AdvanceTime( time, reinterpret_cast< LPD3DXANIMATIONCALLBACKHANDLER >(
+			Marshal::GetFunctionPointerForDelegate( handler ).ToPointer() ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -57,6 +57,9 @@ namespace Direct3D9
 
 		HRESULT hr = m_Pointer->CloneAnimationController( maxAnimationOutputs, maxAnimationSets, maxTracks, maxEvents, &pointer );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew AnimationController( pointer );
 	}
@@ -68,6 +71,9 @@ namespace Direct3D9
 		HRESULT hr = m_Pointer->GetAnimationSet( index, &set );
 		GraphicsException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		return gcnew AnimationSet( set );
 	}
 
@@ -77,22 +83,25 @@ namespace Direct3D9
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		HRESULT hr = m_Pointer->GetAnimationSetByName( (LPCSTR) pinnedName, &set );
+		HRESULT hr = m_Pointer->GetAnimationSetByName( reinterpret_cast<LPCSTR>( pinnedName ), &set );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew AnimationSet( set );
 	}
 
 	int AnimationController::GetCurrentTrackEvent( int track, EventType eventType )
 	{
-		return m_Pointer->GetCurrentTrackEvent( track, ( D3DXEVENT_TYPE )eventType );
+		return m_Pointer->GetCurrentTrackEvent( track, static_cast<D3DXEVENT_TYPE>( eventType ) );
 	}
 
 	EventDescription AnimationController::GetEventDescription( int handle )
 	{
 		EventDescription result;
 
-		HRESULT hr = m_Pointer->GetEventDesc( handle, (LPD3DXEVENT_DESC) &result );
+		HRESULT hr = m_Pointer->GetEventDesc( handle, reinterpret_cast<LPD3DXEVENT_DESC>( &result ) );
 		GraphicsException::CheckHResult( hr );
 
 		return result;
@@ -105,6 +114,9 @@ namespace Direct3D9
 		HRESULT hr = m_Pointer->GetTrackAnimationSet( track, &set );
 		GraphicsException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		return gcnew AnimationSet( set );
 	}
 
@@ -112,7 +124,7 @@ namespace Direct3D9
 	{
 		TrackDescription result;
 
-		HRESULT hr = m_Pointer->GetTrackDesc( track, (LPD3DXTRACK_DESC) &result );
+		HRESULT hr = m_Pointer->GetTrackDesc( track, reinterpret_cast<LPD3DXTRACK_DESC>( &result ) );
 		GraphicsException::CheckHResult( hr );
 
 		return result;
@@ -130,7 +142,7 @@ namespace Direct3D9
 
 	int AnimationController::KeyPriorityBlend( float newBlendWeight, double startTime, double duration, TransitionType transition )
 	{
-		return m_Pointer->KeyPriorityBlend( newBlendWeight, startTime, duration, (D3DXTRANSITION_TYPE) transition );
+		return m_Pointer->KeyPriorityBlend( newBlendWeight, startTime, duration, static_cast<D3DXTRANSITION_TYPE>( transition ) );
 	}
 
 	int AnimationController::KeyTrackEnable( int track, bool enable, double startTime )
@@ -145,12 +157,12 @@ namespace Direct3D9
 
 	int AnimationController::KeyTrackSpeed( int track, float newSpeed, double startTime, double duration, TransitionType transition )
 	{
-		return m_Pointer->KeyTrackSpeed( track, newSpeed, startTime, duration, (D3DXTRANSITION_TYPE) transition );
+		return m_Pointer->KeyTrackSpeed( track, newSpeed, startTime, duration, static_cast<D3DXTRANSITION_TYPE>( transition ) );
 	}
 
 	int AnimationController::KeyTrackWeight( int track, float newWeight, double startTime, double duration, TransitionType transition )
 	{
-		return m_Pointer->KeyTrackWeight( track, newWeight, startTime, duration, (D3DXTRANSITION_TYPE) transition );
+		return m_Pointer->KeyTrackWeight( track, newWeight, startTime, duration, static_cast<D3DXTRANSITION_TYPE>( transition ) );
 	}
 
 	void AnimationController::RegisterAnimationOutput( String^ name, AnimationOutput^ output )
@@ -169,34 +181,34 @@ namespace Direct3D9
 		if( (output->Flags & AnimationOutputFlags::Transformation) == AnimationOutputFlags::Transformation )
 		{
 			pinMatrix = &output->Transformation;
-			matrix = (D3DXMATRIX*) pinMatrix;
+			matrix = reinterpret_cast<D3DXMATRIX*>( pinMatrix );
 		}
 
 		if( (output->Flags & AnimationOutputFlags::Scale) == AnimationOutputFlags::Scale )
 		{
 			pinScale = &output->Scaling;
-			scale = (D3DXVECTOR3*) pinScale;
+			scale = reinterpret_cast<D3DXVECTOR3*>( pinScale );
 		}
 
 		if( (output->Flags & AnimationOutputFlags::Translation) == AnimationOutputFlags::Translation )
 		{
 			pinTranslation = &output->Translation;
-			translation = (D3DXVECTOR3*) pinTranslation;
+			translation = reinterpret_cast<D3DXVECTOR3*>( pinTranslation );
 		}
 
 		if( (output->Flags & AnimationOutputFlags::Rotation) == AnimationOutputFlags::Rotation )
 		{
 			pinQuaternion = &output->Rotation;
-			rotation = (D3DXQUATERNION*) pinQuaternion;
+			rotation = reinterpret_cast<D3DXQUATERNION*>( pinQuaternion );
 		}
 
-		HRESULT hr = m_Pointer->RegisterAnimationOutput( (LPCSTR) pinnedName, matrix, scale, rotation, translation );
+		HRESULT hr = m_Pointer->RegisterAnimationOutput( reinterpret_cast<LPCSTR>( pinnedName ), matrix, scale, rotation, translation );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void AnimationController::RegisterAnimationSet( AnimationSet^ set )
 	{
-		HRESULT hr = m_Pointer->RegisterAnimationSet( (LPD3DXANIMATIONSET) set->ComPointer.ToPointer() );
+		HRESULT hr = m_Pointer->RegisterAnimationSet( reinterpret_cast<LPD3DXANIMATIONSET>( set->ComPointer.ToPointer() ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -208,13 +220,13 @@ namespace Direct3D9
 
 	void AnimationController::SetTrackAnimationSet( int track, AnimationSet^ set )
 	{
-		HRESULT hr = m_Pointer->SetTrackAnimationSet( track, (LPD3DXANIMATIONSET) set->ComPointer.ToPointer() );
+		HRESULT hr = m_Pointer->SetTrackAnimationSet( track, reinterpret_cast<LPD3DXANIMATIONSET>( set->ComPointer.ToPointer() ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void AnimationController::SetTrackDescription( int track, TrackDescription description )
 	{
-		HRESULT hr = m_Pointer->SetTrackDesc( track, (LPD3DXTRACK_DESC) &description);
+		HRESULT hr = m_Pointer->SetTrackDesc( track, reinterpret_cast<LPD3DXTRACK_DESC>( &description ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -238,7 +250,7 @@ namespace Direct3D9
 
 	void AnimationController::SetTrackPriority( int track, TrackPriority priority )
 	{
-		HRESULT hr = m_Pointer->SetTrackPriority( track, (D3DXPRIORITY_TYPE) priority );
+		HRESULT hr = m_Pointer->SetTrackPriority( track, static_cast<D3DXPRIORITY_TYPE>( priority ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -274,7 +286,7 @@ namespace Direct3D9
 
 	void AnimationController::UnregisterAnimationSet( AnimationSet^ set )
 	{
-		HRESULT hr = m_Pointer->UnregisterAnimationSet( (LPD3DXANIMATIONSET) set->ComPointer.ToPointer() );
+		HRESULT hr = m_Pointer->UnregisterAnimationSet( reinterpret_cast<LPD3DXANIMATIONSET>( set->ComPointer.ToPointer() ) );
 		GraphicsException::CheckHResult( hr );
 	}
 

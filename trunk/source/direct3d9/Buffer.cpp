@@ -65,7 +65,7 @@ namespace Direct3D9
 	{
 		if( buffer != NULL )
 		{
-			String^ string = gcnew String( (const char*) buffer->GetBufferPointer() );
+			String^ string = gcnew String( reinterpret_cast<const char*>( buffer->GetBufferPointer() ) );
 			buffer->Release();
 			return string;
 		}

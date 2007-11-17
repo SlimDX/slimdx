@@ -43,7 +43,7 @@ namespace SlimDX
 			Controller(UserIndex userIndex);
 
 			/// <summary>
-			/// Retrieves the current state of the specified controller. See also, unrelated: <see cref="SlimDX.Direct3D10.Buffer"/>.
+			/// Retrieves the current state of the specified controller. See also, unrelated: see cref="SlimDX.Direct3D10.Buffer".
 			/// You may also want to go back to the <wiki page="Main Page"/>.
 			/// </summary>
 			/// <param name="currentState">Out reference to State structure that receives the current state of the controller.</param>

@@ -86,13 +86,13 @@ namespace Direct3D9
 		ID3DXBuffer *errorBuffer;
 		ID3DXConstantTable* constantTable;
 		
-		HRESULT hr = D3DXCompileShader( (const char*) pinnedCode, rawCode->Length, NULL, NULL,
-			(const char*) pinnedFunction, (const char*) pinnedProfile,
-			(DWORD) flags, &shaderBuffer, &errorBuffer, &constantTable );
+		HRESULT hr = D3DXCompileShader( reinterpret_cast<const char*>( pinnedCode ), rawCode->Length, NULL, NULL,
+			reinterpret_cast<const char*>( pinnedFunction ), reinterpret_cast<const char*>( pinnedProfile ),
+			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, &constantTable );
 		
 		if( errorBuffer != NULL )
 		{
-			compilationErrors = gcnew String( (const char*) errorBuffer->GetBufferPointer() );
+			compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBuffer->GetBufferPointer() ) );
 		}
 		else
 		{
@@ -110,7 +110,7 @@ namespace Direct3D9
 		SetLastError( hr );
 		
 		IDirect3DVertexShader9 *vertexShader;
-		device->InternalPointer->CreateVertexShader( (const DWORD*) shaderBuffer->GetBufferPointer(), &vertexShader );
+		device->InternalPointer->CreateVertexShader( reinterpret_cast<const DWORD*>( shaderBuffer->GetBufferPointer() ), &vertexShader );
 		if( vertexShader == NULL)
 			return nullptr;
 		return gcnew VertexShader( vertexShader, constantTable );
@@ -136,7 +136,7 @@ namespace Direct3D9
 
 		//Ask D3DX to give us the actual table
 		ID3DXConstantTable* constantTable;
-		hr = D3DXGetShaderConstantTable( (const DWORD*) data.get(), &constantTable );
+		hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( data.get() ), &constantTable );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return;

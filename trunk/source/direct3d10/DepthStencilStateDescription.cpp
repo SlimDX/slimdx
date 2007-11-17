@@ -52,19 +52,19 @@ namespace Direct3D10
 	DepthStencilStateDescription::DepthStencilStateDescription( const D3D10_DEPTH_STENCIL_DESC& desc )
 	{
 		DepthEnabled = desc.DepthEnable ? true : false;
-		DepthWriteMask = (SlimDX::Direct3D10::DepthWriteMask) desc.DepthWriteMask;
-		DepthComparison = (Comparison) desc.DepthFunc;
-		StencilEnabled = desc.StencilEnable ?(true): false;
+		DepthWriteMask = static_cast<SlimDX::Direct3D10::DepthWriteMask>( desc.DepthWriteMask );
+		DepthComparison = static_cast<Comparison>( desc.DepthFunc );
+		StencilEnabled = desc.StencilEnable ? true : false;
 		StencilReadMask = desc.StencilReadMask;
 		StencilWriteMask = desc.StencilWriteMask;
-		FrontStencilComparison = (Comparison) desc.FrontFace.StencilFunc;
-		FrontStencilFailureOperation = (StencilOperation) desc.FrontFace.StencilFailOp;
-		FrontStencilDepthFailureOperation = (StencilOperation) desc.FrontFace.StencilDepthFailOp;
-		FrontStencilPassOperation = (StencilOperation) desc.FrontFace.StencilPassOp;
-		BackStencilComparison = (Comparison) desc.BackFace.StencilFunc;
-		BackStencilFailureOperation = (StencilOperation) desc.BackFace.StencilFailOp;
-		BackStencilDepthFailureOperation = (StencilOperation) desc.BackFace.StencilDepthFailOp;
-		BackStencilPassOperation = (StencilOperation) desc.BackFace.StencilPassOp;
+		FrontStencilComparison = static_cast<Comparison>( desc.FrontFace.StencilFunc );
+		FrontStencilFailureOperation = static_cast<StencilOperation>( desc.FrontFace.StencilFailOp );
+		FrontStencilDepthFailureOperation = static_cast<StencilOperation>( desc.FrontFace.StencilDepthFailOp );
+		FrontStencilPassOperation = static_cast<StencilOperation>( desc.FrontFace.StencilPassOp );
+		BackStencilComparison = static_cast<Comparison>( desc.BackFace.StencilFunc );
+		BackStencilFailureOperation = static_cast<StencilOperation>( desc.BackFace.StencilFailOp );
+		BackStencilDepthFailureOperation = static_cast<StencilOperation>( desc.BackFace.StencilDepthFailOp );
+		BackStencilPassOperation = static_cast<StencilOperation>( desc.BackFace.StencilPassOp );
 	}
 	
 	void DepthStencilStateDescription::FillNativeObject( D3D10_DEPTH_STENCIL_DESC& desc )
@@ -72,19 +72,19 @@ namespace Direct3D10
 		ZeroMemory( &desc, sizeof( desc ) );
 		
 		desc.DepthEnable = DepthEnabled;
-		desc.DepthWriteMask = (D3D10_DEPTH_WRITE_MASK) DepthWriteMask;
-		desc.DepthFunc = (D3D10_COMPARISON_FUNC) DepthComparison;
+		desc.DepthWriteMask = static_cast<D3D10_DEPTH_WRITE_MASK>( DepthWriteMask );
+		desc.DepthFunc = static_cast<D3D10_COMPARISON_FUNC>( DepthComparison );
 		desc.StencilEnable = StencilEnabled;
 		desc.StencilReadMask = StencilReadMask;
 		desc.StencilWriteMask = StencilWriteMask;
-		desc.FrontFace.StencilFunc = (D3D10_COMPARISON_FUNC) FrontStencilComparison;
-		desc.FrontFace.StencilFailOp = (D3D10_STENCIL_OP) FrontStencilFailureOperation;
-		desc.FrontFace.StencilDepthFailOp = ( D3D10_STENCIL_OP) FrontStencilDepthFailureOperation;
-		desc.FrontFace.StencilPassOp = (D3D10_STENCIL_OP) FrontStencilPassOperation;
-		desc.BackFace.StencilFunc = (D3D10_COMPARISON_FUNC) BackStencilComparison;
-		desc.BackFace.StencilFailOp = (D3D10_STENCIL_OP) BackStencilFailureOperation;
-		desc.BackFace.StencilDepthFailOp = (D3D10_STENCIL_OP) BackStencilDepthFailureOperation;
-		desc.BackFace.StencilPassOp = (D3D10_STENCIL_OP) BackStencilPassOperation;
+		desc.FrontFace.StencilFunc = static_cast<D3D10_COMPARISON_FUNC>( FrontStencilComparison );
+		desc.FrontFace.StencilFailOp = static_cast<D3D10_STENCIL_OP>( FrontStencilFailureOperation );
+		desc.FrontFace.StencilDepthFailOp = static_cast< D3D10_STENCIL_OP>( FrontStencilDepthFailureOperation );
+		desc.FrontFace.StencilPassOp = static_cast<D3D10_STENCIL_OP>( FrontStencilPassOperation );
+		desc.BackFace.StencilFunc = static_cast<D3D10_COMPARISON_FUNC>( BackStencilComparison );
+		desc.BackFace.StencilFailOp = static_cast<D3D10_STENCIL_OP>( BackStencilFailureOperation );
+		desc.BackFace.StencilDepthFailOp = static_cast<D3D10_STENCIL_OP>( BackStencilDepthFailureOperation );
+		desc.BackFace.StencilPassOp = static_cast<D3D10_STENCIL_OP>( BackStencilPassOperation );
 	}
 }
 }

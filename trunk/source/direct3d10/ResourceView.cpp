@@ -47,8 +47,8 @@ namespace Direct3D10
 		D3D10_SHADER_RESOURCE_VIEW_DESC desc;
 		view->GetDesc( &desc );
 		
-		Format = (SlimDX::Direct3D10::Format) desc.Format;
-		Dimension = (ResourceViewDimension) desc.ViewDimension;
+		Format = static_cast<SlimDX::Direct3D10::Format>( desc.Format );
+		Dimension = static_cast<ResourceViewDimension>( desc.ViewDimension );
 		
 		//@TODO D3D10: Figure out the proper way to set these.
 		ElementOffset = 0;

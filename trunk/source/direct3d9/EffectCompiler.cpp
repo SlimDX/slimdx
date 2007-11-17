@@ -76,8 +76,8 @@ namespace Direct3D9
 		array<GCHandle>^ handles;
 		D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
-		HRESULT hr = D3DXCreateEffectCompiler( (LPCSTR) pinnedData, data->Length, macros, includePtr,
-			(DWORD) flags, &compiler, &errorBuffer );
+		HRESULT hr = D3DXCreateEffectCompiler( reinterpret_cast<LPCSTR>( pinnedData ), data->Length, macros, includePtr,
+			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
 		
 		//clean up after marshaling macros
 		Macro::Unmarshal( macros, handles );
@@ -106,8 +106,8 @@ namespace Direct3D9
 		array<GCHandle>^ handles;
 		D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
-		HRESULT hr = D3DXCreateEffectCompilerFromFile( (LPCTSTR) pinnedFile, macros, includePtr,
-			(DWORD) flags, &compiler, &errorBuffer );
+		HRESULT hr = D3DXCreateEffectCompilerFromFile( reinterpret_cast<LPCTSTR>( pinnedFile ), macros, includePtr,
+			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
 		
 		//clean up after marshaling macros
 		Macro::Unmarshal( macros, handles );
@@ -132,7 +132,7 @@ namespace Direct3D9
 		ID3DXBuffer* shader;
 		ID3DXConstantTable* table;
 
-		HRESULT hr = CompilerPointer->CompileShader( handle, (LPCSTR) pinnedTarget, (DWORD) flags, &shader, &errorBuffer, &table );
+		HRESULT hr = CompilerPointer->CompileShader( handle, reinterpret_cast<LPCSTR>( pinnedTarget ), static_cast<DWORD>( flags ), &shader, &errorBuffer, &table );
 
 		//marshal errors if necessary
 		compilationErrors = BufferWrapper::ConvertToString( errorBuffer );
@@ -163,12 +163,12 @@ namespace Direct3D9
 		ID3DXBuffer* errorBuffer;
 		ID3DXBuffer* shader;
 
-		HRESULT hr = CompilerPointer->CompileShader( handle, (LPCSTR) pinnedTarget, (DWORD) flags, &shader, &errorBuffer, NULL );
+		HRESULT hr = CompilerPointer->CompileShader( handle, reinterpret_cast<LPCSTR>( pinnedTarget ), static_cast<DWORD>( flags ), &shader, &errorBuffer, NULL );
 
 		//marshal errors if necessary
 		if( errorBuffer != NULL )
 		{
-			compilationErrors = gcnew String( (const char*) errorBuffer->GetBufferPointer() );
+			compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBuffer->GetBufferPointer() ) );
 		}
 		else
 		{
@@ -201,12 +201,12 @@ namespace Direct3D9
 		ID3DXBuffer* effect;
 		ID3DXBuffer* errorBuffer;
 
-		HRESULT hr = CompilerPointer->CompileEffect( (DWORD) flags, &effect, &errorBuffer );
+		HRESULT hr = CompilerPointer->CompileEffect( static_cast<DWORD>( flags ), &effect, &errorBuffer );
 
 		//marshal errors if necessary
 		if( errorBuffer != NULL )
 		{
-			compilationErrors = gcnew String( (const char*) errorBuffer->GetBufferPointer() );
+			compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBuffer->GetBufferPointer() ) );
 		}
 		else
 		{

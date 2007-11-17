@@ -40,7 +40,7 @@ namespace Direct3D10
 			throw gcnew ArgumentNullException( "device" );
 			
 		IDXGISwapChain *swapChain = 0;
-		HRESULT hr = device->FactoryPointer->CreateSwapChain( device->DevicePointer, (DXGI_SWAP_CHAIN_DESC*) &description, &swapChain );
+		HRESULT hr = device->FactoryPointer->CreateSwapChain( device->DevicePointer, reinterpret_cast<DXGI_SWAP_CHAIN_DESC*>( &description ), &swapChain );
 		GraphicsException::CheckHResult( hr );
 		
 		m_Pointer = swapChain;
@@ -49,7 +49,7 @@ namespace Direct3D10
 	Texture2D^ SwapChain::GetBuffer( int index )
 	{
 		ID3D10Texture2D *texture;
-		HRESULT hr = m_Pointer->GetBuffer( index, __uuidof( ID3D10Texture2D ), (void**) &texture );
+		HRESULT hr = m_Pointer->GetBuffer( index, __uuidof( ID3D10Texture2D ), reinterpret_cast<void**>( &texture ) );
 		GraphicsException::CheckHResult( hr );
 
 		return gcnew Texture2D( texture );
@@ -57,13 +57,13 @@ namespace Direct3D10
 	
 	void SwapChain::ResizeBuffers( int count, int width, int height, Format format, SwapChainFlags flags )
 	{
-		HRESULT hr = m_Pointer->ResizeBuffers( count, width, height, (DXGI_FORMAT)format, (UINT)flags );
+		HRESULT hr = m_Pointer->ResizeBuffers( count, width, height, static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ) );
 		GraphicsException::CheckHResult( hr );
 	}
 	
 	PresentResult SwapChain::Present( int syncInterval, PresentFlags flags )
 	{
-		HRESULT hr = m_Pointer->Present( syncInterval, (UINT) flags );
+		HRESULT hr = m_Pointer->Present( syncInterval, static_cast<UINT>( flags ) );
 		if( hr == S_OK )
 			return PresentResult::Okay;
 		else if( hr == DXGI_STATUS_OCCLUDED )

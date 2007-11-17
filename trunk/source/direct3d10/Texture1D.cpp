@@ -57,16 +57,16 @@ namespace Direct3D10
 		m_Pointer = pointer;
 		
 		D3D10_TEXTURE1D_DESC desc;
-		( (ID3D10Texture1D*) m_Pointer )->GetDesc( &desc );
+		static_cast<ID3D10Texture1D*>( m_Pointer )->GetDesc( &desc );
 		
 		m_Width = desc.Width;
 		m_MipLevels = desc.MipLevels;
 		m_ArraySize = desc.ArraySize;
-		m_Format = (SlimDX::Direct3D10::Format) desc.Format;
-		m_Usage = (ResourceUsage) desc.Usage;
-		m_BindFlags = (SlimDX::Direct3D10::BindFlags) desc.BindFlags;
-		m_AccessFlags = (CpuAccessFlags) desc.CPUAccessFlags;
-		m_OptionFlags = (ResourceOptionFlags) desc.MiscFlags;
+		m_Format = static_cast<SlimDX::Direct3D10::Format>( desc.Format );
+		m_Usage = static_cast<ResourceUsage>( desc.Usage );
+		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( desc.BindFlags );
+		m_AccessFlags = static_cast<CpuAccessFlags>( desc.CPUAccessFlags );
+		m_OptionFlags = static_cast<ResourceOptionFlags>( desc.MiscFlags );
 	}
 	
 	Texture1D::Texture1D( Device^ device, int width, int mipLevels, int arraySize, SlimDX::Direct3D10::Format format,
@@ -77,11 +77,11 @@ namespace Direct3D10
 		desc.Width = width;
 		desc.MipLevels = mipLevels;
 		desc.ArraySize = arraySize;
-		desc.Format = (DXGI_FORMAT) format;
-		desc.Usage = (D3D10_USAGE) usage;
-		desc.BindFlags = (UINT) bindFlags;
-		desc.CPUAccessFlags = (UINT) accessFlags;
-		desc.MiscFlags = (UINT) optionFlags;
+		desc.Format = static_cast<DXGI_FORMAT>( format );
+		desc.Usage = static_cast<D3D10_USAGE>( usage );
+		desc.BindFlags = static_cast<UINT>( bindFlags );
+		desc.CPUAccessFlags = static_cast<UINT>( accessFlags );
+		desc.MiscFlags = static_cast<UINT>( optionFlags );
 	
 		ID3D10Texture1D* texture;
 		HRESULT hr = device->DevicePointer->CreateTexture1D( &desc, NULL, &texture );
@@ -93,7 +93,7 @@ namespace Direct3D10
 	DataStream^ Texture1D::Map( int subResource, MapMode mode, MapFlags flags )
 	{
 		void* mappedArray;
-		HRESULT hr = ( (ID3D10Texture1D*) m_Pointer )->Map( subResource, (D3D10_MAP) mode, (UINT) flags, &mappedArray );
+		HRESULT hr = static_cast<ID3D10Texture1D*>( m_Pointer )->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedArray );
 		GraphicsException::CheckHResult( hr );
 		
 		bool readOnly = mode == MapMode::Read;
@@ -102,7 +102,7 @@ namespace Direct3D10
 
 	void Texture1D::Unmap( int subResource )
 	{
-		( (ID3D10Texture1D*) m_Pointer )->Unmap( subResource );
+		static_cast<ID3D10Texture1D*>( m_Pointer )->Unmap( subResource );
 	}
 	
 	Texture1D^ Texture1D::FromFile( Device^ device, String^ fileName )
@@ -115,7 +115,7 @@ namespace Direct3D10
 		
 		if( texture == NULL )
 			return nullptr;
-		return gcnew Texture1D( (ID3D10Texture1D*) texture );
+		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( texture ) );
 	}
 	
 	Texture1D^ Texture1D::FromStream( Device^ device, Stream^ stream, int sizeInBytes )
@@ -129,7 +129,7 @@ namespace Direct3D10
 		
 		if( texture == NULL )
 			return nullptr;
-		return gcnew Texture1D( (ID3D10Texture1D*) texture );
+		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( texture ) );
 	}
 }
 }

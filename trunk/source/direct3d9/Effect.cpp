@@ -74,7 +74,7 @@ namespace SlimDX
 			{
 				array<Byte>^ skipBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( skipConstants );
 				pinnedSkip = &skipBytes[0];
-				skipString = (LPCSTR) pinnedSkip;
+				skipString = reinterpret_cast<LPCSTR>( pinnedSkip );
 			}
 
 			IncludeShim includeShim = IncludeShim( includeFile );
@@ -87,7 +87,7 @@ namespace SlimDX
 			D3DXMACRO* macros = Macro::Marshal( preprocessorDefines, handles );
 
 			HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinnedData, memory->Length, macros, includePtr,
-				skipString, (DWORD) flags, effectPool, &effect, &errorBuffer );
+				skipString, static_cast<DWORD>( flags ), effectPool, &effect, &errorBuffer );
 			
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
@@ -158,7 +158,7 @@ namespace SlimDX
 			{
 				array<Byte>^ skipBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( skipConstants );
 				pinnedSkip = &skipBytes[0];
-				skipString = (LPCSTR) pinnedSkip;
+				skipString = reinterpret_cast<LPCSTR>( pinnedSkip );
 			}
 
 			IncludeShim includeShim = IncludeShim( includeFile );
@@ -171,7 +171,7 @@ namespace SlimDX
 			D3DXMACRO* macros = Macro::Marshal( preprocessorDefines, handles );
 
 			HRESULT hr = D3DXCreateEffectFromFileEx( device->InternalPointer, pinnedName, macros, includePtr,
-				skipString, (DWORD) flags, effectPool, &effect, &errorBuffer );
+				skipString, static_cast<DWORD>( flags ), effectPool, &effect, &errorBuffer );
 			
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
@@ -201,7 +201,7 @@ namespace SlimDX
 		{
 			unsigned int passCount;
 
-			HRESULT hr = EffectPointer->Begin( &passCount, (DWORD) flags );
+			HRESULT hr = EffectPointer->Begin( &passCount, static_cast<DWORD>( flags ) );
 			GraphicsException::CheckHResult( hr );
 
 			return passCount;

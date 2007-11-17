@@ -52,7 +52,7 @@ namespace Direct3D10
 		
 		for( int i = 0; i < bufferBindings->Length; ++i )
 		{
-			buffers[i] = (ID3D10Buffer*) bufferBindings[ i ].Buffer->InternalPointer;
+			buffers[i] = static_cast<ID3D10Buffer*>( bufferBindings[ i ].Buffer->InternalPointer );
 			offsets[i] = bufferBindings[ i ].Offset;
 		}
 		

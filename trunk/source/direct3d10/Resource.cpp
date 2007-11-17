@@ -39,19 +39,19 @@ namespace Direct3D10
 	
 	ResourcePriority Resource::EvictionPriority::get()
 	{
-		return (ResourcePriority) m_Pointer->GetEvictionPriority();
+		return static_cast<ResourcePriority>( m_Pointer->GetEvictionPriority() );
 	}
 	
 	void Resource::EvictionPriority::set(ResourcePriority value)
 	{
-		m_Pointer->SetEvictionPriority( (UINT) value );
+		m_Pointer->SetEvictionPriority( static_cast<UINT>( value ) );
 	}
 	
 	ResourceDimension Resource::Dimension::get()
 	{
 		D3D10_RESOURCE_DIMENSION type;
 		m_Pointer->GetType(&type);
-		return (ResourceDimension) type;
+		return static_cast<ResourceDimension>( type );
 	}
 }
 }

@@ -62,21 +62,8 @@ namespace SlimDX
 		generic<typename T>
 		static void CheckArrayBounds( array<T>^ data, int offset, int% count );
 
-		static Guid FromGUID( const GUID &guid )
-		{
-			Guid result( guid.Data1, guid.Data2, guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], 
-				guid.Data4[3], guid.Data4[4], guid.Data4[5], guid.Data4[6], guid.Data4[7] );
-			return result;
-		}
+		static Guid FromGUID( const GUID &guid );
 
-		static GUID ToGUID( Guid guid )
-		{
-			GUID result;
-			array<Byte>^ bytes = guid.ToByteArray();
-			pin_ptr<unsigned char> pinned_bytes = &bytes[0];
-			memcpy( &result, pinned_bytes, sizeof(GUID) );
-	
-			return result;
-		}
+		static GUID ToGUID( Guid guid );
 	};
 }

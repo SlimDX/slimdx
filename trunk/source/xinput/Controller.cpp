@@ -34,7 +34,7 @@ namespace SlimDX
 		Controller::Controller(UserIndex userIndex)
 		{
 			XInputEnable(true);
-			this->userIndex = (UInt32)userIndex;
+			this->userIndex = static_cast<UInt32>( userIndex );
 		}
 
 		void Controller::GetState([Out] State% currentState)
@@ -59,10 +59,10 @@ namespace SlimDX
 			XINPUT_CAPABILITIES caps;
 			InputException::CheckResult(XInputGetCapabilities(userIndex, static_cast<DWORD>(flags), &caps));
 
-			capabilities.Type = (DeviceType)caps.Type;
-			capabilities.SubType = (DeviceSubType)caps.SubType;
+			capabilities.Type = static_cast<DeviceType>(caps.Type);
+			capabilities.SubType = static_cast<DeviceSubType>(caps.SubType);
 			capabilities.Gamepad = Gamepad( caps.Gamepad );
-			capabilities.Flags = (CapabilitiesFlags)caps.Flags;
+			capabilities.Flags = static_cast<CapabilitiesFlags>(caps.Flags);
 			capabilities.Vibration.LeftMotorSpeed = caps.Vibration.wLeftMotorSpeed;
 			capabilities.Vibration.RightMotorSpeed = caps.Vibration.wRightMotorSpeed;
 		}

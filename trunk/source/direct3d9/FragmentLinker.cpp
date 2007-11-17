@@ -66,8 +66,8 @@ namespace Direct3D9
 		array<GCHandle>^ handles;
 		D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
-		HRESULT hr = D3DXGatherFragments( (LPCSTR) pinnedData, sourceData->Length, macros, includePtr,
-			(DWORD) flags, &fragmentBuffer, &errorBuffer );
+		HRESULT hr = D3DXGatherFragments( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macros, includePtr,
+			static_cast<DWORD>( flags ), &fragmentBuffer, &errorBuffer );
 		
 		//clean up after marshaling macros
 		Macro::Unmarshal( macros, handles );
@@ -103,8 +103,8 @@ namespace Direct3D9
 		array<GCHandle>^ handles;
 		D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
-		HRESULT hr = D3DXGatherFragmentsFromFile( (LPCTSTR) pinnedFile, macros, includePtr,
-			(DWORD) flags, &fragmentBuffer, &errorBuffer );
+		HRESULT hr = D3DXGatherFragmentsFromFile( reinterpret_cast<LPCTSTR>( pinnedFile ), macros, includePtr,
+			static_cast<DWORD>( flags ), &fragmentBuffer, &errorBuffer );
 		
 		//clean up after marshaling macros
 		Macro::Unmarshal( macros, handles );
@@ -121,13 +121,13 @@ namespace Direct3D9
 	void FragmentLinker::AddFragments( array<int>^ fragments )
 	{
 		pin_ptr<int> pinnedFragments = &fragments[0];
-		HRESULT hr = m_Pointer->AddFragments( (const DWORD*) pinnedFragments );
+		HRESULT hr = m_Pointer->AddFragments( reinterpret_cast<const DWORD*>( pinnedFragments ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void FragmentLinker::AddFragments( DataStream^ fragments )
 	{
-		HRESULT hr = m_Pointer->AddFragments( (const DWORD*) fragments->RawPointer );
+		HRESULT hr = m_Pointer->AddFragments( reinterpret_cast<const DWORD*>( fragments->RawPointer ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -196,7 +196,7 @@ namespace Direct3D9
 		array<Byte>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<const Byte> pinnedName = &nameBytes[0];
 
-		D3DXHANDLE handle = m_Pointer->GetFragmentHandleByName( (LPCSTR) pinnedName );
+		D3DXHANDLE handle = m_Pointer->GetFragmentHandleByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( handle == NULL )
 			return nullptr;
 
@@ -222,7 +222,7 @@ namespace Direct3D9
 			handles[i] = fragmentHandles[i] != nullptr ? fragmentHandles[i]->InternalHandle : NULL;
 		}
 
-		HRESULT hr = m_Pointer->LinkShader( (LPCSTR) pinnedProfile, (DWORD) flags, handles, fragmentHandles->Length, &bytecode, &errorBuffer );
+		HRESULT hr = m_Pointer->LinkShader( reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<DWORD>( flags ), handles, fragmentHandles->Length, &bytecode, &errorBuffer );
 		delete[] handles;
 		GraphicsException::CheckHResult( hr );
 		
@@ -247,7 +247,7 @@ namespace Direct3D9
 			handles[i] = fragmentHandles[i] != nullptr ? fragmentHandles[i]->InternalHandle : NULL;
 		}
 
-		HRESULT hr = m_Pointer->LinkVertexShader( (LPCSTR) pinnedProfile, (DWORD) flags, handles, fragmentHandles->Length, &shader, &errorBuffer );
+		HRESULT hr = m_Pointer->LinkVertexShader( reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<DWORD>( flags ), handles, fragmentHandles->Length, &shader, &errorBuffer );
 		delete[] handles;
 		GraphicsException::CheckHResult( hr );
 		
@@ -272,7 +272,7 @@ namespace Direct3D9
 			handles[i] = fragmentHandles[i] != nullptr ? fragmentHandles[i]->InternalHandle : NULL;
 		}
 
-		HRESULT hr = m_Pointer->LinkPixelShader( (LPCSTR) pinnedProfile, (DWORD) flags, handles, fragmentHandles->Length, &shader, &errorBuffer );
+		HRESULT hr = m_Pointer->LinkPixelShader( reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<DWORD>( flags ), handles, fragmentHandles->Length, &shader, &errorBuffer );
 		delete[] handles;
 		GraphicsException::CheckHResult( hr );
 		

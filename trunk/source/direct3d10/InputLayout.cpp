@@ -45,12 +45,12 @@ namespace Direct3D10
 			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( elements[i].SemanticName );
 			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 		
-			nativeElements[i].SemanticName = (LPCSTR) pinnedName;
+			nativeElements[i].SemanticName = reinterpret_cast<LPCSTR>( pinnedName );
 			nativeElements[i].SemanticIndex = elements[i].SemanticIndex;
-			nativeElements[i].Format = (DXGI_FORMAT) elements[i].AFormat;
+			nativeElements[i].Format = static_cast<DXGI_FORMAT>( elements[i].AFormat );
 			nativeElements[i].InputSlot = elements[i].InputSlot;
 			nativeElements[i].AlignedByteOffset = elements[i].AlignedByteOffset;
-			nativeElements[i].InputSlotClass = (D3D10_INPUT_CLASSIFICATION) elements[i].InputSlotClass;
+			nativeElements[i].InputSlotClass = static_cast<D3D10_INPUT_CLASSIFICATION>( elements[i].InputSlotClass );
 			nativeElements[i].InstanceDataStepRate = elements[i].InstanceDataStepRate;
 		}
 

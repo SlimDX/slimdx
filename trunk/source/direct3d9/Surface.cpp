@@ -59,8 +59,8 @@ namespace Direct3D9
 	{
 		IDirect3DSurface9* surface;
 
-		HRESULT hr = device->InternalPointer->CreateRenderTarget( width, height, (D3DFORMAT) format,
-			(D3DMULTISAMPLE_TYPE) multiSampleType, multiSampleQuality, lockable, &surface, NULL );
+		HRESULT hr = device->InternalPointer->CreateRenderTarget( width, height, static_cast<D3DFORMAT>( format ),
+			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality, lockable, &surface, NULL );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -73,7 +73,7 @@ namespace Direct3D9
 		IDirect3DSurface9* surface;
 
 		HRESULT hr = device->InternalPointer->CreateOffscreenPlainSurface( width, height,
-			(D3DFORMAT) format, (D3DPOOL) pool, &surface, NULL );
+			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &surface, NULL );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -86,8 +86,8 @@ namespace Direct3D9
 	{
 		IDirect3DSurface9* surface;
 
-		HRESULT hr = device->InternalPointer->CreateDepthStencilSurface( width, height, (D3DFORMAT) format,
-			(D3DMULTISAMPLE_TYPE) multiSampleType, multiSampleQuality, discard, &surface, NULL );
+		HRESULT hr = device->InternalPointer->CreateDepthStencilSurface( width, height, static_cast<D3DFORMAT>( format ),
+			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality, discard, &surface, NULL );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -124,7 +124,7 @@ namespace Direct3D9
 		D3DLOCKED_RECT lockedRect;
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
 
-		HRESULT hr = SurfacePointer->LockRect( &lockedRect, &nativeRect, (DWORD) flags );
+		HRESULT hr = SurfacePointer->LockRect( &lockedRect, &nativeRect, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
@@ -153,7 +153,7 @@ namespace Direct3D9
 
 	void Surface::ReleaseDC( IntPtr hdc )
 	{
-		HRESULT hr = SurfacePointer->ReleaseDC( (HDC) hdc.ToPointer() );
+		HRESULT hr = SurfacePointer->ReleaseDC( static_cast<HDC>( hdc.ToPointer() ) );
 		GraphicsException::CheckHResult( hr );
 	}
 }

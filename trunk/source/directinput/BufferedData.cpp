@@ -44,7 +44,7 @@ namespace DirectInput
 				result->keys[objectData.dwOfs] = true;
 			else
 				result->keys[objectData.dwOfs] = false;
-			data = ( DataFormat )result;
+			data = reinterpret_cast<DataFormat>( result );
 		}
 		else if( type == MouseState::typeid )
 		{
@@ -112,7 +112,7 @@ namespace DirectInput
 			else if( objectData.dwOfs == DIMOFS_Z )
 				result->z = objectData.dwData;
 
-			data = ( DataFormat )result;
+			data = reinterpret_cast<DataFormat>( result );
 		}
 		else if( type == JoystickState::typeid )
 		{
@@ -179,7 +179,7 @@ namespace DirectInput
 
 		timeStamp = objectData.dwTimeStamp;
 		sequence = objectData.dwSequence;
-		GCHandle handle = GCHandle::FromIntPtr( ( IntPtr )( ( UIntPtr )objectData.uAppData ).ToPointer() );
+		GCHandle handle = GCHandle::FromIntPtr( static_cast<IntPtr>( static_cast<UIntPtr>( objectData.uAppData ).ToPointer() ) );
 		appData = handle.Target;
 		handle.Free();
 	}

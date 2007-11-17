@@ -31,7 +31,7 @@ namespace SlimDX
 	{
 		Gamepad::Gamepad( const XINPUT_GAMEPAD &gamepad )
 		{
-			buttons = (GamepadButtons)gamepad.wButtons;
+			buttons = static_cast<GamepadButtons>(gamepad.wButtons);
 			leftTrigger = gamepad.bLeftTrigger;
 			rightTrigger = gamepad.bRightTrigger;
 			leftThumbX = gamepad.sThumbLX;

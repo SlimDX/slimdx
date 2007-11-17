@@ -68,8 +68,8 @@ namespace Direct3D9
 		ID3DXFont* font;
 		pin_ptr<const wchar_t> pinned_name = PtrToStringChars( faceName );
 
-		HRESULT hr = D3DXCreateFont( device->InternalPointer, height, width, (UINT) weight, mipLevels, italic, (DWORD) charSet,
-			(DWORD) outputPrecision, (DWORD) quality, (DWORD) pitchAndFamily, (LPCWSTR) pinned_name, &font );
+		HRESULT hr = D3DXCreateFont( device->InternalPointer, height, width, static_cast<UINT>( weight ), mipLevels, italic, static_cast<DWORD>( charSet ),
+			static_cast<DWORD>( outputPrecision ), static_cast<DWORD>( quality ), static_cast<DWORD>( pitchAndFamily ), reinterpret_cast<LPCWSTR>( pinned_name ), &font );
 		GraphicsException::CheckHResult( hr );
 
 		m_Pointer = font;
@@ -81,7 +81,7 @@ namespace Direct3D9
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
 
-		return m_Pointer->DrawTextW( spritePtr, (LPCWSTR) pinned_text, text->Length, &nativeRect, (DWORD) format, color );
+		return m_Pointer->DrawTextW( spritePtr, reinterpret_cast<LPCWSTR>( pinned_text ), text->Length, &nativeRect, static_cast<DWORD>( format ), color );
 	}
 
 	int Font::DrawString( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, Color color )
@@ -106,8 +106,8 @@ namespace Direct3D9
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
 		RECT nativeRect;
 
-		m_Pointer->DrawTextW( spritePtr, (LPCWSTR) pinned_text, text->Length, &nativeRect, 
-			(DWORD) (format | DrawTextFormat::CalcRect), 0 );
+		m_Pointer->DrawTextW( spritePtr, reinterpret_cast<LPCWSTR>( pinned_text ), text->Length, &nativeRect, 
+			static_cast<DWORD>(format | DrawTextFormat::CalcRect), 0 );
 	
 		return System::Drawing::Rectangle( nativeRect.left, nativeRect.top, 
 			nativeRect.right - nativeRect.left, nativeRect.bottom - nativeRect.top );
@@ -128,7 +128,7 @@ namespace Direct3D9
 	void Font::PreloadText( String^ text )
 	{
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
-		HRESULT hr = m_Pointer->PreloadTextW( (LPCWSTR) pinned_text, text->Length );
+		HRESULT hr = m_Pointer->PreloadTextW( reinterpret_cast<LPCWSTR>( pinned_text ), text->Length );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -154,13 +154,13 @@ namespace Direct3D9
 		FontDescription outDesc;
 		outDesc.Height = desc.Height;
 		outDesc.Width = desc.Width;
-		outDesc.Weight = (FontWeight) desc.Weight;
+		outDesc.Weight = static_cast<FontWeight>( desc.Weight );
 		outDesc.MipLevels = desc.MipLevels;
 		outDesc.Italic = desc.Italic > 0;
-		outDesc.CharSet = (CharacterSet) desc.CharSet;
-		outDesc.OutputPrecision = (Precision) desc.OutputPrecision;
-		outDesc.Quality = (FontQuality) desc.Quality;
-		outDesc.PitchAndFamily = (PitchAndFamily) desc.PitchAndFamily;
+		outDesc.CharSet = static_cast<CharacterSet>( desc.CharSet );
+		outDesc.OutputPrecision = static_cast<Precision>( desc.OutputPrecision );
+		outDesc.Quality = static_cast<FontQuality>( desc.Quality );
+		outDesc.PitchAndFamily = static_cast<PitchAndFamily>( desc.PitchAndFamily );
 		outDesc.FaceName = gcnew String( desc.FaceName );
 
 		return outDesc;
@@ -168,7 +168,7 @@ namespace Direct3D9
 
 	IntPtr Font::DeviceContext::get()
 	{
-		return (IntPtr) m_Pointer->GetDC();
+		return static_cast<IntPtr>( m_Pointer->GetDC() );
 	}
 }
 }

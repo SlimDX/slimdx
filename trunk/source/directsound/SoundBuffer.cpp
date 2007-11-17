@@ -40,8 +40,8 @@ namespace DirectSound
 	void BufferDescription::Marshal( DSBUFFERDESC& desc )
 	{
 		desc.dwSize = sizeof(DSBUFFERDESC);
-		desc.dwFlags = (DWORD) this->Flags;
-		desc.dwBufferBytes = (DWORD) this->SizeInBytes;
+		desc.dwFlags = static_cast<DWORD>( this->Flags );
+		desc.dwBufferBytes = static_cast<DWORD>( this->SizeInBytes );
 		desc.dwReserved = 0;
 
 		if( this->Format == nullptr )
@@ -50,7 +50,7 @@ namespace DirectSound
 			desc.lpwfxFormat = this->Format->InternalPointer;
 	}
 
-	SoundBuffer::SoundBuffer( IDirectSoundBuffer* buffer ) : DirectXObject( (IDirectSoundBuffer8*) buffer )
+	SoundBuffer::SoundBuffer( IDirectSoundBuffer* buffer ) : DirectXObject( static_cast<IDirectSoundBuffer8*>( buffer ) )
 	{
 		if( buffer == NULL )
 			throw gcnew ArgumentNullException( "buffer" );
@@ -87,7 +87,7 @@ namespace DirectSound
 	void SoundBuffer::SetDS8Pointer()
 	{
 		IDirectSoundBuffer8* buffer;
-		HRESULT hr = m_Pointer->QueryInterface( IID_IDirectSoundBuffer8, (void**) &buffer );
+		HRESULT hr = m_Pointer->QueryInterface( IID_IDirectSoundBuffer8, reinterpret_cast<void**>( &buffer ) );
 		
 		if( SUCCEEDED( hr ) )
 		{
@@ -110,7 +110,7 @@ namespace DirectSound
 		if( FAILED( hr ) )
 			throw gcnew SoundException();
 
-		m_Pointer = (IDirectSoundBuffer8*) buffer;
+		m_Pointer = static_cast<IDirectSoundBuffer8*>( buffer );
 		SetDS8Pointer();
 	}
 
@@ -122,7 +122,7 @@ namespace DirectSound
 
 	void SoundBuffer::Play( int priority, PlayFlags flags )
 	{
-		HRESULT hr = m_Pointer->Play( 0, priority, (DWORD) flags );
+		HRESULT hr = m_Pointer->Play( 0, priority, static_cast<DWORD>( flags ) );
 		SoundException::CheckHResult( hr );
 	}
 
@@ -140,7 +140,7 @@ namespace DirectSound
 
 		secondPart = nullptr;
 
-		HRESULT hr = m_Pointer->Lock( offset, sizeBytes, &buffer1, &size1, &buffer2, &size2, (DWORD) flags );
+		HRESULT hr = m_Pointer->Lock( offset, sizeBytes, &buffer1, &size1, &buffer2, &size2, static_cast<DWORD>( flags ) );
 		SoundException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -162,10 +162,10 @@ namespace DirectSound
 		if( secondPart != nullptr )
 		{
 			buffer2 = secondPart->RawPointer;
-			size2 = (int) secondPart->Length;
+			size2 = static_cast<int>( secondPart->Length );
 		}
 
-		HRESULT hr = m_Pointer->Unlock( firstPart->RawPointer, (int) firstPart->Length, buffer2, size2 );
+		HRESULT hr = m_Pointer->Unlock( firstPart->RawPointer, static_cast<int>( firstPart->Length ), buffer2, size2 );
 		SoundException::CheckHResult( hr );
 	}
 
@@ -185,14 +185,14 @@ namespace DirectSound
 		if( FAILED( hr ) )
 			return nullptr;
 
-		format = (WAVEFORMATEX*) new char[size];
+		format = reinterpret_cast<WAVEFORMATEX*>( new char[size] );
 		hr = m_Pointer->GetFormat( format, size, NULL );
 		SoundException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
 
 		if( format->wFormatTag == WAVE_FORMAT_EXTENSIBLE )
-			return gcnew WaveFormatExtensible( (WAVEFORMATEXTENSIBLE*) format );
+			return gcnew WaveFormatExtensible( reinterpret_cast<WAVEFORMATEXTENSIBLE*>( format ) );
 		else
 			return gcnew WaveFormatExtended( format );
 	}
@@ -272,7 +272,7 @@ namespace DirectSound
 		HRESULT hr = m_Pointer->GetStatus( &status );
 		SoundException::CheckHResult( hr );
 
-		return (BufferStatus) status;
+		return static_cast<BufferStatus>( status );
 	}
 }
 }

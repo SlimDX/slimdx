@@ -34,7 +34,7 @@ namespace DirectInput
 		instanceGuid = Utils::FromGUID( deviceInstance.guidInstance );
 		productGuid = Utils::FromGUID( deviceInstance.guidProduct );
 		ffDriverGuid = Utils::FromGUID( deviceInstance.guidFFDriver );
-		type = ( DeviceType )deviceInstance.dwDevType;
+		type = static_cast<DeviceType>( deviceInstance.dwDevType );
 		subType = deviceInstance.dwDevType >> 8;
 		usage = deviceInstance.wUsage;
 		usagePage = deviceInstance.wUsagePage;
@@ -57,8 +57,8 @@ namespace DirectInput
 		ffDriverVersion = caps.dwFFDriverVersion;
 		firmwareRevision = caps.dwFirmwareRevision;
 		hardwareRevision = caps.dwHardwareRevision;
-		flags = ( DeviceFlags )caps.dwFlags;
-		type = ( DeviceType )caps.dwDevType;
+		flags = static_cast<DeviceFlags>( caps.dwFlags );
+		type = static_cast<DeviceType>( caps.dwDevType );
 		subType = caps.dwDevType >> 8;
 
 		if( ( caps.dwDevType & DIDEVTYPE_HID ) != 0 )

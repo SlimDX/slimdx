@@ -47,11 +47,11 @@ namespace Direct3D10
 		IDXGIFactory* factory;
 		ID3D10Device* device;
 
-		hr = CreateDXGIFactory( __uuidof( IDXGIFactory ), (void**) &factory );
+		hr = CreateDXGIFactory( __uuidof( IDXGIFactory ), reinterpret_cast<void**>( &factory ) );
 		GraphicsException::CheckHResult( hr );	
 		m_Factory = factory;
 		
-		hr = D3D10CreateDevice( NULL, (D3D10_DRIVER_TYPE) driverType, NULL, (UINT) flags, D3D10_SDK_VERSION, &device );
+		hr = D3D10CreateDevice( NULL, static_cast<D3D10_DRIVER_TYPE>( driverType ), NULL, static_cast<UINT>( flags ), D3D10_SDK_VERSION, &device );
 		GraphicsException::CheckHResult( hr );
 		m_Device = device;
 		

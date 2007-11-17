@@ -43,7 +43,7 @@ namespace SlimDX
 			try
 			{
 				Stream^ stream;
-				m_WrappedInterface->Open( (IncludeType) includeType, gcnew String(pFileName), stream );
+				m_WrappedInterface->Open( static_cast<IncludeType>( includeType ), gcnew String(pFileName), stream );
 				m_stream = stream;
 
 				if( stream != nullptr )
@@ -53,7 +53,7 @@ namespace SlimDX
 						//Magic shortcut if we happen to get a DataStream
 						DataStream^ data = safe_cast<DataStream^>( stream );
 						*ppData = data->RawPointer;
-						*pBytes = (UINT) data->Length;
+						*pBytes = static_cast<UINT>( data->Length );
 					}
 					else
 					{
@@ -121,8 +121,8 @@ namespace SlimDX
 				handles[2 * i] = GCHandle::Alloc( nameBytes, GCHandleType::Pinned );
 				handles[2 * i + 1] = GCHandle::Alloc( defBytes, GCHandleType::Pinned );
 
-				result[i].Name = (LPCSTR) handles[2 * i].AddrOfPinnedObject().ToPointer();
-				result[i].Definition = (LPCSTR) handles[2 * i + 1].AddrOfPinnedObject().ToPointer();
+				result[i].Name = reinterpret_cast<LPCSTR>( handles[2 * i].AddrOfPinnedObject().ToPointer() );
+				result[i].Definition = reinterpret_cast<LPCSTR>( handles[2 * i + 1].AddrOfPinnedObject().ToPointer() );
 			}
 
 			result[macros->Length].Name = NULL;
@@ -146,7 +146,7 @@ namespace SlimDX
 		ConstantTable^ ShaderBytecode::GetConstantTable()
 		{
 			ID3DXConstantTable* constantTable;
-			HRESULT hr = D3DXGetShaderConstantTable( (const DWORD*) m_Pointer->GetBufferPointer(), &constantTable );
+			HRESULT hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( m_Pointer->GetBufferPointer() ), &constantTable );
 			GraphicsException::CheckHResult( hr );
 			if( FAILED( hr ) )
 				return nullptr;
@@ -157,7 +157,7 @@ namespace SlimDX
 		array<ShaderSemantic>^ ShaderBytecode::GetInputSemantics()
 		{
 			UINT count = 0;
-			const DWORD* function = (const DWORD*) m_Pointer->GetBufferPointer();
+			const DWORD* function = reinterpret_cast<const DWORD*>( m_Pointer->GetBufferPointer() );
 
 			HRESULT hr = D3DXGetShaderInputSemantics( function, NULL, &count );
 			GraphicsException::CheckHResult( hr );
@@ -178,7 +178,7 @@ namespace SlimDX
 		array<ShaderSemantic>^ ShaderBytecode::GetOutputSemantics()
 		{
 			UINT count = 0;
-			const DWORD* function = (const DWORD*) m_Pointer->GetBufferPointer();
+			const DWORD* function = reinterpret_cast<const DWORD*>( m_Pointer->GetBufferPointer() );
 
 			HRESULT hr = D3DXGetShaderOutputSemantics( function, NULL, &count );
 			GraphicsException::CheckHResult( hr );
@@ -199,7 +199,7 @@ namespace SlimDX
 		array<String^>^ ShaderBytecode::GetSamplers()
 		{
 			UINT count = 0;
-			const DWORD* function = (const DWORD*) m_Pointer->GetBufferPointer();
+			const DWORD* function = reinterpret_cast<const DWORD*>( m_Pointer->GetBufferPointer() );
 
 			HRESULT hr = D3DXGetShaderSamplers( function, NULL, &count );
 			GraphicsException::CheckHResult( hr );
@@ -224,8 +224,8 @@ namespace SlimDX
 
 		int ShaderBytecode::Version::get()
 		{
-			const DWORD* function = (const DWORD*) m_Pointer->GetBufferPointer();
-			return (int) D3DXGetShaderVersion( function );
+			const DWORD* function = reinterpret_cast<const DWORD*>( m_Pointer->GetBufferPointer() );
+			return static_cast<int>( D3DXGetShaderVersion( function ) );
 		}
 
 		//D3DXAssembleShader
@@ -245,7 +245,7 @@ namespace SlimDX
 			D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
 			HRESULT hr = D3DXAssembleShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macros, includePtr,
-				(DWORD) flags, &shaderBuffer, &errorBuffer );
+				static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer );
 
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
@@ -283,7 +283,7 @@ namespace SlimDX
 			D3DXMACRO* macros = Macro::Marshal( defines, handles );
 
 			HRESULT hr = D3DXAssembleShaderFromFile( pinnedFileName, macros, includePtr,
-				(DWORD) flags, &shaderBuffer, &errorBuffer );
+				static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer );
 
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );

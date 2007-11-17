@@ -53,7 +53,7 @@ namespace SlimDX
 	/// <returns>The length of the vector.</returns>
 	float Vector2::Length()
 	{
-		return (float) Math::Sqrt( (X * X) + (Y * Y) );
+		return static_cast<float>( Math::Sqrt( (X * X) + (Y * Y) ) );
 	}
 
 	/// <summary>
@@ -469,7 +469,7 @@ namespace SlimDX
 		float x = value1.X - value2.X;
 		float y = value1.Y - value2.Y;
 
-		return (float)Math::Sqrt( (x * x) + (y * y) );
+		return static_cast<float>( Math::Sqrt( (x * x) + (y * y) ) );
 	}
 
 	/// <summary>
@@ -483,7 +483,7 @@ namespace SlimDX
 		float x = value1.X - value2.X;
 		float y = value1.Y - value2.Y;
 
-		return (float)Math::Sqrt( (x * x) + (y * y) );
+		return static_cast<float>( Math::Sqrt( (x * x) + (y * y) ) );
 	}
 
 
@@ -951,7 +951,7 @@ namespace SlimDX
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( (Vector2)value );
+		return Equals( static_cast<Vector2>( value ) );
 	}
 
 	/// <summary>

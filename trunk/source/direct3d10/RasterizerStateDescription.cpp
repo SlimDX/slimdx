@@ -47,8 +47,8 @@ namespace Direct3D10
 	
 	RasterizerStateDescription::RasterizerStateDescription( const D3D10_RASTERIZER_DESC& desc )
 	{
-		FillMode = (SlimDX::Direct3D10::FillMode) desc.FillMode;
-		CullMode = (SlimDX::Direct3D10::CullMode) desc.CullMode;
+		FillMode = static_cast<SlimDX::Direct3D10::FillMode>( desc.FillMode );
+		CullMode = static_cast<SlimDX::Direct3D10::CullMode>( desc.CullMode );
 		FrontIsCounterClockwise = desc.FrontCounterClockwise ? true : false;
 		DepthBias = desc.DepthBias;
 		DepthBiasClamp = desc.DepthBiasClamp;
@@ -62,8 +62,8 @@ namespace Direct3D10
 	void RasterizerStateDescription::FillNativeObject( D3D10_RASTERIZER_DESC& desc )
 	{
 		ZeroMemory( &desc, sizeof( desc ) );
-		desc.FillMode = (D3D10_FILL_MODE) FillMode;
-		desc.CullMode = (D3D10_CULL_MODE) CullMode;
+		desc.FillMode = static_cast<D3D10_FILL_MODE>( FillMode );
+		desc.CullMode = static_cast<D3D10_CULL_MODE>( CullMode );
 		desc.FrontCounterClockwise = FrontIsCounterClockwise;
 		desc.DepthBias = DepthBias;
 		desc.DepthBiasClamp = DepthBiasClamp;

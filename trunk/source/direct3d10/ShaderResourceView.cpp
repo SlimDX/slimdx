@@ -47,7 +47,7 @@ namespace Direct3D10
 		
 		D3D10_SHADER_RESOURCE_VIEW_DESC viewDesc;
 		ZeroMemory( &viewDesc, sizeof( viewDesc ) );
-		viewDesc.Format = (DXGI_FORMAT) resource->Format;
+		viewDesc.Format = static_cast<DXGI_FORMAT>( resource->Format );
 	    Format = resource->Format;
 		viewDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;
 		Dimension = ResourceViewDimension::Texture2D;

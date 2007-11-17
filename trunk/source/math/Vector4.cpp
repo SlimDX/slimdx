@@ -86,7 +86,7 @@ namespace SlimDX
 	/// <returns>The length of the vector.</returns>
 	float Vector4::Length()
 	{
-		return (float) Math::Sqrt( (X * X) + (Y * Y) + (Z * Z) + (W * W) );
+		return static_cast<float>( Math::Sqrt( (X * X) + (Y * Y) + (Z * Z) + (W * W) ) );
 	}
 
 	/// <summary>
@@ -554,7 +554,7 @@ namespace SlimDX
 		float z = value1.Z - value2.Z;
 		float w = value1.W - value2.W;
 
-		return (float)Math::Sqrt( (x * x) + (y * y) + (z * z) + (w * w) );
+		return static_cast<float>( Math::Sqrt( (x * x) + (y * y) + (z * z) + (w * w) ) );
 	}
 
 	/// <summary>
@@ -570,7 +570,7 @@ namespace SlimDX
 		float z = value1.Z - value2.Z;
 		float w = value1.W - value2.W;
 
-		return (float)Math::Sqrt( (x * x) + (y * y) + (z * z) + (w * w) );
+		return static_cast<float>( Math::Sqrt( (x * x) + (y * y) + (z * z) + (w * w) ) );
 	}
 
 
@@ -1000,7 +1000,7 @@ namespace SlimDX
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( (Vector4)value );
+		return Equals( static_cast<Vector4>( value ) );
 	}
 
 	/// <summary>

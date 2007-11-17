@@ -37,6 +37,9 @@ namespace Direct3D9
 		HRESULT hr = m_Pointer->GetDevice( &device );
 		GraphicsException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		return gcnew Device( device );
 	}
 	
