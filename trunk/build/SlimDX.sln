@@ -4,16 +4,31 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SlimDX", "SlimDX.vcproj", "{8ECCE443-0440-40F4-A94C-F02E027282C3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xilath", "..\samples\water\Xilath.csproj", "{7C00F00A-831E-4BCE-82A5-83BFD3893CE6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8ECCE443-0440-40F4-A94C-F02E027282C3} = {8ECCE443-0440-40F4-A94C-F02E027282C3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleSound", "..\samples\SimpleSound\SimpleSound.csproj", "{E2B070CB-B5F7-46C5-B142-19065727A4CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTriangle", "..\samples\SimpleTriangle\SimpleTriangle.csproj", "{6B9DCB0F-5C97-4729-A826-385BB06AFAC6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8ECCE443-0440-40F4-A94C-F02E027282C3} = {8ECCE443-0440-40F4-A94C-F02E027282C3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTri", "..\samples\MiniTri\MiniTri.csproj", "{7956A35D-3385-4E7B-B9E2-DD33BFCEE379}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8ECCE443-0440-40F4-A94C-F02E027282C3} = {8ECCE443-0440-40F4-A94C-F02E027282C3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTri10", "..\samples\MiniTri10\MiniTri10.csproj", "{61A6BB09-E98C-497E-B7D7-9D93D5D17368}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8ECCE443-0440-40F4-A94C-F02E027282C3} = {8ECCE443-0440-40F4-A94C-F02E027282C3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vortex", "..\samples\Vortex\Vortex.csproj", "{A9074E03-DF93-4180-BF74-6D8E87046BEE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8ECCE443-0440-40F4-A94C-F02E027282C3} = {8ECCE443-0440-40F4-A94C-F02E027282C3}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{A2525864-A1CD-4EF2-A548-D44B524E4CDD}"
 	ProjectSection(SolutionItems) = preProject

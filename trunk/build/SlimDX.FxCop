@@ -7738,6 +7738,154 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="SkinInfo">
+          <Members>
+           <Member Name="ConvertToBlendedMesh(SlimDX.Direct3D9.Mesh,System.Int32[],System.Int32[],System.Int32&amp;,System.Int32&amp;,SlimDX.Direct3D9.BufferWrapper&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>maxVertexInfluence</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>boneCombinationCount</Item>
+              </Issue>
+             </Message>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>boneCombinationTable</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ConvertToBlendedMesh(SlimDX.Direct3D9.Mesh,System.Int32[],System.Int32[],System.Int32[],SlimDX.Direct3D9.BufferWrapper&amp;,System.Int32&amp;,System.Int32&amp;,SlimDX.Direct3D9.BufferWrapper&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>faceRemap</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>vertexRemap</Item>
+              </Issue>
+             </Message>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>maxVertexInfluence</Item>
+              </Issue>
+             </Message>
+             <Message Id="6#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>boneCombinationCount</Item>
+              </Issue>
+             </Message>
+             <Message Id="7#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>boneCombinationTable</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ConvertToIndexedBlendedMesh(SlimDX.Direct3D9.Mesh,System.Int32,System.Int32[],System.Int32[],System.Int32&amp;,System.Int32&amp;,SlimDX.Direct3D9.BufferWrapper&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>maxVertexInfluence</Item>
+              </Issue>
+             </Message>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>boneCombinationCount</Item>
+              </Issue>
+             </Message>
+             <Message Id="6#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>boneCombinationTable</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ConvertToIndexedBlendedMesh(SlimDX.Direct3D9.Mesh,System.Int32,System.Int32[],System.Int32[],System.Int32[],SlimDX.Direct3D9.BufferWrapper&amp;,System.Int32&amp;,System.Int32&amp;,SlimDX.Direct3D9.BufferWrapper&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>faceRemap</Item>
+              </Issue>
+             </Message>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>vertexRemap</Item>
+              </Issue>
+             </Message>
+             <Message Id="6#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>maxVertexInfluence</Item>
+              </Issue>
+             </Message>
+             <Message Id="7#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>boneCombinationCount</Item>
+              </Issue>
+             </Message>
+             <Message Id="8#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>boneCombinationTable</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetBoneInfluence(System.Int32,System.Int32[]&amp;,System.Single[]&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>vertices</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>weights</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetBoneVertexInfluence(System.Int32,System.Int32,System.Single&amp;,System.Int32&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>weight</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 22:26:10Z">
+              <Issue>
+               <Item>vertex</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="Sprite">
           <Members>
            <Member Name=".ctor(ID3DXSprite*)">
