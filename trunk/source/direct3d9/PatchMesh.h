@@ -1,0 +1,104 @@
+/*
+* Copyright (c) 2007 SlimDX Group
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
+#pragma once
+
+namespace SlimDX
+{
+	namespace Direct3D9
+	{
+		ref class BaseMesh;
+		ref class Mesh;
+		ref class VertexBuffer;
+		ref class IndexBuffer;
+		ref class BufferWrapper;
+
+		public enum class PatchMeshType : Int32
+		{
+			Rectangle = D3DXPATCHMESH_RECT,
+			Triangle = D3DXPATCHMESH_TRI,
+			NPatch = D3DXPATCHMESH_NPATCH
+		};
+
+		[StructLayout(LayoutKind::Sequential)]
+		public value class PatchInfo
+		{
+		public:
+			property PatchMeshType PatchType;
+			property Degree Degree;
+			property Basis Basis;
+		};
+
+		public value class DisplacementParameters
+		{
+		public:
+			property Texture^ Texture;
+			property TextureFilter MinFilter;
+			property TextureFilter MagFilter;
+			property TextureFilter MipFilter;
+			property TextureAddress Wrap;
+			property int LevelOfDetailBias;
+		};
+
+		public ref class PatchMesh : DirectXObject<ID3DXPatchMesh>
+		{
+		internal:
+			PatchMesh( ID3DXPatchMesh *mesh ) : DirectXObject( mesh ) { }
+
+		public:
+			PatchMesh( Device^ device, PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration );
+			PatchMesh( Mesh^ mesh );
+			virtual ~PatchMesh() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
+
+			PatchMesh^ Clone( MeshFlags flags, array<VertexElement>^ vertexDeclaration );
+			void GenerateAdjacency( float tolerance );
+
+			array<VertexElement>^ GetDeclaration();
+			Device^ GetDevice();
+			IndexBuffer^ GetIndexBuffer();
+			VertexBuffer^ GetVertexBuffer();
+			PatchInfo GetPatchInfo();
+			void Optimize();
+
+			DisplacementParameters GetDisplacementParameters();
+			void SetDisplacementParameters( DisplacementParameters parameters );
+
+			DataStream^ LockAttributeBuffer( LockFlags flags );
+			void UnlockAttributeBuffer();
+
+			DataStream^ LockIndexBuffer( LockFlags flags );
+			void UnlockIndexBuffer();
+
+			DataStream^ LockVertexBuffer( LockFlags flags );
+			void UnlockVertexBuffer();
+
+			void GetTessellationSize( float tessellationLevel, bool adaptive, [Out] int% triangleCount, [Out] int% vertexCount );
+			void Tessellate( float tessellationLevel, Mesh^ mesh );
+			void Tessellate( Vector4 translation, int minimumLevel, int maximumLevel, Mesh^ mesh );
+
+			property int ControlVerticesPerPatch { int get(); }
+			property int PatchCount { int get(); }
+			property int VertexCount { int get(); }
+			property PatchMeshType Type { PatchMeshType get(); }
+		};
+	}
+}

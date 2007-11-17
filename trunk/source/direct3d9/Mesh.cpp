@@ -172,165 +172,6 @@ namespace Direct3D9
 		return dest;
 	}
 
-	StreamShim::StreamShim( Stream^ stream )
-	{
-		m_WrappedStream = stream;
-		position = -1;
-	}
-
-	void StreamShim::SetSizeToPosition()
-	{
-		if( position != -1 )
-		{
-			if( position > m_WrappedStream->Length )
-				m_WrappedStream->SetLength( position );
-			m_WrappedStream->Position = position;
-			position = -1;
-		}
-	}
-
-	void StreamShim::Clone( [Out] System::Runtime::InteropServices::ComTypes::IStream^% ppstm )
-	{
-		ppstm = nullptr;
-		throw gcnew ExternalException( nullptr, STG_E_INVALIDFUNCTION );
-	}
-
-	void StreamShim::Commit( int grfCommitFlags )
-	{
-		m_WrappedStream->Flush();
-	}
-
-	void StreamShim::CopyTo( System::Runtime::InteropServices::ComTypes::IStream^ pstm, long long cb, IntPtr pcbRead, IntPtr pcbWritten )
-	{
-		array<unsigned char>^ buffer = gcnew array<unsigned char>( 4096 );
-		long long written = 0;
-		int read;
-
-		if( cb != 0 )
-		{
-			SetSizeToPosition();
-
-			do
-			{
-				int count = 4096;
-				if( written + 4096 > cb )
-					count = (int)( cb - written );
-
-				read = m_WrappedStream->Read( buffer, 0, count );
-				if( read == 0 )
-					break;
-
-				pstm->Write( buffer, read, IntPtr::Zero );
-				written += read;
-
-			} while( written < cb );
-		}
-
-		if( pcbRead != IntPtr::Zero )
-			Marshal::WriteInt64( pcbRead, written );
-		if( pcbWritten != IntPtr::Zero )
-			Marshal::WriteInt64( pcbWritten, written );
-	}
-
-	void StreamShim::LockRegion( long long libOffset, long long cb, int dwLockType )
-	{
-		throw gcnew ExternalException( nullptr, STG_E_INVALIDFUNCTION );
-	}
-
-	void StreamShim::Read( [Out] array<unsigned char>^ pv, int cb, IntPtr pcbRead )
-	{
-		int read = 0;
-
-		if( cb != 0 )
-		{
-			SetSizeToPosition();
-			read = m_WrappedStream->Read( pv, 0, cb );
-		}
-
-		if( pcbRead != IntPtr::Zero )
-			Marshal::WriteInt32( pcbRead, read );
-	}
-
-	void StreamShim::Revert()
-	{
-		throw gcnew ExternalException( nullptr, STG_E_INVALIDFUNCTION );
-	}
-
-	void StreamShim::Seek( long long dlibMove, int dwOrigin, IntPtr plibNewPosition )
-	{
-		long long newPosition;
-
-		if( m_WrappedStream->CanWrite )
-		{
-			SeekOrigin origin = static_cast<SeekOrigin>( dwOrigin );
-			if( origin == SeekOrigin::Begin )
-				newPosition = dlibMove;
-			else if( origin == SeekOrigin::Current )
-			{
-				newPosition = position;
-				if( newPosition == -1 )
-					newPosition = m_WrappedStream->Position;
-				newPosition += dlibMove;
-			}
-			else if( origin == SeekOrigin::End )
-				newPosition = m_WrappedStream->Length + dlibMove;
-			else
-				throw gcnew ExternalException( nullptr, STG_E_INVALIDFUNCTION );
-
-			if( newPosition > m_WrappedStream->Length )
-				position = newPosition;
-			else
-			{
-				m_WrappedStream->Position = newPosition;
-				position = -1;
-			}
-		}
-		else
-		{
-			try
-			{
-				newPosition = m_WrappedStream->Seek( dlibMove, static_cast<SeekOrigin>( dwOrigin ) );
-			}
-			catch( ArgumentException^ )
-			{
-				throw gcnew ExternalException( nullptr, STG_E_INVALIDFUNCTION );
-			}
-
-			position = -1;
-		}
-
-		if( plibNewPosition != IntPtr::Zero )
-			Marshal::WriteInt64( plibNewPosition, newPosition );
-	}
-
-	void StreamShim::SetSize( long long libNewSize )
-	{
-		m_WrappedStream->SetLength( libNewSize );
-	}
-
-	void StreamShim::Stat( [Out] System::Runtime::InteropServices::ComTypes::STATSTG% pstatstg, int grfStatFlag )
-	{
-		pstatstg = System::Runtime::InteropServices::ComTypes::STATSTG();
-		pstatstg.cbSize = m_WrappedStream->Length;
-	}
-
-	void StreamShim::UnlockRegion( long long libOffset, long long cb, int dwLockType )
-	{
-		throw gcnew ExternalException( nullptr, STG_E_INVALIDFUNCTION );
-	}
-
-	void StreamShim::Write( array<unsigned char>^ pv, int cb, IntPtr pcbWritten )
-	{
-		if( cb != 0 )
-		{
-			SetSizeToPosition();
-			m_WrappedStream->Write( pv, 0, cb );
-		}
-
-		if( pcbWritten != IntPtr::Zero )
-			Marshal::WriteInt32( pcbWritten, cb );
-	}
-
 	Mesh^ BaseMesh::Clone( Device^ device, MeshFlags flags, array<VertexElement>^ elements )
 	{
 		ID3DXMesh* mesh;
@@ -541,6 +382,51 @@ namespace Direct3D9
 
 		HRESULT hr = m_Pointer->UpdateSemantics( reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedElements ) );
 		GraphicsException::CheckHResult( hr );
+	}
+
+	IndexBuffer^ BaseMesh::ConvertSubsetToSingleStrip( int attributeId, MeshFlags options, [Out] int% indexCount )
+	{
+		IDirect3DIndexBuffer9 *result;
+		DWORD count;
+
+		HRESULT hr = D3DXConvertMeshSubsetToSingleStrip( m_Pointer, attributeId, static_cast<DWORD>( options ),
+			&result, &count );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			indexCount = 0;
+			return nullptr;
+		}
+
+		indexCount = count;
+		return gcnew IndexBuffer( result );
+	}
+
+	IndexBuffer^ BaseMesh::ConvertSubsetToStrips( int attributeId, MeshFlags options, [Out] int% indexCount,
+		[Out] BufferWrapper^% stripLengths, [Out] int% stripCount )
+	{
+		IDirect3DIndexBuffer9 *result;
+		ID3DXBuffer *buffer;
+		DWORD numIndices;
+		DWORD numStrips;
+
+		HRESULT hr = D3DXConvertMeshSubsetToStrips( m_Pointer, attributeId, static_cast<DWORD>( options ),
+			&result, &numIndices, &buffer, &numStrips );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			indexCount = 0;
+			stripLengths = nullptr;
+			stripCount = 0;
+			return nullptr;
+		}
+
+		indexCount = numIndices;
+		stripCount = numStrips;
+		stripLengths = gcnew BufferWrapper( buffer );
+		return gcnew IndexBuffer( result );
 	}
 
 	int BaseMesh::FaceCount::get()
@@ -827,116 +713,441 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 	}
 
-	ProgressiveMesh^ ProgressiveMesh::CloneProgressive( Device^ device, MeshFlags flags, array<VertexElement>^ vertexDeclaration )
-	{
-		ID3DXPMesh* mesh;
-		pin_ptr<const VertexElement> pinned_elements = &vertexDeclaration[0];
-
-		HRESULT hr = MeshPointer->ClonePMesh( static_cast<DWORD>( flags ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinned_elements ),
-			device->InternalPointer, &mesh );
-		GraphicsException::CheckHResult( hr );
-
-		if( FAILED( hr ) )
-			return nullptr;
-
-		return gcnew ProgressiveMesh( mesh );
-	}
-
-	ProgressiveMesh^ ProgressiveMesh::CloneProgressive( Device^ device, MeshFlags flags, SlimDX::Direct3D9::VertexFormat format )
-	{
-		ID3DXPMesh* mesh;
-
-		HRESULT hr = MeshPointer->ClonePMeshFVF( static_cast<DWORD>( flags ), static_cast<DWORD>( format ), 
-			device->InternalPointer, &mesh );
-		GraphicsException::CheckHResult( hr );
-
-		if( FAILED( hr ) )
-			return nullptr;
-
-		return gcnew ProgressiveMesh( mesh );
-	}
-
-	void ProgressiveMesh::GenerateVertexHistory( array<int>^ vertexHistory )
-	{
-		pin_ptr<int> pinned = &vertexHistory[0];
-
-		HRESULT hr = MeshPointer->GenerateVertexHistory( reinterpret_cast<DWORD*>( pinned ) );
-		GraphicsException::CheckHResult( hr );
-	}
-
-	array<int>^ ProgressiveMesh::GetAdjacency()
-	{
-		array<int>^ adjacency = gcnew array<int>( 3 * MaximumFaceCount );
-		pin_ptr<int> pinnedAdj = &adjacency[0];
-
-		HRESULT hr = MeshPointer->GetAdjacency( reinterpret_cast<DWORD*>( pinnedAdj ) );
-		GraphicsException::CheckHResult( hr );
-
-		if( FAILED( hr ) )
-			return nullptr;
-
-		return adjacency;
-	}
-
-	Mesh^ ProgressiveMesh::Optimize( MeshOptimizeFlags flags )
+	Mesh^ Mesh::CreateBox( Device^ device, float width, float height, float depth, [Out] BufferWrapper^% adjacency )
 	{
 		ID3DXMesh *result;
+		ID3DXBuffer *adj;
 
-		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), NULL, NULL, NULL, &result );
-		GraphicsException::CheckHResult( hr );
-
-		if( FAILED( hr ) )
-			return nullptr;
-
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ ProgressiveMesh::Optimize( MeshOptimizeFlags flags, [Out] array<int>^% adjacencyOut )
-	{
-		ID3DXMesh *result;
-		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
-
-		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), reinterpret_cast<DWORD*>( pinnedAdj ), NULL, NULL, &result );
-		GraphicsException::CheckHResult( hr );
-
-		if( FAILED( hr ) )
-			return nullptr;
-
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ ProgressiveMesh::Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap )
-	{
-		ID3DXMesh *result;
-		ID3DXBuffer *buffer;
-		pin_ptr<int> pinnedFR = &faceRemap[0];
-
-		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), NULL, reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
+		HRESULT hr = D3DXCreateBox( device->InternalPointer, width, height, depth, &result, &adj );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
 		{
-			vertexRemap = nullptr;
+			adjacency = nullptr;
 			return nullptr;
 		}
 
-		vertexRemap = gcnew BufferWrapper( buffer );
+		adjacency = gcnew BufferWrapper( adj );
 		return gcnew Mesh( result );
 	}
 
-	Mesh^ ProgressiveMesh::Optimize( MeshOptimizeFlags flags, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap )
+	Mesh^ Mesh::CreateBox( Device^ device, float width, float height, float depth )
+	{
+		ID3DXMesh *result;
+
+		HRESULT hr = D3DXCreateBox( device->InternalPointer, width, height, depth, &result, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::CreateCylinder( Device^ device, float radius1, float radius2, float length, int slices, 
+		int stacks, [Out] BufferWrapper^% adjacency )
+	{
+		ID3DXMesh *result;
+		ID3DXBuffer *adj;
+
+		HRESULT hr = D3DXCreateCylinder( device->InternalPointer, radius1, radius2, length, slices, stacks, &result, &adj );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			adjacency = nullptr;
+			return nullptr;
+		}
+
+		adjacency = gcnew BufferWrapper( adj );
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::CreateCylinder( Device^ device, float radius1, float radius2, float length, int slices, int stacks )
+	{
+		ID3DXMesh *result;
+
+		HRESULT hr = D3DXCreateCylinder( device->InternalPointer, radius1, radius2, length, slices, stacks, &result, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::CreateSphere( Device^ device, float radius, int slices, int stacks, [Out] BufferWrapper^% adjacency )
+	{
+		ID3DXMesh *result;
+		ID3DXBuffer *adj;
+
+		HRESULT hr = D3DXCreateSphere( device->InternalPointer, radius, slices, stacks, &result, &adj );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			adjacency = nullptr;
+			return nullptr;
+		}
+
+		adjacency = gcnew BufferWrapper( adj );
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::CreateSphere( Device^ device, float radius, int slices, int stacks )
+	{
+		ID3DXMesh *result;
+
+		HRESULT hr = D3DXCreateSphere( device->InternalPointer, radius, slices, stacks, &result, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::CreateTeapot( Device^ device, [Out] BufferWrapper^% adjacency )
+	{
+		ID3DXMesh *result;
+		ID3DXBuffer *adj;
+
+		HRESULT hr = D3DXCreateTeapot( device->InternalPointer, &result, &adj );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			adjacency = nullptr;
+			return nullptr;
+		}
+
+		adjacency = gcnew BufferWrapper( adj );
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::CreateTeapot( Device^ device )
+	{
+		ID3DXMesh *result;
+
+		HRESULT hr = D3DXCreateTeapot( device->InternalPointer, &result, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::CreateTorus( Device^ device, float innerRadius, float outerRadius, int sides, 
+		int rings, [Out] BufferWrapper^% adjacency )
+	{
+		ID3DXMesh *result;
+		ID3DXBuffer *adj;
+
+		HRESULT hr = D3DXCreateTorus( device->InternalPointer, innerRadius, outerRadius, sides, rings, &result, &adj );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			adjacency = nullptr;
+			return nullptr;
+		}
+
+		adjacency = gcnew BufferWrapper( adj );
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::CreateTorus( Device^ device, float innerRadius, float outerRadius, int sides, int rings )
+	{
+		ID3DXMesh *result;
+
+		HRESULT hr = D3DXCreateTorus( device->InternalPointer, innerRadius, outerRadius, sides, rings, &result, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion,
+		[Out] BufferWrapper^% adjacency, [Out] array<GlyphMetricsFloat>^% glyphMetrics )
+	{
+		ID3DXMesh *result;
+		ID3DXBuffer *adj;
+
+		pin_ptr<const wchar_t> pinnedText = PtrToStringChars( text );
+		pin_ptr<GlyphMetricsFloat> pinnedMetrics = &glyphMetrics[0];
+
+		HDC hdc = CreateCompatibleDC( NULL );
+		HFONT newFont;
+		HFONT oldFont;
+		if( hdc == NULL )
+			throw gcnew OutOfMemoryException();
+
+		newFont = static_cast<HFONT>( font->ToHfont().ToPointer() );
+		oldFont = static_cast<HFONT>( SelectObject( hdc, newFont ) );		
+
+		HRESULT hr = D3DXCreateText( device->InternalPointer, hdc, reinterpret_cast<LPCWSTR>( pinnedText ),
+			deviation, extrusion, &result, &adj, reinterpret_cast<LPGLYPHMETRICSFLOAT>( pinnedMetrics ) );
+		GraphicsException::CheckHResult( hr );
+
+		SelectObject( hdc, oldFont );
+		DeleteObject( newFont );
+		DeleteDC( hdc );
+
+		if( FAILED( hr ) )
+		{
+			adjacency = nullptr;
+			glyphMetrics = nullptr;
+			return nullptr;
+		}
+
+		adjacency = gcnew BufferWrapper( adj );
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion,
+		[Out] BufferWrapper^% adjacency )
+	{
+		ID3DXMesh *result;
+		ID3DXBuffer *adj;
+
+		pin_ptr<const wchar_t> pinnedText = PtrToStringChars( text );
+
+		HDC hdc = CreateCompatibleDC( NULL );
+		HFONT newFont;
+		HFONT oldFont;
+		if( hdc == NULL )
+			throw gcnew OutOfMemoryException();
+
+		newFont = static_cast<HFONT>( font->ToHfont().ToPointer() );
+		oldFont = static_cast<HFONT>( SelectObject( hdc, newFont ) );		
+
+		HRESULT hr = D3DXCreateText( device->InternalPointer, hdc, reinterpret_cast<LPCWSTR>( pinnedText ),
+			deviation, extrusion, &result, &adj, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		SelectObject( hdc, oldFont );
+		DeleteObject( newFont );
+		DeleteDC( hdc );
+
+		if( FAILED( hr ) )
+		{
+			adjacency = nullptr;
+			return nullptr;
+		}
+
+		adjacency = gcnew BufferWrapper( adj );
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion )
+	{
+		ID3DXMesh *result;
+
+		pin_ptr<const wchar_t> pinnedText = PtrToStringChars( text );
+
+		HDC hdc = CreateCompatibleDC( NULL );
+		HFONT newFont;
+		HFONT oldFont;
+		if( hdc == NULL )
+			throw gcnew OutOfMemoryException();
+
+		newFont = static_cast<HFONT>( font->ToHfont().ToPointer() );
+		oldFont = static_cast<HFONT>( SelectObject( hdc, newFont ) );		
+
+		HRESULT hr = D3DXCreateText( device->InternalPointer, hdc, reinterpret_cast<LPCWSTR>( pinnedText ),
+			deviation, extrusion, &result, NULL, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		SelectObject( hdc, oldFont );
+		DeleteObject( newFont );
+		DeleteDC( hdc );
+
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Mesh( result );
+	}
+
+	DataStream^ Mesh::LockAttributeBuffer( LockFlags flags )
+	{
+		DWORD *data;
+
+		HRESULT hr = MeshPointer->LockAttributeBuffer( static_cast<DWORD>( flags ), &data );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
+
+		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
+		return gcnew DataStream( data, 0, true, !readOnly, false );
+	}
+
+	void Mesh::UnlockAttributeBuffer()
+	{
+		HRESULT hr = MeshPointer->UnlockAttributeBuffer();
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Mesh::SetAttributeTable( array<AttributeRange>^ table )
+	{
+		pin_ptr<AttributeRange> pinnedTable = &table[0];
+
+		HRESULT hr = MeshPointer->SetAttributeTable( reinterpret_cast<const D3DXATTRIBUTERANGE*>( pinnedTable ), table->Length );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut,
+		[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap )
+	{
+		ID3DXBuffer *buffer;
+		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
+		pin_ptr<int> pinnedFR = &faceRemap[0];
+
+		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
+			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ),
+			reinterpret_cast<DWORD*>( pinnedAdj ),
+			reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			adjacencyOut = nullptr;
+			faceRemap = nullptr;
+			vertexRemap = nullptr;
+		}
+		else
+			vertexRemap = gcnew BufferWrapper( buffer );
+	}
+
+	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap, 
+		[Out] BufferWrapper^% vertexRemap )
+	{
+		ID3DXBuffer *buffer;
+		pin_ptr<int> pinnedFR = &faceRemap[0];
+
+		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
+			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), NULL,
+			reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			faceRemap = nullptr;
+			vertexRemap = nullptr;
+		}
+		else
+			vertexRemap = gcnew BufferWrapper( buffer );
+	}
+
+	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut )
+	{
+		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
+
+		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
+			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ),
+			reinterpret_cast<DWORD*>( pinnedAdj ), NULL, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			adjacencyOut = nullptr;
+	}
+
+	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn )
+	{
+		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
+			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), NULL, NULL, NULL );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
+		[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap )
+	{
+		ID3DXBuffer *buffer;
+		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
+		pin_ptr<int> pinnedFR = &faceRemap[0];
+		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
+
+		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
+			reinterpret_cast<const DWORD*>( pinnedAdjIn ),
+			reinterpret_cast<DWORD*>( pinnedAdj ),
+			reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			adjacencyOut = nullptr;
+			faceRemap = nullptr;
+			vertexRemap = nullptr;
+		}
+		else
+			vertexRemap = gcnew BufferWrapper( buffer );
+	}
+
+	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap, 
+		[Out] BufferWrapper^% vertexRemap )
+	{
+		ID3DXBuffer *buffer;
+		pin_ptr<int> pinnedFR = &faceRemap[0];
+		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
+
+		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
+			reinterpret_cast<const DWORD*>( pinnedAdjIn ), NULL,
+			reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			faceRemap = nullptr;
+			vertexRemap = nullptr;
+		}
+		else
+			vertexRemap = gcnew BufferWrapper( buffer );
+	}
+
+	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut )
+	{
+		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
+		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
+
+		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
+			reinterpret_cast<const DWORD*>( pinnedAdjIn ),
+			reinterpret_cast<DWORD*>( pinnedAdj ), NULL, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			adjacencyOut = nullptr;
+	}
+
+	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn )
+	{
+		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
+
+		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
+			reinterpret_cast<const DWORD*>( pinnedAdjIn ), NULL, NULL, NULL );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut,
+		[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *buffer;
 		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
 		pin_ptr<int> pinnedFR = &faceRemap[0];
 
-		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), reinterpret_cast<DWORD*>( pinnedAdj ), \
+		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
+			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ),
+			reinterpret_cast<DWORD*>( pinnedAdj ),
 			reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
 		{
+			adjacencyOut = nullptr;
+			faceRemap = nullptr;
 			vertexRemap = nullptr;
 			return nullptr;
 		}
@@ -945,346 +1156,466 @@ namespace Direct3D9
 		return gcnew Mesh( result );
 	}
 
-	void ProgressiveMesh::OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags )
+	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap, 
+		[Out] BufferWrapper^% vertexRemap )
 	{
-		HRESULT hr = MeshPointer->OptimizeBaseLOD( static_cast<DWORD>( flags ), NULL );
-		GraphicsException::CheckHResult( hr );
-	}
-
-	void ProgressiveMesh::OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap )
-	{
+		ID3DXMesh *result;
+		ID3DXBuffer *buffer;
 		pin_ptr<int> pinnedFR = &faceRemap[0];
-		HRESULT hr = MeshPointer->OptimizeBaseLOD( static_cast<DWORD>( flags ), reinterpret_cast<DWORD*>( pinnedFR ) );
-		GraphicsException::CheckHResult( hr );
-	}
 
-	void ProgressiveMesh::Save( Stream^ stream, array<ExtendedMaterial>^ materials, array<EffectInstance>^ effects )
-	{
-		StreamShim^ shim = gcnew StreamShim( stream );
-		pin_ptr<StreamShim^> nativeStream = &shim;
-
-		D3DXMATERIAL *nativeMaterials = new D3DXMATERIAL[materials->Length];
-		for( int i = 0; i < materials->Length; i++ )
-			nativeMaterials[i] = ExtendedMaterial::ToUnmanaged( materials[i] );
-
-		D3DXEFFECTINSTANCE *nativeEffects = new D3DXEFFECTINSTANCE[effects->Length];
-		for( int i = 0; i < effects->Length; i++ )
-			nativeEffects[i] = EffectInstance::ToUnmanaged( effects[i] );
-
-		HRESULT hr = MeshPointer->Save( reinterpret_cast<IStream*>( nativeStream ), nativeMaterials, nativeEffects, materials->Length );
+		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
+			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), NULL,
+			reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
 		GraphicsException::CheckHResult( hr );
 
-		delete[] nativeMaterials;
-		delete[] nativeEffects;
+		if( FAILED( hr ) )
+		{
+			faceRemap = nullptr;
+			vertexRemap = nullptr;
+			return nullptr;
+		}
+
+		vertexRemap = gcnew BufferWrapper( buffer );
+		return gcnew Mesh( result );
 	}
 
-	void ProgressiveMesh::SetFaceCount( int faceCount )
+	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut )
 	{
-		HRESULT hr = MeshPointer->SetNumFaces( faceCount );
+		ID3DXMesh *result;
+		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
+
+		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
+			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ),
+			reinterpret_cast<DWORD*>( pinnedAdj ), NULL, NULL, &result );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			adjacencyOut = nullptr;
+			return nullptr;
+		}
+
+		return gcnew Mesh( result );
 	}
 
-	void ProgressiveMesh::SetVertexCount( int vertexCount )
+	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn )
 	{
-		HRESULT hr = MeshPointer->SetNumVertices( vertexCount );
+		ID3DXMesh *result;
+
+		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
+			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), NULL, NULL, NULL, &result );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Mesh( result );
 	}
 
-	void ProgressiveMesh::TrimFaces( int newFaceMinimum, int newFaceMaximum )
+	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
+		[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap )
 	{
-		HRESULT hr = MeshPointer->TrimByFaces( newFaceMinimum, newFaceMaximum, NULL, NULL );
-		GraphicsException::CheckHResult( hr );
-	}
-
-	void ProgressiveMesh::TrimFaces( int newFaceMinimum, int newFaceMaximum, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
-	{
+		ID3DXMesh *result;
+		ID3DXBuffer *buffer;
+		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
 		pin_ptr<int> pinnedFR = &faceRemap[0];
-		pin_ptr<int> pinnedVR = &vertexRemap[0];
+		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
 
-		HRESULT hr = MeshPointer->TrimByFaces( newFaceMinimum, newFaceMaximum, reinterpret_cast<DWORD*>( pinnedFR ), 
-			reinterpret_cast<DWORD*>( pinnedVR ) );
+		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
+			reinterpret_cast<const DWORD*>( pinnedAdjIn ),
+			reinterpret_cast<DWORD*>( pinnedAdj ),
+			reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			adjacencyOut = nullptr;
+			faceRemap = nullptr;
+			vertexRemap = nullptr;
+			return nullptr;
+		}
+
+		vertexRemap = gcnew BufferWrapper( buffer );
+		return gcnew Mesh( result );
 	}
 
-	void ProgressiveMesh::TrimVertices( int newVertexMinimum, int newVertexMaximum )
+	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap, 
+		[Out] BufferWrapper^% vertexRemap )
 	{
-		HRESULT hr = MeshPointer->TrimByVertices( newVertexMinimum, newVertexMaximum, NULL, NULL );
-		GraphicsException::CheckHResult( hr );
-	}
-
-	void ProgressiveMesh::TrimVertices( int newVertexMinimum, int newVertexMaximum, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
-	{
+		ID3DXMesh *result;
+		ID3DXBuffer *buffer;
 		pin_ptr<int> pinnedFR = &faceRemap[0];
-		pin_ptr<int> pinnedVR = &vertexRemap[0];
+		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
 
-		HRESULT hr = MeshPointer->TrimByVertices( newVertexMinimum, newVertexMaximum, reinterpret_cast<DWORD*>( pinnedFR ), 
-			reinterpret_cast<DWORD*>( pinnedVR ) );
-		GraphicsException::CheckHResult( hr );
-	}
-
-	int ProgressiveMesh::MaximumFaceCount::get()
-	{
-		return MeshPointer->GetMaxFaces();
-	}
-
-	int ProgressiveMesh::MaximumVertexCount::get()
-	{
-		return MeshPointer->GetMaxVertices();
-	}
-
-	int ProgressiveMesh::MinimumFaceCount::get()
-	{
-		return MeshPointer->GetMinFaces();
-	}
-
-	int ProgressiveMesh::MinimumVertexCount::get()
-	{
-		return MeshPointer->GetMinVertices();
-	}
-
-	PatchMesh::PatchMesh( Device^ device, PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration )
-	{
-		ID3DXPatchMesh *result;
-		pin_ptr<VertexElement> pinnedElements = &vertexDeclaration[0];
-
-		HRESULT hr = D3DXCreatePatchMesh( reinterpret_cast<D3DXPATCHINFO*>( &info ), patchCount, vertexCount, 0, 
-			reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedElements ), device->InternalPointer, &result );
+		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
+			reinterpret_cast<const DWORD*>( pinnedAdjIn ), NULL,
+			reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = result;
+		if( FAILED( hr ) )
+		{
+			faceRemap = nullptr;
+			vertexRemap = nullptr;
+			return nullptr;
+		}
+
+		vertexRemap = gcnew BufferWrapper( buffer );
+		return gcnew Mesh( result );
 	}
 
-	PatchMesh^ PatchMesh::Clone( MeshFlags flags, array<VertexElement>^ vertexDeclaration )
+	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut )
 	{
-		ID3DXPatchMesh *result;
-		pin_ptr<VertexElement> pinnedElements = &vertexDeclaration[0];
+		ID3DXMesh *result;
+		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
+		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
 
-		HRESULT hr = m_Pointer->CloneMesh( static_cast<DWORD>( flags ), reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedElements ), &result );
+		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
+			reinterpret_cast<const DWORD*>( pinnedAdjIn ),
+			reinterpret_cast<DWORD*>( pinnedAdj ), NULL, NULL, &result );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			adjacencyOut = nullptr;
+			return nullptr;
+		}
+
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn )
+	{
+		ID3DXMesh *result;
+		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
+
+		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
+			reinterpret_cast<const DWORD*>( pinnedAdjIn ), NULL, NULL, NULL, &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew PatchMesh( result );
+		return gcnew Mesh( result );
 	}
 
-	void PatchMesh::GenerateAdjacency( float tolerance )
+	Mesh^ Mesh::Clean( CleanType type, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] BufferWrapper^% errorsAndWarnings )
 	{
-		HRESULT hr = m_Pointer->GenerateAdjacency( tolerance );
+		ID3DXMesh *result;
+		ID3DXBuffer *errors;
+
+		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
+		pin_ptr<int> pinnedAdjOut = &adjacencyOut[0];
+
+		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
+			reinterpret_cast<const DWORD*>( pinnedAdjIn ), &result,
+			reinterpret_cast<DWORD*>( pinnedAdjOut ), &errors );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			adjacencyOut = nullptr;
+			errorsAndWarnings = nullptr;
+			return nullptr;
+		}
+
+		errorsAndWarnings = gcnew BufferWrapper( errors );
+		return gcnew Mesh( result );
 	}
 
-	array<VertexElement>^ PatchMesh::GetDeclaration()
+	Mesh^ Mesh::Clean( CleanType type, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut )
 	{
-		D3DVERTEXELEMENT9 elementBuffer[MAX_FVF_DECL_SIZE];
+		ID3DXMesh *result;
 
-		HRESULT hr = m_Pointer->GetDeclaration( elementBuffer );
+		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
+		pin_ptr<int> pinnedAdjOut = &adjacencyOut[0];
+
+		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
+			reinterpret_cast<const DWORD*>( pinnedAdjIn ), &result,
+			reinterpret_cast<DWORD*>( pinnedAdjOut ), NULL );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			adjacencyOut = nullptr;
+			return nullptr;
+		}
+
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::Clean( CleanType type, array<int>^ adjacencyIn )
+	{
+		ID3DXMesh *result;
+
+		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
+
+		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
+			reinterpret_cast<const DWORD*>( pinnedAdjIn ), &result, NULL, NULL );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
 
-		// Apparently the returned decl does not include an End element. This is bizarre and confusing,
-		// not to mention completely unexpected. We patch it up here.
-		int count = D3DXGetDeclLength( elementBuffer ) + 1;
-		array<VertexElement>^ elements = gcnew array<VertexElement>( count );
-		pin_ptr<VertexElement> pinnedElements = &elements[0];
-		memcpy( pinnedElements, elementBuffer, count * sizeof(D3DVERTEXELEMENT9) );
-		elements[count - 1] = VertexElement::VertexDeclarationEnd;
-
-		return elements;
+		return gcnew Mesh( result );
 	}
 
-	Device^ PatchMesh::GetDevice()
+	Mesh^ Mesh::Clean( CleanType type, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] BufferWrapper^% errorsAndWarnings )
 	{
-		IDirect3DDevice9* device;
+		ID3DXMesh *result;
+		ID3DXBuffer *errors;
 
-		HRESULT hr = m_Pointer->GetDevice( &device );
+		pin_ptr<int> pinnedAdjOut = &adjacencyOut[0];
+
+		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
+			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), &result,
+			reinterpret_cast<DWORD*>( pinnedAdjOut ), &errors );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			adjacencyOut = nullptr;
+			errorsAndWarnings = nullptr;
+			return nullptr;
+		}
+
+		errorsAndWarnings = gcnew BufferWrapper( errors );
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::Clean( CleanType type, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut )
+	{
+		ID3DXMesh *result;
+
+		pin_ptr<int> pinnedAdjOut = &adjacencyOut[0];
+
+		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
+			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), &result,
+			reinterpret_cast<DWORD*>( pinnedAdjOut ), NULL );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			adjacencyOut = nullptr;
+			return nullptr;
+		}
+
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::Clean( CleanType type, IntPtr adjacencyIn )
+	{
+		ID3DXMesh *result;
+
+		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
+			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), &result, NULL, NULL );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew Device( device );
+		return gcnew Mesh( result );
 	}
 
-	IndexBuffer^ PatchMesh::GetIndexBuffer()
+	void Mesh::ComputeNormals( array<int>^ adjacency )
 	{
-		IDirect3DIndexBuffer9* ib;
+		pin_ptr<int> pinnedAdj = &adjacency[0];
 
-		HRESULT hr = m_Pointer->GetIndexBuffer( &ib );
+		HRESULT hr = D3DXComputeNormals( MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Mesh::ComputeNormals()
+	{
+		HRESULT hr = D3DXComputeNormals( MeshPointer, NULL );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Mesh::ComputeTangent( int textureStage, int tangentIndex, int binormalIndex, bool wrap, array<int>^ adjacency )
+	{
+		pin_ptr<int> pinnedAdj = &adjacency[0];
+
+		HRESULT hr = D3DXComputeTangent( MeshPointer, textureStage, tangentIndex, binormalIndex, wrap,
+			reinterpret_cast<const DWORD*>( pinnedAdj ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Mesh::ComputeTangent( int textureStage, int tangentIndex, int binormalIndex, bool wrap )
+	{
+		HRESULT hr = D3DXComputeTangent( MeshPointer, textureStage, tangentIndex, binormalIndex, wrap, NULL );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	Mesh^ Mesh::ComputeTangentFrame( int textureInSemantic, int textureInIndex, int partialOutSemanticU, 
+		int partialOutIndexU, int partialOutSemanticV, int partialOutIndexV, int normalOutSemantic,
+		int normalOutIndex, TangentOptions options, array<int>^ adjacency, float partialEdgeThreshold,
+		float singularPointThreshold, float normalEdgeThreshold, [Out] BufferWrapper^% vertexMapping )
+	{
+		ID3DXMesh *result;
+		ID3DXBuffer *vertex;
+
+		pin_ptr<int> pinnedAdj = &adjacency[0];
+
+		HRESULT hr = D3DXComputeTangentFrameEx( MeshPointer, textureInSemantic, textureInIndex,
+			partialOutSemanticU, partialOutIndexU, partialOutSemanticV, partialOutIndexV, normalOutSemantic,
+			normalOutIndex, static_cast<DWORD>( options ), reinterpret_cast<const DWORD*>( pinnedAdj ),
+			partialEdgeThreshold, singularPointThreshold, normalEdgeThreshold, &result, &vertex );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			vertexMapping = nullptr;
+			return nullptr;
+		}
+
+		vertexMapping = gcnew BufferWrapper( vertex );
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::ComputeTangentFrame( int textureInSemantic, int textureInIndex, int partialOutSemanticU, 
+		int partialOutIndexU, int partialOutSemanticV, int partialOutIndexV, int normalOutSemantic,
+		int normalOutIndex, TangentOptions options, array<int>^ adjacency, float partialEdgeThreshold,
+		float singularPointThreshold, float normalEdgeThreshold )
+	{
+		ID3DXMesh *result;
+
+		pin_ptr<int> pinnedAdj = &adjacency[0];
+
+		HRESULT hr = D3DXComputeTangentFrameEx( MeshPointer, textureInSemantic, textureInIndex,
+			partialOutSemanticU, partialOutIndexU, partialOutSemanticV, partialOutIndexV, normalOutSemantic,
+			normalOutIndex, static_cast<DWORD>( options ), reinterpret_cast<const DWORD*>( pinnedAdj ),
+			partialEdgeThreshold, singularPointThreshold, normalEdgeThreshold, &result, NULL );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew IndexBuffer( ib );
+		return gcnew Mesh( result );
 	}
 
-	VertexBuffer^ PatchMesh::GetVertexBuffer()
+	Mesh^ Mesh::ComputeTangentFrame( int textureInSemantic, int textureInIndex, int partialOutSemanticU, 
+		int partialOutIndexU, int partialOutSemanticV, int partialOutIndexV, int normalOutSemantic,
+		int normalOutIndex, TangentOptions options, float partialEdgeThreshold, float singularPointThreshold, 
+		float normalEdgeThreshold )
 	{
-		IDirect3DVertexBuffer9* vb;
+		ID3DXMesh *result;
 
-		HRESULT hr = m_Pointer->GetVertexBuffer( &vb );
+		HRESULT hr = D3DXComputeTangentFrameEx( MeshPointer, textureInSemantic, textureInIndex,
+			partialOutSemanticU, partialOutIndexU, partialOutSemanticV, partialOutIndexV, normalOutSemantic,
+			normalOutIndex, static_cast<DWORD>( options ), NULL, partialEdgeThreshold, singularPointThreshold, 
+			normalEdgeThreshold, &result, NULL );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew VertexBuffer( vb );
+		return gcnew Mesh( result );
 	}
 
-	PatchInfo PatchMesh::GetPatchInfo()
+	Mesh^ Mesh::Concatenate( Device^ device, array<Mesh^>^ meshes, MeshFlags options, array<Matrix>^ geometryTransforms,
+		array<Matrix>^ textureTransforms, array<VertexElement>^ vertexDeclaration )
 	{
-		PatchInfo result;
+		ID3DXMesh *result;
+		D3DXMATRIX *geoXForms = NULL;
+		D3DXMATRIX *textureXForms = NULL;
+		D3DVERTEXELEMENT9 *decl = NULL;
+		ID3DXMesh **input;
 
-		HRESULT hr = m_Pointer->GetPatchInfo( reinterpret_cast<D3DXPATCHINFO*>( &result ) );
+		pin_ptr<Matrix> pinnedGeo = nullptr;
+		pin_ptr<Matrix> pinnedTexture = nullptr;
+		pin_ptr<VertexElement> pinnedDecl = nullptr;
+
+		input = new ID3DXMesh*[meshes->Length];
+		for( int i = 0; i < meshes->Length; i++ )
+			input[i] = meshes[i]->MeshPointer;
+
+		if( geometryTransforms != nullptr )
+		{
+			pinnedGeo = &geometryTransforms[0];
+			geoXForms = reinterpret_cast<D3DXMATRIX*>( pinnedGeo );
+		}
+
+		if( textureTransforms != nullptr )
+		{
+			pinnedTexture = &textureTransforms[0];
+			textureXForms = reinterpret_cast<D3DXMATRIX*>( pinnedTexture );
+		}
+
+		if( vertexDeclaration != nullptr )
+		{
+			pinnedDecl = &vertexDeclaration[0];
+			decl = reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedDecl );
+		}
+
+		HRESULT hr = D3DXConcatenateMeshes( input, meshes->Length, static_cast<DWORD>( options ), geoXForms,
+			textureXForms, decl, device->InternalPointer, &result );
 		GraphicsException::CheckHResult( hr );
 
-		return result;
-	}
-
-	void PatchMesh::Optimize()
-	{
-		HRESULT hr = m_Pointer->Optimize( 0 );
-		GraphicsException::CheckHResult( hr );
-	}
-
-	DisplacementParameters PatchMesh::GetDisplacementParameters()
-	{
-		DisplacementParameters result;
-		IDirect3DBaseTexture9 *texture;
-		D3DTEXTUREFILTERTYPE minFilter;
-		D3DTEXTUREFILTERTYPE magFilter;
-		D3DTEXTUREFILTERTYPE mipFilter;
-		D3DTEXTUREADDRESS wrap;
-		DWORD lodBias;
-
-		HRESULT hr = m_Pointer->GetDisplaceParam( &texture, &minFilter, &magFilter, &mipFilter, &wrap, &lodBias );
-		GraphicsException::CheckHResult( hr );
-
-		if( FAILED( hr ) )
-			return result;
-
-		result.Texture = gcnew Texture( reinterpret_cast<IDirect3DTexture9*>( texture ) );
-		result.MinFilter = static_cast<TextureFilter>( minFilter );
-		result.MagFilter = static_cast<TextureFilter>( magFilter );
-		result.MipFilter = static_cast<TextureFilter>( mipFilter );
-		result.Wrap = static_cast<TextureAddress>( wrap );
-		result.LevelOfDetailBias = lodBias;
-
-		return result;
-	}
-
-	void PatchMesh::SetDisplacementParameters( DisplacementParameters parameters )
-	{
-		HRESULT hr = m_Pointer->SetDisplaceParam( reinterpret_cast<IDirect3DTexture9*>( parameters.Texture->InternalPointer ), 
-			static_cast<D3DTEXTUREFILTERTYPE>( parameters.MinFilter ), static_cast<D3DTEXTUREFILTERTYPE>( parameters.MagFilter ),
-			static_cast<D3DTEXTUREFILTERTYPE>( parameters.MipFilter ), static_cast<D3DTEXTUREADDRESS>( parameters.Wrap ), parameters.LevelOfDetailBias );
-		GraphicsException::CheckHResult( hr );
-	}
-
-	DataStream^ PatchMesh::LockAttributeBuffer( LockFlags flags )
-	{
-		DWORD *data;
-
-		HRESULT hr = m_Pointer->LockAttributeBuffer( static_cast<DWORD>( flags ), &data );
-		GraphicsException::CheckHResult( hr );
+		delete[] input;
 
 		if( FAILED( hr ) )
 			return nullptr;
 
-		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		return gcnew DataStream( data, 0, true, !readOnly, false );
+		return gcnew Mesh( result );
 	}
 
-	void PatchMesh::UnlockAttributeBuffer()
+	Mesh^ Mesh::Concatenate( Device^ device, array<Mesh^>^ meshes, MeshFlags options, array<Matrix>^ geometryTransforms,
+		array<Matrix>^ textureTransforms )
 	{
-		HRESULT hr = m_Pointer->UnlockAttributeBuffer();
-		GraphicsException::CheckHResult( hr );
-	}
+		ID3DXMesh *result;
+		D3DXMATRIX *geoXForms = NULL;
+		D3DXMATRIX *textureXForms = NULL;
+		ID3DXMesh **input;
 
-	DataStream^ PatchMesh::LockIndexBuffer( LockFlags flags )
-	{
-		void *data;
+		pin_ptr<Matrix> pinnedGeo = nullptr;
+		pin_ptr<Matrix> pinnedTexture = nullptr;
 
-		HRESULT hr = m_Pointer->LockIndexBuffer( static_cast<DWORD>( flags ), &data );
+		input = new ID3DXMesh*[meshes->Length];
+		for( int i = 0; i < meshes->Length; i++ )
+			input[i] = meshes[i]->MeshPointer;
+
+		if( geometryTransforms != nullptr )
+		{
+			pinnedGeo = &geometryTransforms[0];
+			geoXForms = reinterpret_cast<D3DXMATRIX*>( pinnedGeo );
+		}
+
+		if( textureTransforms != nullptr )
+		{
+			pinnedTexture = &textureTransforms[0];
+			textureXForms = reinterpret_cast<D3DXMATRIX*>( pinnedTexture );
+		}
+
+		HRESULT hr = D3DXConcatenateMeshes( input, meshes->Length, static_cast<DWORD>( options ), geoXForms,
+			textureXForms, NULL, device->InternalPointer, &result );
 		GraphicsException::CheckHResult( hr );
+
+		delete[] input;
 
 		if( FAILED( hr ) )
 			return nullptr;
 
-		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		return gcnew DataStream( data, 0, true, !readOnly, false );
+		return gcnew Mesh( result );
 	}
 
-	void PatchMesh::UnlockIndexBuffer()
+	Mesh^ Mesh::Concatenate( Device^ device, array<Mesh^>^ meshes, MeshFlags options )
 	{
-		HRESULT hr = m_Pointer->UnlockIndexBuffer();
-		GraphicsException::CheckHResult( hr );
-	}
+		ID3DXMesh *result;
+		ID3DXMesh **input;
 
-	DataStream^ PatchMesh::LockVertexBuffer( LockFlags flags )
-	{
-		void *data;
+		input = new ID3DXMesh*[meshes->Length];
+		for( int i = 0; i < meshes->Length; i++ )
+			input[i] = meshes[i]->MeshPointer;
 
-		HRESULT hr = m_Pointer->LockVertexBuffer( static_cast<DWORD>( flags ), &data );
+		HRESULT hr = D3DXConcatenateMeshes( input, meshes->Length, static_cast<DWORD>( options ), NULL,
+			NULL, NULL, device->InternalPointer, &result );
 		GraphicsException::CheckHResult( hr );
+
+		delete[] input;
 
 		if( FAILED( hr ) )
 			return nullptr;
 
-		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		return gcnew DataStream( data, 0, true, !readOnly, false );
-	}
-
-	void PatchMesh::UnlockVertexBuffer()
-	{
-		HRESULT hr = m_Pointer->UnlockVertexBuffer();
-		GraphicsException::CheckHResult( hr );
-	}
-
-	void PatchMesh::GetTessellationSize( float tessellationLevel, bool adaptive, [Out] int% triangleCount, [Out] int% vertexCount )
-	{
-		pin_ptr<int> pinnedTriCount = &triangleCount;
-		pin_ptr<int> pinnedVertexCount = &vertexCount;
-
-		HRESULT hr = m_Pointer->GetTessSize( tessellationLevel, adaptive, reinterpret_cast<DWORD*>( pinnedTriCount ), 
-			reinterpret_cast<DWORD*>( pinnedVertexCount ) );
-		GraphicsException::CheckHResult( hr );
-	}
-
-	void PatchMesh::Tessellate( float tessellationLevel, Mesh^ mesh )
-	{
-		HRESULT hr = m_Pointer->Tessellate( tessellationLevel, reinterpret_cast<ID3DXMesh*>( mesh->InternalPointer ) );
-		GraphicsException::CheckHResult( hr );
-	}
-
-	void PatchMesh::Tessellate( Vector4 translation, int minimumLevel, int maximumLevel, Mesh^ mesh )
-	{
-		HRESULT hr = m_Pointer->TessellateAdaptive( reinterpret_cast<D3DXVECTOR4*>( &translation ), maximumLevel, minimumLevel, 
-			reinterpret_cast<ID3DXMesh*>( mesh->InternalPointer ) );
-		GraphicsException::CheckHResult( hr );
-	}
-
-	int PatchMesh::ControlVerticesPerPatch::get()
-	{
-		return m_Pointer->GetControlVerticesPerPatch();
-	}
-
-	int PatchMesh::PatchCount::get()
-	{
-		return m_Pointer->GetNumPatches();
-	}
-
-	int PatchMesh::VertexCount::get()
-	{
-		return m_Pointer->GetNumVertices();
-	}
-
-	PatchMeshType PatchMesh::Type::get()
-	{
-		return static_cast<PatchMeshType>( m_Pointer->GetOptions() );
+		return gcnew Mesh( result );
 	}
 }
 }
