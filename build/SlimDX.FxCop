@@ -4387,6 +4387,18 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="AttributeWeights">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-11-17 19:46:05Z">
+            <Issue Name="Equals">
+             <Item>SlimDX.Direct3D9.AttributeWeights</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>SlimDX.Direct3D9.AttributeWeights</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="BandwidthTimings">
           <Messages>
            <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
@@ -4421,6 +4433,34 @@
                <Item>BaseMesh.Clone(Device, MeshFlags, VertexFormat):Mesh</Item>
                <Item>SlimDX.Direct3D9.Device</Item>
                <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ConvertSubsetToSingleStrip(System.Int32,SlimDX.Direct3D9.MeshFlags,System.Int32&amp;):SlimDX.Direct3D9.IndexBuffer">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>indexCount</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ConvertSubsetToStrips(System.Int32,SlimDX.Direct3D9.MeshFlags,System.Int32&amp;,SlimDX.Direct3D9.BufferWrapper&amp;,System.Int32&amp;):SlimDX.Direct3D9.IndexBuffer">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>indexCount</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>stripLengths</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>stripCount</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4607,6 +4647,15 @@
             </Messages>
            </Member>
           </Members>
+         </Type>
+         <Type Name="CleanType">
+          <Messages>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-11-17 19:46:05Z">
+            <Issue>
+             <Item>CleanType</Item>
+            </Issue>
+           </Message>
+          </Messages>
          </Type>
          <Type Name="ClearFlags">
           <Messages>
@@ -5876,6 +5925,18 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="GlyphMetricsFloat">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-11-17 19:46:05Z">
+            <Issue Name="Equals">
+             <Item>SlimDX.Direct3D9.GlyphMetricsFloat</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>SlimDX.Direct3D9.GlyphMetricsFloat</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="GraphicsException">
           <Members>
            <Member Name=".ctor()">
@@ -6246,6 +6307,293 @@
          </Type>
          <Type Name="Mesh">
           <Members>
+           <Member Name="Clean(SlimDX.Direct3D9.CleanType,System.Int32[],System.Int32[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Clean(SlimDX.Direct3D9.CleanType,System.Int32[],System.Int32[]&amp;,SlimDX.Direct3D9.BufferWrapper&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>errorsAndWarnings</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Clean(SlimDX.Direct3D9.CleanType,System.IntPtr,System.Int32[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Clean(SlimDX.Direct3D9.CleanType,System.IntPtr,System.Int32[]&amp;,SlimDX.Direct3D9.BufferWrapper&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>errorsAndWarnings</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ComputeTangentFrame(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,SlimDX.Direct3D9.TangentOptions,System.Int32[],System.Single,System.Single,System.Single,SlimDX.Direct3D9.BufferWrapper&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="13#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>vertexMapping</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Concatenate(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.Mesh[],SlimDX.Direct3D9.MeshFlags):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.Concatenate(Device, Mesh[], MeshFlags):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Concatenate(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.Mesh[],SlimDX.Direct3D9.MeshFlags,SlimDX.Matrix[],SlimDX.Matrix[]):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.Concatenate(Device, Mesh[], MeshFlags, Matrix[], Matrix[]):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Concatenate(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.Mesh[],SlimDX.Direct3D9.MeshFlags,SlimDX.Matrix[],SlimDX.Matrix[],SlimDX.Direct3D9.VertexElement[]):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.Concatenate(Device, Mesh[], MeshFlags, Matrix[], Matrix[], VertexElement[]):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CreateBox(SlimDX.Direct3D9.Device,System.Single,System.Single,System.Single):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.CreateBox(Device, Single, Single, Single):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CreateBox(SlimDX.Direct3D9.Device,System.Single,System.Single,System.Single,SlimDX.Direct3D9.BufferWrapper&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacency</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.CreateBox(Device, Single, Single, Single, BufferWrapper&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CreateCylinder(SlimDX.Direct3D9.Device,System.Single,System.Single,System.Single,System.Int32,System.Int32):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.CreateCylinder(Device, Single, Single, Single, Int32, Int32):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CreateCylinder(SlimDX.Direct3D9.Device,System.Single,System.Single,System.Single,System.Int32,System.Int32,SlimDX.Direct3D9.BufferWrapper&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="6#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacency</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.CreateCylinder(Device, Single, Single, Single, Int32, Int32, BufferWrapper&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CreateSphere(SlimDX.Direct3D9.Device,System.Single,System.Int32,System.Int32):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.CreateSphere(Device, Single, Int32, Int32):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CreateSphere(SlimDX.Direct3D9.Device,System.Single,System.Int32,System.Int32,SlimDX.Direct3D9.BufferWrapper&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacency</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.CreateSphere(Device, Single, Int32, Int32, BufferWrapper&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CreateTeapot(SlimDX.Direct3D9.Device):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.CreateTeapot(Device):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CreateTeapot(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.BufferWrapper&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacency</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.CreateTeapot(Device, BufferWrapper&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CreateText(SlimDX.Direct3D9.Device,System.Drawing.Font,System.String,System.Single,System.Single):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.CreateText(Device, Font, String, Single, Single):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CreateText(SlimDX.Direct3D9.Device,System.Drawing.Font,System.String,System.Single,System.Single,SlimDX.Direct3D9.BufferWrapper&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacency</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.CreateText(Device, Font, String, Single, Single, BufferWrapper&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CreateText(SlimDX.Direct3D9.Device,System.Drawing.Font,System.String,System.Single,System.Single,SlimDX.Direct3D9.BufferWrapper&amp;,SlimDX.Direct3D9.GlyphMetricsFloat[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacency</Item>
+              </Issue>
+             </Message>
+             <Message Id="6#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>glyphMetrics</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.CreateText(Device, Font, String, Single, Single, BufferWrapper&amp;, GlyphMetricsFloat[]&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CreateTorus(SlimDX.Direct3D9.Device,System.Single,System.Single,System.Int32,System.Int32):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.CreateTorus(Device, Single, Single, Int32, Int32):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CreateTorus(SlimDX.Direct3D9.Device,System.Single,System.Single,System.Int32,System.Int32,SlimDX.Direct3D9.BufferWrapper&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacency</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.CreateTorus(Device, Single, Single, Int32, Int32, BufferWrapper&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="FromFile(SlimDX.Direct3D9.Device,System.String,SlimDX.Direct3D9.MeshFlags):SlimDX.Direct3D9.Mesh">
             <Messages>
              <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-10-09 21:11:47Z">
@@ -6444,6 +6792,174 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="Optimize(SlimDX.Direct3D9.MeshOptimizeFlags,System.Int32[],System.Int32[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Optimize(SlimDX.Direct3D9.MeshOptimizeFlags,System.Int32[],System.Int32[]&amp;,SlimDX.Direct3D9.BufferWrapper&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>faceRemap</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>vertexRemap</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Optimize(SlimDX.Direct3D9.MeshOptimizeFlags,System.Int32[],System.Int32[]&amp;,System.Int32[]&amp;,SlimDX.Direct3D9.BufferWrapper&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>faceRemap</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>vertexRemap</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Optimize(SlimDX.Direct3D9.MeshOptimizeFlags,System.IntPtr,System.Int32[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Optimize(SlimDX.Direct3D9.MeshOptimizeFlags,System.IntPtr,System.Int32[]&amp;,SlimDX.Direct3D9.BufferWrapper&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>faceRemap</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>vertexRemap</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Optimize(SlimDX.Direct3D9.MeshOptimizeFlags,System.IntPtr,System.Int32[]&amp;,System.Int32[]&amp;,SlimDX.Direct3D9.BufferWrapper&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>faceRemap</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>vertexRemap</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="OptimizeInPlace(SlimDX.Direct3D9.MeshOptimizeFlags,System.Int32[],System.Int32[]&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="OptimizeInPlace(SlimDX.Direct3D9.MeshOptimizeFlags,System.Int32[],System.Int32[]&amp;,SlimDX.Direct3D9.BufferWrapper&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>faceRemap</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>vertexRemap</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="OptimizeInPlace(SlimDX.Direct3D9.MeshOptimizeFlags,System.Int32[],System.Int32[]&amp;,System.Int32[]&amp;,SlimDX.Direct3D9.BufferWrapper&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>faceRemap</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>vertexRemap</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="OptimizeInPlace(SlimDX.Direct3D9.MeshOptimizeFlags,System.IntPtr,System.Int32[]&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="OptimizeInPlace(SlimDX.Direct3D9.MeshOptimizeFlags,System.IntPtr,System.Int32[]&amp;,SlimDX.Direct3D9.BufferWrapper&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>faceRemap</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>vertexRemap</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="OptimizeInPlace(SlimDX.Direct3D9.MeshOptimizeFlags,System.IntPtr,System.Int32[]&amp;,System.Int32[]&amp;,SlimDX.Direct3D9.BufferWrapper&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>faceRemap</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>vertexRemap</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
           </Members>
          </Type>
          <Type Name="MeshDataType">
@@ -6471,6 +6987,15 @@
             <Issue>
              <Item>SlimDX.Direct3D9.MeshOptimizeFlags</Item>
              <Item>Flags</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="MeshSimplification">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2007-11-17 19:46:05Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
+             <Item>MeshSimplification</Item>
             </Issue>
            </Message>
           </Messages>
@@ -6774,6 +7299,33 @@
               <Issue>
                <Item>device</Item>
                <Item>ProgressiveMesh.CloneProgressive(Device, MeshFlags, VertexFormat):ProgressiveMesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromStream(SlimDX.Direct3D9.Device,System.IO.Stream,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.BufferWrapper&amp;,SlimDX.Direct3D9.BufferWrapper&amp;,System.Int32&amp;):SlimDX.Direct3D9.ProgressiveMesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>materials</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>effects</Item>
+              </Issue>
+             </Message>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>materialCount</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>ProgressiveMesh.FromStream(Device, Stream, MeshFlags, BufferWrapper&amp;, BufferWrapper&amp;, Int32&amp;):ProgressiveMesh</Item>
                <Item>SlimDX.Direct3D9.Device</Item>
                <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
               </Issue>

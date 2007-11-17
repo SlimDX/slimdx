@@ -29,6 +29,8 @@
 #include "Device.h"
 #include "SkinInfo.h"
 #include "Mesh.h"
+#include "ProgressiveMesh.h"
+#include "PatchMesh.h"
 #include "AnimationController.h"
 #include "AnimationFrame.h"
 

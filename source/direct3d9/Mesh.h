@@ -95,11 +95,14 @@ namespace SlimDX
 			DeviceIndependent = D3DXMESHOPT_DEVICEINDEPENDENT,
 		};
 
-		public enum class PatchMeshType : Int32
+		[Flags]
+		public enum class CleanType : Int32
 		{
-			Rectangle = D3DXPATCHMESH_RECT,
-			Triangle = D3DXPATCHMESH_TRI,
-			NPatch = D3DXPATCHMESH_NPATCH
+			BackFacing = D3DXCLEAN_BACKFACING,
+			BowTies = D3DXCLEAN_BOWTIES,
+			Skinning = D3DXCLEAN_SKINNING,
+			Optimization = D3DXCLEAN_OPTIMIZATION,
+			Simplification = D3DXCLEAN_SIMPLIFICATION
 		};
 
 		public value class ExtendedMaterial
@@ -134,6 +137,7 @@ namespace SlimDX
 			property array<EffectDefault>^ Defaults;
 		};
 
+		[StructLayout(LayoutKind::Sequential)]
 		public value class AttributeRange
 		{
 		public:
@@ -144,47 +148,15 @@ namespace SlimDX
 			property int VertexCount;
 		};
 
-		public value class PatchInfo
+		[StructLayout(LayoutKind::Sequential)]
+		public value class GlyphMetricsFloat
 		{
 		public:
-			property PatchMeshType PatchType;
-			property Degree Degree;
-			property Basis Basis;
-		};
-
-		public value class DisplacementParameters
-		{
-		public:
-			property Texture^ Texture;
-			property TextureFilter MinFilter;
-			property TextureFilter MagFilter;
-			property TextureFilter MipFilter;
-			property TextureAddress Wrap;
-			property int LevelOfDetailBias;
-		};
-
-		ref class StreamShim : System::Runtime::InteropServices::ComTypes::IStream
-		{
-		private:
-			Stream^ m_WrappedStream;
-
-			long long position;
-			void SetSizeToPosition();
-
-		public:
-			StreamShim( Stream^ stream );
-
-			virtual void Clone( [Out] System::Runtime::InteropServices::ComTypes::IStream^% ppstm );
-			virtual void Commit( int grfCommitFlags );
-			virtual void CopyTo( System::Runtime::InteropServices::ComTypes::IStream^ pstm, long long cb, IntPtr pcbRead, IntPtr pcbWritten );
-			virtual void LockRegion( long long libOffset, long long cb, int dwLockType );
-			virtual void Read( [Out] array<unsigned char>^ pv, int cb, IntPtr pcbRead );
-			virtual void Revert();
-			virtual void Seek( long long dlibMove, int dwOrigin, IntPtr plibNewPosition );
-			virtual void SetSize( long long libNewSize );
-			virtual void Stat( [Out] System::Runtime::InteropServices::ComTypes::STATSTG% pstatstg, int grfStatFlag );
-			virtual void UnlockRegion( long long libOffset, long long cb, int dwLockType );
-			virtual void Write( array<unsigned char>^ pv, int cb, IntPtr pcbWritten );
+			property float BlackBoxX;
+			property float BlackBoxY;
+			property PointF GlyphOrigin;
+			property float CellIncX;
+			property float CellIncY;
 		};
 
 		ref class Mesh;
@@ -225,6 +197,9 @@ namespace SlimDX
 
 			void DrawSubset( int subset );
 
+			IndexBuffer^ ConvertSubsetToSingleStrip( int attributeId, MeshFlags options, [Out] int% indexCount );
+			IndexBuffer^ ConvertSubsetToStrips( int attributeId, MeshFlags options, [Out] int% indexCount, [Out] BufferWrapper^% stripLengths, [Out] int% stripCount );
+
 			property int FaceCount { int get(); }
 			property int VertexCount { int get(); }
 			property VertexFormat VertexFormat { SlimDX::Direct3D9::VertexFormat get(); }
@@ -246,28 +221,22 @@ namespace SlimDX
 			Mesh( Device^ device, int faceCount, int vertexCount, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf );
 			virtual ~Mesh() { }
 			
-			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] BufferWrapper^% adjacency,
-				[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
-			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
-				[Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] BufferWrapper^% adjacency, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
 			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );
 			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags );
 
-			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] BufferWrapper^% adjacency,
-				[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
-			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
-				[Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] BufferWrapper^% adjacency, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
 			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );
 			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags );
 
-			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] BufferWrapper^% adjacency,
-				[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
-			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
-				[Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] BufferWrapper^% adjacency, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
 			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );
 			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags );
 
-			/*static Mesh^ CreateBox( Device^ device, float width, float height, float depth, [Out] BufferWrapper^% adjacency );
+			static Mesh^ CreateBox( Device^ device, float width, float height, float depth, [Out] BufferWrapper^% adjacency );
 			static Mesh^ CreateBox( Device^ device, float width, float height, float depth );
 
 			static Mesh^ CreateCylinder( Device^ device, float radius1, float radius2, float length, int slices, int stacks, [Out] BufferWrapper^% adjacency );
@@ -279,129 +248,74 @@ namespace SlimDX
 			static Mesh^ CreateTeapot( Device^ device, [Out] BufferWrapper^% adjacency );
 			static Mesh^ CreateTeapot( Device^ device );
 
-			//TODO: CreateText overload that returns glyph metrics
-			static Mesh^ CreateText( Device^ device, IntPtr hDC, String^ text, float deviation, float extrusion, [Out] BufferWrapper^% adjacency );
-			static Mesh^ CreateText( Device^ device, IntPtr hDC, String^ text, float deviation, float extrusion );
+			static Mesh^ CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion, [Out] BufferWrapper^% adjacency, [Out] array<GlyphMetricsFloat>^% glyphMetrics );
+			static Mesh^ CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion, [Out] BufferWrapper^% adjacency );
+			static Mesh^ CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion );
 
 			static Mesh^ CreateTorus( Device^ device, float innerRadius, float outerRadius, int sides, int rings, [Out] BufferWrapper^% adjacency );
 			static Mesh^ CreateTorus( Device^ device, float innerRadius, float outerRadius, int sides, int rings );
 
-			//DataStream^ LockAttributeBuffer( LockFlags flags );
-			//void UnlockAttributeBuffer();
+			static Mesh^ Concatenate( Device^ device, array<Mesh^>^ meshes, MeshFlags options, 
+				array<Matrix>^ geometryTransforms, array<Matrix>^ textureTransforms, 
+				array<VertexElement>^ vertexDeclaration );
 
-			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut,
-				[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
-			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap,
-				[Out] BufferWrapper^% vertexRemap );
-			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut );
-			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn );
+			static Mesh^ Concatenate( Device^ device, array<Mesh^>^ meshes, MeshFlags options, 
+				array<Matrix>^ geometryTransforms, array<Matrix>^ textureTransforms );
 
-			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
-				[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
-			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap,
-				[Out] BufferWrapper^% vertexRemap );
-			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut );
-			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn );
-
-			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut,
-				[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
-			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap,
-				[Out] BufferWrapper^% vertexRemap );
-			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut );
-			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn );
-
-			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
-				[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
-			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap,
-				[Out] BufferWrapper^% vertexRemap );
-			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut );
-			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn );*/
-
-			void ComputeTangentFrame( TangentOptions options );
-		};
-
-		public ref class ProgressiveMesh : public BaseMesh
-		{
-		internal:
-			ProgressiveMesh( ID3DXPMesh* mesh ) : BaseMesh( mesh ) { }
-
-			property ID3DXPMesh* MeshPointer
-			{
-				ID3DXPMesh* get() { return static_cast<ID3DXPMesh*>( m_Pointer ); }
-			}
-
-		public:
-			virtual ~ProgressiveMesh() { }
-
-			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags flags, array<VertexElement>^ vertexDeclaration );
-			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags flags, SlimDX::Direct3D9::VertexFormat format );
-
-			void GenerateVertexHistory( array<int>^ vertexHistory );
-			array<int>^ GetAdjacency();
-		
-			Mesh^ Optimize( MeshOptimizeFlags flags );
-			Mesh^ Optimize( MeshOptimizeFlags flags, [Out] array<int>^% adjacencyOut );
-			Mesh^ Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
-			Mesh^ Optimize( MeshOptimizeFlags flags, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
-
-			void OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags );
-			void OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap );
-
-			void Save( Stream^ stream, array<ExtendedMaterial>^ materials, array<EffectInstance>^ effects );
-			void SetFaceCount( int faceCount );
-			void SetVertexCount( int vertexCount );
-
-			void TrimFaces( int newFaceMinimum, int newFaceMaximum );
-			void TrimFaces( int newFaceMinimum, int newFaceMaximum, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
-			void TrimVertices( int newVertexMinimum, int newVertexMaximum );
-			void TrimVertices( int newVertexMinimum, int newVertexMaximum, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
-
-			property int MaximumFaceCount { int get(); }
-			property int MaximumVertexCount { int get(); }
-			property int MinimumFaceCount { int get(); }
-			property int MinimumVertexCount { int get(); }
-		};
-
-		public ref class PatchMesh : DirectXObject<ID3DXPatchMesh>
-		{
-		internal:
-			PatchMesh( ID3DXPatchMesh *mesh ) : DirectXObject( mesh ) { }
-
-		public:
-			PatchMesh( Device^ device, PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration );
-			virtual ~PatchMesh() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
-
-			PatchMesh^ Clone( MeshFlags flags, array<VertexElement>^ vertexDeclaration );
-			void GenerateAdjacency( float tolerance );
-
-			array<VertexElement>^ GetDeclaration();
-			Device^ GetDevice();
-			IndexBuffer^ GetIndexBuffer();
-			VertexBuffer^ GetVertexBuffer();
-			PatchInfo GetPatchInfo();
-			void Optimize();
-
-			DisplacementParameters GetDisplacementParameters();
-			void SetDisplacementParameters( DisplacementParameters parameters );
+			static Mesh^ Concatenate( Device^ device, array<Mesh^>^ meshes, MeshFlags options );
 
 			DataStream^ LockAttributeBuffer( LockFlags flags );
 			void UnlockAttributeBuffer();
+			void SetAttributeTable( array<AttributeRange>^ table );
 
-			DataStream^ LockIndexBuffer( LockFlags flags );
-			void UnlockIndexBuffer();
+			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut );
+			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn );
 
-			DataStream^ LockVertexBuffer( LockFlags flags );
-			void UnlockVertexBuffer();
+			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut );
+			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn );
 
-			void GetTessellationSize( float tessellationLevel, bool adaptive, [Out] int% triangleCount, [Out] int% vertexCount );
-			void Tessellate( float tessellationLevel, Mesh^ mesh );
-			void Tessellate( Vector4 translation, int minimumLevel, int maximumLevel, Mesh^ mesh );
+			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut );
+			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn );
 
-			property int ControlVerticesPerPatch { int get(); }
-			property int PatchCount { int get(); }
-			property int VertexCount { int get(); }
-			property PatchMeshType Type { PatchMeshType get(); }
+			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut );
+			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn );
+
+			Mesh^ Clean( CleanType type, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] BufferWrapper^% errorsAndWarnings );
+			Mesh^ Clean( CleanType type, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut );
+			Mesh^ Clean( CleanType type, array<int>^ adjacencyIn );
+
+			Mesh^ Clean( CleanType type, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] BufferWrapper^% errorsAndWarnings );
+			Mesh^ Clean( CleanType type, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut );
+			Mesh^ Clean( CleanType type, IntPtr adjacencyIn );
+			
+			void ComputeNormals( array<int>^ adjacency );
+			void ComputeNormals();
+			void ComputeTangent( int textureStage, int tangentIndex, int binormalIndex, bool wrap, array<int>^ adjacency );
+			void ComputeTangent( int textureStage, int tangentIndex, int binormalIndex, bool wrap );
+			void ComputeTangentFrame( TangentOptions options );
+
+			Mesh^ ComputeTangentFrame( int textureInSemantic, int textureInIndex, int partialOutSemanticU, 
+				int partialOutIndexU, int partialOutSemanticV, int partialOutIndexV, int normalOutSemantic,
+				int normalOutIndex, TangentOptions options, array<int>^ adjacency, float partialEdgeThreshold,
+				float singularPointThreshold, float normalEdgeThreshold, [Out] BufferWrapper^% vertexMapping );
+
+			Mesh^ ComputeTangentFrame( int textureInSemantic, int textureInIndex, int partialOutSemanticU, 
+				int partialOutIndexU, int partialOutSemanticV, int partialOutIndexV, int normalOutSemantic,
+				int normalOutIndex, TangentOptions options, array<int>^ adjacency, float partialEdgeThreshold,
+				float singularPointThreshold, float normalEdgeThreshold );
+
+			Mesh^ ComputeTangentFrame( int textureInSemantic, int textureInIndex, int partialOutSemanticU, 
+				int partialOutIndexU, int partialOutSemanticV, int partialOutIndexV, int normalOutSemantic,
+				int normalOutIndex, TangentOptions options, float partialEdgeThreshold,
+				float singularPointThreshold, float normalEdgeThreshold );
 		};
 	}
 }

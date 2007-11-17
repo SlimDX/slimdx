@@ -28,6 +28,8 @@
 #include "GraphicsException.h"
 #include "Device.h"
 #include "Mesh.h"
+#include "ProgressiveMesh.h"
+#include "PatchMesh.h"
 #include "SkinInfo.h"
 #include "AnimationFrame.h"
 #include "AnimationSet.h"
