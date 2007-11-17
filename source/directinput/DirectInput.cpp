@@ -41,8 +41,8 @@ namespace DirectInput
 
         try
         {
-		    HRESULT hr = DirectInput8Create( (HINSTANCE) hInstance.ToPointer(), DIRECTINPUT_VERSION, 
-			    IID_IDirectInput8, (void**) &dinput, NULL );
+		    HRESULT hr = DirectInput8Create( static_cast<HINSTANCE>( hInstance.ToPointer() ), DIRECTINPUT_VERSION, 
+			    IID_IDirectInput8, reinterpret_cast<void**>( &dinput ), NULL );
 
 			InputException::CheckHResult( hr );
         }
@@ -80,7 +80,7 @@ namespace DirectInput
 
 	void DirectInput::RunControlPanel( Control^ parent )
 	{
-		HRESULT hr = m_DirectInput->RunControlPanel( ( HWND )parent->Handle.ToPointer(), 0 );
+		HRESULT hr = m_DirectInput->RunControlPanel( static_cast<HWND>( parent->Handle.ToPointer() ), 0 );
 		InputException::CheckHResult( hr );
 	}
 
@@ -98,8 +98,11 @@ namespace DirectInput
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( name );
 
 		HRESULT hr = m_DirectInput->FindDevice( Utils::ToGUID( deviceClass ),
-			( LPCTSTR )pinnedName, &result );
+			reinterpret_cast<LPCTSTR>( pinnedName ), &result );
 		InputException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return Guid::Empty;
 
 		return Utils::FromGUID( result );
 	}

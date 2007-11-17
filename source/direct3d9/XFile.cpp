@@ -47,9 +47,12 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 		pin_ptr<unsigned char> pinnedMemory = &data[0];
 
-		HRESULT hr = m_Pointer->AddDataObject( Utils::ToGUID( dataTemplate ), (LPCSTR) pinnedName, pointer, 
-			data->Length, (LPCVOID) pinnedMemory, &result );
+		HRESULT hr = m_Pointer->AddDataObject( Utils::ToGUID( dataTemplate ), reinterpret_cast<LPCSTR>( pinnedName ), pointer, 
+			data->Length, reinterpret_cast<LPCVOID>( pinnedMemory ), &result );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew XFileSaveData( result );
 	}
@@ -70,7 +73,7 @@ namespace Direct3D9
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		HRESULT hr = m_Pointer->AddDataReference( (LPCSTR) pinnedName, pointer );
+		HRESULT hr = m_Pointer->AddDataReference( reinterpret_cast<LPCSTR>( pinnedName ), pointer );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -102,6 +105,9 @@ namespace Direct3D9
 
 		delete name;
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		return gcnew String( name );
 	}
 
@@ -112,6 +118,9 @@ namespace Direct3D9
 		HRESULT hr = m_Pointer->GetSave( &result );
 		GraphicsException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		return gcnew XFileSaveObject( result );
 	}
 
@@ -121,6 +130,9 @@ namespace Direct3D9
 
 		HRESULT hr = m_Pointer->GetType( &result );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return Guid::Empty;
 
 		return Utils::FromGUID( result );
 	}
@@ -141,9 +153,12 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 		pin_ptr<unsigned char> pinnedMemory = &data[0];
 
-		HRESULT hr = m_Pointer->AddDataObject( Utils::ToGUID( dataTemplate ), (LPCSTR) pinnedName, pointer, 
-			data->Length, (LPCVOID) pinnedMemory, &result );
+		HRESULT hr = m_Pointer->AddDataObject( Utils::ToGUID( dataTemplate ), reinterpret_cast<LPCSTR>( pinnedName ), pointer, 
+			data->Length, reinterpret_cast<LPCVOID>( pinnedMemory ), &result );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew XFileSaveData( result );
 	}
@@ -160,6 +175,9 @@ namespace Direct3D9
 
 		HRESULT hr = m_Pointer->GetFile( &result );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew XFile( result );
 	}
@@ -196,8 +214,11 @@ namespace Direct3D9
 		else
 			flag = D3DXF_FILELOAD_FROMFILE;
 
-		HRESULT hr = m_Pointer->CreateEnumObject( (LPCVOID) pinnedName, flag, &result );
+		HRESULT hr = m_Pointer->CreateEnumObject( reinterpret_cast<LPCVOID>( pinnedName ), flag, &result );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew XFileEnumerationObject( result );
 	}
@@ -208,11 +229,14 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
 		D3DXF_FILELOADMEMORY mem;
-		mem.lpMemory = (LPCVOID) pinnedMemory;
+		mem.lpMemory = reinterpret_cast<LPCVOID>( pinnedMemory );
 		mem.dSize = memory->Length;
 
-		HRESULT hr = m_Pointer->CreateEnumObject( (LPCVOID) &mem, D3DXF_FILELOAD_FROMMEMORY, &result );
+		HRESULT hr = m_Pointer->CreateEnumObject( reinterpret_cast<LPCVOID>( &mem ), D3DXF_FILELOAD_FROMMEMORY, &result );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) ) 
+			return nullptr;
 
 		return gcnew XFileEnumerationObject( result );
 	}
@@ -235,8 +259,11 @@ namespace Direct3D9
 		else
 			flag = D3DXF_FILESAVE_TOFILE;
 
-		HRESULT hr = m_Pointer->CreateSaveObject( (LPCVOID) pinnedName, flag, (D3DXF_FILEFORMAT) format, &result );
+		HRESULT hr = m_Pointer->CreateSaveObject( reinterpret_cast<LPCVOID>( pinnedName ), flag, static_cast<D3DXF_FILEFORMAT>( format ), &result );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew XFileSaveObject( result );
 	}
@@ -251,7 +278,7 @@ namespace Direct3D9
 	{
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
-		HRESULT hr = m_Pointer->RegisterTemplates( (LPCVOID) pinnedMemory, memory->Length );
+		HRESULT hr = m_Pointer->RegisterTemplates( reinterpret_cast<LPCVOID>( pinnedMemory ), memory->Length );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -278,6 +305,9 @@ namespace Direct3D9
 		HRESULT hr = m_Pointer->GetChild( id, &result );
 		GraphicsException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		return gcnew XFileData( result );
 	}
 
@@ -288,6 +318,9 @@ namespace Direct3D9
 		HRESULT hr = m_Pointer->GetDataObjectById( Utils::ToGUID( id ), &result );
 		GraphicsException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		return gcnew XFileData( result );
 	}
 
@@ -297,8 +330,11 @@ namespace Direct3D9
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		HRESULT hr = m_Pointer->GetDataObjectByName( (LPCSTR) pinnedName, &result );
+		HRESULT hr = m_Pointer->GetDataObjectByName( reinterpret_cast<LPCSTR>( pinnedName ), &result );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew XFileData( result );
 	}
@@ -310,6 +346,9 @@ namespace Direct3D9
 		HRESULT hr = m_Pointer->GetFile( &result );
 		GraphicsException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		return gcnew XFile( result );
 	}
 
@@ -319,6 +358,9 @@ namespace Direct3D9
 
 		HRESULT hr = m_Pointer->GetChildren( &result );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return 0;
 
 		return result;
 	}
@@ -334,6 +376,9 @@ namespace Direct3D9
 		HRESULT hr = m_Pointer->GetChild( id, &result );
 		GraphicsException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		return gcnew XFileData( result );
 	}
 
@@ -343,6 +388,9 @@ namespace Direct3D9
 
 		HRESULT hr = m_Pointer->GetEnum( &result );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew XFileEnumerationObject( result );
 	}
@@ -354,6 +402,9 @@ namespace Direct3D9
 
 		HRESULT hr = m_Pointer->Lock( &size, &data );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew DataStream( const_cast<void*>( data ), size, true, true, true );
 	}
@@ -370,6 +421,9 @@ namespace Direct3D9
 
 		HRESULT hr = m_Pointer->GetChildren( &result );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return 0;
 
 		return result;
 	}
@@ -395,12 +449,18 @@ namespace Direct3D9
 		HRESULT hr = m_Pointer->GetName( NULL, &size );
 		GraphicsException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		name = new char[size];
 
 		hr = m_Pointer->GetName( name, &size );
 		GraphicsException::CheckHResult( hr );
 
 		delete name;
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew String( name );
 	}
@@ -411,6 +471,9 @@ namespace Direct3D9
 
 		HRESULT hr = m_Pointer->GetType( &result );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return Guid::Empty;
 
 		return Utils::FromGUID( result );
 	}

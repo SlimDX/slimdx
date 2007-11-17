@@ -49,7 +49,10 @@ namespace Direct3D9
 		HRESULT hr = m_Pointer->GetAnimationIndexByName( reinterpret_cast<LPCSTR>( pinnedName ), &result );
 		GraphicsException::CheckHResult( hr );
 
-		return (int) result;
+		if( FAILED( hr ) )
+			return 0;
+
+		return static_cast<int>( result );
 	}
 
 	String^ AnimationSet::GetAnimationName( int index )
@@ -57,6 +60,9 @@ namespace Direct3D9
 		LPCSTR result;
 		HRESULT hr = m_Pointer->GetAnimationNameByIndex( index, &result );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew String( result );
 	}
@@ -66,8 +72,11 @@ namespace Direct3D9
 		pin_ptr<double> pinPosition = &callbackPosition;
 		LPVOID data;
 
-		HRESULT hr = m_Pointer->GetCallback( position, ( DWORD )flags, pinPosition, &data );
+		HRESULT hr = m_Pointer->GetCallback( position, static_cast<DWORD>( flags ), pinPosition, &data );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return IntPtr::Zero;
 
 		return IntPtr( data );
 	}
@@ -78,9 +87,12 @@ namespace Direct3D9
 		Vector3 translation;
 		Quaternion rotation;
 
-		HRESULT hr = m_Pointer->GetSRT( periodicPosition, animation, (D3DXVECTOR3*) &scale, 
-			(D3DXQUATERNION*) &rotation, (D3DXVECTOR3*) &translation );
+		HRESULT hr = m_Pointer->GetSRT( periodicPosition, animation, reinterpret_cast<D3DXVECTOR3*>( &scale ), 
+			reinterpret_cast<D3DXQUATERNION*>( &rotation ), reinterpret_cast<D3DXVECTOR3*>( &translation ) );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		AnimationOutput^ output = gcnew AnimationOutput();
 		output->Flags = AnimationOutputFlags::Rotation | AnimationOutputFlags::Scale | AnimationOutputFlags::Translation;
@@ -151,8 +163,8 @@ namespace Direct3D9
 			keys[i].pCallbackData = callbackKeys[i].Data.ToPointer();
 		}
 
-		HRESULT hr = D3DXCreateCompressedAnimationSet( (LPCSTR) pinnedName, ticksPerSecond,
-			(D3DXPLAYBACK_TYPE) playbackType, (LPD3DXBUFFER) compressedData->ComPointer.ToPointer(), count,
+		HRESULT hr = D3DXCreateCompressedAnimationSet( reinterpret_cast<LPCSTR>( pinnedName ), ticksPerSecond,
+			static_cast<D3DXPLAYBACK_TYPE>( playbackType ), reinterpret_cast<LPD3DXBUFFER>( compressedData->ComPointer.ToPointer() ), count,
 			keys, &pointer );
 		GraphicsException::CheckHResult( hr );
 
@@ -168,6 +180,9 @@ namespace Direct3D9
 
 		HRESULT hr = CASPointer->GetCallbackKeys( keys );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		array<CallbackKey>^ results = gcnew array<CallbackKey>( count );
 		for( int i = 0; i < count; i++ )
@@ -185,6 +200,9 @@ namespace Direct3D9
 		HRESULT hr = CASPointer->GetCompressedData( &buffer );
 		GraphicsException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		return gcnew BufferWrapper( buffer );
 	}
 
@@ -195,7 +213,7 @@ namespace Direct3D9
 
 	SlimDX::Direct3D9::PlaybackType CompressedAnimationSet::PlaybackType::get()
 	{
-		return (SlimDX::Direct3D9::PlaybackType) CASPointer->GetPlaybackType();
+		return static_cast<SlimDX::Direct3D9::PlaybackType>( CASPointer->GetPlaybackType() );
 	}
 
 	double CompressedAnimationSet::SourceTicksPerSecond::get()
@@ -219,7 +237,7 @@ namespace Direct3D9
 			keys[i].pCallbackData = callbackKeys[i].Data.ToPointer();
 		}
 
-		HRESULT hr = D3DXCreateKeyframedAnimationSet( (LPCSTR) pinnedName, ticksPerSecond, (D3DXPLAYBACK_TYPE) playbackType,
+		HRESULT hr = D3DXCreateKeyframedAnimationSet( reinterpret_cast<LPCSTR>( pinnedName ), ticksPerSecond, static_cast<D3DXPLAYBACK_TYPE>( playbackType ),
 			animationCount, count, keys, &pointer );
 		GraphicsException::CheckHResult( hr );
 
@@ -235,6 +253,9 @@ namespace Direct3D9
 		HRESULT hr = KASPointer->Compress( D3DXCOMPRESS_DEFAULT, lossiness, NULL, &data);
 		GraphicsException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		return gcnew BufferWrapper( data );
 	}
 
@@ -244,6 +265,9 @@ namespace Direct3D9
 
 		HRESULT hr = KASPointer->Compress( D3DXCOMPRESS_DEFAULT, lossiness, frame->Pointer, &data);
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew BufferWrapper( data );
 	}
@@ -265,6 +289,9 @@ namespace Direct3D9
 
 		HRESULT hr = KASPointer->GetCallbackKeys( keys );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		array<CallbackKey>^ results = gcnew array<CallbackKey>( count );
 		for( int i = 0; i < count; i++ )
@@ -302,6 +329,9 @@ namespace Direct3D9
 
 		HRESULT hr = KASPointer->GetRotationKeys( animation, keys );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		array<RotationKey>^ results = gcnew array<RotationKey>( count );
 		for( int i = 0; i < count; i++ )
@@ -351,6 +381,9 @@ namespace Direct3D9
 		HRESULT hr = KASPointer->GetScaleKeys( animation, keys );
 		GraphicsException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		array<ScaleKey>^ results = gcnew array<ScaleKey>( count );
 		for( int i = 0; i < count; i++ )
 			results[i] = ScaleKey( keys[i] );
@@ -399,6 +432,9 @@ namespace Direct3D9
 		HRESULT hr = KASPointer->GetTranslationKeys( animation, keys );
 		GraphicsException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		array<TranslationKey>^ results = gcnew array<TranslationKey>( count );
 		for( int i = 0; i < count; i++ )
 			results[i] = TranslationKey( keys[i] );
@@ -444,13 +480,16 @@ namespace Direct3D9
 		D3DXKEY_QUATERNION* rotations = new D3DXKEY_QUATERNION[rotateCount];
 		D3DXKEY_VECTOR3* translations = new D3DXKEY_VECTOR3[translateCount];
 
-		HRESULT hr = KASPointer->RegisterAnimationSRTKeys( (LPCSTR) pinnedName, scaleCount, rotateCount,
+		HRESULT hr = KASPointer->RegisterAnimationSRTKeys( reinterpret_cast<LPCSTR>( pinnedName ), scaleCount, rotateCount,
 			translateCount, scales, rotations, translations, &result );
 		GraphicsException::CheckHResult( hr );
 
 		delete[] scales;
 		delete[] rotations;
 		delete[] translations;
+
+		if( FAILED( hr ) )
+			return 0;
 
 		return result;
 	}
@@ -468,7 +507,7 @@ namespace Direct3D9
 
 	SlimDX::Direct3D9::PlaybackType KeyframedAnimationSet::PlaybackType::get()
 	{
-		return (SlimDX::Direct3D9::PlaybackType) KASPointer->GetPlaybackType();
+		return static_cast<SlimDX::Direct3D9::PlaybackType>( KASPointer->GetPlaybackType() );
 	}
 
 	double KeyframedAnimationSet::SourceTicksPerSecond::get()

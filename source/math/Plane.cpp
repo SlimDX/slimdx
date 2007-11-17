@@ -69,7 +69,7 @@ namespace SlimDX
 		float yz = (y1 * z2) - (z1 * y2);
 		float xz = (z1 * x2) - (x1 * z2);
 		float xy = (x1 * y2) - (y1 * x2);
-		float invPyth = 1.0f / (float) Math::Sqrt((yz * yz) + (xz * xz) + (xy * xy));
+		float invPyth = 1.0f / static_cast<float>( Math::Sqrt((yz * yz) + (xz * xz) + (xy * xy)) );
 
 		Normal.X = yz * invPyth;
 		Normal.Y = xz * invPyth;
@@ -161,7 +161,7 @@ namespace SlimDX
 	/// </summary>
 	void Plane::Normalize()
 	{
-		float magnitude = 1.0f / (float) Math::Sqrt( (Normal.X * Normal.X) + (Normal.Y * Normal.Y) + (Normal.Z * Normal.Z) );
+		float magnitude = 1.0f / static_cast<float>( Math::Sqrt( (Normal.X * Normal.X) + (Normal.Y * Normal.Y) + (Normal.Z * Normal.Z) ) );
 
 		Normal.X *= magnitude;
 		Normal.Y *= magnitude;
@@ -176,7 +176,7 @@ namespace SlimDX
 	/// <returns>The normalized plane.</returns>
 	Plane Plane::Normalize( Plane plane )
 	{
-		float magnitude = 1.0f / (float) Math::Sqrt( (plane.Normal.X * plane.Normal.X) + (plane.Normal.Y * plane.Normal.Y) + (plane.Normal.Z * plane.Normal.Z) );
+		float magnitude = 1.0f / static_cast<float>( Math::Sqrt( (plane.Normal.X * plane.Normal.X) + (plane.Normal.Y * plane.Normal.Y) + (plane.Normal.Z * plane.Normal.Z) ) );
 
 		return Plane( plane.Normal.X * magnitude, plane.Normal.Y * magnitude, plane.Normal.Z * magnitude, plane.D * magnitude );
 	}
@@ -188,7 +188,7 @@ namespace SlimDX
 	/// <param name="result">When the method completes, contains the normalized plane.</param>
 	void Plane::Normalize( Plane% plane, [Out] Plane% result )
 	{
-		float magnitude = 1.0f / (float) Math::Sqrt( (plane.Normal.X * plane.Normal.X) + (plane.Normal.Y * plane.Normal.Y) + (plane.Normal.Z * plane.Normal.Z) );
+		float magnitude = 1.0f / static_cast<float>( Math::Sqrt( (plane.Normal.X * plane.Normal.X) + (plane.Normal.Y * plane.Normal.Y) + (plane.Normal.Z * plane.Normal.Z) ) );
 
 		result = Plane( plane.Normal.X * magnitude, plane.Normal.Y * magnitude, plane.Normal.Z * magnitude, plane.D * magnitude );
 	}
@@ -389,7 +389,7 @@ namespace SlimDX
 	bool Plane::Intersects( Plane plane, Vector3 start, Vector3 end, [Out] Vector3% intersectPoint )
 	{
 		D3DXVECTOR3 nativePoint;
-		D3DXVECTOR3* result = D3DXPlaneIntersectLine( &nativePoint, (D3DXPLANE*) &plane, (D3DXVECTOR3*) &start, (D3DXVECTOR3*) &end );
+		D3DXVECTOR3* result = D3DXPlaneIntersectLine( &nativePoint, reinterpret_cast<D3DXPLANE*>( &plane ), reinterpret_cast<D3DXVECTOR3*>( &start ), reinterpret_cast<D3DXVECTOR3*>( &end ) );
 		if( result == NULL )
 		{
 			intersectPoint = Vector3( 0, 0, 0 );
@@ -414,7 +414,7 @@ namespace SlimDX
 		pin_ptr<Vector3> pinStart = &start;
 		pin_ptr<Vector3> pinEnd = &end;
 		pin_ptr<Plane> pinPlane = &plane;
-		D3DXVECTOR3* result = D3DXPlaneIntersectLine( &nativePoint, (D3DXPLANE*) &pinPlane, (D3DXVECTOR3*) &pinStart, (D3DXVECTOR3*) &pinEnd );
+		D3DXVECTOR3* result = D3DXPlaneIntersectLine( &nativePoint, reinterpret_cast<D3DXPLANE*>( pinPlane ), reinterpret_cast<D3DXVECTOR3*>( pinStart ), reinterpret_cast<D3DXVECTOR3*>( pinEnd ) );
 		if( result == NULL )
 		{
 			intersectPoint = Vector3( 0, 0, 0 );
@@ -434,7 +434,7 @@ namespace SlimDX
 	Plane Plane::operator * ( Plane plane, float scale )
 	{
 		Plane result;
-		D3DXPlaneScale( (D3DXPLANE*) &result, (D3DXPLANE*) &plane, scale );
+		D3DXPlaneScale( reinterpret_cast<D3DXPLANE*>( &result ), reinterpret_cast<D3DXPLANE*>( &plane ), scale );
 		return result;
 	}
 
@@ -502,7 +502,7 @@ namespace SlimDX
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( (Plane)value );
+		return Equals( static_cast<Plane>( value ) );
 	}
 
 	/// <summary>

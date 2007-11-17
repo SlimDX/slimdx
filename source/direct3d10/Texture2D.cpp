@@ -41,13 +41,13 @@ namespace Direct3D10
 		m_Height = desc.Height;
 		m_MipLevels = desc.MipLevels;
 		m_ArraySize = desc.ArraySize;
-		m_Format = ( SlimDX::Direct3D10::Format ) desc.Format;
+		m_Format = static_cast<SlimDX::Direct3D10::Format>( desc.Format );
 		m_SampleDesc.Count = desc.SampleDesc.Count;
 		m_SampleDesc.Quality = desc.SampleDesc.Quality;
-		m_Usage = ( ResourceUsage ) desc.Usage;
-		m_BindFlags = ( SlimDX::Direct3D10::BindFlags ) desc.BindFlags;
-		m_AccessFlags = ( CpuAccessFlags ) desc.CPUAccessFlags;
-		m_OptionFlags = ( ResourceOptionFlags ) desc.MiscFlags;
+		m_Usage = static_cast<ResourceUsage>( desc.Usage );
+		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( desc.BindFlags );
+		m_AccessFlags = static_cast<CpuAccessFlags>( desc.CPUAccessFlags );
+		m_OptionFlags = static_cast<ResourceOptionFlags>( desc.MiscFlags );
 	}
 	
 	Texture2D::Texture2D( IntPtr texture )
@@ -64,18 +64,18 @@ namespace Direct3D10
 		m_Pointer = static_cast<ID3D10Resource*>( pointer );
 		
 		D3D10_TEXTURE2D_DESC desc;
-		((ID3D10Texture2D*)m_Pointer)->GetDesc( &desc );
+		static_cast<ID3D10Texture2D*>( m_Pointer )->GetDesc( &desc );
 		m_Width = desc.Width;
 		m_Height = desc.Height;
 		m_MipLevels = desc.MipLevels;
 		m_ArraySize = desc.ArraySize;
-		m_Format = ( SlimDX::Direct3D10::Format ) desc.Format;
+		m_Format = static_cast<SlimDX::Direct3D10::Format>( desc.Format );
 		m_SampleDesc.Count = desc.SampleDesc.Count;
 		m_SampleDesc.Quality = desc.SampleDesc.Quality;
-		m_Usage = ( ResourceUsage ) desc.Usage;
-		m_BindFlags = ( SlimDX::Direct3D10::BindFlags ) desc.BindFlags;
-		m_AccessFlags = ( CpuAccessFlags ) desc.CPUAccessFlags;
-		m_OptionFlags = ( ResourceOptionFlags ) desc.MiscFlags;
+		m_Usage = static_cast<ResourceUsage>( desc.Usage );
+		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( desc.BindFlags );
+		m_AccessFlags = static_cast<CpuAccessFlags>( desc.CPUAccessFlags );
+		m_OptionFlags = static_cast<ResourceOptionFlags>( desc.MiscFlags );
 	}
 	
 	Texture2D::Texture2D( Device^ device, int width, int height, int mipLevels, int arraySize, SlimDX::Direct3D10::Format format,
@@ -88,13 +88,13 @@ namespace Direct3D10
 		desc.Height = height;
 		desc.MipLevels = mipLevels;
 		desc.ArraySize = arraySize;
-		desc.Format = ( DXGI_FORMAT ) format;
+		desc.Format = static_cast<DXGI_FORMAT>( format );
 		desc.SampleDesc.Count = sampleCount;
 		desc.SampleDesc.Quality = sampleQuality;
-		desc.Usage = ( D3D10_USAGE ) usage;
-		desc.BindFlags = ( UINT ) bindFlags;
-		desc.CPUAccessFlags = ( UINT ) accessFlags;
-		desc.MiscFlags = ( UINT ) optionFlags;
+		desc.Usage = static_cast<D3D10_USAGE>( usage );
+		desc.BindFlags = static_cast<UINT>( bindFlags );
+		desc.CPUAccessFlags = static_cast<UINT>( accessFlags );
+		desc.MiscFlags = static_cast<UINT>( optionFlags );
 	
 		ID3D10Texture2D* texture = 0;
 		HRESULT hr = device->DevicePointer->CreateTexture2D( &desc, NULL, &texture );
@@ -117,7 +117,7 @@ namespace Direct3D10
 	SlimDX::Direct3D::LockedRect Texture2D::Map( int subResource, MapMode mode, MapFlags flags )
 	{
 		D3D10_MAPPED_TEXTURE2D mappedRect;
-		HRESULT hr = ( (ID3D10Texture2D*) m_Pointer )->Map( subResource, (D3D10_MAP) mode, (UINT) flags, &mappedRect );
+		HRESULT hr = static_cast<ID3D10Texture2D*>( m_Pointer )->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedRect );
 		GraphicsException::CheckHResult( hr );
 		
 		bool readOnly = mode == MapMode::Read;
@@ -130,7 +130,7 @@ namespace Direct3D10
 
 	void Texture2D::Unmap( int subResource )
 	{
-		( (ID3D10Texture2D*) m_Pointer )->Unmap( subResource );
+		static_cast<ID3D10Texture2D*>( m_Pointer )->Unmap( subResource );
 	}
 	
 	Texture2D^ Texture2D::FromFile( Device^ device, String^ fileName )
@@ -143,7 +143,7 @@ namespace Direct3D10
 		
 		if( texture == NULL )
 			return nullptr;
-		return gcnew Texture2D( (ID3D10Texture2D*) texture );
+		return gcnew Texture2D( static_cast<ID3D10Texture2D*>( texture ) );
 	}
 	
 	Texture2D^ Texture2D::FromStream( Device^ device, Stream^ stream, int sizeInBytes )
@@ -157,7 +157,7 @@ namespace Direct3D10
 		
 		if( texture == NULL )
 			return nullptr;
-		return gcnew Texture2D( (ID3D10Texture2D*) texture );
+		return gcnew Texture2D( static_cast<ID3D10Texture2D*>( texture ) );
 	}
 }
 }

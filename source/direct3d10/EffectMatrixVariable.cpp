@@ -38,14 +38,14 @@ namespace Direct3D10
 	
 	void EffectMatrixVariable::SetMatrix( Matrix matrix )
 	{
-		HRESULT hr = ( ( ID3D10EffectMatrixVariable* ) Pointer )->SetMatrix( (float*) &matrix );
+		HRESULT hr = static_cast<ID3D10EffectMatrixVariable*>( Pointer )->SetMatrix( reinterpret_cast<float*>( &matrix ) );
 		GraphicsException::CheckHResult( hr );
 	}
 	
 	void EffectMatrixVariable::SetMatrix( array<Matrix>^ matrices )
 	{
 		pin_ptr<Matrix> pinnedMatrices = &matrices[0];
-		HRESULT hr = ( (ID3D10EffectMatrixVariable*) Pointer )->SetMatrixArray( (float*) pinnedMatrices, 0, matrices->Length );
+		HRESULT hr = static_cast<ID3D10EffectMatrixVariable*>( Pointer )->SetMatrixArray( reinterpret_cast<float*>( pinnedMatrices ), 0, matrices->Length );
 		GraphicsException::CheckHResult( hr );
 	}
 }

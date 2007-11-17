@@ -38,19 +38,19 @@ namespace Direct3D10
 	
 	void EffectScalarVariable::Set( bool value )
 	{
-		HRESULT hr = ( (ID3D10EffectScalarVariable*) Pointer )->SetBool( value );
+		HRESULT hr = static_cast<ID3D10EffectScalarVariable*>( Pointer )->SetBool( value );
 		GraphicsException::CheckHResult( hr );
 	}
 	
 	void EffectScalarVariable::Set( float value )
 	{
-		HRESULT hr = ( (ID3D10EffectScalarVariable*) Pointer )->SetFloat( value );
+		HRESULT hr = static_cast<ID3D10EffectScalarVariable*>( Pointer )->SetFloat( value );
 		GraphicsException::CheckHResult( hr );
 	}
 	
 	void EffectScalarVariable::Set( int value )
 	{
-		HRESULT hr = ( (ID3D10EffectScalarVariable*) Pointer )->SetInt( value );
+		HRESULT hr = static_cast<ID3D10EffectScalarVariable*>( Pointer )->SetInt( value );
 		GraphicsException::CheckHResult( hr );
 	}
 }

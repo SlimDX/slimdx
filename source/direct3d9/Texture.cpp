@@ -53,7 +53,7 @@ namespace Direct3D9
 			prevPosition = stream->Position;
 
 		// Create buffer.
-		buffer = Utils::ReadStream( stream, (int) stream->Length );
+		buffer = Utils::ReadStream( stream, static_cast<int>( stream->Length ) );
 
 		if (peek)
 			stream->Position = prevPosition;
@@ -88,7 +88,7 @@ namespace Direct3D9
 		ImageInformation info;
 		pin_ptr<const unsigned char> pinnedMemory = &memory[0];
 
-		HRESULT hr = D3DXGetImageInfoFromFileInMemory( pinnedMemory, memory->Length, (D3DXIMAGE_INFO*) &info );
+		HRESULT hr = D3DXGetImageInfoFromFileInMemory( pinnedMemory, memory->Length, reinterpret_cast<D3DXIMAGE_INFO*>( &info ) );
 		GraphicsException::CheckHResult( hr );
 
 		return info;
@@ -119,8 +119,8 @@ namespace Direct3D9
 	Texture::Texture( Device^ device, int width, int height, int numLevels, Usage usage, Format format, Pool pool )
 	{
 		IDirect3DTexture9* texture;
-		HRESULT hr = device->InternalPointer->CreateTexture( width, height, numLevels, (DWORD) usage, 
-			(D3DFORMAT) format, (D3DPOOL) pool, &texture, NULL );
+		HRESULT hr = device->InternalPointer->CreateTexture( width, height, numLevels, static_cast<DWORD>( usage ), 
+			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, NULL );
 		GraphicsException::CheckHResult( hr );
 
 		m_Pointer = texture;
@@ -130,17 +130,19 @@ namespace Direct3D9
 		int numMipLevels, Usage usage, Format format, Pool pool)
 	{
 		TextureRequirements result;					// Result.
-		D3DFORMAT d3dFormat = (D3DFORMAT)format;	// Format.
+		D3DFORMAT d3dFormat = static_cast<D3DFORMAT>( format );	// Format.
 		HRESULT hr;									// Error code.
 
 		// Get texture requirements.
-		hr = D3DXCheckTextureRequirements(device->InternalPointer, (UINT *)&width, (UINT *)&height, (UINT *)&numMipLevels, (DWORD)usage, (D3DFORMAT *)&d3dFormat, (D3DPOOL)pool);
+		hr = D3DXCheckTextureRequirements(device->InternalPointer, reinterpret_cast<UINT*>( &width ), 
+			reinterpret_cast<UINT*>( &height ), reinterpret_cast<UINT*>( &numMipLevels ), static_cast<DWORD>( usage ),
+			&d3dFormat, static_cast<D3DPOOL>( pool ) );
 		GraphicsException::CheckHResult(hr);
 
 		// Return proposed values.
 		result.Width = width;
 		result.Height = height;
-		result.Format = format;
+		result.Format = static_cast<Format>( d3dFormat );
 		result.MipLevelCount = numMipLevels;
 
 		return result;
@@ -153,8 +155,8 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
 		HRESULT hr = D3DXCreateTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, width,
-			height, numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter,
-			(D3DCOLOR) colorKey, 0, 0, &texture );
+			height, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
+			static_cast<D3DCOLOR>( colorKey ), 0, 0, &texture );
 		GraphicsException::CheckHResult( hr );
 
 		return gcnew Texture( texture );
@@ -202,7 +204,7 @@ namespace Direct3D9
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
 		HRESULT hr = D3DXCreateTextureFromFileEx( device->InternalPointer, pinnedName, width, height, 
-			numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter, 
+			numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), 
 			colorKey, NULL, NULL, &texture );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
@@ -264,7 +266,7 @@ namespace Direct3D9
 		D3DLOCKED_RECT lockedRect;
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
 
-		HRESULT hr = TexturePointer->LockRect( level, &lockedRect, &nativeRect, (DWORD) flags );
+		HRESULT hr = TexturePointer->LockRect( level, &lockedRect, &nativeRect, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return LockedRect();
@@ -281,7 +283,7 @@ namespace Direct3D9
 	{
 		D3DLOCKED_RECT lockedRect;
 
-		HRESULT hr = TexturePointer->LockRect( level, &lockedRect, NULL, (DWORD) flags );
+		HRESULT hr = TexturePointer->LockRect( level, &lockedRect, NULL, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return LockedRect();
@@ -335,7 +337,7 @@ namespace Direct3D9
 		HRESULT hr;															// Error code.
 		ID3DXBuffer *buffer = NULL;											// Buffer to hold the encoded image.
 		
-		hr = D3DXSaveTextureToFileInMemory(&buffer, (D3DXIMAGE_FILEFORMAT)format, BaseTexturePointer, NULL);
+		hr = D3DXSaveTextureToFileInMemory(&buffer, static_cast<D3DXIMAGE_FILEFORMAT>( format ), BaseTexturePointer, NULL);
 		GraphicsException::CheckHResult(hr);
 
 		// Clean up on failure.
@@ -361,7 +363,7 @@ namespace Direct3D9
 		HRESULT hr;															// Error code.
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fileName);		// Native name.
 
-		hr = D3DXSaveTextureToFile(pinnedName, (D3DXIMAGE_FILEFORMAT)format, BaseTexturePointer, NULL);
+		hr = D3DXSaveTextureToFile(pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), BaseTexturePointer, NULL);
 
 		GraphicsException::CheckHResult(hr);
 	}
@@ -391,8 +393,8 @@ namespace Direct3D9
 	CubeTexture::CubeTexture( Device^ device, int edgeLength, int numLevels, Usage usage, Format format, Pool pool )
 	{
 		IDirect3DCubeTexture9* texture;
-		HRESULT hr = device->InternalPointer->CreateCubeTexture( edgeLength, numLevels, (DWORD) usage,
-			(D3DFORMAT) format, (D3DPOOL) pool, &texture, NULL );
+		HRESULT hr = device->InternalPointer->CreateCubeTexture( edgeLength, numLevels, static_cast<DWORD>( usage ),
+			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, NULL );
 		GraphicsException::CheckHResult( hr );
 
 		m_Pointer = texture;
@@ -402,12 +404,13 @@ namespace Direct3D9
 		int numMipLevels, Usage usage, Format format, Pool pool)
 	{
 		CubeTextureRequirements result;					// Result.
-		D3DFORMAT d3dFormat = (D3DFORMAT)format;	// Format.
+		D3DFORMAT d3dFormat = static_cast<D3DFORMAT>( format );	// Format.
 		HRESULT hr;									// Error code.
 
 		// Get texture requirements.
-		hr = D3DXCheckCubeTextureRequirements(device->InternalPointer, (UINT *)&size, (UINT *)&numMipLevels,
-			(DWORD)usage, (D3DFORMAT *)&d3dFormat, (D3DPOOL)pool);
+		hr = D3DXCheckCubeTextureRequirements(device->InternalPointer, reinterpret_cast<UINT*>( &size ), 
+			reinterpret_cast<UINT*>( &numMipLevels ),
+			static_cast<DWORD>( usage ), reinterpret_cast<D3DFORMAT*>( &d3dFormat ), static_cast<D3DPOOL>( pool ) );
 		GraphicsException::CheckHResult(hr);
 
 		// Return proposed values.
@@ -425,8 +428,8 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
 		HRESULT hr = D3DXCreateCubeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, size, numLevels,
-			(DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter,
-			(D3DCOLOR) colorKey, 0, 0, &texture );
+			static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
+			static_cast<D3DCOLOR>( colorKey ), 0, 0, &texture );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -476,7 +479,7 @@ namespace Direct3D9
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
 		HRESULT hr = D3DXCreateCubeTextureFromFileEx( device->InternalPointer, pinnedName, size, 
-			numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter, (DWORD) mipFilter, 
+			numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), 
 			colorKey, NULL, NULL, &texture );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
@@ -500,7 +503,7 @@ namespace Direct3D9
 	{
 		D3DLOCKED_RECT lockedRect;
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
-		HRESULT hr = TexturePointer->LockRect( (D3DCUBEMAP_FACES) face, level, &lockedRect, &nativeRect, (DWORD) flags );
+		HRESULT hr = TexturePointer->LockRect( static_cast<D3DCUBEMAP_FACES>( face ), level, &lockedRect, &nativeRect, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return LockedRect();
@@ -515,7 +518,7 @@ namespace Direct3D9
 	LockedRect CubeTexture::LockRectangle( CubeMapFace face, int level, LockFlags flags )
 	{
 		D3DLOCKED_RECT lockedRect;
-		HRESULT hr = TexturePointer->LockRect( (D3DCUBEMAP_FACES) face, level, &lockedRect, NULL, (DWORD) flags );
+		HRESULT hr = TexturePointer->LockRect( static_cast<D3DCUBEMAP_FACES>( face ), level, &lockedRect, NULL, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return LockedRect();
@@ -530,14 +533,14 @@ namespace Direct3D9
 
 	void CubeTexture::UnlockRectangle( CubeMapFace face, int level )
 	{
-		HRESULT hr = TexturePointer->UnlockRect( (D3DCUBEMAP_FACES) face, level );
+		HRESULT hr = TexturePointer->UnlockRect( static_cast<D3DCUBEMAP_FACES>( face ), level );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void CubeTexture::AddDirtyRect( CubeMapFace face, System::Drawing::Rectangle rect )
 	{
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
-		HRESULT hr = TexturePointer->AddDirtyRect( (D3DCUBEMAP_FACES) face, &nativeRect );
+		HRESULT hr = TexturePointer->AddDirtyRect( static_cast<D3DCUBEMAP_FACES>( face ), &nativeRect );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -586,7 +589,7 @@ namespace Direct3D9
 	{
 		IDirect3DVolumeTexture9* texture;
 		HRESULT hr = device->InternalPointer->CreateVolumeTexture( width, height, depth, numLevels,
-			(DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, &texture, NULL );
+			static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, NULL );
 		GraphicsException::CheckHResult( hr );
 
 		m_Pointer = texture;
@@ -596,7 +599,7 @@ namespace Direct3D9
 		int numMipLevels, Usage usage, Format format, Pool pool)
 	{
 		VolumeTextureRequirements result;					// Result.
-		D3DFORMAT d3dFormat = (D3DFORMAT)format;	// Format.
+		D3DFORMAT d3dFormat = static_cast<D3DFORMAT>( format );	// Format.
 		HRESULT hr;									// Error code.
 
 		// Get texture requirements.
@@ -627,8 +630,8 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
 		HRESULT hr = D3DXCreateVolumeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length,
-			width, height, depth, numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool,
-			(DWORD) filter, (DWORD) mipFilter, (D3DCOLOR) colorKey, 0, 0, &texture );
+			width, height, depth, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ),
+			static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), static_cast<D3DCOLOR>( colorKey ), 0, 0, &texture );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -680,8 +683,8 @@ namespace Direct3D9
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
 		HRESULT hr = D3DXCreateVolumeTextureFromFileEx( device->InternalPointer, pinnedName, width, height,
-			depth, numLevels, (DWORD) usage, (D3DFORMAT) format, (D3DPOOL) pool, (DWORD) filter,
-			(DWORD) mipFilter, colorKey, NULL, NULL, &texture );
+			depth, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ),
+			static_cast<DWORD>( mipFilter ), colorKey, NULL, NULL, &texture );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -720,7 +723,7 @@ namespace Direct3D9
 	LockedBox VolumeTexture::LockBox( int level, LockFlags flags )
 	{
 		D3DLOCKED_BOX lockedBox;
-		HRESULT hr = TexturePointer->LockBox( level, &lockedBox, NULL, (DWORD) flags );
+		HRESULT hr = TexturePointer->LockBox( level, &lockedBox, NULL, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return LockedBox();

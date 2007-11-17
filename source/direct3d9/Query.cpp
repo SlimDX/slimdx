@@ -58,7 +58,7 @@ namespace Direct3D9
 	Query::Query( Device^ device, QueryType type )
 	{
 		IDirect3DQuery9* query;
-		HRESULT hr = device->InternalPointer->CreateQuery( (D3DQUERYTYPE) type, &query );
+		HRESULT hr = device->InternalPointer->CreateQuery( static_cast<D3DQUERYTYPE>( type ), &query );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			throw gcnew GraphicsException( "Failed to create Query." );
@@ -73,7 +73,7 @@ namespace Direct3D9
 
 	QueryType Query::Type::get()
 	{
-		return (QueryType) m_Pointer->GetType();
+		return static_cast<QueryType>( m_Pointer->GetType() );
 	}
 
 	Device^ Query::GetDevice()
@@ -89,7 +89,7 @@ namespace Direct3D9
 
 	void Query::Issue( SlimDX::Direct3D9::Issue flags )
 	{
-		HRESULT hr = m_Pointer->Issue( (DWORD) flags );
+		HRESULT hr = m_Pointer->Issue( static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 	}
 

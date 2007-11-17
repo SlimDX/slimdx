@@ -41,7 +41,7 @@ namespace Direct3D10
 	PixelShader^ EffectShaderVariable::GetPixelShader( int index )
 	{
 		ID3D10PixelShader* shader;
-		HRESULT hr = ( (ID3D10EffectShaderVariable*) Pointer )->GetPixelShader( index, &shader );
+		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetPixelShader( index, &shader );
 		GraphicsException::CheckHResult( hr );
 		
 		return gcnew PixelShader( shader );
@@ -50,7 +50,7 @@ namespace Direct3D10
 	VertexShader^ EffectShaderVariable::GetVertexShader( int index )
 	{
 		ID3D10VertexShader* shader;
-		HRESULT hr = ( (ID3D10EffectShaderVariable*) Pointer )->GetVertexShader( index, &shader );
+		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetVertexShader( index, &shader );
 		GraphicsException::CheckHResult( hr );
 		
 		return gcnew VertexShader( shader );
@@ -59,7 +59,7 @@ namespace Direct3D10
 	GeometryShader^ EffectShaderVariable::GetGeometryShader( int index )
 	{
 		ID3D10GeometryShader* shader;
-		HRESULT hr = ( (ID3D10EffectShaderVariable*) Pointer )->GetGeometryShader( index, &shader );
+		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetGeometryShader( index, &shader );
 		GraphicsException::CheckHResult( hr );
 		
 		return gcnew GeometryShader( shader );
@@ -68,7 +68,7 @@ namespace Direct3D10
 	ShaderParameterDescription EffectShaderVariable::GetInputParameterDescription( int shaderIndex, int parameterIndex )
 	{
 		D3D10_SIGNATURE_PARAMETER_DESC description;
-		HRESULT hr = ( (ID3D10EffectShaderVariable*) Pointer )->GetInputSignatureElementDesc( shaderIndex, parameterIndex, &description );
+		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetInputSignatureElementDesc( shaderIndex, parameterIndex, &description );
 		GraphicsException::CheckHResult( hr );
 		
 		return ShaderParameterDescription( description );
@@ -77,7 +77,7 @@ namespace Direct3D10
 	ShaderParameterDescription EffectShaderVariable::GetOutputParameterDescription( int shaderIndex, int parameterIndex )
 	{
 		D3D10_SIGNATURE_PARAMETER_DESC description;
-		HRESULT hr = ( (ID3D10EffectShaderVariable*) Pointer )->GetOutputSignatureElementDesc( shaderIndex, parameterIndex, &description );
+		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetOutputSignatureElementDesc( shaderIndex, parameterIndex, &description );
 		GraphicsException::CheckHResult( hr );
 		
 		return ShaderParameterDescription( description );
@@ -86,7 +86,7 @@ namespace Direct3D10
 	ShaderDescription EffectShaderVariable::GetShaderDescription( int shaderIndex )
 	{
 		D3D10_EFFECT_SHADER_DESC description;
-		HRESULT hr = ( (ID3D10EffectShaderVariable*) Pointer )->GetShaderDesc( shaderIndex, &description );
+		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetShaderDesc( shaderIndex, &description );
 		GraphicsException::CheckHResult( hr );
 		
 		return ShaderDescription( description );

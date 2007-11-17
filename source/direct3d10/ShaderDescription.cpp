@@ -37,8 +37,8 @@ namespace Direct3D10
 		isInline = desc.IsInline ? true : false;
 		inputParameterCount = desc.NumInputSignatureEntries;
 		outputParameterCount = desc.NumOutputSignatureEntries;
-		signature = gcnew ShaderSignature( (void*)desc.pInputSignature, desc.BytecodeLength - (desc.pInputSignature - desc.pBytecode) );
-		bytecode = gcnew ShaderBytecode( (void*)desc.pBytecode, desc.BytecodeLength );
+		signature = gcnew ShaderSignature( const_cast<void*>( static_cast<const void*>( desc.pInputSignature ) ), desc.BytecodeLength - (desc.pInputSignature - desc.pBytecode) );
+		bytecode = gcnew ShaderBytecode( const_cast<void*>( static_cast<const void*>( desc.pBytecode ) ), desc.BytecodeLength );
 	}
 }
 }

@@ -39,7 +39,7 @@ namespace Direct3D10
 	String^ EffectStringVariable::GetString()
 	{
 		LPCSTR result;
-		HRESULT hr = ( (ID3D10EffectStringVariable*) Pointer )->GetString( &result );
+		HRESULT hr = static_cast<ID3D10EffectStringVariable*>( Pointer )->GetString( &result );
 		GraphicsException::CheckHResult( hr );
 		
 		return gcnew String( result );

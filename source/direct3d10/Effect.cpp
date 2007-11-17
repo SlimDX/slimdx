@@ -93,7 +93,7 @@ namespace Direct3D10
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		technique = m_Pointer->GetTechniqueByName( (LPCSTR) pinnedName );
+		technique = m_Pointer->GetTechniqueByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( technique == NULL )
 			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Name '{0}' does not identify any technique in the effect.", name ) );
 		return gcnew EffectTechnique( technique );
@@ -115,7 +115,7 @@ namespace Direct3D10
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		variable = m_Pointer->GetVariableByName( (LPCSTR) pinnedName );
+		variable = m_Pointer->GetVariableByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( variable == NULL )
 			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Name '{0}' does not identify any variable in the effect.", name ) );
 		return gcnew EffectVariable( variable );
@@ -127,7 +127,7 @@ namespace Direct3D10
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		variable = m_Pointer->GetVariableBySemantic( (LPCSTR) pinnedName );
+		variable = m_Pointer->GetVariableBySemantic( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( variable == NULL )
 			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Semantic '{0}' does not identify any variable in the effect.", name ) );
 		return gcnew EffectVariable( variable );
@@ -154,13 +154,13 @@ namespace Direct3D10
 		ID3D10Blob* errorBlob;
 		
 		ID3D10EffectPool* effectPool = pool == nullptr ? NULL : static_cast<ID3D10EffectPool*>( pool->InternalPointer );
-		HRESULT hr = D3DX10CreateEffectFromFile( pinnedFileName, NULL, NULL, (LPCSTR) pinnedProfile,
+		HRESULT hr = D3DX10CreateEffectFromFile( pinnedFileName, NULL, NULL, reinterpret_cast<LPCSTR>( pinnedProfile ),
 			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), device->DevicePointer,
 			effectPool, NULL, &effect, &errorBlob, NULL );
 
 		if( errorBlob != 0 )
 		{
-		  compilationErrors = gcnew String( (const char*) errorBlob->GetBufferPointer() );
+		  compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBlob->GetBufferPointer() ) );
 		  errorBlob->Release();
 		}
 		else
@@ -190,13 +190,13 @@ namespace Direct3D10
 		ID3D10Blob* errorBlob;
 		
 		ID3D10EffectPool* effectPool = pool == nullptr ? NULL : static_cast<ID3D10EffectPool*>( pool->InternalPointer );
-		HRESULT hr = D3DX10CreateEffectFromMemory( pinnedCode, code->Length, "n/a", NULL, NULL, (LPCSTR) pinnedProfile,
+		HRESULT hr = D3DX10CreateEffectFromMemory( pinnedCode, code->Length, "n/a", NULL, NULL, reinterpret_cast<LPCSTR>( pinnedProfile ),
 			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), device->DevicePointer,
 			effectPool, NULL, &effect, &errorBlob, NULL );
 		
 		if( errorBlob != 0 )
 		{
-		  compilationErrors = gcnew String( (const char*) errorBlob->GetBufferPointer() );
+		  compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBlob->GetBufferPointer() ) );
 		  errorBlob->Release();
 		}
 		else

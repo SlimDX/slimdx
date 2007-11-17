@@ -48,19 +48,19 @@ namespace Direct3D9
 	//quick utility function
 	void ConvertPresentParams( PresentParameters^ presentParams, D3DPRESENT_PARAMETERS& d3dpp )
 	{
-		d3dpp.AutoDepthStencilFormat = (D3DFORMAT) presentParams->AutoDepthStencilFormat;
+		d3dpp.AutoDepthStencilFormat = static_cast<D3DFORMAT>( presentParams->AutoDepthStencilFormat );
 		d3dpp.BackBufferCount = presentParams->BackBufferCount;
-		d3dpp.BackBufferFormat = (D3DFORMAT) presentParams->BackBufferFormat;
+		d3dpp.BackBufferFormat = static_cast<D3DFORMAT>( presentParams->BackBufferFormat );
 		d3dpp.BackBufferHeight = presentParams->BackBufferHeight;
 		d3dpp.BackBufferWidth = presentParams->BackBufferWidth;
 		d3dpp.EnableAutoDepthStencil = presentParams->EnableAutoDepthStencil;
-		d3dpp.Flags = (DWORD) presentParams->PresentFlags;
+		d3dpp.Flags = static_cast<DWORD>( presentParams->PresentFlags );
 		d3dpp.FullScreen_RefreshRateInHz = presentParams->FullScreenRefreshRateInHertz;
-		d3dpp.hDeviceWindow = (HWND) presentParams->DeviceWindowHandle.ToPointer();
+		d3dpp.hDeviceWindow = static_cast<HWND>( presentParams->DeviceWindowHandle.ToPointer() );
 		d3dpp.MultiSampleQuality = presentParams->MultisampleQuality;
-		d3dpp.MultiSampleType = (D3DMULTISAMPLE_TYPE) presentParams->Multisample;
-		d3dpp.PresentationInterval = (UINT) presentParams->PresentationInterval;
-		d3dpp.SwapEffect = (D3DSWAPEFFECT) presentParams->SwapEffect;
+		d3dpp.MultiSampleType = static_cast<D3DMULTISAMPLE_TYPE>( presentParams->Multisample );
+		d3dpp.PresentationInterval = static_cast<UINT>( presentParams->PresentationInterval );
+		d3dpp.SwapEffect = static_cast<D3DSWAPEFFECT>( presentParams->SwapEffect );
 		d3dpp.Windowed = presentParams->Windowed;
 	}
 
@@ -130,7 +130,7 @@ namespace Direct3D9
 
 	void Device::VertexFormat::set( SlimDX::Direct3D9::VertexFormat value )
 	{
-		HRESULT hr = m_Pointer->SetFVF( (DWORD) value );
+		HRESULT hr = m_Pointer->SetFVF( static_cast<DWORD>( value ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -140,7 +140,7 @@ namespace Direct3D9
 		HRESULT hr = m_Pointer->GetFVF( &fvf );
 		GraphicsException::CheckHResult( hr );
 
-		return (SlimDX::Direct3D9::VertexFormat) fvf;
+		return static_cast<SlimDX::Direct3D9::VertexFormat>( fvf );
 	}
 	
 	void Device::VertexDeclaration::set( SlimDX::Direct3D9::VertexDeclaration^ value )
@@ -167,7 +167,7 @@ namespace Direct3D9
 
 	void Device::DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount )
 	{
-		HRESULT hr = m_Pointer->DrawPrimitive( (D3DPRIMITIVETYPE) primitiveType, startIndex, primitiveCount );
+		HRESULT hr = m_Pointer->DrawPrimitive( static_cast<D3DPRIMITIVETYPE>( primitiveType ), startIndex, primitiveCount );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -176,7 +176,7 @@ namespace Direct3D9
 	{
 		pin_ptr<T> pinned_data = &data[startIndex];
 
-		HRESULT hr = m_Pointer->DrawPrimitiveUP( (D3DPRIMITIVETYPE) primitiveType, primitiveCount,
+		HRESULT hr = m_Pointer->DrawPrimitiveUP( static_cast<D3DPRIMITIVETYPE>( primitiveType ), primitiveCount,
 			pinned_data, Marshal::SizeOf( T::typeid ) );
 		GraphicsException::CheckHResult( hr );
 	}
@@ -184,7 +184,7 @@ namespace Direct3D9
 	void Device::DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minVertexIndex, 
 		int numVertices, int startIndex, int primCount )
 	{
-		HRESULT hr = m_Pointer->DrawIndexedPrimitive( (D3DPRIMITIVETYPE) primitiveType, baseVertexIndex,
+		HRESULT hr = m_Pointer->DrawIndexedPrimitive( static_cast<D3DPRIMITIVETYPE>( primitiveType ), baseVertexIndex,
 			minVertexIndex, numVertices, startIndex, primCount );
 		GraphicsException::CheckHResult( hr );
 	}
@@ -196,14 +196,14 @@ namespace Direct3D9
 		pin_ptr<S> pinnedIndices = &indexData[0];
 		pin_ptr<T> pinnedVertices = &vertexData[0];
 
-		HRESULT hr = m_Pointer->DrawIndexedPrimitiveUP( (D3DPRIMITIVETYPE) primitiveType, minVertexIndex, numVertices,
-			primitiveCount, pinnedIndices, (D3DFORMAT) indexDataFormat, pinnedVertices, vertexStride );
+		HRESULT hr = m_Pointer->DrawIndexedPrimitiveUP( static_cast<D3DPRIMITIVETYPE>( primitiveType ), minVertexIndex, numVertices,
+			primitiveCount, pinnedIndices, static_cast<D3DFORMAT>( indexDataFormat ), pinnedVertices, vertexStride );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::Clear( ClearFlags clearFlags, int color, float zdepth, int stencil )
 	{
-		HRESULT hr = m_Pointer->Clear( 0, 0, (DWORD) clearFlags, (D3DCOLOR) color, zdepth, stencil );
+		HRESULT hr = m_Pointer->Clear( 0, 0, static_cast<DWORD>( clearFlags ), static_cast<D3DCOLOR>( color ), zdepth, stencil );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -239,7 +239,7 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			return;
 
-		hr = swapChain->Present( 0, 0, 0, 0, (DWORD) flags );
+		hr = swapChain->Present( 0, 0, 0, 0, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 
 		hr = swapChain->Release();
@@ -248,7 +248,7 @@ namespace Direct3D9
 
 	void Device::SetRenderState( RenderState state, int value )
 	{
-		HRESULT hr = m_Pointer->SetRenderState( (D3DRENDERSTATETYPE) state, value );
+		HRESULT hr = m_Pointer->SetRenderState( static_cast<D3DRENDERSTATETYPE>( state ), value );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -269,7 +269,7 @@ namespace Direct3D9
 	generic<typename T>
 	void Device::SetRenderState( RenderState state, T value )
 	{
-		SetRenderState( state, (int) value );
+		SetRenderState( state, static_cast<int>( value ) );
 	}
 
 	void Device::SetTextureStageState( int stage, TextureStage type, int value )
@@ -280,17 +280,17 @@ namespace Direct3D9
 
 	void Device::SetTextureStageState( int stage, TextureStage type, TextureOperation texOp )
 	{
-		SetTextureStageState( stage, type, (int) texOp );
+		SetTextureStageState( stage, type, static_cast<int>( texOp ) );
 	}
 
 	void Device::SetTextureStageState( int stage, TextureStage type, TextureArgument texArg )
 	{
-		SetTextureStageState( stage, type, (int) texArg );
+		SetTextureStageState( stage, type, static_cast<int>( texArg ) );
 	}
 
 	void Device::SetTextureStageState( int stage, TextureStage type, TextureTransform texTransform )
 	{
-		SetTextureStageState( stage, type, (int) texTransform );
+		SetTextureStageState( stage, type, static_cast<int>( texTransform ) );
 	}
 
 	void Device::SetTextureStageState( int stage, TextureStage type, float value )
@@ -324,13 +324,13 @@ namespace Direct3D9
 
 	void Device::SetTransform( TransformState state, Matrix value )
 	{
-		HRESULT hr = m_Pointer->SetTransform( static_cast<D3DTRANSFORMSTATETYPE>( state ), (const D3DMATRIX*) &value );
+		HRESULT hr = m_Pointer->SetTransform( static_cast<D3DTRANSFORMSTATETYPE>( state ), reinterpret_cast<const D3DMATRIX*>( &value ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::MultiplyTransform( TransformState state, Matrix value )
 	{
-		HRESULT hr = m_Pointer->MultiplyTransform( static_cast<D3DTRANSFORMSTATETYPE>( state ), (const D3DMATRIX*) &value );
+		HRESULT hr = m_Pointer->MultiplyTransform( static_cast<D3DTRANSFORMSTATETYPE>( state ), reinterpret_cast<const D3DMATRIX*>( &value ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -372,7 +372,7 @@ namespace Direct3D9
 	CooperativeLevel Device::CheckCooperativeLevel()
 	{
 		HRESULT hr = m_Pointer->TestCooperativeLevel();
-		return (CooperativeLevel) hr;
+		return static_cast<CooperativeLevel>( hr );
 	}
 
 	void Device::Reset( PresentParameters^ presentParams )
@@ -633,7 +633,7 @@ namespace Direct3D9
 		IDirect3DVertexBuffer9* vb = destBuffer->VbPointer;
 		IDirect3DVertexDeclaration9* decl = vertexDecl != nullptr ? vertexDecl->InternalPointer : NULL;
 
-		HRESULT hr = m_Pointer->ProcessVertices( sourceStartIndex, destIndex, vertexCount, vb, decl, (DWORD) flags );
+		HRESULT hr = m_Pointer->ProcessVertices( sourceStartIndex, destIndex, vertexCount, vb, decl, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -727,7 +727,7 @@ namespace Direct3D9
 	{
 		RECT nativeDestRect = { destRect.Left, destRect.Top, destRect.Right, destRect.Bottom };
 
-		HRESULT hr = m_Pointer->ColorFill( destSurface->SurfacePointer, &nativeDestRect, (D3DCOLOR) color );
+		HRESULT hr = m_Pointer->ColorFill( destSurface->SurfacePointer, &nativeDestRect, static_cast<D3DCOLOR>( color ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -911,7 +911,7 @@ namespace Direct3D9
 
 	DriverLevel Device::DriverLevel::get()
 	{
-		return (SlimDX::Direct3D9::DriverLevel) D3DXGetDriverLevel( m_Pointer );
+		return static_cast<SlimDX::Direct3D9::DriverLevel>( D3DXGetDriverLevel( m_Pointer ) );
 	}
 
 	String^ Device::VertexShaderProfile::get()
@@ -928,7 +928,7 @@ namespace Direct3D9
 
 	void Device::SetR2VBMode( bool enableR2VB )
 	{
-		SetRenderState( RenderState::PointSize, (int) r2vbGlbEnable_Set( enableR2VB ) );
+		SetRenderState( RenderState::PointSize, static_cast<int>( r2vbGlbEnable_Set( enableR2VB ) ) );
 	}
 
 	void Device::BindRenderTargetToVertexStream( R2VBSampler sampler, Texture^ r2vbTarget, int stream, int stride, VertexBuffer^ dummyVb )
@@ -937,7 +937,7 @@ namespace Direct3D9
 		if( FAILED( GraphicsException::LastError ) )
 			return;
 
-		SetRenderState( RenderState::PointSize, (int) r2vbVStrm2SmpMap_Set( stream, (int) sampler ) );
+		SetRenderState( RenderState::PointSize, static_cast<int>( r2vbVStrm2SmpMap_Set( stream, static_cast<int>( sampler ) ) ) );
 		if( FAILED( GraphicsException::LastError ) )
 			return;
 
@@ -948,7 +948,7 @@ namespace Direct3D9
 
 	void Device::RestoreVertexStream( int stream )
 	{
-		SetRenderState( RenderState::PointSize, (int) r2vbVStrm2SmpMap_Set( stream, R2VB_VSMP_OVR_DIS ) );
+		SetRenderState( RenderState::PointSize, static_cast<int>( r2vbVStrm2SmpMap_Set( stream, R2VB_VSMP_OVR_DIS ) ) );
 		if( FAILED( GraphicsException::LastError ) )
 			return;
 

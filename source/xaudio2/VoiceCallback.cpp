@@ -75,7 +75,7 @@ namespace XAudio2
 
 		if( pBufferContext != NULL )
 		{
-			contextHandle = GCHandle::FromIntPtr( (IntPtr) pBufferContext );
+			contextHandle = GCHandle::FromIntPtr( safe_cast<IntPtr>( pBufferContext ) );
 			bufferContext = contextHandle.Target;
 		}
 
@@ -92,7 +92,7 @@ namespace XAudio2
 
 		if( pBufferContext != NULL )
 		{
-			contextHandle = GCHandle::FromIntPtr( (IntPtr) pBufferContext );
+			contextHandle = GCHandle::FromIntPtr( safe_cast<IntPtr>( pBufferContext ) );
 			bufferContext = contextHandle.Target;
 		}
 
@@ -109,7 +109,7 @@ namespace XAudio2
 
 		if( pBufferContext != NULL )
 		{
-			contextHandle = GCHandle::FromIntPtr( (IntPtr) pBufferContext );
+			contextHandle = GCHandle::FromIntPtr( safe_cast<IntPtr>( pBufferContext ) );
 			bufferContext = contextHandle.Target;
 		}
 

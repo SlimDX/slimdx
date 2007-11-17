@@ -50,6 +50,6 @@ namespace SlimDX
 
 		pin_ptr<const wchar_t> pinnedMessage = PtrToStringChars( message );
 
-		return DXTrace( (const char*) pinnedFileName, frame->GetFileLineNumber(), errorCode, pinnedMessage, messageBox );
+		return DXTrace( reinterpret_cast<const char*>( pinnedFileName ), frame->GetFileLineNumber(), errorCode, pinnedMessage, messageBox );
 	}
 }

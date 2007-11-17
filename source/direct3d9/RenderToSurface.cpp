@@ -56,7 +56,7 @@ namespace SlimDX
 		RenderToSurface::RenderToSurface( Device^ device, int width, int height, Format format )
 		{
 			ID3DXRenderToSurface* rtsPointer;
-			HRESULT hr = D3DXCreateRenderToSurface( device->InternalPointer, width, height, (D3DFORMAT) format, FALSE, D3DFMT_UNKNOWN, &rtsPointer );
+			HRESULT hr = D3DXCreateRenderToSurface( device->InternalPointer, width, height, static_cast<D3DFORMAT>( format ), FALSE, D3DFMT_UNKNOWN, &rtsPointer );
 			GraphicsException::CheckHResult( hr );
 			if( FAILED( hr ) )
 				throw gcnew GraphicsException();
@@ -68,7 +68,7 @@ namespace SlimDX
 		{
 			ID3DXRenderToSurface* rtsPointer;
 			HRESULT hr = D3DXCreateRenderToSurface( device->InternalPointer, width, height,
-				(D3DFORMAT) format, TRUE, (D3DFORMAT) depthStencilFormat, &rtsPointer );
+				static_cast<D3DFORMAT>( format ), TRUE, static_cast<D3DFORMAT>( depthStencilFormat ), &rtsPointer );
 			GraphicsException::CheckHResult( hr );
 			if( FAILED( hr ) )
 				throw gcnew GraphicsException();
@@ -85,7 +85,7 @@ namespace SlimDX
 
 		void RenderToSurface::EndScene( Filter mipFilter )
 		{
-			HRESULT hr = m_Pointer->EndScene( (DWORD) mipFilter );
+			HRESULT hr = m_Pointer->EndScene( static_cast<DWORD>( mipFilter ) );
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -121,9 +121,9 @@ namespace SlimDX
 			RenderToSurfaceDescription outDesc;
 			outDesc.Width = desc.Width;
 			outDesc.Height = desc.Height;
-			outDesc.Format = (Format) desc.Format;
+			outDesc.Format = static_cast<Format>( desc.Format );
 			outDesc.DepthStencil = desc.DepthStencil > 0;
-			outDesc.DepthStencilFormat = (Format) desc.DepthStencilFormat;
+			outDesc.DepthStencilFormat = static_cast<Format>( desc.DepthStencilFormat );
 			return outDesc;
 		}
 	}

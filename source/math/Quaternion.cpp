@@ -82,7 +82,7 @@ namespace SlimDX
 
 	float Quaternion::Length()
 	{
-		return (float) Math::Sqrt( (X * X) + (Y * Y) + (Z * Z) + (W * W) );
+		return static_cast<float>( Math::Sqrt( (X * X) + (Y * Y) + (Z * Z) + (W * W) ) );
 	}
 	
 	float Quaternion::LengthSquared()
@@ -458,8 +458,8 @@ namespace SlimDX
 		Quaternion result;
 
 		float half = angle * 0.5f;
-		float sin = (float) Math::Sin( (double) half );
-		float cos = (float) Math::Cos( (double) half );
+		float sin = static_cast<float>( Math::Sin( static_cast<double>( half ) ) );
+		float cos = static_cast<float>( Math::Cos( static_cast<double>( half ) ) );
 
 		result.X = axis.X * sin;
 		result.Y = axis.Y * sin;
@@ -472,8 +472,8 @@ namespace SlimDX
 	void Quaternion::RotationAxis( Vector3% axis, float angle, [Out] Quaternion% result )
 	{
 		float half = angle * 0.5f;
-		float sin = (float) Math::Sin( (double) half );
-		float cos = (float) Math::Cos( (double) half );
+		float sin = static_cast<float>( Math::Sin( static_cast<double>( half ) ) );
+		float cos = static_cast<float>( Math::Cos( static_cast<double>( half ) ) );
 
 		result.X = axis.X * sin;
 		result.Y = axis.Y * sin;
@@ -488,7 +488,7 @@ namespace SlimDX
 
 		if( scale > 0.0f )
 		{
-			float sqrt = (float) Math::Sqrt( (double) (scale + 1.0f) );
+			float sqrt = static_cast<float>( Math::Sqrt( static_cast<double>(scale + 1.0f) ) );
 
 			result.W = sqrt * 0.5f;
 			sqrt = 0.5f / sqrt;
@@ -502,7 +502,7 @@ namespace SlimDX
 
 		if( (matrix.M11 >= matrix.M22) && (matrix.M11 >= matrix.M33) )
 		{
-			float sqrt = (float) Math::Sqrt( (double) (1.0f + matrix.M11 - matrix.M22 - matrix.M33) );
+			float sqrt = static_cast<float>( Math::Sqrt( static_cast<double>(1.0f + matrix.M11 - matrix.M22 - matrix.M33) ) );
 			float half = 0.5f / sqrt;
 
 			result.X = 0.5f * sqrt;
@@ -515,7 +515,7 @@ namespace SlimDX
 
 		if( matrix.M22 > matrix.M33 )
 		{
-			float sqrt = (float) Math::Sqrt( (double) (1.0f + matrix.M22 - matrix.M11 - matrix.M33) );
+			float sqrt = static_cast<float>( Math::Sqrt( static_cast<double>(1.0f + matrix.M22 - matrix.M11 - matrix.M33) ) );
 			float half = 0.5f / sqrt;
 
 			result.X = (matrix.M21 + matrix.M12) * half;
@@ -526,7 +526,7 @@ namespace SlimDX
 			return result;
 		}
 
-		float sqrt = (float) Math::Sqrt( (double) (1.0f + matrix.M33 - matrix.M11 - matrix.M22) );
+		float sqrt = static_cast<float>( Math::Sqrt( static_cast<double>(1.0f + matrix.M33 - matrix.M11 - matrix.M22) ) );
 		float half = 0.5f / sqrt;
 
 		result.X = (matrix.M31 + matrix.M13) * half;
@@ -543,7 +543,7 @@ namespace SlimDX
 
 		if( scale > 0.0f )
 		{
-			float sqrt = (float) Math::Sqrt( (double) (scale + 1.0f) );
+			float sqrt = static_cast<float>( Math::Sqrt( static_cast<double>(scale + 1.0f) ) );
 
 			result.W = sqrt * 0.5f;
 			sqrt = 0.5f / sqrt;
@@ -556,7 +556,7 @@ namespace SlimDX
 
 		if( (matrix.M11 >= matrix.M22) && (matrix.M11 >= matrix.M33) )
 		{
-			float sqrt = (float) Math::Sqrt( (double) (1.0f + matrix.M11 - matrix.M22 - matrix.M33) );
+			float sqrt = static_cast<float>( Math::Sqrt( static_cast<double>(1.0f + matrix.M11 - matrix.M22 - matrix.M33) ) );
 			float half = 0.5f / sqrt;
 
 			result.X = 0.5f * sqrt;
@@ -568,7 +568,7 @@ namespace SlimDX
 
 		if( matrix.M22 > matrix.M33 )
 		{
-			float sqrt = (float) Math::Sqrt( (double) (1.0f + matrix.M22 - matrix.M11 - matrix.M33) );
+			float sqrt = static_cast<float>( Math::Sqrt( static_cast<double>(1.0f + matrix.M22 - matrix.M11 - matrix.M33) ) );
 			float half = 0.5f / sqrt;
 
 			result.X = (matrix.M21 + matrix.M12) * half;
@@ -578,7 +578,7 @@ namespace SlimDX
 			return;
 		}
 
-		float sqrt = (float) Math::Sqrt( (double) (1.0f + matrix.M33 - matrix.M11 - matrix.M22) );
+		float sqrt = static_cast<float>( Math::Sqrt( static_cast<double>(1.0f + matrix.M33 - matrix.M11 - matrix.M22) ) );
 		float half = 0.5f / sqrt;
 
 		result.X = (matrix.M31 + matrix.M13) * half;
@@ -592,14 +592,14 @@ namespace SlimDX
 		Quaternion result;
 
 		float halfRoll = roll * 0.5f;
-		float sinRoll = (float) Math::Sin( (double) halfRoll );
-		float cosRoll = (float) Math::Cos( (double) halfRoll );
+		float sinRoll = static_cast<float>( Math::Sin( static_cast<double>( halfRoll ) ) );
+		float cosRoll = static_cast<float>( Math::Cos( static_cast<double>( halfRoll ) ) );
 		float halfPitch = pitch * 0.5f;
-		float sinPitch = (float) Math::Sin( (double) halfPitch );
-		float cosPitch = (float) Math::Cos(( double) halfPitch );
+		float sinPitch = static_cast<float>( Math::Sin( static_cast<double>( halfPitch ) ) );
+		float cosPitch = static_cast<float>( Math::Cos( static_cast<double>( halfPitch ) ) );
 		float halfYaw = yaw * 0.5f;
-		float sinYaw = (float) Math::Sin( (double) halfYaw );
-		float cosYaw = (float) Math::Cos( (double) halfYaw );
+		float sinYaw = static_cast<float>( Math::Sin( static_cast<double>( halfYaw ) ) );
+		float cosYaw = static_cast<float>( Math::Cos( static_cast<double>( halfYaw ) ) );
 
 		result.X = (cosYaw * sinPitch * cosRoll) + (sinYaw * cosPitch * sinRoll);
 		result.Y = (sinYaw * cosPitch * cosRoll) - (cosYaw * sinPitch * sinRoll);
@@ -612,14 +612,14 @@ namespace SlimDX
 	void Quaternion::RotationYawPitchRoll( float yaw, float pitch, float roll, [Out] Quaternion% result )
 	{
 		float halfRoll = roll * 0.5f;
-		float sinRoll = (float) Math::Sin( (double) halfRoll );
-		float cosRoll = (float) Math::Cos( (double) halfRoll );
+		float sinRoll = static_cast<float>( Math::Sin( static_cast<double>( halfRoll ) ) );
+		float cosRoll = static_cast<float>( Math::Cos( static_cast<double>( halfRoll ) ) );
 		float halfPitch = pitch * 0.5f;
-		float sinPitch = (float) Math::Sin( (double) halfPitch );
-		float cosPitch = (float) Math::Cos(( double) halfPitch );
+		float sinPitch = static_cast<float>( Math::Sin( static_cast<double>( halfPitch ) ) );
+		float cosPitch = static_cast<float>( Math::Cos( static_cast<double>( halfPitch ) ) );
 		float halfYaw = yaw * 0.5f;
-		float sinYaw = (float) Math::Sin( (double) halfYaw );
-		float cosYaw = (float) Math::Cos( (double) halfYaw );
+		float sinYaw = static_cast<float>( Math::Sin( static_cast<double>( halfYaw ) ) );
+		float cosYaw = static_cast<float>( Math::Cos( static_cast<double>( halfYaw ) ) );
 
 		result.X = (cosYaw * sinPitch * cosRoll) + (sinYaw * cosPitch * sinRoll);
 		result.Y = (sinYaw * cosPitch * cosRoll) - (cosYaw * sinPitch * sinRoll);
@@ -649,11 +649,11 @@ namespace SlimDX
 		}
 		else
 		{
-			float acos = (float) Math::Acos( (double) dot );
-			float invSin = (float) ( 1.0f / Math::Sin( (double) acos ) );
+			float acos = static_cast<float>( Math::Acos( static_cast<double>( dot ) ) );
+			float invSin = static_cast<float>( ( 1.0f / Math::Sin( static_cast<double>( acos ) ) ) );
 
-			inverse = ( (float) Math::Sin( (double) ( (1.0f - t) * acos ) ) ) * invSin;
-			opposite = flag ? ( ( (float) -Math::Sin( (double) ( t * acos ) ) ) * invSin ) : ( ( (float) Math::Sin( (double) ( t * acos ) ) ) * invSin );
+			inverse = ( static_cast<float>( Math::Sin( static_cast<double>( (1.0f - t) * acos ) ) ) ) * invSin;
+			opposite = flag ? ( ( static_cast<float>( -Math::Sin( static_cast<double>( t * acos ) ) ) ) * invSin ) : ( ( static_cast<float>( Math::Sin( static_cast<double>( t * acos ) ) ) ) * invSin );
 		}
 
 		result.X = (inverse * q1.X) + (opposite * q2.X);
@@ -684,11 +684,11 @@ namespace SlimDX
 		}
 		else
 		{
-			float acos = (float) Math::Acos( (double) dot );
-			float invSin = (float) ( 1.0f / Math::Sin( (double) acos ) );
+			float acos = static_cast<float>( Math::Acos( static_cast<double>( dot ) ) );
+			float invSin = static_cast<float>( ( 1.0f / Math::Sin( static_cast<double>( acos ) ) ) );
 
-			inverse = ( (float) Math::Sin( (double) ( (1.0f - t) * acos ) ) ) * invSin;
-			opposite = flag ? ( ( (float) -Math::Sin( (double) ( t * acos ) ) ) * invSin ) : ( ( (float) Math::Sin( (double) ( t * acos ) ) ) * invSin );
+			inverse = ( static_cast<float>( Math::Sin( static_cast<double>( (1.0f - t) * acos ) ) ) ) * invSin;
+			opposite = flag ? ( ( static_cast<float>( -Math::Sin( static_cast<double>( t * acos ) ) ) ) * invSin ) : ( ( static_cast<float>( Math::Sin( static_cast<double>( t * acos ) ) ) ) * invSin );
 		}
 
 		result.X = (inverse * q1.X) + (opposite * q2.X);
@@ -888,7 +888,7 @@ namespace SlimDX
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( (Quaternion)value );
+		return Equals( static_cast<Quaternion>( value ) );
 	}
 
 	bool Quaternion::Equals( Quaternion value )

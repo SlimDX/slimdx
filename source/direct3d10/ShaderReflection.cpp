@@ -70,7 +70,7 @@ namespace Direct3D10
 	void ShaderReflection::Construct()
 	{
 		D3D10_SHADER_DESC description;
-		HRESULT hr = ((ID3D10ShaderReflection*) m_Pointer)->GetDesc( &description );
+		HRESULT hr = static_cast<ID3D10ShaderReflection*>( m_Pointer )->GetDesc( &description );
 		GraphicsException::CheckHResult( hr );
 		
 		version = description.Version;
@@ -99,7 +99,7 @@ namespace Direct3D10
 		arrayInstructionCount = description.ArrayInstructionCount;
 		cutInstructionCount = description.CutInstructionCount;
 		emitInstructionCount = description.EmitInstructionCount;
-		geometryShaderOutputTopology = (PrimitiveTopology) description.GSOutputTopology;
+		geometryShaderOutputTopology = static_cast<PrimitiveTopology>( description.GSOutputTopology );
 		geometryShaderMaxOutputVertexCount= description.GSMaxOutputVertexCount;
 		//movInstructionCount = description.MovInstructionCount;
 		//movcInstructionCount = description.MovcInstructionCount;
@@ -110,7 +110,7 @@ namespace Direct3D10
 		for( int inputIndex = 0; inputIndex < inputParameters; ++inputIndex )
 		{
 			D3D10_SIGNATURE_PARAMETER_DESC parameterDesc;
-			hr = 	((ID3D10ShaderReflection*) m_Pointer)->GetInputParameterDesc( inputIndex, &parameterDesc );
+			hr = 	static_cast<ID3D10ShaderReflection*>( m_Pointer )->GetInputParameterDesc( inputIndex, &parameterDesc );
 			GraphicsException::CheckHResult( hr );
 			
 			inputParametersInfo->Add( ShaderParameterDescription( parameterDesc ) );
@@ -120,7 +120,7 @@ namespace Direct3D10
 		for( int outputIndex = 0; outputIndex < outputParameters; ++outputIndex )
 		{
 			D3D10_SIGNATURE_PARAMETER_DESC parameterDesc;
-			hr = 	((ID3D10ShaderReflection*) m_Pointer)->GetOutputParameterDesc( outputIndex, &parameterDesc );
+			hr = 	static_cast<ID3D10ShaderReflection*>( m_Pointer )->GetOutputParameterDesc( outputIndex, &parameterDesc );
 			GraphicsException::CheckHResult( hr );
 			
 			outputParametersInfo->Add( ShaderParameterDescription( parameterDesc ) );

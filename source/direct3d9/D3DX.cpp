@@ -37,18 +37,18 @@ namespace SlimDX
 				throw gcnew ArgumentNullException( "elements" );
 
 			pin_ptr<VertexElement> pinnedElements = &elements[0];
-			return (int) D3DXGetDeclVertexSize( (const D3DVERTEXELEMENT9*) pinnedElements, stream );
+			return static_cast<int>( D3DXGetDeclVertexSize( reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedElements ), stream ) );
 		}
 
 		int D3DX::GetFVFVertexSize( VertexFormat fvf )
 		{
-			return (int) D3DXGetFVFVertexSize( (DWORD) fvf );
+			return static_cast<int>( D3DXGetFVFVertexSize( static_cast<DWORD>( fvf ) ) );
 		}
 
 		Format D3DX::MakeFourCC( Byte c1, Byte c2, Byte c3, Byte c4 )
 		{
 			int fourcc = (c4 << 24) | (c3 << 16) | (c2 << 8) | (c1);
-			return (Format) fourcc;
+			return static_cast<Format>( fourcc );
 		}
 
 		bool D3DX::DebugMute( bool mute )

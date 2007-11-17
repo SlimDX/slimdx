@@ -39,11 +39,11 @@ namespace Direct3D9
 		HRESULT hr = buffer->GetDesc( &desc );
 		GraphicsException::CheckHResult( hr );
 		
-		Format = ( SlimDX::Direct3D9::Format ) desc.Format;
-		Usage = ( SlimDX::Direct3D9::Usage ) desc.Usage;
-		Pool = ( SlimDX::Direct3D9::Pool ) desc.Pool;
+		Format = static_cast<SlimDX::Direct3D9::Format>( desc.Format );
+		Usage = static_cast<SlimDX::Direct3D9::Usage>( desc.Usage );
+		Pool = static_cast<SlimDX::Direct3D9::Pool>( desc.Pool );
 		SizeInBytes = desc.Size;
-		FVF = ( VertexFormat ) desc.FVF;
+		FVF = static_cast<VertexFormat>( desc.FVF );
 
 		m_Pointer = buffer;
 	}
@@ -67,11 +67,11 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			throw gcnew GraphicsException( "Could not get vertex buffer description." );
 		
-		Format = ( SlimDX::Direct3D9::Format ) desc.Format;
-		Usage = ( SlimDX::Direct3D9::Usage ) desc.Usage;
-		Pool = ( SlimDX::Direct3D9::Pool ) desc.Pool;
+		Format = static_cast<SlimDX::Direct3D9::Format>( desc.Format );
+		Usage = static_cast<SlimDX::Direct3D9::Usage>( desc.Usage );
+		Pool = static_cast<SlimDX::Direct3D9::Pool>( desc.Pool );
 		SizeInBytes = desc.Size;
-		FVF = ( VertexFormat ) desc.FVF;
+		FVF = static_cast<VertexFormat>( desc.FVF );
 
 		m_Pointer = vbPtr;
 	}
@@ -79,19 +79,19 @@ namespace Direct3D9
 	VertexBuffer::VertexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool )
 	{
 		IDirect3DVertexBuffer9* vb;
-		HRESULT hr = device->InternalPointer->CreateVertexBuffer( sizeBytes, (DWORD) usage, 
-			(DWORD) format, (D3DPOOL) pool, &vb, NULL );
+		HRESULT hr = device->InternalPointer->CreateVertexBuffer( sizeBytes, static_cast<DWORD>( usage ), 
+			static_cast<DWORD>( format ), static_cast<D3DPOOL>( pool ), &vb, NULL );
 		GraphicsException::CheckHResult( hr );
 		
 		D3DVERTEXBUFFER_DESC desc;
 		hr = vb->GetDesc( &desc );
 		GraphicsException::CheckHResult( hr );
 		
-		Format = ( SlimDX::Direct3D9::Format ) desc.Format;
-		Usage = ( SlimDX::Direct3D9::Usage ) desc.Usage;
-		Pool = ( SlimDX::Direct3D9::Pool ) desc.Pool;
+		Format = static_cast<SlimDX::Direct3D9::Format>( desc.Format );
+		Usage = static_cast<SlimDX::Direct3D9::Usage>( desc.Usage );
+		Pool = static_cast<SlimDX::Direct3D9::Pool>( desc.Pool );
 		SizeInBytes = desc.Size;
-		FVF = ( VertexFormat ) desc.FVF;
+		FVF = static_cast<VertexFormat>( desc.FVF );
 		
 		m_Pointer = vb;
 	}
@@ -99,7 +99,7 @@ namespace Direct3D9
 	DataStream^ VertexBuffer::Lock( int offset, int size, LockFlags flags )
 	{
 		void* lockedPtr;
-		HRESULT hr = VbPointer->Lock( offset, size, &lockedPtr, (DWORD) flags );
+		HRESULT hr = VbPointer->Lock( offset, size, &lockedPtr, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 		
 		int lockedSize = size == 0 ? SizeInBytes : size;

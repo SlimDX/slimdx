@@ -62,31 +62,31 @@ namespace SlimDX
 
 		void MatrixStack::LoadMatrix( Matrix matrix )
 		{
-			HRESULT hr = m_Pointer->LoadMatrix( (D3DXMATRIX*) &matrix );
+			HRESULT hr = m_Pointer->LoadMatrix( reinterpret_cast<D3DXMATRIX*>( &matrix ) );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void MatrixStack::MultiplyMatrix( Matrix matrix )
 		{
-			HRESULT hr = m_Pointer->MultMatrix( (D3DXMATRIX*) &matrix );
+			HRESULT hr = m_Pointer->MultMatrix( reinterpret_cast<D3DXMATRIX*>( &matrix ) );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void MatrixStack::MultiplyMatrixLocal( Matrix matrix )
 		{
-			HRESULT hr = m_Pointer->MultMatrixLocal( (D3DXMATRIX*) &matrix );
+			HRESULT hr = m_Pointer->MultMatrixLocal( reinterpret_cast<D3DXMATRIX*>( &matrix ) );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void MatrixStack::RotateAxis( Vector3 axis, float angle )
 		{
-			HRESULT hr = m_Pointer->RotateAxis( (D3DXVECTOR3*) &axis, angle );
+			HRESULT hr = m_Pointer->RotateAxis( reinterpret_cast<D3DXVECTOR3*>( &axis ), angle );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void MatrixStack::RotateAxisLocal( Vector3 axis, float angle )
 		{
-			HRESULT hr = m_Pointer->RotateAxisLocal( (D3DXVECTOR3*) &axis, angle );
+			HRESULT hr = m_Pointer->RotateAxisLocal( reinterpret_cast<D3DXVECTOR3*>( &axis ), angle );
 			GraphicsException::CheckHResult( hr );
 		}
 

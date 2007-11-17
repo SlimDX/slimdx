@@ -49,7 +49,8 @@ namespace Direct3D10
 	{
 		ID3D10Device* device;
 		m_Pointer->GetDevice( &device );
-		device->ClearDepthStencilView( (ID3D10DepthStencilView*) m_Pointer, (D3D10_CLEAR_FLAG) flags, depthValue, stencilValue );
+		device->ClearDepthStencilView( static_cast<ID3D10DepthStencilView*>( m_Pointer ), static_cast<D3D10_CLEAR_FLAG>( flags ), 
+			depthValue, stencilValue );
 	}
 }
 }

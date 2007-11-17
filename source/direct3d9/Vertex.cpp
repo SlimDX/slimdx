@@ -58,7 +58,7 @@ namespace Direct3D9
 		pin_ptr<VertexElement> pinnedElements = &elements[0];
 		IDirect3DVertexDeclaration9* decl;
 
-		HRESULT hr = device->InternalPointer->CreateVertexDeclaration( (const D3DVERTEXELEMENT9*) pinnedElements, &decl );
+		HRESULT hr = device->InternalPointer->CreateVertexDeclaration( reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedElements ), &decl );
 		GraphicsException::CheckHResult( hr );
 
 		m_Pointer = decl;

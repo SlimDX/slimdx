@@ -42,7 +42,7 @@ namespace Direct3D9
 	{
 		IDirect3DStateBlock9* stateBlock;
 
-		HRESULT hr = device->InternalPointer->CreateStateBlock( (D3DSTATEBLOCKTYPE) type, &stateBlock );
+		HRESULT hr = device->InternalPointer->CreateStateBlock( static_cast<D3DSTATEBLOCKTYPE>( type ), &stateBlock );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			throw gcnew GraphicsException();

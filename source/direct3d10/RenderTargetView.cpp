@@ -50,7 +50,7 @@ namespace Direct3D10
 		float colorArray[] = { color.Red, color.Green, color.Blue, color.Alpha };
 		ID3D10Device* device;
 		m_Pointer->GetDevice( &device );
-		device->ClearRenderTargetView( (ID3D10RenderTargetView*) m_Pointer, colorArray );
+		device->ClearRenderTargetView( static_cast<ID3D10RenderTargetView*>( m_Pointer ), colorArray );
 	}
 }
 }

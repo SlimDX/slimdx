@@ -83,7 +83,7 @@ namespace Direct3D9
 	{
 		pin_ptr<Vector2> pinnedVerts = &vertexList[0];
 
-		HRESULT hr = m_Pointer->Draw( (D3DXVECTOR2*) pinnedVerts, vertexList->Length, color );
+		HRESULT hr = m_Pointer->Draw( reinterpret_cast<D3DXVECTOR2*>( pinnedVerts ), vertexList->Length, color );
 		GraphicsException::CheckHResult( hr );
 	}
 

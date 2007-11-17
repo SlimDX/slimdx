@@ -38,14 +38,14 @@ namespace Direct3D10
 	
 	void EffectVectorVariable::Set( Vector4 value )
 	{
-		HRESULT hr = ( (ID3D10EffectVectorVariable*) Pointer )->SetFloatVector( (float*) &value );
+		HRESULT hr = static_cast<ID3D10EffectVectorVariable*>( Pointer )->SetFloatVector( reinterpret_cast<float*>( &value ) );
 		GraphicsException::CheckHResult( hr );
 	}
 	
 	void EffectVectorVariable::Set( array<Vector4>^ values )
 	{
 		pin_ptr<Vector4> pinnedValues = &values[0];
-		HRESULT hr = ( (ID3D10EffectVectorVariable*) Pointer )->SetFloatVectorArray( (float*) pinnedValues, 0, values->Length );
+		HRESULT hr = static_cast<ID3D10EffectVectorVariable*>( Pointer )->SetFloatVectorArray( reinterpret_cast<float*>( pinnedValues ), 0, values->Length );
 		GraphicsException::CheckHResult( hr );
 	}
 }

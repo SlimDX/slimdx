@@ -107,4 +107,28 @@ namespace SlimDX
 		if( count < 0 || count > data->Length - offset )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 	}
+
+	Guid Utils::FromGUID( const GUID &guid )
+	{
+		if( guid == GUID_NULL )
+			return Guid::Empty;
+
+		Guid result( guid.Data1, guid.Data2, guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], 
+			guid.Data4[3], guid.Data4[4], guid.Data4[5], guid.Data4[6], guid.Data4[7] );
+
+		return result;
+	}
+
+	GUID Utils::ToGUID( Guid guid )
+	{
+		if( guid == Guid::Empty )
+			return GUID_NULL;
+
+		GUID result;
+		array<Byte>^ bytes = guid.ToByteArray();
+		pin_ptr<unsigned char> pinned_bytes = &bytes[0];
+		memcpy( &result, pinned_bytes, sizeof(GUID) );
+
+		return result;
+	}
 }

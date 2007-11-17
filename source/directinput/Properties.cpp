@@ -69,6 +69,9 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_RANGE, &dip.diph );
 		InputException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return 0;
+
 		return dip.lMin;
 	}
 
@@ -83,6 +86,9 @@ namespace DirectInput
 
 		hr = pointer->GetProperty( DIPROP_RANGE, &dip.diph );
 		InputException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return 0;
 
 		return dip.lMax;
 	}
@@ -114,10 +120,10 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_APPDATA, &dip.diph );
 		InputException::CheckHResult( hr );
 
-		if( dip.uData == NULL )
+		if( FAILED( hr ) || dip.uData == NULL )
 			return nullptr;
 
-		IntPtr pointer( ( void* )dip.uData );
+		IntPtr pointer( reinterpret_cast<void*>( dip.uData ) );
 		GCHandle handle = GCHandle::FromIntPtr( pointer );
 		if( !handle.IsAllocated )
 			return nullptr;
@@ -137,7 +143,7 @@ namespace DirectInput
 		dip.diph.dwHow = how;
 
 		GCHandle handle = GCHandle::Alloc( value, GCHandleType::Pinned );
-		dip.uData = ( UINT_PTR )handle.ToIntPtr( handle ).ToPointer();
+		dip.uData = reinterpret_cast<UINT_PTR>( handle.ToIntPtr( handle ).ToPointer() );
 
 		hr = pointer->SetProperty( DIPROP_APPDATA, &dip.diph );
 		InputException::CheckHResult( hr );
@@ -156,6 +162,9 @@ namespace DirectInput
 
 		hr = pointer->GetProperty( DIPROP_DEADZONE, &dip.diph );
 		InputException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return 0;
 
 		return dip.dwData;
 	}
@@ -186,6 +195,9 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_GRANULARITY, &dip.diph );
 		InputException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return 0;
+
 		return dip.dwData;
 	}
 
@@ -200,6 +212,9 @@ namespace DirectInput
 
 		hr = pointer->GetProperty( DIPROP_SATURATION, &dip.diph );
 		InputException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return 0;
 
 		return dip.dwData;
 	}
@@ -230,6 +245,9 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_LOGICALRANGE, &dip.diph );
 		InputException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return 0;
+
 		return dip.dwData;
 	}
 
@@ -244,6 +262,9 @@ namespace DirectInput
 
 		hr = pointer->GetProperty( DIPROP_PHYSICALRANGE, &dip.diph );
 		InputException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return 0;
 
 		return dip.dwData;
 	}
@@ -265,6 +286,9 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_KEYNAME, &dip.diph );
 		InputException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		return gcnew String( dip.wsz );
 	}
 
@@ -280,6 +304,9 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_GETPORTDISPLAYNAME, &dip.diph );
 		InputException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		return gcnew String( dip.wsz );
 	}
 
@@ -294,6 +321,9 @@ namespace DirectInput
 
 		hr = pointer->GetProperty( DIPROP_INSTANCENAME, &dip.diph );
 		InputException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew String( dip.wsz );
 	}
@@ -328,6 +358,9 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_PRODUCTNAME, &dip.diph );
 		InputException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		return gcnew String( dip.wsz );
 	}
 
@@ -361,6 +394,9 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_TYPENAME, &dip.diph );
 		InputException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		return gcnew String( dip.wsz );
 	}
 
@@ -375,6 +411,9 @@ namespace DirectInput
 
 		hr = pointer->GetProperty( DIPROP_USERNAME, &dip.diph );
 		InputException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew String( dip.wsz );
 	}
@@ -391,6 +430,9 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_SCANCODE, &dip.diph );
 		InputException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return 0;
+
 		return dip.dwData;
 	}
 
@@ -406,10 +448,10 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_APPDATA, &dip.diph );
 		InputException::CheckHResult( hr );
 
-		if( dip.uData == NULL )
+		if( FAILED( hr ) || dip.uData == NULL )
 			return nullptr;
 
-		IntPtr pointer( ( void* )dip.uData );
+		IntPtr pointer( reinterpret_cast<void*>( dip.uData ) );
 		GCHandle handle = GCHandle::FromIntPtr( pointer );
 		if( !handle.IsAllocated )
 			return nullptr;
@@ -429,7 +471,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		GCHandle handle = GCHandle::Alloc( value, GCHandleType::Pinned );
-		dip.uData = ( UINT_PTR )handle.ToIntPtr( handle ).ToPointer();
+		dip.uData = reinterpret_cast<UINT_PTR>( handle.ToIntPtr( handle ).ToPointer() );
 
 		hr = pointer->SetProperty( DIPROP_APPDATA, &dip.diph );
 		InputException::CheckHResult( hr );
@@ -485,7 +527,7 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_AXISMODE, &dip.diph );
 		InputException::CheckHResult( hr );
 
-		return ( DeviceAxisMode )dip.dwData;
+		return static_cast<DeviceAxisMode>( dip.dwData );
 	}
 
 	void DeviceProperties::AxisMode::set( DeviceAxisMode value )
@@ -496,7 +538,7 @@ namespace DirectInput
 		dip.diph.dwHeaderSize = sizeof( DIPROPHEADER );
 		dip.diph.dwObj = 0;
 		dip.diph.dwHow = DIPH_DEVICE;
-		dip.dwData = ( DWORD )value;
+		dip.dwData = static_cast<DWORD>( value );
 
 		hr = pointer->SetProperty( DIPROP_AXISMODE, &dip.diph );
 		InputException::CheckHResult( hr );
@@ -513,6 +555,9 @@ namespace DirectInput
 
 		hr = pointer->GetProperty( DIPROP_BUFFERSIZE, &dip.diph );
 		InputException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return 0;
 
 		return dip.dwData;
 	}
@@ -543,6 +588,9 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_DEADZONE, &dip.diph );
 		InputException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return 0;
+
 		return dip.dwData;
 	}
 
@@ -571,6 +619,9 @@ namespace DirectInput
 
 		hr = pointer->GetProperty( DIPROP_FFGAIN, &dip.diph );
 		InputException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return 0;
 
 		return dip.dwData;
 	}
@@ -601,6 +652,9 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_FFLOAD, &dip.diph );
 		InputException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return 0;
+
 		return dip.dwData;
 	}
 
@@ -615,6 +669,9 @@ namespace DirectInput
 
 		hr = pointer->GetProperty( DIPROP_GRANULARITY, &dip.diph );
 		InputException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return 0;
 
 		return dip.dwData;
 	}
@@ -631,6 +688,9 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_JOYSTICKID, &dip.diph );
 		InputException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return 0;
+
 		return dip.dwData;
 	}
 
@@ -645,6 +705,9 @@ namespace DirectInput
 
 		hr = pointer->GetProperty( DIPROP_SATURATION, &dip.diph );
 		InputException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return 0;
 
 		return dip.dwData;
 	}
@@ -675,6 +738,9 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_GUIDANDPATH, &dip.diph );
 		InputException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return Guid::Empty;
+
 		return Utils::FromGUID( dip.guidClass );
 	}
 
@@ -689,6 +755,9 @@ namespace DirectInput
 
 		hr = pointer->GetProperty( DIPROP_GUIDANDPATH, &dip.diph );
 		InputException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		return gcnew String( dip.wszPath );
 	}
@@ -705,6 +774,9 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_VIDPID, &dip.diph );
 		InputException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return 0;
+
 		return LOWORD( dip.dwData );
 	}
 
@@ -719,6 +791,9 @@ namespace DirectInput
 
 		hr = pointer->GetProperty( DIPROP_VIDPID, &dip.diph );
 		InputException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return 0;
 
 		return HIWORD( dip.dwData );
 	}
@@ -735,6 +810,9 @@ namespace DirectInput
 		hr = pointer->GetProperty( DIPROP_RANGE, &dip.diph );
 		InputException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return 0;
+
 		return dip.lMin;
 	}
 
@@ -749,6 +827,9 @@ namespace DirectInput
 
 		hr = pointer->GetProperty( DIPROP_RANGE, &dip.diph );
 		InputException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return 0;
 
 		return dip.lMax;
 	}

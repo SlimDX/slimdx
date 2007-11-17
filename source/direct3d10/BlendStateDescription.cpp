@@ -53,12 +53,12 @@ namespace Direct3D10
 	BlendStateDescription::BlendStateDescription( const D3D10_BLEND_DESC& desc )
 	{
 		AlphaToCoverageEnabled = desc.AlphaToCoverageEnable ? true : false;
-		SourceBlend = (BlendOption) desc.SrcBlend;
-		DestinationBlend = (BlendOption) desc.DestBlend;
-		BlendOperation = (SlimDX::Direct3D10::BlendOperation) desc.BlendOp;
-		SourceAlphaBlend = (BlendOption) desc.SrcBlend;
-		DestinationAlphaBlend = (BlendOption) desc.DestBlend;
-		AlphaBlendOperation = (SlimDX::Direct3D10::BlendOperation) desc.BlendOp;
+		SourceBlend = static_cast<BlendOption>( desc.SrcBlend );
+		DestinationBlend = static_cast<BlendOption>( desc.DestBlend );
+		BlendOperation = static_cast<SlimDX::Direct3D10::BlendOperation>( desc.BlendOp );
+		SourceAlphaBlend = static_cast<BlendOption>( desc.SrcBlend );
+		DestinationAlphaBlend = static_cast<BlendOption>( desc.DestBlend );
+		AlphaBlendOperation = static_cast<SlimDX::Direct3D10::BlendOperation>( desc.BlendOp );
 		
 		renderTargetBlendEnabled = gcnew List<bool>();
 		renderTargetWriteMask = gcnew List<ColorWriteMaskFlags>();
@@ -72,17 +72,17 @@ namespace Direct3D10
 	void BlendStateDescription::FillNativeObject( D3D10_BLEND_DESC& desc )
 	{
 		ZeroMemory( &desc, sizeof( desc ) );
-		desc.SrcBlend = (D3D10_BLEND) SourceBlend;
-		desc.DestBlend = (D3D10_BLEND) DestinationBlend;
-		desc.BlendOp = (D3D10_BLEND_OP) BlendOperation;
-		desc.SrcBlendAlpha = (D3D10_BLEND) SourceAlphaBlend;
-		desc.DestBlendAlpha = (D3D10_BLEND) DestinationAlphaBlend;
-		desc.BlendOpAlpha = (D3D10_BLEND_OP) AlphaBlendOperation;
+		desc.SrcBlend = static_cast<D3D10_BLEND>( SourceBlend );
+		desc.DestBlend = static_cast<D3D10_BLEND>( DestinationBlend );
+		desc.BlendOp = static_cast<D3D10_BLEND_OP>( BlendOperation );
+		desc.SrcBlendAlpha = static_cast<D3D10_BLEND>( SourceAlphaBlend );
+		desc.DestBlendAlpha = static_cast<D3D10_BLEND>( DestinationAlphaBlend );
+		desc.BlendOpAlpha = static_cast<D3D10_BLEND_OP>( AlphaBlendOperation );
 		
 		for(int i = 0; i < 8; ++i)
 		{
 			desc.BlendEnable[i] = RenderTargetBlendEnabled[i];
-			desc.RenderTargetWriteMask[i] = (UINT8) RenderTargetWriteMask[i];
+			desc.RenderTargetWriteMask[i] = static_cast<UINT8>( RenderTargetWriteMask[i] );
 		}
 	}
 }

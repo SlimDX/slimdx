@@ -36,8 +36,8 @@ namespace Direct3D10
 		semanticName = gcnew String( desc.SemanticName );
 		semanticIndex = desc.SemanticIndex;
 		registerIndex = desc.Register;
-		systemValueType = (SystemValueType) desc.SystemValueType;
-		componentType = (RegisterComponentType) desc.ComponentType;
+		systemValueType = static_cast<SystemValueType>( desc.SystemValueType );
+		componentType = static_cast<RegisterComponentType>( desc.ComponentType );
 		mask = desc.Mask;
 		readWriteMask = desc.ReadWriteMask;
 	}

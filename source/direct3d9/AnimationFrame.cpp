@@ -203,7 +203,7 @@ namespace Direct3D9
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( value );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		Pointer->Name = (LPSTR) pinnedName;
+		Pointer->Name = reinterpret_cast<LPSTR>( pinnedName );
 	}
 
 	MeshData^ MeshContainer::Mesh::get()
@@ -220,7 +220,7 @@ namespace Direct3D9
 
 	void MeshContainer::Mesh::set( MeshData^ value )
 	{
-		Pointer->MeshData.Type = (D3DXMESHDATATYPE) value->Type;
+		Pointer->MeshData.Type = static_cast<D3DXMESHDATATYPE>( value->Type );
 		
 		if( Pointer->MeshData.Type == D3DXMESHTYPE_MESH )
 			Pointer->MeshData.pMesh = value->Mesh->MeshPointer;
@@ -463,7 +463,7 @@ namespace Direct3D9
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		D3DXFRAME* frame = D3DXFrameFind( Pointer, (LPCSTR) pinnedName );
+		D3DXFRAME* frame = D3DXFrameFind( Pointer, reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( frame == NULL )
 			return nullptr;
 
@@ -475,8 +475,11 @@ namespace Direct3D9
 		pin_ptr<Vector3> pinnedResult = &objectCenter;
 		float radius;
 
-		HRESULT hr = D3DXFrameCalculateBoundingSphere( root->Pointer, (D3DXVECTOR3*) pinnedResult, &radius );
+		HRESULT hr = D3DXFrameCalculateBoundingSphere( root->Pointer, reinterpret_cast<D3DXVECTOR3*>( pinnedResult ), &radius );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return 0.0f;
 
 		return radius;
 	}
@@ -512,7 +515,7 @@ namespace Direct3D9
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( value );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		Pointer->Name = (LPSTR) pinnedName;
+		Pointer->Name = reinterpret_cast<LPSTR>( pinnedName );
 	}
 
 	Matrix Frame::TransformationMatrix::get()
@@ -583,9 +586,12 @@ namespace Direct3D9
 
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
-		HRESULT hr = D3DXLoadMeshHierarchyFromX( (LPCWSTR) pinnedName, (DWORD) options, device->InternalPointer,
+		HRESULT hr = D3DXLoadMeshHierarchyFromX( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( options ), device->InternalPointer,
 			allocatorShim, userDataLoaderShim, &result, &animationResult );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		animationController = gcnew AnimationController( animationResult );
 
@@ -605,9 +611,12 @@ namespace Direct3D9
 
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
-		HRESULT hr = D3DXLoadMeshHierarchyFromXInMemory( (LPCVOID) pinnedMemory, memory->Length, (DWORD) options, 
+		HRESULT hr = D3DXLoadMeshHierarchyFromXInMemory( reinterpret_cast<LPCVOID>( pinnedMemory ), memory->Length, static_cast<DWORD>( options ), 
 			device->InternalPointer, allocatorShim, userDataLoaderShim, &result, &animationResult );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
 
 		animationController = gcnew AnimationController( animationResult );
 

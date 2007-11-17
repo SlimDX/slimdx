@@ -86,13 +86,13 @@ namespace SlimDX
 			ID3DXBuffer *errorBuffer;
 			ID3DXConstantTable* constantTable;
 			
-			HRESULT hr = D3DXCompileShader( (const char*) pinnedCode, rawCode->Length, NULL, NULL,
-				(const char*) pinnedFunction, (const char*) pinnedProfile,
-				(DWORD) flags, &shaderBuffer, &errorBuffer, &constantTable );
+			HRESULT hr = D3DXCompileShader( reinterpret_cast<const char*>( pinnedCode ), rawCode->Length, NULL, NULL,
+				reinterpret_cast<const char*>( pinnedFunction ), reinterpret_cast<const char*>( pinnedProfile ),
+				static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, &constantTable );
 			
 			if( errorBuffer != NULL )
 			{
-				compilationErrors = gcnew String( (const char*) errorBuffer->GetBufferPointer() );
+				compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBuffer->GetBufferPointer() ) );
 			}
 			else
 			{
@@ -110,7 +110,7 @@ namespace SlimDX
 			SetLastError( hr );
 			
 			IDirect3DPixelShader9 *pixelShader;
-			device->InternalPointer->CreatePixelShader( (const DWORD*) shaderBuffer->GetBufferPointer(), &pixelShader );
+			device->InternalPointer->CreatePixelShader( reinterpret_cast<const DWORD*>( shaderBuffer->GetBufferPointer() ), &pixelShader );
 			if( pixelShader == NULL)
 				return nullptr;
 			return gcnew PixelShader( pixelShader, constantTable );
@@ -136,7 +136,7 @@ namespace SlimDX
 
 			//Ask D3DX to give us the actual table
 			ID3DXConstantTable* constantTable = NULL;
-			hr = D3DXGetShaderConstantTable( (const DWORD*) data.get(), &constantTable );
+			hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( data.get() ), &constantTable );
 			GraphicsException::CheckHResult( hr );
 			if( FAILED( hr ) )
 				return;

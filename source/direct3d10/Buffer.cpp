@@ -62,7 +62,7 @@ namespace Direct3D10
 	DataStream^ Buffer::Map( MapMode mode, MapFlags flags )
 	{
 		void* mappedPtr;
-		HRESULT hr = ( (ID3D10Buffer*) m_Pointer )->Map( (D3D10_MAP) mode, (UINT) flags, &mappedPtr );
+		HRESULT hr = ( static_cast<ID3D10Buffer*>( m_Pointer ) )->Map( static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedPtr );
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = mode == MapMode::Read;
@@ -72,7 +72,7 @@ namespace Direct3D10
 
 	void Buffer::Unmap()
 	{
-		( (ID3D10Buffer*) m_Pointer )->Unmap();
+		( static_cast<ID3D10Buffer*>( m_Pointer ) )->Unmap();
 	}
 	
 	void Buffer::Construct( Device^ device, int sizeInBytes, DataStream^ data, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
@@ -89,10 +89,10 @@ namespace Direct3D10
 		D3D10_BUFFER_DESC desc;
 		ZeroMemory( &desc, sizeof(desc) );
 		desc.ByteWidth = sizeInBytes;
-		desc.Usage = (D3D10_USAGE) usage;
-		desc.BindFlags = (UINT) bindFlags;
-		desc.CPUAccessFlags = (UINT) accessFlags;
-		desc.MiscFlags = (UINT) optionFlags;
+		desc.Usage = static_cast<D3D10_USAGE>( usage );
+		desc.BindFlags = static_cast<UINT>( bindFlags );
+		desc.CPUAccessFlags = static_cast<UINT>( accessFlags );
+		desc.MiscFlags = static_cast<UINT>( optionFlags );
 		
 		ID3D10Buffer* buffer = 0;
 		HRESULT hr;

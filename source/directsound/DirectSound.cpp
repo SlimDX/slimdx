@@ -52,7 +52,7 @@ namespace DirectSound
 	DirectSound::DirectSound( Guid device )
 	{
 		IDirectSound8* dsound;
-		HRESULT hr = DirectSoundCreate8( (GUID*) &device, &dsound, NULL );
+		HRESULT hr = DirectSoundCreate8( reinterpret_cast<GUID*>( &device ), &dsound, NULL );
 		SoundException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			throw gcnew SoundException();
@@ -69,7 +69,7 @@ namespace DirectSound
 
 	void DirectSound::Initialize( Guid device )
 	{
-		HRESULT hr = m_Pointer->Initialize( (GUID*) &device );
+		HRESULT hr = m_Pointer->Initialize( reinterpret_cast<GUID*>( &device ) );
 		SoundException::CheckHResult( hr );
 		caps = GetCapabilities();
 	}
@@ -77,7 +77,7 @@ namespace DirectSound
 	Capabilities DirectSound::GetCapabilities()
 	{
 		SlimDX::DirectSound::Capabilities caps;
-		HRESULT hr = m_Pointer->GetCaps( (DSCAPS*) &caps );
+		HRESULT hr = m_Pointer->GetCaps( reinterpret_cast<DSCAPS*>( &caps ) );
 		SoundException::CheckHResult( hr );
 		
 		return caps;
@@ -85,13 +85,13 @@ namespace DirectSound
 
 	void DirectSound::SetCooperativeLevel( IntPtr windowHandle, CooperativeLevel coopLevel )
 	{
-		HRESULT hr = m_Pointer->SetCooperativeLevel( (HWND) windowHandle.ToPointer(), (DWORD) coopLevel );
+		HRESULT hr = m_Pointer->SetCooperativeLevel( static_cast<HWND>( windowHandle.ToPointer() ), static_cast<DWORD>( coopLevel ) );
 		SoundException::CheckHResult( hr );
 	}
 
 	void DirectSound::SetSpeakerConfig( Speaker speakerSet, SpeakerGeometry geometry )
 	{
-		HRESULT hr = m_Pointer->SetSpeakerConfig( DSSPEAKER_COMBINED( (DWORD) speakerSet, (DWORD) geometry ) );
+		HRESULT hr = m_Pointer->SetSpeakerConfig( DSSPEAKER_COMBINED( static_cast<DWORD>( speakerSet ), static_cast<DWORD>( geometry ) ) );
 		SoundException::CheckHResult( hr );
 	}
 
@@ -101,8 +101,8 @@ namespace DirectSound
 		HRESULT hr = m_Pointer->GetSpeakerConfig( &config );
 		SoundException::CheckHResult( hr );
 
-		speakerSet = (Speaker) DSSPEAKER_CONFIG( config );
-		geometry = (SpeakerGeometry) DSSPEAKER_GEOMETRY( config );
+		speakerSet = static_cast<Speaker>( DSSPEAKER_CONFIG( config ) );
+		geometry = static_cast<SpeakerGeometry>( DSSPEAKER_GEOMETRY( config ) );
 	}
 
 	bool DirectSound::VerifyCertification()

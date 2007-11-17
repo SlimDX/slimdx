@@ -57,7 +57,7 @@ namespace Direct3D9
 	{
 		IDirect3DIndexBuffer9* ib;
 		D3DFORMAT format = sixteenBit ? D3DFMT_INDEX16 : D3DFMT_INDEX32;
-		HRESULT hr = device->InternalPointer->CreateIndexBuffer( sizeBytes, (DWORD) usage, format, (D3DPOOL) pool, &ib, NULL );
+		HRESULT hr = device->InternalPointer->CreateIndexBuffer( sizeBytes, static_cast<DWORD>( usage ), format, static_cast<D3DPOOL>( pool ), &ib, NULL );
 		GraphicsException::CheckHResult( hr );
 
 		m_Pointer = ib;
@@ -66,7 +66,7 @@ namespace Direct3D9
 	DataStream^ IndexBuffer::Lock( int offset, int size, LockFlags flags )
 	{
 		void* lockedPtr;
-		HRESULT hr = IbPointer->Lock( offset, size, &lockedPtr, (DWORD) flags );
+		HRESULT hr = IbPointer->Lock( offset, size, &lockedPtr, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;

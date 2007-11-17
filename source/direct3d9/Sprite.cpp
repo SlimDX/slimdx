@@ -52,7 +52,7 @@ namespace Direct3D9
 
 	void Sprite::Begin( SpriteFlags flags )
 	{
-		HRESULT hr = m_Pointer->Begin( (DWORD) flags );
+		HRESULT hr = m_Pointer->Begin( static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -94,7 +94,7 @@ namespace Direct3D9
 	{
 		Matrix result;
 
-		HRESULT hr = m_Pointer->GetTransform( (D3DXMATRIX*) &result );
+		HRESULT hr = m_Pointer->GetTransform( reinterpret_cast<D3DXMATRIX*>( &result ) );
 		GraphicsException::CheckHResult( hr );
 
 		return result;
@@ -102,19 +102,19 @@ namespace Direct3D9
 
 	void Sprite::Transform::set( Matrix value )
 	{
-		HRESULT hr = m_Pointer->SetTransform( (const D3DXMATRIX*) &value );
+		HRESULT hr = m_Pointer->SetTransform( reinterpret_cast<const D3DXMATRIX*>( &value ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Sprite::SetWorldViewLH( Matrix world, Matrix view )
 	{
-		HRESULT hr = m_Pointer->SetWorldViewLH( (const D3DXMATRIX*) &world, (const D3DXMATRIX*) &view );
+		HRESULT hr = m_Pointer->SetWorldViewLH( reinterpret_cast<const D3DXMATRIX*>( &world ), reinterpret_cast<const D3DXMATRIX*>( &view ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Sprite::SetWorldViewRH( Matrix world, Matrix view )
 	{
-		HRESULT hr = m_Pointer->SetWorldViewRH( (const D3DXMATRIX*) &world, (const D3DXMATRIX*) &view );
+		HRESULT hr = m_Pointer->SetWorldViewRH( reinterpret_cast<const D3DXMATRIX*>( &world ), reinterpret_cast<const D3DXMATRIX*>( &view ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -122,8 +122,8 @@ namespace Direct3D9
 	{
 		RECT rect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
 
-		HRESULT hr = m_Pointer->Draw( texture->TexturePointer, &rect, (const D3DXVECTOR3*) &center,
-			(const D3DXVECTOR3*) &position, color );
+		HRESULT hr = m_Pointer->Draw( texture->TexturePointer, &rect, reinterpret_cast<const D3DXVECTOR3*>( &center ),
+			reinterpret_cast<const D3DXVECTOR3*>( &position ), color );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -147,8 +147,8 @@ namespace Direct3D9
 
 	void Sprite::Draw( Texture^ texture, Vector3 center, Vector3 position, int color )
 	{
-		HRESULT hr = m_Pointer->Draw( texture->TexturePointer, NULL, (const D3DXVECTOR3*) &center,
-			(const D3DXVECTOR3*) &position, color );
+		HRESULT hr = m_Pointer->Draw( texture->TexturePointer, NULL, reinterpret_cast<const D3DXVECTOR3*>( &center ),
+			reinterpret_cast<const D3DXVECTOR3*>( &position ), color );
 		GraphicsException::CheckHResult( hr );
 	}
 
