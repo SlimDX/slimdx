@@ -69,6 +69,10 @@ namespace SlimDX
 			virtual ~PatchMesh() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 
+			static PatchMesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
+			static PatchMesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );
+			static PatchMesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags );
+
 			PatchMesh^ Clone( MeshFlags flags, array<VertexElement>^ vertexDeclaration );
 			void GenerateAdjacency( float tolerance );
 

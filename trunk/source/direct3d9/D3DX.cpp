@@ -45,6 +45,67 @@ namespace SlimDX
 			return static_cast<int>( D3DXGetFVFVertexSize( static_cast<DWORD>( fvf ) ) );
 		}
 
+		array<VertexElement>^ D3DX::DeclaratorFromFVF( VertexFormat fvf )
+		{
+			D3DVERTEXELEMENT9 elementBuffer[MAX_FVF_DECL_SIZE];
+
+			HRESULT hr = D3DXDeclaratorFromFVF( static_cast<DWORD>( fvf ), elementBuffer );
+			GraphicsException::CheckHResult( hr );
+
+			if( FAILED( hr ) )
+				return nullptr;
+
+			// Apparently the returned decl does not include an End element. This is bizarre and confusing,
+			// not to mention completely unexpected. We patch it up here.
+			int count = D3DXGetDeclLength( elementBuffer ) + 1;
+			array<VertexElement>^ elements = gcnew array<VertexElement>( count );
+			pin_ptr<VertexElement> pinnedElements = &elements[0];
+			memcpy( pinnedElements, elementBuffer, count * sizeof(D3DVERTEXELEMENT9) );
+			elements[count - 1] = VertexElement::VertexDeclarationEnd;
+
+			return elements;
+		}
+
+		VertexFormat D3DX::FVFFromDeclarator( array<VertexElement>^ declarator )
+		{
+			DWORD result;
+			pin_ptr<VertexElement> pinnedDecl = &declarator[0];
+
+			HRESULT hr = D3DXFVFFromDeclarator( reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ), &result );
+			GraphicsException::CheckHResult( hr );
+
+			return static_cast<VertexFormat>( result );
+		}
+
+		array<VertexElement>^ D3DX::GenerateOutputDeclaration( array<VertexElement>^ declaration )
+		{
+			D3DVERTEXELEMENT9 elementBuffer[MAX_FVF_DECL_SIZE];
+			pin_ptr<VertexElement> pinnedDecl = &declaration[0];
+
+			HRESULT hr = D3DXGenerateOutputDecl( elementBuffer, reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ) );
+			GraphicsException::CheckHResult( hr );
+
+			if( FAILED( hr ) )
+				return nullptr;
+
+			// Apparently the returned decl does not include an End element. This is bizarre and confusing,
+			// not to mention completely unexpected. We patch it up here.
+			int count = D3DXGetDeclLength( elementBuffer ) + 1;
+			array<VertexElement>^ elements = gcnew array<VertexElement>( count );
+			pin_ptr<VertexElement> pinnedElements = &elements[0];
+			memcpy( pinnedElements, elementBuffer, count * sizeof(D3DVERTEXELEMENT9) );
+			elements[count - 1] = VertexElement::VertexDeclarationEnd;
+
+			return elements;
+		}
+
+		int D3DX::GetDeclarationLength( array<VertexElement>^ declaration )
+		{
+			pin_ptr<VertexElement> pinnedDecl = &declaration[0];
+
+			return D3DXGetDeclLength( reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ) );
+		}
+
 		Format D3DX::MakeFourCC( Byte c1, Byte c2, Byte c3, Byte c4 )
 		{
 			int fourcc = (c4 << 24) | (c3 << 16) | (c2 << 8) | (c1);

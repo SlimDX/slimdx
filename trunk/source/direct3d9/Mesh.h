@@ -21,12 +21,16 @@
 */
 #pragma once
 
+#include "XFile.h"
+
 namespace SlimDX
 {
 	ref class DataStream;
 
 	namespace Direct3D9
 	{
+		ref class SkinInfo;
+
 		[Flags]
 		public enum class MeshFlags : Int32
 		{
@@ -235,6 +239,16 @@ namespace SlimDX
 			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
 			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );
 			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags );
+
+			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] BufferWrapper^% adjacency, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );
+			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags );
+
+			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] BufferWrapper^% adjacency, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances, [Out] SkinInfo^% skinInfo );
+			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances, [Out] SkinInfo^% skinInfo );
+			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] SkinInfo^% skinInfo );
+			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] SkinInfo^% skinInfo );
 
 			static Mesh^ CreateBox( Device^ device, float width, float height, float depth, [Out] BufferWrapper^% adjacency );
 			static Mesh^ CreateBox( Device^ device, float width, float height, float depth );

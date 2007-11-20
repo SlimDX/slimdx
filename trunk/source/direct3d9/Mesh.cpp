@@ -33,6 +33,7 @@
 #include "VertexBuffer.h"
 #include "Buffer.h"
 #include "Mesh.h"
+#include "SkinInfo.h"
 
 namespace SlimDX
 {
@@ -269,7 +270,7 @@ namespace Direct3D9
 		HRESULT hr = m_Pointer->GetAttributeTable( NULL, &count );
 		GraphicsException::CheckHResult( hr );
 
-		if( FAILED( hr ) )
+		if( FAILED( hr ) || count == 0 )
 			return nullptr;
 
 		array<AttributeRange>^ attribTable = gcnew array<AttributeRange>( count );
@@ -584,6 +585,9 @@ namespace Direct3D9
 			device->InternalPointer, NULL, NULL, NULL, NULL, &mesh );
 		GraphicsException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+			return nullptr;
+
 		return gcnew Mesh( mesh );
 	}
 
@@ -689,6 +693,12 @@ namespace Direct3D9
 			NULL, &materialBuffer, NULL, &materialCount, &mesh );
 		GraphicsException::CheckHResult( hr );
 
+		if( FAILED( hr ) )
+		{
+			materials = nullptr;
+			return nullptr;
+		}
+
 		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
 		materialBuffer->Release();
 
@@ -703,6 +713,225 @@ namespace Direct3D9
 		HRESULT hr = D3DXLoadMeshFromXW( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( flags ), 
 			device->InternalPointer, NULL, NULL, NULL, NULL, &mesh );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Mesh( mesh );
+	}
+
+	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] BufferWrapper^% adjacency,
+		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances )
+	{
+		ID3DXMesh* mesh;
+		ID3DXBuffer* adjacencyBuffer;
+		ID3DXBuffer* materialBuffer;
+		ID3DXBuffer* instanceBuffer;
+		DWORD materialCount;
+		
+		HRESULT hr = D3DXLoadMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
+			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+		{
+			adjacency = nullptr;
+			materials = nullptr;
+			effectInstances = nullptr;
+			return nullptr;
+		}
+
+		adjacency = gcnew BufferWrapper( adjacencyBuffer );
+		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
+
+		DWORD instanceCount = 0;
+		hr = mesh->GetAttributeTable( NULL, &instanceCount );
+		effectInstances = EffectInstance::FromBuffer( instanceBuffer, instanceCount );
+
+		materialBuffer->Release();
+		instanceBuffer->Release();
+
+		return gcnew Mesh( mesh );
+	}
+
+	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
+		[Out] array<EffectInstance>^% effectInstances )
+	{
+		ID3DXMesh* mesh;
+		ID3DXBuffer* materialBuffer;
+		ID3DXBuffer* instanceBuffer;
+		DWORD materialCount;
+		
+		HRESULT hr = D3DXLoadMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
+			NULL, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+		{
+			materials = nullptr;
+			effectInstances = nullptr;
+			return nullptr;
+		}
+
+		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
+
+		DWORD instanceCount = 0;
+		hr = mesh->GetAttributeTable( NULL, &instanceCount );
+		effectInstances = EffectInstance::FromBuffer( instanceBuffer, instanceCount );
+
+		materialBuffer->Release();
+		instanceBuffer->Release();
+
+		return gcnew Mesh( mesh );
+	}
+
+	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials )
+	{
+		ID3DXMesh* mesh;
+		ID3DXBuffer* materialBuffer;
+		DWORD materialCount;
+		
+		HRESULT hr = D3DXLoadMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
+			NULL, &materialBuffer, NULL, &materialCount, &mesh );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			materials = nullptr;
+			return nullptr;
+		}
+
+		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
+		materialBuffer->Release();
+
+		return gcnew Mesh( mesh );
+	}
+
+	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags )
+	{
+		ID3DXMesh* mesh;
+
+		HRESULT hr = D3DXLoadMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), 
+			device->InternalPointer, NULL, NULL, NULL, NULL, &mesh );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Mesh( mesh );
+	}
+
+	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] BufferWrapper^% adjacency,
+		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances, [Out] SkinInfo^% skinInfo )
+	{
+		ID3DXMesh* mesh;
+		ID3DXSkinInfo* skin;
+		ID3DXBuffer* adjacencyBuffer;
+		ID3DXBuffer* materialBuffer;
+		ID3DXBuffer* instanceBuffer;
+		DWORD materialCount;
+		
+		HRESULT hr = D3DXLoadSkinMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
+			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &skin, &mesh );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+		{
+			adjacency = nullptr;
+			materials = nullptr;
+			effectInstances = nullptr;
+			skinInfo = nullptr;
+			return nullptr;
+		}
+
+		adjacency = gcnew BufferWrapper( adjacencyBuffer );
+		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
+
+		DWORD instanceCount = 0;
+		hr = mesh->GetAttributeTable( NULL, &instanceCount );
+		effectInstances = EffectInstance::FromBuffer( instanceBuffer, instanceCount );
+
+		materialBuffer->Release();
+		instanceBuffer->Release();
+
+		skinInfo = gcnew SkinInfo( skin );
+
+		return gcnew Mesh( mesh );
+	}
+
+	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
+		[Out] array<EffectInstance>^% effectInstances, [Out] SkinInfo^% skinInfo )
+	{
+		ID3DXMesh* mesh;
+		ID3DXSkinInfo* skin;
+		ID3DXBuffer* materialBuffer;
+		ID3DXBuffer* instanceBuffer;
+		DWORD materialCount;
+		
+		HRESULT hr = D3DXLoadSkinMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
+			NULL, &materialBuffer, &instanceBuffer, &materialCount, &skin, &mesh );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+		{
+			materials = nullptr;
+			effectInstances = nullptr;
+			skinInfo = nullptr;
+			return nullptr;
+		}
+
+		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
+
+		DWORD instanceCount = 0;
+		hr = mesh->GetAttributeTable( NULL, &instanceCount );
+		effectInstances = EffectInstance::FromBuffer( instanceBuffer, instanceCount );
+
+		materialBuffer->Release();
+		instanceBuffer->Release();
+
+		skinInfo = gcnew SkinInfo( skin );
+
+		return gcnew Mesh( mesh );
+	}
+
+	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] SkinInfo^% skinInfo )
+	{
+		ID3DXMesh* mesh;
+		ID3DXSkinInfo* skin;
+		ID3DXBuffer* materialBuffer;
+		DWORD materialCount;
+		
+		HRESULT hr = D3DXLoadSkinMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
+			NULL, &materialBuffer, NULL, &materialCount, &skin, &mesh );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			materials = nullptr;
+			skinInfo = nullptr;
+			return nullptr;
+		}
+
+		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
+		materialBuffer->Release();
+
+		skinInfo = gcnew SkinInfo( skin );
+
+		return gcnew Mesh( mesh );
+	}
+
+	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] SkinInfo^% skinInfo )
+	{
+		ID3DXMesh* mesh;
+		ID3DXSkinInfo* skin;
+
+		HRESULT hr = D3DXLoadSkinMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), 
+			device->InternalPointer, NULL, NULL, NULL, NULL, &skin, &mesh );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			skinInfo = nullptr;
+			return nullptr;
+		}
+
+		skinInfo = gcnew SkinInfo( skin );
 
 		return gcnew Mesh( mesh );
 	}
