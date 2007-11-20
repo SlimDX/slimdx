@@ -43,6 +43,11 @@ namespace SlimDX
 			static int GetDeclarationVertexSize( array<VertexElement>^ elements, int stream );
 			static int GetFVFVertexSize( VertexFormat fvf );
 
+			static array<VertexElement>^ DeclaratorFromFVF( VertexFormat fvf );
+			static VertexFormat FVFFromDeclarator( array<VertexElement>^ declarator );
+			static array<VertexElement>^ GenerateOutputDeclaration( array<VertexElement>^ declaration );
+			static int GetDeclarationLength( array<VertexElement>^ declaration );
+
 			static Format MakeFourCC( Byte c1, Byte c2, Byte c3, Byte c4 );
 
 			static bool DebugMute( bool mute );

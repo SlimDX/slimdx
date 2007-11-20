@@ -61,6 +61,71 @@ namespace Direct3D9
 		m_Pointer = result;
 	}
 
+	PatchMesh^ PatchMesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
+		[Out] array<EffectInstance>^% effectInstances )
+	{
+		ID3DXPatchMesh* mesh;
+		ID3DXBuffer* materialBuffer;
+		ID3DXBuffer* instanceBuffer;
+		DWORD materialCount;
+		
+		HRESULT hr = D3DXLoadPatchMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
+			&materialBuffer, &instanceBuffer, &materialCount, &mesh );
+		GraphicsException::CheckHResult( hr );
+		if( FAILED( hr ) )
+		{
+			materials = nullptr;
+			effectInstances = nullptr;
+			return nullptr;
+		}
+
+		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
+
+		DWORD instanceCount = 0;
+		effectInstances = EffectInstance::FromBuffer( instanceBuffer, instanceCount );
+
+		materialBuffer->Release();
+		instanceBuffer->Release();
+
+		return gcnew PatchMesh( mesh );
+	}
+
+	PatchMesh^ PatchMesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials )
+	{
+		ID3DXPatchMesh* mesh;
+		ID3DXBuffer* materialBuffer;
+		DWORD materialCount;
+		
+		HRESULT hr = D3DXLoadPatchMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
+			&materialBuffer, NULL, &materialCount, &mesh );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			materials = nullptr;
+			return nullptr;
+		}
+
+		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
+		materialBuffer->Release();
+
+		return gcnew PatchMesh( mesh );
+	}
+
+	PatchMesh^ PatchMesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags )
+	{
+		ID3DXPatchMesh* mesh;
+
+		HRESULT hr = D3DXLoadPatchMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), 
+			device->InternalPointer, NULL, NULL, NULL, &mesh );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew PatchMesh( mesh );
+	}
+
 	PatchMesh^ PatchMesh::Clone( MeshFlags flags, array<VertexElement>^ vertexDeclaration )
 	{
 		ID3DXPatchMesh *result;

@@ -24,6 +24,7 @@
 #include <vcclr.h>
 
 #include "../DirectXObject.h"
+#include "../DataStream.h"
 
 #include "Device.h"
 #include "IndexBuffer.h"

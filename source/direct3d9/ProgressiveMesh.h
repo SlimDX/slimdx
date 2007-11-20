@@ -131,5 +131,51 @@ namespace SlimDX
 			property int MinimumFaceCount { int get(); }
 			property int MinimumVertexCount { int get(); }
 		};
+
+		public ref class SimplificationMesh : DirectXObject<ID3DXSPMesh>
+		{
+		internal:
+			SimplificationMesh( ID3DXSPMesh *mesh ) : DirectXObject( mesh ) { }
+
+		public:
+			SimplificationMesh( Mesh^ mesh, array<int>^% adjacency, array<AttributeWeights>^ vertexAttributeWeights, array<float>^ vertexWeights );
+			SimplificationMesh( Mesh^ mesh, array<int>^% adjacency, array<AttributeWeights>^ vertexAttributeWeights );
+			SimplificationMesh( Mesh^ mesh, array<int>^% adjacency, array<float>^ vertexWeights );
+			SimplificationMesh( Mesh^ mesh, array<int>^% adjacency );
+			virtual ~SimplificationMesh() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
+
+			Mesh^ Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% adjacencyOut, [Out] array<int>^% vertexRemap );
+			Mesh^ Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% adjacencyOut );
+			Mesh^ Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration );
+
+			Mesh^ Clone( Device^ device, MeshFlags options, VertexFormat fvf, [Out] array<int>^% adjacencyOut, [Out] array<int>^% vertexRemap );
+			Mesh^ Clone( Device^ device, MeshFlags options, VertexFormat fvf, [Out] array<int>^% adjacencyOut );
+			Mesh^ Clone( Device^ device, MeshFlags options, VertexFormat fvf );
+
+			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap, [Out] array<float>^% errorsByFace );
+			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap );
+			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration );
+
+			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags options, VertexFormat fvf, [Out] array<int>^% vertexRemap, [Out] array<float>^% errorsByFace );
+			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags options, VertexFormat fvf, [Out] array<int>^% vertexRemap );
+			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags options, VertexFormat fvf );
+
+			array<VertexElement>^ GetDeclaration();
+			Device^ GetDevice();
+
+			array<AttributeWeights>^ GetVertexAttributeWeights();
+			array<float>^ GetVertexWeights();
+
+			void ReduceFaces( int faces );
+			void ReduceVertices( int vertices );
+
+			property VertexFormat VertexFormat { SlimDX::Direct3D9::VertexFormat get(); }
+			property int MaximumFaceCount { int get(); }
+			property int MaximumVertexCount { int get(); }
+			property int FaceCount { int get(); }
+			property int VertexCount { int get(); }
+			property MeshFlags CreationOptions { MeshFlags get(); }
+		};
 	}
 }

@@ -25,6 +25,8 @@
 
 #include "../DirectXObject.h"
 #include "../Math/Math.h"
+#include "../DataStream.h"
+
 #include "GraphicsException.h"
 #include "Device.h"
 #include "Mesh.h"
