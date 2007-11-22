@@ -121,23 +121,356 @@ namespace SlimDX
 	
 	float Matrix::Determinant()
 	{
-		pin_ptr<Matrix> pinnedThis = this;
-		return D3DXMatrixDeterminant( (D3DXMATRIX*) pinnedThis );
+		float temp1 = (M33 * M44) - (M34 * M43);
+		float temp2 = (M32 * M44) - (M34 * M42);
+		float temp3 = (M32 * M43) - (M33 * M42);
+		float temp4 = (M31 * M44) - (M34 * M41);
+		float temp5 = (M31 * M43) - (M33 * M41);
+		float temp6 = (M31 * M42) - (M32 * M41);
+		
+		return ((((M11 * (((M22 * temp1) - (M23 * temp2)) + (M24 * temp3))) - (M12 * (((M21 * temp1) - 
+			(M23 * temp4)) + (M24 * temp5)))) + (M13 * (((M21 * temp2) - (M22 * temp4)) + (M24 * temp6)))) - 
+			(M14 * (((M21 * temp3) - (M22 * temp5)) + (M23 * temp6))));
+	}
+
+	Matrix Matrix::Add( Matrix left, Matrix right )
+	{
+		Matrix result;
+		result.M11 = left.M11 + right.M11;
+		result.M12 = left.M12 + right.M12;
+		result.M13 = left.M13 + right.M13;
+		result.M14 = left.M14 + right.M14;
+		result.M21 = left.M21 + right.M21;
+		result.M22 = left.M22 + right.M22;
+		result.M23 = left.M23 + right.M23;
+		result.M24 = left.M24 + right.M24;
+		result.M31 = left.M31 + right.M31;
+		result.M32 = left.M32 + right.M32;
+		result.M33 = left.M33 + right.M33;
+		result.M34 = left.M34 + right.M34;
+		result.M41 = left.M41 + right.M41;
+		result.M42 = left.M42 + right.M42;
+		result.M43 = left.M43 + right.M43;
+		result.M44 = left.M44 + right.M44;
+		return result;
+	}
+
+	void Matrix::Add( Matrix% left, Matrix% right, [Out] Matrix% result )
+	{
+		result.M11 = left.M11 + right.M11;
+		result.M12 = left.M12 + right.M12;
+		result.M13 = left.M13 + right.M13;
+		result.M14 = left.M14 + right.M14;
+		result.M21 = left.M21 + right.M21;
+		result.M22 = left.M22 + right.M22;
+		result.M23 = left.M23 + right.M23;
+		result.M24 = left.M24 + right.M24;
+		result.M31 = left.M31 + right.M31;
+		result.M32 = left.M32 + right.M32;
+		result.M33 = left.M33 + right.M33;
+		result.M34 = left.M34 + right.M34;
+		result.M41 = left.M41 + right.M41;
+		result.M42 = left.M42 + right.M42;
+		result.M43 = left.M43 + right.M43;
+		result.M44 = left.M44 + right.M44;
+	}
+
+	Matrix Matrix::Subtract( Matrix left, Matrix right )
+	{
+		Matrix result;
+		result.M11 = left.M11 - right.M11;
+		result.M12 = left.M12 - right.M12;
+		result.M13 = left.M13 - right.M13;
+		result.M14 = left.M14 - right.M14;
+		result.M21 = left.M21 - right.M21;
+		result.M22 = left.M22 - right.M22;
+		result.M23 = left.M23 - right.M23;
+		result.M24 = left.M24 - right.M24;
+		result.M31 = left.M31 - right.M31;
+		result.M32 = left.M32 - right.M32;
+		result.M33 = left.M33 - right.M33;
+		result.M34 = left.M34 - right.M34;
+		result.M41 = left.M41 - right.M41;
+		result.M42 = left.M42 - right.M42;
+		result.M43 = left.M43 - right.M43;
+		result.M44 = left.M44 - right.M44;
+		return result;
+	}
+
+	void Matrix::Subtract( Matrix% left, Matrix% right, [Out] Matrix% result )
+	{
+		result.M11 = left.M11 - right.M11;
+		result.M12 = left.M12 - right.M12;
+		result.M13 = left.M13 - right.M13;
+		result.M14 = left.M14 - right.M14;
+		result.M21 = left.M21 - right.M21;
+		result.M22 = left.M22 - right.M22;
+		result.M23 = left.M23 - right.M23;
+		result.M24 = left.M24 - right.M24;
+		result.M31 = left.M31 - right.M31;
+		result.M32 = left.M32 - right.M32;
+		result.M33 = left.M33 - right.M33;
+		result.M34 = left.M34 - right.M34;
+		result.M41 = left.M41 - right.M41;
+		result.M42 = left.M42 - right.M42;
+		result.M43 = left.M43 - right.M43;
+		result.M44 = left.M44 - right.M44;
+	}
+
+	Matrix Matrix::Negate( Matrix matrix )
+	{
+		Matrix result;
+		result.M11 = -matrix.M11;
+		result.M12 = -matrix.M12;
+		result.M13 = -matrix.M13;
+		result.M14 = -matrix.M14;
+		result.M21 = -matrix.M21;
+		result.M22 = -matrix.M22;
+		result.M23 = -matrix.M23;
+		result.M24 = -matrix.M24;
+		result.M31 = -matrix.M31;
+		result.M32 = -matrix.M32;
+		result.M33 = -matrix.M33;
+		result.M34 = -matrix.M34;
+		result.M41 = -matrix.M41;
+		result.M42 = -matrix.M42;
+		result.M43 = -matrix.M43;
+		result.M44 = -matrix.M44;
+		return result;
+	}
+
+	void Matrix::Negate( Matrix% matrix, [Out] Matrix% result )
+	{
+		result.M11 = -matrix.M11;
+		result.M12 = -matrix.M12;
+		result.M13 = -matrix.M13;
+		result.M14 = -matrix.M14;
+		result.M21 = -matrix.M21;
+		result.M22 = -matrix.M22;
+		result.M23 = -matrix.M23;
+		result.M24 = -matrix.M24;
+		result.M31 = -matrix.M31;
+		result.M32 = -matrix.M32;
+		result.M33 = -matrix.M33;
+		result.M34 = -matrix.M34;
+		result.M41 = -matrix.M41;
+		result.M42 = -matrix.M42;
+		result.M43 = -matrix.M43;
+		result.M44 = -matrix.M44;
 	}
 
 	Matrix Matrix::Multiply( Matrix left, Matrix right )
 	{
 		Matrix result;
-		D3DXMatrixMultiply( (D3DXMATRIX*) &result, (D3DXMATRIX*) &left, (D3DXMATRIX*) &right );
+		result.M11 = (left.M11 * right.M11) + (left.M12 * right.M21) + (left.M13 * right.M31) + (left.M14 * right.M41);
+		result.M12 = (left.M11 * right.M12) + (left.M12 * right.M22) + (left.M13 * right.M32) + (left.M14 * right.M42);
+		result.M13 = (left.M11 * right.M13) + (left.M12 * right.M23) + (left.M13 * right.M33) + (left.M14 * right.M43);
+		result.M14 = (left.M11 * right.M14) + (left.M12 * right.M24) + (left.M13 * right.M34) + (left.M14 * right.M44);
+		result.M21 = (left.M21 * right.M11) + (left.M22 * right.M21) + (left.M23 * right.M31) + (left.M24 * right.M41);
+		result.M22 = (left.M21 * right.M12) + (left.M22 * right.M22) + (left.M23 * right.M32) + (left.M24 * right.M42);
+		result.M23 = (left.M21 * right.M13) + (left.M22 * right.M23) + (left.M23 * right.M33) + (left.M24 * right.M43);
+		result.M24 = (left.M21 * right.M14) + (left.M22 * right.M24) + (left.M23 * right.M34) + (left.M24 * right.M44);
+		result.M31 = (left.M31 * right.M11) + (left.M32 * right.M21) + (left.M33 * right.M31) + (left.M34 * right.M41);
+		result.M32 = (left.M31 * right.M12) + (left.M32 * right.M22) + (left.M33 * right.M32) + (left.M34 * right.M42);
+		result.M33 = (left.M31 * right.M13) + (left.M32 * right.M23) + (left.M33 * right.M33) + (left.M34 * right.M43);
+		result.M34 = (left.M31 * right.M14) + (left.M32 * right.M24) + (left.M33 * right.M34) + (left.M34 * right.M44);
+		result.M41 = (left.M41 * right.M11) + (left.M42 * right.M21) + (left.M43 * right.M31) + (left.M44 * right.M41);
+		result.M42 = (left.M41 * right.M12) + (left.M42 * right.M22) + (left.M43 * right.M32) + (left.M44 * right.M42);
+		result.M43 = (left.M41 * right.M13) + (left.M42 * right.M23) + (left.M43 * right.M33) + (left.M44 * right.M43);
+		result.M44 = (left.M41 * right.M14) + (left.M42 * right.M24) + (left.M43 * right.M34) + (left.M44 * right.M44);
 		return result;
 	}
 
 	void Matrix::Multiply( Matrix% left, Matrix% right, [Out] Matrix% result )
 	{
-		pin_ptr<Matrix> pinLeft = &left;
-		pin_ptr<Matrix> pinRight = &right;
-		pin_ptr<Matrix> pinResult = &result;
-		D3DXMatrixMultiply( (D3DXMATRIX*) pinResult, (D3DXMATRIX*) pinLeft, (D3DXMATRIX*) pinRight );
+		result.M11 = (left.M11 * right.M11) + (left.M12 * right.M21) + (left.M13 * right.M31) + (left.M14 * right.M41);
+		result.M12 = (left.M11 * right.M12) + (left.M12 * right.M22) + (left.M13 * right.M32) + (left.M14 * right.M42);
+		result.M13 = (left.M11 * right.M13) + (left.M12 * right.M23) + (left.M13 * right.M33) + (left.M14 * right.M43);
+		result.M14 = (left.M11 * right.M14) + (left.M12 * right.M24) + (left.M13 * right.M34) + (left.M14 * right.M44);
+		result.M21 = (left.M21 * right.M11) + (left.M22 * right.M21) + (left.M23 * right.M31) + (left.M24 * right.M41);
+		result.M22 = (left.M21 * right.M12) + (left.M22 * right.M22) + (left.M23 * right.M32) + (left.M24 * right.M42);
+		result.M23 = (left.M21 * right.M13) + (left.M22 * right.M23) + (left.M23 * right.M33) + (left.M24 * right.M43);
+		result.M24 = (left.M21 * right.M14) + (left.M22 * right.M24) + (left.M23 * right.M34) + (left.M24 * right.M44);
+		result.M31 = (left.M31 * right.M11) + (left.M32 * right.M21) + (left.M33 * right.M31) + (left.M34 * right.M41);
+		result.M32 = (left.M31 * right.M12) + (left.M32 * right.M22) + (left.M33 * right.M32) + (left.M34 * right.M42);
+		result.M33 = (left.M31 * right.M13) + (left.M32 * right.M23) + (left.M33 * right.M33) + (left.M34 * right.M43);
+		result.M34 = (left.M31 * right.M14) + (left.M32 * right.M24) + (left.M33 * right.M34) + (left.M34 * right.M44);
+		result.M41 = (left.M41 * right.M11) + (left.M42 * right.M21) + (left.M43 * right.M31) + (left.M44 * right.M41);
+		result.M42 = (left.M41 * right.M12) + (left.M42 * right.M22) + (left.M43 * right.M32) + (left.M44 * right.M42);
+		result.M43 = (left.M41 * right.M13) + (left.M42 * right.M23) + (left.M43 * right.M33) + (left.M44 * right.M43);
+		result.M44 = (left.M41 * right.M14) + (left.M42 * right.M24) + (left.M43 * right.M34) + (left.M44 * right.M44);
+	}
+
+	Matrix Matrix::Multiply( Matrix left, float right )
+	{
+		Matrix result;
+		result.M11 = left.M11 * right;
+		result.M12 = left.M12 * right;
+		result.M13 = left.M13 * right;
+		result.M14 = left.M14 * right;
+		result.M21 = left.M21 * right;
+		result.M22 = left.M22 * right;
+		result.M23 = left.M23 * right;
+		result.M24 = left.M24 * right;
+		result.M31 = left.M31 * right;
+		result.M32 = left.M32 * right;
+		result.M33 = left.M33 * right;
+		result.M34 = left.M34 * right;
+		result.M41 = left.M41 * right;
+		result.M42 = left.M42 * right;
+		result.M43 = left.M43 * right;
+		result.M44 = left.M44 * right;
+		return result;
+	}
+
+	void Matrix::Multiply( Matrix% left, float right, [Out] Matrix% result )
+	{
+		result.M11 = left.M11 * right;
+		result.M12 = left.M12 * right;
+		result.M13 = left.M13 * right;
+		result.M14 = left.M14 * right;
+		result.M21 = left.M21 * right;
+		result.M22 = left.M22 * right;
+		result.M23 = left.M23 * right;
+		result.M24 = left.M24 * right;
+		result.M31 = left.M31 * right;
+		result.M32 = left.M32 * right;
+		result.M33 = left.M33 * right;
+		result.M34 = left.M34 * right;
+		result.M41 = left.M41 * right;
+		result.M42 = left.M42 * right;
+		result.M43 = left.M43 * right;
+		result.M44 = left.M44 * right;
+	}
+
+	Matrix Matrix::Divide( Matrix left, Matrix right )
+	{
+		Matrix result;
+		result.M11 = left.M11 / right.M11;
+		result.M12 = left.M12 / right.M12;
+		result.M13 = left.M13 / right.M13;
+		result.M14 = left.M14 / right.M14;
+		result.M21 = left.M21 / right.M21;
+		result.M22 = left.M22 / right.M22;
+		result.M23 = left.M23 / right.M23;
+		result.M24 = left.M24 / right.M24;
+		result.M31 = left.M31 / right.M31;
+		result.M32 = left.M32 / right.M32;
+		result.M33 = left.M33 / right.M33;
+		result.M34 = left.M34 / right.M34;
+		result.M41 = left.M41 / right.M41;
+		result.M42 = left.M42 / right.M42;
+		result.M43 = left.M43 / right.M43;
+		result.M44 = left.M44 / right.M44;
+		return result;
+	}
+
+	void Matrix::Divide( Matrix% left, Matrix% right, [Out] Matrix% result )
+	{
+		result.M11 = left.M11 / right.M11;
+		result.M12 = left.M12 / right.M12;
+		result.M13 = left.M13 / right.M13;
+		result.M14 = left.M14 / right.M14;
+		result.M21 = left.M21 / right.M21;
+		result.M22 = left.M22 / right.M22;
+		result.M23 = left.M23 / right.M23;
+		result.M24 = left.M24 / right.M24;
+		result.M31 = left.M31 / right.M31;
+		result.M32 = left.M32 / right.M32;
+		result.M33 = left.M33 / right.M33;
+		result.M34 = left.M34 / right.M34;
+		result.M41 = left.M41 / right.M41;
+		result.M42 = left.M42 / right.M42;
+		result.M43 = left.M43 / right.M43;
+		result.M44 = left.M44 / right.M44;
+	}
+
+	Matrix Matrix::Divide( Matrix left, float right )
+	{
+		Matrix result;
+		float inv = 1.0f / right;
+
+		result.M11 = left.M11 * inv;
+		result.M12 = left.M12 * inv;
+		result.M13 = left.M13 * inv;
+		result.M14 = left.M14 * inv;
+		result.M21 = left.M21 * inv;
+		result.M22 = left.M22 * inv;
+		result.M23 = left.M23 * inv;
+		result.M24 = left.M24 * inv;
+		result.M31 = left.M31 * inv;
+		result.M32 = left.M32 * inv;
+		result.M33 = left.M33 * inv;
+		result.M34 = left.M34 * inv;
+		result.M41 = left.M41 * inv;
+		result.M42 = left.M42 * inv;
+		result.M43 = left.M43 * inv;
+		result.M44 = left.M44 * inv;
+		return result;
+	}
+
+	void Matrix::Divide( Matrix% left, float right, [Out] Matrix% result )
+	{
+		float inv = 1.0f / right;
+
+		result.M11 = left.M11 * inv;
+		result.M12 = left.M12 * inv;
+		result.M13 = left.M13 * inv;
+		result.M14 = left.M14 * inv;
+		result.M21 = left.M21 * inv;
+		result.M22 = left.M22 * inv;
+		result.M23 = left.M23 * inv;
+		result.M24 = left.M24 * inv;
+		result.M31 = left.M31 * inv;
+		result.M32 = left.M32 * inv;
+		result.M33 = left.M33 * inv;
+		result.M34 = left.M34 * inv;
+		result.M41 = left.M41 * inv;
+		result.M42 = left.M42 * inv;
+		result.M43 = left.M43 * inv;
+		result.M44 = left.M44 * inv;
+	}
+
+	Matrix Matrix::Lerp( Matrix value1, Matrix value2, float amount )
+	{
+		Matrix result;
+		result.M11 = value1.M11 + ((value2.M11 - value1.M11) * amount);
+		result.M12 = value1.M12 + ((value2.M12 - value1.M12) * amount);
+		result.M13 = value1.M13 + ((value2.M13 - value1.M13) * amount);
+		result.M14 = value1.M14 + ((value2.M14 - value1.M14) * amount);
+		result.M21 = value1.M21 + ((value2.M21 - value1.M21) * amount);
+		result.M22 = value1.M22 + ((value2.M22 - value1.M22) * amount);
+		result.M23 = value1.M23 + ((value2.M23 - value1.M23) * amount);
+		result.M24 = value1.M24 + ((value2.M24 - value1.M24) * amount);
+		result.M31 = value1.M31 + ((value2.M31 - value1.M31) * amount);
+		result.M32 = value1.M32 + ((value2.M32 - value1.M32) * amount);
+		result.M33 = value1.M33 + ((value2.M33 - value1.M33) * amount);
+		result.M34 = value1.M34 + ((value2.M34 - value1.M34) * amount);
+		result.M41 = value1.M41 + ((value2.M41 - value1.M41) * amount);
+		result.M42 = value1.M42 + ((value2.M42 - value1.M42) * amount);
+		result.M43 = value1.M43 + ((value2.M43 - value1.M43) * amount);
+		result.M44 = value1.M44 + ((value2.M44 - value1.M44) * amount);
+		return result;
+	}
+
+	void Matrix::Lerp( Matrix% value1, Matrix% value2, float amount, [Out] Matrix% result )
+	{
+		result.M11 = value1.M11 + ((value2.M11 - value1.M11) * amount);
+		result.M12 = value1.M12 + ((value2.M12 - value1.M12) * amount);
+		result.M13 = value1.M13 + ((value2.M13 - value1.M13) * amount);
+		result.M14 = value1.M14 + ((value2.M14 - value1.M14) * amount);
+		result.M21 = value1.M21 + ((value2.M21 - value1.M21) * amount);
+		result.M22 = value1.M22 + ((value2.M22 - value1.M22) * amount);
+		result.M23 = value1.M23 + ((value2.M23 - value1.M23) * amount);
+		result.M24 = value1.M24 + ((value2.M24 - value1.M24) * amount);
+		result.M31 = value1.M31 + ((value2.M31 - value1.M31) * amount);
+		result.M32 = value1.M32 + ((value2.M32 - value1.M32) * amount);
+		result.M33 = value1.M33 + ((value2.M33 - value1.M33) * amount);
+		result.M34 = value1.M34 + ((value2.M34 - value1.M34) * amount);
+		result.M41 = value1.M41 + ((value2.M41 - value1.M41) * amount);
+		result.M42 = value1.M42 + ((value2.M42 - value1.M42) * amount);
+		result.M43 = value1.M43 + ((value2.M43 - value1.M43) * amount);
+		result.M44 = value1.M44 + ((value2.M44 - value1.M44) * amount);
 	}
 
 	Matrix Matrix::Billboard( Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector, Vector3 cameraForwardVector )
@@ -214,133 +547,461 @@ namespace SlimDX
 	Matrix Matrix::RotationX( float angle )
 	{
 		Matrix result;
-		D3DXMatrixRotationX( (D3DXMATRIX*) &result, angle );
+		float cos = static_cast<float>( Math::Cos( static_cast<double>( angle ) ) );
+		float sin = static_cast<float>( Math::Sin( static_cast<double>( angle ) ) );
+
+		result.M11 = 1.0f;
+		result.M12 = 0.0f;
+		result.M13 = 0.0f;
+		result.M14 = 0.0f;
+		result.M21 = 0.0f;
+		result.M22 = cos;
+		result.M23 = sin;
+		result.M24 = 0.0f;
+		result.M31 = 0.0f;
+		result.M32 = -sin;
+		result.M33 = cos;
+		result.M34 = 0.0f;
+		result.M41 = 0.0f;
+		result.M42 = 0.0f;
+		result.M43 = 0.0f;
+		result.M44 = 1.0f;
+
 		return result;
 	}
 
 	void Matrix::RotationX( float angle, [Out] Matrix% result )
 	{
-		pin_ptr<Matrix> pinResult = &result;
-		D3DXMatrixRotationX( (D3DXMATRIX*) pinResult, angle );
+		float cos = static_cast<float>( Math::Cos( static_cast<double>( angle ) ) );
+		float sin = static_cast<float>( Math::Sin( static_cast<double>( angle ) ) );
+
+		result.M11 = 1.0f;
+		result.M12 = 0.0f;
+		result.M13 = 0.0f;
+		result.M14 = 0.0f;
+		result.M21 = 0.0f;
+		result.M22 = cos;
+		result.M23 = sin;
+		result.M24 = 0.0f;
+		result.M31 = 0.0f;
+		result.M32 = -sin;
+		result.M33 = cos;
+		result.M34 = 0.0f;
+		result.M41 = 0.0f;
+		result.M42 = 0.0f;
+		result.M43 = 0.0f;
+		result.M44 = 1.0f;
 	}
 	
 	Matrix Matrix::RotationY( float angle )
 	{
 		Matrix result;
-		D3DXMatrixRotationY( (D3DXMATRIX*) &result, angle );
+		float cos = static_cast<float>( Math::Cos( static_cast<double>( angle ) ) );
+		float sin = static_cast<float>( Math::Sin( static_cast<double>( angle ) ) );
+
+		result.M11 = cos;
+		result.M12 = 0.0f;
+		result.M13 = -sin;
+		result.M14 = 0.0f;
+		result.M21 = 0.0f;
+		result.M22 = 1.0f;
+		result.M23 = 0.0f;
+		result.M24 = 0.0f;
+		result.M31 = sin;
+		result.M32 = 0.0f;
+		result.M33 = cos;
+		result.M34 = 0.0f;
+		result.M41 = 0.0f;
+		result.M42 = 0.0f;
+		result.M43 = 0.0f;
+		result.M44 = 1.0f;
+
 		return result;
 	}
 
 	void Matrix::RotationY( float angle, [Out] Matrix% result )
 	{
-		pin_ptr<Matrix> pinResult = &result;
-		D3DXMatrixRotationY( (D3DXMATRIX*) pinResult, angle );
+		float cos = static_cast<float>( Math::Cos( static_cast<double>( angle ) ) );
+		float sin = static_cast<float>( Math::Sin( static_cast<double>( angle ) ) );
+
+		result.M11 = cos;
+		result.M12 = 0.0f;
+		result.M13 = -sin;
+		result.M14 = 0.0f;
+		result.M21 = 0.0f;
+		result.M22 = 1.0f;
+		result.M23 = 0.0f;
+		result.M24 = 0.0f;
+		result.M31 = sin;
+		result.M32 = 0.0f;
+		result.M33 = cos;
+		result.M34 = 0.0f;
+		result.M41 = 0.0f;
+		result.M42 = 0.0f;
+		result.M43 = 0.0f;
+		result.M44 = 1.0f;
 	}
 	
 	Matrix Matrix::RotationZ( float angle )
 	{
 		Matrix result;
-		D3DXMatrixRotationZ( (D3DXMATRIX*) &result, angle );
+		float cos = static_cast<float>( Math::Cos( static_cast<double>( angle ) ) );
+		float sin = static_cast<float>( Math::Sin( static_cast<double>( angle ) ) );
+
+		result.M11 = cos;
+		result.M12 = sin;
+		result.M13 = 0.0f;
+		result.M14 = 0.0f;
+		result.M21 = -sin;
+		result.M22 = cos;
+		result.M23 = 0.0f;
+		result.M24 = 0.0f;
+		result.M31 = 0.0f;
+		result.M32 = 0.0f;
+		result.M33 = 1.0f;
+		result.M34 = 0.0f;
+		result.M41 = 0.0f;
+		result.M42 = 0.0f;
+		result.M43 = 0.0f;
+		result.M44 = 1.0f;
+
 		return result;
 	}
 
 	void Matrix::RotationZ( float angle, [Out] Matrix% result )
 	{
-		pin_ptr<Matrix> pinResult = &result;
-		D3DXMatrixRotationZ( (D3DXMATRIX*) pinResult, angle );
+		float cos = static_cast<float>( Math::Cos( static_cast<double>( angle ) ) );
+		float sin = static_cast<float>( Math::Sin( static_cast<double>( angle ) ) );
+
+		result.M11 = cos;
+		result.M12 = sin;
+		result.M13 = 0.0f;
+		result.M14 = 0.0f;
+		result.M21 = -sin;
+		result.M22 = cos;
+		result.M23 = 0.0f;
+		result.M24 = 0.0f;
+		result.M31 = 0.0f;
+		result.M32 = 0.0f;
+		result.M33 = 1.0f;
+		result.M34 = 0.0f;
+		result.M41 = 0.0f;
+		result.M42 = 0.0f;
+		result.M43 = 0.0f;
+		result.M44 = 1.0f;
 	}
 
-	Matrix Matrix::RotationQuaternion( Quaternion quat )
+	Matrix Matrix::RotationQuaternion( Quaternion quaternion )
 	{
 		Matrix result;
-		D3DXMatrixRotationQuaternion( (D3DXMATRIX*) &result, (D3DXQUATERNION*) &quat );
+
+		float xx = quaternion.X * quaternion.X;
+		float yy = quaternion.Y * quaternion.Y;
+		float zz = quaternion.Z * quaternion.Z;
+		float xy = quaternion.X * quaternion.Y;
+		float zw = quaternion.Z * quaternion.W;
+		float zx = quaternion.Z * quaternion.X;
+		float yw = quaternion.Y * quaternion.W;
+		float yz = quaternion.Y * quaternion.Z;
+		float xw = quaternion.X * quaternion.W;
+		result.M11 = 1.0f - (2.0f * (yy + zz));
+		result.M12 = 2.0f * (xy + zw);
+		result.M13 = 2.0f * (zx - yw);
+		result.M14 = 0.0f;
+		result.M21 = 2.0f * (xy - zw);
+		result.M22 = 1.0f - (2.0f * (zz + xx));
+		result.M23 = 2.0f * (yz + xw);
+		result.M24 = 0.0f;
+		result.M31 = 2.0f * (zx + yw);
+		result.M32 = 2.0f * (yz - xw);
+		result.M33 = 1.0f - (2.0f * (yy + xx));
+		result.M34 = 0.0f;
+		result.M41 = 0.0f;
+		result.M42 = 0.0f;
+		result.M43 = 0.0f;
+		result.M44 = 1.0f;
+
 		return result;
 	}
 
 	void Matrix::RotationQuaternion( Quaternion% rotation, [Out] Matrix% result )
 	{
-		pin_ptr<Quaternion> pinRotation = &rotation;
-		pin_ptr<Matrix> pinResult = &result;
-		D3DXMatrixRotationQuaternion( (D3DXMATRIX*) pinResult, (D3DXQUATERNION*) pinRotation );
+		float xx = rotation.X * rotation.X;
+		float yy = rotation.Y * rotation.Y;
+		float zz = rotation.Z * rotation.Z;
+		float xy = rotation.X * rotation.Y;
+		float zw = rotation.Z * rotation.W;
+		float zx = rotation.Z * rotation.X;
+		float yw = rotation.Y * rotation.W;
+		float yz = rotation.Y * rotation.Z;
+		float xw = rotation.X * rotation.W;
+		result.M11 = 1.0f - (2.0f * (yy + zz));
+		result.M12 = 2.0f * (xy + zw);
+		result.M13 = 2.0f * (zx - yw);
+		result.M14 = 0.0f;
+		result.M21 = 2.0f * (xy - zw);
+		result.M22 = 1.0f - (2.0f * (zz + xx));
+		result.M23 = 2.0f * (yz + xw);
+		result.M24 = 0.0f;
+		result.M31 = 2.0f * (zx + yw);
+		result.M32 = 2.0f * (yz - xw);
+		result.M33 = 1.0f - (2.0f * (yy + xx));
+		result.M34 = 0.0f;
+		result.M41 = 0.0f;
+		result.M42 = 0.0f;
+		result.M43 = 0.0f;
+		result.M44 = 1.0f;
 	}
 
 	Matrix Matrix::RotationAxis( Vector3 axis, float angle )
 	{
 		Matrix result;
-		D3DXMatrixRotationAxis( (D3DXMATRIX*) &result, (D3DXVECTOR3*) &axis, angle );
+		float x = axis.X;
+		float y = axis.Y;
+		float z = axis.Z;
+		float cos = static_cast<float>( Math::Cos( static_cast<double>( angle ) ) );
+		float sin = static_cast<float>( Math::Sin( static_cast<double>( angle ) ) );
+		float xx = x * x;
+		float yy = y * y;
+		float zz = z * z;
+		float xy = x * y;
+		float xz = x * z;
+		float yz = y * z;
+
+		result.M11 = xx + (cos * (1.0f - xx));
+		result.M12 = (xy - (cos * xy)) + (sin * z);
+		result.M13 = (xz - (cos * xz)) - (sin * y);
+		result.M14 = 0.0f;
+		result.M21 = (xy - (cos * xy)) - (sin * z);
+		result.M22 = yy + (cos * (1.0f - yy));
+		result.M23 = (yz - (cos * yz)) + (sin * x);
+		result.M24 = 0.0f;
+		result.M31 = (xz - (cos * xz)) + (sin * y);
+		result.M32 = (yz - (cos * yz)) - (sin * x);
+		result.M33 = zz + (cos * (1.0f - zz));
+		result.M34 = 0.0f;
+		result.M41 = 0.0f;
+		result.M42 = 0.0f;
+		result.M43 = 0.0f;
+		result.M44 = 1.0f;
+
 		return result;
 	}
 
 	void Matrix::RotationAxis( Vector3% axis, float angle, [Out] Matrix% result )
 	{
-		pin_ptr<Vector3> pinAxis = &axis;
-		pin_ptr<Matrix> pinResult = &result;
-		D3DXMatrixRotationAxis( (D3DXMATRIX*) pinResult, (D3DXVECTOR3*) pinAxis, angle );
+		float x = axis.X;
+		float y = axis.Y;
+		float z = axis.Z;
+		float cos = static_cast<float>( Math::Cos( static_cast<double>( angle ) ) );
+		float sin = static_cast<float>( Math::Sin( static_cast<double>( angle ) ) );
+		float xx = x * x;
+		float yy = y * y;
+		float zz = z * z;
+		float xy = x * y;
+		float xz = x * z;
+		float yz = y * z;
+
+		result.M11 = xx + (cos * (1.0f - xx));
+		result.M12 = (xy - (cos * xy)) + (sin * z);
+		result.M13 = (xz - (cos * xz)) - (sin * y);
+		result.M14 = 0.0f;
+		result.M21 = (xy - (cos * xy)) - (sin * z);
+		result.M22 = yy + (cos * (1.0f - yy));
+		result.M23 = (yz - (cos * yz)) + (sin * x);
+		result.M24 = 0.0f;
+		result.M31 = (xz - (cos * xz)) + (sin * y);
+		result.M32 = (yz - (cos * yz)) - (sin * x);
+		result.M33 = zz + (cos * (1.0f - zz));
+		result.M34 = 0.0f;
+		result.M41 = 0.0f;
+		result.M42 = 0.0f;
+		result.M43 = 0.0f;
+		result.M44 = 1.0f;
 	}
 
 	Matrix Matrix::RotationYawPitchRoll( float yaw, float pitch, float roll )
 	{
 		Matrix result;
-		D3DXMatrixRotationYawPitchRoll( (D3DXMATRIX*) &result, yaw, pitch, roll );
+		Quaternion quaternion;
+		Quaternion::RotationYawPitchRoll( yaw, pitch, roll, quaternion );
+		RotationQuaternion( quaternion, result );
 		return result;
 	}
 
 	void Matrix::RotationYawPitchRoll( float yaw, float pitch, float roll, [Out] Matrix% result )
 	{
-		pin_ptr<Matrix> pinResult = &result;
-		D3DXMatrixRotationYawPitchRoll( (D3DXMATRIX*) pinResult, yaw, pitch, roll );
+		Quaternion quaternion;
+		Quaternion::RotationYawPitchRoll( yaw, pitch, roll, quaternion );
+		RotationQuaternion( quaternion, result );
 	}
 
 	Matrix Matrix::Translation( float x, float y, float z )
 	{
 		Matrix result;
-		D3DXMatrixTranslation( (D3DXMATRIX*) &result, x, y, z );
+		result.M11 = 1.0f;
+		result.M12 = 0.0f;
+		result.M13 = 0.0f;
+		result.M14 = 0.0f;
+		result.M21 = 0.0f;
+		result.M22 = 1.0f;
+		result.M23 = 0.0f;
+		result.M24 = 0.0f;
+		result.M31 = 0.0f;
+		result.M32 = 0.0f;
+		result.M33 = 1.0f;
+		result.M34 = 0.0f;
+		result.M41 = x;
+		result.M42 = y;
+		result.M43 = z;
+		result.M44 = 1.0f;
 		return result;
 	}
 
 	void Matrix::Translation( float x, float y, float z, [Out] Matrix% result )
 	{
-		pin_ptr<Matrix> pinResult = &result;
-		D3DXMatrixTranslation( (D3DXMATRIX*) pinResult, x, y, z );
+		result.M11 = 1.0f;
+		result.M12 = 0.0f;
+		result.M13 = 0.0f;
+		result.M14 = 0.0f;
+		result.M21 = 0.0f;
+		result.M22 = 1.0f;
+		result.M23 = 0.0f;
+		result.M24 = 0.0f;
+		result.M31 = 0.0f;
+		result.M32 = 0.0f;
+		result.M33 = 1.0f;
+		result.M34 = 0.0f;
+		result.M41 = x;
+		result.M42 = y;
+		result.M43 = z;
+		result.M44 = 1.0f;
 	}
 
 	Matrix Matrix::Translation( Vector3 translation )
 	{
 		Matrix result;
-		D3DXMatrixTranslation( (D3DXMATRIX*) &result, translation.X, translation.Y, translation.Z );
+		result.M11 = 1.0f;
+		result.M12 = 0.0f;
+		result.M13 = 0.0f;
+		result.M14 = 0.0f;
+		result.M21 = 0.0f;
+		result.M22 = 1.0f;
+		result.M23 = 0.0f;
+		result.M24 = 0.0f;
+		result.M31 = 0.0f;
+		result.M32 = 0.0f;
+		result.M33 = 1.0f;
+		result.M34 = 0.0f;
+		result.M41 = translation.X;
+		result.M42 = translation.Y;
+		result.M43 = translation.Z;
+		result.M44 = 1.0f;
 		return result;
 	}
 
 	void Matrix::Translation( Vector3% translation, [Out] Matrix% result )
 	{
-		pin_ptr<Matrix> pinResult = &result;
-		D3DXMatrixTranslation( (D3DXMATRIX*) pinResult, translation.X, translation.Y, translation.Z );
+		result.M11 = 1.0f;
+		result.M12 = 0.0f;
+		result.M13 = 0.0f;
+		result.M14 = 0.0f;
+		result.M21 = 0.0f;
+		result.M22 = 1.0f;
+		result.M23 = 0.0f;
+		result.M24 = 0.0f;
+		result.M31 = 0.0f;
+		result.M32 = 0.0f;
+		result.M33 = 1.0f;
+		result.M34 = 0.0f;
+		result.M41 = translation.X;
+		result.M42 = translation.Y;
+		result.M43 = translation.Z;
+		result.M44 = 1.0f;
 	}
 
 	Matrix Matrix::Scaling ( float x, float y, float z )
 	{
 		Matrix result;
-		D3DXMatrixScaling( (D3DXMATRIX*) &result, x, y, z );
+		result.M11 = x;
+		result.M12 = 0.0f;
+		result.M13 = 0.0f;
+		result.M14 = 0.0f;
+		result.M21 = 0.0f;
+		result.M22 = y;
+		result.M23 = 0.0f;
+		result.M24 = 0.0f;
+		result.M31 = 0.0f;
+		result.M32 = 0.0f;
+		result.M33 = z;
+		result.M34 = 0.0f;
+		result.M41 = 0.0f;
+		result.M42 = 0.0f;
+		result.M43 = 0.0f;
+		result.M44 = 1.0f;
 		return result;
 	}
 
 	void Matrix::Scaling( float x, float y, float z, [Out] Matrix% result )
 	{
-		pin_ptr<Matrix> pinResult = &result;
-		D3DXMatrixScaling( (D3DXMATRIX*) pinResult, x, y, z );
+		result.M11 = x;
+		result.M12 = 0.0f;
+		result.M13 = 0.0f;
+		result.M14 = 0.0f;
+		result.M21 = 0.0f;
+		result.M22 = y;
+		result.M23 = 0.0f;
+		result.M24 = 0.0f;
+		result.M31 = 0.0f;
+		result.M32 = 0.0f;
+		result.M33 = z;
+		result.M34 = 0.0f;
+		result.M41 = 0.0f;
+		result.M42 = 0.0f;
+		result.M43 = 0.0f;
+		result.M44 = 1.0f;
 	}
 
 	Matrix Matrix::Scaling ( Vector3 scaling )
 	{
 		Matrix result;
-		D3DXMatrixScaling( (D3DXMATRIX*) &result, scaling.X, scaling.Y, scaling.Z );
+		result.M11 = scaling.X;
+		result.M12 = 0.0f;
+		result.M13 = 0.0f;
+		result.M14 = 0.0f;
+		result.M21 = 0.0f;
+		result.M22 = scaling.Y;
+		result.M23 = 0.0f;
+		result.M24 = 0.0f;
+		result.M31 = 0.0f;
+		result.M32 = 0.0f;
+		result.M33 = scaling.Z;
+		result.M34 = 0.0f;
+		result.M41 = 0.0f;
+		result.M42 = 0.0f;
+		result.M43 = 0.0f;
+		result.M44 = 1.0f;
 		return result;
 	}
 
 	void Matrix::Scaling( Vector3% scaling, [Out] Matrix% result )
 	{
-		pin_ptr<Matrix> pinResult = &result;
-		D3DXMatrixScaling( (D3DXMATRIX*) pinResult, scaling.X, scaling.Y, scaling.Z );
+		result.M11 = scaling.X;
+		result.M12 = 0.0f;
+		result.M13 = 0.0f;
+		result.M14 = 0.0f;
+		result.M21 = 0.0f;
+		result.M22 = scaling.Y;
+		result.M23 = 0.0f;
+		result.M24 = 0.0f;
+		result.M31 = 0.0f;
+		result.M32 = 0.0f;
+		result.M33 = scaling.Z;
+		result.M34 = 0.0f;
+		result.M41 = 0.0f;
+		result.M42 = 0.0f;
+		result.M43 = 0.0f;
+		result.M44 = 1.0f;
 	}
 
 	Matrix Matrix::AffineTransformation( float scaling, Vector3 rotationCenter, Quaternion rotation, Vector3 translation )
@@ -577,30 +1238,111 @@ namespace SlimDX
 	Matrix Matrix::Reflection( Plane plane )
 	{
 		Matrix result;
-		D3DXMatrixReflect( (D3DXMATRIX*) &result, (D3DXPLANE*) &plane );
+		plane.Normalize();
+		float x = plane.Normal.X;
+		float y = plane.Normal.Y;
+		float z = plane.Normal.Z;
+		float x2 = -2.0f * x;
+		float y2 = -2.0f * y;
+		float z2 = -2.0f * z;
+		result.M11 = (x2 * x) + 1.0f;
+		result.M12 = y2 * x;
+		result.M13 = z2 * x;
+		result.M14 = 0.0f;
+		result.M21 = x2 * y;
+		result.M22 = (y2 * y) + 1.0f;
+		result.M23 = z2 * y;
+		result.M24 = 0.0f;
+		result.M31 = x2 * z;
+		result.M32 = y2 * z;
+		result.M33 = (z2 * z) + 1.0f;
+		result.M34 = 0.0f;
+		result.M41 = x2 * plane.D;
+		result.M42 = y2 * plane.D;
+		result.M43 = z2 * plane.D;
+		result.M44 = 1.0f;
 		return result;
 	}
 
 	void Matrix::Reflection( Plane% plane, [Out] Matrix% result )
 	{
-		pin_ptr<Plane> pinPlane = &plane;
-		pin_ptr<Matrix> pinResult = &result;
-		D3DXMatrixReflect( (D3DXMATRIX*) pinResult, (D3DXPLANE*) pinPlane );
+		plane.Normalize();
+		float x = plane.Normal.X;
+		float y = plane.Normal.Y;
+		float z = plane.Normal.Z;
+		float x2 = -2.0f * x;
+		float y2 = -2.0f * y;
+		float z2 = -2.0f * z;
+		result.M11 = (x2 * x) + 1.0f;
+		result.M12 = y2 * x;
+		result.M13 = z2 * x;
+		result.M14 = 0.0f;
+		result.M21 = x2 * y;
+		result.M22 = (y2 * y) + 1.0f;
+		result.M23 = z2 * y;
+		result.M24 = 0.0f;
+		result.M31 = x2 * z;
+		result.M32 = y2 * z;
+		result.M33 = (z2 * z) + 1.0f;
+		result.M34 = 0.0f;
+		result.M41 = x2 * plane.D;
+		result.M42 = y2 * plane.D;
+		result.M43 = z2 * plane.D;
+		result.M44 = 1.0f;
 	}
 	
 	Matrix Matrix::Shadow( Vector4 light, Plane plane )
 	{
 		Matrix result;
-		D3DXMatrixShadow( (D3DXMATRIX*) &result, (D3DXVECTOR4*) &light, (D3DXPLANE*) &plane );
+		plane.Normalize();
+		float dot = ((plane.Normal.X * light.X) + (plane.Normal.Y * light.Y)) + (plane.Normal.Z * light.Z);
+		float x = -plane.Normal.X;
+		float y = -plane.Normal.Y;
+		float z = -plane.Normal.Z;
+		float d = -plane.D;
+		result.M11 = (x * light.X) + dot;
+		result.M21 = y * light.X;
+		result.M31 = z * light.X;
+		result.M41 = d * light.X;
+		result.M12 = x * light.Y;
+		result.M22 = (y * light.Y) + dot;
+		result.M32 = z * light.Y;
+		result.M42 = d * light.Y;
+		result.M13 = x * light.Z;
+		result.M23 = y * light.Z;
+		result.M33 = (z * light.Z) + dot;
+		result.M43 = d * light.Z;
+		result.M14 = 0.0f;
+		result.M24 = 0.0f;
+		result.M34 = 0.0f;
+		result.M44 = dot;
 		return result;
 	}
 
 	void Matrix::Shadow( Vector4% light, Plane% plane, [Out] Matrix% result )
 	{
-		pin_ptr<Vector4> pinLight = &light;
-		pin_ptr<Plane> pinPlane = &plane;
-		pin_ptr<Matrix> pinResult = &result;
-		D3DXMatrixShadow( (D3DXMATRIX*) pinResult, (D3DXVECTOR4*) pinLight, (D3DXPLANE*) pinPlane );
+		plane.Normalize();
+		float dot = ((plane.Normal.X * light.X) + (plane.Normal.Y * light.Y)) + (plane.Normal.Z * light.Z);
+		float x = -plane.Normal.X;
+		float y = -plane.Normal.Y;
+		float z = -plane.Normal.Z;
+		float d = -plane.D;
+		result.M11 = (x * light.X) + dot;
+		result.M21 = y * light.X;
+		result.M31 = z * light.X;
+		result.M41 = d * light.X;
+		result.M12 = x * light.Y;
+		result.M22 = (y * light.Y) + dot;
+		result.M32 = z * light.Y;
+		result.M42 = d * light.Y;
+		result.M13 = x * light.Z;
+		result.M23 = y * light.Z;
+		result.M33 = (z * light.Z) + dot;
+		result.M43 = d * light.Z;
+		result.M14 = 0.0f;
+		result.M24 = 0.0f;
+		result.M34 = 0.0f;
+		result.M44 = dot;
 	}
 
 	Matrix Matrix::Invert( Matrix mat )
@@ -620,21 +1362,201 @@ namespace SlimDX
 	Matrix Matrix::Transpose( Matrix mat )
 	{
 		Matrix result;
-		D3DXMatrixTranspose( (D3DXMATRIX*) &result, (D3DXMATRIX*) &mat );
+		result.M11 = mat.M11;
+		result.M12 = mat.M21;
+		result.M13 = mat.M31;
+		result.M14 = mat.M41;
+		result.M21 = mat.M12;
+		result.M22 = mat.M22;
+		result.M23 = mat.M32;
+		result.M24 = mat.M42;
+		result.M31 = mat.M13;
+		result.M32 = mat.M23;
+		result.M33 = mat.M33;
+		result.M34 = mat.M43;
+		result.M41 = mat.M14;
+		result.M42 = mat.M24;
+		result.M43 = mat.M34;
+		result.M44 = mat.M44;
 		return result;
 	}
 
 	void Matrix::Transpose( Matrix% mat, [Out] Matrix% result )
 	{
-		pin_ptr<Matrix> pinMatrix = &mat;
-		pin_ptr<Matrix> pinResult = &result;
-		D3DXMatrixTranspose( (D3DXMATRIX*) pinResult, (D3DXMATRIX*) pinMatrix );
+		result.M11 = mat.M11;
+		result.M12 = mat.M21;
+		result.M13 = mat.M31;
+		result.M14 = mat.M41;
+		result.M21 = mat.M12;
+		result.M22 = mat.M22;
+		result.M23 = mat.M32;
+		result.M24 = mat.M42;
+		result.M31 = mat.M13;
+		result.M32 = mat.M23;
+		result.M33 = mat.M33;
+		result.M34 = mat.M43;
+		result.M41 = mat.M14;
+		result.M42 = mat.M24;
+		result.M43 = mat.M34;
+		result.M44 = mat.M44;
 	}
 
-	Matrix Matrix::operator * ( Matrix lhs, Matrix rhs )
+	Matrix Matrix::operator * ( Matrix left, Matrix right )
 	{
 		Matrix result;
-		D3DXMatrixMultiply( (D3DXMATRIX*) &result, (D3DXMATRIX*) &lhs, (D3DXMATRIX*) &rhs );
+		result.M11 = (left.M11 * right.M11) + (left.M12 * right.M21) + (left.M13 * right.M31) + (left.M14 * right.M41);
+		result.M12 = (left.M11 * right.M12) + (left.M12 * right.M22) + (left.M13 * right.M32) + (left.M14 * right.M42);
+		result.M13 = (left.M11 * right.M13) + (left.M12 * right.M23) + (left.M13 * right.M33) + (left.M14 * right.M43);
+		result.M14 = (left.M11 * right.M14) + (left.M12 * right.M24) + (left.M13 * right.M34) + (left.M14 * right.M44);
+		result.M21 = (left.M21 * right.M11) + (left.M22 * right.M21) + (left.M23 * right.M31) + (left.M24 * right.M41);
+		result.M22 = (left.M21 * right.M12) + (left.M22 * right.M22) + (left.M23 * right.M32) + (left.M24 * right.M42);
+		result.M23 = (left.M21 * right.M13) + (left.M22 * right.M23) + (left.M23 * right.M33) + (left.M24 * right.M43);
+		result.M24 = (left.M21 * right.M14) + (left.M22 * right.M24) + (left.M23 * right.M34) + (left.M24 * right.M44);
+		result.M31 = (left.M31 * right.M11) + (left.M32 * right.M21) + (left.M33 * right.M31) + (left.M34 * right.M41);
+		result.M32 = (left.M31 * right.M12) + (left.M32 * right.M22) + (left.M33 * right.M32) + (left.M34 * right.M42);
+		result.M33 = (left.M31 * right.M13) + (left.M32 * right.M23) + (left.M33 * right.M33) + (left.M34 * right.M43);
+		result.M34 = (left.M31 * right.M14) + (left.M32 * right.M24) + (left.M33 * right.M34) + (left.M34 * right.M44);
+		result.M41 = (left.M41 * right.M11) + (left.M42 * right.M21) + (left.M43 * right.M31) + (left.M44 * right.M41);
+		result.M42 = (left.M41 * right.M12) + (left.M42 * right.M22) + (left.M43 * right.M32) + (left.M44 * right.M42);
+		result.M43 = (left.M41 * right.M13) + (left.M42 * right.M23) + (left.M43 * right.M33) + (left.M44 * right.M43);
+		result.M44 = (left.M41 * right.M14) + (left.M42 * right.M24) + (left.M43 * right.M34) + (left.M44 * right.M44);
+		return result;
+	}
+
+	Matrix Matrix::operator * ( Matrix left, float right )
+	{
+		Matrix result;
+		result.M11 = left.M11 * right;
+		result.M12 = left.M12 * right;
+		result.M13 = left.M13 * right;
+		result.M14 = left.M14 * right;
+		result.M21 = left.M21 * right;
+		result.M22 = left.M22 * right;
+		result.M23 = left.M23 * right;
+		result.M24 = left.M24 * right;
+		result.M31 = left.M31 * right;
+		result.M32 = left.M32 * right;
+		result.M33 = left.M33 * right;
+		result.M34 = left.M34 * right;
+		result.M41 = left.M41 * right;
+		result.M42 = left.M42 * right;
+		result.M43 = left.M43 * right;
+		result.M44 = left.M44 * right;
+		return result;
+	}
+
+	Matrix Matrix::operator * ( float right, Matrix left )
+	{
+		return left * right;
+	}
+
+	Matrix Matrix::operator / ( Matrix left, Matrix right )
+	{
+		Matrix result;
+		result.M11 = left.M11 / right.M11;
+		result.M12 = left.M12 / right.M12;
+		result.M13 = left.M13 / right.M13;
+		result.M14 = left.M14 / right.M14;
+		result.M21 = left.M21 / right.M21;
+		result.M22 = left.M22 / right.M22;
+		result.M23 = left.M23 / right.M23;
+		result.M24 = left.M24 / right.M24;
+		result.M31 = left.M31 / right.M31;
+		result.M32 = left.M32 / right.M32;
+		result.M33 = left.M33 / right.M33;
+		result.M34 = left.M34 / right.M34;
+		result.M41 = left.M41 / right.M41;
+		result.M42 = left.M42 / right.M42;
+		result.M43 = left.M43 / right.M43;
+		result.M44 = left.M44 / right.M44;
+		return result;
+	}
+
+	Matrix Matrix::operator / ( Matrix left, float right )
+	{
+		Matrix result;
+		result.M11 = left.M11 / right;
+		result.M12 = left.M12 / right;
+		result.M13 = left.M13 / right;
+		result.M14 = left.M14 / right;
+		result.M21 = left.M21 / right;
+		result.M22 = left.M22 / right;
+		result.M23 = left.M23 / right;
+		result.M24 = left.M24 / right;
+		result.M31 = left.M31 / right;
+		result.M32 = left.M32 / right;
+		result.M33 = left.M33 / right;
+		result.M34 = left.M34 / right;
+		result.M41 = left.M41 / right;
+		result.M42 = left.M42 / right;
+		result.M43 = left.M43 / right;
+		result.M44 = left.M44 / right;
+		return result;
+	}
+
+	Matrix Matrix::operator + ( Matrix left, Matrix right )
+	{
+		Matrix result;
+		result.M11 = left.M11 + right.M11;
+		result.M12 = left.M12 + right.M12;
+		result.M13 = left.M13 + right.M13;
+		result.M14 = left.M14 + right.M14;
+		result.M21 = left.M21 + right.M21;
+		result.M22 = left.M22 + right.M22;
+		result.M23 = left.M23 + right.M23;
+		result.M24 = left.M24 + right.M24;
+		result.M31 = left.M31 + right.M31;
+		result.M32 = left.M32 + right.M32;
+		result.M33 = left.M33 + right.M33;
+		result.M34 = left.M34 + right.M34;
+		result.M41 = left.M41 + right.M41;
+		result.M42 = left.M42 + right.M42;
+		result.M43 = left.M43 + right.M43;
+		result.M44 = left.M44 + right.M44;
+		return result;
+	}
+
+	Matrix Matrix::operator - ( Matrix left, Matrix right )
+	{
+		Matrix result;
+		result.M11 = left.M11 - right.M11;
+		result.M12 = left.M12 - right.M12;
+		result.M13 = left.M13 - right.M13;
+		result.M14 = left.M14 - right.M14;
+		result.M21 = left.M21 - right.M21;
+		result.M22 = left.M22 - right.M22;
+		result.M23 = left.M23 - right.M23;
+		result.M24 = left.M24 - right.M24;
+		result.M31 = left.M31 - right.M31;
+		result.M32 = left.M32 - right.M32;
+		result.M33 = left.M33 - right.M33;
+		result.M34 = left.M34 - right.M34;
+		result.M41 = left.M41 - right.M41;
+		result.M42 = left.M42 - right.M42;
+		result.M43 = left.M43 - right.M43;
+		result.M44 = left.M44 - right.M44;
+		return result;
+	}
+
+	Matrix Matrix::operator - ( Matrix matrix )
+	{
+		Matrix result;
+		result.M11 = -matrix.M11;
+		result.M12 = -matrix.M12;
+		result.M13 = -matrix.M13;
+		result.M14 = -matrix.M14;
+		result.M21 = -matrix.M21;
+		result.M22 = -matrix.M22;
+		result.M23 = -matrix.M23;
+		result.M24 = -matrix.M24;
+		result.M31 = -matrix.M31;
+		result.M32 = -matrix.M32;
+		result.M33 = -matrix.M33;
+		result.M34 = -matrix.M34;
+		result.M41 = -matrix.M41;
+		result.M42 = -matrix.M42;
+		result.M43 = -matrix.M43;
+		result.M44 = -matrix.M44;
 		return result;
 	}
 

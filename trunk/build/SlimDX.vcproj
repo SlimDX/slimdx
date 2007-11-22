@@ -384,6 +384,10 @@
 				Name="Math"
 				>
 				<File
+					RelativePath="..\source\math\BoundingVolumes.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\math\Matrix.cpp"
 					>
 				</File>
@@ -393,6 +397,10 @@
 				</File>
 				<File
 					RelativePath="..\source\math\Quaternion.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Ray.cpp"
 					>
 				</File>
 				<File
@@ -1088,6 +1096,10 @@
 				Name="Math"
 				>
 				<File
+					RelativePath="..\source\math\BoundingVolumes.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\math\Math.h"
 					>
 				</File>
@@ -1101,6 +1113,10 @@
 				</File>
 				<File
 					RelativePath="..\source\math\Quaternion.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Ray.h"
 					>
 				</File>
 				<File

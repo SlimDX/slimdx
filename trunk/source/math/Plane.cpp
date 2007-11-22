@@ -425,6 +425,67 @@ namespace SlimDX
 		return true;
 	}
 
+	PlaneIntersectionType Plane::Intersects( Plane plane, BoundingBox box )
+	{
+		Vector3 min;
+		Vector3 max;
+		max.X = (plane.Normal.X >= 0.0f) ? box.Minimum.X : box.Maximum.X;
+		max.Y = (plane.Normal.Y >= 0.0f) ? box.Minimum.Y : box.Maximum.Y;
+		max.Z = (plane.Normal.Z >= 0.0f) ? box.Minimum.Z : box.Maximum.Z;
+		min.X = (plane.Normal.X >= 0.0f) ? box.Maximum.X : box.Minimum.X;
+		min.Y = (plane.Normal.Y >= 0.0f) ? box.Maximum.Y : box.Minimum.Y;
+		min.Z = (plane.Normal.Z >= 0.0f) ? box.Maximum.Z : box.Minimum.Z;
+
+		float dot = (plane.Normal.X * max.X) + (plane.Normal.Y * max.Y) + (plane.Normal.Z * max.Z);
+
+		if( dot + plane.D > 0.0f )
+			return PlaneIntersectionType::Front;
+
+		dot = (plane.Normal.X * min.X) + (plane.Normal.Y * min.Y) + (plane.Normal.Z * min.Z);
+
+		if ( dot + plane.D < 0.0f)
+			return PlaneIntersectionType::Back;
+
+		return PlaneIntersectionType::Intersecting;
+	}
+
+	PlaneIntersectionType Plane::Intersects( Plane plane, BoundingSphere sphere )
+	{
+		float dot = (sphere.Center.X * plane.Normal.X) + (sphere.Center.Y * plane.Normal.Y) + (sphere.Center.Z * plane.Normal.Z) + plane.D;
+		
+		if( dot > sphere.Radius )
+			return PlaneIntersectionType::Front;
+
+		if( dot < -sphere.Radius )
+			return PlaneIntersectionType::Back;
+
+		return PlaneIntersectionType::Intersecting;
+	}
+
+	PlaneIntersectionType Plane::Intersects( Plane plane, BoundingFrustum frustum )
+	{
+		int location = 0;
+		array<Vector3>^ corners = frustum.GetCorners();
+
+		for (int i = 0; i < 8; i++)
+		{
+			float dot = (corners[i].X * plane.Normal.X) + (corners[i].Y * plane.Normal.Y) + (corners[i].Z * plane.Normal.Z);
+
+			if( ( dot + plane.D ) > 0.0f )
+				location |= 1;
+			else
+				location |= 2;
+
+			if( location == 3 )
+				return PlaneIntersectionType::Intersecting;
+		}
+
+		if( location != 1 )
+			return PlaneIntersectionType::Back;
+
+		return PlaneIntersectionType::Front;
+	}
+
 	/// <summary>
 	/// Scales the plane by the given scaling factor.
 	/// </summary>

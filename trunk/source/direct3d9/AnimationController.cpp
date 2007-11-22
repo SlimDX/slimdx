@@ -42,6 +42,9 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateAnimationController( maxAnimationOutputs, maxAnimationSets, maxTracks, maxEvents,
 			reinterpret_cast<LPD3DXANIMATIONCONTROLLER*>( m_Pointer ) );
 		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			throw gcnew GraphicsException();
 	}
 
 	void AnimationController::AdvanceTime( double time, AnimationCallback^ handler )

@@ -53,6 +53,7 @@ namespace DirectInput
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
 		m_Pointer = static_cast<IDirectInputDevice8W*>( pointer );
+		properties = gcnew DeviceProperties( m_Pointer );
 	}
 
 	generic<typename DataFormat>
@@ -61,6 +62,9 @@ namespace DirectInput
 		IDirectInputDevice8W* device;
 		HRESULT hr = DirectInput::InternalPointer->CreateDevice( Utils::ToGUID( subsystem ), &device, NULL );
 		InputException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			throw gcnew InputException();
 
 		m_Pointer = device;
 
@@ -128,7 +132,7 @@ namespace DirectInput
 		InputException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
-			throw gcnew InvalidOperationException();
+			throw gcnew InputException();
 
 		properties = gcnew DeviceProperties( m_Pointer );
 	}

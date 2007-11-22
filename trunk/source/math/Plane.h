@@ -26,6 +26,13 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
+	public enum class PlaneIntersectionType : Int32
+	{
+		Back,
+		Front,
+		Intersecting
+	};
+
 	/// <summary>
 	/// Defines a 3D mathematical plane.
 	/// </summary>
@@ -75,6 +82,10 @@ namespace SlimDX
 
 		static bool Intersects( Plane plane, Vector3 start, Vector3 end, [Out] Vector3% intersectPoint );
 		static bool Intersects( Plane% plane, Vector3% start, Vector3% end, [Out] Vector3% intersectPoint );
+
+		static PlaneIntersectionType Intersects( Plane plane, BoundingBox box );
+		static PlaneIntersectionType Intersects( Plane plane, BoundingSphere sphere );
+		static PlaneIntersectionType Intersects( Plane plane, BoundingFrustum frustum );
 
 		static Plane operator * ( Plane plane, float scale );
 		static Plane operator * ( float scale, Plane plane );
