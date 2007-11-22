@@ -54,8 +54,29 @@ namespace SlimDX
 		bool Decompose( [Out] Vector3% scale, [Out] Quaternion% rotation, [Out] Vector3% translation );
 		float Determinant();
 
+		static Matrix Add( Matrix left, Matrix right );
+		static void   Add( Matrix% left, Matrix% right, [Out] Matrix% result );
+
+		static Matrix Subtract( Matrix left, Matrix right );
+		static void   Subtract( Matrix% left, Matrix% right, [Out] Matrix% result );
+
 		static Matrix Multiply( Matrix left, Matrix right );
 		static void   Multiply( Matrix% left, Matrix% right, [Out] Matrix% result );
+
+		static Matrix Multiply( Matrix left, float right );
+		static void   Multiply( Matrix% left, float right, [Out] Matrix% result );
+
+		static Matrix Divide( Matrix left, Matrix right );
+		static void   Divide( Matrix% left, Matrix% right, [Out] Matrix% result );
+
+		static Matrix Divide( Matrix left, float right );
+		static void   Divide( Matrix% left, float right, [Out] Matrix% result );
+
+		static Matrix Negate( Matrix matrix );
+		static void   Negate( Matrix% matrix, [Out] Matrix% result );
+
+		static Matrix Lerp( Matrix value1, Matrix value2, float amount );
+		static void   Lerp( Matrix% value1, Matrix% value2, float amount, [Out] Matrix% result );
 
 		static Matrix Billboard( Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector, Vector3 cameraForwardVector );
 		static void   Billboard( Vector3% objectPosition, Vector3% cameraPosition, Vector3% cameraUpVector, Vector3% cameraForwardVector, [Out] Matrix% result );
@@ -150,7 +171,14 @@ namespace SlimDX
 		static Matrix Transformation2D( Vector2 scalingCenter, float scalingRotation, Vector2 scaling, Vector2 rotationCenter, float rotation, Vector2 translation );
 		static void   Transformation2D( Vector2% scalingCenter, float scalingRotation, Vector2% scaling, Vector2% rotationCenter, float rotation, Vector2% translation, [Out] Matrix% result );
 		
+		static Matrix operator - ( Matrix matrix );
+		static Matrix operator + ( Matrix left, Matrix right );
+		static Matrix operator - ( Matrix left, Matrix right );
+		static Matrix operator / ( Matrix left, Matrix right );
+		static Matrix operator / ( Matrix left, float right );
 		static Matrix operator * ( Matrix left, Matrix right );
+		static Matrix operator * ( Matrix left, float right );
+		static Matrix operator * ( float left, Matrix right );
 		static bool operator == ( Matrix left, Matrix right );
 		static bool operator != ( Matrix left, Matrix right );
 		

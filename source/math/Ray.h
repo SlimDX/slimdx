@@ -26,23 +26,29 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	value class Vector2;
-	value class Vector3;
-	value class Vector4;
-	value class Matrix;
-	value class Plane;
-	value class Quaternion;
-	value class Ray;
-	value class BoundingBox;
-	value class BoundingSphere;
-	value class BoundingFrustum;
-}
+	[Serializable]
+	[StructLayout( LayoutKind::Sequential )]
+	public value class Ray : IEquatable<Ray>
+	{
+	public:
+		property Vector3 Position;
+		property Vector3 Direction;
 
-#include "Vector4.h"
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Matrix.h"
-#include "Plane.h"
-#include "Quaternion.h"
-#include "Ray.h"
-#include "BoundingVolumes.h"
+		Ray( Vector3 position, Vector3 direction );
+
+		static bool Intersects( Ray ray, Plane plane, [Out] float% distance );
+		static bool Intersects( Ray ray, Vector3 vertex1, Vector3 vertex2, Vector3 vector3, [Out] float% distance );
+		static bool Intersects( Ray ray, BoundingBox box, [Out] float% distance );
+		static bool Intersects( Ray ray, BoundingSphere sphere, [Out] float% distance );
+		static bool Intersects( Ray ray, BoundingFrustum frustum, [Out] float% distance );
+
+		static bool operator == ( Ray left, Ray right );
+		static bool operator != ( Ray left, Ray right );
+
+		virtual String^ ToString() override;
+		virtual int GetHashCode() override;
+		virtual bool Equals( Object^ obj ) override;
+		virtual bool Equals( Ray other );
+		static bool Equals( Ray% value1, Ray% value2 );
+	};
+}

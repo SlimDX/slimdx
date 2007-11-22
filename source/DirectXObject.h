@@ -58,6 +58,9 @@ namespace SlimDX
 
 		DirectXObject( T* pointer ) : m_Pointer( pointer )
 		{
+			if( pointer == nullptr )
+				throw gcnew ArgumentNullException();
+
 			if( EnableObjectTracking )
 				ObjectTracker::Add( this );
 		}
