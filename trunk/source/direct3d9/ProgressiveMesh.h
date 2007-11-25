@@ -55,33 +55,6 @@ namespace SlimDX
 			virtual void Write( array<unsigned char>^ pv, int cb, IntPtr pcbWritten );
 		};
 
-		public enum class MeshSimplification : Int32
-		{
-			Vertex = D3DXMESHSIMP_VERTEX,
-			Face = D3DXMESHSIMP_FACE
-		};
-
-		[StructLayout(LayoutKind::Sequential)]
-		public value class AttributeWeights
-		{
-		public:
-			property float Position;
-			property float Boundary;
-			property float Normal;
-			property float Diffuse;
-			property float Specular;
-			property float TextureCoordinate1;
-			property float TextureCoordinate2;
-			property float TextureCoordinate3;
-			property float TextureCoordinate4;
-			property float TextureCoordinate5;
-			property float TextureCoordinate6;
-			property float TextureCoordinate7;
-			property float TextureCoordinate8;
-			property float Tangent;
-			property float Binormal;
-		};
-
 		public ref class ProgressiveMesh : public BaseMesh
 		{
 		internal:
