@@ -109,6 +109,12 @@ namespace SlimDX
 			Simplification = D3DXCLEAN_SIMPLIFICATION
 		};
 
+		public enum class MeshSimplification : Int32
+		{
+			Vertex = D3DXMESHSIMP_VERTEX,
+			Face = D3DXMESHSIMP_FACE
+		};
+
 		public value class ExtendedMaterial
 		{
 		internal:
@@ -163,6 +169,27 @@ namespace SlimDX
 			property float CellIncY;
 		};
 
+		[StructLayout(LayoutKind::Sequential)]
+		public value class AttributeWeights
+		{
+		public:
+			property float Position;
+			property float Boundary;
+			property float Normal;
+			property float Diffuse;
+			property float Specular;
+			property float TextureCoordinate1;
+			property float TextureCoordinate2;
+			property float TextureCoordinate3;
+			property float TextureCoordinate4;
+			property float TextureCoordinate5;
+			property float TextureCoordinate6;
+			property float TextureCoordinate7;
+			property float TextureCoordinate8;
+			property float Tangent;
+			property float Binormal;
+		};
+
 		ref class Mesh;
 		ref class VertexBuffer;
 		ref class IndexBuffer;
@@ -203,6 +230,14 @@ namespace SlimDX
 
 			IndexBuffer^ ConvertSubsetToSingleStrip( int attributeId, MeshFlags options, [Out] int% indexCount );
 			IndexBuffer^ ConvertSubsetToStrips( int attributeId, MeshFlags options, [Out] int% indexCount, [Out] BufferWrapper^% stripLengths, [Out] int% stripCount );
+
+			bool Intersects( Ray ray, [Out] float% distance, [Out] int% faceIndex, [Out] int% hitCount, [Out] BufferWrapper^% hits );
+			bool Intersects( Ray ray, [Out] float% distance );
+			bool Intersects( Ray ray );
+
+			bool IntersectsSubset( Ray ray, int attributeId, [Out] float% distance, [Out] int% faceIndex, [Out] int% hitCount, [Out] BufferWrapper^% hits );
+			bool IntersectsSubset( Ray ray, int attributeId, [Out] float% distance );
+			bool IntersectsSubset( Ray ray, int attributeId );
 
 			property int FaceCount { int get(); }
 			property int VertexCount { int get(); }
@@ -278,6 +313,14 @@ namespace SlimDX
 
 			static Mesh^ Concatenate( Device^ device, array<Mesh^>^ meshes, MeshFlags options );
 
+			static Mesh^ Simplify( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ attributeWeights, 
+				array<float>^ vertexWeights, int minimumValue, MeshSimplification options );
+
+			static Mesh^ Simplify( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ attributeWeights, 
+				int minimumValue, MeshSimplification options );
+
+			static Mesh^ Simplify( Mesh^ mesh, array<int>^ adjacency, int minimumValue, MeshSimplification options );
+
 			DataStream^ LockAttributeBuffer( LockFlags flags );
 			void UnlockAttributeBuffer();
 			void SetAttributeTable( array<AttributeRange>^ table );
@@ -330,6 +373,9 @@ namespace SlimDX
 				int partialOutIndexU, int partialOutSemanticV, int partialOutIndexV, int normalOutSemantic,
 				int normalOutIndex, TangentOptions options, float partialEdgeThreshold,
 				float singularPointThreshold, float normalEdgeThreshold );
+
+			void Save( String^ fileName, array<int>^ adjacency, array<ExtendedMaterial>^ materials, array<EffectInstance>^ effects, XFileFormat format, CharSet charSet );
+			void Save( String^ fileName, array<int>^ adjacency, array<ExtendedMaterial>^ materials, array<EffectInstance>^ effects, XFileFormat format );
 		};
 	}
 }

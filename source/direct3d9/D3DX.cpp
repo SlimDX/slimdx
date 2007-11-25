@@ -106,6 +106,46 @@ namespace SlimDX
 			return D3DXGetDeclLength( reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ) );
 		}
 
+		void D3DX::GetRectanglePatchSize( float segmentCount, [Out] int% triangleCount, [Out] int% vertexCount )
+		{
+			DWORD tris;
+			DWORD verts;
+
+			HRESULT hr = D3DXRectPatchSize( &segmentCount, &tris, &verts );
+			GraphicsException::CheckHResult( hr );
+
+			if( FAILED( hr ) )
+			{
+				triangleCount = 0;
+				vertexCount = 0;
+			}
+			else
+			{
+				triangleCount = tris;
+				vertexCount = verts;
+			}
+		}
+
+		void D3DX::GetTrianglePatchSize( float segmentCount, [Out] int% triangleCount, [Out] int% vertexCount )
+		{
+			DWORD tris;
+			DWORD verts;
+
+			HRESULT hr = D3DXTriPatchSize( &segmentCount, &tris, &verts );
+			GraphicsException::CheckHResult( hr );
+
+			if( FAILED( hr ) )
+			{
+				triangleCount = 0;
+				vertexCount = 0;
+			}
+			else
+			{
+				triangleCount = tris;
+				vertexCount = verts;
+			}
+		}
+
 		Format D3DX::MakeFourCC( Byte c1, Byte c2, Byte c3, Byte c4 )
 		{
 			int fourcc = (c4 << 24) | (c3 << 16) | (c2 << 8) | (c1);
@@ -115,6 +155,74 @@ namespace SlimDX
 		bool D3DX::DebugMute( bool mute )
 		{
 			return D3DXDebugMute( mute ) > 0;
+		}
+
+		array<int>^ D3DX::OptimizeFaces( array<int>^ indices, int faceCount, int vertexCount )
+		{
+			array<int>^ results;
+
+			pin_ptr<int> pinnedResults = &results[0];
+			pin_ptr<int> pinnedIndices = &indices[0];
+
+			HRESULT hr = D3DXOptimizeFaces( reinterpret_cast<LPCVOID>( pinnedIndices ), faceCount, vertexCount,
+				TRUE, reinterpret_cast<DWORD*>( pinnedResults ) );
+			GraphicsException::CheckHResult( hr );
+
+			if( FAILED( hr ) )
+				return nullptr;
+
+			return results;
+		}
+
+		array<int>^ D3DX::OptimizeFaces( array<Int16>^ indices, int faceCount, int vertexCount )
+		{
+			array<int>^ results;
+
+			pin_ptr<int> pinnedResults = &results[0];
+			pin_ptr<Int16> pinnedIndices = &indices[0];
+
+			HRESULT hr = D3DXOptimizeFaces( reinterpret_cast<LPCVOID>( pinnedIndices ), faceCount, vertexCount,
+				FALSE, reinterpret_cast<DWORD*>( pinnedResults ) );
+			GraphicsException::CheckHResult( hr );
+
+			if( FAILED( hr ) )
+				return nullptr;
+
+			return results;
+		}
+
+		array<int>^ D3DX::OptimizeVertices( array<int>^ indices, int faceCount, int vertexCount )
+		{
+			array<int>^ results;
+
+			pin_ptr<int> pinnedResults = &results[0];
+			pin_ptr<int> pinnedIndices = &indices[0];
+
+			HRESULT hr = D3DXOptimizeVertices( reinterpret_cast<LPCVOID>( pinnedIndices ), faceCount, vertexCount,
+				TRUE, reinterpret_cast<DWORD*>( pinnedResults ) );
+			GraphicsException::CheckHResult( hr );
+
+			if( FAILED( hr ) )
+				return nullptr;
+
+			return results;
+		}
+
+		array<int>^ D3DX::OptimizeVertices( array<Int16>^ indices, int faceCount, int vertexCount )
+		{
+			array<int>^ results;
+
+			pin_ptr<int> pinnedResults = &results[0];
+			pin_ptr<Int16> pinnedIndices = &indices[0];
+
+			HRESULT hr = D3DXOptimizeVertices( reinterpret_cast<LPCVOID>( pinnedIndices ), faceCount, vertexCount,
+				FALSE, reinterpret_cast<DWORD*>( pinnedResults ) );
+			GraphicsException::CheckHResult( hr );
+
+			if( FAILED( hr ) )
+				return nullptr;
+
+			return results;
 		}
 	}
 }

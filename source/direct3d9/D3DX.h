@@ -21,6 +21,8 @@
 */
 #pragma once
 
+using namespace System::Runtime::InteropServices;
+
 namespace SlimDX
 {
 	namespace Direct3D9
@@ -48,9 +50,18 @@ namespace SlimDX
 			static array<VertexElement>^ GenerateOutputDeclaration( array<VertexElement>^ declaration );
 			static int GetDeclarationLength( array<VertexElement>^ declaration );
 
+			static void GetRectanglePatchSize( float segmentCount, [Out] int% triangleCount, [Out] int% vertexCount );
+			static void GetTrianglePatchSize( float segmentCount, [Out] int% triangleCount, [Out] int% vertexCount );
+
 			static Format MakeFourCC( Byte c1, Byte c2, Byte c3, Byte c4 );
 
 			static bool DebugMute( bool mute );
+
+			static array<int>^ OptimizeFaces( array<int>^ indices, int faceCount, int vertexCount );
+			static array<int>^ OptimizeFaces( array<Int16>^ indices, int faceCount, int vertexCount );
+
+			static array<int>^ OptimizeVertices( array<int>^ indices, int faceCount, int vertexCount );
+			static array<int>^ OptimizeVertices( array<Int16>^ indices, int faceCount, int vertexCount );
 		};
 	}
 }

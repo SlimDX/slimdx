@@ -430,6 +430,148 @@ namespace Direct3D9
 		return gcnew IndexBuffer( result );
 	}
 
+	bool BaseMesh::Intersects( Ray ray, [Out] float% distance, [Out] int% faceIndex, [Out] int% hitCount, [Out] BufferWrapper^% hits )
+	{
+		ID3DXBuffer *allHits;
+		BOOL result;
+		FLOAT dist;
+		DWORD count;
+		DWORD face;
+
+		HRESULT hr = D3DXIntersect( InternalPointer, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
+			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, &face, NULL, NULL, &dist, &allHits, &count );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			hits = nullptr;
+			hitCount = 0;
+			faceIndex = 0;
+			distance = 0;
+			return false;
+		}
+
+		hitCount = count;
+		faceIndex = face;
+		distance = dist;
+		hits = gcnew BufferWrapper( allHits );
+
+		if( result )
+			return true;
+		else
+			return false;
+	}
+
+	bool BaseMesh::Intersects( Ray ray, [Out] float% distance )
+	{
+		BOOL result;
+		FLOAT dist;
+
+		HRESULT hr = D3DXIntersect( InternalPointer, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
+			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, NULL, NULL, NULL, &dist, NULL, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			distance = 0;
+			return false;
+		}
+
+		distance = dist;
+		if( result )
+			return true;
+		else
+			return false;
+	}
+
+	bool BaseMesh::Intersects( Ray ray )
+	{
+		BOOL result;
+
+		HRESULT hr = D3DXIntersect( InternalPointer, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
+			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, NULL, NULL, NULL, NULL, NULL, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return false;
+
+		if( result )
+			return true;
+		else
+			return false;
+	}
+
+	bool BaseMesh::IntersectsSubset( Ray ray, int attributeId, [Out] float% distance, [Out] int% faceIndex, [Out] int% hitCount, [Out] BufferWrapper^% hits )
+	{
+		ID3DXBuffer *allHits;
+		BOOL result;
+		FLOAT dist;
+		DWORD count;
+		DWORD face;
+
+		HRESULT hr = D3DXIntersectSubset( InternalPointer, attributeId, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
+			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, &face, NULL, NULL, &dist, &allHits, &count );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			hits = nullptr;
+			hitCount = 0;
+			faceIndex = 0;
+			distance = 0;
+			return false;
+		}
+
+		hitCount = count;
+		faceIndex = face;
+		distance = dist;
+		hits = gcnew BufferWrapper( allHits );
+
+		if( result )
+			return true;
+		else
+			return false;
+	}
+
+	bool BaseMesh::IntersectsSubset( Ray ray, int attributeId, [Out] float% distance )
+	{
+		BOOL result;
+		FLOAT dist;
+
+		HRESULT hr = D3DXIntersectSubset( InternalPointer, attributeId, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
+			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, NULL, NULL, NULL, &dist, NULL, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			distance = 0;
+			return false;
+		}
+
+		distance = dist;
+		if( result )
+			return true;
+		else
+			return false;
+	}
+
+	bool BaseMesh::IntersectsSubset( Ray ray, int attributeId )
+	{
+		BOOL result;
+
+		HRESULT hr = D3DXIntersectSubset( InternalPointer, attributeId, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
+			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, NULL, NULL, NULL, NULL, NULL, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return false;
+
+		if( result )
+			return true;
+		else
+			return false;
+	}
+
 	int BaseMesh::FaceCount::get()
 	{
 		return m_Pointer->GetNumFaces();
@@ -1840,6 +1982,93 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 
 		delete[] input;
+
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Mesh( result );
+	}
+
+	void Mesh::Save( String^ fileName, array<int>^ adjacency, array<ExtendedMaterial>^ materials, array<EffectInstance>^ effects, XFileFormat format, CharSet charSet )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+		pin_ptr<int> pinnedAdjacency = &adjacency[0];
+
+		D3DXMATERIAL *nativeMaterials = new D3DXMATERIAL[materials->Length];
+		for( int i = 0; i < materials->Length; i++ )
+			nativeMaterials[i] = ExtendedMaterial::ToUnmanaged( materials[i] );
+
+		D3DXEFFECTINSTANCE *nativeEffects = new D3DXEFFECTINSTANCE[effects->Length];
+		for( int i = 0; i < effects->Length; i++ )
+			nativeEffects[i] = EffectInstance::ToUnmanaged( effects[i] );
+
+		DWORD f = static_cast<DWORD>( format );
+		if( charSet == CharSet::Unicode )
+			f |= D3DXF_FILESAVE_TOWFILE;
+		else
+			f |= D3DXF_FILESAVE_TOFILE;
+
+		HRESULT hr = D3DXSaveMeshToX( reinterpret_cast<LPCWSTR>( pinnedName ), MeshPointer, 
+			reinterpret_cast<const DWORD*>( pinnedAdjacency ), nativeMaterials, nativeEffects, materials->Length, f );
+		GraphicsException::CheckHResult( hr );
+
+		delete[] nativeMaterials;
+		delete[] nativeEffects;
+	}
+
+	void Mesh::Save( String^ fileName, array<int>^ adjacency, array<ExtendedMaterial>^ materials, array<EffectInstance>^ effects, XFileFormat format )
+	{
+		Save( fileName, adjacency, materials, effects, format, CharSet::Auto );
+	}
+
+	Mesh^ Mesh::Simplify( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ attributeWeights,
+		array<float>^ vertexWeights, int minimumValue, MeshSimplification options )
+	{
+		ID3DXMesh *result;
+
+		pin_ptr<int> pinnedAdj = &adjacency[0];
+		pin_ptr<float> pinnedVW = &vertexWeights[0];
+		pin_ptr<AttributeWeights> pinnedAW = &attributeWeights[0];
+
+		HRESULT hr = D3DXSimplifyMesh( mesh->MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ),
+			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedAW ), reinterpret_cast<const FLOAT*>( pinnedVW ),
+			minimumValue, static_cast<DWORD>( options ), &result );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::Simplify( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ attributeWeights,
+		int minimumValue, MeshSimplification options )
+	{
+		ID3DXMesh *result;
+
+		pin_ptr<int> pinnedAdj = &adjacency[0];
+		pin_ptr<AttributeWeights> pinnedAW = &attributeWeights[0];
+
+		HRESULT hr = D3DXSimplifyMesh( mesh->MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ),
+			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedAW ), NULL,
+			minimumValue, static_cast<DWORD>( options ), &result );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ Mesh::Simplify( Mesh^ mesh, array<int>^ adjacency, int minimumValue, MeshSimplification options )
+	{
+		ID3DXMesh *result;
+
+		pin_ptr<int> pinnedAdj = &adjacency[0];
+
+		HRESULT hr = D3DXSimplifyMesh( mesh->MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ),
+			NULL, NULL, minimumValue, static_cast<DWORD>( options ), &result );
+		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
