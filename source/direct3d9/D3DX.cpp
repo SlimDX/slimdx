@@ -224,5 +224,10 @@ namespace SlimDX
 
 			return results;
 		}
+
+		bool D3DX::CheckVersion( int d3dVersion, int d3dxVersion )
+		{
+			return D3DXCheckVersion( d3dVersion, d3dxVersion );
+		}
 	}
 }

@@ -35,9 +35,7 @@ namespace SlimDX
 	/// <param name="d">Distance of the plane along its normal from the origin.</param>
 	Plane::Plane( float a, float b, float c, float d )
 	{
-		Normal.X = a;
-		Normal.Y = b;
-		Normal.Z = c;
+		Normal = Vector3( a, b, c );
 		D = d;
 	}
 

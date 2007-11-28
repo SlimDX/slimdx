@@ -22,7 +22,6 @@
 #pragma once
 
 #include "../math/Math.h"
-#include "../Direct3D/ColorValue.h"
 
 using namespace System::Runtime::InteropServices;
 using namespace SlimDX::Direct3D;
