@@ -38,8 +38,8 @@ namespace SlimDX
 	public value class BoundingBox : IEquatable<BoundingBox>
 	{
 	public:
-		property Vector3 Maximum;
-		property Vector3 Minimum;
+		Vector3 Maximum;
+		Vector3 Minimum;
 
 		BoundingBox( Vector3 minimum, Vector3 maximum );
 
@@ -123,8 +123,8 @@ namespace SlimDX
 	public value class BoundingSphere : IEquatable<BoundingSphere>
 	{
 	public:
-		property Vector3 Center;
-		property float Radius;
+		Vector3 Center;
+		float Radius;
 
 		BoundingSphere( Vector3 center, float radius );
 

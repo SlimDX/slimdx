@@ -50,6 +50,12 @@ namespace SlimDX
 		D = d;
 	}
 
+	Plane::Plane( Vector3 point, Vector3 normal )
+	{
+		Normal = normal;
+		D = -Vector3::Dot( normal, point );
+	}
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SlimDX::Plane"/> class.
 	/// </summary>
@@ -100,17 +106,6 @@ namespace SlimDX
 	}
 
 	/// <summary>
-	/// Calculates the dot product of the specified vector and plane.
-	/// </summary>
-	/// <param name="plane">The source plane.</param>
-	/// <param name="point">The source vector.</param>
-	/// <returns>The dot product of the specified vector and plane.</returns>
-	float Plane::Dot( Plane% plane, Vector4% point )
-	{
-		return (plane.Normal.X * point.X) + (plane.Normal.Y * point.Y) + (plane.Normal.Z * point.Z) + (plane.D * point.W);
-	}
-
-	/// <summary>
 	/// Calculates the dot product of a specified vector and the normal of the plane plus the distance value of the plane.
 	/// </summary>
 	/// <param name="plane">The source plane.</param>
@@ -122,34 +117,12 @@ namespace SlimDX
 	}
 
 	/// <summary>
-	/// Calculates the dot product of a specified vector and the normal of the plane plus the distance value of the plane.
-	/// </summary>
-	/// <param name="plane">The source plane.</param>
-	/// <param name="point">The source vector.</param>
-	/// <returns>The dot product of a specified vector and the normal of the Plane plus the distance value of the plane.</returns>
-	float Plane::DotCoordinate( Plane% plane, Vector3% point )
-	{
-		return (plane.Normal.X * point.X) + (plane.Normal.Y * point.Y) + (plane.Normal.Z * point.Z) + plane.D;
-	}
-
-	/// <summary>
 	/// Calculates the dot product of the specified vector and the normal of the plane.
 	/// </summary>
 	/// <param name="plane">The source plane.</param>
 	/// <param name="point">The source vector.</param>
 	/// <returns>The dot product of the specified vector and the normal of the plane.</returns>
 	float Plane::DotNormal( Plane plane, Vector3 point )
-	{
-		return (plane.Normal.X * point.X) + (plane.Normal.Y * point.Y) + (plane.Normal.Z * point.Z);
-	}
-
-	/// <summary>
-	/// Calculates the dot product of the specified vector and the normal of the plane.
-	/// </summary>
-	/// <param name="plane">The source plane.</param>
-	/// <param name="point">The source vector.</param>
-	/// <returns>The dot product of the specified vector and the normal of the plane.</returns>
-	float Plane::DotNormal( Plane% plane, Vector3% point )
 	{
 		return (plane.Normal.X * point.X) + (plane.Normal.Y * point.Y) + (plane.Normal.Z * point.Z);
 	}
@@ -388,31 +361,6 @@ namespace SlimDX
 	{
 		D3DXVECTOR3 nativePoint;
 		D3DXVECTOR3* result = D3DXPlaneIntersectLine( &nativePoint, reinterpret_cast<D3DXPLANE*>( &plane ), reinterpret_cast<D3DXVECTOR3*>( &start ), reinterpret_cast<D3DXVECTOR3*>( &end ) );
-		if( result == NULL )
-		{
-			intersectPoint = Vector3( 0, 0, 0 );
-			return false;
-		}
-
-		intersectPoint = Vector3( nativePoint.x, nativePoint.y, nativePoint.z );
-		return true;
-	}
-
-	/// <summary>
-	/// Finds the intersection between a plane and a line.
-	/// </summary>
-	/// <param name="plane">The source plane.</param>
-	/// <param name="start">The start point of the line.</param>
-	/// <param name="end">The end point of the line.</param>
-	/// <param name="intersectPoint">If an intersection is found, contains the intersection point between the line and the plane.</param>
-	/// <returns><c>true</c> if an intersection is found; <c>false</c> otherwise.</returns>
-	bool Plane::Intersects( Plane% plane, Vector3% start, Vector3% end, [Out] Vector3% intersectPoint )
-	{
-		D3DXVECTOR3 nativePoint;
-		pin_ptr<Vector3> pinStart = &start;
-		pin_ptr<Vector3> pinEnd = &end;
-		pin_ptr<Plane> pinPlane = &plane;
-		D3DXVECTOR3* result = D3DXPlaneIntersectLine( &nativePoint, reinterpret_cast<D3DXPLANE*>( pinPlane ), reinterpret_cast<D3DXVECTOR3*>( pinStart ), reinterpret_cast<D3DXVECTOR3*>( pinEnd ) );
 		if( result == NULL )
 		{
 			intersectPoint = Vector3( 0, 0, 0 );

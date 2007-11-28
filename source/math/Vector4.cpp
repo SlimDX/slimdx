@@ -558,23 +558,6 @@ namespace SlimDX
 	}
 
 	/// <summary>
-	/// Calculates the distance between two vectors.
-	/// </summary>
-	/// <param name="value1">The first vector.</param>
-	/// <param name="value2">The second vector.</param>
-	/// <returns>The distance between the two vectors.</returns>
-	float Vector4::Distance( Vector4% value1, Vector4% value2 )
-	{
-		float x = value1.X - value2.X;
-		float y = value1.Y - value2.Y;
-		float z = value1.Z - value2.Z;
-		float w = value1.W - value2.W;
-
-		return static_cast<float>( Math::Sqrt( (x * x) + (y * y) + (z * z) + (w * w) ) );
-	}
-
-
-	/// <summary>
 	/// Calculates the squared distance between two vectors.
 	/// </summary>
 	/// <param name="value1">The first vector.</param>
@@ -598,46 +581,12 @@ namespace SlimDX
 	}
 
 	/// <summary>
-	/// Calculates the squared distance between two vectors.
-	/// </summary>
-	/// <param name="value1">The first vector.</param>
-	/// <param name="value2">The second vector.</param>
-	/// <returns>The squared distance between the two vectors.</returns>
-	/// <remarks>Distance squared is the value before taking the square root. 
-	/// Distance squared can often be used in place of distance if relative comparisons are being made. 
-	/// For example, consider three points A, B, and C. To determine whether B or C is further from A, 
-	/// compare the distance between A and B to the distance between A and C. Calculating the two distances 
-	/// involves two square roots, which are computationally expensive. However, using distance squared 
-	/// provides the same information and avoids calculating two square roots.
-	/// </remarks>
-	float Vector4::DistanceSquared( Vector4% value1, Vector4% value2 )
-	{
-		float x = value1.X - value2.X;
-		float y = value1.Y - value2.Y;
-		float z = value1.Z - value2.Z;
-		float w = value1.W - value2.W;
-
-		return (x * x) + (y * y) + (z * z) + (w * w);
-	}
-
-	/// <summary>
 	/// Calculates the dot product of two vectors.
 	/// </summary>
 	/// <param name="left">First source vector.</param>
 	/// <param name="right">Second source vector.</param>
 	/// <returns>The dot product of the two vectors.</returns>
 	float Vector4::Dot( Vector4 left, Vector4 right )
-	{
-		return (left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W);
-	}
-
-	/// <summary>
-	/// Calculates the dot product of two vectors.
-	/// </summary>
-	/// <param name="left">First source vector.</param>
-	/// <param name="right">Second source vector.</param>
-	/// <returns>The dot product of the two vectors.</returns>
-	float Vector4::Dot( Vector4% left, Vector4% right )
 	{
 		return (left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W);
 	}

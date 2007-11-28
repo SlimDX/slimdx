@@ -240,11 +240,6 @@ namespace SlimDX
 		return (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z) + (left.W * right.W); 
 	}
 
-	float Quaternion::Dot( Quaternion% left, Quaternion% right )
-	{
-		return (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z) + (left.W * right.W); 
-	}
-
 	Quaternion Quaternion::Exponential( Quaternion quat )
 	{
 		Quaternion result;

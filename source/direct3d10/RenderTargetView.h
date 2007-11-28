@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../direct3d/ColorValue.h"
+#include "../math/Math.h"
 
 #include "ResourceView.h"
 
@@ -39,7 +39,7 @@ namespace SlimDX
 		public:
 			RenderTargetView( Device^ device, Resource^ resource );
 			
-			void Clear( Direct3D::ColorValue color );
+			void Clear( ColorValue color );
 		};
 	}
 };

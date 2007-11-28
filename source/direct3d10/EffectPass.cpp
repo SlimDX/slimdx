@@ -49,7 +49,7 @@ namespace Direct3D10
 		m_Signature = gcnew ShaderSignature( desc.pIAInputSignature, desc.IAInputSignatureSize );
 		m_StencilReference = desc.StencilRef;
 		m_SampleMask = desc.SampleMask;
-		m_BlendFactor = SlimDX::Direct3D::ColorValue( desc.BlendFactor[3], desc.BlendFactor[0], desc.BlendFactor[1], desc.BlendFactor[2] );
+		m_BlendFactor = ColorValue( desc.BlendFactor[3], desc.BlendFactor[0], desc.BlendFactor[1], desc.BlendFactor[2] );
 	}
 	
 	EffectPassShaderMapping EffectPass::PixelShaderDescription::get()

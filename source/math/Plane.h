@@ -45,27 +45,23 @@ namespace SlimDX
 		/// Gets or sets the normal vector of the plane.
 		/// </summary>
 		/// <value>The normal vector of the plane.</value>
-		property Vector3 Normal;
+		Vector3 Normal;
 
 		/// <summary>
 		/// Gets or sets the distance of the plane along its normal from the origin.
 		/// </summary>
 		/// <value>The distance of the plane along its normal from the origin.</value>
-		property float D;
+		float D;
 
 		Plane( float a, float b, float c, float d );
 		Plane( Vector3 normal, float d );
+		Plane( Vector3 point, Vector3 normal );
 		Plane( Vector3 point1, Vector3 point2, Vector3 point3 );
 		Plane( Vector4 value );
 
 		static float Dot( Plane plane, Vector4 point );
-		static float Dot( Plane% plane, Vector4% point );
-
 		static float DotCoordinate( Plane plane, Vector3 point );
-		static float DotCoordinate( Plane% plane, Vector3% point );
-
 		static float DotNormal( Plane plane, Vector3 point );
-		static float DotNormal( Plane% plane, Vector3% point );
 
 		void Normalize();
 
@@ -81,7 +77,6 @@ namespace SlimDX
 		static array<Plane>^ Transform( array<Plane>^ planes, Quaternion% rotation );
 
 		static bool Intersects( Plane plane, Vector3 start, Vector3 end, [Out] Vector3% intersectPoint );
-		static bool Intersects( Plane% plane, Vector3% start, Vector3% end, [Out] Vector3% intersectPoint );
 
 		static PlaneIntersectionType Intersects( Plane plane, BoundingBox box );
 		static PlaneIntersectionType Intersects( Plane plane, BoundingSphere sphere );

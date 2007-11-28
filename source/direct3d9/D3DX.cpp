@@ -227,7 +227,10 @@ namespace SlimDX
 
 		bool D3DX::CheckVersion( int d3dVersion, int d3dxVersion )
 		{
-			return D3DXCheckVersion( d3dVersion, d3dxVersion );
+			if( D3DXCheckVersion( d3dVersion, d3dxVersion ) )
+				return true;
+			else
+				return false;
 		}
 	}
 }

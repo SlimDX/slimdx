@@ -114,14 +114,9 @@ namespace SlimDX
 		static Vector2 SmoothStep( Vector2 start, Vector2 end, float amount );		
 		static void SmoothStep( Vector2% start, Vector2% end, float amount, [Out] Vector2% result );
 		
-		static float Distance( Vector2 value1, Vector2 value2 );		
-		static float Distance( Vector2% value1, Vector2% value2 );
-		
+		static float Distance( Vector2 value1, Vector2 value2 );
 		static float DistanceSquared( Vector2 value1, Vector2 value2 );
-		static float DistanceSquared( Vector2% value1, Vector2% value2 );
-		
-		static float Dot( Vector2 left, Vector2 right );		
-		static float Dot( Vector2% left, Vector2% right );
+		static float Dot( Vector2 left, Vector2 right );
 
 		static Vector2 Normalize( Vector2 vector );
 		static void Normalize( Vector2% vector, [Out] Vector2% result );

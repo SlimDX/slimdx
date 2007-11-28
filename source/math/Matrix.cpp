@@ -1127,7 +1127,7 @@ namespace SlimDX
 	Matrix Matrix::OrthoRH( float width, float height, float znear, float zfar )
 	{
 		Matrix result;
-		D3DXMatrixOrthoLH( (D3DXMATRIX*) &result, width, height, znear, zfar );
+		D3DXMatrixOrthoRH( (D3DXMATRIX*) &result, width, height, znear, zfar );
 		return result;
 	}
 

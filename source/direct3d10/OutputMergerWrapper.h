@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../Direct3D/ColorValue.h"
+#include "../math/Math.h"
 
 namespace SlimDX
 {
@@ -60,10 +60,10 @@ namespace SlimDX
 				SlimDX::Direct3D10::BlendState^ get();
 			}
 			
-			property Direct3D::ColorValue BlendFactor
+			property ColorValue BlendFactor
 			{
-				void set( Direct3D::ColorValue value );
-				Direct3D::ColorValue get();
+				void set( ColorValue value );
+				ColorValue get();
 			}
 			
 			property int BlendSampleMask

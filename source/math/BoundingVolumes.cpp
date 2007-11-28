@@ -136,12 +136,8 @@ namespace SlimDX
 	BoundingBox BoundingBox::FromSphere( BoundingSphere sphere )
 	{
 		BoundingBox box;
-		box.Minimum.X = sphere.Center.X - sphere.Radius;
-		box.Minimum.Y = sphere.Center.Y - sphere.Radius;
-		box.Minimum.Z = sphere.Center.Z - sphere.Radius;
-		box.Maximum.X = sphere.Center.X + sphere.Radius;
-		box.Maximum.Y = sphere.Center.Y + sphere.Radius;
-		box.Maximum.Z = sphere.Center.Z + sphere.Radius;
+		box.Minimum = Vector3( sphere.Center.X - sphere.Radius, sphere.Center.Y - sphere.Radius, sphere.Center.Z - sphere.Radius );
+		box.Maximum = Vector3( sphere.Center.X + sphere.Radius, sphere.Center.Y + sphere.Radius, sphere.Center.Z + sphere.Radius );
 		return box;
 	}
 
