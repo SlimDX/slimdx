@@ -24,7 +24,7 @@
 using namespace System;
 using namespace System::Globalization;
 
-#include "../Direct3D/ColorValue.h"
+#include "../math/Math.h"
 #include "EffectPassShaderMapping.h"
 
 namespace SlimDX
@@ -42,7 +42,7 @@ namespace SlimDX
 			ShaderSignature^ m_Signature;
 			int m_StencilReference;
 			int m_SampleMask;
-			SlimDX::Direct3D::ColorValue m_BlendFactor;
+			ColorValue m_BlendFactor;
 			
 			
 		internal:
@@ -74,9 +74,9 @@ namespace SlimDX
 				int get() { return m_SampleMask; }
 			}
 			
-			property SlimDX::Direct3D::ColorValue BlendFactor
+			property ColorValue BlendFactor
 			{
-				SlimDX::Direct3D::ColorValue get() { return m_BlendFactor; }
+				ColorValue get() { return m_BlendFactor; }
 			}
 			
 			property bool IsValid

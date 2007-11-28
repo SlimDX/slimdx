@@ -66,7 +66,6 @@ namespace SlimDX
 		static void Divide( Quaternion% left, Quaternion% right, [Out] Quaternion% result );
 
 		static float Dot( Quaternion left, Quaternion right );
-		static float Dot( Quaternion% left, Quaternion% right );
 
 		static Quaternion Exponential( Quaternion quaternion );
 		static void Exponential( Quaternion% quaternion, [Out] Quaternion% result );

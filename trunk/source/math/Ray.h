@@ -31,8 +31,8 @@ namespace SlimDX
 	public value class Ray : IEquatable<Ray>
 	{
 	public:
-		property Vector3 Position;
-		property Vector3 Direction;
+		Vector3 Position;
+		Vector3 Direction;
 
 		Ray( Vector3 position, Vector3 direction );
 

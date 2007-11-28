@@ -40,15 +40,8 @@ namespace SlimDX
 		property float M31; property float M32; property float M33; property float M34;
 		property float M41; property float M42; property float M43; property float M44;
 
-		static property Matrix Identity
-		{
-			Matrix get();
-		}
-		
-		property bool IsIdentity
-		{
-			bool get();
-		}
+		static property Matrix Identity { Matrix get(); }
+		property bool IsIdentity { bool get(); }
 
 		void Invert();
 		bool Decompose( [Out] Vector3% scale, [Out] Quaternion% rotation, [Out] Vector3% translation );

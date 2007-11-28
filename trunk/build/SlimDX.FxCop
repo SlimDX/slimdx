@@ -53,6 +53,373 @@
       <Namespaces>
        <Namespace Name="SlimDX">
         <Types>
+         <Type Name="BoundingBox">
+          <Members>
+           <Member Name="Equals(SlimDX.BoundingBox&amp;,SlimDX.BoundingBox&amp;):System.Boolean">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>value1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>value2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromPoints(SlimDX.Vector3[]):SlimDX.BoundingBox">
+            <Messages>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2007-11-28 21:30:41Z">
+              <Issue Name="NoArguments">
+               <Item>System.ArgumentNullException</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Intersects(SlimDX.BoundingBox,SlimDX.Ray,System.Single&amp;):System.Boolean">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>distance</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Maximum">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>Maximum</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Minimum">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>Minimum</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="BoundingFrustum">
+          <Members>
+           <Member Name="ComputeIntersection(SlimDX.Plane&amp;,SlimDX.Ray&amp;):SlimDX.Vector3">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2007-11-28 21:30:41Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>BoundingFrustum.ComputeIntersection(Plane&amp;, Ray&amp;):Vector3</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ComputeIntersectionLine(SlimDX.Plane&amp;,SlimDX.Plane&amp;):SlimDX.Ray">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2007-11-28 21:30:41Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>BoundingFrustum.ComputeIntersectionLine(Plane&amp;, Plane&amp;):Ray</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Equals(SlimDX.BoundingFrustum&amp;,SlimDX.BoundingFrustum&amp;):System.Boolean">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>value1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>value2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Intersects(SlimDX.BoundingFrustum,SlimDX.Ray,System.Single&amp;):System.Boolean">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>distance</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="BoundingSphere">
+          <Members>
+           <Member Name="Center">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>Center</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Equals(SlimDX.BoundingSphere&amp;,SlimDX.BoundingSphere&amp;):System.Boolean">
+            <Messages>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>'value1'</Item>
+               <Item>BoundingSphere.Equals(BoundingSphere&amp;, BoundingSphere&amp;):Boolean</Item>
+              </Issue>
+              <Issue>
+               <Item>'value2'</Item>
+               <Item>BoundingSphere.Equals(BoundingSphere&amp;, BoundingSphere&amp;):Boolean</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>value1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>value2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Intersects(SlimDX.BoundingSphere,SlimDX.Ray,System.Single&amp;):System.Boolean">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>distance</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Radius">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>Radius</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ColorValue">
+          <Members>
+           <Member Name="Add(SlimDX.ColorValue&amp;,SlimDX.ColorValue&amp;,SlimDX.ColorValue&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>color1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>color2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="AdjustContrast(SlimDX.ColorValue&amp;,System.Single,SlimDX.ColorValue&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>color</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="AdjustSaturation(SlimDX.ColorValue&amp;,System.Single,SlimDX.ColorValue&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>color</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Equals(SlimDX.ColorValue&amp;,SlimDX.ColorValue&amp;):System.Boolean">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>value1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>value2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromUnmanaged(D3DXCOLOR*):SlimDX.ColorValue">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>ColorValue.FromUnmanaged(D3DXCOLOR*):ColorValue</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Lerp(SlimDX.ColorValue&amp;,SlimDX.ColorValue&amp;,System.Single,SlimDX.ColorValue&amp;):System.Void">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>color1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>color2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Modulate(SlimDX.ColorValue&amp;,SlimDX.ColorValue&amp;,SlimDX.ColorValue&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>color1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>color2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Negative(SlimDX.ColorValue&amp;,SlimDX.ColorValue&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>color</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="op_Multiply(SlimDX.ColorValue,SlimDX.ColorValue):SlimDX.ColorValue">
+            <Messages>
+             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>Multiply</Item>
+               <Item>ColorValue.op_Multiply(ColorValue, ColorValue):ColorValue</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="op_Multiply(SlimDX.ColorValue,System.Single):SlimDX.ColorValue">
+            <Messages>
+             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>Multiply</Item>
+               <Item>ColorValue.op_Multiply(ColorValue, Single):ColorValue</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="op_Multiply(System.Single,SlimDX.ColorValue):SlimDX.ColorValue">
+            <Messages>
+             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>Multiply</Item>
+               <Item>ColorValue.op_Multiply(Single, ColorValue):ColorValue</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="op_UnaryNegation(SlimDX.ColorValue):SlimDX.ColorValue">
+            <Messages>
+             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>Negate</Item>
+               <Item>ColorValue.op_UnaryNegation(ColorValue):ColorValue</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Scale(SlimDX.ColorValue&amp;,System.Single,SlimDX.ColorValue&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>scale</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>color</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Scale(SlimDX.ColorValue,System.Single):SlimDX.ColorValue">
+            <Messages>
+             <Message Id="1#" TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>scale</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Subtract(SlimDX.ColorValue&amp;,SlimDX.ColorValue&amp;,SlimDX.ColorValue&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>color1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>color2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="DataStream">
           <Members>
            <Member Name=".ctor(System.IntPtr,System.Int64,System.Boolean,System.Boolean)">
@@ -228,6 +595,25 @@
          </Type>
          <Type Name="Matrix">
           <Members>
+           <Member Name="Add(SlimDX.Matrix&amp;,SlimDX.Matrix&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>right</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="AffineTransformation(System.Single,SlimDX.Vector3&amp;,SlimDX.Quaternion&amp;,SlimDX.Vector3&amp;,SlimDX.Matrix&amp;):System.Void">
             <Messages>
              <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
@@ -319,6 +705,39 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="Divide(SlimDX.Matrix&amp;,SlimDX.Matrix&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>right</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Divide(SlimDX.Matrix&amp;,System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="Equals(SlimDX.Matrix&amp;,SlimDX.Matrix&amp;):System.Boolean">
             <Messages>
              <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
@@ -343,6 +762,25 @@
              <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
               <Issue Certainty="50">
                <Item>matrix</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Lerp(SlimDX.Matrix&amp;,SlimDX.Matrix&amp;,System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>value1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>value2</Item>
               </Issue>
              </Message>
             </Messages>
@@ -410,6 +848,34 @@
              <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-30 21:30:17Z">
               <Issue Certainty="50">
                <Item>right</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Multiply(SlimDX.Matrix&amp;,System.Single,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Negate(SlimDX.Matrix&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>matrix</Item>
               </Issue>
              </Message>
             </Messages>
@@ -624,6 +1090,25 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="Subtract(SlimDX.Matrix&amp;,SlimDX.Matrix&amp;,SlimDX.Matrix&amp;):System.Void">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>result</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>left</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>right</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="Transformation(SlimDX.Vector3&amp;,SlimDX.Quaternion&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Quaternion&amp;,SlimDX.Vector3&amp;,SlimDX.Matrix&amp;):System.Void">
             <Messages>
              <Message Id="6#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-30 21:30:17Z">
@@ -733,50 +1218,27 @@
          </Type>
          <Type Name="Plane">
           <Members>
-           <Member Name="Dot(SlimDX.Plane&amp;,SlimDX.Vector4&amp;):System.Single">
+           <Member Name="D">
             <Messages>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
-              <Issue Certainty="50">
-               <Item>plane</Item>
-              </Issue>
-             </Message>
-             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
-              <Issue Certainty="50">
-               <Item>point</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="DotCoordinate(SlimDX.Plane&amp;,SlimDX.Vector3&amp;):System.Single">
-            <Messages>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
-              <Issue Certainty="50">
-               <Item>plane</Item>
-              </Issue>
-             </Message>
-             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
-              <Issue Certainty="50">
-               <Item>point</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="DotNormal(SlimDX.Plane&amp;,SlimDX.Vector3&amp;):System.Single">
-            <Messages>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
-              <Issue Certainty="50">
-               <Item>plane</Item>
-              </Issue>
-             </Message>
-             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
-              <Issue Certainty="50">
-               <Item>point</Item>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>D</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
            <Member Name="Equals(SlimDX.Plane&amp;,SlimDX.Plane&amp;):System.Boolean">
             <Messages>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>'value1'</Item>
+               <Item>Plane.Equals(Plane&amp;, Plane&amp;):Boolean</Item>
+              </Issue>
+              <Issue>
+               <Item>'value2'</Item>
+               <Item>Plane.Equals(Plane&amp;, Plane&amp;):Boolean</Item>
+              </Issue>
+             </Message>
              <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
               <Issue Certainty="50">
                <Item>value1</Item>
@@ -785,30 +1247,6 @@
              <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
               <Issue Certainty="50">
                <Item>value2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Intersects(SlimDX.Plane&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Boolean">
-            <Messages>
-             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-15 20:36:30Z">
-              <Issue>
-               <Item>intersectPoint</Item>
-              </Issue>
-             </Message>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
-              <Issue Certainty="50">
-               <Item>plane</Item>
-              </Issue>
-             </Message>
-             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
-              <Issue Certainty="50">
-               <Item>start</Item>
-              </Issue>
-             </Message>
-             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
-              <Issue Certainty="50">
-               <Item>end</Item>
               </Issue>
              </Message>
             </Messages>
@@ -822,8 +1260,23 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="Normal">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>Normal</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="Normalize(SlimDX.Plane&amp;,SlimDX.Plane&amp;):System.Void">
             <Messages>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>'plane'</Item>
+               <Item>Plane.Normalize(Plane&amp;, Plane&amp;):Void</Item>
+              </Issue>
+             </Message>
              <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-15 20:36:30Z">
               <Issue>
                <Item>result</Item>
@@ -858,6 +1311,12 @@
            </Member>
            <Member Name="Transform(SlimDX.Plane&amp;,SlimDX.Matrix&amp;,SlimDX.Plane&amp;):System.Void">
             <Messages>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>'plane'</Item>
+               <Item>Plane.Transform(Plane&amp;, Matrix&amp;, Plane&amp;):Void</Item>
+              </Issue>
+             </Message>
              <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-15 20:36:30Z">
               <Issue>
                <Item>result</Item>
@@ -877,6 +1336,12 @@
            </Member>
            <Member Name="Transform(SlimDX.Plane&amp;,SlimDX.Quaternion&amp;,SlimDX.Plane&amp;):System.Void">
             <Messages>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>'plane'</Item>
+               <Item>Plane.Transform(Plane&amp;, Quaternion&amp;, Plane&amp;):Void</Item>
+              </Issue>
+             </Message>
              <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-15 20:36:30Z">
               <Issue>
                <Item>result</Item>
@@ -999,20 +1464,6 @@
                <Item>result</Item>
               </Issue>
              </Message>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
-              <Issue Certainty="50">
-               <Item>left</Item>
-              </Issue>
-             </Message>
-             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
-              <Issue Certainty="50">
-               <Item>right</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Dot(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;):System.Single">
-            <Messages>
              <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-31 02:06:30Z">
               <Issue Certainty="50">
                <Item>left</Item>
@@ -1305,6 +1756,87 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="Ray">
+          <Members>
+           <Member Name="Direction">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>Direction</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Equals(SlimDX.Ray&amp;,SlimDX.Ray&amp;):System.Boolean">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>value1</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>value2</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Intersects(SlimDX.Ray,SlimDX.BoundingBox,System.Single&amp;):System.Boolean">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>distance</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Intersects(SlimDX.Ray,SlimDX.BoundingFrustum,System.Single&amp;):System.Boolean">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>distance</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Intersects(SlimDX.Ray,SlimDX.BoundingSphere,System.Single&amp;):System.Boolean">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>distance</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Intersects(SlimDX.Ray,SlimDX.Plane,System.Single&amp;):System.Boolean">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>distance</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Intersects(SlimDX.Ray,SlimDX.Vector3,SlimDX.Vector3,SlimDX.Vector3,System.Single&amp;):System.Boolean">
+            <Messages>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>distance</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Position">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>Position</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="Vector2">
           <Members>
            <Member Name="Add(SlimDX.Vector2&amp;,SlimDX.Vector2&amp;,SlimDX.Vector2&amp;):System.Void">
@@ -1403,34 +1935,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="Distance(SlimDX.Vector2&amp;,SlimDX.Vector2&amp;):System.Single">
-            <Messages>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-16 02:23:12Z">
-              <Issue Certainty="50">
-               <Item>value1</Item>
-              </Issue>
-             </Message>
-             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-16 02:23:12Z">
-              <Issue Certainty="50">
-               <Item>value2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="DistanceSquared(SlimDX.Vector2&amp;,SlimDX.Vector2&amp;):System.Single">
-            <Messages>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-16 02:23:12Z">
-              <Issue Certainty="50">
-               <Item>value1</Item>
-              </Issue>
-             </Message>
-             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-16 02:23:12Z">
-              <Issue Certainty="50">
-               <Item>value2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="Divide(SlimDX.Vector2&amp;,System.Single,SlimDX.Vector2&amp;):System.Void">
             <Messages>
              <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-16 02:23:12Z">
@@ -1441,20 +1945,6 @@
              <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-16 02:23:12Z">
               <Issue Certainty="50">
                <Item>vector</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Dot(SlimDX.Vector2&amp;,SlimDX.Vector2&amp;):System.Single">
-            <Messages>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-16 02:23:12Z">
-              <Issue Certainty="50">
-               <Item>left</Item>
-              </Issue>
-             </Message>
-             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-16 02:23:12Z">
-              <Issue Certainty="50">
-               <Item>right</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1861,34 +2351,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="Distance(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Single">
-            <Messages>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
-              <Issue Certainty="50">
-               <Item>value1</Item>
-              </Issue>
-             </Message>
-             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
-              <Issue Certainty="50">
-               <Item>value2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="DistanceSquared(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Single">
-            <Messages>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
-              <Issue Certainty="50">
-               <Item>value1</Item>
-              </Issue>
-             </Message>
-             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
-              <Issue Certainty="50">
-               <Item>value2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="Divide(SlimDX.Vector3&amp;,System.Single,SlimDX.Vector3&amp;):System.Void">
             <Messages>
              <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
@@ -1899,20 +2361,6 @@
              <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
               <Issue Certainty="50">
                <Item>vector</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Dot(SlimDX.Vector3&amp;,SlimDX.Vector3&amp;):System.Single">
-            <Messages>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
-              <Issue Certainty="50">
-               <Item>left</Item>
-              </Issue>
-             </Message>
-             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
-              <Issue Certainty="50">
-               <Item>right</Item>
               </Issue>
              </Message>
             </Messages>
@@ -2415,34 +2863,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="Distance(SlimDX.Vector4&amp;,SlimDX.Vector4&amp;):System.Single">
-            <Messages>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-16 02:23:12Z">
-              <Issue Certainty="50">
-               <Item>value1</Item>
-              </Issue>
-             </Message>
-             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-16 02:23:12Z">
-              <Issue Certainty="50">
-               <Item>value2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="DistanceSquared(SlimDX.Vector4&amp;,SlimDX.Vector4&amp;):System.Single">
-            <Messages>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-16 02:23:12Z">
-              <Issue Certainty="50">
-               <Item>value1</Item>
-              </Issue>
-             </Message>
-             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-16 02:23:12Z">
-              <Issue Certainty="50">
-               <Item>value2</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="Divide(SlimDX.Vector4&amp;,System.Single,SlimDX.Vector4&amp;):System.Void">
             <Messages>
              <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-16 02:23:12Z">
@@ -2453,20 +2873,6 @@
              <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-16 02:23:12Z">
               <Issue Certainty="50">
                <Item>vector</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="Dot(SlimDX.Vector4&amp;,SlimDX.Vector4&amp;):System.Single">
-            <Messages>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-16 02:23:12Z">
-              <Issue Certainty="50">
-               <Item>left</Item>
-              </Issue>
-             </Message>
-             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-16 02:23:12Z">
-              <Issue Certainty="50">
-               <Item>right</Item>
               </Issue>
              </Message>
             </Messages>
@@ -2732,18 +3138,6 @@
        </Namespace>
        <Namespace Name="SlimDX.Direct3D">
         <Types>
-         <Type Name="ColorValue">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>SlimDX.Direct3D.ColorValue</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>SlimDX.Direct3D.ColorValue</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="LockedBox">
           <Messages>
            <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
@@ -4492,6 +4886,72 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="Intersects(SlimDX.Ray,System.Single&amp;):System.Boolean">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>distance</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Intersects(SlimDX.Ray,System.Single&amp;,System.Int32&amp;,System.Int32&amp;,SlimDX.Direct3D9.BufferWrapper&amp;):System.Boolean">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>distance</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>faceIndex</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>hitCount</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>hits</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="IntersectsSubset(SlimDX.Ray,System.Int32,System.Single&amp;):System.Boolean">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>distance</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="IntersectsSubset(SlimDX.Ray,System.Int32,System.Single&amp;,System.Int32&amp;,System.Int32&amp;,SlimDX.Direct3D9.BufferWrapper&amp;):System.Boolean">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>distance</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>faceIndex</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>hitCount</Item>
+              </Issue>
+             </Message>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>hits</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
           </Members>
          </Type>
          <Type Name="Blend">
@@ -4808,6 +5268,24 @@
          </Type>
          <Type Name="D3DX">
           <Members>
+           <Member Name="DeclaratorFromFVF(SlimDX.Direct3D9.VertexFormat):SlimDX.Direct3D9.VertexElement[]">
+            <Messages>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Name="Member">
+               <Item>D3DX.DeclaratorFromFVF(VertexFormat):VertexElement[]</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FVFFromDeclarator(SlimDX.Direct3D9.VertexElement[]):SlimDX.Direct3D9.VertexFormat">
+            <Messages>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Name="Member">
+               <Item>D3DX.FVFFromDeclarator(VertexElement[]):VertexFormat</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="GetFVFVertexSize(SlimDX.Direct3D9.VertexFormat):System.Int32">
             <Messages>
              <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -4817,11 +5295,87 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="GetRectanglePatchSize(System.Single,System.Int32&amp;,System.Int32&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>triangleCount</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>vertexCount</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetTrianglePatchSize(System.Single,System.Int32&amp;,System.Int32&amp;):System.Void">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>triangleCount</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>vertexCount</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="MakeFourCC(System.Byte,System.Byte,System.Byte,System.Byte):SlimDX.Direct3D9.Format">
             <Messages>
              <Message TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>MakeFourCC</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="OptimizeFaces(System.Int16[],System.Int32,System.Int32):System.Int32[]">
+            <Messages>
+             <Message Id="0#indices" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Name="Parameter">
+               <Item>D3DX.OptimizeFaces(Int16[], Int32, Int32):Int32[]</Item>
+               <Item>indices</Item>
+               <Item>indices</Item>
+               <Item>indexes</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="OptimizeFaces(System.Int32[],System.Int32,System.Int32):System.Int32[]">
+            <Messages>
+             <Message Id="0#indices" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Name="Parameter">
+               <Item>D3DX.OptimizeFaces(Int32[], Int32, Int32):Int32[]</Item>
+               <Item>indices</Item>
+               <Item>indices</Item>
+               <Item>indexes</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="OptimizeVertices(System.Int16[],System.Int32,System.Int32):System.Int32[]">
+            <Messages>
+             <Message Id="0#indices" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Name="Parameter">
+               <Item>D3DX.OptimizeVertices(Int16[], Int32, Int32):Int32[]</Item>
+               <Item>indices</Item>
+               <Item>indices</Item>
+               <Item>indexes</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="OptimizeVertices(System.Int32[],System.Int32,System.Int32):System.Int32[]">
+            <Messages>
+             <Message Id="0#indices" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Name="Parameter">
+               <Item>D3DX.OptimizeVertices(Int32[], Int32, Int32):Int32[]</Item>
+               <Item>indices</Item>
+               <Item>indices</Item>
+               <Item>indexes</Item>
               </Issue>
              </Message>
             </Messages>
@@ -6792,6 +7346,230 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="FromXFile(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.XFileData,SlimDX.Direct3D9.MeshFlags):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.FromXFile(Device, XFileData, MeshFlags):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+              <Issue>
+               <Item>xfile</Item>
+               <Item>Mesh.FromXFile(Device, XFileData, MeshFlags):Mesh</Item>
+               <Item>SlimDX.Direct3D9.XFileData</Item>
+               <Item>SlimDX.DirectXObject&lt;ID3DXFileData&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromXFile(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.XFileData,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.BufferWrapper&amp;,SlimDX.Direct3D9.ExtendedMaterial[]&amp;,SlimDX.Direct3D9.EffectInstance[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>adjacency</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>materials</Item>
+              </Issue>
+             </Message>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>effectInstances</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.FromXFile(Device, XFileData, MeshFlags, BufferWrapper&amp;, ExtendedMaterial[]&amp;, EffectInstance[]&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+              <Issue>
+               <Item>xfile</Item>
+               <Item>Mesh.FromXFile(Device, XFileData, MeshFlags, BufferWrapper&amp;, ExtendedMaterial[]&amp;, EffectInstance[]&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.XFileData</Item>
+               <Item>SlimDX.DirectXObject&lt;ID3DXFileData&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromXFile(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.XFileData,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.BufferWrapper&amp;,SlimDX.Direct3D9.ExtendedMaterial[]&amp;,SlimDX.Direct3D9.EffectInstance[]&amp;,SlimDX.Direct3D9.SkinInfo&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>adjacency</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>materials</Item>
+              </Issue>
+             </Message>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>effectInstances</Item>
+              </Issue>
+             </Message>
+             <Message Id="6#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>skinInfo</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.FromXFile(Device, XFileData, MeshFlags, BufferWrapper&amp;, ExtendedMaterial[]&amp;, EffectInstance[]&amp;, SkinInfo&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+              <Issue>
+               <Item>xfile</Item>
+               <Item>Mesh.FromXFile(Device, XFileData, MeshFlags, BufferWrapper&amp;, ExtendedMaterial[]&amp;, EffectInstance[]&amp;, SkinInfo&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.XFileData</Item>
+               <Item>SlimDX.DirectXObject&lt;ID3DXFileData&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromXFile(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.XFileData,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.ExtendedMaterial[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>materials</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.FromXFile(Device, XFileData, MeshFlags, ExtendedMaterial[]&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+              <Issue>
+               <Item>xfile</Item>
+               <Item>Mesh.FromXFile(Device, XFileData, MeshFlags, ExtendedMaterial[]&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.XFileData</Item>
+               <Item>SlimDX.DirectXObject&lt;ID3DXFileData&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromXFile(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.XFileData,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.ExtendedMaterial[]&amp;,SlimDX.Direct3D9.EffectInstance[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>materials</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>effectInstances</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.FromXFile(Device, XFileData, MeshFlags, ExtendedMaterial[]&amp;, EffectInstance[]&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+              <Issue>
+               <Item>xfile</Item>
+               <Item>Mesh.FromXFile(Device, XFileData, MeshFlags, ExtendedMaterial[]&amp;, EffectInstance[]&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.XFileData</Item>
+               <Item>SlimDX.DirectXObject&lt;ID3DXFileData&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromXFile(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.XFileData,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.ExtendedMaterial[]&amp;,SlimDX.Direct3D9.EffectInstance[]&amp;,SlimDX.Direct3D9.SkinInfo&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>materials</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>effectInstances</Item>
+              </Issue>
+             </Message>
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>skinInfo</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.FromXFile(Device, XFileData, MeshFlags, ExtendedMaterial[]&amp;, EffectInstance[]&amp;, SkinInfo&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+              <Issue>
+               <Item>xfile</Item>
+               <Item>Mesh.FromXFile(Device, XFileData, MeshFlags, ExtendedMaterial[]&amp;, EffectInstance[]&amp;, SkinInfo&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.XFileData</Item>
+               <Item>SlimDX.DirectXObject&lt;ID3DXFileData&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromXFile(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.XFileData,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.ExtendedMaterial[]&amp;,SlimDX.Direct3D9.SkinInfo&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>materials</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>skinInfo</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.FromXFile(Device, XFileData, MeshFlags, ExtendedMaterial[]&amp;, SkinInfo&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+              <Issue>
+               <Item>xfile</Item>
+               <Item>Mesh.FromXFile(Device, XFileData, MeshFlags, ExtendedMaterial[]&amp;, SkinInfo&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.XFileData</Item>
+               <Item>SlimDX.DirectXObject&lt;ID3DXFileData&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromXFile(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.XFileData,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.SkinInfo&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>skinInfo</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>Mesh.FromXFile(Device, XFileData, MeshFlags, SkinInfo&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+              <Issue>
+               <Item>xfile</Item>
+               <Item>Mesh.FromXFile(Device, XFileData, MeshFlags, SkinInfo&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.XFileData</Item>
+               <Item>SlimDX.DirectXObject&lt;ID3DXFileData&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="Optimize(SlimDX.Direct3D9.MeshOptimizeFlags,System.Int32[],System.Int32[]&amp;):SlimDX.Direct3D9.Mesh">
             <Messages>
              <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-17 19:46:05Z">
@@ -6960,6 +7738,15 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="Save(System.String,System.Int32[],SlimDX.Direct3D9.ExtendedMaterial[],SlimDX.Direct3D9.EffectInstance[],SlimDX.Direct3D9.XFileFormat,System.Runtime.InteropServices.CharSet):System.Void">
+            <Messages>
+             <Message Id="5#" TypeName="AvoidTypeNamesInParameters" Category="Microsoft.Naming" CheckId="CA1720" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>charSet</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
           </Members>
          </Type>
          <Type Name="MeshDataType">
@@ -7064,6 +7851,75 @@
          </Type>
          <Type Name="PatchMesh">
           <Members>
+           <Member Name="FromXFile(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.XFileData,SlimDX.Direct3D9.MeshFlags):SlimDX.Direct3D9.PatchMesh">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>PatchMesh.FromXFile(Device, XFileData, MeshFlags):PatchMesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+              <Issue>
+               <Item>xfile</Item>
+               <Item>PatchMesh.FromXFile(Device, XFileData, MeshFlags):PatchMesh</Item>
+               <Item>SlimDX.Direct3D9.XFileData</Item>
+               <Item>SlimDX.DirectXObject&lt;ID3DXFileData&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromXFile(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.XFileData,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.ExtendedMaterial[]&amp;):SlimDX.Direct3D9.PatchMesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>materials</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>PatchMesh.FromXFile(Device, XFileData, MeshFlags, ExtendedMaterial[]&amp;):PatchMesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+              <Issue>
+               <Item>xfile</Item>
+               <Item>PatchMesh.FromXFile(Device, XFileData, MeshFlags, ExtendedMaterial[]&amp;):PatchMesh</Item>
+               <Item>SlimDX.Direct3D9.XFileData</Item>
+               <Item>SlimDX.DirectXObject&lt;ID3DXFileData&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromXFile(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.XFileData,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.ExtendedMaterial[]&amp;,SlimDX.Direct3D9.EffectInstance[]&amp;):SlimDX.Direct3D9.PatchMesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>materials</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>effectInstances</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>PatchMesh.FromXFile(Device, XFileData, MeshFlags, ExtendedMaterial[]&amp;, EffectInstance[]&amp;):PatchMesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+              <Issue>
+               <Item>xfile</Item>
+               <Item>PatchMesh.FromXFile(Device, XFileData, MeshFlags, ExtendedMaterial[]&amp;, EffectInstance[]&amp;):PatchMesh</Item>
+               <Item>SlimDX.Direct3D9.XFileData</Item>
+               <Item>SlimDX.DirectXObject&lt;ID3DXFileData&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="GetDevice():SlimDX.Direct3D9.Device">
             <Messages>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-11-12 22:40:40Z">
@@ -7737,6 +8593,268 @@
             </Issue>
            </Message>
           </Messages>
+         </Type>
+         <Type Name="SimplificationMesh">
+          <Members>
+           <Member Name=".ctor(ID3DXSPMesh*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>SimplificationMesh.SimplificationMesh(ID3DXSPMesh*)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name=".ctor(SlimDX.Direct3D9.Mesh,System.Int32[]&amp;)">
+            <Messages>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Created="2007-11-28 21:30:41Z">
+              <Issue Level="CriticalWarning">
+               <Item>adjacency</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name=".ctor(SlimDX.Direct3D9.Mesh,System.Int32[]&amp;,SlimDX.Direct3D9.AttributeWeights[])">
+            <Messages>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Created="2007-11-28 21:30:41Z">
+              <Issue Level="CriticalWarning">
+               <Item>adjacency</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name=".ctor(SlimDX.Direct3D9.Mesh,System.Int32[]&amp;,SlimDX.Direct3D9.AttributeWeights[],System.Single[])">
+            <Messages>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Created="2007-11-28 21:30:41Z">
+              <Issue Level="CriticalWarning">
+               <Item>adjacency</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name=".ctor(SlimDX.Direct3D9.Mesh,System.Int32[]&amp;,System.Single[])">
+            <Messages>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Created="2007-11-28 21:30:41Z">
+              <Issue Level="CriticalWarning">
+               <Item>adjacency</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Clone(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.VertexElement[]):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>SimplificationMesh.Clone(Device, MeshFlags, VertexElement[]):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Clone(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.VertexElement[],System.Int32[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>SimplificationMesh.Clone(Device, MeshFlags, VertexElement[], Int32[]&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Clone(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.VertexElement[],System.Int32[]&amp;,System.Int32[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>vertexRemap</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>SimplificationMesh.Clone(Device, MeshFlags, VertexElement[], Int32[]&amp;, Int32[]&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Clone(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.VertexFormat):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>SimplificationMesh.Clone(Device, MeshFlags, VertexFormat):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Clone(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.VertexFormat,System.Int32[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>SimplificationMesh.Clone(Device, MeshFlags, VertexFormat, Int32[]&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Clone(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.VertexFormat,System.Int32[]&amp;,System.Int32[]&amp;):SlimDX.Direct3D9.Mesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>adjacencyOut</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>vertexRemap</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>SimplificationMesh.Clone(Device, MeshFlags, VertexFormat, Int32[]&amp;, Int32[]&amp;):Mesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CloneProgressive(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.VertexElement[]):SlimDX.Direct3D9.ProgressiveMesh">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>SimplificationMesh.CloneProgressive(Device, MeshFlags, VertexElement[]):ProgressiveMesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CloneProgressive(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.VertexElement[],System.Int32[]&amp;):SlimDX.Direct3D9.ProgressiveMesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>vertexRemap</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>SimplificationMesh.CloneProgressive(Device, MeshFlags, VertexElement[], Int32[]&amp;):ProgressiveMesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CloneProgressive(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.VertexElement[],System.Int32[]&amp;,System.Single[]&amp;):SlimDX.Direct3D9.ProgressiveMesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>vertexRemap</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>errorsByFace</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>SimplificationMesh.CloneProgressive(Device, MeshFlags, VertexElement[], Int32[]&amp;, Single[]&amp;):ProgressiveMesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CloneProgressive(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.VertexFormat):SlimDX.Direct3D9.ProgressiveMesh">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>SimplificationMesh.CloneProgressive(Device, MeshFlags, VertexFormat):ProgressiveMesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CloneProgressive(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.VertexFormat,System.Int32[]&amp;):SlimDX.Direct3D9.ProgressiveMesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>vertexRemap</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>SimplificationMesh.CloneProgressive(Device, MeshFlags, VertexFormat, Int32[]&amp;):ProgressiveMesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CloneProgressive(SlimDX.Direct3D9.Device,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.VertexFormat,System.Int32[]&amp;,System.Single[]&amp;):SlimDX.Direct3D9.ProgressiveMesh">
+            <Messages>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>vertexRemap</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>errorsByFace</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue>
+               <Item>device</Item>
+               <Item>SimplificationMesh.CloneProgressive(Device, MeshFlags, VertexFormat, Int32[]&amp;, Single[]&amp;):ProgressiveMesh</Item>
+               <Item>SlimDX.Direct3D9.Device</Item>
+               <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetDevice():SlimDX.Direct3D9.Device">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-11-28 21:30:41Z">
+              <Issue Certainty="50">
+               <Item>GetDevice</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
          <Type Name="SkinInfo">
           <Members>
@@ -9455,6 +10573,9 @@
    <Rule TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011">
     <Resolution Name="Default">Consider changing the type of parameter '{0}' in {1} from {2} to its base type {3}. This method appears to only require base class members in its implementation. Suppress this violation if there is a compelling reason to require the more derived type in the method signature.</Resolution>
    </Rule>
+   <Rule TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051">
+    <Resolution Name="Default">Make '{0}' private or internal (Friend in VB, public private in C++) and provide a public or protected property to access it.</Resolution>
+   </Rule>
    <Rule TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122">
     <Resolution Name="Default">{0} calls into {1} which has a LinkDemand. By making this call, {1} is indirectly exposed to user code. Review the following call stack that might expose a way to circumvent security protection: {2}</Resolution>
    </Rule>
@@ -9497,11 +10618,17 @@
    <Rule TypeName="ImplementISerializableCorrectly" Category="Microsoft.Usage" CheckId="CA2240">
     <Resolution Name="Default">Add an implementation of GetObjectData to type '{0}'.</Resolution>
    </Rule>
+   <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
+    <Resolution Name="NoArguments">Call the {0} constructor that contains a message and/or paramName parameter.</Resolution>
+   </Rule>
    <Rule TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705">
     <Resolution Name="Member">Correct the capitalization of member name '{0}'.</Resolution>
    </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of '{0}' appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
+    <Resolution Name="Default">The 'this' parameter (or 'Me' in VB) of {0} is never used. Mark the member as static (or Shared in VB) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
    </Rule>
    <Rule TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223">
     <Resolution Name="Default">'{0}' should differ from other members by more than its return type.</Resolution>
@@ -9526,6 +10653,9 @@
    <Rule TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725">
     <Resolution Name="Default">Change parameter name '{0}' of method {1} to '{2}' in order to match the identifier as it has been declared in {3}.</Resolution>
    </Rule>
+   <Rule TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719">
+    <Resolution Name="Default">Change either member or parameter name '{0}' so that one differs from the other.</Resolution>
+   </Rule>
    <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
     <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>
    </Rule>
@@ -9547,6 +10677,9 @@
    </Rule>
    <Rule TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024">
     <Resolution Name="Default">Change '{0}' to a property if appropriate.</Resolution>
+   </Rule>
+   <Rule TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062">
+    <Resolution Name="Default">Validate parameter {0} passed to externally visible method {1}.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

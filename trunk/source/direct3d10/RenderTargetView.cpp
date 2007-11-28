@@ -45,7 +45,7 @@ namespace Direct3D10
 		m_Pointer = view;
 	}
 	
-	void RenderTargetView::Clear( Direct3D::ColorValue color )
+	void RenderTargetView::Clear( ColorValue color )
 	{
 		float colorArray[] = { color.Red, color.Green, color.Blue, color.Alpha };
 		ID3D10Device* device;
