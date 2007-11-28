@@ -388,6 +388,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\math\ColorValue.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\math\Matrix.cpp"
 					>
 				</File>
@@ -976,10 +980,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d\ColorValue.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\direct3d\LockedBox.h"
 					>
 				</File>
@@ -1097,6 +1097,10 @@
 				>
 				<File
 					RelativePath="..\source\math\BoundingVolumes.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\ColorValue.h"
 					>
 				</File>
 				<File

@@ -36,8 +36,10 @@ namespace SlimDX
 	value class BoundingBox;
 	value class BoundingSphere;
 	value class BoundingFrustum;
+	value class ColorValue;
 }
 
+#include "ColorValue.h"
 #include "Vector4.h"
 #include "Vector2.h"
 #include "Vector3.h"

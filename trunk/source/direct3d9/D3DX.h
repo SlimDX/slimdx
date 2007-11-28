@@ -62,6 +62,8 @@ namespace SlimDX
 
 			static array<int>^ OptimizeVertices( array<int>^ indices, int faceCount, int vertexCount );
 			static array<int>^ OptimizeVertices( array<Int16>^ indices, int faceCount, int vertexCount );
+
+			static bool CheckVersion( int d3dVersion, int d3dxVersion );
 		};
 	}
 }

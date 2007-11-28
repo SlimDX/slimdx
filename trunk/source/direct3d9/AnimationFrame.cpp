@@ -584,9 +584,14 @@ namespace Direct3D9
 		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
 	{
 		IAllocateHierarchyShim* allocatorShim = new IAllocateHierarchyShim( allocator );
-		ILoadUserDataShim* userDataLoaderShim = new ILoadUserDataShim( userDataLoader );
+		ILoadUserDataShim* userDataLoaderShim;
 		LPD3DXFRAME result;
 		LPD3DXANIMATIONCONTROLLER animationResult;
+
+		if( userDataLoader == nullptr )
+			userDataLoaderShim = NULL;
+		else
+			userDataLoaderShim = new ILoadUserDataShim( userDataLoader );
 
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
@@ -609,9 +614,14 @@ namespace Direct3D9
 		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
 	{
 		IAllocateHierarchyShim* allocatorShim = new IAllocateHierarchyShim( allocator );
-		ILoadUserDataShim* userDataLoaderShim = new ILoadUserDataShim( userDataLoader );
+		ILoadUserDataShim* userDataLoaderShim;
 		LPD3DXFRAME result;
 		LPD3DXANIMATIONCONTROLLER animationResult;
+
+		if( userDataLoader == nullptr )
+			userDataLoaderShim = NULL;
+		else
+			userDataLoaderShim = new ILoadUserDataShim( userDataLoader );
 
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 

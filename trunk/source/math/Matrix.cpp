@@ -755,6 +755,9 @@ namespace SlimDX
 
 	Matrix Matrix::RotationAxis( Vector3 axis, float angle )
 	{
+		if( axis.LengthSquared() != 1.0f )
+			axis.Normalize();
+
 		Matrix result;
 		float x = axis.X;
 		float y = axis.Y;
@@ -790,6 +793,9 @@ namespace SlimDX
 
 	void Matrix::RotationAxis( Vector3% axis, float angle, [Out] Matrix% result )
 	{
+		if( axis.LengthSquared() != 1.0f )
+			axis.Normalize();
+
 		float x = axis.X;
 		float y = axis.Y;
 		float z = axis.Z;
@@ -1572,7 +1578,7 @@ namespace SlimDX
 
 	String^ Matrix::ToString()
 	{
-		return String::Format( CultureInfo::CurrentCulture, "{M11:{0} M12:{1} M13:{2} M14:{3}} {M21:{4} M22:{5} M23:{6} M24:{7}} {M31:{8} M32:{9} M33:{10} M34:{11}} {M41:{12} M42:{13} M43:{14} M44:{15}}",
+		return String::Format( CultureInfo::CurrentCulture, "[[M11:{0} M12:{1} M13:{2} M14:{3}] [M21:{4} M22:{5} M23:{6} M24:{7}] [M31:{8} M32:{9} M33:{10} M34:{11}] [M41:{12} M42:{13} M43:{14} M44:{15}]]",
 			M11.ToString(CultureInfo::CurrentCulture), M12.ToString(CultureInfo::CurrentCulture), M13.ToString(CultureInfo::CurrentCulture), M14.ToString(CultureInfo::CurrentCulture),
 			M21.ToString(CultureInfo::CurrentCulture), M22.ToString(CultureInfo::CurrentCulture), M23.ToString(CultureInfo::CurrentCulture), M24.ToString(CultureInfo::CurrentCulture),
 			M31.ToString(CultureInfo::CurrentCulture), M32.ToString(CultureInfo::CurrentCulture), M33.ToString(CultureInfo::CurrentCulture), M34.ToString(CultureInfo::CurrentCulture),
