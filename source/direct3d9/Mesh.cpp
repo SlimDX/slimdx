@@ -1345,7 +1345,8 @@ namespace Direct3D9
 	DataStream^ Mesh::LockAttributeBuffer( LockFlags flags )
 	{
 		DWORD *data;
-
+		int faceCount = MeshPointer->GetNumFaces();
+		
 		HRESULT hr = MeshPointer->LockAttributeBuffer( static_cast<DWORD>( flags ), &data );
 		GraphicsException::CheckHResult( hr );
 
@@ -1353,7 +1354,7 @@ namespace Direct3D9
 			return nullptr;
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		return gcnew DataStream( data, 0, true, !readOnly, false );
+		return gcnew DataStream( data, faceCount * sizeof( DWORD ), true, !readOnly, false );
 	}
 
 	void Mesh::UnlockAttributeBuffer()

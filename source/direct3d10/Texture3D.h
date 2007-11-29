@@ -28,7 +28,7 @@ using namespace System;
 #include "../direct3d/LockedBox.h"
 
 #include "Enums.h"
-#include "Resource.h"
+#include "Texture.h"
 
 namespace SlimDX
 {
@@ -36,7 +36,7 @@ namespace SlimDX
 	{
 		ref class Device;
 		
-		public ref class Texture3D : public Resource
+		public ref class Texture3D : public Texture
 		{
 			int m_Width;
 			int m_Height;

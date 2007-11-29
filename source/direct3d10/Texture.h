@@ -21,40 +21,45 @@
 */
 #pragma once
 
+using namespace System;
+
+#include <cmath>
+
 #include "Enums.h"
 #include "Resource.h"
-#include "../Direct3D/../DataStream.h"
-
-using namespace SlimDX::Direct3D;
 
 namespace SlimDX
 {
-	namespace Direct3D9
+	namespace Direct3D10
 	{
-		public ref class IndexBuffer : public Resource
+		ref class Device;
+		
+		public ref class Texture : public Resource
 		{
-			Format m_Format;
-			SlimDX::Direct3D9::ResourceType m_Type;
-			Usage m_Usage;
-			Pool m_Pool;
-			int m_SizeInBytes;
-			
-			void InitDescription();
-			
 		internal:
-			property IDirect3DIndexBuffer9* IbPointer
+			static int GetMipSize( int mipSlice, int baseSliceSize )
 			{
-				IDirect3DIndexBuffer9* get() { return static_cast<IDirect3DIndexBuffer9*>( m_Pointer ); }
+				float size = static_cast<float>( baseSliceSize );
+				
+				while( mipSlice > 0 )
+				{
+					size = std::floorf(size / 2.0f);
+					--mipSlice;
+				}
+				
+				return (static_cast< int >(size));
 			}
-
-			IndexBuffer( IDirect3DIndexBuffer9* buffer );
-
+			
+		protected:
+			Texture( ID3D10Resource *texture )
+			: Resource( texture )
+			{
+			}
+		
 		public:
-			IndexBuffer( IntPtr buffer );
-			IndexBuffer( Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit );
-
-			DataStream^ Lock( int offset, int size, LockFlags flags );
-			void Unlock();
+			Texture()
+			{
+			}
 		};
 	}
-}
+};

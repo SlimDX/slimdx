@@ -82,6 +82,7 @@ namespace SlimDX
 		[StructLayout( LayoutKind::Sequential )]
 		public value class VolumeDescription
 		{
+		public:
 			Format Format;
 			ResourceType Type;
 			Usage Usage;

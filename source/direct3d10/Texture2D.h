@@ -29,7 +29,7 @@ using namespace System;
 
 #include "Enums.h"
 #include "SampleDescription.h"
-#include "Resource.h"
+#include "Texture.h"
 
 namespace SlimDX
 {
@@ -37,7 +37,7 @@ namespace SlimDX
 	{
 		ref class Device;
 		
-		public ref class Texture2D : public Resource
+		public ref class Texture2D : public Texture
 		{
 			int m_Width;
 			int m_Height;

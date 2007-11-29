@@ -33,7 +33,7 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	Texture3D::Texture3D( ID3D10Texture3D* texture ) : Resource( texture )
+	Texture3D::Texture3D( ID3D10Texture3D* texture ) : Texture( texture )
 	{
 		Construct( texture );
 	}
@@ -92,18 +92,23 @@ namespace Direct3D10
 		Construct( texture );	
 	}
 	
-	SlimDX::Direct3D::LockedBox Texture3D::Map( int subResource, MapMode mode, MapFlags flags )
+	SlimDX::Direct3D::LockedBox Texture3D::Map( int mipSlice, MapMode mode, MapFlags flags )
 	{
+		int subResource = D3D10CalcSubresource( mipSlice, 0, MipLevels );
+		int mipHeight = GetMipSize( mipSlice, Height );
+		
 		D3D10_MAPPED_TEXTURE3D mappedBox;
 		HRESULT hr = static_cast<ID3D10Texture3D*>( m_Pointer )->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedBox );
 		GraphicsException::CheckHResult( hr );
+		
+		int lockedSize = mipHeight * mappedBox.RowPitch * mappedBox.DepthPitch;
 		
 		bool readOnly = mode == MapMode::Read;
 		SlimDX::Direct3D::LockedBox box;
 	
 		box.RowPitch = mappedBox.RowPitch;
 		box.SlicePitch = mappedBox.DepthPitch;
-		box.Data = gcnew DataStream( mappedBox.pData, 0, true, !readOnly, false );
+		box.Data = gcnew DataStream( mappedBox.pData, lockedSize, true, !readOnly, false );
 		
 		return box;
 	}

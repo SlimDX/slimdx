@@ -484,9 +484,12 @@ namespace SlimDX
 			literal int size8 = sizeof( System::Byte );
 			literal int size16 = sizeof( System::Int16 );
 			literal int size32 = sizeof( System::Int32 );
+			literal int size64 = sizeof( System::Int64 );
+			literal int size96 = size64 + size32;
+			literal int size128 = size64 + size64;
 
 		internal:
-			/* Unused.
+		
 			static int SizeOfElement( Format format )
 			{
 				switch( format )
@@ -495,12 +498,12 @@ namespace SlimDX
 					case Format::R32G32B32A32_Float:
 					case Format::R32G32B32A32_UInt:
 					case Format::R32G32B32A32_SInt:
-						return size32 * 4;
+						return size128;
 					case Format::R32G32B32_Typeless:
 					case Format::R32G32B32_Float:
 					case Format::R32G32B32_UInt:
 					case Format::R32G32B32_SInt:
-						return size32 * 3;
+						return size96;
 					case Format::R32G32_Typeless:
 					case Format::R32G32_Float:
 					case Format::R32G32_UInt:
@@ -515,7 +518,7 @@ namespace SlimDX
 					case Format::R16G16B16A16_UInt:
 					case Format::R16G16B16A16_SNorm:
 					case Format::R16G16B16A16_SInt:
-						return size32 * 2;
+						return size64;
 					case Format::R10G10B10A2_Typeless:
 					case Format::R10G10B10A2_UNorm:
 					case Format::R10G10B10A2_UInt:
@@ -590,7 +593,6 @@ namespace SlimDX
 						return 0;
 				}
 			}
-			*/
 		};
 	}
 }

@@ -33,7 +33,7 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	Texture2D::Texture2D( ID3D10Texture2D* texture ) : Resource( texture )
+	Texture2D::Texture2D( ID3D10Texture2D* texture ) : Texture( texture )
 	{
 		D3D10_TEXTURE2D_DESC desc;
 		texture->GetDesc( &desc );
@@ -114,16 +114,21 @@ namespace Direct3D10
 		m_OptionFlags = optionFlags;	
 	}
 	
-	SlimDX::Direct3D::LockedRect Texture2D::Map( int subResource, MapMode mode, MapFlags flags )
+	SlimDX::Direct3D::LockedRect Texture2D::Map( int mipSlice, MapMode mode, MapFlags flags )
 	{
+		int subResource = D3D10CalcSubresource( mipSlice, 0, MipLevels );
+		int mipHeight = GetMipSize( mipSlice, Height );
+		
 		D3D10_MAPPED_TEXTURE2D mappedRect;
 		HRESULT hr = static_cast<ID3D10Texture2D*>( m_Pointer )->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedRect );
 		GraphicsException::CheckHResult( hr );
 		
+		int lockedSize = mipHeight * mappedRect.RowPitch;
+		
 		bool readOnly = mode == MapMode::Read;
 		SlimDX::Direct3D::LockedRect rect;
 		rect.Pitch = mappedRect.RowPitch;
-		rect.Data = gcnew DataStream( mappedRect.pData, 0, true, !readOnly, false );
+		rect.Data = gcnew DataStream( mappedRect.pData, lockedSize, true, !readOnly, false );
 		
 		return rect;
 	}
