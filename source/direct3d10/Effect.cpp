@@ -174,6 +174,53 @@ namespace Direct3D10
 		return gcnew Effect( effect );
 	}
 	
+	Effect^ Effect::FromMemory( Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool )
+	{
+		String^ compilationErrors;
+		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, pool, compilationErrors ) );
+	}
+	
+	Effect^ Effect::FromMemory( Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] String^ %compilationErrors  )
+	{
+		pin_ptr<unsigned char> pinnedData = &memory[0];
+		array<unsigned char>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
+		pin_ptr<unsigned char> pinnedProfile = &profileBytes[0];
+		ID3D10Effect* effect;
+		ID3D10Blob* errorBlob;
+		
+		ID3D10EffectPool* effectPool = pool == nullptr ? NULL : static_cast<ID3D10EffectPool*>( pool->InternalPointer );
+		HRESULT hr = D3DX10CreateEffectFromMemory( pinnedData, memory->Length, "n/a", NULL, NULL, reinterpret_cast<LPCSTR>( pinnedProfile ),
+			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), device->DevicePointer,
+			effectPool, NULL, &effect, &errorBlob, NULL );
+			
+		if( errorBlob != 0 )
+		{
+		  compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBlob->GetBufferPointer() ) );
+		  errorBlob->Release();
+		}
+		else
+		{
+			compilationErrors = String::Empty;
+		}
+		
+		GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );
+		if( effect == NULL )
+			return nullptr;
+		return gcnew Effect( effect );
+	}
+	
+	Effect^ Effect::FromStream( Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool )
+	{
+		String^ compilationErrors;
+		return (FromStream( device, stream, profile, shaderFlags, effectFlags, pool, compilationErrors ) );
+	}
+	
+	Effect^ Effect::FromStream( Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] String^ %compilationErrors )
+	{
+		array<Byte>^ memory = Utils::ReadStream( stream, 0 );
+		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, pool, compilationErrors ) );
+	}
+	
 	Effect^ Effect::FromString( Device^ device, String^ code, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool )
 	{
 		String^ compilationErrors;
@@ -205,7 +252,7 @@ namespace Direct3D10
 		}
 		
 		GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );
-		if( effect == NULL)
+		if( effect == NULL )
 			return nullptr;
 		return gcnew Effect( effect );
 	}
