@@ -259,7 +259,8 @@ namespace Direct3D9
 	DataStream^ PatchMesh::LockAttributeBuffer( LockFlags flags )
 	{
 		DWORD *data;
-
+		int faceCount = m_Pointer->GetNumPatches();
+		
 		HRESULT hr = m_Pointer->LockAttributeBuffer( static_cast<DWORD>( flags ), &data );
 		GraphicsException::CheckHResult( hr );
 
@@ -267,7 +268,7 @@ namespace Direct3D9
 			return nullptr;
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		return gcnew DataStream( data, 0, true, !readOnly, false );
+		return gcnew DataStream( data, faceCount * sizeof( DWORD ), true, !readOnly, false );
 	}
 
 	void PatchMesh::UnlockAttributeBuffer()
@@ -279,15 +280,23 @@ namespace Direct3D9
 	DataStream^ PatchMesh::LockIndexBuffer( LockFlags flags )
 	{
 		void *data;
-
-		HRESULT hr = m_Pointer->LockIndexBuffer( static_cast<DWORD>( flags ), &data );
+		IDirect3DIndexBuffer9 *indexBuffer;
+		
+		HRESULT hr = m_Pointer->GetIndexBuffer( &indexBuffer );
+		GraphicsException::CheckHResult( hr );
+		D3DINDEXBUFFER_DESC desc;
+		hr = indexBuffer->GetDesc( &desc );
+		GraphicsException::CheckHResult( hr );
+		indexBuffer->Release();
+		
+		hr = m_Pointer->LockIndexBuffer( static_cast<DWORD>( flags ), &data );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		return gcnew DataStream( data, 0, true, !readOnly, false );
+		return gcnew DataStream( data, desc.Size, true, !readOnly, false );
 	}
 
 	void PatchMesh::UnlockIndexBuffer()
@@ -299,15 +308,23 @@ namespace Direct3D9
 	DataStream^ PatchMesh::LockVertexBuffer( LockFlags flags )
 	{
 		void *data;
+		IDirect3DVertexBuffer9* vertexBuffer;
 
-		HRESULT hr = m_Pointer->LockVertexBuffer( static_cast<DWORD>( flags ), &data );
+		HRESULT hr = m_Pointer->GetVertexBuffer( &vertexBuffer );
+		GraphicsException::CheckHResult( hr );
+		D3DVERTEXBUFFER_DESC desc;
+		hr = vertexBuffer->GetDesc( &desc );
+		GraphicsException::CheckHResult( hr );
+		vertexBuffer->Release();
+		
+		hr = m_Pointer->LockVertexBuffer( static_cast<DWORD>( flags ), &data );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		return gcnew DataStream( data, 0, true, !readOnly, false );
+		return gcnew DataStream( data, desc.Size, true, !readOnly, false );
 	}
 
 	void PatchMesh::UnlockVertexBuffer()

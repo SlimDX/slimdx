@@ -27,7 +27,7 @@ using namespace System;
 #include "../DataStream.h"
 
 #include "Enums.h"
-#include "Resource.h"
+#include "Texture.h"
 
 namespace SlimDX
 {
@@ -35,7 +35,7 @@ namespace SlimDX
 	{
 		ref class Device;
 		
-		public ref class Texture1D : public Resource
+		public ref class Texture1D : public Texture
 		{
 			int m_Width;
 			int m_MipLevels;

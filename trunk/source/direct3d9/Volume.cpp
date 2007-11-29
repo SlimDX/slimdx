@@ -76,9 +76,11 @@ namespace Direct3D9
 		HRESULT hr = VolumePointer->LockBox( &lockedBox, NULL, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 
+		int lockedSize = lockedBox.RowPitch * lockedBox.SlicePitch * Description.Height;
+
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		LockedBox outBox;
-		outBox.Data = gcnew DataStream( lockedBox.pBits, 0, true, !readOnly, false );
+		outBox.Data = gcnew DataStream( lockedBox.pBits, lockedSize, true, !readOnly, false );
 		outBox.RowPitch = lockedBox.RowPitch;
 		outBox.SlicePitch = lockedBox.SlicePitch;
 		return outBox;
@@ -90,10 +92,12 @@ namespace Direct3D9
 
 		HRESULT hr = VolumePointer->LockBox( &lockedBox, reinterpret_cast<D3DBOX*>( &box ), static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
-
+		
+		int lockedSize = lockedBox.RowPitch * lockedBox.SlicePitch * Description.Height;
+		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		LockedBox outBox;
-		outBox.Data = gcnew DataStream( lockedBox.pBits, 0, true, !readOnly, false );
+		outBox.Data = gcnew DataStream( lockedBox.pBits, lockedSize, true, !readOnly, false );
 		outBox.RowPitch = lockedBox.RowPitch;
 		outBox.SlicePitch = lockedBox.SlicePitch;
 		return outBox;

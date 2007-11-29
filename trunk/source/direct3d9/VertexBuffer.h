@@ -32,10 +32,10 @@ namespace SlimDX
 		{
 		private:
 			Format format;
-            Usage usage;
-            Pool pool;
-            int sizeInBytes;
-            VertexFormat fVF;
+			Usage usage;
+			Pool pool;
+			int sizeInBytes;
+			VertexFormat fVF;
 
 		internal:
 			property IDirect3DVertexBuffer9* VbPointer

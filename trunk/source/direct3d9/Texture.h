@@ -410,8 +410,10 @@ namespace SlimDX
 			void UnlockBox( int level );
 
 			void AddDirtyBox( Box box );
+			
+			VolumeDescription GetLevelDescription( int level );
+			
 			//TODO: Implement the following
-			//VolumeDescription GetLevelDesc( int level );
 			//Volume^ GetVolumeLevel( int level );
 		};
 	}

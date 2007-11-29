@@ -31,6 +31,9 @@ namespace SlimDX
 {
 	DataStream::DataStream( void* buffer, Int64 sizeInBytes, bool canRead, bool canWrite, bool makeCopy )
 	{
+		if( sizeInBytes < 1 )
+			throw gcnew ArgumentOutOfRangeException( "sizeInBytes" );
+	
 		if( makeCopy )
 		{
 			m_Buffer = new char[(size_t) sizeInBytes];
@@ -50,6 +53,9 @@ namespace SlimDX
 	
 	DataStream::DataStream( Int64 sizeInBytes, bool canRead, bool canWrite )
 	{
+		if( sizeInBytes < 1 )
+			throw gcnew ArgumentOutOfRangeException( "sizeInBytes" );
+	
 		m_Buffer = new char[ static_cast<int>( sizeInBytes ) ];
 		m_Size = sizeInBytes;
 		
@@ -110,15 +116,13 @@ namespace SlimDX
 			break;
 
 		case SeekOrigin::End:
-			if(m_Size == 0)
-				throw gcnew NotSupportedException( "Stream size unknown; SeekOrigin::End is not supported." );
 			targetPosition = m_Size - offset;
 			break;
 		}
 
 		if( targetPosition < 0 )
 			throw gcnew InvalidOperationException("Cannot seek beyond the beginning of the stream.");
-		if( targetPosition > m_Size && m_Size > 0)
+		if( targetPosition > m_Size )
 			throw gcnew InvalidOperationException("Cannot seek beyond the end of the stream.");
 
 		m_Position = targetPosition;
@@ -192,9 +196,8 @@ namespace SlimDX
 		T result;
 		int size = Marshal::SizeOf( T::typeid );
 
-		//TODO: This may be the wrong exception to throw.
 		if( Length > 0 && Length - m_Position < size )
-			throw gcnew ArgumentNullException();
+			throw gcnew InvalidOperationException();
 
 		memcpy( &result, m_Buffer + m_Position, size );
 		m_Position += size;
@@ -253,8 +256,6 @@ namespace SlimDX
 	
 	Int64 DataStream::Length::get()
 	{
-		if( m_Size == 0)
-			throw gcnew NotSupportedException("Stream size unknown; cannot query length.");
 		return m_Size;
 	}
 }

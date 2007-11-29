@@ -108,13 +108,15 @@ namespace Direct3D9
 	LockedRect Surface::LockRectangle( LockFlags flags )
 	{
 		D3DLOCKED_RECT lockedRect;
-
+		
 		HRESULT hr = SurfacePointer->LockRect( &lockedRect, NULL, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
-
+		
+		int lockedSize = lockedRect.Pitch * Description.Height;
+		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		LockedRect outRect;
-		outRect.Data = gcnew DataStream( lockedRect.pBits, 0, true, !readOnly, false );
+		outRect.Data = gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false );
 		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}
@@ -126,10 +128,12 @@ namespace Direct3D9
 
 		HRESULT hr = SurfacePointer->LockRect( &lockedRect, &nativeRect, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
-
+		
+		int lockedSize = lockedRect.Pitch * Description.Height;
+		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		LockedRect outRect;
-		outRect.Data = gcnew DataStream( lockedRect.pBits, 0, true, !readOnly, false );
+		outRect.Data = gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false );
 		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}

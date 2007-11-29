@@ -36,6 +36,7 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "buffer" );
 
 		m_Pointer = buffer;
+		InitDescription();
 	}
 
 	IndexBuffer::IndexBuffer( IntPtr buffer )
@@ -51,6 +52,7 @@ namespace Direct3D9
 
 		IDirect3DIndexBuffer9* ibPtr = static_cast<IDirect3DIndexBuffer9*>( pointer );
 		m_Pointer = ibPtr;
+		InitDescription();
 	}
 
 	IndexBuffer::IndexBuffer( Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit )
@@ -61,16 +63,32 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 
 		m_Pointer = ib;
+		InitDescription();
 	}
-
+	
+	void IndexBuffer::InitDescription()
+	{
+	  D3DINDEXBUFFER_DESC desc;
+		HRESULT hr = static_cast<IDirect3DIndexBuffer9*>( m_Pointer )->GetDesc( &desc );
+		GraphicsException::CheckHResult( hr );
+		
+		m_Format = static_cast<Format>( desc.Format );
+		m_Type = static_cast<SlimDX::Direct3D9::ResourceType>( desc.Type );
+		m_Usage = static_cast<Usage>( desc.Usage );
+		m_Pool = static_cast<Pool>( desc.Pool );
+		m_SizeInBytes = desc.Size;
+	}
+	
 	DataStream^ IndexBuffer::Lock( int offset, int size, LockFlags flags )
 	{
 		void* lockedPtr;
 		HRESULT hr = IbPointer->Lock( offset, size, &lockedPtr, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
-
+		
+		int lockedSize = size == 0 ? m_SizeInBytes : size;
+		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		DataStream^ stream = gcnew DataStream( lockedPtr, 0, true, !readOnly, false );
+		DataStream^ stream = gcnew DataStream( lockedPtr, lockedSize, true, !readOnly, false );
 		return stream;
 	}
 

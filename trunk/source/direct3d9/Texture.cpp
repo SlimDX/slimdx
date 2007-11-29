@@ -270,11 +270,13 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return LockedRect();
-
+		
+		int lockedSize = lockedRect.Pitch * GetLevelDescription( level ).Height;
+		
 		LockedRect outRect;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 
-		outRect.Data = gcnew DataStream( lockedRect.pBits, 0, true, !readOnly, false );
+		outRect.Data = gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false );
 		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}
@@ -287,11 +289,13 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return LockedRect();
-
+		
+		int lockedSize = lockedRect.Pitch * GetLevelDescription( level ).Height;
+		
 		LockedRect outRect;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 
-		outRect.Data = gcnew DataStream( lockedRect.pBits, 0, true, !readOnly, false );
+		outRect.Data = gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false );
 		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}
@@ -507,10 +511,12 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return LockedRect();
-
+		
+		int lockedSize = lockedRect.Pitch * GetLevelDescription( level ).Height;
+		
 		LockedRect outRect;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		outRect.Data = gcnew DataStream( lockedRect.pBits, 0, true, !readOnly, false );
+		outRect.Data = gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false );
 		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}
@@ -522,11 +528,13 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return LockedRect();
-
+		
+		int lockedSize = lockedRect.Pitch * GetLevelDescription( level ).Height;
+		
 		LockedRect outRect;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 
-		outRect.Data = gcnew DataStream( lockedRect.pBits, 0, true, !readOnly, false );
+		outRect.Data = gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false );
 		outRect.Pitch = lockedRect.Pitch;
 		return outRect;
 	}
@@ -711,10 +719,12 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return LockedBox();
-
+		
+		int lockedSize = lockedBox.RowPitch * lockedBox.SlicePitch * GetLevelDescription( level ).Height;
+		
 		LockedBox outBox;
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		outBox.Data = gcnew DataStream( lockedBox.pBits, 0, true, !readOnly, false );
+		outBox.Data = gcnew DataStream( lockedBox.pBits, lockedSize, true, !readOnly, false );
 		outBox.RowPitch = lockedBox.RowPitch;
 		outBox.SlicePitch = lockedBox.SlicePitch;
 		return outBox;
@@ -746,6 +756,24 @@ namespace Direct3D9
 	{
 		HRESULT hr = TexturePointer->AddDirtyBox( reinterpret_cast<D3DBOX*>( &box ) );
 		GraphicsException::CheckHResult( hr );
+	}
+	
+	VolumeDescription VolumeTexture::GetLevelDescription( int level )
+	{
+		D3DVOLUME_DESC desc;
+		HRESULT hr = TexturePointer->GetLevelDesc( level, &desc );
+		GraphicsException::CheckHResult( hr );
+		
+		VolumeDescription outDesc;
+		outDesc.Format = static_cast<Format>( desc.Format );
+		outDesc.Type = static_cast<SlimDX::Direct3D9::ResourceType>( desc.Type );
+		outDesc.Usage = static_cast<Usage>( desc.Usage );
+		outDesc.Pool = static_cast<Pool>( desc.Pool );
+		outDesc.Width = desc.Width;
+		outDesc.Height = desc.Height;
+		outDesc.Depth = desc.Depth;
+		
+		return outDesc;
 	}
 }
 }
