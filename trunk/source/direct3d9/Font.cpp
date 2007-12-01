@@ -75,6 +75,12 @@ namespace Direct3D9
 		m_Pointer = font;
 	}
 
+	Font::Font( Device^ device, System::Drawing::Font^ font )
+	{
+		Font( device, font->Height, 0, (font->Bold) ? FontWeight::Bold : FontWeight::Normal, 0, font->Italic, 
+			CharacterSet::Default, Precision::Default, FontQuality::Default, PitchAndFamily::Default, font->Name );
+	}
+
 	int Font::DrawString( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, int color )
 	{
 		ID3DXSprite* spritePtr = sprite != nullptr ? sprite->InternalPointer : NULL;

@@ -31,7 +31,7 @@ namespace SlimDX
 		/// Bitmask of the device digital buttons
 		/// </summary>
 		[Flags]
-		public enum class GamepadButtons : Int32
+		public enum class GamepadButtons : UInt16
 		{
 			None = 0,
 			DPadUp = XINPUT_GAMEPAD_DPAD_UP,

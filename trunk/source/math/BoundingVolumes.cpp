@@ -307,32 +307,9 @@ namespace SlimDX
 		return ray;
 	}
 
-	float Dot( Vector3% vector1, Vector3% vector2 )
-	{
-		return (vector1.X * vector2.X) + (vector1.Y * vector2.Y) + (vector1.Z * vector2.Z);
-	}
-
-	float Distance( Vector3% vector1, Vector3% vector2 )
-	{
-		float x = vector1.X - vector2.X;
-		float y = vector1.Y - vector2.Y;
-		float z = vector1.Z - vector2.Z;
-
-		return static_cast<float>( Math::Sqrt( (x * x) + (y * y) + (z * z) ) );
-	}
-
-	float DistanceSquared( Vector3% vector1, Vector3% vector2 )
-	{
-		float x = vector1.X - vector2.X;
-		float y = vector1.Y - vector2.Y;
-		float z = vector1.Z - vector2.Z;
-
-		return (x * x) + (y * y) + (z * z);
-	}
-
 	Vector3 BoundingFrustum::ComputeIntersection( Plane% plane, Ray% ray )
 	{
-		float dot = (-plane.D - Dot( plane.Normal, ray.Position )) / Dot( plane.Normal, ray.Direction );
+		float dot = (-plane.D - Vector3::Dot( plane.Normal, ray.Position )) / Vector3::Dot( plane.Normal, ray.Direction );
 		return ray.Position + (ray.Direction * dot);
 	}
 
@@ -679,7 +656,7 @@ namespace SlimDX
 	bool BoundingSphere::Intersects( BoundingSphere sphere1, BoundingSphere sphere2 )
 	{
 		float distance;
-		distance = DistanceSquared( sphere1.Center, sphere2.Center );
+		distance = Vector3::DistanceSquared( sphere1.Center, sphere2.Center );
 		float radius = sphere1.Radius;
 		float radius2 = sphere2.Radius;
 

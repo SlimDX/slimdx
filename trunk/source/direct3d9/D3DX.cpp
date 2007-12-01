@@ -232,5 +232,10 @@ namespace SlimDX
 			else
 				return false;
 		}
+
+		float D3DX::FresnelTerm( float cosTheta, float refractionIndex )
+		{
+			return D3DXFresnelTerm( cosTheta, refractionIndex );
+		}
 	}
 }
