@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include <d3dx9.h>
+
 using namespace System;
 using namespace System::IO;
 
@@ -28,16 +30,18 @@ namespace SlimDX
 {
 	public ref class DataStream : public Stream
 	{
-	private:
 		char* m_Buffer;
-		Int64 m_Position;
-		Int64 m_Size;
 		bool m_OwnsBuffer;
-
+		ID3DXBuffer *m_ID3DXBuffer;
+		
+		Int64 m_Size;
+		Int64 m_Position;
+		
 		initonly bool m_CanRead;
 		initonly bool m_CanWrite;
 
 	internal:
+		DataStream( ID3DXBuffer *buffer );
 		DataStream( void* buffer, Int64 sizeInBytes, bool canRead, bool canWrite, bool makeCopy );
 
 		property char* RawPointer

@@ -19,16 +19,35 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "Utils.h"
 #include "DataStream.h"
+
+#include "Utils.h"
 
 using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
+	///
+	DataStream::DataStream( ID3DXBuffer* buffer )
+	{
+		if( buffer->GetBufferSize() < 1 )
+			throw gcnew ArgumentException( "buffer" );
+
+		m_Buffer = static_cast<char*>( buffer->GetBufferPointer() );
+		m_Size = buffer->GetBufferSize();
+		
+		m_CanRead = true;
+		m_CanWrite = true;
+		m_OwnsBuffer = false;
+		
+		m_ID3DXBuffer = buffer;
+	}
+	
+	///
 	DataStream::DataStream( void* buffer, Int64 sizeInBytes, bool canRead, bool canWrite, bool makeCopy )
 	{
 		if( sizeInBytes < 1 )
@@ -49,6 +68,8 @@ namespace SlimDX
 		m_CanRead = canRead;
 		m_CanWrite = canWrite;
 		m_OwnsBuffer = makeCopy;
+		
+		m_ID3DXBuffer = 0;
 	}
 	
 	DataStream::DataStream( Int64 sizeInBytes, bool canRead, bool canWrite )
@@ -63,6 +84,8 @@ namespace SlimDX
 		
 		m_CanRead = canRead;
 		m_CanWrite = canWrite;
+		
+		m_ID3DXBuffer = 0;
 	}
 
 	DataStream::DataStream( IntPtr userBuffer, Int64 sizeInBytes, bool canRead, bool canWrite )
@@ -78,6 +101,8 @@ namespace SlimDX
 		m_OwnsBuffer = false;
 		m_CanRead = canRead;
 		m_CanWrite = canWrite;
+		
+		m_ID3DXBuffer = 0;
 	}
 
 	DataStream::~DataStream()
@@ -92,8 +117,14 @@ namespace SlimDX
 			delete[] m_Buffer;
 			m_OwnsBuffer = false;
 		}
-
-		m_Buffer = NULL;
+		
+		if( m_ID3DXBuffer != 0 )
+		{
+			m_ID3DXBuffer->Release();
+			m_ID3DXBuffer = 0;
+		}
+		
+		m_Buffer = 0;
 	}
 
 	char* DataStream::RawPointer::get()
