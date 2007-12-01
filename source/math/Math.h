@@ -37,6 +37,7 @@ namespace SlimDX
 	value class BoundingSphere;
 	value class BoundingFrustum;
 	value class ColorValue;
+	value class Float16;
 }
 
 #include "ColorValue.h"
@@ -48,3 +49,4 @@ namespace SlimDX
 #include "Quaternion.h"
 #include "Ray.h"
 #include "BoundingVolumes.h"
+#include "Float16.h"

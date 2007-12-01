@@ -158,6 +158,7 @@ namespace SlimDX
 			Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,
 				CharacterSet characterSet, Precision outputPrecision, FontQuality quality,
 				PitchAndFamily pitchAndFamily, String^ faceName );
+			Font( Device^ device, System::Drawing::Font^ font );
 			~Font() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 

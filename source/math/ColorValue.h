@@ -40,8 +40,9 @@ namespace SlimDX
 
 		ColorValue( float alpha, float red, float green, float blue );
 		ColorValue( float red, float green, float blue );
+		ColorValue( Color color );
+		ColorValue( int argb );
 
-		static ColorValue FromColor( Color color );
 		Color ToColor();
 		int ToArgb();
 

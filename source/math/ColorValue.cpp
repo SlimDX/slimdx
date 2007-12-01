@@ -47,16 +47,20 @@ namespace SlimDX
 		Blue = blue;
 	}
 
-	ColorValue ColorValue::FromColor( Color color )
+	ColorValue::ColorValue( Color color )
 	{
-		ColorValue value;
+		Alpha = color.A / 255.0f;
+		Red = color.R / 255.0f;
+		Green = color.G / 255.0f;
+		Blue = color.B / 255.0f;
+	}
 
-		value.Alpha = color.A / 255.0f;
-		value.Red = color.R / 255.0f;
-		value.Green = color.G / 255.0f;
-		value.Blue = color.B / 255.0f;
-
-		return value;
+	ColorValue::ColorValue( int argb )
+	{
+		Alpha = ( ( argb >> 24 ) & 255 ) / 255.0f;
+		Red = ( ( argb >> 16 ) & 255 ) / 255.0f;
+		Green = ( ( argb >> 8 ) & 255 ) / 255.0f;
+		Blue = ( argb & 255 ) / 255.0f;
 	}
 
 	Color ColorValue::ToColor()

@@ -392,6 +392,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\math\Float16.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\math\Matrix.cpp"
 					>
 				</File>
@@ -1101,6 +1105,10 @@
 				</File>
 				<File
 					RelativePath="..\source\math\ColorValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Float16.h"
 					>
 				</File>
 				<File
