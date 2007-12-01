@@ -33,6 +33,7 @@ namespace SlimDX
 	namespace Direct3D10
 	{
 		ref class Device;
+		ref class EffectConstantBuffer;
 		ref class EffectTechnique;
 		ref class EffectVariable;
 		ref class EffectPool;
@@ -92,6 +93,9 @@ namespace SlimDX
 			{
 				bool get() { return m_Pointer->IsValid() ? true : false; }
 			}
+			
+			EffectConstantBuffer^ GetConstantBufferByIndex( int index );
+			EffectConstantBuffer^ GetConstantBufferByName( String^ name );
 			
 			EffectTechnique^ GetTechniqueByIndex( int index );
 			EffectTechnique^ GetTechniqueByName( String^ name );

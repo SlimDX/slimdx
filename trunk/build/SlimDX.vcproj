@@ -689,6 +689,10 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\EffectConstantBuffer.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\EffectMatrixVariable.cpp"
 					>
 				</File>
@@ -1345,6 +1349,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Effect.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectConstantBuffer.h"
 					>
 				</File>
 				<File

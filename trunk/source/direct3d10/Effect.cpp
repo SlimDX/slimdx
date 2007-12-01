@@ -24,10 +24,11 @@
 #include <d3dx10.h>
 #include <vcclr.h>
 
+#include "Effect.h"
 #include "GraphicsException.h"
 
-#include "Effect.h"
 #include "Device.h"
+#include "EffectConstantBuffer.h"
 #include "EffectTechnique.h"
 #include "EffectVariable.h"
 #include "EffectPool.h"
@@ -76,7 +77,29 @@ namespace Direct3D10
 		m_GlobalVariableCount = desc.GlobalVariables;
 		m_TechniqueCount = desc.Techniques;
 	}
+	
+	EffectConstantBuffer^ Effect::GetConstantBufferByIndex( int index )
+	{
+		ID3D10EffectConstantBuffer* buffer = 0;
 
+		buffer = m_Pointer->GetConstantBufferByIndex( index );
+		if( buffer == 0 )
+			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Index '{0}' does not identify any constant buffer in the effect.", index ) );
+		return gcnew EffectConstantBuffer( buffer );
+	}
+	
+	EffectConstantBuffer^ Effect::GetConstantBufferByName( String^ name )
+	{
+		ID3D10EffectConstantBuffer* buffer = 0;
+		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+
+		buffer = m_Pointer->GetConstantBufferByName( reinterpret_cast<LPCSTR>( pinnedName ) );
+		if( buffer == 0 )
+			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Name '{0}' does not identify any constant buffer in the effect.", name ) );
+		return gcnew EffectConstantBuffer( buffer );
+	}
+	
 	EffectTechnique^ Effect::GetTechniqueByIndex( int index )
 	{
 		ID3D10EffectTechnique* technique;

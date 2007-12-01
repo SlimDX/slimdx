@@ -30,6 +30,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
+		ref class EffectConstantBuffer;
 		ref class EffectMatrixVariable;
 		ref class EffectResourceVariable;
 		ref class EffectShaderVariable;
@@ -115,6 +116,7 @@ namespace SlimDX
 			EffectVariable^ GetMemberByName( String^ name );
 			EffectVariable^ GetMemberBySemantic( String^ name );
 			
+			EffectConstantBuffer^ AsConstantBuffer();
 			EffectMatrixVariable^ AsMatrix();
 			EffectResourceVariable^ AsResource();
 			EffectShaderVariable^ AsShader();
