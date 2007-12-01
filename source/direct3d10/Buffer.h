@@ -44,7 +44,10 @@ namespace SlimDX
 			ResourceOptionFlags m_OptionFlags;
 			
 			void Construct( Device^ device, int sizeInBytes, DataStream^ data, ResourceUsage usage, BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
-			
+		
+		internal:
+			Buffer( ID3D10Buffer* buffer );
+		
 		public:
 			property int SizeInBytes
 			{

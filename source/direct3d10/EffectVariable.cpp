@@ -24,13 +24,14 @@
 #include <d3dx10.h>
 #include <vcclr.h>
 
+#include "EffectVariable.h"
 #include "GraphicsException.h"
 
+#include "EffectConstantBuffer.h"
 #include "EffectMatrixVariable.h"
 #include "EffectResourceVariable.h"
 #include "EffectShaderVariable.h"
 #include "EffectScalarVariable.h"
-#include "EffectVariable.h"
 #include "EffectVectorVariable.h"
 #include "EffectStringVariable.h"
 
@@ -108,6 +109,14 @@ namespace Direct3D10
 		ID3D10EffectVariable* variable = m_Pointer->GetMemberBySemantic( reinterpret_cast<LPCSTR>( pinnedName ) );
 		//@TODO D3D10: Check for null and throw "not found"
 		return gcnew EffectVariable( variable );
+	}
+	
+	EffectConstantBuffer^ EffectVariable::AsConstantBuffer()
+	{
+		ID3D10EffectConstantBuffer* variable = m_Pointer->AsConstantBuffer();
+		if( variable == 0 || !variable->IsValid() )
+			throw gcnew InvalidOperationException( "The variable is not convertable to a constant buffer." );
+		return gcnew EffectConstantBuffer( variable );
 	}
 	
 	EffectMatrixVariable^ EffectVariable::AsMatrix()
