@@ -21,8 +21,10 @@
 */
 #pragma once
 
+#include <d3dx9.h>
+
 #include "Resource.h"
-#include "../Direct3D/..\DataStream.h"
+#include "../DataStream.h"
 
 namespace SlimDX
 {

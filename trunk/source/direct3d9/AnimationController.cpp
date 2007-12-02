@@ -23,6 +23,7 @@
 #include <d3dx9.h>
 #include <vcclr.h>
 
+#include "../DataStream.h"
 #include "../DirectXObject.h"
 #include "../Math/Math.h"
 #include "GraphicsException.h"

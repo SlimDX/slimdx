@@ -81,7 +81,7 @@ namespace SlimDX
 
 		internal:
 			MeshContainer( const D3DXMESHCONTAINER &container );
-			MeshContainer( D3DXMESHCONTAINER *container );
+			MeshContainer( const D3DXMESHCONTAINER *container );
 
 			property D3DXMESHCONTAINER *Pointer
 			{ 
@@ -138,6 +138,23 @@ namespace SlimDX
 			virtual void DestroyFrame( Frame^ frame ) = 0;
 			virtual void DestroyMeshContainer( MeshContainer^ container ) = 0;
 		};
+		
+		public interface struct ILoadUserData
+		{
+			virtual void LoadFrameData( Frame^ frame, XFileData^ data ) = 0;
+			virtual void LoadMeshData( MeshContainer^ meshContainer, XFileData^ data ) = 0;
+			virtual void LoadTopLevelData( XFileData^ data ) = 0;
+		};
+
+		public interface struct ISaveUserData
+		{
+			virtual void AddFrameChildData( Frame^ frame, XFileSaveObject^ saveObject, XFileSaveData^ saveData );
+			virtual void AddMeshChildData( MeshContainer^ meshContainer, XFileSaveObject^ saveObject, XFileSaveData^ saveData );
+			virtual void AddTopLevelDataPost( XFileSaveObject^ saveObject );
+			virtual void AddTopLevelDataPre( XFileSaveObject^ saveObject );
+			virtual void RegisterTemplates( XFile^ xfile );
+			virtual void SaveTemplates( XFileSaveObject^ saveObject );
+		};
 
 		class IAllocateHierarchyShim : public ID3DXAllocateHierarchy
 		{
@@ -155,13 +172,6 @@ namespace SlimDX
 			HRESULT WINAPI DestroyFrame( LPD3DXFRAME pFrameToFree );
 			HRESULT WINAPI DestroyMeshContainer( LPD3DXMESHCONTAINER pMeshContainerToFree );
 		};
-		
-		public interface struct ILoadUserData
-		{
-			virtual void LoadFrameData( Frame^ frame, XFileData^ data ) = 0;
-			virtual void LoadMeshData( MeshContainer^ meshContainer, XFileData^ data ) = 0;
-			virtual void LoadTopLevelData( XFileData^ data ) = 0;
-		};
 
 		class ILoadUserDataShim : public ID3DXLoadUserData
 		{
@@ -176,6 +186,22 @@ namespace SlimDX
 			HRESULT WINAPI LoadTopLevelData( LPD3DXFILEDATA pXofChildData );
 		};
 
+		class ISaveUserDataShim : public ID3DXSaveUserData
+		{
+		private:
+			gcroot<ISaveUserData^> m_WrappedInterface;
+
+		public:
+			ISaveUserDataShim( ISaveUserData^ wrappedInterface );
+
+			HRESULT WINAPI AddFrameChildData( const D3DXFRAME *pFrame, LPD3DXFILESAVEOBJECT pXofSave, LPD3DXFILESAVEDATA pXofFrameData );
+			HRESULT WINAPI AddMeshChildData( const D3DXMESHCONTAINER *pMeshContainer, LPD3DXFILESAVEOBJECT pXofSave, LPD3DXFILESAVEDATA pXofMeshData );
+			HRESULT WINAPI AddTopLevelDataObjectsPost( LPD3DXFILESAVEOBJECT pXofSave );
+			HRESULT WINAPI AddTopLevelDataObjectsPre( LPD3DXFILESAVEOBJECT pXofSave );
+			HRESULT WINAPI RegisterTemplates( LPD3DXFILE pXFileApi );
+			HRESULT WINAPI SaveTemplates( LPD3DXFILESAVEOBJECT pXofSave );
+		};
+
 		public ref class Frame
 		{
 		private:
@@ -183,7 +209,7 @@ namespace SlimDX
 
 		internal:
 			Frame( const D3DXFRAME &frame );
-			Frame( D3DXFRAME *frame );
+			Frame( const D3DXFRAME *frame );
 
 			property D3DXFRAME *Pointer
 			{ 
@@ -204,10 +230,15 @@ namespace SlimDX
 			static Frame^ LoadHierarchyFromX( Device^ device, Stream^ stream, MeshFlags options, 
 				IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController );
 
+			static void SaveHierarchyToFile( String^ fileName, XFileFormat format, Frame^ root, 
+				AnimationController^ animationController, ISaveUserData^ userDataSaver );
+			static void SaveHierarchyToFile( String^ fileName, XFileFormat format, Frame^ root, 
+				AnimationController^ animationController );
+
 			void AppendChild( Frame^ child );
 			Frame^ FindChild( String^ name );
 
-			static float CalculateBoundingSphere( Frame^ root, [Out] Vector3% objectCenter );
+			static BoundingSphere CalculateBoundingSphere( Frame^ root );
 			static void DestroyHierarchy( Frame^ root, IAllocateHierarchy^ allocator );
 			static int CountNamedFrames( Frame^ root );
 			static void RegisterNamedMatrices( Frame^ root, AnimationController^ controller );

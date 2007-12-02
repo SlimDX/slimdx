@@ -31,7 +31,6 @@
 #include "Texture.h"
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
-#include "Buffer.h"
 #include "Mesh.h"
 #include "SkinInfo.h"
 
@@ -405,7 +404,7 @@ namespace Direct3D9
 	}
 
 	IndexBuffer^ BaseMesh::ConvertSubsetToStrips( int attributeId, MeshFlags options, [Out] int% indexCount,
-		[Out] BufferWrapper^% stripLengths, [Out] int% stripCount )
+		[Out] array<int>^% stripLengths )
 	{
 		IDirect3DIndexBuffer9 *result;
 		ID3DXBuffer *buffer;
@@ -420,17 +419,15 @@ namespace Direct3D9
 		{
 			indexCount = 0;
 			stripLengths = nullptr;
-			stripCount = 0;
 			return nullptr;
 		}
 
 		indexCount = numIndices;
-		stripCount = numStrips;
-		stripLengths = gcnew BufferWrapper( buffer );
+		stripLengths = ( gcnew DataStream( buffer ) )->ReadRange<int>( numStrips );
 		return gcnew IndexBuffer( result );
 	}
 
-	bool BaseMesh::Intersects( Ray ray, [Out] float% distance, [Out] int% faceIndex, [Out] int% hitCount, [Out] BufferWrapper^% hits )
+	bool BaseMesh::Intersects( Ray ray, [Out] float% distance, [Out] int% faceIndex, [Out] array<IntersectInformation>^% hits )
 	{
 		ID3DXBuffer *allHits;
 		BOOL result;
@@ -445,16 +442,15 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 		{
 			hits = nullptr;
-			hitCount = 0;
 			faceIndex = 0;
 			distance = 0;
 			return false;
 		}
 
-		hitCount = count;
 		faceIndex = face;
 		distance = dist;
-		hits = gcnew BufferWrapper( allHits );
+
+		hits = ( gcnew DataStream( allHits ) )->ReadRange<IntersectInformation>( count );
 
 		if( result )
 			return true;
@@ -501,7 +497,7 @@ namespace Direct3D9
 			return false;
 	}
 
-	bool BaseMesh::IntersectsSubset( Ray ray, int attributeId, [Out] float% distance, [Out] int% faceIndex, [Out] int% hitCount, [Out] BufferWrapper^% hits )
+	bool BaseMesh::IntersectsSubset( Ray ray, int attributeId, [Out] float% distance, [Out] int% faceIndex, [Out] array<IntersectInformation>^% hits )
 	{
 		ID3DXBuffer *allHits;
 		BOOL result;
@@ -516,16 +512,14 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 		{
 			hits = nullptr;
-			hitCount = 0;
 			faceIndex = 0;
 			distance = 0;
 			return false;
 		}
 
-		hitCount = count;
 		faceIndex = face;
 		distance = dist;
-		hits = gcnew BufferWrapper( allHits );
+		hits = ( gcnew DataStream( allHits ) )->ReadRange<IntersectInformation>( count );
 
 		if( result )
 			return true;
@@ -630,7 +624,7 @@ namespace Direct3D9
 		m_Pointer = mesh;
 	}
 
-	Mesh^ Mesh::FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] BufferWrapper^% adjacency,
+	Mesh^ Mesh::FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<int>^% adjacency,
 		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances )
 	{
 		ID3DXMesh* mesh;
@@ -651,7 +645,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		adjacency = gcnew BufferWrapper( adjacencyBuffer );
+		adjacency = ( gcnew DataStream( adjacencyBuffer ) )->ReadRange<int>( mesh->GetNumFaces() * 3 );
 		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
 
 		// figure out how many effect instances there are, and get them out of the buffer
@@ -733,7 +727,7 @@ namespace Direct3D9
 		return gcnew Mesh( mesh );
 	}
 
-	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] BufferWrapper^% adjacency,
+	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<int>^% adjacency,
 		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances )
 	{
 		array<Byte>^ data = Utils::ReadStream( stream, 0 );
@@ -759,7 +753,7 @@ namespace Direct3D9
 		return Mesh::FromMemory( device, data, flags );
 	}
 
-	Mesh^ Mesh::FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] BufferWrapper^% adjacency,
+	Mesh^ Mesh::FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<int>^% adjacency,
 		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances )
 	{
 		ID3DXMesh* mesh;
@@ -780,7 +774,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		adjacency = gcnew BufferWrapper( adjacencyBuffer );
+		adjacency = ( gcnew DataStream( adjacencyBuffer ) )->ReadRange<int>( mesh->GetNumFaces() * 3 );
 		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
 
 		DWORD instanceCount = 0;
@@ -862,7 +856,7 @@ namespace Direct3D9
 		return gcnew Mesh( mesh );
 	}
 
-	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] BufferWrapper^% adjacency,
+	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<int>^% adjacency,
 		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances )
 	{
 		ID3DXMesh* mesh;
@@ -882,7 +876,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		adjacency = gcnew BufferWrapper( adjacencyBuffer );
+		adjacency = ( gcnew DataStream( adjacencyBuffer ) )->ReadRange<int>( mesh->GetNumFaces() * 3 );
 		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
 
 		DWORD instanceCount = 0;
@@ -961,7 +955,7 @@ namespace Direct3D9
 		return gcnew Mesh( mesh );
 	}
 
-	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] BufferWrapper^% adjacency,
+	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<int>^% adjacency,
 		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances, [Out] SkinInfo^% skinInfo )
 	{
 		ID3DXMesh* mesh;
@@ -983,7 +977,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		adjacency = gcnew BufferWrapper( adjacencyBuffer );
+		adjacency = ( gcnew DataStream( adjacencyBuffer ) )->ReadRange<int>( mesh->GetNumFaces() * 3 );
 		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
 
 		DWORD instanceCount = 0;
@@ -1084,7 +1078,7 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 	}
 
-	Mesh^ Mesh::CreateBox( Device^ device, float width, float height, float depth, [Out] BufferWrapper^% adjacency )
+	Mesh^ Mesh::CreateBox( Device^ device, float width, float height, float depth, [Out] array<int>^% adjacency )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1098,7 +1092,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		adjacency = gcnew BufferWrapper( adj );
+		adjacency = ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 );
 		return gcnew Mesh( result );
 	}
 
@@ -1116,7 +1110,7 @@ namespace Direct3D9
 	}
 
 	Mesh^ Mesh::CreateCylinder( Device^ device, float radius1, float radius2, float length, int slices, 
-		int stacks, [Out] BufferWrapper^% adjacency )
+		int stacks, [Out] array<int>^% adjacency )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1130,7 +1124,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		adjacency = gcnew BufferWrapper( adj );
+		adjacency = ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 );
 		return gcnew Mesh( result );
 	}
 
@@ -1147,7 +1141,7 @@ namespace Direct3D9
 		return gcnew Mesh( result );
 	}
 
-	Mesh^ Mesh::CreateSphere( Device^ device, float radius, int slices, int stacks, [Out] BufferWrapper^% adjacency )
+	Mesh^ Mesh::CreateSphere( Device^ device, float radius, int slices, int stacks, [Out] array<int>^% adjacency )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1161,7 +1155,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		adjacency = gcnew BufferWrapper( adj );
+		adjacency = ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 );
 		return gcnew Mesh( result );
 	}
 
@@ -1178,7 +1172,7 @@ namespace Direct3D9
 		return gcnew Mesh( result );
 	}
 
-	Mesh^ Mesh::CreateTeapot( Device^ device, [Out] BufferWrapper^% adjacency )
+	Mesh^ Mesh::CreateTeapot( Device^ device, [Out] array<int>^% adjacency )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1192,7 +1186,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		adjacency = gcnew BufferWrapper( adj );
+		adjacency = ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 );
 		return gcnew Mesh( result );
 	}
 
@@ -1210,7 +1204,7 @@ namespace Direct3D9
 	}
 
 	Mesh^ Mesh::CreateTorus( Device^ device, float innerRadius, float outerRadius, int sides, 
-		int rings, [Out] BufferWrapper^% adjacency )
+		int rings, [Out] array<int>^% adjacency )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1224,7 +1218,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		adjacency = gcnew BufferWrapper( adj );
+		adjacency = ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 );
 		return gcnew Mesh( result );
 	}
 
@@ -1242,7 +1236,7 @@ namespace Direct3D9
 	}
 
 	Mesh^ Mesh::CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion,
-		[Out] BufferWrapper^% adjacency, [Out] array<GlyphMetricsFloat>^% glyphMetrics )
+		[Out] array<int>^% adjacency, [Out] array<GlyphMetricsFloat>^% glyphMetrics )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1274,12 +1268,12 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		adjacency = gcnew BufferWrapper( adj );
+		adjacency = ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 );
 		return gcnew Mesh( result );
 	}
 
 	Mesh^ Mesh::CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion,
-		[Out] BufferWrapper^% adjacency )
+		[Out] array<int>^% adjacency )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1309,7 +1303,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		adjacency = gcnew BufferWrapper( adj );
+		adjacency = ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 );
 		return gcnew Mesh( result );
 	}
 
@@ -1372,7 +1366,7 @@ namespace Direct3D9
 	}
 
 	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut,
-		[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap )
+		[Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
 	{
 		ID3DXBuffer *buffer;
 		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
@@ -1391,11 +1385,11 @@ namespace Direct3D9
 			vertexRemap = nullptr;
 		}
 		else
-			vertexRemap = gcnew BufferWrapper( buffer );
+			vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
 	}
 
 	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap, 
-		[Out] BufferWrapper^% vertexRemap )
+		[Out] array<int>^% vertexRemap )
 	{
 		ID3DXBuffer *buffer;
 		pin_ptr<int> pinnedFR = &faceRemap[0];
@@ -1411,7 +1405,7 @@ namespace Direct3D9
 			vertexRemap = nullptr;
 		}
 		else
-			vertexRemap = gcnew BufferWrapper( buffer );
+			vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
 	}
 
 	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut )
@@ -1435,7 +1429,7 @@ namespace Direct3D9
 	}
 
 	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
-		[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap )
+		[Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
 	{
 		ID3DXBuffer *buffer;
 		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
@@ -1455,11 +1449,11 @@ namespace Direct3D9
 			vertexRemap = nullptr;
 		}
 		else
-			vertexRemap = gcnew BufferWrapper( buffer );
+			vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
 	}
 
 	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap, 
-		[Out] BufferWrapper^% vertexRemap )
+		[Out] array<int>^% vertexRemap )
 	{
 		ID3DXBuffer *buffer;
 		pin_ptr<int> pinnedFR = &faceRemap[0];
@@ -1476,7 +1470,7 @@ namespace Direct3D9
 			vertexRemap = nullptr;
 		}
 		else
-			vertexRemap = gcnew BufferWrapper( buffer );
+			vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
 	}
 
 	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut )
@@ -1503,7 +1497,7 @@ namespace Direct3D9
 	}
 
 	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut,
-		[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap )
+		[Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *buffer;
@@ -1524,12 +1518,12 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		vertexRemap = gcnew BufferWrapper( buffer );
+		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( result->GetNumVertices() );
 		return gcnew Mesh( result );
 	}
 
 	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap, 
-		[Out] BufferWrapper^% vertexRemap )
+		[Out] array<int>^% vertexRemap )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *buffer;
@@ -1547,7 +1541,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		vertexRemap = gcnew BufferWrapper( buffer );
+		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( result->GetNumVertices() );
 		return gcnew Mesh( result );
 	}
 
@@ -1585,7 +1579,7 @@ namespace Direct3D9
 	}
 
 	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
-		[Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap )
+		[Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *buffer;
@@ -1607,12 +1601,12 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		vertexRemap = gcnew BufferWrapper( buffer );
+		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( result->GetNumVertices() );
 		return gcnew Mesh( result );
 	}
 
 	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap, 
-		[Out] BufferWrapper^% vertexRemap )
+		[Out] array<int>^% vertexRemap )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *buffer;
@@ -1631,7 +1625,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		vertexRemap = gcnew BufferWrapper( buffer );
+		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( result->GetNumVertices() );
 		return gcnew Mesh( result );
 	}
 
@@ -1670,7 +1664,7 @@ namespace Direct3D9
 		return gcnew Mesh( result );
 	}
 
-	Mesh^ Mesh::Clean( CleanType type, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] BufferWrapper^% errorsAndWarnings )
+	Mesh^ Mesh::Clean( CleanType type, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] String^% errorsAndWarnings )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *errors;
@@ -1690,7 +1684,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		errorsAndWarnings = gcnew BufferWrapper( errors );
+		errorsAndWarnings = Utils::BufferToString( errors );
 		return gcnew Mesh( result );
 	}
 
@@ -1731,7 +1725,7 @@ namespace Direct3D9
 		return gcnew Mesh( result );
 	}
 
-	Mesh^ Mesh::Clean( CleanType type, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] BufferWrapper^% errorsAndWarnings )
+	Mesh^ Mesh::Clean( CleanType type, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] String^% errorsAndWarnings )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *errors;
@@ -1750,7 +1744,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		errorsAndWarnings = gcnew BufferWrapper( errors );
+		errorsAndWarnings = Utils::BufferToString( errors );
 		return gcnew Mesh( result );
 	}
 
@@ -1820,7 +1814,7 @@ namespace Direct3D9
 	Mesh^ Mesh::ComputeTangentFrame( int textureInSemantic, int textureInIndex, int partialOutSemanticU, 
 		int partialOutIndexU, int partialOutSemanticV, int partialOutIndexV, int normalOutSemantic,
 		int normalOutIndex, TangentOptions options, array<int>^ adjacency, float partialEdgeThreshold,
-		float singularPointThreshold, float normalEdgeThreshold, [Out] BufferWrapper^% vertexMapping )
+		float singularPointThreshold, float normalEdgeThreshold, [Out] array<int>^% vertexMapping )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *vertex;
@@ -1839,7 +1833,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		vertexMapping = gcnew BufferWrapper( vertex );
+		vertexMapping = ( gcnew DataStream( vertex ) )->ReadRange<int>( result->GetNumVertices() );
 		return gcnew Mesh( result );
 	}
 

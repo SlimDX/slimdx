@@ -55,8 +55,8 @@ namespace SlimDX
 	
 		if( makeCopy )
 		{
-			m_Buffer = new char[(size_t) sizeInBytes];
-			memcpy( m_Buffer, buffer, (size_t) sizeInBytes );
+			m_Buffer = new char[static_cast<size_t>( sizeInBytes )];
+			memcpy( m_Buffer, buffer, static_cast<size_t>( sizeInBytes ) );
 		}
 		else
 		{
@@ -130,6 +130,22 @@ namespace SlimDX
 	char* DataStream::RawPointer::get()
 	{
 		return (m_Buffer);
+	}
+
+	ID3DXBuffer* DataStream::GetD3DBuffer()
+	{
+		if( m_ID3DXBuffer != 0 )
+			return m_ID3DXBuffer;
+
+		ID3DXBuffer *temp;
+		HRESULT hr = D3DXCreateBuffer( static_cast<DWORD>( m_Size ), &temp );
+		if( FAILED( hr ) )
+			throw gcnew OutOfMemoryException();
+
+		m_ID3DXBuffer = temp;
+
+		memcpy( m_ID3DXBuffer->GetBufferPointer(), m_Buffer, static_cast<size_t>( m_Size ) );
+		return m_ID3DXBuffer;
 	}
 
 	Int64 DataStream::Seek( Int64 offset, SeekOrigin origin )

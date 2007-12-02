@@ -22,8 +22,10 @@
 
 #include <d3d10.h>
 #include <d3dx10.h>
+#include <d3dx9.h>
 #include <vcclr.h>
 
+#include "../DataStream.h"
 #include "GraphicsException.h"
 
 #include "Texture3D.h"

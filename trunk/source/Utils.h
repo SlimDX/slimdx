@@ -22,6 +22,7 @@
 #pragma once
 
 #include <windows.h>
+#include <d3dx9.h>
 
 using namespace System;
 using namespace System::Globalization;
@@ -56,6 +57,8 @@ namespace SlimDX
 		/// <param name="rect">RECT to convert.</param>
 		/// <returns>A GDI+ rectangle structure.</returns>
 		static Drawing::Rectangle ConvertRect(RECT rect);
+
+		static String^ BufferToString( ID3DXBuffer *buffer );
 
 		static array<Byte>^ ReadStream( Stream^ stream, int readLength );
 

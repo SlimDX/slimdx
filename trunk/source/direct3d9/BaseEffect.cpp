@@ -24,6 +24,7 @@
 #include <vcclr.h>
 
 #include "../math/Math.h"
+#include "../DataStream.h"
 #include "Device.h"
 #include "Texture.h"
 #include "BaseEffect.h"

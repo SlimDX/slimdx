@@ -25,7 +25,6 @@
 #include "Resource.h"
 #include "Surface.h"
 #include "Volume.h"
-#include "Buffer.h"
 #include "../direct3d/LockedBox.h"
 #include "../direct3d/LockedRect.h"
 #include "../math/Math.h"
@@ -304,7 +303,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="format">File format used to encode the image.</param>
 			/// <returns>A graphics stream containing the texture data.</returns>
-			BufferWrapper^ Save(ImageFileFormat format);
+			DataStream^ Save(ImageFileFormat format);
 
 			/// <summary>
 			/// Function to save the texture to a file.

@@ -24,6 +24,7 @@
 #include <windows.h>
 #include <mmreg.h>
 #include <dsound.h>
+#include <d3dx9.h>
 
 #include "../DataStream.h"
 #include "DirectSound.h"

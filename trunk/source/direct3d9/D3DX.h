@@ -23,6 +23,8 @@
 
 using namespace System::Runtime::InteropServices;
 
+#include "../math/Math.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
@@ -66,6 +68,9 @@ namespace SlimDX
 			static bool CheckVersion( int d3dVersion, int d3dxVersion );
 
 			static float FresnelTerm( float cosTheta, float refractionIndex );
+
+			static array<Vector3>^ GetVectors( DataStream^ stream, int vertexCount, VertexFormat format );
+			static array<Vector3>^ GetVectors( DataStream^ stream, int vertexCount, int stride );
 		};
 	}
 }

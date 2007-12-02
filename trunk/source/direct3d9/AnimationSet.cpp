@@ -152,7 +152,7 @@ namespace Direct3D9
 	}
 
 	CompressedAnimationSet::CompressedAnimationSet( String^ name, double ticksPerSecond,
-		SlimDX::Direct3D9::PlaybackType playbackType, BufferWrapper^ compressedData,
+		SlimDX::Direct3D9::PlaybackType playbackType, DataStream^ compressedData,
 		array<CallbackKey>^ callbackKeys )
 	{
 		LPD3DXCOMPRESSEDANIMATIONSET pointer;
@@ -168,7 +168,7 @@ namespace Direct3D9
 		}
 
 		HRESULT hr = D3DXCreateCompressedAnimationSet( reinterpret_cast<LPCSTR>( pinnedName ), ticksPerSecond,
-			static_cast<D3DXPLAYBACK_TYPE>( playbackType ), reinterpret_cast<LPD3DXBUFFER>( compressedData->ComPointer.ToPointer() ), count,
+			static_cast<D3DXPLAYBACK_TYPE>( playbackType ), compressedData->GetD3DBuffer(), count,
 			keys, &pointer );
 		GraphicsException::CheckHResult( hr );
 
@@ -197,7 +197,7 @@ namespace Direct3D9
 		return results;
 	}
 
-	BufferWrapper^ CompressedAnimationSet::GetCompressedData()
+	DataStream^ CompressedAnimationSet::GetCompressedData()
 	{
 		LPD3DXBUFFER buffer;
 
@@ -207,7 +207,7 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew BufferWrapper( buffer );
+		return gcnew DataStream( buffer );
 	}
 
 	int CompressedAnimationSet::CallbackKeyCount::get()
@@ -250,7 +250,7 @@ namespace Direct3D9
 		m_Pointer = pointer;
 	}
 
-	BufferWrapper^ KeyframedAnimationSet::Compress( float lossiness )
+	DataStream^ KeyframedAnimationSet::Compress( float lossiness )
 	{
 		LPD3DXBUFFER data;
 
@@ -260,10 +260,10 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew BufferWrapper( data );
+		return gcnew DataStream( data );
 	}
 
-	BufferWrapper^ KeyframedAnimationSet::Compress( float lossiness, Frame^ frame )
+	DataStream^ KeyframedAnimationSet::Compress( float lossiness, Frame^ frame )
 	{
 		LPD3DXBUFFER data;
 
@@ -273,7 +273,7 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew BufferWrapper( data );
+		return gcnew DataStream( data );
 	}
 
 	CallbackKey KeyframedAnimationSet::GetCallbackKey( int animation )

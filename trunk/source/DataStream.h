@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#include <d3dx9.h>
-
 using namespace System;
 using namespace System::IO;
 
@@ -50,6 +48,8 @@ namespace SlimDX
 		}
 	
 		void TakeOwnership() { m_OwnsBuffer = true; }
+
+		ID3DXBuffer* GetD3DBuffer();
 
 	public:
 		DataStream( Int64 sizeInBytes, bool canRead, bool canWrite );

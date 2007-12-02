@@ -22,6 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include "../DataStream.h"
 #include "../DirectXObject.h"
 #include "Device.h"
 #include "VertexShader.h"
@@ -51,7 +52,7 @@ namespace Direct3D9
 		m_Pointer = linker;
 	}
 
-	ShaderFragments^ FragmentLinker::Gather( array<Byte>^ sourceData, array<Macro>^ defines,
+	DataStream^ FragmentLinker::Gather( array<Byte>^ sourceData, array<Macro>^ defines,
 		Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
 	{
 		ID3DXBuffer* fragmentBuffer;
@@ -72,23 +73,23 @@ namespace Direct3D9
 		//clean up after marshaling macros
 		Macro::Unmarshal( macros, handles );
 		//marshal errors if necessary
-		errors = BufferWrapper::ConvertToString( errorBuffer );
+		errors = Utils::BufferToString( errorBuffer );
 		
 		GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew ShaderFragments( fragmentBuffer );
+		return gcnew DataStream( fragmentBuffer );
 	}
 
-	ShaderFragments^ FragmentLinker::Gather( String^ sourceData, array<Macro>^ defines,
+	DataStream^ FragmentLinker::Gather( String^ sourceData, array<Macro>^ defines,
 		Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
 	{
 		array<Byte>^ sourceBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( sourceData );
 		return Gather( sourceBytes, defines, includeFile, flags, errors );
 	}
 
-	ShaderFragments^ FragmentLinker::GatherFromFile( String^ fileName, array<Macro>^ defines,
+	DataStream^ FragmentLinker::GatherFromFile( String^ fileName, array<Macro>^ defines,
 		Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
 	{
 		ID3DXBuffer* fragmentBuffer;
@@ -109,13 +110,13 @@ namespace Direct3D9
 		//clean up after marshaling macros
 		Macro::Unmarshal( macros, handles );
 		//marshal errors if necessary
-		errors = BufferWrapper::ConvertToString( errorBuffer );
+		errors = Utils::BufferToString( errorBuffer );
 		
 		GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew ShaderFragments( fragmentBuffer );
+		return gcnew DataStream( fragmentBuffer );
 	}
 
 	void FragmentLinker::AddFragments( array<int>^ fragments )
@@ -131,7 +132,7 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 	}
 
-	ShaderFragments^ FragmentLinker::GetFragment( EffectHandle^ name )
+	DataStream^ FragmentLinker::GetFragment( EffectHandle^ name )
 	{
 		D3DXHANDLE handle = name != nullptr ? name->InternalHandle : NULL;
 		ID3DXBuffer* fragment;
@@ -141,10 +142,10 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew ShaderFragments( fragment );
+		return gcnew DataStream( fragment );
 	}
 
-	ShaderFragments^ FragmentLinker::GetAllFragments()
+	DataStream^ FragmentLinker::GetAllFragments()
 	{
 		ID3DXBuffer* fragments;
 
@@ -153,7 +154,7 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew ShaderFragments( fragments );
+		return gcnew DataStream( fragments );
 	}
 
 	Device^ FragmentLinker::GetDevice()
@@ -227,7 +228,7 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 		
 		//marshal errors if necessary
-		errors = BufferWrapper::ConvertToString( errorBuffer );
+		errors = Utils::BufferToString( errorBuffer );
 		if( FAILED( hr ) )
 			return nullptr;
 
@@ -252,7 +253,7 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 		
 		//marshal errors if necessary
-		errors = BufferWrapper::ConvertToString( errorBuffer );
+		errors = Utils::BufferToString( errorBuffer );
 		if( FAILED( hr ) )
 			return nullptr;
 
@@ -277,7 +278,7 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 		
 		//marshal errors if necessary
-		errors = BufferWrapper::ConvertToString( errorBuffer );
+		errors = Utils::BufferToString( errorBuffer );
 		if( FAILED( hr ) )
 			return nullptr;
 
