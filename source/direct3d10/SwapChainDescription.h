@@ -25,7 +25,7 @@ using namespace System;
 using namespace System::Runtime::InteropServices;
 
 #include "Enums.h"
-#include "Rational.h"
+#include "../math/Rational.h"
 
 namespace SlimDX
 {
