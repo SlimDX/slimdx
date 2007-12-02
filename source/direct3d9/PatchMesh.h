@@ -29,7 +29,6 @@ namespace SlimDX
 		ref class Mesh;
 		ref class VertexBuffer;
 		ref class IndexBuffer;
-		ref class BufferWrapper;
 
 		public enum class PatchMeshType : Int32
 		{

@@ -25,8 +25,6 @@
 
 namespace SlimDX
 {
-	ref class DataStream;
-
 	namespace Direct3D9
 	{
 		ref class SkinInfo;
@@ -190,10 +188,19 @@ namespace SlimDX
 			property float Binormal;
 		};
 
+		[StructLayout(LayoutKind::Sequential)]
+		public value class IntersectInformation
+		{
+		public:
+			property int FaceIndex;
+			property float U;
+			property float V;
+			property float Distance;
+		};
+
 		ref class Mesh;
 		ref class VertexBuffer;
 		ref class IndexBuffer;
-		ref class BufferWrapper;
 		enum class VertexFormat;
 
 		public ref class BaseMesh abstract : public DirectXObject<ID3DXBaseMesh>
@@ -229,13 +236,13 @@ namespace SlimDX
 			void DrawSubset( int subset );
 
 			IndexBuffer^ ConvertSubsetToSingleStrip( int attributeId, MeshFlags options, [Out] int% indexCount );
-			IndexBuffer^ ConvertSubsetToStrips( int attributeId, MeshFlags options, [Out] int% indexCount, [Out] BufferWrapper^% stripLengths, [Out] int% stripCount );
+			IndexBuffer^ ConvertSubsetToStrips( int attributeId, MeshFlags options, [Out] int% indexCount, [Out] array<int>^% stripLengths );
 
-			bool Intersects( Ray ray, [Out] float% distance, [Out] int% faceIndex, [Out] int% hitCount, [Out] BufferWrapper^% hits );
+			bool Intersects( Ray ray, [Out] float% distance, [Out] int% faceIndex, [Out] array<IntersectInformation>^% hits );
 			bool Intersects( Ray ray, [Out] float% distance );
 			bool Intersects( Ray ray );
 
-			bool IntersectsSubset( Ray ray, int attributeId, [Out] float% distance, [Out] int% faceIndex, [Out] int% hitCount, [Out] BufferWrapper^% hits );
+			bool IntersectsSubset( Ray ray, int attributeId, [Out] float% distance, [Out] int% faceIndex, [Out] array<IntersectInformation>^% hits );
 			bool IntersectsSubset( Ray ray, int attributeId, [Out] float% distance );
 			bool IntersectsSubset( Ray ray, int attributeId );
 
@@ -260,48 +267,48 @@ namespace SlimDX
 			Mesh( Device^ device, int faceCount, int vertexCount, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf );
 			virtual ~Mesh() { }
 			
-			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] BufferWrapper^% adjacency, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<int>^% adjacency, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
 			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
 			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );
 			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags );
 
-			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] BufferWrapper^% adjacency, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<int>^% adjacency, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
 			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
 			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );
 			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags );
 
-			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] BufferWrapper^% adjacency, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<int>^% adjacency, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
 			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
 			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );
 			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags );
 
-			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] BufferWrapper^% adjacency, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
+			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<int>^% adjacency, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
 			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
 			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );
 			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags );
 
-			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] BufferWrapper^% adjacency, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances, [Out] SkinInfo^% skinInfo );
+			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<int>^% adjacency, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances, [Out] SkinInfo^% skinInfo );
 			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances, [Out] SkinInfo^% skinInfo );
 			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] SkinInfo^% skinInfo );
 			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] SkinInfo^% skinInfo );
 
-			static Mesh^ CreateBox( Device^ device, float width, float height, float depth, [Out] BufferWrapper^% adjacency );
+			static Mesh^ CreateBox( Device^ device, float width, float height, float depth, [Out] array<int>^% adjacency );
 			static Mesh^ CreateBox( Device^ device, float width, float height, float depth );
 
-			static Mesh^ CreateCylinder( Device^ device, float radius1, float radius2, float length, int slices, int stacks, [Out] BufferWrapper^% adjacency );
+			static Mesh^ CreateCylinder( Device^ device, float radius1, float radius2, float length, int slices, int stacks, [Out] array<int>^% adjacency );
 			static Mesh^ CreateCylinder( Device^ device, float radius1, float radius2, float length, int slices, int stacks );
 
-			static Mesh^ CreateSphere( Device^ device, float radius, int slices, int stacks, [Out] BufferWrapper^% adjacency );
+			static Mesh^ CreateSphere( Device^ device, float radius, int slices, int stacks, [Out] array<int>^% adjacency );
 			static Mesh^ CreateSphere( Device^ device, float radius, int slices, int stacks );
 
-			static Mesh^ CreateTeapot( Device^ device, [Out] BufferWrapper^% adjacency );
+			static Mesh^ CreateTeapot( Device^ device, [Out] array<int>^% adjacency );
 			static Mesh^ CreateTeapot( Device^ device );
 
-			static Mesh^ CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion, [Out] BufferWrapper^% adjacency, [Out] array<GlyphMetricsFloat>^% glyphMetrics );
-			static Mesh^ CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion, [Out] BufferWrapper^% adjacency );
+			static Mesh^ CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion, [Out] array<int>^% adjacency, [Out] array<GlyphMetricsFloat>^% glyphMetrics );
+			static Mesh^ CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion, [Out] array<int>^% adjacency );
 			static Mesh^ CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion );
 
-			static Mesh^ CreateTorus( Device^ device, float innerRadius, float outerRadius, int sides, int rings, [Out] BufferWrapper^% adjacency );
+			static Mesh^ CreateTorus( Device^ device, float innerRadius, float outerRadius, int sides, int rings, [Out] array<int>^% adjacency );
 			static Mesh^ CreateTorus( Device^ device, float innerRadius, float outerRadius, int sides, int rings );
 
 			static Mesh^ Concatenate( Device^ device, array<Mesh^>^ meshes, MeshFlags options, 
@@ -325,31 +332,31 @@ namespace SlimDX
 			void UnlockAttributeBuffer();
 			void SetAttributeTable( array<AttributeRange>^ table );
 
-			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
-			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
+			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
 			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut );
 			void OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn );
 
-			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
-			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
+			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
 			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut );
 			void OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn );
 
-			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
-			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
+			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
 			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut );
 			Mesh^ Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn );
 
-			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
-			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
+			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
 			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut );
 			Mesh^ Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn );
 
-			Mesh^ Clean( CleanType type, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] BufferWrapper^% errorsAndWarnings );
+			Mesh^ Clean( CleanType type, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] String^% errorsAndWarnings );
 			Mesh^ Clean( CleanType type, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut );
 			Mesh^ Clean( CleanType type, array<int>^ adjacencyIn );
 
-			Mesh^ Clean( CleanType type, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] BufferWrapper^% errorsAndWarnings );
+			Mesh^ Clean( CleanType type, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] String^% errorsAndWarnings );
 			Mesh^ Clean( CleanType type, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut );
 			Mesh^ Clean( CleanType type, IntPtr adjacencyIn );
 			
@@ -362,7 +369,7 @@ namespace SlimDX
 			Mesh^ ComputeTangentFrame( int textureInSemantic, int textureInIndex, int partialOutSemanticU, 
 				int partialOutIndexU, int partialOutSemanticV, int partialOutIndexV, int normalOutSemantic,
 				int normalOutIndex, TangentOptions options, array<int>^ adjacency, float partialEdgeThreshold,
-				float singularPointThreshold, float normalEdgeThreshold, [Out] BufferWrapper^% vertexMapping );
+				float singularPointThreshold, float normalEdgeThreshold, [Out] array<int>^% vertexMapping );
 
 			Mesh^ ComputeTangentFrame( int textureInSemantic, int textureInIndex, int partialOutSemanticU, 
 				int partialOutIndexU, int partialOutSemanticV, int partialOutIndexV, int normalOutSemantic,

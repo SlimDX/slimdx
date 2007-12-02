@@ -22,6 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include "../DataStream.h"
 #include "../DirectXObject.h"
 
 #include "EffectCompiler.h"
@@ -82,7 +83,7 @@ namespace Direct3D9
 		//clean up after marshaling macros
 		Macro::Unmarshal( macros, handles );
 		//marshal errors if necessary
-		errors = BufferWrapper::ConvertToString( errorBuffer );
+		errors = Utils::BufferToString( errorBuffer );
 		
 		GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 		if( FAILED( hr ) )
@@ -112,7 +113,7 @@ namespace Direct3D9
 		//clean up after marshaling macros
 		Macro::Unmarshal( macros, handles );
 		//marshal errors if necessary
-		errors = BufferWrapper::ConvertToString( errorBuffer );
+		errors = Utils::BufferToString( errorBuffer );
 		
 		GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 		if( FAILED( hr ) )
@@ -135,7 +136,7 @@ namespace Direct3D9
 		HRESULT hr = CompilerPointer->CompileShader( handle, reinterpret_cast<LPCSTR>( pinnedTarget ), static_cast<DWORD>( flags ), &shader, &errorBuffer, &table );
 
 		//marshal errors if necessary
-		compilationErrors = BufferWrapper::ConvertToString( errorBuffer );
+		compilationErrors = Utils::BufferToString( errorBuffer );
 			
 		// CheckHResult() is not used because we need to include the compiler errors.
 		if( DirectXException::EnableExceptions && FAILED(hr) )
@@ -196,7 +197,7 @@ namespace Direct3D9
 		return CompileShader( functionHandle, target, flags, errors );
 	}
 
-	EffectBytecode^ EffectCompiler::CompileEffect( ShaderFlags flags, [Out] String^% compilationErrors )
+	DataStream^ EffectCompiler::CompileEffect( ShaderFlags flags, [Out] String^% compilationErrors )
 	{
 		ID3DXBuffer* effect;
 		ID3DXBuffer* errorBuffer;
@@ -225,10 +226,10 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew EffectBytecode( effect );
+		return gcnew DataStream( effect );
 	}
 
-	EffectBytecode^ EffectCompiler::CompileEffect( ShaderFlags flags )
+	DataStream^ EffectCompiler::CompileEffect( ShaderFlags flags )
 	{
 		String^ errors;
 		return CompileEffect( flags, errors );

@@ -21,7 +21,6 @@
 */
 #include <d3d9.h>
 #include <d3dx9.h>
-#include <vcclr.h>
 
 #include "../DirectXObject.h"
 #include "../Utils.h"
@@ -31,7 +30,6 @@
 #include "Texture.h"
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
-#include "Buffer.h"
 #include "Mesh.h"
 #include "PatchMesh.h"
 

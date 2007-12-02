@@ -63,9 +63,9 @@ namespace Direct3D9
 		m_Pointer = new D3DXMESHCONTAINER( container );
 	}
 
-	MeshContainer::MeshContainer( D3DXMESHCONTAINER *container )
+	MeshContainer::MeshContainer( const D3DXMESHCONTAINER *container )
 	{
-		m_Pointer = container;
+		m_Pointer = const_cast<D3DXMESHCONTAINER*>( container );
 	}
 
 	MeshContainer::MeshContainer()
@@ -422,14 +422,105 @@ namespace Direct3D9
 		return D3D_OK;
 	}
 
+	ISaveUserDataShim::ISaveUserDataShim( ISaveUserData^ wrappedInterface )
+	{
+		m_WrappedInterface = wrappedInterface;
+	}
+
+	HRESULT ISaveUserDataShim::AddFrameChildData( const D3DXFRAME *pFrame, LPD3DXFILESAVEOBJECT pXofSave, LPD3DXFILESAVEDATA pXofFrameData )
+	{
+		try
+		{
+			m_WrappedInterface->AddFrameChildData( gcnew Frame( pFrame ), gcnew XFileSaveObject( pXofSave ), 
+				gcnew XFileSaveData( pXofFrameData ) );
+		}
+		catch( Exception^ )
+		{
+			return E_FAIL;
+		}
+
+		return D3D_OK;
+	}
+
+	HRESULT ISaveUserDataShim::AddMeshChildData( const D3DXMESHCONTAINER *pMeshContainer, LPD3DXFILESAVEOBJECT pXofSave, LPD3DXFILESAVEDATA pXofMeshData )
+	{
+		try
+		{
+			m_WrappedInterface->AddMeshChildData( gcnew MeshContainer( pMeshContainer ), 
+				gcnew XFileSaveObject( pXofSave ), gcnew XFileSaveData( pXofMeshData ) );
+		}
+		catch( Exception^ )
+		{
+			return E_FAIL;
+		}
+
+		return D3D_OK;
+	}
+
+	HRESULT ISaveUserDataShim::AddTopLevelDataObjectsPost( LPD3DXFILESAVEOBJECT pXofSave )
+	{
+		try
+		{
+			m_WrappedInterface->AddTopLevelDataPost( gcnew XFileSaveObject( pXofSave ) );
+		}
+		catch( Exception^ )
+		{
+			return E_FAIL;
+		}
+
+		return D3D_OK;
+	}
+
+	HRESULT ISaveUserDataShim::AddTopLevelDataObjectsPre( LPD3DXFILESAVEOBJECT pXofSave )
+	{
+		try
+		{
+			m_WrappedInterface->AddTopLevelDataPre( gcnew XFileSaveObject( pXofSave ) );
+		}
+		catch( Exception^ )
+		{
+			return E_FAIL;
+		}
+
+		return D3D_OK;
+	}
+
+	HRESULT ISaveUserDataShim::RegisterTemplates( LPD3DXFILE pXFileApi )
+	{
+		try
+		{
+			m_WrappedInterface->RegisterTemplates( gcnew XFile( pXFileApi ) );
+		}
+		catch( Exception^ )
+		{
+			return E_FAIL;
+		}
+
+		return D3D_OK;
+	}
+
+	HRESULT ISaveUserDataShim::SaveTemplates( LPD3DXFILESAVEOBJECT pXofSave )
+	{
+		try
+		{
+			m_WrappedInterface->SaveTemplates( gcnew XFileSaveObject( pXofSave ) );
+		}
+		catch( Exception^ )
+		{
+			return E_FAIL;
+		}
+
+		return D3D_OK;
+	}
+
 	Frame::Frame( const D3DXFRAME &frame )
 	{
 		m_Pointer = new D3DXFRAME( frame );
 	}
 
-	Frame::Frame( D3DXFRAME *frame )
+	Frame::Frame( const D3DXFRAME *frame )
 	{
-		m_Pointer = frame;
+		m_Pointer = const_cast<D3DXFRAME*>( frame );
 	}
 
 	Frame::Frame()
@@ -474,18 +565,18 @@ namespace Direct3D9
 		return gcnew Frame( *frame );
 	}
 
-	float Frame::CalculateBoundingSphere( Frame^ root, [Out] Vector3% objectCenter )
+	BoundingSphere Frame::CalculateBoundingSphere( Frame^ root )
 	{
-		pin_ptr<Vector3> pinnedResult = &objectCenter;
+		Vector3 objectCenter;
 		float radius;
 
-		HRESULT hr = D3DXFrameCalculateBoundingSphere( root->Pointer, reinterpret_cast<D3DXVECTOR3*>( pinnedResult ), &radius );
+		HRESULT hr = D3DXFrameCalculateBoundingSphere( root->Pointer, reinterpret_cast<D3DXVECTOR3*>( &objectCenter ), &radius );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
-			return 0.0f;
+			return BoundingSphere( Vector3( 0, 0, 0 ), 0.0f );
 
-		return radius;
+		return BoundingSphere( objectCenter, radius );
 	}
 
 	void Frame::DestroyHierarchy( Frame^ root, IAllocateHierarchy^ allocator )
@@ -645,6 +736,27 @@ namespace Direct3D9
 	{
 		array<Byte>^ data = Utils::ReadStream( stream, 0 );
 		return Frame::LoadHierarchyFromX( device, data, options, allocator, userDataLoader, animationController );
+	}
+
+	void Frame::SaveHierarchyToFile( String^ fileName, XFileFormat format, Frame^ root, AnimationController^ animationController, ISaveUserData^ userDataSaver )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+		ISaveUserDataShim *shim = new ISaveUserDataShim( userDataSaver );
+
+		HRESULT hr = D3DXSaveMeshHierarchyToFile( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( format ),
+			root->Pointer, animationController->InternalPointer, shim );
+		GraphicsException::CheckHResult( hr );
+
+		delete shim;
+	}
+
+	void Frame::SaveHierarchyToFile( String^ fileName, XFileFormat format, Frame^ root, AnimationController^ animationController )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+
+		HRESULT hr = D3DXSaveMeshHierarchyToFile( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( format ),
+			root->Pointer, animationController->InternalPointer, NULL );
+		GraphicsException::CheckHResult( hr );
 	}
 }
 }

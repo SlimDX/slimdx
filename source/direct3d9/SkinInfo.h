@@ -30,6 +30,7 @@ namespace SlimDX
 		value class VertexElement;
 		enum class VertexFormat;
 
+		[StructLayout(LayoutKind::Sequential)]
 		public ref class BoneCombination
 		{
 		internal:
@@ -59,21 +60,19 @@ namespace SlimDX
 			SkinInfo^ Clone();
 
 			Mesh^ ConvertToBlendedMesh( Mesh^ mesh, array<int>^ adjacencyIn, [Out] array<int>^ adjacencyOut,
-				[Out] array<int>^ faceRemap, [Out] BufferWrapper^% vertexRemap, [Out] int% maxVertexInfluence,
-				[Out] int% boneCombinationCount, [Out] BufferWrapper^% boneCombinationTable );
+				[Out] array<int>^ faceRemap, [Out] array<int>^% vertexRemap, [Out] int% maxVertexInfluence,
+				[Out] array<BoneCombination^>^% boneCombinationTable );
 
 			Mesh^ ConvertToBlendedMesh( Mesh^ mesh, array<int>^ adjacencyIn, [Out] array<int>^ adjacencyOut,
-				[Out] int% maxVertexInfluence, [Out] int% boneCombinationCount, 
-				[Out] BufferWrapper^% boneCombinationTable );
+				[Out] int% maxVertexInfluence, [Out] array<BoneCombination^>^% boneCombinationTable );
 
 			Mesh^ ConvertToIndexedBlendedMesh( Mesh^ mesh, int paletteSize, array<int>^ adjacencyIn, 
-				[Out] array<int>^ adjacencyOut, [Out] array<int>^ faceRemap, [Out] BufferWrapper^% vertexRemap, 
-				[Out] int% maxVertexInfluence, [Out] int% boneCombinationCount, 
-				[Out] BufferWrapper^% boneCombinationTable );
+				[Out] array<int>^ adjacencyOut, [Out] array<int>^ faceRemap, [Out] array<int>^% vertexRemap, 
+				[Out] int% maxVertexInfluence, [Out] array<BoneCombination^>^% boneCombinationTable );
 
 			Mesh^ ConvertToIndexedBlendedMesh( Mesh^ mesh, int paletteSize, array<int>^ adjacencyIn, 
-				[Out] array<int>^ adjacencyOut, [Out] int% maxVertexInfluence, [Out] int% boneCombinationCount, 
-				[Out] BufferWrapper^% boneCombinationTable );
+				[Out] array<int>^ adjacencyOut, [Out] int% maxVertexInfluence,
+				[Out] array<BoneCombination^>^% boneCombinationTable );
 
 			int FindBoneVertexInfluenceIndex( int bone, int vertex );
 

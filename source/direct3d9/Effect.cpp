@@ -24,7 +24,6 @@
 
 #include "Device.h"
 #include "Effect.h"
-#include "Buffer.h"
 
 namespace SlimDX
 {
@@ -92,7 +91,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			compilationErrors = BufferWrapper::ConvertToString( errorBuffer );
+			compilationErrors = Utils::BufferToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );	
 			if( FAILED( hr ) )
@@ -176,7 +175,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			compilationErrors = BufferWrapper::ConvertToString( errorBuffer );
+			compilationErrors = Utils::BufferToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );
 			if( effect == NULL)

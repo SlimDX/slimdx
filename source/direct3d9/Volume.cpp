@@ -25,7 +25,7 @@
 #include "../DirectXObject.h"
 
 #include "Device.h"
-#include "../Direct3D/..\DataStream.h"
+#include "../DataStream.h"
 #include "Volume.h"
 
 namespace SlimDX

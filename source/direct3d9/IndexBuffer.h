@@ -21,9 +21,11 @@
 */
 #pragma once
 
+#include <d3dx9.h>
+
 #include "Enums.h"
 #include "Resource.h"
-#include "../Direct3D/../DataStream.h"
+#include "../DataStream.h"
 
 using namespace SlimDX::Direct3D;
 

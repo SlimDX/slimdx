@@ -23,12 +23,12 @@
 #include <d3dx9.h>
 #include <vcclr.h>
 
+#include "../DataStream.h"
 #include "../DirectXObject.h"
 #include "../Utils.h"
 
 #include "Device.h"
 #include "D3DX.h"
-#include "../Direct3D/..\DataStream.h"
 #include "Texture.h"
 
 namespace SlimDX
@@ -336,7 +336,7 @@ namespace Direct3D9
 	/// </summary>
 	/// <param name="format">File format used to encode the image.</param>
 	/// <returns>A graphics stream containing the texture data.</returns>
-	BufferWrapper^ Texture::Save(ImageFileFormat format)
+	DataStream^ Texture::Save(ImageFileFormat format)
 	{
 		HRESULT hr;															// Error code.
 		ID3DXBuffer *buffer = NULL;											// Buffer to hold the encoded image.
@@ -354,7 +354,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		return gcnew BufferWrapper( buffer );
+		return gcnew DataStream( buffer );
 	}
 
 	/// <summary>

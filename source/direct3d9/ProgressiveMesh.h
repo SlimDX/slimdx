@@ -29,7 +29,6 @@ namespace SlimDX
 		ref class Mesh;
 		ref class VertexBuffer;
 		ref class IndexBuffer;
-		ref class BufferWrapper;
 
 		ref class StreamShim : System::Runtime::InteropServices::ComTypes::IStream
 		{
@@ -74,7 +73,7 @@ namespace SlimDX
 			virtual ~ProgressiveMesh() { }
 
 			static ProgressiveMesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags, 
-				[Out] BufferWrapper^% materials, [Out] BufferWrapper^% effects, [Out] int% materialCount );
+				[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effects );
 
 			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags flags, array<VertexElement>^ vertexDeclaration );
 			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags flags, SlimDX::Direct3D9::VertexFormat format );
@@ -84,8 +83,8 @@ namespace SlimDX
 		
 			Mesh^ Optimize( MeshOptimizeFlags flags );
 			Mesh^ Optimize( MeshOptimizeFlags flags, [Out] array<int>^% adjacencyOut );
-			Mesh^ Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
-			Mesh^ Optimize( MeshOptimizeFlags flags, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap );
+			Mesh^ Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
+			Mesh^ Optimize( MeshOptimizeFlags flags, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
 
 			void OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags );
 			void OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap );
@@ -111,10 +110,10 @@ namespace SlimDX
 			SimplificationMesh( ID3DXSPMesh *mesh ) : DirectXObject( mesh ) { }
 
 		public:
-			SimplificationMesh( Mesh^ mesh, array<int>^% adjacency, array<AttributeWeights>^ vertexAttributeWeights, array<float>^ vertexWeights );
-			SimplificationMesh( Mesh^ mesh, array<int>^% adjacency, array<AttributeWeights>^ vertexAttributeWeights );
-			SimplificationMesh( Mesh^ mesh, array<int>^% adjacency, array<float>^ vertexWeights );
-			SimplificationMesh( Mesh^ mesh, array<int>^% adjacency );
+			SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ vertexAttributeWeights, array<float>^ vertexWeights );
+			SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ vertexAttributeWeights );
+			SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<float>^ vertexWeights );
+			SimplificationMesh( Mesh^ mesh, array<int>^ adjacency );
 			virtual ~SimplificationMesh() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 

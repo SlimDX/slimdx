@@ -29,7 +29,6 @@ namespace SlimDX
 
 	namespace Direct3D
 	{
-		
 		[StructLayout( LayoutKind::Sequential )]
 		public value class LockedRect
 		{

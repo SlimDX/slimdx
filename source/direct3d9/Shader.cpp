@@ -24,8 +24,8 @@
 #include <vcclr.h>
 #include <memory>
 
+#include "../DataStream.h"
 #include "Device.h"
-#include "Buffer.h"
 #include "Shader.h"
 
 namespace SlimDX
@@ -250,7 +250,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = BufferWrapper::ConvertToString( errorBuffer );
+			errors = Utils::BufferToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )
@@ -288,7 +288,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = BufferWrapper::ConvertToString( errorBuffer );
+			errors = Utils::BufferToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )
@@ -327,7 +327,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = BufferWrapper::ConvertToString( errorBuffer );
+			errors = Utils::BufferToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )
@@ -375,7 +375,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = BufferWrapper::ConvertToString( errorBuffer );
+			errors = Utils::BufferToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )
@@ -424,7 +424,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = BufferWrapper::ConvertToString( errorBuffer );
+			errors = Utils::BufferToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )
@@ -464,7 +464,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = BufferWrapper::ConvertToString( errorBuffer );
+			errors = Utils::BufferToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )

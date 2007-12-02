@@ -23,6 +23,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include "../DataStream.h"
 #include "Enums.h"
 #include "Vertex.h"
 #include "D3DX.h"
@@ -236,6 +237,25 @@ namespace SlimDX
 		float D3DX::FresnelTerm( float cosTheta, float refractionIndex )
 		{
 			return D3DXFresnelTerm( cosTheta, refractionIndex );
+		}
+
+		array<Vector3>^ D3DX::GetVectors( DataStream^ stream, int vertexCount, VertexFormat format )
+		{
+			return GetVectors( stream, vertexCount, GetFVFVertexSize( format ) );
+		}
+
+		array<Vector3>^ D3DX::GetVectors( DataStream^ stream, int vertexCount, int stride )
+		{
+			array<Vector3>^ results = gcnew array<Vector3>( vertexCount );
+			int jump = stride - 12;
+
+			for( int i = 0; i < vertexCount; i++ )
+			{
+				results[i] = stream->Read<Vector3>();
+				stream->Position += jump;
+			}
+
+			return results;
 		}
 	}
 }

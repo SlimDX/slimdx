@@ -21,7 +21,6 @@
 */
 #pragma once
 
-#include "Buffer.h"
 #include "Shader.h"
 #include "EffectHandle.h"
 
@@ -39,17 +38,6 @@ namespace SlimDX
             property int Target;
 		};
 
-		public ref class ShaderFragments : public BufferWrapper
-		{
-		internal:
-			ShaderFragments( ID3DXBuffer* buffer ) : BufferWrapper( buffer )
-			{ }
-
-		public:
-			ShaderFragments( int size ) : BufferWrapper( size )
-			{ }
-		};
-
 		public ref class FragmentLinker : public DirectXObject<ID3DXFragmentLinker>
 		{
 		internal:
@@ -60,18 +48,18 @@ namespace SlimDX
 			~FragmentLinker() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 
-			static ShaderFragments^ Gather( array<Byte>^ sourceData, array<Macro>^ defines,
+			static DataStream^ Gather( array<Byte>^ sourceData, array<Macro>^ defines,
 				Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
-			static ShaderFragments^ Gather( String^ sourceData, array<Macro>^ defines,
+			static DataStream^ Gather( String^ sourceData, array<Macro>^ defines,
 				Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
 
-			static ShaderFragments^ GatherFromFile( String^ fileName, array<Macro>^ defines,
+			static DataStream^ GatherFromFile( String^ fileName, array<Macro>^ defines,
 				Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
 
 			void AddFragments( array<int>^ fragments );
 			void AddFragments( DataStream^ fragments );
-			ShaderFragments^ GetFragment( EffectHandle^ name );
-			ShaderFragments^ GetAllFragments();
+			DataStream^ GetFragment( EffectHandle^ name );
+			DataStream^ GetAllFragments();
 			Device^ GetDevice();
 
 			FragmentDescription GetFragmentDescription( EffectHandle^ name );

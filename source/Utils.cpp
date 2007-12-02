@@ -131,4 +131,18 @@ namespace SlimDX
 
 		return result;
 	}
+
+	String^ Utils::BufferToString( ID3DXBuffer *buffer )
+	{
+		if( buffer != NULL )
+		{
+			String^ string = gcnew String( reinterpret_cast<const char*>( buffer->GetBufferPointer() ) );
+			buffer->Release();
+			return string;
+		}
+		else
+		{
+			return String::Empty;
+		}
+	}
 }

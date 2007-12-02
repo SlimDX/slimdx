@@ -26,7 +26,6 @@ using namespace System::Runtime::InteropServices;
 
 #include "Device.h"
 #include "ConstantTable.h"
-#include "Buffer.h"
 #include <vcclr.h>
 
 namespace SlimDX
@@ -82,13 +81,16 @@ namespace SlimDX
 			property int UsageIndex;
 		};
 
-		public ref class ShaderBytecode : public BufferWrapper
+		public ref class ShaderBytecode : DirectXObject<ID3DXBuffer>
 		{
 		internal:
-			ShaderBytecode( ID3DXBuffer* buffer ) : BufferWrapper( buffer )
+			ShaderBytecode( ID3DXBuffer* buffer ) : DirectXObject( buffer )
 			{ }
 
 		public:
+			~ShaderBytecode() { Destruct(); }
+			DXOBJECT_FUNCTIONS;
+
 			ConstantTable^ GetConstantTable();
 			array<ShaderSemantic>^ GetInputSemantics();
 			array<ShaderSemantic>^ GetOutputSemantics();

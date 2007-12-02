@@ -31,7 +31,6 @@
 #include "Texture.h"
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
-#include "Buffer.h"
 #include "Mesh.h"
 #include "ProgressiveMesh.h"
 
@@ -245,7 +244,7 @@ namespace Direct3D9
 	}
 
 	ProgressiveMesh^ ProgressiveMesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags, 
-		[Out] BufferWrapper^% materials, [Out] BufferWrapper^% effects, [Out] int% materialCount )
+		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effects )
 	{
 		ID3DXPMesh *result;
 		ID3DXBuffer *om;
@@ -263,13 +262,11 @@ namespace Direct3D9
 		{
 			materials = nullptr;
 			effects = nullptr;
-			materialCount = 0;
 			return nullptr;
 		}
 
-		materials = gcnew BufferWrapper( om );
-		effects = gcnew BufferWrapper( oe );
-		materialCount = numMaterials;
+		materials = ExtendedMaterial::FromBuffer( om, numMaterials );
+		effects = EffectInstance::FromBuffer( oe, numMaterials );
 		return gcnew ProgressiveMesh( result );
 	}
 
@@ -351,7 +348,7 @@ namespace Direct3D9
 		return gcnew Mesh( result );
 	}
 
-	Mesh^ ProgressiveMesh::Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap )
+	Mesh^ ProgressiveMesh::Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *buffer;
@@ -366,11 +363,11 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		vertexRemap = gcnew BufferWrapper( buffer );
+		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( result->GetNumVertices() );
 		return gcnew Mesh( result );
 	}
 
-	Mesh^ ProgressiveMesh::Optimize( MeshOptimizeFlags flags, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] BufferWrapper^% vertexRemap )
+	Mesh^ ProgressiveMesh::Optimize( MeshOptimizeFlags flags, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *buffer;
@@ -387,7 +384,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		vertexRemap = gcnew BufferWrapper( buffer );
+		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( result->GetNumVertices() );
 		return gcnew Mesh( result );
 	}
 
@@ -488,7 +485,7 @@ namespace Direct3D9
 		return MeshPointer->GetMinVertices();
 	}
 
-	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^% adjacency, array<AttributeWeights>^ vertexAttributeWeights, array<float>^ vertexWeights )
+	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ vertexAttributeWeights, array<float>^ vertexWeights )
 	{
 		ID3DXSPMesh *result;
 
@@ -503,7 +500,7 @@ namespace Direct3D9
 		m_Pointer = result;
 	}
 
-	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^% adjacency, array<AttributeWeights>^ vertexAttributeWeights )
+	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ vertexAttributeWeights )
 	{
 		ID3DXSPMesh *result;
 
@@ -517,7 +514,7 @@ namespace Direct3D9
 		m_Pointer = result;
 	}
 
-	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^% adjacency, array<float>^ vertexWeights )
+	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<float>^ vertexWeights )
 	{
 		ID3DXSPMesh *result;
 
@@ -531,7 +528,7 @@ namespace Direct3D9
 		m_Pointer = result;
 	}
 
-	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^% adjacency )
+	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^ adjacency )
 	{
 		ID3DXSPMesh *result;
 

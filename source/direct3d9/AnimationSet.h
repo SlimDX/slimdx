@@ -23,8 +23,6 @@
 
 using namespace System;
 
-#include "Buffer.h"
-
 namespace SlimDX
 {
 	namespace Direct3D9
@@ -139,11 +137,11 @@ namespace SlimDX
 
 		public:
 			CompressedAnimationSet( String^ name, double ticksPerSecond, PlaybackType playbackType, 
-				BufferWrapper^ compressedData, array<CallbackKey>^ callbackKeys );
+				DataStream^ compressedData, array<CallbackKey>^ callbackKeys );
 			virtual ~CompressedAnimationSet() { }
 
 			array<CallbackKey>^ GetCallbackKeys();
-			BufferWrapper^ GetCompressedData();
+			DataStream^ GetCompressedData();
 
 			property int CallbackKeyCount { int get(); }
 			property PlaybackType PlaybackType { SlimDX::Direct3D9::PlaybackType get(); }
@@ -163,8 +161,8 @@ namespace SlimDX
 				int animationCount, array<CallbackKey>^ callbackKeys );
 			virtual ~KeyframedAnimationSet() { }
 
-			BufferWrapper^ Compress( float lossiness );
-			BufferWrapper^ Compress( float lossiness, Frame^ frameHierarchy );
+			DataStream^ Compress( float lossiness );
+			DataStream^ Compress( float lossiness, Frame^ frameHierarchy );
 
 			CallbackKey GetCallbackKey( int animation );
 			array<CallbackKey>^ GetCallbackKeys();
