@@ -32,6 +32,7 @@ namespace SlimDX
 	value class Matrix;
 	value class Plane;
 	value class Quaternion;
+	value class Rational;
 	value class Ray;
 	value class BoundingBox;
 	value class BoundingSphere;
@@ -47,6 +48,7 @@ namespace SlimDX
 #include "Matrix.h"
 #include "Plane.h"
 #include "Quaternion.h"
+#include "Rational.h"
 #include "Ray.h"
 #include "BoundingVolumes.h"
 #include "Float16.h"

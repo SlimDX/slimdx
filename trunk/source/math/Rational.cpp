@@ -19,36 +19,37 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-using namespace System;
+#include "Rational.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	/// 
+	Rational::Rational( int numerator, int denominator ) : numerator( numerator), denominator( denominator )
 	{
-		public value class Rational
-		{
-		private:
-			int numerator;
-            int denominator;
-
-		public:
-			property int Numerator
-            {
-                int get() { return numerator; }
-                void set( int value ) { numerator = value; }
-            }
-
-            property int Denominator
-            {
-                int get() { return denominator; }
-                void set( int value ) { denominator = value; }
-            }
-			
-			Rational( int numerator, int denominator ) : numerator( numerator), denominator( denominator )
-			{
-			}
-		};
 	}
-};
+	
+	///
+	int Rational::Numerator::get()
+	{
+		return numerator;
+	}
+	
+	///
+	void Rational::Numerator::set( int value )
+	{
+		numerator = value;
+	}
+	
+	///
+	int Rational::Denominator::get()
+	{
+		return denominator;
+	}
+	
+	///
+	void Rational::Denominator::set( int value )
+	{
+		denominator = value;
+	}
+}

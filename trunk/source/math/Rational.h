@@ -22,31 +22,33 @@
 #pragma once
 
 using namespace System;
-
-#include "EffectVariable.h"
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	/// <remarks>
+	/// Defines a rational number as a numerator / denominator pair.
+	/// </remarks>
+	[Serializable]
+	[StructLayout( LayoutKind::Sequential )]
+	public value class Rational
 	{
-		ref class Buffer;
-		ref class ShaderResourceView;
+		int numerator;
+		int denominator;
+
+	public:
+		property int Numerator
+		{
+			int get();
+			void set( int value );
+		}
+
+		property int Denominator
+		{
+			int get();
+			void set( int value );
+		}
 		
-		/// <remarks>
-		/// An <see cref="EffectVariable"/> for accessing constant or texture buffers.
-		/// </remarks>
-		/// <unmanaged counterpart="ID3D10EffectConstantBuffer" complete="yes"/>
-		public ref class EffectConstantBuffer : EffectVariable
-		{	
-		internal:
-			EffectConstantBuffer( ID3D10EffectConstantBuffer* variable );
-			
-		public:
-			Buffer^ GetConstantBuffer();
-			void SetConstantBuffer( Buffer^ buffer );
-			
-			ShaderResourceView^ GetTextureBuffer();
-			void SetTextureBuffer( ShaderResourceView^ buffer );
-		};
-	}
+		Rational( int numerator, int denominator );
+	};
 };
