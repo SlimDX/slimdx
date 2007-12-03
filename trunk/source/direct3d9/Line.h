@@ -45,7 +45,9 @@ namespace SlimDX
 
 			void Draw( array<Vector2>^ vertexList, int color );
 			void Draw( array<Vector2>^ vertexList, Color color );
-
+			void DrawTransformed( array<Vector3>^ vertexList, Matrix matrix, int color );
+			void DrawTransformed( array<Vector3>^ vertexList, Matrix matrix, Color color );
+			
 			void OnLostDevice();
 			void OnResetDevice();
 
