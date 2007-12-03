@@ -328,6 +328,14 @@ namespace Direct3D9
 		HRESULT hr = m_Pointer->SetTransform( static_cast<D3DTRANSFORMSTATETYPE>( state ), reinterpret_cast<const D3DMATRIX*>( &value ) );
 		GraphicsException::CheckHResult( hr );
 	}
+	
+	Matrix Device::GetTransform( TransformState state )
+	{
+		Matrix result;
+		HRESULT hr = m_Pointer->GetTransform( static_cast<D3DTRANSFORMSTATETYPE>( state ), reinterpret_cast<D3DMATRIX*>( &result ) );
+		GraphicsException::CheckHResult( hr );
+		return result;
+	}
 
 	void Device::MultiplyTransform( TransformState state, Matrix value )
 	{
