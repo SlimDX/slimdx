@@ -286,6 +286,8 @@ namespace SlimDX
 			void SetCursorProperties( System::Drawing::Point position, Surface^ cursorBitmap ) { SetCursorProperties( position.X, position.Y, cursorBitmap ); }
 
 			void SetTransform( TransformState state, Matrix value );
+			Matrix GetTransform( TransformState state );
+			
 			void MultiplyTransform( TransformState state, Matrix value );
 			void SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride );
 			void SetStreamSourceFreq( int stream, int frequency );
