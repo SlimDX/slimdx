@@ -91,7 +91,20 @@ namespace Direct3D9
 	{
 		Draw( vertexList, color.ToArgb() );
 	}
+	
+	void Line::DrawTransformed( array<Vector3>^ vertexList, Matrix transform, int color )
+	{
+		pin_ptr<Vector3> pinnedVerts = &vertexList[0];
 
+		HRESULT hr = m_Pointer->DrawTransform( reinterpret_cast<D3DXVECTOR3*>( pinnedVerts ), vertexList->Length, reinterpret_cast<const D3DXMATRIX*>( &transform ), color );
+		GraphicsException::CheckHResult( hr );
+	}
+	
+	void Line::DrawTransformed( array<Vector3>^ vertexList, Matrix transform, Color color )
+	{
+		DrawTransformed( vertexList, transform, color.ToArgb() );
+	}
+	
 	void Line::OnLostDevice()
 	{
 		HRESULT hr = m_Pointer->OnLostDevice();
