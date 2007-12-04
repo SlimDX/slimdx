@@ -30,6 +30,20 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	StateBlock::StateBlock( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		void* result;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_IDirect3DStateBlock9, &result );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<IDirect3DStateBlock9*>( result );
+	}
+
 	StateBlock::StateBlock( IDirect3DStateBlock9* stateBlock )
 	{
 		if( stateBlock == NULL )

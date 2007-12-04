@@ -31,6 +31,7 @@ namespace SlimDX
 		public ref class MatrixStack : DirectXObject<ID3DXMatrixStack>
 		{
 		public:
+			MatrixStack( IntPtr pointer );
 			MatrixStack();
 			~MatrixStack() { Destruct(); }
 			DXOBJECT_FUNCTIONS;

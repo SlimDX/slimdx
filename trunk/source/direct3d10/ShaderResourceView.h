@@ -39,6 +39,7 @@ namespace SlimDX
 			ShaderResourceView( ID3D10ShaderResourceView* view );
 			
 		public:
+			ShaderResourceView( IntPtr pointer );
 			ShaderResourceView( Device^ device, Texture2D^ resource );
 		};
 	}

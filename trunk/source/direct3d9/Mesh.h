@@ -211,6 +211,7 @@ namespace SlimDX
 			{ }
 
 		public:
+			BaseMesh( IntPtr pointer );
 			Mesh^ Clone( Device^ device, MeshFlags flags, array<VertexElement>^ elements );
 			Mesh^ Clone( Device^ device, MeshFlags flags, VertexFormat fvf );
 			virtual ~BaseMesh() { Destruct(); }
@@ -263,6 +264,7 @@ namespace SlimDX
 			}
 
 		public:
+			Mesh( IntPtr pointer );
 			Mesh( Device^ device, int faceCount, int vertexCount, MeshFlags options, array<VertexElement>^ vertexDecl );
 			Mesh( Device^ device, int faceCount, int vertexCount, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf );
 			virtual ~Mesh() { }

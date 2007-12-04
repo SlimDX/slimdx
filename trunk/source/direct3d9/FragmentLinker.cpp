@@ -33,6 +33,20 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	FragmentLinker::FragmentLinker( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		void* result;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXFragmentLinker, &result );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<ID3DXFragmentLinker*>( result );
+	}
+
 	FragmentLinker::FragmentLinker( ID3DXFragmentLinker* linker ) : DirectXObject( linker )
 	{
 		if( linker == NULL )

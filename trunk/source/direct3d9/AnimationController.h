@@ -86,6 +86,7 @@ namespace SlimDX
 			AnimationController( ID3DXAnimationController *controller );
 
 		public:
+			AnimationController( IntPtr pointer );
 			AnimationController( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents );
 			virtual ~AnimationController() { Destruct(); }
 			DXOBJECT_FUNCTIONS;

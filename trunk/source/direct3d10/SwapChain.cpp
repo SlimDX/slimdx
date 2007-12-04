@@ -46,6 +46,20 @@ namespace Direct3D10
 		m_Pointer = swapChain;
 	}
 
+	SwapChain::SwapChain( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		void* result;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_IDXGISwapChain, &result );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<IDXGISwapChain*>( result );
+	}
+
 	Texture2D^ SwapChain::GetBuffer( int index )
 	{
 		ID3D10Texture2D *texture;

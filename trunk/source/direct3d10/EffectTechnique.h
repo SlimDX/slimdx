@@ -48,7 +48,7 @@ namespace SlimDX
 			}
 			
 			property int AnnotationCount 
-		  {
+			{
 				int get() { return m_AnnotationCount; }
 			}
 			

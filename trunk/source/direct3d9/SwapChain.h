@@ -54,6 +54,7 @@ namespace SlimDX
 			SwapChain( IDirect3DSwapChain9* swapChain );
 
 		public:
+			SwapChain( IntPtr pointer );
 			SwapChain( Device^ device, PresentParameters^ presentParams );
 			~SwapChain() { Destruct(); }
 			DXOBJECT_FUNCTIONS;

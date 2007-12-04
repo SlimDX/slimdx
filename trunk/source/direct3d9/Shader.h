@@ -88,6 +88,7 @@ namespace SlimDX
 			{ }
 
 		public:
+			ShaderBytecode( IntPtr pointer );
 			~ShaderBytecode() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 

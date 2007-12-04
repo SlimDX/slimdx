@@ -37,6 +37,20 @@ namespace Direct3D10
 	ShaderResourceView::ShaderResourceView( ID3D10ShaderResourceView* view ) : ResourceView( view )
 	{
 	}
+
+	ShaderResourceView::ShaderResourceView( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		void* result;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_ID3D10ShaderResourceView, &result );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<ID3D10ShaderResourceView*>( result );
+	}
 	
 	ShaderResourceView::ShaderResourceView( Device^ device, Texture2D^ resource )
 	{

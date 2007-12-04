@@ -63,6 +63,7 @@ namespace SlimDX
 			PatchMesh( ID3DXPatchMesh *mesh ) : DirectXObject( mesh ) { }
 
 		public:
+			PatchMesh( IntPtr pointer );
 			PatchMesh( Device^ device, PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration );
 			PatchMesh( Mesh^ mesh );
 			virtual ~PatchMesh() { Destruct(); }

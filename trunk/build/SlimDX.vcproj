@@ -1063,6 +1063,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\direct3d9\RenderToEnvMap.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d9\RenderToEnvMap.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\direct3d9\RenderToSurface.cpp"
 				>
 			</File>

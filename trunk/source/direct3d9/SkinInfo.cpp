@@ -52,6 +52,20 @@ namespace Direct3D9
 		return result;
 	}
 
+	SkinInfo::SkinInfo( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		void* result;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXSkinInfo, &result );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<ID3DXSkinInfo*>( result );
+	}
+
 	SkinInfo::SkinInfo( int vertexCount, array<VertexElement>^ vertexDecl, int boneCount )
 	{
 		ID3DXSkinInfo *result;

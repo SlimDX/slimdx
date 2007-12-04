@@ -47,6 +47,7 @@ namespace SlimDX
 			XFileSaveData( ID3DXFileSaveData *object );
 
 		public:
+			XFileSaveData( IntPtr pointer );
 			virtual ~XFileSaveData() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 
@@ -67,6 +68,7 @@ namespace SlimDX
 			XFileSaveObject( ID3DXFileSaveObject *object );
 
 		public:
+			XFileSaveObject( IntPtr pointer );
 			virtual ~XFileSaveObject() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 
@@ -82,6 +84,7 @@ namespace SlimDX
 			XFile( ID3DXFile *object );
 
 		public:
+			XFile( IntPtr pointer );
 			XFile();
 			virtual ~XFile() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
@@ -103,6 +106,7 @@ namespace SlimDX
 			XFileEnumerationObject( ID3DXFileEnumObject *object );
 
 		public:
+			XFileEnumerationObject( IntPtr pointer );
 			virtual ~XFileEnumerationObject() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 
@@ -120,6 +124,7 @@ namespace SlimDX
 			XFileData( ID3DXFileData *data );
 
 		public:
+			XFileData( IntPtr pointer );
 			virtual ~XFileData() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 

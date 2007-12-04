@@ -70,6 +70,7 @@ namespace SlimDX
 			DirectSound( IDirectSound8* dsound );
 
 		public:
+			DirectSound( IntPtr pointer );
 			DirectSound();
 			DirectSound( Guid device );
 			~DirectSound() { Destruct(); }

@@ -44,6 +44,7 @@ namespace SlimDX
 			FragmentLinker( ID3DXFragmentLinker* linker );
 
 		public:
+			FragmentLinker( IntPtr pointer );
 			FragmentLinker( Device^ device, int cacheSize );
 			~FragmentLinker() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
