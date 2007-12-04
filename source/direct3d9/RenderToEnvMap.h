@@ -21,36 +21,47 @@
 */
 #pragma once
 
-#include "../DirectXObject.h"
+using namespace System::IO;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		ref class Device;
-
-		public enum class StateBlockType : Int32
+		public value class RenderToEnvironmentMapDescription
 		{
-			All = D3DSBT_ALL,
-			PixelState = D3DSBT_PIXELSTATE,
-			VertexState = D3DSBT_VERTEXSTATE,
+		public:
+			property int Size;
+			property int MipLevels;
+			property SlimDX::Direct3D9::Format Format;
+			property bool DepthStencil;
+			property SlimDX::Direct3D9::Format DepthStencilFormat;
 		};
 
-		public ref class StateBlock : DirectXObject<IDirect3DStateBlock9>
+		public ref class RenderToEnvironmentMap : DirectXObject<ID3DXRenderToEnvMap>
 		{
 		internal:
-			StateBlock( IDirect3DStateBlock9* stateBlock );
+			RenderToEnvironmentMap( ID3DXRenderToEnvMap* pointer );
 
 		public:
-			StateBlock( IntPtr pointer );
-			StateBlock( Device^ device, StateBlockType type );
-			~StateBlock() { Destruct(); }
+			RenderToEnvironmentMap( IntPtr pointer );
+			RenderToEnvironmentMap( Device^ device, int size, int mipLevels, Format format );
+			RenderToEnvironmentMap( Device^ device, int size, int mipLevels, Format format, Format depthStencilFormat );
+			virtual ~RenderToEnvironmentMap() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 
-			void Apply();
-			void Capture();
+			void BeginCube( CubeTexture^ texture );
+			void BeginHemisphere( Texture^ positiveZTexture, Texture^ negativeZTexture );
+			void BeginParabolic( Texture^ positiveZTexture, Texture^ negativeZTexture );
+			void BeginSphere( Texture^ texture );
+			void End( Filter mipFilter );
+			void Face( CubeMapFace face, Filter mipFilter );
 
 			Device^ GetDevice();
+			void OnLostDevice();
+			void OnResetDevice();
+
+			property RenderToEnvironmentMapDescription Description { RenderToEnvironmentMapDescription get(); }
 		};
 	}
 }

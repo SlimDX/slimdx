@@ -37,6 +37,20 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	PatchMesh::PatchMesh( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		void* result;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXPatchMesh, &result );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<ID3DXPatchMesh*>( result );
+	}
+
 	PatchMesh::PatchMesh( Device^ device, PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration )
 	{
 		ID3DXPatchMesh *result;

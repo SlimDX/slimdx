@@ -29,6 +29,20 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		EffectPool::EffectPool( IntPtr pointer )
+		{
+			if( pointer == IntPtr::Zero )
+				throw gcnew ArgumentNullException( "pointer" );
+
+			void* result;
+			IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+			HRESULT hr = unknown->QueryInterface( IID_ID3DXEffectPool, &result );
+			if( FAILED( hr ) )
+				throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+			m_Pointer = static_cast<ID3DXEffectPool*>( result );
+		}
+
 		EffectPool::EffectPool()
 		{
 			ID3DXEffectPool* pointer;

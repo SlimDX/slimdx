@@ -38,6 +38,7 @@ namespace SlimDX
 		public ref class EffectPool : public DirectXObject<ID3DXEffectPool>
 		{
 		public:
+			EffectPool( IntPtr pointer );
 			EffectPool();
 			~EffectPool() { Destruct(); }
 			DXOBJECT_FUNCTIONS;

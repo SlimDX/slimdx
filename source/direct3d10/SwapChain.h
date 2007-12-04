@@ -38,6 +38,7 @@ namespace SlimDX
 		public ref class SwapChain : public DirectXObject<IDXGISwapChain>
 		{
 		public:
+			SwapChain( IntPtr pointer );
 			SwapChain( Device^ device, SwapChainDescription description );
 			~SwapChain() { Destruct(); }
 			DXOBJECT_FUNCTIONS;

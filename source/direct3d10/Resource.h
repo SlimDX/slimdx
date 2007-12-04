@@ -38,6 +38,7 @@ namespace SlimDX
 			Resource(ID3D10Resource *resource);
 			
 		public:
+			Resource( IntPtr pointer );
 			virtual ~Resource() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 

@@ -37,6 +37,7 @@ namespace SlimDX
 			Resource() { }
 
 		public:
+			Resource( IntPtr pointer );
 			virtual ~Resource() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 

@@ -44,6 +44,20 @@ namespace Direct3D9
 	{
 	}
 
+	AnimationSet::AnimationSet( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		void* result;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXAnimationSet, &result );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<ID3DXAnimationSet*>( result );
+	}
+
 	int AnimationSet::GetAnimationIndex( String^ name )
 	{
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
@@ -151,6 +165,20 @@ namespace Direct3D9
 		Value = Vector3( key.Value.x, key.Value.y, key.Value.z );
 	}
 
+	CompressedAnimationSet::CompressedAnimationSet( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		void* result;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXCompressedAnimationSet, &result );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<ID3DXCompressedAnimationSet*>( result );
+	}
+
 	CompressedAnimationSet::CompressedAnimationSet( String^ name, double ticksPerSecond,
 		SlimDX::Direct3D9::PlaybackType playbackType, DataStream^ compressedData,
 		array<CallbackKey>^ callbackKeys )
@@ -223,6 +251,20 @@ namespace Direct3D9
 	double CompressedAnimationSet::SourceTicksPerSecond::get()
 	{
 		return CASPointer->GetSourceTicksPerSecond();
+	}
+
+	KeyframedAnimationSet::KeyframedAnimationSet( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		void* result;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXKeyframedAnimationSet, &result );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<ID3DXKeyframedAnimationSet*>( result );
 	}
 
 	KeyframedAnimationSet::KeyframedAnimationSet( String^ name, double ticksPerSecond, SlimDX::Direct3D9::PlaybackType playbackType,

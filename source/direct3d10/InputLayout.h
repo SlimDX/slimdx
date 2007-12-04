@@ -36,6 +36,7 @@ namespace SlimDX
 		public ref class InputLayout : public DirectXObject<ID3D10InputLayout>
 		{
 		public:
+			InputLayout( IntPtr pointer );
 			InputLayout( Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature );
 			~InputLayout() { Destruct(); }
 			DXOBJECT_FUNCTIONS;

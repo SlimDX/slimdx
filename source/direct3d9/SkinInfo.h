@@ -51,6 +51,7 @@ namespace SlimDX
 			SkinInfo( ID3DXSkinInfo* skinInfo ) : DirectXObject( skinInfo ) { }
 
 		public:
+			SkinInfo( IntPtr pointer );
 			SkinInfo( int vertexCount, array<VertexElement>^ vertexDecl, int boneCount );
 			SkinInfo( BaseMesh^ mesh, int boneCount, array<BoneCombination^>^ boneCombinationTable );
 			SkinInfo( int vertexCount, VertexFormat fvf, int boneCount );

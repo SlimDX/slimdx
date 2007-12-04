@@ -31,6 +31,20 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		MatrixStack::MatrixStack( IntPtr pointer )
+		{
+			if( pointer == IntPtr::Zero )
+				throw gcnew ArgumentNullException( "pointer" );
+
+			void* result;
+			IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+			HRESULT hr = unknown->QueryInterface( IID_ID3DXMatrixStack, &result );
+			if( FAILED( hr ) )
+				throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+			m_Pointer = static_cast<ID3DXMatrixStack*>( result );
+		}
+
 		MatrixStack::MatrixStack()
 		{
 			ID3DXMatrixStack* matrixStack;

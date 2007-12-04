@@ -49,6 +49,7 @@ namespace SlimDX
 			Sprite( ID3DXSprite* sprite );
 
 		public:
+			Sprite( IntPtr pointer );
 			Sprite( Device^ device );
 			~Sprite() { Destruct(); }
 			DXOBJECT_FUNCTIONS;

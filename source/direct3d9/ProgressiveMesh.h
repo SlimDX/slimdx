@@ -65,6 +65,7 @@ namespace SlimDX
 			}
 
 		public:
+			ProgressiveMesh( IntPtr pointer );
 			ProgressiveMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ attributeWeights, 
 				array<float>^ vertexWeights, int minimumValue, MeshSimplification options );
 			ProgressiveMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ attributeWeights, 
@@ -110,6 +111,7 @@ namespace SlimDX
 			SimplificationMesh( ID3DXSPMesh *mesh ) : DirectXObject( mesh ) { }
 
 		public:
+			SimplificationMesh( IntPtr pointer );
 			SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ vertexAttributeWeights, array<float>^ vertexWeights );
 			SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ vertexAttributeWeights );
 			SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<float>^ vertexWeights );

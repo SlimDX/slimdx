@@ -143,6 +143,20 @@ namespace SlimDX
 			}
 		}
 
+		ShaderBytecode::ShaderBytecode( IntPtr pointer )
+		{
+			if( pointer == IntPtr::Zero )
+				throw gcnew ArgumentNullException( "pointer" );
+
+			void* result;
+			IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+			HRESULT hr = unknown->QueryInterface( IID_ID3DXBuffer, &result );
+			if( FAILED( hr ) )
+				throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+			m_Pointer = static_cast<ID3DXBuffer*>( result );
+		}
+
 		ConstantTable^ ShaderBytecode::GetConstantTable()
 		{
 			ID3DXConstantTable* constantTable;

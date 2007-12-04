@@ -197,6 +197,20 @@ namespace Direct3D9
 			Marshal::WriteInt32( pcbWritten, cb );
 	}
 
+	ProgressiveMesh::ProgressiveMesh( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		void* result;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXPMesh, &result );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<ID3DXPMesh*>( result );
+	}
+
 	ProgressiveMesh::ProgressiveMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ attributeWeights,
 		array<float>^ vertexWeights, int minimumValue, MeshSimplification options )
 	{
@@ -483,6 +497,20 @@ namespace Direct3D9
 	int ProgressiveMesh::MinimumVertexCount::get()
 	{
 		return MeshPointer->GetMinVertices();
+	}
+
+	SimplificationMesh::SimplificationMesh( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		void* result;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXSPMesh, &result );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<ID3DXSPMesh*>( result );
 	}
 
 	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ vertexAttributeWeights, array<float>^ vertexWeights )

@@ -113,6 +113,7 @@ namespace SlimDX
 			AnimationSet( ID3DXAnimationSet* set );
 
 		public:
+			AnimationSet( IntPtr pointer );
 			virtual ~AnimationSet() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 
@@ -136,6 +137,7 @@ namespace SlimDX
 			}
 
 		public:
+			CompressedAnimationSet( IntPtr pointer );
 			CompressedAnimationSet( String^ name, double ticksPerSecond, PlaybackType playbackType, 
 				DataStream^ compressedData, array<CallbackKey>^ callbackKeys );
 			virtual ~CompressedAnimationSet() { }
@@ -157,6 +159,7 @@ namespace SlimDX
 			}
 
 		public:
+			KeyframedAnimationSet( IntPtr pointer );
 			KeyframedAnimationSet( String^ name, double ticksPerSecond, PlaybackType playbackType,
 				int animationCount, array<CallbackKey>^ callbackKeys );
 			virtual ~KeyframedAnimationSet() { }

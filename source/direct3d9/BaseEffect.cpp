@@ -33,6 +33,20 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		BaseEffect::BaseEffect( IntPtr pointer )
+		{
+			if( pointer == IntPtr::Zero )
+				throw gcnew ArgumentNullException( "pointer" );
+
+			void* result;
+			IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+			HRESULT hr = unknown->QueryInterface( IID_ID3DXBaseEffect, &result );
+			if( FAILED( hr ) )
+				throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+			m_Pointer = static_cast<ID3DXBaseEffect*>( result );
+		}
+
 		EffectHandle^ BaseEffect::GetAnnotation( EffectHandle^ handle, int index )
 		{
 			D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;

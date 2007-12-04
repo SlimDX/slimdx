@@ -35,6 +35,20 @@ namespace Direct3D9
 	{
 	}
 
+	XFileSaveData::XFileSaveData( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		void* result;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXFileSaveData, &result );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<ID3DXFileSaveData*>( result );
+	}
+
 	XFileSaveData^ XFileSaveData::AddDataObject( Guid dataTemplate, String^ name, Guid id, array<Byte>^ data )
 	{
 		ID3DXFileSaveData *result;
@@ -141,6 +155,20 @@ namespace Direct3D9
 	{
 	}
 
+	XFileSaveObject::XFileSaveObject( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		void* result;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXFileSaveObject, &result );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<ID3DXFileSaveObject*>( result );
+	}
+
 	XFileSaveData^ XFileSaveObject::AddDataObject( Guid dataTemplate, String^ name, Guid id, array<Byte>^ data )
 	{
 		ID3DXFileSaveData *result;
@@ -190,6 +218,20 @@ namespace Direct3D9
 
 	XFile::XFile( ID3DXFile *object ) : DirectXObject( object )
 	{
+	}
+
+	XFile::XFile( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		void* result;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXFile, &result );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<ID3DXFile*>( result );
 	}
 
 	XFile::XFile()
@@ -298,6 +340,20 @@ namespace Direct3D9
 	{
 	}
 
+	XFileEnumerationObject::XFileEnumerationObject( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		void* result;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXFileEnumObject, &result );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<ID3DXFileEnumObject*>( result );
+	}
+
 	XFileData^ XFileEnumerationObject::GetChild( int id )
 	{
 		ID3DXFileData *result;
@@ -367,6 +423,20 @@ namespace Direct3D9
 
 	XFileData::XFileData( ID3DXFileData *object ) : DirectXObject( object )
 	{
+	}
+
+	XFileData::XFileData( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		void* result;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( IID_ID3DXFileData, &result );
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		m_Pointer = static_cast<ID3DXFileData*>( result );
 	}
 
 	XFileData^ XFileData::GetChild( int id )
