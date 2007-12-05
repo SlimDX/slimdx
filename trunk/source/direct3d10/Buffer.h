@@ -79,7 +79,8 @@ namespace SlimDX
 			Buffer( IntPtr pointer );
 			Buffer( Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
 			Buffer( Device^ device, int sizeInBytes, DataStream^ data, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
-			
+			virtual ~Buffer() { }
+
 			DataStream^ Map( MapMode mode, MapFlags flags );
 			void Unmap();
 		};

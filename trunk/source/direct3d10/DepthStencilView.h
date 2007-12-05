@@ -37,6 +37,7 @@ namespace SlimDX
 		{
 		public:
 			DepthStencilView( Device^ device, Resource^ resource );
+			virtual ~DepthStencilView() { }
 			
 			void Clear( DepthStencilClearFlags flags, float depthValue, Byte stencilValue );
 		};

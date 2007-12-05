@@ -119,7 +119,8 @@ namespace SlimDX
 			Texture3D( IntPtr nativeObject );
 			Texture3D( Device^ device, int width, int height, int depth, int mipLevels, SlimDX::Direct3D10::Format format,
 				ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,ResourceOptionFlags optionFlags );
-			
+			virtual ~Texture3D() { }
+
 			static Texture3D^ FromFile( Device^ device, String^ fileName );
 			static Texture3D^ FromStream( Device^ device, Stream^ stream, int sizeInBytes );
 		};

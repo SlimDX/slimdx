@@ -349,6 +349,25 @@ namespace SlimDX
 		};
 
 		[Flags]
+		public enum class NormalMapFlags : Int32
+		{
+			MirrorU = D3DX_NORMALMAP_MIRROR_U,
+			MirrorV = D3DX_NORMALMAP_MIRROR_V,
+			Mirror = D3DX_NORMALMAP_MIRROR,
+			InvertSign = D3DX_NORMALMAP_INVERTSIGN,
+			ComputeOcclusion = D3DX_NORMALMAP_COMPUTE_OCCLUSION
+		};
+
+		public enum class Channel : Int32
+		{
+			Red = D3DX_CHANNEL_RED,
+			Blue = D3DX_CHANNEL_BLUE,
+			Green = D3DX_CHANNEL_GREEN,
+			Alpha = D3DX_CHANNEL_ALPHA,
+			Luminance = D3DX_CHANNEL_LUMINANCE
+		};
+
+		[Flags]
 		public enum class ClearFlags : Int32
 		{
 			None = 0,

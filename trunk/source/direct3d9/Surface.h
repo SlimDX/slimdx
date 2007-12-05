@@ -30,6 +30,8 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
+		value class ImageInformation;
+
 		public value class SurfaceDescription
 		{
 		private:
@@ -103,12 +105,40 @@ namespace SlimDX
 
 		public:
 			Surface( IntPtr surface );
+			virtual ~Surface() { }
 
 			static Surface^ CreateRenderTarget( Device^ device, int width, int height, Format format,
 				MultisampleType multisampleType, int multisampleQuality, bool lockable );
 			static Surface^ CreateOffscreenPlain( Device^ device, int width, int height, Format format, Pool pool );
 			static Surface^ CreateDepthStencil( Device^ device, int width, int height, Format format,
 				MultisampleType multisampleType, int multisampleQuality, bool discard );
+
+			static void FromMemory( Surface^ surface, array<Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
+			static void FromMemory( Surface^ surface, array<Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, [Out] ImageInformation% imageInformation );
+			static void FromMemory( Surface^ surface, array<Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle );
+			static void FromMemory( Surface^ surface, array<Byte>^ memory, Filter filter, int colorKey );
+
+			static void FromStream( Surface^ surface, Stream^ stream, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
+			static void FromStream( Surface^ surface, Stream^ stream, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, [Out] ImageInformation% imageInformation );
+			static void FromStream( Surface^ surface, Stream^ stream, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle );
+			static void FromStream( Surface^ surface, Stream^ stream, Filter filter, int colorKey );
+
+			static void FromFile( Surface^ surface, String^ fileName, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
+			static void FromFile( Surface^ surface, String^ fileName, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, [Out] ImageInformation% imageInformation );
+			static void FromFile( Surface^ surface, String^ fileName, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle );
+			static void FromFile( Surface^ surface, String^ fileName, Filter filter, int colorKey );
+
+			static void FromSurface( Surface^ destinationSurface, Surface^ sourceSurface, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, array<PaletteEntry>^ destinationPalette, array<PaletteEntry>^ sourcePalette );
+			static void FromSurface( Surface^ destinationSurface, Surface^ sourceSurface, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle );
+			static void FromSurface( Surface^ destinationSurface, Surface^ sourceSurface, Filter filter, int colorKey );
+
+			static DataStream^ ToStream( Surface^ surface, ImageFileFormat format, System::Drawing::Rectangle rectangle, array<PaletteEntry>^ palette );
+			static DataStream^ ToStream( Surface^ surface, ImageFileFormat format, System::Drawing::Rectangle rectangle );
+			static DataStream^ ToStream( Surface^ surface, ImageFileFormat format );
+
+			static void ToFile( Surface^ surface, String^ fileName, ImageFileFormat format, System::Drawing::Rectangle rectangle, array<PaletteEntry>^ palette );
+			static void ToFile( Surface^ surface, String^ fileName, ImageFileFormat format, System::Drawing::Rectangle rectangle );
+			static void ToFile( Surface^ surface, String^ fileName, ImageFileFormat format );
 
 			LockedRect LockRectangle( LockFlags flags );
 			LockedRect LockRectangle( System::Drawing::Rectangle rect, LockFlags flags );

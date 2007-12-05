@@ -21,6 +21,7 @@
 */
 #pragma once
 
+#include "../DataStream.h"
 #include "Enums.h"
 #include "Resource.h"
 
@@ -40,6 +41,8 @@ namespace SlimDX
 			}
 		
 		public:
+			virtual ~BaseTexture() { }
+
 			property TextureFilter AutoMipGenerationFilter
 			{
 				TextureFilter get() { return ( TextureFilter ) BaseTexturePointer->GetAutoGenFilterType(); }
@@ -58,6 +61,12 @@ namespace SlimDX
 			}
 			
 			void GenerateMipSublevels();
+
+			static DataStream^ ToStream( BaseTexture^ texture, ImageFileFormat format );
+			static DataStream^ ToStream( BaseTexture^ texture, ImageFileFormat, array<PaletteEntry>^ palette );
+
+			static void ToFile( BaseTexture^ texture, String^ fileName, ImageFileFormat format );
+			static void ToFile( BaseTexture^ texture, String^ fileName, ImageFileFormat format, array<PaletteEntry>^ palette );
 		};
 	}
 }

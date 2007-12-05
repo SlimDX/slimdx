@@ -66,6 +66,7 @@ namespace SlimDX
 
 		public:
 			Volume( IntPtr volume );
+			virtual ~Volume() { }
 
 			LockedBox LockBox( LockFlags flags );
 			LockedBox LockBox( Box box, LockFlags flags );

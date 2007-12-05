@@ -113,6 +113,7 @@ namespace SlimDX
 			Texture2D( Device^ device, int width, int height, int mipLevels, int arraySize, SlimDX::Direct3D10::Format format,
 				int sampleCount, int sampleQuality, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,
 				ResourceOptionFlags optionFlags );
+			virtual ~Texture2D() { }
 			
 			SlimDX::Direct3D::LockedRect Map( int subResource, MapMode mode, MapFlags flags );
 			void Unmap( int subResource );

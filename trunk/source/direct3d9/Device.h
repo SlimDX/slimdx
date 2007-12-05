@@ -94,6 +94,16 @@ namespace SlimDX
 			property float Phi;
 		};
 
+		[StructLayout(LayoutKind::Sequential)]
+		public value class PaletteEntry
+		{
+		public:
+			property Byte Red;
+			property Byte Green;
+			property Byte Blue;
+			property Byte Flags;
+		};
+
 		public ref class PresentParameters
 		{
 		public:
