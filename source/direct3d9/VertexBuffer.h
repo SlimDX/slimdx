@@ -50,7 +50,8 @@ namespace SlimDX
 		public:
 			VertexBuffer( IntPtr buffer );
 			VertexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool );
-			
+			virtual ~VertexBuffer() { }
+
 			DataStream^ Lock( int offset, int size, LockFlags flags );
 			void Unlock();
 

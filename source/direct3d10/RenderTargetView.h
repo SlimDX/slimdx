@@ -38,6 +38,7 @@ namespace SlimDX
 		{
 		public:
 			RenderTargetView( Device^ device, Resource^ resource );
+			virtual ~RenderTargetView() { }
 			
 			void Clear( ColorValue color );
 		};

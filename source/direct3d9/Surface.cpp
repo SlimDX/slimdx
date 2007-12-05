@@ -21,12 +21,14 @@
 */
 #include <d3d9.h>
 #include <d3dx9.h>
+#include <vcclr.h>
 
 #include "../DirectXObject.h"
 
 #include "Device.h"
-#include "../Direct3D/..\DataStream.h"
+#include "../DataStream.h"
 #include "Surface.h"
+#include "Texture.h"
 
 namespace SlimDX
 {
@@ -93,6 +95,254 @@ namespace Direct3D9
 			return nullptr;
 
 		return gcnew Surface( surface );
+	}
+
+	void Surface::FromMemory( Surface^ surface, array<Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle,
+		System::Drawing::Rectangle destinationRectangle, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation )
+	{
+		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+
+		HRESULT hr = D3DXLoadSurfaceFromFileInMemory( surface->SurfacePointer, 
+			reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
+			reinterpret_cast<const RECT*>( &destinationRectangle ), pinnedMemory, memory->Length,
+			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ),
+			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Surface::FromMemory( Surface^ surface, array<Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle,
+		System::Drawing::Rectangle destinationRectangle, [Out] ImageInformation% imageInformation )
+	{
+		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+
+		HRESULT hr = D3DXLoadSurfaceFromFileInMemory( surface->SurfacePointer, NULL,
+			reinterpret_cast<const RECT*>( &destinationRectangle ), pinnedMemory, memory->Length,
+			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ),
+			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Surface::FromMemory( Surface^ surface, array<Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle,
+		System::Drawing::Rectangle destinationRectangle )
+	{
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+
+		HRESULT hr = D3DXLoadSurfaceFromFileInMemory( surface->SurfacePointer, NULL,
+			reinterpret_cast<const RECT*>( &destinationRectangle ), pinnedMemory, memory->Length,
+			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ),
+			static_cast<D3DCOLOR>( colorKey ), NULL );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Surface::FromMemory( Surface^ surface, array<Byte>^ memory, Filter filter, int colorKey )
+	{
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+
+		HRESULT hr = D3DXLoadSurfaceFromFileInMemory( surface->SurfacePointer, NULL, NULL, pinnedMemory, 
+			memory->Length, NULL, static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ), NULL );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Surface::FromStream( Surface^ surface, Stream^ stream, Filter filter, int colorKey,
+		System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle,
+		array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		return Surface::FromMemory( surface, data, filter, colorKey, sourceRectangle, destinationRectangle,
+			palette, imageInformation );
+	}
+
+	void Surface::FromStream( Surface^ surface, Stream^ stream, Filter filter, int colorKey,
+		System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle,
+		[Out] ImageInformation% imageInformation )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		return Surface::FromMemory( surface, data, filter, colorKey, sourceRectangle, destinationRectangle,
+			imageInformation );
+	}
+
+	void Surface::FromStream( Surface^ surface, Stream^ stream, Filter filter, int colorKey,
+		System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		return Surface::FromMemory( surface, data, filter, colorKey, sourceRectangle, destinationRectangle );
+	}
+
+	void Surface::FromStream( Surface^ surface, Stream^ stream, Filter filter, int colorKey )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		return Surface::FromMemory( surface, data, filter, colorKey );
+	}
+
+	void Surface::FromFile( Surface^ surface, String^ fileName, Filter filter, int colorKey, 
+		System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle,
+		array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation )
+	{
+		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+
+		HRESULT hr = D3DXLoadSurfaceFromFile( surface->SurfacePointer, 
+			reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
+			reinterpret_cast<const RECT*>( &destinationRectangle ), pinnedName,
+			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ),
+			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Surface::FromFile( Surface^ surface, String^ fileName, Filter filter, int colorKey, 
+		System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle,
+		[Out] ImageInformation% imageInformation )
+	{
+		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+
+		HRESULT hr = D3DXLoadSurfaceFromFile( surface->SurfacePointer, NULL,
+			reinterpret_cast<const RECT*>( &destinationRectangle ), pinnedName,
+			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ),
+			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Surface::FromFile( Surface^ surface, String^ fileName, Filter filter, int colorKey, 
+		System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+
+		HRESULT hr = D3DXLoadSurfaceFromFile( surface->SurfacePointer, NULL,
+			reinterpret_cast<const RECT*>( &destinationRectangle ), pinnedName,
+			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ),
+			static_cast<D3DCOLOR>( colorKey ), NULL );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Surface::FromFile( Surface^ surface, String^ fileName, Filter filter, int colorKey )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+
+		HRESULT hr = D3DXLoadSurfaceFromFile( surface->SurfacePointer, NULL, NULL, pinnedName,
+			NULL, static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ), NULL );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Surface::FromSurface( Surface^ destinationSurface, Surface^ sourceSurface, Filter filter, int colorKey,
+		System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle,
+		array<PaletteEntry>^ destinationPalette, array<PaletteEntry>^ sourcePalette )
+	{
+		pin_ptr<PaletteEntry> pinnedSource = &sourcePalette[0];
+		pin_ptr<PaletteEntry> pinnedDest = &destinationPalette[0];
+
+		HRESULT hr = D3DXLoadSurfaceFromSurface( destinationSurface->SurfacePointer, 
+			reinterpret_cast<const PALETTEENTRY*>( pinnedDest ), reinterpret_cast<const RECT*>( &destinationRectangle ),
+			sourceSurface->SurfacePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedSource ), 
+			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Surface::FromSurface( Surface^ destinationSurface, Surface^ sourceSurface, Filter filter, int colorKey,
+		System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle )
+	{
+		HRESULT hr = D3DXLoadSurfaceFromSurface( destinationSurface->SurfacePointer, 
+			NULL, reinterpret_cast<const RECT*>( &destinationRectangle ), sourceSurface->SurfacePointer, NULL, 
+			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Surface::FromSurface( Surface^ destinationSurface, Surface^ sourceSurface, Filter filter, int colorKey )
+	{
+		HRESULT hr = D3DXLoadSurfaceFromSurface( destinationSurface->SurfacePointer, NULL, NULL, 
+			sourceSurface->SurfacePointer, NULL, NULL, static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	DataStream^ Surface::ToStream( Surface^ surface, ImageFileFormat format, System::Drawing::Rectangle rectangle,
+		array<PaletteEntry>^ palette )
+	{
+		ID3DXBuffer *result = NULL;
+		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+
+		HRESULT hr = D3DXSaveSurfaceToFileInMemory( &result, static_cast<D3DXIMAGE_FILEFORMAT>( format ),
+			surface->SurfacePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ), reinterpret_cast<const RECT*>( &rectangle ) );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			if( result != NULL )
+				result->Release();
+			return nullptr;
+		}
+
+		return gcnew DataStream( result );
+	}
+
+	DataStream^ Surface::ToStream( Surface^ surface, ImageFileFormat format, System::Drawing::Rectangle rectangle )
+	{
+		ID3DXBuffer *result = NULL;
+
+		HRESULT hr = D3DXSaveSurfaceToFileInMemory( &result, static_cast<D3DXIMAGE_FILEFORMAT>( format ),
+			surface->SurfacePointer, NULL, reinterpret_cast<const RECT*>( &rectangle ) );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			if( result != NULL )
+				result->Release();
+			return nullptr;
+		}
+
+		return gcnew DataStream( result );
+	}
+
+	DataStream^ Surface::ToStream( Surface^ surface, ImageFileFormat format )
+	{
+		ID3DXBuffer *result = NULL;
+
+		HRESULT hr = D3DXSaveSurfaceToFileInMemory( &result, static_cast<D3DXIMAGE_FILEFORMAT>( format ),
+			surface->SurfacePointer, NULL, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			if( result != NULL )
+				result->Release();
+			return nullptr;
+		}
+
+		return gcnew DataStream( result );
+	}
+
+	void Surface::ToFile( Surface^ surface, String^ fileName, ImageFileFormat format, 
+		System::Drawing::Rectangle rectangle, array<PaletteEntry>^ palette )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fileName);
+		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+		
+		HRESULT hr = D3DXSaveSurfaceToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
+			surface->SurfacePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
+			reinterpret_cast<const RECT*>( &rectangle ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Surface::ToFile( Surface^ surface, String^ fileName, ImageFileFormat format, 
+		System::Drawing::Rectangle rectangle )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fileName);
+		
+		HRESULT hr = D3DXSaveSurfaceToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
+			surface->SurfacePointer, NULL, reinterpret_cast<const RECT*>( &rectangle ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Surface::ToFile( Surface^ surface, String^ fileName, ImageFileFormat format )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fileName);
+		
+		HRESULT hr = D3DXSaveSurfaceToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
+			surface->SurfacePointer, NULL, NULL );
+		GraphicsException::CheckHResult( hr );
 	}
 
 	SurfaceDescription Surface::Description::get()

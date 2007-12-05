@@ -50,6 +50,9 @@ namespace SlimDX
 
 		public value class ConstantDescription
 		{
+		internal:
+			void Initialize( const D3DXCONSTANT_DESC& desc );
+
 		public:
 			property String^ Name;
 			property RegisterSet RegisterSet;
@@ -63,8 +66,6 @@ namespace SlimDX
 			property int StructMembers;
 			property int Bytes;
 			//TODO: default value?
-
-			void Initialize( const D3DXCONSTANT_DESC& desc );
 		};
 
 		ref class EffectHandle;
@@ -76,10 +77,10 @@ namespace SlimDX
 
 		internal:
 			ConstantTable( ID3DXConstantTable* table );
+			ConstantTable( IDirect3DDevice9* device, ID3DXConstantTable* constantTable );
 
 		public:
 			ConstantTable( IntPtr table );
-			ConstantTable( IDirect3DDevice9* device, ID3DXConstantTable* constantTable );
 			~ConstantTable();
 			DXOBJECT_FUNCTIONS;
 			

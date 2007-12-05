@@ -43,13 +43,13 @@ namespace SlimDX
 				D3DXHANDLE get() { return m_Handle; }
 			}
 
-		public:
 			EffectHandle( D3DXHANDLE handle )
 			{
 				m_Handle = handle;
 				m_StringData = IntPtr::Zero;
 			}
 
+		public:
 			EffectHandle( String^ name )
 			{
 				m_StringData = Marshal::StringToHGlobalAnsi( name );

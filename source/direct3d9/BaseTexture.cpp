@@ -21,7 +21,9 @@
 */
 #include <d3d9.h>
 #include <d3dx9.h>
+#include <vcclr.h>
 
+#include "Device.h"
 #include "BaseTexture.h"
 
 namespace SlimDX
@@ -32,5 +34,61 @@ namespace Direct3D9
 	{
 		BaseTexturePointer->GenerateMipSubLevels();
 	}
+
+	DataStream^ BaseTexture::ToStream( BaseTexture^ texture, ImageFileFormat format, array<PaletteEntry>^ palette )
+	{
+		ID3DXBuffer *buffer = NULL;
+		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+		
+		HRESULT hr = D3DXSaveTextureToFileInMemory( &buffer, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
+			texture->BaseTexturePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ) );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			if( buffer != NULL )
+				buffer->Release();
+			return nullptr;
+		}
+
+		return gcnew DataStream( buffer );
+	}
+
+	DataStream^ BaseTexture::ToStream( BaseTexture^ texture, ImageFileFormat format )
+	{
+		ID3DXBuffer *buffer = NULL;
+		
+		HRESULT hr = D3DXSaveTextureToFileInMemory( &buffer, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
+			texture->BaseTexturePointer, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			if( buffer != NULL )
+				buffer->Release();
+			return nullptr;
+		}
+
+		return gcnew DataStream( buffer );
+	}
+
+	void BaseTexture::ToFile( BaseTexture^ texture, String^ fileName, ImageFileFormat format, array<PaletteEntry>^ palette )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fileName);
+		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+		
+		HRESULT hr = D3DXSaveTextureToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
+			texture->BaseTexturePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void BaseTexture::ToFile( BaseTexture^ texture, String^ fileName, ImageFileFormat format )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fileName);
+		
+		HRESULT hr = D3DXSaveTextureToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
+			texture->BaseTexturePointer, NULL );
+		GraphicsException::CheckHResult( hr );
+	}	
 }
 }

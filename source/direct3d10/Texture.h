@@ -60,6 +60,8 @@ namespace SlimDX
 			Texture()
 			{
 			}
+
+			virtual ~Texture() { }
 		};
 	}
 };

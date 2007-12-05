@@ -106,7 +106,8 @@ namespace SlimDX
 			Texture1D( IntPtr nativeObject );
 			Texture1D( Device^ device, int width, int mipLevels, int arraySize, SlimDX::Direct3D10::Format format,
 				ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,ResourceOptionFlags optionFlags );
-			
+			virtual ~Texture1D() { }
+
 			static Texture1D^ FromFile( Device^ device, String^ fileName );
 			static Texture1D^ FromStream( Device^ device, Stream^ stream, int sizeInBytes );
 		};
