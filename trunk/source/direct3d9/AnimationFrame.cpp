@@ -58,6 +58,24 @@ namespace Direct3D9
 		type = MeshDataType::PatchMesh;
 	}
 
+	void MeshData::Mesh::set( SlimDX::Direct3D9::Mesh^ value )
+	{
+		mesh = value;
+		type = MeshDataType::Mesh;
+	}
+
+	void MeshData::ProgressiveMesh::set( SlimDX::Direct3D9::ProgressiveMesh^ value )
+	{
+		progressiveMesh = value;
+		type = MeshDataType::ProgressiveMesh;
+	}
+
+	void MeshData::PatchMesh::set( SlimDX::Direct3D9::PatchMesh^ value )
+	{
+		patchMesh = value;
+		type = MeshDataType::PatchMesh;
+	}
+
 	MeshContainer::MeshContainer( const D3DXMESHCONTAINER &container )
 	{
 		m_Pointer = new D3DXMESHCONTAINER( container );

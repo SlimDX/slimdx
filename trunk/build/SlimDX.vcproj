@@ -1143,6 +1143,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\direct3d9\TextureShader.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d9\TextureShader.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\direct3d9\Vertex.cpp"
 				>
 			</File>

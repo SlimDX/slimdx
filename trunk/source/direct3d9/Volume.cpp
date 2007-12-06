@@ -21,12 +21,14 @@
 */
 #include <d3d9.h>
 #include <d3dx9.h>
+#include <vcclr.h>
 
 #include "../DirectXObject.h"
 
 #include "Device.h"
 #include "../DataStream.h"
 #include "Volume.h"
+#include "Texture.h"
 
 namespace SlimDX
 {
@@ -106,6 +108,265 @@ namespace Direct3D9
 	void Volume::UnlockBox()
 	{
 		HRESULT hr = VolumePointer->UnlockBox();
+		GraphicsException::CheckHResult( hr );
+	}
+
+	Device^ Volume::GetDevice()
+	{
+		IDirect3DDevice9 *result;
+
+		HRESULT hr = VolumePointer->GetDevice( &result );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+			return nullptr;
+
+		return gcnew Device( result );
+	}
+
+	void Volume::FromMemory( Volume^ volume, array<Byte>^ memory, Filter filter, int colorKey, Box sourceBox,
+		Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation )
+	{
+		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+
+		HRESULT hr = D3DXLoadVolumeFromFileInMemory( volume->VolumePointer, 
+			reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
+			reinterpret_cast<const D3DBOX*>( &destinationBox ), pinnedMemory, memory->Length,
+			reinterpret_cast<const D3DBOX*>( &sourceBox ), static_cast<DWORD>( filter ),
+			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Volume::FromMemory( Volume^ volume, array<Byte>^ memory, Filter filter, int colorKey, Box sourceBox,
+		Box destinationBox, [Out] ImageInformation% imageInformation )
+	{
+		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+
+		HRESULT hr = D3DXLoadVolumeFromFileInMemory( volume->VolumePointer, NULL,
+			reinterpret_cast<const D3DBOX*>( &destinationBox ), pinnedMemory, memory->Length,
+			reinterpret_cast<const D3DBOX*>( &sourceBox ), static_cast<DWORD>( filter ),
+			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Volume::FromMemory( Volume^ volume, array<Byte>^ memory, Filter filter, int colorKey, Box sourceBox,
+		Box destinationBox )
+	{
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+
+		HRESULT hr = D3DXLoadVolumeFromFileInMemory( volume->VolumePointer, NULL,
+			reinterpret_cast<const D3DBOX*>( &destinationBox ), pinnedMemory, memory->Length,
+			reinterpret_cast<const D3DBOX*>( &sourceBox ), static_cast<DWORD>( filter ),
+			static_cast<D3DCOLOR>( colorKey ), NULL );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Volume::FromMemory( Volume^ volume, array<Byte>^ memory, Filter filter, int colorKey )
+	{
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+
+		HRESULT hr = D3DXLoadVolumeFromFileInMemory( volume->VolumePointer, NULL, NULL, pinnedMemory, 
+			memory->Length, NULL, static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ), NULL );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Volume::FromStream( Volume^ volume, Stream^ stream, Filter filter, int colorKey, Box sourceBox, 
+		Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		return Volume::FromMemory( volume, data, filter, colorKey, sourceBox, destinationBox,
+			palette, imageInformation );
+	}
+
+	void Volume::FromStream( Volume^ volume, Stream^ stream, Filter filter, int colorKey, Box sourceBox,
+		Box destinationBox, [Out] ImageInformation% imageInformation )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		return Volume::FromMemory( volume, data, filter, colorKey, sourceBox, destinationBox,
+			imageInformation );
+	}
+
+	void Volume::FromStream( Volume^ volume, Stream^ stream, Filter filter, int colorKey, Box sourceBox, 
+		Box destinationBox )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		return Volume::FromMemory( volume, data, filter, colorKey, sourceBox, destinationBox );
+	}
+
+	void Volume::FromStream( Volume^ volume, Stream^ stream, Filter filter, int colorKey )
+	{
+		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		return Volume::FromMemory( volume, data, filter, colorKey );
+	}
+
+	void Volume::FromFile( Volume^ volume, String^ fileName, Filter filter, int colorKey, 
+		Box sourceBox, Box destinationBox,
+		array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation )
+	{
+		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+
+		HRESULT hr = D3DXLoadVolumeFromFile( volume->VolumePointer, 
+			reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
+			reinterpret_cast<const D3DBOX*>( &destinationBox ), pinnedName,
+			reinterpret_cast<const D3DBOX*>( &sourceBox ), static_cast<DWORD>( filter ),
+			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Volume::FromFile( Volume^ volume, String^ fileName, Filter filter, int colorKey, 
+		Box sourceBox, Box destinationBox,
+		[Out] ImageInformation% imageInformation )
+	{
+		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+
+		HRESULT hr = D3DXLoadVolumeFromFile( volume->VolumePointer, NULL,
+			reinterpret_cast<const D3DBOX*>( &destinationBox ), pinnedName,
+			reinterpret_cast<const D3DBOX*>( &sourceBox ), static_cast<DWORD>( filter ),
+			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Volume::FromFile( Volume^ volume, String^ fileName, Filter filter, int colorKey, 
+		Box sourceBox, Box destinationBox )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+
+		HRESULT hr = D3DXLoadVolumeFromFile( volume->VolumePointer, NULL,
+			reinterpret_cast<const D3DBOX*>( &destinationBox ), pinnedName,
+			reinterpret_cast<const D3DBOX*>( &sourceBox ), static_cast<DWORD>( filter ),
+			static_cast<D3DCOLOR>( colorKey ), NULL );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Volume::FromFile( Volume^ volume, String^ fileName, Filter filter, int colorKey )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+
+		HRESULT hr = D3DXLoadVolumeFromFile( volume->VolumePointer, NULL, NULL, pinnedName,
+			NULL, static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ), NULL );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Volume::FromVolume( Volume^ destinationVolume, Volume^ sourceVolume, Filter filter, int colorKey,
+		Box sourceBox, Box destinationBox,
+		array<PaletteEntry>^ destinationPalette, array<PaletteEntry>^ sourcePalette )
+	{
+		pin_ptr<PaletteEntry> pinnedSource = &sourcePalette[0];
+		pin_ptr<PaletteEntry> pinnedDest = &destinationPalette[0];
+
+		HRESULT hr = D3DXLoadVolumeFromVolume( destinationVolume->VolumePointer, 
+			reinterpret_cast<const PALETTEENTRY*>( pinnedDest ), reinterpret_cast<const D3DBOX*>( &destinationBox ),
+			sourceVolume->VolumePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedSource ), 
+			reinterpret_cast<const D3DBOX*>( &sourceBox ), static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Volume::FromVolume( Volume^ destinationVolume, Volume^ sourceVolume, Filter filter, int colorKey,
+		Box sourceBox, Box destinationBox )
+	{
+		HRESULT hr = D3DXLoadVolumeFromVolume( destinationVolume->VolumePointer, 
+			NULL, reinterpret_cast<const D3DBOX*>( &destinationBox ), sourceVolume->VolumePointer, NULL, 
+			reinterpret_cast<const D3DBOX*>( &sourceBox ), static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Volume::FromVolume( Volume^ destinationVolume, Volume^ sourceVolume, Filter filter, int colorKey )
+	{
+		HRESULT hr = D3DXLoadVolumeFromVolume( destinationVolume->VolumePointer, NULL, NULL, 
+			sourceVolume->VolumePointer, NULL, NULL, static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	DataStream^ Volume::ToStream( Volume^ volume, ImageFileFormat format, Box box,
+		array<PaletteEntry>^ palette )
+	{
+		ID3DXBuffer *result = NULL;
+		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+
+		HRESULT hr = D3DXSaveVolumeToFileInMemory( &result, static_cast<D3DXIMAGE_FILEFORMAT>( format ),
+			volume->VolumePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ), reinterpret_cast<const D3DBOX*>( &box ) );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			if( result != NULL )
+				result->Release();
+			return nullptr;
+		}
+
+		return gcnew DataStream( result );
+	}
+
+	DataStream^ Volume::ToStream( Volume^ volume, ImageFileFormat format, Box box )
+	{
+		ID3DXBuffer *result = NULL;
+
+		HRESULT hr = D3DXSaveVolumeToFileInMemory( &result, static_cast<D3DXIMAGE_FILEFORMAT>( format ),
+			volume->VolumePointer, NULL, reinterpret_cast<const D3DBOX*>( &box ) );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			if( result != NULL )
+				result->Release();
+			return nullptr;
+		}
+
+		return gcnew DataStream( result );
+	}
+
+	DataStream^ Volume::ToStream( Volume^ volume, ImageFileFormat format )
+	{
+		ID3DXBuffer *result = NULL;
+
+		HRESULT hr = D3DXSaveVolumeToFileInMemory( &result, static_cast<D3DXIMAGE_FILEFORMAT>( format ),
+			volume->VolumePointer, NULL, NULL );
+		GraphicsException::CheckHResult( hr );
+
+		if( FAILED( hr ) )
+		{
+			if( result != NULL )
+				result->Release();
+			return nullptr;
+		}
+
+		return gcnew DataStream( result );
+	}
+
+	void Volume::ToFile( Volume^ volume, String^ fileName, ImageFileFormat format, 
+		Box box, array<PaletteEntry>^ palette )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fileName);
+		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+		
+		HRESULT hr = D3DXSaveVolumeToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
+			volume->VolumePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
+			reinterpret_cast<const D3DBOX*>( &box ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Volume::ToFile( Volume^ volume, String^ fileName, ImageFileFormat format, 
+		Box box )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fileName);
+		
+		HRESULT hr = D3DXSaveVolumeToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
+			volume->VolumePointer, NULL, reinterpret_cast<const D3DBOX*>( &box ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void Volume::ToFile( Volume^ volume, String^ fileName, ImageFileFormat format )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fileName);
+		
+		HRESULT hr = D3DXSaveVolumeToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
+			volume->VolumePointer, NULL, NULL );
 		GraphicsException::CheckHResult( hr );
 	}
 }

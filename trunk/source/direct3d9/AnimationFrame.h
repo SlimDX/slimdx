@@ -61,16 +61,19 @@ namespace SlimDX
 			property Mesh^ Mesh
 			{
 				SlimDX::Direct3D9::Mesh^ get() { return mesh; }
+				void set( SlimDX::Direct3D9::Mesh^ value );
 			}
 
 			property ProgressiveMesh^ ProgressiveMesh
 			{
 				SlimDX::Direct3D9::ProgressiveMesh^ get() { return progressiveMesh; }
+				void set( SlimDX::Direct3D9::ProgressiveMesh^ value );
 			}
 
 			property PatchMesh^ PatchMesh
 			{
 				SlimDX::Direct3D9::PatchMesh^ get() { return patchMesh; }
+				void set( SlimDX::Direct3D9::PatchMesh^ value );
 			}
 		};
 
