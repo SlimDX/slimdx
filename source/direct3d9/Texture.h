@@ -25,6 +25,9 @@
 #include "Resource.h"
 #include "Surface.h"
 #include "Volume.h"
+#include "Effect.h"
+#include "ConstantTable.h"
+#include "TextureShader.h"
 #include "../direct3d/LockedBox.h"
 #include "../direct3d/LockedRect.h"
 #include "../math/Math.h"
@@ -114,6 +117,8 @@ namespace SlimDX
 		/// <param name="texelSize">Dimensions of the texel.</param>
 		/// <returns>A 4 dimensional vector, representing a color value.  X maps to R, G to Y, etc...</returns>
 		public delegate Vector4 Fill2DCallback(Vector2 coordinate, Vector2 texelSize);
+
+		public delegate Vector4 Fill3DCallback(Vector3 coordinate, Vector3 texelSize);
 
 		public value class TextureRequirements
 		{
@@ -309,6 +314,8 @@ namespace SlimDX
 			/// <param name="callback">A function that uses the signature of the Fill2DCallback delegate.</param>
 			void Fill(Fill2DCallback^ callback);
 
+			void Fill( TextureShader^ shader );
+
 			LockedRect LockRectangle( int level, LockFlags flags );
 			LockedRect LockRectangle( int level, System::Drawing::Rectangle rect, LockFlags flags );
 			void UnlockRectangle( int level );
@@ -355,6 +362,9 @@ namespace SlimDX
 			static CubeTexture^ FromFile( Device^ device, String^ fileName, Usage usage, Pool pool );
 			static CubeTexture^ FromFile( Device^ device, String^ fileName );
 
+			void Fill( Fill3DCallback^ callback );
+			void Fill( TextureShader^ shader );
+
 			LockedRect LockRectangle( CubeMapFace face, int level, LockFlags flags );
 			LockedRect LockRectangle( CubeMapFace face, int level, System::Drawing::Rectangle rect, LockFlags flags );
 			void UnlockRectangle( CubeMapFace face, int level );
@@ -399,6 +409,9 @@ namespace SlimDX
 			static VolumeTexture^ FromFile( Device^ device, String^ fileName, int width, int height, int depth, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
 			static VolumeTexture^ FromFile( Device^ device, String^ fileName, Usage usage, Pool pool );
 			static VolumeTexture^ FromFile( Device^ device, String^ fileName );
+
+			void Fill( Fill3DCallback^ callback );
+			void Fill( TextureShader^ shader );
 
 			SlimDX::Direct3D::LockedBox LockBox( int level, LockFlags flags );
 			SlimDX::Direct3D::LockedBox LockBox( int level, Box box, LockFlags flags );

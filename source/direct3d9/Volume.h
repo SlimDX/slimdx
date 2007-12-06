@@ -30,6 +30,8 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
+		value class ImageInformation;
+
 		[StructLayout( LayoutKind::Sequential )]
 		public value class Box
 		{
@@ -68,9 +70,38 @@ namespace SlimDX
 			Volume( IntPtr volume );
 			virtual ~Volume() { }
 
+			static void FromMemory( Volume^ volume, array<Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
+			static void FromMemory( Volume^ volume, array<Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox, [Out] ImageInformation% imageInformation );
+			static void FromMemory( Volume^ volume, array<Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox );
+			static void FromMemory( Volume^ volume, array<Byte>^ memory, Filter filter, int colorKey );
+
+			static void FromStream( Volume^ volume, Stream^ stream, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
+			static void FromStream( Volume^ volume, Stream^ stream, Filter filter, int colorKey, Box sourceBox, Box destinationBox, [Out] ImageInformation% imageInformation );
+			static void FromStream( Volume^ volume, Stream^ stream, Filter filter, int colorKey, Box sourceBox, Box destinationBox );
+			static void FromStream( Volume^ volume, Stream^ stream, Filter filter, int colorKey );
+
+			static void FromFile( Volume^ volume, String^ fileName, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
+			static void FromFile( Volume^ volume, String^ fileName, Filter filter, int colorKey, Box sourceBox, Box destinationBox, [Out] ImageInformation% imageInformation );
+			static void FromFile( Volume^ volume, String^ fileName, Filter filter, int colorKey, Box sourceBox, Box destinationBox );
+			static void FromFile( Volume^ volume, String^ fileName, Filter filter, int colorKey );
+
+			static void FromVolume( Volume^ destinationVolume, Volume^ sourceVolume, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ destinationPalette, array<PaletteEntry>^ sourcePalette );
+			static void FromVolume( Volume^ destinationVolume, Volume^ sourceVolume, Filter filter, int colorKey, Box sourceBox, Box destinationBox );
+			static void FromVolume( Volume^ destinationVolume, Volume^ sourceVolume, Filter filter, int colorKey );
+
+			static DataStream^ ToStream( Volume^ volume, ImageFileFormat format, Box box, array<PaletteEntry>^ palette );
+			static DataStream^ ToStream( Volume^ volume, ImageFileFormat format, Box box );
+			static DataStream^ ToStream( Volume^ volume, ImageFileFormat format );
+
+			static void ToFile( Volume^ volume, String^ fileName, ImageFileFormat format, Box box, array<PaletteEntry>^ palette );
+			static void ToFile( Volume^ volume, String^ fileName, ImageFileFormat format, Box box );
+			static void ToFile( Volume^ volume, String^ fileName, ImageFileFormat format );
+
 			LockedBox LockBox( LockFlags flags );
 			LockedBox LockBox( Box box, LockFlags flags );
 			void UnlockBox();
+
+			Device^ GetDevice();
 
 			property VolumeDescription Description
 			{

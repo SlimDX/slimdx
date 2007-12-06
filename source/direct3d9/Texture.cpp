@@ -366,6 +366,27 @@ namespace Direct3D9
 		out->w = result.W;
 	}
 
+	// Native callback used by FillTexture.
+	void WINAPI NativeD3DXFill3D(D3DXVECTOR4 *out, CONST D3DXVECTOR3 *pTexCoord, CONST D3DXVECTOR3 *pTexelSize, LPVOID data)
+	{
+		Fill3DCallback^ callback = nullptr;									// Our callback.
+		Vector3 coordinate = Vector3(pTexCoord->x, pTexCoord->y, pTexCoord->z);			// Managed coordinate.
+		Vector3 size = Vector3(pTexelSize->x, pTexelSize->y, pTexelSize->z);				// Managed size.
+		Vector4 result;														// Result vector.
+
+		// Get the delegate.
+		callback = safe_cast<Fill3DCallback^>(Marshal::GetDelegateForFunctionPointer(IntPtr::IntPtr(data), Fill3DCallback::typeid));			
+
+		// Call the callback delegate.
+		result = callback(coordinate, size);
+
+		// Return the 4D vector.
+		out->x = result.X;
+		out->y = result.Y;
+		out->z = result.Z;
+		out->w = result.W;
+	}
+
 	/// <summary>
 	/// Uses a user-provided function to fill each texel of each mip level of a given texture.
 	/// </summary>
@@ -378,6 +399,12 @@ namespace Direct3D9
 		hr = D3DXFillTexture(TexturePointer, NativeD3DXFill2D, Marshal::GetFunctionPointerForDelegate(callback).ToPointer());
 
 		GraphicsException::CheckHResult(hr);
+	}
+
+	void Texture::Fill( TextureShader^ shader )
+	{
+		HRESULT hr = D3DXFillTextureTX( TexturePointer, shader->InternalPointer );
+		GraphicsException::CheckHResult( hr );
 	}
 
 	LockedRect Texture::LockRectangle( int level, System::Drawing::Rectangle rect, LockFlags flags )
@@ -748,6 +775,21 @@ namespace Direct3D9
 		return gcnew Surface( surface );
 	}
 
+	void CubeTexture::Fill(Fill3DCallback^ callback)
+	{
+		HRESULT hr;		// Error code.
+
+		// Call the function.
+		hr = D3DXFillCubeTexture(TexturePointer, NativeD3DXFill3D, Marshal::GetFunctionPointerForDelegate(callback).ToPointer());
+
+		GraphicsException::CheckHResult(hr);
+	}
+
+	void CubeTexture::Fill( TextureShader^ shader )
+	{
+		HRESULT hr = D3DXFillCubeTextureTX( TexturePointer, shader->InternalPointer );
+		GraphicsException::CheckHResult( hr );
+	}
 
 	VolumeTexture::VolumeTexture( IDirect3DVolumeTexture9* texture )
 	{
@@ -1067,6 +1109,22 @@ namespace Direct3D9
 			return nullptr;
 
 		return gcnew Volume( result );
+	}
+
+	void VolumeTexture::Fill(Fill3DCallback^ callback)
+	{
+		HRESULT hr;		// Error code.
+
+		// Call the function.
+		hr = D3DXFillVolumeTexture(TexturePointer, NativeD3DXFill3D, Marshal::GetFunctionPointerForDelegate(callback).ToPointer());
+
+		GraphicsException::CheckHResult(hr);
+	}
+
+	void VolumeTexture::Fill( TextureShader^ shader )
+	{
+		HRESULT hr = D3DXFillVolumeTextureTX( TexturePointer, shader->InternalPointer );
+		GraphicsException::CheckHResult( hr );
 	}
 }
 }
