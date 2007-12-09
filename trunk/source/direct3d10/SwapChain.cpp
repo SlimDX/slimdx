@@ -23,11 +23,12 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
+#include "SwapChain.h"
 #include "GraphicsException.h"
 
-#include "SwapChain.h"
 #include "Device.h"
 #include "Texture2D.h"
+#include "ModeDescription.h"
 #include "SwapChainDescription.h"
 
 namespace SlimDX
@@ -72,6 +73,12 @@ namespace Direct3D10
 	void SwapChain::ResizeBuffers( int count, int width, int height, Format format, SwapChainFlags flags )
 	{
 		HRESULT hr = m_Pointer->ResizeBuffers( count, width, height, static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ) );
+		GraphicsException::CheckHResult( hr );
+	}
+	
+	void SwapChain::ResizeTarget( ModeDescription description )
+	{
+		HRESULT hr = m_Pointer->ResizeTarget( reinterpret_cast<DXGI_MODE_DESC*>( &description ) );
 		GraphicsException::CheckHResult( hr );
 	}
 	

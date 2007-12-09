@@ -33,6 +33,7 @@ namespace SlimDX
 	{
 		ref class Device;
 		ref class Texture2D;
+		value class ModeDescription;
 		value class SwapChainDescription;
 		
 		public ref class SwapChain : public DirectXObject<IDXGISwapChain>
@@ -46,7 +47,8 @@ namespace SlimDX
 			Texture2D^ GetBuffer( int index );
 
 			void ResizeBuffers( int count, int width, int height, Format format, SwapChainFlags flags );
-
+			void ResizeTarget( ModeDescription description );
+			
 			PresentResult Present( int syncInterval, PresentFlags flags );
 		};
 	}
