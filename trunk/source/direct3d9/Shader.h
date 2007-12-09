@@ -92,6 +92,8 @@ namespace SlimDX
 			~ShaderBytecode() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 
+			DataStream^ GetData();
+
 			ConstantTable^ GetConstantTable();
 			array<ShaderSemantic>^ GetInputSemantics();
 			array<ShaderSemantic>^ GetOutputSemantics();
