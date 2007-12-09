@@ -56,39 +56,39 @@ namespace SlimDX
 			void Unlock();
 
 			property SlimDX::Direct3D9::Format Format
-            {
-                SlimDX::Direct3D9::Format get() { return format; }
+			{
+				SlimDX::Direct3D9::Format get() { return format; }
 			private:
-                void set( SlimDX::Direct3D9::Format value ) { format = value; }
-            }
+				void set( SlimDX::Direct3D9::Format value ) { format = value; }
+			}
 
-            property SlimDX::Direct3D9::Usage Usage
-            {
-                SlimDX::Direct3D9::Usage get() { return usage; }
+			property SlimDX::Direct3D9::Usage Usage
+			{
+				SlimDX::Direct3D9::Usage get() { return usage; }
 			private:
-                void set( SlimDX::Direct3D9::Usage value ) { usage = value; }
-            }
+				void set( SlimDX::Direct3D9::Usage value ) { usage = value; }
+			}
 
-            property SlimDX::Direct3D9::Pool Pool
-            {
-                SlimDX::Direct3D9::Pool get() { return pool; }
+			property SlimDX::Direct3D9::Pool Pool
+			{
+				SlimDX::Direct3D9::Pool get() { return pool; }
 			private:
-                void set( SlimDX::Direct3D9::Pool value ) { pool = value; }
-            }
+				void set( SlimDX::Direct3D9::Pool value ) { pool = value; }
+			}
 
-            property int SizeInBytes
-            {
-                int get() { return sizeInBytes; }
+			property int SizeInBytes
+			{
+				int get() { return sizeInBytes; }
 			private:
-                void set( int value ) { sizeInBytes = value; }
-            }
+				void set( int value ) { sizeInBytes = value; }
+			}
 
-            property VertexFormat FVF
-            {
-                VertexFormat get() { return fVF; }
+			property VertexFormat FVF
+			{
+				VertexFormat get() { return fVF; }
 			private:
-                void set( VertexFormat value ) { fVF = value; }
-            }
+				void set( VertexFormat value ) { fVF = value; }
+			}
 		};
 	}
 }

@@ -55,7 +55,7 @@ namespace Direct3D9
 		InitDescription();
 	}
 
-	IndexBuffer::IndexBuffer( Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit )
+	IndexBuffer::IndexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, SlimDX::Direct3D9::Pool pool, bool sixteenBit )
 	{
 		IDirect3DIndexBuffer9* ib;
 		D3DFORMAT format = sixteenBit ? D3DFMT_INDEX16 : D3DFMT_INDEX32;
@@ -72,10 +72,10 @@ namespace Direct3D9
 		HRESULT hr = static_cast<IDirect3DIndexBuffer9*>( m_Pointer )->GetDesc( &desc );
 		GraphicsException::CheckHResult( hr );
 		
-		m_Format = static_cast<Format>( desc.Format );
+		m_Format = static_cast<SlimDX::Direct3D9::Format>( desc.Format );
 		m_Type = static_cast<SlimDX::Direct3D9::ResourceType>( desc.Type );
-		m_Usage = static_cast<Usage>( desc.Usage );
-		m_Pool = static_cast<Pool>( desc.Pool );
+		m_Usage = static_cast<SlimDX::Direct3D9::Usage>( desc.Usage );
+		m_Pool = static_cast<SlimDX::Direct3D9::Pool>( desc.Pool );
 		m_SizeInBytes = desc.Size;
 	}
 	
