@@ -157,6 +157,11 @@ namespace SlimDX
 			m_Pointer = static_cast<ID3DXBuffer*>( result );
 		}
 
+		DataStream^ ShaderBytecode::GetData()
+		{
+			return gcnew DataStream( m_Pointer->GetBufferPointer(), m_Pointer->GetBufferSize(), true, true, false );
+		}
+
 		ConstantTable^ ShaderBytecode::GetConstantTable()
 		{
 			ID3DXConstantTable* constantTable;

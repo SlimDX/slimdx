@@ -59,6 +59,9 @@ namespace SlimDX
 				int get() { return BaseTexturePointer->GetLOD(); }
 				void set(int value) { BaseTexturePointer->SetLOD( value ); }
 			}
+
+			void FilterTexture( int sourceLevel, Filter filter, array<PaletteEntry>^ palette );
+			void FilterTexture( int sourceLevel, Filter filter );
 			
 			void GenerateMipSublevels();
 

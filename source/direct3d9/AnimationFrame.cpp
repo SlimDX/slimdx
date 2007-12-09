@@ -217,15 +217,23 @@ namespace Direct3D9
 
 	String^ MeshContainer::Name::get()
 	{
+		if( Pointer->Name == NULL )
+			return String::Empty;
+
 		return gcnew String( Pointer->Name );
 	}
 
 	void MeshContainer::Name::set( String^ value )
 	{
-		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( value );
-		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+		if( value == nullptr || String::IsNullOrEmpty( value ) )
+			Pointer->Name = NULL;
+		else
+		{
+			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( value );
+			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		Pointer->Name = reinterpret_cast<LPSTR>( pinnedName );
+			Pointer->Name = reinterpret_cast<LPSTR>( pinnedName );
+		}
 	}
 
 	MeshData^ MeshContainer::Mesh::get()
@@ -620,15 +628,23 @@ namespace Direct3D9
 
 	String^ Frame::Name::get()
 	{
+		if( Pointer->Name == NULL )
+			return String::Empty;
+
 		return gcnew String( Pointer->Name );
 	}
 
 	void Frame::Name::set( String^ value )
 	{
-		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( value );
-		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+		if( value == nullptr || String::IsNullOrEmpty( value ) )
+			Pointer->Name = NULL;
+		else
+		{
+			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( value );
+			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		Pointer->Name = reinterpret_cast<LPSTR>( pinnedName );
+			Pointer->Name = reinterpret_cast<LPSTR>( pinnedName );
+		}
 	}
 
 	Matrix Frame::TransformationMatrix::get()

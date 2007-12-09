@@ -128,6 +128,10 @@ namespace SlimDX
 		static Vector4 Transform( Vector2 vector, Quaternion rotation );
 		static void Transform( Vector2% vector, Quaternion% rotation, [Out] Vector4% result );
 		static array<Vector4>^ Transform( array<Vector2>^ vectors, Quaternion% rotation );
+
+		static Vector2 TransformCoordinate( Vector2 coordinate, Matrix transformation );
+		static void TransformCoordinate( Vector2% coordinate, Matrix% transformation, [Out] Vector2% result );
+		static array<Vector2>^ TransformCoordinate( array<Vector2>^ coordinates, Matrix% transformation );
 		
 		static Vector2 TransformNormal( Vector2 normal, Matrix transformation );
 		static void TransformNormal( Vector2% normal, Matrix% transformation, [Out] Vector2% result );

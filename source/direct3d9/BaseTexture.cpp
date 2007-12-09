@@ -89,6 +89,21 @@ namespace Direct3D9
 		HRESULT hr = D3DXSaveTextureToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			texture->BaseTexturePointer, NULL );
 		GraphicsException::CheckHResult( hr );
-	}	
+	}
+
+	void BaseTexture::FilterTexture( int sourceLevel, Filter filter, array<PaletteEntry>^ palette )
+	{
+		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+
+		HRESULT hr = D3DXFilterTexture( BaseTexturePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
+			sourceLevel, static_cast<DWORD>( filter ) );
+		GraphicsException::CheckHResult( hr );
+	}
+
+	void BaseTexture::FilterTexture( int sourceLevel, Filter filter )
+	{
+		HRESULT hr = D3DXFilterTexture( BaseTexturePointer, NULL, sourceLevel, static_cast<DWORD>( filter ) );
+		GraphicsException::CheckHResult( hr );
+	}
 }
 }

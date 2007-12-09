@@ -681,6 +681,69 @@ namespace SlimDX
 	}
 
 	/// <summary>
+	/// Performs a coordinate transformation using the given <see cref="SlimDX::Matrix"/>.
+	/// </summary>
+	/// <param name="coordinate">The coordinate vector to transform.</param>
+	/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
+	/// <returns>The transformed coordinates.</returns>
+	Vector2 Vector2::TransformCoordinate( Vector2 coord, Matrix transform )
+	{
+		Vector4 vector;
+
+		vector.X = (coord.X * transform.M11) + (coord.Y * transform.M21) + transform.M41;
+		vector.Y = (coord.X * transform.M12) + (coord.Y * transform.M22) + transform.M42;
+		vector.Z = (coord.X * transform.M13) + (coord.Y * transform.M23) + transform.M43;
+		vector.W = 1 / ((coord.X * transform.M14) + (coord.Y * transform.M24) + transform.M44);
+
+		return Vector2( vector.X * vector.W, vector.Y * vector.W );
+	}
+
+	/// <summary>
+	/// Performs a coordinate transformation using the given <see cref="SlimDX::Matrix"/>.
+	/// </summary>
+	/// <param name="coordinate">The coordinate vector to transform.</param>
+	/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
+	/// <param name="result">When the method completes, contains the transformed coordinates.</param>
+	void Vector2::TransformCoordinate( Vector2% coord, Matrix% transform, [Out] Vector2% result )
+	{
+		Vector4 vector;
+
+		vector.X = (coord.X * transform.M11) + (coord.Y * transform.M21) + transform.M41;
+		vector.Y = (coord.X * transform.M12) + (coord.Y * transform.M22) + transform.M42;
+		vector.Z = (coord.X * transform.M13) + (coord.Y * transform.M23) + transform.M43;
+		vector.W = 1 / ((coord.X * transform.M14) + (coord.Y * transform.M24) + transform.M44);
+
+		result = Vector2( vector.X * vector.W, vector.Y * vector.W );
+	}
+
+	/// <summary>
+	/// Performs a coordinate transformation using the given <see cref="SlimDX::Matrix"/>.
+	/// </summary>
+	/// <param name="coordinates">The coordinate vectors to transform.</param>
+	/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
+	/// <returns>The transformed coordinates.</returns>
+	array<Vector2>^ Vector2::TransformCoordinate( array<Vector2>^ coords, Matrix% transform )
+	{
+		if( coords == nullptr )
+			throw gcnew ArgumentNullException( "coordinates" );
+
+		Vector4 vector;
+		int count = coords->Length;
+		array<Vector2>^ results = gcnew array<Vector2>( count );
+
+		for( int i = 0; i < count; i++ )
+		{
+			vector.X = (coords[i].X * transform.M11) + (coords[i].Y * transform.M21) + transform.M41;
+			vector.Y = (coords[i].X * transform.M12) + (coords[i].Y * transform.M22) + transform.M42;
+			vector.Z = (coords[i].X * transform.M13) + (coords[i].Y * transform.M23) + transform.M43;
+			vector.W = 1 / ((coords[i].X * transform.M14) + (coords[i].Y * transform.M24) + transform.M44);
+			results[i] = Vector2( vector.X * vector.W, vector.Y * vector.W );
+		}
+
+		return results;
+	}
+
+	/// <summary>
 	/// Performs a normal transformation using the given <see cref="SlimDX::Matrix"/>.
 	/// </summary>
 	/// <param name="normal">The normal vector to transform.</param>
