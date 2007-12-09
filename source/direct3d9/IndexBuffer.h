@@ -58,6 +58,34 @@ namespace SlimDX
 
 			DataStream^ Lock( int offset, int size, LockFlags flags );
 			void Unlock();
+			
+			property SlimDX::Direct3D9::Format Format
+			{
+				SlimDX::Direct3D9::Format get() { return m_Format; }
+			private:
+				void set( SlimDX::Direct3D9::Format value ) { m_Format = value; }
+			}
+
+			property SlimDX::Direct3D9::Usage Usage
+			{
+				SlimDX::Direct3D9::Usage get() { return m_Usage; }
+			private:
+				void set( SlimDX::Direct3D9::Usage value ) { m_Usage = value; }
+			}
+
+			property SlimDX::Direct3D9::Pool Pool
+			{
+				SlimDX::Direct3D9::Pool get() { return m_Pool; }
+			private:
+				void set( SlimDX::Direct3D9::Pool value ) { m_Pool = value; }
+			}
+
+			property int SizeInBytes
+			{
+				int get() { return m_SizeInBytes; }
+			private:
+				void set( int value ) { m_SizeInBytes = value; }
+			}
 		};
 	}
 }
