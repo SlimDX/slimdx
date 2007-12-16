@@ -33,7 +33,6 @@ namespace SlimDX
 		public:
 			TextureShader( IntPtr pointer );
 			TextureShader( DataStream^ stream );
-			TextureShader( ShaderBytecode^ function );
 			virtual ~TextureShader() { Destruct(); }
 			DXOBJECT_FUNCTIONS;
 

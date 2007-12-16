@@ -55,11 +55,6 @@ namespace Direct3D9
 		m_Pointer = static_cast<ID3DXTextureShader*>( result );
 	}
 
-	TextureShader::TextureShader( ShaderBytecode^ function )
-	{
-		TextureShader( gcnew DataStream( function->InternalPointer ) );
-	}
-
 	TextureShader::TextureShader( DataStream^ stream )
 	{
 		ID3DXTextureShader *result;
