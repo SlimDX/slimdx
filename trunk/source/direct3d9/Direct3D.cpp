@@ -323,7 +323,7 @@ namespace Direct3D9
 		Caps = static_cast<SlimDX::Direct3D9::Caps>( caps.Caps );
 		Caps2 = static_cast<SlimDX::Direct3D9::Caps2>( caps.Caps2 );
 		Caps3 = static_cast<SlimDX::Direct3D9::Caps3>( caps.Caps3 );
-		PresentInterval = caps.PresentationIntervals;
+		PresentInterval = static_cast<SlimDX::Direct3D9::PresentInterval>( caps.PresentationIntervals );
 
 		CursorCaps = static_cast<SlimDX::Direct3D9::CursorCaps>( caps.CursorCaps );
 

@@ -86,7 +86,7 @@ namespace SlimDX
             property Caps Caps;
             property Caps2 Caps2;
             property Caps3 Caps3;
-            property int PresentInterval;
+            property PresentInterval PresentInterval;
             property CursorCaps CursorCaps;
             property DeviceCaps DeviceCaps;
             property PrimitiveMiscCaps PrimitiveMiscCaps;
