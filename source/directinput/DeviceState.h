@@ -67,10 +67,11 @@ namespace SlimDX
 			int frz;
 			array<int>^ fsliders;
 
-			JoystickState();
 			JoystickState( const DIJOYSTATE2 &joystate );
 
 		public:
+			JoystickState();
+
 			/// <summary>
 			/// Gets the state of each point-of-view controller on the joystick.
 			/// </summary>
@@ -318,10 +319,11 @@ namespace SlimDX
 		public ref class KeyboardState
 		{
 		internal:
-			KeyboardState() { keys = gcnew array<bool>( 256 ); }
 			array<bool>^ keys;
 
 		public:
+			KeyboardState() { keys = gcnew array<bool>( 256 ); }
+
 			/// <summary>
 			/// Gets the state of the specified key.
 			/// </summary>
@@ -342,12 +344,12 @@ namespace SlimDX
 			int y;
 			int z;
 
+		public:
 			MouseState( int x, int y, int z ) : x(x), y(y), z(z)
 			{
 				buttons = gcnew array<bool>( 8 );
 			}
 
-		public:
 			/// <summary>
 			/// Gets the X axis of the mouse.
 			/// </summary>

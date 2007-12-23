@@ -391,6 +391,11 @@ namespace Direct3D9
 		ConvertPresentParams( presentParams, d3dpp );
 		HRESULT hr = m_Pointer->Reset( &d3dpp );
 		GraphicsException::CheckHResult( hr );
+
+		presentParams->BackBufferCount = d3dpp.BackBufferCount;
+		presentParams->BackBufferFormat = static_cast<Format>( d3dpp.BackBufferFormat );
+		presentParams->BackBufferWidth = d3dpp.BackBufferWidth;
+		presentParams->BackBufferHeight = d3dpp.BackBufferHeight;
 	}
 
 	void Device::SetTexture( int sampler, BaseTexture^ texture )
@@ -866,6 +871,179 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 		
 		return light;
+	}
+
+	void Device::SetCursor( Cursor^ cursor, bool addWaterMark )
+	{
+		IDirect3DSurface9 *cursorSurface = NULL;
+		ICONINFO iconInfo = {0};
+		HRESULT hr;
+		BITMAP bmp;
+		BITMAPINFO bmi = {0};
+		bool bwCursor;
+		int width = 0;
+		int heightSrc = 0;
+		int heightDest = 0;
+		COLORREF *arrayMask = NULL;
+		COLORREF *arrayColor = NULL;
+		COLORREF color;
+		COLORREF mask;
+		HDC hdcColor = NULL;
+		HDC hdcScreen = NULL;
+		HDC hdcMask = NULL;
+		HGDIOBJ oldObject;
+		DWORD *bitmap;
+
+		if( !GetIconInfo( static_cast<HICON>( cursor->Handle.ToPointer() ), &iconInfo ) )
+			return;
+
+		if( GetObject( static_cast<HGDIOBJ>( iconInfo.hbmMask ), sizeof( BITMAP ), static_cast<LPVOID>( &bmp ) ) == 0 )
+		{
+			if( iconInfo.hbmMask != NULL )
+				DeleteObject( iconInfo.hbmMask );
+			if( iconInfo.hbmColor != NULL )
+				DeleteObject( iconInfo.hbmColor );
+			return;
+		}
+
+		width = bmp.bmWidth;
+		heightSrc = bmp.bmHeight;
+
+		if( iconInfo.hbmColor == NULL )
+		{
+			bwCursor = true;
+			heightDest = heightSrc / 2;
+		}
+		else
+		{
+			bwCursor = false;
+			heightDest = heightSrc;
+		}
+
+		if( FAILED( hr = m_Pointer->CreateOffscreenPlainSurface( width, heightDest, D3DFMT_A8R8G8B8,
+			D3DPOOL_SCRATCH, &cursorSurface, NULL ) ) )
+		{
+			if( iconInfo.hbmMask != NULL )
+				DeleteObject( iconInfo.hbmMask );
+			if( iconInfo.hbmColor != NULL )
+				DeleteObject( iconInfo.hbmColor );
+			GraphicsException::CheckHResult( hr );
+			return;
+		}
+
+		arrayMask = new DWORD[width * heightSrc];
+
+		bmi.bmiHeader.biSize = sizeof( bmi.bmiHeader );
+		bmi.bmiHeader.biWidth = width;
+		bmi.bmiHeader.biHeight = heightSrc;
+		bmi.bmiHeader.biPlanes = 1;
+		bmi.bmiHeader.biBitCount = 32;
+		bmi.bmiHeader.biCompression = BI_RGB;
+
+		hdcScreen = GetDC( NULL );
+		hdcMask = CreateCompatibleDC( hdcScreen );
+		if( hdcMask == NULL )
+		{
+			if( iconInfo.hbmMask != NULL )
+				DeleteObject( iconInfo.hbmMask );
+			if( iconInfo.hbmColor != NULL )
+				DeleteObject( iconInfo.hbmColor );
+			if( hdcScreen != NULL )
+				ReleaseDC( NULL, hdcScreen );
+			if( arrayMask != NULL )
+				delete[] arrayMask;
+			if( cursorSurface != NULL )
+				cursorSurface->Release();
+			return;
+		}
+
+		oldObject = SelectObject( hdcMask, iconInfo.hbmMask );
+		GetDIBits( hdcMask, iconInfo.hbmMask, 0, heightSrc, arrayMask, &bmi, DIB_RGB_COLORS );
+		SelectObject( hdcMask, oldObject );
+
+		if( !bwCursor )
+		{
+			arrayColor = new DWORD[width * heightDest];
+			hdcColor = CreateCompatibleDC( hdcScreen );
+			if( hdcColor == NULL )
+			{
+				if( iconInfo.hbmMask != NULL )
+					DeleteObject( iconInfo.hbmMask );
+				if( iconInfo.hbmColor != NULL )
+					DeleteObject( iconInfo.hbmColor );
+				if( hdcScreen != NULL )
+					ReleaseDC( NULL, hdcScreen );
+				if( hdcMask != NULL )
+					DeleteDC( hdcMask );
+				if( hdcColor != NULL )
+					DeleteDC( hdcColor );
+				if( arrayColor != NULL )
+					delete[] arrayColor;
+				if( arrayMask != NULL )
+					delete[] arrayMask;
+				if( cursorSurface != NULL )
+					cursorSurface->Release();
+				return;
+			}
+
+			SelectObject( hdcColor, iconInfo.hbmColor );
+			GetDIBits( hdcColor, iconInfo.hbmColor, 0, heightDest, arrayColor, &bmi, DIB_RGB_COLORS );
+		}
+
+		D3DLOCKED_RECT lr;
+		cursorSurface->LockRect( &lr, NULL, 0 );
+		bitmap = static_cast<DWORD*>( lr.pBits );
+
+		for( int y = 0; y < heightDest; y++ )
+		{
+			for( int x = 0; x < width; x++ )
+			{
+				if( bwCursor )
+				{
+					color = arrayMask[width * ( heightDest - 1 - y ) + x];
+					mask = arrayMask[width * ( heightSrc - 1 - y ) + x];
+				}
+				else
+				{
+					color = arrayColor[width * ( heightDest - 1 - y ) + x];
+					mask = arrayMask[width * ( heightDest - 1 - y ) + x];
+				}
+
+				if( mask == 0 )
+					bitmap[width * y + x] = 0xff000000 | color;
+				else
+					bitmap[width * y + x] = 0x00000000;
+
+				if( addWaterMark && x < 12 && y < 5 )
+				{
+					const WORD wMask[5] = { 0xccc0, 0xa2a0, 0xa4a0, 0xa2a0, 0xccc0 };
+					if( wMask[y] & ( 1 << ( 15 - x ) ) )
+						bitmap[width * y + x] |= 0xff808080;
+				}
+			}
+		}
+
+		cursorSurface->UnlockRect();
+
+		hr = m_Pointer->SetCursorProperties( iconInfo.xHotspot, iconInfo.yHotspot, cursorSurface );
+
+		if( iconInfo.hbmMask != NULL )
+			DeleteObject( iconInfo.hbmMask );
+		if( iconInfo.hbmColor != NULL )
+			DeleteObject( iconInfo.hbmColor );
+		if( hdcScreen != NULL )
+			ReleaseDC( NULL, hdcScreen );
+		if( hdcMask != NULL )
+			DeleteDC( hdcMask );
+		if( hdcColor != NULL )
+			DeleteDC( hdcColor );
+		if( arrayColor != NULL )
+			delete[] arrayColor;
+		if( arrayMask != NULL )
+			delete[] arrayMask;
+		if( cursorSurface != NULL )
+			cursorSurface->Release();
+		GraphicsException::CheckHResult( hr );
 	}
 
 	void Device::SetCursorPosition( int x, int y, bool immediateUpdate )

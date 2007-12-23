@@ -131,12 +131,17 @@ namespace Direct3D9
 	D3DXEFFECTINSTANCE EffectInstance::ToUnmanaged( EffectInstance effect )
 	{
 		D3DXEFFECTINSTANCE result;
-		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( effect.EffectFilename );
-		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 		int count = effect.Defaults->Length;
-
-		result.pEffectFilename = reinterpret_cast<LPSTR>( pinnedName );
 		result.pDefaults = new D3DXEFFECTDEFAULT[count];
+
+		if( String::IsNullOrEmpty( effect.EffectFilename ) )
+			result.pEffectFilename = NULL;
+		else
+		{
+			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( effect.EffectFilename );
+			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+			result.pEffectFilename = reinterpret_cast<LPSTR>( pinnedName );
+		}		
 
 		for( int i = 0; i < effect.Defaults->Length; i++ )
 		{
