@@ -122,8 +122,8 @@ namespace Direct3D9
 		return gcnew SkinInfo( result );
 	}
 
-	Mesh^ SkinInfo::ConvertToBlendedMesh( Mesh^ mesh, array<int>^ adjacencyIn, [Out] array<int>^ adjacencyOut,
-		[Out] array<int>^ faceRemap, [Out] array<int>^% vertexRemap, [Out] int% maxVertexInfluence,
+	Mesh^ SkinInfo::ConvertToBlendedMesh( Mesh^ mesh, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
+		[Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap, [Out] int% maxVertexInfluence,
 		[Out] array<BoneCombination^>^% boneCombinationTable )
 	{
 		ID3DXMesh *result;
@@ -169,7 +169,7 @@ namespace Direct3D9
 		return gcnew Mesh( result );
 	}
 
-	Mesh^ SkinInfo::ConvertToBlendedMesh( Mesh^ mesh, array<int>^ adjacencyIn, [Out] array<int>^ adjacencyOut,
+	Mesh^ SkinInfo::ConvertToBlendedMesh( Mesh^ mesh, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
 		[Out] int% maxVertexInfluence, [Out] array<BoneCombination^>^% boneCombinationTable )
 	{
 		ID3DXMesh *result;
@@ -210,8 +210,8 @@ namespace Direct3D9
 		return gcnew Mesh( result );
 	}
 
-	Mesh^ SkinInfo::ConvertToIndexedBlendedMesh( Mesh^ mesh, int paletteSize, array<int>^ adjacencyIn, [Out] array<int>^ adjacencyOut,
-		[Out] array<int>^ faceRemap, [Out] array<int>^% vertexRemap, [Out] int% maxVertexInfluence,
+	Mesh^ SkinInfo::ConvertToIndexedBlendedMesh( Mesh^ mesh, int paletteSize, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
+		[Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap, [Out] int% maxVertexInfluence,
 		[Out] array<BoneCombination^>^% boneCombinationTable )
 	{
 		ID3DXMesh *result;
@@ -257,7 +257,7 @@ namespace Direct3D9
 		return gcnew Mesh( result );
 	}
 
-	Mesh^ SkinInfo::ConvertToIndexedBlendedMesh( Mesh^ mesh, int paletteSize, array<int>^ adjacencyIn, [Out] array<int>^ adjacencyOut,
+	Mesh^ SkinInfo::ConvertToIndexedBlendedMesh( Mesh^ mesh, int paletteSize, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
 		[Out] int% maxVertexInfluence, [Out] array<BoneCombination^>^% boneCombinationTable )
 	{
 		ID3DXMesh *result;

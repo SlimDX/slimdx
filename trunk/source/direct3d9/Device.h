@@ -25,6 +25,7 @@ using namespace System;
 using namespace System::Collections::Generic;
 using namespace System::Drawing;
 using namespace System::Runtime::InteropServices;
+using namespace System::Windows::Forms;
 
 #include "Enums.h"
 #include "Direct3D.h"
@@ -290,6 +291,7 @@ namespace SlimDX
 			void SetLight( int lightIndex, Light lightData );
 			Light GetLight( int lightIndex );
 
+			void SetCursor( Cursor^ cursor, bool addWaterMark );
 			void SetCursorPosition( int x, int y, bool immediateUpdate );
 			void SetCursorPosition( System::Drawing::Point position, bool immediateUpdate ) { SetCursorPosition( position.X, position.Y, immediateUpdate ); }
 			void SetCursorProperties( int hotspotX, int hotspotY, Surface^ cursorBitmap );
