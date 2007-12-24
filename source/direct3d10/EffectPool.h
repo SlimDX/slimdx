@@ -40,13 +40,14 @@ namespace SlimDX
 		/// Using EffectPools can improve performance by reducing the number state change
 		/// API calls.
 		/// </remarks>
-		public ref class EffectPool : public DirectXObject<ID3D10EffectPool>
+		public ref class EffectPool : public DirectXBase
 		{
+			DXOBJECT(ID3D10EffectPool);
+
 		internal:
 			EffectPool( ID3D10EffectPool* effectPool );
 		
 		public:
-			DXOBJECT_FUNCTIONS;
 			
 		  /// <summary>
 			/// Constructs a new <see cref="EffectPool"/>.

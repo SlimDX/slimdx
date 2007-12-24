@@ -70,8 +70,10 @@ namespace SlimDX
 
 		ref class EffectHandle;
 		
-		public ref class ConstantTable : public DirectXObject<ID3DXConstantTable>
+		public ref class ConstantTable : public DirectXBase
 		{
+			DXOBJECT(ID3DXConstantTable);
+
 		private:
 			IDirect3DDevice9* m_Device;
 
@@ -82,7 +84,6 @@ namespace SlimDX
 		public:
 			ConstantTable( IntPtr table );
 			~ConstantTable();
-			DXOBJECT_FUNCTIONS;
 			
 			EffectHandle^ GetConstant( EffectHandle^ handle, int index );
 			EffectHandle^ GetConstant( EffectHandle^ handle, String^ name );

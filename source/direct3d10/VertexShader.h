@@ -29,10 +29,12 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class VertexShader : public DirectXObject<ID3D10VertexShader>
+		public ref class VertexShader : public DirectXBase
 		{
+			DXOBJECT(ID3D10VertexShader);
+
 		internal:
-			VertexShader(ID3D10VertexShader *shader) : DirectXObject( shader ) { }
+			VertexShader(ID3D10VertexShader *shader) { m_Pointer = shader; }
 			
 		public:
 			VertexShader( IntPtr shader )
@@ -50,7 +52,6 @@ namespace SlimDX
 			}
 
 			virtual ~VertexShader() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 		};
 	}
 };

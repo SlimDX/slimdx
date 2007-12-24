@@ -34,8 +34,11 @@ namespace SlimDX
 	{	
 		ref class Device;
 		
-		public ref class RasterizerState : DirectXObject<ID3D10RasterizerState>
+		public ref class RasterizerState : DirectXBase
 		{
+			DXOBJECT(ID3D10RasterizerState);
+
+		private:
 			RasterizerStateDescription^ m_Description;
 		
 		internal:
@@ -43,7 +46,6 @@ namespace SlimDX
 		
 		public:
 			~RasterizerState() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			property SlimDX::Direct3D10::FillMode FillMode
 			{

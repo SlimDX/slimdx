@@ -104,8 +104,10 @@ namespace SlimDX
 			property Vector3 Value;
 		};
 
-		public ref class AnimationSet : public DirectXObject<ID3DXAnimationSet>
+		public ref class AnimationSet : public DirectXBase
 		{
+			DXOBJECT(ID3DXAnimationSet);
+
 		protected:
 			AnimationSet() { }
 
@@ -115,7 +117,6 @@ namespace SlimDX
 		public:
 			AnimationSet( IntPtr pointer );
 			virtual ~AnimationSet() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			int GetAnimationIndex( String^ name );
 			String^ GetAnimationName( int index );

@@ -43,8 +43,10 @@ namespace SlimDX
 			property SlimDX::Direct3D9::Format DepthStencilFormat;
 		};
 
-		public ref class RenderToSurface : public DirectXObject<ID3DXRenderToSurface>
+		public ref class RenderToSurface : public DirectXBase
 		{
+			DXOBJECT(ID3DXRenderToSurface);
+
 		internal:
 			/* Unused for now.
 			RenderToSurface( ID3DXRenderToSurface* pointer );
@@ -55,7 +57,6 @@ namespace SlimDX
 			RenderToSurface( Device^ device, int width, int height, Format format );
 			RenderToSurface( Device^ device, int width, int height, Format format, Format depthStencilFormat );
 			~RenderToSurface() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			void BeginScene( Surface^ renderSurface, Viewport viewport );
 			void EndScene( Filter mipFilter );

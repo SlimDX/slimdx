@@ -87,10 +87,12 @@ namespace Direct3D9
 		PresentationInterval = PresentInterval::Immediate;
 	}
 
-	Device::Device( IDirect3DDevice9* device ) : DirectXObject( device )
+	Device::Device( IDirect3DDevice9* device )
 	{
 		if( device == NULL )
 			throw gcnew ArgumentNullException( "device" );
+
+		m_Pointer = device;
 		
 		device->AddRef();
 	}

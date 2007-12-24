@@ -45,8 +45,10 @@ namespace SlimDX
 		/// play force-feedback effects, and open a device's control panel.
 		/// </summary>
 		generic<typename DataFormat>
-		public ref class Device : public DirectXObject<IDirectInputDevice8W>
+		public ref class Device : public DirectXBase
 		{
+			DXOBJECT(IDirectInputDevice8W);
+
 		private:
 			DeviceProperties^ properties;
 
@@ -59,7 +61,6 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="subsystem">The subsystem identifier.</param>
 			Device( Guid subsystem );
-			DXOBJECT_FUNCTIONS;
 
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::Device"/> class.

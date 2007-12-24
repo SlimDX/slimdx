@@ -31,15 +31,16 @@ namespace SlimDX
 	{
 		ref class Device;
 		
-		public ref class Resource abstract : public DirectXObject<IDirect3DResource9>
+		public ref class Resource abstract : public DirectXBase
 		{
+			DXOBJECT(IDirect3DResource9);
+
 		protected:
 			Resource() { }
 
 		public:
 			Resource( IntPtr pointer );
 			virtual ~Resource() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			property int Priority
 			{

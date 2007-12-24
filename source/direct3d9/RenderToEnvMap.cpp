@@ -31,8 +31,9 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		RenderToEnvironmentMap::RenderToEnvironmentMap( ID3DXRenderToEnvMap *pointer ) : DirectXObject( pointer )
+		RenderToEnvironmentMap::RenderToEnvironmentMap( ID3DXRenderToEnvMap *pointer )
 		{
+			m_Pointer = pointer;
 		}
 
 		RenderToEnvironmentMap::RenderToEnvironmentMap( IntPtr pointer )

@@ -51,10 +51,12 @@ namespace DirectSound
 			desc.lpwfxFormat = this->Format->InternalPointer;
 	}
 
-	SoundBuffer::SoundBuffer( IDirectSoundBuffer* buffer ) : DirectXObject( static_cast<IDirectSoundBuffer8*>( buffer ) )
+	SoundBuffer::SoundBuffer( IDirectSoundBuffer* buffer )
 	{
 		if( buffer == NULL )
 			throw gcnew ArgumentNullException( "buffer" );
+
+		m_Pointer = buffer;
 
 		SetDS8Pointer();
 	}

@@ -93,8 +93,10 @@ namespace SlimDX
 
 		ref class Device;
 
-		public ref class VertexDeclaration : public DirectXObject<IDirect3DVertexDeclaration9>
+		public ref class VertexDeclaration : public DirectXBase
 		{
+			DXOBJECT(IDirect3DVertexDeclaration9);
+
 		internal:
 			VertexDeclaration( IDirect3DVertexDeclaration9* decl );
 
@@ -102,7 +104,6 @@ namespace SlimDX
 			VertexDeclaration( IntPtr decl );
 			VertexDeclaration( Device^ device, array<VertexElement>^ elements );
 			~VertexDeclaration() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			property array<VertexElement>^ Elements
 			{

@@ -42,8 +42,10 @@ namespace Direct3D10
 		DepthSize = 0;
 	}
 	
-	ResourceView::ResourceView( ID3D10ShaderResourceView* view ) : DirectXObject( view )
+	ResourceView::ResourceView( ID3D10ShaderResourceView* view )
 	{
+		m_Pointer = view;
+
 		D3D10_SHADER_RESOURCE_VIEW_DESC desc;
 		view->GetDesc( &desc );
 		

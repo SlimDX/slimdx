@@ -203,19 +203,19 @@ namespace SlimDX
 		ref class IndexBuffer;
 		enum class VertexFormat;
 
-		public ref class BaseMesh abstract : public DirectXObject<ID3DXBaseMesh>
+		public ref class BaseMesh abstract : public DirectXBase
 		{
+			DXOBJECT(ID3DXBaseMesh);
+
 		protected:
 			BaseMesh() { }
-			BaseMesh( ID3DXBaseMesh* baseMesh ) : DirectXObject( baseMesh )
-			{ }
+			BaseMesh( ID3DXBaseMesh* baseMesh ) { m_Pointer = baseMesh; }
 
 		public:
 			BaseMesh( IntPtr pointer );
 			Mesh^ Clone( Device^ device, MeshFlags flags, array<VertexElement>^ elements );
 			Mesh^ Clone( Device^ device, MeshFlags flags, VertexFormat fvf );
 			virtual ~BaseMesh() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			Device^ GetDevice();
 			IndexBuffer^ GetIndexBuffer();

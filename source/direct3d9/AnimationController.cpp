@@ -34,8 +34,9 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	AnimationController::AnimationController( ID3DXAnimationController *controller ) : DirectXObject( controller )
+	AnimationController::AnimationController( ID3DXAnimationController *controller )
 	{
+		m_Pointer = controller;
 	}
 
 	AnimationController::AnimationController( IntPtr pointer )

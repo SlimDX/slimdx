@@ -33,10 +33,13 @@ namespace SlimDX
 namespace DirectInput
 {
 	generic<typename DataFormat>
-	Device<DataFormat>::Device( IDirectInputDevice8W* device ) : DirectXObject( device )
+	Device<DataFormat>::Device( IDirectInputDevice8W* device )
 	{
 		if( device == NULL )
 			throw gcnew ArgumentNullException( "device" );
+
+		m_Pointer = device;
+
 		properties = gcnew DeviceProperties( m_Pointer );
 	}
 

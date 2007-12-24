@@ -31,8 +31,10 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class ResourceView : public DirectXObject<ID3D10View>
+		public ref class ResourceView : public DirectXBase
 		{
+			DXOBJECT(ID3D10View);
+
 		private:
 			Format format;
             ResourceViewDimension dimension;
@@ -50,7 +52,6 @@ namespace SlimDX
 			
 		public:
 			virtual ~ResourceView() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			property SlimDX::Direct3D10::Format Format
             {

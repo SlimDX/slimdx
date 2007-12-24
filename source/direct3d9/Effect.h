@@ -35,13 +35,14 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
-		public ref class EffectPool : public DirectXObject<ID3DXEffectPool>
+		public ref class EffectPool : public DirectXBase
 		{
+			DXOBJECT(ID3DXEffectPool);
+
 		public:
 			EffectPool( IntPtr pointer );
 			EffectPool();
 			~EffectPool() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			//ID3DXEffectPool has no methods
 		};
@@ -59,7 +60,6 @@ namespace SlimDX
 		public:
 			Effect( IntPtr effect );
 			virtual ~Effect() { }
-			DXOBJECT_FUNCTIONS;
 
 			//FromMemory
 			static Effect^ FromMemory( Device^ device, array<Byte>^ memory, array<Macro>^ preprocessorDefines, Include^ includeFile,

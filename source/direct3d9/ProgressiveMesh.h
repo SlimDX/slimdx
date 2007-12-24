@@ -105,10 +105,12 @@ namespace SlimDX
 			property int MinimumVertexCount { int get(); }
 		};
 
-		public ref class SimplificationMesh : DirectXObject<ID3DXSPMesh>
+		public ref class SimplificationMesh : DirectXBase
 		{
+			DXOBJECT(ID3DXSPMesh);
+
 		internal:
-			SimplificationMesh( ID3DXSPMesh *mesh ) : DirectXObject( mesh ) { }
+			SimplificationMesh( ID3DXSPMesh *mesh ) { m_Pointer = mesh; }
 
 		public:
 			SimplificationMesh( IntPtr pointer );
@@ -117,7 +119,6 @@ namespace SlimDX
 			SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<float>^ vertexWeights );
 			SimplificationMesh( Mesh^ mesh, array<int>^ adjacency );
 			virtual ~SimplificationMesh() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			Mesh^ Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% adjacencyOut, [Out] array<int>^% vertexRemap );
 			Mesh^ Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% adjacencyOut );

@@ -84,17 +84,17 @@ namespace SlimDX
             property int Bytes;
 		};
 
-		public ref class BaseEffect abstract : public DirectXObject<ID3DXBaseEffect>
+		public ref class BaseEffect abstract : public DirectXBase
 		{
+			DXOBJECT(ID3DXBaseEffect);
+
 		protected:
 			BaseEffect() { }
-			BaseEffect( ID3DXBaseEffect* pointer ) : DirectXObject( pointer )
-			{ }
+			BaseEffect( ID3DXBaseEffect* pointer ) { m_Pointer = pointer; }
 
 		public:
 			BaseEffect( IntPtr pointer );
 			virtual ~BaseEffect() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			EffectHandle^ GetAnnotation( EffectHandle^ handle, int index );
 			EffectHandle^ GetAnnotation( EffectHandle^ handle, String^ name );

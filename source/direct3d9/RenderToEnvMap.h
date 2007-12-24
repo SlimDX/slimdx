@@ -38,8 +38,10 @@ namespace SlimDX
 			property SlimDX::Direct3D9::Format DepthStencilFormat;
 		};
 
-		public ref class RenderToEnvironmentMap : DirectXObject<ID3DXRenderToEnvMap>
+		public ref class RenderToEnvironmentMap : DirectXBase
 		{
+			DXOBJECT(ID3DXRenderToEnvMap);
+
 		internal:
 			RenderToEnvironmentMap( ID3DXRenderToEnvMap* pointer );
 
@@ -48,7 +50,6 @@ namespace SlimDX
 			RenderToEnvironmentMap( Device^ device, int size, int mipLevels, Format format );
 			RenderToEnvironmentMap( Device^ device, int size, int mipLevels, Format format, Format depthStencilFormat );
 			virtual ~RenderToEnvironmentMap() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			void BeginCube( CubeTexture^ texture );
 			void BeginHemisphere( Texture^ positiveZTexture, Texture^ negativeZTexture );

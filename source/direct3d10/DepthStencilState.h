@@ -34,8 +34,11 @@ namespace SlimDX
 	{	
 		ref class Device;
 		
-		public ref class DepthStencilState : DirectXObject<ID3D10DepthStencilState>
+		public ref class DepthStencilState : DirectXBase
 		{
+			DXOBJECT(ID3D10DepthStencilState);
+
+		private:
 			DepthStencilStateDescription^ m_Description;
 		
 		internal:
@@ -44,7 +47,6 @@ namespace SlimDX
 		public:
 			DepthStencilState( IntPtr state );
 			~DepthStencilState() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			property bool DepthEnabled
 			{

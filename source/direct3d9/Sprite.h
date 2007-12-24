@@ -43,8 +43,10 @@ namespace SlimDX
 
 		ref class Texture;
 
-		public ref class Sprite : public DirectXObject<ID3DXSprite>
+		public ref class Sprite : public DirectXBase
 		{
+			DXOBJECT(ID3DXSprite);
+
 		internal:
 			Sprite( ID3DXSprite* sprite );
 
@@ -52,7 +54,6 @@ namespace SlimDX
 			Sprite( IntPtr pointer );
 			Sprite( Device^ device );
 			~Sprite() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			void Begin( SpriteFlags flags );
 			void End();

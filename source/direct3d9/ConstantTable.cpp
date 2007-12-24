@@ -53,8 +53,9 @@ namespace Direct3D9
 		Bytes = desc.Bytes;
 	}
 
-	ConstantTable::ConstantTable( ID3DXConstantTable* table ) : DirectXObject( table )
+	ConstantTable::ConstantTable( ID3DXConstantTable* table )
 	{
+		m_Pointer = table;
 	}
 
 	ConstantTable::ConstantTable( IntPtr table )
@@ -72,8 +73,10 @@ namespace Direct3D9
 	}
 
 	ConstantTable::ConstantTable( IDirect3DDevice9* device,ID3DXConstantTable* constantTable )
-		: DirectXObject(constantTable), m_Device(device)
+		: m_Device(device)
 	{
+		m_Pointer = constantTable;
+
 		m_Device->AddRef();
 	}
 

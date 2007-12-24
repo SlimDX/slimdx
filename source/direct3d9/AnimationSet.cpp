@@ -40,8 +40,9 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	AnimationSet::AnimationSet(ID3DXAnimationSet *set) : DirectXObject( set )
+	AnimationSet::AnimationSet(ID3DXAnimationSet *set)
 	{
+		m_Pointer = set;
 	}
 
 	AnimationSet::AnimationSet( IntPtr pointer )

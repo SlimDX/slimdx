@@ -57,17 +57,18 @@ namespace SlimDX
 			property int LevelOfDetailBias;
 		};
 
-		public ref class PatchMesh : DirectXObject<ID3DXPatchMesh>
+		public ref class PatchMesh : DirectXBase
 		{
+			DXOBJECT(ID3DXPatchMesh);
+
 		internal:
-			PatchMesh( ID3DXPatchMesh *mesh ) : DirectXObject( mesh ) { }
+			PatchMesh( ID3DXPatchMesh *mesh ) { m_Pointer = mesh; }
 
 		public:
 			PatchMesh( IntPtr pointer );
 			PatchMesh( Device^ device, PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration );
 			PatchMesh( Mesh^ mesh );
 			virtual ~PatchMesh() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			static PatchMesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
 			static PatchMesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );

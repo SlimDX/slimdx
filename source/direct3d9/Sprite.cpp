@@ -48,10 +48,12 @@ namespace Direct3D9
 		m_Pointer = static_cast<ID3DXSprite*>( result );
 	}
 
-	Sprite::Sprite( ID3DXSprite* sprite ) : DirectXObject( sprite )
+	Sprite::Sprite( ID3DXSprite* sprite )
 	{
 		if( sprite == NULL )
 			throw gcnew ArgumentNullException( "sprite" );
+
+		m_Pointer = sprite;
 	}
 
 	Sprite::Sprite( Device^ device )

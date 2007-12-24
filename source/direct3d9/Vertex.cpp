@@ -30,10 +30,12 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	VertexDeclaration::VertexDeclaration( IDirect3DVertexDeclaration9* decl ) : DirectXObject( decl )
+	VertexDeclaration::VertexDeclaration( IDirect3DVertexDeclaration9* decl )
 	{
 		if( decl == NULL )
 			throw gcnew ArgumentNullException( "decl" );
+
+		m_Pointer = decl;
 	}
 
 	VertexDeclaration::VertexDeclaration( IntPtr decl )

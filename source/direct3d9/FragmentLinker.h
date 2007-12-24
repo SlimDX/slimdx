@@ -38,8 +38,10 @@ namespace SlimDX
             property int Target;
 		};
 
-		public ref class FragmentLinker : public DirectXObject<ID3DXFragmentLinker>
+		public ref class FragmentLinker : public DirectXBase
 		{
+			DXOBJECT(ID3DXFragmentLinker);
+
 		internal:
 			FragmentLinker( ID3DXFragmentLinker* linker );
 
@@ -47,7 +49,6 @@ namespace SlimDX
 			FragmentLinker( IntPtr pointer );
 			FragmentLinker( Device^ device, int cacheSize );
 			~FragmentLinker() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			static DataStream^ Gather( array<Byte>^ sourceData, array<Macro>^ defines,
 				Include^ includeFile, ShaderFlags flags, [Out] String^% errors );

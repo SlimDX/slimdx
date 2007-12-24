@@ -31,8 +31,10 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class Resource abstract : public DirectXObject<ID3D10Resource>
+		public ref class Resource abstract : public DirectXBase
 		{
+			DXOBJECT(ID3D10Resource);
+
 		protected:
 			Resource();
 			Resource(ID3D10Resource *resource);
@@ -40,7 +42,6 @@ namespace SlimDX
 		public:
 			Resource( IntPtr pointer );
 			virtual ~Resource() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			/// <summary>
 			/// Gets or sets the resource's eviction priority.
