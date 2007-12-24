@@ -28,13 +28,14 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
-		public ref class MatrixStack : DirectXObject<ID3DXMatrixStack>
+		public ref class MatrixStack : DirectXBase
 		{
+			DXOBJECT(ID3DXMatrixStack);
+
 		public:
 			MatrixStack( IntPtr pointer );
 			MatrixStack();
 			~MatrixStack() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			void Push();
 			void Pop();

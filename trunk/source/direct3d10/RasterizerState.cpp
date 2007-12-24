@@ -32,10 +32,12 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	RasterizerState::RasterizerState( ID3D10RasterizerState* state ) : DirectXObject( state )
+	RasterizerState::RasterizerState( ID3D10RasterizerState* state )
 	{
 		if( state == NULL )
 			throw gcnew ArgumentNullException( "state" );
+
+		m_Pointer = state;
 		
 		D3D10_RASTERIZER_DESC desc;
 		state->GetDesc( &desc );

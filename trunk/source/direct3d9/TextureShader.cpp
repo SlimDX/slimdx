@@ -37,8 +37,9 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	TextureShader::TextureShader( ID3DXTextureShader *pointer ) : DirectXObject( pointer )
+	TextureShader::TextureShader( ID3DXTextureShader *pointer )
 	{
+		m_Pointer = pointer;
 	}
 
 	TextureShader::TextureShader( IntPtr pointer )

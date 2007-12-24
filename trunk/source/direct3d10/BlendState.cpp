@@ -32,10 +32,12 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	BlendState::BlendState( ID3D10BlendState* state ) : DirectXObject( state )
+	BlendState::BlendState( ID3D10BlendState* state )
 	{
 		if( state == NULL )
 			throw gcnew ArgumentNullException( "state" );
+
+		m_Pointer = state;
 		
 		D3D10_BLEND_DESC desc;
 		state->GetDesc( &desc );

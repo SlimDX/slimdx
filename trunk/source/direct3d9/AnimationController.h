@@ -80,8 +80,10 @@ namespace SlimDX
 			property bool Enabled;
 		};		
 
-		public ref class AnimationController : public DirectXObject<ID3DXAnimationController>
+		public ref class AnimationController : public DirectXBase
 		{
+			DXOBJECT(ID3DXAnimationController);
+
 		internal:
 			AnimationController( ID3DXAnimationController *controller );
 
@@ -89,7 +91,6 @@ namespace SlimDX
 			AnimationController( IntPtr pointer );
 			AnimationController( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents );
 			virtual ~AnimationController() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			void AdvanceTime( double time, AnimationCallback^ handler );
 			AnimationController^ Clone( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents );

@@ -34,8 +34,9 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	EffectPool::EffectPool( ID3D10EffectPool* effectPool ) : DirectXObject( effectPool )
+	EffectPool::EffectPool( ID3D10EffectPool* effectPool )
 	{
+		m_Pointer = effectPool;
 	}
 
 	EffectPool::EffectPool( IntPtr effectPool )

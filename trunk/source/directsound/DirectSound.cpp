@@ -32,10 +32,12 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	DirectSound::DirectSound( IDirectSound8* dsound ) : DirectXObject( dsound )
+	DirectSound::DirectSound( IDirectSound8* dsound )
 	{
 		if( dsound == NULL )
 			throw gcnew ArgumentNullException( "dsound" );
+
+		m_Pointer = dsound;
 	}
 
 	DirectSound::DirectSound( IntPtr pointer )

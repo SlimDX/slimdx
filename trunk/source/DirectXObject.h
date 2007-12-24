@@ -40,59 +40,30 @@ namespace SlimDX
 		}
 		
 	protected:
-		DirectXBase() { }
+		DirectXBase()
+		{
+			if( EnableObjectTracking )
+				ObjectTracker::Add( this );
+		}
 
 	public:
+		virtual ~DirectXBase() { }
+
 		static property bool EnableObjectTracking;
-	};
-
-	template<typename T>
-	public ref class DirectXObject abstract : public DirectXBase
-	{
-	protected:
-		DirectXObject()
-		{
-			if( EnableObjectTracking )
-				ObjectTracker::Add( this );
-		}
-
-		DirectXObject( T* pointer ) : m_Pointer( pointer )
-		{
-			if( pointer == nullptr )
-				throw gcnew ArgumentNullException();
-
-			if( EnableObjectTracking )
-				ObjectTracker::Add( this );
-		}
-
-		T* m_Pointer;
-
-		void Destruct()
-		{
-			if( m_Pointer != NULL )
-			    m_Pointer->Release();
-			m_Pointer = NULL;
-
-			if( EnableObjectTracking )
-				ObjectTracker::Remove( this );
-		}
-
-	internal:
-		property T* InternalPointer
-		{
-			T* get() { return m_Pointer; }
-		}
-
-	public:
-		virtual ~DirectXObject() { };
 
 		property bool Disposed { virtual bool get() abstract; }
 		property IntPtr ComPointer { virtual IntPtr get() abstract; }
 		virtual void DisposeHandler( Object^ sender, EventArgs^ e ) abstract;
 	};
-}
 
-#define DXOBJECT_FUNCTIONS \
+#define DXOBJECT(type) \
+	protected: \
+	type *m_Pointer; \
+	void Destruct() { if( m_Pointer != NULL ) m_Pointer->Release(); m_Pointer = NULL; if( EnableObjectTracking ) ObjectTracker::Remove( this ); } \
+	internal: \
+	property type* InternalPointer { type* get() { return m_Pointer; } } \
+	public: \
 	property bool Disposed { virtual bool get() override { return m_Pointer == NULL; } } \
 	property IntPtr ComPointer { virtual IntPtr get() override{ return IntPtr( m_Pointer ); } } \
 	virtual void DisposeHandler( Object^ sender, EventArgs^ e ) override { delete this; }
+}

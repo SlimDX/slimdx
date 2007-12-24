@@ -48,8 +48,10 @@ namespace SlimDX
             }
 		};
 
-		public ref class SwapChain : public DirectXObject<IDirect3DSwapChain9>
+		public ref class SwapChain : public DirectXBase
 		{
+			DXOBJECT(IDirect3DSwapChain9);
+
 		internal:
 			SwapChain( IDirect3DSwapChain9* swapChain );
 
@@ -57,7 +59,6 @@ namespace SlimDX
 			SwapChain( IntPtr pointer );
 			SwapChain( Device^ device, PresentParameters^ presentParams );
 			~SwapChain() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			property SlimDX::Direct3D9::DisplayMode DisplayMode
 			{

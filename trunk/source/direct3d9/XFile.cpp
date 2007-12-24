@@ -31,8 +31,9 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	XFileSaveData::XFileSaveData( ID3DXFileSaveData *object ) : DirectXObject( object )
+	XFileSaveData::XFileSaveData( ID3DXFileSaveData *object )
 	{
+		m_Pointer = object;
 	}
 
 	XFileSaveData::XFileSaveData( IntPtr pointer )
@@ -151,8 +152,9 @@ namespace Direct3D9
 		return Utils::FromGUID( result );
 	}
 
-	XFileSaveObject::XFileSaveObject( ID3DXFileSaveObject *object ) : DirectXObject( object )
+	XFileSaveObject::XFileSaveObject( ID3DXFileSaveObject *object )
 	{
+		m_Pointer = object;
 	}
 
 	XFileSaveObject::XFileSaveObject( IntPtr pointer )
@@ -216,8 +218,9 @@ namespace Direct3D9
 		GraphicsException::CheckHResult( hr );
 	}
 
-	XFile::XFile( ID3DXFile *object ) : DirectXObject( object )
+	XFile::XFile( ID3DXFile *object )
 	{
+		m_Pointer = object;
 	}
 
 	XFile::XFile( IntPtr pointer )
@@ -336,8 +339,9 @@ namespace Direct3D9
 		RegisterTemplates( nameBytes );
 	}
 
-	XFileEnumerationObject::XFileEnumerationObject( ID3DXFileEnumObject *object ) : DirectXObject( object )
+	XFileEnumerationObject::XFileEnumerationObject( ID3DXFileEnumObject *object )
 	{
+		m_Pointer = object;
 	}
 
 	XFileEnumerationObject::XFileEnumerationObject( IntPtr pointer )
@@ -421,8 +425,9 @@ namespace Direct3D9
 		return result;
 	}
 
-	XFileData::XFileData( ID3DXFileData *object ) : DirectXObject( object )
+	XFileData::XFileData( ID3DXFileData *object )
 	{
+		m_Pointer = object;
 	}
 
 	XFileData::XFileData( IntPtr pointer )

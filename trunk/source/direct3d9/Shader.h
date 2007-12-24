@@ -81,16 +81,16 @@ namespace SlimDX
 			property int UsageIndex;
 		};
 
-		public ref class ShaderBytecode : DirectXObject<ID3DXBuffer>
+		public ref class ShaderBytecode : DirectXBase
 		{
+			DXOBJECT(ID3DXBuffer);
+
 		internal:
-			ShaderBytecode( ID3DXBuffer* buffer ) : DirectXObject( buffer )
-			{ }
+			ShaderBytecode( ID3DXBuffer* buffer ) { m_Pointer = buffer; }
 
 		public:
 			ShaderBytecode( IntPtr pointer );
 			~ShaderBytecode() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			DataStream^ GetData();
 

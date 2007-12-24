@@ -29,10 +29,12 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class GeometryShader : public DirectXObject<ID3D10GeometryShader>
+		public ref class GeometryShader : public DirectXBase
 		{
+			DXOBJECT(ID3D10GeometryShader);
+
 		internal:
-			GeometryShader(ID3D10GeometryShader *shader) : DirectXObject( shader ) { }
+			GeometryShader(ID3D10GeometryShader *shader) { m_Pointer = shader; }
 			
 		public:
 			GeometryShader( IntPtr shader )
@@ -51,7 +53,6 @@ namespace SlimDX
 			}
 
 			virtual ~GeometryShader() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 		};
 	}
 };

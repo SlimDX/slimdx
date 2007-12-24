@@ -47,10 +47,12 @@ namespace Direct3D9
 		m_Pointer = static_cast<ID3DXFragmentLinker*>( result );
 	}
 
-	FragmentLinker::FragmentLinker( ID3DXFragmentLinker* linker ) : DirectXObject( linker )
+	FragmentLinker::FragmentLinker( ID3DXFragmentLinker* linker )
 	{
 		if( linker == NULL )
 			throw gcnew ArgumentNullException( "linker" );
+
+		m_Pointer = linker;
 	}
 
 	FragmentLinker::FragmentLinker( Device^ device, int cacheSize )

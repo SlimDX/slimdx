@@ -45,10 +45,12 @@ namespace SlimDX
 			property array<int>^ BoneIds;
 		};
 
-		public ref class SkinInfo : public DirectXObject<ID3DXSkinInfo>
+		public ref class SkinInfo : public DirectXBase
 		{
+			DXOBJECT(ID3DXSkinInfo);
+
 		internal:
-			SkinInfo( ID3DXSkinInfo* skinInfo ) : DirectXObject( skinInfo ) { }
+			SkinInfo( ID3DXSkinInfo* skinInfo ) { m_Pointer = skinInfo; }
 
 		public:
 			SkinInfo( IntPtr pointer );
@@ -56,7 +58,6 @@ namespace SlimDX
 			SkinInfo( BaseMesh^ mesh, int boneCount, array<BoneCombination^>^ boneCombinationTable );
 			SkinInfo( int vertexCount, VertexFormat fvf, int boneCount );
 			virtual ~SkinInfo() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			SkinInfo^ Clone();
 

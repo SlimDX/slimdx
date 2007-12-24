@@ -27,8 +27,10 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public ref class Line : DirectXObject<ID3DXLine>
+		public ref class Line : DirectXBase
 		{
+			DXOBJECT(ID3DXLine);
+
 		internal:
 			/* Unused for now.
 			Line( ID3DXLine* line );
@@ -38,7 +40,6 @@ namespace SlimDX
 			Line( IntPtr line );
 			Line( Device^ device );
 			~Line() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			void Begin();
 			void End();

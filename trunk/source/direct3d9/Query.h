@@ -387,8 +387,10 @@ namespace SlimDX
 			}
 		};
 
-		public ref class Query : public DirectXObject<IDirect3DQuery9>
+		public ref class Query : public DirectXBase
 		{
+			DXOBJECT(IDirect3DQuery9);
+
 		internal:
 			/* Unused for now.
 			Query( IDirect3DQuery9* query );
@@ -398,7 +400,6 @@ namespace SlimDX
 			Query( IntPtr query );
 			Query( Device^ device, QueryType type );
 			~Query() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			property QueryType Type
 			{

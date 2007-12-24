@@ -33,8 +33,9 @@ namespace Direct3D10
 	{
 	}
 	
-	Resource::Resource( ID3D10Resource* resource ) : DirectXObject( resource )
+	Resource::Resource( ID3D10Resource* resource )
 	{
+		m_Pointer = resource;
 	}
 
 	Resource::Resource( IntPtr pointer )

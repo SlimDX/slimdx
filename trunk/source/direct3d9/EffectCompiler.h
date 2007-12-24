@@ -47,7 +47,6 @@ namespace SlimDX
 			EffectCompiler( String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
 			EffectCompiler( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
 			virtual ~EffectCompiler() { }
-			DXOBJECT_FUNCTIONS;
 
 			static EffectCompiler^ FromFile( String^ fileName, array<Macro>^ defines,
 				Include^ includeFile, ShaderFlags flags, [Out] String^% errors );

@@ -60,8 +60,10 @@ namespace SlimDX
 			int Reserved2;
 		};
 
-		public ref class DirectSound : DirectXObject<IDirectSound8>
+		public ref class DirectSound : DirectXBase
 		{
+			DXOBJECT(IDirectSound8);
+
 		private:
 			Capabilities caps;
 			Capabilities GetCapabilities();
@@ -74,7 +76,6 @@ namespace SlimDX
 			DirectSound();
 			DirectSound( Guid device );
 			~DirectSound() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			void Initialize();
 			void Initialize( Guid device );

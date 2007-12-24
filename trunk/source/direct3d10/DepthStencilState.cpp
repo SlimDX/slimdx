@@ -32,10 +32,12 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	DepthStencilState::DepthStencilState( ID3D10DepthStencilState* state ) : DirectXObject( state )
+	DepthStencilState::DepthStencilState( ID3D10DepthStencilState* state )
 	{
 		if( state == NULL )
 			throw gcnew ArgumentNullException( "state" );
+
+		m_Pointer = state;
 		
 		D3D10_DEPTH_STENCIL_DESC desc;
 		state->GetDesc( &desc );

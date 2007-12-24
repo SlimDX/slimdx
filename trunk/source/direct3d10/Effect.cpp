@@ -37,8 +37,10 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	Effect::Effect( ID3D10Effect* effect ) : DirectXObject( effect )
+	Effect::Effect( ID3D10Effect* effect )
 	{
+		m_Pointer = effect;
+
 		D3D10_EFFECT_DESC desc;
 		HRESULT hr = effect->GetDesc( &desc );
 		GraphicsException::CheckHResult( hr );

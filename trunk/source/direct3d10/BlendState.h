@@ -34,8 +34,11 @@ namespace SlimDX
 	{	
 		ref class Device;
 		
-		public ref class BlendState : DirectXObject<ID3D10BlendState>
+		public ref class BlendState : DirectXBase
 		{
+			DXOBJECT(ID3D10BlendState);
+
+		private:
 			BlendStateDescription^ m_Description;
 		
 		internal:
@@ -44,7 +47,6 @@ namespace SlimDX
 		public:
 			BlendState( IntPtr state );
 			~BlendState() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			property bool AlphaToCoverageEnabled
 			{

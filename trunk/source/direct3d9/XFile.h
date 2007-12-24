@@ -41,15 +41,16 @@ namespace SlimDX
 			Compressed = D3DXF_FILEFORMAT_COMPRESSED
 		};
 
-		public ref class XFileSaveData : public DirectXObject<ID3DXFileSaveData>
+		public ref class XFileSaveData : public DirectXBase
 		{
+			DXOBJECT(ID3DXFileSaveData);
+
 		internal:
 			XFileSaveData( ID3DXFileSaveData *object );
 
 		public:
 			XFileSaveData( IntPtr pointer );
 			virtual ~XFileSaveData() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			XFileSaveData^ AddDataObject( Guid dataTemplate, String^ name, Guid id, array<Byte>^ data );
 			XFileSaveData^ AddDataObject( Guid dataTemplate, String^ name, Guid id, Stream^ data );
@@ -62,15 +63,16 @@ namespace SlimDX
 			property Guid Type { Guid get(); }
 		};
 
-		public ref class XFileSaveObject : public DirectXObject<ID3DXFileSaveObject>
+		public ref class XFileSaveObject : public DirectXBase
 		{
+			DXOBJECT(ID3DXFileSaveObject);
+
 		internal:
 			XFileSaveObject( ID3DXFileSaveObject *object );
 
 		public:
 			XFileSaveObject( IntPtr pointer );
 			virtual ~XFileSaveObject() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			XFileSaveData^ AddDataObject( Guid dataTemplate, String^ name, Guid id, array<Byte>^ data );
 			XFileSaveData^ AddDataObject( Guid dataTemplate, String^ name, Guid id, Stream^ data );
@@ -78,8 +80,10 @@ namespace SlimDX
 			void Save();
 		};
 
-		public ref class XFile : public DirectXObject<ID3DXFile>
+		public ref class XFile : public DirectXBase
 		{
+			DXOBJECT(ID3DXFile);
+
 		internal:
 			XFile( ID3DXFile *object );
 
@@ -87,7 +91,6 @@ namespace SlimDX
 			XFile( IntPtr pointer );
 			XFile();
 			virtual ~XFile() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			XFileEnumerationObject^ CreateEnumerationObject( String^ fileName, CharSet charSet );
 			XFileEnumerationObject^ CreateEnumerationObject( array<Byte>^ memory );
@@ -100,15 +103,16 @@ namespace SlimDX
 			void RegisterTemplates( String^ name );
 		};
 
-		public ref class XFileEnumerationObject : public DirectXObject<ID3DXFileEnumObject>
+		public ref class XFileEnumerationObject : public DirectXBase
 		{
+			DXOBJECT(ID3DXFileEnumObject);
+
 		internal:
 			XFileEnumerationObject( ID3DXFileEnumObject *object );
 
 		public:
 			XFileEnumerationObject( IntPtr pointer );
 			virtual ~XFileEnumerationObject() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			XFileData^ GetChild( int id );
 			XFileData^ GetDataObject( Guid id );
@@ -118,15 +122,16 @@ namespace SlimDX
 			property int ChildCount { int get(); }
 		};
 
-		public ref class XFileData : public DirectXObject<ID3DXFileData>
+		public ref class XFileData : public DirectXBase
 		{
+			DXOBJECT(ID3DXFileData);
+
 		internal:
 			XFileData( ID3DXFileData *data );
 
 		public:
 			XFileData( IntPtr pointer );
 			virtual ~XFileData() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			XFileData^ GetChild( int id );
 			XFileEnumerationObject^ GetEnumerationObject();

@@ -25,8 +25,10 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public ref class TextureShader : public DirectXObject<ID3DXTextureShader>
+		public ref class TextureShader : public DirectXBase
 		{
+			DXOBJECT(ID3DXTextureShader);
+
 		internal:
 			TextureShader( ID3DXTextureShader* pointer );
 
@@ -34,7 +36,6 @@ namespace SlimDX
 			TextureShader( IntPtr pointer );
 			TextureShader( DataStream^ stream );
 			virtual ~TextureShader() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			EffectHandle^ GetConstant( EffectHandle^ parent, int index );
 			EffectHandle^ GetConstant( EffectHandle^ parent, String^ name );

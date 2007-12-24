@@ -38,8 +38,11 @@ namespace SlimDX
 		ref class EffectVariable;
 		ref class EffectPool;
 		
-		public ref class Effect : public DirectXObject<ID3D10Effect>
+		public ref class Effect : public DirectXBase
 		{
+			DXOBJECT(ID3D10Effect);
+
+		private:
 			bool m_IsChildEffect;
 			int m_ConstantBufferCount;
 			int m_SharedConstantBufferCount;
@@ -52,7 +55,6 @@ namespace SlimDX
 		public:
 			Effect( IntPtr effect );
 			virtual ~Effect() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			property bool IsChildEffect
 			{
@@ -112,7 +114,7 @@ namespace SlimDX
 			static Effect^ FromMemory( Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] String^ %compilationErrors );
 			static Effect^ FromStream( Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool );
 			static Effect^ FromStream( Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] String^ %compilationErrors );
-		  static Effect^ FromString( Device^ device, String^ code, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool );
+			static Effect^ FromString( Device^ device, String^ code, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool );
 			static Effect^ FromString( Device^ device, String^ code, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] String^ %compilationErrors );
 		};
 	}

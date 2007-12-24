@@ -38,8 +38,11 @@ namespace SlimDX
 	{
 		ref class ShaderBytecode;
 		
-		public ref class ShaderReflection : public DirectXObject<ID3D10ShaderReflection>
+		public ref class ShaderReflection : public DirectXBase
 		{
+			DXOBJECT(ID3D10ShaderReflection);
+
+		private:
 			int version;
 			String^ creator;
 			int flags; //TODO: No idea what values this can take...?
@@ -84,8 +87,6 @@ namespace SlimDX
 			*/
 				
 		public:
-			DXOBJECT_FUNCTIONS;
-
 			/// <summary>
 			/// Gets the version.
 			/// </summary>

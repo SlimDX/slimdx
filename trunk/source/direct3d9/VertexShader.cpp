@@ -36,10 +36,12 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	VertexShader::VertexShader( IDirect3DVertexShader9* vertexShader ) : DirectXObject( vertexShader )
+	VertexShader::VertexShader( IDirect3DVertexShader9* vertexShader )
 	{
 		if( vertexShader == NULL )
 			throw gcnew ArgumentNullException( "vertexShader" );
+
+		m_Pointer = vertexShader;
 
 		m_ConstantTable = nullptr;
 	}
@@ -58,12 +60,14 @@ namespace Direct3D9
 		m_Pointer = static_cast<IDirect3DVertexShader9*>( pointer );
 	}
 
-	VertexShader::VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable ) : DirectXObject( vertexShader )
+	VertexShader::VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable )
 	{
 		if( vertexShader == NULL )
 			throw gcnew ArgumentNullException( "vertexShader" );
 		if( constantTable == NULL )
 			throw gcnew ArgumentNullException( "constantTable" );
+
+		m_Pointer = vertexShader;
 
 		IDirect3DDevice9* device;
 		HRESULT hr = vertexShader->GetDevice(&device);

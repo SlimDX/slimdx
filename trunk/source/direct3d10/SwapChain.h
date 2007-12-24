@@ -36,13 +36,14 @@ namespace SlimDX
 		value class ModeDescription;
 		value class SwapChainDescription;
 		
-		public ref class SwapChain : public DirectXObject<IDXGISwapChain>
+		public ref class SwapChain : public DirectXBase
 		{
+			DXOBJECT(IDXGISwapChain);
+
 		public:
 			SwapChain( IntPtr pointer );
 			SwapChain( Device^ device, SwapChainDescription description );
 			~SwapChain() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			Texture2D^ GetBuffer( int index );
 

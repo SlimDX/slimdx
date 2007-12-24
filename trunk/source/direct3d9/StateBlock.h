@@ -36,8 +36,10 @@ namespace SlimDX
 			VertexState = D3DSBT_VERTEXSTATE,
 		};
 
-		public ref class StateBlock : DirectXObject<IDirect3DStateBlock9>
+		public ref class StateBlock : DirectXBase
 		{
+			DXOBJECT(IDirect3DStateBlock9);
+
 		internal:
 			StateBlock( IDirect3DStateBlock9* stateBlock );
 
@@ -45,7 +47,6 @@ namespace SlimDX
 			StateBlock( IntPtr pointer );
 			StateBlock( Device^ device, StateBlockType type );
 			~StateBlock() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			void Apply();
 			void Capture();

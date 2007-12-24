@@ -29,10 +29,12 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class PixelShader : public DirectXObject<ID3D10PixelShader>
+		public ref class PixelShader : public DirectXBase
 		{
+			DXOBJECT(ID3D10PixelShader);
+
 		internal:
-			PixelShader(ID3D10PixelShader *shader) : DirectXObject( shader ) { }
+			PixelShader(ID3D10PixelShader *shader) { m_Pointer = shader; }
 			
 		public:
 			PixelShader( IntPtr shader )
@@ -51,7 +53,6 @@ namespace SlimDX
 			}
 
 			virtual ~PixelShader() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 		};
 	}
 };

@@ -139,8 +139,10 @@ namespace SlimDX
 		ref class SwapChain;
 		ref class StateBlock;
 
-		public ref class Device : public DirectXObject<IDirect3DDevice9>
+		public ref class Device : public DirectXBase
 		{
+			DXOBJECT(IDirect3DDevice9);
+
 		internal:
 			Device( IDirect3DDevice9* device );
 
@@ -148,7 +150,6 @@ namespace SlimDX
 			Device( IntPtr device );
 			Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams );
 			virtual ~Device() { Destruct(); }
-			DXOBJECT_FUNCTIONS;
 
 			// --- Properties ---
 
