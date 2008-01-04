@@ -310,7 +310,7 @@ namespace Direct3D9
 			return E_FAIL;
 		}
 
-		*ppNewFrame = frame->Pointer;
+		*ppNewFrame = new FrameShim( *(frame->Pointer), frame->GetType() );
 
 		return D3D_OK;
 	}
@@ -365,6 +365,8 @@ namespace Direct3D9
 		{
 			return E_FAIL;
 		}
+
+		*ppNewMeshContainer = new D3DXMESHCONTAINER( *(meshContainer->Pointer) );
 
 		return D3D_OK;
 	}
@@ -539,19 +541,24 @@ namespace Direct3D9
 		return D3D_OK;
 	}
 
+	FrameShim::FrameShim( D3DXFRAME pointer, Type^ type ) : D3DXFRAME( pointer )
+	{
+		m_Type = type;
+	}
+
 	Frame::Frame( const D3DXFRAME &frame )
 	{
-		m_Pointer = new D3DXFRAME( frame );
+		Pointer = new D3DXFRAME( frame );
 	}
 
 	Frame::Frame( const D3DXFRAME *frame )
 	{
-		m_Pointer = const_cast<D3DXFRAME*>( frame );
+		Pointer = const_cast<D3DXFRAME*>( frame );
 	}
 
 	Frame::Frame()
 	{
-		m_Pointer = new D3DXFRAME();
+		Pointer = new D3DXFRAME();
 	}
 
 	Frame::~Frame()
@@ -566,10 +573,10 @@ namespace Direct3D9
 
 	void Frame::Destruct()
 	{
-		if( m_Pointer != NULL )
+		if( Pointer != NULL )
 		{
-			delete m_Pointer;
-			m_Pointer = NULL;
+			delete Pointer;
+			Pointer = NULL;
 		}
 	}
 
@@ -732,7 +739,11 @@ namespace Direct3D9
 		delete allocatorShim;
 		delete userDataLoaderShim;
 
-		return gcnew Frame( result );
+		Object^ object = Activator::CreateInstance( ( (FrameShim*)result )->GetType() );
+		Frame^ frame = safe_cast<Frame^>( object );
+		frame->Pointer = result;
+
+		return frame;
 	}
 
 	Frame^ Frame::LoadHierarchyFromX( Device^ device, array<Byte>^ memory, MeshFlags options, 
@@ -762,7 +773,11 @@ namespace Direct3D9
 		delete allocatorShim;
 		delete userDataLoaderShim;
 
-		return gcnew Frame( result );
+		Object^ object = Activator::CreateInstance( ( (FrameShim*)result )->GetType() );
+		Frame^ frame = safe_cast<Frame^>( object );
+		frame->Pointer = result;
+
+		return frame;
 	}
 
 	Frame^ Frame::LoadHierarchyFromX( Device^ device, Stream^ stream, MeshFlags options, 

@@ -205,19 +205,24 @@ namespace SlimDX
 			HRESULT WINAPI SaveTemplates( LPD3DXFILESAVEOBJECT pXofSave );
 		};
 
-		public ref class Frame
+		class FrameShim : public D3DXFRAME
 		{
 		private:
-			D3DXFRAME *m_Pointer;
+			gcroot<Type^> m_Type;
 
+		public:
+			FrameShim( D3DXFRAME frame, Type^ type );
+
+			Type^ GetType() { return m_Type; }
+		};
+
+		public ref class Frame
+		{
 		internal:
 			Frame( const D3DXFRAME &frame );
 			Frame( const D3DXFRAME *frame );
 
-			property D3DXFRAME *Pointer
-			{ 
-				D3DXFRAME* get() { return m_Pointer; }
-			}
+			property D3DXFRAME *Pointer;
 
 			void Destruct();
 

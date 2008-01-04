@@ -771,7 +771,8 @@ namespace SlimDX
 			Alpha = D3DCOLORWRITEENABLE_ALPHA,
 			Blue = D3DCOLORWRITEENABLE_BLUE,
 			Green = D3DCOLORWRITEENABLE_GREEN,
-			Red = D3DCOLORWRITEENABLE_RED
+			Red = D3DCOLORWRITEENABLE_RED,
+			All = Alpha | Blue | Green | Red
 		};
 
 		public enum class ImageFileFormat : Int32
