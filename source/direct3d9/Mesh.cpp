@@ -65,10 +65,15 @@ namespace Direct3D9
 	D3DXMATERIAL ExtendedMaterial::ToUnmanaged( ExtendedMaterial material )
 	{
 		D3DXMATERIAL result;
-		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( material.TextureFilename );
-		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+		if( !String::IsNullOrEmpty( material.TextureFilename ) )
+		{
+			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( material.TextureFilename );
+			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+			result.pTextureFilename = reinterpret_cast<LPSTR>( pinnedName );
+		}
+		else
+			result.pTextureFilename = NULL;
 
-		result.pTextureFilename = reinterpret_cast<LPSTR>( pinnedName );
 		result.MatD3D.Ambient = ConvertColor( material.MaterialD3D.Ambient );
 		result.MatD3D.Diffuse = ConvertColor( material.MaterialD3D.Diffuse );
 		result.MatD3D.Specular = ConvertColor( material.MaterialD3D.Specular );
