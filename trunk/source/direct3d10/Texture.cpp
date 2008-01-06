@@ -19,51 +19,29 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-using namespace System;
+#include <d3d10.h>
+#include <d3dx10.h>
+#include <d3dx9.h>
+#include <vcclr.h>
 
-#include <cmath>
+#include "../DataStream.h"
+#include "GraphicsException.h"
 
-#include "Enums.h"
-#include "Resource.h"
+#include "Texture.h"
+#include "Device.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+namespace Direct3D10
+{ 
+	bool Texture::ToFile( Texture^ texture, ImageFileFormat format, String^ fileName )
 	{
-		ref class Device;
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+		HRESULT hr = D3DX10SaveTextureToFile( texture->InternalPointer, (D3DX10_IMAGE_FILE_FORMAT) format, pinnedName );
+		GraphicsException::CheckHResult( hr );
 		
-		public ref class Texture : public Resource
-		{
-		internal:
-			static int GetMipSize( int mipSlice, int baseSliceSize )
-			{
-				float size = static_cast<float>( baseSliceSize );
-				
-				while( mipSlice > 0 )
-				{
-					size = std::floorf(size / 2.0f);
-					--mipSlice;
-				}
-				
-				return (static_cast< int >(size));
-			}
-			
-		protected:
-			Texture( ID3D10Resource *texture )
-			: Resource( texture )
-			{
-			}
-		
-		public:
-			Texture()
-			{
-			}
-
-			virtual ~Texture() { }
-
-			static bool ToFile( Texture^ texture, ImageFileFormat format, String^ fileName );
-		};
+		return ( FAILED( hr ) );
 	}
-};
+}
+}
