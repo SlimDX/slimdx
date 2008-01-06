@@ -30,6 +30,8 @@ using namespace System;
 
 namespace SlimDX
 {
+	ref class DataStream;
+
 	namespace Direct3D10
 	{
 		ref class Device;

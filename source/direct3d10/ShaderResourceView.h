@@ -31,8 +31,10 @@ namespace SlimDX
 	{
 		ref class Device;
 		ref class Resource;
+		ref class Texture1D;
 		ref class Texture2D;
-		
+		ref class Texture3D;
+
 		public ref class ShaderResourceView : public ResourceView
 		{
 		internal:
@@ -40,7 +42,9 @@ namespace SlimDX
 			
 		public:
 			ShaderResourceView( IntPtr pointer );
+			ShaderResourceView( Device^ device, Texture1D^ resource );
 			ShaderResourceView( Device^ device, Texture2D^ resource );
+			ShaderResourceView( Device^ device, Texture3D^ resource );
 			virtual ~ShaderResourceView() { }
 		};
 	}
