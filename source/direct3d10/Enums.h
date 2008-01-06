@@ -283,6 +283,17 @@ namespace SlimDX
 			B8G8R8A8_UNorm = DXGI_FORMAT_B8G8R8A8_UNORM,
 			B8G8R8X8_UNorm = DXGI_FORMAT_B8G8R8X8_UNORM
 		};
+		
+		public enum class ImageFileFormat : Int32
+		{
+			Bmp = D3DX10_IFF_BMP,
+			Jpg = D3DX10_IFF_JPG,
+			Png = D3DX10_IFF_PNG,
+			Dds = D3DX10_IFF_DDS,
+			Tiff = D3DX10_IFF_TIFF,
+			Gif = D3DX10_IFF_GIF,
+			Wmp = D3DX10_IFF_WMP,
+		};
 
 		public enum class InputClassification : Int32
 		{
