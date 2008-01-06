@@ -28,7 +28,9 @@
 #include "ShaderResourceView.h"
 #include "Device.h"
 #include "Resource.h"
+#include "Texture1D.h"
 #include "Texture2D.h"
+#include "Texture3D.h"
 
 namespace SlimDX
 {
@@ -52,6 +54,28 @@ namespace Direct3D10
 		m_Pointer = static_cast<ID3D10ShaderResourceView*>( result );
 	}
 	
+	ShaderResourceView::ShaderResourceView( Device^ device, Texture1D^ resource )
+	{
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+		if( resource == nullptr )
+			throw gcnew ArgumentNullException( "resource" );
+		
+		D3D10_SHADER_RESOURCE_VIEW_DESC viewDesc;
+		ZeroMemory( &viewDesc, sizeof( viewDesc ) );
+		viewDesc.Format = static_cast<DXGI_FORMAT>( resource->Format );
+	    Format = resource->Format;
+		viewDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE1D;
+		Dimension = ResourceViewDimension::Texture1D;
+		viewDesc.Texture2D.MipLevels = resource->MipLevels;
+		
+		ID3D10ShaderResourceView *view;
+		HRESULT hr = device->DevicePointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
+		GraphicsException::CheckHResult( hr );
+		
+		m_Pointer = view;
+	}
+
 	ShaderResourceView::ShaderResourceView( Device^ device, Texture2D^ resource )
 	{
 		if( device == nullptr )
@@ -66,6 +90,28 @@ namespace Direct3D10
 		viewDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;
 		Dimension = ResourceViewDimension::Texture2D;
 		viewDesc.Texture2D.MipLevels = resource->MipLevels;
+		
+		ID3D10ShaderResourceView *view;
+		HRESULT hr = device->DevicePointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
+		GraphicsException::CheckHResult( hr );
+		
+		m_Pointer = view;
+	}
+
+	ShaderResourceView::ShaderResourceView( Device^ device, Texture3D^ resource )
+	{
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+		if( resource == nullptr )
+			throw gcnew ArgumentNullException( "resource" );
+		
+		D3D10_SHADER_RESOURCE_VIEW_DESC viewDesc;
+		ZeroMemory( &viewDesc, sizeof( viewDesc ) );
+		viewDesc.Format = static_cast<DXGI_FORMAT>( resource->Format );
+	    Format = resource->Format;
+		viewDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE3D;
+		Dimension = ResourceViewDimension::Texture3D;
+		viewDesc.Texture3D.MipLevels = resource->MipLevels;
 		
 		ID3D10ShaderResourceView *view;
 		HRESULT hr = device->DevicePointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );

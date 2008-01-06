@@ -92,7 +92,7 @@ namespace Direct3D10
 		Construct( texture );	
 	}
 	
-	DataStream^ Texture1D::Map( int mipSlice, MapMode mode, MapFlags flags )
+	SlimDX::DataStream^ Texture1D::Map( int mipSlice, MapMode mode, MapFlags flags )
 	{
 		int subResource = D3D10CalcSubresource( mipSlice, 0, MipLevels );
 		int mipWidth = GetMipSize( mipSlice, Width );
@@ -103,7 +103,7 @@ namespace Direct3D10
 		GraphicsException::CheckHResult( hr );
 		
 		bool readOnly = mode == MapMode::Read;
-		return gcnew DataStream( mappedArray, bufferSize, true, !readOnly, false );
+		return gcnew SlimDX::DataStream( mappedArray, bufferSize, true, !readOnly, false );
 	}
 
 	void Texture1D::Unmap( int subResource )
