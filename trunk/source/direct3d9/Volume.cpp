@@ -81,10 +81,7 @@ namespace Direct3D9
 		int lockedSize = lockedBox.RowPitch * lockedBox.SlicePitch * Description.Height;
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		LockedBox outBox;
-		outBox.Data = gcnew DataStream( lockedBox.pBits, lockedSize, true, !readOnly, false );
-		outBox.RowPitch = lockedBox.RowPitch;
-		outBox.SlicePitch = lockedBox.SlicePitch;
+		LockedBox outBox( lockedBox.RowPitch, lockedBox.SlicePitch, gcnew DataStream( lockedBox.pBits, lockedSize, true, !readOnly, false ) );
 		return outBox;
 	}
 
@@ -98,10 +95,7 @@ namespace Direct3D9
 		int lockedSize = lockedBox.RowPitch * lockedBox.SlicePitch * Description.Height;
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		LockedBox outBox;
-		outBox.Data = gcnew DataStream( lockedBox.pBits, lockedSize, true, !readOnly, false );
-		outBox.RowPitch = lockedBox.RowPitch;
-		outBox.SlicePitch = lockedBox.SlicePitch;
+		LockedBox outBox( lockedBox.RowPitch, lockedBox.SlicePitch, gcnew DataStream( lockedBox.pBits, lockedSize, true, !readOnly, false ) );
 		return outBox;
 	}
 

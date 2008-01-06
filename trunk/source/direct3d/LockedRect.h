@@ -36,17 +36,21 @@ namespace SlimDX
 			int pitch;
 			SlimDX::DataStream^ data;
 
+		internal:
+			LockedRect( int pitch, SlimDX::DataStream^ data )
+			: pitch( pitch ), data( data )
+			{
+			}
+
 		public:
 			property int Pitch
 			{
 				int get() { return pitch; }
-				void set( int value ) { pitch = value; }
 			}
 
 			property SlimDX::DataStream^ Data
 			{
 				SlimDX::DataStream^ get() { return data; }
-				void set( SlimDX::DataStream^ value ) { data = value; }
 			}
 		};
 	}

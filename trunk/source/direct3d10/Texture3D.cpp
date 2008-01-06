@@ -106,11 +106,7 @@ namespace Direct3D10
 		int lockedSize = mipHeight * mappedBox.RowPitch * mappedBox.DepthPitch;
 		
 		bool readOnly = mode == MapMode::Read;
-		SlimDX::Direct3D::LockedBox box;
-	
-		box.RowPitch = mappedBox.RowPitch;
-		box.SlicePitch = mappedBox.DepthPitch;
-		box.Data = gcnew DataStream( mappedBox.pData, lockedSize, true, !readOnly, false );
+		SlimDX::Direct3D::LockedBox box( mappedBox.RowPitch, mappedBox.DepthPitch, gcnew DataStream( mappedBox.pData, lockedSize, true, !readOnly, false ) );
 		
 		return box;
 	}

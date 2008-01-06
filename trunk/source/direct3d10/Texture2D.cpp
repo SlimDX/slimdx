@@ -128,10 +128,7 @@ namespace Direct3D10
 		int lockedSize = mipHeight * mappedRect.RowPitch;
 		
 		bool readOnly = mode == MapMode::Read;
-		SlimDX::Direct3D::LockedRect rect;
-		rect.Pitch = mappedRect.RowPitch;
-		rect.Data = gcnew DataStream( mappedRect.pData, lockedSize, true, !readOnly, false );
-		
+		SlimDX::Direct3D::LockedRect rect( mappedRect.RowPitch, gcnew DataStream( mappedRect.pData, lockedSize, true, !readOnly, false ) );
 		return rect;
 	}
 

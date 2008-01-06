@@ -365,9 +365,7 @@ namespace Direct3D9
 		int lockedSize = lockedRect.Pitch * Description.Height;
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		LockedRect outRect;
-		outRect.Data = gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false );
-		outRect.Pitch = lockedRect.Pitch;
+		LockedRect outRect( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
 		return outRect;
 	}
 
@@ -382,9 +380,7 @@ namespace Direct3D9
 		int lockedSize = lockedRect.Pitch * Description.Height;
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		LockedRect outRect;
-		outRect.Data = gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false );
-		outRect.Pitch = lockedRect.Pitch;
+		LockedRect outRect( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
 		return outRect;
 	}
 
