@@ -435,6 +435,48 @@ namespace SlimDX
 			OptimizationLevel3 = D3D10_SHADER_OPTIMIZATION_LEVEL3
 		};
 		
+		/// <remarks>
+		/// Flags that control the behavior of <see cref="SlimDX.Direct3D10.Sprite"/> rendering.
+		/// </remarks>
+		/// <unmanaged counterpart="D3DX10_SPRITE_FLAG" complete="yes"/>
+		[Flags]
+		public enum class SpriteFlags : Int32
+		{
+			/// <summary>
+			/// No flags.
+			/// </summary>
+			None = 0,
+
+			/// <summary>
+			/// Group sprites by texture before rendering; improves performance when many sprites
+			/// share textures.
+			/// </summary>
+			GroupByTexture = D3DX10_SPRITE_SORT_TEXTURE,
+			
+			/// <summary>
+			/// Sort the sprites from back to front based on their depth; sprites further away from the
+			/// camera will be rendered first.
+			/// </summary>
+			SortBackToFront = D3DX10_SPRITE_SORT_DEPTH_BACK_TO_FRONT,
+			
+			/// <summary>
+			/// Sort the sprites from front to back based on their depth; sprites closer to the
+			/// camera will be rendered first.
+			/// </summary>
+			SortFrontToBack = D3DX10_SPRITE_SORT_DEPTH_FRONT_TO_BACK,
+			
+			/// <summary>
+			/// Saves render state when sprites are rendered, and restores the previous state once rendering
+			/// is complete.
+			/// </summary>
+			SaveState = D3DX10_SPRITE_SAVE_STATE,
+			
+			/// <summary>
+			/// Increases the reference count of textures when DrawSpritesBuffered is called.
+			/// </summary>
+			IncreaseTextureReferenceCount = D3DX10_SPRITE_ADDREF_TEXTURES
+		};
+
 		public enum class StencilOperation : Int32
 		{
 			Keep = D3D10_STENCIL_OP_KEEP,
