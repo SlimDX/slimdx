@@ -179,9 +179,14 @@ namespace DirectInput
 
 		timeStamp = objectData.dwTimeStamp;
 		sequence = objectData.dwSequence;
-		GCHandle handle = GCHandle::FromIntPtr( static_cast<IntPtr>( static_cast<UIntPtr>( objectData.uAppData ).ToPointer() ) );
-		appData = handle.Target;
-		handle.Free();
+		if( objectData.uAppData == NULL )
+			appData = nullptr;
+		else
+		{
+			GCHandle handle = GCHandle::FromIntPtr( static_cast<IntPtr>( static_cast<UIntPtr>( objectData.uAppData ).ToPointer() ) );
+			appData = handle.Target;
+			handle.Free();
+		}
 	}
 
 	generic<typename DataFormat>

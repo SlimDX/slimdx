@@ -137,6 +137,7 @@ namespace Direct3D9
 	{
 		D3DXEFFECTINSTANCE result;
 		int count = effect.Defaults->Length;
+		result.NumDefaults = count;
 		result.pDefaults = new D3DXEFFECTDEFAULT[count];
 
 		if( String::IsNullOrEmpty( effect.EffectFilename ) )
@@ -1872,6 +1873,10 @@ namespace Direct3D9
 		}
 
 		vertexMapping = ( gcnew DataStream( vertex ) )->ReadRange<int>( result->GetNumVertices() );
+
+		if( (options & TangentOptions::GenerateInPlace) == TangentOptions::GenerateInPlace )
+			return this;
+
 		return gcnew Mesh( result );
 	}
 
@@ -1893,6 +1898,9 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			return nullptr;
 
+		if( (options & TangentOptions::GenerateInPlace) == TangentOptions::GenerateInPlace )
+			return this;
+
 		return gcnew Mesh( result );
 	}
 
@@ -1911,6 +1919,9 @@ namespace Direct3D9
 
 		if( FAILED( hr ) )
 			return nullptr;
+
+		if( (options & TangentOptions::GenerateInPlace) == TangentOptions::GenerateInPlace )
+			return this;
 
 		return gcnew Mesh( result );
 	}

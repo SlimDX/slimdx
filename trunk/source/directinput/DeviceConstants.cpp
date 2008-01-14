@@ -453,6 +453,12 @@ namespace DirectInput
 			return DIK_NUMPAD9;
 			break;
 
+		case Key::NumberPadEquals:
+			return DIK_NUMPADEQUALS;
+
+		case Key::WebRefresh:
+			return DIK_WEBREFRESH;
+
 		case Key::NumberPadComma:
 			return DIK_NUMPADCOMMA;
 			break;
@@ -1053,6 +1059,12 @@ namespace DirectInput
 		case Key::NumberPadSlash:
 			return DIKEYBOARD_DIVIDE;
 			break;
+
+		case Key::NumberPadEquals:
+			return DIKEYBOARD_NUMPADEQUALS;
+
+		case Key::WebRefresh:
+			return DIKEYBOARD_WEBREFRESH;
 
 		case Key::NumberPadStar:
 			return DIKEYBOARD_MULTIPLY;
