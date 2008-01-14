@@ -216,16 +216,19 @@ namespace DirectInput
 		if( hr == DIERR_INPUTLOST && &Device::DeviceLost != nullptr )
 			DeviceLost( this, EventArgs::Empty );
 
-		delete[] data;
-
 		if( FAILED( hr ) )
+		{
+			delete[] data;
 			return nullptr;
+		}
 
 		for( int i = 0; i < size; i++ )
 		{
 			BufferedData<DataFormat>^ bufferedData = gcnew BufferedData<DataFormat>( data[i] );
 			list->Add( bufferedData );
 		}
+
+		delete[] data;
 
 		return list;
 	}
