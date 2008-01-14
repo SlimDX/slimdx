@@ -113,29 +113,18 @@ namespace Direct3D10
 	
 	Texture1D^ Texture1D::FromFile( Device^ device, String^ fileName )
 	{
-		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
-
-		ID3D10Resource* texture = 0;
-		HRESULT hr = D3DX10CreateTextureFromFile( device->DevicePointer, pinnedName, NULL, NULL, &texture, NULL ); 
-		GraphicsException::CheckHResult( hr );
-		
-		if( texture == NULL )
-			return nullptr;
-		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( texture ) );
+		Texture^ baseTexture = Texture::FromFile( device, fileName );
+		if( baseTexture->Dimension != ResourceDimension::Texture1D )
+			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
+		return static_cast< Texture1D^ >( baseTexture );
 	}
 	
 	Texture1D^ Texture1D::FromStream( Device^ device, Stream^ stream, int sizeInBytes )
 	{
-		array<Byte>^ memory = SlimDX::Utils::ReadStream( stream, sizeInBytes );
-		pin_ptr<unsigned char> pinnedMemory = &memory[0];
-		
-		ID3D10Resource* texture;
-		HRESULT hr = D3DX10CreateTextureFromMemory( device->DevicePointer, pinnedMemory, sizeInBytes, NULL, NULL, &texture, NULL ); 
-		GraphicsException::CheckHResult( hr );
-		
-		if( texture == NULL )
-			return nullptr;
-		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( texture ) );
+		Texture^ baseTexture = Texture::FromStream( device, stream, sizeInBytes );
+		if( baseTexture->Dimension != ResourceDimension::Texture1D )
+			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
+		return static_cast< Texture1D^ >( baseTexture );
 	}
 }
 }

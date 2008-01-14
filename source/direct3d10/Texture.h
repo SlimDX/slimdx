@@ -23,9 +23,6 @@
 
 using namespace System;
 
-#include <cmath>
-
-#include "Enums.h"
 #include "Resource.h"
 
 namespace SlimDX
@@ -34,34 +31,23 @@ namespace SlimDX
 	{
 		ref class Device;
 		
+		/// <remarks>
+		/// A base class for texture resources.
+		/// </remarks>
 		public ref class Texture : public Resource
 		{
 		internal:
-			static int GetMipSize( int mipSlice, int baseSliceSize )
-			{
-				float size = static_cast<float>( baseSliceSize );
-				
-				while( mipSlice > 0 )
-				{
-					size = std::floorf(size / 2.0f);
-					--mipSlice;
-				}
-				
-				return (static_cast< int >(size));
-			}
+			static int GetMipSize( int mipSlice, int baseSliceSize );
 			
 		protected:
-			Texture( ID3D10Resource *texture )
-			: Resource( texture )
-			{
-			}
+			Texture( ID3D10Resource *pointer );
 		
 		public:
-			Texture()
-			{
-			}
+			Texture();
 
-			virtual ~Texture() { }
+			static Texture^ FromFile( Device^ device, String^ fileName );
+			static Texture^ FromMemory( Device^ device, array<Byte>^ memory );
+			static Texture^ FromStream( Device^ device, Stream^ stream, int sizeInBytes );
 
 			static bool ToFile( Texture^ texture, ImageFileFormat format, String^ fileName );
 		};
