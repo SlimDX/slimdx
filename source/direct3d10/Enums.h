@@ -191,6 +191,23 @@ namespace SlimDX
 			Solid = D3D10_FILL_SOLID
 		};
 		
+		[Flags]
+		public enum class FontFlags : Int32
+		{
+			Bottom = DT_BOTTOM,
+			CalculateBounds = DT_CALCRECT,
+			Center = DT_CENTER,
+			ExpandTabs = DT_EXPANDTABS,
+			Left = DT_LEFT,
+			NoClip = DT_NOCLIP,
+			Right = DT_RIGHT,
+			RightToLeftReading = DT_RTLREADING,
+			SingleLine = DT_SINGLELINE,
+			Top = DT_TOP,
+			VerticalCenter = DT_VCENTER,
+			WordBreak = DT_WORDBREAK
+		};
+
 		public enum class Format : Int32
 		{
 			Unknown = DXGI_FORMAT_UNKNOWN,
