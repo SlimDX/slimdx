@@ -24,6 +24,7 @@
 #include <d3dx10.h>
 #include <d3dx9.h>
 #include <vcclr.h>
+#include <cmath>
 
 #include "../DataStream.h"
 #include "GraphicsException.h"
@@ -31,10 +32,52 @@
 #include "Texture.h"
 #include "Device.h"
 
+
 namespace SlimDX
 {
 namespace Direct3D10
 { 
+	Texture::Texture()
+	{
+	}
+
+	Texture::Texture( ID3D10Resource* pointer )
+	: Resource( pointer )
+	{
+	}
+
+	Texture^ Texture::FromFile( Device^ device, String^ fileName )
+	{	
+		ID3D10Resource* resource = 0;
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+		HRESULT hr = D3DX10CreateTextureFromFile( device->DevicePointer, pinnedName, 0, 0, &resource, 0 );
+		GraphicsException::CheckHResult( hr );
+		
+		if( resource == 0 )
+			return nullptr;
+		return gcnew Texture( resource );
+	}
+
+	Texture^ Texture::FromMemory( Device^ device, array<Byte>^ memory )
+	{
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+		
+		ID3D10Resource* resource = 0;
+		HRESULT hr = D3DX10CreateTextureFromMemory( device->DevicePointer, pinnedMemory, memory->Length, 0, 0, &resource, 0 ); 
+		GraphicsException::CheckHResult( hr );
+		
+		if( resource == 0 )
+			return nullptr;
+		return gcnew Texture( static_cast<ID3D10Resource*>( resource ) );
+	}
+
+	Texture^ Texture::FromStream( Device^ device, Stream^ stream, int sizeInBytes )
+	{
+		array<Byte>^ memory = SlimDX::Utils::ReadStream( stream, sizeInBytes );
+		return FromMemory( device, memory );
+	}
+
+
 	bool Texture::ToFile( Texture^ texture, ImageFileFormat format, String^ fileName )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
@@ -42,6 +85,19 @@ namespace Direct3D10
 		GraphicsException::CheckHResult( hr );
 		
 		return ( FAILED( hr ) );
+	}
+
+	int Texture::GetMipSize( int mipSlice, int baseSliceSize )
+	{
+		float size = static_cast<float>( baseSliceSize );
+		
+		while( mipSlice > 0 )
+		{
+			size = std::floorf(size / 2.0f);
+			--mipSlice;
+		}
+		
+		return (static_cast< int >(size));
 	}
 }
 }
