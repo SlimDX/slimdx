@@ -1715,9 +1715,17 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\direct3d\Viewport.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\source\direct3d\Viewport.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="DXGI"
+			>
 		</Filter>
 		<File
 			RelativePath="..\source\AssemblyInfo.cpp"
