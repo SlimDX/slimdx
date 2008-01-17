@@ -47,11 +47,12 @@ namespace SlimDX
 
 		public:
 			Font( IntPtr pointer );
-			Font( Device^ device, int height, int width, int weight, int mipLevels, bool isItalic,
-				int characterSet, int outputPrecision, int quality, int pitchAndFamily, String^ faceName );
+			Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic,
+				FontCharacterSet characterSet, FontPrecision outputPrecision, FontQuality quality,
+				FontPitchAndFamily pitchAndFamily, String^ faceName );
 			~Font() { Destruct(); }
 
-			int Draw( Sprite^ sprite, String^ text, Drawing::Rectangle rect, FontFlags flags, int color );
+			int Draw( Sprite^ sprite, String^ text, Drawing::Rectangle rect, FontDrawFlags flags, int color );
 
 			void PreloadCharacters( int first, int last );
 			void PreloadGlyphs( int first, int last );

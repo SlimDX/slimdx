@@ -23,6 +23,8 @@
 
 using namespace System;
 
+#include <windows.h>
+
 namespace SlimDX
 {
 	namespace Direct3D10
@@ -190,9 +192,34 @@ namespace SlimDX
 			Wireframe = D3D10_FILL_WIREFRAME,
 			Solid = D3D10_FILL_SOLID
 		};
-		
+	
+		public enum class FontCharacterSet : Int32
+		{
+			Ansi = ANSI_CHARSET,
+			Default = DEFAULT_CHARSET,
+			Symbol = SYMBOL_CHARSET,
+			ShiftJIS = SHIFTJIS_CHARSET,
+			Hangul = HANGUL_CHARSET,
+			GB2312 = GB2312_CHARSET,
+			ChineseBig5 = CHINESEBIG5_CHARSET,
+			Oem = OEM_CHARSET,
+
+			Johab = JOHAB_CHARSET,
+			Hebrew = HEBREW_CHARSET,
+			Arabic = ARABIC_CHARSET,
+			Greek = GREEK_CHARSET,
+			Turkish = TURKISH_CHARSET,
+			Vietnamese = VIETNAMESE_CHARSET,
+			Thai = THAI_CHARSET,
+			EastEurope = EASTEUROPE_CHARSET,
+			Russian = RUSSIAN_CHARSET,
+
+			Baltic = BALTIC_CHARSET,
+			Mac = MAC_CHARSET
+		};
+
 		[Flags]
-		public enum class FontFlags : Int32
+		public enum class FontDrawFlags : Int32
 		{
 			Bottom = DT_BOTTOM,
 			CalculateBounds = DT_CALCRECT,
@@ -206,6 +233,67 @@ namespace SlimDX
 			Top = DT_TOP,
 			VerticalCenter = DT_VCENTER,
 			WordBreak = DT_WORDBREAK
+		};
+		
+		[Flags]
+		public enum class FontPitchAndFamily : Int32
+		{
+			Default = DEFAULT_PITCH,
+			Fixed = FIXED_PITCH,
+			Variable = VARIABLE_PITCH,
+			Mono = MONO_FONT,
+
+			DoNotCare = FF_DONTCARE,
+			Roman = FF_ROMAN,
+			Swiss = FF_SWISS,
+			Modern = FF_MODERN,
+			Script = FF_SCRIPT,
+			Decorative = FF_DECORATIVE
+		};
+
+		public enum class FontPrecision : Int32
+		{
+			Default = OUT_DEFAULT_PRECIS,
+			String = OUT_STRING_PRECIS,
+			Character = OUT_CHARACTER_PRECIS,
+			Stroke = OUT_STROKE_PRECIS,
+			TrueType = OUT_TT_PRECIS,
+			Device = OUT_DEVICE_PRECIS,
+			Raster = OUT_RASTER_PRECIS,
+			TrueTypeOnly = OUT_TT_ONLY_PRECIS,
+			Outline = OUT_OUTLINE_PRECIS,
+			ScreenOutline = OUT_SCREEN_OUTLINE_PRECIS,
+			PostScriptOnly = OUT_PS_ONLY_PRECIS
+		};
+
+		public enum class FontQuality : Int32
+		{
+			Default = DEFAULT_QUALITY,
+			Draft = DRAFT_QUALITY,
+			Proof = PROOF_QUALITY,
+			NonAntiAliased = NONANTIALIASED_QUALITY,
+			AntiAliased = ANTIALIASED_QUALITY,
+			ClearType = CLEARTYPE_QUALITY,
+			ClearTypeNatural = CLEARTYPE_NATURAL_QUALITY
+		};
+
+		public enum class FontWeight : Int32
+		{
+			DoNotCare = FW_DONTCARE,
+			Thin = FW_THIN,
+			ExtraLight = FW_EXTRALIGHT,
+			UltraLight = FW_ULTRALIGHT,
+			Light = FW_LIGHT,
+			Normal = FW_NORMAL,
+			Regular = FW_REGULAR,
+			Medium = FW_MEDIUM,
+			SemiBold = FW_SEMIBOLD,
+			DemiBold = FW_DEMIBOLD,
+			Bold = FW_BOLD,
+			ExtraBold = FW_EXTRABOLD,
+			UltraBold = FW_ULTRABOLD,
+			Heavy = FW_HEAVY,
+			Black = FW_BLACK
 		};
 
 		public enum class Format : Int32

@@ -48,20 +48,22 @@ namespace Direct3D10
 		Construct(pointer);
 	}
 	
-	Font::Font( Device^ device, int height, int width, int weight, int mipLevels, bool isItalic,
-		int characterSet, int outputPrecision, int quality, int pitchAndFamily, String^ faceName )
+	Font::Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic,
+		FontCharacterSet characterSet, FontPrecision outputPrecision, FontQuality quality,
+		FontPitchAndFamily pitchAndFamily, String^ faceName )
 	{
 		pin_ptr<const wchar_t> pinned_name = PtrToStringChars( faceName );
 		
 		ID3DX10Font* font = 0;
-		HRESULT hr = D3DX10CreateFont( device->DevicePointer, height, width, weight, mipLevels, isItalic,
-			characterSet, outputPrecision, quality, pitchAndFamily, pinned_name, &font );
+		HRESULT hr = D3DX10CreateFont( device->DevicePointer, height, width, static_cast<UINT>( weight ),
+			mipLevels, isItalic, static_cast<UINT>( characterSet ), static_cast<UINT>( outputPrecision ),
+			static_cast< UINT>( quality ), static_cast<UINT>( pitchAndFamily ), pinned_name, &font );
 		GraphicsException::CheckHResult( hr );
 
 		Construct(font);
 	}
 
-	int Font::Draw( Sprite^ sprite, String^ text, Drawing::Rectangle rect, FontFlags flags, int color )
+	int Font::Draw( Sprite^ sprite, String^ text, Drawing::Rectangle rect, FontDrawFlags flags, int color )
 	{
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };

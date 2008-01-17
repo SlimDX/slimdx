@@ -23,12 +23,102 @@
 
 using namespace System;
 
+#include <windows.h>
+
 #include "external/atir2vb.h"
 
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		public enum class CharacterSet : Int32
+		{
+			Ansi = ANSI_CHARSET,
+			Default = DEFAULT_CHARSET,
+			Symbol = SYMBOL_CHARSET,
+			ShiftJIS = SHIFTJIS_CHARSET,
+			Hangul = HANGUL_CHARSET,
+			GB2312 = GB2312_CHARSET,
+			ChineseBig5 = CHINESEBIG5_CHARSET,
+			Oem = OEM_CHARSET,
+
+			Johab = JOHAB_CHARSET,
+			Hebrew = HEBREW_CHARSET,
+			Arabic = ARABIC_CHARSET,
+			Greek = GREEK_CHARSET,
+			Turkish = TURKISH_CHARSET,
+			Vietnamese = VIETNAMESE_CHARSET,
+			Thai = THAI_CHARSET,
+			EastEurope = EASTEUROPE_CHARSET,
+			Russian = RUSSIAN_CHARSET,
+
+			Baltic = BALTIC_CHARSET,
+			Mac = MAC_CHARSET,
+		};
+
+		[Flags]
+		public enum class CreateFlags : Int32
+		{
+			None = 0,
+			AdapterGroupDevice = D3DCREATE_ADAPTERGROUP_DEVICE,
+			DisableDriverManagement = D3DCREATE_DISABLE_DRIVER_MANAGEMENT,
+			DisableExtendedDriverManagement = D3DCREATE_DISABLE_DRIVER_MANAGEMENT_EX,
+			FpuPreserve = D3DCREATE_FPU_PRESERVE,
+			HardwareVertexProcessing = D3DCREATE_HARDWARE_VERTEXPROCESSING,
+			MixedVertexProcessing = D3DCREATE_MIXED_VERTEXPROCESSING,
+			Multithreaded = D3DCREATE_MULTITHREADED,
+			NoWindowChanges = D3DCREATE_NOWINDOWCHANGES,
+			PureDevice = D3DCREATE_PUREDEVICE,
+			SoftwareVertexProcessing = D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+		};
+
+		[Flags]
+		public enum class DrawTextFormat : Int32
+		{
+			Top = DT_TOP,
+			Left = DT_LEFT,
+			Center = DT_CENTER,
+			Right = DT_RIGHT,
+			VCenter = DT_VCENTER,
+			Bottom = DT_BOTTOM,
+			WordBreak = DT_WORDBREAK,
+			SingleLine = DT_SINGLELINE,
+			ExpandTabs = DT_EXPANDTABS,
+			NoClip = DT_NOCLIP,
+			CalcRect = DT_CALCRECT,
+			RtlReading = DT_RTLREADING,
+		};
+		
+		public enum class FontQuality : Int32
+		{
+			Default = DEFAULT_QUALITY,
+			Draft = DRAFT_QUALITY,
+			Proof = PROOF_QUALITY,
+			NonAntiAliased = NONANTIALIASED_QUALITY,
+			AntiAliased = ANTIALIASED_QUALITY,
+			ClearType = CLEARTYPE_QUALITY,
+			ClearTypeNatural = CLEARTYPE_NATURAL_QUALITY,
+		};
+
+		public enum class FontWeight : Int32
+		{
+			DoNotCare = FW_DONTCARE,
+			Thin = FW_THIN,
+			ExtraLight = FW_EXTRALIGHT,
+			UltraLight = FW_ULTRALIGHT,
+			Light = FW_LIGHT,
+			Normal = FW_NORMAL,
+			Regular = FW_REGULAR,
+			Medium = FW_MEDIUM,
+			SemiBold = FW_SEMIBOLD,
+			DemiBold = FW_DEMIBOLD,
+			Bold = FW_BOLD,
+			ExtraBold = FW_EXTRABOLD,
+			UltraBold = FW_ULTRABOLD,
+			Heavy = FW_HEAVY,
+			Black = FW_BLACK,
+		};
+
 		public enum class Format : Int32
 		{
 			R8G8B8 = D3DFMT_R8G8B8,
@@ -109,20 +199,37 @@ namespace SlimDX
 		};
 
 		[Flags]
-		public enum class CreateFlags : Int32
+		public enum class PitchAndFamily : Int32
 		{
-			None = 0,
-			AdapterGroupDevice = D3DCREATE_ADAPTERGROUP_DEVICE,
-			DisableDriverManagement = D3DCREATE_DISABLE_DRIVER_MANAGEMENT,
-			DisableExtendedDriverManagement = D3DCREATE_DISABLE_DRIVER_MANAGEMENT_EX,
-			FpuPreserve = D3DCREATE_FPU_PRESERVE,
-			HardwareVertexProcessing = D3DCREATE_HARDWARE_VERTEXPROCESSING,
-			MixedVertexProcessing = D3DCREATE_MIXED_VERTEXPROCESSING,
-			Multithreaded = D3DCREATE_MULTITHREADED,
-			NoWindowChanges = D3DCREATE_NOWINDOWCHANGES,
-			PureDevice = D3DCREATE_PUREDEVICE,
-			SoftwareVertexProcessing = D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+			Default = DEFAULT_PITCH,
+			Fixed = FIXED_PITCH,
+			Variable = VARIABLE_PITCH,
+			Mono = MONO_FONT,
+
+			DontCare = FF_DONTCARE,
+			Roman = FF_ROMAN,
+			Swiss = FF_SWISS,
+			Modern = FF_MODERN,
+			Script = FF_SCRIPT,
+			Decorative = FF_DECORATIVE,
 		};
+
+		public enum class Precision : Int32
+		{
+			Default = OUT_DEFAULT_PRECIS,
+			String = OUT_STRING_PRECIS,
+			Character = OUT_CHARACTER_PRECIS,
+			Stroke = OUT_STROKE_PRECIS,
+			TrueType = OUT_TT_PRECIS,
+			Device = OUT_DEVICE_PRECIS,
+			Raster = OUT_RASTER_PRECIS,
+			TrueTypeOnly = OUT_TT_ONLY_PRECIS,
+			Outline = OUT_OUTLINE_PRECIS,
+			ScreenOutline = OUT_SCREEN_OUTLINE_PRECIS,
+			PostScriptOnly = OUT_PS_ONLY_PRECIS,
+		};
+
+		
 
 		[Flags]
 		public enum class Usage : Int32
