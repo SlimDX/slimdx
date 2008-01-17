@@ -19,8 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#define WINVER 0x0501
-#define _WIN32_WINNT 0x501
+
 #include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -50,6 +49,7 @@ namespace Direct3D9
 	Font::Font( IntPtr font )
 	{
 		Construct( font, IID_ID3DXFont );
+
 	}
 
 	Font::Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,
