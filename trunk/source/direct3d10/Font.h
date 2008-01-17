@@ -23,7 +23,7 @@
 
 using namespace System::Drawing;
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 
 #include "Enums.h"
 
@@ -38,7 +38,7 @@ namespace SlimDX
 		/// An interface for performing text rendering.
 		/// </remarks>
 		/// <unmanaged counterpart="ID3DX10Font" complete="no"/>
-		public ref class Font : public DirectXBase
+		public ref class Font : public BaseObject
 		{
 			DXOBJECT(ID3DX10Font);
 

@@ -22,7 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../Utils.h"
+#include "../Utilities.h"
 #include "Device.h"
 #include "VertexBuffer.h"
 
@@ -45,7 +45,7 @@ namespace Direct3D9
 		SizeInBytes = desc.Size;
 		FVF = static_cast<VertexFormat>( desc.FVF );
 
-		m_Pointer = buffer;
+		Construct(buffer);
 	}
 
 	VertexBuffer::VertexBuffer( IntPtr buffer )
@@ -73,7 +73,7 @@ namespace Direct3D9
 		SizeInBytes = desc.Size;
 		FVF = static_cast<VertexFormat>( desc.FVF );
 
-		m_Pointer = vbPtr;
+		Construct(vbPtr);
 	}
 
 	VertexBuffer::VertexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool )
@@ -93,7 +93,7 @@ namespace Direct3D9
 		SizeInBytes = desc.Size;
 		FVF = static_cast<VertexFormat>( desc.FVF );
 		
-		m_Pointer = vb;
+		Construct(vb);
 	}
 
 	DataStream^ VertexBuffer::Lock( int offset, int size, LockFlags flags )

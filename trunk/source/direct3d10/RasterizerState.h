@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 
 #include "Enums.h"
 #include "RasterizerStateDescription.h"
@@ -34,7 +34,7 @@ namespace SlimDX
 	{	
 		ref class Device;
 		
-		public ref class RasterizerState : DirectXBase
+		public ref class RasterizerState : BaseObject
 		{
 			DXOBJECT(ID3D10RasterizerState);
 

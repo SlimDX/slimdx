@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{	
-		public ref class PixelShader : public DirectXBase
+		public ref class PixelShader : public BaseObject
 		{
 			DXOBJECT(IDirect3DPixelShader9);
 

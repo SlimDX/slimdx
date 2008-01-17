@@ -119,7 +119,7 @@ namespace SlimDX
 
 		inline void GraphicsException::CheckHResult( HRESULT hr )
 		{
-			if( DirectXException::EnableExceptions && FAILED(hr) )
+			if( Configuration::EnableExceptions && FAILED(hr) )
 			{
 				GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( (hr) );
 				//don't throw if an exception wasn't returned for some reason (e.g. it's part of a disabled subset)
@@ -133,7 +133,7 @@ namespace SlimDX
 		inline void GraphicsException::CheckHResult( HRESULT hr, String^ dataKey, Object^ dataValue )
 		{
 			GraphicsException::LastError = hr;
-			if( DirectXException::EnableExceptions && FAILED(hr) )
+			if( Configuration::EnableExceptions && FAILED(hr) )
 			{
 				GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( (hr) );
 				//don't throw if an exception wasn't returned for some reason (e.g. it's part of a disabled subset)

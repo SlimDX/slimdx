@@ -23,7 +23,7 @@
 
 #ifdef WRAP_XAUDIO2
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 #include "Enums.h"
 #include "Voice.h"
 

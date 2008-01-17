@@ -25,8 +25,8 @@
 #include <vcclr.h>
 #include <memory>
 
-#include "../DirectXObject.h"
-#include "../Utils.h"
+#include "../BaseObject.h"
+#include "../Utilities.h"
 
 #include "Device.h"
 #include "PixelShader.h"
@@ -41,23 +41,14 @@ namespace SlimDX
 			if( pixelShader == NULL )
 				throw gcnew ArgumentNullException( "pixelShader" );
 
-			m_Pointer = pixelShader;
+			Construct(pixelShader);
 
 			m_ConstantTable = nullptr;
 		}
 
 		PixelShader::PixelShader( IntPtr pixelShader )
 		{
-			if( pixelShader == IntPtr::Zero )
-				throw gcnew ArgumentNullException( "pixelShader" );
-
-			void* pointer;
-			IUnknown* unknown = static_cast<IUnknown*>( pixelShader.ToPointer() );
-			HRESULT hr = unknown->QueryInterface( IID_IDirect3DPixelShader9, &pointer );
-			if( FAILED( hr ) )
-				throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-			m_Pointer = static_cast<IDirect3DPixelShader9*>( pointer );
+			Construct( pixelShader, IID_IDirect3DPixelShader9 );
 		}
 
 		PixelShader::PixelShader( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable )
@@ -67,7 +58,7 @@ namespace SlimDX
 			if( constantTable == NULL )
 				throw gcnew ArgumentNullException( "constantTable" );
 
-			m_Pointer = pixelShader;
+			Construct(pixelShader);
 
 			IDirect3DDevice9* device;
 			HRESULT hr = pixelShader->GetDevice(&device);
@@ -104,7 +95,7 @@ namespace SlimDX
 			}
 			
 			// CheckHResult() is not used because we need to include the compiler errors.
-			if( DirectXException::EnableExceptions && FAILED(hr) )
+			if( Configuration::EnableExceptions && FAILED(hr) )
 			{
 				GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( hr );
 				ex->Data->Add( "CompilationErrors", compilationErrors );
@@ -127,13 +118,13 @@ namespace SlimDX
 
 			//Retrieve the binary data
 			UINT size = 0;
-			HRESULT hr = m_Pointer->GetFunction( NULL, &size );
+			HRESULT hr = InternalPointer->GetFunction( NULL, &size );
 			GraphicsException::CheckHResult( hr );
 			if( FAILED( hr ) )
 				return;
 
 			std::auto_ptr<char> data( new char[size] );
-			hr = m_Pointer->GetFunction( data.get(), &size );
+			hr = InternalPointer->GetFunction( data.get(), &size );
 			GraphicsException::CheckHResult( hr );
 			if( FAILED( hr ) )
 				return;

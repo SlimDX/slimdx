@@ -37,7 +37,7 @@ namespace Direct3D10
 		if( state == NULL )
 			throw gcnew ArgumentNullException( "state" );
 
-		m_Pointer = state;
+		Construct(state);
 		
 		D3D10_BLEND_DESC desc;
 		state->GetDesc( &desc );
@@ -46,19 +46,10 @@ namespace Direct3D10
 	
 	BlendState::BlendState( IntPtr state )
 	{
-		if( state == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "state" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( state.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3D10BlendState, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3D10BlendState*>( pointer );
+		Construct( state, IID_ID3D10BlendState );
 
 		D3D10_BLEND_DESC desc;
-		m_Pointer->GetDesc( &desc );
+		InternalPointer->GetDesc( &desc );
 		m_Description = gcnew BlendStateDescription( desc );
 	}
 
@@ -77,13 +68,13 @@ namespace Direct3D10
 		HRESULT hr = device->DevicePointer->CreateBlendState( &desc, &state );
 		GraphicsException::CheckHResult( hr );
 		
-		m_Pointer = state;
+		Construct(state);
 	}
 	
 	BlendStateDescription^ BlendState::CloneDescription()
 	{
 		D3D10_BLEND_DESC desc;
-		m_Pointer->GetDesc( &desc );
+		InternalPointer->GetDesc( &desc );
 		return gcnew BlendStateDescription( desc );
 	}
 }

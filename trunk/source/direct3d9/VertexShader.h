@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{	
-		public ref class VertexShader : public DirectXBase
+		public ref class VertexShader : public BaseObject
 		{
 			DXOBJECT(IDirect3DVertexShader9);
 

@@ -25,7 +25,7 @@
 
 #include "DataStream.h"
 
-#include "Utils.h"
+#include "Utilities.h"
 
 using namespace System::Runtime::InteropServices;
 

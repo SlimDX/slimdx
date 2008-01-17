@@ -41,16 +41,7 @@ namespace Direct3D10
 	
 	ShaderReflection::ShaderReflection( IntPtr reflection )
 	{
-		if( reflection == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "reflection" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( reflection.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3D10ShaderReflection, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "QueryInterface() on user pointer failed." );
-
-		m_Pointer = static_cast<ID3D10ShaderReflection*>( pointer );
+		Construct( reflection, IID_ID3D10ShaderReflection );
 		Construct();
 	}
 	
@@ -63,14 +54,14 @@ namespace Direct3D10
 		HRESULT hr = D3D10ReflectShader( shaderBytecode->Buffer, shaderBytecode->Length, &reflection );
 		GraphicsException::CheckHResult( hr );
 		
-		m_Pointer = reflection;
+		Construct(reflection);
 		Construct();
 	}
 	
 	void ShaderReflection::Construct()
 	{
 		D3D10_SHADER_DESC description;
-		HRESULT hr = static_cast<ID3D10ShaderReflection*>( m_Pointer )->GetDesc( &description );
+		HRESULT hr = static_cast<ID3D10ShaderReflection*>( InternalPointer )->GetDesc( &description );
 		GraphicsException::CheckHResult( hr );
 		
 		version = description.Version;
@@ -110,7 +101,7 @@ namespace Direct3D10
 		for( int inputIndex = 0; inputIndex < inputParameters; ++inputIndex )
 		{
 			D3D10_SIGNATURE_PARAMETER_DESC parameterDesc;
-			hr = 	static_cast<ID3D10ShaderReflection*>( m_Pointer )->GetInputParameterDesc( inputIndex, &parameterDesc );
+			hr = 	static_cast<ID3D10ShaderReflection*>( InternalPointer )->GetInputParameterDesc( inputIndex, &parameterDesc );
 			GraphicsException::CheckHResult( hr );
 			
 			inputParametersInfo->Add( ShaderParameterDescription( parameterDesc ) );
@@ -120,7 +111,7 @@ namespace Direct3D10
 		for( int outputIndex = 0; outputIndex < outputParameters; ++outputIndex )
 		{
 			D3D10_SIGNATURE_PARAMETER_DESC parameterDesc;
-			hr = 	static_cast<ID3D10ShaderReflection*>( m_Pointer )->GetOutputParameterDesc( outputIndex, &parameterDesc );
+			hr = 	static_cast<ID3D10ShaderReflection*>( InternalPointer )->GetOutputParameterDesc( outputIndex, &parameterDesc );
 			GraphicsException::CheckHResult( hr );
 			
 			outputParametersInfo->Add( ShaderParameterDescription( parameterDesc ) );

@@ -57,12 +57,12 @@ namespace SlimDX
 			property int LevelOfDetailBias;
 		};
 
-		public ref class PatchMesh : DirectXBase
+		public ref class PatchMesh : BaseObject
 		{
 			DXOBJECT(ID3DXPatchMesh);
 
 		internal:
-			PatchMesh( ID3DXPatchMesh *mesh ) { m_Pointer = mesh; }
+			PatchMesh( ID3DXPatchMesh *mesh ) { Construct(mesh); }
 
 		public:
 			PatchMesh( IntPtr pointer );

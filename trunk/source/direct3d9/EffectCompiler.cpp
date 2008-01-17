@@ -23,7 +23,7 @@
 #include <d3dx9.h>
 
 #include "../DataStream.h"
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 
 #include "EffectCompiler.h"
 
@@ -36,21 +36,12 @@ namespace Direct3D9
 		if( compiler == NULL )
 			throw gcnew ArgumentNullException( "compiler" );
 
-		m_Pointer = compiler;
+		Construct(compiler);
 	}
 
 	EffectCompiler::EffectCompiler( IntPtr compiler )
 	{
-		if( compiler == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "compiler" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( compiler.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXEffectCompiler, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXEffectCompiler*>( pointer );
+		Construct( compiler, IID_ID3DXEffectCompiler );
 	}
 
 	EffectCompiler::EffectCompiler( String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
@@ -83,13 +74,13 @@ namespace Direct3D9
 		//clean up after marshaling macros
 		Macro::Unmarshal( macros, handles );
 		//marshal errors if necessary
-		errors = Utils::BufferToString( errorBuffer );
+		errors = Utilities::BufferToString( errorBuffer );
 		
 		GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 		if( FAILED( hr ) )
 			throw gcnew GraphicsException();
 
-		m_Pointer = compiler;
+		Construct(compiler);
 	}
 
 	EffectCompiler^ EffectCompiler::FromFile( String^ fileName, array<Macro>^ defines,
@@ -113,7 +104,7 @@ namespace Direct3D9
 		//clean up after marshaling macros
 		Macro::Unmarshal( macros, handles );
 		//marshal errors if necessary
-		errors = Utils::BufferToString( errorBuffer );
+		errors = Utilities::BufferToString( errorBuffer );
 		
 		GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 		if( FAILED( hr ) )
@@ -136,10 +127,10 @@ namespace Direct3D9
 		HRESULT hr = CompilerPointer->CompileShader( handle, reinterpret_cast<LPCSTR>( pinnedTarget ), static_cast<DWORD>( flags ), &shader, &errorBuffer, &table );
 
 		//marshal errors if necessary
-		compilationErrors = Utils::BufferToString( errorBuffer );
+		compilationErrors = Utilities::BufferToString( errorBuffer );
 			
 		// CheckHResult() is not used because we need to include the compiler errors.
-		if( DirectXException::EnableExceptions && FAILED(hr) )
+		if( Configuration::EnableExceptions && FAILED(hr) )
 		{
 			GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( hr );
 			ex->Data->Add( "CompilationErrors", compilationErrors );
@@ -177,7 +168,7 @@ namespace Direct3D9
 		}
 			
 		// CheckHResult() is not used because we need to include the compiler errors.
-		if( DirectXException::EnableExceptions && FAILED(hr) )
+		if( Configuration::EnableExceptions && FAILED(hr) )
 		{
 			GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( hr );
 			ex->Data->Add( "CompilationErrors", compilationErrors );
@@ -215,7 +206,7 @@ namespace Direct3D9
 		}
 		
 		// CheckHResult() is not used because we need to include the compiler errors.
-		if( DirectXException::EnableExceptions && FAILED(hr) )
+		if( Configuration::EnableExceptions && FAILED(hr) )
 		{
 			GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( hr );
 			ex->Data->Add( "CompilationErrors", compilationErrors );

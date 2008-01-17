@@ -741,7 +741,7 @@ namespace DirectInput
 		if( FAILED( hr ) )
 			return Guid::Empty;
 
-		return Utils::FromGUID( dip.guidClass );
+		return Utilities::FromGUID( dip.guidClass );
 	}
 
 	String^ DeviceProperties::InterfacePath::get()

@@ -23,7 +23,7 @@
 #include <d3dx9.h>
 #include <vcclr.h>
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 
 #include "Device.h"
 #include "../DataStream.h"
@@ -36,27 +36,15 @@ namespace Direct3D9
 {
 	Volume::Volume( IDirect3DVolume9* volume )
 	{
-		if( volume == NULL )
-			throw gcnew ArgumentNullException( "volume" );
-
 		//D3D BUG WAR: IDirect3DVolume9 does not inherit from IDirect3DResource9 like it's supposed to
-		m_Pointer = reinterpret_cast<IDirect3DResource9*>( volume );
+		Construct( volume );
 	}
 
 	Volume::Volume( IntPtr volume )
 	{
-		if( volume == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "vertexShader" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( volume.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_IDirect3DVolume9, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<IDirect3DResource9*>( pointer );
+		Construct( volume, IID_IDirect3DVolume9 );
 		
-		D3DRESOURCETYPE type = m_Pointer->GetType();
+		D3DRESOURCETYPE type = InternalPointer->GetType();
 		if( type != D3DRTYPE_VOLUME )
 			throw gcnew InvalidCastException( "Serious QueryInterface failure in Volume." );
 	}
@@ -170,7 +158,7 @@ namespace Direct3D9
 	void Volume::FromStream( Volume^ volume, Stream^ stream, Filter filter, int colorKey, Box sourceBox, 
 		Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
 		return Volume::FromMemory( volume, data, filter, colorKey, sourceBox, destinationBox,
 			palette, imageInformation );
 	}
@@ -178,7 +166,7 @@ namespace Direct3D9
 	void Volume::FromStream( Volume^ volume, Stream^ stream, Filter filter, int colorKey, Box sourceBox,
 		Box destinationBox, [Out] ImageInformation% imageInformation )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
 		return Volume::FromMemory( volume, data, filter, colorKey, sourceBox, destinationBox,
 			imageInformation );
 	}
@@ -186,13 +174,13 @@ namespace Direct3D9
 	void Volume::FromStream( Volume^ volume, Stream^ stream, Filter filter, int colorKey, Box sourceBox, 
 		Box destinationBox )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
 		return Volume::FromMemory( volume, data, filter, colorKey, sourceBox, destinationBox );
 	}
 
 	void Volume::FromStream( Volume^ volume, Stream^ stream, Filter filter, int colorKey )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
 		return Volume::FromMemory( volume, data, filter, colorKey );
 	}
 

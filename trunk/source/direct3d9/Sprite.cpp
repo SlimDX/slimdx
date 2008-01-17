@@ -23,7 +23,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 #include "../math/Math.h"
 
 #include "Device.h"
@@ -36,16 +36,7 @@ namespace Direct3D9
 {
 	Sprite::Sprite( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXSprite, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXSprite*>( result );
+		Construct( pointer, IID_ID3DXSprite );
 	}
 
 	Sprite::Sprite( ID3DXSprite* sprite )
@@ -53,7 +44,7 @@ namespace Direct3D9
 		if( sprite == NULL )
 			throw gcnew ArgumentNullException( "sprite" );
 
-		m_Pointer = sprite;
+		Construct(sprite);
 	}
 
 	Sprite::Sprite( Device^ device )
@@ -63,36 +54,36 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateSprite( device->InternalPointer, &sprite );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = sprite;
+		Construct(sprite);
 	}
 
 	void Sprite::Begin( SpriteFlags flags )
 	{
-		HRESULT hr = m_Pointer->Begin( static_cast<DWORD>( flags ) );
+		HRESULT hr = InternalPointer->Begin( static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Sprite::End()
 	{
-		HRESULT hr = m_Pointer->End();
+		HRESULT hr = InternalPointer->End();
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Sprite::Flush()
 	{
-		HRESULT hr = m_Pointer->Flush();
+		HRESULT hr = InternalPointer->Flush();
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Sprite::OnLostDevice()
 	{
-		HRESULT hr = m_Pointer->OnLostDevice();
+		HRESULT hr = InternalPointer->OnLostDevice();
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Sprite::OnResetDevice()
 	{
-		HRESULT hr = m_Pointer->OnResetDevice();
+		HRESULT hr = InternalPointer->OnResetDevice();
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -100,7 +91,7 @@ namespace Direct3D9
 	{
 		IDirect3DDevice9* device;
 
-		HRESULT hr = m_Pointer->GetDevice( &device );
+		HRESULT hr = InternalPointer->GetDevice( &device );
 		GraphicsException::CheckHResult( hr );
 
 		return gcnew Device( device );
@@ -110,7 +101,7 @@ namespace Direct3D9
 	{
 		Matrix result;
 
-		HRESULT hr = m_Pointer->GetTransform( reinterpret_cast<D3DXMATRIX*>( &result ) );
+		HRESULT hr = InternalPointer->GetTransform( reinterpret_cast<D3DXMATRIX*>( &result ) );
 		GraphicsException::CheckHResult( hr );
 
 		return result;
@@ -118,19 +109,19 @@ namespace Direct3D9
 
 	void Sprite::Transform::set( Matrix value )
 	{
-		HRESULT hr = m_Pointer->SetTransform( reinterpret_cast<const D3DXMATRIX*>( &value ) );
+		HRESULT hr = InternalPointer->SetTransform( reinterpret_cast<const D3DXMATRIX*>( &value ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Sprite::SetWorldViewLH( Matrix world, Matrix view )
 	{
-		HRESULT hr = m_Pointer->SetWorldViewLH( reinterpret_cast<const D3DXMATRIX*>( &world ), reinterpret_cast<const D3DXMATRIX*>( &view ) );
+		HRESULT hr = InternalPointer->SetWorldViewLH( reinterpret_cast<const D3DXMATRIX*>( &world ), reinterpret_cast<const D3DXMATRIX*>( &view ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Sprite::SetWorldViewRH( Matrix world, Matrix view )
 	{
-		HRESULT hr = m_Pointer->SetWorldViewRH( reinterpret_cast<const D3DXMATRIX*>( &world ), reinterpret_cast<const D3DXMATRIX*>( &view ) );
+		HRESULT hr = InternalPointer->SetWorldViewRH( reinterpret_cast<const D3DXMATRIX*>( &world ), reinterpret_cast<const D3DXMATRIX*>( &view ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -138,7 +129,7 @@ namespace Direct3D9
 	{
 		RECT rect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
 
-		HRESULT hr = m_Pointer->Draw( texture->TexturePointer, &rect, reinterpret_cast<const D3DXVECTOR3*>( &center ),
+		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, &rect, reinterpret_cast<const D3DXVECTOR3*>( &center ),
 			reinterpret_cast<const D3DXVECTOR3*>( &position ), color );
 		GraphicsException::CheckHResult( hr );
 	}
@@ -152,7 +143,7 @@ namespace Direct3D9
 	{
 		RECT rect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
 
-		HRESULT hr = m_Pointer->Draw( texture->TexturePointer, &rect, NULL, NULL, color );
+		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, &rect, NULL, NULL, color );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -163,7 +154,7 @@ namespace Direct3D9
 
 	void Sprite::Draw( Texture^ texture, Vector3 center, Vector3 position, int color )
 	{
-		HRESULT hr = m_Pointer->Draw( texture->TexturePointer, NULL, reinterpret_cast<const D3DXVECTOR3*>( &center ),
+		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, NULL, reinterpret_cast<const D3DXVECTOR3*>( &center ),
 			reinterpret_cast<const D3DXVECTOR3*>( &position ), color );
 		GraphicsException::CheckHResult( hr );
 	}
@@ -175,7 +166,7 @@ namespace Direct3D9
 
 	void Sprite::Draw( Texture^ texture, int color )
 	{
-		HRESULT hr = m_Pointer->Draw( texture->TexturePointer, NULL, NULL, NULL, color );
+		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, NULL, NULL, NULL, color );
 		GraphicsException::CheckHResult( hr );
 	}
 

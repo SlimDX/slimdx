@@ -44,7 +44,7 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;D3D_DEBUG_INFO"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
-				GenerateXMLDocumentationFiles="true"
+				GenerateXMLDocumentationFiles="false"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -125,7 +125,7 @@
 				PreprocessorDefinitions="WIN32;NDEBUG;D3D_DEBUG_INFO"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
-				GenerateXMLDocumentationFiles="true"
+				GenerateXMLDocumentationFiles="false"
 				XMLDocumentationFileName="$(IntDir)\"
 				WarningLevel="3"
 				DebugInformationFormat="3"
@@ -948,15 +948,27 @@
 			Name="Base"
 			>
 			<File
+				RelativePath="..\source\BaseObject.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\BaseObject.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\Configuration.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\Configuration.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\DirectX.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\source\DirectX.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\DirectXObject.h"
 				>
 			</File>
 			<File
@@ -976,11 +988,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\Utils.cpp"
+				RelativePath="..\source\Utilities.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\source\Utils.h"
+				RelativePath="..\source\Utilities.h"
 				>
 			</File>
 			<Filter
@@ -997,7 +1009,7 @@
 			</Filter>
 		</Filter>
 		<Filter
-			Name="Direct3D 9"
+			Name="Direct3D9"
 			>
 			<File
 				RelativePath="..\source\direct3d9\AnimationController.cpp"

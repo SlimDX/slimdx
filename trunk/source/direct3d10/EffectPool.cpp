@@ -36,26 +36,17 @@ namespace Direct3D10
 { 
 	EffectPool::EffectPool( ID3D10EffectPool* effectPool )
 	{
-		m_Pointer = effectPool;
+		Construct(effectPool);
 	}
 
 	EffectPool::EffectPool( IntPtr effectPool )
 	{
-		if( effectPool == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "effectPool" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( effectPool.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3D10EffectPool, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3D10EffectPool*>( pointer );
+		Construct( effectPool, IID_ID3D10EffectPool );
 	}
 
 	Effect^ EffectPool::AsEffect()
 	{
-		ID3D10Effect* effect = m_Pointer->AsEffect();
+		ID3D10Effect* effect = InternalPointer->AsEffect();
 		if( effect == 0 )
 			return nullptr;
 	  return gcnew Effect( effect );
@@ -103,7 +94,7 @@ namespace Direct3D10
 	
 	EffectPool^ EffectPool::FromStream( Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, [Out] String^ %compilationErrors  )
 	{
-		array<Byte>^ memory = Utils::ReadStream( stream, 0 );
+		array<Byte>^ memory = Utilities::ReadStream( stream, 0 );
 		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, compilationErrors ));
 	}
 	

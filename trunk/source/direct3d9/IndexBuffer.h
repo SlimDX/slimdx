@@ -46,7 +46,7 @@ namespace SlimDX
 		internal:
 			property IDirect3DIndexBuffer9* IbPointer
 			{
-				IDirect3DIndexBuffer9* get() { return static_cast<IDirect3DIndexBuffer9*>( m_Pointer ); }
+				IDirect3DIndexBuffer9* get() { return static_cast<IDirect3DIndexBuffer9*>( InternalPointer ); }
 			}
 
 			IndexBuffer( IDirect3DIndexBuffer9* buffer );

@@ -84,13 +84,13 @@ namespace SlimDX
             property int Bytes;
 		};
 
-		public ref class BaseEffect abstract : public DirectXBase
+		public ref class BaseEffect abstract : public BaseObject
 		{
 			DXOBJECT(ID3DXBaseEffect);
 
 		protected:
 			BaseEffect() { }
-			BaseEffect( ID3DXBaseEffect* pointer ) { m_Pointer = pointer; }
+			BaseEffect( ID3DXBaseEffect* pointer ) { Construct(pointer); }
 
 		public:
 			BaseEffect( IntPtr pointer );

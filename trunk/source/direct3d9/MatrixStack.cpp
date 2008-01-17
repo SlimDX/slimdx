@@ -22,7 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 #include "../math/Math.h"
 #include "GraphicsException.h"
 #include "MatrixStack.h"
@@ -33,16 +33,7 @@ namespace SlimDX
 	{
 		MatrixStack::MatrixStack( IntPtr pointer )
 		{
-			if( pointer == IntPtr::Zero )
-				throw gcnew ArgumentNullException( "pointer" );
-
-			void* result;
-			IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-			HRESULT hr = unknown->QueryInterface( IID_ID3DXMatrixStack, &result );
-			if( FAILED( hr ) )
-				throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-			m_Pointer = static_cast<ID3DXMatrixStack*>( result );
+			Construct( pointer, IID_ID3DXMatrixStack );
 		}
 
 		MatrixStack::MatrixStack()
@@ -53,96 +44,96 @@ namespace SlimDX
 			if( FAILED( hr ) )
 				throw gcnew GraphicsException( "Failed to create MatrixStack." );
 
-			m_Pointer = matrixStack;
+			Construct(matrixStack);
 		}
 
 		void MatrixStack::Push()
 		{
-			HRESULT hr = m_Pointer->Push();
+			HRESULT hr = InternalPointer->Push();
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void MatrixStack::Pop()
 		{
-			HRESULT hr = m_Pointer->Pop();
+			HRESULT hr = InternalPointer->Pop();
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void MatrixStack::LoadIdentity()
 		{
-			HRESULT hr = m_Pointer->LoadIdentity();
+			HRESULT hr = InternalPointer->LoadIdentity();
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void MatrixStack::LoadMatrix( Matrix matrix )
 		{
-			HRESULT hr = m_Pointer->LoadMatrix( reinterpret_cast<D3DXMATRIX*>( &matrix ) );
+			HRESULT hr = InternalPointer->LoadMatrix( reinterpret_cast<D3DXMATRIX*>( &matrix ) );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void MatrixStack::MultiplyMatrix( Matrix matrix )
 		{
-			HRESULT hr = m_Pointer->MultMatrix( reinterpret_cast<D3DXMATRIX*>( &matrix ) );
+			HRESULT hr = InternalPointer->MultMatrix( reinterpret_cast<D3DXMATRIX*>( &matrix ) );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void MatrixStack::MultiplyMatrixLocal( Matrix matrix )
 		{
-			HRESULT hr = m_Pointer->MultMatrixLocal( reinterpret_cast<D3DXMATRIX*>( &matrix ) );
+			HRESULT hr = InternalPointer->MultMatrixLocal( reinterpret_cast<D3DXMATRIX*>( &matrix ) );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void MatrixStack::RotateAxis( Vector3 axis, float angle )
 		{
-			HRESULT hr = m_Pointer->RotateAxis( reinterpret_cast<D3DXVECTOR3*>( &axis ), angle );
+			HRESULT hr = InternalPointer->RotateAxis( reinterpret_cast<D3DXVECTOR3*>( &axis ), angle );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void MatrixStack::RotateAxisLocal( Vector3 axis, float angle )
 		{
-			HRESULT hr = m_Pointer->RotateAxisLocal( reinterpret_cast<D3DXVECTOR3*>( &axis ), angle );
+			HRESULT hr = InternalPointer->RotateAxisLocal( reinterpret_cast<D3DXVECTOR3*>( &axis ), angle );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void MatrixStack::RotateYawPitchRoll( float yaw, float pitch, float roll )
 		{
-			HRESULT hr = m_Pointer->RotateYawPitchRoll( yaw, pitch, roll );
+			HRESULT hr = InternalPointer->RotateYawPitchRoll( yaw, pitch, roll );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void MatrixStack::RotateYawPitchRollLocal( float yaw, float pitch, float roll )
 		{
-			HRESULT hr = m_Pointer->RotateYawPitchRollLocal( yaw, pitch, roll );
+			HRESULT hr = InternalPointer->RotateYawPitchRollLocal( yaw, pitch, roll );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void MatrixStack::Scale( float x, float y, float z )
 		{
-			HRESULT hr = m_Pointer->Scale( x, y, z );
+			HRESULT hr = InternalPointer->Scale( x, y, z );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void MatrixStack::ScaleLocal( float x, float y, float z )
 		{
-			HRESULT hr = m_Pointer->ScaleLocal( x, y, z );
+			HRESULT hr = InternalPointer->ScaleLocal( x, y, z );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void MatrixStack::Translate( float x, float y, float z )
 		{
-			HRESULT hr = m_Pointer->Translate( x, y, z );
+			HRESULT hr = InternalPointer->Translate( x, y, z );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void MatrixStack::TranslateLocal( float x, float y, float z )
 		{
-			HRESULT hr = m_Pointer->TranslateLocal( x, y, z );
+			HRESULT hr = InternalPointer->TranslateLocal( x, y, z );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		Matrix MatrixStack::Top::get()
 		{
-			D3DXMATRIX* top = m_Pointer->GetTop();
+			D3DXMATRIX* top = InternalPointer->GetTop();
 			Matrix result;
 			*reinterpret_cast<D3DXMATRIX*>( &result ) = *top;
 

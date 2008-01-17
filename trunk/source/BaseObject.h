@@ -21,34 +21,49 @@
 */
 #pragma once
 
-using namespace System;
+#include <unknwn.h>
 
-#include "../BaseObject.h"
+#include "Configuration.h"
+#include "ObjectTracker.h"
+#include "Utilities.h"
 
-#include "Enums.h"
-#include "Resource.h"
+#define DXOBJECT(type) \
+	internal: \
+	property type* InternalPointer { type* get() { return static_cast<type*>( UnknownPointer ); } } \
+	private:
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	public ref class BaseObject abstract
 	{
-		public ref class ShaderSignature
-		{
-			void* buffer;
-			int length;
+		IUnknown* m_Unknown;
+
+	protected:
+		BaseObject();
 		
-		internal:
-			property void* Buffer
-			{
-				void* get() { return buffer; }
-			}
-			
-			property int Length
-			{
-				int get() { return length; }
-			}
-			
-			ShaderSignature( void* buffer, int length );
-		};
-	}
-};
+		void Construct( IUnknown* pointer );
+		void Construct( IntPtr pointer, const IID& iid );
+		void Destruct();
+	
+	internal:
+		property IUnknown* UnknownPointer
+		{
+			IUnknown* get();
+		}
+
+	public:
+		property bool Disposed
+		{
+			bool get();
+		}
+
+		property IntPtr ComPointer
+		{
+			IntPtr get();
+		}
+
+		virtual ~BaseObject();
+		
+		virtual void DisposeHandler( Object^ sender, EventArgs^ e );
+	};
+}

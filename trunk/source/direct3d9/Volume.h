@@ -63,7 +63,7 @@ namespace SlimDX
 			Volume( IDirect3DVolume9* volume );
 			property IDirect3DVolume9* VolumePointer
 			{
-				IDirect3DVolume9* get() { return reinterpret_cast<IDirect3DVolume9*>( m_Pointer ); }
+				IDirect3DVolume9* get() { return reinterpret_cast<IDirect3DVolume9*>( InternalPointer ); }
 			}
 
 		public:

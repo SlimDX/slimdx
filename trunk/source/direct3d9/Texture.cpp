@@ -24,8 +24,8 @@
 #include <vcclr.h>
 
 #include "../DataStream.h"
-#include "../DirectXObject.h"
-#include "../Utils.h"
+#include "../BaseObject.h"
+#include "../Utilities.h"
 
 #include "Device.h"
 #include "D3DX.h"
@@ -53,7 +53,7 @@ namespace Direct3D9
 			prevPosition = stream->Position;
 
 		// Create buffer.
-		buffer = Utils::ReadStream( stream, static_cast<int>( stream->Length ) );
+		buffer = Utilities::ReadStream( stream, static_cast<int>( stream->Length ) );
 
 		if (peek)
 			stream->Position = prevPosition;
@@ -99,21 +99,12 @@ namespace Direct3D9
 		if( texture == NULL )
 			throw gcnew ArgumentNullException( "texture" );
 
-		m_Pointer = texture;
+		Construct(texture);
 	}
 
 	Texture::Texture( IntPtr texture )
 	{
-		if( texture == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "texture" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( texture.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_IDirect3DTexture9, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<IDirect3DTexture9*>( pointer );
+		Construct( texture, IID_IDirect3DTexture9 );
 	}
 
 	Texture::Texture( Device^ device, int width, int height, int numLevels, Usage usage, Format format, Pool pool )
@@ -123,7 +114,7 @@ namespace Direct3D9
 			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, NULL );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = texture;
+		Construct(texture);
 	}
 
 	TextureRequirements Texture::CheckRequirements(Device^ device, int width, int height,
@@ -224,7 +215,7 @@ namespace Direct3D9
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, sizeBytes );
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
 		return Texture::FromMemory( device, data, width, height, numLevels, usage, format, pool, filter, 
 			mipFilter, colorKey, imageInformation, palette );
 	}
@@ -233,7 +224,7 @@ namespace Direct3D9
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, sizeBytes );
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
 		return Texture::FromMemory( device, data, width, height, numLevels, usage, format, pool, filter, 
 			mipFilter, colorKey, imageInformation );
 	}
@@ -241,7 +232,7 @@ namespace Direct3D9
 	Texture^ Texture::FromStream( Device^ device, Stream^ stream, int sizeBytes, int width, int height, int numLevels,
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, sizeBytes );
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
 		return Texture::FromMemory( device, data, width, height, numLevels, usage, format, pool, filter, mipFilter, colorKey );
 	}
 
@@ -476,21 +467,12 @@ namespace Direct3D9
 		if( texture == NULL )
 			throw gcnew ArgumentNullException( "texture" );
 
-		m_Pointer = texture;
+		Construct(texture);
 	}
 
 	CubeTexture::CubeTexture( IntPtr cubeTexture )
 	{
-		if( cubeTexture == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "cubeTexture" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( cubeTexture.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_IDirect3DCubeTexture9, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<IDirect3DCubeTexture9*>( pointer );
+		Construct( cubeTexture, IID_IDirect3DCubeTexture9 );
 	}
 
 	CubeTexture::CubeTexture( Device^ device, int edgeLength, int numLevels, Usage usage, Format format, Pool pool )
@@ -500,7 +482,7 @@ namespace Direct3D9
 			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, NULL );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = texture;
+		Construct(texture);
 	}
 
 	CubeTextureRequirements CubeTexture::CheckRequirements(Device^ device, int size,
@@ -597,7 +579,7 @@ namespace Direct3D9
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, sizeBytes );
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
 		return CubeTexture::FromMemory( device, data, size, numLevels, usage, format, pool, filter, mipFilter, 
 			colorKey, imageInformation, palette );
 	}
@@ -606,7 +588,7 @@ namespace Direct3D9
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, sizeBytes );
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
 		return CubeTexture::FromMemory( device, data, size, numLevels, usage, format, pool, filter, mipFilter, 
 			colorKey, imageInformation );
 	}
@@ -614,7 +596,7 @@ namespace Direct3D9
 	CubeTexture^ CubeTexture::FromStream( Device^ device, Stream^ stream, int sizeBytes, int size, int numLevels,
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, sizeBytes );
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
 		return CubeTexture::FromMemory( device, data, size, numLevels, usage, format, pool, filter, mipFilter, colorKey );
 	}
 
@@ -785,21 +767,12 @@ namespace Direct3D9
 		if( texture == NULL )
 			throw gcnew ArgumentNullException( "texture" );
 
-		m_Pointer = texture;
+		Construct(texture);
 	}
 
 	VolumeTexture::VolumeTexture( IntPtr volumeTexture )
 	{
-		if( volumeTexture == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "volumeTexture" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( volumeTexture.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_IDirect3DVolumeTexture9, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<IDirect3DVolumeTexture9*>( pointer );
+		Construct( volumeTexture, IID_IDirect3DVolumeTexture9 );
 	}
 
 	VolumeTexture::VolumeTexture( Device^ device, int width, int height, int depth, int numLevels, Usage usage, Format format, Pool pool )
@@ -809,7 +782,7 @@ namespace Direct3D9
 			static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, NULL );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = texture;
+		Construct(texture);
 	}
 
 	VolumeTextureRequirements VolumeTexture::CheckRequirements(Device^ device, int width, int height, int depth,
@@ -913,7 +886,7 @@ namespace Direct3D9
 		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, sizeBytes );
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
 		return VolumeTexture::FromMemory( device, data, width, height, depth, numLevels,
 			usage, format, pool, filter, mipFilter, colorKey, imageInformation, palette );
 	}
@@ -922,7 +895,7 @@ namespace Direct3D9
 		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, sizeBytes );
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
 		return VolumeTexture::FromMemory( device, data, width, height, depth, numLevels,
 			usage, format, pool, filter, mipFilter, colorKey, imageInformation );
 	}
@@ -930,7 +903,7 @@ namespace Direct3D9
 	VolumeTexture^ VolumeTexture::FromStream( Device^ device, Stream^ stream, int sizeBytes, int width, int height, int depth,
 		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, sizeBytes );
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
 		return VolumeTexture::FromMemory( device, data, width, height, depth, numLevels,
 			usage, format, pool, filter, mipFilter, colorKey );
 	}

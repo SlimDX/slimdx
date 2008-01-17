@@ -23,7 +23,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 #include "../math/Math.h"
 
 #include "Device.h"
@@ -43,16 +43,7 @@ namespace Direct3D9
 
 	Line::Line( IntPtr line )
 	{
-		if( line == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "line" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( line.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXLine, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXLine*>( pointer );
+		Construct( line, IID_ID3DXLine );
 	}
 
 	Line::Line( Device^ device )
@@ -64,18 +55,18 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			throw gcnew GraphicsException();
 
-		m_Pointer = line;
+		Construct(line);
 	}
 
 	void Line::Begin()
 	{
-		HRESULT hr = m_Pointer->Begin();
+		HRESULT hr = InternalPointer->Begin();
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Line::End()
 	{
-		HRESULT hr = m_Pointer->End();
+		HRESULT hr = InternalPointer->End();
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -83,7 +74,7 @@ namespace Direct3D9
 	{
 		pin_ptr<Vector2> pinnedVerts = &vertexList[0];
 
-		HRESULT hr = m_Pointer->Draw( reinterpret_cast<D3DXVECTOR2*>( pinnedVerts ), vertexList->Length, color );
+		HRESULT hr = InternalPointer->Draw( reinterpret_cast<D3DXVECTOR2*>( pinnedVerts ), vertexList->Length, color );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -96,7 +87,7 @@ namespace Direct3D9
 	{
 		pin_ptr<Vector3> pinnedVerts = &vertexList[0];
 
-		HRESULT hr = m_Pointer->DrawTransform( reinterpret_cast<D3DXVECTOR3*>( pinnedVerts ), vertexList->Length, reinterpret_cast<const D3DXMATRIX*>( &transform ), color );
+		HRESULT hr = InternalPointer->DrawTransform( reinterpret_cast<D3DXVECTOR3*>( pinnedVerts ), vertexList->Length, reinterpret_cast<const D3DXMATRIX*>( &transform ), color );
 		GraphicsException::CheckHResult( hr );
 	}
 	
@@ -107,20 +98,20 @@ namespace Direct3D9
 	
 	void Line::OnLostDevice()
 	{
-		HRESULT hr = m_Pointer->OnLostDevice();
+		HRESULT hr = InternalPointer->OnLostDevice();
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Line::OnResetDevice()
 	{
-		HRESULT hr = m_Pointer->OnResetDevice();
+		HRESULT hr = InternalPointer->OnResetDevice();
 		GraphicsException::CheckHResult( hr );
 	}
 
 	Device^ Line::GetDevice()
 	{
 		IDirect3DDevice9* device;
-		HRESULT hr = m_Pointer->GetDevice( &device );
+		HRESULT hr = InternalPointer->GetDevice( &device );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -130,56 +121,56 @@ namespace Direct3D9
 
 	bool Line::Antialias::get()
 	{
-		return m_Pointer->GetAntialias() > 0;
+		return InternalPointer->GetAntialias() > 0;
 	}
 
 	void Line::Antialias::set( bool value )
 	{
-		HRESULT hr = m_Pointer->SetAntialias( value );
+		HRESULT hr = InternalPointer->SetAntialias( value );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	bool Line::GLLines::get()
 	{
-		return m_Pointer->GetGLLines() > 0;
+		return InternalPointer->GetGLLines() > 0;
 	}
 
 	void Line::GLLines::set( bool value )
 	{
-		HRESULT hr = m_Pointer->SetGLLines( value );
+		HRESULT hr = InternalPointer->SetGLLines( value );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	int Line::Pattern::get()
 	{
-		return m_Pointer->GetPattern();
+		return InternalPointer->GetPattern();
 	}
 
 	void Line::Pattern::set( int value )
 	{
-		HRESULT hr = m_Pointer->SetPattern( value );
+		HRESULT hr = InternalPointer->SetPattern( value );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	float Line::PatternScale::get()
 	{
-		return m_Pointer->GetPatternScale();
+		return InternalPointer->GetPatternScale();
 	}
 
 	void Line::PatternScale::set( float value )
 	{
-		HRESULT hr = m_Pointer->SetPatternScale( value );
+		HRESULT hr = InternalPointer->SetPatternScale( value );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	float Line::Width::get()
 	{
-		return m_Pointer->GetWidth();
+		return InternalPointer->GetWidth();
 	}
 
 	void Line::Width::set( float value )
 	{
-		HRESULT hr = m_Pointer->SetWidth( value );
+		HRESULT hr = InternalPointer->SetWidth( value );
 		GraphicsException::CheckHResult( hr );
 	}
 

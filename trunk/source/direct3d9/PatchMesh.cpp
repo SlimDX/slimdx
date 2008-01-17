@@ -22,8 +22,8 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../DirectXObject.h"
-#include "../Utils.h"
+#include "../BaseObject.h"
+#include "../Utilities.h"
 #include "../DataStream.h"
 
 #include "Device.h"
@@ -39,16 +39,7 @@ namespace Direct3D9
 {
 	PatchMesh::PatchMesh( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXPatchMesh, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXPatchMesh*>( result );
+		Construct( pointer, IID_ID3DXPatchMesh );
 	}
 
 	PatchMesh::PatchMesh( Device^ device, PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration )
@@ -60,7 +51,7 @@ namespace Direct3D9
 			reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedElements ), device->InternalPointer, &result );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = result;
+		Construct(result);
 	}
 
 	PatchMesh::PatchMesh( Mesh^ mesh )
@@ -70,7 +61,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateNPatchMesh( mesh->MeshPointer, &result );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = result;
+		Construct(result);
 	}
 
 	PatchMesh^ PatchMesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
@@ -143,7 +134,7 @@ namespace Direct3D9
 		ID3DXPatchMesh *result;
 		pin_ptr<VertexElement> pinnedElements = &vertexDeclaration[0];
 
-		HRESULT hr = m_Pointer->CloneMesh( static_cast<DWORD>( flags ), reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedElements ), &result );
+		HRESULT hr = InternalPointer->CloneMesh( static_cast<DWORD>( flags ), reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedElements ), &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -154,7 +145,7 @@ namespace Direct3D9
 
 	void PatchMesh::GenerateAdjacency( float tolerance )
 	{
-		HRESULT hr = m_Pointer->GenerateAdjacency( tolerance );
+		HRESULT hr = InternalPointer->GenerateAdjacency( tolerance );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -162,7 +153,7 @@ namespace Direct3D9
 	{
 		D3DVERTEXELEMENT9 elementBuffer[MAX_FVF_DECL_SIZE];
 
-		HRESULT hr = m_Pointer->GetDeclaration( elementBuffer );
+		HRESULT hr = InternalPointer->GetDeclaration( elementBuffer );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -183,7 +174,7 @@ namespace Direct3D9
 	{
 		IDirect3DDevice9* device;
 
-		HRESULT hr = m_Pointer->GetDevice( &device );
+		HRESULT hr = InternalPointer->GetDevice( &device );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -196,7 +187,7 @@ namespace Direct3D9
 	{
 		IDirect3DIndexBuffer9* ib;
 
-		HRESULT hr = m_Pointer->GetIndexBuffer( &ib );
+		HRESULT hr = InternalPointer->GetIndexBuffer( &ib );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -209,7 +200,7 @@ namespace Direct3D9
 	{
 		IDirect3DVertexBuffer9* vb;
 
-		HRESULT hr = m_Pointer->GetVertexBuffer( &vb );
+		HRESULT hr = InternalPointer->GetVertexBuffer( &vb );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -222,7 +213,7 @@ namespace Direct3D9
 	{
 		PatchInfo result;
 
-		HRESULT hr = m_Pointer->GetPatchInfo( reinterpret_cast<D3DXPATCHINFO*>( &result ) );
+		HRESULT hr = InternalPointer->GetPatchInfo( reinterpret_cast<D3DXPATCHINFO*>( &result ) );
 		GraphicsException::CheckHResult( hr );
 
 		return result;
@@ -230,7 +221,7 @@ namespace Direct3D9
 
 	void PatchMesh::Optimize()
 	{
-		HRESULT hr = m_Pointer->Optimize( 0 );
+		HRESULT hr = InternalPointer->Optimize( 0 );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -244,7 +235,7 @@ namespace Direct3D9
 		D3DTEXTUREADDRESS wrap;
 		DWORD lodBias;
 
-		HRESULT hr = m_Pointer->GetDisplaceParam( &texture, &minFilter, &magFilter, &mipFilter, &wrap, &lodBias );
+		HRESULT hr = InternalPointer->GetDisplaceParam( &texture, &minFilter, &magFilter, &mipFilter, &wrap, &lodBias );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -262,7 +253,7 @@ namespace Direct3D9
 
 	void PatchMesh::SetDisplacementParameters( DisplacementParameters parameters )
 	{
-		HRESULT hr = m_Pointer->SetDisplaceParam( reinterpret_cast<IDirect3DTexture9*>( parameters.Texture->InternalPointer ), 
+		HRESULT hr = InternalPointer->SetDisplaceParam( reinterpret_cast<IDirect3DTexture9*>( parameters.Texture->InternalPointer ), 
 			static_cast<D3DTEXTUREFILTERTYPE>( parameters.MinFilter ), static_cast<D3DTEXTUREFILTERTYPE>( parameters.MagFilter ),
 			static_cast<D3DTEXTUREFILTERTYPE>( parameters.MipFilter ), static_cast<D3DTEXTUREADDRESS>( parameters.Wrap ), parameters.LevelOfDetailBias );
 		GraphicsException::CheckHResult( hr );
@@ -271,9 +262,9 @@ namespace Direct3D9
 	DataStream^ PatchMesh::LockAttributeBuffer( LockFlags flags )
 	{
 		DWORD *data;
-		int faceCount = m_Pointer->GetNumPatches();
+		int faceCount = InternalPointer->GetNumPatches();
 		
-		HRESULT hr = m_Pointer->LockAttributeBuffer( static_cast<DWORD>( flags ), &data );
+		HRESULT hr = InternalPointer->LockAttributeBuffer( static_cast<DWORD>( flags ), &data );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -285,7 +276,7 @@ namespace Direct3D9
 
 	void PatchMesh::UnlockAttributeBuffer()
 	{
-		HRESULT hr = m_Pointer->UnlockAttributeBuffer();
+		HRESULT hr = InternalPointer->UnlockAttributeBuffer();
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -294,14 +285,14 @@ namespace Direct3D9
 		void *data;
 		IDirect3DIndexBuffer9 *indexBuffer;
 		
-		HRESULT hr = m_Pointer->GetIndexBuffer( &indexBuffer );
+		HRESULT hr = InternalPointer->GetIndexBuffer( &indexBuffer );
 		GraphicsException::CheckHResult( hr );
 		D3DINDEXBUFFER_DESC desc;
 		hr = indexBuffer->GetDesc( &desc );
 		GraphicsException::CheckHResult( hr );
 		indexBuffer->Release();
 		
-		hr = m_Pointer->LockIndexBuffer( static_cast<DWORD>( flags ), &data );
+		hr = InternalPointer->LockIndexBuffer( static_cast<DWORD>( flags ), &data );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -313,7 +304,7 @@ namespace Direct3D9
 
 	void PatchMesh::UnlockIndexBuffer()
 	{
-		HRESULT hr = m_Pointer->UnlockIndexBuffer();
+		HRESULT hr = InternalPointer->UnlockIndexBuffer();
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -322,14 +313,14 @@ namespace Direct3D9
 		void *data;
 		IDirect3DVertexBuffer9* vertexBuffer;
 
-		HRESULT hr = m_Pointer->GetVertexBuffer( &vertexBuffer );
+		HRESULT hr = InternalPointer->GetVertexBuffer( &vertexBuffer );
 		GraphicsException::CheckHResult( hr );
 		D3DVERTEXBUFFER_DESC desc;
 		hr = vertexBuffer->GetDesc( &desc );
 		GraphicsException::CheckHResult( hr );
 		vertexBuffer->Release();
 		
-		hr = m_Pointer->LockVertexBuffer( static_cast<DWORD>( flags ), &data );
+		hr = InternalPointer->LockVertexBuffer( static_cast<DWORD>( flags ), &data );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -341,7 +332,7 @@ namespace Direct3D9
 
 	void PatchMesh::UnlockVertexBuffer()
 	{
-		HRESULT hr = m_Pointer->UnlockVertexBuffer();
+		HRESULT hr = InternalPointer->UnlockVertexBuffer();
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -350,42 +341,42 @@ namespace Direct3D9
 		pin_ptr<int> pinnedTriCount = &triangleCount;
 		pin_ptr<int> pinnedVertexCount = &vertexCount;
 
-		HRESULT hr = m_Pointer->GetTessSize( tessellationLevel, adaptive, reinterpret_cast<DWORD*>( pinnedTriCount ), 
+		HRESULT hr = InternalPointer->GetTessSize( tessellationLevel, adaptive, reinterpret_cast<DWORD*>( pinnedTriCount ), 
 			reinterpret_cast<DWORD*>( pinnedVertexCount ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void PatchMesh::Tessellate( float tessellationLevel, Mesh^ mesh )
 	{
-		HRESULT hr = m_Pointer->Tessellate( tessellationLevel, reinterpret_cast<ID3DXMesh*>( mesh->InternalPointer ) );
+		HRESULT hr = InternalPointer->Tessellate( tessellationLevel, reinterpret_cast<ID3DXMesh*>( mesh->InternalPointer ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void PatchMesh::Tessellate( Vector4 translation, int minimumLevel, int maximumLevel, Mesh^ mesh )
 	{
-		HRESULT hr = m_Pointer->TessellateAdaptive( reinterpret_cast<D3DXVECTOR4*>( &translation ), maximumLevel, minimumLevel, 
+		HRESULT hr = InternalPointer->TessellateAdaptive( reinterpret_cast<D3DXVECTOR4*>( &translation ), maximumLevel, minimumLevel, 
 			reinterpret_cast<ID3DXMesh*>( mesh->InternalPointer ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	int PatchMesh::ControlVerticesPerPatch::get()
 	{
-		return m_Pointer->GetControlVerticesPerPatch();
+		return InternalPointer->GetControlVerticesPerPatch();
 	}
 
 	int PatchMesh::PatchCount::get()
 	{
-		return m_Pointer->GetNumPatches();
+		return InternalPointer->GetNumPatches();
 	}
 
 	int PatchMesh::VertexCount::get()
 	{
-		return m_Pointer->GetNumVertices();
+		return InternalPointer->GetNumVertices();
 	}
 
 	PatchMeshType PatchMesh::Type::get()
 	{
-		return static_cast<PatchMeshType>( m_Pointer->GetOptions() );
+		return static_cast<PatchMeshType>( InternalPointer->GetOptions() );
 	}
 }
 }

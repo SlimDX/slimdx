@@ -21,34 +21,17 @@
 */
 #pragma once
 
-using namespace System;
-
-#include "../BaseObject.h"
-
-#include "Enums.h"
-#include "Resource.h"
+#include "ObjectTracker.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	public ref class Configuration sealed
 	{
-		public ref class ShaderSignature
-		{
-			void* buffer;
-			int length;
-		
-		internal:
-			property void* Buffer
-			{
-				void* get() { return buffer; }
-			}
-			
-			property int Length
-			{
-				int get() { return length; }
-			}
-			
-			ShaderSignature( void* buffer, int length );
-		};
-	}
-};
+	private:
+		static Configuration();
+	
+	public:
+		property static bool EnableExceptions;
+		property static bool EnableObjectTracking;
+	};
+}

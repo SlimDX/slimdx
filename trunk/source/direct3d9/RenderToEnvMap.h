@@ -38,7 +38,7 @@ namespace SlimDX
 			property SlimDX::Direct3D9::Format DepthStencilFormat;
 		};
 
-		public ref class RenderToEnvironmentMap : DirectXBase
+		public ref class RenderToEnvironmentMap : BaseObject
 		{
 			DXOBJECT(ID3DXRenderToEnvMap);
 

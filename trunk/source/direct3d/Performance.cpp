@@ -22,7 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../Utils.h"
+#include "../Utilities.h"
 #include "Performance.h"
 #include <vcclr.h>
 

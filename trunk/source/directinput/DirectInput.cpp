@@ -86,7 +86,7 @@ namespace DirectInput
 
 	bool DirectInput::IsDeviceAttached( Guid device )
 	{
-		HRESULT hr = m_DirectInput->GetDeviceStatus( Utils::ToGUID( device ) );
+		HRESULT hr = m_DirectInput->GetDeviceStatus( Utilities::ToGUID( device ) );
 		InputException::CheckHResult( hr );
 
 		return hr == DI_OK;
@@ -97,14 +97,14 @@ namespace DirectInput
 		GUID result;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( name );
 
-		HRESULT hr = m_DirectInput->FindDevice( Utils::ToGUID( deviceClass ),
+		HRESULT hr = m_DirectInput->FindDevice( Utilities::ToGUID( deviceClass ),
 			reinterpret_cast<LPCTSTR>( pinnedName ), &result );
 		InputException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
 			return Guid::Empty;
 
-		return Utils::FromGUID( result );
+		return Utilities::FromGUID( result );
 	}
 }
 }

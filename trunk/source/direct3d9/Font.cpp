@@ -25,8 +25,8 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../DirectXObject.h"
-#include "../Utils.h"
+#include "../BaseObject.h"
+#include "../Utilities.h"
 #include "../math/Math.h"
 
 #include "Device.h"
@@ -49,16 +49,7 @@ namespace Direct3D9
 
 	Font::Font( IntPtr font )
 	{
-		if( font == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "font" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( font.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXFont, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXFont*>( pointer );
+		Construct( font, IID_ID3DXFont );
 	}
 
 	Font::Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,
@@ -72,7 +63,7 @@ namespace Direct3D9
 			static_cast<DWORD>( outputPrecision ), static_cast<DWORD>( quality ), static_cast<DWORD>( pitchAndFamily ), reinterpret_cast<LPCWSTR>( pinned_name ), &font );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = font;
+		Construct(font);
 	}
 
 	Font::Font( Device^ device, System::Drawing::Font^ font )
@@ -87,7 +78,7 @@ namespace Direct3D9
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
 
-		return m_Pointer->DrawTextW( spritePtr, reinterpret_cast<LPCWSTR>( pinned_text ), text->Length, &nativeRect, static_cast<DWORD>( format ), color );
+		return InternalPointer->DrawTextW( spritePtr, reinterpret_cast<LPCWSTR>( pinned_text ), text->Length, &nativeRect, static_cast<DWORD>( format ), color );
 	}
 
 	int Font::DrawString( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, Color color )
@@ -112,7 +103,7 @@ namespace Direct3D9
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
 		RECT nativeRect;
 
-		m_Pointer->DrawTextW( spritePtr, reinterpret_cast<LPCWSTR>( pinned_text ), text->Length, &nativeRect, 
+		InternalPointer->DrawTextW( spritePtr, reinterpret_cast<LPCWSTR>( pinned_text ), text->Length, &nativeRect, 
 			static_cast<DWORD>(format | DrawTextFormat::CalcRect), 0 );
 	
 		return System::Drawing::Rectangle( nativeRect.left, nativeRect.top, 
@@ -121,32 +112,32 @@ namespace Direct3D9
 
 	void Font::PreloadCharacters( int first, int last )
 	{
-		HRESULT hr = m_Pointer->PreloadCharacters( first, last );
+		HRESULT hr = InternalPointer->PreloadCharacters( first, last );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Font::PreloadGlyphs( int first, int last )
 	{
-		HRESULT hr = m_Pointer->PreloadGlyphs( first, last );
+		HRESULT hr = InternalPointer->PreloadGlyphs( first, last );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Font::PreloadText( String^ text )
 	{
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
-		HRESULT hr = m_Pointer->PreloadTextW( reinterpret_cast<LPCWSTR>( pinned_text ), text->Length );
+		HRESULT hr = InternalPointer->PreloadTextW( reinterpret_cast<LPCWSTR>( pinned_text ), text->Length );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Font::OnLostDevice()
 	{
-		HRESULT hr = m_Pointer->OnLostDevice();
+		HRESULT hr = InternalPointer->OnLostDevice();
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void Font::OnResetDevice()
 	{
-		HRESULT hr = m_Pointer->OnResetDevice();
+		HRESULT hr = InternalPointer->OnResetDevice();
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -154,7 +145,7 @@ namespace Direct3D9
 	{
 		D3DXFONT_DESC desc;
 		
-		HRESULT hr = m_Pointer->GetDesc( &desc );
+		HRESULT hr = InternalPointer->GetDesc( &desc );
 		GraphicsException::CheckHResult( hr );
 
 		FontDescription outDesc;
@@ -174,7 +165,7 @@ namespace Direct3D9
 
 	IntPtr Font::DeviceContext::get()
 	{
-		return static_cast<IntPtr>( m_Pointer->GetDC() );
+		return static_cast<IntPtr>( InternalPointer->GetDC() );
 	}
 }
 }

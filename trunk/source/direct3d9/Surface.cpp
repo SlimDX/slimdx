@@ -23,7 +23,7 @@
 #include <d3dx9.h>
 #include <vcclr.h>
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 
 #include "Device.h"
 #include "../DataStream.h"
@@ -39,21 +39,12 @@ namespace Direct3D9
 		if( surface == NULL )
 			throw gcnew ArgumentNullException( "surface" );
 
-		m_Pointer = surface;
+		Construct(surface);
 	}
 
 	Surface::Surface( IntPtr surface )
 	{
-		if( surface == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "vertexShader" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( surface.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_IDirect3DSurface9, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<IDirect3DSurface9*>( pointer );
+		Construct( surface, IID_IDirect3DSurface9 );
 	}
 
 	Surface^ Surface::CreateRenderTarget( Device^ device, int width, int height, Format format,
@@ -150,7 +141,7 @@ namespace Direct3D9
 		System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle,
 		array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
 		return Surface::FromMemory( surface, data, filter, colorKey, sourceRectangle, destinationRectangle,
 			palette, imageInformation );
 	}
@@ -159,7 +150,7 @@ namespace Direct3D9
 		System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle,
 		[Out] ImageInformation% imageInformation )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
 		return Surface::FromMemory( surface, data, filter, colorKey, sourceRectangle, destinationRectangle,
 			imageInformation );
 	}
@@ -167,13 +158,13 @@ namespace Direct3D9
 	void Surface::FromStream( Surface^ surface, Stream^ stream, Filter filter, int colorKey,
 		System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
 		return Surface::FromMemory( surface, data, filter, colorKey, sourceRectangle, destinationRectangle );
 	}
 
 	void Surface::FromStream( Surface^ surface, Stream^ stream, Filter filter, int colorKey )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
 		return Surface::FromMemory( surface, data, filter, colorKey );
 	}
 

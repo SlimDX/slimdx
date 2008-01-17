@@ -23,7 +23,7 @@
 #include <d3dx9.h>
 #include <vcclr.h>
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 #include "../Math/Math.h"
 #include "../DataStream.h"
 
@@ -783,7 +783,7 @@ namespace Direct3D9
 	Frame^ Frame::LoadHierarchyFromX( Device^ device, Stream^ stream, MeshFlags options, 
 		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
 		return Frame::LoadHierarchyFromX( device, data, options, allocator, userDataLoader, animationController );
 	}
 

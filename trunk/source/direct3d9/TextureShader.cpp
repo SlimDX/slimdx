@@ -24,8 +24,8 @@
 #include <memory>
 
 #include "../DataStream.h"
-#include "../DirectXObject.h"
-#include "../Utils.h"
+#include "../BaseObject.h"
+#include "../Utilities.h"
 
 #include "Device.h"
 #include "D3DX.h"
@@ -39,21 +39,12 @@ namespace Direct3D9
 {
 	TextureShader::TextureShader( ID3DXTextureShader *pointer )
 	{
-		m_Pointer = pointer;
+		Construct(pointer);
 	}
 
 	TextureShader::TextureShader( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXTextureShader, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXTextureShader*>( result );
+		Construct( pointer, IID_ID3DXTextureShader );
 	}
 
 	TextureShader::TextureShader( DataStream^ stream )
@@ -66,13 +57,13 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			throw gcnew GraphicsException();
 
-		m_Pointer = result;
+		Construct(result);
 	}
 
 	EffectHandle^ TextureShader::GetConstant(SlimDX::Direct3D9::EffectHandle ^handle, int index)
 	{
 		D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;
-		D3DXHANDLE result = m_Pointer->GetConstant( parentHandle, index );
+		D3DXHANDLE result = InternalPointer->GetConstant( parentHandle, index );
 		
 		if( result == NULL )
 			return nullptr;
@@ -85,7 +76,7 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedName = &rawName[0];
 		
 		D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;
-		D3DXHANDLE result = m_Pointer->GetConstantByName( parentHandle, reinterpret_cast<const char*>( pinnedName ) );
+		D3DXHANDLE result = InternalPointer->GetConstantByName( parentHandle, reinterpret_cast<const char*>( pinnedName ) );
 		
 		if( result == NULL )
 			return nullptr;
@@ -95,7 +86,7 @@ namespace Direct3D9
 	EffectHandle^ TextureShader::GetConstantElement( EffectHandle^ handle, int index )
 	{
 		D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;
-		D3DXHANDLE result = m_Pointer->GetConstantElement( parentHandle, index );
+		D3DXHANDLE result = InternalPointer->GetConstantElement( parentHandle, index );
 		
 		if( result == NULL )
 			return nullptr;
@@ -110,7 +101,7 @@ namespace Direct3D9
 		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		unsigned int count = 1;
 
-		HRESULT hr = m_Pointer->GetConstantDesc( nativeHandle, &nativeDesc, &count );
+		HRESULT hr = InternalPointer->GetConstantDesc( nativeHandle, &nativeDesc, &count );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return desc;
@@ -126,14 +117,14 @@ namespace Direct3D9
 		unsigned int count = 0;
 
 		//Determine the count
-		HRESULT hr = m_Pointer->GetConstantDesc( nativeHandle, NULL, &count );
+		HRESULT hr = InternalPointer->GetConstantDesc( nativeHandle, NULL, &count );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
 
 		//Get the actual data
 		std::auto_ptr<D3DXCONSTANT_DESC> nativeDescArray(new D3DXCONSTANT_DESC[count]);
-		hr = m_Pointer->GetConstantDesc( nativeHandle, nativeDescArray.get(), &count );
+		hr = InternalPointer->GetConstantDesc( nativeHandle, nativeDescArray.get(), &count );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -153,7 +144,7 @@ namespace Direct3D9
 	{
 		ID3DXBuffer *result = NULL;
 
-		HRESULT hr = m_Pointer->GetConstantBuffer( &result );
+		HRESULT hr = InternalPointer->GetConstantBuffer( &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -170,7 +161,7 @@ namespace Direct3D9
 	{
 		ID3DXBuffer *result = NULL;
 
-		HRESULT hr = m_Pointer->GetFunction( &result );
+		HRESULT hr = InternalPointer->GetFunction( &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -185,14 +176,14 @@ namespace Direct3D9
 
 	void TextureShader::SetDefaults()
 	{
-		HRESULT hr = m_Pointer->SetDefaults();
+		HRESULT hr = InternalPointer->SetDefaults();
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void TextureShader::SetValue( EffectHandle^ constant, bool value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		HRESULT hr = m_Pointer->SetBool( handle, value );
+		HRESULT hr = InternalPointer->SetBool( handle, value );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -205,14 +196,14 @@ namespace Direct3D9
 
 		D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
 		pin_ptr<BOOL> pinnedValue = &expandedArray[0];
-		HRESULT hr = m_Pointer->SetBoolArray( handle, pinnedValue, values->Length );
+		HRESULT hr = InternalPointer->SetBoolArray( handle, pinnedValue, values->Length );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void TextureShader::SetValue( EffectHandle^ constant, int value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		HRESULT hr = m_Pointer->SetInt( handle, value );
+		HRESULT hr = InternalPointer->SetInt( handle, value );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -220,14 +211,14 @@ namespace Direct3D9
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<int> pinned_value = &values[0];
-		HRESULT hr = m_Pointer->SetIntArray( handle, pinned_value, values->Length );
+		HRESULT hr = InternalPointer->SetIntArray( handle, pinned_value, values->Length );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void TextureShader::SetValue( EffectHandle^ constant, float value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		HRESULT hr = m_Pointer->SetFloat( handle, value );
+		HRESULT hr = InternalPointer->SetFloat( handle, value );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -235,14 +226,14 @@ namespace Direct3D9
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<float> pinned_values = &values[0];
-		HRESULT hr = m_Pointer->SetFloatArray( handle, pinned_values, values->Length );
+		HRESULT hr = InternalPointer->SetFloatArray( handle, pinned_values, values->Length );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void TextureShader::SetValue( EffectHandle^ constant, Vector4 value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		HRESULT hr = m_Pointer->SetVector( handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
+		HRESULT hr = InternalPointer->SetVector( handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -250,14 +241,14 @@ namespace Direct3D9
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<Vector4> pinned_value = &values[0];
-		HRESULT hr = m_Pointer->SetVectorArray( handle, reinterpret_cast<const D3DXVECTOR4*>( pinned_value ), values->Length );
+		HRESULT hr = InternalPointer->SetVectorArray( handle, reinterpret_cast<const D3DXVECTOR4*>( pinned_value ), values->Length );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void TextureShader::SetValue( EffectHandle^ constant, ColorValue value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		HRESULT hr = m_Pointer->SetVector( handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
+		HRESULT hr = InternalPointer->SetVector( handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -265,14 +256,14 @@ namespace Direct3D9
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<ColorValue> pinned_value = &values[0];
-		HRESULT hr = m_Pointer->SetVectorArray( handle, reinterpret_cast<const D3DXVECTOR4*>( pinned_value ), values->Length );
+		HRESULT hr = InternalPointer->SetVectorArray( handle, reinterpret_cast<const D3DXVECTOR4*>( pinned_value ), values->Length );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void TextureShader::SetValue( EffectHandle^ constant, Matrix value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		HRESULT hr = m_Pointer->SetMatrix( handle, reinterpret_cast<const D3DXMATRIX*>( &value ) );
+		HRESULT hr = InternalPointer->SetMatrix( handle, reinterpret_cast<const D3DXMATRIX*>( &value ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -280,14 +271,14 @@ namespace Direct3D9
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<Matrix> pinned_value = &values[0];
-		HRESULT hr = m_Pointer->SetMatrixArray( handle, reinterpret_cast<const D3DXMATRIX*>( pinned_value ), values->Length );
+		HRESULT hr = InternalPointer->SetMatrixArray( handle, reinterpret_cast<const D3DXMATRIX*>( pinned_value ), values->Length );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void TextureShader::SetValueTranspose( EffectHandle^ constant, Matrix value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		HRESULT hr = m_Pointer->SetMatrixTranspose( handle, reinterpret_cast<const D3DXMATRIX*>( &value ) );
+		HRESULT hr = InternalPointer->SetMatrixTranspose( handle, reinterpret_cast<const D3DXMATRIX*>( &value ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -295,7 +286,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<Matrix> pinned_value = &values[0];
-		HRESULT hr = m_Pointer->SetMatrixTransposeArray( handle, reinterpret_cast<const D3DXMATRIX*>( pinned_value ), values->Length );
+		HRESULT hr = InternalPointer->SetMatrixTransposeArray( handle, reinterpret_cast<const D3DXMATRIX*>( pinned_value ), values->Length );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -304,7 +295,7 @@ namespace Direct3D9
 		D3DXCONSTANTTABLE_DESC nativeDesc;
 		ConstantTableDescription desc;
 
-		HRESULT hr = m_Pointer->GetDesc( &nativeDesc );
+		HRESULT hr = InternalPointer->GetDesc( &nativeDesc );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return desc;

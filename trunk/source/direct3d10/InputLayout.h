@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 #include "InputElement.h"
 
 namespace SlimDX
@@ -33,7 +33,7 @@ namespace SlimDX
 		ref class Device;
 		ref class ShaderSignature;
 		
-		public ref class InputLayout : public DirectXBase
+		public ref class InputLayout : public BaseObject
 		{
 			DXOBJECT(ID3D10InputLayout);
 

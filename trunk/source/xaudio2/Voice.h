@@ -23,7 +23,7 @@
 
 #ifdef WRAP_XAUDIO2
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 #include "Enums.h"
 
 using namespace System;
@@ -43,15 +43,15 @@ namespace SlimDX
 		public ref class Voice abstract
 		{
 		private:
-			IXAudio2Voice* m_Pointer;
+			IXAudio2Voice* InternalPointer;
 
 		protected:
 			Voice() { }
 
 			property IXAudio2Voice* Pointer
 			{
-				IXAudio2Voice* get() { return m_Pointer; }
-				void set( IXAudio2Voice* value ) { m_Pointer = value; }
+				IXAudio2Voice* get() { return InternalPointer; }
+				void set( IXAudio2Voice* value ) { Construct(value); }
 			}
 		};
 	}

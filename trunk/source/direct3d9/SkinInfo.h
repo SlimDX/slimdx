@@ -45,12 +45,12 @@ namespace SlimDX
 			property array<int>^ BoneIds;
 		};
 
-		public ref class SkinInfo : public DirectXBase
+		public ref class SkinInfo : public BaseObject
 		{
 			DXOBJECT(ID3DXSkinInfo);
 
 		internal:
-			SkinInfo( ID3DXSkinInfo* skinInfo ) { m_Pointer = skinInfo; }
+			SkinInfo( ID3DXSkinInfo* skinInfo ) { Construct(skinInfo); }
 
 		public:
 			SkinInfo( IntPtr pointer );

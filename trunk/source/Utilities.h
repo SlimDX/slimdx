@@ -31,16 +31,16 @@ using namespace System::Diagnostics;
 
 namespace SlimDX
 {
-	ref class DirectXBase;
+	ref class BaseObject;
 
-	ref class Utils sealed
+	ref class Utilities sealed
 	{
 	private:
-		Utils() { }
+		Utilities() { }
 
 	public:
 		/* Unused for now
-		static void ReportNotDisposed( SlimDX::DirectXBase^ obj );
+		static void ReportNotDisposed( SlimDX::BaseObject^ obj );
 		static void MarkDisposed( bool %disposed, Object^ obj );
 
 		/// <summary>

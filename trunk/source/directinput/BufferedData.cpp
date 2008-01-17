@@ -22,8 +22,8 @@
 #include <windows.h>
 #include <dinput.h>
 
-#include "../DirectXObject.h"
-#include "../Utils.h"
+#include "../BaseObject.h"
+#include "../Utilities.h"
 #include "DirectInput.h"
 #include "Device.h"
 #include "InputException.h"

@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 
 #include "Enums.h"
 #include "Resource.h"

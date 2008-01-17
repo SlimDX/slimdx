@@ -37,7 +37,7 @@ namespace Direct3D10
 		if( state == NULL )
 			throw gcnew ArgumentNullException( "state" );
 
-		m_Pointer = state;
+		Construct(state);
 		
 		D3D10_DEPTH_STENCIL_DESC desc;
 		state->GetDesc( &desc );
@@ -46,19 +46,10 @@ namespace Direct3D10
 	
 	DepthStencilState::DepthStencilState( IntPtr state )
 	{
-		if( state == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "state" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( state.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3D10DepthStencilState, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3D10DepthStencilState*>( pointer );
+		Construct( state, IID_ID3D10DepthStencilState );
 
 		D3D10_DEPTH_STENCIL_DESC desc;
-		m_Pointer->GetDesc( &desc );
+		InternalPointer->GetDesc( &desc );
 		m_Description = gcnew DepthStencilStateDescription( desc );
 	}
 
@@ -77,13 +68,13 @@ namespace Direct3D10
 		HRESULT hr = device->DevicePointer->CreateDepthStencilState( &desc, &state );
 		GraphicsException::CheckHResult( hr );
 		
-		m_Pointer = state;
+		Construct(state);
 	}
 	
 	DepthStencilStateDescription^ DepthStencilState::CloneDescription()
 	{
 		D3D10_DEPTH_STENCIL_DESC desc;
-		m_Pointer->GetDesc( &desc );
+		InternalPointer->GetDesc( &desc );
 		return gcnew DepthStencilStateDescription( desc );
 	}
 }

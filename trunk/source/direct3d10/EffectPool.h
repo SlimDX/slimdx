@@ -24,7 +24,7 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 
 #include "Enums.h"
 
@@ -40,7 +40,7 @@ namespace SlimDX
 		/// Using EffectPools can improve performance by reducing the number state change
 		/// API calls.
 		/// </remarks>
-		public ref class EffectPool : public DirectXBase
+		public ref class EffectPool : public BaseObject
 		{
 			DXOBJECT(ID3D10EffectPool);
 
@@ -50,7 +50,7 @@ namespace SlimDX
 		public:
 			
 		  /// <summary>
-			/// Constructs a new <see cref="EffectPool"/>.
+			/// Construct( s ); a new <see cref="EffectPool"/>.
 			/// </summary>
 			/// <param name="effectPool">An IntPtr to an unmanaged ID3D10EffectPool.</param>
 			EffectPool( IntPtr effectPool );

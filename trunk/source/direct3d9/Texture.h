@@ -263,7 +263,7 @@ namespace SlimDX
 		internal:
 			property IDirect3DTexture9* TexturePointer
 			{
-				IDirect3DTexture9* get() { return static_cast<IDirect3DTexture9*>( m_Pointer ); }
+				IDirect3DTexture9* get() { return static_cast<IDirect3DTexture9*>( InternalPointer ); }
 			}
 
 			Texture( IDirect3DTexture9* texture );
@@ -330,7 +330,7 @@ namespace SlimDX
 		internal:
 			property IDirect3DCubeTexture9* TexturePointer
 			{
-				IDirect3DCubeTexture9* get() { return static_cast<IDirect3DCubeTexture9*>( m_Pointer ); }
+				IDirect3DCubeTexture9* get() { return static_cast<IDirect3DCubeTexture9*>( InternalPointer ); }
 			}
 
 			CubeTexture( IDirect3DCubeTexture9* texture );
@@ -379,7 +379,7 @@ namespace SlimDX
 		internal:
 			property IDirect3DVolumeTexture9* TexturePointer
 			{
-				IDirect3DVolumeTexture9* get() { return static_cast<IDirect3DVolumeTexture9*>( m_Pointer ); }
+				IDirect3DVolumeTexture9* get() { return static_cast<IDirect3DVolumeTexture9*>( InternalPointer ); }
 			}
 
 			VolumeTexture( IDirect3DVolumeTexture9* texture );

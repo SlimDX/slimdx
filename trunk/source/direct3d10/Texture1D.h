@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 
 #include "Enums.h"
 #include "Texture.h"
@@ -49,7 +49,6 @@ namespace SlimDX
 			
 		internal:
 			Texture1D( ID3D10Texture1D* pointer );
-			void Construct( ID3D10Texture1D* pointer );
 			
 		public:
 			/// <summary>
@@ -102,7 +101,7 @@ namespace SlimDX
 			void Unmap( int subResource );
 			
 			/// <summary>
-			/// Constructs a <see cref="Texture1D"/> from a native pointer.
+			/// Construct( s ); a <see cref="Texture1D"/> from a native pointer.
 			/// </summary>
 			/// <param name="nativeObject">A native ID3D10Texture1D pointer, as an IntPtr.</param>
 			Texture1D( IntPtr nativeObject );

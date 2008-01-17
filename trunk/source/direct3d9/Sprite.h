@@ -43,7 +43,7 @@ namespace SlimDX
 
 		ref class Texture;
 
-		public ref class Sprite : public DirectXBase
+		public ref class Sprite : public BaseObject
 		{
 			DXOBJECT(ID3DXSprite);
 

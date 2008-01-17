@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 #include "../direct3d/LockedRect.h"
 
 #include "Enums.h"

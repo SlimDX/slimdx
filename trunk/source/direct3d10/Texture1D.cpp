@@ -37,29 +37,25 @@ namespace Direct3D10
 { 
 	Texture1D::Texture1D( ID3D10Texture1D* texture ) : Texture( texture )
 	{
-		Construct( texture );
+		D3D10_TEXTURE1D_DESC desc;
+		static_cast<ID3D10Texture1D*>( InternalPointer )->GetDesc( &desc );
+		
+		m_Width = desc.Width;
+		m_MipLevels = desc.MipLevels;
+		m_ArraySize = desc.ArraySize;
+		m_Format = static_cast<SlimDX::Direct3D10::Format>( desc.Format );
+		m_Usage = static_cast<ResourceUsage>( desc.Usage );
+		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( desc.BindFlags );
+		m_AccessFlags = static_cast<CpuAccessFlags>( desc.CPUAccessFlags );
+		m_OptionFlags = static_cast<ResourceOptionFlags>( desc.MiscFlags );
 	}
 	
 	Texture1D::Texture1D( IntPtr nativeObject )
 	{
-		if( nativeObject == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "nativeObject" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( nativeObject.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3D10Texture1D, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "QueryInterface() on user pointer failed." );
-
-		Construct( static_cast<ID3D10Texture1D*>( pointer ) );
-	}
-	
-	void Texture1D::Construct( ID3D10Texture1D* pointer )
-	{
-		m_Pointer = pointer;
+		Construct( nativeObject, IID_ID3D10Texture1D );
 		
 		D3D10_TEXTURE1D_DESC desc;
-		static_cast<ID3D10Texture1D*>( m_Pointer )->GetDesc( &desc );
+		static_cast<ID3D10Texture1D*>( InternalPointer )->GetDesc( &desc );
 		
 		m_Width = desc.Width;
 		m_MipLevels = desc.MipLevels;
@@ -99,7 +95,7 @@ namespace Direct3D10
 		int bufferSize = mipWidth * EnumerationReflection::SizeOfElement( Format );
 		
 		void* mappedArray;
-		HRESULT hr = static_cast<ID3D10Texture1D*>( m_Pointer )->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedArray );
+		HRESULT hr = static_cast<ID3D10Texture1D*>( InternalPointer )->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedArray );
 		GraphicsException::CheckHResult( hr );
 		
 		bool readOnly = mode == MapMode::Read;
@@ -108,7 +104,7 @@ namespace Direct3D10
 
 	void Texture1D::Unmap( int subResource )
 	{
-		static_cast<ID3D10Texture1D*>( m_Pointer )->Unmap( subResource );
+		static_cast<ID3D10Texture1D*>( InternalPointer )->Unmap( subResource );
 	}
 	
 	Texture1D^ Texture1D::FromFile( Device^ device, String^ fileName )

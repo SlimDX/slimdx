@@ -22,7 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 
 #include "Device.h"
 #include "Query.h"
@@ -37,22 +37,13 @@ namespace Direct3D9
 		if( query == NULL )
 			throw gcnew ArgumentNullException( "surface" );
 
-		m_Pointer = query;
+		Construct(query);
 	}
 	*/
 
 	Query::Query( IntPtr query )
 	{
-		if( query == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "query" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( query.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_IDirect3DQuery9, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<IDirect3DQuery9*>( pointer );
+		Construct( query, IID_IDirect3DQuery9 );
 	}
 
 	Query::Query( Device^ device, QueryType type )
@@ -63,23 +54,23 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			throw gcnew GraphicsException( "Failed to create Query." );
 
-		m_Pointer = query;
+		Construct(query);
 	}
 
 	int Query::DataSize::get()
 	{
-		return m_Pointer->GetDataSize();
+		return InternalPointer->GetDataSize();
 	}
 
 	QueryType Query::Type::get()
 	{
-		return static_cast<QueryType>( m_Pointer->GetType() );
+		return static_cast<QueryType>( InternalPointer->GetType() );
 	}
 
 	Device^ Query::GetDevice()
 	{
 		IDirect3DDevice9* device;
-		HRESULT hr = m_Pointer->GetDevice( &device );
+		HRESULT hr = InternalPointer->GetDevice( &device );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -89,13 +80,13 @@ namespace Direct3D9
 
 	void Query::Issue( SlimDX::Direct3D9::Issue flags )
 	{
-		HRESULT hr = m_Pointer->Issue( static_cast<DWORD>( flags ) );
+		HRESULT hr = InternalPointer->Issue( static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	bool Query::CheckStatus( bool flush )
 	{
-		HRESULT hr = m_Pointer->GetData( NULL, 0, flush ? D3DGETDATA_FLUSH : 0 );
+		HRESULT hr = InternalPointer->GetData( NULL, 0, flush ? D3DGETDATA_FLUSH : 0 );
 		
 		switch( hr )
 		{
@@ -194,7 +185,7 @@ namespace Direct3D9
 		{
 			//need to marshal BOOL (int) to bool
 			BOOL value = FALSE;
-			hr = m_Pointer->GetData( &value, sizeof(BOOL), flags );
+			hr = InternalPointer->GetData( &value, sizeof(BOOL), flags );
 			GraphicsException::CheckHResult( hr );
 			//we know that T is a bool, but the runtime does not
 			return (T) (value > 0);
@@ -202,7 +193,7 @@ namespace Direct3D9
 		else
 		{
 			T data;
-			hr = m_Pointer->GetData( &data, Marshal::SizeOf( T::typeid ), flags );
+			hr = InternalPointer->GetData( &data, Marshal::SizeOf( T::typeid ), flags );
 			GraphicsException::CheckHResult( hr );
 			return data;
 		}

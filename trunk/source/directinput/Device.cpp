@@ -22,8 +22,8 @@
 #include <windows.h>
 #include <dinput.h>
 
-#include "../DirectXObject.h"
-#include "../Utils.h"
+#include "../BaseObject.h"
+#include "../Utilities.h"
 #include "DirectInput.h"
 #include "Device.h"
 #include "InputException.h"
@@ -38,46 +38,37 @@ namespace DirectInput
 		if( device == NULL )
 			throw gcnew ArgumentNullException( "device" );
 
-		m_Pointer = device;
+		Construct(device);
 
-		properties = gcnew DeviceProperties( m_Pointer );
+		properties = gcnew DeviceProperties( InternalPointer );
 	}
 
 	generic<typename DataFormat>
 	Device<DataFormat>::Device( IntPtr device )
 	{
-		if( device == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "device" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( device.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_IDirectInputDevice8W, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<IDirectInputDevice8W*>( pointer );
-		properties = gcnew DeviceProperties( m_Pointer );
+		Construct( device, IID_IDirectInputDevice8W );
+		properties = gcnew DeviceProperties( InternalPointer );
 	}
 
 	generic<typename DataFormat>
 	Device<DataFormat>::Device( Guid subsystem )
 	{
 		IDirectInputDevice8W* device;
-		HRESULT hr = DirectInput::InternalPointer->CreateDevice( Utils::ToGUID( subsystem ), &device, NULL );
+		HRESULT hr = DirectInput::InternalPointer->CreateDevice( Utilities::ToGUID( subsystem ), &device, NULL );
 		InputException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
 			throw gcnew InputException();
 
-		m_Pointer = device;
+		Construct(device);
 
 		Type^ type = DataFormat::typeid;
 		if( type == KeyboardState::typeid )
-			hr = m_Pointer->SetDataFormat( &c_dfDIKeyboard );
+			hr = InternalPointer->SetDataFormat( &c_dfDIKeyboard );
 		else if( type == MouseState::typeid )
-			hr = m_Pointer->SetDataFormat( &c_dfDIMouse2 );
+			hr = InternalPointer->SetDataFormat( &c_dfDIMouse2 );
 		else if( type == JoystickState::typeid )
-			hr = m_Pointer->SetDataFormat( &c_dfDIJoystick2 );
+			hr = InternalPointer->SetDataFormat( &c_dfDIJoystick2 );
 		else
 		{
 			array<DataFormatAttribute^>^ formatAttributes = safe_cast<array<DataFormatAttribute^>^>( type->GetCustomAttributes(
@@ -113,7 +104,7 @@ namespace DirectInput
 			DIOBJECTDATAFORMAT *objectFormats = new DIOBJECTDATAFORMAT[objectAttributes->Count];
 			for( int i = 0; i < objectAttributes->Count; i++ )
 			{
-				GUID *guid = new GUID( Utils::ToGUID( objectAttributes[i]->SourceGuid ) );
+				GUID *guid = new GUID( Utilities::ToGUID( objectAttributes[i]->SourceGuid ) );
 				objectFormats[i].dwFlags = static_cast<DWORD>( objectAttributes[i]->Flags );
 				objectFormats[i].dwType = static_cast<DWORD>( objectAttributes[i]->Type );
 				objectFormats[i].pguid = guid;
@@ -125,7 +116,7 @@ namespace DirectInput
 			}
 
 			format.rgodf = objectFormats;
-			hr = m_Pointer->SetDataFormat( &format );
+			hr = InternalPointer->SetDataFormat( &format );
 
 			for( int i = 0; i < objectAttributes->Count; i++ )
 				delete objectFormats[i].pguid;
@@ -137,13 +128,13 @@ namespace DirectInput
 		if( FAILED( hr ) )
 			throw gcnew InputException();
 
-		properties = gcnew DeviceProperties( m_Pointer );
+		properties = gcnew DeviceProperties( InternalPointer );
 	}
 
 	generic<typename DataFormat>
 	void Device<DataFormat>::SetCooperativeLevel( IntPtr handle, CooperativeLevel flags )
 	{
-		HRESULT hr = m_Pointer->SetCooperativeLevel( static_cast<HWND>( handle.ToPointer() ), static_cast<DWORD>( flags ) );
+		HRESULT hr = InternalPointer->SetCooperativeLevel( static_cast<HWND>( handle.ToPointer() ), static_cast<DWORD>( flags ) );
 		InputException::CheckHResult( hr );
 	}
 
@@ -156,35 +147,35 @@ namespace DirectInput
 	generic<typename DataFormat>
 	void Device<DataFormat>::Acquire()
 	{
-		HRESULT hr = m_Pointer->Acquire();
+		HRESULT hr = InternalPointer->Acquire();
 		InputException::CheckHResult( hr );
 	}
 
 	generic<typename DataFormat>
 	void Device<DataFormat>::Unacquire()
 	{
-		HRESULT hr = m_Pointer->Unacquire();
+		HRESULT hr = InternalPointer->Unacquire();
 		InputException::CheckHResult( hr );
 	}
 
 	generic<typename DataFormat>
 	void Device<DataFormat>::Poll()
 	{
-		HRESULT hr = m_Pointer->Poll();
+		HRESULT hr = InternalPointer->Poll();
 		InputException::CheckHResult( hr );
 	}
 
 	generic<typename DataFormat>
 	void Device<DataFormat>::RunControlPanel()
 	{
-		HRESULT hr = m_Pointer->RunControlPanel( NULL, 0 );
+		HRESULT hr = InternalPointer->RunControlPanel( NULL, 0 );
 		InputException::CheckHResult( hr );
 	}
 
 	generic<typename DataFormat>
 	void Device<DataFormat>::RunControlPanel( Control^ parent )
 	{
-		HRESULT hr = m_Pointer->RunControlPanel( static_cast<HWND>( parent->Handle.ToPointer() ), 0 );
+		HRESULT hr = InternalPointer->RunControlPanel( static_cast<HWND>( parent->Handle.ToPointer() ), 0 );
 		InputException::CheckHResult( hr );
 	}
 
@@ -194,7 +185,7 @@ namespace DirectInput
 		BufferedDataCollection<DataFormat>^ list = gcnew BufferedDataCollection<DataFormat>();
 
 		int size = INFINITE;
-		HRESULT hr = m_Pointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), NULL, reinterpret_cast<LPDWORD>( &size ), DIGDD_PEEK );
+		HRESULT hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), NULL, reinterpret_cast<LPDWORD>( &size ), DIGDD_PEEK );
 		InputException::CheckHResult( hr );
 
 		if( hr == DI_BUFFEROVERFLOW && &Device::BufferOverflow != nullptr )
@@ -207,7 +198,7 @@ namespace DirectInput
 			return nullptr;
 
 		DIDEVICEOBJECTDATA *data = new DIDEVICEOBJECTDATA[size];
-		hr = m_Pointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), data, reinterpret_cast<LPDWORD>( &size ), 0 );
+		hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), data, reinterpret_cast<LPDWORD>( &size ), 0 );
 		InputException::CheckHResult( hr );
 
 		if( hr == DI_BUFFEROVERFLOW && &Device::BufferOverflow != nullptr )
@@ -241,7 +232,7 @@ namespace DirectInput
 		if( type == KeyboardState::typeid )
 		{
 			BYTE keys[256];
-			HRESULT hr = m_Pointer->GetDeviceState( sizeof( BYTE ) * 256, keys );
+			HRESULT hr = InternalPointer->GetDeviceState( sizeof( BYTE ) * 256, keys );
 			InputException::CheckHResult( hr );
 
 			if( hr == DIERR_INPUTLOST )
@@ -263,7 +254,7 @@ namespace DirectInput
 		else if( type == MouseState::typeid )
 		{
 			DIMOUSESTATE2 state;
-			HRESULT hr = m_Pointer->GetDeviceState( sizeof( DIMOUSESTATE2 ), &state );
+			HRESULT hr = InternalPointer->GetDeviceState( sizeof( DIMOUSESTATE2 ), &state );
 			InputException::CheckHResult( hr );
 
 			if( hr == DIERR_INPUTLOST )
@@ -285,7 +276,7 @@ namespace DirectInput
 		else if( type == JoystickState::typeid )
 		{
 			DIJOYSTATE2 joystate;
-			HRESULT hr = m_Pointer->GetDeviceState( sizeof( DIJOYSTATE2 ), &joystate );
+			HRESULT hr = InternalPointer->GetDeviceState( sizeof( DIJOYSTATE2 ), &joystate );
 			InputException::CheckHResult( hr );
 
 			if( hr == DIERR_INPUTLOST )
@@ -344,7 +335,7 @@ namespace DirectInput
 		{
 			int typeSize = Marshal::SizeOf( type );
 			BYTE *bytes = new BYTE[typeSize];
-			HRESULT hr = m_Pointer->GetDeviceState( sizeof( BYTE ) * typeSize, bytes );
+			HRESULT hr = InternalPointer->GetDeviceState( sizeof( BYTE ) * typeSize, bytes );
 			InputException::CheckHResult( hr );
 
 			if( hr == DIERR_INPUTLOST )
@@ -371,7 +362,7 @@ namespace DirectInput
 		if( type == KeyboardState::typeid )
 		{
 			BYTE keys[256];
-			HRESULT hr = m_Pointer->GetDeviceState( sizeof( BYTE ) * 256, keys );
+			HRESULT hr = InternalPointer->GetDeviceState( sizeof( BYTE ) * 256, keys );
 			InputException::CheckHResult( hr );
 
 			KeyboardState^ state = gcnew KeyboardState();
@@ -396,7 +387,7 @@ namespace DirectInput
 		else if( type == MouseState::typeid )
 		{
 			DIMOUSESTATE2 state;
-			HRESULT hr = m_Pointer->GetDeviceState( sizeof( DIMOUSESTATE2 ), &state );
+			HRESULT hr = InternalPointer->GetDeviceState( sizeof( DIMOUSESTATE2 ), &state );
 			InputException::CheckHResult( hr );
 
 			if( hr == DIERR_INPUTLOST )
@@ -420,7 +411,7 @@ namespace DirectInput
 		else if( type == JoystickState::typeid )
 		{
 			DIJOYSTATE2 state;
-			HRESULT hr = m_Pointer->GetDeviceState( sizeof( DIJOYSTATE2 ), &state );
+			HRESULT hr = InternalPointer->GetDeviceState( sizeof( DIJOYSTATE2 ), &state );
 			InputException::CheckHResult( hr );
 
 			if( hr == DIERR_INPUTLOST )
@@ -436,7 +427,7 @@ namespace DirectInput
 		{
 			int typeSize = Marshal::SizeOf( type );
 			BYTE *bytes = new BYTE[typeSize];
-			HRESULT hr = m_Pointer->GetDeviceState( sizeof( BYTE ) * typeSize, bytes );
+			HRESULT hr = InternalPointer->GetDeviceState( sizeof( BYTE ) * typeSize, bytes );
 			InputException::CheckHResult( hr );
 
 			if( hr == DIERR_INPUTLOST )
@@ -469,7 +460,7 @@ namespace DirectInput
 	Capabilities^ Device<DataFormat>::Caps::get()
 	{
 		DIDEVCAPS caps;
-		HRESULT hr = m_Pointer->GetCapabilities( &caps );
+		HRESULT hr = InternalPointer->GetCapabilities( &caps );
 		InputException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -482,7 +473,7 @@ namespace DirectInput
 	DeviceInstance^ Device<DataFormat>::DeviceInformation::get()
 	{
 		DIDEVICEINSTANCE deviceInstance;
-		HRESULT hr = m_Pointer->GetDeviceInfo( &deviceInstance );
+		HRESULT hr = InternalPointer->GetDeviceInfo( &deviceInstance );
 		InputException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
