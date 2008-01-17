@@ -44,7 +44,7 @@ namespace Direct3D10
 	
 	ResourceView::ResourceView( ID3D10ShaderResourceView* view )
 	{
-		m_Pointer = view;
+		Construct(view);
 
 		D3D10_SHADER_RESOURCE_VIEW_DESC desc;
 		view->GetDesc( &desc );

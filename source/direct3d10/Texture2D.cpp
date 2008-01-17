@@ -52,21 +52,12 @@ namespace Direct3D10
 		m_OptionFlags = static_cast<ResourceOptionFlags>( desc.MiscFlags );
 	}
 	
-	Texture2D::Texture2D( IntPtr texture )
+	Texture2D::Texture2D( IntPtr pointer )
 	{
-		if( texture == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "texture" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( texture.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3D10Texture2D, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "QueryInterface() on user pointer failed." );
-
-		m_Pointer = static_cast<ID3D10Resource*>( pointer );
+		Construct( pointer, IID_ID3D10Texture2D );
 		
 		D3D10_TEXTURE2D_DESC desc;
-		static_cast<ID3D10Texture2D*>( m_Pointer )->GetDesc( &desc );
+		static_cast<ID3D10Texture2D*>( InternalPointer )->GetDesc( &desc );
 		m_Width = desc.Width;
 		m_Height = desc.Height;
 		m_MipLevels = desc.MipLevels;
@@ -102,7 +93,7 @@ namespace Direct3D10
 		HRESULT hr = device->DevicePointer->CreateTexture2D( &desc, NULL, &texture );
 		GraphicsException::CheckHResult( hr );
 		
-		m_Pointer = texture;
+		Construct(texture);
 		m_Width = width;
 		m_Height = height;
 		m_MipLevels = mipLevels;
@@ -122,7 +113,7 @@ namespace Direct3D10
 		int mipHeight = GetMipSize( mipSlice, Height );
 		
 		D3D10_MAPPED_TEXTURE2D mappedRect;
-		HRESULT hr = static_cast<ID3D10Texture2D*>( m_Pointer )->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedRect );
+		HRESULT hr = static_cast<ID3D10Texture2D*>( InternalPointer )->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedRect );
 		GraphicsException::CheckHResult( hr );
 		
 		int lockedSize = mipHeight * mappedRect.RowPitch;
@@ -134,7 +125,7 @@ namespace Direct3D10
 
 	void Texture2D::Unmap( int subResource )
 	{
-		static_cast<ID3D10Texture2D*>( m_Pointer )->Unmap( subResource );
+		static_cast<ID3D10Texture2D*>( InternalPointer )->Unmap( subResource );
 	}
 	
 	Texture2D^ Texture2D::FromFile( Device^ device, String^ fileName )

@@ -35,37 +35,28 @@ namespace Direct3D10
 	
 	Resource::Resource( ID3D10Resource* resource )
 	{
-		m_Pointer = resource;
+		Construct(resource);
 	}
 
 	Resource::Resource( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3D10Resource, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3D10Resource*>( result );
+		Construct( pointer, IID_ID3D10Resource );
 	}
 	
 	ResourcePriority Resource::EvictionPriority::get()
 	{
-		return static_cast<ResourcePriority>( m_Pointer->GetEvictionPriority() );
+		return static_cast<ResourcePriority>( InternalPointer->GetEvictionPriority() );
 	}
 	
 	void Resource::EvictionPriority::set(ResourcePriority value)
 	{
-		m_Pointer->SetEvictionPriority( static_cast<UINT>( value ) );
+		InternalPointer->SetEvictionPriority( static_cast<UINT>( value ) );
 	}
 	
 	ResourceDimension Resource::Dimension::get()
 	{
 		D3D10_RESOURCE_DIMENSION type;
-		m_Pointer->GetType(&type);
+		InternalPointer->GetType(&type);
 		return static_cast<ResourceDimension>( type );
 	}
 }

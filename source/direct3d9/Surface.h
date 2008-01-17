@@ -100,7 +100,7 @@ namespace SlimDX
 			Surface( IDirect3DSurface9* surface );
 			property IDirect3DSurface9* SurfacePointer
 			{
-				IDirect3DSurface9* get() { return static_cast<IDirect3DSurface9*>( m_Pointer ); }
+				IDirect3DSurface9* get() { return static_cast<IDirect3DSurface9*>( InternalPointer ); }
 			}
 
 		public:

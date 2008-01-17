@@ -23,8 +23,8 @@
 #include <d3dx9.h>
 #include <vcclr.h>
 
-#include "../DirectXObject.h"
-#include "../Utils.h"
+#include "../BaseObject.h"
+#include "../Utilities.h"
 #include "../DataStream.h"
 
 #include "Device.h"
@@ -199,16 +199,7 @@ namespace Direct3D9
 
 	ProgressiveMesh::ProgressiveMesh( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXPMesh, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXPMesh*>( result );
+		Construct( pointer, IID_ID3DXPMesh );
 	}
 
 	ProgressiveMesh::ProgressiveMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ attributeWeights,
@@ -225,7 +216,7 @@ namespace Direct3D9
 			minimumValue, static_cast<DWORD>( options ), &result );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = result;
+		Construct(result);
 	}
 
 	ProgressiveMesh::ProgressiveMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ attributeWeights,
@@ -241,7 +232,7 @@ namespace Direct3D9
 			minimumValue, static_cast<DWORD>( options ), &result );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = result;
+		Construct(result);
 	}
 
 	ProgressiveMesh::ProgressiveMesh( Mesh^ mesh, array<int>^ adjacency, int minimumValue, MeshSimplification options )
@@ -254,7 +245,7 @@ namespace Direct3D9
 			NULL, NULL, minimumValue, static_cast<DWORD>( options ), &result );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = result;
+		Construct(result);
 	}
 
 	ProgressiveMesh^ ProgressiveMesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags, 
@@ -501,16 +492,7 @@ namespace Direct3D9
 
 	SimplificationMesh::SimplificationMesh( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXSPMesh, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXSPMesh*>( result );
+		Construct( pointer, IID_ID3DXSPMesh );
 	}
 
 	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ vertexAttributeWeights, array<float>^ vertexWeights )
@@ -525,7 +507,7 @@ namespace Direct3D9
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedVAW ), reinterpret_cast<const FLOAT *>( pinnedVW ), &result );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = result;
+		Construct(result);
 	}
 
 	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ vertexAttributeWeights )
@@ -539,7 +521,7 @@ namespace Direct3D9
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedVAW ), NULL, &result );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = result;
+		Construct(result);
 	}
 
 	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<float>^ vertexWeights )
@@ -553,7 +535,7 @@ namespace Direct3D9
 			NULL, reinterpret_cast<const FLOAT *>( pinnedVW ), &result );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = result;
+		Construct(result);
 	}
 
 	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^ adjacency )
@@ -565,7 +547,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateSPMesh( mesh->MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ), NULL, NULL, &result );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = result;
+		Construct(result);
 	}
 
 	Mesh^ SimplificationMesh::Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% adjacencyOut, [Out] array<int>^% vertexRemap )
@@ -576,7 +558,7 @@ namespace Direct3D9
 		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
 		pin_ptr<int> pinnedVR = &vertexRemap[0];
 
-		HRESULT hr = m_Pointer->CloneMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
+		HRESULT hr = InternalPointer->CloneMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
 			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedAdj ), reinterpret_cast<DWORD*>( pinnedVR ), &result );
 		GraphicsException::CheckHResult( hr );
 
@@ -597,7 +579,7 @@ namespace Direct3D9
 		pin_ptr<VertexElement> pinnedDecl = &vertexDeclaration[0];
 		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
 
-		HRESULT hr = m_Pointer->CloneMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
+		HRESULT hr = InternalPointer->CloneMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
 			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedAdj ), NULL, &result );
 		GraphicsException::CheckHResult( hr );
 
@@ -616,7 +598,7 @@ namespace Direct3D9
 
 		pin_ptr<VertexElement> pinnedDecl = &vertexDeclaration[0];
 
-		HRESULT hr = m_Pointer->CloneMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
+		HRESULT hr = InternalPointer->CloneMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
 			device->InternalPointer, NULL, NULL, &result );
 		GraphicsException::CheckHResult( hr );
 
@@ -633,7 +615,7 @@ namespace Direct3D9
 		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
 		pin_ptr<int> pinnedVR = &vertexRemap[0];
 
-		HRESULT hr = m_Pointer->CloneMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
+		HRESULT hr = InternalPointer->CloneMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
 			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedAdj ), reinterpret_cast<DWORD*>( pinnedVR ), &result );
 		GraphicsException::CheckHResult( hr );
 
@@ -653,7 +635,7 @@ namespace Direct3D9
 
 		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
 
-		HRESULT hr = m_Pointer->CloneMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
+		HRESULT hr = InternalPointer->CloneMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
 			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedAdj ), NULL, &result );
 		GraphicsException::CheckHResult( hr );
 
@@ -670,7 +652,7 @@ namespace Direct3D9
 	{
 		ID3DXMesh *result;
 
-		HRESULT hr = m_Pointer->CloneMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
+		HRESULT hr = InternalPointer->CloneMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
 			device->InternalPointer, NULL, NULL, &result );
 		GraphicsException::CheckHResult( hr );
 
@@ -688,7 +670,7 @@ namespace Direct3D9
 		pin_ptr<float> pinnedEBF = &errorsByFace[0];
 		pin_ptr<int> pinnedVR = &vertexRemap[0];
 
-		HRESULT hr = m_Pointer->ClonePMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
+		HRESULT hr = InternalPointer->ClonePMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
 			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedVR ), reinterpret_cast<FLOAT*>( pinnedEBF ), &result );
 		GraphicsException::CheckHResult( hr );
 
@@ -709,7 +691,7 @@ namespace Direct3D9
 		pin_ptr<VertexElement> pinnedDecl = &vertexDeclaration[0];
 		pin_ptr<int> pinnedVR = &vertexRemap[0];
 
-		HRESULT hr = m_Pointer->ClonePMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
+		HRESULT hr = InternalPointer->ClonePMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
 			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedVR ), NULL, &result );
 		GraphicsException::CheckHResult( hr );
 
@@ -728,7 +710,7 @@ namespace Direct3D9
 
 		pin_ptr<VertexElement> pinnedDecl = &vertexDeclaration[0];
 
-		HRESULT hr = m_Pointer->ClonePMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
+		HRESULT hr = InternalPointer->ClonePMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
 			device->InternalPointer, NULL, NULL, &result );
 		GraphicsException::CheckHResult( hr );
 
@@ -745,7 +727,7 @@ namespace Direct3D9
 		pin_ptr<float> pinnedEBF = &errorsByFace[0];
 		pin_ptr<int> pinnedVR = &vertexRemap[0];
 
-		HRESULT hr = m_Pointer->ClonePMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
+		HRESULT hr = InternalPointer->ClonePMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
 			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedVR ), reinterpret_cast<FLOAT*>( pinnedEBF ), &result );
 		GraphicsException::CheckHResult( hr );
 
@@ -765,7 +747,7 @@ namespace Direct3D9
 
 		pin_ptr<int> pinnedVR = &vertexRemap[0];
 
-		HRESULT hr = m_Pointer->ClonePMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
+		HRESULT hr = InternalPointer->ClonePMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
 			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedVR ), NULL, &result );
 		GraphicsException::CheckHResult( hr );
 
@@ -782,7 +764,7 @@ namespace Direct3D9
 	{
 		ID3DXPMesh *result;
 
-		HRESULT hr = m_Pointer->ClonePMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
+		HRESULT hr = InternalPointer->ClonePMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
 			device->InternalPointer, NULL, NULL, &result );
 		GraphicsException::CheckHResult( hr );
 
@@ -795,7 +777,7 @@ namespace Direct3D9
 	array<VertexElement>^ SimplificationMesh::GetDeclaration()
 	{
 		D3DVERTEXELEMENT9 elementBuffer[MAX_FVF_DECL_SIZE];
-		HRESULT hr = m_Pointer->GetDeclaration( elementBuffer );
+		HRESULT hr = InternalPointer->GetDeclaration( elementBuffer );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -813,7 +795,7 @@ namespace Direct3D9
 	Device^ SimplificationMesh::GetDevice()
 	{
 		IDirect3DDevice9* device;
-		HRESULT hr = m_Pointer->GetDevice( &device );
+		HRESULT hr = InternalPointer->GetDevice( &device );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -827,7 +809,7 @@ namespace Direct3D9
 		array<AttributeWeights>^ results = gcnew array<AttributeWeights>( MaximumVertexCount );
 		pin_ptr<AttributeWeights> pinnedResults = &results[0];
 
-		HRESULT hr = m_Pointer->GetVertexAttributeWeights( reinterpret_cast<D3DXATTRIBUTEWEIGHTS*>( pinnedResults ) );
+		HRESULT hr = InternalPointer->GetVertexAttributeWeights( reinterpret_cast<D3DXATTRIBUTEWEIGHTS*>( pinnedResults ) );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -841,7 +823,7 @@ namespace Direct3D9
 		array<float>^ results = gcnew array<float>( MaximumVertexCount );
 		pin_ptr<float> pinnedResults = &results[0];
 
-		HRESULT hr = m_Pointer->GetVertexWeights( reinterpret_cast<FLOAT*>( pinnedResults ) );
+		HRESULT hr = InternalPointer->GetVertexWeights( reinterpret_cast<FLOAT*>( pinnedResults ) );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -852,44 +834,44 @@ namespace Direct3D9
 
 	void SimplificationMesh::ReduceFaces( int faces )
 	{
-		HRESULT hr = m_Pointer->ReduceFaces( faces );
+		HRESULT hr = InternalPointer->ReduceFaces( faces );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void SimplificationMesh::ReduceVertices( int vertices )
 	{
-		HRESULT hr = m_Pointer->ReduceVertices( vertices );
+		HRESULT hr = InternalPointer->ReduceVertices( vertices );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	int SimplificationMesh::MaximumFaceCount::get()
 	{
-		return m_Pointer->GetMaxFaces();
+		return InternalPointer->GetMaxFaces();
 	}
 
 	int SimplificationMesh::MaximumVertexCount::get()
 	{
-		return m_Pointer->GetMaxVertices();
+		return InternalPointer->GetMaxVertices();
 	}
 
 	int SimplificationMesh::FaceCount::get()
 	{
-		return m_Pointer->GetNumFaces();
+		return InternalPointer->GetNumFaces();
 	}
 
 	int SimplificationMesh::VertexCount::get()
 	{
-		return m_Pointer->GetNumVertices();
+		return InternalPointer->GetNumVertices();
 	}
 
 	SlimDX::Direct3D9::VertexFormat SimplificationMesh::VertexFormat::get()
 	{
-		return static_cast<SlimDX::Direct3D9::VertexFormat>( m_Pointer->GetFVF() );
+		return static_cast<SlimDX::Direct3D9::VertexFormat>( InternalPointer->GetFVF() );
 	}
 
 	MeshFlags SimplificationMesh::CreationOptions::get()
 	{
-		return static_cast<MeshFlags>( m_Pointer->GetOptions() );
+		return static_cast<MeshFlags>( InternalPointer->GetOptions() );
 	}
 }
 }

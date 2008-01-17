@@ -73,7 +73,7 @@ namespace Direct3D10
 
 	Texture^ Texture::FromStream( Device^ device, Stream^ stream, int sizeInBytes )
 	{
-		array<Byte>^ memory = SlimDX::Utils::ReadStream( stream, sizeInBytes );
+		array<Byte>^ memory = SlimDX::Utilities::ReadStream( stream, sizeInBytes );
 		return FromMemory( device, memory );
 	}
 

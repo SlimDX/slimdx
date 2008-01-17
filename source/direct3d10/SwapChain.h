@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 
 #include "Enums.h"
 
@@ -36,7 +36,7 @@ namespace SlimDX
 		value class ModeDescription;
 		value class SwapChainDescription;
 		
-		public ref class SwapChain : public DirectXBase
+		public ref class SwapChain : public BaseObject
 		{
 			DXOBJECT(IDXGISwapChain);
 

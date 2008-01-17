@@ -75,7 +75,7 @@ namespace Direct3D10
 	DataStream^ Buffer::Map( MapMode mode, MapFlags flags )
 	{
 		void* mappedPtr;
-		HRESULT hr = ( static_cast<ID3D10Buffer*>( m_Pointer ) )->Map( static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedPtr );
+		HRESULT hr = ( static_cast<ID3D10Buffer*>( InternalPointer ) )->Map( static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedPtr );
 		GraphicsException::CheckHResult( hr );
 
 		bool readOnly = mode == MapMode::Read;
@@ -85,7 +85,7 @@ namespace Direct3D10
 
 	void Buffer::Unmap()
 	{
-		( static_cast<ID3D10Buffer*>( m_Pointer ) )->Unmap();
+		( static_cast<ID3D10Buffer*>( InternalPointer ) )->Unmap();
 	}
 	
 	void Buffer::Construct( Device^ device, int sizeInBytes, DataStream^ data, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
@@ -127,7 +127,7 @@ namespace Direct3D10
 		}
 		GraphicsException::CheckHResult( hr );
 		
-		m_Pointer = buffer;
+		Construct(buffer);
 	}
 }
 }

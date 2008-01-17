@@ -33,21 +33,12 @@ namespace SlimDX
 	{
 		RenderToEnvironmentMap::RenderToEnvironmentMap( ID3DXRenderToEnvMap *pointer )
 		{
-			m_Pointer = pointer;
+			Construct(pointer);
 		}
 
 		RenderToEnvironmentMap::RenderToEnvironmentMap( IntPtr pointer )
 		{
-			if( pointer == IntPtr::Zero )
-				throw gcnew ArgumentNullException( "pointer" );
-
-			void* result;
-			IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-			HRESULT hr = unknown->QueryInterface( IID_ID3DXRenderToEnvMap, &result );
-			if( FAILED( hr ) )
-				throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-			m_Pointer = static_cast<ID3DXRenderToEnvMap*>( result );
+			Construct( pointer, IID_ID3DXRenderToEnvMap );
 		}
 
 		RenderToEnvironmentMap::RenderToEnvironmentMap( Device^ device, int size, int mipLevels, Format format, Format depthStencilFormat )
@@ -61,7 +52,7 @@ namespace SlimDX
 			if( FAILED( hr ) )
 				throw gcnew GraphicsException();
 
-			m_Pointer = result;
+			Construct(result);
 		}
 
 		RenderToEnvironmentMap::RenderToEnvironmentMap( Device^ device, int size, int mipLevels, Format format )
@@ -75,42 +66,42 @@ namespace SlimDX
 			if( FAILED( hr ) )
 				throw gcnew GraphicsException();
 
-			m_Pointer = result;
+			Construct(result);
 		}
 
 		void RenderToEnvironmentMap::BeginCube( CubeTexture^ texture )
 		{
-			HRESULT hr = m_Pointer->BeginCube( texture->TexturePointer );
+			HRESULT hr = InternalPointer->BeginCube( texture->TexturePointer );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void RenderToEnvironmentMap::BeginHemisphere( Texture^ positiveZTexture, Texture^ negativeZTexture )
 		{
-			HRESULT hr = m_Pointer->BeginHemisphere( positiveZTexture->TexturePointer, negativeZTexture->TexturePointer );
+			HRESULT hr = InternalPointer->BeginHemisphere( positiveZTexture->TexturePointer, negativeZTexture->TexturePointer );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void RenderToEnvironmentMap::BeginParabolic( Texture^ positiveZTexture, Texture^ negativeZTexture )
 		{
-			HRESULT hr = m_Pointer->BeginParabolic( positiveZTexture->TexturePointer, negativeZTexture->TexturePointer );
+			HRESULT hr = InternalPointer->BeginParabolic( positiveZTexture->TexturePointer, negativeZTexture->TexturePointer );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void RenderToEnvironmentMap::BeginSphere( Texture^ texture )
 		{
-			HRESULT hr = m_Pointer->BeginSphere( texture->TexturePointer );
+			HRESULT hr = InternalPointer->BeginSphere( texture->TexturePointer );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void RenderToEnvironmentMap::End( Filter mipFilter )
 		{
-			HRESULT hr = m_Pointer->End( static_cast<DWORD>( mipFilter ) );
+			HRESULT hr = InternalPointer->End( static_cast<DWORD>( mipFilter ) );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void RenderToEnvironmentMap::Face( CubeMapFace face, Filter mipFilter )
 		{
-			HRESULT hr = m_Pointer->Face( static_cast<D3DCUBEMAP_FACES>( face ), static_cast<DWORD>( mipFilter ) );
+			HRESULT hr = InternalPointer->Face( static_cast<D3DCUBEMAP_FACES>( face ), static_cast<DWORD>( mipFilter ) );
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -118,7 +109,7 @@ namespace SlimDX
 		{
 			IDirect3DDevice9* device;
 
-			HRESULT hr = m_Pointer->GetDevice( &device );
+			HRESULT hr = InternalPointer->GetDevice( &device );
 			GraphicsException::CheckHResult( hr );
 
 			if( FAILED( hr ) )
@@ -129,13 +120,13 @@ namespace SlimDX
 
 		void RenderToEnvironmentMap::OnLostDevice()
 		{
-			HRESULT hr = m_Pointer->OnLostDevice();
+			HRESULT hr = InternalPointer->OnLostDevice();
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void RenderToEnvironmentMap::OnResetDevice()
 		{
-			HRESULT hr = m_Pointer->OnResetDevice();
+			HRESULT hr = InternalPointer->OnResetDevice();
 			GraphicsException::CheckHResult( hr );
 		}
 
@@ -143,7 +134,7 @@ namespace SlimDX
 		{
 			D3DXRTE_DESC desc = {0};
 
-			HRESULT hr = m_Pointer->GetDesc( &desc );
+			HRESULT hr = InternalPointer->GetDesc( &desc );
 			GraphicsException::CheckHResult( hr );
 
 			RenderToEnvironmentMapDescription outDesc;

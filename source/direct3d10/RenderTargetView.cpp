@@ -42,15 +42,15 @@ namespace Direct3D10
 		HRESULT hr = device->DevicePointer->CreateRenderTargetView( resource->InternalPointer, NULL, &view );
 		GraphicsException::CheckHResult( hr );
 		
-		m_Pointer = view;
+		Construct(view);
 	}
 	
 	void RenderTargetView::Clear( ColorValue color )
 	{
 		float colorArray[] = { color.Red, color.Green, color.Blue, color.Alpha };
 		ID3D10Device* device;
-		m_Pointer->GetDevice( &device );
-		device->ClearRenderTargetView( static_cast<ID3D10RenderTargetView*>( m_Pointer ), colorArray );
+		InternalPointer->GetDevice( &device );
+		device->ClearRenderTargetView( static_cast<ID3D10RenderTargetView*>( InternalPointer ), colorArray );
 	}
 }
 }

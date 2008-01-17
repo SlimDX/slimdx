@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 
 #include "Enums.h"
 #include "DepthStencilStateDescription.h"
@@ -34,7 +34,7 @@ namespace SlimDX
 	{	
 		ref class Device;
 		
-		public ref class DepthStencilState : DirectXBase
+		public ref class DepthStencilState : BaseObject
 		{
 			DXOBJECT(ID3D10DepthStencilState);
 

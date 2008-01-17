@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 
 #include "Enums.h"
 
@@ -31,7 +31,7 @@ namespace SlimDX
 	{
 		ref class Device;
 		
-		public ref class Resource abstract : public DirectXBase
+		public ref class Resource abstract : public BaseObject
 		{
 			DXOBJECT(IDirect3DResource9);
 
@@ -44,13 +44,13 @@ namespace SlimDX
 
 			property int Priority
 			{
-				int get() { return m_Pointer->GetPriority(); }
-				void set(int value) { m_Pointer->SetPriority( value ); }
+				int get() { return InternalPointer->GetPriority(); }
+				void set(int value) { InternalPointer->SetPriority( value ); }
 			};
 		
 			property SlimDX::Direct3D9::ResourceType ResourceType
 			{
-				SlimDX::Direct3D9::ResourceType get() { return ( SlimDX::Direct3D9::ResourceType ) m_Pointer->GetType(); }
+				SlimDX::Direct3D9::ResourceType get() { return ( SlimDX::Direct3D9::ResourceType ) InternalPointer->GetType(); }
 			}
 			
 			Device^ GetDevice();

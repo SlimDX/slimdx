@@ -20,62 +20,69 @@
 * THE SOFTWARE.
 */
 
-#include <d3d9.h>
-#include <d3dx9.h>
-
-#include "Device.h"
-#include "StateBlock.h"
+#include "BaseObject.h"
+#include "Configuration.h"
 
 namespace SlimDX
 {
-namespace Direct3D9
-{
-	StateBlock::StateBlock( IntPtr pointer )
+	BaseObject::BaseObject()
 	{
-		Construct( pointer, IID_IDirect3DStateBlock9 );
+		if( Configuration::EnableObjectTracking )
+			ObjectTracker::Add( this );
 	}
 
-	StateBlock::StateBlock( IDirect3DStateBlock9* stateBlock )
+	BaseObject::~BaseObject()
 	{
-		if( stateBlock == NULL )
-			throw gcnew ArgumentNullException( "stateBlock" );
-
-		Construct(stateBlock);
 	}
 
-	StateBlock::StateBlock( Device^ device, StateBlockType type )
+	bool BaseObject::Disposed::get()
 	{
-		IDirect3DStateBlock9* stateBlock;
+		return m_Unknown == 0;
+	}
 
-		HRESULT hr = device->InternalPointer->CreateStateBlock( static_cast<D3DSTATEBLOCKTYPE>( type ), &stateBlock );
-		GraphicsException::CheckHResult( hr );
+	IntPtr BaseObject::ComPointer::get()
+	{
+		return IntPtr( m_Unknown );
+	}
+
+	IUnknown* BaseObject::UnknownPointer::get()
+	{
+		return m_Unknown;
+	}
+	
+	void BaseObject::Construct( IUnknown* pointer )
+	{
+		if( pointer == 0 )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		m_Unknown = pointer;
+	}
+
+	void BaseObject::Construct( IntPtr pointer, const IID& iid )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		void* result = 0;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface( iid, &result );
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException();
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
-		Construct(stateBlock);
+		Construct( unknown );
 	}
 
-	void StateBlock::Apply()
+	void BaseObject::Destruct()
 	{
-		HRESULT hr = InternalPointer->Apply();
-		GraphicsException::CheckHResult( hr );
+		if( m_Unknown != 0 )
+			m_Unknown->Release();
+
+		if( Configuration::EnableObjectTracking )
+			ObjectTracker::Remove( this );
 	}
 
-	void StateBlock::Capture()
+	void BaseObject::DisposeHandler( Object^ sender, EventArgs^ e )
 	{
-		HRESULT hr = InternalPointer->Apply();
-		GraphicsException::CheckHResult( hr );
-	}
-
-	Device^ StateBlock::GetDevice()
-	{
-		IDirect3DDevice9* device;
-		HRESULT hr = InternalPointer->GetDevice( &device );
-		GraphicsException::CheckHResult( hr );
-		if( FAILED( hr ) )
-			return nullptr;
-
-		return gcnew Device( device );
-	}
-}
+		delete this;
+	};
 }

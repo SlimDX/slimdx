@@ -23,7 +23,7 @@
 #include <d3dx9.h>
 
 #include "../DataStream.h"
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 #include "Device.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
@@ -35,16 +35,7 @@ namespace Direct3D9
 {
 	FragmentLinker::FragmentLinker( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXFragmentLinker, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXFragmentLinker*>( result );
+		Construct( pointer, IID_ID3DXFragmentLinker );
 	}
 
 	FragmentLinker::FragmentLinker( ID3DXFragmentLinker* linker )
@@ -52,7 +43,7 @@ namespace Direct3D9
 		if( linker == NULL )
 			throw gcnew ArgumentNullException( "linker" );
 
-		m_Pointer = linker;
+		Construct(linker);
 	}
 
 	FragmentLinker::FragmentLinker( Device^ device, int cacheSize )
@@ -65,7 +56,7 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			throw gcnew GraphicsException();
 
-		m_Pointer = linker;
+		Construct(linker);
 	}
 
 	DataStream^ FragmentLinker::Gather( array<Byte>^ sourceData, array<Macro>^ defines,
@@ -89,7 +80,7 @@ namespace Direct3D9
 		//clean up after marshaling macros
 		Macro::Unmarshal( macros, handles );
 		//marshal errors if necessary
-		errors = Utils::BufferToString( errorBuffer );
+		errors = Utilities::BufferToString( errorBuffer );
 		
 		GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 		if( FAILED( hr ) )
@@ -126,7 +117,7 @@ namespace Direct3D9
 		//clean up after marshaling macros
 		Macro::Unmarshal( macros, handles );
 		//marshal errors if necessary
-		errors = Utils::BufferToString( errorBuffer );
+		errors = Utilities::BufferToString( errorBuffer );
 		
 		GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 		if( FAILED( hr ) )
@@ -138,13 +129,13 @@ namespace Direct3D9
 	void FragmentLinker::AddFragments( array<int>^ fragments )
 	{
 		pin_ptr<int> pinnedFragments = &fragments[0];
-		HRESULT hr = m_Pointer->AddFragments( reinterpret_cast<const DWORD*>( pinnedFragments ) );
+		HRESULT hr = InternalPointer->AddFragments( reinterpret_cast<const DWORD*>( pinnedFragments ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void FragmentLinker::AddFragments( DataStream^ fragments )
 	{
-		HRESULT hr = m_Pointer->AddFragments( reinterpret_cast<const DWORD*>( fragments->RawPointer ) );
+		HRESULT hr = InternalPointer->AddFragments( reinterpret_cast<const DWORD*>( fragments->RawPointer ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -153,7 +144,7 @@ namespace Direct3D9
 		D3DXHANDLE handle = name != nullptr ? name->InternalHandle : NULL;
 		ID3DXBuffer* fragment;
 
-		HRESULT hr = m_Pointer->GetFragment( handle, &fragment );
+		HRESULT hr = InternalPointer->GetFragment( handle, &fragment );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -165,7 +156,7 @@ namespace Direct3D9
 	{
 		ID3DXBuffer* fragments;
 
-		HRESULT hr = m_Pointer->GetAllFragments( &fragments );
+		HRESULT hr = InternalPointer->GetAllFragments( &fragments );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -177,7 +168,7 @@ namespace Direct3D9
 	{
 		IDirect3DDevice9* device;
 		//This method always returns the value S_OK.
-		m_Pointer->GetDevice( &device );
+		InternalPointer->GetDevice( &device );
 
 		return gcnew Device( device );
 	}
@@ -187,7 +178,7 @@ namespace Direct3D9
 		D3DXHANDLE handle = name != nullptr ? name->InternalHandle : NULL;
 		D3DXFRAGMENT_DESC desc;
 
-		HRESULT hr = m_Pointer->GetFragmentDesc( handle, &desc );
+		HRESULT hr = InternalPointer->GetFragmentDesc( handle, &desc );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return FragmentDescription();
@@ -201,7 +192,7 @@ namespace Direct3D9
 
 	EffectHandle^ FragmentLinker::GetFragmentHandle( int index )
 	{
-		D3DXHANDLE handle = m_Pointer->GetFragmentHandleByIndex( index );
+		D3DXHANDLE handle = InternalPointer->GetFragmentHandleByIndex( index );
 		if( handle == NULL )
 			return nullptr;
 
@@ -213,7 +204,7 @@ namespace Direct3D9
 		array<Byte>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<const Byte> pinnedName = &nameBytes[0];
 
-		D3DXHANDLE handle = m_Pointer->GetFragmentHandleByName( reinterpret_cast<LPCSTR>( pinnedName ) );
+		D3DXHANDLE handle = InternalPointer->GetFragmentHandleByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( handle == NULL )
 			return nullptr;
 
@@ -223,7 +214,7 @@ namespace Direct3D9
 	void FragmentLinker::ClearCache()
 	{
 		//This method always returns the value S_OK.
-		m_Pointer->ClearCache();
+		InternalPointer->ClearCache();
 	}
 
 	ShaderBytecode^ FragmentLinker::LinkShader( String^ profile, ShaderFlags flags, array<EffectHandle^>^ fragmentHandles, [Out] String^% errors )
@@ -239,12 +230,12 @@ namespace Direct3D9
 			handles[i] = fragmentHandles[i] != nullptr ? fragmentHandles[i]->InternalHandle : NULL;
 		}
 
-		HRESULT hr = m_Pointer->LinkShader( reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<DWORD>( flags ), handles, fragmentHandles->Length, &bytecode, &errorBuffer );
+		HRESULT hr = InternalPointer->LinkShader( reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<DWORD>( flags ), handles, fragmentHandles->Length, &bytecode, &errorBuffer );
 		delete[] handles;
 		GraphicsException::CheckHResult( hr );
 		
 		//marshal errors if necessary
-		errors = Utils::BufferToString( errorBuffer );
+		errors = Utilities::BufferToString( errorBuffer );
 		if( FAILED( hr ) )
 			return nullptr;
 
@@ -264,12 +255,12 @@ namespace Direct3D9
 			handles[i] = fragmentHandles[i] != nullptr ? fragmentHandles[i]->InternalHandle : NULL;
 		}
 
-		HRESULT hr = m_Pointer->LinkVertexShader( reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<DWORD>( flags ), handles, fragmentHandles->Length, &shader, &errorBuffer );
+		HRESULT hr = InternalPointer->LinkVertexShader( reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<DWORD>( flags ), handles, fragmentHandles->Length, &shader, &errorBuffer );
 		delete[] handles;
 		GraphicsException::CheckHResult( hr );
 		
 		//marshal errors if necessary
-		errors = Utils::BufferToString( errorBuffer );
+		errors = Utilities::BufferToString( errorBuffer );
 		if( FAILED( hr ) )
 			return nullptr;
 
@@ -289,12 +280,12 @@ namespace Direct3D9
 			handles[i] = fragmentHandles[i] != nullptr ? fragmentHandles[i]->InternalHandle : NULL;
 		}
 
-		HRESULT hr = m_Pointer->LinkPixelShader( reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<DWORD>( flags ), handles, fragmentHandles->Length, &shader, &errorBuffer );
+		HRESULT hr = InternalPointer->LinkPixelShader( reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<DWORD>( flags ), handles, fragmentHandles->Length, &shader, &errorBuffer );
 		delete[] handles;
 		GraphicsException::CheckHResult( hr );
 		
 		//marshal errors if necessary
-		errors = Utils::BufferToString( errorBuffer );
+		errors = Utilities::BufferToString( errorBuffer );
 		if( FAILED( hr ) )
 			return nullptr;
 
@@ -303,7 +294,7 @@ namespace Direct3D9
 
 	int FragmentLinker::FragmentCount::get()
 	{
-		return m_Pointer->GetNumberOfFragments();
+		return InternalPointer->GetNumberOfFragments();
 	}
 }
 }

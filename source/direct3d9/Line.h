@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public ref class Line : DirectXBase
+		public ref class Line : BaseObject
 		{
 			DXOBJECT(ID3DXLine);
 

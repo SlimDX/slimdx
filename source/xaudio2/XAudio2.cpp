@@ -30,7 +30,7 @@
 #include <mmreg.h>
 #include <xaudio2.h>
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 #include "XAudio2.h"
 #include "AudioException.h"
 #include "EngineCallback.h"
@@ -49,7 +49,7 @@ namespace XAudio2
 		if( FAILED( hr ) )
 			throw gcnew AudioException();
 
-		m_Pointer = xa2;
+		Construct(xa2);
 	}
 
 	float XAudio2::AmplitudeRatioToDecibels( float volume )
@@ -80,26 +80,26 @@ namespace XAudio2
 	{
 		IXAudio2EngineCallback* nativeCallback = callback != nullptr ? callback->Shim : NULL;
 
-		HRESULT hr = m_Pointer->Initialize( 0, nativeCallback, static_cast<XAUDIO2_PROCESSOR>( processor ) );
+		HRESULT hr = InternalPointer->Initialize( 0, nativeCallback, static_cast<XAUDIO2_PROCESSOR>( processor ) );
 		AudioException::CheckHResult( hr );
 	}
 
 	void XAudio2::StartEngine()
 	{
-		HRESULT hr = m_Pointer->StartEngine();
+		HRESULT hr = InternalPointer->StartEngine();
 		AudioException::CheckHResult( hr );
 	}
 
 	void XAudio2::StopEngine()
 	{
-		HRESULT hr = m_Pointer->StopEngine();
+		HRESULT hr = InternalPointer->StopEngine();
 		AudioException::CheckHResult( hr );
 	}
 
 	DeviceDetails XAudio2::GetDeviceDetails( int index )
 	{
 		DeviceDetails details;
-		//HRESULT hr = m_Pointer->GetDeviceDetails( reinterpret_cast<XAUDIO2_DEVICE_DETAILS*>( &details ) );
+		//HRESULT hr = InternalPointer->GetDeviceDetails( reinterpret_cast<XAUDIO2_DEVICE_DETAILS*>( &details ) );
 		//AudioException::CheckHResult( hr );
 
 		return details;
@@ -108,7 +108,7 @@ namespace XAudio2
 	int XAudio2::DeviceCount::get()
 	{
 		UINT32 count = 0;
-		HRESULT hr = m_Pointer->GetDeviceCount( &count );
+		HRESULT hr = InternalPointer->GetDeviceCount( &count );
 		AudioException::CheckHResult( hr );
 
 		return (int) count;
@@ -117,7 +117,7 @@ namespace XAudio2
 	SlimDX::XAudio2::PerformanceData XAudio2::PerformanceData::get()
 	{
 		SlimDX::XAudio2::PerformanceData data;
-		HRESULT hr = m_Pointer->GetPerformanceData( reinterpret_cast<XAUDIO2_PERFORMANCE_DATA*>( &data ) );
+		HRESULT hr = InternalPointer->GetPerformanceData( reinterpret_cast<XAUDIO2_PERFORMANCE_DATA*>( &data ) );
 		AudioException::CheckHResult( hr );
 
 		return data;

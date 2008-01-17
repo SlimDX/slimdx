@@ -22,7 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 
 #include "Device.h"
 #include "Resource.h"
@@ -33,22 +33,13 @@ namespace Direct3D9
 {
 	Resource::Resource( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_IDirect3DResource9, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<IDirect3DResource9*>( result );
+		Construct( pointer, IID_IDirect3DResource9 );
 	}
 
 	Device^ Resource::GetDevice()
 	{
 		IDirect3DDevice9* device;
-		HRESULT hr = m_Pointer->GetDevice( &device );
+		HRESULT hr = InternalPointer->GetDevice( &device );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -59,7 +50,7 @@ namespace Direct3D9
 	
 	void Resource::Preload()
 	{
-		m_Pointer->PreLoad();
+		InternalPointer->PreLoad();
 	}
 }
 }

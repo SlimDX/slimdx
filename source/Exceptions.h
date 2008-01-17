@@ -24,22 +24,17 @@
 using namespace System;
 using namespace System::Runtime::Serialization;
 
+#include "Configuration.h"
+
 namespace SlimDX
 {
 	[Serializable]
 	public ref class DirectXException : public Exception
 	{
-	private:
-		static DirectXException()
-		{
-			EnableExceptions = true;
-		}
-
 	protected:
 		DirectXException(SerializationInfo^ info, StreamingContext context) : Exception(info, context) { }		
 		
 	public:
-		static property bool EnableExceptions;
 		property int ErrorCode;
 
 		DirectXException() : Exception("A DirectX exception occurred.")

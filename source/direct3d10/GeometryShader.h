@@ -23,32 +23,23 @@
 
 using namespace System;
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class GeometryShader : public DirectXBase
+		public ref class GeometryShader : public BaseObject
 		{
 			DXOBJECT(ID3D10GeometryShader);
 
 		internal:
-			GeometryShader(ID3D10GeometryShader *shader) { m_Pointer = shader; }
+			GeometryShader(ID3D10GeometryShader *shader) { Construct(shader); }
 			
 		public:
 			GeometryShader( IntPtr shader )
 			{
-				if( shader == IntPtr::Zero )
-					throw gcnew ArgumentNullException( "shader" );
-
-				void* pointer;
-				IUnknown* unknown = static_cast<IUnknown*>( shader.ToPointer() );
-				HRESULT hr = unknown->QueryInterface( IID_ID3D10GeometryShader, &pointer );
-				if( FAILED( hr ) )
-					throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-				m_Pointer = static_cast<ID3D10GeometryShader*>( pointer );
+				Construct( shader, IID_ID3D10GeometryShader );
 
 			}
 

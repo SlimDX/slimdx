@@ -42,14 +42,14 @@ namespace Direct3D10
 		HRESULT hr = device->DevicePointer->CreateDepthStencilView( resource->InternalPointer, NULL, &view );
 		GraphicsException::CheckHResult( hr );
 		
-		m_Pointer = view;
+		Construct(view);
 	}
 	
 	void DepthStencilView::Clear( DepthStencilClearFlags flags, float depthValue, Byte stencilValue )
 	{
 		ID3D10Device* device;
-		m_Pointer->GetDevice( &device );
-		device->ClearDepthStencilView( static_cast<ID3D10DepthStencilView*>( m_Pointer ), static_cast<D3D10_CLEAR_FLAG>( flags ), 
+		InternalPointer->GetDevice( &device );
+		device->ClearDepthStencilView( static_cast<ID3D10DepthStencilView*>( InternalPointer ), static_cast<D3D10_CLEAR_FLAG>( flags ), 
 			depthValue, stencilValue );
 	}
 }

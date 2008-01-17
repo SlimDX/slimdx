@@ -34,7 +34,7 @@ namespace Demo.Kaos
 	{
 		public Engine(System.Windows.Forms.Panel view)
 		{
-			DirectXBase.EnableObjectTracking = false;
+			Configuration.EnableObjectTracking = false;
 			Direct3D.Initialize();
 
 			PresentParameters presentParams = new PresentParameters();

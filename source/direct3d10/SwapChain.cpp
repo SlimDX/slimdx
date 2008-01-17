@@ -44,27 +44,18 @@ namespace Direct3D10
 		HRESULT hr = device->FactoryPointer->CreateSwapChain( device->DevicePointer, reinterpret_cast<DXGI_SWAP_CHAIN_DESC*>( &description ), &swapChain );
 		GraphicsException::CheckHResult( hr );
 		
-		m_Pointer = swapChain;
+		Construct(swapChain);
 	}
 
 	SwapChain::SwapChain( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_IDXGISwapChain, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<IDXGISwapChain*>( result );
+		Construct( pointer, IID_IDXGISwapChain );
 	}
 
 	Texture2D^ SwapChain::GetBuffer( int index )
 	{
 		ID3D10Texture2D *texture;
-		HRESULT hr = m_Pointer->GetBuffer( index, __uuidof( ID3D10Texture2D ), reinterpret_cast<void**>( &texture ) );
+		HRESULT hr = InternalPointer->GetBuffer( index, __uuidof( ID3D10Texture2D ), reinterpret_cast<void**>( &texture ) );
 		GraphicsException::CheckHResult( hr );
 
 		return gcnew Texture2D( texture );
@@ -72,19 +63,19 @@ namespace Direct3D10
 	
 	void SwapChain::ResizeBuffers( int count, int width, int height, Format format, SwapChainFlags flags )
 	{
-		HRESULT hr = m_Pointer->ResizeBuffers( count, width, height, static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ) );
+		HRESULT hr = InternalPointer->ResizeBuffers( count, width, height, static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ) );
 		GraphicsException::CheckHResult( hr );
 	}
 	
 	void SwapChain::ResizeTarget( ModeDescription description )
 	{
-		HRESULT hr = m_Pointer->ResizeTarget( reinterpret_cast<DXGI_MODE_DESC*>( &description ) );
+		HRESULT hr = InternalPointer->ResizeTarget( reinterpret_cast<DXGI_MODE_DESC*>( &description ) );
 		GraphicsException::CheckHResult( hr );
 	}
 	
 	PresentResult SwapChain::Present( int syncInterval, PresentFlags flags )
 	{
-		HRESULT hr = m_Pointer->Present( syncInterval, static_cast<UINT>( flags ) );
+		HRESULT hr = InternalPointer->Present( syncInterval, static_cast<UINT>( flags ) );
 		if( hr == S_OK )
 			return PresentResult::Okay;
 		else if( hr == DXGI_STATUS_OCCLUDED )

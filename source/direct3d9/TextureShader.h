@@ -25,7 +25,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public ref class TextureShader : public DirectXBase
+		public ref class TextureShader : public BaseObject
 		{
 			DXOBJECT(ID3DXTextureShader);
 

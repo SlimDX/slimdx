@@ -31,16 +31,7 @@ namespace SlimDX
 	{
 		EffectPool::EffectPool( IntPtr pointer )
 		{
-			if( pointer == IntPtr::Zero )
-				throw gcnew ArgumentNullException( "pointer" );
-
-			void* result;
-			IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-			HRESULT hr = unknown->QueryInterface( IID_ID3DXEffectPool, &result );
-			if( FAILED( hr ) )
-				throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-			m_Pointer = static_cast<ID3DXEffectPool*>( result );
+			Construct( pointer, IID_ID3DXEffectPool );
 		}
 
 		EffectPool::EffectPool()
@@ -50,7 +41,7 @@ namespace SlimDX
 			if( FAILED( hr ) )
 				throw gcnew GraphicsException();
 
-			m_Pointer = pointer;
+			Construct(pointer);
 		}
 
 		Effect::Effect( ID3DXEffect* effect ) : BaseEffect( effect )
@@ -61,16 +52,7 @@ namespace SlimDX
 
 		Effect::Effect( IntPtr effect )
 		{
-			if( effect == IntPtr::Zero )
-				throw gcnew ArgumentNullException( "effect" );
-
-			void* pointer;
-			IUnknown* unknown = static_cast<IUnknown*>( effect.ToPointer() );
-			HRESULT hr = unknown->QueryInterface( IID_ID3DXEffect, &pointer );
-			if( FAILED( hr ) )
-				throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-			m_Pointer = static_cast<ID3DXEffect*>( pointer );
+			Construct( effect, IID_ID3DXEffect );
 		}
 
 		Effect^ Effect::FromMemory( Device^ device, array<Byte>^ memory, array<Macro>^ preprocessorDefines,
@@ -105,7 +87,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			compilationErrors = Utils::BufferToString( errorBuffer );
+			compilationErrors = Utilities::BufferToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );	
 			if( FAILED( hr ) )
@@ -117,7 +99,7 @@ namespace SlimDX
 		Effect^ Effect::FromStream( Device^ device, Stream^ stream, array<Macro>^ preprocessorDefines, Include^ includeFile,
 			String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors )
 		{
-			array<Byte>^ data = Utils::ReadStream( stream, 0 );
+			array<Byte>^ data = Utilities::ReadStream( stream, 0 );
 
 			return Effect::FromMemory( device, data, preprocessorDefines, includeFile,
 				skipConstants, flags, pool, compilationErrors );
@@ -189,7 +171,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			compilationErrors = Utils::BufferToString( errorBuffer );
+			compilationErrors = Utilities::BufferToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );
 			if( effect == NULL)

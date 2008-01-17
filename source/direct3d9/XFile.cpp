@@ -22,7 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 #include "../DataStream.h"
 #include "GraphicsException.h"
 #include "XFile.h"
@@ -33,27 +33,18 @@ namespace Direct3D9
 {
 	XFileSaveData::XFileSaveData( ID3DXFileSaveData *object )
 	{
-		m_Pointer = object;
+		Construct(object);
 	}
 
 	XFileSaveData::XFileSaveData( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXFileSaveData, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXFileSaveData*>( result );
+		Construct( pointer, IID_ID3DXFileSaveData );
 	}
 
 	XFileSaveData^ XFileSaveData::AddDataObject( Guid dataTemplate, String^ name, Guid id, array<Byte>^ data )
 	{
 		ID3DXFileSaveData *result;
-		GUID nativeId = Utils::ToGUID( id );
+		GUID nativeId = Utilities::ToGUID( id );
 		GUID *pointer = &nativeId;
 		if( id == Guid::Empty )
 			pointer = NULL;
@@ -62,7 +53,7 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 		pin_ptr<unsigned char> pinnedMemory = &data[0];
 
-		HRESULT hr = m_Pointer->AddDataObject( Utils::ToGUID( dataTemplate ), reinterpret_cast<LPCSTR>( pinnedName ), pointer, 
+		HRESULT hr = InternalPointer->AddDataObject( Utilities::ToGUID( dataTemplate ), reinterpret_cast<LPCSTR>( pinnedName ), pointer, 
 			data->Length, reinterpret_cast<LPCVOID>( pinnedMemory ), &result );
 		GraphicsException::CheckHResult( hr );
 
@@ -74,13 +65,13 @@ namespace Direct3D9
 
 	XFileSaveData^ XFileSaveData::AddDataObject( Guid dataTemplate, String^ name, Guid id, Stream^ data )
 	{
-		array<Byte>^ memory = Utils::ReadStream( data, 0 );
+		array<Byte>^ memory = Utilities::ReadStream( data, 0 );
 		return AddDataObject( dataTemplate, name, id, memory );
 	}
 
 	void XFileSaveData::AddDataReference( String^ name, Guid id )
 	{
-		GUID nativeId = Utils::ToGUID( id );
+		GUID nativeId = Utilities::ToGUID( id );
 		GUID *pointer = &nativeId;
 		if( id == Guid::Empty )
 			pointer = NULL;
@@ -88,7 +79,7 @@ namespace Direct3D9
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		HRESULT hr = m_Pointer->AddDataReference( reinterpret_cast<LPCSTR>( pinnedName ), pointer );
+		HRESULT hr = InternalPointer->AddDataReference( reinterpret_cast<LPCSTR>( pinnedName ), pointer );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -96,13 +87,13 @@ namespace Direct3D9
 	{
 		GUID guid;
 
-		HRESULT hr = m_Pointer->GetId( &guid );
+		HRESULT hr = InternalPointer->GetId( &guid );
 		GraphicsException::CheckHResult( hr );
 
 		if( guid == GUID_NULL )
 			return Guid::Empty;
 
-		return Utils::FromGUID( guid );
+		return Utilities::FromGUID( guid );
 	}
 
 	String^ XFileSaveData::Name::get()
@@ -110,12 +101,12 @@ namespace Direct3D9
 		char *name;
 		SIZE_T size = 0;
 
-		HRESULT hr = m_Pointer->GetName( NULL, &size );
+		HRESULT hr = InternalPointer->GetName( NULL, &size );
 		GraphicsException::CheckHResult( hr );
 
 		name = new char[size];
 
-		hr = m_Pointer->GetName( name, &size );
+		hr = InternalPointer->GetName( name, &size );
 		GraphicsException::CheckHResult( hr );
 
 		delete name;
@@ -130,7 +121,7 @@ namespace Direct3D9
 	{
 		ID3DXFileSaveObject *result;
 
-		HRESULT hr = m_Pointer->GetSave( &result );
+		HRESULT hr = InternalPointer->GetSave( &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -143,38 +134,29 @@ namespace Direct3D9
 	{
 		GUID result;
 
-		HRESULT hr = m_Pointer->GetType( &result );
+		HRESULT hr = InternalPointer->GetType( &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
 			return Guid::Empty;
 
-		return Utils::FromGUID( result );
+		return Utilities::FromGUID( result );
 	}
 
 	XFileSaveObject::XFileSaveObject( ID3DXFileSaveObject *object )
 	{
-		m_Pointer = object;
+		Construct(object);
 	}
 
 	XFileSaveObject::XFileSaveObject( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXFileSaveObject, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXFileSaveObject*>( result );
+		Construct( pointer, IID_ID3DXFileSaveObject );
 	}
 
 	XFileSaveData^ XFileSaveObject::AddDataObject( Guid dataTemplate, String^ name, Guid id, array<Byte>^ data )
 	{
 		ID3DXFileSaveData *result;
-		GUID nativeId = Utils::ToGUID( id );
+		GUID nativeId = Utilities::ToGUID( id );
 		GUID *pointer = &nativeId;
 		if( id == Guid::Empty )
 			pointer = NULL;
@@ -183,7 +165,7 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 		pin_ptr<unsigned char> pinnedMemory = &data[0];
 
-		HRESULT hr = m_Pointer->AddDataObject( Utils::ToGUID( dataTemplate ), reinterpret_cast<LPCSTR>( pinnedName ), pointer, 
+		HRESULT hr = InternalPointer->AddDataObject( Utilities::ToGUID( dataTemplate ), reinterpret_cast<LPCSTR>( pinnedName ), pointer, 
 			data->Length, reinterpret_cast<LPCVOID>( pinnedMemory ), &result );
 		GraphicsException::CheckHResult( hr );
 
@@ -195,7 +177,7 @@ namespace Direct3D9
 
 	XFileSaveData^ XFileSaveObject::AddDataObject( Guid dataTemplate, String^ name, Guid id, Stream^ data )
 	{
-		array<Byte>^ memory = Utils::ReadStream( data, 0 );
+		array<Byte>^ memory = Utilities::ReadStream( data, 0 );
 		return AddDataObject( dataTemplate, name, id, memory );
 	}
 
@@ -203,7 +185,7 @@ namespace Direct3D9
 	{
 		ID3DXFile* result;
 
-		HRESULT hr = m_Pointer->GetFile( &result );
+		HRESULT hr = InternalPointer->GetFile( &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -214,27 +196,18 @@ namespace Direct3D9
 
 	void XFileSaveObject::Save()
 	{
-		HRESULT hr = m_Pointer->Save();
+		HRESULT hr = InternalPointer->Save();
 		GraphicsException::CheckHResult( hr );
 	}
 
 	XFile::XFile( ID3DXFile *object )
 	{
-		m_Pointer = object;
+		Construct(object);
 	}
 
 	XFile::XFile( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXFile, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXFile*>( result );
+		Construct( pointer, IID_ID3DXFile );
 	}
 
 	XFile::XFile()
@@ -244,7 +217,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXFileCreate( &result );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = result;
+		Construct(result);
 	}
 
 	XFileEnumerationObject^ XFile::CreateEnumerationObject( String^ fileName, CharSet charSet )
@@ -259,7 +232,7 @@ namespace Direct3D9
 		else
 			flag = D3DXF_FILELOAD_FROMFILE;
 
-		HRESULT hr = m_Pointer->CreateEnumObject( reinterpret_cast<LPCVOID>( pinnedName ), flag, &result );
+		HRESULT hr = InternalPointer->CreateEnumObject( reinterpret_cast<LPCVOID>( pinnedName ), flag, &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -277,7 +250,7 @@ namespace Direct3D9
 		mem.lpMemory = reinterpret_cast<LPCVOID>( pinnedMemory );
 		mem.dSize = memory->Length;
 
-		HRESULT hr = m_Pointer->CreateEnumObject( reinterpret_cast<LPCVOID>( &mem ), D3DXF_FILELOAD_FROMMEMORY, &result );
+		HRESULT hr = InternalPointer->CreateEnumObject( reinterpret_cast<LPCVOID>( &mem ), D3DXF_FILELOAD_FROMMEMORY, &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) ) 
@@ -288,7 +261,7 @@ namespace Direct3D9
 
 	XFileEnumerationObject^ XFile::CreateEnumerationObject( Stream^ memory )
 	{
-		array<Byte>^ data = Utils::ReadStream( memory, 0 );
+		array<Byte>^ data = Utilities::ReadStream( memory, 0 );
 		return CreateEnumerationObject( data );
 	}
 
@@ -304,7 +277,7 @@ namespace Direct3D9
 		else
 			flag = D3DXF_FILESAVE_TOFILE;
 
-		HRESULT hr = m_Pointer->CreateSaveObject( reinterpret_cast<LPCVOID>( pinnedName ), flag, static_cast<D3DXF_FILEFORMAT>( format ), &result );
+		HRESULT hr = InternalPointer->CreateSaveObject( reinterpret_cast<LPCVOID>( pinnedName ), flag, static_cast<D3DXF_FILEFORMAT>( format ), &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -315,7 +288,7 @@ namespace Direct3D9
 
 	void XFile::RegisterEnumerationTemplates( XFileEnumerationObject^ enumerationObject )
 	{
-		HRESULT hr = m_Pointer->RegisterEnumTemplates( enumerationObject->InternalPointer );
+		HRESULT hr = InternalPointer->RegisterEnumTemplates( enumerationObject->InternalPointer );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -323,13 +296,13 @@ namespace Direct3D9
 	{
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
-		HRESULT hr = m_Pointer->RegisterTemplates( reinterpret_cast<LPCVOID>( pinnedMemory ), memory->Length );
+		HRESULT hr = InternalPointer->RegisterTemplates( reinterpret_cast<LPCVOID>( pinnedMemory ), memory->Length );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	void XFile::RegisterTemplates( Stream^ stream )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
 		RegisterTemplates( data );
 	}
 
@@ -341,28 +314,19 @@ namespace Direct3D9
 
 	XFileEnumerationObject::XFileEnumerationObject( ID3DXFileEnumObject *object )
 	{
-		m_Pointer = object;
+		Construct(object);
 	}
 
 	XFileEnumerationObject::XFileEnumerationObject( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXFileEnumObject, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXFileEnumObject*>( result );
+		Construct( pointer, IID_ID3DXFileEnumObject );
 	}
 
 	XFileData^ XFileEnumerationObject::GetChild( int id )
 	{
 		ID3DXFileData *result;
 
-		HRESULT hr = m_Pointer->GetChild( id, &result );
+		HRESULT hr = InternalPointer->GetChild( id, &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -375,7 +339,7 @@ namespace Direct3D9
 	{
 		ID3DXFileData *result;
 
-		HRESULT hr = m_Pointer->GetDataObjectById( Utils::ToGUID( id ), &result );
+		HRESULT hr = InternalPointer->GetDataObjectById( Utilities::ToGUID( id ), &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -390,7 +354,7 @@ namespace Direct3D9
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		HRESULT hr = m_Pointer->GetDataObjectByName( reinterpret_cast<LPCSTR>( pinnedName ), &result );
+		HRESULT hr = InternalPointer->GetDataObjectByName( reinterpret_cast<LPCSTR>( pinnedName ), &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -403,7 +367,7 @@ namespace Direct3D9
 	{
 		ID3DXFile *result;
 
-		HRESULT hr = m_Pointer->GetFile( &result );
+		HRESULT hr = InternalPointer->GetFile( &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -416,7 +380,7 @@ namespace Direct3D9
 	{
 		SIZE_T result;
 
-		HRESULT hr = m_Pointer->GetChildren( &result );
+		HRESULT hr = InternalPointer->GetChildren( &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -427,28 +391,19 @@ namespace Direct3D9
 
 	XFileData::XFileData( ID3DXFileData *object )
 	{
-		m_Pointer = object;
+		Construct(object);
 	}
 
 	XFileData::XFileData( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXFileData, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXFileData*>( result );
+		Construct( pointer, IID_ID3DXFileData );
 	}
 
 	XFileData^ XFileData::GetChild( int id )
 	{
 		ID3DXFileData *result;
 
-		HRESULT hr = m_Pointer->GetChild( id, &result );
+		HRESULT hr = InternalPointer->GetChild( id, &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -461,7 +416,7 @@ namespace Direct3D9
 	{
 		ID3DXFileEnumObject *result;
 
-		HRESULT hr = m_Pointer->GetEnum( &result );
+		HRESULT hr = InternalPointer->GetEnum( &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -475,7 +430,7 @@ namespace Direct3D9
 		SIZE_T size;
 		const void *data;
 
-		HRESULT hr = m_Pointer->Lock( &size, &data );
+		HRESULT hr = InternalPointer->Lock( &size, &data );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -486,7 +441,7 @@ namespace Direct3D9
 
 	void XFileData::Unlock()
 	{
-		HRESULT hr = m_Pointer->Unlock();
+		HRESULT hr = InternalPointer->Unlock();
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -494,7 +449,7 @@ namespace Direct3D9
 	{
 		SIZE_T result;
 
-		HRESULT hr = m_Pointer->GetChildren( &result );
+		HRESULT hr = InternalPointer->GetChildren( &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -507,13 +462,13 @@ namespace Direct3D9
 	{
 		GUID guid;
 
-		HRESULT hr = m_Pointer->GetId( &guid );
+		HRESULT hr = InternalPointer->GetId( &guid );
 		GraphicsException::CheckHResult( hr );
 
 		if( guid == GUID_NULL )
 			return Guid::Empty;
 
-		return Utils::FromGUID( guid );
+		return Utilities::FromGUID( guid );
 	}
 
 	String^ XFileData::Name::get()
@@ -521,7 +476,7 @@ namespace Direct3D9
 		char *name;
 		SIZE_T size = 0;
 
-		HRESULT hr = m_Pointer->GetName( NULL, &size );
+		HRESULT hr = InternalPointer->GetName( NULL, &size );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -529,7 +484,7 @@ namespace Direct3D9
 
 		name = new char[size];
 
-		hr = m_Pointer->GetName( name, &size );
+		hr = InternalPointer->GetName( name, &size );
 		GraphicsException::CheckHResult( hr );
 
 		delete name;
@@ -544,18 +499,18 @@ namespace Direct3D9
 	{
 		GUID result;
 
-		HRESULT hr = m_Pointer->GetType( &result );
+		HRESULT hr = InternalPointer->GetType( &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
 			return Guid::Empty;
 
-		return Utils::FromGUID( result );
+		return Utilities::FromGUID( result );
 	}
 
 	bool XFileData::IsReference::get()
 	{
-		if( m_Pointer->IsReference() )
+		if( InternalPointer->IsReference() )
 			return true;
 		else
 			return false;

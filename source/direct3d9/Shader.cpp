@@ -58,7 +58,7 @@ namespace SlimDX
 					else
 					{
 						//Read the stream into a byte array and pin it
-						array<Byte>^ data = Utils::ReadStream( stream, 0 );
+						array<Byte>^ data = Utilities::ReadStream( stream, 0 );
 						m_handle = GCHandle::Alloc( data, GCHandleType::Pinned );
 						*ppData = m_handle.AddrOfPinnedObject().ToPointer();
 						*pBytes = data->Length;
@@ -145,27 +145,18 @@ namespace SlimDX
 
 		ShaderBytecode::ShaderBytecode( IntPtr pointer )
 		{
-			if( pointer == IntPtr::Zero )
-				throw gcnew ArgumentNullException( "pointer" );
-
-			void* result;
-			IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-			HRESULT hr = unknown->QueryInterface( IID_ID3DXBuffer, &result );
-			if( FAILED( hr ) )
-				throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-			m_Pointer = static_cast<ID3DXBuffer*>( result );
+			Construct( pointer, IID_ID3DXBuffer );
 		}
 
 		DataStream^ ShaderBytecode::GetData()
 		{
-			return gcnew DataStream( m_Pointer->GetBufferPointer(), m_Pointer->GetBufferSize(), true, true, false );
+			return gcnew DataStream( InternalPointer->GetBufferPointer(), InternalPointer->GetBufferSize(), true, true, false );
 		}
 
 		ConstantTable^ ShaderBytecode::GetConstantTable()
 		{
 			ID3DXConstantTable* constantTable;
-			HRESULT hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( m_Pointer->GetBufferPointer() ), &constantTable );
+			HRESULT hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( InternalPointer->GetBufferPointer() ), &constantTable );
 			GraphicsException::CheckHResult( hr );
 			if( FAILED( hr ) )
 				return nullptr;
@@ -176,7 +167,7 @@ namespace SlimDX
 		array<ShaderSemantic>^ ShaderBytecode::GetInputSemantics()
 		{
 			UINT count = 0;
-			const DWORD* function = reinterpret_cast<const DWORD*>( m_Pointer->GetBufferPointer() );
+			const DWORD* function = reinterpret_cast<const DWORD*>( InternalPointer->GetBufferPointer() );
 
 			HRESULT hr = D3DXGetShaderInputSemantics( function, NULL, &count );
 			GraphicsException::CheckHResult( hr );
@@ -197,7 +188,7 @@ namespace SlimDX
 		array<ShaderSemantic>^ ShaderBytecode::GetOutputSemantics()
 		{
 			UINT count = 0;
-			const DWORD* function = reinterpret_cast<const DWORD*>( m_Pointer->GetBufferPointer() );
+			const DWORD* function = reinterpret_cast<const DWORD*>( InternalPointer->GetBufferPointer() );
 
 			HRESULT hr = D3DXGetShaderOutputSemantics( function, NULL, &count );
 			GraphicsException::CheckHResult( hr );
@@ -218,7 +209,7 @@ namespace SlimDX
 		array<String^>^ ShaderBytecode::GetSamplers()
 		{
 			UINT count = 0;
-			const DWORD* function = reinterpret_cast<const DWORD*>( m_Pointer->GetBufferPointer() );
+			const DWORD* function = reinterpret_cast<const DWORD*>( InternalPointer->GetBufferPointer() );
 
 			HRESULT hr = D3DXGetShaderSamplers( function, NULL, &count );
 			GraphicsException::CheckHResult( hr );
@@ -243,7 +234,7 @@ namespace SlimDX
 
 		int ShaderBytecode::Version::get()
 		{
-			const DWORD* function = reinterpret_cast<const DWORD*>( m_Pointer->GetBufferPointer() );
+			const DWORD* function = reinterpret_cast<const DWORD*>( InternalPointer->GetBufferPointer() );
 			return static_cast<int>( D3DXGetShaderVersion( function ) );
 		}
 
@@ -269,7 +260,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = Utils::BufferToString( errorBuffer );
+			errors = Utilities::BufferToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )
@@ -307,7 +298,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = Utils::BufferToString( errorBuffer );
+			errors = Utilities::BufferToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )
@@ -346,7 +337,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = Utils::BufferToString( errorBuffer );
+			errors = Utilities::BufferToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )
@@ -394,7 +385,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = Utils::BufferToString( errorBuffer );
+			errors = Utilities::BufferToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )
@@ -443,7 +434,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = Utils::BufferToString( errorBuffer );
+			errors = Utilities::BufferToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )
@@ -483,7 +474,7 @@ namespace SlimDX
 			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
-			errors = Utils::BufferToString( errorBuffer );
+			errors = Utilities::BufferToString( errorBuffer );
 			
 			GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
 			if( FAILED( hr ) )

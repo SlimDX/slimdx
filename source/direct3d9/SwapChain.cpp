@@ -22,7 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 
 #include "Device.h"
 #include "Direct3D.h"
@@ -41,21 +41,12 @@ namespace Direct3D9
 		if( swapChain == NULL )
 			throw gcnew ArgumentNullException( "swapChain" );
 
-		m_Pointer = swapChain;
+		Construct(swapChain);
 	}
 
 	SwapChain::SwapChain( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_IDirect3DSwapChain9, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<IDirect3DSwapChain9*>( result );
+		Construct( pointer, IID_IDirect3DSwapChain9 );
 	}
 
 	SwapChain::SwapChain( Device^ device, PresentParameters^ presentParams )
@@ -74,13 +65,13 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			throw gcnew GraphicsException( "Failed to create swap chain." );
 
-		m_Pointer = swapChain;
+		Construct(swapChain);
 	}
 
 	Surface^ SwapChain::GetBackBuffer( int index )
 	{
 		IDirect3DSurface9* surface;
-		HRESULT hr = m_Pointer->GetBackBuffer( index, D3DBACKBUFFER_TYPE_MONO, &surface );
+		HRESULT hr = InternalPointer->GetBackBuffer( index, D3DBACKBUFFER_TYPE_MONO, &surface );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -93,14 +84,14 @@ namespace Direct3D9
 		if( destSurface == nullptr )
 			throw gcnew ArgumentNullException( "destSurface" );
 
-		HRESULT hr = m_Pointer->GetFrontBufferData( destSurface->SurfacePointer );
+		HRESULT hr = InternalPointer->GetFrontBufferData( destSurface->SurfacePointer );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	Device^ SwapChain::GetDevice()
 	{
 		IDirect3DDevice9* device;
-		HRESULT hr = m_Pointer->GetDevice( &device );
+		HRESULT hr = InternalPointer->GetDevice( &device );
 		GraphicsException::CheckHResult( hr );
 
 		return gcnew Device( device );
@@ -109,7 +100,7 @@ namespace Direct3D9
 	SlimDX::Direct3D9::DisplayMode SwapChain::DisplayMode::get()
 	{
 		SlimDX::Direct3D9::DisplayMode mode;
-		HRESULT hr = m_Pointer->GetDisplayMode( reinterpret_cast<D3DDISPLAYMODE*>( &mode ) );
+		HRESULT hr = InternalPointer->GetDisplayMode( reinterpret_cast<D3DDISPLAYMODE*>( &mode ) );
 		GraphicsException::CheckHResult( hr );
 
 		return mode;
@@ -118,7 +109,7 @@ namespace Direct3D9
 	SlimDX::Direct3D9::RasterStatus SwapChain::RasterStatus::get()
 	{
 		D3DRASTER_STATUS status;
-		HRESULT hr = m_Pointer->GetRasterStatus( &status );
+		HRESULT hr = InternalPointer->GetRasterStatus( &status );
 		GraphicsException::CheckHResult( hr );
 
 		SlimDX::Direct3D9::RasterStatus result;
@@ -129,7 +120,7 @@ namespace Direct3D9
 
 	void SwapChain::Present( SlimDX::Direct3D9::Present flags )
 	{
-		HRESULT hr = m_Pointer->Present( 0, 0, 0, 0, static_cast<DWORD>( flags ) );
+		HRESULT hr = InternalPointer->Present( 0, 0, 0, 0, static_cast<DWORD>( flags ) );
 		GraphicsException::CheckHResult( hr );
 	}
 }

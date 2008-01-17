@@ -25,8 +25,8 @@
 #include <vcclr.h>
 #include <memory>
 
-#include "../DirectXObject.h"
-#include "../Utils.h"
+#include "../BaseObject.h"
+#include "../Utilities.h"
 
 #include "Device.h"
 #include "VertexShader.h"
@@ -41,23 +41,14 @@ namespace Direct3D9
 		if( vertexShader == NULL )
 			throw gcnew ArgumentNullException( "vertexShader" );
 
-		m_Pointer = vertexShader;
+		Construct(vertexShader);
 
 		m_ConstantTable = nullptr;
 	}
 
 	VertexShader::VertexShader( IntPtr vertexShader )
 	{
-		if( vertexShader == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "vertexShader" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( vertexShader.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_IDirect3DVertexShader9, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<IDirect3DVertexShader9*>( pointer );
+		Construct( vertexShader, IID_IDirect3DVertexShader9 );
 	}
 
 	VertexShader::VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable )
@@ -67,7 +58,7 @@ namespace Direct3D9
 		if( constantTable == NULL )
 			throw gcnew ArgumentNullException( "constantTable" );
 
-		m_Pointer = vertexShader;
+		Construct(vertexShader);
 
 		IDirect3DDevice9* device;
 		HRESULT hr = vertexShader->GetDevice(&device);
@@ -104,7 +95,7 @@ namespace Direct3D9
 		}
 		
 		// CheckHResult() is not used because we need to include the compiler errors.
-		if( DirectXException::EnableExceptions && FAILED(hr) )
+		if( Configuration::EnableExceptions && FAILED(hr) )
 		{
 			GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( hr );
 			ex->Data->Add( "CompilationErrors", compilationErrors );
@@ -127,13 +118,13 @@ namespace Direct3D9
 
 		//Retrieve the binary data
 		UINT size;
-		HRESULT hr = m_Pointer->GetFunction( NULL, &size );
+		HRESULT hr = InternalPointer->GetFunction( NULL, &size );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return;
 
 		std::auto_ptr<char> data( new char[size] );
-		hr = m_Pointer->GetFunction( data.get(), &size );
+		hr = InternalPointer->GetFunction( data.get(), &size );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return;

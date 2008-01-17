@@ -41,16 +41,7 @@ namespace SlimDX
 
 		RenderToSurface::RenderToSurface( IntPtr rts )
 		{
-			if( rts == IntPtr::Zero )
-				throw gcnew ArgumentNullException( "rts" );
-
-			void* pointer;
-			IUnknown* unknown = static_cast<IUnknown*>( rts.ToPointer() );
-			HRESULT hr = unknown->QueryInterface( IID_ID3DXRenderToSurface, &pointer );
-			if( FAILED( hr ) )
-				throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-			m_Pointer = static_cast<ID3DXRenderToSurface*>( pointer );
+			Construct( rts, IID_ID3DXRenderToSurface );
 		}
 
 		RenderToSurface::RenderToSurface( Device^ device, int width, int height, Format format )
@@ -61,7 +52,7 @@ namespace SlimDX
 			if( FAILED( hr ) )
 				throw gcnew GraphicsException();
 
-			m_Pointer = rtsPointer;
+			Construct(rtsPointer);
 		}
 
 		RenderToSurface::RenderToSurface( Device^ device, int width, int height, Format format, Format depthStencilFormat )
@@ -73,26 +64,26 @@ namespace SlimDX
 			if( FAILED( hr ) )
 				throw gcnew GraphicsException();
 
-			m_Pointer = rtsPointer;
+			Construct(rtsPointer);
 		}
 
 		void RenderToSurface::BeginScene( Surface^ renderSurface, Viewport viewport )
 		{
 			IDirect3DSurface9* surface = renderSurface->SurfacePointer;
-			HRESULT hr = m_Pointer->BeginScene( surface, reinterpret_cast<D3DVIEWPORT9*>( &viewport ) );
+			HRESULT hr = InternalPointer->BeginScene( surface, reinterpret_cast<D3DVIEWPORT9*>( &viewport ) );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void RenderToSurface::EndScene( Filter mipFilter )
 		{
-			HRESULT hr = m_Pointer->EndScene( static_cast<DWORD>( mipFilter ) );
+			HRESULT hr = InternalPointer->EndScene( static_cast<DWORD>( mipFilter ) );
 			GraphicsException::CheckHResult( hr );
 		}
 
 		Device^ RenderToSurface::GetDevice()
 		{
 			IDirect3DDevice9* device;
-			HRESULT hr = m_Pointer->GetDevice( &device );
+			HRESULT hr = InternalPointer->GetDevice( &device );
 			GraphicsException::CheckHResult( hr );
 			if( FAILED( hr ) )
 				return nullptr;
@@ -102,20 +93,20 @@ namespace SlimDX
 
 		void RenderToSurface::OnLostDevice()
 		{
-			HRESULT hr = m_Pointer->OnLostDevice();
+			HRESULT hr = InternalPointer->OnLostDevice();
 			GraphicsException::CheckHResult( hr );
 		}
 
 		void RenderToSurface::OnResetDevice()
 		{
-			HRESULT hr = m_Pointer->OnResetDevice();
+			HRESULT hr = InternalPointer->OnResetDevice();
 			GraphicsException::CheckHResult( hr );
 		}
 
 		RenderToSurfaceDescription RenderToSurface::Description::get()
 		{
 			D3DXRTS_DESC desc = {0};
-			HRESULT hr = m_Pointer->GetDesc( &desc );
+			HRESULT hr = InternalPointer->GetDesc( &desc );
 			GraphicsException::CheckHResult( hr );
 
 			RenderToSurfaceDescription outDesc;

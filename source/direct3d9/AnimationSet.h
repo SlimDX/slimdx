@@ -104,7 +104,7 @@ namespace SlimDX
 			property Vector3 Value;
 		};
 
-		public ref class AnimationSet : public DirectXBase
+		public ref class AnimationSet : public BaseObject
 		{
 			DXOBJECT(ID3DXAnimationSet);
 
@@ -134,7 +134,7 @@ namespace SlimDX
 		internal:
 			property ID3DXCompressedAnimationSet* CASPointer
 			{
-				ID3DXCompressedAnimationSet* get() { return static_cast<ID3DXCompressedAnimationSet*>( m_Pointer ); }
+				ID3DXCompressedAnimationSet* get() { return static_cast<ID3DXCompressedAnimationSet*>( InternalPointer ); }
 			}
 
 		public:
@@ -156,7 +156,7 @@ namespace SlimDX
 		internal:
 			property ID3DXKeyframedAnimationSet* KASPointer
 			{
-				ID3DXKeyframedAnimationSet* get() { return static_cast<ID3DXKeyframedAnimationSet*>( m_Pointer ); }
+				ID3DXKeyframedAnimationSet* get() { return static_cast<ID3DXKeyframedAnimationSet*>( InternalPointer ); }
 			}
 
 		public:

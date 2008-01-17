@@ -48,7 +48,7 @@ namespace SlimDX
             }
 		};
 
-		public ref class SwapChain : public DirectXBase
+		public ref class SwapChain : public BaseObject
 		{
 			DXOBJECT(IDirect3DSwapChain9);
 

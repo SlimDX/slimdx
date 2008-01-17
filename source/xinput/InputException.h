@@ -22,6 +22,7 @@
 #pragma once
 
 #include "../Exceptions.h"
+#include "../Configuration.h"
 
 namespace SlimDX
 {
@@ -60,7 +61,7 @@ namespace SlimDX
 			{
 				if(result != ERROR_SUCCESS && result != ERROR_EMPTY)
 				{
-					if(DirectXException::EnableExceptions)
+					if( Configuration::EnableExceptions )
 					{
 						if(result == ERROR_DEVICE_NOT_CONNECTED)
 							throw gcnew InputException(ERROR_DEVICE_NOT_CONNECTED, "Device not connected. If this is a wireless device it may not yet be powered on.");

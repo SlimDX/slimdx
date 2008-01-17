@@ -26,7 +26,7 @@
 #error You are not compiling against the November 2007 SDK. Change the linker settings to delay load the correct DLLs and update this code.
 #endif
 
-#include "../Utils.h"
+#include "../Utilities.h"
 #include "GraphicsException.h"
 #include "Enums.h"
 
@@ -54,7 +54,7 @@ namespace Direct3D9
 		DeviceId = ident.DeviceId;
 		SubSystemId = ident.SubSysId;
 		Revision = ident.Revision;
-		DeviceIdentifier = Utils::FromGUID( ident.DeviceIdentifier );
+		DeviceIdentifier = Utilities::FromGUID( ident.DeviceIdentifier );
 		WhqlLevel = ident.WHQLLevel;
 	}
 

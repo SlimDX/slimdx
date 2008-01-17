@@ -61,7 +61,7 @@ namespace SlimDX
 
 			property ID3DXPMesh* MeshPointer
 			{
-				ID3DXPMesh* get() { return static_cast<ID3DXPMesh*>( m_Pointer ); }
+				ID3DXPMesh* get() { return static_cast<ID3DXPMesh*>( InternalPointer ); }
 			}
 
 		public:
@@ -105,12 +105,12 @@ namespace SlimDX
 			property int MinimumVertexCount { int get(); }
 		};
 
-		public ref class SimplificationMesh : DirectXBase
+		public ref class SimplificationMesh : BaseObject
 		{
 			DXOBJECT(ID3DXSPMesh);
 
 		internal:
-			SimplificationMesh( ID3DXSPMesh *mesh ) { m_Pointer = mesh; }
+			SimplificationMesh( ID3DXSPMesh *mesh ) { Construct(mesh); }
 
 		public:
 			SimplificationMesh( IntPtr pointer );

@@ -24,7 +24,7 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 
 #include "Enums.h"
 
@@ -38,7 +38,7 @@ namespace SlimDX
 		ref class EffectVariable;
 		ref class EffectPool;
 		
-		public ref class Effect : public DirectXBase
+		public ref class Effect : public BaseObject
 		{
 			DXOBJECT(ID3D10Effect);
 
@@ -83,17 +83,17 @@ namespace SlimDX
 			
 			property bool IsOptimized
 			{
-				bool get() { return m_Pointer->IsOptimized() ? true : false; }
+				bool get() { return InternalPointer->IsOptimized() ? true : false; }
 			}
 			
 			property bool IsPooled
 			{
-				bool get() { return m_Pointer->IsPool() ? true : false; }
+				bool get() { return InternalPointer->IsPool() ? true : false; }
 			}
 			
 			property bool IsValid
 			{
-				bool get() { return m_Pointer->IsValid() ? true : false; }
+				bool get() { return InternalPointer->IsValid() ? true : false; }
 			}
 			
 			EffectConstantBuffer^ GetConstantBufferByIndex( int index );

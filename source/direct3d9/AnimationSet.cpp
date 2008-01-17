@@ -23,7 +23,7 @@
 #include <d3dx9.h>
 #include <vcclr.h>
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 #include "../Math/Math.h"
 #include "../DataStream.h"
 
@@ -42,21 +42,12 @@ namespace Direct3D9
 {
 	AnimationSet::AnimationSet(ID3DXAnimationSet *set)
 	{
-		m_Pointer = set;
+		Construct(set);
 	}
 
 	AnimationSet::AnimationSet( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXAnimationSet, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXAnimationSet*>( result );
+		Construct( pointer, IID_ID3DXAnimationSet );
 	}
 
 	int AnimationSet::GetAnimationIndex( String^ name )
@@ -65,7 +56,7 @@ namespace Direct3D9
 		pin_ptr<const unsigned char> pinnedName = &nameBytes[0];
 		unsigned int result;
 
-		HRESULT hr = m_Pointer->GetAnimationIndexByName( reinterpret_cast<LPCSTR>( pinnedName ), &result );
+		HRESULT hr = InternalPointer->GetAnimationIndexByName( reinterpret_cast<LPCSTR>( pinnedName ), &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -77,7 +68,7 @@ namespace Direct3D9
 	String^ AnimationSet::GetAnimationName( int index )
 	{
 		LPCSTR result;
-		HRESULT hr = m_Pointer->GetAnimationNameByIndex( index, &result );
+		HRESULT hr = InternalPointer->GetAnimationNameByIndex( index, &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -91,7 +82,7 @@ namespace Direct3D9
 		pin_ptr<double> pinPosition = &callbackPosition;
 		LPVOID data;
 
-		HRESULT hr = m_Pointer->GetCallback( position, static_cast<DWORD>( flags ), pinPosition, &data );
+		HRESULT hr = InternalPointer->GetCallback( position, static_cast<DWORD>( flags ), pinPosition, &data );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -106,7 +97,7 @@ namespace Direct3D9
 		Vector3 translation;
 		Quaternion rotation;
 
-		HRESULT hr = m_Pointer->GetSRT( periodicPosition, animation, reinterpret_cast<D3DXVECTOR3*>( &scale ), 
+		HRESULT hr = InternalPointer->GetSRT( periodicPosition, animation, reinterpret_cast<D3DXVECTOR3*>( &scale ), 
 			reinterpret_cast<D3DXQUATERNION*>( &rotation ), reinterpret_cast<D3DXVECTOR3*>( &translation ) );
 		GraphicsException::CheckHResult( hr );
 
@@ -124,22 +115,22 @@ namespace Direct3D9
 
 	String^ AnimationSet::Name::get()
 	{
-		return gcnew String( m_Pointer->GetName() );
+		return gcnew String( InternalPointer->GetName() );
 	}
 
 	int AnimationSet::AnimationCount::get()
 	{
-		return m_Pointer->GetNumAnimations();
+		return InternalPointer->GetNumAnimations();
 	}
 
 	double AnimationSet::Period::get()
 	{
-		return m_Pointer->GetPeriod();
+		return InternalPointer->GetPeriod();
 	}
 
 	double AnimationSet::GetPeriodicPosition( double position )
 	{
-		return m_Pointer->GetPeriodicPosition( position );
+		return InternalPointer->GetPeriodicPosition( position );
 	}
 
 	CallbackKey::CallbackKey( const D3DXKEY_CALLBACK &key )
@@ -168,16 +159,7 @@ namespace Direct3D9
 
 	CompressedAnimationSet::CompressedAnimationSet( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXCompressedAnimationSet, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXCompressedAnimationSet*>( result );
+		Construct( pointer, IID_ID3DXCompressedAnimationSet );
 	}
 
 	CompressedAnimationSet::CompressedAnimationSet( String^ name, double ticksPerSecond,
@@ -203,7 +185,7 @@ namespace Direct3D9
 
 		delete[] keys;
 
-		m_Pointer = pointer;
+		Construct(pointer);
 	}
 
 	array<CallbackKey>^ CompressedAnimationSet::GetCallbackKeys()
@@ -256,16 +238,7 @@ namespace Direct3D9
 
 	KeyframedAnimationSet::KeyframedAnimationSet( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXKeyframedAnimationSet, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXKeyframedAnimationSet*>( result );
+		Construct( pointer, IID_ID3DXKeyframedAnimationSet );
 	}
 
 	KeyframedAnimationSet::KeyframedAnimationSet( String^ name, double ticksPerSecond, SlimDX::Direct3D9::PlaybackType playbackType,
@@ -290,7 +263,7 @@ namespace Direct3D9
 
 		delete[] keys;
 
-		m_Pointer = pointer;
+		Construct(pointer);
 	}
 
 	DataStream^ KeyframedAnimationSet::Compress( float lossiness )

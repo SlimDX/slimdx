@@ -80,7 +80,7 @@ namespace SlimDX
 			property bool Enabled;
 		};		
 
-		public ref class AnimationController : public DirectXBase
+		public ref class AnimationController : public BaseObject
 		{
 			DXOBJECT(ID3DXAnimationController);
 

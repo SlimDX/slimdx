@@ -23,8 +23,8 @@
 #include <d3dx9.h>
 #include <vcclr.h>
 
-#include "../DirectXObject.h"
-#include "../Utils.h"
+#include "../BaseObject.h"
+#include "../Utilities.h"
 #include "../DataStream.h"
 
 #include "Device.h"
@@ -185,16 +185,7 @@ namespace Direct3D9
 
 	BaseMesh::BaseMesh( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXBaseMesh, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXBaseMesh*>( result );
+		Construct( pointer, IID_ID3DXBaseMesh );
 	}
 
 	Mesh^ BaseMesh::Clone( Device^ device, MeshFlags flags, array<VertexElement>^ elements )
@@ -202,7 +193,7 @@ namespace Direct3D9
 		ID3DXMesh* mesh;
 		pin_ptr<const VertexElement> pinned_elements = &elements[0];
 
-		HRESULT hr = m_Pointer->CloneMesh( static_cast<DWORD>( flags ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinned_elements ),
+		HRESULT hr = InternalPointer->CloneMesh( static_cast<DWORD>( flags ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinned_elements ),
 			device->InternalPointer, &mesh );
 		GraphicsException::CheckHResult( hr );
 
@@ -216,7 +207,7 @@ namespace Direct3D9
 	{
 		ID3DXMesh* mesh;
 
-		HRESULT hr = m_Pointer->CloneMeshFVF( static_cast<DWORD>( flags ), static_cast<DWORD>( fvf ), 
+		HRESULT hr = InternalPointer->CloneMeshFVF( static_cast<DWORD>( flags ), static_cast<DWORD>( fvf ), 
 			device->InternalPointer, &mesh );
 		GraphicsException::CheckHResult( hr );
 
@@ -228,14 +219,14 @@ namespace Direct3D9
 
 	void BaseMesh::DrawSubset( int subset )
 	{
-		HRESULT hr = m_Pointer->DrawSubset( subset );
+		HRESULT hr = InternalPointer->DrawSubset( subset );
 		GraphicsException::CheckHResult( hr );
 	}
 
 	Device^ BaseMesh::GetDevice()
 	{
 		IDirect3DDevice9* device;
-		HRESULT hr = m_Pointer->GetDevice( &device );
+		HRESULT hr = InternalPointer->GetDevice( &device );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -247,7 +238,7 @@ namespace Direct3D9
 	IndexBuffer^ BaseMesh::GetIndexBuffer()
 	{
 		IDirect3DIndexBuffer9* ib;
-		HRESULT hr = m_Pointer->GetIndexBuffer( &ib );
+		HRESULT hr = InternalPointer->GetIndexBuffer( &ib );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -259,7 +250,7 @@ namespace Direct3D9
 	VertexBuffer^ BaseMesh::GetVertexBuffer()
 	{
 		IDirect3DVertexBuffer9* vb;
-		HRESULT hr = m_Pointer->GetVertexBuffer( &vb );
+		HRESULT hr = InternalPointer->GetVertexBuffer( &vb );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -271,7 +262,7 @@ namespace Direct3D9
 	array<VertexElement>^ BaseMesh::GetDeclaration()
 	{
 		D3DVERTEXELEMENT9 elementBuffer[MAX_FVF_DECL_SIZE];
-		HRESULT hr = m_Pointer->GetDeclaration( elementBuffer );
+		HRESULT hr = InternalPointer->GetDeclaration( elementBuffer );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -291,7 +282,7 @@ namespace Direct3D9
 	array<AttributeRange>^ BaseMesh::GetAttributeTable()
 	{
 		DWORD count = 0;
-		HRESULT hr = m_Pointer->GetAttributeTable( NULL, &count );
+		HRESULT hr = InternalPointer->GetAttributeTable( NULL, &count );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) || count == 0 )
@@ -299,7 +290,7 @@ namespace Direct3D9
 
 		array<AttributeRange>^ attribTable = gcnew array<AttributeRange>( count );
 		pin_ptr<AttributeRange> pinnedTable = &attribTable[0];
-		hr = m_Pointer->GetAttributeTable( reinterpret_cast<D3DXATTRIBUTERANGE*>( pinnedTable ), &count );
+		hr = InternalPointer->GetAttributeTable( reinterpret_cast<D3DXATTRIBUTERANGE*>( pinnedTable ), &count );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -311,7 +302,7 @@ namespace Direct3D9
 	DataStream^ BaseMesh::LockIndexBuffer( LockFlags flags )
 	{
 		void* data;
-		HRESULT hr = m_Pointer->LockIndexBuffer( static_cast<DWORD>( flags ), &data );
+		HRESULT hr = InternalPointer->LockIndexBuffer( static_cast<DWORD>( flags ), &data );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -328,14 +319,14 @@ namespace Direct3D9
 
 	void BaseMesh::UnlockIndexBuffer()
 	{
-		HRESULT hr = m_Pointer->UnlockIndexBuffer();
+		HRESULT hr = InternalPointer->UnlockIndexBuffer();
 		GraphicsException::CheckHResult( hr );
 	}
 
 	DataStream^ BaseMesh::LockVertexBuffer( LockFlags flags )
 	{
 		void* data;
-		HRESULT hr = m_Pointer->LockVertexBuffer( static_cast<DWORD>( flags ), &data );
+		HRESULT hr = InternalPointer->LockVertexBuffer( static_cast<DWORD>( flags ), &data );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -350,7 +341,7 @@ namespace Direct3D9
 
 	void BaseMesh::UnlockVertexBuffer()
 	{
-		HRESULT hr = m_Pointer->UnlockVertexBuffer();
+		HRESULT hr = InternalPointer->UnlockVertexBuffer();
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -360,7 +351,7 @@ namespace Direct3D9
 		array<int>^ adjacency = gcnew array<int>( 3 * FaceCount );
 		pin_ptr<int> pinnedAdj = &adjacency[0];
 
-		HRESULT hr = m_Pointer->GenerateAdjacency( epsilon, reinterpret_cast<DWORD*>( pinnedAdj ) );
+		HRESULT hr = InternalPointer->GenerateAdjacency( epsilon, reinterpret_cast<DWORD*>( pinnedAdj ) );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -375,7 +366,7 @@ namespace Direct3D9
 		pin_ptr<int> pinnedAdj = &adjacency[0];
 		pin_ptr<int> pinnedPoints = &points[0];
 
-		HRESULT hr = m_Pointer->ConvertAdjacencyToPointReps( reinterpret_cast<const DWORD*>( pinnedAdj ),
+		HRESULT hr = InternalPointer->ConvertAdjacencyToPointReps( reinterpret_cast<const DWORD*>( pinnedAdj ),
 			reinterpret_cast<DWORD*>( pinnedPoints ) );
 		GraphicsException::CheckHResult( hr );
 
@@ -391,7 +382,7 @@ namespace Direct3D9
 		pin_ptr<int> pinnedAdj = &adjacency[0];
 		pin_ptr<int> pinnedPoints = &points[0];
 
-		HRESULT hr = m_Pointer->ConvertPointRepsToAdjacency( reinterpret_cast<const DWORD*>( pinnedPoints ),
+		HRESULT hr = InternalPointer->ConvertPointRepsToAdjacency( reinterpret_cast<const DWORD*>( pinnedPoints ),
 			reinterpret_cast<DWORD*>( pinnedAdj ) );
 		GraphicsException::CheckHResult( hr );
 
@@ -405,7 +396,7 @@ namespace Direct3D9
 	{
 		pin_ptr<VertexElement> pinnedElements = &elements[0];
 
-		HRESULT hr = m_Pointer->UpdateSemantics( reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedElements ) );
+		HRESULT hr = InternalPointer->UpdateSemantics( reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedElements ) );
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -414,7 +405,7 @@ namespace Direct3D9
 		IDirect3DIndexBuffer9 *result;
 		DWORD count;
 
-		HRESULT hr = D3DXConvertMeshSubsetToSingleStrip( m_Pointer, attributeId, static_cast<DWORD>( options ),
+		HRESULT hr = D3DXConvertMeshSubsetToSingleStrip( InternalPointer, attributeId, static_cast<DWORD>( options ),
 			&result, &count );
 		GraphicsException::CheckHResult( hr );
 
@@ -436,7 +427,7 @@ namespace Direct3D9
 		DWORD numIndices;
 		DWORD numStrips;
 
-		HRESULT hr = D3DXConvertMeshSubsetToStrips( m_Pointer, attributeId, static_cast<DWORD>( options ),
+		HRESULT hr = D3DXConvertMeshSubsetToStrips( InternalPointer, attributeId, static_cast<DWORD>( options ),
 			&result, &numIndices, &buffer, &numStrips );
 		GraphicsException::CheckHResult( hr );
 
@@ -593,27 +584,27 @@ namespace Direct3D9
 
 	int BaseMesh::FaceCount::get()
 	{
-		return m_Pointer->GetNumFaces();
+		return InternalPointer->GetNumFaces();
 	}
 
 	int BaseMesh::VertexCount::get()
 	{
-		return m_Pointer->GetNumVertices();
+		return InternalPointer->GetNumVertices();
 	}
 
 	SlimDX::Direct3D9::VertexFormat BaseMesh::VertexFormat::get()
 	{
-		return static_cast<SlimDX::Direct3D9::VertexFormat>( m_Pointer->GetFVF() );
+		return static_cast<SlimDX::Direct3D9::VertexFormat>( InternalPointer->GetFVF() );
 	}
 
 	int BaseMesh::BytesPerVertex::get()
 	{
-		return m_Pointer->GetNumBytesPerVertex();
+		return InternalPointer->GetNumBytesPerVertex();
 	}
 
 	MeshFlags BaseMesh::CreationOptions::get()
 	{
-		return static_cast<MeshFlags>( m_Pointer->GetOptions() );
+		return static_cast<MeshFlags>( InternalPointer->GetOptions() );
 	}
 
 	Mesh::Mesh( ID3DXMesh* mesh ) : BaseMesh( mesh )
@@ -622,16 +613,7 @@ namespace Direct3D9
 
 	Mesh::Mesh( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3DXMesh, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3DXMesh*>( result );
+		Construct( pointer, IID_ID3DXMesh );
 	}
 
 	Mesh::Mesh( Device^ device, int numFaces, int numVertices, MeshFlags options, array<VertexElement>^ vertexDecl )
@@ -646,7 +628,7 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			throw gcnew GraphicsException();
 
-		m_Pointer = mesh;
+		Construct(mesh);
 	}
 
 	Mesh::Mesh( Device^ device, int numFaces, int numVertices, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf )
@@ -660,7 +642,7 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			throw gcnew GraphicsException();
 
-		m_Pointer = mesh;
+		Construct(mesh);
 	}
 
 	Mesh^ Mesh::FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<int>^% adjacency,
@@ -769,26 +751,26 @@ namespace Direct3D9
 	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<int>^% adjacency,
 		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
 		return Mesh::FromMemory( device, data, flags, adjacency, materials, effectInstances );
 	}
 
 	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
 		[Out] array<EffectInstance>^% effectInstances )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
 		return Mesh::FromMemory( device, data, flags, materials, effectInstances );
 	}
 
 	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
 		return Mesh::FromMemory( device, data, flags, materials );
 	}
 
 	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags )
 	{
-		array<Byte>^ data = Utils::ReadStream( stream, 0 );
+		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
 		return Mesh::FromMemory( device, data, flags );
 	}
 
@@ -1723,7 +1705,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		errorsAndWarnings = Utils::BufferToString( errors );
+		errorsAndWarnings = Utilities::BufferToString( errors );
 		return gcnew Mesh( result );
 	}
 
@@ -1783,7 +1765,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		errorsAndWarnings = Utils::BufferToString( errors );
+		errorsAndWarnings = Utilities::BufferToString( errors );
 		return gcnew Mesh( result );
 	}
 

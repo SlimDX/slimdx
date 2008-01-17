@@ -19,36 +19,19 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-using namespace System;
-
-#include "../BaseObject.h"
-
-#include "Enums.h"
-#include "Resource.h"
+#include "Configuration.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	static Configuration::Configuration()
 	{
-		public ref class ShaderSignature
-		{
-			void* buffer;
-			int length;
-		
-		internal:
-			property void* Buffer
-			{
-				void* get() { return buffer; }
-			}
-			
-			property int Length
-			{
-				int get() { return length; }
-			}
-			
-			ShaderSignature( void* buffer, int length );
-		};
+		EnableExceptions = true;
+
+#ifdef _DEBUG
+		EnableObjectTracking = true;
+#else
+		EnableObjectTracking = false;
+#endif	
 	}
-};
+}

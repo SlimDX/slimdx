@@ -56,7 +56,7 @@ namespace DirectSound
 		if( buffer == NULL )
 			throw gcnew ArgumentNullException( "buffer" );
 
-		m_Pointer = buffer;
+		Construct(buffer);
 
 		SetDS8Pointer();
 	}
@@ -72,7 +72,7 @@ namespace DirectSound
 		if( FAILED( hr ) )
 			throw gcnew SoundException();
 
-		m_Pointer = buffer;
+		Construct(buffer);
 		SetDS8Pointer();
 	}
 
@@ -90,7 +90,7 @@ namespace DirectSound
 	void SoundBuffer::SetDS8Pointer()
 	{
 		IDirectSoundBuffer8* buffer;
-		HRESULT hr = m_Pointer->QueryInterface( IID_IDirectSoundBuffer8, reinterpret_cast<void**>( &buffer ) );
+		HRESULT hr = InternalPointer->QueryInterface( IID_IDirectSoundBuffer8, reinterpret_cast<void**>( &buffer ) );
 		
 		if( SUCCEEDED( hr ) )
 		{
@@ -113,25 +113,25 @@ namespace DirectSound
 		if( FAILED( hr ) )
 			throw gcnew SoundException();
 
-		m_Pointer = static_cast<IDirectSoundBuffer8*>( buffer );
+		Construct( buffer );;
 		SetDS8Pointer();
 	}
 
 	void SoundBuffer::Restore()
 	{
-		HRESULT hr = m_Pointer->Restore();
+		HRESULT hr = InternalPointer->Restore();
 		SoundException::CheckHResult( hr );
 	}
 
 	void SoundBuffer::Play( int priority, PlayFlags flags )
 	{
-		HRESULT hr = m_Pointer->Play( 0, priority, static_cast<DWORD>( flags ) );
+		HRESULT hr = InternalPointer->Play( 0, priority, static_cast<DWORD>( flags ) );
 		SoundException::CheckHResult( hr );
 	}
 
 	void SoundBuffer::Stop()
 	{
-		HRESULT hr = m_Pointer->Stop();
+		HRESULT hr = InternalPointer->Stop();
 		SoundException::CheckHResult( hr );
 	}
 
@@ -143,7 +143,7 @@ namespace DirectSound
 
 		secondPart = nullptr;
 
-		HRESULT hr = m_Pointer->Lock( offset, sizeBytes, &buffer1, &size1, &buffer2, &size2, static_cast<DWORD>( flags ) );
+		HRESULT hr = InternalPointer->Lock( offset, sizeBytes, &buffer1, &size1, &buffer2, &size2, static_cast<DWORD>( flags ) );
 		SoundException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -168,13 +168,13 @@ namespace DirectSound
 			size2 = static_cast<int>( secondPart->Length );
 		}
 
-		HRESULT hr = m_Pointer->Unlock( firstPart->RawPointer, static_cast<int>( firstPart->Length ), buffer2, size2 );
+		HRESULT hr = InternalPointer->Unlock( firstPart->RawPointer, static_cast<int>( firstPart->Length ), buffer2, size2 );
 		SoundException::CheckHResult( hr );
 	}
 
 	void SoundBuffer::SetFormat( WaveFormatExtended^ format )
 	{
-		HRESULT hr = m_Pointer->SetFormat( format->InternalPointer );
+		HRESULT hr = InternalPointer->SetFormat( format->InternalPointer );
 		SoundException::CheckHResult( hr );
 	}
 
@@ -183,13 +183,13 @@ namespace DirectSound
 		WAVEFORMATEX* format;
 		DWORD size;
 
-		HRESULT hr = m_Pointer->GetFormat( NULL, 0, &size );
+		HRESULT hr = InternalPointer->GetFormat( NULL, 0, &size );
 		SoundException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
 
 		format = reinterpret_cast<WAVEFORMATEX*>( new char[size] );
-		hr = m_Pointer->GetFormat( format, size, NULL );
+		hr = InternalPointer->GetFormat( format, size, NULL );
 		SoundException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			return nullptr;
@@ -203,7 +203,7 @@ namespace DirectSound
 	int SoundBuffer::CurrentPlayPosition::get()
 	{
 		DWORD position = 0;
-		HRESULT hr = m_Pointer->GetCurrentPosition( &position, NULL );
+		HRESULT hr = InternalPointer->GetCurrentPosition( &position, NULL );
 		SoundException::CheckHResult( hr );
 
 		return position;
@@ -211,14 +211,14 @@ namespace DirectSound
 	
 	void SoundBuffer::CurrentPlayPosition::set( int value )
 	{
-		HRESULT hr = m_Pointer->SetCurrentPosition( value );
+		HRESULT hr = InternalPointer->SetCurrentPosition( value );
 		SoundException::CheckHResult( hr );
 	}
 
 	int SoundBuffer::CurrentWritePosition::get()
 	{
 		DWORD position = 0;
-		HRESULT hr = m_Pointer->GetCurrentPosition( NULL, &position );
+		HRESULT hr = InternalPointer->GetCurrentPosition( NULL, &position );
 		SoundException::CheckHResult( hr );
 
 		return position;
@@ -227,7 +227,7 @@ namespace DirectSound
 	int SoundBuffer::Frequency::get()
 	{
 		DWORD freq = 0;
-		HRESULT hr = m_Pointer->GetFrequency( &freq );
+		HRESULT hr = InternalPointer->GetFrequency( &freq );
 		SoundException::CheckHResult( hr );
 
 		return freq;
@@ -235,14 +235,14 @@ namespace DirectSound
 
 	void SoundBuffer::Frequency::set( int value )
 	{
-		HRESULT hr = m_Pointer->SetFrequency( value );
+		HRESULT hr = InternalPointer->SetFrequency( value );
 		SoundException::CheckHResult( hr );
 	}
 
 	int SoundBuffer::Volume::get()
 	{
 		LONG volume = 0;
-		HRESULT hr = m_Pointer->GetVolume( &volume );
+		HRESULT hr = InternalPointer->GetVolume( &volume );
 		SoundException::CheckHResult( hr );
 
 		return volume;
@@ -250,14 +250,14 @@ namespace DirectSound
 
 	void SoundBuffer::Volume::set( int value )
 	{
-		HRESULT hr = m_Pointer->SetVolume( value );
+		HRESULT hr = InternalPointer->SetVolume( value );
 		SoundException::CheckHResult( hr );
 	}
 
 	int SoundBuffer::Pan::get()
 	{
 		LONG pan = 0;
-		HRESULT hr = m_Pointer->GetPan( &pan );
+		HRESULT hr = InternalPointer->GetPan( &pan );
 		SoundException::CheckHResult( hr );
 
 		return pan;
@@ -265,14 +265,14 @@ namespace DirectSound
 
 	void SoundBuffer::Pan::set( int value )
 	{
-		HRESULT hr = m_Pointer->SetPan( value );
+		HRESULT hr = InternalPointer->SetPan( value );
 		SoundException::CheckHResult( hr );
 	}
 
 	BufferStatus SoundBuffer::Status::get()
 	{
 		DWORD status = 0;
-		HRESULT hr = m_Pointer->GetStatus( &status );
+		HRESULT hr = InternalPointer->GetStatus( &status );
 		SoundException::CheckHResult( hr );
 
 		return static_cast<BufferStatus>( status );

@@ -19,13 +19,13 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "Utils.h"
-#include "DirectXObject.h"
+#include "Utilities.h"
+#include "BaseObject.h"
 
 namespace SlimDX
 {
 	/* Unused for now.
-	void Utils::ReportNotDisposed( DirectXBase^ obj )
+	void Utilities::ReportNotDisposed( BaseObject^ obj )
 	{
 		String^ message = String::Format( CultureInfo::InvariantCulture, "Object of type {0} not disposed.", obj->GetType()->ToString() );
 		Debug::WriteLine( message );
@@ -33,7 +33,7 @@ namespace SlimDX
 	*/
 	
 	/* Unused for now.
-	void Utils::MarkDisposed( bool %disposed, Object^ obj )
+	void Utilities::MarkDisposed( bool %disposed, Object^ obj )
 	{
 		if( disposed )
 			throw gcnew ObjectDisposedException( obj->GetType()->ToString() );
@@ -49,7 +49,7 @@ namespace SlimDX
 	/// </summary>
 	/// <param name="rect">Rectangle to convert.</param>
 	/// <param name="outrect">Output rectangle.</param>
-	void Utils::ConvertRect(Drawing::Rectangle rect, RECT *outrect)
+	void Utilities::ConvertRect(Drawing::Rectangle rect, RECT *outrect)
 	{
 		if (outrect == NULL)
 			throw gcnew ArgumentNullException("outrect");
@@ -66,12 +66,12 @@ namespace SlimDX
 	/// </summary>
 	/// <param name="rect">RECT to convert.</param>
 	/// <returns>A GDI+ rectangle structure.</returns>
-	Drawing::Rectangle Utils::ConvertRect(RECT rect)
+	Drawing::Rectangle Utilities::ConvertRect(RECT rect)
 	{
 		return Drawing::Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
 	}
 
-	array<Byte>^ Utils::ReadStream( Stream^ stream, int readLength )
+	array<Byte>^ Utilities::ReadStream( Stream^ stream, int readLength )
 	{
 		if( stream == nullptr )
 			throw gcnew ArgumentNullException( "stream" );
@@ -97,7 +97,7 @@ namespace SlimDX
 	}
 
 	generic<typename T>
-	void Utils::CheckArrayBounds( array<T>^ data, int offset, int% count )
+	void Utilities::CheckArrayBounds( array<T>^ data, int offset, int% count )
 	{
 		if( count == 0 )
 			count = data->Length - offset;
@@ -108,7 +108,7 @@ namespace SlimDX
 			throw gcnew ArgumentOutOfRangeException( "count" );
 	}
 
-	Guid Utils::FromGUID( const GUID &guid )
+	Guid Utilities::FromGUID( const GUID &guid )
 	{
 		if( guid == GUID_NULL )
 			return Guid::Empty;
@@ -119,7 +119,7 @@ namespace SlimDX
 		return result;
 	}
 
-	GUID Utils::ToGUID( Guid guid )
+	GUID Utilities::ToGUID( Guid guid )
 	{
 		if( guid == Guid::Empty )
 			return GUID_NULL;
@@ -132,7 +132,7 @@ namespace SlimDX
 		return result;
 	}
 
-	String^ Utils::BufferToString( ID3DXBuffer *buffer )
+	String^ Utilities::BufferToString( ID3DXBuffer *buffer )
 	{
 		if( buffer != NULL )
 		{

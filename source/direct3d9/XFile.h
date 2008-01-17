@@ -41,7 +41,7 @@ namespace SlimDX
 			Compressed = D3DXF_FILEFORMAT_COMPRESSED
 		};
 
-		public ref class XFileSaveData : public DirectXBase
+		public ref class XFileSaveData : public BaseObject
 		{
 			DXOBJECT(ID3DXFileSaveData);
 
@@ -63,7 +63,7 @@ namespace SlimDX
 			property Guid Type { Guid get(); }
 		};
 
-		public ref class XFileSaveObject : public DirectXBase
+		public ref class XFileSaveObject : public BaseObject
 		{
 			DXOBJECT(ID3DXFileSaveObject);
 
@@ -80,7 +80,7 @@ namespace SlimDX
 			void Save();
 		};
 
-		public ref class XFile : public DirectXBase
+		public ref class XFile : public BaseObject
 		{
 			DXOBJECT(ID3DXFile);
 
@@ -103,7 +103,7 @@ namespace SlimDX
 			void RegisterTemplates( String^ name );
 		};
 
-		public ref class XFileEnumerationObject : public DirectXBase
+		public ref class XFileEnumerationObject : public BaseObject
 		{
 			DXOBJECT(ID3DXFileEnumObject);
 
@@ -122,7 +122,7 @@ namespace SlimDX
 			property int ChildCount { int get(); }
 		};
 
-		public ref class XFileData : public DirectXBase
+		public ref class XFileData : public BaseObject
 		{
 			DXOBJECT(ID3DXFileData);
 

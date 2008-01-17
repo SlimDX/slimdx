@@ -39,7 +39,7 @@ namespace Direct3D10
 { 
 	Effect::Effect( ID3D10Effect* effect )
 	{
-		m_Pointer = effect;
+		Construct(effect);
 
 		D3D10_EFFECT_DESC desc;
 		HRESULT hr = effect->GetDesc( &desc );
@@ -56,19 +56,10 @@ namespace Direct3D10
 
 	Effect::Effect( IntPtr effect )
 	{
-		if( effect == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "effect" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( effect.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3D10Effect, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3D10Effect*>( pointer );
+		Construct( effect, IID_ID3D10Effect );
 
 		D3D10_EFFECT_DESC desc;
-		hr = m_Pointer->GetDesc( &desc );
+		HRESULT hr = InternalPointer->GetDesc( &desc );
 		GraphicsException::CheckHResult( hr );
 		if( FAILED( hr ) )
 			throw gcnew GraphicsException( "Failed to get description for effect." );
@@ -84,7 +75,7 @@ namespace Direct3D10
 	{
 		ID3D10EffectConstantBuffer* buffer = 0;
 
-		buffer = m_Pointer->GetConstantBufferByIndex( index );
+		buffer = InternalPointer->GetConstantBufferByIndex( index );
 		if( buffer == 0 )
 			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Index '{0}' does not identify any constant buffer in the effect.", index ) );
 		return gcnew EffectConstantBuffer( buffer );
@@ -96,7 +87,7 @@ namespace Direct3D10
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		buffer = m_Pointer->GetConstantBufferByName( reinterpret_cast<LPCSTR>( pinnedName ) );
+		buffer = InternalPointer->GetConstantBufferByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( buffer == 0 )
 			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Name '{0}' does not identify any constant buffer in the effect.", name ) );
 		return gcnew EffectConstantBuffer( buffer );
@@ -106,7 +97,7 @@ namespace Direct3D10
 	{
 		ID3D10EffectTechnique* technique;
 
-		technique = m_Pointer->GetTechniqueByIndex( index );
+		technique = InternalPointer->GetTechniqueByIndex( index );
 		if( technique == NULL )
 			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Index '{0}' does not identify any technique in the effect.", index ) );
 		return gcnew EffectTechnique( technique );
@@ -118,7 +109,7 @@ namespace Direct3D10
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		technique = m_Pointer->GetTechniqueByName( reinterpret_cast<LPCSTR>( pinnedName ) );
+		technique = InternalPointer->GetTechniqueByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( technique == NULL )
 			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Name '{0}' does not identify any technique in the effect.", name ) );
 		return gcnew EffectTechnique( technique );
@@ -128,7 +119,7 @@ namespace Direct3D10
 	{
 		ID3D10EffectVariable* variable;
 		
-		variable = m_Pointer->GetVariableByIndex( index );
+		variable = InternalPointer->GetVariableByIndex( index );
 		if( variable == NULL )
 			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Index '{0}' does not identify any variable in the effect.", index ) );
 		return gcnew EffectVariable( variable );
@@ -140,7 +131,7 @@ namespace Direct3D10
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		variable = m_Pointer->GetVariableByName( reinterpret_cast<LPCSTR>( pinnedName ) );
+		variable = InternalPointer->GetVariableByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( variable == NULL )
 			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Name '{0}' does not identify any variable in the effect.", name ) );
 		return gcnew EffectVariable( variable );
@@ -152,7 +143,7 @@ namespace Direct3D10
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		variable = m_Pointer->GetVariableBySemantic( reinterpret_cast<LPCSTR>( pinnedName ) );
+		variable = InternalPointer->GetVariableBySemantic( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( variable == NULL )
 			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Semantic '{0}' does not identify any variable in the effect.", name ) );
 		return gcnew EffectVariable( variable );
@@ -160,7 +151,7 @@ namespace Direct3D10
 	
 	void Effect::Optimize()
 	{
-		HRESULT hr = m_Pointer->Optimize();
+		HRESULT hr = InternalPointer->Optimize();
 		GraphicsException::CheckHResult( hr );
 	}
 
@@ -242,7 +233,7 @@ namespace Direct3D10
 	
 	Effect^ Effect::FromStream( Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] String^ %compilationErrors )
 	{
-		array<Byte>^ memory = Utils::ReadStream( stream, 0 );
+		array<Byte>^ memory = Utilities::ReadStream( stream, 0 );
 		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, pool, compilationErrors ) );
 	}
 	

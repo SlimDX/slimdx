@@ -138,7 +138,7 @@ namespace SlimDX
 
 		inline void AudioException::CheckHResult( HRESULT hr, String^ dataKey, Object^ dataValue )
 		{
-			if( DirectXException::EnableExceptions && FAILED(hr) )
+			if( Configuration::EnableExceptions && FAILED(hr) )
 			{
 				AudioException^ ex = AudioException::GetExceptionFromHResult( (hr) );
 				//don't throw if an exception wasn't returned for some reason (e.g. it's part of a disabled subset)

@@ -42,16 +42,7 @@ namespace Direct3D10
 
 	ShaderResourceView::ShaderResourceView( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3D10ShaderResourceView, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<ID3D10ShaderResourceView*>( result );
+		Construct( pointer, IID_ID3D10ShaderResourceView );
 	}
 	
 	ShaderResourceView::ShaderResourceView( Device^ device, Texture1D^ resource )
@@ -73,7 +64,7 @@ namespace Direct3D10
 		HRESULT hr = device->DevicePointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
 		GraphicsException::CheckHResult( hr );
 		
-		m_Pointer = view;
+		Construct(view);
 	}
 
 	ShaderResourceView::ShaderResourceView( Device^ device, Texture2D^ resource )
@@ -95,7 +86,7 @@ namespace Direct3D10
 		HRESULT hr = device->DevicePointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
 		GraphicsException::CheckHResult( hr );
 		
-		m_Pointer = view;
+		Construct(view);
 	}
 
 	ShaderResourceView::ShaderResourceView( Device^ device, Texture3D^ resource )
@@ -117,7 +108,7 @@ namespace Direct3D10
 		HRESULT hr = device->DevicePointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
 		GraphicsException::CheckHResult( hr );
 		
-		m_Pointer = view;
+		Construct(view);
 	}
 }
 }

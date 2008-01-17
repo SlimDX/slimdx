@@ -22,7 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../Utils.h"
+#include "../Utilities.h"
 #include "Device.h"
 #include "IndexBuffer.h"
 
@@ -35,7 +35,7 @@ namespace Direct3D9
 		if( buffer == NULL )
 			throw gcnew ArgumentNullException( "buffer" );
 
-		m_Pointer = buffer;
+		Construct(buffer);
 		InitDescription();
 	}
 
@@ -51,7 +51,7 @@ namespace Direct3D9
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 
 		IDirect3DIndexBuffer9* ibPtr = static_cast<IDirect3DIndexBuffer9*>( pointer );
-		m_Pointer = ibPtr;
+		Construct(ibPtr);
 		InitDescription();
 	}
 
@@ -62,14 +62,14 @@ namespace Direct3D9
 		HRESULT hr = device->InternalPointer->CreateIndexBuffer( sizeBytes, static_cast<DWORD>( usage ), format, static_cast<D3DPOOL>( pool ), &ib, NULL );
 		GraphicsException::CheckHResult( hr );
 
-		m_Pointer = ib;
+		Construct(ib);
 		InitDescription();
 	}
 	
 	void IndexBuffer::InitDescription()
 	{
 	  D3DINDEXBUFFER_DESC desc;
-		HRESULT hr = static_cast<IDirect3DIndexBuffer9*>( m_Pointer )->GetDesc( &desc );
+		HRESULT hr = static_cast<IDirect3DIndexBuffer9*>( InternalPointer )->GetDesc( &desc );
 		GraphicsException::CheckHResult( hr );
 		
 		m_Format = static_cast<SlimDX::Direct3D9::Format>( desc.Format );

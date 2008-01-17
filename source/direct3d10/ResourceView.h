@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../DirectXObject.h"
+#include "../BaseObject.h"
 
 #include "Enums.h"
 
@@ -31,7 +31,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class ResourceView : public DirectXBase
+		public ref class ResourceView : public BaseObject
 		{
 			DXOBJECT(ID3D10View);
 

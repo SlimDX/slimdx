@@ -37,29 +37,8 @@ namespace Direct3D10
 { 
 	Texture3D::Texture3D( ID3D10Texture3D* texture ) : Texture( texture )
 	{
-		Construct( texture );
-	}
-	
-	Texture3D::Texture3D( IntPtr nativeObject )
-	{
-		if( nativeObject == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "nativeObject" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( nativeObject.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_ID3D10Texture3D, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "QueryInterface() on user pointer failed." );
-
-		Construct( static_cast<ID3D10Texture3D*>( pointer ) );
-	}
-	
-	void Texture3D::Construct( ID3D10Texture3D* pointer )
-	{
-		m_Pointer = pointer;
-		
 		D3D10_TEXTURE3D_DESC desc;
-		static_cast<ID3D10Texture3D*>( m_Pointer )->GetDesc( &desc );
+		static_cast<ID3D10Texture3D*>( InternalPointer )->GetDesc( &desc );
 		
 		m_Width = desc.Width;
 		m_Height = desc.Height;
@@ -70,6 +49,11 @@ namespace Direct3D10
 		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( desc.BindFlags );
 		m_AccessFlags = static_cast<CpuAccessFlags>( desc.CPUAccessFlags );
 		m_OptionFlags = static_cast<ResourceOptionFlags>( desc.MiscFlags );
+	}
+	
+	Texture3D::Texture3D( IntPtr nativeObject )
+	{
+		Construct( nativeObject, IID_ID3D10Texture3D );
 	}
 	
 	Texture3D::Texture3D( Device^ device, int width, int height, int depth, int mipLevels, SlimDX::Direct3D10::Format format,
@@ -100,7 +84,7 @@ namespace Direct3D10
 		int mipHeight = GetMipSize( mipSlice, Height );
 		
 		D3D10_MAPPED_TEXTURE3D mappedBox;
-		HRESULT hr = static_cast<ID3D10Texture3D*>( m_Pointer )->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedBox );
+		HRESULT hr = static_cast<ID3D10Texture3D*>( InternalPointer )->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedBox );
 		GraphicsException::CheckHResult( hr );
 		
 		int lockedSize = mipHeight * mappedBox.RowPitch * mappedBox.DepthPitch;
@@ -113,7 +97,7 @@ namespace Direct3D10
 
 	void Texture3D::Unmap( int subResource )
 	{
-		static_cast<ID3D10Texture3D*>( m_Pointer )->Unmap( subResource );
+		static_cast<ID3D10Texture3D*>( InternalPointer )->Unmap( subResource );
 	}
 	
 	Texture3D^ Texture3D::FromFile( Device^ device, String^ fileName )

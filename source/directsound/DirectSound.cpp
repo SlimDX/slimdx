@@ -34,24 +34,12 @@ namespace DirectSound
 {
 	DirectSound::DirectSound( IDirectSound8* dsound )
 	{
-		if( dsound == NULL )
-			throw gcnew ArgumentNullException( "dsound" );
-
-		m_Pointer = dsound;
+		Construct( dsound );
 	}
 
 	DirectSound::DirectSound( IntPtr pointer )
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* result;
-		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_IDirectSound8, &result );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		m_Pointer = static_cast<IDirectSound8*>( result );
+		Construct( pointer, IID_IDirectSound );
 	}
 
 	DirectSound::DirectSound()
@@ -62,7 +50,7 @@ namespace DirectSound
 		if( FAILED( hr ) )
 			throw gcnew SoundException();
 
-		m_Pointer = dsound;
+		Construct(dsound);
 	}
 
 	DirectSound::DirectSound( Guid device )
@@ -73,19 +61,19 @@ namespace DirectSound
 		if( FAILED( hr ) )
 			throw gcnew SoundException();
 
-		m_Pointer = dsound;
+		Construct(dsound);
 	}
 
 	void DirectSound::Initialize()
 	{
-		HRESULT hr = m_Pointer->Initialize( NULL );
+		HRESULT hr = InternalPointer->Initialize( NULL );
 		SoundException::CheckHResult( hr );
 		caps = GetCapabilities();
 	}
 
 	void DirectSound::Initialize( Guid device )
 	{
-		HRESULT hr = m_Pointer->Initialize( reinterpret_cast<GUID*>( &device ) );
+		HRESULT hr = InternalPointer->Initialize( reinterpret_cast<GUID*>( &device ) );
 		SoundException::CheckHResult( hr );
 		caps = GetCapabilities();
 	}
@@ -93,7 +81,7 @@ namespace DirectSound
 	Capabilities DirectSound::GetCapabilities()
 	{
 		SlimDX::DirectSound::Capabilities caps;
-		HRESULT hr = m_Pointer->GetCaps( reinterpret_cast<DSCAPS*>( &caps ) );
+		HRESULT hr = InternalPointer->GetCaps( reinterpret_cast<DSCAPS*>( &caps ) );
 		SoundException::CheckHResult( hr );
 		
 		return caps;
@@ -101,20 +89,20 @@ namespace DirectSound
 
 	void DirectSound::SetCooperativeLevel( IntPtr windowHandle, CooperativeLevel coopLevel )
 	{
-		HRESULT hr = m_Pointer->SetCooperativeLevel( static_cast<HWND>( windowHandle.ToPointer() ), static_cast<DWORD>( coopLevel ) );
+		HRESULT hr = InternalPointer->SetCooperativeLevel( static_cast<HWND>( windowHandle.ToPointer() ), static_cast<DWORD>( coopLevel ) );
 		SoundException::CheckHResult( hr );
 	}
 
 	void DirectSound::SetSpeakerConfig( Speaker speakerSet, SpeakerGeometry geometry )
 	{
-		HRESULT hr = m_Pointer->SetSpeakerConfig( DSSPEAKER_COMBINED( static_cast<DWORD>( speakerSet ), static_cast<DWORD>( geometry ) ) );
+		HRESULT hr = InternalPointer->SetSpeakerConfig( DSSPEAKER_COMBINED( static_cast<DWORD>( speakerSet ), static_cast<DWORD>( geometry ) ) );
 		SoundException::CheckHResult( hr );
 	}
 
 	void DirectSound::GetSpeakerConfig( [Out] Speaker% speakerSet, [Out] SpeakerGeometry% geometry )
 	{
 		DWORD config = 0;
-		HRESULT hr = m_Pointer->GetSpeakerConfig( &config );
+		HRESULT hr = InternalPointer->GetSpeakerConfig( &config );
 		SoundException::CheckHResult( hr );
 
 		speakerSet = static_cast<Speaker>( DSSPEAKER_CONFIG( config ) );
@@ -124,7 +112,7 @@ namespace DirectSound
 	bool DirectSound::VerifyCertification()
 	{
 		DWORD certified = DS_UNCERTIFIED;
-		HRESULT hr = m_Pointer->VerifyCertification( &certified );
+		HRESULT hr = InternalPointer->VerifyCertification( &certified );
 		SoundException::CheckHResult( hr );
 
 		return certified == DS_CERTIFIED;

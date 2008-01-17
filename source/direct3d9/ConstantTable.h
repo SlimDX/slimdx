@@ -70,7 +70,7 @@ namespace SlimDX
 
 		ref class EffectHandle;
 		
-		public ref class ConstantTable : public DirectXBase
+		public ref class ConstantTable : public BaseObject
 		{
 			DXOBJECT(ID3DXConstantTable);
 
@@ -102,7 +102,7 @@ namespace SlimDX
 
 			property int BufferSize
 			{
-				int get() { return m_Pointer->GetBufferSize(); }
+				int get() { return InternalPointer->GetBufferSize(); }
 			}
 
 			void SetDefaults();
