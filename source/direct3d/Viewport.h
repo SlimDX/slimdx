@@ -21,60 +21,76 @@
 */
 #pragma once
 
-/*
-This header serves as a storage point for types which are needed in multiple
-places but don't really have a proper home. ALL of the contents of this file
-should be considered to be misplaced for now.
-*/
 namespace SlimDX
 {
 	namespace Direct3D
 	{
+		/// <remarks>
+		/// Defines a rectangular region of a render-target surface onto which 
+		/// a 3D rendering is projected.
+		/// </remarks>
 		public value class Viewport
 		{
-		private:
-			int x;
-			int y;
-			int width;
-			int height;
-			float minZ;
-			float maxZ;
+			int m_X;
+			int m_Y;
+			int m_Width;
+			int m_Height;
+			float m_MinZ;
+			float m_MaxZ;
 
 		public:
+			/// <summary>
+			/// Gets or sets the viewport's X position.
+			/// </summary>
 			property int X
 			{
-				int get() { return x; }
-				void set( int value ) { x = value; }
+				int get();
+				void set( int value );
 			}
-
+			
+			/// <summary>
+			/// Gets or sets the viewport's Y position.
+			/// </summary>
 			property int Y
 			{
-				int get() { return y; }
-				void set( int value ) { y = value; }
+				int get();
+				void set( int value );
 			}
-
+			
+			/// <summary>
+			/// Gets or sets the viewport's width.
+			/// </summary>
 			property int Width
 			{
-				int get() { return width; }
-				void set( int value ) { width = value; }
+				int get();
+				void set( int value );
 			}
-
+			
+			/// <summary>
+			/// Gets or sets the viewport's height.
+			/// </summary>
 			property int Height
 			{
-				int get() { return height; }
-				void set( int value ) { height = value; }
+				int get();
+				void set( int value );
 			}
 
+			/// <summary>
+			/// Gets or sets the viewport's minimum Z depth.
+			/// </summary>
 			property float MinZ
 			{
-				float get() { return minZ; }
-				void set( float value ) { minZ = value; }
+				float get();
+				void set( float value );
 			}
-
+			
+			/// <summary>
+			/// Gets or sets the viewport's maximum Z depth.
+			/// </summary>
 			property float MaxZ
 			{
-				float get() { return maxZ; }
-				void set( float value ) { maxZ = value; }
+				float get();
+				void set( float value );
 			}
 		};
 	}
