@@ -35,7 +35,7 @@ namespace Direct3D9
 {
 	FragmentLinker::FragmentLinker( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXFragmentLinker );
+		Construct( pointer, NativeInterface );
 	}
 
 	FragmentLinker::FragmentLinker( ID3DXFragmentLinker* linker )

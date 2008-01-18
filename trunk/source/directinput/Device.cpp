@@ -46,7 +46,7 @@ namespace DirectInput
 	generic<typename DataFormat>
 	Device<DataFormat>::Device( IntPtr device )
 	{
-		Construct( device, IID_IDirectInputDevice8W );
+		Construct( device, NativeInterface );
 		properties = gcnew DeviceProperties( InternalPointer );
 	}
 
@@ -54,7 +54,7 @@ namespace DirectInput
 	Device<DataFormat>::Device( Guid subsystem )
 	{
 		IDirectInputDevice8W* device;
-		HRESULT hr = DirectInput::InternalPointer->CreateDevice( Utilities::ToGUID( subsystem ), &device, NULL );
+		HRESULT hr = DirectInput::InternalPointer->CreateDevice( Utilities::ConvertManagedGuid( subsystem ), &device, NULL );
 		InputException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -104,7 +104,7 @@ namespace DirectInput
 			DIOBJECTDATAFORMAT *objectFormats = new DIOBJECTDATAFORMAT[objectAttributes->Count];
 			for( int i = 0; i < objectAttributes->Count; i++ )
 			{
-				GUID *guid = new GUID( Utilities::ToGUID( objectAttributes[i]->SourceGuid ) );
+				GUID *guid = new GUID( Utilities::ConvertManagedGuid( objectAttributes[i]->SourceGuid ) );
 				objectFormats[i].dwFlags = static_cast<DWORD>( objectAttributes[i]->Flags );
 				objectFormats[i].dwType = static_cast<DWORD>( objectAttributes[i]->Type );
 				objectFormats[i].pguid = guid;

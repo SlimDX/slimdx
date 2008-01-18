@@ -46,7 +46,7 @@ namespace Direct3D10
 	
 	RasterizerState::RasterizerState( IntPtr state )
 	{
-		Construct( state, IID_ID3D10RasterizerState );
+		Construct( state, NativeInterface );
 
 		D3D10_RASTERIZER_DESC desc;
 		InternalPointer->GetDesc( &desc );

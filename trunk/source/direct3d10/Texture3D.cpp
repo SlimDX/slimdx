@@ -44,7 +44,7 @@ namespace Direct3D10
 		m_Height = desc.Height;
 		m_Depth = desc.Depth;
 		m_MipLevels = desc.MipLevels;
-		m_Format = static_cast<SlimDX::Direct3D10::Format>( desc.Format );
+		m_Format = static_cast<DXGI::Format>( desc.Format );
 		m_Usage = static_cast<ResourceUsage>( desc.Usage );
 		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( desc.BindFlags );
 		m_AccessFlags = static_cast<CpuAccessFlags>( desc.CPUAccessFlags );
@@ -53,10 +53,10 @@ namespace Direct3D10
 	
 	Texture3D::Texture3D( IntPtr nativeObject )
 	{
-		Construct( nativeObject, IID_ID3D10Texture3D );
+		Construct( nativeObject, NativeInterface );
 	}
 	
-	Texture3D::Texture3D( Device^ device, int width, int height, int depth, int mipLevels, SlimDX::Direct3D10::Format format,
+	Texture3D::Texture3D( Device^ device, int width, int height, int depth, int mipLevels, DXGI::Format format,
 		ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
 	{
 		D3D10_TEXTURE3D_DESC desc;

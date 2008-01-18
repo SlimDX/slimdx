@@ -23,56 +23,48 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "SwapChain.h"
-#include "GraphicsException.h"
+#include "Exception.h"
 
-#include "Device.h"
-#include "Texture2D.h"
+#include "SwapChain.h"
+#include "FrameStatistics.h"
 #include "ModeDescription.h"
-#include "SwapChainDescription.h"
 
 namespace SlimDX
 {
-namespace Direct3D10
-{ 
-	SwapChain::SwapChain( Device^ device, SwapChainDescription description )
+namespace DXGI
+{ 	
+	generic< class T > where T : BaseObject, ref class
+	T SwapChain::GetBuffer( int index )
 	{
-		if( device == nullptr )
-			throw gcnew ArgumentNullException( "device" );
-			
-		IDXGISwapChain *swapChain = 0;
-		HRESULT hr = device->FactoryPointer->CreateSwapChain( device->DevicePointer, reinterpret_cast<DXGI_SWAP_CHAIN_DESC*>( &description ), &swapChain );
-		GraphicsException::CheckHResult( hr );
-		
-		Construct(swapChain);
+		IUnknown* unknown = 0;
+		GUID guid = Utilities::GetNativeGuidForType( T::typeid );
+		HRESULT hr = InternalPointer->GetBuffer( index, guid, reinterpret_cast<void**>( &unknown ) );
+		if( Exception::TestForFailure( hr ) )
+			return T();
+		return safe_cast<T>( Activator::CreateInstance( T::typeid, IntPtr( unknown ) ) );
 	}
 
-	SwapChain::SwapChain( IntPtr pointer )
+	FrameStatistics SwapChain::GetFrameStatistics()
 	{
-		Construct( pointer, IID_IDXGISwapChain );
+		DXGI_FRAME_STATISTICS stats;
+		HRESULT hr = InternalPointer->GetFrameStatistics( &stats );
+		if( Exception::TestForFailure( hr ) )
+			return FrameStatistics();
+		return FrameStatistics( stats );
 	}
 
-	Texture2D^ SwapChain::GetBuffer( int index )
-	{
-		ID3D10Texture2D *texture;
-		HRESULT hr = InternalPointer->GetBuffer( index, __uuidof( ID3D10Texture2D ), reinterpret_cast<void**>( &texture ) );
-		GraphicsException::CheckHResult( hr );
-
-		return gcnew Texture2D( texture );
-	}
-	
-	void SwapChain::ResizeBuffers( int count, int width, int height, Format format, SwapChainFlags flags )
+	void SwapChain::ResizeBuffers( int count, int width, int height, SlimDX::DXGI::Format format, SwapChainFlags flags )
 	{
 		HRESULT hr = InternalPointer->ResizeBuffers( count, width, height, static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ) );
-		GraphicsException::CheckHResult( hr );
+		Exception::TestForFailure( hr );
 	}
 	
 	void SwapChain::ResizeTarget( ModeDescription description )
 	{
 		HRESULT hr = InternalPointer->ResizeTarget( reinterpret_cast<DXGI_MODE_DESC*>( &description ) );
-		GraphicsException::CheckHResult( hr );
+		Exception::TestForFailure( hr );
 	}
-	
+
 	PresentResult SwapChain::Present( int syncInterval, PresentFlags flags )
 	{
 		HRESULT hr = InternalPointer->Present( syncInterval, static_cast<UINT>( flags ) );
@@ -81,7 +73,7 @@ namespace Direct3D10
 		else if( hr == DXGI_STATUS_OCCLUDED )
 			return PresentResult::Occluded;
 		
-		GraphicsException::CheckHResult( hr );
+		Exception::TestForFailure( hr );
 		return PresentResult::Failed;
 	}
 }

@@ -33,7 +33,7 @@ namespace Direct3D9
 {
 	Resource::Resource( IntPtr pointer )
 	{
-		Construct( pointer, IID_IDirect3DResource9 );
+		Construct( pointer, NativeInterface );
 	}
 
 	Device^ Resource::GetDevice()

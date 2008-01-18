@@ -39,7 +39,7 @@ namespace Direct3D9
 {
 	PatchMesh::PatchMesh( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXPatchMesh );
+		Construct( pointer, NativeInterface );
 	}
 
 	PatchMesh::PatchMesh( Device^ device, PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration )

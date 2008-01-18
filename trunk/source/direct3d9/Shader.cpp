@@ -145,7 +145,7 @@ namespace SlimDX
 
 		ShaderBytecode::ShaderBytecode( IntPtr pointer )
 		{
-			Construct( pointer, IID_ID3DXBuffer );
+			Construct( pointer, NativeInterface );
 		}
 
 		DataStream^ ShaderBytecode::GetData()

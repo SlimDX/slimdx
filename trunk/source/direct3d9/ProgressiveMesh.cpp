@@ -199,7 +199,7 @@ namespace Direct3D9
 
 	ProgressiveMesh::ProgressiveMesh( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXPMesh );
+		Construct( pointer, NativeInterface );
 	}
 
 	ProgressiveMesh::ProgressiveMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ attributeWeights,
@@ -492,7 +492,7 @@ namespace Direct3D9
 
 	SimplificationMesh::SimplificationMesh( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXSPMesh );
+		Construct( pointer, NativeInterface );
 	}
 
 	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ vertexAttributeWeights, array<float>^ vertexWeights )

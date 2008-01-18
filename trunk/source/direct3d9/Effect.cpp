@@ -31,7 +31,7 @@ namespace SlimDX
 	{
 		EffectPool::EffectPool( IntPtr pointer )
 		{
-			Construct( pointer, IID_ID3DXEffectPool );
+			Construct( pointer, NativeInterface );
 		}
 
 		EffectPool::EffectPool()
@@ -52,7 +52,7 @@ namespace SlimDX
 
 		Effect::Effect( IntPtr effect )
 		{
-			Construct( effect, IID_ID3DXEffect );
+			Construct( effect, NativeInterface );
 		}
 
 		Effect^ Effect::FromMemory( Device^ device, array<Byte>^ memory, array<Macro>^ preprocessorDefines,

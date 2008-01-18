@@ -35,7 +35,7 @@ namespace SlimDX
 	{
 		BaseEffect::BaseEffect( IntPtr pointer )
 		{
-			Construct( pointer, IID_ID3DXBaseEffect );
+			Construct( pointer, NativeInterface );
 		}
 
 		EffectHandle^ BaseEffect::GetAnnotation( EffectHandle^ handle, int index )

@@ -54,7 +54,7 @@ namespace Direct3D9
 		DeviceId = ident.DeviceId;
 		SubSystemId = ident.SubSysId;
 		Revision = ident.Revision;
-		DeviceIdentifier = Utilities::FromGUID( ident.DeviceIdentifier );
+		DeviceIdentifier = Utilities::ConvertNativeGuid( ident.DeviceIdentifier );
 		WhqlLevel = ident.WHQLLevel;
 	}
 

@@ -39,7 +39,7 @@ namespace SlimDX
 		public:
 			GeometryShader( IntPtr shader )
 			{
-				Construct( shader, IID_ID3D10GeometryShader );
+				Construct( shader, NativeInterface );
 
 			}
 

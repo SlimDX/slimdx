@@ -29,6 +29,7 @@
 
 #define DXOBJECT(type) \
 	internal: \
+	static property Guid NativeInterface { Guid get() { return Utilities::ConvertNativeGuid( IID_ ## type ); } } \
 	property type* InternalPointer { type* get() { return static_cast<type*>( UnknownPointer ); } } \
 	private:
 
@@ -42,7 +43,7 @@ namespace SlimDX
 		BaseObject();
 		
 		void Construct( IUnknown* pointer );
-		void Construct( IntPtr pointer, const IID& iid );
+		void Construct( IntPtr pointer, Guid guid );
 		void Destruct();
 	
 	internal:

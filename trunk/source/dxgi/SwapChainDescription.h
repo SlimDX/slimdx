@@ -29,7 +29,7 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	namespace DXGI
 	{		
 		[StructLayout( LayoutKind::Sequential )]
 		public value class SwapChainDescription
@@ -69,10 +69,10 @@ namespace SlimDX
                 void set( Rational value ) { refreshRate = value; }
             }
 
-            property SlimDX::Direct3D10::Format Format
+            property DXGI::Format Format
             {
-                SlimDX::Direct3D10::Format get() { return format; }
-                void set( SlimDX::Direct3D10::Format value ) { format = value; }
+                DXGI::Format get() { return format; }
+                void set( DXGI::Format value ) { format = value; }
             }
 
             property DisplayModeScanlineOrdering ScanlineOrdering

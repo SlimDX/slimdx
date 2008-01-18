@@ -60,7 +60,7 @@ namespace Direct3D9
 
 	ConstantTable::ConstantTable( IntPtr table )
 	{
-		Construct( table, IID_ID3DXConstantTable );
+		Construct( table, NativeInterface );
 	}
 
 	ConstantTable::ConstantTable( IDirect3DDevice9* device,ID3DXConstantTable* constantTable )

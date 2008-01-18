@@ -48,7 +48,7 @@ namespace SlimDX
 
 		PixelShader::PixelShader( IntPtr pixelShader )
 		{
-			Construct( pixelShader, IID_IDirect3DPixelShader9 );
+			Construct( pixelShader, NativeInterface );
 		}
 
 		PixelShader::PixelShader( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable )

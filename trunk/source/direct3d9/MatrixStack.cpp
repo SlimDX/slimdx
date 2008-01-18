@@ -33,7 +33,7 @@ namespace SlimDX
 	{
 		MatrixStack::MatrixStack( IntPtr pointer )
 		{
-			Construct( pointer, IID_ID3DXMatrixStack );
+			Construct( pointer, NativeInterface );
 		}
 
 		MatrixStack::MatrixStack()

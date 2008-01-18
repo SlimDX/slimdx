@@ -154,7 +154,7 @@ namespace SlimDX
 			GUID captureGuid;
 			InputException::CheckResult(XInputGetDSoundAudioDeviceGuids(userIndex, &renderGuid, &captureGuid));
 
-			return Utilities::FromGUID( renderGuid );
+			return Utilities::ConvertNativeGuid( renderGuid );
 		}
 
 		Guid Controller::SoundCaptureGuid::get()
@@ -163,7 +163,7 @@ namespace SlimDX
 			GUID captureGuid;
 			InputException::CheckResult(XInputGetDSoundAudioDeviceGuids(userIndex, &renderGuid, &captureGuid));
 
-			return Utilities::FromGUID( captureGuid );
+			return Utilities::ConvertNativeGuid( captureGuid );
 		}
 	}
 }

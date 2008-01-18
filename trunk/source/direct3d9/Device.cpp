@@ -99,7 +99,7 @@ namespace Direct3D9
 
 	Device::Device( IntPtr device )
 	{
-		Construct( device, IID_IDirect3DDevice9 );
+		Construct( device, NativeInterface );
 	}
 
 	Device::Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams )

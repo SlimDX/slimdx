@@ -36,7 +36,7 @@ namespace Direct3D9
 {
 	Sprite::Sprite( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXSprite );
+		Construct( pointer, NativeInterface );
 	}
 
 	Sprite::Sprite( ID3DXSprite* sprite )

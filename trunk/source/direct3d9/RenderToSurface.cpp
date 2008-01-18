@@ -32,7 +32,7 @@ namespace SlimDX
 	namespace Direct3D9
 	{
 		/* Unused for now.
-		RenderToSurface::RenderToSurface( ID3DXRenderToSurface* pointer ) : DirectXObject( pointer )
+		RenderToSurface::RenderToSurface( ID3DXRenderToSurface* pointer ) : BaseObject( pointer )
 		{
 			if( pointer == NULL )
 				throw gcnew ArgumentNullException( "pointer" );
@@ -41,7 +41,7 @@ namespace SlimDX
 
 		RenderToSurface::RenderToSurface( IntPtr rts )
 		{
-			Construct( rts, IID_ID3DXRenderToSurface );
+			Construct( rts, NativeInterface );
 		}
 
 		RenderToSurface::RenderToSurface( Device^ device, int width, int height, Format format )

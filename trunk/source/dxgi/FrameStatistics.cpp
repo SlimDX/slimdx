@@ -19,38 +19,47 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-using namespace System;
+#include <dxgi.h>
 
-#include "../BaseObject.h"
-
-#include "Enums.h"
+#include "FrameStatistics.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+namespace DXGI
+{ 	
+	FrameStatistics::FrameStatistics( const DXGI_FRAME_STATISTICS& native )
 	{
-		ref class Device;
-		ref class Texture2D;
-		value class ModeDescription;
-		value class SwapChainDescription;
-		
-		public ref class SwapChain : public BaseObject
-		{
-			DXOBJECT(IDXGISwapChain);
-
-		public:
-			SwapChain( IntPtr pointer );
-			SwapChain( Device^ device, SwapChainDescription description );
-			~SwapChain() { Destruct(); }
-
-			Texture2D^ GetBuffer( int index );
-
-			void ResizeBuffers( int count, int width, int height, Format format, SwapChainFlags flags );
-			void ResizeTarget( ModeDescription description );
-			
-			PresentResult Present( int syncInterval, PresentFlags flags );
-		};
+		m_PresentCount = native.PresentCount;
+		m_PresentRefreshCount = native.PresentRefreshCount;
+		m_SyncRefreshCount = native.SyncRefreshCount;
+		m_SyncQPCTime = native.SyncQPCTime.QuadPart;
+		m_SyncGPUTime = native.SyncGPUTime.QuadPart;
 	}
-};
+
+	int FrameStatistics::PresentCount::get()
+	{
+		return m_PresentCount;
+	}
+
+	int FrameStatistics::PresentRefreshCount::get()
+	{
+		return m_PresentRefreshCount;
+	}
+
+	int FrameStatistics::SyncRefreshCount::get()
+	{
+		return m_SyncRefreshCount;
+	}
+
+	__int64 FrameStatistics::SyncQPCTime::get()
+	{
+		return m_SyncQPCTime;
+	}
+
+	__int64 FrameStatistics::SyncGPUTime::get()
+	{
+		return m_SyncGPUTime;
+	}
+}
+}

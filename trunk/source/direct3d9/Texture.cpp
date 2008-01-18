@@ -104,7 +104,7 @@ namespace Direct3D9
 
 	Texture::Texture( IntPtr texture )
 	{
-		Construct( texture, IID_IDirect3DTexture9 );
+		Construct( texture, NativeInterface );
 	}
 
 	Texture::Texture( Device^ device, int width, int height, int numLevels, Usage usage, Format format, Pool pool )
@@ -472,7 +472,7 @@ namespace Direct3D9
 
 	CubeTexture::CubeTexture( IntPtr cubeTexture )
 	{
-		Construct( cubeTexture, IID_IDirect3DCubeTexture9 );
+		Construct( cubeTexture, NativeInterface );
 	}
 
 	CubeTexture::CubeTexture( Device^ device, int edgeLength, int numLevels, Usage usage, Format format, Pool pool )
@@ -772,7 +772,7 @@ namespace Direct3D9
 
 	VolumeTexture::VolumeTexture( IntPtr volumeTexture )
 	{
-		Construct( volumeTexture, IID_IDirect3DVolumeTexture9 );
+		Construct( volumeTexture, NativeInterface );
 	}
 
 	VolumeTexture::VolumeTexture( Device^ device, int width, int height, int depth, int numLevels, Usage usage, Format format, Pool pool )

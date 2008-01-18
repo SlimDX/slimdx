@@ -43,7 +43,7 @@ namespace Direct3D10
 		m_Width = desc.Width;
 		m_MipLevels = desc.MipLevels;
 		m_ArraySize = desc.ArraySize;
-		m_Format = static_cast<SlimDX::Direct3D10::Format>( desc.Format );
+		m_Format = static_cast<DXGI::Format>( desc.Format );
 		m_Usage = static_cast<ResourceUsage>( desc.Usage );
 		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( desc.BindFlags );
 		m_AccessFlags = static_cast<CpuAccessFlags>( desc.CPUAccessFlags );
@@ -52,7 +52,7 @@ namespace Direct3D10
 	
 	Texture1D::Texture1D( IntPtr nativeObject )
 	{
-		Construct( nativeObject, IID_ID3D10Texture1D );
+		Construct( nativeObject, NativeInterface );
 		
 		D3D10_TEXTURE1D_DESC desc;
 		static_cast<ID3D10Texture1D*>( InternalPointer )->GetDesc( &desc );
@@ -60,14 +60,14 @@ namespace Direct3D10
 		m_Width = desc.Width;
 		m_MipLevels = desc.MipLevels;
 		m_ArraySize = desc.ArraySize;
-		m_Format = static_cast<SlimDX::Direct3D10::Format>( desc.Format );
+		m_Format = static_cast<DXGI::Format>( desc.Format );
 		m_Usage = static_cast<ResourceUsage>( desc.Usage );
 		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( desc.BindFlags );
 		m_AccessFlags = static_cast<CpuAccessFlags>( desc.CPUAccessFlags );
 		m_OptionFlags = static_cast<ResourceOptionFlags>( desc.MiscFlags );
 	}
 	
-	Texture1D::Texture1D( Device^ device, int width, int mipLevels, int arraySize, SlimDX::Direct3D10::Format format,
+	Texture1D::Texture1D( Device^ device, int width, int mipLevels, int arraySize, DXGI::Format format,
 		ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
 	{
 		D3D10_TEXTURE1D_DESC desc;
@@ -92,7 +92,7 @@ namespace Direct3D10
 	{
 		int subResource = D3D10CalcSubresource( mipSlice, 0, MipLevels );
 		int mipWidth = GetMipSize( mipSlice, Width );
-		int bufferSize = mipWidth * EnumerationReflection::SizeOfElement( Format );
+		int bufferSize = mipWidth * GetElementSize( Format );
 		
 		void* mappedArray;
 		HRESULT hr = static_cast<ID3D10Texture1D*>( InternalPointer )->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedArray );

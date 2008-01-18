@@ -38,7 +38,7 @@ namespace SlimDX
 
 		RenderToEnvironmentMap::RenderToEnvironmentMap( IntPtr pointer )
 		{
-			Construct( pointer, IID_ID3DXRenderToEnvMap );
+			Construct( pointer, NativeInterface );
 		}
 
 		RenderToEnvironmentMap::RenderToEnvironmentMap( Device^ device, int size, int mipLevels, Format format, Format depthStencilFormat )

@@ -46,7 +46,7 @@ namespace Direct3D9
 
 	SwapChain::SwapChain( IntPtr pointer )
 	{
-		Construct( pointer, IID_IDirect3DSwapChain9 );
+		Construct( pointer, NativeInterface );
 	}
 
 	SwapChain::SwapChain( Device^ device, PresentParameters^ presentParams )

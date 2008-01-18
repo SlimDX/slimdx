@@ -58,14 +58,14 @@ namespace SlimDX
 		m_Unknown = pointer;
 	}
 
-	void BaseObject::Construct( IntPtr pointer, const IID& iid )
+	void BaseObject::Construct( IntPtr pointer, Guid guid )
 	{
 		if( pointer == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "pointer" );
 
 		void* result = 0;
 		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( iid, &result );
+		HRESULT hr = unknown->QueryInterface( Utilities::ConvertManagedGuid( guid ), &result );
 		if( FAILED( hr ) )
 			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
 

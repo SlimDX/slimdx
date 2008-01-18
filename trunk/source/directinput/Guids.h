@@ -43,7 +43,7 @@ namespace SlimDX
 			/// </summary>
 			static property Guid Keyboard
 			{
-				Guid get() { return Utilities::FromGUID( GUID_SysKeyboard ); }
+				Guid get() { return Utilities::ConvertNativeGuid( GUID_SysKeyboard ); }
 			}
 
 			/// <summary>
@@ -51,7 +51,7 @@ namespace SlimDX
 			/// </summary>
 			static property Guid Mouse
 			{
-				Guid get() { return Utilities::FromGUID( GUID_SysMouse ); }
+				Guid get() { return Utilities::ConvertNativeGuid( GUID_SysMouse ); }
 			}
 		};
 
@@ -66,57 +66,57 @@ namespace SlimDX
 		public:
 			static property Guid XAxis
 			{
-				Guid get() { return Utilities::FromGUID( GUID_XAxis ); }
+				Guid get() { return Utilities::ConvertNativeGuid( GUID_XAxis ); }
 			}
-
+						
 			static property Guid YAxis
 			{
-				Guid get() { return Utilities::FromGUID( GUID_YAxis ); }
+				Guid get() { return Utilities::ConvertNativeGuid( GUID_YAxis ); }
 			}
 
 			static property Guid ZAxis
 			{
-				Guid get() { return Utilities::FromGUID( GUID_ZAxis ); }
+				Guid get() { return Utilities::ConvertNativeGuid( GUID_ZAxis ); }
 			}
 
 			static property Guid RotationalXAxis
 			{
-				Guid get() { return Utilities::FromGUID( GUID_RxAxis ); }
+				Guid get() { return Utilities::ConvertNativeGuid( GUID_RxAxis ); }
 			}
 
 			static property Guid RotationalYAxis
 			{
-				Guid get() { return Utilities::FromGUID( GUID_RyAxis ); }
+				Guid get() { return Utilities::ConvertNativeGuid( GUID_RyAxis ); }
 			}
 
 			static property Guid RotationalZAxis
 			{
-				Guid get() { return Utilities::FromGUID( GUID_RzAxis ); }
+				Guid get() { return Utilities::ConvertNativeGuid( GUID_RzAxis ); }
 			}
 
 			static property Guid Slider
 			{
-				Guid get() { return Utilities::FromGUID( GUID_Slider ); }
+				Guid get() { return Utilities::ConvertNativeGuid( GUID_Slider ); }
 			}
 
 			static property Guid Button
 			{
-				Guid get() { return Utilities::FromGUID( GUID_Button ); }
+				Guid get() { return Utilities::ConvertNativeGuid( GUID_Button ); }
 			}
 
 			static property Guid Key
 			{
-				Guid get() { return Utilities::FromGUID( GUID_Key ); }
+				Guid get() { return Utilities::ConvertNativeGuid( GUID_Key ); }
 			}
 
 			static property Guid PovController
 			{
-				Guid get() { return Utilities::FromGUID( GUID_POV ); }
+				Guid get() { return Utilities::ConvertNativeGuid( GUID_POV ); }
 			}
 
 			static property Guid Unknown
 			{
-				Guid get() { return Utilities::FromGUID( GUID_Unknown ); }
+				Guid get() { return Utilities::ConvertNativeGuid( GUID_Unknown ); }
 			}
 		};
 	}

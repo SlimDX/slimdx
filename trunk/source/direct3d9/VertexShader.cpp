@@ -48,7 +48,7 @@ namespace Direct3D9
 
 	VertexShader::VertexShader( IntPtr vertexShader )
 	{
-		Construct( vertexShader, IID_IDirect3DVertexShader9 );
+		Construct( vertexShader, NativeInterface );
 	}
 
 	VertexShader::VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable )

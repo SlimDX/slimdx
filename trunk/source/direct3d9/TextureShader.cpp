@@ -44,7 +44,7 @@ namespace Direct3D9
 
 	TextureShader::TextureShader( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXTextureShader );
+		Construct( pointer, NativeInterface );
 	}
 
 	TextureShader::TextureShader( DataStream^ stream )

@@ -54,7 +54,7 @@ namespace Direct3D9
 
 	SkinInfo::SkinInfo( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXSkinInfo );
+		Construct( pointer, NativeInterface );
 	}
 
 	SkinInfo::SkinInfo( int vertexCount, array<VertexElement>^ vertexDecl, int boneCount )

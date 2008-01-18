@@ -40,15 +40,15 @@ namespace Direct3D10
 
 	Resource::Resource( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3D10Resource );
+		Construct( pointer, NativeInterface );
 	}
 	
-	ResourcePriority Resource::EvictionPriority::get()
+	DXGI::ResourcePriority Resource::EvictionPriority::get()
 	{
-		return static_cast<ResourcePriority>( InternalPointer->GetEvictionPriority() );
+		return static_cast<DXGI::ResourcePriority>( InternalPointer->GetEvictionPriority() );
 	}
 	
-	void Resource::EvictionPriority::set(ResourcePriority value)
+	void Resource::EvictionPriority::set(DXGI::ResourcePriority value)
 	{
 		InternalPointer->SetEvictionPriority( static_cast<UINT>( value ) );
 	}

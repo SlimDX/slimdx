@@ -32,7 +32,7 @@ namespace Direct3D9
 {
 	StateBlock::StateBlock( IntPtr pointer )
 	{
-		Construct( pointer, IID_IDirect3DStateBlock9 );
+		Construct( pointer, NativeInterface );
 	}
 
 	StateBlock::StateBlock( IDirect3DStateBlock9* stateBlock )

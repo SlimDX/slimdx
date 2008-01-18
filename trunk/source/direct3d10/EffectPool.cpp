@@ -41,7 +41,7 @@ namespace Direct3D10
 
 	EffectPool::EffectPool( IntPtr effectPool )
 	{
-		Construct( effectPool, IID_ID3D10EffectPool );
+		Construct( effectPool, NativeInterface );
 	}
 
 	Effect^ EffectPool::AsEffect()

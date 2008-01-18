@@ -185,7 +185,7 @@ namespace Direct3D9
 
 	BaseMesh::BaseMesh( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXBaseMesh );
+		Construct( pointer, NativeInterface );
 	}
 
 	Mesh^ BaseMesh::Clone( Device^ device, MeshFlags flags, array<VertexElement>^ elements )
@@ -613,7 +613,7 @@ namespace Direct3D9
 
 	Mesh::Mesh( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXMesh );
+		Construct( pointer, NativeInterface );
 	}
 
 	Mesh::Mesh( Device^ device, int numFaces, int numVertices, MeshFlags options, array<VertexElement>^ vertexDecl )

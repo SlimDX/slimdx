@@ -41,7 +41,7 @@ namespace Direct3D9
 
 	AnimationController::AnimationController( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXAnimationController );
+		Construct( pointer, NativeInterface );
 	}
 
 	AnimationController::AnimationController( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents )

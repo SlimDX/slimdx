@@ -43,7 +43,7 @@ namespace Direct3D10
 		m_Height = desc.Height;
 		m_MipLevels = desc.MipLevels;
 		m_ArraySize = desc.ArraySize;
-		m_Format = static_cast<SlimDX::Direct3D10::Format>( desc.Format );
+		m_Format = static_cast<DXGI::Format>( desc.Format );
 		m_SampleDesc.Count = desc.SampleDesc.Count;
 		m_SampleDesc.Quality = desc.SampleDesc.Quality;
 		m_Usage = static_cast<ResourceUsage>( desc.Usage );
@@ -54,7 +54,7 @@ namespace Direct3D10
 	
 	Texture2D::Texture2D( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3D10Texture2D );
+		Construct( pointer, NativeInterface );
 		
 		D3D10_TEXTURE2D_DESC desc;
 		static_cast<ID3D10Texture2D*>( InternalPointer )->GetDesc( &desc );
@@ -62,7 +62,7 @@ namespace Direct3D10
 		m_Height = desc.Height;
 		m_MipLevels = desc.MipLevels;
 		m_ArraySize = desc.ArraySize;
-		m_Format = static_cast<SlimDX::Direct3D10::Format>( desc.Format );
+		m_Format = static_cast<DXGI::Format>( desc.Format );
 		m_SampleDesc.Count = desc.SampleDesc.Count;
 		m_SampleDesc.Quality = desc.SampleDesc.Quality;
 		m_Usage = static_cast<ResourceUsage>( desc.Usage );
@@ -71,7 +71,7 @@ namespace Direct3D10
 		m_OptionFlags = static_cast<ResourceOptionFlags>( desc.MiscFlags );
 	}
 	
-	Texture2D::Texture2D( Device^ device, int width, int height, int mipLevels, int arraySize, SlimDX::Direct3D10::Format format,
+	Texture2D::Texture2D( Device^ device, int width, int height, int mipLevels, int arraySize, DXGI::Format format,
 		int sampleCount, int sampleQuality, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,
 		ResourceOptionFlags optionFlags )
 	{

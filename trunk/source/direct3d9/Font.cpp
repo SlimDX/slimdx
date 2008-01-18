@@ -39,7 +39,7 @@ namespace SlimDX
 namespace Direct3D9
 {
 	/* Unused for now.
-	Font::Font( ID3DXFont* font ) : DirectXObject( font )
+	Font::Font( ID3DXFont* font ) : BaseObject( font )
 	{
 		if( font == NULL )
 			throw gcnew ArgumentNullException( "font" );
@@ -48,7 +48,7 @@ namespace Direct3D9
 
 	Font::Font( IntPtr font )
 	{
-		Construct( font, IID_ID3DXFont );
+		Construct( font, NativeInterface );
 
 	}
 
