@@ -24,6 +24,7 @@
 using namespace System;
 
 #include "../BaseObject.h"
+#include "../dxgi/Enums.h"
 
 #include "Enums.h"
 
@@ -36,7 +37,7 @@ namespace SlimDX
 			DXOBJECT(ID3D10View);
 
 		private:
-			Format format;
+			DXGI::Format format;
             ResourceViewDimension dimension;
             int elementOffset;
             int elementWidth;
@@ -53,11 +54,11 @@ namespace SlimDX
 		public:
 			virtual ~ResourceView() { Destruct(); }
 
-			property SlimDX::Direct3D10::Format Format
+			property DXGI::Format Format
             {
-				SlimDX::Direct3D10::Format get() { return format; }
+				DXGI::Format get() { return format; }
 			protected:
-                void set( SlimDX::Direct3D10::Format value ) { format = value; }
+                void set( DXGI::Format value ) { format = value; }
             }
 
             property ResourceViewDimension Dimension

@@ -39,7 +39,7 @@ namespace SlimDX
 		public:
 			VertexShader( IntPtr shader )
 			{
-				Construct( shader, IID_ID3D10VertexShader );
+				Construct( shader, NativeInterface );
 			}
 
 			virtual ~VertexShader() { Destruct(); }

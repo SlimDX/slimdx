@@ -23,6 +23,8 @@
 
 using namespace System;
 
+#include "../dxgi/Enums.h"
+
 #include "Enums.h"
 #include "VertexBufferBinding.h"
 
@@ -44,7 +46,7 @@ namespace SlimDX
 			void SetInputLayout( InputLayout^ layout );
 			void SetPrimitiveTopology( PrimitiveTopology topology );
 			
-			void SetIndexBuffer( Buffer^ indexBuffer, Format format, int offset );
+			void SetIndexBuffer( Buffer^ indexBuffer, DXGI::Format format, int offset );
 			
 			void SetVertexBuffers( int slot, VertexBufferBinding vertexBufferBinding );
 			void SetVertexBuffers( int firstSlot, ... array<VertexBufferBinding>^ vertexBufferBindings );

@@ -31,7 +31,7 @@ namespace Direct3D10
 { 
 	ResourceView::ResourceView()
 	{
-		Format = SlimDX::Direct3D10::Format::Unknown;
+		Format = DXGI::Format::Unknown;
 		Dimension = ResourceViewDimension::Unknown;
 		ElementOffset = 0;
 		ElementWidth = 0;
@@ -49,7 +49,7 @@ namespace Direct3D10
 		D3D10_SHADER_RESOURCE_VIEW_DESC desc;
 		view->GetDesc( &desc );
 		
-		Format = static_cast<SlimDX::Direct3D10::Format>( desc.Format );
+		Format = static_cast<DXGI::Format>( desc.Format );
 		Dimension = static_cast<ResourceViewDimension>( desc.ViewDimension );
 		
 		//@TODO D3D10: Figure out the proper way to set these.

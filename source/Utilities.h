@@ -37,19 +37,13 @@ namespace SlimDX
 	{
 	private:
 		Utilities() { }
+		
+	internal:
+		static GUID GetNativeGuidForType( Type^ type );
 
 	public:
-		/* Unused for now
-		static void ReportNotDisposed( SlimDX::BaseObject^ obj );
-		static void MarkDisposed( bool %disposed, Object^ obj );
-
-		/// <summary>
-		/// Function to convert a GDI+ rectangle to a standard RECT.
-		/// </summary>
-		/// <param name="rect">Rectangle to convert.</param>
-		/// <param name="outrect">Output rectangle.</param>
-		static void ConvertRect(Drawing::Rectangle rect, RECT *outrect);
-		*/
+		static Guid ConvertNativeGuid( const GUID &guid );
+		static GUID ConvertManagedGuid( Guid guid );
 
 		/// <summary>
 		/// Function to convert a standard RECT to a GDI+ rectangle.
@@ -65,8 +59,6 @@ namespace SlimDX
 		generic<typename T>
 		static void CheckArrayBounds( array<T>^ data, int offset, int% count );
 
-		static Guid FromGUID( const GUID &guid );
 
-		static GUID ToGUID( Guid guid );
 	};
 }

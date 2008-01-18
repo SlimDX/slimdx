@@ -42,7 +42,7 @@ namespace Direct3D10
 
 	ShaderResourceView::ShaderResourceView( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3D10ShaderResourceView );
+		Construct( pointer, NativeInterface );
 	}
 	
 	ShaderResourceView::ShaderResourceView( Device^ device, Texture1D^ resource )

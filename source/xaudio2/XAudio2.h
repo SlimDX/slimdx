@@ -95,7 +95,7 @@ namespace SlimDX
 			WaveFormatExtended OutputFormat;
 		};
 
-		public ref class XAudio2 : DirectXObject<IXAudio2>
+		public ref class XAudio2 : BaseObject<IXAudio2>
 		{
 		public:
 			XAudio2( XAudio2Flags flags, EngineCallback^ callback, WindowsProcessorSpecifier processor );

@@ -47,7 +47,7 @@ namespace Direct3D9
 
 	AnimationSet::AnimationSet( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXAnimationSet );
+		Construct( pointer, NativeInterface );
 	}
 
 	int AnimationSet::GetAnimationIndex( String^ name )
@@ -159,7 +159,7 @@ namespace Direct3D9
 
 	CompressedAnimationSet::CompressedAnimationSet( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXCompressedAnimationSet );
+		Construct( pointer, NativeInterface );
 	}
 
 	CompressedAnimationSet::CompressedAnimationSet( String^ name, double ticksPerSecond,
@@ -238,7 +238,7 @@ namespace Direct3D9
 
 	KeyframedAnimationSet::KeyframedAnimationSet( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXKeyframedAnimationSet );
+		Construct( pointer, NativeInterface );
 	}
 
 	KeyframedAnimationSet::KeyframedAnimationSet( String^ name, double ticksPerSecond, SlimDX::Direct3D9::PlaybackType playbackType,

@@ -34,7 +34,7 @@ namespace SlimDX
 namespace Direct3D9
 {
 	/* Unused for now.
-	Line::Line( ID3DXLine* line ) : DirectXObject( line )
+	Line::Line( ID3DXLine* line ) : BaseObject( line )
 	{
 		if( line == NULL )
 			throw gcnew ArgumentNullException( "line" );
@@ -43,7 +43,7 @@ namespace Direct3D9
 
 	Line::Line( IntPtr line )
 	{
-		Construct( line, IID_ID3DXLine );
+		Construct( line, NativeInterface );
 	}
 
 	Line::Line( Device^ device )

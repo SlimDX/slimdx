@@ -42,7 +42,7 @@ namespace Direct3D9
 
 	Volume::Volume( IntPtr volume )
 	{
-		Construct( volume, IID_IDirect3DVolume9 );
+		Construct( volume, NativeInterface );
 		
 		D3DRESOURCETYPE type = InternalPointer->GetType();
 		if( type != D3DRTYPE_VOLUME )

@@ -38,13 +38,13 @@ namespace Direct3D9
 
 	XFileSaveData::XFileSaveData( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXFileSaveData );
+		Construct( pointer, NativeInterface );
 	}
 
 	XFileSaveData^ XFileSaveData::AddDataObject( Guid dataTemplate, String^ name, Guid id, array<Byte>^ data )
 	{
 		ID3DXFileSaveData *result;
-		GUID nativeId = Utilities::ToGUID( id );
+		GUID nativeId = Utilities::ConvertManagedGuid( id );
 		GUID *pointer = &nativeId;
 		if( id == Guid::Empty )
 			pointer = NULL;
@@ -53,7 +53,7 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 		pin_ptr<unsigned char> pinnedMemory = &data[0];
 
-		HRESULT hr = InternalPointer->AddDataObject( Utilities::ToGUID( dataTemplate ), reinterpret_cast<LPCSTR>( pinnedName ), pointer, 
+		HRESULT hr = InternalPointer->AddDataObject( Utilities::ConvertManagedGuid( dataTemplate ), reinterpret_cast<LPCSTR>( pinnedName ), pointer, 
 			data->Length, reinterpret_cast<LPCVOID>( pinnedMemory ), &result );
 		GraphicsException::CheckHResult( hr );
 
@@ -71,7 +71,7 @@ namespace Direct3D9
 
 	void XFileSaveData::AddDataReference( String^ name, Guid id )
 	{
-		GUID nativeId = Utilities::ToGUID( id );
+		GUID nativeId = Utilities::ConvertManagedGuid( id );
 		GUID *pointer = &nativeId;
 		if( id == Guid::Empty )
 			pointer = NULL;
@@ -93,7 +93,7 @@ namespace Direct3D9
 		if( guid == GUID_NULL )
 			return Guid::Empty;
 
-		return Utilities::FromGUID( guid );
+		return Utilities::ConvertNativeGuid( guid );
 	}
 
 	String^ XFileSaveData::Name::get()
@@ -140,7 +140,7 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			return Guid::Empty;
 
-		return Utilities::FromGUID( result );
+		return Utilities::ConvertNativeGuid( result );
 	}
 
 	XFileSaveObject::XFileSaveObject( ID3DXFileSaveObject *object )
@@ -150,13 +150,13 @@ namespace Direct3D9
 
 	XFileSaveObject::XFileSaveObject( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXFileSaveObject );
+		Construct( pointer, NativeInterface );
 	}
 
 	XFileSaveData^ XFileSaveObject::AddDataObject( Guid dataTemplate, String^ name, Guid id, array<Byte>^ data )
 	{
 		ID3DXFileSaveData *result;
-		GUID nativeId = Utilities::ToGUID( id );
+		GUID nativeId = Utilities::ConvertManagedGuid( id );
 		GUID *pointer = &nativeId;
 		if( id == Guid::Empty )
 			pointer = NULL;
@@ -165,7 +165,7 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 		pin_ptr<unsigned char> pinnedMemory = &data[0];
 
-		HRESULT hr = InternalPointer->AddDataObject( Utilities::ToGUID( dataTemplate ), reinterpret_cast<LPCSTR>( pinnedName ), pointer, 
+		HRESULT hr = InternalPointer->AddDataObject( Utilities::ConvertManagedGuid( dataTemplate ), reinterpret_cast<LPCSTR>( pinnedName ), pointer, 
 			data->Length, reinterpret_cast<LPCVOID>( pinnedMemory ), &result );
 		GraphicsException::CheckHResult( hr );
 
@@ -207,7 +207,7 @@ namespace Direct3D9
 
 	XFile::XFile( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXFile );
+		Construct( pointer, NativeInterface );
 	}
 
 	XFile::XFile()
@@ -319,7 +319,7 @@ namespace Direct3D9
 
 	XFileEnumerationObject::XFileEnumerationObject( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXFileEnumObject );
+		Construct( pointer, NativeInterface );
 	}
 
 	XFileData^ XFileEnumerationObject::GetChild( int id )
@@ -339,7 +339,7 @@ namespace Direct3D9
 	{
 		ID3DXFileData *result;
 
-		HRESULT hr = InternalPointer->GetDataObjectById( Utilities::ToGUID( id ), &result );
+		HRESULT hr = InternalPointer->GetDataObjectById( Utilities::ConvertManagedGuid( id ), &result );
 		GraphicsException::CheckHResult( hr );
 
 		if( FAILED( hr ) )
@@ -396,7 +396,7 @@ namespace Direct3D9
 
 	XFileData::XFileData( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DXFileData );
+		Construct( pointer, NativeInterface );
 	}
 
 	XFileData^ XFileData::GetChild( int id )
@@ -468,7 +468,7 @@ namespace Direct3D9
 		if( guid == GUID_NULL )
 			return Guid::Empty;
 
-		return Utilities::FromGUID( guid );
+		return Utilities::ConvertNativeGuid( guid );
 	}
 
 	String^ XFileData::Name::get()
@@ -505,7 +505,7 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			return Guid::Empty;
 
-		return Utilities::FromGUID( result );
+		return Utilities::ConvertNativeGuid( result );
 	}
 
 	bool XFileData::IsReference::get()

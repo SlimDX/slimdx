@@ -37,7 +37,7 @@ namespace Direct3D10
 {
 	Font::Font( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3DX10Font );
+		Construct( pointer, NativeInterface );
 	}
 
 	Font::Font( ID3DX10Font* pointer )

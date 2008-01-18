@@ -44,7 +44,7 @@ namespace Direct3D9
 
 	Surface::Surface( IntPtr surface )
 	{
-		Construct( surface, IID_IDirect3DSurface9 );
+		Construct( surface, NativeInterface );
 	}
 
 	Surface^ Surface::CreateRenderTarget( Device^ device, int width, int height, Format format,

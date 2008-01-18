@@ -22,60 +22,70 @@
 #pragma once
 
 using namespace System;
-using namespace System::Runtime::InteropServices;
-
-#include "Enums.h"
-#include "../math/Rational.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
-	{		
-		[StructLayout( LayoutKind::Sequential )]
-		public value class ModeDescription
+	namespace DXGI
+	{
+		public value class AdapterDescription
 		{
-			int width;
-			int height;
-			Rational refreshRate;
-			Format format;
-			DisplayModeScanlineOrdering scanlineOrdering;
-			DisplayModeScaling scaling;
-		
+			String^ m_Description;
+			int m_VendorId;
+			int m_DeviceId;
+			int m_SubSysId;
+			int m_Revision;
+			int m_DedicatedVideoMemory;
+			int m_DedicatedSystemMemory;
+			int m_SharedSystemMemory;
+			Int64 m_Luid;
+
+		internal:
+			AdapterDescription( const DXGI_ADAPTER_DESC& native );
+
 		public:
-			property int Width
+			property String^ Description
 			{
-				int get() { return width; }
-				void set( int value ) { width = value; }
+				String^ get();
 			}
 
-			property int Height
+			property int VendorId
 			{
-				int get() { return height; }
-				void set( int value ) { height = value; }
+				int get();
 			}
 
-			property Rational RefreshRate
+			property int DeviceId
 			{
-				Rational get() { return refreshRate; }
-				void set( Rational value ) { refreshRate = value; }
+				int get();
 			}
 
-			property SlimDX::Direct3D10::Format Format
+			property int SubsystemId
 			{
-				SlimDX::Direct3D10::Format get() { return format; }
-				void set( SlimDX::Direct3D10::Format value ) { format = value; }
+				int get();
 			}
 
-			property DisplayModeScanlineOrdering ScanlineOrdering
+			property int Revision
 			{
-				DisplayModeScanlineOrdering get() { return scanlineOrdering; }
-				void set( DisplayModeScanlineOrdering value ) { scanlineOrdering = value; }
+				int get();
 			}
 
-			property DisplayModeScaling Scaling
+			property int DedicatedVideoMemory
 			{
-				DisplayModeScaling get() { return scaling; }
-				void set( DisplayModeScaling value ) { scaling = value; }
+				int get();
+			}
+
+			property int DedicatedSystemMemory
+			{
+				int get();
+			}
+
+			property int SharedSystemMemory
+			{
+				int get();
+			}
+
+			property Int64 Luid
+			{
+				Int64 get();
 			}
 		};
 	}

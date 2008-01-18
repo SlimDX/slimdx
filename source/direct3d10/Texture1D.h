@@ -41,7 +41,7 @@ namespace SlimDX
 			int m_Width;
 			int m_MipLevels;
 			int m_ArraySize;
-			SlimDX::Direct3D10::Format m_Format;
+			DXGI::Format m_Format;
 			ResourceUsage m_Usage;
 			SlimDX::Direct3D10::BindFlags m_BindFlags;
 			CpuAccessFlags m_AccessFlags;
@@ -72,9 +72,9 @@ namespace SlimDX
 				int get() { return m_ArraySize; }
 			}
 			
-			property SlimDX::Direct3D10::Format Format
+			property DXGI::Format Format
 			{
-				SlimDX::Direct3D10::Format get() { return m_Format; }
+				DXGI::Format get() { return m_Format; }
 			}
 			
 			property ResourceUsage Usage
@@ -105,7 +105,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="nativeObject">A native ID3D10Texture1D pointer, as an IntPtr.</param>
 			Texture1D( IntPtr nativeObject );
-			Texture1D( Device^ device, int width, int mipLevels, int arraySize, SlimDX::Direct3D10::Format format,
+			Texture1D( Device^ device, int width, int mipLevels, int arraySize, DXGI::Format format,
 				ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,ResourceOptionFlags optionFlags );
 			virtual ~Texture1D() { }
 

@@ -40,7 +40,7 @@ namespace Direct3D9
 
 	VertexDeclaration::VertexDeclaration( IntPtr decl )
 	{
-		Construct( decl, IID_IDirect3DVertexDeclaration9 );
+		Construct( decl, NativeInterface );
 	}
 
 	VertexDeclaration::VertexDeclaration( Device^ device, array<VertexElement>^ elements )

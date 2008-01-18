@@ -35,7 +35,7 @@ namespace Direct3D10
 { 
 	InputLayout::InputLayout( IntPtr pointer )
 	{
-		Construct( pointer, IID_ID3D10InputLayout );
+		Construct( pointer, NativeInterface );
 	}
 
 	InputLayout::InputLayout( Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature )

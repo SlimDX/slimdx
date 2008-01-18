@@ -56,7 +56,7 @@ namespace Direct3D10
 
 	Effect::Effect( IntPtr effect )
 	{
-		Construct( effect, IID_ID3D10Effect );
+		Construct( effect, NativeInterface );
 
 		D3D10_EFFECT_DESC desc;
 		HRESULT hr = InternalPointer->GetDesc( &desc );

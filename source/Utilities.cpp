@@ -19,47 +19,49 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "Utilities.h"
+
 #include "BaseObject.h"
+#include "Utilities.h"
+
+using namespace System::Reflection;
 
 namespace SlimDX
 {
-	/* Unused for now.
-	void Utilities::ReportNotDisposed( BaseObject^ obj )
+	GUID Utilities::GetNativeGuidForType( Type^ type )
 	{
-		String^ message = String::Format( CultureInfo::InvariantCulture, "Object of type {0} not disposed.", obj->GetType()->ToString() );
-		Debug::WriteLine( message );
+		if( type == nullptr )
+			throw gcnew ArgumentNullException( "type" );
+		
+		PropertyInfo^ nativeInterfaceProperty = type->GetProperty( "NativeInterface" );
+		Guid nativeInterface = static_cast<Guid>( nativeInterfaceProperty->GetValue( nullptr, nullptr ) );
+		
+		return ConvertManagedGuid( nativeInterface );
 	}
-	*/
 	
-	/* Unused for now.
-	void Utilities::MarkDisposed( bool %disposed, Object^ obj )
+	Guid Utilities::ConvertNativeGuid( const GUID &guid )
 	{
-		if( disposed )
-			throw gcnew ObjectDisposedException( obj->GetType()->ToString() );
+		if( guid == GUID_NULL )
+			return Guid::Empty;
 
-		disposed = true;
-		GC::SuppressFinalize( obj );
+		Guid result( guid.Data1, guid.Data2, guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], 
+			guid.Data4[3], guid.Data4[4], guid.Data4[5], guid.Data4[6], guid.Data4[7] );
+
+		return result;
 	}
-	*/
 
-	/* Unused for now.
-	/// <summary>
-	/// Function to convert a GDI+ rectangle to a standard RECT.
-	/// </summary>
-	/// <param name="rect">Rectangle to convert.</param>
-	/// <param name="outrect">Output rectangle.</param>
-	void Utilities::ConvertRect(Drawing::Rectangle rect, RECT *outrect)
+	GUID Utilities::ConvertManagedGuid( Guid guid )
 	{
-		if (outrect == NULL)
-			throw gcnew ArgumentNullException("outrect");
+		if( guid == Guid::Empty )
+			return GUID_NULL;
 
-		outrect->left = rect.Left;
-		outrect->top = rect.Top;
-		outrect->right = rect.Right;
-		outrect->bottom = rect.Bottom;
+		GUID result;
+		array<Byte>^ bytes = guid.ToByteArray();
+		pin_ptr<unsigned char> pinned_bytes = &bytes[0];
+		memcpy( &result, pinned_bytes, sizeof(GUID) );
+
+		return result;
 	}
-	*/
+	
 
 	/// <summary>
 	/// Function to convert a standard RECT to a GDI+ rectangle.
@@ -106,30 +108,6 @@ namespace SlimDX
 			throw gcnew ArgumentOutOfRangeException( "offset" );
 		if( count < 0 || count > data->Length - offset )
 			throw gcnew ArgumentOutOfRangeException( "count" );
-	}
-
-	Guid Utilities::FromGUID( const GUID &guid )
-	{
-		if( guid == GUID_NULL )
-			return Guid::Empty;
-
-		Guid result( guid.Data1, guid.Data2, guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], 
-			guid.Data4[3], guid.Data4[4], guid.Data4[5], guid.Data4[6], guid.Data4[7] );
-
-		return result;
-	}
-
-	GUID Utilities::ToGUID( Guid guid )
-	{
-		if( guid == Guid::Empty )
-			return GUID_NULL;
-
-		GUID result;
-		array<Byte>^ bytes = guid.ToByteArray();
-		pin_ptr<unsigned char> pinned_bytes = &bytes[0];
-		memcpy( &result, pinned_bytes, sizeof(GUID) );
-
-		return result;
 	}
 
 	String^ Utilities::BufferToString( ID3DXBuffer *buffer )

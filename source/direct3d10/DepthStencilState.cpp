@@ -46,7 +46,7 @@ namespace Direct3D10
 	
 	DepthStencilState::DepthStencilState( IntPtr state )
 	{
-		Construct( state, IID_ID3D10DepthStencilState );
+		Construct( state, NativeInterface );
 
 		D3D10_DEPTH_STENCIL_DESC desc;
 		InternalPointer->GetDesc( &desc );

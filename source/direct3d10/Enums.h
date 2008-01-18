@@ -25,6 +25,8 @@ using namespace System;
 
 #include <windows.h>
 
+#include "../dxgi/Enums.h"
+
 namespace SlimDX
 {
 	namespace Direct3D10
@@ -137,30 +139,6 @@ namespace SlimDX
 			PreventThreadingOptimizations = D3D10_CREATE_DEVICE_PREVENT_INTERNAL_THREADING_OPTIMIZATIONS
 		};
 	
-		public enum class DisplayModeRotation : Int32
-		{
-			Unspecified = DXGI_MODE_ROTATION_UNSPECIFIED,
-			Identity = DXGI_MODE_ROTATION_IDENTITY,
-			Rotate90Degrees = DXGI_MODE_ROTATION_ROTATE90,
-			Rotate180Degrees = DXGI_MODE_ROTATION_ROTATE180,
-			Rotate270Degrees = DXGI_MODE_ROTATION_ROTATE270
-		};
-
-		public enum class DisplayModeScaling : Int32
-		{
-			Unspecified = DXGI_MODE_SCALING_UNSPECIFIED,
-			Centered = DXGI_MODE_SCALING_CENTERED,
-			Stretched = DXGI_MODE_SCALING_STRETCHED
-		};
-
-		public enum class DisplayModeScanlineOrdering : Int32
-		{
-			Unspecified = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED,
-			Progressive = DXGI_MODE_SCANLINE_ORDER_PROGRESSIVE,
-			UpperFieldFirst = DXGI_MODE_SCANLINE_ORDER_UPPER_FIELD_FIRST,
-			LowerFieldFirst = DXGI_MODE_SCANLINE_ORDER_LOWER_FIELD_FIRST
-		};
-		
 		public enum class DriverType : Int32
 		{
 			Hardware = D3D10_DRIVER_TYPE_HARDWARE,
@@ -295,99 +273,6 @@ namespace SlimDX
 			Heavy = FW_HEAVY,
 			Black = FW_BLACK
 		};
-
-		public enum class Format : Int32
-		{
-			Unknown = DXGI_FORMAT_UNKNOWN,
-			R32G32B32A32_Typeless = DXGI_FORMAT_R32G32B32A32_TYPELESS,
-			R32G32B32A32_Float = DXGI_FORMAT_R32G32B32A32_FLOAT,
-			R32G32B32A32_UInt = DXGI_FORMAT_R32G32B32A32_UINT,
-			R32G32B32A32_SInt = DXGI_FORMAT_R32G32B32A32_SINT,
-			R32G32B32_Typeless = DXGI_FORMAT_R32G32B32_TYPELESS,
-			R32G32B32_Float = DXGI_FORMAT_R32G32B32_FLOAT,
-			R32G32B32_UInt = DXGI_FORMAT_R32G32B32_UINT,
-			R32G32B32_SInt = DXGI_FORMAT_R32G32B32_SINT,
-			R16G16B16A16_Typeless = DXGI_FORMAT_R16G16B16A16_TYPELESS,
-			R16G16B16A16_Float = DXGI_FORMAT_R16G16B16A16_FLOAT,
-			R16G16B16A16_UNorm = DXGI_FORMAT_R16G16B16A16_UNORM,
-			R16G16B16A16_UInt = DXGI_FORMAT_R16G16B16A16_UINT,
-			R16G16B16A16_SNorm = DXGI_FORMAT_R16G16B16A16_SNORM,
-			R16G16B16A16_SInt = DXGI_FORMAT_R16G16B16A16_SINT,
-			R32G32_Typeless = DXGI_FORMAT_R32G32_TYPELESS,
-			R32G32_Float = DXGI_FORMAT_R32G32_FLOAT,
-			R32G32_UInt = DXGI_FORMAT_R32G32_UINT,
-			R32G32_SInt = DXGI_FORMAT_R32G32_SINT,
-			R32G8X24_Typeless = DXGI_FORMAT_R32G8X24_TYPELESS,
-			D32_Float_S8X24_UInt = DXGI_FORMAT_D32_FLOAT_S8X24_UINT,
-			R32_Float_X8X24_Typeless = DXGI_FORMAT_R32_FLOAT_X8X24_TYPELESS,
-			X32_Typeless_G8X24_UInt = DXGI_FORMAT_X32_TYPELESS_G8X24_UINT,
-			R10G10B10A2_Typeless = DXGI_FORMAT_R10G10B10A2_TYPELESS,
-			R10G10B10A2_UNorm = DXGI_FORMAT_R10G10B10A2_UNORM,
-			R10G10B10A2_UInt = DXGI_FORMAT_R10G10B10A2_UINT,
-			R11G11B10_Float = DXGI_FORMAT_R11G11B10_FLOAT,
-			R8G8B8A8_Typeless = DXGI_FORMAT_R8G8B8A8_TYPELESS,
-			R8G8B8A8_UNorm = DXGI_FORMAT_R8G8B8A8_UNORM,
-			R8G8B8A8_UNorm_SRGB = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
-			R8G8B8A8_UInt = DXGI_FORMAT_R8G8B8A8_UINT,
-			R8G8B8A8_SNorm = DXGI_FORMAT_R8G8B8A8_SNORM,
-			R8G8B8A8_SInt = DXGI_FORMAT_R8G8B8A8_SINT,
-			R16G16_Typeless = DXGI_FORMAT_R16G16_TYPELESS,
-			R16G16_Float = DXGI_FORMAT_R16G16_FLOAT,
-			R16G16_UNorm = DXGI_FORMAT_R16G16_UNORM,
-			R16G16_UInt = DXGI_FORMAT_R16G16_UINT,
-			R16G16_SNorm = DXGI_FORMAT_R16G16_SNORM,
-			R16G16_SInt = DXGI_FORMAT_R16G16_SINT,
-			R32_Typeless = DXGI_FORMAT_R32_TYPELESS,
-			D32_Float = DXGI_FORMAT_D32_FLOAT,
-			R32_Float = DXGI_FORMAT_R32_FLOAT,
-			R32_UInt = DXGI_FORMAT_R32_UINT,
-			R32_SInt = DXGI_FORMAT_R32_SINT,
-			R24G8_Typeless = DXGI_FORMAT_R24G8_TYPELESS,
-			D24_UNorm_S8_UInt = DXGI_FORMAT_D24_UNORM_S8_UINT,
-			R24_UNorm_X8_Typeless = DXGI_FORMAT_R24_UNORM_X8_TYPELESS,
-			X24_Typeless_G8_UInt = DXGI_FORMAT_X24_TYPELESS_G8_UINT,
-			R8G8_Typeless = DXGI_FORMAT_R8G8_TYPELESS,
-			R8G8_UNorm = DXGI_FORMAT_R8G8_UNORM,
-			R8G8_UInt = DXGI_FORMAT_R8G8_UINT,
-			R8G8_SNorm = DXGI_FORMAT_R8G8_SNORM ,
-			R8G8_SInt = DXGI_FORMAT_R8G8_SINT,
-			R16_Typeless = DXGI_FORMAT_R16_TYPELESS,
-			R16_Float = DXGI_FORMAT_R16_FLOAT,
-			D16_UNorm = DXGI_FORMAT_D16_UNORM,
-			R16_UNorm = DXGI_FORMAT_R16_UNORM,
-			R16_UInt = DXGI_FORMAT_R16_UINT ,
-			R16_SNorm = DXGI_FORMAT_R16_SNORM ,
-			R16_SInt = DXGI_FORMAT_R16_SINT,
-			R8_Typeless = DXGI_FORMAT_R8_TYPELESS,
-			R8_UNorm = DXGI_FORMAT_R8_UNORM,
-			R8_UInt = DXGI_FORMAT_R8_UINT,
-			R8_SNorm = DXGI_FORMAT_R8_SNORM,
-			R8_SInt = DXGI_FORMAT_R8_SINT,
-			A8_UNorm = DXGI_FORMAT_A8_UNORM,
-			R1_UNorm = DXGI_FORMAT_R1_UNORM,
-			R9G9B9E5_SharedExp = DXGI_FORMAT_R9G9B9E5_SHAREDEXP,
-			R8G8_B8G8_UNorm = DXGI_FORMAT_R8G8_B8G8_UNORM,
-			G8R8_G8B8_UNorm = DXGI_FORMAT_G8R8_G8B8_UNORM,
-			BC1_Typeless = DXGI_FORMAT_BC1_TYPELESS,
-			BC1_UNorm = DXGI_FORMAT_BC1_UNORM,
-			BC1_UNorm_SRGB = DXGI_FORMAT_BC1_UNORM_SRGB,
-			BC2_Typeless = DXGI_FORMAT_BC2_TYPELESS,
-			BC2_UNorm = DXGI_FORMAT_BC2_UNORM,
-			BC2_UNorm_SRGB = DXGI_FORMAT_BC2_UNORM_SRGB,
-			BC3_Typeless = DXGI_FORMAT_BC3_TYPELESS,
-			BC3_UNorm = DXGI_FORMAT_BC3_UNORM,
-			BC3_UNorm_SRGB = DXGI_FORMAT_BC3_UNORM_SRGB,
-			BC4_Typeless = DXGI_FORMAT_BC4_TYPELESS,
-			BC4_UNorm = DXGI_FORMAT_BC4_UNORM,
-			BC4_SNorm = DXGI_FORMAT_BC4_SNORM,
-			BC5_Typeless = DXGI_FORMAT_BC5_TYPELESS,
-			BC5_UNorm = DXGI_FORMAT_BC5_UNORM,
-			BC5_SNorm = DXGI_FORMAT_BC5_SNORM,
-			B5G6R5_UNorm = DXGI_FORMAT_B5G6R5_UNORM,
-			B5G5R5A1_UNorm = DXGI_FORMAT_B5G5R5A1_UNORM,
-			B8G8R8A8_UNorm = DXGI_FORMAT_B8G8R8A8_UNORM,
-			B8G8R8X8_UNorm = DXGI_FORMAT_B8G8R8X8_UNORM
-		};
 		
 		public enum class ImageFileFormat : Int32
 		{
@@ -421,22 +306,6 @@ namespace SlimDX
 			None = 0,
 			DoNotWait = D3D10_MAP_FLAG_DO_NOT_WAIT
 		};
-	
-		[Flags]
-		public enum class PresentFlags : Int32
-		{
-			None = 0,
-			DoNotSequence = DXGI_PRESENT_DO_NOT_SEQUENCE,
-			Restart = DXGI_PRESENT_RESTART,
-			Test = DXGI_PRESENT_TEST
-		};
-
-		public enum class PresentResult : Int32
-		{
-			Okay = S_OK,
-			Occluded = DXGI_STATUS_OCCLUDED,
-			Failed
-		};
 		
 		public enum class PrimitiveTopology : Int32
 		{
@@ -460,13 +329,6 @@ namespace SlimDX
 			Float32 = D3D10_REGISTER_COMPONENT_FLOAT32
 		};
 		
-		public enum class Residency : Int32
-		{
-			FullyResident = DXGI_RESIDENCY_FULLY_RESIDENT,
-			ResidentInSharedMemory = DXGI_RESIDENCY_RESIDENT_IN_SHARED_MEMORY,
-			EvictedToDisk = DXGI_RESIDENCY_EVICTED_TO_DISK
-		};
-
 		public enum class ResourceDimension : Int32
 		{
 			Unknown = D3D10_RESOURCE_DIMENSION_UNKNOWN,
@@ -485,16 +347,7 @@ namespace SlimDX
 			Shared = D3D10_RESOURCE_MISC_SHARED,
 			TextureCube = D3D10_RESOURCE_MISC_TEXTURECUBE
 		};
-		
-		public enum class ResourcePriority : UInt32
-		{
-			Minimum = DXGI_RESOURCE_PRIORITY_MINIMUM,
-			Low = DXGI_RESOURCE_PRIORITY_LOW,
-			Normal = DXGI_RESOURCE_PRIORITY_NORMAL,
-			High = DXGI_RESOURCE_PRIORITY_HIGH,
-			Maximum = DXGI_RESOURCE_PRIORITY_MAXIMUM
-		};
-		
+
 		public enum class ResourceUsage : Int32
 		{
 			Default = D3D10_USAGE_DEFAULT,
@@ -593,29 +446,6 @@ namespace SlimDX
 			Increment = D3D10_STENCIL_OP_INCR,
 			Decrement = D3D10_STENCIL_OP_DECR
 		};
-
-		public enum class SurfaceUsage : Int32
-		{
-			ShaderInput = DXGI_USAGE_SHADER_INPUT,
-			RenderTargetOutput = DXGI_USAGE_RENDER_TARGET_OUTPUT,
-			BackBuffer = DXGI_USAGE_BACK_BUFFER,
-			Shared = DXGI_USAGE_SHARED,
-			ReadOnly = DXGI_USAGE_READ_ONLY 
-		};
-		
-		[Flags]
-		public enum class SwapChainFlags : Int32
-		{
-			None = 0,
-			NonPrerotated = DXGI_SWAP_CHAIN_FLAG_NONPREROTATED,
-			AllowModeSwitch = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH
-		};
-
-		public enum class SwapEffect : Int32
-		{
-			Discard = DXGI_SWAP_EFFECT_DISCARD,
-			Sequential = DXGI_SWAP_EFFECT_SEQUENTIAL
-		};
 		
 		public enum class SystemValueType : Int32
 		{
@@ -632,125 +462,6 @@ namespace SlimDX
 			SampleIndex =D3D10_NAME_SAMPLE_INDEX,
 			Target = D3D10_NAME_TARGET,
 			Depth = D3D10_NAME_DEPTH
-		};
-		
-		ref class EnumerationReflection sealed
-		{
-		private:
-			EnumerationReflection() { }
-			
-			literal int size8 = sizeof( System::Byte );
-			literal int size16 = sizeof( System::Int16 );
-			literal int size32 = sizeof( System::Int32 );
-			literal int size64 = sizeof( System::Int64 );
-			literal int size96 = size64 + size32;
-			literal int size128 = size64 + size64;
-
-		internal:
-		
-			static int SizeOfElement( Format format )
-			{
-				switch( format )
-				{
-					case Format::R32G32B32A32_Typeless:
-					case Format::R32G32B32A32_Float:
-					case Format::R32G32B32A32_UInt:
-					case Format::R32G32B32A32_SInt:
-						return size128;
-					case Format::R32G32B32_Typeless:
-					case Format::R32G32B32_Float:
-					case Format::R32G32B32_UInt:
-					case Format::R32G32B32_SInt:
-						return size96;
-					case Format::R32G32_Typeless:
-					case Format::R32G32_Float:
-					case Format::R32G32_UInt:
-					case Format::R32G32_SInt:
-					case Format::R32G8X24_Typeless:
-					case Format::D32_Float_S8X24_UInt:
-					case Format::R32_Float_X8X24_Typeless:
-					case Format::X32_Typeless_G8X24_UInt:
-					case Format::R16G16B16A16_Typeless:
-					case Format::R16G16B16A16_Float:
-					case Format::R16G16B16A16_UNorm:
-					case Format::R16G16B16A16_UInt:
-					case Format::R16G16B16A16_SNorm:
-					case Format::R16G16B16A16_SInt:
-						return size64;
-					case Format::R10G10B10A2_Typeless:
-					case Format::R10G10B10A2_UNorm:
-					case Format::R10G10B10A2_UInt:
-					case Format::R11G11B10_Float:
-					case Format::R8G8B8A8_Typeless:
-					case Format::R8G8B8A8_UNorm:
-					case Format::R8G8B8A8_UNorm_SRGB:
-					case Format::R8G8B8A8_UInt:
-					case Format::R8G8B8A8_SNorm:
-					case Format::R8G8B8A8_SInt:
-					case Format::R16G16_Typeless:
-					case Format::R16G16_Float:
-					case Format::R16G16_UNorm:
-					case Format::R16G16_UInt:
-					case Format::R16G16_SNorm:
-					case Format::R16G16_SInt:
-					case Format::R32_Typeless:
-					case Format::D32_Float:
-					case Format::R32_Float:
-					case Format::R32_UInt:
-					case Format::R32_SInt:
-					case Format::R24G8_Typeless:
-					case Format::D24_UNorm_S8_UInt:
-					case Format::R24_UNorm_X8_Typeless:
-					case Format::X24_Typeless_G8_UInt:
-					case Format::R9G9B9E5_SharedExp:
-					case Format::R8G8_B8G8_UNorm:
-					case Format::G8R8_G8B8_UNorm:
-					case Format::B8G8R8A8_UNorm:
-					case Format::B8G8R8X8_UNorm:
-						return size32;
-					case Format::R8G8_Typeless:
-					case Format::R8G8_UNorm:
-					case Format::R8G8_UInt:
-					case Format::R8G8_SNorm:
-					case Format::R8G8_SInt:
-					case Format::R16_Typeless:
-					case Format::R16_Float:
-					case Format::D16_UNorm:
-					case Format::R16_UNorm:
-					case Format::R16_UInt:
-					case Format::R16_SNorm:
-					case Format::R16_SInt:
-					case Format::B5G6R5_UNorm:
-					case Format::B5G5R5A1_UNorm:
-						return size16;
-					case Format::R8_Typeless:
-					case Format::R8_UNorm:
-					case Format::R8_UInt:
-					case Format::R8_SNorm:
-					case Format::R8_SInt:
-					case Format::A8_UNorm:
-						return size8;
-					case Format::R1_UNorm:
-					case Format::BC1_Typeless:
-					case Format::BC1_UNorm:
-					case Format::BC1_UNorm_SRGB:
-					case Format::BC2_Typeless:
-					case Format::BC2_UNorm:
-					case Format::BC2_UNorm_SRGB:
-					case Format::BC3_Typeless:
-					case Format::BC3_UNorm:
-					case Format::BC3_UNorm_SRGB:
-					case Format::BC4_Typeless:
-					case Format::BC4_UNorm:
-					case Format::BC4_SNorm:
-					case Format::BC5_Typeless:
-					case Format::BC5_UNorm:
-					case Format::BC5_SNorm:
-						return 0;
-					default:
-						return 0;
-				}
-			}
 		};
 	}
 }

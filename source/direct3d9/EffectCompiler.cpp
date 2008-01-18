@@ -41,7 +41,7 @@ namespace Direct3D9
 
 	EffectCompiler::EffectCompiler( IntPtr compiler )
 	{
-		Construct( compiler, IID_ID3DXEffectCompiler );
+		Construct( compiler, NativeInterface );
 	}
 
 	EffectCompiler::EffectCompiler( String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors )

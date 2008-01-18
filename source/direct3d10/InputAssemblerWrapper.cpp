@@ -50,7 +50,7 @@ namespace Direct3D10
 		m_Device->IASetPrimitiveTopology( static_cast<D3D10_PRIMITIVE_TOPOLOGY>( value ) );
 	}
 	
-	void InputAssemblerWrapper::SetIndexBuffer( Buffer^ indexBuffer, Format format, int offset )
+	void InputAssemblerWrapper::SetIndexBuffer( Buffer^ indexBuffer, DXGI::Format format, int offset )
 	{
 		m_Device->IASetIndexBuffer( static_cast<ID3D10Buffer*>( indexBuffer->InternalPointer ), static_cast<DXGI_FORMAT>( format ), offset );
 	}

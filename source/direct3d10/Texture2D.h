@@ -42,7 +42,7 @@ namespace SlimDX
 			int m_Height;
 			int m_MipLevels;
 			int m_ArraySize;
-			SlimDX::Direct3D10::Format m_Format;
+			DXGI::Format m_Format;
 			SlimDX::Direct3D10::SampleDescription m_SampleDesc;
 			ResourceUsage m_Usage;
 			SlimDX::Direct3D10::BindFlags m_BindFlags;
@@ -79,9 +79,9 @@ namespace SlimDX
 				int get() { return m_ArraySize; }
 			}
 			
-			property SlimDX::Direct3D10::Format Format
+			property DXGI::Format Format
 			{
-				SlimDX::Direct3D10::Format get() { return m_Format; }
+				DXGI::Format get() { return m_Format; }
 			}
 			
 			property SlimDX::Direct3D10::SampleDescription SampleDescription
@@ -110,7 +110,7 @@ namespace SlimDX
 			}
 			
 			Texture2D( IntPtr texture );
-			Texture2D( Device^ device, int width, int height, int mipLevels, int arraySize, SlimDX::Direct3D10::Format format,
+			Texture2D( Device^ device, int width, int height, int mipLevels, int arraySize, DXGI::Format format,
 				int sampleCount, int sampleQuality, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,
 				ResourceOptionFlags optionFlags );
 			virtual ~Texture2D() { }

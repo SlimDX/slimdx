@@ -24,6 +24,7 @@
 using namespace System;
 
 #include "../BaseObject.h"
+#include "../dxgi/Enums.h"
 
 #include "Enums.h"
 
@@ -46,10 +47,10 @@ namespace SlimDX
 			/// <summary>
 			/// Gets or sets the resource's eviction priority.
 			/// </summary>
-			property ResourcePriority EvictionPriority
+			property DXGI::ResourcePriority EvictionPriority
 			{
-				ResourcePriority get();
-				void set(ResourcePriority value);
+				DXGI::ResourcePriority get();
+				void set(DXGI::ResourcePriority value);
 			}
 			
 			/// <summary>

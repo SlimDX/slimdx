@@ -39,7 +39,7 @@ namespace DirectSound
 
 	DirectSound::DirectSound( IntPtr pointer )
 	{
-		Construct( pointer, IID_IDirectSound );
+		Construct( pointer, NativeInterface );
 	}
 
 	DirectSound::DirectSound()

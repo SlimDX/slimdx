@@ -39,7 +39,7 @@ namespace SlimDX
 		public:
 			PixelShader( IntPtr shader )
 			{
-				Construct( shader, IID_ID3D10PixelShader );
+				Construct( shader, NativeInterface );
 
 			}
 

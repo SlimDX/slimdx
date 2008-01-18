@@ -23,6 +23,8 @@
 
 using namespace System;
 
+#include "../dxgi/Enums.h"
+
 #include "Resource.h"
 
 namespace SlimDX
@@ -38,6 +40,7 @@ namespace SlimDX
 		{
 		internal:
 			static int GetMipSize( int mipSlice, int baseSliceSize );
+			static int GetElementSize( DXGI::Format format );
 			
 		protected:
 			Texture( ID3D10Resource *pointer );

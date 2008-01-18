@@ -24,6 +24,8 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
+#include "../dxgi/Enums.h"
+
 #include "Enums.h"
 
 namespace SlimDX
@@ -36,7 +38,7 @@ namespace SlimDX
 		private:
             String^ semanticName;
             int semanticIndex;
-            Format aFormat;
+            DXGI::Format aFormat;
             int inputSlot;
             int alignedByteOffset;
             InputClassification inputSlotClass;
@@ -55,10 +57,10 @@ namespace SlimDX
                 void set( int value ) { semanticIndex = value; }
             }
 
-            property Format AFormat
+            property DXGI::Format AFormat
             {
-                Format get() { return aFormat; }
-                void set( Format value ) { aFormat = value; }
+                DXGI::Format get() { return aFormat; }
+                void set( DXGI::Format value ) { aFormat = value; }
             }
 
             property int InputSlot
@@ -85,7 +87,7 @@ namespace SlimDX
                 void set( int value ) { instanceDataStepRate = value; }
             }
 
-			InputElement( String^ name, int index, Format format, int offset, int slot  )
+			InputElement( String^ name, int index, DXGI::Format format, int offset, int slot  )
 			{
 				SemanticName = name;
 				SemanticIndex = index;
@@ -96,7 +98,7 @@ namespace SlimDX
 				InstanceDataStepRate = 0;
 			}
 
-			InputElement( String^ name, int index, Format format, int offset, int slot, InputClassification slotClass, int stepRate )
+			InputElement( String^ name, int index, DXGI::Format format, int offset, int slot, InputClassification slotClass, int stepRate )
 			{
 				SemanticName = name;
 				SemanticIndex = index;

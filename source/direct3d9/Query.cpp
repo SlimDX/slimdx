@@ -43,7 +43,7 @@ namespace Direct3D9
 
 	Query::Query( IntPtr query )
 	{
-		Construct( query, IID_IDirect3DQuery9 );
+		Construct( query, NativeInterface );
 	}
 
 	Query::Query( Device^ device, QueryType type )

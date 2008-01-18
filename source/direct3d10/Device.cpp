@@ -34,8 +34,6 @@
 #include "RenderTargetView.h"
 #include "Resource.h"
 #include "StreamOutputWrapper.h"
-#include "SwapChain.h"
-#include "SwapChainDescription.h"
 
 namespace SlimDX
 {

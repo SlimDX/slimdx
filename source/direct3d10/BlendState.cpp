@@ -46,7 +46,7 @@ namespace Direct3D10
 	
 	BlendState::BlendState( IntPtr state )
 	{
-		Construct( state, IID_ID3D10BlendState );
+		Construct( state, NativeInterface );
 
 		D3D10_BLEND_DESC desc;
 		InternalPointer->GetDesc( &desc );
