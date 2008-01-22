@@ -25,6 +25,9 @@
 #include "../DataStream.h"
 #include "../BaseObject.h"
 
+#include "Direct3D9ErrorHandler.h"
+#include "Direct3D9Exception.h"
+
 #include "EffectCompiler.h"
 
 namespace SlimDX
@@ -76,9 +79,9 @@ namespace Direct3D9
 		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );
 		
-		GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException();
+			throw gcnew Direct3D9Exception();
 
 		Construct(compiler);
 	}
@@ -106,7 +109,7 @@ namespace Direct3D9
 		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );
 		
-		GraphicsException::CheckHResult( hr, "Compilation Errors", errors );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 			return nullptr;
 
@@ -132,7 +135,7 @@ namespace Direct3D9
 		// CheckHResult() is not used because we need to include the compiler errors.
 		if( Configuration::EnableExceptions && FAILED(hr) )
 		{
-			GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( hr );
+			Direct3D9Exception^ ex = gcnew Direct3D9Exception( hr );
 			ex->Data->Add( "CompilationErrors", compilationErrors );
 			throw ex;
 		}
@@ -170,7 +173,7 @@ namespace Direct3D9
 		// CheckHResult() is not used because we need to include the compiler errors.
 		if( Configuration::EnableExceptions && FAILED(hr) )
 		{
-			GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( hr );
+			Direct3D9Exception^ ex = gcnew Direct3D9Exception( hr );
 			ex->Data->Add( "CompilationErrors", compilationErrors );
 			throw ex;
 		}
@@ -208,7 +211,7 @@ namespace Direct3D9
 		// CheckHResult() is not used because we need to include the compiler errors.
 		if( Configuration::EnableExceptions && FAILED(hr) )
 		{
-			GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( hr );
+			Direct3D9Exception^ ex = gcnew Direct3D9Exception( hr );
 			ex->Data->Add( "CompilationErrors", compilationErrors );
 			throw ex;
 		}
@@ -230,7 +233,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		HRESULT hr = CompilerPointer->SetLiteral( nativeHandle, literal );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	bool EffectCompiler::GetLiteral( EffectHandle^ handle )
@@ -238,7 +241,7 @@ namespace Direct3D9
 		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		BOOL literal = false;
 		HRESULT hr = CompilerPointer->GetLiteral( nativeHandle, &literal );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		
 		return literal > 0;
 	}

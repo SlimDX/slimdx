@@ -96,7 +96,7 @@ namespace Demo.Kaos
 						}
 						mDiffuseMap = Texture.FromFile(Program.Engine.Device, mDiffuseMapPath);
 					}
-					catch(GraphicsException)
+					catch(Direct3D9Exception)
 					{
 						mDiffuseMap = null;
 					}
@@ -124,7 +124,7 @@ namespace Demo.Kaos
 						}
 						mEffect = Effect.FromFile(Program.Engine.Device, mEffectPath, null, null, 0, null);
 					}
-					catch(GraphicsException)
+					catch(Direct3D9Exception)
 					{
 						mEffect = null;
 					}

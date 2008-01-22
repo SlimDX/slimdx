@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "GraphicsException.h"
+#include "Direct3D10ErrorHandler.h"
 
 #include "Sprite.h"
 #include "Device.h"
@@ -50,7 +50,7 @@ namespace Direct3D10
 		ID3DX10Sprite* sprite;
 		
 		HRESULT hr = D3DX10CreateSprite( device->DevicePointer, bufferSize, &sprite );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 
 		Construct(sprite);
 	}
@@ -59,46 +59,46 @@ namespace Direct3D10
 	{
 		D3DXMATRIX matrix;
 		HRESULT hr = InternalPointer->GetViewTransform( &matrix );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 		return Matrix::FromD3DXMATRIX( matrix );
 	}
 
 	void Sprite::ViewTransform::set( Matrix value )
 	{
 		HRESULT hr = InternalPointer->SetViewTransform( reinterpret_cast<D3DXMATRIX*>( &value ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 	}
 
 	Matrix Sprite::ProjectionTransform::get()
 	{
 		D3DXMATRIX matrix;
 		HRESULT hr = InternalPointer->GetProjectionTransform( &matrix );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 		return Matrix::FromD3DXMATRIX( matrix );
 	}
 
 	void Sprite::ProjectionTransform::set( Matrix value )
 	{
 		HRESULT hr = InternalPointer->SetProjectionTransform( reinterpret_cast<D3DXMATRIX*>( &value ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 	}
 
 	void Sprite::Begin( SpriteFlags flags )
 	{
 		HRESULT hr = InternalPointer->Begin( static_cast<DWORD>( flags ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 	}
 
 	void Sprite::End()
 	{
 		HRESULT hr = InternalPointer->End();
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 	}
 
 	void Sprite::Flush()
 	{
 		HRESULT hr = InternalPointer->Flush();
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 	}
 
 	void Sprite::DrawBuffered( array<SpriteInstance^>^ instances )
@@ -107,7 +107,7 @@ namespace Direct3D10
 		for( int instanceIndex = 0; instanceIndex < instances->Length; ++instanceIndex )
 			instances[instanceIndex]->ToNativeObject( nativeInstances[instanceIndex] );
 		HRESULT hr = InternalPointer->DrawSpritesBuffered( nativeInstances, instances->Length );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 	}
 
 	void Sprite::DrawImmediate( array<SpriteInstance^>^ instances )
@@ -116,7 +116,7 @@ namespace Direct3D10
 		for( int instanceIndex = 0; instanceIndex < instances->Length; ++instanceIndex )
 			instances[instanceIndex]->ToNativeObject( nativeInstances[instanceIndex] );
 		HRESULT hr = InternalPointer->DrawSpritesImmediate( nativeInstances, instances->Length, sizeof(D3DX10_SPRITE), 0 );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 	}
 }
 }

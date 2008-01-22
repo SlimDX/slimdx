@@ -110,8 +110,9 @@ namespace SimpleTriangle
 			{
 				//NOTE: This Initialize call is *required* in all SlimDX based D3D9 apps.
 				Direct3D.Initialize();
+			  
 			}
-			catch( DirectXException ex )
+			catch( SlimDXException ex )
 			{
 				MessageBox.Show( ex.Message );
 				return;

@@ -74,24 +74,27 @@ namespace Engine
 		}
 		private void Recover()
 		{
-			try
-			{
+			//try
+			//{
+		    //TODO :Fix this
 				device.TestCooperativeLevel();
-			}
-			catch(DeviceLostException)
-			{
-			}
-			catch(DeviceNotResetException)
-			{
-				try
-				{
-					device.Reset(presentParams);
-					deviceLost = false;
-				}
-				catch(DeviceLostException)
-				{
-				}
-			}
+				device.Reset(presentParams);
+        deviceLost = false;
+      //}
+      //catch(DeviceLostException)
+      //{
+      //}
+      //catch(DeviceNotResetException)
+      //{
+      //  try
+      //  {
+      //    device.Reset(presentParams);
+      //    deviceLost = false;
+      //  }
+      //  catch(DeviceLostException)
+      //  {
+      //  }
+      //}
 		}
 		public void BeginRender(Color bgColor)
 		{
@@ -110,14 +113,15 @@ namespace Engine
 			if(deviceLost)
 				return;
 			device.EndScene();
-			try
-			{
+		//	try
+			//{
 				device.Present();
-			}
-			catch(DeviceLostException)
-			{
+			//}
+			//catch(DeviceLostException)
+		//	{
 				deviceLost = true;
-			}
+		//	}
+		  //TODO: Fix above.
 		}
 		public void DisposeDevice()
 		{

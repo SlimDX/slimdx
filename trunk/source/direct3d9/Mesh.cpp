@@ -27,6 +27,9 @@
 #include "../Utilities.h"
 #include "../DataStream.h"
 
+#include "Direct3D9ErrorHandler.h"
+#include "Direct3D9Exception.h"
+
 #include "Device.h"
 #include "Texture.h"
 #include "IndexBuffer.h"
@@ -195,7 +198,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->CloneMesh( static_cast<DWORD>( flags ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinned_elements ),
 			device->InternalPointer, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -209,7 +212,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->CloneMeshFVF( static_cast<DWORD>( flags ), static_cast<DWORD>( fvf ), 
 			device->InternalPointer, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -220,14 +223,14 @@ namespace Direct3D9
 	void BaseMesh::DrawSubset( int subset )
 	{
 		HRESULT hr = InternalPointer->DrawSubset( subset );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	Device^ BaseMesh::GetDevice()
 	{
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -239,7 +242,7 @@ namespace Direct3D9
 	{
 		IDirect3DIndexBuffer9* ib;
 		HRESULT hr = InternalPointer->GetIndexBuffer( &ib );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -251,7 +254,7 @@ namespace Direct3D9
 	{
 		IDirect3DVertexBuffer9* vb;
 		HRESULT hr = InternalPointer->GetVertexBuffer( &vb );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -263,7 +266,7 @@ namespace Direct3D9
 	{
 		D3DVERTEXELEMENT9 elementBuffer[MAX_FVF_DECL_SIZE];
 		HRESULT hr = InternalPointer->GetDeclaration( elementBuffer );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -283,7 +286,7 @@ namespace Direct3D9
 	{
 		DWORD count = 0;
 		HRESULT hr = InternalPointer->GetAttributeTable( NULL, &count );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) || count == 0 )
 			return nullptr;
@@ -291,7 +294,7 @@ namespace Direct3D9
 		array<AttributeRange>^ attribTable = gcnew array<AttributeRange>( count );
 		pin_ptr<AttributeRange> pinnedTable = &attribTable[0];
 		hr = InternalPointer->GetAttributeTable( reinterpret_cast<D3DXATTRIBUTERANGE*>( pinnedTable ), &count );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -303,7 +306,7 @@ namespace Direct3D9
 	{
 		void* data;
 		HRESULT hr = InternalPointer->LockIndexBuffer( static_cast<DWORD>( flags ), &data );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -320,14 +323,14 @@ namespace Direct3D9
 	void BaseMesh::UnlockIndexBuffer()
 	{
 		HRESULT hr = InternalPointer->UnlockIndexBuffer();
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	DataStream^ BaseMesh::LockVertexBuffer( LockFlags flags )
 	{
 		void* data;
 		HRESULT hr = InternalPointer->LockVertexBuffer( static_cast<DWORD>( flags ), &data );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -342,7 +345,7 @@ namespace Direct3D9
 	void BaseMesh::UnlockVertexBuffer()
 	{
 		HRESULT hr = InternalPointer->UnlockVertexBuffer();
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	array<int>^ BaseMesh::GenerateAdjacency( float epsilon )
@@ -352,7 +355,7 @@ namespace Direct3D9
 		pin_ptr<int> pinnedAdj = &adjacency[0];
 
 		HRESULT hr = InternalPointer->GenerateAdjacency( epsilon, reinterpret_cast<DWORD*>( pinnedAdj ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -368,7 +371,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->ConvertAdjacencyToPointReps( reinterpret_cast<const DWORD*>( pinnedAdj ),
 			reinterpret_cast<DWORD*>( pinnedPoints ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -384,7 +387,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->ConvertPointRepsToAdjacency( reinterpret_cast<const DWORD*>( pinnedPoints ),
 			reinterpret_cast<DWORD*>( pinnedAdj ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -397,7 +400,7 @@ namespace Direct3D9
 		pin_ptr<VertexElement> pinnedElements = &elements[0];
 
 		HRESULT hr = InternalPointer->UpdateSemantics( reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedElements ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	IndexBuffer^ BaseMesh::ConvertSubsetToSingleStrip( int attributeId, MeshFlags options, [Out] int% indexCount )
@@ -407,7 +410,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXConvertMeshSubsetToSingleStrip( InternalPointer, attributeId, static_cast<DWORD>( options ),
 			&result, &count );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -429,7 +432,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXConvertMeshSubsetToStrips( InternalPointer, attributeId, static_cast<DWORD>( options ),
 			&result, &numIndices, &buffer, &numStrips );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -453,7 +456,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXIntersect( InternalPointer, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
 			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, &face, NULL, NULL, &dist, &allHits, &count );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -481,7 +484,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXIntersect( InternalPointer, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
 			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, NULL, NULL, NULL, &dist, NULL, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -502,7 +505,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXIntersect( InternalPointer, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
 			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, NULL, NULL, NULL, NULL, NULL, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return false;
@@ -523,7 +526,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXIntersectSubset( InternalPointer, attributeId, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
 			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, &face, NULL, NULL, &dist, &allHits, &count );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -550,7 +553,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXIntersectSubset( InternalPointer, attributeId, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
 			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, NULL, NULL, NULL, &dist, NULL, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -571,7 +574,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXIntersectSubset( InternalPointer, attributeId, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
 			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, NULL, NULL, NULL, NULL, NULL, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return false;
@@ -623,10 +626,10 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateMesh( numFaces, numVertices, static_cast<DWORD>( options ),
 			reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedDecl ), device->InternalPointer, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException();
+			throw gcnew Direct3D9Exception();
 
 		Construct(mesh);
 	}
@@ -637,10 +640,10 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateMeshFVF( numFaces, numVertices, static_cast<DWORD>( options ), 
 			static_cast<DWORD>( fvf ), device->InternalPointer, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException();
+			throw gcnew Direct3D9Exception();
 
 		Construct(mesh);
 	}
@@ -657,7 +660,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXLoadMeshFromXInMemory( pinnedMemory, memory->Length, static_cast<DWORD>( flags ), device->InternalPointer,
 			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 		{
 			adjacency = nullptr;
@@ -691,7 +694,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXLoadMeshFromXInMemory( pinnedMemory, memory->Length, static_cast<DWORD>( flags ), device->InternalPointer,
 			NULL, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 		{
 			materials = nullptr;
@@ -720,7 +723,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXLoadMeshFromXInMemory( pinnedMemory, memory->Length, static_cast<DWORD>( flags ),
 			device->InternalPointer, NULL, &materialBuffer, NULL, &materialCount, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 		{
 			materials = nullptr;
@@ -740,7 +743,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXLoadMeshFromXInMemory( pinnedMemory, memory->Length, static_cast<DWORD>( flags ),
 			device->InternalPointer, NULL, NULL, NULL, NULL, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -786,7 +789,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXLoadMeshFromX( pinnedFileName, static_cast<DWORD>( flags ), device->InternalPointer,
 			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 		{
 			adjacency = nullptr;
@@ -819,7 +822,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXLoadMeshFromX( pinnedFileName, static_cast<DWORD>( flags ), device->InternalPointer,
 			NULL, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 		{
 			materials = nullptr;
@@ -848,7 +851,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXLoadMeshFromXW( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( flags ), device->InternalPointer,
 			NULL, &materialBuffer, NULL, &materialCount, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -869,7 +872,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXLoadMeshFromXW( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( flags ), 
 			device->InternalPointer, NULL, NULL, NULL, NULL, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -888,7 +891,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXLoadMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
 			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 		{
 			adjacency = nullptr;
@@ -920,7 +923,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXLoadMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
 			NULL, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 		{
 			materials = nullptr;
@@ -948,7 +951,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXLoadMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
 			NULL, &materialBuffer, NULL, &materialCount, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -968,7 +971,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXLoadMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), 
 			device->InternalPointer, NULL, NULL, NULL, NULL, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -988,7 +991,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXLoadSkinMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
 			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &skin, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 		{
 			adjacency = nullptr;
@@ -1024,7 +1027,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXLoadSkinMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
 			NULL, &materialBuffer, &instanceBuffer, &materialCount, &skin, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 		{
 			materials = nullptr;
@@ -1056,7 +1059,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXLoadSkinMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
 			NULL, &materialBuffer, NULL, &materialCount, &skin, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1080,7 +1083,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXLoadSkinMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), 
 			device->InternalPointer, NULL, NULL, NULL, NULL, &skin, &mesh );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1096,7 +1099,7 @@ namespace Direct3D9
 	void Mesh::ComputeTangentFrame( TangentOptions options )
 	{
 		HRESULT hr = D3DXComputeTangentFrame( MeshPointer, static_cast<DWORD>( options ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	Mesh^ Mesh::CreateBox( Device^ device, float width, float height, float depth, [Out] array<int>^% adjacency )
@@ -1105,7 +1108,7 @@ namespace Direct3D9
 		ID3DXBuffer *adj;
 
 		HRESULT hr = D3DXCreateBox( device->InternalPointer, width, height, depth, &result, &adj );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1122,7 +1125,7 @@ namespace Direct3D9
 		ID3DXMesh *result;
 
 		HRESULT hr = D3DXCreateBox( device->InternalPointer, width, height, depth, &result, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -1137,7 +1140,7 @@ namespace Direct3D9
 		ID3DXBuffer *adj;
 
 		HRESULT hr = D3DXCreateCylinder( device->InternalPointer, radius1, radius2, length, slices, stacks, &result, &adj );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1154,7 +1157,7 @@ namespace Direct3D9
 		ID3DXMesh *result;
 
 		HRESULT hr = D3DXCreateCylinder( device->InternalPointer, radius1, radius2, length, slices, stacks, &result, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -1168,7 +1171,7 @@ namespace Direct3D9
 		ID3DXBuffer *adj;
 
 		HRESULT hr = D3DXCreateSphere( device->InternalPointer, radius, slices, stacks, &result, &adj );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1185,7 +1188,7 @@ namespace Direct3D9
 		ID3DXMesh *result;
 
 		HRESULT hr = D3DXCreateSphere( device->InternalPointer, radius, slices, stacks, &result, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -1199,7 +1202,7 @@ namespace Direct3D9
 		ID3DXBuffer *adj;
 
 		HRESULT hr = D3DXCreateTeapot( device->InternalPointer, &result, &adj );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1216,7 +1219,7 @@ namespace Direct3D9
 		ID3DXMesh *result;
 
 		HRESULT hr = D3DXCreateTeapot( device->InternalPointer, &result, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -1231,7 +1234,7 @@ namespace Direct3D9
 		ID3DXBuffer *adj;
 
 		HRESULT hr = D3DXCreateTorus( device->InternalPointer, innerRadius, outerRadius, sides, rings, &result, &adj );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1248,7 +1251,7 @@ namespace Direct3D9
 		ID3DXMesh *result;
 
 		HRESULT hr = D3DXCreateTorus( device->InternalPointer, innerRadius, outerRadius, sides, rings, &result, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -1276,7 +1279,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateText( device->InternalPointer, hdc, reinterpret_cast<LPCWSTR>( pinnedText ),
 			deviation, extrusion, &result, &adj, reinterpret_cast<LPGLYPHMETRICSFLOAT>( pinnedMetrics ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		SelectObject( hdc, oldFont );
 		DeleteObject( newFont );
@@ -1312,7 +1315,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateText( device->InternalPointer, hdc, reinterpret_cast<LPCWSTR>( pinnedText ),
 			deviation, extrusion, &result, &adj, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		SelectObject( hdc, oldFont );
 		DeleteObject( newFont );
@@ -1345,7 +1348,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateText( device->InternalPointer, hdc, reinterpret_cast<LPCWSTR>( pinnedText ),
 			deviation, extrusion, &result, NULL, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		SelectObject( hdc, oldFont );
 		DeleteObject( newFont );
@@ -1363,7 +1366,7 @@ namespace Direct3D9
 		int faceCount = MeshPointer->GetNumFaces();
 		
 		HRESULT hr = MeshPointer->LockAttributeBuffer( static_cast<DWORD>( flags ), &data );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -1375,7 +1378,7 @@ namespace Direct3D9
 	void Mesh::UnlockAttributeBuffer()
 	{
 		HRESULT hr = MeshPointer->UnlockAttributeBuffer();
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void Mesh::SetAttributeTable( array<AttributeRange>^ table )
@@ -1383,7 +1386,7 @@ namespace Direct3D9
 		pin_ptr<AttributeRange> pinnedTable = &table[0];
 
 		HRESULT hr = MeshPointer->SetAttributeTable( reinterpret_cast<const D3DXATTRIBUTERANGE*>( pinnedTable ), table->Length );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut,
@@ -1397,7 +1400,7 @@ namespace Direct3D9
 			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ),
 			reinterpret_cast<DWORD*>( pinnedAdj ),
 			reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1418,7 +1421,7 @@ namespace Direct3D9
 		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
 			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), NULL,
 			reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1436,7 +1439,7 @@ namespace Direct3D9
 		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
 			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ),
 			reinterpret_cast<DWORD*>( pinnedAdj ), NULL, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			adjacencyOut = nullptr;
@@ -1446,7 +1449,7 @@ namespace Direct3D9
 	{
 		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
 			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), NULL, NULL, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
@@ -1461,7 +1464,7 @@ namespace Direct3D9
 			reinterpret_cast<const DWORD*>( pinnedAdjIn ),
 			reinterpret_cast<DWORD*>( pinnedAdj ),
 			reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1483,7 +1486,7 @@ namespace Direct3D9
 		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
 			reinterpret_cast<const DWORD*>( pinnedAdjIn ), NULL,
 			reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1502,7 +1505,7 @@ namespace Direct3D9
 		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
 			reinterpret_cast<const DWORD*>( pinnedAdjIn ),
 			reinterpret_cast<DWORD*>( pinnedAdj ), NULL, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			adjacencyOut = nullptr;
@@ -1514,7 +1517,7 @@ namespace Direct3D9
 
 		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
 			reinterpret_cast<const DWORD*>( pinnedAdjIn ), NULL, NULL, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut,
@@ -1529,7 +1532,7 @@ namespace Direct3D9
 			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ),
 			reinterpret_cast<DWORD*>( pinnedAdj ),
 			reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1553,7 +1556,7 @@ namespace Direct3D9
 		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
 			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), NULL,
 			reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1574,7 +1577,7 @@ namespace Direct3D9
 		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
 			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ),
 			reinterpret_cast<DWORD*>( pinnedAdj ), NULL, NULL, &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1591,7 +1594,7 @@ namespace Direct3D9
 
 		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
 			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), NULL, NULL, NULL, &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -1612,7 +1615,7 @@ namespace Direct3D9
 			reinterpret_cast<const DWORD*>( pinnedAdjIn ),
 			reinterpret_cast<DWORD*>( pinnedAdj ),
 			reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1637,7 +1640,7 @@ namespace Direct3D9
 		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
 			reinterpret_cast<const DWORD*>( pinnedAdjIn ), NULL,
 			reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1659,7 +1662,7 @@ namespace Direct3D9
 		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
 			reinterpret_cast<const DWORD*>( pinnedAdjIn ),
 			reinterpret_cast<DWORD*>( pinnedAdj ), NULL, NULL, &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1677,7 +1680,7 @@ namespace Direct3D9
 
 		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
 			reinterpret_cast<const DWORD*>( pinnedAdjIn ), NULL, NULL, NULL, &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -1696,7 +1699,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
 			reinterpret_cast<const DWORD*>( pinnedAdjIn ), &result,
 			reinterpret_cast<DWORD*>( pinnedAdjOut ), &errors );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1719,7 +1722,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
 			reinterpret_cast<const DWORD*>( pinnedAdjIn ), &result,
 			reinterpret_cast<DWORD*>( pinnedAdjOut ), NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1738,7 +1741,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
 			reinterpret_cast<const DWORD*>( pinnedAdjIn ), &result, NULL, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -1756,7 +1759,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
 			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), &result,
 			reinterpret_cast<DWORD*>( pinnedAdjOut ), &errors );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1778,7 +1781,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
 			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), &result,
 			reinterpret_cast<DWORD*>( pinnedAdjOut ), NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1795,7 +1798,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
 			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), &result, NULL, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -1808,13 +1811,13 @@ namespace Direct3D9
 		pin_ptr<int> pinnedAdj = &adjacency[0];
 
 		HRESULT hr = D3DXComputeNormals( MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void Mesh::ComputeNormals()
 	{
 		HRESULT hr = D3DXComputeNormals( MeshPointer, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void Mesh::ComputeTangent( int textureStage, int tangentIndex, int binormalIndex, bool wrap, array<int>^ adjacency )
@@ -1823,13 +1826,13 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXComputeTangent( MeshPointer, textureStage, tangentIndex, binormalIndex, wrap,
 			reinterpret_cast<const DWORD*>( pinnedAdj ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void Mesh::ComputeTangent( int textureStage, int tangentIndex, int binormalIndex, bool wrap )
 	{
 		HRESULT hr = D3DXComputeTangent( MeshPointer, textureStage, tangentIndex, binormalIndex, wrap, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	Mesh^ Mesh::ComputeTangentFrame( int textureInSemantic, int textureInIndex, int partialOutSemanticU, 
@@ -1846,7 +1849,7 @@ namespace Direct3D9
 			partialOutSemanticU, partialOutIndexU, partialOutSemanticV, partialOutIndexV, normalOutSemantic,
 			normalOutIndex, static_cast<DWORD>( options ), reinterpret_cast<const DWORD*>( pinnedAdj ),
 			partialEdgeThreshold, singularPointThreshold, normalEdgeThreshold, &result, &vertex );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -1875,7 +1878,7 @@ namespace Direct3D9
 			partialOutSemanticU, partialOutIndexU, partialOutSemanticV, partialOutIndexV, normalOutSemantic,
 			normalOutIndex, static_cast<DWORD>( options ), reinterpret_cast<const DWORD*>( pinnedAdj ),
 			partialEdgeThreshold, singularPointThreshold, normalEdgeThreshold, &result, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -1897,7 +1900,7 @@ namespace Direct3D9
 			partialOutSemanticU, partialOutIndexU, partialOutSemanticV, partialOutIndexV, normalOutSemantic,
 			normalOutIndex, static_cast<DWORD>( options ), NULL, partialEdgeThreshold, singularPointThreshold, 
 			normalEdgeThreshold, &result, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -1945,7 +1948,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXConcatenateMeshes( input, meshes->Length, static_cast<DWORD>( options ), geoXForms,
 			textureXForms, decl, device->InternalPointer, &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		delete[] input;
 
@@ -1984,7 +1987,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXConcatenateMeshes( input, meshes->Length, static_cast<DWORD>( options ), geoXForms,
 			textureXForms, NULL, device->InternalPointer, &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		delete[] input;
 
@@ -2005,7 +2008,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXConcatenateMeshes( input, meshes->Length, static_cast<DWORD>( options ), NULL,
 			NULL, NULL, device->InternalPointer, &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		delete[] input;
 
@@ -2036,7 +2039,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXSaveMeshToX( reinterpret_cast<LPCWSTR>( pinnedName ), MeshPointer, 
 			reinterpret_cast<const DWORD*>( pinnedAdjacency ), nativeMaterials, nativeEffects, materials->Length, f );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		delete[] nativeMaterials;
 		delete[] nativeEffects;
@@ -2059,7 +2062,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXSimplifyMesh( mesh->MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ),
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedAW ), reinterpret_cast<const FLOAT*>( pinnedVW ),
 			minimumValue, static_cast<DWORD>( options ), &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -2078,7 +2081,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXSimplifyMesh( mesh->MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ),
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedAW ), NULL,
 			minimumValue, static_cast<DWORD>( options ), &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -2094,7 +2097,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXSimplifyMesh( mesh->MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ),
 			NULL, NULL, minimumValue, static_cast<DWORD>( options ), &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;

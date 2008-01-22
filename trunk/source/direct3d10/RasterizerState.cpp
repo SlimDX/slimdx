@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "GraphicsException.h"
+#include "Direct3D10ErrorHandler.h"
 
 #include "RasterizerState.h"
 #include "Device.h"
@@ -66,7 +66,7 @@ namespace Direct3D10
 		
 		ID3D10RasterizerState* state;
 		HRESULT hr = device->DevicePointer->CreateRasterizerState( &desc, &state );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		Construct(state);
 	}

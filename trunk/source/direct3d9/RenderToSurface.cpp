@@ -22,7 +22,9 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "GraphicsException.h"
+#include "Direct3D9ErrorHandler.h"
+#include "Direct3D9Exception.h"
+
 #include "Device.h"
 #include "Surface.h"
 #include "RenderToSurface.h"
@@ -48,9 +50,9 @@ namespace SlimDX
 		{
 			ID3DXRenderToSurface* rtsPointer;
 			HRESULT hr = D3DXCreateRenderToSurface( device->InternalPointer, width, height, static_cast<D3DFORMAT>( format ), FALSE, D3DFMT_UNKNOWN, &rtsPointer );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 			if( FAILED( hr ) )
-				throw gcnew GraphicsException();
+				throw gcnew Direct3D9Exception();
 
 			Construct(rtsPointer);
 		}
@@ -60,9 +62,9 @@ namespace SlimDX
 			ID3DXRenderToSurface* rtsPointer;
 			HRESULT hr = D3DXCreateRenderToSurface( device->InternalPointer, width, height,
 				static_cast<D3DFORMAT>( format ), TRUE, static_cast<D3DFORMAT>( depthStencilFormat ), &rtsPointer );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 			if( FAILED( hr ) )
-				throw gcnew GraphicsException();
+				throw gcnew Direct3D9Exception();
 
 			Construct(rtsPointer);
 		}
@@ -71,20 +73,20 @@ namespace SlimDX
 		{
 			IDirect3DSurface9* surface = renderSurface->SurfacePointer;
 			HRESULT hr = InternalPointer->BeginScene( surface, reinterpret_cast<D3DVIEWPORT9*>( &viewport ) );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void RenderToSurface::EndScene( Filter mipFilter )
 		{
 			HRESULT hr = InternalPointer->EndScene( static_cast<DWORD>( mipFilter ) );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		Device^ RenderToSurface::GetDevice()
 		{
 			IDirect3DDevice9* device;
 			HRESULT hr = InternalPointer->GetDevice( &device );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 
@@ -94,20 +96,20 @@ namespace SlimDX
 		void RenderToSurface::OnLostDevice()
 		{
 			HRESULT hr = InternalPointer->OnLostDevice();
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void RenderToSurface::OnResetDevice()
 		{
 			HRESULT hr = InternalPointer->OnResetDevice();
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		RenderToSurfaceDescription RenderToSurface::Description::get()
 		{
 			D3DXRTS_DESC desc = {0};
 			HRESULT hr = InternalPointer->GetDesc( &desc );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 
 			RenderToSurfaceDescription outDesc;
 			outDesc.Width = desc.Width;

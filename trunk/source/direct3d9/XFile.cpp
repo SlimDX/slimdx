@@ -24,7 +24,7 @@
 
 #include "../BaseObject.h"
 #include "../DataStream.h"
-#include "GraphicsException.h"
+#include "Direct3D9ErrorHandler.h"
 #include "XFile.h"
 
 namespace SlimDX
@@ -55,7 +55,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->AddDataObject( Utilities::ConvertManagedGuid( dataTemplate ), reinterpret_cast<LPCSTR>( pinnedName ), pointer, 
 			data->Length, reinterpret_cast<LPCVOID>( pinnedMemory ), &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -80,7 +80,7 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
 		HRESULT hr = InternalPointer->AddDataReference( reinterpret_cast<LPCSTR>( pinnedName ), pointer );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	Guid XFileSaveData::Id::get()
@@ -88,7 +88,7 @@ namespace Direct3D9
 		GUID guid;
 
 		HRESULT hr = InternalPointer->GetId( &guid );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( guid == GUID_NULL )
 			return Guid::Empty;
@@ -102,12 +102,12 @@ namespace Direct3D9
 		SIZE_T size = 0;
 
 		HRESULT hr = InternalPointer->GetName( NULL, &size );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		name = new char[size];
 
 		hr = InternalPointer->GetName( name, &size );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		delete name;
 
@@ -122,7 +122,7 @@ namespace Direct3D9
 		ID3DXFileSaveObject *result;
 
 		HRESULT hr = InternalPointer->GetSave( &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -135,7 +135,7 @@ namespace Direct3D9
 		GUID result;
 
 		HRESULT hr = InternalPointer->GetType( &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return Guid::Empty;
@@ -167,7 +167,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->AddDataObject( Utilities::ConvertManagedGuid( dataTemplate ), reinterpret_cast<LPCSTR>( pinnedName ), pointer, 
 			data->Length, reinterpret_cast<LPCVOID>( pinnedMemory ), &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -186,7 +186,7 @@ namespace Direct3D9
 		ID3DXFile* result;
 
 		HRESULT hr = InternalPointer->GetFile( &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -197,7 +197,7 @@ namespace Direct3D9
 	void XFileSaveObject::Save()
 	{
 		HRESULT hr = InternalPointer->Save();
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	XFile::XFile( ID3DXFile *object )
@@ -215,7 +215,7 @@ namespace Direct3D9
 		ID3DXFile *result;
 
 		HRESULT hr = D3DXFileCreate( &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		Construct(result);
 	}
@@ -233,7 +233,7 @@ namespace Direct3D9
 			flag = D3DXF_FILELOAD_FROMFILE;
 
 		HRESULT hr = InternalPointer->CreateEnumObject( reinterpret_cast<LPCVOID>( pinnedName ), flag, &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -251,7 +251,7 @@ namespace Direct3D9
 		mem.dSize = memory->Length;
 
 		HRESULT hr = InternalPointer->CreateEnumObject( reinterpret_cast<LPCVOID>( &mem ), D3DXF_FILELOAD_FROMMEMORY, &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) ) 
 			return nullptr;
@@ -278,7 +278,7 @@ namespace Direct3D9
 			flag = D3DXF_FILESAVE_TOFILE;
 
 		HRESULT hr = InternalPointer->CreateSaveObject( reinterpret_cast<LPCVOID>( pinnedName ), flag, static_cast<D3DXF_FILEFORMAT>( format ), &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -289,7 +289,7 @@ namespace Direct3D9
 	void XFile::RegisterEnumerationTemplates( XFileEnumerationObject^ enumerationObject )
 	{
 		HRESULT hr = InternalPointer->RegisterEnumTemplates( enumerationObject->InternalPointer );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void XFile::RegisterTemplates( array<Byte>^ memory )
@@ -297,7 +297,7 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
 		HRESULT hr = InternalPointer->RegisterTemplates( reinterpret_cast<LPCVOID>( pinnedMemory ), memory->Length );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void XFile::RegisterTemplates( Stream^ stream )
@@ -327,7 +327,7 @@ namespace Direct3D9
 		ID3DXFileData *result;
 
 		HRESULT hr = InternalPointer->GetChild( id, &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -340,7 +340,7 @@ namespace Direct3D9
 		ID3DXFileData *result;
 
 		HRESULT hr = InternalPointer->GetDataObjectById( Utilities::ConvertManagedGuid( id ), &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -355,7 +355,7 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
 		HRESULT hr = InternalPointer->GetDataObjectByName( reinterpret_cast<LPCSTR>( pinnedName ), &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -368,7 +368,7 @@ namespace Direct3D9
 		ID3DXFile *result;
 
 		HRESULT hr = InternalPointer->GetFile( &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -381,7 +381,7 @@ namespace Direct3D9
 		SIZE_T result;
 
 		HRESULT hr = InternalPointer->GetChildren( &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -404,7 +404,7 @@ namespace Direct3D9
 		ID3DXFileData *result;
 
 		HRESULT hr = InternalPointer->GetChild( id, &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -417,7 +417,7 @@ namespace Direct3D9
 		ID3DXFileEnumObject *result;
 
 		HRESULT hr = InternalPointer->GetEnum( &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -431,7 +431,7 @@ namespace Direct3D9
 		const void *data;
 
 		HRESULT hr = InternalPointer->Lock( &size, &data );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -442,7 +442,7 @@ namespace Direct3D9
 	void XFileData::Unlock()
 	{
 		HRESULT hr = InternalPointer->Unlock();
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	int XFileData::ChildCount::get()
@@ -450,7 +450,7 @@ namespace Direct3D9
 		SIZE_T result;
 
 		HRESULT hr = InternalPointer->GetChildren( &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -463,7 +463,7 @@ namespace Direct3D9
 		GUID guid;
 
 		HRESULT hr = InternalPointer->GetId( &guid );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( guid == GUID_NULL )
 			return Guid::Empty;
@@ -477,7 +477,7 @@ namespace Direct3D9
 		SIZE_T size = 0;
 
 		HRESULT hr = InternalPointer->GetName( NULL, &size );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -485,7 +485,7 @@ namespace Direct3D9
 		name = new char[size];
 
 		hr = InternalPointer->GetName( name, &size );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		delete name;
 
@@ -500,7 +500,7 @@ namespace Direct3D9
 		GUID result;
 
 		HRESULT hr = InternalPointer->GetType( &result );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return Guid::Empty;

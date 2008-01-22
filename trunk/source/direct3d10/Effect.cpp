@@ -25,7 +25,8 @@
 #include <vcclr.h>
 
 #include "Effect.h"
-#include "GraphicsException.h"
+#include "Direct3D10ErrorHandler.h"
+#include "Direct3D10Exception.h"
 
 #include "Device.h"
 #include "EffectConstantBuffer.h"
@@ -43,9 +44,9 @@ namespace Direct3D10
 
 		D3D10_EFFECT_DESC desc;
 		HRESULT hr = effect->GetDesc( &desc );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException( "Failed to get description for effect." );
+			throw gcnew Direct3D10Exception( "Failed to get description for effect." );
 		
 		m_IsChildEffect = desc.IsChildEffect ? true : false;
 		m_ConstantBufferCount = desc.ConstantBuffers;
@@ -60,9 +61,9 @@ namespace Direct3D10
 
 		D3D10_EFFECT_DESC desc;
 		HRESULT hr = InternalPointer->GetDesc( &desc );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException( "Failed to get description for effect." );
+			throw gcnew Direct3D10Exception( "Failed to get description for effect." );
 
 		m_IsChildEffect = desc.IsChildEffect ? true : false;
 		m_ConstantBufferCount = desc.ConstantBuffers;
@@ -152,7 +153,7 @@ namespace Direct3D10
 	void Effect::Optimize()
 	{
 		HRESULT hr = InternalPointer->Optimize();
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 	}
 
 	Effect^ Effect::FromFile( Device^ device, String ^fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool )
@@ -184,7 +185,7 @@ namespace Direct3D10
 			compilationErrors = String::Empty;
 		}
 		
-		GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 		if( effect == NULL)
 			return nullptr;
 		return gcnew Effect( effect );
@@ -219,7 +220,7 @@ namespace Direct3D10
 			compilationErrors = String::Empty;
 		}
 		
-		GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 		if( effect == NULL )
 			return nullptr;
 		return gcnew Effect( effect );
@@ -267,7 +268,7 @@ namespace Direct3D10
 			compilationErrors = String::Empty;
 		}
 		
-		GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 		if( effect == NULL )
 			return nullptr;
 		return gcnew Effect( effect );

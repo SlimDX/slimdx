@@ -25,9 +25,10 @@
 #include <d3dx9.h>
 
 using namespace System;
-using namespace System::Globalization;
-using namespace System::IO;
 using namespace System::Diagnostics;
+using namespace System::IO;
+using namespace System::Globalization;
+using namespace System::Reflection;
 
 namespace SlimDX
 {
@@ -40,7 +41,9 @@ namespace SlimDX
 		
 	internal:
 		static GUID GetNativeGuidForType( Type^ type );
-
+		
+		static bool TestForFailure( int hr, Type^ typeToThrow );
+		
 	public:
 		static Guid ConvertNativeGuid( const GUID &guid );
 		static GUID ConvertManagedGuid( Guid guid );
@@ -58,7 +61,5 @@ namespace SlimDX
 
 		generic<typename T>
 		static void CheckArrayBounds( array<T>^ data, int offset, int% count );
-
-
 	};
 }

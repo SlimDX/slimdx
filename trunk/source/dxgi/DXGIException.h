@@ -19,49 +19,32 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include "Exception.h"
+using namespace System;
+using namespace System::Runtime::Serialization;
+
+#include "../SlimDXException.h"
 
 namespace SlimDX
 {
-	Exception::Exception( SerializationInfo^ info, StreamingContext context )
-	: ApplicationException( info, context )
+	namespace DXGI
 	{
-	}
+		[Serializable]
+		public ref class DXGIException : public SlimDXException
+		{	
+		protected:
+			DXGIException( SerializationInfo^ info, StreamingContext context );
+			
+		public:
+			static property bool Enabled;
+			
+			property int ErrorCode;
 
-	Exception::Exception()
-	: ApplicationException("A SlimDX exception occurred.")
-	{
-		ErrorCode = E_FAIL;
-	}
-
-	Exception::Exception( String^ message )
-	: ApplicationException(message)
-	{
-		ErrorCode = E_FAIL;
-	}
-
-	Exception::Exception( String^ message, Exception^ innerException )
-	: ApplicationException( message, innerException )
-	{
-	}
-
-	Exception::Exception( String^ message, int errorCode )
-	: ApplicationException( message )
-	{
-		ErrorCode = errorCode;
-	}
-	
-	bool Exception::TestForFailure( HRESULT hr )
-	{
-		if( !Enabled )
-			return FAILED( hr );
-		if( !FAILED( hr ) )
-			return false;
-
-		String^ message = String::Empty;
-		if( messages->TryGetValue( hr, message ) )
-			throw gcnew Exception( message, hr );
-		throw gcnew Exception( "Unknown error.", hr );
+			DXGIException();
+			DXGIException( String^ message );
+			DXGIException( String^ message, Exception^ innerException );
+			DXGIException( int errorCode );
+		};
 	}
 }

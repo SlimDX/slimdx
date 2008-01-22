@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "Exception.h"
+#include "DXGIErrorHandler.h"
 
 #include "SwapChain.h"
 #include "FrameStatistics.h"
@@ -39,7 +39,7 @@ namespace DXGI
 		IUnknown* unknown = 0;
 		GUID guid = Utilities::GetNativeGuidForType( T::typeid );
 		HRESULT hr = InternalPointer->GetBuffer( index, guid, reinterpret_cast<void**>( &unknown ) );
-		if( Exception::TestForFailure( hr ) )
+		if( DXGIErrorHandler::TestForFailure( hr ) )
 			return T();
 		return safe_cast<T>( Activator::CreateInstance( T::typeid, IntPtr( unknown ) ) );
 	}
@@ -48,7 +48,7 @@ namespace DXGI
 	{
 		DXGI_FRAME_STATISTICS stats;
 		HRESULT hr = InternalPointer->GetFrameStatistics( &stats );
-		if( Exception::TestForFailure( hr ) )
+		if( DXGIErrorHandler::TestForFailure( hr ) )
 			return FrameStatistics();
 		return FrameStatistics( stats );
 	}
@@ -56,13 +56,13 @@ namespace DXGI
 	void SwapChain::ResizeBuffers( int count, int width, int height, SlimDX::DXGI::Format format, SwapChainFlags flags )
 	{
 		HRESULT hr = InternalPointer->ResizeBuffers( count, width, height, static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ) );
-		Exception::TestForFailure( hr );
+		DXGIErrorHandler::TestForFailure( hr );
 	}
 	
 	void SwapChain::ResizeTarget( ModeDescription description )
 	{
 		HRESULT hr = InternalPointer->ResizeTarget( reinterpret_cast<DXGI_MODE_DESC*>( &description ) );
-		Exception::TestForFailure( hr );
+		DXGIErrorHandler::TestForFailure( hr );
 	}
 
 	PresentResult SwapChain::Present( int syncInterval, PresentFlags flags )
@@ -73,7 +73,7 @@ namespace DXGI
 		else if( hr == DXGI_STATUS_OCCLUDED )
 			return PresentResult::Occluded;
 		
-		Exception::TestForFailure( hr );
+		DXGIErrorHandler::TestForFailure( hr );
 		return PresentResult::Failed;
 	}
 }

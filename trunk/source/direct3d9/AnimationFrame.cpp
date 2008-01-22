@@ -27,7 +27,7 @@
 #include "../Math/Math.h"
 #include "../DataStream.h"
 
-#include "GraphicsException.h"
+#include "Direct3D9ErrorHandler.h"
 #include "Device.h"
 #include "Mesh.h"
 #include "SkinInfo.h"
@@ -583,7 +583,7 @@ namespace Direct3D9
 	void Frame::AppendChild( Frame^ child )
 	{
 		HRESULT hr = D3DXFrameAppendChild( Pointer, child->Pointer );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	Frame^ Frame::FindChild( String^ name )
@@ -604,7 +604,7 @@ namespace Direct3D9
 		float radius;
 
 		HRESULT hr = D3DXFrameCalculateBoundingSphere( root->Pointer, reinterpret_cast<D3DXVECTOR3*>( &objectCenter ), &radius );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return BoundingSphere( Vector3( 0, 0, 0 ), 0.0f );
@@ -617,7 +617,7 @@ namespace Direct3D9
 		IAllocateHierarchyShim* shim = new IAllocateHierarchyShim( allocator );
 
 		HRESULT hr = D3DXFrameDestroy( root->Pointer, shim );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		delete shim;
 	}
@@ -630,7 +630,7 @@ namespace Direct3D9
 	void Frame::RegisterNamedMatrices( Frame^ root, AnimationController^ controller )
 	{
 		HRESULT hr = D3DXFrameRegisterNamedMatrices( root->Pointer, controller->InternalPointer );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	String^ Frame::Name::get()
@@ -729,7 +729,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXLoadMeshHierarchyFromX( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( options ), device->InternalPointer,
 			allocatorShim, userDataLoaderShim, &result, &animationResult );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -763,7 +763,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXLoadMeshHierarchyFromXInMemory( reinterpret_cast<LPCVOID>( pinnedMemory ), memory->Length, static_cast<DWORD>( options ), 
 			device->InternalPointer, allocatorShim, userDataLoaderShim, &result, &animationResult );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -794,7 +794,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXSaveMeshHierarchyToFile( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( format ),
 			root->Pointer, animationController->InternalPointer, shim );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		delete shim;
 	}
@@ -805,7 +805,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXSaveMeshHierarchyToFile( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( format ),
 			root->Pointer, animationController->InternalPointer, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 }
 }

@@ -23,6 +23,10 @@
 #include <d3dx9.h>
 
 #include "../Utilities.h"
+
+#include "Direct3D9ErrorHandler.h"
+#include "Direct3D9Exception.h"
+
 #include "Device.h"
 #include "VertexBuffer.h"
 
@@ -37,7 +41,7 @@ namespace Direct3D9
 
 		D3DVERTEXBUFFER_DESC desc;
 		HRESULT hr = buffer->GetDesc( &desc );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		
 		Format = static_cast<SlimDX::Direct3D9::Format>( desc.Format );
 		Usage = static_cast<SlimDX::Direct3D9::Usage>( desc.Usage );
@@ -63,9 +67,9 @@ namespace Direct3D9
 
 		D3DVERTEXBUFFER_DESC desc;
 		hr = vbPtr->GetDesc( &desc );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException( "Could not get vertex buffer description." );
+			throw gcnew Direct3D9Exception( hr );
 		
 		Format = static_cast<SlimDX::Direct3D9::Format>( desc.Format );
 		Usage = static_cast<SlimDX::Direct3D9::Usage>( desc.Usage );
@@ -81,11 +85,11 @@ namespace Direct3D9
 		IDirect3DVertexBuffer9* vb;
 		HRESULT hr = device->InternalPointer->CreateVertexBuffer( sizeBytes, static_cast<DWORD>( usage ), 
 			static_cast<DWORD>( format ), static_cast<D3DPOOL>( pool ), &vb, NULL );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		
 		D3DVERTEXBUFFER_DESC desc;
 		hr = vb->GetDesc( &desc );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		
 		Format = static_cast<SlimDX::Direct3D9::Format>( desc.Format );
 		Usage = static_cast<SlimDX::Direct3D9::Usage>( desc.Usage );
@@ -100,7 +104,7 @@ namespace Direct3D9
 	{
 		void* lockedPtr;
 		HRESULT hr = VbPointer->Lock( offset, size, &lockedPtr, static_cast<DWORD>( flags ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		
 		int lockedSize = size == 0 ? SizeInBytes : size;
 		

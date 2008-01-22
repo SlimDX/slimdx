@@ -23,8 +23,11 @@
 #include <dinput.h>
 #include <vcclr.h>
 
-#include "InputException.h"
 #include "DirectInput.h"
+#include "DirectInputErrorHandler.h"
+#include "DirectInputException.h"
+#include "DirectInputNotFoundException.h"
+
 #include "Device.h"
 
 namespace SlimDX
@@ -44,15 +47,15 @@ namespace DirectInput
 		    HRESULT hr = DirectInput8Create( static_cast<HINSTANCE>( hInstance.ToPointer() ), DIRECTINPUT_VERSION, 
 			    IID_IDirectInput8, reinterpret_cast<void**>( &dinput ), NULL );
 
-			InputException::CheckHResult( hr );
+			DirectInputErrorHandler::TestForFailure( hr );
         }
         catch( SEHException^ ex )
         {
-            throw gcnew DirectInput8NotFoundException( "DirectInput 8 was not found. Reinstalling DirectX may fix the problem.", ex );
+            throw gcnew DirectInputNotFoundException( "DirectInput was not found. Reinstalling DirectX may fix the problem.", ex );
         }
 
 		if( dinput == NULL )
-			throw gcnew DirectXException( -1, "Could not create DirectInput instance." );
+			throw gcnew DirectInputException( "Could not create DirectInput instance." );
 
 		m_DirectInput = dinput;
 		
@@ -75,19 +78,19 @@ namespace DirectInput
 	void DirectInput::RunControlPanel()
 	{
 		HRESULT hr = m_DirectInput->RunControlPanel( NULL, 0 );
-		InputException::CheckHResult( hr );
+		DirectInputErrorHandler::TestForFailure( hr );
 	}
 
 	void DirectInput::RunControlPanel( Control^ parent )
 	{
 		HRESULT hr = m_DirectInput->RunControlPanel( static_cast<HWND>( parent->Handle.ToPointer() ), 0 );
-		InputException::CheckHResult( hr );
+		DirectInputErrorHandler::TestForFailure( hr );
 	}
 
 	bool DirectInput::IsDeviceAttached( Guid device )
 	{
 		HRESULT hr = m_DirectInput->GetDeviceStatus( Utilities::ConvertManagedGuid( device ) );
-		InputException::CheckHResult( hr );
+		DirectInputErrorHandler::TestForFailure( hr );
 
 		return hr == DI_OK;
 	}
@@ -99,7 +102,7 @@ namespace DirectInput
 
 		HRESULT hr = m_DirectInput->FindDevice( Utilities::ConvertManagedGuid( deviceClass ),
 			reinterpret_cast<LPCTSTR>( pinnedName ), &result );
-		InputException::CheckHResult( hr );
+		DirectInputErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return Guid::Empty;

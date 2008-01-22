@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "GraphicsException.h"
+#include "Direct3D10ErrorHandler.h"
 
 #include "Device.h"
 #include "Font.h"
@@ -58,7 +58,7 @@ namespace Direct3D10
 		HRESULT hr = D3DX10CreateFont( device->DevicePointer, height, width, static_cast<UINT>( weight ),
 			mipLevels, isItalic, static_cast<UINT>( characterSet ), static_cast<UINT>( outputPrecision ),
 			static_cast< UINT>( quality ), static_cast<UINT>( pitchAndFamily ), pinned_name, &font );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 
 		Construct(font);
 	}
@@ -76,20 +76,20 @@ namespace Direct3D10
 	void Font::PreloadCharacters( int first, int last )
 	{
 		HRESULT hr = InternalPointer->PreloadCharacters( first, last );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 	}
 
 	void Font::PreloadGlyphs( int first, int last )
 	{
 		HRESULT hr = InternalPointer->PreloadGlyphs( first, last );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 	}
 
 	void Font::PreloadText( String^ text )
 	{
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
 		HRESULT hr = InternalPointer->PreloadText( pinned_text, text->Length );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 	}
 }
 }

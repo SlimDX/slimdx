@@ -13,7 +13,7 @@ namespace Engine
 				SlimDX.Direct3D9.Direct3D.Initialize();
 				SlimDX.DirectInput.DirectInput.Initialize();
 			}
-			catch( SlimDX.DirectXException ex )
+			catch( SlimDX.SlimDXException ex )
 			{
 				MessageBox.Show( ex.Message );
 				Application.Exit();

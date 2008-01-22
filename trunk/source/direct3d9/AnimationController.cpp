@@ -26,7 +26,10 @@
 #include "../DataStream.h"
 #include "../BaseObject.h"
 #include "../Math/Math.h"
-#include "GraphicsException.h"
+
+#include "Direct3D9ErrorHandler.h"
+#include "Direct3D9Exception.h"
+
 #include "AnimationSet.h"
 #include "AnimationController.h"
 
@@ -48,17 +51,17 @@ namespace Direct3D9
 	{
 		HRESULT hr = D3DXCreateAnimationController( maxAnimationOutputs, maxAnimationSets, maxTracks, maxEvents,
 			reinterpret_cast<LPD3DXANIMATIONCONTROLLER*>( InternalPointer ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException();
+			throw gcnew Direct3D9Exception();
 	}
 
 	void AnimationController::AdvanceTime( double time, AnimationCallback^ handler )
 	{
 		HRESULT hr = InternalPointer->AdvanceTime( time, reinterpret_cast< LPD3DXANIMATIONCALLBACKHANDLER >(
 			Marshal::GetFunctionPointerForDelegate( handler ).ToPointer() ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	AnimationController^ AnimationController::Clone( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents )
@@ -66,7 +69,7 @@ namespace Direct3D9
 		LPD3DXANIMATIONCONTROLLER pointer;
 
 		HRESULT hr = InternalPointer->CloneAnimationController( maxAnimationOutputs, maxAnimationSets, maxTracks, maxEvents, &pointer );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -79,7 +82,7 @@ namespace Direct3D9
 		LPD3DXANIMATIONSET set;
 
 		HRESULT hr = InternalPointer->GetAnimationSet( index, &set );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -94,7 +97,7 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
 		HRESULT hr = InternalPointer->GetAnimationSetByName( reinterpret_cast<LPCSTR>( pinnedName ), &set );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -112,7 +115,7 @@ namespace Direct3D9
 		EventDescription result;
 
 		HRESULT hr = InternalPointer->GetEventDesc( handle, reinterpret_cast<LPD3DXEVENT_DESC>( &result ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		return result;
 	}
@@ -122,7 +125,7 @@ namespace Direct3D9
 		LPD3DXANIMATIONSET set;
 
 		HRESULT hr = InternalPointer->GetTrackAnimationSet( track, &set );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -135,7 +138,7 @@ namespace Direct3D9
 		TrackDescription result;
 
 		HRESULT hr = InternalPointer->GetTrackDesc( track, reinterpret_cast<LPD3DXTRACK_DESC>( &result ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		return result;
 	}
@@ -213,91 +216,91 @@ namespace Direct3D9
 		}
 
 		HRESULT hr = InternalPointer->RegisterAnimationOutput( reinterpret_cast<LPCSTR>( pinnedName ), matrix, scale, rotation, translation );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void AnimationController::RegisterAnimationSet( AnimationSet^ set )
 	{
 		HRESULT hr = InternalPointer->RegisterAnimationSet( reinterpret_cast<LPD3DXANIMATIONSET>( set->ComPointer.ToPointer() ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void AnimationController::ResetTime()
 	{
 		HRESULT hr = InternalPointer->ResetTime();
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void AnimationController::SetTrackAnimationSet( int track, AnimationSet^ set )
 	{
 		HRESULT hr = InternalPointer->SetTrackAnimationSet( track, reinterpret_cast<LPD3DXANIMATIONSET>( set->ComPointer.ToPointer() ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void AnimationController::SetTrackDescription( int track, TrackDescription description )
 	{
 		HRESULT hr = InternalPointer->SetTrackDesc( track, reinterpret_cast<LPD3DXTRACK_DESC>( &description ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void AnimationController::EnableTrack( int track )
 	{
 		HRESULT hr = InternalPointer->SetTrackEnable( track, true );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void AnimationController::DisableTrack( int track )
 	{
 		HRESULT hr = InternalPointer->SetTrackEnable( track, false );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void AnimationController::SetTrackPosition( int track, double position )
 	{
 		HRESULT hr = InternalPointer->SetTrackPosition( track, position );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void AnimationController::SetTrackPriority( int track, TrackPriority priority )
 	{
 		HRESULT hr = InternalPointer->SetTrackPriority( track, static_cast<D3DXPRIORITY_TYPE>( priority ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void AnimationController::SetTrackSpeed( int track, float speed )
 	{
 		HRESULT hr = InternalPointer->SetTrackSpeed( track, speed );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void AnimationController::SetTrackWeight( int track, float weight )
 	{
 		HRESULT hr = InternalPointer->SetTrackWeight( track, weight );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void AnimationController::UnkeyAllPriorityBlends()
 	{
 		HRESULT hr = InternalPointer->UnkeyAllPriorityBlends();
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void AnimationController::UnkeyAllTrackEvents( int track )
 	{
 		HRESULT hr = InternalPointer->UnkeyAllTrackEvents( track );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void AnimationController::UnkeyEvent( int handle )
 	{
 		HRESULT hr = InternalPointer->UnkeyEvent( handle );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void AnimationController::UnregisterAnimationSet( AnimationSet^ set )
 	{
 		HRESULT hr = InternalPointer->UnregisterAnimationSet( reinterpret_cast<LPD3DXANIMATIONSET>( set->ComPointer.ToPointer() ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	bool AnimationController::ValidateEvent( int handle )
