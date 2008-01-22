@@ -23,7 +23,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 #include "../math/Math.h"
 
 #include "Direct3D9ErrorHandler.h"
@@ -37,7 +37,7 @@ namespace SlimDX
 namespace Direct3D9
 {
 	/* Unused for now.
-	Line::Line( ID3DXLine* line ) : BaseObject( line )
+	Line::Line( ID3DXLine* line ) : SlimDXObject( line )
 	{
 		if( line == NULL )
 			throw gcnew ArgumentNullException( "line" );

@@ -23,7 +23,7 @@
 #include <d3dx9.h>
 #include <vcclr.h>
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 #include "../Math/Math.h"
 #include "../DataStream.h"
 

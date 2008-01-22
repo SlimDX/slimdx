@@ -30,7 +30,7 @@
 #include <mmreg.h>
 #include <xaudio2.h>
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 #include "XAudio2.h"
 #include "AudioException.h"
 #include "EngineCallback.h"

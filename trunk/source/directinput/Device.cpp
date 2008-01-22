@@ -22,7 +22,7 @@
 #include <windows.h>
 #include <dinput.h>
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 #include "../Utilities.h"
 
 #include "DirectInput.h"

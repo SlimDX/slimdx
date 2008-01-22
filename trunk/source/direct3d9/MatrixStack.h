@@ -28,7 +28,7 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
-		public ref class MatrixStack : BaseObject
+		public ref class MatrixStack : SlimDXObject
 		{
 			DXOBJECT(ID3DXMatrixStack);
 

@@ -35,12 +35,12 @@
 
 namespace SlimDX
 {
-	public ref class BaseObject abstract
+	public ref class SlimDXObject abstract
 	{
 		IUnknown* m_Unknown;
 
 	protected:
-		BaseObject();
+		SlimDXObject();
 		
 		void Construct( IUnknown* pointer );
 		void Construct( IntPtr pointer, Guid guid );
@@ -63,7 +63,7 @@ namespace SlimDX
 			IntPtr get();
 		}
 
-		virtual ~BaseObject();
+		virtual ~SlimDXObject();
 		
 		virtual void DisposeHandler( Object^ sender, EventArgs^ e );
 	};

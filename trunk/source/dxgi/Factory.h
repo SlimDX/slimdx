@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 
 #include "Enums.h"
 
@@ -33,7 +33,7 @@ namespace SlimDX
 	{
 		ref class Adapter;
 
-		public ref class Factory : public BaseObject
+		public ref class Factory : public SlimDXObject
 		{
 			DXOBJECT(IDXGIFactory);
 			

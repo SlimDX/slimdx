@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 
 namespace SlimDX
 {
@@ -36,7 +36,7 @@ namespace SlimDX
 			VertexState = D3DSBT_VERTEXSTATE,
 		};
 
-		public ref class StateBlock : BaseObject
+		public ref class StateBlock : SlimDXObject
 		{
 			DXOBJECT(IDirect3DStateBlock9);
 

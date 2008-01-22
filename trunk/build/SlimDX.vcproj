@@ -917,14 +917,6 @@
 			Name="Base"
 			>
 			<File
-				RelativePath="..\source\BaseObject.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\BaseObject.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\Configuration.cpp"
 				>
 			</File>
@@ -958,6 +950,14 @@
 			</File>
 			<File
 				RelativePath="..\source\SlimDXException.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\SlimDXObject.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\SlimDXObject.h"
 				>
 			</File>
 			<File

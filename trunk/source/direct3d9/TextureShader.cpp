@@ -24,7 +24,7 @@
 #include <memory>
 
 #include "../DataStream.h"
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 #include "../Utilities.h"
 
 #include "Direct3D9ErrorHandler.h"

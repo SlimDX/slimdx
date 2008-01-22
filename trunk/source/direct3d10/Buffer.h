@@ -25,7 +25,7 @@ using namespace System;
 
 #include <d3dx9.h>
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 #include "../DataStream.h"
 
 #include "Enums.h"

@@ -81,7 +81,7 @@ namespace SlimDX
 			property int UsageIndex;
 		};
 
-		public ref class ShaderBytecode : BaseObject
+		public ref class ShaderBytecode : SlimDXObject
 		{
 			DXOBJECT(ID3DXBuffer);
 

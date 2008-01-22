@@ -24,7 +24,7 @@
 #include <vcclr.h>
 
 #include "../DataStream.h"
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 
 #include "Device.h"
 #include "IndexBuffer.h"

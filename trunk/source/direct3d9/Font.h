@@ -44,7 +44,7 @@ namespace SlimDX
             property String^ FaceName;
 		};
 
-		public ref class Font : public BaseObject
+		public ref class Font : public SlimDXObject
 		{
 			DXOBJECT(ID3DXFont);
 

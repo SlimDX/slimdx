@@ -70,7 +70,7 @@ namespace SlimDX
 
 		ref class EffectHandle;
 		
-		public ref class ConstantTable : public BaseObject
+		public ref class ConstantTable : public SlimDXObject
 		{
 			DXOBJECT(ID3DXConstantTable);
 

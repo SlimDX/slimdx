@@ -104,7 +104,7 @@ namespace SlimDX
 			property Vector3 Value;
 		};
 
-		public ref class AnimationSet : public BaseObject
+		public ref class AnimationSet : public SlimDXObject
 		{
 			DXOBJECT(ID3DXAnimationSet);
 
