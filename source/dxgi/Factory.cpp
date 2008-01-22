@@ -22,7 +22,7 @@
 
 #include <dxgi.h>
 
-#include "Exception.h"
+#include "DXGIErrorHandler.h"
 
 #include "Adapter.h"
 #include "Factory.h"
@@ -35,7 +35,7 @@ namespace DXGI
 	{
 		IDXGIFactory* factory = 0;
 		HRESULT hr = CreateDXGIFactory( __uuidof( IDXGIFactory ), reinterpret_cast<void**>( &factory ) );
-		Exception::TestForFailure( hr );
+		DXGIErrorHandler::TestForFailure( hr );
 
 		Construct( factory );
 	}
@@ -57,7 +57,7 @@ namespace DXGI
 	{
 		IDXGIAdapter* adapter = 0;
 		HRESULT hr = InternalPointer->EnumAdapters( index, &adapter);
-		if( Exception::TestForFailure( hr ) )
+		if( DXGIErrorHandler::TestForFailure( hr ) )
 			return nullptr;
 		return gcnew Adapter( adapter );
 	}
@@ -66,7 +66,7 @@ namespace DXGI
 	{
 		HWND window = 0;
 		HRESULT hr = InternalPointer->GetWindowAssociation( &window );
-		if( Exception::TestForFailure( hr ) )
+		if( DXGIErrorHandler::TestForFailure( hr ) )
 			return IntPtr::Zero;
 		return IntPtr( window );
 	}
@@ -74,7 +74,7 @@ namespace DXGI
 	void Factory::SetWindowAssociation( IntPtr handle, WindowAssociationFlags flags )
 	{
 		HRESULT hr = InternalPointer->MakeWindowAssociation( reinterpret_cast<HWND>( handle.ToInt32() ), static_cast<UINT>( flags ) );
-		Exception::TestForFailure( hr );
+		DXGIErrorHandler::TestForFailure( hr );
 	}
 }
 }

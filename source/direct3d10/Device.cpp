@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "GraphicsException.h"
+#include "Direct3D10ErrorHandler.h"
 
 #include "Device.h"
 #include "Buffer.h"
@@ -46,11 +46,11 @@ namespace Direct3D10
 		ID3D10Device* device;
 
 		hr = CreateDXGIFactory( __uuidof( IDXGIFactory ), reinterpret_cast<void**>( &factory ) );
-		GraphicsException::CheckHResult( hr );	
+		Direct3D10ErrorHandler::TestForFailure( hr );	
 		m_Factory = factory;
 		
 		hr = D3D10CreateDevice( NULL, static_cast<D3D10_DRIVER_TYPE>( driverType ), NULL, static_cast<UINT>( flags ), D3D10_SDK_VERSION, &device );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 		m_Device = device;
 		
 		InputAssembler = gcnew InputAssemblerWrapper( m_Device );

@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "GraphicsException.h"
+#include "Direct3D10ErrorHandler.h"
 
 #include "EffectVectorVariable.h"
 
@@ -39,14 +39,14 @@ namespace Direct3D10
 	void EffectVectorVariable::Set( Vector4 value )
 	{
 		HRESULT hr = static_cast<ID3D10EffectVectorVariable*>( Pointer )->SetFloatVector( reinterpret_cast<float*>( &value ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 	}
 	
 	void EffectVectorVariable::Set( array<Vector4>^ values )
 	{
 		pin_ptr<Vector4> pinnedValues = &values[0];
 		HRESULT hr = static_cast<ID3D10EffectVectorVariable*>( Pointer )->SetFloatVectorArray( reinterpret_cast<float*>( pinnedValues ), 0, values->Length );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 	}
 }
 }

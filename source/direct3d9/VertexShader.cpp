@@ -28,6 +28,9 @@
 #include "../BaseObject.h"
 #include "../Utilities.h"
 
+#include "Direct3D9ErrorHandler.h"
+#include "Direct3D9Exception.h"
+
 #include "Device.h"
 #include "VertexShader.h"
 #include "ConstantTable.h"
@@ -62,7 +65,7 @@ namespace Direct3D9
 
 		IDirect3DDevice9* device;
 		HRESULT hr = vertexShader->GetDevice(&device);
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		
 		m_ConstantTable = gcnew ConstantTable( device, constantTable );
 		device->Release();
@@ -95,9 +98,9 @@ namespace Direct3D9
 		}
 		
 		// CheckHResult() is not used because we need to include the compiler errors.
-		if( Configuration::EnableExceptions && FAILED(hr) )
+		if( Configuration::EnableExceptions && FAILED( hr ) )
 		{
-			GraphicsException^ ex = GraphicsException::GetExceptionFromHResult( hr );
+			Direct3D9Exception^ ex = gcnew Direct3D9Exception( hr );
 			ex->Data->Add( "CompilationErrors", compilationErrors );
 			throw ex;
 		}
@@ -119,20 +122,20 @@ namespace Direct3D9
 		//Retrieve the binary data
 		UINT size;
 		HRESULT hr = InternalPointer->GetFunction( NULL, &size );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 			return;
 
 		std::auto_ptr<char> data( new char[size] );
 		hr = InternalPointer->GetFunction( data.get(), &size );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 			return;
 
 		//Ask D3DX to give us the actual table
 		ID3DXConstantTable* constantTable;
 		hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( data.get() ), &constantTable );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 			return;
 

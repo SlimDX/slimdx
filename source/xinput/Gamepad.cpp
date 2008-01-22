@@ -23,7 +23,7 @@
 #include <xinput.h>
 
 #include "XInput.h"
-#include "InputException.h"
+#include "XInputErrorHandler.h"
 
 namespace SlimDX
 {

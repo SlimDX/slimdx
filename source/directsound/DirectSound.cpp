@@ -26,7 +26,8 @@
 #include <dsound.h>
 
 #include "DirectSound.h"
-#include "SoundException.h"
+#include "DirectSoundErrorHandler.h"
+#include "DirectSoundException.h"
 
 namespace SlimDX
 {
@@ -46,9 +47,9 @@ namespace DirectSound
 	{
 		IDirectSound8* dsound;
 		HRESULT hr = DirectSoundCreate8( NULL, &dsound, NULL );
-		SoundException::CheckHResult( hr );
+		DirectSoundErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
-			throw gcnew SoundException();
+			throw gcnew DirectSoundException();
 
 		Construct(dsound);
 	}
@@ -57,9 +58,9 @@ namespace DirectSound
 	{
 		IDirectSound8* dsound;
 		HRESULT hr = DirectSoundCreate8( reinterpret_cast<GUID*>( &device ), &dsound, NULL );
-		SoundException::CheckHResult( hr );
+		DirectSoundErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
-			throw gcnew SoundException();
+			throw gcnew DirectSoundException();
 
 		Construct(dsound);
 	}
@@ -67,14 +68,14 @@ namespace DirectSound
 	void DirectSound::Initialize()
 	{
 		HRESULT hr = InternalPointer->Initialize( NULL );
-		SoundException::CheckHResult( hr );
+		DirectSoundErrorHandler::TestForFailure( hr );
 		caps = GetCapabilities();
 	}
 
 	void DirectSound::Initialize( Guid device )
 	{
 		HRESULT hr = InternalPointer->Initialize( reinterpret_cast<GUID*>( &device ) );
-		SoundException::CheckHResult( hr );
+		DirectSoundErrorHandler::TestForFailure( hr );
 		caps = GetCapabilities();
 	}
 
@@ -82,7 +83,7 @@ namespace DirectSound
 	{
 		SlimDX::DirectSound::Capabilities caps;
 		HRESULT hr = InternalPointer->GetCaps( reinterpret_cast<DSCAPS*>( &caps ) );
-		SoundException::CheckHResult( hr );
+		DirectSoundErrorHandler::TestForFailure( hr );
 		
 		return caps;
 	}
@@ -90,20 +91,20 @@ namespace DirectSound
 	void DirectSound::SetCooperativeLevel( IntPtr windowHandle, CooperativeLevel coopLevel )
 	{
 		HRESULT hr = InternalPointer->SetCooperativeLevel( static_cast<HWND>( windowHandle.ToPointer() ), static_cast<DWORD>( coopLevel ) );
-		SoundException::CheckHResult( hr );
+		DirectSoundErrorHandler::TestForFailure( hr );
 	}
 
 	void DirectSound::SetSpeakerConfig( Speaker speakerSet, SpeakerGeometry geometry )
 	{
 		HRESULT hr = InternalPointer->SetSpeakerConfig( DSSPEAKER_COMBINED( static_cast<DWORD>( speakerSet ), static_cast<DWORD>( geometry ) ) );
-		SoundException::CheckHResult( hr );
+		DirectSoundErrorHandler::TestForFailure( hr );
 	}
 
 	void DirectSound::GetSpeakerConfig( [Out] Speaker% speakerSet, [Out] SpeakerGeometry% geometry )
 	{
 		DWORD config = 0;
 		HRESULT hr = InternalPointer->GetSpeakerConfig( &config );
-		SoundException::CheckHResult( hr );
+		DirectSoundErrorHandler::TestForFailure( hr );
 
 		speakerSet = static_cast<Speaker>( DSSPEAKER_CONFIG( config ) );
 		geometry = static_cast<SpeakerGeometry>( DSSPEAKER_GEOMETRY( config ) );
@@ -113,7 +114,7 @@ namespace DirectSound
 	{
 		DWORD certified = DS_UNCERTIFIED;
 		HRESULT hr = InternalPointer->VerifyCertification( &certified );
-		SoundException::CheckHResult( hr );
+		DirectSoundErrorHandler::TestForFailure( hr );
 
 		return certified == DS_CERTIFIED;
 	}

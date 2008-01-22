@@ -24,9 +24,11 @@
 
 #include "../BaseObject.h"
 #include "../Utilities.h"
+
 #include "DirectInput.h"
+#include "DirectInputErrorHandler.h"
+
 #include "Device.h"
-#include "InputException.h"
 #include "DeviceConstants.h"
 
 namespace SlimDX

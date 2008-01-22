@@ -21,7 +21,10 @@
 */
 
 #include <dinput.h>
+
 #include "DirectInput.h"
+#include "DirectInputErrorHandler.h"
+
 #include "DeviceInfo.h"
 #include "Guids.h"
 

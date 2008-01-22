@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "GraphicsException.h"
+#include "Direct3D10ErrorHandler.h"
 
 #include "InputLayout.h"
 #include "Device.h"
@@ -61,7 +61,7 @@ namespace Direct3D10
 
 		ID3D10InputLayout* layout;
 		HRESULT hr = device->DevicePointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->Buffer, shaderSignature->Length, &layout );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 
 		Construct(layout);
 	}

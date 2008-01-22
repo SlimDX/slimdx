@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "GraphicsException.h"
+#include "Direct3D10ErrorHandler.h"
 
 #include "EffectResourceVariable.h"
 #include "ShaderResourceView.h"
@@ -39,14 +39,14 @@ namespace Direct3D10
 	void EffectResourceVariable::SetResource( ShaderResourceView^ view )
 	{
 		HRESULT hr = static_cast<ID3D10EffectShaderResourceVariable*>( Pointer )->SetResource( static_cast<ID3D10ShaderResourceView*>( view->InternalPointer ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 	}
 	
 	ShaderResourceView^ EffectResourceVariable::GetResource()
 	{
 		ID3D10ShaderResourceView* view = 0;
 		HRESULT hr = static_cast<ID3D10EffectShaderResourceVariable*>( Pointer )->GetResource( &view );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		return gcnew ShaderResourceView( view );
 	}

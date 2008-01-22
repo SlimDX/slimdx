@@ -25,7 +25,7 @@ using namespace System;
 using namespace System::Windows::Forms;
 using namespace System::Runtime::InteropServices;
 
-#include "../Exceptions.h"
+#include "../SlimDXException.h"
 
 namespace SlimDX
 {

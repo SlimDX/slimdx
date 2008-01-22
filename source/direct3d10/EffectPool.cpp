@@ -24,7 +24,7 @@
 #include <d3dx10.h>
 #include <vcclr.h>
 
-#include "GraphicsException.h"
+#include "Direct3D10ErrorHandler.h"
 
 #include "EffectPool.h"
 #include "Device.h"
@@ -80,7 +80,7 @@ namespace Direct3D10
 			compilationErrors = String::Empty;
 		}
 		
-		GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 		if( effectPool == NULL)
 			return nullptr;
 		return gcnew EffectPool( effectPool );
@@ -127,7 +127,7 @@ namespace Direct3D10
 			compilationErrors = String::Empty;
 		}
 		
-		GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 		if( effectPool == NULL)
 			return nullptr;
 		return gcnew EffectPool( effectPool );

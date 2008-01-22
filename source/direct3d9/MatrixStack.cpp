@@ -24,7 +24,10 @@
 
 #include "../BaseObject.h"
 #include "../math/Math.h"
-#include "GraphicsException.h"
+
+#include "Direct3D9ErrorHandler.h"
+#include "Direct3D9Exception.h"
+
 #include "MatrixStack.h"
 
 namespace SlimDX
@@ -40,9 +43,9 @@ namespace SlimDX
 		{
 			ID3DXMatrixStack* matrixStack;
 			HRESULT hr = D3DXCreateMatrixStack( 0, &matrixStack );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 			if( FAILED( hr ) )
-				throw gcnew GraphicsException( "Failed to create MatrixStack." );
+				throw gcnew Direct3D9Exception( "Failed to create MatrixStack." );
 
 			Construct(matrixStack);
 		}
@@ -50,85 +53,85 @@ namespace SlimDX
 		void MatrixStack::Push()
 		{
 			HRESULT hr = InternalPointer->Push();
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void MatrixStack::Pop()
 		{
 			HRESULT hr = InternalPointer->Pop();
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void MatrixStack::LoadIdentity()
 		{
 			HRESULT hr = InternalPointer->LoadIdentity();
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void MatrixStack::LoadMatrix( Matrix matrix )
 		{
 			HRESULT hr = InternalPointer->LoadMatrix( reinterpret_cast<D3DXMATRIX*>( &matrix ) );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void MatrixStack::MultiplyMatrix( Matrix matrix )
 		{
 			HRESULT hr = InternalPointer->MultMatrix( reinterpret_cast<D3DXMATRIX*>( &matrix ) );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void MatrixStack::MultiplyMatrixLocal( Matrix matrix )
 		{
 			HRESULT hr = InternalPointer->MultMatrixLocal( reinterpret_cast<D3DXMATRIX*>( &matrix ) );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void MatrixStack::RotateAxis( Vector3 axis, float angle )
 		{
 			HRESULT hr = InternalPointer->RotateAxis( reinterpret_cast<D3DXVECTOR3*>( &axis ), angle );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void MatrixStack::RotateAxisLocal( Vector3 axis, float angle )
 		{
 			HRESULT hr = InternalPointer->RotateAxisLocal( reinterpret_cast<D3DXVECTOR3*>( &axis ), angle );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void MatrixStack::RotateYawPitchRoll( float yaw, float pitch, float roll )
 		{
 			HRESULT hr = InternalPointer->RotateYawPitchRoll( yaw, pitch, roll );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void MatrixStack::RotateYawPitchRollLocal( float yaw, float pitch, float roll )
 		{
 			HRESULT hr = InternalPointer->RotateYawPitchRollLocal( yaw, pitch, roll );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void MatrixStack::Scale( float x, float y, float z )
 		{
 			HRESULT hr = InternalPointer->Scale( x, y, z );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void MatrixStack::ScaleLocal( float x, float y, float z )
 		{
 			HRESULT hr = InternalPointer->ScaleLocal( x, y, z );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void MatrixStack::Translate( float x, float y, float z )
 		{
 			HRESULT hr = InternalPointer->Translate( x, y, z );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void MatrixStack::TranslateLocal( float x, float y, float z )
 		{
 			HRESULT hr = InternalPointer->TranslateLocal( x, y, z );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		Matrix MatrixStack::Top::get()

@@ -24,7 +24,7 @@
 #include <d3dx10.h>
 #include <vcclr.h>
 
-#include "GraphicsException.h"
+#include "Direct3D10ErrorHandler.h"
 
 #include "EffectPass.h"
 #include "EffectVariable.h"
@@ -42,7 +42,7 @@ namespace Direct3D10
 		
 		D3D10_PASS_DESC desc;
 		HRESULT hr = m_Pointer->GetDesc( &desc );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		m_Name = gcnew String( desc.Name );
 		m_AnnotationCount = desc.Annotations;
@@ -56,7 +56,7 @@ namespace Direct3D10
 	{
 		D3D10_PASS_SHADER_DESC description;
 		HRESULT hr = m_Pointer->GetPixelShaderDesc( &description );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		return EffectPassShaderMapping( description );
 	}
@@ -65,7 +65,7 @@ namespace Direct3D10
 	{
 		D3D10_PASS_SHADER_DESC description;
 		HRESULT hr = m_Pointer->GetVertexShaderDesc( &description );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		return EffectPassShaderMapping( description );
 	}
@@ -74,7 +74,7 @@ namespace Direct3D10
 	{
 		D3D10_PASS_SHADER_DESC description;
 		HRESULT hr = m_Pointer->GetVertexShaderDesc( &description );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		return EffectPassShaderMapping( description );
 	}
@@ -100,7 +100,7 @@ namespace Direct3D10
 	void EffectPass::Apply()
 	{
 		HRESULT hr = m_Pointer->Apply(0);
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 	}
 }
 }

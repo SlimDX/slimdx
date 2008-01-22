@@ -22,36 +22,23 @@
 #pragma once
 
 using namespace System;
-using namespace System::Runtime::Serialization;
-
-#include "Configuration.h"
 
 namespace SlimDX
 {
-	[Serializable]
-	public ref class DirectXException : public Exception
+	namespace Direct3D10
 	{
-	protected:
-		DirectXException(SerializationInfo^ info, StreamingContext context) : Exception(info, context) { }		
+		public ref class Direct3D10ErrorHandler sealed
+		{
+			static int m_LastError;
+			
+		internal:
+			static bool TestForFailure( int hr );
 		
-	public:
-		property int ErrorCode;
-
-		DirectXException() : Exception("A DirectX exception occurred.")
-		{
-			ErrorCode = E_FAIL;
-		}
-
-		DirectXException(String^ message) : Exception(message)
-		{
-			ErrorCode = E_FAIL;
-		}
-
-		DirectXException( int errorCode, String^ message ) : Exception( message )
-		{
-			ErrorCode = errorCode;
-		}
-
-		DirectXException( String^ message, Exception^ innerException ) : Exception( message, innerException ) { }
-	};
+		public:
+			static property int LastError
+			{
+				int get();
+			}
+		};
+	}
 }

@@ -25,7 +25,7 @@ using namespace System::Runtime::InteropServices;
 
 #include "Enums.h"
 #include "CapsEnums.h"
-#include "GraphicsException.h"
+#include "Direct3D9ErrorHandler.h"
 
 namespace SlimDX
 {

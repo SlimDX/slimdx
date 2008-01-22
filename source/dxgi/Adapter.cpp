@@ -22,7 +22,7 @@
 
 #include <dxgi.h>
 
-#include "Exception.h"
+#include "DXGIErrorHandler.h"
 
 #include "Adapter.h"
 #include "AdapterDescription.h"
@@ -46,7 +46,7 @@ namespace DXGI
 	{
 		DXGI_ADAPTER_DESC desc;
 		HRESULT hr = InternalPointer->GetDesc( &desc );
-		if( Exception::TestForFailure( hr ) )
+		if( DXGIErrorHandler::TestForFailure( hr ) )
 			return AdapterDescription();
 		return AdapterDescription( desc );
 	}
@@ -68,7 +68,7 @@ namespace DXGI
 	{
 		IDXGIOutput* output = 0;
 		HRESULT hr = InternalPointer->EnumOutputs( index, &output);
-		if( Exception::TestForFailure( hr ) )
+		if( DXGIErrorHandler::TestForFailure( hr ) )
 			return nullptr;
 		return gcnew Output( output );
 	}

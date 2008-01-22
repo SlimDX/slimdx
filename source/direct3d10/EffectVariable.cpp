@@ -25,7 +25,7 @@
 #include <vcclr.h>
 
 #include "EffectVariable.h"
-#include "GraphicsException.h"
+#include "Direct3D10ErrorHandler.h"
 
 #include "EffectConstantBuffer.h"
 #include "EffectMatrixVariable.h"
@@ -47,7 +47,7 @@ namespace Direct3D10
 		
 		D3D10_EFFECT_VARIABLE_DESC desc;
 		HRESULT hr = m_Pointer->GetDesc( &desc );
-		GraphicsException::CheckHResult( hr );
+		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		m_Name = gcnew String( desc.Name );
 		m_Semantic = gcnew String( desc.Semantic );

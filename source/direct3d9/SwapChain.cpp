@@ -24,6 +24,8 @@
 
 #include "../BaseObject.h"
 
+#include "Direct3D9Exception.h"
+
 #include "Device.h"
 #include "Direct3D.h"
 #include "Surface.h"
@@ -61,9 +63,9 @@ namespace Direct3D9
 
 		IDirect3DSwapChain9* swapChain;
 		HRESULT hr = device->InternalPointer->CreateAdditionalSwapChain( &d3dpp, &swapChain );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
-			throw gcnew GraphicsException( "Failed to create swap chain." );
+			throw gcnew Direct3D9Exception( "Failed to create swap chain." );
 
 		Construct(swapChain);
 	}
@@ -72,7 +74,7 @@ namespace Direct3D9
 	{
 		IDirect3DSurface9* surface;
 		HRESULT hr = InternalPointer->GetBackBuffer( index, D3DBACKBUFFER_TYPE_MONO, &surface );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 			return nullptr;
 
@@ -85,14 +87,14 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "destSurface" );
 
 		HRESULT hr = InternalPointer->GetFrontBufferData( destSurface->SurfacePointer );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	Device^ SwapChain::GetDevice()
 	{
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		return gcnew Device( device );
 	}
@@ -101,7 +103,7 @@ namespace Direct3D9
 	{
 		SlimDX::Direct3D9::DisplayMode mode;
 		HRESULT hr = InternalPointer->GetDisplayMode( reinterpret_cast<D3DDISPLAYMODE*>( &mode ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		return mode;
 	}
@@ -110,7 +112,7 @@ namespace Direct3D9
 	{
 		D3DRASTER_STATUS status;
 		HRESULT hr = InternalPointer->GetRasterStatus( &status );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		SlimDX::Direct3D9::RasterStatus result;
 		result.InVBlank = status.InVBlank > 0;
@@ -121,7 +123,7 @@ namespace Direct3D9
 	void SwapChain::Present( SlimDX::Direct3D9::Present flags )
 	{
 		HRESULT hr = InternalPointer->Present( 0, 0, 0, 0, static_cast<DWORD>( flags ) );
-		GraphicsException::CheckHResult( hr );
+		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 }
 }

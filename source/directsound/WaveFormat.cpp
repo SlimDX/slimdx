@@ -25,11 +25,15 @@
 #include <mmreg.h>
 #include <dsound.h>
 #include <d3dx9.h>
+#include <cstring>
 
 #include "../DataStream.h"
-#include "WaveFormat.h"
 
-#include <cstring>
+#include "DirectSound.h"
+#include "DirectSoundErrorHandler.h"
+#include "DirectSoundException.h"
+
+#include "WaveFormat.h"
 
 namespace SlimDX
 {

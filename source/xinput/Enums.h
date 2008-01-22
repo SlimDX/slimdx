@@ -23,6 +23,8 @@
 
 using namespace System;
 
+#include <xinput.h>
+
 namespace SlimDX
 {
 	namespace XInput

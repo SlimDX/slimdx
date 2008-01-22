@@ -26,7 +26,7 @@
 using namespace System;
 using namespace System::Runtime::Serialization;
 
-#include "../Exceptions.h"
+#include "../SlimDXException.h"
 #include <dxerr.h>
 
 namespace SlimDX
@@ -34,7 +34,7 @@ namespace SlimDX
 	namespace XAudio2
 	{
 		[Serializable]
-		public ref class AudioException : public SlimDX::DirectXException
+		public ref class AudioException : public SlimDX::SlimDXException
 		{
 		private:
 			static AudioException()
@@ -43,19 +43,19 @@ namespace SlimDX
 			}
 
 		protected:
-			AudioException(SerializationInfo^ info, StreamingContext context) : DirectXException(info, context)
+			AudioException(SerializationInfo^ info, StreamingContext context) : SlimDXException(info, context)
 			{ }
 
 		public:
-			AudioException() : DirectXException(E_FAIL, "An XAudio2 exception occurred.")
+			AudioException() : SlimDXException(E_FAIL, "An XAudio2 exception occurred.")
 			{ }
-			AudioException(String^ message) : DirectXException(E_FAIL, message)
+			AudioException(String^ message) : SlimDXException(E_FAIL, message)
 			{ }
-			AudioException(int errorCode ) : DirectXException( errorCode, gcnew String( DXGetErrorDescription( errorCode ) ) )
+			AudioException(int errorCode ) : SlimDXException( errorCode, gcnew String( DXGetErrorDescription( errorCode ) ) )
 			{ }
-			AudioException(int errorCode, String^ message) : DirectXException( errorCode, message )
+			AudioException(int errorCode, String^ message) : SlimDXException( errorCode, message )
 			{ }
-			AudioException(String^ message, Exception^ innerException) : DirectXException( message, innerException )
+			AudioException(String^ message, Exception^ innerException) : SlimDXException( message, innerException )
 			{ }
 
 			static property int LastError;

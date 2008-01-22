@@ -20,10 +20,7 @@
 * THE SOFTWARE.
 */
 
-#include "BaseObject.h"
 #include "Utilities.h"
-
-using namespace System::Reflection;
 
 namespace SlimDX
 {
@@ -62,6 +59,10 @@ namespace SlimDX
 		return result;
 	}
 	
+	bool Utilities::TestForFailure( int hr, Type^ typeToThrow )
+	{
+		return FAILED( hr );
+	}
 
 	/// <summary>
 	/// Function to convert a standard RECT to a GDI+ rectangle.

@@ -22,6 +22,9 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include "Direct3D9ErrorHandler.h"
+#include "Direct3D9Exception.h"
+
 #include "Device.h"
 #include "Effect.h"
 
@@ -39,7 +42,7 @@ namespace SlimDX
 			ID3DXEffectPool* pointer;
 			HRESULT hr = D3DXCreateEffectPool( &pointer );
 			if( FAILED( hr ) )
-				throw gcnew GraphicsException();
+				throw gcnew Direct3D9Exception();
 
 			Construct(pointer);
 		}
@@ -89,7 +92,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			compilationErrors = Utilities::BufferToString( errorBuffer );
 			
-			GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );	
+			Direct3D9ErrorHandler::TestForFailure( hr );	
 			if( FAILED( hr ) )
 				return nullptr;
 
@@ -173,7 +176,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			compilationErrors = Utilities::BufferToString( errorBuffer );
 			
-			GraphicsException::CheckHResult( hr, "Compilation Errors", compilationErrors );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 			if( effect == NULL)
 				return nullptr;
 			return gcnew Effect( effect );
@@ -197,7 +200,7 @@ namespace SlimDX
 			unsigned int passCount;
 
 			HRESULT hr = EffectPointer->Begin( &passCount, static_cast<DWORD>( flags ) );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 
 			return passCount;
 		}
@@ -205,25 +208,25 @@ namespace SlimDX
 		void Effect::End()
 		{
 			HRESULT hr = EffectPointer->End();
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void Effect::BeginPass( int pass )
 		{
 			HRESULT hr = EffectPointer->BeginPass( pass );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void Effect::EndPass()
 		{
 			HRESULT hr = EffectPointer->EndPass();
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void Effect::BeginParameterBlock()
 		{
 			HRESULT hr = EffectPointer->BeginParameterBlock();
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		EffectHandle^ Effect::EndParameterBlock()
@@ -238,14 +241,14 @@ namespace SlimDX
 		{
 			D3DXHANDLE handle = parameterBlock != nullptr ? parameterBlock->InternalHandle : NULL;
 			HRESULT hr = EffectPointer->ApplyParameterBlock( handle );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void Effect::DeleteParameterBlock( EffectHandle^ parameterBlock )
 		{
 			D3DXHANDLE handle = parameterBlock != nullptr ? parameterBlock->InternalHandle : NULL;
 			HRESULT hr = EffectPointer->DeleteParameterBlock( handle );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		bool Effect::IsParameterUsed( EffectHandle^ parameter, EffectHandle^ technique )
@@ -259,7 +262,7 @@ namespace SlimDX
 		void Effect::CommitChanges()
 		{
 			HRESULT hr = EffectPointer->CommitChanges();
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		EffectHandle^ Effect::FindNextValidTechnique( EffectHandle^ technique )
@@ -268,7 +271,7 @@ namespace SlimDX
 			D3DXHANDLE parentHandle = technique != nullptr ? technique->InternalHandle : NULL;
 
 			HRESULT hr = EffectPointer->FindNextValidTechnique( parentHandle, &handle );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 
 			if( handle == NULL )
 				return nullptr;
@@ -293,19 +296,19 @@ namespace SlimDX
 		{
 			D3DXHANDLE handle = value != nullptr ? value->InternalHandle : NULL;
 			HRESULT hr = EffectPointer->SetTechnique( handle );
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void Effect::OnLostDevice()
 		{
 			HRESULT hr = EffectPointer->OnLostDevice();
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 
 		void Effect::OnResetDevice()
 		{
 			HRESULT hr = EffectPointer->OnResetDevice();
-			GraphicsException::CheckHResult( hr );
+			Direct3D9ErrorHandler::TestForFailure( hr );
 		}
 	}
 }

@@ -280,6 +280,22 @@
 			Name="Direct3D10"
 			>
 			<File
+				RelativePath="..\source\direct3d10\Direct3D10ErrorHandler.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d10\Direct3D10ErrorHandler.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d10\Direct3D10Exception.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d10\Direct3D10Exception.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\direct3d10\Enums.h"
 				>
 			</File>
@@ -929,15 +945,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\Exceptions.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\ObjectTracker.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\source\ObjectTracker.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\SlimDXException.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\SlimDXException.h"
 				>
 			</File>
 			<File
@@ -1041,6 +1061,46 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\direct3d9\Direct3D9ErrorHandler.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d9\Direct3D9ErrorHandler.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d9\Direct3D9Exception.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d9\Direct3D9Exception.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d9\Direct3D9NotFoundException.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d9\Direct3D9NotFoundException.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d9\Direct3D9NotInitializedException.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d9\Direct3D9NotInitializedException.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d9\Direct3DX9NotFoundException.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d9\Direct3DX9NotFoundException.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\direct3d9\Effect.cpp"
 				>
 			</File>
@@ -1082,10 +1142,6 @@
 			</File>
 			<File
 				RelativePath="..\source\direct3d9\FragmentLinker.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d9\GraphicsException.h"
 				>
 			</File>
 			<File
@@ -1364,6 +1420,30 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\directinput\DirectInputErrorHandler.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directinput\DirectInputErrorHandler.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directinput\DirectInputException.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directinput\DirectInputException.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directinput\DirectInputNotFoundException.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directinput\DirectInputNotFoundException.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\directinput\Enums.h"
 				>
 			</File>
@@ -1373,10 +1453,6 @@
 			</File>
 			<File
 				RelativePath="..\source\directinput\Guids.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directinput\InputException.h"
 				>
 			</File>
 			<File
@@ -1400,6 +1476,22 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\directsound\DirectSoundErrorHandler.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directsound\DirectSoundErrorHandler.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directsound\DirectSoundException.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directsound\DirectSoundException.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\directsound\Enums.h"
 				>
 			</File>
@@ -1413,10 +1505,6 @@
 			</File>
 			<File
 				RelativePath="..\source\directsound\SoundBuffer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directsound\SoundException.h"
 				>
 			</File>
 			<File
@@ -1624,10 +1712,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\xinput\InputException.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\xinput\KeyStroke.h"
 				>
 			</File>
@@ -1641,6 +1725,22 @@
 			</File>
 			<File
 				RelativePath="..\source\xinput\XInput.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\xinput\XInputErrorHandler.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\xinput\XInputErrorHandler.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\xinput\XInputException.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\xinput\XInputException.h"
 				>
 			</File>
 		</Filter>
@@ -1680,15 +1780,23 @@
 			Name="DXGI"
 			>
 			<File
+				RelativePath="..\source\dxgi\DXGIErrorHandler.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\dxgi\DXGIErrorHandler.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\dxgi\DXGIException.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\dxgi\DXGIException.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\dxgi\Enums.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\dxgi\Exception.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\dxgi\Exception.h"
 				>
 			</File>
 			<File

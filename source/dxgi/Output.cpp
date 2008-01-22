@@ -22,7 +22,7 @@
 
 #include <dxgi.h>
 
-#include "Exception.h"
+#include "DXGIErrorHandler.h"
 
 #include "FrameStatistics.h"
 #include "GammaControlCapabilities.h"
@@ -43,7 +43,7 @@ namespace DXGI
 	{
 		DXGI_OUTPUT_DESC desc;
 		HRESULT hr = InternalPointer->GetDesc( &desc );
-		if( Exception::TestForFailure( hr ) )
+		if( DXGIErrorHandler::TestForFailure( hr ) )
 			return OutputDescription();
 		return OutputDescription( desc );
 	}
@@ -52,7 +52,7 @@ namespace DXGI
 	{
 		DXGI_FRAME_STATISTICS stats;
 		HRESULT hr = InternalPointer->GetFrameStatistics( &stats );
-		if( Exception::TestForFailure( hr ) )
+		if( DXGIErrorHandler::TestForFailure( hr ) )
 			return FrameStatistics();
 		return FrameStatistics( stats );
 	}
@@ -61,7 +61,7 @@ namespace DXGI
 	{
 		DXGI_GAMMA_CONTROL_CAPABILITIES caps;
 		HRESULT hr = InternalPointer->GetGammaControlCapabilities( &caps );
-		if( Exception::TestForFailure( hr ) )
+		if( DXGIErrorHandler::TestForFailure( hr ) )
 			return GammaControlCapabilities();
 		return GammaControlCapabilities( caps );
 	}
@@ -69,7 +69,7 @@ namespace DXGI
 	void Output::WaitForVerticalBlank()
 	{
 		HRESULT hr = InternalPointer->WaitForVBlank();
-		Exception::TestForFailure( hr );
+		DXGIErrorHandler::TestForFailure( hr );
 	}
 }
 }
