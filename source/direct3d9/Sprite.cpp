@@ -23,7 +23,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 #include "../math/Math.h"
 
 #include "Device.h"

@@ -24,7 +24,7 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 #include "Enums.h"
 
 namespace SlimDX
@@ -58,7 +58,7 @@ namespace SlimDX
 			int PlayCpuOverhead;
 		};
 
-		public ref class SoundBuffer : BaseObject
+		public ref class SoundBuffer : SlimDXObject
 		{
 			DXOBJECT(IDirectSoundBuffer);
 

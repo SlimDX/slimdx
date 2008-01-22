@@ -22,7 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 #include "../Utilities.h"
 #include "../DataStream.h"
 

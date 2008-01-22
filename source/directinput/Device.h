@@ -25,7 +25,7 @@ using namespace System;
 using namespace System::Reflection;
 using namespace System::Windows::Forms;
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 #include "ErrorCode.h"
 #include "DeviceState.h"
 #include "Enums.h"
@@ -45,7 +45,7 @@ namespace SlimDX
 		/// play force-feedback effects, and open a device's control panel.
 		/// </summary>
 		generic<typename DataFormat>
-		public ref class Device : public BaseObject
+		public ref class Device : public SlimDXObject
 		{
 			DXOBJECT(IDirectInputDevice8W);
 

@@ -24,7 +24,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 #include "../Utilities.h"
 #include "../math/Math.h"
 
@@ -39,7 +39,7 @@ namespace SlimDX
 namespace Direct3D9
 {
 	/* Unused for now.
-	Font::Font( ID3DXFont* font ) : BaseObject( font )
+	Font::Font( ID3DXFont* font ) : SlimDXObject( font )
 	{
 		if( font == NULL )
 			throw gcnew ArgumentNullException( "font" );

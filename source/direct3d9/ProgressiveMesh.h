@@ -105,7 +105,7 @@ namespace SlimDX
 			property int MinimumVertexCount { int get(); }
 		};
 
-		public ref class SimplificationMesh : BaseObject
+		public ref class SimplificationMesh : SlimDXObject
 		{
 			DXOBJECT(ID3DXSPMesh);
 

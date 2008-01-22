@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 
 #include "Enums.h"
 
@@ -31,7 +31,7 @@ namespace SlimDX
 	{
 		ref class Device;
 		
-		public ref class Resource abstract : public BaseObject
+		public ref class Resource abstract : public SlimDXObject
 		{
 			DXOBJECT(IDirect3DResource9);
 

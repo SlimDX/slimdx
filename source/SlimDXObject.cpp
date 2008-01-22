@@ -20,37 +20,37 @@
 * THE SOFTWARE.
 */
 
-#include "BaseObject.h"
+#include "SlimDXObject.h"
 #include "Configuration.h"
 
 namespace SlimDX
 {
-	BaseObject::BaseObject()
+	SlimDXObject::SlimDXObject()
 	{
 		if( Configuration::EnableObjectTracking )
 			ObjectTracker::Add( this );
 	}
 
-	BaseObject::~BaseObject()
+	SlimDXObject::~SlimDXObject()
 	{
 	}
 
-	bool BaseObject::Disposed::get()
+	bool SlimDXObject::Disposed::get()
 	{
 		return m_Unknown == 0;
 	}
 
-	IntPtr BaseObject::ComPointer::get()
+	IntPtr SlimDXObject::ComPointer::get()
 	{
 		return IntPtr( m_Unknown );
 	}
 
-	IUnknown* BaseObject::UnknownPointer::get()
+	IUnknown* SlimDXObject::UnknownPointer::get()
 	{
 		return m_Unknown;
 	}
 	
-	void BaseObject::Construct( IUnknown* pointer )
+	void SlimDXObject::Construct( IUnknown* pointer )
 	{
 		if( pointer == 0 )
 			throw gcnew ArgumentNullException( "pointer" );
@@ -58,7 +58,7 @@ namespace SlimDX
 		m_Unknown = pointer;
 	}
 
-	void BaseObject::Construct( IntPtr pointer, Guid guid )
+	void SlimDXObject::Construct( IntPtr pointer, Guid guid )
 	{
 		if( pointer == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "pointer" );
@@ -72,7 +72,7 @@ namespace SlimDX
 		Construct( unknown );
 	}
 
-	void BaseObject::Destruct()
+	void SlimDXObject::Destruct()
 	{
 		if( m_Unknown != 0 )
 			m_Unknown->Release();
@@ -81,7 +81,7 @@ namespace SlimDX
 			ObjectTracker::Remove( this );
 	}
 
-	void BaseObject::DisposeHandler( Object^ sender, EventArgs^ e )
+	void SlimDXObject::DisposeHandler( Object^ sender, EventArgs^ e )
 	{
 		delete this;
 	};

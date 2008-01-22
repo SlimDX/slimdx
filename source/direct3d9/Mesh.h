@@ -203,7 +203,7 @@ namespace SlimDX
 		ref class IndexBuffer;
 		enum class VertexFormat;
 
-		public ref class BaseMesh abstract : public BaseObject
+		public ref class BaseMesh abstract : public SlimDXObject
 		{
 			DXOBJECT(ID3DXBaseMesh);
 

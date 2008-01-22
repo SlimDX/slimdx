@@ -23,13 +23,13 @@
 
 using namespace System;
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class GeometryShader : public BaseObject
+		public ref class GeometryShader : public SlimDXObject
 		{
 			DXOBJECT(ID3D10GeometryShader);
 

@@ -23,7 +23,7 @@
 
 #ifdef WRAP_XAUDIO2
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 #include "Enums.h"
 
 using namespace System;

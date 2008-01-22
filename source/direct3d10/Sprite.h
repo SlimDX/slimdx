@@ -23,7 +23,7 @@
 
 using namespace System::Drawing;
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 
 #include "Enums.h"
 #include "SpriteInstance.h"
@@ -38,7 +38,7 @@ namespace SlimDX
 		/// An interface for performing sprite rendering.
 		/// </remarks>
 		/// <unmanaged counterpart="ID3DX10Sprite" complete="no"/>
-		public ref class Sprite : public BaseObject
+		public ref class Sprite : public SlimDXObject
 		{
 			DXOBJECT(ID3DX10Sprite);
 

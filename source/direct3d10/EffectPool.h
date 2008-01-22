@@ -24,7 +24,7 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 
 #include "Enums.h"
 
@@ -40,7 +40,7 @@ namespace SlimDX
 		/// Using EffectPools can improve performance by reducing the number state change
 		/// API calls.
 		/// </remarks>
-		public ref class EffectPool : public BaseObject
+		public ref class EffectPool : public SlimDXObject
 		{
 			DXOBJECT(ID3D10EffectPool);
 

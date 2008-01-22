@@ -24,7 +24,7 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 
 #include "Enums.h"
 
@@ -38,7 +38,7 @@ namespace SlimDX
 		ref class EffectVariable;
 		ref class EffectPool;
 		
-		public ref class Effect : public BaseObject
+		public ref class Effect : public SlimDXObject
 		{
 			DXOBJECT(ID3D10Effect);
 

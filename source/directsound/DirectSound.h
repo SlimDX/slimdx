@@ -23,7 +23,7 @@
 
 using namespace System::Runtime::InteropServices;
 
-#include "../BaseObject.h"
+#include "../SlimDXObject.h"
 #include "ErrorCode.h"
 #include "Enums.h"
 
@@ -60,7 +60,7 @@ namespace SlimDX
 			int Reserved2;
 		};
 
-		public ref class DirectSound : BaseObject
+		public ref class DirectSound : SlimDXObject
 		{
 			DXOBJECT(IDirectSound8);
 
