@@ -33,7 +33,7 @@ namespace SlimDX
 {
 namespace DXGI
 { 	
-	generic< class T > where T : SlimDXObject, ref class
+	generic< class T > where T : ComObject, ref class
 	T SwapChain::GetBuffer( int index )
 	{
 		IUnknown* unknown = 0;

@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../SlimDXObject.h"
+#include "../ComObject.h"
 
 #include "BlendStateDescription.h"
 #include "Enums.h"
@@ -34,9 +34,9 @@ namespace SlimDX
 	{	
 		ref class Device;
 		
-		public ref class BlendState : SlimDXObject
+		public ref class BlendState : ComObject
 		{
-			DXOBJECT(ID3D10BlendState);
+			COMOBJECT(ID3D10BlendState);
 
 		private:
 			BlendStateDescription^ m_Description;

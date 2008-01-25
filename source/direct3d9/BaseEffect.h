@@ -84,9 +84,9 @@ namespace SlimDX
             property int Bytes;
 		};
 
-		public ref class BaseEffect abstract : public SlimDXObject
+		public ref class BaseEffect abstract : public ComObject
 		{
-			DXOBJECT(ID3DXBaseEffect);
+			COMOBJECT(ID3DXBaseEffect);
 
 		protected:
 			BaseEffect() { }

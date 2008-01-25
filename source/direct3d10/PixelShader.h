@@ -23,15 +23,15 @@
 
 using namespace System;
 
-#include "../SlimDXObject.h"
+#include "../ComObject.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class PixelShader : public SlimDXObject
+		public ref class PixelShader : public ComObject
 		{
-			DXOBJECT(ID3D10PixelShader);
+			COMOBJECT(ID3D10PixelShader);
 
 		internal:
 			PixelShader(ID3D10PixelShader *shader) { Construct(shader); }

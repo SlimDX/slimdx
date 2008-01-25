@@ -32,7 +32,7 @@ using namespace System::Reflection;
 
 namespace SlimDX
 {
-	ref class SlimDXObject;
+	ref class ComObject;
 
 	ref class Utilities sealed
 	{

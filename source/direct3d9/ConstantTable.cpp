@@ -26,7 +26,7 @@
 #include <vcclr.h>
 #include <memory>
 
-#include "../SlimDXObject.h"
+#include "../ComObject.h"
 #include "../Utilities.h"
 
 #include "Effect.h"

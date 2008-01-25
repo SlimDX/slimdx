@@ -80,9 +80,9 @@ namespace SlimDX
 			property bool Enabled;
 		};		
 
-		public ref class AnimationController : public SlimDXObject
+		public ref class AnimationController : public ComObject
 		{
-			DXOBJECT(ID3DXAnimationController);
+			COMOBJECT(ID3DXAnimationController);
 
 		internal:
 			AnimationController( ID3DXAnimationController *controller );

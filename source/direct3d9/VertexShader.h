@@ -27,9 +27,9 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{	
-		public ref class VertexShader : public SlimDXObject
+		public ref class VertexShader : public ComObject
 		{
-			DXOBJECT(IDirect3DVertexShader9);
+			COMOBJECT(IDirect3DVertexShader9);
 
 		private:
 			ConstantTable^ m_ConstantTable;

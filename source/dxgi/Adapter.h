@@ -24,7 +24,7 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
-#include "../SlimDXObject.h"
+#include "../ComObject.h"
 
 namespace SlimDX
 {
@@ -36,9 +36,9 @@ namespace SlimDX
 		/// <remarks>
 		/// An Adapter represents a display subsystem (one or more GPUs, DACs, and video memory).
 		/// </remarks>
-		public ref class Adapter : public SlimDXObject
+		public ref class Adapter : public ComObject
 		{
-			DXOBJECT(IDXGIAdapter);
+			COMOBJECT(IDXGIAdapter);
 
 		internal:
 			Adapter( IDXGIAdapter* pointer );

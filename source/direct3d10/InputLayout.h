@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../SlimDXObject.h"
+#include "../ComObject.h"
 #include "InputElement.h"
 
 namespace SlimDX
@@ -33,9 +33,9 @@ namespace SlimDX
 		ref class Device;
 		ref class ShaderSignature;
 		
-		public ref class InputLayout : public SlimDXObject
+		public ref class InputLayout : public ComObject
 		{
-			DXOBJECT(ID3D10InputLayout);
+			COMOBJECT(ID3D10InputLayout);
 
 		public:
 			InputLayout( IntPtr pointer );

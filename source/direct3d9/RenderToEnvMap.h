@@ -38,9 +38,9 @@ namespace SlimDX
 			property SlimDX::Direct3D9::Format DepthStencilFormat;
 		};
 
-		public ref class RenderToEnvironmentMap : SlimDXObject
+		public ref class RenderToEnvironmentMap : ComObject
 		{
-			DXOBJECT(ID3DXRenderToEnvMap);
+			COMOBJECT(ID3DXRenderToEnvMap);
 
 		internal:
 			RenderToEnvironmentMap( ID3DXRenderToEnvMap* pointer );

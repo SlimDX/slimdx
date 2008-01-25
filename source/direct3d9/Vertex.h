@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../SlimDXObject.h"
+#include "../ComObject.h"
 #include "Direct3D9ErrorHandler.h"
 
 namespace SlimDX
@@ -93,9 +93,9 @@ namespace SlimDX
 
 		ref class Device;
 
-		public ref class VertexDeclaration : public SlimDXObject
+		public ref class VertexDeclaration : public ComObject
 		{
-			DXOBJECT(IDirect3DVertexDeclaration9);
+			COMOBJECT(IDirect3DVertexDeclaration9);
 
 		internal:
 			VertexDeclaration( IDirect3DVertexDeclaration9* decl );

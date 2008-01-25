@@ -45,9 +45,9 @@ namespace SlimDX
 			property array<int>^ BoneIds;
 		};
 
-		public ref class SkinInfo : public SlimDXObject
+		public ref class SkinInfo : public ComObject
 		{
-			DXOBJECT(ID3DXSkinInfo);
+			COMOBJECT(ID3DXSkinInfo);
 
 		internal:
 			SkinInfo( ID3DXSkinInfo* skinInfo ) { Construct(skinInfo); }

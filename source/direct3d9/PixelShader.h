@@ -27,9 +27,9 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{	
-		public ref class PixelShader : public SlimDXObject
+		public ref class PixelShader : public ComObject
 		{
-			DXOBJECT(IDirect3DPixelShader9);
+			COMOBJECT(IDirect3DPixelShader9);
 
 		private:
 			ConstantTable^ m_ConstantTable;

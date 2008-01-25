@@ -24,7 +24,7 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
-#include "../SlimDXObject.h"
+#include "../ComObject.h"
 #include "Enums.h"
 
 namespace SlimDX
@@ -58,9 +58,9 @@ namespace SlimDX
 			int PlayCpuOverhead;
 		};
 
-		public ref class SoundBuffer : SlimDXObject
+		public ref class SoundBuffer : ComObject
 		{
-			DXOBJECT(IDirectSoundBuffer);
+			COMOBJECT(IDirectSoundBuffer);
 
 		private:
 			//While I believe the IDirectSoundBuffer can be safely cast to one of these, it's not

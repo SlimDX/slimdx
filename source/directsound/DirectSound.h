@@ -23,7 +23,7 @@
 
 using namespace System::Runtime::InteropServices;
 
-#include "../SlimDXObject.h"
+#include "../ComObject.h"
 #include "ErrorCode.h"
 #include "Enums.h"
 
@@ -60,9 +60,9 @@ namespace SlimDX
 			int Reserved2;
 		};
 
-		public ref class DirectSound : SlimDXObject
+		public ref class DirectSound : ComObject
 		{
-			DXOBJECT(IDirectSound8);
+			COMOBJECT(IDirectSound8);
 
 		private:
 			Capabilities caps;
