@@ -110,11 +110,11 @@ namespace Direct3D10
 			initData.pSysMem = data->RawPointer + data->Position;
 			data->Position += sizeInBytes;
 		
-			hr = device->DevicePointer->CreateBuffer( &desc, &initData, &buffer );
+			hr = device->InternalPointer->CreateBuffer( &desc, &initData, &buffer );
 		}
 		else
 		{
-			hr = device->DevicePointer->CreateBuffer( &desc, NULL, &buffer );
+			hr = device->InternalPointer->CreateBuffer( &desc, NULL, &buffer );
 		}
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		

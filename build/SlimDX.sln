@@ -36,6 +36,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		..\docs\xsl\api-structure.xsl = ..\docs\xsl\api-structure.xsl
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{807ED4D9-5152-4F9B-9271-B62A477EE5D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -118,5 +120,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E2B070CB-B5F7-46C5-B142-19065727A4CD} = {807ED4D9-5152-4F9B-9271-B62A477EE5D7}
+		{6B9DCB0F-5C97-4729-A826-385BB06AFAC6} = {807ED4D9-5152-4F9B-9271-B62A477EE5D7}
+		{7956A35D-3385-4E7B-B9E2-DD33BFCEE379} = {807ED4D9-5152-4F9B-9271-B62A477EE5D7}
+		{A9074E03-DF93-4180-BF74-6D8E87046BEE} = {807ED4D9-5152-4F9B-9271-B62A477EE5D7}
+		{7C00F00A-831E-4BCE-82A5-83BFD3893CE6} = {807ED4D9-5152-4F9B-9271-B62A477EE5D7}
 	EndGlobalSection
 EndGlobal

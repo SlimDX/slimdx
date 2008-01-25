@@ -67,7 +67,7 @@ namespace Direct3D10
 		ID3D10Blob* errorBlob;
 
 		HRESULT hr = D3DX10CreateEffectPoolFromFile( pinnedFileName, NULL, NULL, reinterpret_cast<LPCSTR>( pinnedProfile ),
-			static_cast<UINT>(shaderFlags), static_cast<UINT>(effectFlags ), device->DevicePointer,
+			static_cast<UINT>(shaderFlags), static_cast<UINT>(effectFlags ), device->InternalPointer,
 			NULL, &effectPool, &errorBlob, NULL );
 
 		if( errorBlob != 0 )
@@ -114,7 +114,7 @@ namespace Direct3D10
 		pin_ptr<unsigned char> pinnedData = &memory[0];
 
 		HRESULT hr = D3DX10CreateEffectPoolFromMemory( pinnedData, memory->Length, "<no file name>", NULL, NULL,
-			reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<UINT>(shaderFlags), static_cast< UINT>(effectFlags ), device->DevicePointer,
+			reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<UINT>(shaderFlags), static_cast< UINT>(effectFlags ), device->InternalPointer,
 			NULL, &effectPool, &errorBlob, NULL );
 
 		if( errorBlob != 0 )

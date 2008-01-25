@@ -1831,6 +1831,14 @@
 				RelativePath="..\source\dxgi\ModeDescription.h"
 				>
 			</File>
+			<File
+				RelativePath="..\source\dxgi\SampleDescription.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\dxgi\SampleDescription.h"
+				>
+			</File>
 			<Filter
 				Name="Swap Chain"
 				>
@@ -1867,6 +1875,10 @@
 				</File>
 				<File
 					RelativePath="..\source\dxgi\SwapChain.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\SwapChainDescription.cpp"
 					>
 				</File>
 				<File

@@ -90,7 +90,7 @@ namespace Direct3D10
 		desc.MiscFlags = static_cast<UINT>( optionFlags );
 	
 		ID3D10Texture2D* texture = 0;
-		HRESULT hr = device->DevicePointer->CreateTexture2D( &desc, NULL, &texture );
+		HRESULT hr = device->InternalPointer->CreateTexture2D( &desc, NULL, &texture );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		Construct(texture);

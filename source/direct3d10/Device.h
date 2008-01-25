@@ -23,6 +23,8 @@
 
 using namespace System;
 
+#include "../ComObject.h"
+
 #include "Enums.h"
 #include "ErrorCode.h"
 #include "InputElement.h"
@@ -43,65 +45,42 @@ namespace SlimDX
 		value class RenderTargetViewDescription;
 		value class SwapChainDescription;
 
-		public ref class Device
+		public ref class Device : ComObject
 		{
-		private:
-			IDXGIFactory* m_Factory;
-			ID3D10Device* m_Device;
-
-			InputAssemblerWrapper^ inputAssembler;
-            RasterizerWrapper^ rasterizer;
-            OutputMergerWrapper^ outputMerger;
-            StreamOutputWrapper^ streamOutput;
-		
-		protected:
-			void Destruct();
+			COMOBJECT(ID3D10Device);
+			
+			InputAssemblerWrapper^ m_InputAssembler;
+            OutputMergerWrapper^ m_OutputMerger;
+            StreamOutputWrapper^ m_StreamOutput;
+			RasterizerWrapper^ m_Rasterizer;
 
 		internal:
-			property IDXGIFactory* FactoryPointer
-			{
-				IDXGIFactory* get() { return m_Factory; }
-			}
-
-			property ID3D10Device* DevicePointer
-			{
-				ID3D10Device* get() { return m_Device; }
-			}
+			Device( ID3D10Device* pointer );
 		
 		public:
 			property InputAssemblerWrapper^ InputAssembler
             {
-                InputAssemblerWrapper^ get() { return inputAssembler; }
-			protected:
-                void set( InputAssemblerWrapper^ value ) { inputAssembler = value; }
-            }
-
-            property RasterizerWrapper^ Rasterizer
-            {
-                RasterizerWrapper^ get() { return rasterizer; }
-			protected:
-                void set( RasterizerWrapper^ value ) { rasterizer = value; }
+                InputAssemblerWrapper^ get();
             }
 
             property OutputMergerWrapper^ OutputMerger
             {
-                OutputMergerWrapper^ get() { return outputMerger; }
-			protected:
-                void set( OutputMergerWrapper^ value ) { outputMerger = value; }
+                OutputMergerWrapper^ get();
             }
 
             property StreamOutputWrapper^ StreamOutput
             {
-                StreamOutputWrapper^ get() { return streamOutput; }
-			protected:
-                void set( StreamOutputWrapper^ value ) { streamOutput = value; }
+                StreamOutputWrapper^ get();
+            }
+            
+            property RasterizerWrapper^ Rasterizer
+            {
+                RasterizerWrapper^ get();
             }
 			
-			Device( DriverType driverType, DeviceCreationFlags flags );
+			Device( IntPtr pointer );
+			Device( DeviceCreationFlags flags );
 
-			~Device();
-			!Device();
-			
 			void ClearState();
 			
 			void Draw( int vertexCount, int startVertexLocation );

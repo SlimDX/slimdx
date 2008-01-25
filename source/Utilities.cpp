@@ -22,6 +22,8 @@
 
 #include "Utilities.h"
 
+#include "SlimDXException.h"
+
 namespace SlimDX
 {
 	GUID Utilities::GetNativeGuidForType( Type^ type )
@@ -61,6 +63,15 @@ namespace SlimDX
 	
 	bool Utilities::TestForFailure( int hr, Type^ typeToThrow )
 	{
+		if( FAILED( hr ) )
+		{
+			// We need to call CreateInstance in this fashion, otherwise the overload for calling
+			// a public or nonpublic default constructor will be chosen (since the integer value of hr
+			// will convert to bool) rather than the overload for calling the constructor of the given
+			// type that takes a single integer.
+			Object^ errorCodeObject = hr;
+			throw static_cast<SlimDXException^>( Activator::CreateInstance( typeToThrow, errorCodeObject ) );
+		}
 		return FAILED( hr );
 	}
 

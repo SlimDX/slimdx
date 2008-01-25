@@ -39,7 +39,7 @@ namespace Direct3D10
 			throw gcnew ArgumentNullException( "device" );
 		
 		ID3D10RenderTargetView *view;
-		HRESULT hr = device->DevicePointer->CreateRenderTargetView( resource->InternalPointer, NULL, &view );
+		HRESULT hr = device->InternalPointer->CreateRenderTargetView( resource->InternalPointer, NULL, &view );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		Construct(view);

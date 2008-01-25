@@ -172,7 +172,7 @@ namespace Direct3D10
 		
 		ID3D10EffectPool* effectPool = pool == nullptr ? NULL : static_cast<ID3D10EffectPool*>( pool->InternalPointer );
 		HRESULT hr = D3DX10CreateEffectFromFile( pinnedFileName, NULL, NULL, reinterpret_cast<LPCSTR>( pinnedProfile ),
-			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), device->DevicePointer,
+			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), device->InternalPointer,
 			effectPool, NULL, &effect, &errorBlob, NULL );
 
 		if( errorBlob != 0 )
@@ -207,7 +207,7 @@ namespace Direct3D10
 		
 		ID3D10EffectPool* effectPool = pool == nullptr ? NULL : static_cast<ID3D10EffectPool*>( pool->InternalPointer );
 		HRESULT hr = D3DX10CreateEffectFromMemory( pinnedData, memory->Length, "n/a", NULL, NULL, reinterpret_cast<LPCSTR>( pinnedProfile ),
-			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), device->DevicePointer,
+			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), device->InternalPointer,
 			effectPool, NULL, &effect, &errorBlob, NULL );
 			
 		if( errorBlob != 0 )
@@ -255,7 +255,7 @@ namespace Direct3D10
 		
 		ID3D10EffectPool* effectPool = pool == nullptr ? NULL : static_cast<ID3D10EffectPool*>( pool->InternalPointer );
 		HRESULT hr = D3DX10CreateEffectFromMemory( pinnedCode, code->Length, "n/a", NULL, NULL, reinterpret_cast<LPCSTR>( pinnedProfile ),
-			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), device->DevicePointer,
+			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), device->InternalPointer,
 			effectPool, NULL, &effect, &errorBlob, NULL );
 		
 		if( errorBlob != 0 )
