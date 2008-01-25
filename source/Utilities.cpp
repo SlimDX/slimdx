@@ -29,7 +29,7 @@ namespace SlimDX
 		if( type == nullptr )
 			throw gcnew ArgumentNullException( "type" );
 		
-		PropertyInfo^ nativeInterfaceProperty = type->GetProperty( "NativeInterface" );
+		PropertyInfo^ nativeInterfaceProperty = type->GetProperty( "NativeInterface", BindingFlags::NonPublic | BindingFlags::Static );
 		Guid nativeInterface = static_cast<Guid>( nativeInterfaceProperty->GetValue( nullptr, nullptr ) );
 		
 		return ConvertManagedGuid( nativeInterface );
