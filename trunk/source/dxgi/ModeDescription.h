@@ -42,6 +42,8 @@ namespace SlimDX
 		internal:
 			ModeDescription( const DXGI_MODE_DESC& native );
 			
+			DXGI_MODE_DESC CreateNativeVersion();
+			
 		public:
 			property int Width
 			{
@@ -78,6 +80,8 @@ namespace SlimDX
 				DisplayModeScaling get();
 				void set( DisplayModeScaling value );
 			}
+			
+			ModeDescription( int width, int height, Rational refreshRate, DXGI::Format format );
 		};
 	}
 };

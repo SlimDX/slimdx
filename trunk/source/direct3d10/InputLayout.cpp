@@ -60,7 +60,7 @@ namespace Direct3D10
 		}
 
 		ID3D10InputLayout* layout;
-		HRESULT hr = device->DevicePointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->Buffer, shaderSignature->Length, &layout );
+		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->Buffer, shaderSignature->Length, &layout );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 
 		Construct(layout);

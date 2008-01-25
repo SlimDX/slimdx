@@ -50,7 +50,7 @@ namespace Direct3D10
 	{	
 		ID3D10Resource* resource = 0;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
-		HRESULT hr = D3DX10CreateTextureFromFile( device->DevicePointer, pinnedName, 0, 0, &resource, 0 );
+		HRESULT hr = D3DX10CreateTextureFromFile( device->InternalPointer, pinnedName, 0, 0, &resource, 0 );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		if( resource == 0 )
@@ -63,7 +63,7 @@ namespace Direct3D10
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 		
 		ID3D10Resource* resource = 0;
-		HRESULT hr = D3DX10CreateTextureFromMemory( device->DevicePointer, pinnedMemory, memory->Length, 0, 0, &resource, 0 ); 
+		HRESULT hr = D3DX10CreateTextureFromMemory( device->InternalPointer, pinnedMemory, memory->Length, 0, 0, &resource, 0 ); 
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		if( resource == 0 )

@@ -49,7 +49,7 @@ namespace Direct3D10
 	{
 		ID3DX10Sprite* sprite;
 		
-		HRESULT hr = D3DX10CreateSprite( device->DevicePointer, bufferSize, &sprite );
+		HRESULT hr = D3DX10CreateSprite( device->InternalPointer, bufferSize, &sprite );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 
 		Construct(sprite);

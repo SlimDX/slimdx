@@ -23,45 +23,32 @@
 
 using namespace System;
 
-#include "../ComObject.h"
-
-#include "Factory.h"
-#include "Enums.h"
-
 namespace SlimDX
 {
 	namespace DXGI
-	{
-		ref class Factory;
-		ref class Device;
-		value class FrameStatistics;
-		value class ModeDescription;
-		value class SwapChainDescription;
-		
-		/// <remarks>
-		/// A swap chain holds one or more surfaces that store rendered data
-		/// prior to presenting that data to an output.
-		/// </remarks>
-		public ref class SwapChain : public ComObject
+	{	
+		public value class SampleDescription
 		{
-			COMOBJECT(IDXGISwapChain);
+			int m_Count;
+			int m_Quality;
 		
 		internal:
-			SwapChain( IDXGISwapChain* pointer );
+			DXGI_SAMPLE_DESC CreateNativeVersion();
 			
 		public:
-			SwapChain( IntPtr pointer );
-			SwapChain( Factory^ factory, ComObject^ device, SwapChainDescription description );
+			property int Count
+			{
+				int get();
+				void set( int value );
+			}
+
+			property int Quality
+			{
+				int get();
+				void set( int value );
+			}
 			
-			generic< typename T > where T : ComObject, ref class
-			T GetBuffer( int buffer );
-
-			FrameStatistics GetFrameStatistics();
-
-			void ResizeBuffers( int count, int width, int height, Format format, SwapChainFlags flags );
-			void ResizeTarget( ModeDescription description );
-
-			PresentResult Present( int syncInterval, PresentFlags flags );
+			SampleDescription( int count, int quality );
 		};
 	}
 };

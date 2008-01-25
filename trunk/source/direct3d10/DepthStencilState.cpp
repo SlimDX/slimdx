@@ -65,7 +65,7 @@ namespace Direct3D10
 		m_Description->FillNativeObject( desc );
 		
 		ID3D10DepthStencilState* state;
-		HRESULT hr = device->DevicePointer->CreateDepthStencilState( &desc, &state );
+		HRESULT hr = device->InternalPointer->CreateDepthStencilState( &desc, &state );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		Construct(state);

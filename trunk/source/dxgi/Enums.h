@@ -182,15 +182,6 @@ namespace SlimDX
 			Maximum = DXGI_RESOURCE_PRIORITY_MAXIMUM
 		};
 
-		public enum class SurfaceUsage : Int32
-		{
-			ShaderInput = DXGI_USAGE_SHADER_INPUT,
-			RenderTargetOutput = DXGI_USAGE_RENDER_TARGET_OUTPUT,
-			BackBuffer = DXGI_USAGE_BACK_BUFFER,
-			Shared = DXGI_USAGE_SHARED,
-			ReadOnly = DXGI_USAGE_READ_ONLY 
-		};
-		
 		[Flags]
 		public enum class SwapChainFlags : Int32
 		{
@@ -203,6 +194,15 @@ namespace SlimDX
 		{
 			Discard = DXGI_SWAP_EFFECT_DISCARD,
 			Sequential = DXGI_SWAP_EFFECT_SEQUENTIAL
+		};
+		
+		public enum class Usage : Int32
+		{
+			ShaderInput = DXGI_USAGE_SHADER_INPUT,
+			RenderTargetOutput = DXGI_USAGE_RENDER_TARGET_OUTPUT,
+			BackBuffer = DXGI_USAGE_BACK_BUFFER,
+			Shared = DXGI_USAGE_SHARED,
+			ReadOnly = DXGI_USAGE_READ_ONLY 
 		};
 		
 		/// <remarks>

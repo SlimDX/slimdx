@@ -19,49 +19,47 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-using namespace System;
+#include <dxgi.h>
 
-#include "../ComObject.h"
-
-#include "Factory.h"
-#include "Enums.h"
+#include "SampleDescription.h"
 
 namespace SlimDX
 {
-	namespace DXGI
+namespace DXGI
+{ 	
+	SampleDescription::SampleDescription( int count, int quality )
+	: m_Count( count ), m_Quality( quality )
 	{
-		ref class Factory;
-		ref class Device;
-		value class FrameStatistics;
-		value class ModeDescription;
-		value class SwapChainDescription;
-		
-		/// <remarks>
-		/// A swap chain holds one or more surfaces that store rendered data
-		/// prior to presenting that data to an output.
-		/// </remarks>
-		public ref class SwapChain : public ComObject
-		{
-			COMOBJECT(IDXGISwapChain);
-		
-		internal:
-			SwapChain( IDXGISwapChain* pointer );
-			
-		public:
-			SwapChain( IntPtr pointer );
-			SwapChain( Factory^ factory, ComObject^ device, SwapChainDescription description );
-			
-			generic< typename T > where T : ComObject, ref class
-			T GetBuffer( int buffer );
-
-			FrameStatistics GetFrameStatistics();
-
-			void ResizeBuffers( int count, int width, int height, Format format, SwapChainFlags flags );
-			void ResizeTarget( ModeDescription description );
-
-			PresentResult Present( int syncInterval, PresentFlags flags );
-		};
 	}
-};
+	
+	DXGI_SAMPLE_DESC SampleDescription::CreateNativeVersion()
+	{
+		DXGI_SAMPLE_DESC native;
+		native.Count = m_Count;
+		native.Quality = m_Quality;
+		
+		return native;
+	}
+	
+	int SampleDescription::Count::get()
+	{
+		return m_Count;
+	}
+
+	void SampleDescription::Count::set( int value )
+	{
+		m_Count = value;
+	}
+
+	int SampleDescription::Quality::get()
+	{
+		return m_Quality;
+	}
+
+	void SampleDescription::Quality::set( int value )
+	{
+		m_Quality = value;
+	}
+}
+}

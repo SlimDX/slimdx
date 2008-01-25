@@ -24,9 +24,10 @@
 #include <d3dx10.h>
 
 #include "Direct3D10ErrorHandler.h"
+#include "Direct3D10Exception.h"
 
-#include "Device.h"
 #include "Buffer.h"
+#include "Device.h"
 #include "InputAssemblerWrapper.h"
 #include "InputLayout.h"
 #include "OutputMergerWrapper.h"
@@ -38,76 +39,95 @@
 namespace SlimDX
 {
 namespace Direct3D10
-{ 
-	Device::Device( DriverType driverType, DeviceCreationFlags flags )
+{
+	Device::Device( ID3D10Device* pointer )
 	{
-		HRESULT hr;
-		IDXGIFactory* factory;
-		ID3D10Device* device;
-
-		hr = CreateDXGIFactory( __uuidof( IDXGIFactory ), reinterpret_cast<void**>( &factory ) );
-		Direct3D10ErrorHandler::TestForFailure( hr );	
-		m_Factory = factory;
+		Construct( pointer );
 		
-		hr = D3D10CreateDevice( NULL, static_cast<D3D10_DRIVER_TYPE>( driverType ), NULL, static_cast<UINT>( flags ), D3D10_SDK_VERSION, &device );
-		Direct3D10ErrorHandler::TestForFailure( hr );
-		m_Device = device;
+		m_InputAssembler = gcnew InputAssemblerWrapper( InternalPointer );
+		m_OutputMerger = gcnew OutputMergerWrapper( InternalPointer );
+		m_StreamOutput = gcnew StreamOutputWrapper( InternalPointer );
+		m_Rasterizer = gcnew RasterizerWrapper( InternalPointer );
+	}
+	
+	Device::Device( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
 		
-		InputAssembler = gcnew InputAssemblerWrapper( m_Device );
-		Rasterizer = gcnew RasterizerWrapper( m_Device );
-		OutputMerger = gcnew OutputMergerWrapper( m_Device );
-		StreamOutput = gcnew StreamOutputWrapper( m_Device );
+		m_InputAssembler = gcnew InputAssemblerWrapper( InternalPointer );
+		m_OutputMerger = gcnew OutputMergerWrapper( InternalPointer );
+		m_StreamOutput = gcnew StreamOutputWrapper( InternalPointer );
+		m_Rasterizer = gcnew RasterizerWrapper( InternalPointer );
 	}
-
-	Device::~Device()
+	
+	Device::Device( DeviceCreationFlags flags )
 	{
-		Destruct();
+		ID3D10Device* device = 0;
+		HRESULT hr = D3D10CreateDevice( 0, D3D10_DRIVER_TYPE_HARDWARE, 0, static_cast<UINT>( flags ), D3D10_SDK_VERSION, &device );
+		if( Direct3D10ErrorHandler::TestForFailure( hr ) )
+			throw gcnew Direct3D10Exception( hr );
+		
+		Construct( device );
+		
+		m_InputAssembler = gcnew InputAssemblerWrapper( InternalPointer );
+		m_OutputMerger = gcnew OutputMergerWrapper( InternalPointer );
+		m_StreamOutput = gcnew StreamOutputWrapper( InternalPointer );
+		m_Rasterizer = gcnew RasterizerWrapper( InternalPointer );
 	}
-
-	Device::!Device()
+	
+	InputAssemblerWrapper^ Device::InputAssembler::get()
 	{
-		Destruct();
+		return m_InputAssembler;
 	}
-
-	void Device::Destruct()
+	
+	OutputMergerWrapper^ Device::OutputMerger::get()
 	{
-		m_Device->Release();
-		m_Factory->Release();
+		return m_OutputMerger;
+	}
+	
+	StreamOutputWrapper^ Device::StreamOutput::get()
+	{
+		return m_StreamOutput;
+	}
+	
+	RasterizerWrapper^ Device::Rasterizer::get()
+	{
+		return m_Rasterizer;
 	}
 	
 	void Device::ClearState()
 	{
-		m_Device->ClearState();
+		InternalPointer->ClearState();
 	}
 	
 	void Device::Draw( int vertexCount, int startVertexLocation )
 	{
-		m_Device->Draw( vertexCount, startVertexLocation );
+		InternalPointer->Draw( vertexCount, startVertexLocation );
 	}
 	
 	void Device::DrawAuto()
 	{
-		m_Device->DrawAuto();
+		InternalPointer->DrawAuto();
 	}
 	
 	void Device::DrawIndexed( int indexCount, int startIndexLocation, int baseVertexLocation )
 	{
-		m_Device->DrawIndexed( indexCount, startIndexLocation, baseVertexLocation );
+		InternalPointer->DrawIndexed( indexCount, startIndexLocation, baseVertexLocation );
 	}
 	
 	void Device::DrawIndexedInstanced( int indexCountPerInstance, int instanceCount, int startIndexLocation, int baseVertexLocation, int startInstanceLocation )
 	{
-		m_Device->DrawIndexedInstanced( indexCountPerInstance, instanceCount, startIndexLocation, baseVertexLocation, startInstanceLocation );
+		InternalPointer->DrawIndexedInstanced( indexCountPerInstance, instanceCount, startIndexLocation, baseVertexLocation, startInstanceLocation );
 	}
 	
 	void Device::DrawInstanced( int vertexCountPerInstance, int instanceCount, int startVertexLocation, int startInstanceLocation )
 	{
-		m_Device->DrawInstanced( vertexCountPerInstance, instanceCount, startVertexLocation, startInstanceLocation );
+		InternalPointer->DrawInstanced( vertexCountPerInstance, instanceCount, startVertexLocation, startInstanceLocation );
 	}
 	
 	void Device::Flush()
 	{
-		m_Device->Flush();
+		InternalPointer->Flush();
 	}
 }
 }

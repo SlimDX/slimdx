@@ -55,7 +55,7 @@ namespace Direct3D10
 		pin_ptr<const wchar_t> pinned_name = PtrToStringChars( faceName );
 		
 		ID3DX10Font* font = 0;
-		HRESULT hr = D3DX10CreateFont( device->DevicePointer, height, width, static_cast<UINT>( weight ),
+		HRESULT hr = D3DX10CreateFont( device->InternalPointer, height, width, static_cast<UINT>( weight ),
 			mipLevels, isItalic, static_cast<UINT>( characterSet ), static_cast<UINT>( outputPrecision ),
 			static_cast< UINT>( quality ), static_cast<UINT>( pitchAndFamily ), pinned_name, &font );
 		Direct3D10ErrorHandler::TestForFailure( hr );

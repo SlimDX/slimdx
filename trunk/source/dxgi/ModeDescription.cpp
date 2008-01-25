@@ -28,6 +28,26 @@ namespace SlimDX
 {
 namespace DXGI
 { 	
+	ModeDescription::ModeDescription( int width, int height, Rational refreshRate, DXGI::Format format )
+	: m_Width( width ), m_Height( height ), m_RefreshRate( refreshRate ), m_Format( format ),
+		m_ScanlineOrdering( DisplayModeScanlineOrdering::Unspecified ), m_Scaling( DisplayModeScaling::Unspecified )
+	{
+	}
+	
+	DXGI_MODE_DESC ModeDescription::CreateNativeVersion()
+	{
+		DXGI_MODE_DESC native;
+		native.Width = m_Width;
+		native.Height = m_Height;
+		native.RefreshRate.Numerator = m_RefreshRate.Numerator;
+		native.RefreshRate.Denominator = m_RefreshRate.Denominator;
+		native.Format = static_cast<DXGI_FORMAT>( m_Format );
+		native.ScanlineOrdering = static_cast<DXGI_MODE_SCANLINE_ORDER>( m_ScanlineOrdering );
+		native.Scaling = static_cast<DXGI_MODE_SCALING>( m_Scaling );
+		
+		return native;
+	}
+	
 	ModeDescription::ModeDescription( const DXGI_MODE_DESC& native )
 	{
 		m_Width = native.Width;

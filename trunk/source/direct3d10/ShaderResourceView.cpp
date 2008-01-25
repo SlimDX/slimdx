@@ -61,7 +61,7 @@ namespace Direct3D10
 		viewDesc.Texture2D.MipLevels = resource->MipLevels;
 		
 		ID3D10ShaderResourceView *view;
-		HRESULT hr = device->DevicePointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
+		HRESULT hr = device->InternalPointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		Construct(view);
@@ -83,7 +83,7 @@ namespace Direct3D10
 		viewDesc.Texture2D.MipLevels = resource->MipLevels;
 		
 		ID3D10ShaderResourceView *view;
-		HRESULT hr = device->DevicePointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
+		HRESULT hr = device->InternalPointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		Construct(view);
@@ -105,7 +105,7 @@ namespace Direct3D10
 		viewDesc.Texture3D.MipLevels = resource->MipLevels;
 		
 		ID3D10ShaderResourceView *view;
-		HRESULT hr = device->DevicePointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
+		HRESULT hr = device->InternalPointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		Construct(view);

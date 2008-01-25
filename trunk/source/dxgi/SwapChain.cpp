@@ -24,8 +24,11 @@
 #include <d3dx10.h>
 
 #include "DXGIErrorHandler.h"
+#include "DXGIException.h"
 
+#include "Factory.h"
 #include "SwapChain.h"
+#include "SwapChainDescription.h"
 #include "FrameStatistics.h"
 #include "ModeDescription.h"
 
@@ -33,6 +36,32 @@ namespace SlimDX
 {
 namespace DXGI
 { 	
+	SwapChain::SwapChain( IDXGISwapChain* pointer )
+	{
+		Construct( pointer );
+	}
+	
+	SwapChain::SwapChain( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+	
+	SwapChain::SwapChain( Factory^ factory, ComObject^ device, SwapChainDescription description )
+	{
+		if( factory == nullptr )
+			throw gcnew ArgumentNullException( "factory" );
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+		
+		IDXGISwapChain* swapChain = 0;
+		DXGI_SWAP_CHAIN_DESC nativeDescription = description.CreateNativeVersion();
+		HRESULT hr = factory->InternalPointer->CreateSwapChain( device->UnknownPointer, &nativeDescription, &swapChain );
+		if( DXGIErrorHandler::TestForFailure( hr ) )
+			throw gcnew DXGIException( hr );
+		
+		Construct( swapChain );
+	}
+	
 	generic< class T > where T : ComObject, ref class
 	T SwapChain::GetBuffer( int index )
 	{

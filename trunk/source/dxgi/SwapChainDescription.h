@@ -22,117 +22,77 @@
 #pragma once
 
 using namespace System;
-using namespace System::Runtime::InteropServices;
 
 #include "Enums.h"
-#include "../math/Rational.h"
+#include "ModeDescription.h"
+#include "SampleDescription.h"
 
 namespace SlimDX
 {
 	namespace DXGI
 	{		
-		[StructLayout( LayoutKind::Sequential )]
 		public value class SwapChainDescription
 		{
 		private:
-			int width;
-            int height;
-            Rational refreshRate;
-            Format format;
-            DisplayModeScanlineOrdering scanlineOrdering;
-            DisplayModeScaling scaling;
-            int sampleCount;
-            int sampleQuality;
-            SurfaceUsage usage;
-            int bufferCount;
-            IntPtr outputHandle;
-            bool windowed;
-            SwapEffect swapEffect;
-            SwapChainFlags flags;
+			ModeDescription m_BufferDesc;
+			SampleDescription m_SampleDesc;
+			Usage m_BufferUsage;
+			int m_BufferCount;
+			IntPtr m_OutputWindow;
+			bool m_Windowed;
+			SwapEffect m_SwapEffect;
+			SwapChainFlags m_Flags;
+		
+		internal:
+			DXGI_SWAP_CHAIN_DESC CreateNativeVersion();
 
 		public:
-			property int Width
+			property ModeDescription ModeDescription
             {
-                int get() { return width; }
-                void set( int value ) { width = value; }
+                DXGI::ModeDescription get();
+                void set( DXGI::ModeDescription value );
             }
 
-            property int Height
+            property SampleDescription SampleDescription
             {
-                int get() { return height; }
-                void set( int value ) { height = value; }
+                DXGI::SampleDescription get();
+                void set( DXGI::SampleDescription value );
             }
 
-            property Rational RefreshRate
+            property Usage Usage
             {
-                Rational get() { return refreshRate; }
-                void set( Rational value ) { refreshRate = value; }
-            }
-
-            property DXGI::Format Format
-            {
-                DXGI::Format get() { return format; }
-                void set( DXGI::Format value ) { format = value; }
-            }
-
-            property DisplayModeScanlineOrdering ScanlineOrdering
-            {
-                DisplayModeScanlineOrdering get() { return scanlineOrdering; }
-                void set( DisplayModeScanlineOrdering value ) { scanlineOrdering = value; }
-            }
-
-            property DisplayModeScaling Scaling
-            {
-                DisplayModeScaling get() { return scaling; }
-                void set( DisplayModeScaling value ) { scaling = value; }
-            }
-
-            property int SampleCount
-            {
-                int get() { return sampleCount; }
-                void set( int value ) { sampleCount = value; }
-            }
-
-            property int SampleQuality
-            {
-                int get() { return sampleQuality; }
-                void set( int value ) { sampleQuality = value; }
-            }
-
-            property SurfaceUsage Usage
-            {
-                SurfaceUsage get() { return usage; }
-                void set( SurfaceUsage value ) { usage = value; }
+                DXGI::Usage get();
+                void set( DXGI::Usage value );
             }
 
             property int BufferCount
             {
-                int get() { return bufferCount; }
-                void set( int value ) { bufferCount = value; }
+                int get();
+                void set( int value );
             }
 
             property IntPtr OutputHandle
             {
-                IntPtr get() { return outputHandle; }
-                void set( IntPtr value ) { outputHandle = value; }
+                IntPtr get();
+                void set( IntPtr value );
             }
 
-            property bool Windowed
+            property bool IsWindowed
             {
-                bool get() { return windowed; }
-                void set( bool value ) { windowed = value; }
+                bool get();
+                void set( bool value );
             }
 
-            property SlimDX::Direct3D10::SwapEffect SwapEffect
+            property DXGI::SwapEffect SwapEffect
             {
-                SlimDX::Direct3D10::SwapEffect get() { return swapEffect; }
-                void set( SlimDX::Direct3D10::SwapEffect value ) { swapEffect = value; }
+                DXGI::SwapEffect get();
+                void set( DXGI::SwapEffect value );
             }
 
             property SwapChainFlags Flags
             {
-                SwapChainFlags get() { return flags; }
-                void set( SwapChainFlags value ) { flags = value; }
+                SwapChainFlags get();
+                void set( SwapChainFlags value );
             }
 		};
 	}

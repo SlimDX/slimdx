@@ -65,7 +65,7 @@ namespace Direct3D10
 		m_Description->FillNativeObject( desc );
 		
 		ID3D10BlendState* state;
-		HRESULT hr = device->DevicePointer->CreateBlendState( &desc, &state );
+		HRESULT hr = device->InternalPointer->CreateBlendState( &desc, &state );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		Construct(state);

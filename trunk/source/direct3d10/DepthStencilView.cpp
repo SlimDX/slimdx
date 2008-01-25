@@ -39,7 +39,7 @@ namespace Direct3D10
 			throw gcnew ArgumentNullException( "device" );
 		
 		ID3D10DepthStencilView *view;
-		HRESULT hr = device->DevicePointer->CreateDepthStencilView( resource->InternalPointer, NULL, &view );
+		HRESULT hr = device->InternalPointer->CreateDepthStencilView( resource->InternalPointer, NULL, &view );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		Construct(view);
