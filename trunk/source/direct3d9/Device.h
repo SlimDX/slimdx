@@ -139,9 +139,9 @@ namespace SlimDX
 		ref class SwapChain;
 		ref class StateBlock;
 
-		public ref class Device : public SlimDXObject
+		public ref class Device : public ComObject
 		{
-			DXOBJECT(IDirect3DDevice9);
+			COMOBJECT(IDirect3DDevice9);
 
 		internal:
 			Device( IDirect3DDevice9* device );

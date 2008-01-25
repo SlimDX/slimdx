@@ -70,9 +70,9 @@ namespace SlimDX
 
 		ref class EffectHandle;
 		
-		public ref class ConstantTable : public SlimDXObject
+		public ref class ConstantTable : public ComObject
 		{
-			DXOBJECT(ID3DXConstantTable);
+			COMOBJECT(ID3DXConstantTable);
 
 		private:
 			IDirect3DDevice9* m_Device;

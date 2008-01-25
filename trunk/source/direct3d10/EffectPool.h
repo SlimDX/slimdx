@@ -24,7 +24,7 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
-#include "../SlimDXObject.h"
+#include "../ComObject.h"
 
 #include "Enums.h"
 
@@ -40,9 +40,9 @@ namespace SlimDX
 		/// Using EffectPools can improve performance by reducing the number state change
 		/// API calls.
 		/// </remarks>
-		public ref class EffectPool : public SlimDXObject
+		public ref class EffectPool : public ComObject
 		{
-			DXOBJECT(ID3D10EffectPool);
+			COMOBJECT(ID3D10EffectPool);
 
 		internal:
 			EffectPool( ID3D10EffectPool* effectPool );

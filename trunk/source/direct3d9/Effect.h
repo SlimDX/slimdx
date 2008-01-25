@@ -35,9 +35,9 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
-		public ref class EffectPool : public SlimDXObject
+		public ref class EffectPool : public ComObject
 		{
-			DXOBJECT(ID3DXEffectPool);
+			COMOBJECT(ID3DXEffectPool);
 
 		public:
 			EffectPool( IntPtr pointer );

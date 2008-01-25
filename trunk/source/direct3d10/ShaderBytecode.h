@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../SlimDXObject.h"
+#include "../ComObject.h"
 
 #include "Enums.h"
 #include "Resource.h"

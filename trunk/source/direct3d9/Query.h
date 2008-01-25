@@ -387,9 +387,9 @@ namespace SlimDX
 			}
 		};
 
-		public ref class Query : public SlimDXObject
+		public ref class Query : public ComObject
 		{
-			DXOBJECT(IDirect3DQuery9);
+			COMOBJECT(IDirect3DQuery9);
 
 		internal:
 			/* Unused for now.

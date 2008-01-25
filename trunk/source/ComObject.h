@@ -27,7 +27,7 @@
 #include "ObjectTracker.h"
 #include "Utilities.h"
 
-#define DXOBJECT(type) \
+#define COMOBJECT(type) \
 	internal: \
 	static property Guid NativeInterface { Guid get() { return Utilities::ConvertNativeGuid( IID_ ## type ); } } \
 	property type* InternalPointer { type* get() { return static_cast<type*>( UnknownPointer ); } } \
@@ -35,12 +35,12 @@
 
 namespace SlimDX
 {
-	public ref class SlimDXObject abstract
+	public ref class ComObject abstract
 	{
 		IUnknown* m_Unknown;
 
 	protected:
-		SlimDXObject();
+		ComObject();
 		
 		void Construct( IUnknown* pointer );
 		void Construct( IntPtr pointer, Guid guid );
@@ -63,7 +63,7 @@ namespace SlimDX
 			IntPtr get();
 		}
 
-		virtual ~SlimDXObject();
+		virtual ~ComObject();
 		
 		virtual void DisposeHandler( Object^ sender, EventArgs^ e );
 	};

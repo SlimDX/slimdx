@@ -57,9 +57,9 @@ namespace SlimDX
 			property int LevelOfDetailBias;
 		};
 
-		public ref class PatchMesh : SlimDXObject
+		public ref class PatchMesh : ComObject
 		{
-			DXOBJECT(ID3DXPatchMesh);
+			COMOBJECT(ID3DXPatchMesh);
 
 		internal:
 			PatchMesh( ID3DXPatchMesh *mesh ) { Construct(mesh); }

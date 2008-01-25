@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../SlimDXObject.h"
+#include "../ComObject.h"
 
 namespace SlimDX
 {
@@ -34,9 +34,9 @@ namespace SlimDX
 		value class ModeDescription;
 		value class OutputDescription;
 
-		public ref class Output : public SlimDXObject
+		public ref class Output : public ComObject
 		{
-			DXOBJECT(IDXGIOutput);
+			COMOBJECT(IDXGIOutput);
 		
 		internal:
 			Output( IDXGIOutput* pointer );

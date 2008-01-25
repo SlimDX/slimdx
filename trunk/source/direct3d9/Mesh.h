@@ -203,9 +203,9 @@ namespace SlimDX
 		ref class IndexBuffer;
 		enum class VertexFormat;
 
-		public ref class BaseMesh abstract : public SlimDXObject
+		public ref class BaseMesh abstract : public ComObject
 		{
-			DXOBJECT(ID3DXBaseMesh);
+			COMOBJECT(ID3DXBaseMesh);
 
 		protected:
 			BaseMesh() { }

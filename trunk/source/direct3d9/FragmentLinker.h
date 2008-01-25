@@ -38,9 +38,9 @@ namespace SlimDX
             property int Target;
 		};
 
-		public ref class FragmentLinker : public SlimDXObject
+		public ref class FragmentLinker : public ComObject
 		{
-			DXOBJECT(ID3DXFragmentLinker);
+			COMOBJECT(ID3DXFragmentLinker);
 
 		internal:
 			FragmentLinker( ID3DXFragmentLinker* linker );

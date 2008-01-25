@@ -105,9 +105,9 @@ namespace SlimDX
 			property int MinimumVertexCount { int get(); }
 		};
 
-		public ref class SimplificationMesh : SlimDXObject
+		public ref class SimplificationMesh : ComObject
 		{
-			DXOBJECT(ID3DXSPMesh);
+			COMOBJECT(ID3DXSPMesh);
 
 		internal:
 			SimplificationMesh( ID3DXSPMesh *mesh ) { Construct(mesh); }

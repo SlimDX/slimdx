@@ -43,9 +43,9 @@ namespace SlimDX
 			property SlimDX::Direct3D9::Format DepthStencilFormat;
 		};
 
-		public ref class RenderToSurface : public SlimDXObject
+		public ref class RenderToSurface : public ComObject
 		{
-			DXOBJECT(ID3DXRenderToSurface);
+			COMOBJECT(ID3DXRenderToSurface);
 
 		internal:
 			/* Unused for now.

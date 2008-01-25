@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include "../SlimDXObject.h"
+#include "../ComObject.h"
 
 #include "Factory.h"
 #include "Enums.h"
@@ -42,12 +42,12 @@ namespace SlimDX
 		/// A swap chain holds one or more surfaces that store rendered data
 		/// prior to presenting that data to an output.
 		/// </remarks>
-		public ref class SwapChain : public SlimDXObject
+		public ref class SwapChain : public ComObject
 		{
-			DXOBJECT(IDXGISwapChain);
+			COMOBJECT(IDXGISwapChain);
 		
 		public:
-			generic< typename T > where T : SlimDXObject, ref class
+			generic< typename T > where T : ComObject, ref class
 			T GetBuffer( int buffer );
 
 			FrameStatistics GetFrameStatistics();

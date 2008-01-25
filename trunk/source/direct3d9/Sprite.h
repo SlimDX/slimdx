@@ -43,9 +43,9 @@ namespace SlimDX
 
 		ref class Texture;
 
-		public ref class Sprite : public SlimDXObject
+		public ref class Sprite : public ComObject
 		{
-			DXOBJECT(ID3DXSprite);
+			COMOBJECT(ID3DXSprite);
 
 		internal:
 			Sprite( ID3DXSprite* sprite );

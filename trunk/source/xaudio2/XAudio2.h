@@ -95,11 +95,11 @@ namespace SlimDX
 			WaveFormatExtended OutputFormat;
 		};
 
-		public ref class XAudio2 : SlimDXObject<IXAudio2>
+		public ref class XAudio2 : ComObject<IXAudio2>
 		{
 		public:
 			XAudio2( XAudio2Flags flags, EngineCallback^ callback, WindowsProcessorSpecifier processor );
-			DXOBJECT_FUNCTIONS;
+			COMOBJECT_FUNCTIONS;
 
 			static float AmplitudeRatioToDecibels( float volume );
 			static float DecibelsToAmplitudeRatio( float decibels );

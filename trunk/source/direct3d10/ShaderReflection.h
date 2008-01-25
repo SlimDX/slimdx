@@ -25,7 +25,7 @@ using namespace System;
 using namespace System::Collections::Generic;
 using namespace System::Collections::ObjectModel;
 
-#include "../SlimDXObject.h"
+#include "../ComObject.h"
 
 #include "Enums.h"
 #include "Resource.h"
@@ -38,9 +38,9 @@ namespace SlimDX
 	{
 		ref class ShaderBytecode;
 		
-		public ref class ShaderReflection : public SlimDXObject
+		public ref class ShaderReflection : public ComObject
 		{
-			DXOBJECT(ID3D10ShaderReflection);
+			COMOBJECT(ID3D10ShaderReflection);
 
 		private:
 			int version;

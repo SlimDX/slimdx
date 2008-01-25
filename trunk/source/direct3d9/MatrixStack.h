@@ -28,9 +28,9 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
-		public ref class MatrixStack : SlimDXObject
+		public ref class MatrixStack : ComObject
 		{
-			DXOBJECT(ID3DXMatrixStack);
+			COMOBJECT(ID3DXMatrixStack);
 
 		public:
 			MatrixStack( IntPtr pointer );

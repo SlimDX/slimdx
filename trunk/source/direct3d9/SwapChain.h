@@ -48,9 +48,9 @@ namespace SlimDX
             }
 		};
 
-		public ref class SwapChain : public SlimDXObject
+		public ref class SwapChain : public ComObject
 		{
-			DXOBJECT(IDirect3DSwapChain9);
+			COMOBJECT(IDirect3DSwapChain9);
 
 		internal:
 			SwapChain( IDirect3DSwapChain9* swapChain );

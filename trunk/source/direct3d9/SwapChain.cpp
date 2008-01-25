@@ -22,7 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../SlimDXObject.h"
+#include "../ComObject.h"
 
 #include "Direct3D9Exception.h"
 
