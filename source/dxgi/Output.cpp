@@ -65,7 +65,32 @@ namespace DXGI
 			return GammaControlCapabilities();
 		return GammaControlCapabilities( caps );
 	}
-
+	
+	void Output::FindClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription% result )
+	{
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+			
+		DXGI_MODE_DESC nativeModeToMatch = modeToMatch.CreateNativeVersion();
+		DXGI_MODE_DESC nativeResult;
+		HRESULT hr = InternalPointer->FindClosestMatchingMode( &nativeModeToMatch, &nativeResult, device->UnknownPointer );
+		if( SUCCEEDED( hr ) )
+			result = ModeDescription( nativeResult );
+	}
+	
+	void Output::TakeOwnership( ComObject^ device, bool exclusive )
+	{
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+		HRESULT hr = InternalPointer->TakeOwnership( device->UnknownPointer, exclusive );
+		DXGIErrorHandler::TestForFailure( hr );
+	}
+	
+	void Output::ReleaseOwnership()
+	{
+		InternalPointer->ReleaseOwnership();
+	}
+	
 	void Output::WaitForVerticalBlank()
 	{
 		HRESULT hr = InternalPointer->WaitForVBlank();

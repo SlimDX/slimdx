@@ -22,6 +22,7 @@
 #pragma once
 
 using namespace System;
+using namespace System::Runtime::InteropServices;
 
 #include "../ComObject.h"
 
@@ -46,7 +47,12 @@ namespace SlimDX
 
 			FrameStatistics GetFrameStatistics();
 			GammaControlCapabilities GetGammaControlCapabilities();
-
+			
+			void FindClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription %result );
+			
+			void TakeOwnership( ComObject^ device, bool exclusive );
+			void ReleaseOwnership();
+			
 			void WaitForVerticalBlank();
 		};
 	}
