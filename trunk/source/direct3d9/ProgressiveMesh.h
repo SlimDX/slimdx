@@ -56,6 +56,10 @@ namespace SlimDX
 
 		public ref class ProgressiveMesh : public BaseMesh
 		{
+		private:
+			array<ExtendedMaterial>^ materials;
+			array<EffectInstance>^ effects;
+
 		internal:
 			ProgressiveMesh( ID3DXPMesh* mesh ) : BaseMesh( mesh ) { }
 
@@ -66,15 +70,13 @@ namespace SlimDX
 
 		public:
 			ProgressiveMesh( IntPtr pointer );
-			ProgressiveMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ attributeWeights, 
-				array<float>^ vertexWeights, int minimumValue, MeshSimplification options );
-			ProgressiveMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ attributeWeights, 
-				int minimumValue, MeshSimplification options );
-			ProgressiveMesh( Mesh^ mesh, array<int>^ adjacency, int minimumValue, MeshSimplification options );
+			ProgressiveMesh( Mesh^ mesh, array<AttributeWeights>^ attributeWeights, array<float>^ vertexWeights, int minimumValue, MeshSimplification options );
+			ProgressiveMesh( Mesh^ mesh, array<AttributeWeights>^ attributeWeights, int minimumValue, MeshSimplification options );
+			ProgressiveMesh( Mesh^ mesh, int minimumValue, MeshSimplification options );
 			virtual ~ProgressiveMesh() { }
 
-			static ProgressiveMesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags, 
-				[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effects );
+			static ProgressiveMesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags );
+			static void ToStream( ProgressiveMesh^ mesh, Stream^ stream );
 
 			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags flags, array<VertexElement>^ vertexDeclaration );
 			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags flags, SlimDX::Direct3D9::VertexFormat format );
@@ -83,14 +85,11 @@ namespace SlimDX
 			array<int>^ GetAdjacency();
 		
 			Mesh^ Optimize( MeshOptimizeFlags flags );
-			Mesh^ Optimize( MeshOptimizeFlags flags, [Out] array<int>^% adjacencyOut );
 			Mesh^ Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
-			Mesh^ Optimize( MeshOptimizeFlags flags, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
 
 			void OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags );
 			void OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap );
 
-			void Save( Stream^ stream, array<ExtendedMaterial>^ materials, array<EffectInstance>^ effects );
 			void SetFaceCount( int faceCount );
 			void SetVertexCount( int vertexCount );
 
@@ -98,6 +97,12 @@ namespace SlimDX
 			void TrimFaces( int newFaceMinimum, int newFaceMaximum, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
 			void TrimVertices( int newVertexMinimum, int newVertexMaximum );
 			void TrimVertices( int newVertexMinimum, int newVertexMaximum, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
+
+			array<ExtendedMaterial>^ GetMaterials() { return materials; }
+			void SetMaterials( array<ExtendedMaterial>^ value ) { materials = value; }
+
+			array<EffectInstance>^ GetEffects() { return effects; }
+			void SetEffects( array<EffectInstance>^ value ) { effects = value; }
 
 			property int MaximumFaceCount { int get(); }
 			property int MaximumVertexCount { int get(); }
@@ -114,18 +119,16 @@ namespace SlimDX
 
 		public:
 			SimplificationMesh( IntPtr pointer );
-			SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ vertexAttributeWeights, array<float>^ vertexWeights );
-			SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ vertexAttributeWeights );
-			SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<float>^ vertexWeights );
-			SimplificationMesh( Mesh^ mesh, array<int>^ adjacency );
+			SimplificationMesh( Mesh^ mesh, array<AttributeWeights>^ vertexAttributeWeights, array<float>^ vertexWeights );
+			SimplificationMesh( Mesh^ mesh, array<AttributeWeights>^ vertexAttributeWeights );
+			SimplificationMesh( Mesh^ mesh, array<float>^ vertexWeights );
+			SimplificationMesh( Mesh^ mesh );
 			virtual ~SimplificationMesh() { Destruct(); }
 
-			Mesh^ Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% adjacencyOut, [Out] array<int>^% vertexRemap );
-			Mesh^ Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% adjacencyOut );
+			Mesh^ Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap );
 			Mesh^ Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration );
 
-			Mesh^ Clone( Device^ device, MeshFlags options, VertexFormat fvf, [Out] array<int>^% adjacencyOut, [Out] array<int>^% vertexRemap );
-			Mesh^ Clone( Device^ device, MeshFlags options, VertexFormat fvf, [Out] array<int>^% adjacencyOut );
+			Mesh^ Clone( Device^ device, MeshFlags options, VertexFormat fvf, [Out] array<int>^% vertexRemap );
 			Mesh^ Clone( Device^ device, MeshFlags options, VertexFormat fvf );
 
 			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap, [Out] array<float>^% errorsByFace );

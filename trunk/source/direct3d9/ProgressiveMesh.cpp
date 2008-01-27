@@ -202,16 +202,25 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
-	ProgressiveMesh::ProgressiveMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ attributeWeights,
+	ProgressiveMesh::ProgressiveMesh( Mesh^ mesh, array<AttributeWeights>^ attributeWeights,
 		array<float>^ vertexWeights, int minimumValue, MeshSimplification options )
 	{
 		ID3DXPMesh *result;
 
-		pin_ptr<int> pinnedAdj = &adjacency[0];
+		DWORD *adjacencyIn = NULL;
+		pin_ptr<int> pinnedAdj;
+		array<int>^ adjacency = mesh->GetAdjacency();
+
+		if( adjacency != nullptr )
+		{
+			pinnedAdj = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
+		}
+
 		pin_ptr<float> pinnedVW = &vertexWeights[0];
 		pin_ptr<AttributeWeights> pinnedAW = &attributeWeights[0];
 
-		HRESULT hr = D3DXGeneratePMesh( mesh->MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ),
+		HRESULT hr = D3DXGeneratePMesh( mesh->MeshPointer, adjacencyIn,
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedAW ), reinterpret_cast<const FLOAT*>( pinnedVW ),
 			minimumValue, static_cast<DWORD>( options ), &result );
 		Direct3D9ErrorHandler::TestForFailure( hr );
@@ -219,15 +228,24 @@ namespace Direct3D9
 		Construct(result);
 	}
 
-	ProgressiveMesh::ProgressiveMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ attributeWeights,
+	ProgressiveMesh::ProgressiveMesh( Mesh^ mesh, array<AttributeWeights>^ attributeWeights,
 		int minimumValue, MeshSimplification options )
 	{
 		ID3DXPMesh *result;
 
-		pin_ptr<int> pinnedAdj = &adjacency[0];
+		DWORD *adjacencyIn = NULL;
+		pin_ptr<int> pinnedAdj;
+		array<int>^ adjacency = mesh->GetAdjacency();
+
+		if( adjacency != nullptr )
+		{
+			pinnedAdj = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
+		}
+
 		pin_ptr<AttributeWeights> pinnedAW = &attributeWeights[0];
 
-		HRESULT hr = D3DXGeneratePMesh( mesh->MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ),
+		HRESULT hr = D3DXGeneratePMesh( mesh->MeshPointer, adjacencyIn,
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedAW ), NULL,
 			minimumValue, static_cast<DWORD>( options ), &result );
 		Direct3D9ErrorHandler::TestForFailure( hr );
@@ -235,21 +253,28 @@ namespace Direct3D9
 		Construct(result);
 	}
 
-	ProgressiveMesh::ProgressiveMesh( Mesh^ mesh, array<int>^ adjacency, int minimumValue, MeshSimplification options )
+	ProgressiveMesh::ProgressiveMesh( Mesh^ mesh, int minimumValue, MeshSimplification options )
 	{
 		ID3DXPMesh *result;
 
-		pin_ptr<int> pinnedAdj = &adjacency[0];
+		DWORD *adjacencyIn = NULL;
+		pin_ptr<int> pinnedAdj;
+		array<int>^ adjacency = mesh->GetAdjacency();
 
-		HRESULT hr = D3DXGeneratePMesh( mesh->MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ),
+		if( adjacency != nullptr )
+		{
+			pinnedAdj = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
+		}
+
+		HRESULT hr = D3DXGeneratePMesh( mesh->MeshPointer, adjacencyIn,
 			NULL, NULL, minimumValue, static_cast<DWORD>( options ), &result );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		Construct(result);
 	}
 
-	ProgressiveMesh^ ProgressiveMesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags, 
-		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effects )
+	ProgressiveMesh^ ProgressiveMesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags )
 	{
 		ID3DXPMesh *result;
 		ID3DXBuffer *om;
@@ -264,15 +289,14 @@ namespace Direct3D9
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
-		{
-			materials = nullptr;
-			effects = nullptr;
 			return nullptr;
-		}
+		
+		ProgressiveMesh^ mesh = gcnew ProgressiveMesh( result );
 
-		materials = ExtendedMaterial::FromBuffer( om, numMaterials );
-		effects = EffectInstance::FromBuffer( oe, numMaterials );
-		return gcnew ProgressiveMesh( result );
+		mesh->SetMaterials( ExtendedMaterial::FromBuffer( om, numMaterials ) );
+		mesh->SetEffects( EffectInstance::FromBuffer( oe, numMaterials ) );
+
+		return mesh;
 	}
 
 	ProgressiveMesh^ ProgressiveMesh::CloneProgressive( Device^ device, MeshFlags flags, array<VertexElement>^ vertexDeclaration )
@@ -330,18 +354,7 @@ namespace Direct3D9
 	{
 		ID3DXMesh *result;
 
-		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), NULL, NULL, NULL, &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-			return nullptr;
-
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ ProgressiveMesh::Optimize( MeshOptimizeFlags flags, [Out] array<int>^% adjacencyOut )
-	{
-		ID3DXMesh *result;
+		array<int>^ adjacencyOut = gcnew array<int>( FaceCount * 3 );
 		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
 
 		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), reinterpret_cast<DWORD*>( pinnedAdj ), NULL, NULL, &result );
@@ -350,36 +363,23 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew Mesh( result );
+		Mesh^ mesh = gcnew Mesh( result );
+		mesh->SetAdjacency( adjacencyOut );
+
+		return mesh;
 	}
 
 	Mesh^ ProgressiveMesh::Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *buffer;
+		faceRemap = gcnew array<int>( FaceCount );
 		pin_ptr<int> pinnedFR = &faceRemap[0];
 
-		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), NULL, reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-		{
-			vertexRemap = nullptr;
-			return nullptr;
-		}
-
-		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( result->GetNumVertices() );
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ ProgressiveMesh::Optimize( MeshOptimizeFlags flags, [Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
-	{
-		ID3DXMesh *result;
-		ID3DXBuffer *buffer;
+		array<int>^ adjacencyOut = gcnew array<int>( FaceCount * 3 );
 		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
-		pin_ptr<int> pinnedFR = &faceRemap[0];
 
-		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), reinterpret_cast<DWORD*>( pinnedAdj ),
+		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), reinterpret_cast<DWORD*>( pinnedAdj ), 
 			reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
@@ -390,7 +390,11 @@ namespace Direct3D9
 		}
 
 		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( result->GetNumVertices() );
-		return gcnew Mesh( result );
+		
+		Mesh^ mesh = gcnew Mesh( result );
+		mesh->SetAdjacency( adjacencyOut );
+
+		return mesh;
 	}
 
 	void ProgressiveMesh::OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags )
@@ -401,25 +405,38 @@ namespace Direct3D9
 
 	void ProgressiveMesh::OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap )
 	{
+		faceRemap = gcnew array<int>( FaceCount );
 		pin_ptr<int> pinnedFR = &faceRemap[0];
 		HRESULT hr = MeshPointer->OptimizeBaseLOD( static_cast<DWORD>( flags ), reinterpret_cast<DWORD*>( pinnedFR ) );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
-	void ProgressiveMesh::Save( Stream^ stream, array<ExtendedMaterial>^ materials, array<EffectInstance>^ effects )
+	void ProgressiveMesh::ToStream( ProgressiveMesh^ mesh, Stream^ stream )
 	{
 		StreamShim^ shim = gcnew StreamShim( stream );
 		pin_ptr<StreamShim^> nativeStream = &shim;
 
-		D3DXMATERIAL *nativeMaterials = new D3DXMATERIAL[materials->Length];
-		for( int i = 0; i < materials->Length; i++ )
-			nativeMaterials[i] = ExtendedMaterial::ToUnmanaged( materials[i] );
+		array<ExtendedMaterial>^ materials = mesh->GetMaterials();
+		array<EffectInstance>^ effects = mesh->GetEffects();
 
-		D3DXEFFECTINSTANCE *nativeEffects = new D3DXEFFECTINSTANCE[effects->Length];
-		for( int i = 0; i < effects->Length; i++ )
-			nativeEffects[i] = EffectInstance::ToUnmanaged( effects[i] );
+		D3DXMATERIAL *nativeMaterials = NULL;
+		D3DXEFFECTINSTANCE *nativeEffects = NULL;
 
-		HRESULT hr = MeshPointer->Save( reinterpret_cast<IStream*>( nativeStream ), nativeMaterials, nativeEffects, materials->Length );
+		if( materials != nullptr )
+		{
+			nativeMaterials = new D3DXMATERIAL[materials->Length];
+			for( int i = 0; i < materials->Length; i++ )
+				nativeMaterials[i] = ExtendedMaterial::ToUnmanaged( materials[i] );
+		}
+
+		if( effects != nullptr )
+		{
+			nativeEffects = new D3DXEFFECTINSTANCE[effects->Length];
+			for( int i = 0; i < effects->Length; i++ )
+				nativeEffects[i] = EffectInstance::ToUnmanaged( effects[i] );
+		}
+
+		HRESULT hr = mesh->MeshPointer->Save( reinterpret_cast<IStream*>( nativeStream ), nativeMaterials, nativeEffects, materials->Length );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		delete[] nativeMaterials;
@@ -446,6 +463,8 @@ namespace Direct3D9
 
 	void ProgressiveMesh::TrimFaces( int newFaceMinimum, int newFaceMaximum, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
 	{
+		faceRemap = gcnew array<int>( FaceCount );
+		vertexRemap = gcnew array<int>( VertexCount );
 		pin_ptr<int> pinnedFR = &faceRemap[0];
 		pin_ptr<int> pinnedVR = &vertexRemap[0];
 
@@ -462,6 +481,8 @@ namespace Direct3D9
 
 	void ProgressiveMesh::TrimVertices( int newVertexMinimum, int newVertexMaximum, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
 	{
+		faceRemap = gcnew array<int>( FaceCount );
+		vertexRemap = gcnew array<int>( VertexCount );
 		pin_ptr<int> pinnedFR = &faceRemap[0];
 		pin_ptr<int> pinnedVR = &vertexRemap[0];
 
@@ -495,67 +516,104 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
-	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ vertexAttributeWeights, array<float>^ vertexWeights )
+	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<AttributeWeights>^ vertexAttributeWeights, array<float>^ vertexWeights )
 	{
 		ID3DXSPMesh *result;
 
-		pin_ptr<int> pinnedAdj = &adjacency[0];
+		DWORD *adjacencyIn = NULL;
+		pin_ptr<int> pinnedAdj;
+		array<int>^ adjacency = mesh->GetAdjacency();
+
+		if( adjacency != nullptr )
+		{
+			pinnedAdj = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
+		}
+
 		pin_ptr<AttributeWeights> pinnedVAW = &vertexAttributeWeights[0];
 		pin_ptr<float> pinnedVW = &vertexWeights[0];
 
-		HRESULT hr = D3DXCreateSPMesh( mesh->MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ),
+		HRESULT hr = D3DXCreateSPMesh( mesh->MeshPointer, adjacencyIn,
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedVAW ), reinterpret_cast<const FLOAT *>( pinnedVW ), &result );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		Construct(result);
 	}
 
-	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ vertexAttributeWeights )
+	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<AttributeWeights>^ vertexAttributeWeights )
 	{
 		ID3DXSPMesh *result;
 
-		pin_ptr<int> pinnedAdj = &adjacency[0];
+		DWORD *adjacencyIn = NULL;
+		pin_ptr<int> pinnedAdj;
+		array<int>^ adjacency = mesh->GetAdjacency();
+
+		if( adjacency != nullptr )
+		{
+			pinnedAdj = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
+		}
+
 		pin_ptr<AttributeWeights> pinnedVAW = &vertexAttributeWeights[0];
 
-		HRESULT hr = D3DXCreateSPMesh( mesh->MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ),
+		HRESULT hr = D3DXCreateSPMesh( mesh->MeshPointer, adjacencyIn,
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedVAW ), NULL, &result );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		Construct(result);
 	}
 
-	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^ adjacency, array<float>^ vertexWeights )
+	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<float>^ vertexWeights )
 	{
 		ID3DXSPMesh *result;
 
-		pin_ptr<int> pinnedAdj = &adjacency[0];
+		DWORD *adjacencyIn = NULL;
+		pin_ptr<int> pinnedAdj;
+		array<int>^ adjacency = mesh->GetAdjacency();
+
+		if( adjacency != nullptr )
+		{
+			pinnedAdj = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
+		}
+
 		pin_ptr<float> pinnedVW = &vertexWeights[0];
 
-		HRESULT hr = D3DXCreateSPMesh( mesh->MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ),
+		HRESULT hr = D3DXCreateSPMesh( mesh->MeshPointer, adjacencyIn,
 			NULL, reinterpret_cast<const FLOAT *>( pinnedVW ), &result );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		Construct(result);
 	}
 
-	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<int>^ adjacency )
+	SimplificationMesh::SimplificationMesh( Mesh^ mesh )
 	{
 		ID3DXSPMesh *result;
 
-		pin_ptr<int> pinnedAdj = &adjacency[0];
+		DWORD *adjacencyIn = NULL;
+		pin_ptr<int> pinnedAdj;
+		array<int>^ adjacency = mesh->GetAdjacency();
 
-		HRESULT hr = D3DXCreateSPMesh( mesh->MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ), NULL, NULL, &result );
+		if( adjacency != nullptr )
+		{
+			pinnedAdj = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
+		}
+
+		HRESULT hr = D3DXCreateSPMesh( mesh->MeshPointer, adjacencyIn, NULL, NULL, &result );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		Construct(result);
 	}
 
-	Mesh^ SimplificationMesh::Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% adjacencyOut, [Out] array<int>^% vertexRemap )
+	Mesh^ SimplificationMesh::Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap )
 	{
 		ID3DXMesh *result;
 
 		pin_ptr<VertexElement> pinnedDecl = &vertexDeclaration[0];
+		array<int>^ adjacencyOut = gcnew array<int>( FaceCount * 3 );
 		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
+		vertexRemap = gcnew array<int>( VertexCount );
 		pin_ptr<int> pinnedVR = &vertexRemap[0];
 
 		HRESULT hr = InternalPointer->CloneMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
@@ -564,32 +622,14 @@ namespace Direct3D9
 
 		if( FAILED( hr ) )
 		{
-			adjacencyOut = nullptr;
 			vertexRemap = nullptr;
 			return nullptr;
 		}
 
-		return gcnew Mesh( result );
-	}
+		Mesh^ mesh = gcnew Mesh( result );
+		mesh->SetAdjacency( adjacencyOut );
 
-	Mesh^ SimplificationMesh::Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% adjacencyOut )
-	{
-		ID3DXMesh *result;
-
-		pin_ptr<VertexElement> pinnedDecl = &vertexDeclaration[0];
-		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
-
-		HRESULT hr = InternalPointer->CloneMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
-			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedAdj ), NULL, &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-		{
-			adjacencyOut = nullptr;
-			return nullptr;
-		}
-
-		return gcnew Mesh( result );
+		return mesh;
 	}
 
 	Mesh^ SimplificationMesh::Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration )
@@ -597,22 +637,29 @@ namespace Direct3D9
 		ID3DXMesh *result;
 
 		pin_ptr<VertexElement> pinnedDecl = &vertexDeclaration[0];
+		array<int>^ adjacencyOut = gcnew array<int>( FaceCount * 3 );
+		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
 
 		HRESULT hr = InternalPointer->CloneMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
-			device->InternalPointer, NULL, NULL, &result );
+			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedAdj ), NULL, &result );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew Mesh( result );
+		Mesh^ mesh = gcnew Mesh( result );
+		mesh->SetAdjacency( adjacencyOut );
+
+		return mesh;
 	}
 
-	Mesh^ SimplificationMesh::Clone( Device^ device, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf, [Out] array<int>^% adjacencyOut, [Out] array<int>^% vertexRemap )
+	Mesh^ SimplificationMesh::Clone( Device^ device, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf, [Out] array<int>^% vertexRemap )
 	{
 		ID3DXMesh *result;
 
+		array<int>^ adjacencyOut = gcnew array<int>( FaceCount * 3 );
 		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
+		vertexRemap = gcnew array<int>( VertexCount );
 		pin_ptr<int> pinnedVR = &vertexRemap[0];
 
 		HRESULT hr = InternalPointer->CloneMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
@@ -621,18 +668,21 @@ namespace Direct3D9
 
 		if( FAILED( hr ) )
 		{
-			adjacencyOut = nullptr;
 			vertexRemap = nullptr;
 			return nullptr;
 		}
 
-		return gcnew Mesh( result );
+		Mesh^ mesh = gcnew Mesh( result );
+		mesh->SetAdjacency( adjacencyOut );
+
+		return mesh;
 	}
 
-	Mesh^ SimplificationMesh::Clone( Device^ device, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf, [Out] array<int>^% adjacencyOut )
+	Mesh^ SimplificationMesh::Clone( Device^ device, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf )
 	{
 		ID3DXMesh *result;
 
+		array<int>^ adjacencyOut = gcnew array<int>( FaceCount * 3 );
 		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
 
 		HRESULT hr = InternalPointer->CloneMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
@@ -640,26 +690,12 @@ namespace Direct3D9
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
-		{
-			adjacencyOut = nullptr;
-			return nullptr;
-		}
-
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ SimplificationMesh::Clone( Device^ device, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf )
-	{
-		ID3DXMesh *result;
-
-		HRESULT hr = InternalPointer->CloneMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
-			device->InternalPointer, NULL, NULL, &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew Mesh( result );
+		Mesh^ mesh = gcnew Mesh( result );
+		mesh->SetAdjacency( adjacencyOut );
+
+		return mesh;
 	}
 
 	ProgressiveMesh^ SimplificationMesh::CloneProgressive( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap, [Out] array<float>^% errorsByFace )
@@ -667,6 +703,8 @@ namespace Direct3D9
 		ID3DXPMesh *result;
 
 		pin_ptr<VertexElement> pinnedDecl = &vertexDeclaration[0];
+		vertexRemap = gcnew array<int>( VertexCount );
+		errorsByFace = gcnew array<float>( FaceCount );
 		pin_ptr<float> pinnedEBF = &errorsByFace[0];
 		pin_ptr<int> pinnedVR = &vertexRemap[0];
 
@@ -689,6 +727,7 @@ namespace Direct3D9
 		ID3DXPMesh *result;
 
 		pin_ptr<VertexElement> pinnedDecl = &vertexDeclaration[0];
+		vertexRemap = gcnew array<int>( VertexCount );
 		pin_ptr<int> pinnedVR = &vertexRemap[0];
 
 		HRESULT hr = InternalPointer->ClonePMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
@@ -724,6 +763,9 @@ namespace Direct3D9
 	{
 		ID3DXPMesh *result;
 
+		vertexRemap = gcnew array<int>( VertexCount );
+		errorsByFace = gcnew array<float>( FaceCount );
+
 		pin_ptr<float> pinnedEBF = &errorsByFace[0];
 		pin_ptr<int> pinnedVR = &vertexRemap[0];
 
@@ -745,6 +787,7 @@ namespace Direct3D9
 	{
 		ID3DXPMesh *result;
 
+		vertexRemap = gcnew array<int>( VertexCount );
 		pin_ptr<int> pinnedVR = &vertexRemap[0];
 
 		HRESULT hr = InternalPointer->ClonePMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
