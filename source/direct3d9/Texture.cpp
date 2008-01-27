@@ -145,7 +145,9 @@ namespace Direct3D9
 	{
 		IDirect3DTexture9* texture;
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+		imageInformation = ImageInformation();
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		palette = gcnew array<PaletteEntry>( 256 );
 		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
 
 		HRESULT hr = D3DXCreateTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, width,
@@ -169,6 +171,7 @@ namespace Direct3D9
 	{
 		IDirect3DTexture9* texture;
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+		imageInformation = ImageInformation();
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
 
 		HRESULT hr = D3DXCreateTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, width,
@@ -259,7 +262,9 @@ namespace Direct3D9
 	{
 		IDirect3DTexture9* texture;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+		imageInformation = ImageInformation();
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		palette = gcnew array<PaletteEntry>( 256 );
 		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
 
 		HRESULT hr = D3DXCreateTextureFromFileEx( device->InternalPointer, pinnedName, width, height, 
@@ -512,7 +517,9 @@ namespace Direct3D9
 	{
 		IDirect3DCubeTexture9* texture;
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+		imageInformation = ImageInformation();
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		palette = gcnew array<PaletteEntry>( 256 );
 		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
 
 		HRESULT hr = D3DXCreateCubeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, size, numLevels,
@@ -623,7 +630,9 @@ namespace Direct3D9
 	{
 		IDirect3DCubeTexture9* texture;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+		imageInformation = ImageInformation();
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		palette = gcnew array<PaletteEntry>( 256 );
 		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
 
 		HRESULT hr = D3DXCreateCubeTextureFromFileEx( device->InternalPointer, pinnedName, size, 
@@ -819,7 +828,9 @@ namespace Direct3D9
 	{
 		IDirect3DVolumeTexture9* texture;
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+		imageInformation = ImageInformation();
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		palette = gcnew array<PaletteEntry>( 256 );
 		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
 
 		HRESULT hr = D3DXCreateVolumeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length,
@@ -932,7 +943,9 @@ namespace Direct3D9
 	{
 		IDirect3DVolumeTexture9* texture;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+		imageInformation = ImageInformation();
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		palette = gcnew array<PaletteEntry>( 256 );
 		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
 
 		HRESULT hr = D3DXCreateVolumeTextureFromFileEx( device->InternalPointer, pinnedName, width, height,

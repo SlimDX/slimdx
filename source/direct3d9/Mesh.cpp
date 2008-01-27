@@ -612,6 +612,18 @@ namespace Direct3D9
 		return static_cast<MeshFlags>( InternalPointer->GetOptions() );
 	}
 
+	void Mesh::SetAdjacency( DWORD *adj )
+	{
+		if( adj == NULL )
+			adjacency = nullptr;
+		else
+		{
+			adjacency = gcnew array<int>( FaceCount * 3 );
+			for( int i = 0; i < FaceCount * 3; i++ )
+				adjacency[i] = adj[i];
+		}
+	}
+
 	Mesh::Mesh( ID3DXMesh* mesh ) : BaseMesh( mesh )
 	{
 	}
@@ -650,8 +662,7 @@ namespace Direct3D9
 		Construct(mesh);
 	}
 
-	Mesh^ Mesh::FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<int>^% adjacency,
-		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances )
+	Mesh^ Mesh::FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags )
 	{
 		ID3DXMesh* mesh;
 		ID3DXBuffer* adjacencyBuffer;
@@ -664,113 +675,22 @@ namespace Direct3D9
 			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
-		{
-			adjacency = nullptr;
-			materials = nullptr;
-			effectInstances = nullptr;
 			return nullptr;
-		}
 
-		adjacency = ( gcnew DataStream( adjacencyBuffer ) )->ReadRange<int>( mesh->GetNumFaces() * 3 );
-		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
+		Mesh^ result = gcnew Mesh( mesh );
+
+		result->SetAdjacency( ( gcnew DataStream( adjacencyBuffer ) )->ReadRange<int>( mesh->GetNumFaces() * 3 ) );
+		result->SetMaterials( ExtendedMaterial::FromBuffer( materialBuffer, materialCount ) );
 
 		// figure out how many effect instances there are, and get them out of the buffer
 		DWORD instanceCount = 0;
 		hr = mesh->GetAttributeTable( NULL, &instanceCount );
-		effectInstances = EffectInstance::FromBuffer( instanceBuffer, instanceCount );
+		result->SetEffects( EffectInstance::FromBuffer( instanceBuffer, instanceCount ) );
 
 		materialBuffer->Release();
 		instanceBuffer->Release();
 
-		return gcnew Mesh( mesh );
-	}
-
-	Mesh^ Mesh::FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
-		[Out] array<EffectInstance>^% effectInstances )
-	{
-		ID3DXMesh* mesh;
-		ID3DXBuffer* materialBuffer;
-		ID3DXBuffer* instanceBuffer;
-		DWORD materialCount;
-		pin_ptr<unsigned char> pinnedMemory = &memory[0];
-		
-		HRESULT hr = D3DXLoadMeshFromXInMemory( pinnedMemory, memory->Length, static_cast<DWORD>( flags ), device->InternalPointer,
-			NULL, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-		if( FAILED( hr ) )
-		{
-			materials = nullptr;
-			effectInstances = nullptr;
-			return nullptr;
-		}
-
-		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
-
-		DWORD instanceCount = 0;
-		hr = mesh->GetAttributeTable( NULL, &instanceCount );
-		effectInstances = EffectInstance::FromBuffer( instanceBuffer, instanceCount );
-
-		materialBuffer->Release();
-		instanceBuffer->Release();
-
-		return gcnew Mesh( mesh );
-	}
-
-	Mesh^ Mesh::FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials )
-	{
-		ID3DXMesh* mesh;
-		ID3DXBuffer* materialBuffer;
-		DWORD materialCount;
-		pin_ptr<unsigned char> pinnedMemory = &memory[0];
-		
-		HRESULT hr = D3DXLoadMeshFromXInMemory( pinnedMemory, memory->Length, static_cast<DWORD>( flags ),
-			device->InternalPointer, NULL, &materialBuffer, NULL, &materialCount, &mesh );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-		if( FAILED( hr ) )
-		{
-			materials = nullptr;
-			return nullptr;
-		}
-
-		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
-		materialBuffer->Release();
-
-		return gcnew Mesh( mesh );
-	}
-
-	Mesh^ Mesh::FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags )
-	{
-		ID3DXMesh* mesh;
-		pin_ptr<unsigned char> pinnedMemory = &memory[0];
-		
-		HRESULT hr = D3DXLoadMeshFromXInMemory( pinnedMemory, memory->Length, static_cast<DWORD>( flags ),
-			device->InternalPointer, NULL, NULL, NULL, NULL, &mesh );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-			return nullptr;
-
-		return gcnew Mesh( mesh );
-	}
-
-	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<int>^% adjacency,
-		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances )
-	{
-		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
-		return Mesh::FromMemory( device, data, flags, adjacency, materials, effectInstances );
-	}
-
-	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
-		[Out] array<EffectInstance>^% effectInstances )
-	{
-		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
-		return Mesh::FromMemory( device, data, flags, materials, effectInstances );
-	}
-
-	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials )
-	{
-		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
-		return Mesh::FromMemory( device, data, flags, materials );
+		return result;
 	}
 
 	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags )
@@ -779,210 +699,37 @@ namespace Direct3D9
 		return Mesh::FromMemory( device, data, flags );
 	}
 
-	Mesh^ Mesh::FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<int>^% adjacency,
-		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances )
-	{
-		ID3DXMesh* mesh;
-		ID3DXBuffer* adjacencyBuffer;
-		ID3DXBuffer* materialBuffer;
-		ID3DXBuffer* instanceBuffer;
-		DWORD materialCount;
-		pin_ptr<const wchar_t> pinnedFileName = PtrToStringChars( fileName );
-		
-		HRESULT hr = D3DXLoadMeshFromX( pinnedFileName, static_cast<DWORD>( flags ), device->InternalPointer,
-			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-		if( FAILED( hr ) )
-		{
-			adjacency = nullptr;
-			materials = nullptr;
-			effectInstances = nullptr;
-			return nullptr;
-		}
-
-		adjacency = ( gcnew DataStream( adjacencyBuffer ) )->ReadRange<int>( mesh->GetNumFaces() * 3 );
-		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
-
-		DWORD instanceCount = 0;
-		hr = mesh->GetAttributeTable( NULL, &instanceCount );
-		effectInstances = EffectInstance::FromBuffer( instanceBuffer, instanceCount );
-
-		materialBuffer->Release();
-		instanceBuffer->Release();
-
-		return gcnew Mesh( mesh );
-	}
-
-	Mesh^ Mesh::FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
-		[Out] array<EffectInstance>^% effectInstances )
-	{
-		ID3DXMesh* mesh;
-		ID3DXBuffer* materialBuffer;
-		ID3DXBuffer* instanceBuffer;
-		DWORD materialCount;
-		pin_ptr<const wchar_t> pinnedFileName = PtrToStringChars( fileName );
-		
-		HRESULT hr = D3DXLoadMeshFromX( pinnedFileName, static_cast<DWORD>( flags ), device->InternalPointer,
-			NULL, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-		if( FAILED( hr ) )
-		{
-			materials = nullptr;
-			effectInstances = nullptr;
-			return nullptr;
-		}
-
-		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
-
-		DWORD instanceCount = 0;
-		hr = mesh->GetAttributeTable( NULL, &instanceCount );
-		effectInstances = EffectInstance::FromBuffer( instanceBuffer, instanceCount );
-
-		materialBuffer->Release();
-		instanceBuffer->Release();
-
-		return gcnew Mesh( mesh );
-	}
-
-	Mesh^ Mesh::FromFile( Device^ device, String^ fileName, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials )
-	{
-		ID3DXMesh* mesh;
-		ID3DXBuffer* materialBuffer;
-		DWORD materialCount;
-		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
-		
-		HRESULT hr = D3DXLoadMeshFromXW( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( flags ), device->InternalPointer,
-			NULL, &materialBuffer, NULL, &materialCount, &mesh );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-		{
-			materials = nullptr;
-			return nullptr;
-		}
-
-		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
-		materialBuffer->Release();
-
-		return gcnew Mesh( mesh );
-	}
-
 	Mesh^ Mesh::FromFile( Device^ device, String^ fileName, MeshFlags flags )
 	{
 		ID3DXMesh* mesh;
-		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
-
-		HRESULT hr = D3DXLoadMeshFromXW( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( flags ), 
-			device->InternalPointer, NULL, NULL, NULL, NULL, &mesh );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-			return nullptr;
-
-		return gcnew Mesh( mesh );
-	}
-
-	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<int>^% adjacency,
-		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances )
-	{
-		ID3DXMesh* mesh;
 		ID3DXBuffer* adjacencyBuffer;
 		ID3DXBuffer* materialBuffer;
 		ID3DXBuffer* instanceBuffer;
 		DWORD materialCount;
+		pin_ptr<const wchar_t> pinnedFileName = PtrToStringChars( fileName );
 		
-		HRESULT hr = D3DXLoadMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
+		HRESULT hr = D3DXLoadMeshFromX( pinnedFileName, static_cast<DWORD>( flags ), device->InternalPointer,
 			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
-		{
-			adjacency = nullptr;
-			materials = nullptr;
-			effectInstances = nullptr;
 			return nullptr;
-		}
 
-		adjacency = ( gcnew DataStream( adjacencyBuffer ) )->ReadRange<int>( mesh->GetNumFaces() * 3 );
-		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
+		Mesh^ result = gcnew Mesh( mesh );
+
+		result->SetAdjacency( ( gcnew DataStream( adjacencyBuffer ) )->ReadRange<int>( mesh->GetNumFaces() * 3 ) );
+		result->SetMaterials( ExtendedMaterial::FromBuffer( materialBuffer, materialCount ) );
 
 		DWORD instanceCount = 0;
 		hr = mesh->GetAttributeTable( NULL, &instanceCount );
-		effectInstances = EffectInstance::FromBuffer( instanceBuffer, instanceCount );
+		result->SetEffects( EffectInstance::FromBuffer( instanceBuffer, instanceCount ) );
 
 		materialBuffer->Release();
 		instanceBuffer->Release();
 
-		return gcnew Mesh( mesh );
-	}
-
-	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
-		[Out] array<EffectInstance>^% effectInstances )
-	{
-		ID3DXMesh* mesh;
-		ID3DXBuffer* materialBuffer;
-		ID3DXBuffer* instanceBuffer;
-		DWORD materialCount;
-		
-		HRESULT hr = D3DXLoadMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
-			NULL, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-		if( FAILED( hr ) )
-		{
-			materials = nullptr;
-			effectInstances = nullptr;
-			return nullptr;
-		}
-
-		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
-
-		DWORD instanceCount = 0;
-		hr = mesh->GetAttributeTable( NULL, &instanceCount );
-		effectInstances = EffectInstance::FromBuffer( instanceBuffer, instanceCount );
-
-		materialBuffer->Release();
-		instanceBuffer->Release();
-
-		return gcnew Mesh( mesh );
-	}
-
-	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials )
-	{
-		ID3DXMesh* mesh;
-		ID3DXBuffer* materialBuffer;
-		DWORD materialCount;
-		
-		HRESULT hr = D3DXLoadMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
-			NULL, &materialBuffer, NULL, &materialCount, &mesh );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-		{
-			materials = nullptr;
-			return nullptr;
-		}
-
-		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
-		materialBuffer->Release();
-
-		return gcnew Mesh( mesh );
+		return result;
 	}
 
 	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags )
-	{
-		ID3DXMesh* mesh;
-
-		HRESULT hr = D3DXLoadMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), 
-			device->InternalPointer, NULL, NULL, NULL, NULL, &mesh );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-			return nullptr;
-
-		return gcnew Mesh( mesh );
-	}
-
-	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<int>^% adjacency,
-		[Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances, [Out] SkinInfo^% skinInfo )
 	{
 		ID3DXMesh* mesh;
 		ID3DXSkinInfo* skin;
@@ -995,107 +742,23 @@ namespace Direct3D9
 			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &skin, &mesh );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
-		{
-			adjacency = nullptr;
-			materials = nullptr;
-			effectInstances = nullptr;
-			skinInfo = nullptr;
 			return nullptr;
-		}
 
-		adjacency = ( gcnew DataStream( adjacencyBuffer ) )->ReadRange<int>( mesh->GetNumFaces() * 3 );
-		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
+		Mesh^ result = gcnew Mesh( mesh );
+
+		result->SetAdjacency( ( gcnew DataStream( adjacencyBuffer ) )->ReadRange<int>( mesh->GetNumFaces() * 3 ) );
+		result->SetMaterials( ExtendedMaterial::FromBuffer( materialBuffer, materialCount ) );
 
 		DWORD instanceCount = 0;
 		hr = mesh->GetAttributeTable( NULL, &instanceCount );
-		effectInstances = EffectInstance::FromBuffer( instanceBuffer, instanceCount );
+		result->SetEffects( EffectInstance::FromBuffer( instanceBuffer, instanceCount ) );
 
 		materialBuffer->Release();
 		instanceBuffer->Release();
 
-		skinInfo = gcnew SkinInfo( skin );
+		result->SkinInfo = gcnew SlimDX::Direct3D9::SkinInfo( skin );
 
-		return gcnew Mesh( mesh );
-	}
-
-	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
-		[Out] array<EffectInstance>^% effectInstances, [Out] SkinInfo^% skinInfo )
-	{
-		ID3DXMesh* mesh;
-		ID3DXSkinInfo* skin;
-		ID3DXBuffer* materialBuffer;
-		ID3DXBuffer* instanceBuffer;
-		DWORD materialCount;
-		
-		HRESULT hr = D3DXLoadSkinMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
-			NULL, &materialBuffer, &instanceBuffer, &materialCount, &skin, &mesh );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-		if( FAILED( hr ) )
-		{
-			materials = nullptr;
-			effectInstances = nullptr;
-			skinInfo = nullptr;
-			return nullptr;
-		}
-
-		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
-
-		DWORD instanceCount = 0;
-		hr = mesh->GetAttributeTable( NULL, &instanceCount );
-		effectInstances = EffectInstance::FromBuffer( instanceBuffer, instanceCount );
-
-		materialBuffer->Release();
-		instanceBuffer->Release();
-
-		skinInfo = gcnew SkinInfo( skin );
-
-		return gcnew Mesh( mesh );
-	}
-
-	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] SkinInfo^% skinInfo )
-	{
-		ID3DXMesh* mesh;
-		ID3DXSkinInfo* skin;
-		ID3DXBuffer* materialBuffer;
-		DWORD materialCount;
-		
-		HRESULT hr = D3DXLoadSkinMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
-			NULL, &materialBuffer, NULL, &materialCount, &skin, &mesh );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-		{
-			materials = nullptr;
-			skinInfo = nullptr;
-			return nullptr;
-		}
-
-		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
-		materialBuffer->Release();
-
-		skinInfo = gcnew SkinInfo( skin );
-
-		return gcnew Mesh( mesh );
-	}
-
-	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] SkinInfo^% skinInfo )
-	{
-		ID3DXMesh* mesh;
-		ID3DXSkinInfo* skin;
-
-		HRESULT hr = D3DXLoadSkinMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), 
-			device->InternalPointer, NULL, NULL, NULL, NULL, &skin, &mesh );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-		{
-			skinInfo = nullptr;
-			return nullptr;
-		}
-
-		skinInfo = gcnew SkinInfo( skin );
-
-		return gcnew Mesh( mesh );
+		return result;
 	}
 
 	void Mesh::ComputeTangentFrame( TangentOptions options )
@@ -1104,7 +767,7 @@ namespace Direct3D9
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
-	Mesh^ Mesh::CreateBox( Device^ device, float width, float height, float depth, [Out] array<int>^% adjacency )
+	Mesh^ Mesh::CreateBox( Device^ device, float width, float height, float depth )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1113,30 +776,15 @@ namespace Direct3D9
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
-		{
-			adjacency = nullptr;
-			return nullptr;
-		}
-
-		adjacency = ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 );
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ Mesh::CreateBox( Device^ device, float width, float height, float depth )
-	{
-		ID3DXMesh *result;
-
-		HRESULT hr = D3DXCreateBox( device->InternalPointer, width, height, depth, &result, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew Mesh( result );
+		Mesh^ mesh = gcnew Mesh( result );
+
+		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
+		return mesh;
 	}
 
-	Mesh^ Mesh::CreateCylinder( Device^ device, float radius1, float radius2, float length, int slices, 
-		int stacks, [Out] array<int>^% adjacency )
+	Mesh^ Mesh::CreateCylinder( Device^ device, float radius1, float radius2, float length, int slices, int stacks )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1145,29 +793,15 @@ namespace Direct3D9
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
-		{
-			adjacency = nullptr;
-			return nullptr;
-		}
-
-		adjacency = ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 );
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ Mesh::CreateCylinder( Device^ device, float radius1, float radius2, float length, int slices, int stacks )
-	{
-		ID3DXMesh *result;
-
-		HRESULT hr = D3DXCreateCylinder( device->InternalPointer, radius1, radius2, length, slices, stacks, &result, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew Mesh( result );
+		Mesh^ mesh = gcnew Mesh( result );
+
+		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
+		return mesh;
 	}
 
-	Mesh^ Mesh::CreateSphere( Device^ device, float radius, int slices, int stacks, [Out] array<int>^% adjacency )
+	Mesh^ Mesh::CreateSphere( Device^ device, float radius, int slices, int stacks )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1176,29 +810,15 @@ namespace Direct3D9
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
-		{
-			adjacency = nullptr;
-			return nullptr;
-		}
+			nullptr;
 
-		adjacency = ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 );
-		return gcnew Mesh( result );
+		Mesh^ mesh = gcnew Mesh( result );
+
+		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
+		return mesh;
 	}
 
-	Mesh^ Mesh::CreateSphere( Device^ device, float radius, int slices, int stacks )
-	{
-		ID3DXMesh *result;
-
-		HRESULT hr = D3DXCreateSphere( device->InternalPointer, radius, slices, stacks, &result, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-			return nullptr;
-
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ Mesh::CreateTeapot( Device^ device, [Out] array<int>^% adjacency )
+	Mesh^ Mesh::CreateTeapot( Device^ device )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1207,30 +827,15 @@ namespace Direct3D9
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
-		{
-			adjacency = nullptr;
-			return nullptr;
-		}
-
-		adjacency = ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 );
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ Mesh::CreateTeapot( Device^ device )
-	{
-		ID3DXMesh *result;
-
-		HRESULT hr = D3DXCreateTeapot( device->InternalPointer, &result, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew Mesh( result );
+		Mesh^ mesh = gcnew Mesh( result );
+
+		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
+		return mesh;
 	}
 
-	Mesh^ Mesh::CreateTorus( Device^ device, float innerRadius, float outerRadius, int sides, 
-		int rings, [Out] array<int>^% adjacency )
+	Mesh^ Mesh::CreateTorus( Device^ device, float innerRadius, float outerRadius, int sides, int rings )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1239,33 +844,20 @@ namespace Direct3D9
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
-		{
-			adjacency = nullptr;
-			return nullptr;
-		}
-
-		adjacency = ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 );
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ Mesh::CreateTorus( Device^ device, float innerRadius, float outerRadius, int sides, int rings )
-	{
-		ID3DXMesh *result;
-
-		HRESULT hr = D3DXCreateTorus( device->InternalPointer, innerRadius, outerRadius, sides, rings, &result, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew Mesh( result );
+		Mesh^ mesh = gcnew Mesh( result );
+
+		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
+		return mesh;
 	}
 
-	Mesh^ Mesh::CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion,
-		[Out] array<int>^% adjacency, [Out] array<GlyphMetricsFloat>^% glyphMetrics )
+	Mesh^ Mesh::CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion, [Out] array<GlyphMetricsFloat>^% glyphMetrics )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
+
+		glyphMetrics = gcnew array<GlyphMetricsFloat>( text->Length );
 
 		pin_ptr<const wchar_t> pinnedText = PtrToStringChars( text );
 		pin_ptr<GlyphMetricsFloat> pinnedMetrics = &glyphMetrics[0];
@@ -1289,17 +881,17 @@ namespace Direct3D9
 
 		if( FAILED( hr ) )
 		{
-			adjacency = nullptr;
 			glyphMetrics = nullptr;
 			return nullptr;
 		}
 
-		adjacency = ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 );
-		return gcnew Mesh( result );
+		Mesh^ mesh = gcnew Mesh( result );
+
+		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
+		return mesh;
 	}
 
-	Mesh^ Mesh::CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion,
-		[Out] array<int>^% adjacency )
+	Mesh^ Mesh::CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1324,42 +916,12 @@ namespace Direct3D9
 		DeleteDC( hdc );
 
 		if( FAILED( hr ) )
-		{
-			adjacency = nullptr;
-			return nullptr;
-		}
-
-		adjacency = ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 );
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ Mesh::CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion )
-	{
-		ID3DXMesh *result;
-
-		pin_ptr<const wchar_t> pinnedText = PtrToStringChars( text );
-
-		HDC hdc = CreateCompatibleDC( NULL );
-		HFONT newFont;
-		HFONT oldFont;
-		if( hdc == NULL )
-			throw gcnew OutOfMemoryException();
-
-		newFont = static_cast<HFONT>( font->ToHfont().ToPointer() );
-		oldFont = static_cast<HFONT>( SelectObject( hdc, newFont ) );		
-
-		HRESULT hr = D3DXCreateText( device->InternalPointer, hdc, reinterpret_cast<LPCWSTR>( pinnedText ),
-			deviation, extrusion, &result, NULL, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		SelectObject( hdc, oldFont );
-		DeleteObject( newFont );
-		DeleteDC( hdc );
-
-		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew Mesh( result );
+		Mesh^ mesh = gcnew Mesh( result );
+
+		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
+		return mesh;
 	}
 
 	DataStream^ Mesh::LockAttributeBuffer( LockFlags flags )
@@ -1391,173 +953,100 @@ namespace Direct3D9
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
-	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut,
-		[Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
+	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
 	{
 		ID3DXBuffer *buffer;
-		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
+		DWORD *adjacencyIn = NULL;
+		DWORD *adjacencyOut = NULL;
+
+		array<int>^ adjacency = GetAdjacency();
+		pin_ptr<int> pinnedAdjIn;
+
+		faceRemap = gcnew array<int>( FaceCount );
 		pin_ptr<int> pinnedFR = &faceRemap[0];
 
-		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
-			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ),
-			reinterpret_cast<DWORD*>( pinnedAdj ),
-			reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
+		if( adjacency != nullptr )
+		{
+			pinnedAdjIn = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
+			adjacencyOut = new DWORD[FaceCount * 3];
+		}		
+
+		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), adjacencyIn,
+			adjacencyOut, reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
-			adjacencyOut = nullptr;
 			faceRemap = nullptr;
 			vertexRemap = nullptr;
+			SetAdjacency( NULL );
 		}
 		else
+		{
 			vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
+			if( adjacencyOut != NULL )
+				SetAdjacency( adjacencyOut );
+			else
+				SetAdjacency( NULL );
+		}
+
+		delete[] adjacencyOut;
 	}
 
-	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap, 
-		[Out] array<int>^% vertexRemap )
+	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags )
 	{
-		ID3DXBuffer *buffer;
-		pin_ptr<int> pinnedFR = &faceRemap[0];
+		DWORD *adjacencyIn = NULL;
+		DWORD *adjacencyOut = NULL;
 
-		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
-			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), NULL,
-			reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
+		array<int>^ adjacency = GetAdjacency();
+		pin_ptr<int> pinnedAdjIn;
+		if( adjacency != nullptr )
+		{
+			pinnedAdjIn = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
+			adjacencyOut = new DWORD[FaceCount * 3];
+		}		
+
+		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), adjacencyIn,
+			adjacencyOut, NULL, NULL );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
-		{
-			faceRemap = nullptr;
-			vertexRemap = nullptr;
-		}
+			SetAdjacency( NULL );
 		else
-			vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
-	}
-
-	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut )
-	{
-		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
-
-		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
-			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ),
-			reinterpret_cast<DWORD*>( pinnedAdj ), NULL, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-			adjacencyOut = nullptr;
-	}
-
-	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, IntPtr adjacencyIn )
-	{
-		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
-			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), NULL, NULL, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-	}
-
-	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
-		[Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
-	{
-		ID3DXBuffer *buffer;
-		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
-		pin_ptr<int> pinnedFR = &faceRemap[0];
-		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
-
-		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
-			reinterpret_cast<const DWORD*>( pinnedAdjIn ),
-			reinterpret_cast<DWORD*>( pinnedAdj ),
-			reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
 		{
-			adjacencyOut = nullptr;
-			faceRemap = nullptr;
-			vertexRemap = nullptr;
+			if( adjacencyOut != NULL )
+				SetAdjacency( adjacencyOut );
+			else
+				SetAdjacency( NULL );
 		}
-		else
-			vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
+
+		delete[] adjacencyOut;
 	}
 
-	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap, 
-		[Out] array<int>^% vertexRemap )
-	{
-		ID3DXBuffer *buffer;
-		pin_ptr<int> pinnedFR = &faceRemap[0];
-		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
-
-		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
-			reinterpret_cast<const DWORD*>( pinnedAdjIn ), NULL,
-			reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-		{
-			faceRemap = nullptr;
-			vertexRemap = nullptr;
-		}
-		else
-			vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
-	}
-
-	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut )
-	{
-		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
-		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
-
-		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
-			reinterpret_cast<const DWORD*>( pinnedAdjIn ),
-			reinterpret_cast<DWORD*>( pinnedAdj ), NULL, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-			adjacencyOut = nullptr;
-	}
-
-	void Mesh::OptimizeInPlace( MeshOptimizeFlags flags, array<int>^ adjacencyIn )
-	{
-		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
-
-		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), 
-			reinterpret_cast<const DWORD*>( pinnedAdjIn ), NULL, NULL, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-	}
-
-	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut,
-		[Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
+	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *buffer;
-		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
+		DWORD *adjacencyIn = NULL;
+		DWORD *adjacencyOut = NULL;
+
+		array<int>^ adjacency = GetAdjacency();
+		pin_ptr<int> pinnedAdjIn;
+
+		faceRemap = gcnew array<int>( FaceCount );
 		pin_ptr<int> pinnedFR = &faceRemap[0];
 
-		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
-			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ),
-			reinterpret_cast<DWORD*>( pinnedAdj ),
-			reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
+		if( adjacency != nullptr )
 		{
-			adjacencyOut = nullptr;
-			faceRemap = nullptr;
-			vertexRemap = nullptr;
-			return nullptr;
-		}
+			pinnedAdjIn = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
+			adjacencyOut = new DWORD[FaceCount * 3];
+		}		
 
-		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( result->GetNumVertices() );
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% faceRemap, 
-		[Out] array<int>^% vertexRemap )
-	{
-		ID3DXMesh *result;
-		ID3DXBuffer *buffer;
-		pin_ptr<int> pinnedFR = &faceRemap[0];
-
-		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
-			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), NULL,
-			reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
+		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), adjacencyIn,
+			adjacencyOut, reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
@@ -1567,289 +1056,176 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( result->GetNumVertices() );
-		return gcnew Mesh( result );
+		Mesh^ mesh = gcnew Mesh( result );
+
+		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
+
+		if( adjacencyOut != NULL )
+			mesh->SetAdjacency( adjacencyOut );
+
+		delete[] adjacencyOut;
+
+		return mesh;
 	}
 
-	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut )
+	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags )
 	{
 		ID3DXMesh *result;
-		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
+		DWORD *adjacencyIn = NULL;
+		DWORD *adjacencyOut = NULL;
 
-		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
-			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ),
-			reinterpret_cast<DWORD*>( pinnedAdj ), NULL, NULL, &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		array<int>^ adjacency = GetAdjacency();
+		pin_ptr<int> pinnedAdjIn;
 
-		if( FAILED( hr ) )
+		if( adjacency != nullptr )
 		{
-			adjacencyOut = nullptr;
-			return nullptr;
+			pinnedAdjIn = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
+			adjacencyOut = new DWORD[FaceCount * 3];
 		}
 
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, IntPtr adjacencyIn )
-	{
-		ID3DXMesh *result;
-
-		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
-			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), NULL, NULL, NULL, &result );
+		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), adjacencyIn,
+			adjacencyOut, NULL, NULL, &result );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew Mesh( result );
+		Mesh^ mesh = gcnew Mesh( result );
+
+		if( adjacencyOut != NULL )
+			mesh->SetAdjacency( adjacencyOut );
+
+		delete[] adjacencyOut;
+
+		return mesh;
 	}
 
-	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
-		[Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
-	{
-		ID3DXMesh *result;
-		ID3DXBuffer *buffer;
-		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
-		pin_ptr<int> pinnedFR = &faceRemap[0];
-		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
-
-		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
-			reinterpret_cast<const DWORD*>( pinnedAdjIn ),
-			reinterpret_cast<DWORD*>( pinnedAdj ),
-			reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-		{
-			adjacencyOut = nullptr;
-			faceRemap = nullptr;
-			vertexRemap = nullptr;
-			return nullptr;
-		}
-
-		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( result->GetNumVertices() );
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% faceRemap, 
-		[Out] array<int>^% vertexRemap )
-	{
-		ID3DXMesh *result;
-		ID3DXBuffer *buffer;
-		pin_ptr<int> pinnedFR = &faceRemap[0];
-		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
-
-		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
-			reinterpret_cast<const DWORD*>( pinnedAdjIn ), NULL,
-			reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-		{
-			faceRemap = nullptr;
-			vertexRemap = nullptr;
-			return nullptr;
-		}
-
-		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( result->GetNumVertices() );
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut )
-	{
-		ID3DXMesh *result;
-		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
-		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
-
-		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
-			reinterpret_cast<const DWORD*>( pinnedAdjIn ),
-			reinterpret_cast<DWORD*>( pinnedAdj ), NULL, NULL, &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-		{
-			adjacencyOut = nullptr;
-			return nullptr;
-		}
-
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, array<int>^ adjacencyIn )
-	{
-		ID3DXMesh *result;
-		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
-
-		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), 
-			reinterpret_cast<const DWORD*>( pinnedAdjIn ), NULL, NULL, NULL, &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-			return nullptr;
-
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ Mesh::Clean( CleanType type, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] String^% errorsAndWarnings )
+	Mesh^ Mesh::Clean( CleanType type, [Out] String^% errorsAndWarnings )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *errors;
+		DWORD *adjacencyIn = NULL;
+		DWORD *adjacencyOut = NULL;
 
-		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
-		pin_ptr<int> pinnedAdjOut = &adjacencyOut[0];
+		array<int>^ adjacency = GetAdjacency();
+		pin_ptr<int> pinnedAdjIn;
+
+		if( adjacency != nullptr )
+		{
+			pinnedAdjIn = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
+			adjacencyOut = new DWORD[FaceCount * 3];
+		}
 
 		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
-			reinterpret_cast<const DWORD*>( pinnedAdjIn ), &result,
-			reinterpret_cast<DWORD*>( pinnedAdjOut ), &errors );
+			adjacencyIn, &result, adjacencyOut, &errors );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 		{
-			adjacencyOut = nullptr;
 			errorsAndWarnings = nullptr;
 			return nullptr;
 		}
 
 		errorsAndWarnings = Utilities::BufferToString( errors );
-		return gcnew Mesh( result );
+
+		Mesh^ mesh = gcnew Mesh( result );
+
+		if( adjacencyOut != NULL )
+			mesh->SetAdjacency( adjacencyOut );
+
+		delete[] adjacencyOut;
+
+		return mesh;
 	}
 
-	Mesh^ Mesh::Clean( CleanType type, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut )
+	Mesh^ Mesh::Clean( CleanType type )
 	{
 		ID3DXMesh *result;
+		DWORD *adjacencyIn = NULL;
+		DWORD *adjacencyOut = NULL;
 
-		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
-		pin_ptr<int> pinnedAdjOut = &adjacencyOut[0];
+		array<int>^ adjacency = GetAdjacency();
+		pin_ptr<int> pinnedAdjIn;
 
-		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
-			reinterpret_cast<const DWORD*>( pinnedAdjIn ), &result,
-			reinterpret_cast<DWORD*>( pinnedAdjOut ), NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
+		if( adjacency != nullptr )
 		{
-			adjacencyOut = nullptr;
-			return nullptr;
+			pinnedAdjIn = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
+			adjacencyOut = new DWORD[FaceCount * 3];
 		}
 
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ Mesh::Clean( CleanType type, array<int>^ adjacencyIn )
-	{
-		ID3DXMesh *result;
-
-		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
-
 		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
-			reinterpret_cast<const DWORD*>( pinnedAdjIn ), &result, NULL, NULL );
+			adjacencyIn, &result, adjacencyOut, NULL );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew Mesh( result );
-	}
+		Mesh^ mesh = gcnew Mesh( result );
 
-	Mesh^ Mesh::Clean( CleanType type, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut, [Out] String^% errorsAndWarnings )
-	{
-		ID3DXMesh *result;
-		ID3DXBuffer *errors;
+		if( adjacencyOut != NULL )
+			mesh->SetAdjacency( adjacencyOut );
 
-		pin_ptr<int> pinnedAdjOut = &adjacencyOut[0];
+		delete[] adjacencyOut;
 
-		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
-			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), &result,
-			reinterpret_cast<DWORD*>( pinnedAdjOut ), &errors );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-		{
-			adjacencyOut = nullptr;
-			errorsAndWarnings = nullptr;
-			return nullptr;
-		}
-
-		errorsAndWarnings = Utilities::BufferToString( errors );
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ Mesh::Clean( CleanType type, IntPtr adjacencyIn, [Out] array<int>^% adjacencyOut )
-	{
-		ID3DXMesh *result;
-
-		pin_ptr<int> pinnedAdjOut = &adjacencyOut[0];
-
-		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
-			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), &result,
-			reinterpret_cast<DWORD*>( pinnedAdjOut ), NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-		{
-			adjacencyOut = nullptr;
-			return nullptr;
-		}
-
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ Mesh::Clean( CleanType type, IntPtr adjacencyIn )
-	{
-		ID3DXMesh *result;
-
-		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
-			reinterpret_cast<const DWORD*>( adjacencyIn.ToPointer() ), &result, NULL, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-			return nullptr;
-
-		return gcnew Mesh( result );
-	}
-
-	void Mesh::ComputeNormals( array<int>^ adjacency )
-	{
-		pin_ptr<int> pinnedAdj = &adjacency[0];
-
-		HRESULT hr = D3DXComputeNormals( MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		return mesh;
 	}
 
 	void Mesh::ComputeNormals()
 	{
-		HRESULT hr = D3DXComputeNormals( MeshPointer, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-	}
+		DWORD *adjacencyIn = NULL;
+		pin_ptr<int> pinnedAdj;
 
-	void Mesh::ComputeTangent( int textureStage, int tangentIndex, int binormalIndex, bool wrap, array<int>^ adjacency )
-	{
-		pin_ptr<int> pinnedAdj = &adjacency[0];
+		array<int>^ adjacency = GetAdjacency();
+		if( adjacency != nullptr )
+		{
+			pinnedAdj = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
+		}
 
-		HRESULT hr = D3DXComputeTangent( MeshPointer, textureStage, tangentIndex, binormalIndex, wrap,
-			reinterpret_cast<const DWORD*>( pinnedAdj ) );
+		HRESULT hr = D3DXComputeNormals( MeshPointer, adjacencyIn );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void Mesh::ComputeTangent( int textureStage, int tangentIndex, int binormalIndex, bool wrap )
 	{
-		HRESULT hr = D3DXComputeTangent( MeshPointer, textureStage, tangentIndex, binormalIndex, wrap, NULL );
+		array<int>^ adjacency = GetAdjacency();
+		DWORD *adjacencyIn = NULL;
+		pin_ptr<int> pinnedAdj;
+
+		if( adjacency != nullptr )
+		{
+			pinnedAdj = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
+		}
+
+		HRESULT hr = D3DXComputeTangent( MeshPointer, textureStage, tangentIndex, binormalIndex, wrap, adjacencyIn );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	Mesh^ Mesh::ComputeTangentFrame( int textureInSemantic, int textureInIndex, int partialOutSemanticU, 
 		int partialOutIndexU, int partialOutSemanticV, int partialOutIndexV, int normalOutSemantic,
-		int normalOutIndex, TangentOptions options, array<int>^ adjacency, float partialEdgeThreshold,
+		int normalOutIndex, TangentOptions options, float partialEdgeThreshold,
 		float singularPointThreshold, float normalEdgeThreshold, [Out] array<int>^% vertexMapping )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *vertex;
 
-		pin_ptr<int> pinnedAdj = &adjacency[0];
+		array<int>^ adjacency = GetAdjacency();
+		DWORD *adjacencyIn = NULL;
+		pin_ptr<int> pinnedAdj;
+
+		if( adjacency != nullptr )
+		{
+			pinnedAdj = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
+		}
 
 		HRESULT hr = D3DXComputeTangentFrameEx( MeshPointer, textureInSemantic, textureInIndex,
 			partialOutSemanticU, partialOutIndexU, partialOutSemanticV, partialOutIndexV, normalOutSemantic,
-			normalOutIndex, static_cast<DWORD>( options ), reinterpret_cast<const DWORD*>( pinnedAdj ),
+			normalOutIndex, static_cast<DWORD>( options ), adjacencyIn,
 			partialEdgeThreshold, singularPointThreshold, normalEdgeThreshold, &result, &vertex );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
@@ -1869,39 +1245,25 @@ namespace Direct3D9
 
 	Mesh^ Mesh::ComputeTangentFrame( int textureInSemantic, int textureInIndex, int partialOutSemanticU, 
 		int partialOutIndexU, int partialOutSemanticV, int partialOutIndexV, int normalOutSemantic,
-		int normalOutIndex, TangentOptions options, array<int>^ adjacency, float partialEdgeThreshold,
+		int normalOutIndex, TangentOptions options, float partialEdgeThreshold,
 		float singularPointThreshold, float normalEdgeThreshold )
 	{
 		ID3DXMesh *result;
 
-		pin_ptr<int> pinnedAdj = &adjacency[0];
+		array<int>^ adjacency = GetAdjacency();
+		DWORD *adjacencyIn = NULL;
+		pin_ptr<int> pinnedAdj;
+
+		if( adjacency != nullptr )
+		{
+			pinnedAdj = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
+		}
 
 		HRESULT hr = D3DXComputeTangentFrameEx( MeshPointer, textureInSemantic, textureInIndex,
 			partialOutSemanticU, partialOutIndexU, partialOutSemanticV, partialOutIndexV, normalOutSemantic,
-			normalOutIndex, static_cast<DWORD>( options ), reinterpret_cast<const DWORD*>( pinnedAdj ),
+			normalOutIndex, static_cast<DWORD>( options ), adjacencyIn,
 			partialEdgeThreshold, singularPointThreshold, normalEdgeThreshold, &result, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
-
-		if( FAILED( hr ) )
-			return nullptr;
-
-		if( (options & TangentOptions::GenerateInPlace) == TangentOptions::GenerateInPlace )
-			return this;
-
-		return gcnew Mesh( result );
-	}
-
-	Mesh^ Mesh::ComputeTangentFrame( int textureInSemantic, int textureInIndex, int partialOutSemanticU, 
-		int partialOutIndexU, int partialOutSemanticV, int partialOutIndexV, int normalOutSemantic,
-		int normalOutIndex, TangentOptions options, float partialEdgeThreshold, float singularPointThreshold, 
-		float normalEdgeThreshold )
-	{
-		ID3DXMesh *result;
-
-		HRESULT hr = D3DXComputeTangentFrameEx( MeshPointer, textureInSemantic, textureInIndex,
-			partialOutSemanticU, partialOutIndexU, partialOutSemanticV, partialOutIndexV, normalOutSemantic,
-			normalOutIndex, static_cast<DWORD>( options ), NULL, partialEdgeThreshold, singularPointThreshold, 
-			normalEdgeThreshold, &result, NULL );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
@@ -2020,18 +1382,40 @@ namespace Direct3D9
 		return gcnew Mesh( result );
 	}
 
-	void Mesh::Save( String^ fileName, array<int>^ adjacency, array<ExtendedMaterial>^ materials, array<EffectInstance>^ effects, XFileFormat format, CharSet charSet )
+	void Mesh::ToXFile( Mesh^ mesh, String^ fileName, XFileFormat format, CharSet charSet )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
-		pin_ptr<int> pinnedAdjacency = &adjacency[0];
+		
+		array<int>^ adjacency = mesh->GetAdjacency();
+		array<ExtendedMaterial>^ materials = mesh->GetMaterials();
+		array<EffectInstance>^ effects = mesh->GetEffects();
 
-		D3DXMATERIAL *nativeMaterials = new D3DXMATERIAL[materials->Length];
-		for( int i = 0; i < materials->Length; i++ )
-			nativeMaterials[i] = ExtendedMaterial::ToUnmanaged( materials[i] );
+		DWORD *adjacencyIn = NULL;
+		D3DXMATERIAL *nativeMaterials = NULL;
+		D3DXEFFECTINSTANCE *nativeEffects = NULL;
+		pin_ptr<int> pinnedAdj;
+		int length = 0;
 
-		D3DXEFFECTINSTANCE *nativeEffects = new D3DXEFFECTINSTANCE[effects->Length];
-		for( int i = 0; i < effects->Length; i++ )
-			nativeEffects[i] = EffectInstance::ToUnmanaged( effects[i] );
+		if( adjacency != nullptr )
+		{
+			pinnedAdj = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
+		}
+
+		if( materials != nullptr )
+		{
+			length = materials->Length;
+			nativeMaterials = new D3DXMATERIAL[length];
+			for( int i = 0; i < length; i++ )
+				nativeMaterials[i] = ExtendedMaterial::ToUnmanaged( materials[i] );
+		}
+
+		if( effects != nullptr )
+		{
+			nativeEffects = new D3DXEFFECTINSTANCE[effects->Length];
+			for( int i = 0; i < effects->Length; i++ )
+				nativeEffects[i] = EffectInstance::ToUnmanaged( effects[i] );
+		}
 
 		DWORD f = static_cast<DWORD>( format );
 		if( charSet == CharSet::Unicode )
@@ -2039,29 +1423,38 @@ namespace Direct3D9
 		else
 			f |= D3DXF_FILESAVE_TOFILE;
 
-		HRESULT hr = D3DXSaveMeshToX( reinterpret_cast<LPCWSTR>( pinnedName ), MeshPointer, 
-			reinterpret_cast<const DWORD*>( pinnedAdjacency ), nativeMaterials, nativeEffects, materials->Length, f );
+		HRESULT hr = D3DXSaveMeshToX( reinterpret_cast<LPCWSTR>( pinnedName ), mesh->MeshPointer, 
+			adjacencyIn, nativeMaterials, nativeEffects, length, f );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		delete[] nativeMaterials;
 		delete[] nativeEffects;
 	}
 
-	void Mesh::Save( String^ fileName, array<int>^ adjacency, array<ExtendedMaterial>^ materials, array<EffectInstance>^ effects, XFileFormat format )
+	void Mesh::ToXFile( Mesh^ mesh, String^ fileName, XFileFormat format )
 	{
-		Save( fileName, adjacency, materials, effects, format, CharSet::Auto );
+		ToXFile( mesh, fileName, format, CharSet::Auto );
 	}
 
-	Mesh^ Mesh::Simplify( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ attributeWeights,
+	Mesh^ Mesh::Simplify( Mesh^ mesh, array<AttributeWeights>^ attributeWeights,
 		array<float>^ vertexWeights, int minimumValue, MeshSimplification options )
 	{
 		ID3DXMesh *result;
 
-		pin_ptr<int> pinnedAdj = &adjacency[0];
+		DWORD *adjacencyIn = NULL;
+		pin_ptr<int> pinnedAdj;
+		array<int>^ adjacency = mesh->GetAdjacency();
+
+		if( adjacency != nullptr )
+		{
+			pinnedAdj = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
+		}
+
 		pin_ptr<float> pinnedVW = &vertexWeights[0];
 		pin_ptr<AttributeWeights> pinnedAW = &attributeWeights[0];
 
-		HRESULT hr = D3DXSimplifyMesh( mesh->MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ),
+		HRESULT hr = D3DXSimplifyMesh( mesh->MeshPointer, adjacencyIn,
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedAW ), reinterpret_cast<const FLOAT*>( pinnedVW ),
 			minimumValue, static_cast<DWORD>( options ), &result );
 		Direct3D9ErrorHandler::TestForFailure( hr );
@@ -2072,15 +1465,24 @@ namespace Direct3D9
 		return gcnew Mesh( result );
 	}
 
-	Mesh^ Mesh::Simplify( Mesh^ mesh, array<int>^ adjacency, array<AttributeWeights>^ attributeWeights,
+	Mesh^ Mesh::Simplify( Mesh^ mesh, array<AttributeWeights>^ attributeWeights,
 		int minimumValue, MeshSimplification options )
 	{
 		ID3DXMesh *result;
 
-		pin_ptr<int> pinnedAdj = &adjacency[0];
+		DWORD *adjacencyIn = NULL;
+		pin_ptr<int> pinnedAdj;
+		array<int>^ adjacency = mesh->GetAdjacency();
+
+		if( adjacency != nullptr )
+		{
+			pinnedAdj = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
+		}
+
 		pin_ptr<AttributeWeights> pinnedAW = &attributeWeights[0];
 
-		HRESULT hr = D3DXSimplifyMesh( mesh->MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ),
+		HRESULT hr = D3DXSimplifyMesh( mesh->MeshPointer, adjacencyIn,
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedAW ), NULL,
 			minimumValue, static_cast<DWORD>( options ), &result );
 		Direct3D9ErrorHandler::TestForFailure( hr );
@@ -2091,13 +1493,21 @@ namespace Direct3D9
 		return gcnew Mesh( result );
 	}
 
-	Mesh^ Mesh::Simplify( Mesh^ mesh, array<int>^ adjacency, int minimumValue, MeshSimplification options )
+	Mesh^ Mesh::Simplify( Mesh^ mesh, int minimumValue, MeshSimplification options )
 	{
 		ID3DXMesh *result;
 
-		pin_ptr<int> pinnedAdj = &adjacency[0];
+		DWORD *adjacencyIn = NULL;
+		array<int>^ adjacency = mesh->GetAdjacency();
+		pin_ptr<int> pinnedAdj;
 
-		HRESULT hr = D3DXSimplifyMesh( mesh->MeshPointer, reinterpret_cast<const DWORD*>( pinnedAdj ),
+		if( adjacency != nullptr )
+		{
+			pinnedAdj = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
+		}
+
+		HRESULT hr = D3DXSimplifyMesh( mesh->MeshPointer, adjacencyIn,
 			NULL, NULL, minimumValue, static_cast<DWORD>( options ), &result );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
@@ -2106,5 +1516,7 @@ namespace Direct3D9
 
 		return gcnew Mesh( result );
 	}
+
+
 }
 }
