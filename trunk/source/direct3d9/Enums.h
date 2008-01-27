@@ -608,17 +608,6 @@ namespace SlimDX
 			Three = D3DPRESENT_INTERVAL_THREE,
 			Four = D3DPRESENT_INTERVAL_FOUR,
 		};
-
-		[Flags]
-		public enum class PresentationIntervals : Int32
-		{
-			Default = D3DPRESENT_INTERVAL_DEFAULT,
-			Immediate = (int) D3DPRESENT_INTERVAL_IMMEDIATE,
-			One = D3DPRESENT_INTERVAL_ONE,
-			Two = D3DPRESENT_INTERVAL_TWO,
-			Three = D3DPRESENT_INTERVAL_THREE,
-			Four = D3DPRESENT_INTERVAL_FOUR,
-		};
 		
 		public enum class PrimitiveType : Int32
 		{

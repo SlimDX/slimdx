@@ -35,6 +35,7 @@ namespace SlimDX
 		{
 		internal:
 			D3DXBONECOMBINATION ToUnmanaged();
+			static BoneCombination^ FromUnmanaged( const D3DXBONECOMBINATION &bone );
 
 		public:
 			property int AttributeId;
@@ -50,7 +51,7 @@ namespace SlimDX
 			COMOBJECT(ID3DXSkinInfo);
 
 		internal:
-			SkinInfo( ID3DXSkinInfo* skinInfo ) { Construct(skinInfo); }
+			SkinInfo( ID3DXSkinInfo* skinInfo );
 
 		public:
 			SkinInfo( IntPtr pointer );
@@ -68,6 +69,9 @@ namespace SlimDX
 			Mesh^ ConvertToBlendedMesh( Mesh^ mesh, array<int>^ adjacencyIn, [Out] array<int>^% adjacencyOut,
 				[Out] int% maxVertexInfluence, [Out] array<BoneCombination^>^% boneCombinationTable );
 
+			Mesh^ ConvertToBlendedMesh( Mesh^ mesh, array<int>^ adjacencyIn,
+				[Out] int% maxVertexInfluence, [Out] array<BoneCombination^>^% boneCombinationTable );
+
 			Mesh^ ConvertToIndexedBlendedMesh( Mesh^ mesh, int paletteSize, array<int>^ adjacencyIn, 
 				[Out] array<int>^% adjacencyOut, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap, 
 				[Out] int% maxVertexInfluence, [Out] array<BoneCombination^>^% boneCombinationTable );
@@ -75,6 +79,9 @@ namespace SlimDX
 			Mesh^ ConvertToIndexedBlendedMesh( Mesh^ mesh, int paletteSize, array<int>^ adjacencyIn, 
 				[Out] array<int>^% adjacencyOut, [Out] int% maxVertexInfluence,
 				[Out] array<BoneCombination^>^% boneCombinationTable );
+
+			Mesh^ ConvertToIndexedBlendedMesh( Mesh^ mesh, int paletteSize, array<int>^ adjacencyIn, 
+				[Out] int% maxVertexInfluence,	[Out] array<BoneCombination^>^% boneCombinationTable );
 
 			int FindBoneVertexInfluenceIndex( int bone, int vertex );
 

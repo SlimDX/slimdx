@@ -127,10 +127,13 @@ namespace SlimDX
 
 	void Quaternion::Add( Quaternion% left, Quaternion% right, [Out] Quaternion% result )
 	{
-		result.X = left.X + right.X;
-		result.Y = left.Y + right.Y;
-		result.Z = left.Z + right.Z;
-		result.W = left.W + right.W;
+		Quaternion r;
+		r.X = left.X + right.X;
+		r.Y = left.Y + right.Y;
+		r.Z = left.Z + right.Z;
+		r.W = left.W + right.W;
+
+		result = r;
 	}
 
 	Quaternion Quaternion::Barycentric( Quaternion q1, Quaternion q2, Quaternion q3, float f, float g )
@@ -193,10 +196,13 @@ namespace SlimDX
 		float xy = (rx * ly) - (ry * lx);
 		float lengthSq = ((rx * lx) + (ry * ly)) + (rz * lz);
 
-		result.X = ((rx * lw) + (lx * rw)) + yz;
-		result.Y = ((ry * lw) + (ly * rw)) + xz;
-		result.Z = ((rz * lw) + (lz * rw)) + xy;
-		result.W = (rw * lw) - lengthSq;
+		Quaternion r;
+		r.X = ((rx * lw) + (lx * rw)) + yz;
+		r.Y = ((ry * lw) + (ly * rw)) + xz;
+		r.Z = ((rz * lw) + (lz * rw)) + xy;
+		r.W = (rw * lw) - lengthSq;
+
+		result = r;
 	}
 
 	Quaternion Quaternion::Conjugate( Quaternion quat )

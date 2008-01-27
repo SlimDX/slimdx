@@ -332,6 +332,16 @@ namespace Direct3D9
 		return result;
 	}
 
+	void Device::SetTransform( int index, Matrix value )
+	{
+		SetTransform( static_cast<TransformState>( index + 256 ), value );
+	}
+
+	Matrix Device::GetTransform( int index )
+	{
+		return GetTransform( static_cast<TransformState>( index + 256 ) );
+	}
+
 	void Device::MultiplyTransform( TransformState state, Matrix value )
 	{
 		HRESULT hr = InternalPointer->MultiplyTransform( static_cast<D3DTRANSFORMSTATETYPE>( state ), reinterpret_cast<const D3DMATRIX*>( &value ) );

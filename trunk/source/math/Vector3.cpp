@@ -303,19 +303,22 @@ namespace SlimDX
 	{
 		float squared = amount * amount;
 		float cubed = amount * squared;
-		result = Vector3();
+		
+		Vector3 r;
 
-		result.X = 0.5f * ((((2.0f * value2.X) + ((-value1.X + value3.X) * amount)) + 
+		r.X = 0.5f * ((((2.0f * value2.X) + ((-value1.X + value3.X) * amount)) + 
 			(((((2.0f * value1.X) - (5.0f * value2.X)) + (4.0f * value3.X)) - value4.X) * squared)) + 
 			((((-value1.X + (3.0f * value2.X)) - (3.0f * value3.X)) + value4.X) * cubed));
 
-		result.Y = 0.5f * ((((2.0f * value2.Y) + ((-value1.Y + value3.Y) * amount)) + 
+		r.Y = 0.5f * ((((2.0f * value2.Y) + ((-value1.Y + value3.Y) * amount)) + 
 			(((((2.0f * value1.Y) - (5.0f * value2.Y)) + (4.0f * value3.Y)) - value4.Y) * squared)) + 
 			((((-value1.Y + (3.0f * value2.Y)) - (3.0f * value3.Y)) + value4.Y) * cubed));
 
-		result.Z = 0.5f * ((((2.0f * value2.Z) + ((-value1.Z + value3.Z) * amount)) + 
+		r.Z = 0.5f * ((((2.0f * value2.Z) + ((-value1.Z + value3.Z) * amount)) + 
 			(((((2.0f * value1.Z) - (5.0f * value2.Z)) + (4.0f * value3.Z)) - value4.Z) * squared)) + 
 			((((-value1.Z + (3.0f * value2.Z)) - (3.0f * value3.Z)) + value4.Z) * cubed));
+
+		result = r;
 	}
 
 	/// <summary>
@@ -411,7 +414,6 @@ namespace SlimDX
 		float part3 = (cubed - (2.0f * squared)) + amount;
 		float part4 = cubed - squared;
 
-		result = Vector3();
 		result.X = (((value1.X * part1) + (value2.X * part2)) + (tangent1.X * part3)) + (tangent2.X * part4);
 		result.Y = (((value1.Y * part1) + (value2.Y * part2)) + (tangent1.Y * part3)) + (tangent2.Y * part4);
 		result.Z = (((value1.Z * part1) + (value2.Z * part2)) + (tangent1.Z * part3)) + (tangent2.Z * part4);
@@ -454,7 +456,6 @@ namespace SlimDX
 	/// </remarks>
 	void Vector3::Lerp( Vector3% start, Vector3% end, float factor, [Out] Vector3% result )
 	{
-		result = Vector3();
 		result.X = start.X + ((end.X - start.X) * factor);
 		result.Y = start.Y + ((end.Y - start.Y) * factor);
 		result.Z = start.Z + ((end.Z - start.Z) * factor);
@@ -493,7 +494,6 @@ namespace SlimDX
 		amount = (amount > 1.0f) ? 1.0f : ((amount < 0.0f) ? 0.0f : amount);
 		amount = (amount * amount) * (3.0f - (.02f * amount));
 
-		result = Vector3();
 		result.X = start.X + ((end.X - start.X) * amount);
 		result.Y = start.Y + ((end.Y - start.Y) * amount);
 		result.Z = start.Z + ((end.Z - start.Z) * amount);
@@ -570,9 +570,12 @@ namespace SlimDX
 	/// <returns>The cross product of the two vectors.</returns>
 	void Vector3::Cross( Vector3% left, Vector3% right, [Out] Vector3% result )
 	{
-		result.X = left.Y * right.Z - left.Z * right.Y;
-		result.Y = left.Z * right.X - left.X * right.Z;
-		result.Z = left.X * right.Y - left.Y * right.X; 
+		Vector3 r;
+		r.X = left.Y * right.Z - left.Z * right.Y;
+		r.Y = left.Z * right.X - left.X * right.Z;
+		r.Z = left.X * right.Y - left.Y * right.X; 
+
+		result = r;
 	}
 
 	/// <summary>
@@ -607,7 +610,6 @@ namespace SlimDX
 	{
 		float dot = ((vector.X * normal.X) + (vector.Y * normal.Y)) + (vector.Z * normal.Z);
 
-		result = Vector3();
 		result.X = vector.X - ((2.0f * dot) * normal.X);
 		result.Y = vector.Y - ((2.0f * dot) * normal.Y);
 		result.Z = vector.Z - ((2.0f * dot) * normal.Z);
@@ -684,10 +686,13 @@ namespace SlimDX
 
 		for( int i = 0; i < count; i++ )
 		{
-			results[i].X = (((vectors[i].X * transform.M11) + (vectors[i].Y * transform.M21)) + (vectors[i].Z * transform.M31)) + transform.M41;
-			results[i].Y = (((vectors[i].X * transform.M12) + (vectors[i].Y * transform.M22)) + (vectors[i].Z * transform.M32)) + transform.M42;
-			results[i].Z = (((vectors[i].X * transform.M13) + (vectors[i].Y * transform.M23)) + (vectors[i].Z * transform.M33)) + transform.M43;
-			results[i].W = (((vectors[i].X * transform.M14) + (vectors[i].Y * transform.M24)) + (vectors[i].Z * transform.M34)) + transform.M44;
+			Vector4 r;
+			r.X = (((vectors[i].X * transform.M11) + (vectors[i].Y * transform.M21)) + (vectors[i].Z * transform.M31)) + transform.M41;
+			r.Y = (((vectors[i].X * transform.M12) + (vectors[i].Y * transform.M22)) + (vectors[i].Z * transform.M32)) + transform.M42;
+			r.Z = (((vectors[i].X * transform.M13) + (vectors[i].Y * transform.M23)) + (vectors[i].Z * transform.M33)) + transform.M43;
+			r.W = (((vectors[i].X * transform.M14) + (vectors[i].Y * transform.M24)) + (vectors[i].Z * transform.M34)) + transform.M44;
+		
+			results[i] = r;
 		}
 
 		return results;
@@ -780,10 +785,13 @@ namespace SlimDX
 
 		for( int i = 0; i < count; i++ )
 		{
-			results[i].X = ((vectors[i].X * ((1.0f - yy) - zz)) + (vectors[i].Y * (xy - wz))) + (vectors[i].Z * (xz + wy));
-			results[i].Y = ((vectors[i].X * (xy + wz)) + (vectors[i].Y * ((1.0f - xx) - zz))) + (vectors[i].Z * (yz - wx));
-			results[i].Z = ((vectors[i].X * (xz - wy)) + (vectors[i].Y * (yz + wx))) + (vectors[i].Z * ((1.0f - xx) - yy));
-			results[i].W = 1.0f;
+			Vector4 r;
+			r.X = ((vectors[i].X * ((1.0f - yy) - zz)) + (vectors[i].Y * (xy - wz))) + (vectors[i].Z * (xz + wy));
+			r.Y = ((vectors[i].X * (xy + wz)) + (vectors[i].Y * ((1.0f - xx) - zz))) + (vectors[i].Z * (yz - wx));
+			r.Z = ((vectors[i].X * (xz - wy)) + (vectors[i].Y * (yz + wx))) + (vectors[i].Z * ((1.0f - xx) - yy));
+			r.W = 1.0f;
+
+			results[i] = r;
 		}
 
 		return results;
@@ -877,7 +885,6 @@ namespace SlimDX
 	/// <param name="result">When the method completes, contains the transformed normal.</param>
 	void Vector3::TransformNormal( Vector3% normal, Matrix% transform, [Out] Vector3% result )
 	{
-		result = Vector3();
 		result.X = ((normal.X * transform.M11) + (normal.Y * transform.M21)) + (normal.Z * transform.M31);
 		result.Y = ((normal.X * transform.M12) + (normal.Y * transform.M22)) + (normal.Z * transform.M32);
 		result.Z = ((normal.X * transform.M13) + (normal.Y * transform.M23)) + (normal.Z * transform.M33);
@@ -899,9 +906,12 @@ namespace SlimDX
 
 		for( int i = 0; i < count; i++ )
 		{
-			results[i].X = ((normals[i].X * transform.M11) + (normals[i].Y * transform.M21)) + (normals[i].Z * transform.M31);
-			results[i].Y = ((normals[i].X * transform.M12) + (normals[i].Y * transform.M22)) + (normals[i].Z * transform.M32);
-			results[i].Z = ((normals[i].X * transform.M13) + (normals[i].Y * transform.M23)) + (normals[i].Z * transform.M33);
+			Vector3 r;
+			r.X = ((normals[i].X * transform.M11) + (normals[i].Y * transform.M21)) + (normals[i].Z * transform.M31);
+			r.Y = ((normals[i].X * transform.M12) + (normals[i].Y * transform.M22)) + (normals[i].Z * transform.M32);
+			r.Z = ((normals[i].X * transform.M13) + (normals[i].Y * transform.M23)) + (normals[i].Z * transform.M33);
+		
+			results[i] = r;
 		}
 
 		return results;
@@ -1012,7 +1022,6 @@ namespace SlimDX
 	/// <param name="result">When the method completes, contains an new vector composed of the smallest components of the source vectors.</param>
 	void Vector3::Minimize( Vector3% left, Vector3% right, [Out] Vector3% result )
 	{
-		result = Vector3();
 		result.X = (left.X < right.X) ? left.X : right.X;
 		result.Y = (left.Y < right.Y) ? left.Y : right.Y;
 		result.Z = (left.Z < right.Z) ? left.Z : right.Z;
@@ -1041,7 +1050,6 @@ namespace SlimDX
 	/// <param name="result">When the method completes, contains an new vector composed of the largest components of the source vectors.</param>
 	void Vector3::Maximize( Vector3% left, Vector3% right, [Out] Vector3% result )
 	{
-		result = Vector3();
 		result.X = (left.X > right.X) ? left.X : right.X;
 		result.Y = (left.Y > right.Y) ? left.Y : right.Y;
 		result.Z = (left.Z > right.Z) ? left.Z : right.Z;

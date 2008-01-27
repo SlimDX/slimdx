@@ -89,11 +89,13 @@ namespace Direct3D9
 	ExtendedMaterial ExtendedMaterial::FromUnmanaged( const D3DXMATERIAL &material )
 	{
 		ExtendedMaterial result;
-		result.MaterialD3D.Diffuse = ConvertColor( material.MatD3D.Diffuse );
-		result.MaterialD3D.Ambient = ConvertColor( material.MatD3D.Ambient );
-		result.MaterialD3D.Specular = ConvertColor( material.MatD3D.Specular );
-		result.MaterialD3D.Emissive = ConvertColor( material.MatD3D.Emissive );
-		result.MaterialD3D.Power = material.MatD3D.Power;
+		Material mat;
+		mat.Diffuse = ConvertColor( material.MatD3D.Diffuse );
+		mat.Ambient = ConvertColor( material.MatD3D.Ambient );
+		mat.Specular = ConvertColor( material.MatD3D.Specular );
+		mat.Emissive = ConvertColor( material.MatD3D.Emissive );
+		mat.Power = material.MatD3D.Power;
+		result.MaterialD3D = mat;
 		result.TextureFilename = gcnew String( material.pTextureFilename );
 
 		return result;

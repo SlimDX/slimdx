@@ -157,22 +157,25 @@ namespace SlimDX
 
 	void Matrix::Add( Matrix% left, Matrix% right, [Out] Matrix% result )
 	{
-		result.M11 = left.M11 + right.M11;
-		result.M12 = left.M12 + right.M12;
-		result.M13 = left.M13 + right.M13;
-		result.M14 = left.M14 + right.M14;
-		result.M21 = left.M21 + right.M21;
-		result.M22 = left.M22 + right.M22;
-		result.M23 = left.M23 + right.M23;
-		result.M24 = left.M24 + right.M24;
-		result.M31 = left.M31 + right.M31;
-		result.M32 = left.M32 + right.M32;
-		result.M33 = left.M33 + right.M33;
-		result.M34 = left.M34 + right.M34;
-		result.M41 = left.M41 + right.M41;
-		result.M42 = left.M42 + right.M42;
-		result.M43 = left.M43 + right.M43;
-		result.M44 = left.M44 + right.M44;
+		Matrix r;
+		r.M11 = left.M11 + right.M11;
+		r.M12 = left.M12 + right.M12;
+		r.M13 = left.M13 + right.M13;
+		r.M14 = left.M14 + right.M14;
+		r.M21 = left.M21 + right.M21;
+		r.M22 = left.M22 + right.M22;
+		r.M23 = left.M23 + right.M23;
+		r.M24 = left.M24 + right.M24;
+		r.M31 = left.M31 + right.M31;
+		r.M32 = left.M32 + right.M32;
+		r.M33 = left.M33 + right.M33;
+		r.M34 = left.M34 + right.M34;
+		r.M41 = left.M41 + right.M41;
+		r.M42 = left.M42 + right.M42;
+		r.M43 = left.M43 + right.M43;
+		r.M44 = left.M44 + right.M44;
+
+		result = r;
 	}
 
 	Matrix Matrix::Subtract( Matrix left, Matrix right )
@@ -199,22 +202,25 @@ namespace SlimDX
 
 	void Matrix::Subtract( Matrix% left, Matrix% right, [Out] Matrix% result )
 	{
-		result.M11 = left.M11 - right.M11;
-		result.M12 = left.M12 - right.M12;
-		result.M13 = left.M13 - right.M13;
-		result.M14 = left.M14 - right.M14;
-		result.M21 = left.M21 - right.M21;
-		result.M22 = left.M22 - right.M22;
-		result.M23 = left.M23 - right.M23;
-		result.M24 = left.M24 - right.M24;
-		result.M31 = left.M31 - right.M31;
-		result.M32 = left.M32 - right.M32;
-		result.M33 = left.M33 - right.M33;
-		result.M34 = left.M34 - right.M34;
-		result.M41 = left.M41 - right.M41;
-		result.M42 = left.M42 - right.M42;
-		result.M43 = left.M43 - right.M43;
-		result.M44 = left.M44 - right.M44;
+		Matrix r;
+		r.M11 = left.M11 - right.M11;
+		r.M12 = left.M12 - right.M12;
+		r.M13 = left.M13 - right.M13;
+		r.M14 = left.M14 - right.M14;
+		r.M21 = left.M21 - right.M21;
+		r.M22 = left.M22 - right.M22;
+		r.M23 = left.M23 - right.M23;
+		r.M24 = left.M24 - right.M24;
+		r.M31 = left.M31 - right.M31;
+		r.M32 = left.M32 - right.M32;
+		r.M33 = left.M33 - right.M33;
+		r.M34 = left.M34 - right.M34;
+		r.M41 = left.M41 - right.M41;
+		r.M42 = left.M42 - right.M42;
+		r.M43 = left.M43 - right.M43;
+		r.M44 = left.M44 - right.M44;
+
+		result = r;
 	}
 
 	Matrix Matrix::Negate( Matrix matrix )
@@ -241,22 +247,25 @@ namespace SlimDX
 
 	void Matrix::Negate( Matrix% matrix, [Out] Matrix% result )
 	{
-		result.M11 = -matrix.M11;
-		result.M12 = -matrix.M12;
-		result.M13 = -matrix.M13;
-		result.M14 = -matrix.M14;
-		result.M21 = -matrix.M21;
-		result.M22 = -matrix.M22;
-		result.M23 = -matrix.M23;
-		result.M24 = -matrix.M24;
-		result.M31 = -matrix.M31;
-		result.M32 = -matrix.M32;
-		result.M33 = -matrix.M33;
-		result.M34 = -matrix.M34;
-		result.M41 = -matrix.M41;
-		result.M42 = -matrix.M42;
-		result.M43 = -matrix.M43;
-		result.M44 = -matrix.M44;
+		Matrix r;
+		r.M11 = -matrix.M11;
+		r.M12 = -matrix.M12;
+		r.M13 = -matrix.M13;
+		r.M14 = -matrix.M14;
+		r.M21 = -matrix.M21;
+		r.M22 = -matrix.M22;
+		r.M23 = -matrix.M23;
+		r.M24 = -matrix.M24;
+		r.M31 = -matrix.M31;
+		r.M32 = -matrix.M32;
+		r.M33 = -matrix.M33;
+		r.M34 = -matrix.M34;
+		r.M41 = -matrix.M41;
+		r.M42 = -matrix.M42;
+		r.M43 = -matrix.M43;
+		r.M44 = -matrix.M44;
+
+		result = r;
 	}
 
 	Matrix Matrix::Multiply( Matrix left, Matrix right )
@@ -283,22 +292,25 @@ namespace SlimDX
 
 	void Matrix::Multiply( Matrix% left, Matrix% right, [Out] Matrix% result )
 	{
-		result.M11 = (left.M11 * right.M11) + (left.M12 * right.M21) + (left.M13 * right.M31) + (left.M14 * right.M41);
-		result.M12 = (left.M11 * right.M12) + (left.M12 * right.M22) + (left.M13 * right.M32) + (left.M14 * right.M42);
-		result.M13 = (left.M11 * right.M13) + (left.M12 * right.M23) + (left.M13 * right.M33) + (left.M14 * right.M43);
-		result.M14 = (left.M11 * right.M14) + (left.M12 * right.M24) + (left.M13 * right.M34) + (left.M14 * right.M44);
-		result.M21 = (left.M21 * right.M11) + (left.M22 * right.M21) + (left.M23 * right.M31) + (left.M24 * right.M41);
-		result.M22 = (left.M21 * right.M12) + (left.M22 * right.M22) + (left.M23 * right.M32) + (left.M24 * right.M42);
-		result.M23 = (left.M21 * right.M13) + (left.M22 * right.M23) + (left.M23 * right.M33) + (left.M24 * right.M43);
-		result.M24 = (left.M21 * right.M14) + (left.M22 * right.M24) + (left.M23 * right.M34) + (left.M24 * right.M44);
-		result.M31 = (left.M31 * right.M11) + (left.M32 * right.M21) + (left.M33 * right.M31) + (left.M34 * right.M41);
-		result.M32 = (left.M31 * right.M12) + (left.M32 * right.M22) + (left.M33 * right.M32) + (left.M34 * right.M42);
-		result.M33 = (left.M31 * right.M13) + (left.M32 * right.M23) + (left.M33 * right.M33) + (left.M34 * right.M43);
-		result.M34 = (left.M31 * right.M14) + (left.M32 * right.M24) + (left.M33 * right.M34) + (left.M34 * right.M44);
-		result.M41 = (left.M41 * right.M11) + (left.M42 * right.M21) + (left.M43 * right.M31) + (left.M44 * right.M41);
-		result.M42 = (left.M41 * right.M12) + (left.M42 * right.M22) + (left.M43 * right.M32) + (left.M44 * right.M42);
-		result.M43 = (left.M41 * right.M13) + (left.M42 * right.M23) + (left.M43 * right.M33) + (left.M44 * right.M43);
-		result.M44 = (left.M41 * right.M14) + (left.M42 * right.M24) + (left.M43 * right.M34) + (left.M44 * right.M44);
+		Matrix r;
+		r.M11 = (left.M11 * right.M11) + (left.M12 * right.M21) + (left.M13 * right.M31) + (left.M14 * right.M41);
+		r.M12 = (left.M11 * right.M12) + (left.M12 * right.M22) + (left.M13 * right.M32) + (left.M14 * right.M42);
+		r.M13 = (left.M11 * right.M13) + (left.M12 * right.M23) + (left.M13 * right.M33) + (left.M14 * right.M43);
+		r.M14 = (left.M11 * right.M14) + (left.M12 * right.M24) + (left.M13 * right.M34) + (left.M14 * right.M44);
+		r.M21 = (left.M21 * right.M11) + (left.M22 * right.M21) + (left.M23 * right.M31) + (left.M24 * right.M41);
+		r.M22 = (left.M21 * right.M12) + (left.M22 * right.M22) + (left.M23 * right.M32) + (left.M24 * right.M42);
+		r.M23 = (left.M21 * right.M13) + (left.M22 * right.M23) + (left.M23 * right.M33) + (left.M24 * right.M43);
+		r.M24 = (left.M21 * right.M14) + (left.M22 * right.M24) + (left.M23 * right.M34) + (left.M24 * right.M44);
+		r.M31 = (left.M31 * right.M11) + (left.M32 * right.M21) + (left.M33 * right.M31) + (left.M34 * right.M41);
+		r.M32 = (left.M31 * right.M12) + (left.M32 * right.M22) + (left.M33 * right.M32) + (left.M34 * right.M42);
+		r.M33 = (left.M31 * right.M13) + (left.M32 * right.M23) + (left.M33 * right.M33) + (left.M34 * right.M43);
+		r.M34 = (left.M31 * right.M14) + (left.M32 * right.M24) + (left.M33 * right.M34) + (left.M34 * right.M44);
+		r.M41 = (left.M41 * right.M11) + (left.M42 * right.M21) + (left.M43 * right.M31) + (left.M44 * right.M41);
+		r.M42 = (left.M41 * right.M12) + (left.M42 * right.M22) + (left.M43 * right.M32) + (left.M44 * right.M42);
+		r.M43 = (left.M41 * right.M13) + (left.M42 * right.M23) + (left.M43 * right.M33) + (left.M44 * right.M43);
+		r.M44 = (left.M41 * right.M14) + (left.M42 * right.M24) + (left.M43 * right.M34) + (left.M44 * right.M44);
+	
+		result = r;
 	}
 
 	Matrix Matrix::Multiply( Matrix left, float right )
@@ -325,22 +337,25 @@ namespace SlimDX
 
 	void Matrix::Multiply( Matrix% left, float right, [Out] Matrix% result )
 	{
-		result.M11 = left.M11 * right;
-		result.M12 = left.M12 * right;
-		result.M13 = left.M13 * right;
-		result.M14 = left.M14 * right;
-		result.M21 = left.M21 * right;
-		result.M22 = left.M22 * right;
-		result.M23 = left.M23 * right;
-		result.M24 = left.M24 * right;
-		result.M31 = left.M31 * right;
-		result.M32 = left.M32 * right;
-		result.M33 = left.M33 * right;
-		result.M34 = left.M34 * right;
-		result.M41 = left.M41 * right;
-		result.M42 = left.M42 * right;
-		result.M43 = left.M43 * right;
-		result.M44 = left.M44 * right;
+		Matrix r;
+		r.M11 = left.M11 * right;
+		r.M12 = left.M12 * right;
+		r.M13 = left.M13 * right;
+		r.M14 = left.M14 * right;
+		r.M21 = left.M21 * right;
+		r.M22 = left.M22 * right;
+		r.M23 = left.M23 * right;
+		r.M24 = left.M24 * right;
+		r.M31 = left.M31 * right;
+		r.M32 = left.M32 * right;
+		r.M33 = left.M33 * right;
+		r.M34 = left.M34 * right;
+		r.M41 = left.M41 * right;
+		r.M42 = left.M42 * right;
+		r.M43 = left.M43 * right;
+		r.M44 = left.M44 * right;
+
+		result = r;
 	}
 
 	Matrix Matrix::Divide( Matrix left, Matrix right )
@@ -367,22 +382,25 @@ namespace SlimDX
 
 	void Matrix::Divide( Matrix% left, Matrix% right, [Out] Matrix% result )
 	{
-		result.M11 = left.M11 / right.M11;
-		result.M12 = left.M12 / right.M12;
-		result.M13 = left.M13 / right.M13;
-		result.M14 = left.M14 / right.M14;
-		result.M21 = left.M21 / right.M21;
-		result.M22 = left.M22 / right.M22;
-		result.M23 = left.M23 / right.M23;
-		result.M24 = left.M24 / right.M24;
-		result.M31 = left.M31 / right.M31;
-		result.M32 = left.M32 / right.M32;
-		result.M33 = left.M33 / right.M33;
-		result.M34 = left.M34 / right.M34;
-		result.M41 = left.M41 / right.M41;
-		result.M42 = left.M42 / right.M42;
-		result.M43 = left.M43 / right.M43;
-		result.M44 = left.M44 / right.M44;
+		Matrix r;
+		r.M11 = left.M11 / right.M11;
+		r.M12 = left.M12 / right.M12;
+		r.M13 = left.M13 / right.M13;
+		r.M14 = left.M14 / right.M14;
+		r.M21 = left.M21 / right.M21;
+		r.M22 = left.M22 / right.M22;
+		r.M23 = left.M23 / right.M23;
+		r.M24 = left.M24 / right.M24;
+		r.M31 = left.M31 / right.M31;
+		r.M32 = left.M32 / right.M32;
+		r.M33 = left.M33 / right.M33;
+		r.M34 = left.M34 / right.M34;
+		r.M41 = left.M41 / right.M41;
+		r.M42 = left.M42 / right.M42;
+		r.M43 = left.M43 / right.M43;
+		r.M44 = left.M44 / right.M44;
+
+		result = r;
 	}
 
 	Matrix Matrix::Divide( Matrix left, float right )
@@ -413,22 +431,25 @@ namespace SlimDX
 	{
 		float inv = 1.0f / right;
 
-		result.M11 = left.M11 * inv;
-		result.M12 = left.M12 * inv;
-		result.M13 = left.M13 * inv;
-		result.M14 = left.M14 * inv;
-		result.M21 = left.M21 * inv;
-		result.M22 = left.M22 * inv;
-		result.M23 = left.M23 * inv;
-		result.M24 = left.M24 * inv;
-		result.M31 = left.M31 * inv;
-		result.M32 = left.M32 * inv;
-		result.M33 = left.M33 * inv;
-		result.M34 = left.M34 * inv;
-		result.M41 = left.M41 * inv;
-		result.M42 = left.M42 * inv;
-		result.M43 = left.M43 * inv;
-		result.M44 = left.M44 * inv;
+		Matrix r;
+		r.M11 = left.M11 * inv;
+		r.M12 = left.M12 * inv;
+		r.M13 = left.M13 * inv;
+		r.M14 = left.M14 * inv;
+		r.M21 = left.M21 * inv;
+		r.M22 = left.M22 * inv;
+		r.M23 = left.M23 * inv;
+		r.M24 = left.M24 * inv;
+		r.M31 = left.M31 * inv;
+		r.M32 = left.M32 * inv;
+		r.M33 = left.M33 * inv;
+		r.M34 = left.M34 * inv;
+		r.M41 = left.M41 * inv;
+		r.M42 = left.M42 * inv;
+		r.M43 = left.M43 * inv;
+		r.M44 = left.M44 * inv;
+
+		result = r;
 	}
 
 	Matrix Matrix::Lerp( Matrix value1, Matrix value2, float amount )
@@ -455,22 +476,25 @@ namespace SlimDX
 
 	void Matrix::Lerp( Matrix% value1, Matrix% value2, float amount, [Out] Matrix% result )
 	{
-		result.M11 = value1.M11 + ((value2.M11 - value1.M11) * amount);
-		result.M12 = value1.M12 + ((value2.M12 - value1.M12) * amount);
-		result.M13 = value1.M13 + ((value2.M13 - value1.M13) * amount);
-		result.M14 = value1.M14 + ((value2.M14 - value1.M14) * amount);
-		result.M21 = value1.M21 + ((value2.M21 - value1.M21) * amount);
-		result.M22 = value1.M22 + ((value2.M22 - value1.M22) * amount);
-		result.M23 = value1.M23 + ((value2.M23 - value1.M23) * amount);
-		result.M24 = value1.M24 + ((value2.M24 - value1.M24) * amount);
-		result.M31 = value1.M31 + ((value2.M31 - value1.M31) * amount);
-		result.M32 = value1.M32 + ((value2.M32 - value1.M32) * amount);
-		result.M33 = value1.M33 + ((value2.M33 - value1.M33) * amount);
-		result.M34 = value1.M34 + ((value2.M34 - value1.M34) * amount);
-		result.M41 = value1.M41 + ((value2.M41 - value1.M41) * amount);
-		result.M42 = value1.M42 + ((value2.M42 - value1.M42) * amount);
-		result.M43 = value1.M43 + ((value2.M43 - value1.M43) * amount);
-		result.M44 = value1.M44 + ((value2.M44 - value1.M44) * amount);
+		Matrix r;
+		r.M11 = value1.M11 + ((value2.M11 - value1.M11) * amount);
+		r.M12 = value1.M12 + ((value2.M12 - value1.M12) * amount);
+		r.M13 = value1.M13 + ((value2.M13 - value1.M13) * amount);
+		r.M14 = value1.M14 + ((value2.M14 - value1.M14) * amount);
+		r.M21 = value1.M21 + ((value2.M21 - value1.M21) * amount);
+		r.M22 = value1.M22 + ((value2.M22 - value1.M22) * amount);
+		r.M23 = value1.M23 + ((value2.M23 - value1.M23) * amount);
+		r.M24 = value1.M24 + ((value2.M24 - value1.M24) * amount);
+		r.M31 = value1.M31 + ((value2.M31 - value1.M31) * amount);
+		r.M32 = value1.M32 + ((value2.M32 - value1.M32) * amount);
+		r.M33 = value1.M33 + ((value2.M33 - value1.M33) * amount);
+		r.M34 = value1.M34 + ((value2.M34 - value1.M34) * amount);
+		r.M41 = value1.M41 + ((value2.M41 - value1.M41) * amount);
+		r.M42 = value1.M42 + ((value2.M42 - value1.M42) * amount);
+		r.M43 = value1.M43 + ((value2.M43 - value1.M43) * amount);
+		r.M44 = value1.M44 + ((value2.M44 - value1.M44) * amount);
+
+		result = r;
 	}
 
 	Matrix Matrix::Billboard( Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector, Vector3 cameraForwardVector )
@@ -1389,22 +1413,25 @@ namespace SlimDX
 
 	void Matrix::Transpose( Matrix% mat, [Out] Matrix% result )
 	{
-		result.M11 = mat.M11;
-		result.M12 = mat.M21;
-		result.M13 = mat.M31;
-		result.M14 = mat.M41;
-		result.M21 = mat.M12;
-		result.M22 = mat.M22;
-		result.M23 = mat.M32;
-		result.M24 = mat.M42;
-		result.M31 = mat.M13;
-		result.M32 = mat.M23;
-		result.M33 = mat.M33;
-		result.M34 = mat.M43;
-		result.M41 = mat.M14;
-		result.M42 = mat.M24;
-		result.M43 = mat.M34;
-		result.M44 = mat.M44;
+		Matrix r;
+		r.M11 = mat.M11;
+		r.M12 = mat.M21;
+		r.M13 = mat.M31;
+		r.M14 = mat.M41;
+		r.M21 = mat.M12;
+		r.M22 = mat.M22;
+		r.M23 = mat.M32;
+		r.M24 = mat.M42;
+		r.M31 = mat.M13;
+		r.M32 = mat.M23;
+		r.M33 = mat.M33;
+		r.M34 = mat.M43;
+		r.M41 = mat.M14;
+		r.M42 = mat.M24;
+		r.M43 = mat.M34;
+		r.M44 = mat.M44;
+
+		result = r;
 	}
 
 	Matrix Matrix::operator * ( Matrix left, Matrix right )
