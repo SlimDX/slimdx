@@ -30,6 +30,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		ref class MeshContainer;
 		ref class Frame;
 		ref class AnimationController;
 
@@ -77,24 +78,36 @@ namespace SlimDX
 			}
 		};
 
-		public ref class MeshContainer
+		class MeshContainerShim : public D3DXMESHCONTAINER
 		{
 		private:
-			D3DXMESHCONTAINER *m_Pointer;
+			gcroot<MeshContainer^> m_Container;
 
-		internal:
-			MeshContainer( const D3DXMESHCONTAINER &container );
-			MeshContainer( const D3DXMESHCONTAINER *container );
+		public:
+			MeshContainerShim( MeshContainer^ container );
 
-			property D3DXMESHCONTAINER *Pointer
-			{ 
-				D3DXMESHCONTAINER* get() { return m_Pointer; }
+			MeshContainer^ GetMeshContainer()
+			{
+				return m_Container;
 			}
+		};
+
+		public ref class MeshContainer abstract
+		{
+		internal:
+			property D3DXMESHCONTAINER *Pointer;
 
 			void Destruct();
 
-		public:
+			String^ m_Name;
+			MeshContainer^ m_NextContainer;
+			MeshData^ m_MeshData;
+			SkinInfo^ m_SkinInfo;
+
+		protected:
 			MeshContainer();
+
+		public:
 			virtual ~MeshContainer();
 			!MeshContainer();
 
@@ -208,26 +221,43 @@ namespace SlimDX
 		class FrameShim : public D3DXFRAME
 		{
 		private:
-			gcroot<Type^> m_Type;
+			gcroot<Frame^> m_Frame;
 
 		public:
-			FrameShim( D3DXFRAME frame, Type^ type );
+			FrameShim( Frame^ frame );
+			FrameShim( Frame^ frame, const D3DXFRAME &pFrame );
 
-			Type^ GetType() { return m_Type; }
+			Frame^ GetFrame()
+			{
+				return m_Frame;
+			}
 		};
 
-		public ref class Frame
+		public ref class Frame abstract
 		{
 		internal:
-			Frame( const D3DXFRAME &frame );
-			Frame( const D3DXFRAME *frame );
-
 			property D3DXFRAME *Pointer;
 
 			void Destruct();
 
-		public:
+			String^ m_Name;
+			Frame^ m_FirstChild;
+			Frame^ m_Sibling;
+			MeshContainer^ m_MeshContainer;
+
+			static Frame^ BuildHierarchyFromUnmanaged( FrameShim* pFrame );
+			static void BuildManagedFrames( Frame^% frame, FrameShim* pFrame );
+			static void BuildManagedMeshes( MeshContainer^% mesh, MeshContainerShim* pMesh );
+			static void RegisterAnimations( Frame^ frame, LPD3DXANIMATIONCONTROLLER animation );
+
+			static FrameShim* BuildHierarchyFromManaged( Frame^ frame );
+			static void BuildUnmanagedFrames( FrameShim*% pFrame, Frame^ frame );
+			static void BuildUnmanagedMeshes( MeshContainerShim*% pMesh, MeshContainer^ mesh );
+
+		protected:
 			Frame();
+
+		public:
 			virtual ~Frame();
 			!Frame();
 
@@ -243,8 +273,8 @@ namespace SlimDX
 			static void SaveHierarchyToFile( String^ fileName, XFileFormat format, Frame^ root, 
 				AnimationController^ animationController );
 
-			void AppendChild( Frame^ child );
 			Frame^ FindChild( String^ name );
+			void AppendChild( Frame^ child );
 
 			static BoundingSphere CalculateBoundingSphere( Frame^ root );
 			static void DestroyHierarchy( Frame^ root, IAllocateHierarchy^ allocator );

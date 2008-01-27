@@ -300,6 +300,9 @@ namespace SlimDX
 
 			void SetTransform( TransformState state, Matrix value );
 			Matrix GetTransform( TransformState state );
+
+			void SetTransform( int index, Matrix value );
+			Matrix GetTransform( int index );
 			
 			void MultiplyTransform( TransformState state, Matrix value );
 			void SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride );

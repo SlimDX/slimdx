@@ -26,8 +26,9 @@
 #include "../ComObject.h"
 #include "../Math/Math.h"
 #include "../DataStream.h"
+#include "../Utilities.h"
 
-#include "Direct3D9ErrorHandler.h"
+#include "Direct3D9Exception.h"
 #include "Device.h"
 #include "Mesh.h"
 #include "SkinInfo.h"
@@ -76,24 +77,23 @@ namespace Direct3D9
 		type = MeshDataType::PatchMesh;
 	}
 
-	MeshContainer::MeshContainer( const D3DXMESHCONTAINER &container )
+	MeshContainerShim::MeshContainerShim( SlimDX::Direct3D9::MeshContainer ^container ) : D3DXMESHCONTAINER( )
 	{
-		m_Pointer = new D3DXMESHCONTAINER( container );
-	}
-
-	MeshContainer::MeshContainer( const D3DXMESHCONTAINER *container )
-	{
-		m_Pointer = const_cast<D3DXMESHCONTAINER*>( container );
+		m_Container = container;
 	}
 
 	MeshContainer::MeshContainer()
 	{
-		m_Pointer = new D3DXMESHCONTAINER();
+		Pointer = new D3DXMESHCONTAINER();
+		Pointer->MeshData = D3DXMESHDATA();
 		Pointer->pMaterials = NULL;
 		Pointer->pEffects = NULL;
 		Pointer->pAdjacency = NULL;
 		Pointer->pSkinInfo = NULL;
 		Pointer->pNextMeshContainer = NULL;
+		m_Name = String::Empty;
+		m_NextContainer = nullptr;
+		m_SkinInfo = nullptr;
 	}
 
 	MeshContainer::~MeshContainer()
@@ -108,7 +108,7 @@ namespace Direct3D9
 
 	void MeshContainer::Destruct()
 	{
-		if( m_Pointer != NULL )
+		if( Pointer != NULL )
 		{
 			if( Pointer->pMaterials != NULL )
 			{
@@ -134,8 +134,29 @@ namespace Direct3D9
 				Pointer->pEffects = NULL;
 			}
 
-			delete m_Pointer;
-			m_Pointer = NULL;
+			if(m_MeshData != nullptr )
+			{
+				if(m_MeshData->Mesh != nullptr)
+				{
+					m_MeshData->Mesh->~Mesh();
+				}
+				if(m_MeshData->PatchMesh != nullptr)
+				{
+					m_MeshData->PatchMesh->~PatchMesh();
+				}
+				if(m_MeshData->ProgressiveMesh != nullptr)
+				{
+					m_MeshData->ProgressiveMesh->~ProgressiveMesh();
+				}
+			}
+
+			if(m_SkinInfo != nullptr)
+			{
+				m_SkinInfo->~SkinInfo();
+			}
+
+			delete Pointer;
+			Pointer = NULL;
 		}
 	}
 
@@ -217,14 +238,13 @@ namespace Direct3D9
 
 	String^ MeshContainer::Name::get()
 	{
-		if( Pointer->Name == NULL )
-			return String::Empty;
-
-		return gcnew String( Pointer->Name );
+		return m_Name;
 	}
 
 	void MeshContainer::Name::set( String^ value )
 	{
+		m_Name = value;
+
 		if( value == nullptr || String::IsNullOrEmpty( value ) )
 			Pointer->Name = NULL;
 		else
@@ -238,54 +258,55 @@ namespace Direct3D9
 
 	MeshData^ MeshContainer::Mesh::get()
 	{
-		if( Pointer->MeshData.Type == D3DXMESHTYPE_MESH )
-			return gcnew MeshData( gcnew SlimDX::Direct3D9::Mesh( Pointer->MeshData.pMesh ) );
-		else if( Pointer->MeshData.Type == D3DXMESHTYPE_PMESH )
-			return gcnew MeshData( gcnew ProgressiveMesh( Pointer->MeshData.pPMesh ) );
-		else if( Pointer->MeshData.Type == D3DXMESHTYPE_PATCHMESH )
-			return gcnew MeshData( gcnew PatchMesh( Pointer->MeshData.pPatchMesh ) );
-
-		return nullptr;
+		return m_MeshData;
 	}
 
 	void MeshContainer::Mesh::set( MeshData^ value )
 	{
+		m_MeshData = value;
+
 		Pointer->MeshData.Type = static_cast<D3DXMESHDATATYPE>( value->Type );
 		
 		if( Pointer->MeshData.Type == D3DXMESHTYPE_MESH )
+		{
 			Pointer->MeshData.pMesh = value->Mesh->MeshPointer;
+		}
 		else if( Pointer->MeshData.Type == D3DXMESHTYPE_PMESH )
+		{
 			Pointer->MeshData.pPMesh = value->ProgressiveMesh->MeshPointer;
+		}
 		else if( Pointer->MeshData.Type == D3DXMESHTYPE_PATCHMESH )
+		{
 			Pointer->MeshData.pPatchMesh = value->PatchMesh->InternalPointer;
+		}
 	}
 
 	SlimDX::Direct3D9::SkinInfo^ MeshContainer::SkinInfo::get()
 	{
-		if( Pointer->pSkinInfo == NULL )
-			return nullptr;
-
-		return gcnew SlimDX::Direct3D9::SkinInfo( Pointer->pSkinInfo );
+		return m_SkinInfo;
 	}
 
 	void MeshContainer::SkinInfo::set( SlimDX::Direct3D9::SkinInfo^ value )
 	{
+		m_SkinInfo = value;
+
 		if( value == nullptr )
 			Pointer->pSkinInfo = NULL;
 		else
+		{
 			Pointer->pSkinInfo = value->InternalPointer;
+		}
 	}
 
 	MeshContainer^ MeshContainer::NextMeshContainer::get()
 	{
-		if( Pointer->pNextMeshContainer == NULL )
-			return nullptr;
-
-		return gcnew MeshContainer( Pointer->pNextMeshContainer );
+		return m_NextContainer;
 	}
 
 	void MeshContainer::NextMeshContainer::set( MeshContainer^ value )
 	{
+		m_NextContainer = value;
+
 		if( value == nullptr )
 			Pointer->pNextMeshContainer = NULL;
 		else
@@ -300,17 +321,18 @@ namespace Direct3D9
 	HRESULT IAllocateHierarchyShim::CreateFrame( LPCSTR Name, LPD3DXFRAME *ppNewFrame )
 	{
 		Frame^ frame;
+		*ppNewFrame = NULL;
 
 		try
 		{
-			frame = m_WrappedInterface->CreateFrame( gcnew String( Name ) );
+			frame = m_WrappedInterface->CreateFrame( gcnew String(Name) );
 		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
 		}
-
-		*ppNewFrame = new FrameShim( *(frame->Pointer), frame->GetType() );
+		 
+		*ppNewFrame = new FrameShim( frame, *(frame->Pointer) );
 
 		return D3D_OK;
 	}
@@ -321,6 +343,7 @@ namespace Direct3D9
 		LPD3DXMESHCONTAINER *ppNewMeshContainer )
 	{
 		MeshContainer^ meshContainer;
+		*ppNewMeshContainer = NULL;
 
 		MeshData^ meshData;
 		int count = 0;
@@ -328,16 +351,19 @@ namespace Direct3D9
 		if( pMeshData->Type == D3DXMESHTYPE_MESH )
 		{
 			meshData = gcnew MeshData( gcnew Mesh( pMeshData->pMesh ) );
+			meshData->Mesh->MeshPointer->AddRef();
 			count = meshData->Mesh->FaceCount;
 		}
 		else if( pMeshData->Type == D3DXMESHTYPE_PMESH )
 		{
 			meshData = gcnew MeshData( gcnew ProgressiveMesh( pMeshData->pPMesh ) );
+			meshData->ProgressiveMesh->MeshPointer->AddRef();
 			count = meshData->ProgressiveMesh->FaceCount;
 		}
 		else if( pMeshData->Type == D3DXMESHTYPE_PATCHMESH )
 		{
 			meshData = gcnew MeshData( gcnew PatchMesh( pMeshData->pPatchMesh ) );
+			meshData->PatchMesh->InternalPointer->AddRef();
 			count = meshData->PatchMesh->PatchCount;
 		}
 
@@ -356,17 +382,24 @@ namespace Direct3D9
 		for( int i = 0; i < count; i++ )
 			adjacency[i] = pAdjacency[i];
 
+		SkinInfo^ skinInfo = nullptr;
+		if(pSkinInfo != NULL)
+		{
+			skinInfo = gcnew SkinInfo( pSkinInfo );
+			pSkinInfo->AddRef();
+		}
+
 		try
 		{
-			meshContainer = m_WrappedInterface->CreateMeshContainer( gcnew String( Name ), meshData, materials, 
-				effects, adjacency, gcnew SkinInfo( pSkinInfo ) );
+			meshContainer = m_WrappedInterface->CreateMeshContainer( gcnew String(Name), meshData, materials, 
+				effects, adjacency, skinInfo );
 		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
 		}
 
-		*ppNewMeshContainer = new D3DXMESHCONTAINER( *(meshContainer->Pointer) );
+		*ppNewMeshContainer = new MeshContainerShim( meshContainer );
 
 		return D3D_OK;
 	}
@@ -375,9 +408,8 @@ namespace Direct3D9
 	{
 		try
 		{
-			Frame^ frame = gcnew Frame( pFrameToFree );
-			m_WrappedInterface->DestroyFrame( frame );
-			frame->~Frame();
+			m_WrappedInterface->DestroyFrame( ((FrameShim*)pFrameToFree)->GetFrame() );
+			delete pFrameToFree;
 		}
 		catch( Exception^ )
 		{
@@ -391,9 +423,8 @@ namespace Direct3D9
 	{
 		try
 		{
-			MeshContainer^ meshContainer = gcnew MeshContainer( pMeshContainerToFree );
-			m_WrappedInterface->DestroyMeshContainer( meshContainer );
-			meshContainer->~MeshContainer();
+			m_WrappedInterface->DestroyMeshContainer( ((MeshContainerShim*)pMeshContainerToFree)->GetMeshContainer() );
+			delete pMeshContainerToFree;
 		}
 		catch( Exception^ )
 		{
@@ -402,7 +433,7 @@ namespace Direct3D9
 
 		return D3D_OK;
 	}
-
+ 
 	ILoadUserDataShim::ILoadUserDataShim( ILoadUserData^ wrappedInterface )
 	{
 		m_WrappedInterface = wrappedInterface;
@@ -412,7 +443,9 @@ namespace Direct3D9
 	{
 		try
 		{
-			m_WrappedInterface->LoadFrameData( gcnew Frame( pFrame ), gcnew XFileData( pXofChildData ) );
+			XFileData^ data = gcnew XFileData( pXofChildData );
+			m_WrappedInterface->LoadFrameData( ((FrameShim*)pFrame)->GetFrame(), data );
+			data->~XFileData();
 		}
 		catch( Exception^ )
 		{
@@ -426,7 +459,9 @@ namespace Direct3D9
 	{
 		try
 		{
-			m_WrappedInterface->LoadMeshData( gcnew MeshContainer( pMeshContainer ), gcnew XFileData( pXofChildData ) );
+			XFileData^ data = gcnew XFileData( pXofChildData );
+			m_WrappedInterface->LoadMeshData( ((MeshContainerShim*)pMeshContainer)->GetMeshContainer(), data );
+			data->~XFileData();
 		}
 		catch( Exception^ )
 		{
@@ -440,7 +475,9 @@ namespace Direct3D9
 	{
 		try
 		{
-			m_WrappedInterface->LoadTopLevelData( gcnew XFileData( pXofChildData ) );
+			XFileData^ data = gcnew XFileData( pXofChildData );
+			m_WrappedInterface->LoadTopLevelData( data );
+			data->~XFileData();
 		}
 		catch( Exception^ )
 		{
@@ -459,8 +496,11 @@ namespace Direct3D9
 	{
 		try
 		{
-			m_WrappedInterface->AddFrameChildData( gcnew Frame( pFrame ), gcnew XFileSaveObject( pXofSave ), 
-				gcnew XFileSaveData( pXofFrameData ) );
+			XFileSaveObject^ saveObject = gcnew XFileSaveObject( pXofSave );
+			XFileSaveData^ saveData = gcnew XFileSaveData( pXofFrameData );
+			m_WrappedInterface->AddFrameChildData( ((FrameShim*)pFrame)->GetFrame(), saveObject, saveData );
+			saveObject->~XFileSaveObject();
+			saveData->~XFileSaveData();
 		}
 		catch( Exception^ )
 		{
@@ -474,8 +514,11 @@ namespace Direct3D9
 	{
 		try
 		{
-			m_WrappedInterface->AddMeshChildData( gcnew MeshContainer( pMeshContainer ), 
-				gcnew XFileSaveObject( pXofSave ), gcnew XFileSaveData( pXofMeshData ) );
+			XFileSaveObject^ saveObject = gcnew XFileSaveObject( pXofSave );
+			XFileSaveData^ saveData = gcnew XFileSaveData( pXofMeshData );
+			m_WrappedInterface->AddMeshChildData( ((MeshContainerShim*)pMeshContainer)->GetMeshContainer(), saveObject, saveData );
+			saveObject->~XFileSaveObject();
+			saveData->~XFileSaveData();
 		}
 		catch( Exception^ )
 		{
@@ -489,7 +532,9 @@ namespace Direct3D9
 	{
 		try
 		{
-			m_WrappedInterface->AddTopLevelDataPost( gcnew XFileSaveObject( pXofSave ) );
+			XFileSaveObject^ saveObject = gcnew XFileSaveObject( pXofSave );
+			m_WrappedInterface->AddTopLevelDataPost( saveObject );
+			saveObject->~XFileSaveObject();
 		}
 		catch( Exception^ )
 		{
@@ -503,7 +548,9 @@ namespace Direct3D9
 	{
 		try
 		{
-			m_WrappedInterface->AddTopLevelDataPre( gcnew XFileSaveObject( pXofSave ) );
+			XFileSaveObject^ saveObject = gcnew XFileSaveObject( pXofSave );
+			m_WrappedInterface->AddTopLevelDataPre( saveObject );
+			saveObject->~XFileSaveObject();
 		}
 		catch( Exception^ )
 		{
@@ -517,7 +564,9 @@ namespace Direct3D9
 	{
 		try
 		{
-			m_WrappedInterface->RegisterTemplates( gcnew XFile( pXFileApi ) );
+			XFile^ xFile = gcnew XFile( pXFileApi );
+			m_WrappedInterface->RegisterTemplates( xFile );
+			xFile->~XFile();
 		}
 		catch( Exception^ )
 		{
@@ -531,7 +580,9 @@ namespace Direct3D9
 	{
 		try
 		{
-			m_WrappedInterface->SaveTemplates( gcnew XFileSaveObject( pXofSave ) );
+			XFileSaveObject^ saveObject = gcnew XFileSaveObject( pXofSave );
+			m_WrappedInterface->SaveTemplates( saveObject );
+			saveObject->~XFileSaveObject();
 		}
 		catch( Exception^ )
 		{
@@ -541,24 +592,27 @@ namespace Direct3D9
 		return D3D_OK;
 	}
 
-	FrameShim::FrameShim( D3DXFRAME pointer, Type^ type ) : D3DXFRAME( pointer )
+	FrameShim::FrameShim( Frame^ frame, const D3DXFRAME &pFrame ) : D3DXFRAME( pFrame )
 	{
-		m_Type = type;
+		m_Frame = frame;
 	}
 
-	Frame::Frame( const D3DXFRAME &frame )
+	FrameShim::FrameShim( Frame^ frame ) : D3DXFRAME( )
 	{
-		Pointer = new D3DXFRAME( frame );
-	}
+		m_Frame = frame;
 
-	Frame::Frame( const D3DXFRAME *frame )
-	{
-		Pointer = const_cast<D3DXFRAME*>( frame );
+		// This step is important when saving the frame hierarchy.
+		if(frame->Pointer != NULL)
+			TransformationMatrix = frame->Pointer->TransformationMatrix;
 	}
 
 	Frame::Frame()
 	{
 		Pointer = new D3DXFRAME();
+		m_Name = String::Empty;
+		m_FirstChild = nullptr;
+		m_Sibling = nullptr;
+		m_MeshContainer = nullptr;
 	}
 
 	Frame::~Frame()
@@ -582,8 +636,28 @@ namespace Direct3D9
 
 	void Frame::AppendChild( Frame^ child )
 	{
-		HRESULT hr = D3DXFrameAppendChild( Pointer, child->Pointer );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		if( child == this )
+			throw gcnew Direct3D9Exception("Child frame can't be the same as the parent." + 
+			" This will cause a StackOverflowException.");
+
+		// Append managed child frame to parent.
+		if( m_FirstChild != nullptr )
+		{
+            // Go through all the child frames connected to this frame
+			Frame^ frame = FirstChild;
+			while( frame != nullptr )
+			{
+				// Go to the next child
+				frame = frame->Sibling;
+			}
+
+			// Set child
+			frame = child;
+		}
+		else
+		{
+			FirstChild = child;
+		}
 	}
 
 	Frame^ Frame::FindChild( String^ name )
@@ -591,11 +665,18 @@ namespace Direct3D9
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		D3DXFRAME* frame = D3DXFrameFind( Pointer, reinterpret_cast<LPCSTR>( pinnedName ) );
-		if( frame == NULL )
-			return nullptr;
+		FrameShim* shim = Frame::BuildHierarchyFromManaged( this );
 
-		return gcnew Frame( *frame );
+		FrameShim* pFrame = (FrameShim*)D3DXFrameFind( shim, reinterpret_cast<LPCSTR>( pinnedName ) );
+
+		if( pFrame == NULL )
+		{
+			delete shim;
+			return nullptr;
+		}
+
+		delete shim;
+		return pFrame->GetFrame();
 	}
 
 	BoundingSphere Frame::CalculateBoundingSphere( Frame^ root )
@@ -603,46 +684,59 @@ namespace Direct3D9
 		Vector3 objectCenter;
 		float radius;
 
-		HRESULT hr = D3DXFrameCalculateBoundingSphere( root->Pointer, reinterpret_cast<D3DXVECTOR3*>( &objectCenter ), &radius );
+		FrameShim* shim = Frame::BuildHierarchyFromManaged( root );
+
+		HRESULT hr = D3DXFrameCalculateBoundingSphere( shim, reinterpret_cast<D3DXVECTOR3*>( &objectCenter ), &radius );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
+		{
+			delete shim;
 			return BoundingSphere( Vector3( 0, 0, 0 ), 0.0f );
+		}
 
+		delete shim;
 		return BoundingSphere( objectCenter, radius );
 	}
 
 	void Frame::DestroyHierarchy( Frame^ root, IAllocateHierarchy^ allocator )
 	{
 		IAllocateHierarchyShim* shim = new IAllocateHierarchyShim( allocator );
+		FrameShim* frameShim = Frame::BuildHierarchyFromManaged( root );
 
-		HRESULT hr = D3DXFrameDestroy( root->Pointer, shim );
+		HRESULT hr = D3DXFrameDestroy( frameShim, shim );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		delete shim;
+		delete frameShim;
 	}
 
 	int Frame::CountNamedFrames( Frame^ root )
 	{
-		return D3DXFrameNumNamedMatrices( root->Pointer );
+		FrameShim* frameShim = Frame::BuildHierarchyFromManaged( root );
+		int count = D3DXFrameNumNamedMatrices( frameShim );
+
+		delete frameShim;
+		return count;
 	}
 
 	void Frame::RegisterNamedMatrices( Frame^ root, AnimationController^ controller )
 	{
-		HRESULT hr = D3DXFrameRegisterNamedMatrices( root->Pointer, controller->InternalPointer );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		if( root == nullptr || controller == nullptr )
+			throw gcnew NullReferenceException();
+
+		Frame::RegisterAnimations( root, controller->InternalPointer );
 	}
 
 	String^ Frame::Name::get()
 	{
-		if( Pointer->Name == NULL )
-			return String::Empty;
-
-		return gcnew String( Pointer->Name );
+		return m_Name;
 	}
 
 	void Frame::Name::set( String^ value )
 	{
+		m_Name = value;
+
 		if( value == nullptr || String::IsNullOrEmpty( value ) )
 			Pointer->Name = NULL;
 		else
@@ -666,15 +760,15 @@ namespace Direct3D9
 
 	SlimDX::Direct3D9::MeshContainer^ Frame::MeshContainer::get()
 	{
-		if( Pointer->pMeshContainer == NULL )
-			return nullptr;
-
-		return gcnew SlimDX::Direct3D9::MeshContainer( *Pointer->pMeshContainer );
+		return m_MeshContainer;
 	}
 
 	void Frame::MeshContainer::set( SlimDX::Direct3D9::MeshContainer^ value )
 	{
-		if( value == nullptr )
+		m_MeshContainer = value;
+
+		/* Update Unmanaged */
+		if(value == nullptr)
 			Pointer->pMeshContainer = NULL;
 		else
 			Pointer->pMeshContainer = value->Pointer;
@@ -682,15 +776,14 @@ namespace Direct3D9
 
 	Frame^ Frame::Sibling::get()
 	{
-		if( Pointer->pFrameSibling == NULL )
-			return nullptr;
-
-		return gcnew Frame( *Pointer->pFrameSibling );
+		return m_Sibling;
 	}
 
 	void Frame::Sibling::set( Frame^ value )
 	{
-		if( value == nullptr )
+		m_Sibling = value;
+
+		if(value == nullptr)
 			Pointer->pFrameSibling = NULL;
 		else
 			Pointer->pFrameSibling = value->Pointer;
@@ -698,15 +791,14 @@ namespace Direct3D9
 
 	Frame^ Frame::FirstChild::get()
 	{
-		if( Pointer->pFrameFirstChild == NULL )
-			return nullptr;
-
-		return gcnew Frame( *Pointer->pFrameFirstChild );
+		return m_FirstChild;
 	}
 
 	void Frame::FirstChild::set( Frame^ value )
 	{
-		if( value == nullptr )
+		m_FirstChild = value;
+
+		if(value == nullptr)
 			Pointer->pFrameFirstChild = NULL;
 		else
 			Pointer->pFrameFirstChild = value->Pointer;
@@ -716,8 +808,8 @@ namespace Direct3D9
 		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
 	{
 		IAllocateHierarchyShim* allocatorShim = new IAllocateHierarchyShim( allocator );
-		ILoadUserDataShim* userDataLoaderShim;
-		LPD3DXFRAME result;
+		ILoadUserDataShim* userDataLoaderShim = NULL;
+		LPD3DXFRAME result = NULL;
 		LPD3DXANIMATIONCONTROLLER animationResult;
 
 		if( userDataLoader == nullptr )
@@ -728,20 +820,32 @@ namespace Direct3D9
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
 		HRESULT hr = D3DXLoadMeshHierarchyFromX( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( options ), device->InternalPointer,
-			allocatorShim, userDataLoaderShim, &result, &animationResult );
+			allocatorShim, userDataLoaderShim, &result, &animationResult);
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
+		{
+			animationController = nullptr;
 			return nullptr;
+		}
 
-		animationController = gcnew AnimationController( animationResult );
+		// If there is no animation, return a nullptr.
+		if( animationResult != NULL )
+		{
+			animationController = gcnew AnimationController( animationResult );
+		}
+		else
+			animationController = nullptr;
 
 		delete allocatorShim;
 		delete userDataLoaderShim;
+		
+		// Build frame hierarchy.
+		Frame^ frame = Frame::BuildHierarchyFromUnmanaged( ((FrameShim*)result) );
 
-		Object^ object = Activator::CreateInstance( ( (FrameShim*)result )->GetType() );
-		Frame^ frame = safe_cast<Frame^>( object );
-		frame->Pointer = result;
+		// Register frame animations.
+		if( animationResult != NULL )
+			Frame::RegisterAnimations( frame, animationResult );
 
 		return frame;
 	}
@@ -750,9 +854,9 @@ namespace Direct3D9
 		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
 	{
 		IAllocateHierarchyShim* allocatorShim = new IAllocateHierarchyShim( allocator );
-		ILoadUserDataShim* userDataLoaderShim;
-		LPD3DXFRAME result;
-		LPD3DXANIMATIONCONTROLLER animationResult;
+		ILoadUserDataShim* userDataLoaderShim = NULL;
+		LPD3DXFRAME result = NULL;
+		LPD3DXANIMATIONCONTROLLER animationResult = NULL;
 
 		if( userDataLoader == nullptr )
 			userDataLoaderShim = NULL;
@@ -761,21 +865,33 @@ namespace Direct3D9
 
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
-		HRESULT hr = D3DXLoadMeshHierarchyFromXInMemory( reinterpret_cast<LPCVOID>( pinnedMemory ), memory->Length, static_cast<DWORD>( options ), 
-			device->InternalPointer, allocatorShim, userDataLoaderShim, &result, &animationResult );
+		HRESULT hr = D3DXLoadMeshHierarchyFromX( reinterpret_cast<LPCWSTR>( pinnedMemory ), static_cast<DWORD>( options ), device->InternalPointer,
+			allocatorShim, userDataLoaderShim, &result, &animationResult);
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
+		{
+			animationController = nullptr;
 			return nullptr;
+		}
 
-		animationController = gcnew AnimationController( animationResult );
+		// If there is no animation, return a nullptr.
+		if( animationResult != NULL )
+		{
+			animationController = gcnew AnimationController( animationResult );
+		}
+		else
+			animationController = nullptr;
 
 		delete allocatorShim;
 		delete userDataLoaderShim;
+		
+		// Build frame hierarchy.
+		Frame^ frame = Frame::BuildHierarchyFromUnmanaged( (FrameShim*)result );
 
-		Object^ object = Activator::CreateInstance( ( (FrameShim*)result )->GetType() );
-		Frame^ frame = safe_cast<Frame^>( object );
-		frame->Pointer = result;
+		// Register frame animations.
+		if( animationResult != NULL )
+			Frame::RegisterAnimations( frame, animationResult );
 
 		return frame;
 	}
@@ -791,21 +907,184 @@ namespace Direct3D9
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 		ISaveUserDataShim *shim = new ISaveUserDataShim( userDataSaver );
+		FrameShim *frameShim = Frame::BuildHierarchyFromManaged( root );
+
+		// If animation controller is null, handle it.
+		LPD3DXANIMATIONCONTROLLER animation = NULL;
+		if(animationController != nullptr)
+			animation = animationController->InternalPointer;
+
 
 		HRESULT hr = D3DXSaveMeshHierarchyToFile( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( format ),
-			root->Pointer, animationController->InternalPointer, shim );
+			frameShim, animation, shim );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		delete shim;
+		delete frameShim;
 	}
 
 	void Frame::SaveHierarchyToFile( String^ fileName, XFileFormat format, Frame^ root, AnimationController^ animationController )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+		FrameShim *frameShim = Frame::BuildHierarchyFromManaged( root );
+
+		// If animation controller is null, handle it.
+		LPD3DXANIMATIONCONTROLLER animation = NULL;
+		if(animationController != nullptr)
+			animation = animationController->InternalPointer;
 
 		HRESULT hr = D3DXSaveMeshHierarchyToFile( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( format ),
-			root->Pointer, animationController->InternalPointer, NULL );
+			frameShim, animation, NULL );
 		Direct3D9ErrorHandler::TestForFailure( hr );
+
+		delete frameShim;
 	}
-}
+
+	void Frame::RegisterAnimations( Frame^ frame, LPD3DXANIMATIONCONTROLLER animation )
+	{
+		if( frame->Name != nullptr )
+		{
+			animation->RegisterAnimationOutput( frame->Pointer->Name, &frame->Pointer->TransformationMatrix, NULL, NULL, NULL );
+		}
+
+		if( frame->FirstChild != nullptr )
+		{
+			RegisterAnimations( frame->FirstChild, animation );
+		}
+
+		if( frame->Sibling != nullptr )
+		{
+			RegisterAnimations( frame->Sibling, animation );
+		}
+	}
+
+	Frame^ Frame::BuildHierarchyFromUnmanaged( FrameShim* pFrame )
+	{
+		Frame^ hierarchy = nullptr;
+		BuildManagedFrames( hierarchy, pFrame );
+		return hierarchy;
+	}
+
+	void Frame::BuildManagedFrames( Frame^% frame, FrameShim* pFrame )
+	{
+		frame = pFrame->GetFrame();
+
+		// Since DX adds the frame's transformation matrix after creating the frame,
+		// we have to update that here.
+		frame->Pointer->TransformationMatrix = pFrame->TransformationMatrix;
+
+		// Get any meshes.
+		if( pFrame->pMeshContainer != NULL )
+		{
+			SlimDX::Direct3D9::MeshContainer^ mc;
+			BuildManagedMeshes( mc, (MeshContainerShim*)pFrame->pMeshContainer );
+			frame->MeshContainer = mc;
+		}
+
+		if( pFrame->pFrameFirstChild != NULL )
+		{
+			Frame^ fc;
+			BuildManagedFrames( fc, (FrameShim*)pFrame->pFrameFirstChild );
+			frame->FirstChild = fc;
+		}
+
+		if( pFrame->pFrameSibling != NULL )
+		{
+			Frame^ sb;
+			BuildManagedFrames( sb, (FrameShim*)pFrame->pFrameSibling );
+			frame->Sibling = sb;
+		}
+	}
+
+	void Frame::BuildManagedMeshes( SlimDX::Direct3D9::MeshContainer^% mesh, MeshContainerShim* pMesh )
+	{
+		mesh = pMesh->GetMeshContainer();
+
+		if( pMesh->pNextMeshContainer != NULL )
+		{
+			SlimDX::Direct3D9::MeshContainer^ nc;
+			BuildManagedMeshes( nc, (MeshContainerShim*)pMesh->pNextMeshContainer );
+			mesh->NextMeshContainer = nc;
+		}
+	}
+
+	FrameShim* Frame::BuildHierarchyFromManaged( Frame^ frame )
+	{
+		FrameShim* hierarchy = nullptr;
+		BuildUnmanagedFrames( hierarchy, frame );
+		return hierarchy;
+	}
+
+	void Frame::BuildUnmanagedFrames( FrameShim*% pFrame, Frame^ frame )
+	{
+		pFrame = new FrameShim( frame );
+
+		if( frame->Name == nullptr || String::IsNullOrEmpty(frame->Name) )
+			pFrame->Name = NULL;
+		else
+		{
+			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( frame->Name );
+			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+
+			pFrame->Name = reinterpret_cast<LPSTR>( pinnedName );
+		}
+
+		// Get any meshes.
+		if( frame->MeshContainer != nullptr )
+		{
+			MeshContainerShim* mc;
+			BuildUnmanagedMeshes( mc, frame->MeshContainer );
+			pFrame->pMeshContainer = mc;
+		}
+
+		if( frame->FirstChild != nullptr )
+		{
+			FrameShim* fc;
+			BuildUnmanagedFrames( fc, frame->FirstChild );
+			pFrame->pFrameFirstChild = fc;
+		}
+
+		if( frame->Sibling != nullptr )
+		{
+			FrameShim* sb;
+			BuildUnmanagedFrames( sb, frame->Sibling );
+			pFrame->pFrameSibling = sb;
+		}
+	}
+
+	void Frame::BuildUnmanagedMeshes( MeshContainerShim*% pMesh, SlimDX::Direct3D9::MeshContainer^ mesh )
+	{
+		pMesh = new MeshContainerShim( mesh );
+
+		if( mesh->Name == nullptr || String::IsNullOrEmpty( mesh->Name ) )
+			pMesh->Name = NULL;
+		else
+		{
+			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( mesh->Name );
+			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+
+			pMesh->Name = reinterpret_cast<LPSTR>( pinnedName );
+		}
+
+		if( mesh->Pointer != NULL )
+		{
+			pMesh->NumMaterials = mesh->Pointer->NumMaterials;
+			pMesh->pMaterials = mesh->Pointer->pMaterials;
+			pMesh->pEffects = mesh->Pointer->pEffects;
+			pMesh->pAdjacency = mesh->Pointer->pAdjacency;
+			pMesh->pSkinInfo = mesh->Pointer->pSkinInfo;
+			pMesh->MeshData.pMesh = mesh->Pointer->MeshData.pMesh;
+			pMesh->MeshData.pPatchMesh = mesh->Pointer->MeshData.pPatchMesh;
+			pMesh->MeshData.pPMesh = mesh->Pointer->MeshData.pPMesh;
+			pMesh->MeshData.Type = mesh->Pointer->MeshData.Type;
+
+			if( mesh->NextMeshContainer != nullptr )
+			{
+				MeshContainerShim* nc;
+				BuildUnmanagedMeshes( nc, mesh->NextMeshContainer );
+				pMesh->pNextMeshContainer = nc;
+			}
+		}
+	}
+  }
 }

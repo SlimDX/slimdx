@@ -49,8 +49,8 @@ namespace Direct3D9
 
 	AnimationController::AnimationController( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents )
 	{
-		HRESULT hr = D3DXCreateAnimationController( maxAnimationOutputs, maxAnimationSets, maxTracks, maxEvents,
-			reinterpret_cast<LPD3DXANIMATIONCONTROLLER*>( InternalPointer ) );
+		HRESULT hr = D3DXCreateAnimationController( maxAnimationOutputs, maxAnimationSets, maxTracks, maxEvents, 
+			reinterpret_cast<LPD3DXANIMATIONCONTROLLER*>(InternalPointer) );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		if( FAILED( hr ) )
@@ -59,8 +59,11 @@ namespace Direct3D9
 
 	void AnimationController::AdvanceTime( double time, AnimationCallback^ handler )
 	{
-		HRESULT hr = InternalPointer->AdvanceTime( time, reinterpret_cast< LPD3DXANIMATIONCALLBACKHANDLER >(
-			Marshal::GetFunctionPointerForDelegate( handler ).ToPointer() ) );
+		LPD3DXANIMATIONCALLBACKHANDLER callback = NULL;
+		if(handler != nullptr)
+			callback = reinterpret_cast< LPD3DXANIMATIONCALLBACKHANDLER >( Marshal::GetFunctionPointerForDelegate( handler ).ToPointer() );
+
+		HRESULT hr = InternalPointer->AdvanceTime( time, callback );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 

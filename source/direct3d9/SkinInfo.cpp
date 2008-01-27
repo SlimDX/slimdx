@@ -52,6 +52,23 @@ namespace Direct3D9
 		return result;
 	}
 
+	BoneCombination^ BoneCombination::FromUnmanaged( const D3DXBONECOMBINATION &bone )
+	{
+		BoneCombination^ bc = gcnew BoneCombination();
+		bc->AttributeId = bone.AttribId;
+		bc->FaceCount = bone.FaceCount;
+		bc->FaceStart = bone.FaceStart;
+		bc->VertexCount = bone.VertexCount;
+		bc->VertexStart = bone.VertexStart;
+
+		return bc;
+	}
+
+	SkinInfo::SkinInfo( ID3DXSkinInfo* skinInfo )
+	{
+		Construct( skinInfo );
+	}
+
 	SkinInfo::SkinInfo( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
@@ -67,7 +84,7 @@ namespace Direct3D9
 			boneCount, &result );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
-		Construct(result);
+		Construct( result );
 	}
 
 	SkinInfo::SkinInfo( BaseMesh^ mesh, int boneCount, array<BoneCombination^>^ boneCombinationTable )
@@ -86,7 +103,7 @@ namespace Direct3D9
 			delete[] bones[i].BoneId;
 		delete[] bones;
 
-		Construct(result);
+		Construct( result );
 	}
 
 	SkinInfo::SkinInfo( int vertexCount, SlimDX::Direct3D9::VertexFormat fvf, int boneCount )
@@ -97,7 +114,7 @@ namespace Direct3D9
 			boneCount, &result );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
-		Construct(result);
+		Construct( result );
 	}
 
 	SkinInfo^ SkinInfo::Clone()
@@ -122,7 +139,6 @@ namespace Direct3D9
 		ID3DXBuffer *bct;
 		DWORD mvi;
 		DWORD bcc;
-
 		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
 		pin_ptr<int> pinnedAdjOut = &adjacencyOut[0];
 		pin_ptr<int> pinnedFR = &faceRemap[0];
@@ -142,17 +158,14 @@ namespace Direct3D9
 		}
 
 		boneCombinationTable = gcnew array<BoneCombination^>( bcc );
-		char *pointer = static_cast<char*>( bct->GetBufferPointer() );
-		int size = ( 5 + mvi ) * 4;
+		LPD3DXBONECOMBINATION pointer = reinterpret_cast<LPD3DXBONECOMBINATION>( bct->GetBufferPointer() );
 
 		for( DWORD i = 0; i < bcc; i++ )
 		{
-			boneCombinationTable[i] = gcnew BoneCombination();
+			boneCombinationTable[i] = BoneCombination::FromUnmanaged( pointer[i] );
 			boneCombinationTable[i]->BoneIds = gcnew array<int>( mvi );
-
-			pin_ptr<BoneCombination^> pinnedBone = &boneCombinationTable[i];
-			memcpy( pinnedBone, pointer, size );
-			pointer += size;
+			for( DWORD j = 0; j < mvi; j++ )
+				boneCombinationTable[i]->BoneIds[j] = pointer[i].BoneId[j];			
 		}
 
 		maxVertexInfluence = mvi;
@@ -184,17 +197,49 @@ namespace Direct3D9
 		}
 
 		boneCombinationTable = gcnew array<BoneCombination^>( bcc );
-		char *pointer = static_cast<char*>( bct->GetBufferPointer() );
-		int size = ( 5 + mvi ) * 4;
+		LPD3DXBONECOMBINATION pointer = reinterpret_cast<LPD3DXBONECOMBINATION>( bct->GetBufferPointer() );
 
 		for( DWORD i = 0; i < bcc; i++ )
 		{
-			boneCombinationTable[i] = gcnew BoneCombination();
+			boneCombinationTable[i] = BoneCombination::FromUnmanaged( pointer[i] );
 			boneCombinationTable[i]->BoneIds = gcnew array<int>( mvi );
+			for( DWORD j = 0; j < mvi; j++ )
+				boneCombinationTable[i]->BoneIds[j] = pointer[i].BoneId[j];			
+		}
 
-			pin_ptr<BoneCombination^> pinnedBone = &boneCombinationTable[i];
-			memcpy( pinnedBone, pointer, size );
-			pointer += size;
+		maxVertexInfluence = mvi;
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ SkinInfo::ConvertToBlendedMesh( Mesh^ mesh, array<int>^ adjacencyIn, [Out] int% maxVertexInfluence, [Out] array<BoneCombination^>^% boneCombinationTable )
+	{
+		ID3DXMesh *result;
+		ID3DXBuffer *bct;
+		DWORD mvi;
+		DWORD bcc;
+
+		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
+
+		HRESULT hr = InternalPointer->ConvertToBlendedMesh( mesh->MeshPointer, 0, reinterpret_cast<const DWORD*>( pinnedAdjIn ),
+			NULL, NULL, NULL, &mvi, &bcc, &bct, &result );
+		Direct3D9ErrorHandler::TestForFailure( hr );
+
+		if( FAILED( hr ) )
+		{
+			boneCombinationTable = nullptr;
+			maxVertexInfluence = 0;
+			return nullptr;
+		}
+
+		boneCombinationTable = gcnew array<BoneCombination^>( bcc );
+		LPD3DXBONECOMBINATION pointer = reinterpret_cast<LPD3DXBONECOMBINATION>( bct->GetBufferPointer() );
+		
+		for( DWORD i = 0; i < bcc; i++ )
+		{
+			boneCombinationTable[i] = BoneCombination::FromUnmanaged( pointer[i] ); 
+			boneCombinationTable[i]->BoneIds = gcnew array<int>( mvi );
+			for( DWORD j = 0; j < mvi; j++ )
+				boneCombinationTable[i]->BoneIds[j] = pointer[i].BoneId[j];			
 		}
 
 		maxVertexInfluence = mvi;
@@ -210,7 +255,6 @@ namespace Direct3D9
 		ID3DXBuffer *bct;
 		DWORD mvi;
 		DWORD bcc;
-
 		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
 		pin_ptr<int> pinnedAdjOut = &adjacencyOut[0];
 		pin_ptr<int> pinnedFR = &faceRemap[0];
@@ -230,17 +274,14 @@ namespace Direct3D9
 		}
 
 		boneCombinationTable = gcnew array<BoneCombination^>( bcc );
-		char *pointer = static_cast<char*>( bct->GetBufferPointer() );
-		int size = ( 5 + paletteSize ) * 4;
+		LPD3DXBONECOMBINATION pointer = reinterpret_cast<LPD3DXBONECOMBINATION>( bct->GetBufferPointer() );
 
 		for( DWORD i = 0; i < bcc; i++ )
 		{
-			boneCombinationTable[i] = gcnew BoneCombination();
+			boneCombinationTable[i] = BoneCombination::FromUnmanaged( pointer[i] );
 			boneCombinationTable[i]->BoneIds = gcnew array<int>( paletteSize );
-
-			pin_ptr<BoneCombination^> pinnedBone = &boneCombinationTable[i];
-			memcpy( pinnedBone, pointer, size );
-			pointer += size;
+			for( int j = 0; j < paletteSize; j++ )
+				boneCombinationTable[i]->BoneIds[j] = pointer[i].BoneId[j];			
 		}
 
 		maxVertexInfluence = mvi;
@@ -272,17 +313,50 @@ namespace Direct3D9
 		}
 
 		boneCombinationTable = gcnew array<BoneCombination^>( bcc );
-		char *pointer = static_cast<char*>( bct->GetBufferPointer() );
-		int size = ( 5 + paletteSize ) * 4;
+		LPD3DXBONECOMBINATION pointer = reinterpret_cast<LPD3DXBONECOMBINATION>( bct->GetBufferPointer() );
 
 		for( DWORD i = 0; i < bcc; i++ )
 		{
-			boneCombinationTable[i] = gcnew BoneCombination();
+			boneCombinationTable[i] = BoneCombination::FromUnmanaged( pointer[i] );
 			boneCombinationTable[i]->BoneIds = gcnew array<int>( paletteSize );
+			for( int j = 0; j < paletteSize; j++ )
+				boneCombinationTable[i]->BoneIds[j] = pointer[i].BoneId[j];			
+		}
 
-			pin_ptr<BoneCombination^> pinnedBone = &boneCombinationTable[i];
-			memcpy( pinnedBone, pointer, size );
-			pointer += size;
+		maxVertexInfluence = mvi;
+		return gcnew Mesh( result );
+	}
+
+	Mesh^ SkinInfo::ConvertToIndexedBlendedMesh( Mesh^ mesh, int paletteSize, array<int>^ adjacencyIn,
+		[Out] int% maxVertexInfluence, [Out] array<BoneCombination^>^% boneCombinationTable )
+	{
+		ID3DXMesh *result;
+		ID3DXBuffer *bct;
+		DWORD mvi;
+		DWORD bcc;
+
+		pin_ptr<int> pinnedAdjIn = &adjacencyIn[0];
+
+		HRESULT hr = InternalPointer->ConvertToIndexedBlendedMesh( mesh->MeshPointer, 0, paletteSize, reinterpret_cast<const DWORD*>( pinnedAdjIn ),
+			NULL, NULL, NULL, &mvi, &bcc, &bct, &result );
+		Direct3D9ErrorHandler::TestForFailure( hr );
+
+		if( FAILED( hr ) )
+		{
+			boneCombinationTable = nullptr;
+			maxVertexInfluence = 0;
+			return nullptr;
+		}
+
+		boneCombinationTable = gcnew array<BoneCombination^>( bcc );
+		LPD3DXBONECOMBINATION pointer = reinterpret_cast<LPD3DXBONECOMBINATION>( bct->GetBufferPointer() );
+
+		for( DWORD i = 0; i < bcc; i++ )
+		{
+			boneCombinationTable[i] = BoneCombination::FromUnmanaged( pointer[i] );
+			boneCombinationTable[i]->BoneIds = gcnew array<int>( paletteSize );
+			for( int j = 0; j < paletteSize; j++ )
+				boneCombinationTable[i]->BoneIds[j] = pointer[i].BoneId[j];			
 		}
 
 		maxVertexInfluence = mvi;
