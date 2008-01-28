@@ -287,8 +287,8 @@ namespace Direct3D9
 		
 		HRESULT hr = InternalPointer->GetIndexBuffer( &indexBuffer );
 		Direct3D9ErrorHandler::TestForFailure( hr );
-		D3DINDEXBUFFER_DESC desc;
-		hr = indexBuffer->GetDesc( &desc );
+		D3DINDEXBUFFER_DESC description;
+		hr = indexBuffer->GetDesc( &description );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 		indexBuffer->Release();
 		
@@ -299,7 +299,7 @@ namespace Direct3D9
 			return nullptr;
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		return gcnew DataStream( data, desc.Size, true, !readOnly, false );
+		return gcnew DataStream( data, description.Size, true, !readOnly, false );
 	}
 
 	void PatchMesh::UnlockIndexBuffer()
@@ -315,8 +315,8 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetVertexBuffer( &vertexBuffer );
 		Direct3D9ErrorHandler::TestForFailure( hr );
-		D3DVERTEXBUFFER_DESC desc;
-		hr = vertexBuffer->GetDesc( &desc );
+		D3DVERTEXBUFFER_DESC description;
+		hr = vertexBuffer->GetDesc( &description );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 		vertexBuffer->Release();
 		
@@ -327,7 +327,7 @@ namespace Direct3D9
 			return nullptr;
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		return gcnew DataStream( data, desc.Size, true, !readOnly, false );
+		return gcnew DataStream( data, description.Size, true, !readOnly, false );
 	}
 
 	void PatchMesh::UnlockVertexBuffer()

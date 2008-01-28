@@ -39,18 +39,18 @@ namespace Direct3D10
 
 		Construct(state);
 		
-		D3D10_DEPTH_STENCIL_DESC desc;
-		state->GetDesc( &desc );
-		m_Description = gcnew DepthStencilStateDescription( desc );
+		D3D10_DEPTH_STENCIL_DESC description;
+		state->GetDesc( &description );
+		m_Description = gcnew DepthStencilStateDescription( description );
 	}
 	
 	DepthStencilState::DepthStencilState( IntPtr state )
 	{
 		Construct( state, NativeInterface );
 
-		D3D10_DEPTH_STENCIL_DESC desc;
-		InternalPointer->GetDesc( &desc );
-		m_Description = gcnew DepthStencilStateDescription( desc );
+		D3D10_DEPTH_STENCIL_DESC description;
+		InternalPointer->GetDesc( &description );
+		m_Description = gcnew DepthStencilStateDescription( description );
 	}
 
 	DepthStencilState::DepthStencilState( Device^ device, DepthStencilStateDescription^ description )
@@ -73,9 +73,9 @@ namespace Direct3D10
 	
 	DepthStencilStateDescription^ DepthStencilState::CloneDescription()
 	{
-		D3D10_DEPTH_STENCIL_DESC desc;
-		InternalPointer->GetDesc( &desc );
-		return gcnew DepthStencilStateDescription( desc );
+		D3D10_DEPTH_STENCIL_DESC description;
+		InternalPointer->GetDesc( &description );
+		return gcnew DepthStencilStateDescription( description );
 	}
 }
 }

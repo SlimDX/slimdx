@@ -180,16 +180,16 @@ namespace Direct3D9
 	FragmentDescription FragmentLinker::GetFragmentDescription( EffectHandle^ name )
 	{
 		D3DXHANDLE handle = name != nullptr ? name->InternalHandle : NULL;
-		D3DXFRAGMENT_DESC desc;
+		D3DXFRAGMENT_DESC description;
 
-		HRESULT hr = InternalPointer->GetFragmentDesc( handle, &desc );
+		HRESULT hr = InternalPointer->GetFragmentDesc( handle, &description );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 			return FragmentDescription();
 
 		FragmentDescription outDesc;
-		outDesc.Name = gcnew String( desc.Name );
-		outDesc.Target = desc.Target;
+		outDesc.Name = gcnew String( description.Name );
+		outDesc.Target = description.Target;
 
 		return outDesc;
 	}

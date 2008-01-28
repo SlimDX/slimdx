@@ -39,7 +39,7 @@ namespace SlimDX
 		{
 		private:
             DeviceType type;
-            DeviceSubType subType;
+            DeviceSubtype subType;
             CapabilitiesFlags flags;
             Gamepad gamepad;
             Vibration vibration;
@@ -58,11 +58,11 @@ namespace SlimDX
 			/// <summary>
 			/// Subtype of the game controller. 
 			/// </summary>
-            property DeviceSubType SubType
+            property DeviceSubtype Subtype
             {
-                DeviceSubType get() { return subType; }
+                DeviceSubtype get() { return subType; }
 			internal:
-                void set( DeviceSubType value ) { subType = value; }
+                void set( DeviceSubtype value ) { subType = value; }
             }
 
 			/// <summary>

@@ -39,15 +39,15 @@ namespace Direct3D9
 		if( buffer == NULL )
 			throw gcnew ArgumentNullException( "buffer" );
 
-		D3DVERTEXBUFFER_DESC desc;
-		HRESULT hr = buffer->GetDesc( &desc );
+		D3DVERTEXBUFFER_DESC description;
+		HRESULT hr = buffer->GetDesc( &description );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 		
-		Format = static_cast<SlimDX::Direct3D9::Format>( desc.Format );
-		Usage = static_cast<SlimDX::Direct3D9::Usage>( desc.Usage );
-		Pool = static_cast<SlimDX::Direct3D9::Pool>( desc.Pool );
-		SizeInBytes = desc.Size;
-		FVF = static_cast<VertexFormat>( desc.FVF );
+		Format = static_cast<SlimDX::Direct3D9::Format>( description.Format );
+		Usage = static_cast<SlimDX::Direct3D9::Usage>( description.Usage );
+		Pool = static_cast<SlimDX::Direct3D9::Pool>( description.Pool );
+		SizeInBytes = description.Size;
+		FVF = static_cast<VertexFormat>( description.FVF );
 
 		Construct(buffer);
 	}
@@ -65,17 +65,17 @@ namespace Direct3D9
 
 		IDirect3DVertexBuffer9* vbPtr = static_cast<IDirect3DVertexBuffer9*>( pointer );
 
-		D3DVERTEXBUFFER_DESC desc;
-		hr = vbPtr->GetDesc( &desc );
+		D3DVERTEXBUFFER_DESC description;
+		hr = vbPtr->GetDesc( &description );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 			throw gcnew Direct3D9Exception( hr );
 		
-		Format = static_cast<SlimDX::Direct3D9::Format>( desc.Format );
-		Usage = static_cast<SlimDX::Direct3D9::Usage>( desc.Usage );
-		Pool = static_cast<SlimDX::Direct3D9::Pool>( desc.Pool );
-		SizeInBytes = desc.Size;
-		FVF = static_cast<VertexFormat>( desc.FVF );
+		Format = static_cast<SlimDX::Direct3D9::Format>( description.Format );
+		Usage = static_cast<SlimDX::Direct3D9::Usage>( description.Usage );
+		Pool = static_cast<SlimDX::Direct3D9::Pool>( description.Pool );
+		SizeInBytes = description.Size;
+		FVF = static_cast<VertexFormat>( description.FVF );
 
 		Construct(vbPtr);
 	}
@@ -87,15 +87,15 @@ namespace Direct3D9
 			static_cast<DWORD>( format ), static_cast<D3DPOOL>( pool ), &vb, NULL );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 		
-		D3DVERTEXBUFFER_DESC desc;
-		hr = vb->GetDesc( &desc );
+		D3DVERTEXBUFFER_DESC description;
+		hr = vb->GetDesc( &description );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 		
-		Format = static_cast<SlimDX::Direct3D9::Format>( desc.Format );
-		Usage = static_cast<SlimDX::Direct3D9::Usage>( desc.Usage );
-		Pool = static_cast<SlimDX::Direct3D9::Pool>( desc.Pool );
-		SizeInBytes = desc.Size;
-		FVF = static_cast<VertexFormat>( desc.FVF );
+		Format = static_cast<SlimDX::Direct3D9::Format>( description.Format );
+		Usage = static_cast<SlimDX::Direct3D9::Usage>( description.Usage );
+		Pool = static_cast<SlimDX::Direct3D9::Pool>( description.Pool );
+		SizeInBytes = description.Size;
+		FVF = static_cast<VertexFormat>( description.FVF );
 		
 		Construct(vb);
 	}

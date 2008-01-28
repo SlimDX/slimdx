@@ -55,7 +55,7 @@ namespace SlimDX
 			literal int TooManyInfluences = D3DX10_ERR_TOO_MANY_INFLUENCES;
 			literal int InvalidData = D3DX10_ERR_INVALID_DATA;
 			literal int MeshHasNoData = D3DX10_ERR_LOADED_MESH_HAS_NO_DATA;
-			literal int DuplicatNamedFragment = D3DX10_ERR_DUPLICATE_NAMED_FRAGMENT;
+			literal int DuplicateNamedFragment = D3DX10_ERR_DUPLICATE_NAMED_FRAGMENT;
 			literal int CannotRemoveLastItem = D3DX10_ERR_CANNOT_REMOVE_LAST_ITEM;
 		};
 	}

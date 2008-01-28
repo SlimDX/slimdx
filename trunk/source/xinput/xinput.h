@@ -26,7 +26,7 @@ using namespace System::Runtime::InteropServices;
 
 #include "Enums.h"
 #include "Gamepad.h"
-#include "KeyStroke.h"
+#include "Keystroke.h"
 #include "State.h"
 #include "Vibration.h"
 #include "BatteryInformation.h"

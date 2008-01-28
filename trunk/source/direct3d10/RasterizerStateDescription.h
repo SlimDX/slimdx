@@ -34,7 +34,7 @@ namespace SlimDX
 		private:
 			FillMode fillMode;
             CullMode cullMode;
-            bool frontIsCounterClockwise;
+            bool frontIsCounterclockwise;
             int depthBias;
             float depthBiasClamp;
             float slopeScaledDepthBias;
@@ -44,9 +44,9 @@ namespace SlimDX
             bool antialiasedLineEnabled;
 
 		internal:
-			RasterizerStateDescription( const D3D10_RASTERIZER_DESC& desc );
+			RasterizerStateDescription( const D3D10_RASTERIZER_DESC& description );
 			
-			void FillNativeObject( D3D10_RASTERIZER_DESC& desc);
+			void FillNativeObject( D3D10_RASTERIZER_DESC& description);
 			
 		public:
 			property SlimDX::Direct3D10::FillMode FillMode
@@ -61,10 +61,10 @@ namespace SlimDX
                 void set( SlimDX::Direct3D10::CullMode value ) { cullMode = value; }
             }
 
-            property bool FrontIsCounterClockwise
+            property bool FrontIsCounterclockwise
             {
-                bool get() { return frontIsCounterClockwise; }
-                void set( bool value ) { frontIsCounterClockwise = value; }
+                bool get() { return frontIsCounterclockwise; }
+                void set( bool value ) { frontIsCounterclockwise = value; }
             }
 
             property int DepthBias

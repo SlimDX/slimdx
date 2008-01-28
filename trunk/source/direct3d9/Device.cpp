@@ -49,22 +49,22 @@ namespace Direct3D9
 	//ATI R2VB functions
 
 	//quick utility function
-	void ConvertPresentParams( PresentParameters^ presentParams, D3DPRESENT_PARAMETERS& d3dpp )
+	void ConvertPresentParams( PresentParameters^ presentParameters, D3DPRESENT_PARAMETERS& d3dpp )
 	{
-		d3dpp.AutoDepthStencilFormat = static_cast<D3DFORMAT>( presentParams->AutoDepthStencilFormat );
-		d3dpp.BackBufferCount = presentParams->BackBufferCount;
-		d3dpp.BackBufferFormat = static_cast<D3DFORMAT>( presentParams->BackBufferFormat );
-		d3dpp.BackBufferHeight = presentParams->BackBufferHeight;
-		d3dpp.BackBufferWidth = presentParams->BackBufferWidth;
-		d3dpp.EnableAutoDepthStencil = presentParams->EnableAutoDepthStencil;
-		d3dpp.Flags = static_cast<DWORD>( presentParams->PresentFlags );
-		d3dpp.FullScreen_RefreshRateInHz = presentParams->FullScreenRefreshRateInHertz;
-		d3dpp.hDeviceWindow = static_cast<HWND>( presentParams->DeviceWindowHandle.ToPointer() );
-		d3dpp.MultiSampleQuality = presentParams->MultisampleQuality;
-		d3dpp.MultiSampleType = static_cast<D3DMULTISAMPLE_TYPE>( presentParams->Multisample );
-		d3dpp.PresentationInterval = static_cast<UINT>( presentParams->PresentationInterval );
-		d3dpp.SwapEffect = static_cast<D3DSWAPEFFECT>( presentParams->SwapEffect );
-		d3dpp.Windowed = presentParams->Windowed;
+		d3dpp.AutoDepthStencilFormat = static_cast<D3DFORMAT>( presentParameters->AutoDepthStencilFormat );
+		d3dpp.BackBufferCount = presentParameters->BackBufferCount;
+		d3dpp.BackBufferFormat = static_cast<D3DFORMAT>( presentParameters->BackBufferFormat );
+		d3dpp.BackBufferHeight = presentParameters->BackBufferHeight;
+		d3dpp.BackBufferWidth = presentParameters->BackBufferWidth;
+		d3dpp.EnableAutoDepthStencil = presentParameters->EnableAutoDepthStencil;
+		d3dpp.Flags = static_cast<DWORD>( presentParameters->PresentFlags );
+		d3dpp.FullScreen_RefreshRateInHz = presentParameters->FullScreenRefreshRateInHertz;
+		d3dpp.hDeviceWindow = static_cast<HWND>( presentParameters->DeviceWindowHandle.ToPointer() );
+		d3dpp.MultiSampleQuality = presentParameters->MultisampleQuality;
+		d3dpp.MultiSampleType = static_cast<D3DMULTISAMPLE_TYPE>( presentParameters->Multisample );
+		d3dpp.PresentationInterval = static_cast<UINT>( presentParameters->PresentationInterval );
+		d3dpp.SwapEffect = static_cast<D3DSWAPEFFECT>( presentParameters->SwapEffect );
+		d3dpp.Windowed = presentParameters->Windowed;
 	}
 
 	PresentParameters::PresentParameters()
@@ -104,7 +104,7 @@ namespace Direct3D9
 		Construct( device, NativeInterface );
 	}
 
-	Device::Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams )
+	Device::Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParameters )
 	{
 		IDirect3DDevice9* device;
 		D3DPRESENT_PARAMETERS d3dpp;
@@ -112,7 +112,7 @@ namespace Direct3D9
 		if( Direct3D::InternalPointer == NULL )
 			throw gcnew Direct3D9NotInitializedException();
 
-		ConvertPresentParams( presentParams, d3dpp );
+		ConvertPresentParams( presentParameters, d3dpp );
 		HRESULT hr = Direct3D::InternalPointer->CreateDevice( adapter,
 			static_cast<D3DDEVTYPE>( deviceType ),
 			static_cast<HWND>( controlHandle.ToPointer() ), 
@@ -308,9 +308,9 @@ namespace Direct3D9
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
-	void Device::SetSamplerState( int sampler, SamplerState type, TextureAddress texAddr )
+	void Device::SetSamplerState( int sampler, SamplerState type, TextureAddress textureAddress )
 	{
-		SetSamplerState( sampler, type, static_cast<int>( texAddr ) );
+		SetSamplerState( sampler, type, static_cast<int>( textureAddress ) );
 	}
 
 	void Device::SetSamplerState( int sampler, SamplerState type, TextureFilter texFilter )
@@ -389,18 +389,18 @@ namespace Direct3D9
 		return static_cast<CooperativeLevel>( hr );
 	}
 
-	void Device::Reset( PresentParameters^ presentParams )
+	void Device::Reset( PresentParameters^ presentParameters )
 	{
 		D3DPRESENT_PARAMETERS d3dpp;
 
-		ConvertPresentParams( presentParams, d3dpp );
+		ConvertPresentParams( presentParameters, d3dpp );
 		HRESULT hr = InternalPointer->Reset( &d3dpp );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
-		presentParams->BackBufferCount = d3dpp.BackBufferCount;
-		presentParams->BackBufferFormat = static_cast<Format>( d3dpp.BackBufferFormat );
-		presentParams->BackBufferWidth = d3dpp.BackBufferWidth;
-		presentParams->BackBufferHeight = d3dpp.BackBufferHeight;
+		presentParameters->BackBufferCount = d3dpp.BackBufferCount;
+		presentParameters->BackBufferFormat = static_cast<Format>( d3dpp.BackBufferFormat );
+		presentParameters->BackBufferWidth = d3dpp.BackBufferWidth;
+		presentParameters->BackBufferHeight = d3dpp.BackBufferHeight;
 	}
 
 	void Device::SetTexture( int sampler, BaseTexture^ texture )
@@ -471,7 +471,7 @@ namespace Direct3D9
 		return Capabilities( caps );
 	}
 
-	int Device::AvailableTextureMem::get()
+	int Device::AvailableTextureMemory::get()
 	{
 		return InternalPointer->GetAvailableTextureMem();
 	}
@@ -646,13 +646,13 @@ namespace Direct3D9
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
-	void Device::ProcessVertices( int sourceStartIndex, int destIndex, int vertexCount, VertexBuffer^ destBuffer,
-		SlimDX::Direct3D9::VertexDeclaration^ vertexDecl, LockFlags flags )
+	void Device::ProcessVertices( int sourceStartIndex, int destinationIndex, int vertexCount, VertexBuffer^ destinationBuffer,
+		SlimDX::Direct3D9::VertexDeclaration^ vertexDeclaration, LockFlags flags )
 	{
-		IDirect3DVertexBuffer9* vb = destBuffer->VbPointer;
-		IDirect3DVertexDeclaration9* decl = vertexDecl != nullptr ? vertexDecl->InternalPointer : NULL;
+		IDirect3DVertexBuffer9* vb = destinationBuffer->VbPointer;
+		IDirect3DVertexDeclaration9* decl = vertexDeclaration != nullptr ? vertexDeclaration->InternalPointer : NULL;
 
-		HRESULT hr = InternalPointer->ProcessVertices( sourceStartIndex, destIndex, vertexCount, vb, decl, static_cast<DWORD>( flags ) );
+		HRESULT hr = InternalPointer->ProcessVertices( sourceStartIndex, destinationIndex, vertexCount, vb, decl, static_cast<DWORD>( flags ) );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
@@ -714,31 +714,31 @@ namespace Direct3D9
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
-	void Device::StretchRect( Surface^ source, System::Drawing::Rectangle sourceRect, Surface^ dest,
+	void Device::StretchRect( Surface^ source, System::Drawing::Rectangle sourceRect, Surface^ destination,
 		System::Drawing::Rectangle destRect, TextureFilter filter )
 	{
 		RECT nativeSourceRect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
 		RECT nativeDestRect = { destRect.Left, destRect.Top, destRect.Right, destRect.Bottom };
 
-		HRESULT hr = InternalPointer->StretchRect( source->SurfacePointer, &nativeSourceRect, dest->SurfacePointer,
+		HRESULT hr = InternalPointer->StretchRect( source->SurfacePointer, &nativeSourceRect, destination->SurfacePointer,
 			&nativeDestRect, static_cast<D3DTEXTUREFILTERTYPE>( filter ) );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
 	void Device::UpdateSurface( Surface^ source, System::Drawing::Rectangle sourceRect,
-		Surface^ dest, System::Drawing::Point destPoint )
+		Surface^ destination, System::Drawing::Point destinationPoint )
 	{
 		RECT nativeSourceRect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
-		POINT nativeDestPoint = { destPoint.X, destPoint.Y };
+		POINT nativeDestPoint = { destinationPoint.X, destinationPoint.Y };
 
 		HRESULT hr = InternalPointer->UpdateSurface( source->SurfacePointer, &nativeSourceRect,
-			dest->SurfacePointer, &nativeDestPoint );
+			destination->SurfacePointer, &nativeDestPoint );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
-	void Device::UpdateTexture( BaseTexture^ sourceTexture, BaseTexture^ destTexture )
+	void Device::UpdateTexture( BaseTexture^ sourceTexture, BaseTexture^ destinationTexture )
 	{
-		HRESULT hr = InternalPointer->UpdateTexture( sourceTexture->BaseTexturePointer, destTexture->BaseTexturePointer );
+		HRESULT hr = InternalPointer->UpdateTexture( sourceTexture->BaseTexturePointer, destinationTexture->BaseTexturePointer );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
@@ -878,7 +878,7 @@ namespace Direct3D9
 		return light;
 	}
 
-	void Device::SetCursor( Cursor^ cursor, bool addWaterMark )
+	void Device::SetCursor( Cursor^ cursor, bool addWatermark )
 	{
 		IDirect3DSurface9 *cursorSurface = NULL;
 		ICONINFO iconInfo = {0};
@@ -1019,7 +1019,7 @@ namespace Direct3D9
 				else
 					bitmap[width * y + x] = 0x00000000;
 
-				if( addWaterMark && x < 12 && y < 5 )
+				if( addWatermark && x < 12 && y < 5 )
 				{
 					const WORD wMask[5] = { 0xccc0, 0xa2a0, 0xa4a0, 0xa2a0, 0xccc0 };
 					if( wMask[y] & ( 1 << ( 15 - x ) ) )
@@ -1162,18 +1162,18 @@ namespace Direct3D9
 		return plane;
 	}
 
-	void Device::GetFrontBufferData( int swapChain, Surface^ destSurface )
+	void Device::GetFrontBufferData( int swapChain, Surface^ destinationSurface )
 	{
-		IDirect3DSurface9* surface = destSurface != nullptr ? destSurface->SurfacePointer : NULL;
+		IDirect3DSurface9* surface = destinationSurface != nullptr ? destinationSurface->SurfacePointer : NULL;
 		HRESULT hr = InternalPointer->GetFrontBufferData( swapChain, surface );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
-	void Device::GetRenderTargetData( Surface^ renderTarget, Surface^ destSurface )
+	void Device::GetRenderTargetData( Surface^ renderTarget, Surface^ destinationSurface )
 	{
 		IDirect3DSurface9* target = renderTarget != nullptr	? renderTarget->SurfacePointer : NULL;
-		IDirect3DSurface9* dest = destSurface != nullptr ? destSurface->SurfacePointer : NULL;
-		HRESULT hr = InternalPointer->GetRenderTargetData( target, dest );
+		IDirect3DSurface9* destination = destinationSurface != nullptr ? destinationSurface->SurfacePointer : NULL;
+		HRESULT hr = InternalPointer->GetRenderTargetData( target, destination );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 }

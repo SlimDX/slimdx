@@ -51,7 +51,7 @@ namespace SlimDX
 		public value class ConstantDescription
 		{
 		internal:
-			void Initialize( const D3DXCONSTANT_DESC& desc );
+			void Initialize( const D3DXCONSTANT_DESC& description );
 
 		public:
 			property String^ Name;

@@ -39,13 +39,13 @@ namespace Direct3D10
 			throw gcnew ArgumentNullException( "technique" );
 		m_Pointer = technique;
 	
-		D3D10_TECHNIQUE_DESC desc;
-		HRESULT hr = m_Pointer->GetDesc( &desc );
+		D3D10_TECHNIQUE_DESC description;
+		HRESULT hr = m_Pointer->GetDesc( &description );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		
-		m_Name = gcnew String( desc.Name );
-		m_PassCount = desc.Passes;
-		m_AnnotationCount = desc.Annotations;
+		m_Name = gcnew String( description.Name );
+		m_PassCount = description.Passes;
+		m_AnnotationCount = description.Annotations;
 	}
 	
 	EffectVariable^ EffectTechnique::GetAnnotationByIndex( int index )

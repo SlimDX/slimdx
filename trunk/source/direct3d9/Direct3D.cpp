@@ -57,7 +57,7 @@ namespace Direct3D9
 			HIWORD( ident.DriverVersion.LowPart ), LOWORD( ident.DriverVersion.LowPart ) );
 		VendorId = ident.VendorId;
 		DeviceId = ident.DeviceId;
-		SubSystemId = ident.SubSysId;
+		SubsystemId = ident.SubSysId;
 		Revision = ident.Revision;
 		DeviceIdentifier = Utilities::ConvertNativeGuid( ident.DeviceIdentifier );
 		WhqlLevel = ident.WHQLLevel;
@@ -338,7 +338,7 @@ namespace Direct3D9
 		RasterCaps = static_cast<SlimDX::Direct3D9::RasterCaps>( caps.RasterCaps );
 		DepthCompareCaps = static_cast<CompareCaps>( caps.ZCmpCaps );
 		SourceBlendCaps = static_cast<BlendCaps>( caps.SrcBlendCaps );
-		DestBlendCaps = static_cast<BlendCaps>( caps.DestBlendCaps );
+		DestinationBlendCaps = static_cast<BlendCaps>( caps.DestBlendCaps );
 		AlphaCompareCaps = static_cast<CompareCaps>( caps.AlphaCmpCaps );
 		ShadeCaps = static_cast<SlimDX::Direct3D9::ShadeCaps>( caps.ShadeCaps );
 		TextureCaps = static_cast<SlimDX::Direct3D9::TextureCaps>( caps.TextureCaps );
@@ -400,7 +400,7 @@ namespace Direct3D9
 		MasterAdapterOrdinal = caps.MasterAdapterOrdinal;
 		AdapterOrdinalInGroup = caps.AdapterOrdinalInGroup;
 		NumberOfAdaptersInGroup = caps.NumberOfAdaptersInGroup;
-		DeclTypes = static_cast<DeclTypeCaps>( caps.DeclTypes );
+		DeclarationTypes = static_cast<DeclarationTypeCaps>( caps.DeclTypes );
 		SimultaneousRTCount = caps.NumSimultaneousRTs;
 		StretchRectFilterCaps = static_cast<FilterCaps>( caps.StretchRectFilterCaps );
 		VS20Caps = *reinterpret_cast<const VertexShader20Caps*>( &caps.VS20Caps );

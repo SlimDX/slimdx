@@ -44,11 +44,11 @@ namespace DXGI
 
 	AdapterDescription Adapter::GetDescription()
 	{
-		DXGI_ADAPTER_DESC desc;
-		HRESULT hr = InternalPointer->GetDesc( &desc );
+		DXGI_ADAPTER_DESC description;
+		HRESULT hr = InternalPointer->GetDesc( &description );
 		if( DXGIErrorHandler::TestForFailure( hr ) )
 			return AdapterDescription();
-		return AdapterDescription( desc );
+		return AdapterDescription( description );
 	}
 		
 	int Adapter::GetOutputCount()

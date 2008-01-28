@@ -32,10 +32,10 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	EffectPassShaderMapping::EffectPassShaderMapping( const D3D10_PASS_SHADER_DESC& desc )
+	EffectPassShaderMapping::EffectPassShaderMapping( const D3D10_PASS_SHADER_DESC& description )
 	{
-		shaderVariable = gcnew EffectShaderVariable( desc.pShaderVariable );
-		shaderIndex = desc.ShaderIndex;
+		shaderVariable = gcnew EffectShaderVariable( description.pShaderVariable );
+		shaderIndex = description.ShaderIndex;
 	}
 }
 }

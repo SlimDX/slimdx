@@ -88,7 +88,7 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the secondary device type specifier.
 			/// </summary>
-			property int SubType
+			property int Subtype
 			{
 				int get() { return subType; }
 			}
@@ -178,7 +178,7 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the device sub-type specifier.
 			/// </summary>
-			property int SubType
+			property int Subtype
 			{
 				int get() { return subType; }
 			}
@@ -260,10 +260,10 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the sub type of a DirectInput device.
 		/// </summary>
-		public ref class DeviceSubType sealed
+		public ref class DeviceSubtype sealed
 		{
 		private:
-			DeviceSubType() { }
+			DeviceSubtype() { }
 
 		public:
 			/// <summary>
@@ -342,7 +342,7 @@ namespace SlimDX
 			/// Standard game pad that provides the minimum number of objects for
 			/// action mapping.
 			/// </summary>
-			literal int StandardGamePad = DI8DEVTYPEGAMEPAD_STANDARD;
+			literal int StandardGamepad = DI8DEVTYPEGAMEPAD_STANDARD;
 
 			/// <summary>
 			/// IBM PC/XT 83-key keyboard.

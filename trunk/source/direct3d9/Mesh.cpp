@@ -68,9 +68,9 @@ namespace Direct3D9
 	D3DXMATERIAL ExtendedMaterial::ToUnmanaged( ExtendedMaterial material )
 	{
 		D3DXMATERIAL result;
-		if( !String::IsNullOrEmpty( material.TextureFilename ) )
+		if( !String::IsNullOrEmpty( material.TextureFileName ) )
 		{
-			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( material.TextureFilename );
+			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( material.TextureFileName );
 			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 			result.pTextureFilename = reinterpret_cast<LPSTR>( pinnedName );
 		}
@@ -96,7 +96,7 @@ namespace Direct3D9
 		mat.Emissive = ConvertColor( material.MatD3D.Emissive );
 		mat.Power = material.MatD3D.Power;
 		result.MaterialD3D = mat;
-		result.TextureFilename = gcnew String( material.pTextureFilename );
+		result.TextureFileName = gcnew String( material.pTextureFilename );
 
 		return result;
 	}
@@ -105,7 +105,7 @@ namespace Direct3D9
 	{
 		const D3DXMATERIAL* source  = reinterpret_cast<const D3DXMATERIAL*>( buffer->GetBufferPointer() );
 
-		array<ExtendedMaterial>^ dest = gcnew array<ExtendedMaterial>( count );
+		array<ExtendedMaterial>^ destination = gcnew array<ExtendedMaterial>( count );
 		for( unsigned int i = 0; i < count; ++i )
 		{
 			Material m;
@@ -114,18 +114,18 @@ namespace Direct3D9
 			m.Specular = ConvertColor( source[i].MatD3D.Specular );
 			m.Emissive = ConvertColor( source[i].MatD3D.Emissive );
 			m.Power = source[i].MatD3D.Power;
-			dest[i].MaterialD3D = m;
-			dest[i].TextureFilename = gcnew String( source[i].pTextureFilename );
+			destination[i].MaterialD3D = m;
+			destination[i].TextureFileName = gcnew String( source[i].pTextureFilename );
 		}
 
-		return dest;
+		return destination;
 	}
 
 	EffectInstance EffectInstance::FromUnmanaged( const D3DXEFFECTINSTANCE &effect )
 	{
 		EffectInstance result;
 
-		result.EffectFilename = gcnew String( effect.pEffectFilename );
+		result.EffectFileName = gcnew String( effect.pEffectFilename );
 		result.Defaults = gcnew array<EffectDefault>( effect.NumDefaults );
 
 		for( unsigned int i = 0; i < effect.NumDefaults; i++ )
@@ -145,11 +145,11 @@ namespace Direct3D9
 		result.NumDefaults = count;
 		result.pDefaults = new D3DXEFFECTDEFAULT[count];
 
-		if( String::IsNullOrEmpty( effect.EffectFilename ) )
+		if( String::IsNullOrEmpty( effect.EffectFileName ) )
 			result.pEffectFilename = NULL;
 		else
 		{
-			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( effect.EffectFilename );
+			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( effect.EffectFileName );
 			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 			result.pEffectFilename = reinterpret_cast<LPSTR>( pinnedName );
 		}		
@@ -172,20 +172,20 @@ namespace Direct3D9
 	{
 		const D3DXEFFECTINSTANCE* source  = reinterpret_cast<const D3DXEFFECTINSTANCE*>( buffer->GetBufferPointer() );
 
-		array<EffectInstance>^ dest = gcnew array<EffectInstance>( count );
+		array<EffectInstance>^ destination = gcnew array<EffectInstance>( count );
 		for( unsigned int i = 0; i < count; ++i )
 		{
-			dest[i].EffectFilename = gcnew String( source[i].pEffectFilename );
-			dest[i].Defaults = gcnew array<EffectDefault>( source[i].NumDefaults );
+			destination[i].EffectFileName = gcnew String( source[i].pEffectFilename );
+			destination[i].Defaults = gcnew array<EffectDefault>( source[i].NumDefaults );
 			for( unsigned int x = 0; x < source[i].NumDefaults; ++x )
 			{
-				dest[i].Defaults[x].ParameterName = gcnew String( source[i].pDefaults[x].pParamName );
-				dest[i].Defaults[x].Type = static_cast<EffectDefaultType>( source[i].pDefaults[x].Type );
-				dest[i].Defaults[x].Value = gcnew DataStream( source[i].pDefaults[x].pValue, source[i].pDefaults[x].NumBytes, true, false, true );
+				destination[i].Defaults[x].ParameterName = gcnew String( source[i].pDefaults[x].pParamName );
+				destination[i].Defaults[x].Type = static_cast<EffectDefaultType>( source[i].pDefaults[x].Type );
+				destination[i].Defaults[x].Value = gcnew DataStream( source[i].pDefaults[x].pValue, source[i].pDefaults[x].NumBytes, true, false, true );
 			}
 		}
 
-		return dest;
+		return destination;
 	}
 
 	BaseMesh::BaseMesh( IntPtr pointer )
@@ -633,10 +633,10 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
-	Mesh::Mesh( Device^ device, int numFaces, int numVertices, MeshFlags options, array<VertexElement>^ vertexDecl )
+	Mesh::Mesh( Device^ device, int numFaces, int numVertices, MeshFlags options, array<VertexElement>^ vertexDeclaration )
 	{
 		ID3DXMesh* mesh;
-		pin_ptr<VertexElement> pinnedDecl = &vertexDecl[0];
+		pin_ptr<VertexElement> pinnedDecl = &vertexDeclaration[0];
 
 		HRESULT hr = D3DXCreateMesh( numFaces, numVertices, static_cast<DWORD>( options ),
 			reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedDecl ), device->InternalPointer, &mesh );

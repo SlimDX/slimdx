@@ -107,16 +107,16 @@ namespace SlimDX
 
 		RenderToSurfaceDescription RenderToSurface::Description::get()
 		{
-			D3DXRTS_DESC desc = {0};
-			HRESULT hr = InternalPointer->GetDesc( &desc );
+			D3DXRTS_DESC description = {0};
+			HRESULT hr = InternalPointer->GetDesc( &description );
 			Direct3D9ErrorHandler::TestForFailure( hr );
 
 			RenderToSurfaceDescription outDesc;
-			outDesc.Width = desc.Width;
-			outDesc.Height = desc.Height;
-			outDesc.Format = static_cast<Format>( desc.Format );
-			outDesc.DepthStencil = desc.DepthStencil > 0;
-			outDesc.DepthStencilFormat = static_cast<Format>( desc.DepthStencilFormat );
+			outDesc.Width = description.Width;
+			outDesc.Height = description.Height;
+			outDesc.Format = static_cast<Format>( description.Format );
+			outDesc.DepthStencil = description.DepthStencil > 0;
+			outDesc.DepthStencilFormat = static_cast<Format>( description.DepthStencilFormat );
 			return outDesc;
 		}
 	}

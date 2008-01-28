@@ -44,7 +44,7 @@ namespace SlimDX
 			VertexBufferSoftware = D3DXMESH_VB_SOFTWAREPROCESSING,
 			IndexBufferSystemMemory = D3DXMESH_IB_SYSTEMMEM,
 			IndexBufferManaged = D3DXMESH_IB_MANAGED,
-			IndexBufferbWriteOnly = D3DXMESH_IB_WRITEONLY,
+			IndexBufferWriteOnly = D3DXMESH_IB_WRITEONLY,
 			IndexBufferDynamic = D3DXMESH_IB_DYNAMIC,
 			IndexBufferSoftware = D3DXMESH_IB_SOFTWAREPROCESSING,
 
@@ -101,7 +101,7 @@ namespace SlimDX
 		public enum class CleanType : Int32
 		{
 			BackFacing = D3DXCLEAN_BACKFACING,
-			BowTies = D3DXCLEAN_BOWTIES,
+			Bowties = D3DXCLEAN_BOWTIES,
 			Skinning = D3DXCLEAN_SKINNING,
 			Optimization = D3DXCLEAN_OPTIMIZATION,
 			Simplification = D3DXCLEAN_SIMPLIFICATION
@@ -122,7 +122,7 @@ namespace SlimDX
 
 		public:
 			property Material MaterialD3D;
-			property String^ TextureFilename;
+			property String^ TextureFileName;
 		};
 
 		public value class EffectDefault
@@ -141,7 +141,7 @@ namespace SlimDX
 			static array<EffectInstance>^ FromBuffer( ID3DXBuffer* buffer, unsigned int count );
 
 		public:
-			property String^ EffectFilename;
+			property String^ EffectFileName;
 			property array<EffectDefault>^ Defaults;
 		};
 
@@ -209,10 +209,10 @@ namespace SlimDX
 
 		protected:
 			BaseMesh() { }
+			BaseMesh( IntPtr pointer );
 			BaseMesh( ID3DXBaseMesh* baseMesh ) { Construct(baseMesh); }
 
 		public:
-			BaseMesh( IntPtr pointer );
 			Mesh^ Clone( Device^ device, MeshFlags flags, array<VertexElement>^ elements );
 			Mesh^ Clone( Device^ device, MeshFlags flags, VertexFormat fvf );
 			virtual ~BaseMesh() { Destruct(); }
@@ -273,7 +273,7 @@ namespace SlimDX
 
 		public:
 			Mesh( IntPtr pointer );
-			Mesh( Device^ device, int faceCount, int vertexCount, MeshFlags options, array<VertexElement>^ vertexDecl );
+			Mesh( Device^ device, int faceCount, int vertexCount, MeshFlags options, array<VertexElement>^ vertexDeclaration );
 			Mesh( Device^ device, int faceCount, int vertexCount, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf );
 			virtual ~Mesh() { }
 			
@@ -335,7 +335,7 @@ namespace SlimDX
 			array<EffectInstance>^ GetEffects() { return effects; }
 			void SetEffects( array<EffectInstance>^ value ) { effects = value; }
 
-			void SetAdjacency( array<int>^ adj ) { adjacency = adj; }
+			void SetAdjacency( array<int>^ adjacency ) { this->adjacency = adjacency; }
 			array<int>^ GetAdjacency() { return adjacency; }
 
 			property SkinInfo^ SkinInfo

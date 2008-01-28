@@ -148,7 +148,7 @@ namespace SlimDX
 
 		public:
 			Device( IntPtr device );
-			Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParams );
+			Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParameters );
 			virtual ~Device() { Destruct(); }
 
 			// --- Properties ---
@@ -189,7 +189,7 @@ namespace SlimDX
 				void set( Drawing::Rectangle value );
 			}
 
-			property int AvailableTextureMem
+			property int AvailableTextureMemory
 			{
 				int get();
 			}
@@ -240,7 +240,7 @@ namespace SlimDX
 			int ValidateDevice();
 			void TestCooperativeLevel();
 			CooperativeLevel CheckCooperativeLevel();
-			void Reset( PresentParameters^ presentParams );
+			void Reset( PresentParameters^ presentParameters );
 
 			void Clear( ClearFlags clearFlags, int color, float zdepth, int stencil );
 			void Clear( ClearFlags clearFlags, Color color, float zdepth, int stencil );
@@ -267,8 +267,8 @@ namespace SlimDX
 			void GetStreamSource( int stream, [Out] VertexBuffer^% streamData, [Out] int% offsetBytes, [Out] int% stride );
 			int GetStreamSourceFreq( int stream );
 
-			void GetFrontBufferData( int swapChain, Surface^ destSurface );
-			void GetRenderTargetData( Surface^ renderTarget, Surface^ destSurface );
+			void GetFrontBufferData( int swapChain, Surface^ destinationSurface );
+			void GetRenderTargetData( Surface^ renderTarget, Surface^ destinationSurface );
 
 			void SetRenderState( RenderState state, int value );
 			void SetRenderState( RenderState state, bool value );
@@ -284,7 +284,7 @@ namespace SlimDX
 
 			void SetSamplerState( int sampler, SamplerState type, int value );
 			void SetSamplerState( int sampler, SamplerState type, float value );
-			void SetSamplerState( int sampler, SamplerState type, TextureAddress texAddr );
+			void SetSamplerState( int sampler, SamplerState type, TextureAddress textureAddress );
 			void SetSamplerState( int sampler, SamplerState type, TextureFilter texFilter );
 
 			void LightEnable( int lightIndex, bool enable );
@@ -292,7 +292,7 @@ namespace SlimDX
 			void SetLight( int lightIndex, Light lightData );
 			Light GetLight( int lightIndex );
 
-			void SetCursor( Cursor^ cursor, bool addWaterMark );
+			void SetCursor( Cursor^ cursor, bool addWatermark );
 			void SetCursorPosition( int x, int y, bool immediateUpdate );
 			void SetCursorPosition( System::Drawing::Point position, bool immediateUpdate ) { SetCursorPosition( position.X, position.Y, immediateUpdate ); }
 			void SetCursorProperties( int hotspotX, int hotspotY, Surface^ cursorBitmap );
@@ -333,8 +333,8 @@ namespace SlimDX
 			void BeginStateBlock();
 			StateBlock^ EndStateBlock();
 
-			void ProcessVertices( int sourceStartIndex, int destIndex, int vertexCount, VertexBuffer^ destBuffer,
-				SlimDX::Direct3D9::VertexDeclaration^ vertexDecl, LockFlags flags );
+			void ProcessVertices( int sourceStartIndex, int destinationIndex, int vertexCount, VertexBuffer^ destinationBuffer,
+				SlimDX::Direct3D9::VertexDeclaration^ vertexDeclaration, LockFlags flags );
 
 			void DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount );
 			void DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minVertexIndex, 
@@ -353,13 +353,13 @@ namespace SlimDX
 			void DrawRectPatch( int handle, array<float>^ segmentCount );
 			void DeletePatch( int handle );
 
-			void StretchRect( Surface^ source, System::Drawing::Rectangle sourceRect, Surface^ dest,
-				System::Drawing::Rectangle destRect, TextureFilter filter );
+			void StretchRect( Surface^ source, System::Drawing::Rectangle sourceRect, Surface^ destination,
+				System::Drawing::Rectangle destinationRectangle, TextureFilter filter );
 			void UpdateSurface( Surface^ source, System::Drawing::Rectangle sourceRect,
-				Surface^ dest, System::Drawing::Point destPoint );
-			void UpdateTexture( BaseTexture^ sourceTexture, BaseTexture^ destTexture );
-			void ColorFill( Surface^ destSurface, System::Drawing::Rectangle destRect, int color );
-			void ColorFill( Surface^ destSurface, System::Drawing::Rectangle destRect, System::Drawing::Color color );
+				Surface^ destination, System::Drawing::Point destinationPoint );
+			void UpdateTexture( BaseTexture^ sourceTexture, BaseTexture^ destinationTexture );
+			void ColorFill( Surface^ destinationSurface, System::Drawing::Rectangle destinationRect, int color );
+			void ColorFill( Surface^ destinationSurface, System::Drawing::Rectangle destinationRect, System::Drawing::Color color );
 
 			//ATI R2VB functionality, based on work by Oliver 'acid2' Charles
 			void SetR2VBMode( bool enableR2VB );

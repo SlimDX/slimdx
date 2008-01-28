@@ -41,17 +41,17 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	void BufferDescription::Marshal( DSBUFFERDESC& desc )
+	void BufferDescription::Marshal( DSBUFFERDESC& description )
 	{
-		desc.dwSize = sizeof(DSBUFFERDESC);
-		desc.dwFlags = static_cast<DWORD>( this->Flags );
-		desc.dwBufferBytes = static_cast<DWORD>( this->SizeInBytes );
-		desc.dwReserved = 0;
+		description.dwSize = sizeof(DSBUFFERDESC);
+		description.dwFlags = static_cast<DWORD>( this->Flags );
+		description.dwBufferBytes = static_cast<DWORD>( this->SizeInBytes );
+		description.dwReserved = 0;
 
 		if( this->Format == nullptr )
-			desc.lpwfxFormat = NULL;
+			description.lpwfxFormat = NULL;
 		else
-			desc.lpwfxFormat = this->Format->InternalPointer;
+			description.lpwfxFormat = this->Format->InternalPointer;
 	}
 
 	SoundBuffer::SoundBuffer( IDirectSoundBuffer* buffer )
@@ -64,10 +64,10 @@ namespace DirectSound
 		SetDS8Pointer();
 	}
 
-	SoundBuffer::SoundBuffer( DirectSound^ dsound, BufferDescription desc )
+	SoundBuffer::SoundBuffer( DirectSound^ dsound, BufferDescription description )
 	{
 		DSBUFFERDESC nativeDesc;
-		desc.Marshal( nativeDesc );
+		description.Marshal( nativeDesc );
 
 		IDirectSoundBuffer* buffer;
 		HRESULT hr = dsound->InternalPointer->CreateSoundBuffer( &nativeDesc, &buffer, NULL );
@@ -105,10 +105,10 @@ namespace DirectSound
 		}
 	}
 
-	void SoundBuffer::Initialize( DirectSound^ dsound, BufferDescription desc )
+	void SoundBuffer::Initialize( DirectSound^ dsound, BufferDescription description )
 	{
 		DSBUFFERDESC nativeDesc;
-		desc.Marshal( nativeDesc );
+		description.Marshal( nativeDesc );
 
 		IDirectSoundBuffer* buffer;
 		HRESULT hr = dsound->InternalPointer->CreateSoundBuffer( &nativeDesc, &buffer, NULL );

@@ -52,7 +52,7 @@ namespace SlimDX
 			property String^ DriverName;
 			property Version^ DriverVersion;
 			property int Revision;
-			property int SubSystemId;
+			property int SubsystemId;
 			property int VendorId;
 			property int WhqlLevel;
 
@@ -93,7 +93,7 @@ namespace SlimDX
             property RasterCaps RasterCaps;
             property CompareCaps DepthCompareCaps;
             property BlendCaps SourceBlendCaps;
-            property BlendCaps DestBlendCaps;
+            property BlendCaps DestinationBlendCaps;
             property CompareCaps AlphaCompareCaps;
             property ShadeCaps ShadeCaps;
             property TextureCaps TextureCaps;
@@ -139,7 +139,7 @@ namespace SlimDX
             property int MasterAdapterOrdinal;
             property int AdapterOrdinalInGroup;
             property int NumberOfAdaptersInGroup;
-            property DeclTypeCaps DeclTypes;
+            property DeclarationTypeCaps DeclarationTypes;
             property int SimultaneousRTCount;
             property FilterCaps StretchRectFilterCaps;
             property VertexShader20Caps VS20Caps;

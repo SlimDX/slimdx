@@ -101,7 +101,7 @@ namespace SlimDX
 			literal int TooManyInfluences = D3DXERR_TOOMANYINFLUENCES;
 			literal int InvalidData = D3DXERR_INVALIDDATA;
 			literal int MeshHasNoData = D3DXERR_LOADEDMESHASNODATA;
-			literal int DuplicatNamedFragment = D3DXERR_DUPLICATENAMEDFRAGMENT;
+			literal int DuplicateNamedFragment = D3DXERR_DUPLICATENAMEDFRAGMENT;
 			literal int CannotRemoveLastItem = D3DXERR_CANNOTREMOVELASTITEM;
 		};
 	}

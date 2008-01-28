@@ -47,20 +47,20 @@ namespace SlimDX
 			DataStream^ GetConstantBuffer();
 			DataStream^ GetFunctionStream();
 
-			void SetValue( EffectHandle^ param, bool value );
-			void SetValue( EffectHandle^ param, array<bool>^ values );
-			void SetValue( EffectHandle^ param, int value );
-			void SetValue( EffectHandle^ param, array<int>^ values );
-			void SetValue( EffectHandle^ param, float value );
-			void SetValue( EffectHandle^ param, array<float>^ values );
-			void SetValue( EffectHandle^ param, Vector4 value );
-			void SetValue( EffectHandle^ param, array<Vector4>^ values );
-			void SetValue( EffectHandle^ param, ColorValue value );
-			void SetValue( EffectHandle^ param, array<ColorValue>^ values );
-			void SetValue( EffectHandle^ param, Matrix value );
-			void SetValue( EffectHandle^ param, array<Matrix>^ values );
-			void SetValueTranspose( EffectHandle^ param, Matrix value );
-			void SetValueTranspose( EffectHandle^ param, array<Matrix>^ values );
+			void SetValue( EffectHandle^ parameter, bool value );
+			void SetValue( EffectHandle^ parameter, array<bool>^ values );
+			void SetValue( EffectHandle^ parameter, int value );
+			void SetValue( EffectHandle^ parameter, array<int>^ values );
+			void SetValue( EffectHandle^ parameter, float value );
+			void SetValue( EffectHandle^ parameter, array<float>^ values );
+			void SetValue( EffectHandle^ parameter, Vector4 value );
+			void SetValue( EffectHandle^ parameter, array<Vector4>^ values );
+			void SetValue( EffectHandle^ parameter, ColorValue value );
+			void SetValue( EffectHandle^ parameter, array<ColorValue>^ values );
+			void SetValue( EffectHandle^ parameter, Matrix value );
+			void SetValue( EffectHandle^ parameter, array<Matrix>^ values );
+			void SetValueTranspose( EffectHandle^ parameter, Matrix value );
+			void SetValueTranspose( EffectHandle^ parameter, array<Matrix>^ values );
 
 			void SetDefaults();
 

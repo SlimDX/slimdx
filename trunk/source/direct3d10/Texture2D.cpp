@@ -37,60 +37,60 @@ namespace Direct3D10
 { 
 	Texture2D::Texture2D( ID3D10Texture2D* texture ) : Texture( texture )
 	{
-		D3D10_TEXTURE2D_DESC desc;
-		texture->GetDesc( &desc );
-		m_Width = desc.Width;
-		m_Height = desc.Height;
-		m_MipLevels = desc.MipLevels;
-		m_ArraySize = desc.ArraySize;
-		m_Format = static_cast<DXGI::Format>( desc.Format );
-		m_SampleDesc.Count = desc.SampleDesc.Count;
-		m_SampleDesc.Quality = desc.SampleDesc.Quality;
-		m_Usage = static_cast<ResourceUsage>( desc.Usage );
-		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( desc.BindFlags );
-		m_AccessFlags = static_cast<CpuAccessFlags>( desc.CPUAccessFlags );
-		m_OptionFlags = static_cast<ResourceOptionFlags>( desc.MiscFlags );
+		D3D10_TEXTURE2D_DESC description;
+		texture->GetDesc( &description );
+		m_Width = description.Width;
+		m_Height = description.Height;
+		m_MipLevels = description.MipLevels;
+		m_ArraySize = description.ArraySize;
+		m_Format = static_cast<DXGI::Format>( description.Format );
+		m_SampleDesc.Count = description.SampleDesc.Count;
+		m_SampleDesc.Quality = description.SampleDesc.Quality;
+		m_Usage = static_cast<ResourceUsage>( description.Usage );
+		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( description.BindFlags );
+		m_AccessFlags = static_cast<CpuAccessFlags>( description.CPUAccessFlags );
+		m_OptionFlags = static_cast<ResourceOptionFlags>( description.MiscFlags );
 	}
 	
 	Texture2D::Texture2D( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 		
-		D3D10_TEXTURE2D_DESC desc;
-		static_cast<ID3D10Texture2D*>( InternalPointer )->GetDesc( &desc );
-		m_Width = desc.Width;
-		m_Height = desc.Height;
-		m_MipLevels = desc.MipLevels;
-		m_ArraySize = desc.ArraySize;
-		m_Format = static_cast<DXGI::Format>( desc.Format );
-		m_SampleDesc.Count = desc.SampleDesc.Count;
-		m_SampleDesc.Quality = desc.SampleDesc.Quality;
-		m_Usage = static_cast<ResourceUsage>( desc.Usage );
-		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( desc.BindFlags );
-		m_AccessFlags = static_cast<CpuAccessFlags>( desc.CPUAccessFlags );
-		m_OptionFlags = static_cast<ResourceOptionFlags>( desc.MiscFlags );
+		D3D10_TEXTURE2D_DESC description;
+		static_cast<ID3D10Texture2D*>( InternalPointer )->GetDesc( &description );
+		m_Width = description.Width;
+		m_Height = description.Height;
+		m_MipLevels = description.MipLevels;
+		m_ArraySize = description.ArraySize;
+		m_Format = static_cast<DXGI::Format>( description.Format );
+		m_SampleDesc.Count = description.SampleDesc.Count;
+		m_SampleDesc.Quality = description.SampleDesc.Quality;
+		m_Usage = static_cast<ResourceUsage>( description.Usage );
+		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( description.BindFlags );
+		m_AccessFlags = static_cast<CpuAccessFlags>( description.CPUAccessFlags );
+		m_OptionFlags = static_cast<ResourceOptionFlags>( description.MiscFlags );
 	}
 	
 	Texture2D::Texture2D( Device^ device, int width, int height, int mipLevels, int arraySize, DXGI::Format format,
 		int sampleCount, int sampleQuality, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,
 		ResourceOptionFlags optionFlags )
 	{
-		D3D10_TEXTURE2D_DESC desc;
-		ZeroMemory( &desc, sizeof( desc ) );
-		desc.Width = width;
-		desc.Height = height;
-		desc.MipLevels = mipLevels;
-		desc.ArraySize = arraySize;
-		desc.Format = static_cast<DXGI_FORMAT>( format );
-		desc.SampleDesc.Count = sampleCount;
-		desc.SampleDesc.Quality = sampleQuality;
-		desc.Usage = static_cast<D3D10_USAGE>( usage );
-		desc.BindFlags = static_cast<UINT>( bindFlags );
-		desc.CPUAccessFlags = static_cast<UINT>( accessFlags );
-		desc.MiscFlags = static_cast<UINT>( optionFlags );
+		D3D10_TEXTURE2D_DESC description;
+		ZeroMemory( &description, sizeof( description ) );
+		description.Width = width;
+		description.Height = height;
+		description.MipLevels = mipLevels;
+		description.ArraySize = arraySize;
+		description.Format = static_cast<DXGI_FORMAT>( format );
+		description.SampleDesc.Count = sampleCount;
+		description.SampleDesc.Quality = sampleQuality;
+		description.Usage = static_cast<D3D10_USAGE>( usage );
+		description.BindFlags = static_cast<UINT>( bindFlags );
+		description.CPUAccessFlags = static_cast<UINT>( accessFlags );
+		description.MiscFlags = static_cast<UINT>( optionFlags );
 	
 		ID3D10Texture2D* texture = 0;
-		HRESULT hr = device->InternalPointer->CreateTexture2D( &desc, NULL, &texture );
+		HRESULT hr = device->InternalPointer->CreateTexture2D( &description, NULL, &texture );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		Construct(texture);

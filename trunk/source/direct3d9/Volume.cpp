@@ -51,12 +51,12 @@ namespace Direct3D9
 
 	VolumeDescription Volume::Description::get()
 	{
-		VolumeDescription desc;
+		VolumeDescription description;
 
-		HRESULT hr = VolumePointer->GetDesc( reinterpret_cast<D3DVOLUME_DESC*>( &desc ) );
+		HRESULT hr = VolumePointer->GetDesc( reinterpret_cast<D3DVOLUME_DESC*>( &description ) );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
-		return desc;
+		return description;
 	}
 
 	LockedBox Volume::LockBox( LockFlags flags )

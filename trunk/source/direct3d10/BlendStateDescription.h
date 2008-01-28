@@ -45,9 +45,9 @@ namespace SlimDX
             List<ColorWriteMaskFlags>^ renderTargetWriteMask;
 
 		internal:
-			BlendStateDescription( const D3D10_BLEND_DESC& desc );
+			BlendStateDescription( const D3D10_BLEND_DESC& description );
 			
-			void FillNativeObject( D3D10_BLEND_DESC& desc);
+			void FillNativeObject( D3D10_BLEND_DESC& description);
 			
 		public:
 			property bool AlphaToCoverageEnabled

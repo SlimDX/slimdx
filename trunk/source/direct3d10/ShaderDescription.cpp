@@ -31,14 +31,14 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	ShaderDescription::ShaderDescription( const D3D10_EFFECT_SHADER_DESC& desc )
+	ShaderDescription::ShaderDescription( const D3D10_EFFECT_SHADER_DESC& description )
 	{
-		streamOutputDeclaration = gcnew String( desc.SODecl );
-		isInline = desc.IsInline ? true : false;
-		inputParameterCount = desc.NumInputSignatureEntries;
-		outputParameterCount = desc.NumOutputSignatureEntries;
-		signature = gcnew ShaderSignature( const_cast<void*>( static_cast<const void*>( desc.pInputSignature ) ), desc.BytecodeLength - (desc.pInputSignature - desc.pBytecode) );
-		bytecode = gcnew ShaderBytecode( const_cast<void*>( static_cast<const void*>( desc.pBytecode ) ), desc.BytecodeLength );
+		streamOutputDeclaration = gcnew String( description.SODecl );
+		isInline = description.IsInline ? true : false;
+		inputParameterCount = description.NumInputSignatureEntries;
+		outputParameterCount = description.NumOutputSignatureEntries;
+		signature = gcnew ShaderSignature( const_cast<void*>( static_cast<const void*>( description.pInputSignature ) ), description.BytecodeLength - (description.pInputSignature - description.pBytecode) );
+		bytecode = gcnew ShaderBytecode( const_cast<void*>( static_cast<const void*>( description.pBytecode ) ), description.BytecodeLength );
 	}
 }
 }

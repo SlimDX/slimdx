@@ -57,9 +57,9 @@ namespace SlimDX
 				SlimDX::Direct3D10::CullMode get() { return m_Description->CullMode; }
 			}
 			
-			property bool FrontIsCounterClockwise
+			property bool FrontIsCounterclockwise
 			{
-				bool get() { return m_Description->FrontIsCounterClockwise; }
+				bool get() { return m_Description->FrontIsCounterclockwise; }
 			}
 			
 			property int DepthBias

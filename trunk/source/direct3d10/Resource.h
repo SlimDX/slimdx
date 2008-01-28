@@ -38,10 +38,10 @@ namespace SlimDX
 
 		protected:
 			Resource();
+			Resource( IntPtr pointer );
 			Resource(ID3D10Resource *resource);
 			
 		public:
-			Resource( IntPtr pointer );
 			virtual ~Resource() { Destruct(); }
 
 			/// <summary>

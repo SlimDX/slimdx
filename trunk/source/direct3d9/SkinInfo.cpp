@@ -74,11 +74,11 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
-	SkinInfo::SkinInfo( int vertexCount, array<VertexElement>^ vertexDecl, int boneCount )
+	SkinInfo::SkinInfo( int vertexCount, array<VertexElement>^ vertexDeclaration, int boneCount )
 	{
 		ID3DXSkinInfo *result;
 
-		pin_ptr<VertexElement> pinnedDecl = &vertexDecl[0];
+		pin_ptr<VertexElement> pinnedDecl = &vertexDeclaration[0];
 
 		HRESULT hr = D3DXCreateSkinInfo( vertexCount, reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
 			boneCount, &result );

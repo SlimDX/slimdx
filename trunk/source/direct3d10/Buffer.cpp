@@ -34,14 +34,14 @@ namespace Direct3D10
 { 
 	Buffer::Buffer( ID3D10Buffer* buffer ) : Resource( buffer )
 	{
-		D3D10_BUFFER_DESC desc;
-		buffer->GetDesc(&desc);
+		D3D10_BUFFER_DESC description;
+		buffer->GetDesc(&description);
 		
-		m_SizeInBytes = desc.ByteWidth;
-		m_Usage = (SlimDX::Direct3D10::ResourceUsage) desc.Usage;
-		m_BindFlags = (SlimDX::Direct3D10::BindFlags) desc.BindFlags;
-		m_AccessFlags = (SlimDX::Direct3D10::CpuAccessFlags) desc.CPUAccessFlags;
-		m_OptionFlags = (SlimDX::Direct3D10::ResourceOptionFlags) desc.MiscFlags;
+		m_SizeInBytes = description.ByteWidth;
+		m_Usage = (SlimDX::Direct3D10::ResourceUsage) description.Usage;
+		m_BindFlags = (SlimDX::Direct3D10::BindFlags) description.BindFlags;
+		m_AccessFlags = (SlimDX::Direct3D10::CpuAccessFlags) description.CPUAccessFlags;
+		m_OptionFlags = (SlimDX::Direct3D10::ResourceOptionFlags) description.MiscFlags;
 	}
 
 	Buffer::Buffer( IntPtr pointer )
@@ -90,13 +90,13 @@ namespace Direct3D10
 		m_AccessFlags = accessFlags;
 		m_OptionFlags = optionFlags;
 		
-		D3D10_BUFFER_DESC desc;
-		ZeroMemory( &desc, sizeof(desc) );
-		desc.ByteWidth = sizeInBytes;
-		desc.Usage = static_cast<D3D10_USAGE>( usage );
-		desc.BindFlags = static_cast<UINT>( bindFlags );
-		desc.CPUAccessFlags = static_cast<UINT>( accessFlags );
-		desc.MiscFlags = static_cast<UINT>( optionFlags );
+		D3D10_BUFFER_DESC description;
+		ZeroMemory( &description, sizeof(description) );
+		description.ByteWidth = sizeInBytes;
+		description.Usage = static_cast<D3D10_USAGE>( usage );
+		description.BindFlags = static_cast<UINT>( bindFlags );
+		description.CPUAccessFlags = static_cast<UINT>( accessFlags );
+		description.MiscFlags = static_cast<UINT>( optionFlags );
 		
 		ID3D10Buffer* buffer = 0;
 		HRESULT hr;
@@ -110,11 +110,11 @@ namespace Direct3D10
 			initData.pSysMem = data->RawPointer + data->Position;
 			data->Position += sizeInBytes;
 		
-			hr = device->InternalPointer->CreateBuffer( &desc, &initData, &buffer );
+			hr = device->InternalPointer->CreateBuffer( &description, &initData, &buffer );
 		}
 		else
 		{
-			hr = device->InternalPointer->CreateBuffer( &desc, NULL, &buffer );
+			hr = device->InternalPointer->CreateBuffer( &description, NULL, &buffer );
 		}
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		

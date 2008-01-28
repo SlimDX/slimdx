@@ -509,14 +509,14 @@ namespace SlimDX
 			AX,
 
 			/// <summary>
-			/// The BackSpace.
+			/// The Backspace.
 			/// </summary>
-			BackSpace,
+			Backspace,
 
 			/// <summary>
 			/// The back slash key.
 			/// </summary>
-			BackSlash,
+			Backslash,
 
 			/// <summary>
 			/// The calculator key.
@@ -836,7 +836,7 @@ namespace SlimDX
 			/// <summary>
 			/// The British and German OEM102 key.
 			/// </summary>
-			OEM102,
+			Oem102,
 
 			/// <summary>
 			/// The Page Down key.

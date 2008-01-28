@@ -29,6 +29,9 @@ namespace SlimDX
 	{
 		ref class DirectSoundErrorHandler sealed
 		{	
+		private:
+			DirectSoundErrorHandler() { }
+
 		internal:
 			static bool TestForFailure( int hr );
 		};

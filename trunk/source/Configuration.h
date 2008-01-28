@@ -28,6 +28,7 @@ namespace SlimDX
 	public ref class Configuration sealed
 	{
 	private:
+		Configuration() { }
 		static Configuration();
 	
 	public:

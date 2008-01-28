@@ -50,15 +50,15 @@ namespace Direct3D10
 		}
 	}
 
-	BlendStateDescription::BlendStateDescription( const D3D10_BLEND_DESC& desc )
+	BlendStateDescription::BlendStateDescription( const D3D10_BLEND_DESC& description )
 	{
-		AlphaToCoverageEnabled = desc.AlphaToCoverageEnable ? true : false;
-		SourceBlend = static_cast<BlendOption>( desc.SrcBlend );
-		DestinationBlend = static_cast<BlendOption>( desc.DestBlend );
-		BlendOperation = static_cast<SlimDX::Direct3D10::BlendOperation>( desc.BlendOp );
-		SourceAlphaBlend = static_cast<BlendOption>( desc.SrcBlend );
-		DestinationAlphaBlend = static_cast<BlendOption>( desc.DestBlend );
-		AlphaBlendOperation = static_cast<SlimDX::Direct3D10::BlendOperation>( desc.BlendOp );
+		AlphaToCoverageEnabled = description.AlphaToCoverageEnable ? true : false;
+		SourceBlend = static_cast<BlendOption>( description.SrcBlend );
+		DestinationBlend = static_cast<BlendOption>( description.DestBlend );
+		BlendOperation = static_cast<SlimDX::Direct3D10::BlendOperation>( description.BlendOp );
+		SourceAlphaBlend = static_cast<BlendOption>( description.SrcBlend );
+		DestinationAlphaBlend = static_cast<BlendOption>( description.DestBlend );
+		AlphaBlendOperation = static_cast<SlimDX::Direct3D10::BlendOperation>( description.BlendOp );
 		
 		renderTargetBlendEnabled = gcnew List<bool>();
 		renderTargetWriteMask = gcnew List<ColorWriteMaskFlags>();
@@ -69,20 +69,20 @@ namespace Direct3D10
 		}
 	}
 	
-	void BlendStateDescription::FillNativeObject( D3D10_BLEND_DESC& desc )
+	void BlendStateDescription::FillNativeObject( D3D10_BLEND_DESC& description )
 	{
-		ZeroMemory( &desc, sizeof( desc ) );
-		desc.SrcBlend = static_cast<D3D10_BLEND>( SourceBlend );
-		desc.DestBlend = static_cast<D3D10_BLEND>( DestinationBlend );
-		desc.BlendOp = static_cast<D3D10_BLEND_OP>( BlendOperation );
-		desc.SrcBlendAlpha = static_cast<D3D10_BLEND>( SourceAlphaBlend );
-		desc.DestBlendAlpha = static_cast<D3D10_BLEND>( DestinationAlphaBlend );
-		desc.BlendOpAlpha = static_cast<D3D10_BLEND_OP>( AlphaBlendOperation );
+		ZeroMemory( &description, sizeof( description ) );
+		description.SrcBlend = static_cast<D3D10_BLEND>( SourceBlend );
+		description.DestBlend = static_cast<D3D10_BLEND>( DestinationBlend );
+		description.BlendOp = static_cast<D3D10_BLEND_OP>( BlendOperation );
+		description.SrcBlendAlpha = static_cast<D3D10_BLEND>( SourceAlphaBlend );
+		description.DestBlendAlpha = static_cast<D3D10_BLEND>( DestinationAlphaBlend );
+		description.BlendOpAlpha = static_cast<D3D10_BLEND_OP>( AlphaBlendOperation );
 		
 		for(int i = 0; i < 8; ++i)
 		{
-			desc.BlendEnable[i] = RenderTargetBlendEnabled[i];
-			desc.RenderTargetWriteMask[i] = static_cast<UINT8>( RenderTargetWriteMask[i] );
+			description.BlendEnable[i] = RenderTargetBlendEnabled[i];
+			description.RenderTargetWriteMask[i] = static_cast<UINT8>( RenderTargetWriteMask[i] );
 		}
 	}
 }

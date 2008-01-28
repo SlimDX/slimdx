@@ -34,8 +34,8 @@ namespace Engine
 			kbDevice = new SlimDX.DirectInput.Device<KeyboardState>(SystemGuid.Keyboard);
 			mouseDevice = new SlimDX.DirectInput.Device<MouseState>(SystemGuid.Mouse);
 			//mouseDevice.Properties.AxisModeAbsolute = false;
-			kbDevice.SetCooperativeLevel(handle, CooperativeLevel.NonExclusive | CooperativeLevel.Background);
-			mouseDevice.SetCooperativeLevel(handle, CooperativeLevel.NonExclusive | CooperativeLevel.Background);
+			kbDevice.SetCooperativeLevel(handle, CooperativeLevel.Nonexclusive | CooperativeLevel.Background);
+			mouseDevice.SetCooperativeLevel(handle, CooperativeLevel.Nonexclusive | CooperativeLevel.Background);
 			kbDevice.Acquire();
 			mouseDevice.Acquire();
 		}

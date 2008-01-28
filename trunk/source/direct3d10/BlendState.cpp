@@ -39,18 +39,18 @@ namespace Direct3D10
 
 		Construct(state);
 		
-		D3D10_BLEND_DESC desc;
-		state->GetDesc( &desc );
-		m_Description = gcnew BlendStateDescription( desc );
+		D3D10_BLEND_DESC description;
+		state->GetDesc( &description );
+		m_Description = gcnew BlendStateDescription( description );
 	}
 	
 	BlendState::BlendState( IntPtr state )
 	{
 		Construct( state, NativeInterface );
 
-		D3D10_BLEND_DESC desc;
-		InternalPointer->GetDesc( &desc );
-		m_Description = gcnew BlendStateDescription( desc );
+		D3D10_BLEND_DESC description;
+		InternalPointer->GetDesc( &description );
+		m_Description = gcnew BlendStateDescription( description );
 	}
 
 	BlendState::BlendState( Device^ device, BlendStateDescription^ description )
@@ -73,9 +73,9 @@ namespace Direct3D10
 	
 	BlendStateDescription^ BlendState::CloneDescription()
 	{
-		D3D10_BLEND_DESC desc;
-		InternalPointer->GetDesc( &desc );
-		return gcnew BlendStateDescription( desc );
+		D3D10_BLEND_DESC description;
+		InternalPointer->GetDesc( &description );
+		return gcnew BlendStateDescription( description );
 	}
 }
 }

@@ -26,7 +26,7 @@ namespace Engine
 
 			window.D3DDevice.SetRenderState(RenderState.DiffuseMaterialSource, ColorSource.Color1);
 			window.D3DDevice.SetRenderState(RenderState.SourceBlend, Blend.One);
-			window.D3DDevice.SetRenderState(RenderState.DestBlend, Blend.One);
+			window.D3DDevice.SetRenderState(RenderState.DestinationBlend, Blend.One);
 		}
 		private void Update()
 		{

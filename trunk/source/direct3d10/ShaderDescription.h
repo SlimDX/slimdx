@@ -44,7 +44,7 @@ namespace SlimDX
 			int outputParameterCount;
 		
 		internal:
-			ShaderDescription( const D3D10_EFFECT_SHADER_DESC & desc );
+			ShaderDescription( const D3D10_EFFECT_SHADER_DESC & description );
 		
 		public:
 			property ShaderSignature^ Signature

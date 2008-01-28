@@ -55,7 +55,7 @@ namespace SlimDX
 
 		public:
 			SkinInfo( IntPtr pointer );
-			SkinInfo( int vertexCount, array<VertexElement>^ vertexDecl, int boneCount );
+			SkinInfo( int vertexCount, array<VertexElement>^ vertexDeclaration, int boneCount );
 			SkinInfo( BaseMesh^ mesh, int boneCount, array<BoneCombination^>^ boneCombinationTable );
 			SkinInfo( int vertexCount, VertexFormat fvf, int boneCount );
 			virtual ~SkinInfo() { Destruct(); }
