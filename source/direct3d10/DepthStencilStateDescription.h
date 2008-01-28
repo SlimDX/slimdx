@@ -48,9 +48,9 @@ namespace SlimDX
             StencilOperation backStencilPassOperation;
 
 		internal:
-			DepthStencilStateDescription( const D3D10_DEPTH_STENCIL_DESC& desc );
+			DepthStencilStateDescription( const D3D10_DEPTH_STENCIL_DESC& description );
 			
-			void FillNativeObject( D3D10_DEPTH_STENCIL_DESC& desc);
+			void FillNativeObject( D3D10_DEPTH_STENCIL_DESC& description);
 			
 		public:
 			property bool DepthEnabled

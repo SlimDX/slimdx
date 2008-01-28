@@ -210,7 +210,7 @@ namespace SlimDX
 			SingleLine = DT_SINGLELINE,
 			Top = DT_TOP,
 			VerticalCenter = DT_VCENTER,
-			WordBreak = DT_WORDBREAK
+			Wordbreak = DT_WORDBREAK
 		};
 		
 		[Flags]
@@ -249,8 +249,8 @@ namespace SlimDX
 			Default = DEFAULT_QUALITY,
 			Draft = DRAFT_QUALITY,
 			Proof = PROOF_QUALITY,
-			NonAntiAliased = NONANTIALIASED_QUALITY,
-			AntiAliased = ANTIALIASED_QUALITY,
+			NonAntialiased = NONANTIALIASED_QUALITY,
+			Antialiased = ANTIALIASED_QUALITY,
 			ClearType = CLEARTYPE_QUALITY,
 			ClearTypeNatural = CLEARTYPE_NATURAL_QUALITY
 		};

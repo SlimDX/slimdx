@@ -35,7 +35,7 @@ namespace Direct3D10
 	{
 		FillMode = SlimDX::Direct3D10::FillMode::Solid;
 		CullMode = SlimDX::Direct3D10::CullMode::None;
-		FrontIsCounterClockwise = true;
+		FrontIsCounterclockwise = true;
 		DepthBias = 0;
 		DepthBiasClamp = 0.0f;
 		SlopeScaledDepthBias = 0.0f;
@@ -45,33 +45,33 @@ namespace Direct3D10
 		AntialiasedLineEnabled = false;
 	}
 	
-	RasterizerStateDescription::RasterizerStateDescription( const D3D10_RASTERIZER_DESC& desc )
+	RasterizerStateDescription::RasterizerStateDescription( const D3D10_RASTERIZER_DESC& description )
 	{
-		FillMode = static_cast<SlimDX::Direct3D10::FillMode>( desc.FillMode );
-		CullMode = static_cast<SlimDX::Direct3D10::CullMode>( desc.CullMode );
-		FrontIsCounterClockwise = desc.FrontCounterClockwise ? true : false;
-		DepthBias = desc.DepthBias;
-		DepthBiasClamp = desc.DepthBiasClamp;
-		SlopeScaledDepthBias = desc.SlopeScaledDepthBias;
-		DepthClipEnabled = desc.DepthClipEnable ? true : false;
-		ScissorEnabled = desc.ScissorEnable ? true : false;
-		MultisampleEnabled = desc.MultisampleEnable ? true : false;
-		AntialiasedLineEnabled = desc.AntialiasedLineEnable ? true : false;
+		FillMode = static_cast<SlimDX::Direct3D10::FillMode>( description.FillMode );
+		CullMode = static_cast<SlimDX::Direct3D10::CullMode>( description.CullMode );
+		FrontIsCounterclockwise = description.FrontCounterClockwise ? true : false;
+		DepthBias = description.DepthBias;
+		DepthBiasClamp = description.DepthBiasClamp;
+		SlopeScaledDepthBias = description.SlopeScaledDepthBias;
+		DepthClipEnabled = description.DepthClipEnable ? true : false;
+		ScissorEnabled = description.ScissorEnable ? true : false;
+		MultisampleEnabled = description.MultisampleEnable ? true : false;
+		AntialiasedLineEnabled = description.AntialiasedLineEnable ? true : false;
 	}
 	
-	void RasterizerStateDescription::FillNativeObject( D3D10_RASTERIZER_DESC& desc )
+	void RasterizerStateDescription::FillNativeObject( D3D10_RASTERIZER_DESC& description )
 	{
-		ZeroMemory( &desc, sizeof( desc ) );
-		desc.FillMode = static_cast<D3D10_FILL_MODE>( FillMode );
-		desc.CullMode = static_cast<D3D10_CULL_MODE>( CullMode );
-		desc.FrontCounterClockwise = FrontIsCounterClockwise;
-		desc.DepthBias = DepthBias;
-		desc.DepthBiasClamp = DepthBiasClamp;
-		desc.SlopeScaledDepthBias = SlopeScaledDepthBias;
-		desc.DepthClipEnable = DepthClipEnabled;
-		desc.ScissorEnable = ScissorEnabled;
-		desc.MultisampleEnable = MultisampleEnabled;
-		desc.AntialiasedLineEnable = AntialiasedLineEnabled;
+		ZeroMemory( &description, sizeof( description ) );
+		description.FillMode = static_cast<D3D10_FILL_MODE>( FillMode );
+		description.CullMode = static_cast<D3D10_CULL_MODE>( CullMode );
+		description.FrontCounterClockwise = FrontIsCounterclockwise;
+		description.DepthBias = DepthBias;
+		description.DepthBiasClamp = DepthBiasClamp;
+		description.SlopeScaledDepthBias = SlopeScaledDepthBias;
+		description.DepthClipEnable = DepthClipEnabled;
+		description.ScissorEnable = ScissorEnabled;
+		description.MultisampleEnable = MultisampleEnabled;
+		description.AntialiasedLineEnable = AntialiasedLineEnabled;
 	}
 }
 }

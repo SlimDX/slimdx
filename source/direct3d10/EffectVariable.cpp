@@ -45,16 +45,16 @@ namespace Direct3D10
 			throw gcnew ArgumentNullException( "variable" );
 		m_Pointer = variable;
 		
-		D3D10_EFFECT_VARIABLE_DESC desc;
-		HRESULT hr = m_Pointer->GetDesc( &desc );
+		D3D10_EFFECT_VARIABLE_DESC description;
+		HRESULT hr = m_Pointer->GetDesc( &description );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		
-		m_Name = gcnew String( desc.Name );
-		m_Semantic = gcnew String( desc.Semantic );
-		m_Flags = static_cast<EffectVariableFlags>( desc.Flags );
-		m_AnnotationCount = desc.Annotations;
-		m_BufferOffset = desc.BufferOffset;
-		m_ExplicitBindPoint = desc.ExplicitBindPoint;
+		m_Name = gcnew String( description.Name );
+		m_Semantic = gcnew String( description.Semantic );
+		m_Flags = static_cast<EffectVariableFlags>( description.Flags );
+		m_AnnotationCount = description.Annotations;
+		m_BufferOffset = description.BufferOffset;
+		m_ExplicitBindPoint = description.ExplicitBindPoint;
 	}
 	
 	EffectVariable^ EffectVariable::GetAnnotationByIndex( int index )

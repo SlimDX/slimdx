@@ -30,6 +30,9 @@ namespace SlimDX
 		public ref class Direct3D9ErrorHandler sealed
 		{
 			static int m_LastError;
+
+		private:
+			Direct3D9ErrorHandler() { }
 			
 		internal:
 			static bool TestForFailure( int hr );

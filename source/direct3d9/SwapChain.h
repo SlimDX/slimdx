@@ -41,7 +41,7 @@ namespace SlimDX
                 void set( bool value ) { inVBlank = value; }
             }
 
-            property int ScanLine
+            property int Scanline
             {
                 int get() { return scanLine; }
                 void set( int value ) { scanLine = value; }
@@ -57,7 +57,7 @@ namespace SlimDX
 
 		public:
 			SwapChain( IntPtr pointer );
-			SwapChain( Device^ device, PresentParameters^ presentParams );
+			SwapChain( Device^ device, PresentParameters^ presentParameters );
 			~SwapChain() { Destruct(); }
 
 			property SlimDX::Direct3D9::DisplayMode DisplayMode
@@ -72,7 +72,7 @@ namespace SlimDX
 
 			Device^ GetDevice();
 			Surface^ GetBackBuffer( int index );
-			void GetFrontBufferData( Surface^ destSurface );
+			void GetFrontBufferData( Surface^ destinationSurface );
 
 			void Present( SlimDX::Direct3D9::Present flags );
 		};

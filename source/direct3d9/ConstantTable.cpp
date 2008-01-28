@@ -38,19 +38,19 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	void ConstantDescription::Initialize( const D3DXCONSTANT_DESC& desc )
+	void ConstantDescription::Initialize( const D3DXCONSTANT_DESC& description )
 	{
-		Name = gcnew String( desc.Name );
-		RegisterSet = static_cast<SlimDX::Direct3D9::RegisterSet>( desc.RegisterSet );
-		RegisterIndex = desc.RegisterIndex;
-		RegisterCount = desc.RegisterCount;
-		Class = static_cast<ParameterClass>( desc.Class );
-		Type = static_cast<ParameterType>( desc.Type );
-		Rows = desc.Rows;
-		Columns = desc.Columns;
-		Elements = desc.Elements;
-		StructMembers = desc.StructMembers;
-		Bytes = desc.Bytes;
+		Name = gcnew String( description.Name );
+		RegisterSet = static_cast<SlimDX::Direct3D9::RegisterSet>( description.RegisterSet );
+		RegisterIndex = description.RegisterIndex;
+		RegisterCount = description.RegisterCount;
+		Class = static_cast<ParameterClass>( description.Class );
+		Type = static_cast<ParameterType>( description.Type );
+		Rows = description.Rows;
+		Columns = description.Columns;
+		Elements = description.Elements;
+		StructMembers = description.StructMembers;
+		Bytes = description.Bytes;
 	}
 
 	ConstantTable::ConstantTable( ID3DXConstantTable* table )
@@ -113,7 +113,7 @@ namespace Direct3D9
 	ConstantDescription ConstantTable::GetConstantDescription( EffectHandle^ handle )
 	{
 		D3DXCONSTANT_DESC nativeDesc;
-		ConstantDescription desc;
+		ConstantDescription description;
 
 		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		unsigned int count = 1;
@@ -121,10 +121,10 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetConstantDesc( nativeHandle, &nativeDesc, &count );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
-			return desc;
+			return description;
 
-		desc.Initialize( nativeDesc );
-		return desc;
+		description.Initialize( nativeDesc );
+		return description;
 	}
 
 	array<ConstantDescription>^ ConstantTable::GetConstantDescriptionArray( EffectHandle^ handle )
@@ -187,14 +187,14 @@ namespace Direct3D9
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
-	void ConstantTable::SetValue( EffectHandle^ param, array<bool>^ values )
+	void ConstantTable::SetValue( EffectHandle^ parameter, array<bool>^ values )
 	{
 		//implementing set for bool array is REALLY ANNOYING.
 		//Win32 uses BOOL, which is an int
 		array<BOOL>^ expandedArray = gcnew array<BOOL>( values->Length );
 		Array::Copy( values, expandedArray, values->Length );
 
-		D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		pin_ptr<BOOL> pinnedValue = &expandedArray[0];
 		HRESULT hr = InternalPointer->SetBoolArray( m_Device, handle, pinnedValue, values->Length );
 		Direct3D9ErrorHandler::TestForFailure( hr );
@@ -293,17 +293,17 @@ namespace Direct3D9
 	ConstantTableDescription ConstantTable::Description::get()
 	{
 		D3DXCONSTANTTABLE_DESC nativeDesc;
-		ConstantTableDescription desc;
+		ConstantTableDescription description;
 
 		HRESULT hr = InternalPointer->GetDesc( &nativeDesc );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
-			return desc;
+			return description;
 
-		desc.Creator = gcnew String( nativeDesc.Creator );
-		desc.Version = gcnew Version( D3DSHADER_VERSION_MAJOR( nativeDesc.Version ), D3DSHADER_VERSION_MINOR( nativeDesc.Version ) );
-		desc.Constants = nativeDesc.Constants;
-		return desc;
+		description.Creator = gcnew String( nativeDesc.Creator );
+		description.Version = gcnew Version( D3DSHADER_VERSION_MAJOR( nativeDesc.Version ), D3DSHADER_VERSION_MINOR( nativeDesc.Version ) );
+		description.Constants = nativeDesc.Constants;
+		return description;
 	}
 }
 }

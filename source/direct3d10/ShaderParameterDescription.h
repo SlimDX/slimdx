@@ -43,7 +43,7 @@ namespace SlimDX
 			Byte readWriteMask;
 		
 		internal:
-			ShaderParameterDescription( const D3D10_SIGNATURE_PARAMETER_DESC& desc );
+			ShaderParameterDescription( const D3D10_SIGNATURE_PARAMETER_DESC& description );
 		
 		public:
 			property String^ SemanticName

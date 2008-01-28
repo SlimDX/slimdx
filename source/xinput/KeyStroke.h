@@ -30,11 +30,11 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies keystroke data returned by Controller.GetKeystroke
 		/// </summary>
-		public value class KeyStroke
+		public value class Keystroke
 		{
 		private:
 			GamepadKeyCode virtualKey;
-            KeyStrokeFlags flags;
+            KeystrokeFlags flags;
             UserIndex userIndex;
             int hidCode;
 
@@ -52,11 +52,11 @@ namespace SlimDX
 			/// <summary>
 			/// Combination of flags that indicate the keyboard state at the time of the input event.
 			/// </summary>
-            property KeyStrokeFlags Flags
+            property KeystrokeFlags Flags
             {
-                KeyStrokeFlags get() { return flags; }
+                KeystrokeFlags get() { return flags; }
 			internal:
-                void set( KeyStrokeFlags value ) { flags = value; }
+                void set( KeystrokeFlags value ) { flags = value; }
             }
 
 			/// <summary>

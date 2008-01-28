@@ -31,15 +31,15 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	ShaderParameterDescription::ShaderParameterDescription( const D3D10_SIGNATURE_PARAMETER_DESC& desc )
+	ShaderParameterDescription::ShaderParameterDescription( const D3D10_SIGNATURE_PARAMETER_DESC& description )
 	{
-		semanticName = gcnew String( desc.SemanticName );
-		semanticIndex = desc.SemanticIndex;
-		registerIndex = desc.Register;
-		systemValueType = static_cast<SystemValueType>( desc.SystemValueType );
-		componentType = static_cast<RegisterComponentType>( desc.ComponentType );
-		mask = desc.Mask;
-		readWriteMask = desc.ReadWriteMask;
+		semanticName = gcnew String( description.SemanticName );
+		semanticIndex = description.SemanticIndex;
+		registerIndex = description.Register;
+		systemValueType = static_cast<SystemValueType>( description.SystemValueType );
+		componentType = static_cast<RegisterComponentType>( description.ComponentType );
+		mask = description.Mask;
+		readWriteMask = description.ReadWriteMask;
 	}
 }
 }

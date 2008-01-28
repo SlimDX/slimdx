@@ -42,34 +42,34 @@ namespace Direct3D10
 	{
 		Construct(effect);
 
-		D3D10_EFFECT_DESC desc;
-		HRESULT hr = effect->GetDesc( &desc );
+		D3D10_EFFECT_DESC description;
+		HRESULT hr = effect->GetDesc( &description );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 			throw gcnew Direct3D10Exception( "Failed to get description for effect." );
 		
-		m_IsChildEffect = desc.IsChildEffect ? true : false;
-		m_ConstantBufferCount = desc.ConstantBuffers;
-		m_SharedConstantBufferCount = desc.SharedConstantBuffers;
-		m_GlobalVariableCount = desc.GlobalVariables;
-		m_TechniqueCount = desc.Techniques;
+		m_IsChildEffect = description.IsChildEffect ? true : false;
+		m_ConstantBufferCount = description.ConstantBuffers;
+		m_SharedConstantBufferCount = description.SharedConstantBuffers;
+		m_GlobalVariableCount = description.GlobalVariables;
+		m_TechniqueCount = description.Techniques;
 	}
 
 	Effect::Effect( IntPtr effect )
 	{
 		Construct( effect, NativeInterface );
 
-		D3D10_EFFECT_DESC desc;
-		HRESULT hr = InternalPointer->GetDesc( &desc );
+		D3D10_EFFECT_DESC description;
+		HRESULT hr = InternalPointer->GetDesc( &description );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
 			throw gcnew Direct3D10Exception( "Failed to get description for effect." );
 
-		m_IsChildEffect = desc.IsChildEffect ? true : false;
-		m_ConstantBufferCount = desc.ConstantBuffers;
-		m_SharedConstantBufferCount = desc.SharedConstantBuffers;
-		m_GlobalVariableCount = desc.GlobalVariables;
-		m_TechniqueCount = desc.Techniques;
+		m_IsChildEffect = description.IsChildEffect ? true : false;
+		m_ConstantBufferCount = description.ConstantBuffers;
+		m_SharedConstantBufferCount = description.SharedConstantBuffers;
+		m_GlobalVariableCount = description.GlobalVariables;
+		m_TechniqueCount = description.Techniques;
 	}
 	
 	EffectConstantBuffer^ Effect::GetConstantBufferByIndex( int index )

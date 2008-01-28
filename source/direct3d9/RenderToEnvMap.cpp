@@ -134,17 +134,17 @@ namespace SlimDX
 
 		RenderToEnvironmentMapDescription RenderToEnvironmentMap::Description::get()
 		{
-			D3DXRTE_DESC desc = {0};
+			D3DXRTE_DESC description = {0};
 
-			HRESULT hr = InternalPointer->GetDesc( &desc );
+			HRESULT hr = InternalPointer->GetDesc( &description );
 			Direct3D9ErrorHandler::TestForFailure( hr );
 
 			RenderToEnvironmentMapDescription outDesc;
-			outDesc.Size = desc.Size;
-			outDesc.MipLevels = desc.MipLevels;
-			outDesc.Format = static_cast<Format>( desc.Format );
-			outDesc.DepthStencil = desc.DepthStencil > 0;
-			outDesc.DepthStencilFormat = static_cast<Format>( desc.DepthStencilFormat );
+			outDesc.Size = description.Size;
+			outDesc.MipLevels = description.MipLevels;
+			outDesc.Format = static_cast<Format>( description.Format );
+			outDesc.DepthStencil = description.DepthStencil > 0;
+			outDesc.DepthStencilFormat = static_cast<Format>( description.DepthStencilFormat );
 
 			return outDesc;
 		}

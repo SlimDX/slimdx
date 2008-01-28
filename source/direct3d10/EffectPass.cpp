@@ -40,16 +40,16 @@ namespace Direct3D10
 			throw gcnew ArgumentNullException( "pass" );
 		m_Pointer = pass;
 		
-		D3D10_PASS_DESC desc;
-		HRESULT hr = m_Pointer->GetDesc( &desc );
+		D3D10_PASS_DESC description;
+		HRESULT hr = m_Pointer->GetDesc( &description );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		
-		m_Name = gcnew String( desc.Name );
-		m_AnnotationCount = desc.Annotations;
-		m_Signature = gcnew ShaderSignature( desc.pIAInputSignature, desc.IAInputSignatureSize );
-		m_StencilReference = desc.StencilRef;
-		m_SampleMask = desc.SampleMask;
-		m_BlendFactor = ColorValue( desc.BlendFactor[3], desc.BlendFactor[0], desc.BlendFactor[1], desc.BlendFactor[2] );
+		m_Name = gcnew String( description.Name );
+		m_AnnotationCount = description.Annotations;
+		m_Signature = gcnew ShaderSignature( description.pIAInputSignature, description.IAInputSignatureSize );
+		m_StencilReference = description.StencilRef;
+		m_SampleMask = description.SampleMask;
+		m_BlendFactor = ColorValue( description.BlendFactor[3], description.BlendFactor[0], description.BlendFactor[1], description.BlendFactor[2] );
 	}
 	
 	EffectPassShaderMapping EffectPass::PixelShaderDescription::get()

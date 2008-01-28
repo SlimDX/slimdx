@@ -51,9 +51,9 @@ namespace SlimDX
 			int FreeHw3DAllBuffers;
 			int FreeHw3DStaticBuffers;
 			int FreeHw3DStreamingBuffers;
-			int TotalHwMemBytes;
-			int FreeHwMemBytes;
-			int MaxContigFreeHwMemBytes;
+			int TotalHwMemoryBytes;
+			int FreeHwMemoryBytes;
+			int MaxContigFreeHwMemoryBytes;
 			int UnlockTransferRateHwBuffers;
 			int PlayCpuOverheadSwBuffers;
 			int Reserved1;

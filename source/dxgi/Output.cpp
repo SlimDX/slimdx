@@ -41,11 +41,11 @@ namespace DXGI
 	
 	OutputDescription Output::GetDescription()
 	{
-		DXGI_OUTPUT_DESC desc;
-		HRESULT hr = InternalPointer->GetDesc( &desc );
+		DXGI_OUTPUT_DESC description;
+		HRESULT hr = InternalPointer->GetDesc( &description );
 		if( DXGIErrorHandler::TestForFailure( hr ) )
 			return OutputDescription();
-		return OutputDescription( desc );
+		return OutputDescription( description );
 	}
 
 	FrameStatistics Output::GetFrameStatistics()

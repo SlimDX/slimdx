@@ -451,10 +451,10 @@ namespace Direct3D9
 
 	SurfaceDescription Texture::GetLevelDescription( int level )
 	{
-		SurfaceDescription desc;
-		HRESULT hr = TexturePointer->GetLevelDesc( level, reinterpret_cast<D3DSURFACE_DESC*>( &desc ) );
+		SurfaceDescription description;
+		HRESULT hr = TexturePointer->GetLevelDesc( level, reinterpret_cast<D3DSURFACE_DESC*>( &description ) );
 		Direct3D9ErrorHandler::TestForFailure( hr );
-		return desc;
+		return description;
 	}
 
 	Surface^ Texture::GetSurfaceLevel( int level )
@@ -739,10 +739,10 @@ namespace Direct3D9
 
 	SurfaceDescription CubeTexture::GetLevelDescription( int level )
 	{
-		SurfaceDescription desc;
-		HRESULT hr = TexturePointer->GetLevelDesc( level, reinterpret_cast<D3DSURFACE_DESC*>( &desc ) );
+		SurfaceDescription description;
+		HRESULT hr = TexturePointer->GetLevelDesc( level, reinterpret_cast<D3DSURFACE_DESC*>( &description ) );
 		Direct3D9ErrorHandler::TestForFailure( hr );
-		return desc;
+		return description;
 	}
 
 	Surface^ CubeTexture::GetCubeMapSurface( CubeMapFace face, int level )
@@ -1053,18 +1053,18 @@ namespace Direct3D9
 	
 	VolumeDescription VolumeTexture::GetLevelDescription( int level )
 	{
-		D3DVOLUME_DESC desc;
-		HRESULT hr = TexturePointer->GetLevelDesc( level, &desc );
+		D3DVOLUME_DESC description;
+		HRESULT hr = TexturePointer->GetLevelDesc( level, &description );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 		
 		VolumeDescription outDesc;
-		outDesc.Format = static_cast<Format>( desc.Format );
-		outDesc.Type = static_cast<SlimDX::Direct3D9::ResourceType>( desc.Type );
-		outDesc.Usage = static_cast<Usage>( desc.Usage );
-		outDesc.Pool = static_cast<Pool>( desc.Pool );
-		outDesc.Width = desc.Width;
-		outDesc.Height = desc.Height;
-		outDesc.Depth = desc.Depth;
+		outDesc.Format = static_cast<Format>( description.Format );
+		outDesc.Type = static_cast<SlimDX::Direct3D9::ResourceType>( description.Type );
+		outDesc.Usage = static_cast<Usage>( description.Usage );
+		outDesc.Pool = static_cast<Pool>( description.Pool );
+		outDesc.Width = description.Width;
+		outDesc.Height = description.Height;
+		outDesc.Depth = description.Depth;
 		
 		return outDesc;
 	}

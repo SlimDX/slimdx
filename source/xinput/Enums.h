@@ -56,7 +56,7 @@ namespace SlimDX
 		/// Flags that indicate the keyboard state at the time of the input event.
 		/// </summary>
 		[Flags]
-		public enum class KeyStrokeFlags : Int32
+		public enum class KeystrokeFlags : Int32
 		{
 			None = 0,
 			KeyDown = XINPUT_KEYSTROKE_KEYDOWN,
@@ -117,7 +117,7 @@ namespace SlimDX
 		/// <summary>
 		/// Subtype of the game controller.
 		/// </summary>
-		public enum class DeviceSubType : Int32
+		public enum class DeviceSubtype : Int32
 		{
 			ArcadeStick = XINPUT_DEVSUBTYPE_ARCADE_STICK,
 			Gamepad = XINPUT_DEVSUBTYPE_GAMEPAD,

@@ -66,7 +66,7 @@ namespace SlimDX
 			void GenerateMipSublevels();
 
 			static DataStream^ ToStream( BaseTexture^ texture, ImageFileFormat format );
-			static DataStream^ ToStream( BaseTexture^ texture, ImageFileFormat, array<PaletteEntry>^ palette );
+			static DataStream^ ToStream( BaseTexture^ texture, ImageFileFormat format, array<PaletteEntry>^ palette );
 
 			static void ToFile( BaseTexture^ texture, String^ fileName, ImageFileFormat format );
 			static void ToFile( BaseTexture^ texture, String^ fileName, ImageFileFormat format, array<PaletteEntry>^ palette );

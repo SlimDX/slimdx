@@ -315,7 +315,7 @@ namespace SlimDX
 			/// <summary>
 			/// Non exclusive access to the device.
 			/// </summary>
-			NonExclusive = DISCL_NONEXCLUSIVE,
+			Nonexclusive = DISCL_NONEXCLUSIVE,
 
 			/// <summary>
 			/// Foreground operation of the device.

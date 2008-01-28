@@ -36,7 +36,7 @@ namespace SlimDX
 namespace Direct3D9
 {
 	//grab this function from Device.cpp
-	void ConvertPresentParams( PresentParameters^ presentParams, D3DPRESENT_PARAMETERS& d3dpp );
+	void ConvertPresentParams( PresentParameters^ presentParameters, D3DPRESENT_PARAMETERS& d3dpp );
 
 	SwapChain::SwapChain( IDirect3DSwapChain9* swapChain )
 	{
@@ -51,15 +51,15 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
-	SwapChain::SwapChain( Device^ device, PresentParameters^ presentParams )
+	SwapChain::SwapChain( Device^ device, PresentParameters^ presentParameters )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
-		if( presentParams == nullptr )
-			throw gcnew ArgumentNullException( "presentParams" );
+		if( presentParameters == nullptr )
+			throw gcnew ArgumentNullException( "presentParameters" );
 
 		D3DPRESENT_PARAMETERS d3dpp;
-		ConvertPresentParams( presentParams, d3dpp );
+		ConvertPresentParams( presentParameters, d3dpp );
 
 		IDirect3DSwapChain9* swapChain;
 		HRESULT hr = device->InternalPointer->CreateAdditionalSwapChain( &d3dpp, &swapChain );
@@ -81,12 +81,12 @@ namespace Direct3D9
 		return gcnew Surface( surface );
 	}
 
-	void SwapChain::GetFrontBufferData( Surface^ destSurface )
+	void SwapChain::GetFrontBufferData( Surface^ destinationSurface )
 	{
-		if( destSurface == nullptr )
-			throw gcnew ArgumentNullException( "destSurface" );
+		if( destinationSurface == nullptr )
+			throw gcnew ArgumentNullException( "destinationSurface" );
 
-		HRESULT hr = InternalPointer->GetFrontBufferData( destSurface->SurfacePointer );
+		HRESULT hr = InternalPointer->GetFrontBufferData( destinationSurface->SurfacePointer );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
@@ -116,7 +116,7 @@ namespace Direct3D9
 
 		SlimDX::Direct3D9::RasterStatus result;
 		result.InVBlank = status.InVBlank > 0;
-		result.ScanLine = status.ScanLine;
+		result.Scanline = status.ScanLine;
 		return result;
 	}
 

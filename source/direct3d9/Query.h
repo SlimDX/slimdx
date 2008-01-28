@@ -177,7 +177,7 @@ namespace SlimDX
 			int numberVidCreated;
 			int lastPriority;
 			int numberUsed;
-			int numberUsedInVidMem;
+			int numberUsedInVidMemory;
 			int workingSet;
 			int workingSetBytes;
 			int totalManaged;
@@ -202,7 +202,7 @@ namespace SlimDX
 				void set( int value ) { numberEvicted = value; }
 			}
 
-			property int NumberVidCreated
+			property int NumberVideoCreated
 			{
 				int get() { return numberVidCreated; }
 				void set( int value ) { numberVidCreated = value; }
@@ -220,10 +220,10 @@ namespace SlimDX
 				void set( int value ) { numberUsed = value; }
 			}
 
-			property int NumberUsedInVidMem
+			property int NumberUsedInVideoMemory
 			{
-				int get() { return numberUsedInVidMem; }
-				void set( int value ) { numberUsedInVidMem = value; }
+				int get() { return numberUsedInVidMemory; }
+				void set( int value ) { numberUsedInVidMemory = value; }
 			}
 
 			property int WorkingSet

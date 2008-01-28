@@ -50,10 +50,10 @@ namespace SlimDX
 			InvSourceColor = D3DBLEND_INVSRCCOLOR,
 			SourceAlpha = D3DBLEND_SRCALPHA,
 			InvSourceAlpha = D3DBLEND_INVSRCALPHA,
-			DestAlpha = D3DBLEND_DESTALPHA,
-			InvDestAlpha = D3DBLEND_INVDESTALPHA,
-			DestColor = D3DBLEND_DESTCOLOR,
-			InvDestColor = D3DBLEND_INVDESTCOLOR,
+			DestinationAlpha = D3DBLEND_DESTALPHA,
+			InvDestinationAlpha = D3DBLEND_INVDESTALPHA,
+			DestinationColor = D3DBLEND_DESTCOLOR,
+			InvDestinationColor = D3DBLEND_INVDESTCOLOR,
 			SourceAlphaSat = D3DBLEND_SRCALPHASAT,
 			BothSourceAlpha = D3DBLEND_BOTHSRCALPHA,
 			BothInvSourceAlpha = D3DBLEND_BOTHINVSRCALPHA,
@@ -149,7 +149,7 @@ namespace SlimDX
 		public enum class Cull : Int32
 		{
 			Clockwise = D3DCULL_CW,
-			CounterClockwise = D3DCULL_CCW,
+			Counterclockwise = D3DCULL_CCW,
 			None = D3DCULL_NONE
 		};
 		
@@ -201,8 +201,8 @@ namespace SlimDX
 			PartialV = D3DDECLMETHOD_PARTIALV,
 			CrossUV = D3DDECLMETHOD_CROSSUV,
 			UV = D3DDECLMETHOD_UV,
-			LookUp = D3DDECLMETHOD_LOOKUP,
-			LookUpPresampled = D3DDECLMETHOD_LOOKUPPRESAMPLED
+			Lookup = D3DDECLMETHOD_LOOKUP,
+			LookupPresampled = D3DDECLMETHOD_LOOKUPPRESAMPLED
 		};
 
 		public enum class DeclarationType : Byte
@@ -273,7 +273,7 @@ namespace SlimDX
 			Right = DT_RIGHT,
 			VCenter = DT_VCENTER,
 			Bottom = DT_BOTTOM,
-			WordBreak = DT_WORDBREAK,
+			Wordbreak = DT_WORDBREAK,
 			SingleLine = DT_SINGLELINE,
 			ExpandTabs = DT_EXPANDTABS,
 			NoClip = DT_NOCLIP,
@@ -319,8 +319,8 @@ namespace SlimDX
 			Default = DEFAULT_QUALITY,
 			Draft = DRAFT_QUALITY,
 			Proof = PROOF_QUALITY,
-			NonAntiAliased = NONANTIALIASED_QUALITY,
-			AntiAliased = ANTIALIASED_QUALITY,
+			NonAntialiased = NONANTIALIASED_QUALITY,
+			Antialiased = ANTIALIASED_QUALITY,
 			ClearType = CLEARTYPE_QUALITY,
 			ClearTypeNatural = CLEARTYPE_NATURAL_QUALITY,
 		};
@@ -561,7 +561,7 @@ namespace SlimDX
 		{
 			Default = D3DPOOL_DEFAULT,
 			Managed = D3DPOOL_MANAGED,
-			SystemMem = D3DPOOL_SYSTEMMEM,
+			SystemMemory = D3DPOOL_SYSTEMMEM,
 			Scratch = D3DPOOL_SCRATCH,
 		};
 
@@ -657,7 +657,7 @@ namespace SlimDX
 			AlphaTestEnable = D3DRS_ALPHATESTENABLE,
 			LastPixel = D3DRS_LASTPIXEL,
 			SourceBlend = D3DRS_SRCBLEND,
-			DestBlend = D3DRS_DESTBLEND,
+			DestinationBlend = D3DRS_DESTBLEND,
 			CullMode = D3DRS_CULLMODE,
 			ZFunc = D3DRS_ZFUNC,
 			AlphaRef = D3DRS_ALPHAREF,
@@ -751,7 +751,7 @@ namespace SlimDX
 			Wrap15 = D3DRS_WRAP15,
 			SeparateAlphaBlendEnable = D3DRS_SEPARATEALPHABLENDENABLE,
 			SourceBlendAlpha = D3DRS_SRCBLENDALPHA,
-			DestBlendAlpha = D3DRS_DESTBLENDALPHA,
+			DestinationBlendAlpha = D3DRS_DESTBLENDALPHA,
 			BlendOperationAlpha = D3DRS_BLENDOPALPHA,
 		};
 		
@@ -831,15 +831,15 @@ namespace SlimDX
 			/// <summary>Replace the stencil value.</summary>
 			Replace = D3DSTENCILOP_REPLACE,
 			/// <summary>Increment and clamp stencil value.</summary>
-			IncrSat = D3DSTENCILOP_INCRSAT,
+			IncrementSaturate = D3DSTENCILOP_INCRSAT,
 			/// <summary>Decrement and clamp stencil value.</summary>
-			DecrSat = D3DSTENCILOP_DECRSAT,
+			DecrementSaturate = D3DSTENCILOP_DECRSAT,
 			/// <summary>Invert the stencil value.</summary>
 			Invert = D3DSTENCILOP_INVERT,
 			/// <summary>Increment the stencil value.</summary>
-			Incr = D3DSTENCILOP_INCR,
+			Increment = D3DSTENCILOP_INCR,
 			/// <summary>Decrement the stencil value.</summary>
-			Decr = D3DSTENCILOP_DECR
+			Decrement = D3DSTENCILOP_DECR
 		};
 		
 		public enum class SwapEffect : Int32
@@ -921,8 +921,8 @@ namespace SlimDX
 			ModulateInvAlphaAddColor = D3DTOP_MODULATEINVALPHA_ADDCOLOR,
 			ModulateInvColorAddAlpha = D3DTOP_MODULATEINVCOLOR_ADDALPHA,
 
-			BumpEnvMap = D3DTOP_BUMPENVMAP,
-			BumpEnvMapLuminance = D3DTOP_BUMPENVMAPLUMINANCE,
+			BumpEnvironmentMap = D3DTOP_BUMPENVMAP,
+			BumpEnvironmentMapLuminance = D3DTOP_BUMPENVMAPLUMINANCE,
 
 			DotProduct3 = D3DTOP_DOTPRODUCT3,
 
@@ -938,13 +938,13 @@ namespace SlimDX
 			AlphaOperation = D3DTSS_ALPHAOP,
 			AlphaArg1 = D3DTSS_ALPHAARG1,
 			AlphaArg2 = D3DTSS_ALPHAARG2,
-			BumpEnvMat00 = D3DTSS_BUMPENVMAT00,
-			BumpEnvMat01 = D3DTSS_BUMPENVMAT01,
-			BumpEnvMat10 = D3DTSS_BUMPENVMAT10,
-			BumpEnvMat11 = D3DTSS_BUMPENVMAT11,
+			BumpEnvironmentMat00 = D3DTSS_BUMPENVMAT00,
+			BumpEnvironmentMat01 = D3DTSS_BUMPENVMAT01,
+			BumpEnvironmentMat10 = D3DTSS_BUMPENVMAT10,
+			BumpEnvironmentMat11 = D3DTSS_BUMPENVMAT11,
 			TexCoordIndex = D3DTSS_TEXCOORDINDEX,
-			BumpEnvLScale = D3DTSS_BUMPENVLSCALE,
-			BumpEnvLOffset = D3DTSS_BUMPENVLOFFSET,
+			BumpEnvironmentLScale = D3DTSS_BUMPENVLSCALE,
+			BumpEnvironmentLOffset = D3DTSS_BUMPENVLOFFSET,
 			TextureTransformFlags = D3DTSS_TEXTURETRANSFORMFLAGS,
 			ColorArg0 = D3DTSS_COLORARG0,
 			AlphaArg0 = D3DTSS_ALPHAARG0,

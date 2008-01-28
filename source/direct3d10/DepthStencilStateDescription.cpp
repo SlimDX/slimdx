@@ -49,42 +49,42 @@ namespace Direct3D10
 		BackStencilPassOperation = StencilOperation::Keep;
 	}
 	
-	DepthStencilStateDescription::DepthStencilStateDescription( const D3D10_DEPTH_STENCIL_DESC& desc )
+	DepthStencilStateDescription::DepthStencilStateDescription( const D3D10_DEPTH_STENCIL_DESC& description )
 	{
-		DepthEnabled = desc.DepthEnable ? true : false;
-		DepthWriteMask = static_cast<SlimDX::Direct3D10::DepthWriteMask>( desc.DepthWriteMask );
-		DepthComparison = static_cast<Comparison>( desc.DepthFunc );
-		StencilEnabled = desc.StencilEnable ? true : false;
-		StencilReadMask = desc.StencilReadMask;
-		StencilWriteMask = desc.StencilWriteMask;
-		FrontStencilComparison = static_cast<Comparison>( desc.FrontFace.StencilFunc );
-		FrontStencilFailureOperation = static_cast<StencilOperation>( desc.FrontFace.StencilFailOp );
-		FrontStencilDepthFailureOperation = static_cast<StencilOperation>( desc.FrontFace.StencilDepthFailOp );
-		FrontStencilPassOperation = static_cast<StencilOperation>( desc.FrontFace.StencilPassOp );
-		BackStencilComparison = static_cast<Comparison>( desc.BackFace.StencilFunc );
-		BackStencilFailureOperation = static_cast<StencilOperation>( desc.BackFace.StencilFailOp );
-		BackStencilDepthFailureOperation = static_cast<StencilOperation>( desc.BackFace.StencilDepthFailOp );
-		BackStencilPassOperation = static_cast<StencilOperation>( desc.BackFace.StencilPassOp );
+		DepthEnabled = description.DepthEnable ? true : false;
+		DepthWriteMask = static_cast<SlimDX::Direct3D10::DepthWriteMask>( description.DepthWriteMask );
+		DepthComparison = static_cast<Comparison>( description.DepthFunc );
+		StencilEnabled = description.StencilEnable ? true : false;
+		StencilReadMask = description.StencilReadMask;
+		StencilWriteMask = description.StencilWriteMask;
+		FrontStencilComparison = static_cast<Comparison>( description.FrontFace.StencilFunc );
+		FrontStencilFailureOperation = static_cast<StencilOperation>( description.FrontFace.StencilFailOp );
+		FrontStencilDepthFailureOperation = static_cast<StencilOperation>( description.FrontFace.StencilDepthFailOp );
+		FrontStencilPassOperation = static_cast<StencilOperation>( description.FrontFace.StencilPassOp );
+		BackStencilComparison = static_cast<Comparison>( description.BackFace.StencilFunc );
+		BackStencilFailureOperation = static_cast<StencilOperation>( description.BackFace.StencilFailOp );
+		BackStencilDepthFailureOperation = static_cast<StencilOperation>( description.BackFace.StencilDepthFailOp );
+		BackStencilPassOperation = static_cast<StencilOperation>( description.BackFace.StencilPassOp );
 	}
 	
-	void DepthStencilStateDescription::FillNativeObject( D3D10_DEPTH_STENCIL_DESC& desc )
+	void DepthStencilStateDescription::FillNativeObject( D3D10_DEPTH_STENCIL_DESC& description )
 	{
-		ZeroMemory( &desc, sizeof( desc ) );
+		ZeroMemory( &description, sizeof( description ) );
 		
-		desc.DepthEnable = DepthEnabled;
-		desc.DepthWriteMask = static_cast<D3D10_DEPTH_WRITE_MASK>( DepthWriteMask );
-		desc.DepthFunc = static_cast<D3D10_COMPARISON_FUNC>( DepthComparison );
-		desc.StencilEnable = StencilEnabled;
-		desc.StencilReadMask = StencilReadMask;
-		desc.StencilWriteMask = StencilWriteMask;
-		desc.FrontFace.StencilFunc = static_cast<D3D10_COMPARISON_FUNC>( FrontStencilComparison );
-		desc.FrontFace.StencilFailOp = static_cast<D3D10_STENCIL_OP>( FrontStencilFailureOperation );
-		desc.FrontFace.StencilDepthFailOp = static_cast< D3D10_STENCIL_OP>( FrontStencilDepthFailureOperation );
-		desc.FrontFace.StencilPassOp = static_cast<D3D10_STENCIL_OP>( FrontStencilPassOperation );
-		desc.BackFace.StencilFunc = static_cast<D3D10_COMPARISON_FUNC>( BackStencilComparison );
-		desc.BackFace.StencilFailOp = static_cast<D3D10_STENCIL_OP>( BackStencilFailureOperation );
-		desc.BackFace.StencilDepthFailOp = static_cast<D3D10_STENCIL_OP>( BackStencilDepthFailureOperation );
-		desc.BackFace.StencilPassOp = static_cast<D3D10_STENCIL_OP>( BackStencilPassOperation );
+		description.DepthEnable = DepthEnabled;
+		description.DepthWriteMask = static_cast<D3D10_DEPTH_WRITE_MASK>( DepthWriteMask );
+		description.DepthFunc = static_cast<D3D10_COMPARISON_FUNC>( DepthComparison );
+		description.StencilEnable = StencilEnabled;
+		description.StencilReadMask = StencilReadMask;
+		description.StencilWriteMask = StencilWriteMask;
+		description.FrontFace.StencilFunc = static_cast<D3D10_COMPARISON_FUNC>( FrontStencilComparison );
+		description.FrontFace.StencilFailOp = static_cast<D3D10_STENCIL_OP>( FrontStencilFailureOperation );
+		description.FrontFace.StencilDepthFailOp = static_cast< D3D10_STENCIL_OP>( FrontStencilDepthFailureOperation );
+		description.FrontFace.StencilPassOp = static_cast<D3D10_STENCIL_OP>( FrontStencilPassOperation );
+		description.BackFace.StencilFunc = static_cast<D3D10_COMPARISON_FUNC>( BackStencilComparison );
+		description.BackFace.StencilFailOp = static_cast<D3D10_STENCIL_OP>( BackStencilFailureOperation );
+		description.BackFace.StencilDepthFailOp = static_cast<D3D10_STENCIL_OP>( BackStencilDepthFailureOperation );
+		description.BackFace.StencilPassOp = static_cast<D3D10_STENCIL_OP>( BackStencilPassOperation );
 	}
 }
 }

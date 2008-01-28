@@ -68,15 +68,15 @@ namespace Direct3D9
 	
 	void IndexBuffer::InitDescription()
 	{
-	  D3DINDEXBUFFER_DESC desc;
-		HRESULT hr = static_cast<IDirect3DIndexBuffer9*>( InternalPointer )->GetDesc( &desc );
+	  D3DINDEXBUFFER_DESC description;
+		HRESULT hr = static_cast<IDirect3DIndexBuffer9*>( InternalPointer )->GetDesc( &description );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 		
-		m_Format = static_cast<SlimDX::Direct3D9::Format>( desc.Format );
-		m_Type = static_cast<SlimDX::Direct3D9::ResourceType>( desc.Type );
-		m_Usage = static_cast<SlimDX::Direct3D9::Usage>( desc.Usage );
-		m_Pool = static_cast<SlimDX::Direct3D9::Pool>( desc.Pool );
-		m_SizeInBytes = desc.Size;
+		m_Format = static_cast<SlimDX::Direct3D9::Format>( description.Format );
+		m_Type = static_cast<SlimDX::Direct3D9::ResourceType>( description.Type );
+		m_Usage = static_cast<SlimDX::Direct3D9::Usage>( description.Usage );
+		m_Pool = static_cast<SlimDX::Direct3D9::Pool>( description.Pool );
+		m_SizeInBytes = description.Size;
 	}
 	
 	DataStream^ IndexBuffer::Lock( int offset, int size, LockFlags flags )

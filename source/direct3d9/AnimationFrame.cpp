@@ -723,7 +723,7 @@ namespace Direct3D9
 	void Frame::RegisterNamedMatrices( Frame^ root, AnimationController^ controller )
 	{
 		if( root == nullptr || controller == nullptr )
-			throw gcnew NullReferenceException();
+			throw gcnew ArgumentNullException();
 
 		Frame::RegisterAnimations( root, controller->InternalPointer );
 	}

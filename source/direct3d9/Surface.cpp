@@ -338,12 +338,12 @@ namespace Direct3D9
 
 	SurfaceDescription Surface::Description::get()
 	{
-		SurfaceDescription desc;
+		SurfaceDescription description;
 
-		HRESULT hr = SurfacePointer->GetDesc( reinterpret_cast<D3DSURFACE_DESC*>( &desc ) );
+		HRESULT hr = SurfacePointer->GetDesc( reinterpret_cast<D3DSURFACE_DESC*>( &description ) );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
-		return desc;
+		return description;
 	}
 
 	LockedRect Surface::LockRectangle( LockFlags flags )

@@ -37,9 +37,9 @@ namespace SlimDX
 
 		protected:
 			Resource() { }
+			Resource( IntPtr pointer );
 
 		public:
-			Resource( IntPtr pointer );
 			virtual ~Resource() { Destruct(); }
 
 			property int Priority

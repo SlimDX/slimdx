@@ -83,7 +83,7 @@ namespace SlimDX
 	String^ Float16::ToString()
 	{
 		Float16 temp = Float16( m_Value );
-		return ( static_cast<float>( temp ) ).ToString();
+		return ( static_cast<float>( temp ) ).ToString( CultureInfo::CurrentCulture );
 	}
 
 	int Float16::GetHashCode()

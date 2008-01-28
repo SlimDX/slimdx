@@ -46,11 +46,11 @@ namespace Direct3D10
 	{
 		Construct(view);
 
-		D3D10_SHADER_RESOURCE_VIEW_DESC desc;
-		view->GetDesc( &desc );
+		D3D10_SHADER_RESOURCE_VIEW_DESC description;
+		view->GetDesc( &description );
 		
-		Format = static_cast<DXGI::Format>( desc.Format );
-		Dimension = static_cast<ResourceViewDimension>( desc.ViewDimension );
+		Format = static_cast<DXGI::Format>( description.Format );
+		Dimension = static_cast<ResourceViewDimension>( description.ViewDimension );
 		
 		//@TODO D3D10: Figure out the proper way to set these.
 		ElementOffset = 0;

@@ -39,18 +39,18 @@ namespace Direct3D10
 
 		Construct(state);
 		
-		D3D10_RASTERIZER_DESC desc;
-		state->GetDesc( &desc );
-		m_Description = gcnew RasterizerStateDescription( desc );
+		D3D10_RASTERIZER_DESC description;
+		state->GetDesc( &description );
+		m_Description = gcnew RasterizerStateDescription( description );
 	}
 	
 	RasterizerState::RasterizerState( IntPtr state )
 	{
 		Construct( state, NativeInterface );
 
-		D3D10_RASTERIZER_DESC desc;
-		InternalPointer->GetDesc( &desc );
-		m_Description = gcnew RasterizerStateDescription( desc );
+		D3D10_RASTERIZER_DESC description;
+		InternalPointer->GetDesc( &description );
+		m_Description = gcnew RasterizerStateDescription( description );
 	}
 
 	RasterizerState::RasterizerState( Device^ device, RasterizerStateDescription^ description )
@@ -73,9 +73,9 @@ namespace Direct3D10
 	
 	RasterizerStateDescription^ RasterizerState::CloneDescription()
 	{
-		D3D10_RASTERIZER_DESC desc;
-		InternalPointer->GetDesc( &desc );
-		return gcnew RasterizerStateDescription( desc );
+		D3D10_RASTERIZER_DESC description;
+		InternalPointer->GetDesc( &description );
+		return gcnew RasterizerStateDescription( description );
 	}
 }
 }

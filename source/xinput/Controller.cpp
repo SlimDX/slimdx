@@ -61,7 +61,7 @@ namespace SlimDX
 			XInputErrorHandler::TestForFailure(XInputGetCapabilities(userIndex, static_cast<DWORD>(flags), &caps));
 
 			capabilities.Type = static_cast<DeviceType>(caps.Type);
-			capabilities.SubType = static_cast<DeviceSubType>(caps.SubType);
+			capabilities.Subtype = static_cast<DeviceSubtype>(caps.SubType);
 			capabilities.Gamepad = Gamepad( caps.Gamepad );
 			capabilities.Flags = static_cast<CapabilitiesFlags>(caps.Flags);
 			capabilities.Vibration.LeftMotorSpeed = caps.Vibration.wLeftMotorSpeed;
@@ -76,14 +76,14 @@ namespace SlimDX
 				reinterpret_cast<GUID*>(renderGuid), reinterpret_cast<GUID*>(captureGuid)));
 		}
 		
-		bool Controller::GetKeystroke(DeviceQueryType flags, KeyStroke% keystroke)
+		bool Controller::GetKeystroke(DeviceQueryType flags, Keystroke% keystroke)
 		{
 			XINPUT_KEYSTROKE keys;
 			UInt32 result = XInputGetKeystroke(userIndex, static_cast<DWORD>(flags), &keys);
 			XInputErrorHandler::TestForFailure(result);
 
 			keystroke.VirtualKey = static_cast<GamepadKeyCode>(keys.VirtualKey);
-			keystroke.Flags = static_cast<KeyStrokeFlags>(keys.Flags);
+			keystroke.Flags = static_cast<KeystrokeFlags>(keys.Flags);
 			keystroke.UserIndex = static_cast<UserIndex>(keys.UserIndex);
 			keystroke.HidCode = keys.HidCode;
 
@@ -140,7 +140,7 @@ namespace SlimDX
 			XInputErrorHandler::TestForFailure(XInputGetCapabilities(userIndex, XINPUT_FLAG_GAMEPAD, &caps));
 
 			capabilities.Type = static_cast<DeviceType>(caps.Type);
-			capabilities.SubType = static_cast<DeviceSubType>(caps.SubType);
+			capabilities.Subtype = static_cast<DeviceSubtype>(caps.SubType);
 			capabilities.Gamepad = Gamepad( caps.Gamepad );
 			capabilities.Flags = static_cast<CapabilitiesFlags>(caps.Flags);
 			capabilities.Vibration.LeftMotorSpeed = caps.Vibration.wLeftMotorSpeed;

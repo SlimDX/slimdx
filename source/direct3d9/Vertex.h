@@ -83,10 +83,10 @@ namespace SlimDX
 
 			static initonly VertexElement VertexDeclarationEnd;
 
-			VertexElement( short stream, short offset, DeclarationType declType, 
-				DeclarationMethod declMethod, DeclarationUsage declUsage, Byte usageIndex )
-				: stream( stream ), offset( offset ), type( declType ),
-				method( declMethod ), usage( declUsage ), usageIndex( usageIndex )
+			VertexElement( short stream, short offset, DeclarationType declarationType, 
+				DeclarationMethod declarationMethod, DeclarationUsage declarationUsage, Byte usageIndex )
+				: stream( stream ), offset( offset ), type( declarationType ),
+				method( declarationMethod ), usage( declarationUsage ), usageIndex( usageIndex )
 			{
 			}
 		};
@@ -98,10 +98,10 @@ namespace SlimDX
 			COMOBJECT(IDirect3DVertexDeclaration9);
 
 		internal:
-			VertexDeclaration( IDirect3DVertexDeclaration9* decl );
+			VertexDeclaration( IDirect3DVertexDeclaration9* declaration );
 
 		public:
-			VertexDeclaration( IntPtr decl );
+			VertexDeclaration( IntPtr declaration );
 			VertexDeclaration( Device^ device, array<VertexElement>^ elements );
 			~VertexDeclaration() { Destruct(); }
 

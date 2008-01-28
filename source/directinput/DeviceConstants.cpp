@@ -227,11 +227,11 @@ namespace DirectInput
 			return DIK_AX;
 			break;
 
-		case Key::BackSpace:
+		case Key::Backspace:
 			return DIK_BACKSPACE;
 			break;
 
-		case Key::BackSlash:
+		case Key::Backslash:
 			return DIK_BACKSLASH;
 			break;
 
@@ -489,7 +489,7 @@ namespace DirectInput
 			return DIK_NUMPADSTAR;
 			break;
 
-		case Key::OEM102:
+		case Key::Oem102:
 			return DIK_OEM_102;
 			break;
 
@@ -810,11 +810,11 @@ namespace DirectInput
 			return DIKEYBOARD_AX;
 			break;
 
-		case Key::BackSpace:
+		case Key::Backspace:
 			return DIKEYBOARD_BACK;
 			break;
 
-		case Key::BackSlash:
+		case Key::Backslash:
 			return DIKEYBOARD_BACKSLASH;
 			break;
 
@@ -1072,7 +1072,7 @@ namespace DirectInput
 			return DIKEYBOARD_MULTIPLY;
 			break;
 
-		case Key::OEM102:
+		case Key::Oem102:
 			return DIKEYBOARD_OEM_102;
 			break;
 

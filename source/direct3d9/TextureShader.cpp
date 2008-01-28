@@ -99,7 +99,7 @@ namespace Direct3D9
 	ConstantDescription TextureShader::GetConstantDescription( EffectHandle^ handle )
 	{
 		D3DXCONSTANT_DESC nativeDesc;
-		ConstantDescription desc;
+		ConstantDescription description;
 
 		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		unsigned int count = 1;
@@ -107,10 +107,10 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetConstantDesc( nativeHandle, &nativeDesc, &count );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
-			return desc;
+			return description;
 
-		desc.Initialize( nativeDesc );
-		return desc;
+		description.Initialize( nativeDesc );
+		return description;
 	}
 
 	array<ConstantDescription>^ TextureShader::GetConstantDescriptionArray( EffectHandle^ handle )
@@ -190,14 +190,14 @@ namespace Direct3D9
 		Direct3D9ErrorHandler::TestForFailure( hr );
 	}
 
-	void TextureShader::SetValue( EffectHandle^ param, array<bool>^ values )
+	void TextureShader::SetValue( EffectHandle^ parameter, array<bool>^ values )
 	{
 		//implementing set for bool array is REALLY ANNOYING.
 		//Win32 uses BOOL, which is an int
 		array<BOOL>^ expandedArray = gcnew array<BOOL>( values->Length );
 		Array::Copy( values, expandedArray, values->Length );
 
-		D3DXHANDLE handle = param != nullptr ? param->InternalHandle : NULL;
+		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		pin_ptr<BOOL> pinnedValue = &expandedArray[0];
 		HRESULT hr = InternalPointer->SetBoolArray( handle, pinnedValue, values->Length );
 		Direct3D9ErrorHandler::TestForFailure( hr );
@@ -296,17 +296,17 @@ namespace Direct3D9
 	ConstantTableDescription TextureShader::Description::get()
 	{
 		D3DXCONSTANTTABLE_DESC nativeDesc;
-		ConstantTableDescription desc;
+		ConstantTableDescription description;
 
 		HRESULT hr = InternalPointer->GetDesc( &nativeDesc );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 		if( FAILED( hr ) )
-			return desc;
+			return description;
 
-		desc.Creator = gcnew String( nativeDesc.Creator );
-		desc.Version = gcnew Version( D3DSHADER_VERSION_MAJOR( nativeDesc.Version ), D3DSHADER_VERSION_MINOR( nativeDesc.Version ) );
-		desc.Constants = nativeDesc.Constants;
-		return desc;
+		description.Creator = gcnew String( nativeDesc.Creator );
+		description.Version = gcnew Version( D3DSHADER_VERSION_MAJOR( nativeDesc.Version ), D3DSHADER_VERSION_MINOR( nativeDesc.Version ) );
+		description.Constants = nativeDesc.Constants;
+		return description;
 	}
 }
 }

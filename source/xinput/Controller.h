@@ -75,9 +75,9 @@ namespace SlimDX
 			/// Retrieves a gamepad input event.
 			/// </summary>
 			/// <param name="flag">Input flags that identify the device type.</param>
-			/// <param name="keystroke">Out reference to KeyStroke structure that receives an input event.</param>
+			/// <param name="keystroke">Out reference to Keystroke structure that receives an input event.</param>
 			/// <returns>False if no new keys have been pressed.</returns>
-			bool GetKeystroke(DeviceQueryType flag, [Out] KeyStroke% keystroke);
+			bool GetKeystroke(DeviceQueryType flag, [Out] Keystroke% keystroke);
 
 			/// <summary>
 			/// Gets information on the controllers battery.

@@ -29,6 +29,9 @@ namespace SlimDX
 	{
 		ref class XInputErrorHandler sealed
 		{	
+		private:
+			XInputErrorHandler() { }
+
 		internal:
 			static bool TestForFailure( int hr );
 		};

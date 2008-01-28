@@ -143,22 +143,22 @@ namespace Direct3D9
 
 	FontDescription Font::Description::get()
 	{
-		D3DXFONT_DESC desc;
+		D3DXFONT_DESC description;
 		
-		HRESULT hr = InternalPointer->GetDesc( &desc );
+		HRESULT hr = InternalPointer->GetDesc( &description );
 		Direct3D9ErrorHandler::TestForFailure( hr );
 
 		FontDescription outDesc;
-		outDesc.Height = desc.Height;
-		outDesc.Width = desc.Width;
-		outDesc.Weight = static_cast<FontWeight>( desc.Weight );
-		outDesc.MipLevels = desc.MipLevels;
-		outDesc.Italic = desc.Italic > 0;
-		outDesc.CharSet = static_cast<CharacterSet>( desc.CharSet );
-		outDesc.OutputPrecision = static_cast<Precision>( desc.OutputPrecision );
-		outDesc.Quality = static_cast<FontQuality>( desc.Quality );
-		outDesc.PitchAndFamily = static_cast<PitchAndFamily>( desc.PitchAndFamily );
-		outDesc.FaceName = gcnew String( desc.FaceName );
+		outDesc.Height = description.Height;
+		outDesc.Width = description.Width;
+		outDesc.Weight = static_cast<FontWeight>( description.Weight );
+		outDesc.MipLevels = description.MipLevels;
+		outDesc.Italic = description.Italic > 0;
+		outDesc.CharSet = static_cast<CharacterSet>( description.CharSet );
+		outDesc.OutputPrecision = static_cast<Precision>( description.OutputPrecision );
+		outDesc.Quality = static_cast<FontQuality>( description.Quality );
+		outDesc.PitchAndFamily = static_cast<PitchAndFamily>( description.PitchAndFamily );
+		outDesc.FaceName = gcnew String( description.FaceName );
 
 		return outDesc;
 	}

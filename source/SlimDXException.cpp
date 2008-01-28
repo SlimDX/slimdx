@@ -52,7 +52,7 @@ namespace SlimDX
 	}
 	
 	SlimDXException::SlimDXException( int errorCode )
-	: Exception( String::Format( "{0}: {1}", gcnew String( DXGetErrorString( errorCode ) ), gcnew String( DXGetErrorDescription( errorCode ) ) ) )
+		: Exception( String::Format( CultureInfo::CurrentCulture, "{0}: {1}", gcnew String( DXGetErrorString( errorCode ) ), gcnew String( DXGetErrorDescription( errorCode ) ) ) )
 	{
 		ErrorCode = errorCode;
 	}

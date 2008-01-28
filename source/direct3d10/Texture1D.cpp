@@ -37,52 +37,52 @@ namespace Direct3D10
 { 
 	Texture1D::Texture1D( ID3D10Texture1D* texture ) : Texture( texture )
 	{
-		D3D10_TEXTURE1D_DESC desc;
-		static_cast<ID3D10Texture1D*>( InternalPointer )->GetDesc( &desc );
+		D3D10_TEXTURE1D_DESC description;
+		static_cast<ID3D10Texture1D*>( InternalPointer )->GetDesc( &description );
 		
-		m_Width = desc.Width;
-		m_MipLevels = desc.MipLevels;
-		m_ArraySize = desc.ArraySize;
-		m_Format = static_cast<DXGI::Format>( desc.Format );
-		m_Usage = static_cast<ResourceUsage>( desc.Usage );
-		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( desc.BindFlags );
-		m_AccessFlags = static_cast<CpuAccessFlags>( desc.CPUAccessFlags );
-		m_OptionFlags = static_cast<ResourceOptionFlags>( desc.MiscFlags );
+		m_Width = description.Width;
+		m_MipLevels = description.MipLevels;
+		m_ArraySize = description.ArraySize;
+		m_Format = static_cast<DXGI::Format>( description.Format );
+		m_Usage = static_cast<ResourceUsage>( description.Usage );
+		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( description.BindFlags );
+		m_AccessFlags = static_cast<CpuAccessFlags>( description.CPUAccessFlags );
+		m_OptionFlags = static_cast<ResourceOptionFlags>( description.MiscFlags );
 	}
 	
 	Texture1D::Texture1D( IntPtr nativeObject )
 	{
 		Construct( nativeObject, NativeInterface );
 		
-		D3D10_TEXTURE1D_DESC desc;
-		static_cast<ID3D10Texture1D*>( InternalPointer )->GetDesc( &desc );
+		D3D10_TEXTURE1D_DESC description;
+		static_cast<ID3D10Texture1D*>( InternalPointer )->GetDesc( &description );
 		
-		m_Width = desc.Width;
-		m_MipLevels = desc.MipLevels;
-		m_ArraySize = desc.ArraySize;
-		m_Format = static_cast<DXGI::Format>( desc.Format );
-		m_Usage = static_cast<ResourceUsage>( desc.Usage );
-		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( desc.BindFlags );
-		m_AccessFlags = static_cast<CpuAccessFlags>( desc.CPUAccessFlags );
-		m_OptionFlags = static_cast<ResourceOptionFlags>( desc.MiscFlags );
+		m_Width = description.Width;
+		m_MipLevels = description.MipLevels;
+		m_ArraySize = description.ArraySize;
+		m_Format = static_cast<DXGI::Format>( description.Format );
+		m_Usage = static_cast<ResourceUsage>( description.Usage );
+		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( description.BindFlags );
+		m_AccessFlags = static_cast<CpuAccessFlags>( description.CPUAccessFlags );
+		m_OptionFlags = static_cast<ResourceOptionFlags>( description.MiscFlags );
 	}
 	
 	Texture1D::Texture1D( Device^ device, int width, int mipLevels, int arraySize, DXGI::Format format,
 		ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
 	{
-		D3D10_TEXTURE1D_DESC desc;
-		ZeroMemory( &desc, sizeof( desc ) );
-		desc.Width = width;
-		desc.MipLevels = mipLevels;
-		desc.ArraySize = arraySize;
-		desc.Format = static_cast<DXGI_FORMAT>( format );
-		desc.Usage = static_cast<D3D10_USAGE>( usage );
-		desc.BindFlags = static_cast<UINT>( bindFlags );
-		desc.CPUAccessFlags = static_cast<UINT>( accessFlags );
-		desc.MiscFlags = static_cast<UINT>( optionFlags );
+		D3D10_TEXTURE1D_DESC description;
+		ZeroMemory( &description, sizeof( description ) );
+		description.Width = width;
+		description.MipLevels = mipLevels;
+		description.ArraySize = arraySize;
+		description.Format = static_cast<DXGI_FORMAT>( format );
+		description.Usage = static_cast<D3D10_USAGE>( usage );
+		description.BindFlags = static_cast<UINT>( bindFlags );
+		description.CPUAccessFlags = static_cast<UINT>( accessFlags );
+		description.MiscFlags = static_cast<UINT>( optionFlags );
 	
 		ID3D10Texture1D* texture;
-		HRESULT hr = device->InternalPointer->CreateTexture1D( &desc, NULL, &texture );
+		HRESULT hr = device->InternalPointer->CreateTexture1D( &description, NULL, &texture );
 		Direct3D10ErrorHandler::TestForFailure( hr );
 		
 		Construct( texture );	

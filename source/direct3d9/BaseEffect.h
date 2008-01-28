@@ -90,10 +90,10 @@ namespace SlimDX
 
 		protected:
 			BaseEffect() { }
+			BaseEffect( IntPtr pointer );
 			BaseEffect( ID3DXBaseEffect* pointer ) { Construct(pointer); }
 
 		public:
-			BaseEffect( IntPtr pointer );
 			virtual ~BaseEffect() { Destruct(); }
 
 			EffectHandle^ GetAnnotation( EffectHandle^ handle, int index );
@@ -122,41 +122,41 @@ namespace SlimDX
 				EffectDescription get();
 			}
 
-			void SetValue( EffectHandle^ param, bool value );
-			void SetValue( EffectHandle^ param, array<bool>^ values );
-			void SetValue( EffectHandle^ param, int value );
-			void SetValue( EffectHandle^ param, array<int>^ values );
-			void SetValue( EffectHandle^ param, float value );
-			void SetValue( EffectHandle^ param, array<float>^ values );
-			void SetValue( EffectHandle^ param, Vector4 value );
-			void SetValue( EffectHandle^ param, array<Vector4>^ values );
-			void SetValue( EffectHandle^ param, ColorValue value );
-			void SetValue( EffectHandle^ param, array<ColorValue>^ values );
-			void SetValue( EffectHandle^ param, Matrix value );
-			void SetValue( EffectHandle^ param, array<Matrix>^ values );
-			void SetValue( EffectHandle^ param, BaseTexture^ value );
-			void SetValue( EffectHandle^ param, String^ value );
-			void SetValueTranspose( EffectHandle^ param, Matrix value );
-			void SetValueTranspose( EffectHandle^ param, array<Matrix>^ values );
+			void SetValue( EffectHandle^ parameter, bool value );
+			void SetValue( EffectHandle^ parameter, array<bool>^ values );
+			void SetValue( EffectHandle^ parameter, int value );
+			void SetValue( EffectHandle^ parameter, array<int>^ values );
+			void SetValue( EffectHandle^ parameter, float value );
+			void SetValue( EffectHandle^ parameter, array<float>^ values );
+			void SetValue( EffectHandle^ parameter, Vector4 value );
+			void SetValue( EffectHandle^ parameter, array<Vector4>^ values );
+			void SetValue( EffectHandle^ parameter, ColorValue value );
+			void SetValue( EffectHandle^ parameter, array<ColorValue>^ values );
+			void SetValue( EffectHandle^ parameter, Matrix value );
+			void SetValue( EffectHandle^ parameter, array<Matrix>^ values );
+			void SetValue( EffectHandle^ parameter, BaseTexture^ value );
+			void SetValue( EffectHandle^ parameter, String^ value );
+			void SetValueTranspose( EffectHandle^ parameter, Matrix value );
+			void SetValueTranspose( EffectHandle^ parameter, array<Matrix>^ values );
 
-			bool GetBool( EffectHandle^ param );
-			array<bool>^ GetBoolArray( EffectHandle^ param, int count );
-			int GetInt( EffectHandle^ param );
-			array<int>^ GetIntArray( EffectHandle^ param, int count );
-			float GetFloat( EffectHandle^ param );
-			array<float>^ GetFloatArray( EffectHandle^ param, int count );
-			Vector4 GetVector( EffectHandle^ param );
-			array<Vector4>^ GetVectorArray( EffectHandle^ param, int count );
-			ColorValue GetColor( EffectHandle^ param );
-			array<ColorValue>^ GetColorArray( EffectHandle^ param, int count );
-			Matrix GetMatrix( EffectHandle^ param );
-			array<Matrix>^ GetMatrixArray( EffectHandle^ param, int count );
-			Matrix GetMatrixTranspose( EffectHandle^ param );
-			array<Matrix>^ GetMatrixTransposeArray( EffectHandle^ param, int count );
-			BaseTexture^ GetTexture( EffectHandle^ param );
+			bool GetBool( EffectHandle^ parameter );
+			array<bool>^ GetBoolArray( EffectHandle^ parameter, int count );
+			int GetInt( EffectHandle^ parameter );
+			array<int>^ GetIntArray( EffectHandle^ parameter, int count );
+			float GetFloat( EffectHandle^ parameter );
+			array<float>^ GetFloatArray( EffectHandle^ parameter, int count );
+			Vector4 GetVector( EffectHandle^ parameter );
+			array<Vector4>^ GetVectorArray( EffectHandle^ parameter, int count );
+			ColorValue GetColor( EffectHandle^ parameter );
+			array<ColorValue>^ GetColorArray( EffectHandle^ parameter, int count );
+			Matrix GetMatrix( EffectHandle^ parameter );
+			array<Matrix>^ GetMatrixArray( EffectHandle^ parameter, int count );
+			Matrix GetMatrixTranspose( EffectHandle^ parameter );
+			array<Matrix>^ GetMatrixTransposeArray( EffectHandle^ parameter, int count );
+			BaseTexture^ GetTexture( EffectHandle^ parameter );
 
-			String^ GetString( EffectHandle^ param );
-			DataStream^ GetValue( EffectHandle^ param, int bytes );
+			String^ GetString( EffectHandle^ parameter );
+			DataStream^ GetValue( EffectHandle^ parameter, int bytes );
 		};
    }
 }

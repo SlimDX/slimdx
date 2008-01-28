@@ -29,6 +29,9 @@ namespace SlimDX
 	{
 		ref class DXGIErrorHandler sealed
 		{
+		private:
+			DXGIErrorHandler() { }
+
 		internal:
 			static bool TestForFailure( int hr );
 		};
