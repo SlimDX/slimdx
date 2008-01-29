@@ -381,6 +381,10 @@ namespace SlimDX
 			{
 				return buttons;
 			}
+
+			bool IsPressed(int button) { return GetButtons()[button]; }
+
+			bool IsReleased(int button) { return !GetButtons()[button]; }
 		};
 	}
 }
