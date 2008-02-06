@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "Direct3D10ErrorHandler.h"
+//#include "Direct3D10ErrorHandler.h"
 
 #include "ShaderResourceView.h"
 #include "Device.h"
@@ -62,7 +62,7 @@ namespace Direct3D10
 		
 		ID3D10ShaderResourceView *view;
 		HRESULT hr = device->InternalPointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		Construct(view);
 	}
@@ -84,7 +84,7 @@ namespace Direct3D10
 		
 		ID3D10ShaderResourceView *view;
 		HRESULT hr = device->InternalPointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		Construct(view);
 	}
@@ -106,7 +106,7 @@ namespace Direct3D10
 		
 		ID3D10ShaderResourceView *view;
 		HRESULT hr = device->InternalPointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		Construct(view);
 	}

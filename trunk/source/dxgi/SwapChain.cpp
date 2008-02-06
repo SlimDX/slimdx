@@ -23,7 +23,6 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "DXGIErrorHandler.h"
 #include "DXGIException.h"
 
 #include "Factory.h"
@@ -55,9 +54,9 @@ namespace DXGI
 		
 		IDXGISwapChain* swapChain = 0;
 		DXGI_SWAP_CHAIN_DESC nativeDescription = description.CreateNativeVersion();
-		HRESULT hr = factory->InternalPointer->CreateSwapChain( device->UnknownPointer, &nativeDescription, &swapChain );
-		if( DXGIErrorHandler::TestForFailure( hr ) )
-			throw gcnew DXGIException( hr );
+		Result::Record( factory->InternalPointer->CreateSwapChain( device->UnknownPointer, &nativeDescription, &swapChain ) );
+		if( Result::Last.IsFailure )
+			throw gcnew DXGIException( Result::Last.Code );
 		
 		Construct( swapChain );
 	}
@@ -67,8 +66,8 @@ namespace DXGI
 	{
 		IUnknown* unknown = 0;
 		GUID guid = Utilities::GetNativeGuidForType( T::typeid );
-		HRESULT hr = InternalPointer->GetBuffer( index, guid, reinterpret_cast<void**>( &unknown ) );
-		if( DXGIErrorHandler::TestForFailure( hr ) )
+		Result::Record( InternalPointer->GetBuffer( index, guid, reinterpret_cast<void**>( &unknown ) ) );
+		if( Result::Last.IsFailure )
 			return T();
 		return safe_cast<T>( Activator::CreateInstance( T::typeid, IntPtr( unknown ) ) );
 	}
@@ -76,8 +75,8 @@ namespace DXGI
 	FrameStatistics SwapChain::GetFrameStatistics()
 	{
 		DXGI_FRAME_STATISTICS stats;
-		HRESULT hr = InternalPointer->GetFrameStatistics( &stats );
-		if( DXGIErrorHandler::TestForFailure( hr ) )
+		Result::Record( InternalPointer->GetFrameStatistics( &stats ) );
+		if( Result::Last.IsFailure )
 			return FrameStatistics();
 		return FrameStatistics( stats );
 	}
@@ -85,13 +84,13 @@ namespace DXGI
 	void SwapChain::ResizeBuffers( int count, int width, int height, SlimDX::DXGI::Format format, SwapChainFlags flags )
 	{
 		HRESULT hr = InternalPointer->ResizeBuffers( count, width, height, static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ) );
-		DXGIErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 	
 	void SwapChain::ResizeTarget( ModeDescription description )
 	{
 		HRESULT hr = InternalPointer->ResizeTarget( reinterpret_cast<DXGI_MODE_DESC*>( &description ) );
-		DXGIErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	PresentResult SwapChain::Present( int syncInterval, PresentFlags flags )
@@ -102,7 +101,7 @@ namespace DXGI
 		else if( hr == DXGI_STATUS_OCCLUDED )
 			return PresentResult::Occluded;
 		
-		DXGIErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		return PresentResult::Failed;
 	}
 }

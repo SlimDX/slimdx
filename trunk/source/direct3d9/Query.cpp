@@ -24,7 +24,7 @@
 
 #include "../ComObject.h"
 
-#include "Direct3D9ErrorHandler.h"
+//#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
 
 #include "Device.h"
@@ -53,7 +53,7 @@ namespace Direct3D9
 	{
 		IDirect3DQuery9* query;
 		HRESULT hr = device->InternalPointer->CreateQuery( static_cast<D3DQUERYTYPE>( type ), &query );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			throw gcnew Direct3D9Exception( "Failed to create Query." );
 
@@ -74,7 +74,7 @@ namespace Direct3D9
 	{
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			return nullptr;
 
@@ -84,7 +84,7 @@ namespace Direct3D9
 	void Query::Issue( SlimDX::Direct3D9::Issue flags )
 	{
 		HRESULT hr = InternalPointer->Issue( static_cast<DWORD>( flags ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	bool Query::CheckStatus( bool flush )
@@ -99,7 +99,7 @@ namespace Direct3D9
 			return false;
 			
 		default:
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			return false;
 		}
 	}
@@ -179,7 +179,7 @@ namespace Direct3D9
 
 		}
 
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		DWORD flags = flush ? D3DGETDATA_FLUSH : 0;
 
@@ -189,7 +189,7 @@ namespace Direct3D9
 			//need to marshal BOOL (int) to bool
 			BOOL value = FALSE;
 			hr = InternalPointer->GetData( &value, sizeof(BOOL), flags );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			//we know that T is a bool, but the runtime does not
 			return (T) (value > 0);
 		}
@@ -197,7 +197,7 @@ namespace Direct3D9
 		{
 			T data;
 			hr = InternalPointer->GetData( &data, Marshal::SizeOf( T::typeid ), flags );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			return data;
 		}
 	}

@@ -32,15 +32,11 @@ namespace SlimDX
 	{
 		[Serializable]
 		public ref class DXGIException : public SlimDXException
-		{	
+		{
 		protected:
 			DXGIException( SerializationInfo^ info, StreamingContext context );
 			
 		public:
-			static property bool Enabled;
-			
-			property int ErrorCode;
-
 			DXGIException();
 			DXGIException( String^ message );
 			DXGIException( String^ message, Exception^ innerException );

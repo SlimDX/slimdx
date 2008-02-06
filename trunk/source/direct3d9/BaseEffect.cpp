@@ -112,7 +112,7 @@ namespace SlimDX
 			D3DXPARAMETER_DESC description;
 
 			HRESULT hr = InternalPointer->GetParameterDesc( parameter->InternalHandle, &description );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			ParameterDescription outDesc;
 			outDesc.Name = gcnew String( description.Name );
@@ -156,7 +156,7 @@ namespace SlimDX
 			D3DXFUNCTION_DESC description;
 
 			HRESULT hr = InternalPointer->GetFunctionDesc( handle->InternalHandle, &description );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			FunctionDescription outDesc;
 			outDesc.Name = gcnew String( description.Name );
@@ -191,7 +191,7 @@ namespace SlimDX
 			D3DXTECHNIQUE_DESC description;
 
 			HRESULT hr = InternalPointer->GetTechniqueDesc( handle->InternalHandle, &description );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			TechniqueDescription outDesc;
 			outDesc.Name = gcnew String( description.Name );
@@ -230,7 +230,7 @@ namespace SlimDX
 			D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
 
 			HRESULT hr = InternalPointer->GetPassDesc( nativeHandle, &description );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return PassDescription();
 
@@ -248,7 +248,7 @@ namespace SlimDX
 			D3DXEFFECT_DESC description;
 
 			HRESULT hr = InternalPointer->GetDesc( &description );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			EffectDescription outDesc;
 			outDesc.Creator = gcnew String( description.Creator );
@@ -263,7 +263,7 @@ namespace SlimDX
 		{
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->SetBool( handle, value );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ parameter, array<bool>^ values )
@@ -276,14 +276,14 @@ namespace SlimDX
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			pin_ptr<BOOL> pinnedValue = &expandedArray[0];
 			HRESULT hr = InternalPointer->SetBoolArray( handle, pinnedValue, values->Length );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ parameter, int value )
 		{
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->SetInt( handle, value );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ parameter, array<int>^ values )
@@ -291,14 +291,14 @@ namespace SlimDX
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			pin_ptr<int> pinnedValue = &values[0];
 			HRESULT hr = InternalPointer->SetIntArray( handle, pinnedValue, values->Length );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ parameter, float value )
 		{
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->SetFloat( handle, value );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ parameter, array<float>^ values )
@@ -306,14 +306,14 @@ namespace SlimDX
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			pin_ptr<float> pinnedValues = &values[0];
 			HRESULT hr = InternalPointer->SetFloatArray( handle, pinnedValues, values->Length );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ parameter, Vector4 value )
 		{
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->SetVector( handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ parameter, array<Vector4>^ values )
@@ -321,14 +321,14 @@ namespace SlimDX
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			pin_ptr<Vector4> pinnedValue = &values[0];
 			HRESULT hr = InternalPointer->SetVectorArray( handle, reinterpret_cast<const D3DXVECTOR4*>( pinnedValue ), values->Length );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ parameter, ColorValue value )
 		{
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->SetVector( handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ parameter, array<ColorValue>^ values )
@@ -336,14 +336,14 @@ namespace SlimDX
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			pin_ptr<ColorValue> pinnedValue = &values[0];
 			HRESULT hr = InternalPointer->SetVectorArray( handle, reinterpret_cast<const D3DXVECTOR4*>( pinnedValue ), values->Length );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ parameter, Matrix value )
 		{
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->SetMatrix( handle, reinterpret_cast<const D3DXMATRIX*>( &value ) );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ parameter, array<Matrix>^ values )
@@ -351,7 +351,7 @@ namespace SlimDX
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			pin_ptr<Matrix> pinnedValue = &values[0];
 			HRESULT hr = InternalPointer->SetMatrixArray( handle, reinterpret_cast<const D3DXMATRIX*>( pinnedValue ), values->Length );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ parameter, BaseTexture^ value )
@@ -362,7 +362,7 @@ namespace SlimDX
 
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->SetTexture( handle, texture );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void BaseEffect::SetValue( EffectHandle^ parameter, String^ value )
@@ -372,14 +372,14 @@ namespace SlimDX
 
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->SetString( handle, reinterpret_cast<LPCSTR>( pinnedValue ) );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void BaseEffect::SetValueTranspose( EffectHandle^ parameter, Matrix value )
 		{
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->SetMatrixTranspose( handle, reinterpret_cast<const D3DXMATRIX*>( &value ) );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void BaseEffect::SetValueTranspose( EffectHandle^ parameter, array<Matrix>^ values )
@@ -387,7 +387,7 @@ namespace SlimDX
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			pin_ptr<Matrix> pinnedValue = &values[0];
 			HRESULT hr = InternalPointer->SetMatrixTransposeArray( handle, reinterpret_cast<const D3DXMATRIX*>( pinnedValue ), values->Length );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		bool BaseEffect::GetBool( EffectHandle^ parameter )
@@ -395,7 +395,7 @@ namespace SlimDX
 			BOOL value = FALSE;
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->GetBool( handle, &value );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			return value < 0;
 		}
@@ -407,7 +407,7 @@ namespace SlimDX
 			pin_ptr<BOOL> pinnedData = &data[0];
 
 			HRESULT hr = InternalPointer->GetBoolArray( handle, pinnedData, count );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 
@@ -422,7 +422,7 @@ namespace SlimDX
 			int value = 0;
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->GetInt( handle, &value );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			return value;
 		}
@@ -434,7 +434,7 @@ namespace SlimDX
 			pin_ptr<int> pinnedData = &data[0];
 
 			HRESULT hr = InternalPointer->GetIntArray( handle, pinnedData, count );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 
@@ -446,7 +446,7 @@ namespace SlimDX
 			float value = 0.0f;
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->GetFloat( handle, &value );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			return value;
 		}
@@ -458,7 +458,7 @@ namespace SlimDX
 			pin_ptr<float> pinnedData = &data[0];
 
 			HRESULT hr = InternalPointer->GetFloatArray( handle, pinnedData, count );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 
@@ -470,7 +470,7 @@ namespace SlimDX
 			Vector4 value = Vector4();
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->GetVector( handle, reinterpret_cast<D3DXVECTOR4*>( &value ) );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			return value;
 		}
@@ -482,7 +482,7 @@ namespace SlimDX
 			pin_ptr<Vector4> pinnedData = &data[0];
 
 			HRESULT hr = InternalPointer->GetVectorArray( handle, reinterpret_cast<D3DXVECTOR4*>( pinnedData ), count );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 
@@ -494,7 +494,7 @@ namespace SlimDX
 			ColorValue value = ColorValue();
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->GetVector( handle, reinterpret_cast<D3DXVECTOR4*>( &value ) );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			return value;
 		}
@@ -506,7 +506,7 @@ namespace SlimDX
 			pin_ptr<ColorValue> pinnedData = &data[0];
 
 			HRESULT hr = InternalPointer->GetVectorArray( handle, reinterpret_cast<D3DXVECTOR4*>( pinnedData ), count );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 
@@ -518,7 +518,7 @@ namespace SlimDX
 			Matrix value = Matrix();
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->GetMatrix( handle, reinterpret_cast<D3DXMATRIX*>( &value ) );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			return value;
 		}
@@ -530,7 +530,7 @@ namespace SlimDX
 			pin_ptr<Matrix> pinnedData = &data[0];
 
 			HRESULT hr = InternalPointer->GetMatrixArray( handle, reinterpret_cast<D3DXMATRIX*>( pinnedData ), count );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 
@@ -542,7 +542,7 @@ namespace SlimDX
 			IDirect3DBaseTexture9* texture = NULL;
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->GetTexture( handle, &texture );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 
@@ -565,7 +565,7 @@ namespace SlimDX
 			Matrix value = Matrix();
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->GetMatrixTranspose( handle, reinterpret_cast<D3DXMATRIX*>( &value ) );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			return value;
 		}
@@ -577,7 +577,7 @@ namespace SlimDX
 			pin_ptr<Matrix> pinnedData = &data[0];
 
 			HRESULT hr = InternalPointer->GetMatrixTransposeArray( handle, reinterpret_cast<D3DXMATRIX*>( pinnedData ), count );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 
@@ -590,7 +590,7 @@ namespace SlimDX
 			LPCSTR data = 0;
 
 			HRESULT hr = InternalPointer->GetString(handle,&data);
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			return gcnew String(data);
 		}
@@ -601,7 +601,7 @@ namespace SlimDX
 			void* data = new char[bytes];
 
 			HRESULT hr = InternalPointer->GetValue( handle, data, bytes );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 

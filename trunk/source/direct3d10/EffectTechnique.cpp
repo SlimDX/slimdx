@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "Direct3D10ErrorHandler.h"
+#include "Direct3D10Exception.h"
 
 #include "EffectTechnique.h"
 #include "EffectPass.h"
@@ -41,7 +41,7 @@ namespace Direct3D10
 	
 		D3D10_TECHNIQUE_DESC description;
 		HRESULT hr = m_Pointer->GetDesc( &description );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		m_Name = gcnew String( description.Name );
 		m_PassCount = description.Passes;

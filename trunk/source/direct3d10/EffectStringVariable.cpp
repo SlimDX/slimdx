@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "Direct3D10ErrorHandler.h"
+#include "Direct3D10Exception.h"
 
 #include "EffectStringVariable.h"
 
@@ -40,7 +40,7 @@ namespace Direct3D10
 	{
 		LPCSTR result;
 		HRESULT hr = static_cast<ID3D10EffectStringVariable*>( Pointer )->GetString( &result );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		return gcnew String( result );
 	}

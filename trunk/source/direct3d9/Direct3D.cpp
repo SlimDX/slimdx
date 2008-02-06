@@ -28,7 +28,7 @@
 
 #include "../Utilities.h"
 
-#include "Direct3D9ErrorHandler.h"
+//#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
 #include "Direct3D9NotFoundException.h"
 #include "Direct3DX9NotFoundException.h"
@@ -47,7 +47,7 @@ namespace Direct3D9
 		DWORD flags = Direct3D::CheckWhql ? D3DENUM_WHQL_LEVEL : 0;
 
 		HRESULT hr = Direct3D::InternalPointer->GetAdapterIdentifier( adapter, flags, &ident );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		Adapter = adapter;
 		DriverName = gcnew String( ident.Driver );
@@ -297,7 +297,7 @@ namespace Direct3D9
         DisplayMode displayMode;
         HRESULT hr = m_Direct3D->EnumAdapterModes( adapter, static_cast<D3DFORMAT>( format ),
 			modeIndex, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
-        Direct3D9ErrorHandler::TestForFailure( hr );
+        Result::Record( hr );
         return displayMode;
     }
 
@@ -310,7 +310,7 @@ namespace Direct3D9
 	{
 		D3DCAPS9 caps;
 		HRESULT hr = Direct3D::InternalPointer->GetDeviceCaps( adapter, static_cast<D3DDEVTYPE>( deviceType ), &caps );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		return Capabilities( caps );
 	}

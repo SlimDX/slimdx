@@ -22,9 +22,12 @@
 #pragma once
 
 using namespace System;
+using namespace System::Collections::ObjectModel;
 using namespace System::Runtime::InteropServices;
 
 #include "../ComObject.h"
+
+#include "Enums.h"
 
 namespace SlimDX
 {
@@ -43,17 +46,20 @@ namespace SlimDX
 			Output( IDXGIOutput* pointer );
 
 		public:
-			OutputDescription GetDescription();
-
-			FrameStatistics GetFrameStatistics();
-			GammaControlCapabilities GetGammaControlCapabilities();
+			Result GetDescription( [Out] OutputDescription% description );
 			
-			void FindClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription %result );
+			ReadOnlyCollection<ModeDescription>^ GetDisplayModeList( Format format, DisplayModeEnumerationFlags flags );
 			
-			void TakeOwnership( ComObject^ device, bool exclusive );
+			Result GetFrameStatistics( [Out] FrameStatistics% statistics );
+			Result GetGammaControlCapabilities( [Out] GammaControlCapabilities% capabilities );
+			
+			Result FindClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription %result );
+			
+			
+			Result TakeOwnership( ComObject^ device, bool exclusive );
 			void ReleaseOwnership();
 			
-			void WaitForVerticalBlank();
+			Result WaitForVerticalBlank();
 		};
 	}
 };

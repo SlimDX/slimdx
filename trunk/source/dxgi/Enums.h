@@ -32,7 +32,14 @@ namespace SlimDX
 		// NOTE: The enumerations defined in this file are in alphabetical order. When
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
-	
+		
+		[Flags]
+		public enum class DisplayModeEnumerationFlags : Int32
+		{
+			Interlaced = DXGI_ENUM_MODES_INTERLACED,
+			Scaling = DXGI_ENUM_MODES_SCALING
+		};
+		
 		public enum class DisplayModeRotation : Int32
 		{
 			Unspecified = DXGI_MODE_ROTATION_UNSPECIFIED,

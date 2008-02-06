@@ -28,6 +28,12 @@ namespace SlimDX
 {
 namespace DXGI
 { 	
+	SampleDescription::SampleDescription( const DXGI_SAMPLE_DESC& native )
+	{
+		m_Count = native.Count;
+		m_Quality = native.Quality;
+	}
+	
 	SampleDescription::SampleDescription( int count, int quality )
 	: m_Count( count ), m_Quality( quality )
 	{

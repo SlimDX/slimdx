@@ -19,19 +19,42 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include "../Utilities.h"
+using namespace System;
+using namespace System::Collections::Generic;
+using namespace System::Collections::ObjectModel;
+using namespace System::Runtime::InteropServices;
 
-#include "XInputErrorHandler.h"
-#include "XInputException.h"
+#include "../ComObject.h"
+
+#include "Enums.h"
 
 namespace SlimDX
 {
-namespace XInput
-{
-	bool XInputErrorHandler::TestForFailure( int hr )
+	namespace DXGI
 	{
-		return Utilities::TestForFailure( hr, XInputException::typeid );
+		ref class Adapter;
+		
+		/// <remarks>
+		/// A Device represents an object that produces image data.
+		/// </remarks>
+		public ref class Device : public ComObject
+		{
+			COMOBJECT(IDXGIDevice);
+
+		internal:
+			Device( IDXGIDevice* pointer );
+
+		public:
+			Device( IntPtr pointer );
+			
+			Adapter^ GetAdapter();
+			
+			Result GetGPUThreadPriority( [Out] int% priority );
+			Result SetGPUThreadPriority( int priority );
+
+			ReadOnlyCollection<Residency>^ QueryResourceResidency( IList<ComObject^>^ resources ); 
+		};
 	}
-}
-}
+};

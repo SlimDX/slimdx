@@ -51,7 +51,7 @@ namespace SlimDX
 			D3DVERTEXELEMENT9 elementBuffer[MAX_FVF_DECL_SIZE];
 
 			HRESULT hr = D3DXDeclaratorFromFVF( static_cast<DWORD>( fvf ), elementBuffer );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			if( FAILED( hr ) )
 				return nullptr;
@@ -73,7 +73,7 @@ namespace SlimDX
 			pin_ptr<VertexElement> pinnedDecl = &declarator[0];
 
 			HRESULT hr = D3DXFVFFromDeclarator( reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ), &result );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			return static_cast<VertexFormat>( result );
 		}
@@ -84,7 +84,7 @@ namespace SlimDX
 			pin_ptr<VertexElement> pinnedDecl = &declaration[0];
 
 			HRESULT hr = D3DXGenerateOutputDecl( elementBuffer, reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ) );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			if( FAILED( hr ) )
 				return nullptr;
@@ -113,7 +113,7 @@ namespace SlimDX
 			DWORD verts;
 
 			HRESULT hr = D3DXRectPatchSize( &segmentCount, &tris, &verts );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			if( FAILED( hr ) )
 			{
@@ -133,7 +133,7 @@ namespace SlimDX
 			DWORD verts;
 
 			HRESULT hr = D3DXTriPatchSize( &segmentCount, &tris, &verts );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			if( FAILED( hr ) )
 			{
@@ -167,7 +167,7 @@ namespace SlimDX
 
 			HRESULT hr = D3DXOptimizeFaces( reinterpret_cast<LPCVOID>( pinnedIndices ), faceCount, vertexCount,
 				TRUE, reinterpret_cast<DWORD*>( pinnedResults ) );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			if( FAILED( hr ) )
 				return nullptr;
@@ -184,7 +184,7 @@ namespace SlimDX
 
 			HRESULT hr = D3DXOptimizeFaces( reinterpret_cast<LPCVOID>( pinnedIndices ), faceCount, vertexCount,
 				FALSE, reinterpret_cast<DWORD*>( pinnedResults ) );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			if( FAILED( hr ) )
 				return nullptr;
@@ -201,7 +201,7 @@ namespace SlimDX
 
 			HRESULT hr = D3DXOptimizeVertices( reinterpret_cast<LPCVOID>( pinnedIndices ), faceCount, vertexCount,
 				TRUE, reinterpret_cast<DWORD*>( pinnedResults ) );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			if( FAILED( hr ) )
 				return nullptr;
@@ -218,7 +218,7 @@ namespace SlimDX
 
 			HRESULT hr = D3DXOptimizeVertices( reinterpret_cast<LPCVOID>( pinnedIndices ), faceCount, vertexCount,
 				FALSE, reinterpret_cast<DWORD*>( pinnedResults ) );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			if( FAILED( hr ) )
 				return nullptr;

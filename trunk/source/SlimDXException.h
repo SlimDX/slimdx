@@ -25,12 +25,13 @@ using namespace System;
 using namespace System::Runtime::Serialization;
 
 #include "Configuration.h"
+#include "Result.h"
 
 namespace SlimDX
 {
 	[Serializable]
 	public ref class SlimDXException : public Exception
-	{
+	{	
 	protected:
 		SlimDXException( SerializationInfo^ info, StreamingContext context );	
 		
@@ -40,8 +41,9 @@ namespace SlimDX
 		SlimDXException();
 		SlimDXException( String^ message );
 		SlimDXException( String^ message, Exception^ innerException );
-		SlimDXException( int errorCode );
+		SlimDXException( int result );
 		
+		//TODO: Remove.
 		SlimDXException( int errorCode, String^ message );
 	};
 }

@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "Direct3D10ErrorHandler.h"
+//#include "Direct3D10ErrorHandler.h"
 
 #include "BlendState.h"
 #include "Device.h"
@@ -66,7 +66,7 @@ namespace Direct3D10
 		
 		ID3D10BlendState* state;
 		HRESULT hr = device->InternalPointer->CreateBlendState( &desc, &state );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		Construct(state);
 	}

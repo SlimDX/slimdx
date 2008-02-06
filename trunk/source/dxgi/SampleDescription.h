@@ -33,6 +33,8 @@ namespace SlimDX
 			int m_Quality;
 		
 		internal:
+			SampleDescription( const DXGI_SAMPLE_DESC& native );
+			
 			DXGI_SAMPLE_DESC CreateNativeVersion();
 			
 		public:

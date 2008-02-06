@@ -52,7 +52,7 @@ namespace Direct3D9
 		IDirect3DVertexDeclaration9* decl;
 
 		HRESULT hr = device->InternalPointer->CreateVertexDeclaration( reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedElements ), &decl );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		Construct(decl);
 	}
@@ -62,7 +62,7 @@ namespace Direct3D9
 		unsigned int count = 0;
 
 		HRESULT hr = InternalPointer->GetDeclaration( 0, &count );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			return nullptr;
 
@@ -70,7 +70,7 @@ namespace Direct3D9
 		pin_ptr<VertexElement> pinnedDecl = &decl[0];
 
 		hr = InternalPointer->GetDeclaration( reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedDecl ), &count );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			return nullptr;
 

@@ -46,7 +46,7 @@ namespace SlimDX
 		public:
 			Adapter( IntPtr pointer );
 			
-			AdapterDescription GetDescription();
+			Result GetDescription( [Out] AdapterDescription% description );
 
 			int GetOutputCount();
 			Output^ GetOutput( int index );

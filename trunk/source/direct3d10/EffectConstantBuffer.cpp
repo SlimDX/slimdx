@@ -24,7 +24,7 @@
 #include <d3dx10.h>
 
 #include "EffectConstantBuffer.h"
-#include "Direct3D10ErrorHandler.h"
+//#include "Direct3D10ErrorHandler.h"
 
 #include "Buffer.h"
 #include "ShaderResourceView.h"
@@ -45,7 +45,7 @@ namespace Direct3D10
 	{
 		ID3D10Buffer* buffer = 0;
 		HRESULT hr = static_cast<ID3D10EffectConstantBuffer*>( Pointer )->GetConstantBuffer( &buffer );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		if( buffer == 0 )
 			return nullptr;
@@ -59,7 +59,7 @@ namespace Direct3D10
 	void EffectConstantBuffer::SetConstantBuffer( Buffer^ buffer )
 	{
 		HRESULT hr = static_cast<ID3D10EffectConstantBuffer*>( Pointer )->SetConstantBuffer( static_cast<ID3D10Buffer*>( buffer->InternalPointer ) );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 	
 	/// <summary>
@@ -69,7 +69,7 @@ namespace Direct3D10
 	{
 		ID3D10ShaderResourceView* buffer = 0;
 		HRESULT hr = static_cast<ID3D10EffectConstantBuffer*>( Pointer )->GetTextureBuffer( &buffer );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		if( buffer == 0 )
 			return nullptr;
@@ -83,7 +83,7 @@ namespace Direct3D10
 	void EffectConstantBuffer::SetTextureBuffer( ShaderResourceView^ buffer )
 	{
 		HRESULT hr = static_cast<ID3D10EffectConstantBuffer*>( Pointer )->SetTextureBuffer( static_cast<ID3D10ShaderResourceView*>( buffer->InternalPointer ) );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 }
 }

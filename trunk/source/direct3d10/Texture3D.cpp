@@ -26,7 +26,7 @@
 #include <vcclr.h>
 
 #include "../DataStream.h"
-#include "Direct3D10ErrorHandler.h"
+//#include "Direct3D10ErrorHandler.h"
 
 #include "Texture3D.h"
 #include "Device.h"
@@ -73,7 +73,7 @@ namespace Direct3D10
 	
 		ID3D10Texture3D* texture;
 		HRESULT hr = device->InternalPointer->CreateTexture3D( &description, NULL, &texture );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		Construct( texture );	
 	}
@@ -85,7 +85,7 @@ namespace Direct3D10
 		
 		D3D10_MAPPED_TEXTURE3D mappedBox;
 		HRESULT hr = static_cast<ID3D10Texture3D*>( InternalPointer )->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedBox );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		int lockedSize = mipHeight * mappedBox.RowPitch * mappedBox.DepthPitch;
 		

@@ -60,7 +60,7 @@ namespace Direct3D9
 		IDirect3DIndexBuffer9* ib;
 		D3DFORMAT format = sixteenBit ? D3DFMT_INDEX16 : D3DFMT_INDEX32;
 		HRESULT hr = device->InternalPointer->CreateIndexBuffer( sizeBytes, static_cast<DWORD>( usage ), format, static_cast<D3DPOOL>( pool ), &ib, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		Construct(ib);
 		InitDescription();
@@ -70,7 +70,7 @@ namespace Direct3D9
 	{
 	  D3DINDEXBUFFER_DESC description;
 		HRESULT hr = static_cast<IDirect3DIndexBuffer9*>( InternalPointer )->GetDesc( &description );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		m_Format = static_cast<SlimDX::Direct3D9::Format>( description.Format );
 		m_Type = static_cast<SlimDX::Direct3D9::ResourceType>( description.Type );
@@ -83,7 +83,7 @@ namespace Direct3D9
 	{
 		void* lockedPtr;
 		HRESULT hr = IbPointer->Lock( offset, size, &lockedPtr, static_cast<DWORD>( flags ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		int lockedSize = size == 0 ? m_SizeInBytes : size;
 		

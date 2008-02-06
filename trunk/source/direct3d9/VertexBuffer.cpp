@@ -24,7 +24,7 @@
 
 #include "../Utilities.h"
 
-#include "Direct3D9ErrorHandler.h"
+//#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
 
 #include "Device.h"
@@ -41,7 +41,7 @@ namespace Direct3D9
 
 		D3DVERTEXBUFFER_DESC description;
 		HRESULT hr = buffer->GetDesc( &description );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		Format = static_cast<SlimDX::Direct3D9::Format>( description.Format );
 		Usage = static_cast<SlimDX::Direct3D9::Usage>( description.Usage );
@@ -67,7 +67,7 @@ namespace Direct3D9
 
 		D3DVERTEXBUFFER_DESC description;
 		hr = vbPtr->GetDesc( &description );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			throw gcnew Direct3D9Exception( hr );
 		
@@ -85,11 +85,11 @@ namespace Direct3D9
 		IDirect3DVertexBuffer9* vb;
 		HRESULT hr = device->InternalPointer->CreateVertexBuffer( sizeBytes, static_cast<DWORD>( usage ), 
 			static_cast<DWORD>( format ), static_cast<D3DPOOL>( pool ), &vb, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		D3DVERTEXBUFFER_DESC description;
 		hr = vb->GetDesc( &description );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		Format = static_cast<SlimDX::Direct3D9::Format>( description.Format );
 		Usage = static_cast<SlimDX::Direct3D9::Usage>( description.Usage );
@@ -104,7 +104,7 @@ namespace Direct3D9
 	{
 		void* lockedPtr;
 		HRESULT hr = VbPointer->Lock( offset, size, &lockedPtr, static_cast<DWORD>( flags ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		int lockedSize = size == 0 ? SizeInBytes : size;
 		

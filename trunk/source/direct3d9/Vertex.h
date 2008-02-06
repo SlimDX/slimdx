@@ -22,7 +22,7 @@
 #pragma once
 
 #include "../ComObject.h"
-#include "Direct3D9ErrorHandler.h"
+//#include "Direct3D9ErrorHandler.h"
 
 namespace SlimDX
 {

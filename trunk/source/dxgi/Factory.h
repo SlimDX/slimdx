@@ -44,7 +44,7 @@ namespace SlimDX
 			Adapter^ GetAdapter( int index );
 
 			IntPtr GetWindowAssociation();
-			void SetWindowAssociation( IntPtr handle, WindowAssociationFlags flags );
+			Result SetWindowAssociation( IntPtr handle, WindowAssociationFlags flags );
 		};
 	}
 };

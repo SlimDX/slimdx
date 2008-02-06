@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "Direct3D10ErrorHandler.h"
+#include "Direct3D10Exception.h"
 
 #include "EffectScalarVariable.h"
 
@@ -39,19 +39,19 @@ namespace Direct3D10
 	void EffectScalarVariable::Set( bool value )
 	{
 		HRESULT hr = static_cast<ID3D10EffectScalarVariable*>( Pointer )->SetBool( value );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 	
 	void EffectScalarVariable::Set( float value )
 	{
 		HRESULT hr = static_cast<ID3D10EffectScalarVariable*>( Pointer )->SetFloat( value );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 	
 	void EffectScalarVariable::Set( int value )
 	{
 		HRESULT hr = static_cast<ID3D10EffectScalarVariable*>( Pointer )->SetInt( value );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 }
 }

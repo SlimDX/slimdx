@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "Direct3D10ErrorHandler.h"
+//#include "Direct3D10ErrorHandler.h"
 
 #include "ShaderReflection.h"
 #include "ShaderBytecode.h"
@@ -52,7 +52,7 @@ namespace Direct3D10
 		
 		ID3D10ShaderReflection* reflection;
 		HRESULT hr = D3D10ReflectShader( shaderBytecode->Buffer, shaderBytecode->Length, &reflection );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		Construct(reflection);
 		Construct();
@@ -62,7 +62,7 @@ namespace Direct3D10
 	{
 		D3D10_SHADER_DESC description;
 		HRESULT hr = static_cast<ID3D10ShaderReflection*>( InternalPointer )->GetDesc( &description );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		version = description.Version;
 		creator = gcnew String( description.Creator );
@@ -102,7 +102,7 @@ namespace Direct3D10
 		{
 			D3D10_SIGNATURE_PARAMETER_DESC parameterDesc;
 			hr = 	static_cast<ID3D10ShaderReflection*>( InternalPointer )->GetInputParameterDesc( inputIndex, &parameterDesc );
-			Direct3D10ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			
 			inputParametersInfo->Add( ShaderParameterDescription( parameterDesc ) );
 		}
@@ -112,7 +112,7 @@ namespace Direct3D10
 		{
 			D3D10_SIGNATURE_PARAMETER_DESC parameterDesc;
 			hr = 	static_cast<ID3D10ShaderReflection*>( InternalPointer )->GetOutputParameterDesc( outputIndex, &parameterDesc );
-			Direct3D10ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			
 			outputParametersInfo->Add( ShaderParameterDescription( parameterDesc ) );
 		}

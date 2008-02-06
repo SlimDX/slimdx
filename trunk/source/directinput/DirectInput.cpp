@@ -24,7 +24,7 @@
 #include <vcclr.h>
 
 #include "DirectInput.h"
-#include "DirectInputErrorHandler.h"
+//#include "DirectInputErrorHandler.h"
 #include "DirectInputException.h"
 #include "DirectInputNotFoundException.h"
 
@@ -47,7 +47,7 @@ namespace DirectInput
 		    HRESULT hr = DirectInput8Create( static_cast<HINSTANCE>( hInstance.ToPointer() ), DIRECTINPUT_VERSION, 
 			    IID_IDirectInput8, reinterpret_cast<void**>( &dinput ), NULL );
 
-			DirectInputErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
         }
         catch( SEHException^ ex )
         {
@@ -78,19 +78,19 @@ namespace DirectInput
 	void DirectInput::RunControlPanel()
 	{
 		HRESULT hr = m_DirectInput->RunControlPanel( NULL, 0 );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void DirectInput::RunControlPanel( Control^ parent )
 	{
 		HRESULT hr = m_DirectInput->RunControlPanel( static_cast<HWND>( parent->Handle.ToPointer() ), 0 );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	bool DirectInput::IsDeviceAttached( Guid device )
 	{
 		HRESULT hr = m_DirectInput->GetDeviceStatus( Utilities::ConvertManagedGuid( device ) );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		return hr == DI_OK;
 	}
@@ -102,7 +102,7 @@ namespace DirectInput
 
 		HRESULT hr = m_DirectInput->FindDevice( Utilities::ConvertManagedGuid( deviceClass ),
 			reinterpret_cast<LPCTSTR>( pinnedName ), &result );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return Guid::Empty;

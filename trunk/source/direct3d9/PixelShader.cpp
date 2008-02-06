@@ -28,7 +28,7 @@
 #include "../ComObject.h"
 #include "../Utilities.h"
 
-#include "Direct3D9ErrorHandler.h"
+//#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
 
 #include "Device.h"
@@ -65,7 +65,7 @@ namespace SlimDX
 
 			IDirect3DDevice9* device;
 			HRESULT hr = pixelShader->GetDevice(&device);
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			
 			m_ConstantTable = gcnew ConstantTable( device, constantTable );
 			device->Release();
@@ -122,20 +122,20 @@ namespace SlimDX
 			//Retrieve the binary data
 			UINT size = 0;
 			HRESULT hr = InternalPointer->GetFunction( NULL, &size );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return;
 
 			std::auto_ptr<char> data( new char[size] );
 			hr = InternalPointer->GetFunction( data.get(), &size );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return;
 
 			//Ask D3DX to give us the actual table
 			ID3DXConstantTable* constantTable = NULL;
 			hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( data.get() ), &constantTable );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return;
 

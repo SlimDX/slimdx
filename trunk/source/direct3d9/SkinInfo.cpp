@@ -82,7 +82,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateSkinInfo( vertexCount, reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
 			boneCount, &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		Construct( result );
 	}
@@ -97,7 +97,7 @@ namespace Direct3D9
 			bones[i] = boneCombinationTable[i]->ToUnmanaged();
 
 		HRESULT hr = D3DXCreateSkinInfoFromBlendedMesh( mesh->InternalPointer, boneCount, bones, &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		for( int i = 0; i < length; i++ )
 			delete[] bones[i].BoneId;
@@ -112,7 +112,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateSkinInfoFVF( vertexCount, static_cast<DWORD>( fvf ),
 			boneCount, &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		Construct( result );
 	}
@@ -122,7 +122,7 @@ namespace Direct3D9
 		ID3DXSkinInfo *result;
 
 		HRESULT hr = InternalPointer->Clone( &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -158,7 +158,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->ConvertToBlendedMesh( mesh->MeshPointer, 0, adjacencyIn,
 			reinterpret_cast<DWORD*>( pinnedAdjOut ), reinterpret_cast<DWORD*>( pinnedFR ), &vr, &mvi, &bcc, &bct, &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -214,7 +214,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->ConvertToBlendedMesh( mesh->MeshPointer, 0, adjacencyIn,
 			reinterpret_cast<DWORD*>( pinnedAdjOut ), NULL, NULL, &mvi, &bcc, &bct, &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -273,7 +273,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->ConvertToIndexedBlendedMesh( mesh->MeshPointer, 0, paletteSize, adjacencyIn,
 			reinterpret_cast<DWORD*>( pinnedAdjOut ), reinterpret_cast<DWORD*>( pinnedFR ), &vr, &mvi, &bcc, &bct, &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -329,7 +329,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->ConvertToIndexedBlendedMesh( mesh->MeshPointer, 0, paletteSize, adjacencyIn,
 			reinterpret_cast<DWORD*>( pinnedAdjOut ), NULL, NULL, &mvi, &bcc, &bct, &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -364,7 +364,7 @@ namespace Direct3D9
 		DWORD influence;
 
 		HRESULT hr = InternalPointer->FindBoneVertexInfluenceIndex( bone, vertex, &influence );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -383,7 +383,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetBoneInfluence( bone, reinterpret_cast<DWORD*>( pinnedVerts ),
 			reinterpret_cast<float*>( pinnedWeights ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -399,7 +399,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->SetBoneInfluence( bone, vertices->Length, reinterpret_cast<const DWORD*>( pinnedVerts ),
 			reinterpret_cast<const float*>( pinnedWeights ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	String^ SkinInfo::GetBoneName( int bone )
@@ -413,7 +413,7 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
 		HRESULT hr = InternalPointer->SetBoneName( bone, reinterpret_cast<LPCSTR>( pinnedName ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void SkinInfo::GetBoneVertexInfluence( int bone, int influence, [Out] float% weight, [Out] int% vertex )
@@ -422,7 +422,7 @@ namespace Direct3D9
 		DWORD v;
 
 		HRESULT hr = InternalPointer->GetBoneVertexInfluence( bone, influence, &w, &v );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -439,7 +439,7 @@ namespace Direct3D9
 	void SkinInfo::SetBoneVertexInfluence( int bone, int influence, float weight )
 	{
 		HRESULT hr = InternalPointer->SetBoneVertexInfluence( bone, influence, weight );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	Matrix SkinInfo::GetBoneOffsetMatrix( int bone )
@@ -450,14 +450,14 @@ namespace Direct3D9
 	void SkinInfo::SetBoneOffsetMatrix( int bone, Matrix matrix )
 	{
 		HRESULT hr = InternalPointer->SetBoneOffsetMatrix( bone, reinterpret_cast<D3DXMATRIX*>( &matrix ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	array<VertexElement>^ SkinInfo::GetDeclaration()
 	{
 		D3DVERTEXELEMENT9 elementBuffer[MAX_FVF_DECL_SIZE];
 		HRESULT hr = InternalPointer->GetDeclaration( elementBuffer );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -478,7 +478,7 @@ namespace Direct3D9
 		pin_ptr<VertexElement> pinnedDecl = &declaration[0];
 
 		HRESULT hr = InternalPointer->SetDeclaration( reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedDecl ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	int SkinInfo::GetMaxFaceInfluences( IndexBuffer^ indexBuffer, int faceCount )
@@ -486,7 +486,7 @@ namespace Direct3D9
 		DWORD ret;
 
 		HRESULT hr = InternalPointer->GetMaxFaceInfluences( indexBuffer->IbPointer, faceCount, &ret );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -499,14 +499,14 @@ namespace Direct3D9
 		pin_ptr<int> pinnedData = &remapData[0];
 
 		HRESULT hr = InternalPointer->Remap( remapData->Length, reinterpret_cast<DWORD*>( pinnedData ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void SkinInfo::UpdateSkinnedMesh( Matrix boneTransform, Matrix boneInvTranspose, DataStream^ source, DataStream^ destination )
 	{
 		HRESULT hr = InternalPointer->UpdateSkinnedMesh( reinterpret_cast<const D3DXMATRIX*>( &boneTransform ),
 			reinterpret_cast<const D3DXMATRIX*>( &boneInvTranspose ), source->RawPointer, destination->RawPointer );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	int SkinInfo::GetBoneInfluenceCount( int bone )
@@ -519,7 +519,7 @@ namespace Direct3D9
 		DWORD result;
 
 		HRESULT hr = InternalPointer->GetMaxVertexInfluences( &result );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -540,7 +540,7 @@ namespace Direct3D9
 	void SkinInfo::MinimumBoneInfluence::set( float value )
 	{
 		HRESULT hr = InternalPointer->SetMinBoneInfluence( value );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	SlimDX::Direct3D9::VertexFormat SkinInfo::VertexFormat::get()
@@ -551,7 +551,7 @@ namespace Direct3D9
 	void SkinInfo::VertexFormat::set( SlimDX::Direct3D9::VertexFormat value )
 	{
 		HRESULT hr = InternalPointer->SetFVF( static_cast<DWORD>( value ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 }
 }

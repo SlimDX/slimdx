@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "Direct3D10ErrorHandler.h"
+//#include "Direct3D10ErrorHandler.h"
 
 #include "EffectShaderVariable.h"
 #include "PixelShader.h"
@@ -42,7 +42,7 @@ namespace Direct3D10
 	{
 		ID3D10PixelShader* shader;
 		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetPixelShader( index, &shader );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		return gcnew PixelShader( shader );
 	}
@@ -51,7 +51,7 @@ namespace Direct3D10
 	{
 		ID3D10VertexShader* shader;
 		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetVertexShader( index, &shader );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		return gcnew VertexShader( shader );
 	}
@@ -60,7 +60,7 @@ namespace Direct3D10
 	{
 		ID3D10GeometryShader* shader;
 		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetGeometryShader( index, &shader );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		return gcnew GeometryShader( shader );
 	}
@@ -69,7 +69,7 @@ namespace Direct3D10
 	{
 		D3D10_SIGNATURE_PARAMETER_DESC description;
 		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetInputSignatureElementDesc( shaderIndex, parameterIndex, &description );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		return ShaderParameterDescription( description );
 	}
@@ -78,7 +78,7 @@ namespace Direct3D10
 	{
 		D3D10_SIGNATURE_PARAMETER_DESC description;
 		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetOutputSignatureElementDesc( shaderIndex, parameterIndex, &description );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		return ShaderParameterDescription( description );
 	}
@@ -87,7 +87,7 @@ namespace Direct3D10
 	{
 		D3D10_EFFECT_SHADER_DESC description;
 		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetShaderDesc( shaderIndex, &description );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		return ShaderDescription( description );
 	}

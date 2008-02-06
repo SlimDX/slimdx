@@ -24,7 +24,7 @@
 using namespace System::Runtime::InteropServices;
 
 #include "../ComObject.h"
-#include "ErrorCode.h"
+
 #include "Enums.h"
 
 namespace SlimDX

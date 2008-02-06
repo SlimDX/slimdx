@@ -22,41 +22,30 @@
 #pragma once
 
 using namespace System;
+using namespace System::Runtime::InteropServices;
 
-#include <d3d10.h>
-#include "../ErrorCode.h"
+#include "../ComObject.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	namespace DXGI
 	{
-		public ref class D3D10ErrorCode : ErrorCode
+		value class SurfaceDescription;
+		
+		/// <remarks>
+		/// A Surface represents container for image data.
+		/// </remarks>
+		public ref class Surface : public ComObject
 		{
+			COMOBJECT(IDXGISurface);
+
 		internal:
-			D3D10ErrorCode() { }
+			Surface( IDXGISurface* pointer );
 
 		public:
-			literal int FileNotFound = D3D10_ERROR_FILE_NOT_FOUND;
-			literal int TooManyUniqueStateObjects = D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS;
-			literal int InvalidCall = D3DERR_INVALIDCALL;
-			literal int WasStillDrawing = D3DERR_WASSTILLDRAWING;
-		};
-
-		public ref class D3DX10ErrorCode : ErrorCode
-		{
-		internal:
-			D3DX10ErrorCode() { }
-
-		public:
-			literal int CannotModifyIndexBuffer = D3DX10_ERR_CANNOT_MODIFY_INDEX_BUFFER;
-			literal int InvalidMesh = D3DX10_ERR_INVALID_MESH;
-			literal int CannotAttributeSort = D3DX10_ERR_CANNOT_ATTR_SORT;
-			literal int SkinningNotSupported = D3DX10_ERR_SKINNING_NOT_SUPPORTED;
-			literal int TooManyInfluences = D3DX10_ERR_TOO_MANY_INFLUENCES;
-			literal int InvalidData = D3DX10_ERR_INVALID_DATA;
-			literal int MeshHasNoData = D3DX10_ERR_LOADED_MESH_HAS_NO_DATA;
-			literal int DuplicateNamedFragment = D3DX10_ERR_DUPLICATE_NAMED_FRAGMENT;
-			literal int CannotRemoveLastItem = D3DX10_ERR_CANNOT_REMOVE_LAST_ITEM;
+			Surface( IntPtr pointer );
+			
+			Result GetDescription( [Out] SurfaceDescription% description );
 		};
 	}
-}
+};

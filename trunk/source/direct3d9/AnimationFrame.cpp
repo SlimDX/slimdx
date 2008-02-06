@@ -687,7 +687,7 @@ namespace Direct3D9
 		FrameShim* shim = Frame::BuildHierarchyFromManaged( root );
 
 		HRESULT hr = D3DXFrameCalculateBoundingSphere( shim, reinterpret_cast<D3DXVECTOR3*>( &objectCenter ), &radius );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -705,7 +705,7 @@ namespace Direct3D9
 		FrameShim* frameShim = Frame::BuildHierarchyFromManaged( root );
 
 		HRESULT hr = D3DXFrameDestroy( frameShim, shim );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		delete shim;
 		delete frameShim;
@@ -821,7 +821,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXLoadMeshHierarchyFromX( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( options ), device->InternalPointer,
 			allocatorShim, userDataLoaderShim, &result, &animationResult);
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -867,7 +867,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXLoadMeshHierarchyFromX( reinterpret_cast<LPCWSTR>( pinnedMemory ), static_cast<DWORD>( options ), device->InternalPointer,
 			allocatorShim, userDataLoaderShim, &result, &animationResult);
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -917,7 +917,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXSaveMeshHierarchyToFile( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( format ),
 			frameShim, animation, shim );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		delete shim;
 		delete frameShim;
@@ -935,7 +935,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXSaveMeshHierarchyToFile( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( format ),
 			frameShim, animation, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		delete frameShim;
 	}

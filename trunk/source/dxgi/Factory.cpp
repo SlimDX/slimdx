@@ -22,7 +22,7 @@
 
 #include <dxgi.h>
 
-#include "DXGIErrorHandler.h"
+#include "DXGIException.h"
 
 #include "Adapter.h"
 #include "Factory.h"
@@ -34,8 +34,9 @@ namespace DXGI
 	Factory::Factory()
 	{
 		IDXGIFactory* factory = 0;
-		HRESULT hr = CreateDXGIFactory( __uuidof( IDXGIFactory ), reinterpret_cast<void**>( &factory ) );
-		DXGIErrorHandler::TestForFailure( hr );
+		Result::Record( CreateDXGIFactory( __uuidof( IDXGIFactory ), reinterpret_cast<void**>( &factory ) ) );
+		if( Result::Last.IsFailure )
+			throw gcnew DXGIException( Result::Last.Code );
 
 		Construct( factory );
 	}
@@ -56,8 +57,8 @@ namespace DXGI
 	Adapter^ Factory::GetAdapter( int index )
 	{
 		IDXGIAdapter* adapter = 0;
-		HRESULT hr = InternalPointer->EnumAdapters( index, &adapter);
-		if( DXGIErrorHandler::TestForFailure( hr ) )
+		Result::Record( InternalPointer->EnumAdapters( index, &adapter) );
+		if( Result::Last.IsFailure )
 			return nullptr;
 		return gcnew Adapter( adapter );
 	}
@@ -65,16 +66,15 @@ namespace DXGI
 	IntPtr Factory::GetWindowAssociation()
 	{
 		HWND window = 0;
-		HRESULT hr = InternalPointer->GetWindowAssociation( &window );
-		if( DXGIErrorHandler::TestForFailure( hr ) )
+		Result::Record( InternalPointer->GetWindowAssociation( &window ) );
+		if( Result::Last.IsFailure )
 			return IntPtr::Zero;
 		return IntPtr( window );
 	}
 	
-	void Factory::SetWindowAssociation( IntPtr handle, WindowAssociationFlags flags )
+	Result Factory::SetWindowAssociation( IntPtr handle, WindowAssociationFlags flags )
 	{
-		HRESULT hr = InternalPointer->MakeWindowAssociation( reinterpret_cast<HWND>( handle.ToInt32() ), static_cast<UINT>( flags ) );
-		DXGIErrorHandler::TestForFailure( hr );
+		return Result::Record( InternalPointer->MakeWindowAssociation( reinterpret_cast<HWND>( handle.ToInt32() ), static_cast<UINT>( flags ) ) );
 	}
 }
 }
