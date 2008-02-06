@@ -30,7 +30,7 @@
 #include "../DataStream.h"
 
 #include "DirectSound.h"
-#include "DirectSoundErrorHandler.h"
+//#include "DirectSoundErrorHandler.h"
 #include "DirectSoundException.h"
 
 #include "WaveFormat.h"

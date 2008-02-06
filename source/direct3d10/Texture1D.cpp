@@ -26,7 +26,7 @@
 #include <vcclr.h>
 
 #include "../DataStream.h"
-#include "Direct3D10ErrorHandler.h"
+//#include "Direct3D10ErrorHandler.h"
 
 #include "Texture1D.h"
 #include "Device.h"
@@ -83,7 +83,7 @@ namespace Direct3D10
 	
 		ID3D10Texture1D* texture;
 		HRESULT hr = device->InternalPointer->CreateTexture1D( &description, NULL, &texture );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		Construct( texture );	
 	}
@@ -96,7 +96,7 @@ namespace Direct3D10
 		
 		void* mappedArray;
 		HRESULT hr = static_cast<ID3D10Texture1D*>( InternalPointer )->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedArray );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		bool readOnly = mode == MapMode::Read;
 		return gcnew SlimDX::DataStream( mappedArray, bufferSize, true, !readOnly, false );

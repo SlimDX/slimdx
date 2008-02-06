@@ -22,7 +22,9 @@
 
 #include <dxgi.h>
 
-#include "DXGIErrorHandler.h"
+#include <vector>
+
+#include "DXGIException.h"
 
 #include "FrameStatistics.h"
 #include "GammaControlCapabilities.h"
@@ -39,51 +41,70 @@ namespace DXGI
 		Construct( pointer );
 	}
 	
-	OutputDescription Output::GetDescription()
+	Result Output::GetDescription( [Out] OutputDescription% description )
 	{
-		DXGI_OUTPUT_DESC description;
-		HRESULT hr = InternalPointer->GetDesc( &description );
-		if( DXGIErrorHandler::TestForFailure( hr ) )
-			return OutputDescription();
-		return OutputDescription( description );
-	}
-
-	FrameStatistics Output::GetFrameStatistics()
-	{
-		DXGI_FRAME_STATISTICS stats;
-		HRESULT hr = InternalPointer->GetFrameStatistics( &stats );
-		if( DXGIErrorHandler::TestForFailure( hr ) )
-			return FrameStatistics();
-		return FrameStatistics( stats );
-	}
-
-	GammaControlCapabilities Output::GetGammaControlCapabilities()
-	{
-		DXGI_GAMMA_CONTROL_CAPABILITIES caps;
-		HRESULT hr = InternalPointer->GetGammaControlCapabilities( &caps );
-		if( DXGIErrorHandler::TestForFailure( hr ) )
-			return GammaControlCapabilities();
-		return GammaControlCapabilities( caps );
+		DXGI_OUTPUT_DESC nativeDescription;
+		Result::Record( InternalPointer->GetDesc( &nativeDescription ) );
+		if( Result::Last.IsSuccess )
+			description = OutputDescription( nativeDescription );
+		return Result::Last;
 	}
 	
-	void Output::FindClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription% result )
+	ReadOnlyCollection<ModeDescription>^ Output::GetDisplayModeList( Format format, DisplayModeEnumerationFlags flags )
+	{
+		UINT modeCount = 0;
+		Result::Record( InternalPointer->GetDisplayModeList( static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ), &modeCount, 0 ) );
+		if( Result::Last.IsFailure )
+			return nullptr;
+		
+		std::vector<DXGI_MODE_DESC> nativeDescriptions(modeCount);
+		Result::Record( InternalPointer->GetDisplayModeList( static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ), &modeCount, &nativeDescriptions[0] ) );
+		if( Result::Last.IsFailure )
+			return nullptr;
+		
+		System::Collections::Generic::List<ModeDescription>^ descriptions = gcnew System::Collections::Generic::List<ModeDescription>( modeCount );
+		for( unsigned int descriptionIndex = 0; descriptionIndex < nativeDescriptions.size(); ++descriptionIndex )
+			descriptions->Add( ModeDescription( nativeDescriptions[ descriptionIndex ] ) );
+		
+		return gcnew ReadOnlyCollection<ModeDescription>( descriptions );
+	}
+	
+	Result Output::GetFrameStatistics( [Out] FrameStatistics% statistics )
+	{
+		DXGI_FRAME_STATISTICS stats;
+		Result::Record( InternalPointer->GetFrameStatistics( &stats ) );
+		if( Result::Last.IsSuccess )
+			statistics = FrameStatistics( stats );
+		return Result::Last;
+	}
+
+	Result Output::GetGammaControlCapabilities( [Out] GammaControlCapabilities% capabilities )
+	{
+		DXGI_GAMMA_CONTROL_CAPABILITIES caps;
+		Result::Record( InternalPointer->GetGammaControlCapabilities( &caps ) );
+		if( Result::Last.IsFailure )
+			capabilities = GammaControlCapabilities( caps );
+		return Result::Last;
+	}
+	
+	Result Output::FindClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription% result )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
 			
 		DXGI_MODE_DESC nativeModeToMatch = modeToMatch.CreateNativeVersion();
 		DXGI_MODE_DESC nativeResult;
-		HRESULT hr = InternalPointer->FindClosestMatchingMode( &nativeModeToMatch, &nativeResult, device->UnknownPointer );
-		if( SUCCEEDED( hr ) )
+		Result::Record( InternalPointer->FindClosestMatchingMode( &nativeModeToMatch, &nativeResult, device->UnknownPointer ) );
+		if( Result::Last.IsSuccess )
 			result = ModeDescription( nativeResult );
+		return Result::Last;
 	}
 	
-	void Output::TakeOwnership( ComObject^ device, bool exclusive )
+	Result Output::TakeOwnership( ComObject^ device, bool exclusive )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
-		HRESULT hr = InternalPointer->TakeOwnership( device->UnknownPointer, exclusive );
-		DXGIErrorHandler::TestForFailure( hr );
+		return Result::Record( InternalPointer->TakeOwnership( device->UnknownPointer, exclusive ) );
 	}
 	
 	void Output::ReleaseOwnership()
@@ -91,10 +112,9 @@ namespace DXGI
 		InternalPointer->ReleaseOwnership();
 	}
 	
-	void Output::WaitForVerticalBlank()
+	Result Output::WaitForVerticalBlank()
 	{
-		HRESULT hr = InternalPointer->WaitForVBlank();
-		DXGIErrorHandler::TestForFailure( hr );
+		return Result::Record( InternalPointer->WaitForVBlank() );
 	}
 }
 }

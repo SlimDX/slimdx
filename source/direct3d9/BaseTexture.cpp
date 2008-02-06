@@ -42,7 +42,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXSaveTextureToFileInMemory( &buffer, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			texture->BaseTexturePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -60,7 +60,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXSaveTextureToFileInMemory( &buffer, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			texture->BaseTexturePointer, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -79,7 +79,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXSaveTextureToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			texture->BaseTexturePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void BaseTexture::ToFile( BaseTexture^ texture, String^ fileName, ImageFileFormat format )
@@ -88,7 +88,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXSaveTextureToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			texture->BaseTexturePointer, NULL );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void BaseTexture::FilterTexture( int sourceLevel, Filter filter, array<PaletteEntry>^ palette )
@@ -97,13 +97,13 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXFilterTexture( BaseTexturePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
 			sourceLevel, static_cast<DWORD>( filter ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void BaseTexture::FilterTexture( int sourceLevel, Filter filter )
 	{
 		HRESULT hr = D3DXFilterTexture( BaseTexturePointer, NULL, sourceLevel, static_cast<DWORD>( filter ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 }
 }

@@ -280,14 +280,6 @@
 			Name="Direct3D10"
 			>
 			<File
-				RelativePath="..\source\direct3d10\Direct3D10ErrorHandler.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d10\Direct3D10ErrorHandler.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\direct3d10\Direct3D10Exception.cpp"
 				>
 			</File>
@@ -297,10 +289,6 @@
 			</File>
 			<File
 				RelativePath="..\source\direct3d10\Enums.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d10\ErrorCode.h"
 				>
 			</File>
 			<File
@@ -941,15 +929,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\ErrorCode.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\ObjectTracker.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\source\ObjectTracker.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\Result.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\Result.h"
 				>
 			</File>
 			<File
@@ -1061,14 +1053,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\direct3d9\Direct3D9ErrorHandler.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d9\Direct3D9ErrorHandler.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\direct3d9\Direct3D9Exception.cpp"
 				>
 			</File>
@@ -1122,10 +1106,6 @@
 			</File>
 			<File
 				RelativePath="..\source\direct3d9\Enums.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d9\ErrorCode.h"
 				>
 			</File>
 			<File
@@ -1420,14 +1400,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\directinput\DirectInputErrorHandler.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directinput\DirectInputErrorHandler.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\directinput\DirectInputException.cpp"
 				>
 			</File>
@@ -1445,10 +1417,6 @@
 			</File>
 			<File
 				RelativePath="..\source\directinput\Enums.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directinput\ErrorCode.h"
 				>
 			</File>
 			<File
@@ -1476,14 +1444,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\directsound\DirectSoundErrorHandler.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directsound\DirectSoundErrorHandler.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\directsound\DirectSoundException.cpp"
 				>
 			</File>
@@ -1493,10 +1453,6 @@
 			</File>
 			<File
 				RelativePath="..\source\directsound\Enums.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directsound\ErrorCode.h"
 				>
 			</File>
 			<File
@@ -1728,14 +1684,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\xinput\XInputErrorHandler.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\xinput\XInputErrorHandler.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\xinput\XInputException.cpp"
 				>
 			</File>
@@ -1779,14 +1727,6 @@
 		<Filter
 			Name="DXGI"
 			>
-			<File
-				RelativePath="..\source\dxgi\DXGIErrorHandler.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\dxgi\DXGIErrorHandler.h"
-				>
-			</File>
 			<File
 				RelativePath="..\source\dxgi\DXGIException.cpp"
 				>
@@ -1923,6 +1863,96 @@
 				</File>
 				<File
 					RelativePath="..\source\dxgi\AdapterDescription.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Device"
+				>
+				<File
+					RelativePath="..\source\dxgi\Device.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)3.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)3.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)3.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\Device.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Resource"
+				>
+			</Filter>
+			<Filter
+				Name="Surface"
+				>
+				<File
+					RelativePath="..\source\dxgi\Surface.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\Surface.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\SurfaceDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\SurfaceDescription.h"
 					>
 				</File>
 			</Filter>

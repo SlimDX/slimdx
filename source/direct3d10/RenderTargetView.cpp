@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "Direct3D10ErrorHandler.h"
+//#include "Direct3D10ErrorHandler.h"
 
 #include "RenderTargetView.h"
 #include "Device.h"
@@ -40,7 +40,7 @@ namespace Direct3D10
 		
 		ID3D10RenderTargetView *view;
 		HRESULT hr = device->InternalPointer->CreateRenderTargetView( resource->InternalPointer, NULL, &view );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		Construct(view);
 	}

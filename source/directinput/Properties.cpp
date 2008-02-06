@@ -23,7 +23,7 @@
 #include <dinput.h>
 #include <string>
 
-#include "DirectInputErrorHandler.h"
+//#include "DirectInputErrorHandler.h"
 
 #include "Enums.h"
 #include "DeviceConstants.h"
@@ -68,7 +68,7 @@ namespace DirectInput
 		dip.diph.dwHow = how;
 
 		hr = pointer->GetProperty( DIPROP_RANGE, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -86,7 +86,7 @@ namespace DirectInput
 		dip.diph.dwHow = how;
 
 		hr = pointer->GetProperty( DIPROP_RANGE, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -106,7 +106,7 @@ namespace DirectInput
 		dip.lMax = upperRange;
 
 		hr = pointer->SetProperty( DIPROP_RANGE, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	Object^ ObjectProperties::ApplicationData::get()
@@ -119,7 +119,7 @@ namespace DirectInput
 		dip.diph.dwHow = how;
 
 		hr = pointer->GetProperty( DIPROP_APPDATA, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) || dip.uData == NULL )
 			return nullptr;
@@ -147,7 +147,7 @@ namespace DirectInput
 		dip.uData = reinterpret_cast<UINT_PTR>( handle.ToIntPtr( handle ).ToPointer() );
 
 		hr = pointer->SetProperty( DIPROP_APPDATA, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		handle.Free();
 	}
@@ -162,7 +162,7 @@ namespace DirectInput
 		dip.diph.dwHow = how;
 
 		hr = pointer->GetProperty( DIPROP_DEADZONE, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -181,7 +181,7 @@ namespace DirectInput
 		dip.dwData = value;
 
 		hr = pointer->SetProperty( DIPROP_DEADZONE, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	int ObjectProperties::Granularity::get()
@@ -194,7 +194,7 @@ namespace DirectInput
 		dip.diph.dwHow = how;
 
 		hr = pointer->GetProperty( DIPROP_GRANULARITY, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -212,7 +212,7 @@ namespace DirectInput
 		dip.diph.dwHow = how;
 
 		hr = pointer->GetProperty( DIPROP_SATURATION, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -231,7 +231,7 @@ namespace DirectInput
 		dip.dwData = value;
 
 		hr = pointer->SetProperty( DIPROP_SATURATION, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	int ObjectProperties::LogicalRange::get()
@@ -244,7 +244,7 @@ namespace DirectInput
 		dip.diph.dwHow = how;
 
 		hr = pointer->GetProperty( DIPROP_LOGICALRANGE, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -262,7 +262,7 @@ namespace DirectInput
 		dip.diph.dwHow = how;
 
 		hr = pointer->GetProperty( DIPROP_PHYSICALRANGE, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -285,7 +285,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_KEYNAME, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -303,7 +303,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_GETPORTDISPLAYNAME, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -321,7 +321,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_INSTANCENAME, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -344,7 +344,7 @@ namespace DirectInput
 		memcpy( dip.wsz, chars, sizeof( WCHAR ) * 260 );
 
 		hr = pointer->SetProperty( DIPROP_INSTANCENAME, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	String^ DeviceProperties::ProductName::get()
@@ -357,7 +357,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_PRODUCTNAME, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -380,7 +380,7 @@ namespace DirectInput
 		memcpy( dip.wsz, chars, sizeof( WCHAR ) * 260 );
 
 		hr = pointer->SetProperty( DIPROP_PRODUCTNAME, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	String^ DeviceProperties::TypeName::get()
@@ -393,7 +393,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_TYPENAME, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -411,7 +411,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_USERNAME, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -429,7 +429,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_SCANCODE, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -447,7 +447,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_APPDATA, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) || dip.uData == NULL )
 			return nullptr;
@@ -475,7 +475,7 @@ namespace DirectInput
 		dip.uData = reinterpret_cast<UINT_PTR>( handle.ToIntPtr( handle ).ToPointer() );
 
 		hr = pointer->SetProperty( DIPROP_APPDATA, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		handle.Free();
 	}
@@ -490,7 +490,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_AUTOCENTER, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( dip.dwData == DIPROPAUTOCENTER_OFF )
 			return false;
@@ -513,7 +513,7 @@ namespace DirectInput
 			dip.dwData = DIPROPAUTOCENTER_OFF;
 
 		hr = pointer->SetProperty( DIPROP_AUTOCENTER, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	DeviceAxisMode DeviceProperties::AxisMode::get()
@@ -526,7 +526,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_AXISMODE, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		return static_cast<DeviceAxisMode>( dip.dwData );
 	}
@@ -542,7 +542,7 @@ namespace DirectInput
 		dip.dwData = static_cast<DWORD>( value );
 
 		hr = pointer->SetProperty( DIPROP_AXISMODE, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	int DeviceProperties::BufferSize::get()
@@ -555,7 +555,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_BUFFERSIZE, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -574,7 +574,7 @@ namespace DirectInput
 		dip.dwData = value;
 
 		hr = pointer->SetProperty( DIPROP_BUFFERSIZE, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	int DeviceProperties::DeadZone::get()
@@ -587,7 +587,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_DEADZONE, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -606,7 +606,7 @@ namespace DirectInput
 		dip.dwData = value;
 
 		hr = pointer->SetProperty( DIPROP_DEADZONE, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	int DeviceProperties::ForceFeedbackGain::get()
@@ -619,7 +619,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_FFGAIN, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -638,7 +638,7 @@ namespace DirectInput
 		dip.dwData = value;
 
 		hr = pointer->SetProperty( DIPROP_FFGAIN, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	int DeviceProperties::MemoryLoad::get()
@@ -651,7 +651,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_FFLOAD, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -669,7 +669,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_GRANULARITY, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -687,7 +687,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_JOYSTICKID, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -705,7 +705,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_SATURATION, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -724,7 +724,7 @@ namespace DirectInput
 		dip.dwData = value;
 
 		hr = pointer->SetProperty( DIPROP_SATURATION, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	Guid DeviceProperties::ClassGuid::get()
@@ -737,7 +737,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_GUIDANDPATH, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return Guid::Empty;
@@ -755,7 +755,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_GUIDANDPATH, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return nullptr;
@@ -773,7 +773,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_VIDPID, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -791,7 +791,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_VIDPID, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -809,7 +809,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_RANGE, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -827,7 +827,7 @@ namespace DirectInput
 		dip.diph.dwHow = DIPH_DEVICE;
 
 		hr = pointer->GetProperty( DIPROP_RANGE, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -847,7 +847,7 @@ namespace DirectInput
 		dip.lMax = upperRange;
 
 		hr = pointer->SetProperty( DIPROP_RANGE, &dip.diph );
-		DirectInputErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 }
 }

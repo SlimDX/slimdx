@@ -23,7 +23,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "Direct3D9ErrorHandler.h"
+//#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
 
 #include "Device.h"
@@ -51,7 +51,7 @@ namespace Direct3D9
 		IDirect3DStateBlock9* stateBlock;
 
 		HRESULT hr = device->InternalPointer->CreateStateBlock( static_cast<D3DSTATEBLOCKTYPE>( type ), &stateBlock );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			throw gcnew Direct3D9Exception();
 
@@ -61,20 +61,20 @@ namespace Direct3D9
 	void StateBlock::Apply()
 	{
 		HRESULT hr = InternalPointer->Apply();
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void StateBlock::Capture()
 	{
 		HRESULT hr = InternalPointer->Apply();
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	Device^ StateBlock::GetDevice()
 	{
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			return nullptr;
 

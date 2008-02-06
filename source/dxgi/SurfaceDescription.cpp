@@ -19,21 +19,41 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-using namespace System;
+#include <dxgi.h>
+
+#include "SurfaceDescription.h"
 
 namespace SlimDX
 {
-	namespace XInput
+namespace DXGI
+{ 	
+	SurfaceDescription::SurfaceDescription( const DXGI_SURFACE_DESC& native )
 	{
-		ref class XInputErrorHandler sealed
-		{	
-		private:
-			XInputErrorHandler() { }
-
-		internal:
-			static bool TestForFailure( int hr );
-		};
+		m_Width = native.Width;
+		m_Height = native.Height;
+		m_Format = static_cast<DXGI::Format>( native.Format );
+		m_SampleDesc = DXGI::SampleDescription( native.SampleDesc );
 	}
+
+	int SurfaceDescription::Width::get()
+	{
+		return m_Width;
+	}
+
+	int SurfaceDescription::Height::get()
+	{
+		return m_Height;
+	}
+
+	DXGI::Format SurfaceDescription::Format::get()
+	{
+		return m_Format;
+	}
+
+	DXGI::SampleDescription SurfaceDescription::SampleDescription::get()
+	{
+		return m_SampleDesc;
+	}
+}
 }

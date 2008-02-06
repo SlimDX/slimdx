@@ -19,25 +19,51 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include "../Utilities.h"
-
-#include "Direct3D10ErrorHandler.h"
-#include "Direct3D10Exception.h"
+using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
-{
-	bool Direct3D10ErrorHandler::TestForFailure( int hr )
+	public value class Result
 	{
-		m_LastError = hr;
-		return Utilities::TestForFailure( hr, Direct3D10Exception::typeid );
-	}
+		int m_Code;
+		String^ m_Description;
 	
-	int Direct3D10ErrorHandler::LastError::get()
-	{
-		return m_LastError;
-	}
-}
+		static int m_LastCode;
+		
+	internal:
+		Result( int hr );
+		
+		static Result Record( int hr );
+		
+	public:
+		property int Code
+		{
+			int get();
+		};
+		
+		property String^ Description
+		{
+			String^ get();
+		};
+		
+		property bool IsSuccess
+		{
+			bool get();
+		};
+		
+		property bool IsFailure
+		{
+			bool get();
+		};
+	
+		static property Result Last
+		{
+			Result get();
+		};
+		
+		static bool operator==( Result left, Result right );
+		static bool operator!=( Result left, Result right );
+	};
 }

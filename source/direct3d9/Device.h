@@ -30,7 +30,7 @@ using namespace System::Windows::Forms;
 #include "Enums.h"
 #include "Direct3D.h"
 #include "Vertex.h"
-#include "ErrorCode.h"
+
 #include "../Direct3D/Viewport.h"
 #include "../math/Math.h"
 

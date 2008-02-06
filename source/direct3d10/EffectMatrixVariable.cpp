@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "Direct3D10ErrorHandler.h"
+#include "Direct3D10Exception.h"
 
 #include "EffectMatrixVariable.h"
 
@@ -39,14 +39,14 @@ namespace Direct3D10
 	void EffectMatrixVariable::SetMatrix( Matrix matrix )
 	{
 		HRESULT hr = static_cast<ID3D10EffectMatrixVariable*>( Pointer )->SetMatrix( reinterpret_cast<float*>( &matrix ) );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 	
 	void EffectMatrixVariable::SetMatrix( array<Matrix>^ matrices )
 	{
 		pin_ptr<Matrix> pinnedMatrices = &matrices[0];
 		HRESULT hr = static_cast<ID3D10EffectMatrixVariable*>( Pointer )->SetMatrixArray( reinterpret_cast<float*>( pinnedMatrices ), 0, matrices->Length );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 }
 }

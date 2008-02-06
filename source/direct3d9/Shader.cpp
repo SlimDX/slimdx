@@ -157,7 +157,7 @@ namespace SlimDX
 		{
 			ID3DXConstantTable* constantTable;
 			HRESULT hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( InternalPointer->GetBufferPointer() ), &constantTable );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 
@@ -170,7 +170,7 @@ namespace SlimDX
 			const DWORD* function = reinterpret_cast<const DWORD*>( InternalPointer->GetBufferPointer() );
 
 			HRESULT hr = D3DXGetShaderInputSemantics( function, NULL, &count );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 			
@@ -178,7 +178,7 @@ namespace SlimDX
 			pin_ptr<ShaderSemantic> pinnedInputs = &inputs[0];
 
 			hr = D3DXGetShaderInputSemantics( function, reinterpret_cast<D3DXSEMANTIC*>( pinnedInputs ), &count );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 			
@@ -191,7 +191,7 @@ namespace SlimDX
 			const DWORD* function = reinterpret_cast<const DWORD*>( InternalPointer->GetBufferPointer() );
 
 			HRESULT hr = D3DXGetShaderOutputSemantics( function, NULL, &count );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 			
@@ -199,7 +199,7 @@ namespace SlimDX
 			pin_ptr<ShaderSemantic> pinnedOutputs = &outputs[0];
 
 			hr = D3DXGetShaderOutputSemantics( function, reinterpret_cast<D3DXSEMANTIC*>( pinnedOutputs ), &count );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 			
@@ -212,14 +212,14 @@ namespace SlimDX
 			const DWORD* function = reinterpret_cast<const DWORD*>( InternalPointer->GetBufferPointer() );
 
 			HRESULT hr = D3DXGetShaderSamplers( function, NULL, &count );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 			
 			std::auto_ptr<LPCSTR> samplers(new LPCSTR[count]);
 
 			hr = D3DXGetShaderSamplers( function, samplers.get(), &count );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 			
@@ -262,7 +262,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			errors = Utilities::BufferToString( errorBuffer );
 			
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 
@@ -300,7 +300,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			errors = Utilities::BufferToString( errorBuffer );
 			
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 				return nullptr;
 
@@ -339,7 +339,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			errors = Utilities::BufferToString( errorBuffer );
 			
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 			{
 				constantTable = nullptr;
@@ -387,7 +387,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			errors = Utilities::BufferToString( errorBuffer );
 			
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 			{
 				return nullptr;
@@ -436,7 +436,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			errors = Utilities::BufferToString( errorBuffer );
 			
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 			{
 				constantTable = nullptr;
@@ -476,7 +476,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			errors = Utilities::BufferToString( errorBuffer );
 			
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 			if( FAILED( hr ) )
 			{
 				return nullptr;

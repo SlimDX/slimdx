@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "Direct3D10ErrorHandler.h"
+//#include "Direct3D10ErrorHandler.h"
 #include "Direct3D10Exception.h"
 
 #include "Buffer.h"
@@ -63,9 +63,9 @@ namespace Direct3D10
 	Device::Device( DeviceCreationFlags flags )
 	{
 		ID3D10Device* device = 0;
-		HRESULT hr = D3D10CreateDevice( 0, D3D10_DRIVER_TYPE_HARDWARE, 0, static_cast<UINT>( flags ), D3D10_SDK_VERSION, &device );
-		if( Direct3D10ErrorHandler::TestForFailure( hr ) )
-			throw gcnew Direct3D10Exception( hr );
+		Result::Record( D3D10CreateDevice( 0, D3D10_DRIVER_TYPE_HARDWARE, 0, static_cast<UINT>( flags ), D3D10_SDK_VERSION, &device ) );
+		if( Result::Last.IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last.Code );
 		
 		Construct( device );
 		

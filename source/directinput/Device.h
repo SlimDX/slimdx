@@ -26,7 +26,7 @@ using namespace System::Reflection;
 using namespace System::Windows::Forms;
 
 #include "../ComObject.h"
-#include "ErrorCode.h"
+
 #include "DeviceState.h"
 #include "Enums.h"
 #include "Attributes.h"

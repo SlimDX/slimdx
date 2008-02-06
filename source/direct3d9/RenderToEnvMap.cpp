@@ -22,7 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "Direct3D9ErrorHandler.h"
+//#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
 
 #include "Device.h"
@@ -49,7 +49,7 @@ namespace SlimDX
 
 			HRESULT hr = D3DXCreateRenderToEnvMap( device->InternalPointer, size, mipLevels, static_cast<D3DFORMAT>( format ),
 				true, static_cast<D3DFORMAT>( depthStencilFormat ), &result );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			if( FAILED( hr ) )
 				throw gcnew Direct3D9Exception();
@@ -63,7 +63,7 @@ namespace SlimDX
 
 			HRESULT hr = D3DXCreateRenderToEnvMap( device->InternalPointer, size, mipLevels, static_cast<D3DFORMAT>( format ),
 				false, D3DFMT_UNKNOWN, &result );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			if( FAILED( hr ) )
 				throw gcnew Direct3D9Exception();
@@ -74,37 +74,37 @@ namespace SlimDX
 		void RenderToEnvironmentMap::BeginCube( CubeTexture^ texture )
 		{
 			HRESULT hr = InternalPointer->BeginCube( texture->TexturePointer );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void RenderToEnvironmentMap::BeginHemisphere( Texture^ positiveZTexture, Texture^ negativeZTexture )
 		{
 			HRESULT hr = InternalPointer->BeginHemisphere( positiveZTexture->TexturePointer, negativeZTexture->TexturePointer );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void RenderToEnvironmentMap::BeginParabolic( Texture^ positiveZTexture, Texture^ negativeZTexture )
 		{
 			HRESULT hr = InternalPointer->BeginParabolic( positiveZTexture->TexturePointer, negativeZTexture->TexturePointer );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void RenderToEnvironmentMap::BeginSphere( Texture^ texture )
 		{
 			HRESULT hr = InternalPointer->BeginSphere( texture->TexturePointer );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void RenderToEnvironmentMap::End( Filter mipFilter )
 		{
 			HRESULT hr = InternalPointer->End( static_cast<DWORD>( mipFilter ) );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void RenderToEnvironmentMap::Face( CubeMapFace face, Filter mipFilter )
 		{
 			HRESULT hr = InternalPointer->Face( static_cast<D3DCUBEMAP_FACES>( face ), static_cast<DWORD>( mipFilter ) );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		Device^ RenderToEnvironmentMap::GetDevice()
@@ -112,7 +112,7 @@ namespace SlimDX
 			IDirect3DDevice9* device;
 
 			HRESULT hr = InternalPointer->GetDevice( &device );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			if( FAILED( hr ) )
 				return nullptr;
@@ -123,13 +123,13 @@ namespace SlimDX
 		void RenderToEnvironmentMap::OnLostDevice()
 		{
 			HRESULT hr = InternalPointer->OnLostDevice();
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		void RenderToEnvironmentMap::OnResetDevice()
 		{
 			HRESULT hr = InternalPointer->OnResetDevice();
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 		}
 
 		RenderToEnvironmentMapDescription RenderToEnvironmentMap::Description::get()
@@ -137,7 +137,7 @@ namespace SlimDX
 			D3DXRTE_DESC description = {0};
 
 			HRESULT hr = InternalPointer->GetDesc( &description );
-			Direct3D9ErrorHandler::TestForFailure( hr );
+			Result::Record( hr );
 
 			RenderToEnvironmentMapDescription outDesc;
 			outDesc.Size = description.Size;

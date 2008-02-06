@@ -25,7 +25,7 @@
 #include "../DataStream.h"
 #include "../ComObject.h"
 
-#include "Direct3D9ErrorHandler.h"
+//#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
 
 #include "EffectCompiler.h"
@@ -79,7 +79,7 @@ namespace Direct3D9
 		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );
 		
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			throw gcnew Direct3D9Exception();
 
@@ -109,7 +109,7 @@ namespace Direct3D9
 		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );
 		
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			return nullptr;
 
@@ -233,7 +233,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		HRESULT hr = CompilerPointer->SetLiteral( nativeHandle, literal );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	bool EffectCompiler::GetLiteral( EffectHandle^ handle )
@@ -241,7 +241,7 @@ namespace Direct3D9
 		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		BOOL literal = false;
 		HRESULT hr = CompilerPointer->GetLiteral( nativeHandle, &literal );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		return literal > 0;
 	}

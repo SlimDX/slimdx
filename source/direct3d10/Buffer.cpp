@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "Direct3D10ErrorHandler.h"
+//#include "Direct3D10ErrorHandler.h"
 
 #include "Buffer.h"
 #include "Device.h"
@@ -67,7 +67,7 @@ namespace Direct3D10
 	{
 		void* mappedPtr;
 		HRESULT hr = ( static_cast<ID3D10Buffer*>( InternalPointer ) )->Map( static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedPtr );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		bool readOnly = mode == MapMode::Read;
 		DataStream^ stream = gcnew DataStream( mappedPtr, SizeInBytes, true, !readOnly, false );
@@ -116,7 +116,7 @@ namespace Direct3D10
 		{
 			hr = device->InternalPointer->CreateBuffer( &description, NULL, &buffer );
 		}
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		Construct(buffer);
 	}

@@ -25,7 +25,7 @@
 #include <vcclr.h>
 
 #include "Effect.h"
-#include "Direct3D10ErrorHandler.h"
+//#include "Direct3D10ErrorHandler.h"
 #include "Direct3D10Exception.h"
 
 #include "Device.h"
@@ -44,7 +44,7 @@ namespace Direct3D10
 
 		D3D10_EFFECT_DESC description;
 		HRESULT hr = effect->GetDesc( &description );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			throw gcnew Direct3D10Exception( "Failed to get description for effect." );
 		
@@ -61,7 +61,7 @@ namespace Direct3D10
 
 		D3D10_EFFECT_DESC description;
 		HRESULT hr = InternalPointer->GetDesc( &description );
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			throw gcnew Direct3D10Exception( "Failed to get description for effect." );
 
@@ -153,7 +153,7 @@ namespace Direct3D10
 	void Effect::Optimize()
 	{
 		HRESULT hr = InternalPointer->Optimize();
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	Effect^ Effect::FromFile( Device^ device, String ^fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool )
@@ -185,7 +185,7 @@ namespace Direct3D10
 			compilationErrors = String::Empty;
 		}
 		
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( effect == NULL)
 			return nullptr;
 		return gcnew Effect( effect );
@@ -220,7 +220,7 @@ namespace Direct3D10
 			compilationErrors = String::Empty;
 		}
 		
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( effect == NULL )
 			return nullptr;
 		return gcnew Effect( effect );
@@ -268,7 +268,7 @@ namespace Direct3D10
 			compilationErrors = String::Empty;
 		}
 		
-		Direct3D10ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( effect == NULL )
 			return nullptr;
 		return gcnew Effect( effect );

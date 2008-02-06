@@ -19,29 +19,35 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-using namespace System;
+#include <dxgi.h>
+
+#include "DXGIException.h"
+
+#include "Surface.h"
+#include "SurfaceDescription.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+namespace DXGI
+{ 	
+	Surface::Surface( IDXGISurface* pointer )
 	{
-		public ref class Direct3D10ErrorHandler sealed
-		{
-			static int m_LastError;
-
-		private:
-			Direct3D10ErrorHandler() { }
-			
-		internal:
-			static bool TestForFailure( int hr );
-		
-		public:
-			static property int LastError
-			{
-				int get();
-			}
-		};
+		Construct( pointer );
 	}
+	
+	Surface::Surface( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+
+	Result Surface::GetDescription([Out] SurfaceDescription% description )
+	{
+		DXGI_SURFACE_DESC nativeDescription;
+		Result::Record( InternalPointer->GetDesc( &nativeDescription ) );
+		if( Result::Last.IsSuccess )
+			description = SurfaceDescription( nativeDescription );
+		return Result::Last;
+	}
+}
 }

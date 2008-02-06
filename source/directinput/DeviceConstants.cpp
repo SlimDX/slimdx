@@ -26,7 +26,7 @@
 #include "../Utilities.h"
 
 #include "DirectInput.h"
-#include "DirectInputErrorHandler.h"
+//#include "DirectInputErrorHandler.h"
 
 #include "Device.h"
 #include "DeviceConstants.h"

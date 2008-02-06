@@ -23,32 +23,43 @@
 
 using namespace System;
 
+#include "Enums.h"
+#include "SampleDescription.h"
+
 namespace SlimDX
 {
-	public ref class ErrorCode
+	namespace DXGI
 	{
-	internal:
-		ErrorCode() { };
+		public value class SurfaceDescription
+		{
+			int m_Width;
+			int m_Height;
+			Format m_Format;
+			SampleDescription m_SampleDesc;
 
-	public:
-		static bool Failed( int errorCode ) { return FAILED( errorCode ); }
+		internal:
+			SurfaceDescription( const DXGI_SURFACE_DESC& native );
 
-		static bool Succeeded( int errorCode ) { return SUCCEEDED( errorCode ); }
+		public:
+			property int Width
+			{
+				int get();
+			}
 
-		literal int Ok = S_OK;
-		literal int False = S_FALSE;
+			property int Height
+			{
+				int get();
+			}
 
-		literal int UnexpectedError = E_UNEXPECTED;
-		literal int NotImplemented = E_NOTIMPL;
-		literal int OutOfMemory = E_OUTOFMEMORY;
-		literal int InvalidArgument = E_INVALIDARG;
-		literal int NoInterface = E_NOINTERFACE;
-		literal int InvalidPointer = E_POINTER;
-		literal int InvalidHandle = E_HANDLE;
-		literal int Aborted = E_ABORT;
-		literal int CallFailed = E_FAIL;
-		literal int AccessDenied = E_ACCESSDENIED;
+			property DXGI::Format Format
+			{
+				DXGI::Format get();
+			}
 
-		literal int Pending = E_PENDING;
-	};
-}
+			property DXGI::SampleDescription SampleDescription
+			{
+				DXGI::SampleDescription get();
+			}
+		};
+	}
+};

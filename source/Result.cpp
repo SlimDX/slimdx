@@ -19,47 +19,75 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
 #include <windows.h>
-#include <d3dx9.h>
-
-using namespace System;
-using namespace System::Diagnostics;
-using namespace System::IO;
-using namespace System::Globalization;
-using namespace System::Reflection;
 
 #include "Result.h"
 
 namespace SlimDX
 {
-	ref class ComObject;
-
-	ref class Utilities sealed
+	Result::Result( int hr )
+	: m_Code( hr )
 	{
-	private:
-		Utilities() { }
+	}
+	
+	int Result::Code::get()
+	{
+		return m_Code;
+	}
+	
+	String^ Result::Description::get()
+	{
+		if( m_Description == nullptr )
+		{
+			wchar_t * message = 0;
+			
+			try
+			{
+				int flags = FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM;
+				int lang = MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT);
+				if( FormatMessage( flags, 0, m_Code, lang, reinterpret_cast<wchar_t*>( &message ), 0, 0 ) )
+					m_Description = gcnew String( message );
+				else
+					m_Description = String::Format( "HRESULT: {0}", m_Code );
+			}
+			finally
+			{
+				LocalFree( message );
+			}
+		}
 		
-	internal:
-		static GUID GetNativeGuidForType( Type^ type );
-		
-	public:
-		static Guid ConvertNativeGuid( const GUID &guid );
-		static GUID ConvertManagedGuid( Guid guid );
-
-		/// <summary>
-		/// Function to convert a standard RECT to a GDI+ rectangle.
-		/// </summary>
-		/// <param name="rect">RECT to convert.</param>
-		/// <returns>A GDI+ rectangle structure.</returns>
-		static Drawing::Rectangle ConvertRect(RECT rect);
-
-		static String^ BufferToString( ID3DXBuffer *buffer );
-
-		static array<Byte>^ ReadStream( Stream^ stream, int readLength );
-
-		generic<typename T>
-		static void CheckArrayBounds( array<T>^ data, int offset, int% count );
-	};
+		return m_Description;
+	}
+	
+	bool Result::IsSuccess::get()
+	{
+		return SUCCEEDED( m_Code );
+	}
+	
+	bool Result::IsFailure::get()
+	{
+		return FAILED( m_Code );
+	}
+	
+	Result Result::Record( int hr )
+	{
+		m_LastCode = hr;
+		return Result( hr );
+	}
+	
+	Result Result::Last::get()
+	{
+		return Result( m_LastCode );
+	}
+	
+	bool Result::operator==( Result left, Result right )
+	{
+		return left.Code == right.Code;
+	}
+	
+	bool Result::operator!=( Result left, Result right )
+	{
+		return !(left == right);
+	}
 }

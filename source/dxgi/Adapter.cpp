@@ -22,7 +22,7 @@
 
 #include <dxgi.h>
 
-#include "DXGIErrorHandler.h"
+#include "DXGIException.h"
 
 #include "Adapter.h"
 #include "AdapterDescription.h"
@@ -42,13 +42,13 @@ namespace DXGI
 		Construct( pointer, NativeInterface );
 	}
 
-	AdapterDescription Adapter::GetDescription()
+	Result Adapter::GetDescription([Out] AdapterDescription% description )
 	{
-		DXGI_ADAPTER_DESC description;
-		HRESULT hr = InternalPointer->GetDesc( &description );
-		if( DXGIErrorHandler::TestForFailure( hr ) )
-			return AdapterDescription();
-		return AdapterDescription( description );
+		DXGI_ADAPTER_DESC nativeDescription;
+		Result::Record( InternalPointer->GetDesc( &nativeDescription ) );
+		if( Result::Last.IsSuccess )
+			description = AdapterDescription( nativeDescription );
+		return Result::Last;
 	}
 		
 	int Adapter::GetOutputCount()
@@ -67,8 +67,8 @@ namespace DXGI
 	Output^ Adapter::GetOutput( int index )
 	{
 		IDXGIOutput* output = 0;
-		HRESULT hr = InternalPointer->EnumOutputs( index, &output);
-		if( DXGIErrorHandler::TestForFailure( hr ) )
+		Result::Record( InternalPointer->EnumOutputs( index, &output) );
+		if( Result::Last.IsFailure )
 			return nullptr;
 		return gcnew Output( output );
 	}
@@ -83,8 +83,8 @@ namespace DXGI
 	{
 		GUID guid = Utilities::GetNativeGuidForType( type );
 		LARGE_INTEGER version;
-		HRESULT hr = InternalPointer->CheckInterfaceSupport( guid, &version );
-		if( hr == DXGI_ERROR_UNSUPPORTED )
+		Result::Record( InternalPointer->CheckInterfaceSupport( guid, &version ) );
+		if( Result::Last == Result( DXGI_ERROR_UNSUPPORTED ) )
 		{
 			userModeVersion = 0;
 			return false;

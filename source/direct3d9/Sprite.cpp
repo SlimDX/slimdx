@@ -52,7 +52,7 @@ namespace Direct3D9
 		ID3DXSprite* sprite;
 		
 		HRESULT hr = D3DXCreateSprite( device->InternalPointer, &sprite );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		Construct(sprite);
 	}
@@ -60,31 +60,31 @@ namespace Direct3D9
 	void Sprite::Begin( SpriteFlags flags )
 	{
 		HRESULT hr = InternalPointer->Begin( static_cast<DWORD>( flags ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void Sprite::End()
 	{
 		HRESULT hr = InternalPointer->End();
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void Sprite::Flush()
 	{
 		HRESULT hr = InternalPointer->Flush();
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void Sprite::OnLostDevice()
 	{
 		HRESULT hr = InternalPointer->OnLostDevice();
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void Sprite::OnResetDevice()
 	{
 		HRESULT hr = InternalPointer->OnResetDevice();
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	Device^ Sprite::GetDevice()
@@ -92,7 +92,7 @@ namespace Direct3D9
 		IDirect3DDevice9* device;
 
 		HRESULT hr = InternalPointer->GetDevice( &device );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		return gcnew Device( device );
 	}
@@ -102,7 +102,7 @@ namespace Direct3D9
 		Matrix result;
 
 		HRESULT hr = InternalPointer->GetTransform( reinterpret_cast<D3DXMATRIX*>( &result ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 
 		return result;
 	}
@@ -110,19 +110,19 @@ namespace Direct3D9
 	void Sprite::Transform::set( Matrix value )
 	{
 		HRESULT hr = InternalPointer->SetTransform( reinterpret_cast<const D3DXMATRIX*>( &value ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void Sprite::SetWorldViewLH( Matrix world, Matrix view )
 	{
 		HRESULT hr = InternalPointer->SetWorldViewLH( reinterpret_cast<const D3DXMATRIX*>( &world ), reinterpret_cast<const D3DXMATRIX*>( &view ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void Sprite::SetWorldViewRH( Matrix world, Matrix view )
 	{
 		HRESULT hr = InternalPointer->SetWorldViewRH( reinterpret_cast<const D3DXMATRIX*>( &world ), reinterpret_cast<const D3DXMATRIX*>( &view ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, int color )
@@ -131,7 +131,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, &rect, reinterpret_cast<const D3DXVECTOR3*>( &center ),
 			reinterpret_cast<const D3DXVECTOR3*>( &position ), color );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color color )
@@ -144,7 +144,7 @@ namespace Direct3D9
 		RECT rect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
 
 		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, &rect, NULL, NULL, color );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color color )
@@ -156,7 +156,7 @@ namespace Direct3D9
 	{
 		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, NULL, reinterpret_cast<const D3DXVECTOR3*>( &center ),
 			reinterpret_cast<const D3DXVECTOR3*>( &position ), color );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void Sprite::Draw( Texture^ texture, Vector3 center, Vector3 position, Color color )
@@ -167,7 +167,7 @@ namespace Direct3D9
 	void Sprite::Draw( Texture^ texture, int color )
 	{
 		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, NULL, NULL, NULL, color );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void Sprite::Draw( Texture^ texture, Color color )

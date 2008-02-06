@@ -119,7 +119,7 @@ namespace Direct3D9
 		unsigned int count = 1;
 
 		HRESULT hr = InternalPointer->GetConstantDesc( nativeHandle, &nativeDesc, &count );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			return description;
 
@@ -135,14 +135,14 @@ namespace Direct3D9
 
 		//Determine the count
 		HRESULT hr = InternalPointer->GetConstantDesc( nativeHandle, NULL, &count );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			return nullptr;
 
 		//Get the actual data
 		std::auto_ptr<D3DXCONSTANT_DESC> nativeDescArray(new D3DXCONSTANT_DESC[count]);
 		hr = InternalPointer->GetConstantDesc( nativeHandle, nativeDescArray.get(), &count );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			return nullptr;
 
@@ -177,14 +177,14 @@ namespace Direct3D9
 	void ConstantTable::SetDefaults()
 	{
 		HRESULT hr = InternalPointer->SetDefaults( m_Device );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void ConstantTable::SetValue( EffectHandle^ constant, bool value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetBool( m_Device, handle, value );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void ConstantTable::SetValue( EffectHandle^ parameter, array<bool>^ values )
@@ -197,14 +197,14 @@ namespace Direct3D9
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		pin_ptr<BOOL> pinnedValue = &expandedArray[0];
 		HRESULT hr = InternalPointer->SetBoolArray( m_Device, handle, pinnedValue, values->Length );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void ConstantTable::SetValue( EffectHandle^ constant, int value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetInt( m_Device, handle, value );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void ConstantTable::SetValue( EffectHandle^ constant, array<int>^ values )
@@ -212,14 +212,14 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<int> pinned_value = &values[0];
 		HRESULT hr = InternalPointer->SetIntArray( m_Device, handle, pinned_value, values->Length );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void ConstantTable::SetValue( EffectHandle^ constant, float value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetFloat( m_Device, handle, value );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void ConstantTable::SetValue( EffectHandle^ constant, array<float>^ values )
@@ -227,14 +227,14 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<float> pinned_values = &values[0];
 		HRESULT hr = InternalPointer->SetFloatArray( m_Device, handle, pinned_values, values->Length );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void ConstantTable::SetValue( EffectHandle^ constant, Vector4 value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetVector( m_Device, handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void ConstantTable::SetValue( EffectHandle^ constant, array<Vector4>^ values )
@@ -242,14 +242,14 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<Vector4> pinned_value = &values[0];
 		HRESULT hr = InternalPointer->SetVectorArray( m_Device, handle, reinterpret_cast<const D3DXVECTOR4*>( pinned_value ), values->Length );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void ConstantTable::SetValue( EffectHandle^ constant, ColorValue value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetVector( m_Device, handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void ConstantTable::SetValue( EffectHandle^ constant, array<ColorValue>^ values )
@@ -257,14 +257,14 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<ColorValue> pinned_value = &values[0];
 		HRESULT hr = InternalPointer->SetVectorArray( m_Device, handle, reinterpret_cast<const D3DXVECTOR4*>( pinned_value ), values->Length );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void ConstantTable::SetValue( EffectHandle^ constant, Matrix value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetMatrix( m_Device, handle, reinterpret_cast<const D3DXMATRIX*>( &value ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void ConstantTable::SetValue( EffectHandle^ constant, array<Matrix>^ values )
@@ -272,14 +272,14 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<Matrix> pinned_value = &values[0];
 		HRESULT hr = InternalPointer->SetMatrixArray( m_Device, handle, reinterpret_cast<const D3DXMATRIX*>( pinned_value ), values->Length );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void ConstantTable::SetValueTranspose( EffectHandle^ constant, Matrix value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetMatrixTranspose( m_Device, handle, reinterpret_cast<const D3DXMATRIX*>( &value ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void ConstantTable::SetValueTranspose( EffectHandle^ constant, array<Matrix>^ values )
@@ -287,7 +287,7 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<Matrix> pinned_value = &values[0];
 		HRESULT hr = InternalPointer->SetMatrixTransposeArray( m_Device, handle, reinterpret_cast<const D3DXMATRIX*>( pinned_value ), values->Length );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	ConstantTableDescription ConstantTable::Description::get()
@@ -296,7 +296,7 @@ namespace Direct3D9
 		ConstantTableDescription description;
 
 		HRESULT hr = InternalPointer->GetDesc( &nativeDesc );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			return description;
 

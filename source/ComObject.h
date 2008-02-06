@@ -25,6 +25,7 @@
 
 #include "Configuration.h"
 #include "ObjectTracker.h"
+#include "Result.h"
 #include "Utilities.h"
 
 #define COMOBJECT(type) \

@@ -25,7 +25,7 @@
 #include "../DataStream.h"
 #include "../ComObject.h"
 
-#include "Direct3D9ErrorHandler.h"
+//#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
 
 #include "Device.h"
@@ -56,7 +56,7 @@ namespace Direct3D9
 		ID3DXFragmentLinker* linker;
 
 		HRESULT hr = D3DXCreateFragmentLinker( devicePointer, cacheSize, &linker );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			throw gcnew Direct3D9Exception();
 
@@ -86,7 +86,7 @@ namespace Direct3D9
 		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );
 		
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			return nullptr;
 
@@ -123,7 +123,7 @@ namespace Direct3D9
 		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );
 		
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			return nullptr;
 
@@ -134,13 +134,13 @@ namespace Direct3D9
 	{
 		pin_ptr<int> pinnedFragments = &fragments[0];
 		HRESULT hr = InternalPointer->AddFragments( reinterpret_cast<const DWORD*>( pinnedFragments ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void FragmentLinker::AddFragments( DataStream^ fragments )
 	{
 		HRESULT hr = InternalPointer->AddFragments( reinterpret_cast<const DWORD*>( fragments->RawPointer ) );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	DataStream^ FragmentLinker::GetFragment( EffectHandle^ name )
@@ -149,7 +149,7 @@ namespace Direct3D9
 		ID3DXBuffer* fragment;
 
 		HRESULT hr = InternalPointer->GetFragment( handle, &fragment );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			return nullptr;
 
@@ -161,7 +161,7 @@ namespace Direct3D9
 		ID3DXBuffer* fragments;
 
 		HRESULT hr = InternalPointer->GetAllFragments( &fragments );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			return nullptr;
 
@@ -183,7 +183,7 @@ namespace Direct3D9
 		D3DXFRAGMENT_DESC description;
 
 		HRESULT hr = InternalPointer->GetFragmentDesc( handle, &description );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			return FragmentDescription();
 
@@ -236,7 +236,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->LinkShader( reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<DWORD>( flags ), handles, fragmentHandles->Length, &bytecode, &errorBuffer );
 		delete[] handles;
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );
@@ -261,7 +261,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->LinkVertexShader( reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<DWORD>( flags ), handles, fragmentHandles->Length, &shader, &errorBuffer );
 		delete[] handles;
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );
@@ -286,7 +286,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->LinkPixelShader( reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<DWORD>( flags ), handles, fragmentHandles->Length, &shader, &errorBuffer );
 		delete[] handles;
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		
 		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );

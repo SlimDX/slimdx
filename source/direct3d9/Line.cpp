@@ -26,7 +26,7 @@
 #include "../ComObject.h"
 #include "../math/Math.h"
 
-#include "Direct3D9ErrorHandler.h"
+//#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
 
 #include "Device.h"
@@ -54,7 +54,7 @@ namespace Direct3D9
 		ID3DXLine* line;
 
 		HRESULT hr = D3DXCreateLine( device->InternalPointer, &line );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			throw gcnew Direct3D9Exception();
 
@@ -64,13 +64,13 @@ namespace Direct3D9
 	void Line::Begin()
 	{
 		HRESULT hr = InternalPointer->Begin();
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void Line::End()
 	{
 		HRESULT hr = InternalPointer->End();
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void Line::Draw( array<Vector2>^ vertexList, int color )
@@ -78,7 +78,7 @@ namespace Direct3D9
 		pin_ptr<Vector2> pinnedVerts = &vertexList[0];
 
 		HRESULT hr = InternalPointer->Draw( reinterpret_cast<D3DXVECTOR2*>( pinnedVerts ), vertexList->Length, color );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void Line::Draw( array<Vector2>^ vertexList, Color color )
@@ -91,7 +91,7 @@ namespace Direct3D9
 		pin_ptr<Vector3> pinnedVerts = &vertexList[0];
 
 		HRESULT hr = InternalPointer->DrawTransform( reinterpret_cast<D3DXVECTOR3*>( pinnedVerts ), vertexList->Length, reinterpret_cast<const D3DXMATRIX*>( &transform ), color );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 	
 	void Line::DrawTransformed( array<Vector3>^ vertexList, Matrix transform, Color color )
@@ -102,20 +102,20 @@ namespace Direct3D9
 	void Line::OnLostDevice()
 	{
 		HRESULT hr = InternalPointer->OnLostDevice();
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	void Line::OnResetDevice()
 	{
 		HRESULT hr = InternalPointer->OnResetDevice();
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	Device^ Line::GetDevice()
 	{
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 		if( FAILED( hr ) )
 			return nullptr;
 
@@ -130,7 +130,7 @@ namespace Direct3D9
 	void Line::Antialias::set( bool value )
 	{
 		HRESULT hr = InternalPointer->SetAntialias( value );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	bool Line::GLLines::get()
@@ -141,7 +141,7 @@ namespace Direct3D9
 	void Line::GLLines::set( bool value )
 	{
 		HRESULT hr = InternalPointer->SetGLLines( value );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	int Line::Pattern::get()
@@ -152,7 +152,7 @@ namespace Direct3D9
 	void Line::Pattern::set( int value )
 	{
 		HRESULT hr = InternalPointer->SetPattern( value );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	float Line::PatternScale::get()
@@ -163,7 +163,7 @@ namespace Direct3D9
 	void Line::PatternScale::set( float value )
 	{
 		HRESULT hr = InternalPointer->SetPatternScale( value );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 	float Line::Width::get()
@@ -174,7 +174,7 @@ namespace Direct3D9
 	void Line::Width::set( float value )
 	{
 		HRESULT hr = InternalPointer->SetWidth( value );
-		Direct3D9ErrorHandler::TestForFailure( hr );
+		Result::Record( hr );
 	}
 
 }
