@@ -44,14 +44,34 @@ namespace SlimDX
 			Adapter( IDXGIAdapter* pointer );
 
 		public:
+			/// <remarks>
+			/// Constructs a new Adapter from an unmanaged IDXGIAdapter pointer.
+			/// </remarks>
 			Adapter( IntPtr pointer );
 			
+			/// <remarks>
+			/// Gets the adapter's description.
+			/// </remarks>
 			Result GetDescription( [Out] AdapterDescription% description );
-
+			
+			/// <remarks>
+			/// Gets the number of outputs on the adapter.
+			/// </remarks>
 			int GetOutputCount();
+			
+			/// <remarks>
+			/// Gets the specified output.
+			/// </remarks>
 			Output^ GetOutput( int index );
 			
+			/// <remarks>
+			/// Determines if a device interface for a graphics component is supported by the adapter.
+			/// </remarks>
 			bool IsInterfaceSupported( Type^ type );
+			
+			/// <remarks>
+			/// Determines if a device interface for a graphics component is supported by the adapter.
+			/// </remarks>
 			bool IsInterfaceSupported( Type^ type, [Out] Int64% userModeVersion );	
 		};
 	}

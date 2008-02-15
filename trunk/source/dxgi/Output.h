@@ -33,6 +33,7 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
+		ref class Surface;
 		value class FrameStatistics;
 		value class GammaControlCapabilities;
 		value class ModeDescription;
@@ -55,6 +56,7 @@ namespace SlimDX
 			
 			Result FindClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription %result );
 			
+			Result SetDisplaySurface( Surface^ surface );
 			
 			Result TakeOwnership( ComObject^ device, bool exclusive );
 			void ReleaseOwnership();

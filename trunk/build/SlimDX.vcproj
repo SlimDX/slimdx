@@ -1743,14 +1743,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\dxgi\Factory.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\dxgi\Factory.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\dxgi\FrameStatistics.cpp"
 				>
 			</File>
@@ -1956,6 +1948,18 @@
 				</File>
 				<File
 					RelativePath="..\source\dxgi\SurfaceDescription.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Factory"
+				>
+				<File
+					RelativePath="..\source\dxgi\Factory.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\Factory.h"
 					>
 				</File>
 			</Filter>
