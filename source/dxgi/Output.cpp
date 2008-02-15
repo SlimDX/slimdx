@@ -31,6 +31,7 @@
 #include "ModeDescription.h"
 #include "Output.h"
 #include "OutputDescription.h"
+#include "Surface.h"
 
 namespace SlimDX
 {
@@ -98,6 +99,13 @@ namespace DXGI
 		if( Result::Last.IsSuccess )
 			result = ModeDescription( nativeResult );
 		return Result::Last;
+	}
+	
+	Result Output::SetDisplaySurface( Surface^ surface )
+	{
+		if( surface == nullptr )
+			throw gcnew ArgumentNullException( "surface" );
+		return Result::Record( InternalPointer->SetDisplaySurface( surface->InternalPointer ) );
 	}
 	
 	Result Output::TakeOwnership( ComObject^ device, bool exclusive )
