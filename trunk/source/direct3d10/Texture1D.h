@@ -38,6 +38,9 @@ namespace SlimDX
 		
 		public ref class Texture1D : public Texture
 		{
+			COMOBJECT(ID3D10Texture1D);
+		
+		private:
 			int m_Width;
 			int m_MipLevels;
 			int m_ArraySize;
