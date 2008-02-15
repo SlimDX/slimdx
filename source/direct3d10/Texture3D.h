@@ -37,6 +37,9 @@ namespace SlimDX
 		
 		public ref class Texture3D : public Texture
 		{
+			COMOBJECT(ID3D10Texture3D);
+		
+		private:
 			int m_Width;
 			int m_Height;
 			int m_Depth;
