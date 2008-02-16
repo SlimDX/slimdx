@@ -22,6 +22,7 @@
 
 #include <windows.h>
 
+#include "Configuration.h"
 #include "Result.h"
 
 namespace SlimDX
@@ -72,13 +73,19 @@ namespace SlimDX
 	
 	Result Result::Record( int hr )
 	{
-		m_LastCode = hr;
+		m_Last = Result( hr );
+
+#ifdef _DEBUG
+		if( Configuration::HasResultWatch( m_Last ) )
+			System::Diagnostics::Debugger::Break();
+#endif
+		
 		return Result( hr );
 	}
 	
 	Result Result::Last::get()
 	{
-		return Result( m_LastCode );
+		return m_Last;
 	}
 	
 	bool Result::operator==( Result left, Result right )

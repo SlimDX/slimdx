@@ -21,45 +21,69 @@
 */
 #pragma once
 
-#include <windows.h>
-#include <d3dx9.h>
-
 using namespace System;
-using namespace System::Diagnostics;
-using namespace System::IO;
-using namespace System::Globalization;
-using namespace System::Reflection;
 
-#include "Result.h"
+#include "../Result.h"
 
 namespace SlimDX
 {
-	ref class ComObject;
-
-	ref class Utilities sealed
+	namespace DXGI
 	{
-	private:
-		Utilities();
-		
-	internal:
-		static GUID GetNativeGuidForType( Type^ type );
-		
-	public:
-		static Guid ConvertNativeGuid( const GUID &guid );
-		static GUID ConvertManagedGuid( Guid guid );
-
-		/// <summary>
-		/// Function to convert a standard RECT to a GDI+ rectangle.
-		/// </summary>
-		/// <param name="rect">RECT to convert.</param>
-		/// <returns>A GDI+ rectangle structure.</returns>
-		static Drawing::Rectangle ConvertRect(RECT rect);
-
-		static String^ BufferToString( ID3DXBuffer *buffer );
-
-		static array<Byte>^ ReadStream( Stream^ stream, int readLength );
-
-		generic<typename T>
-		static void CheckArrayBounds( array<T>^ data, int offset, int% count );
-	};
+		public ref class Error sealed
+		{
+			private:
+				Error();
+				
+			public:				
+				property static Result InvalidCall
+				{
+					Result get();
+				};
+				
+				property static Result NotFound
+				{
+					Result get();
+				};
+				
+				property static Result MoreData
+				{
+					Result get();
+				};
+				
+				property static Result Unsupported
+				{
+					Result get();
+				};
+				
+				property static Result DeviceRemoved
+				{
+					Result get();
+				};
+				
+				property static Result DeviceHung
+				{
+					Result get();
+				};
+				
+				property static Result DeviceReset
+				{
+					Result get();
+				};
+				
+				property static Result WasStillDrawing
+				{
+					Result get();
+				};
+				
+				property static Result DriverInternalError
+				{
+					Result get();
+				};
+				
+				property static Result NonExclusive
+				{
+					Result get();
+				};
+		};
+	}
 }

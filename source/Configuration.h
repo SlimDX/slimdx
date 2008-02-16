@@ -21,18 +21,32 @@
 */
 #pragma once
 
+using namespace System;
+using namespace System::Collections::Generic;
+
 #include "ObjectTracker.h"
+#include "Result.h"
 
 namespace SlimDX
 {
 	public ref class Configuration sealed
 	{
 	private:
-		Configuration() { }
-		static Configuration();
+		static List<Result>^ resultWatches;
 	
+		static Configuration();
+		
+		Configuration();
+	
+	internal:
+		static bool HasResultWatch( Result result );
+
 	public:
 		property static bool EnableExceptions;
 		property static bool EnableObjectTracking;
+		
+		static void AddResultWatch( Result result );
+		static void ClearResultWatch( Result result );
+		static void ClearResultWatches();
 	};
 }
