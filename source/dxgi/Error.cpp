@@ -35,51 +35,51 @@ namespace DXGI
 	Result Error::InvalidCall::get()
 	{
 		return Result( DXGI_ERROR_INVALID_CALL );
-	};
+	}
 	
 	Result Error::NotFound::get()
 	{
 		return Result( DXGI_ERROR_NOT_FOUND );
-	};
+	}
 	
 	Result Error::MoreData::get()
 	{
 		return Result( DXGI_ERROR_MORE_DATA );
-	};
+	}
 	
 	Result Error::Unsupported::get()
 	{
 		return Result( DXGI_ERROR_UNSUPPORTED );
-	};
+	}
 	
 	Result Error::DeviceRemoved::get()
 	{
 		return Result( DXGI_ERROR_DEVICE_REMOVED );
-	};
+	}
 	
 	Result Error::DeviceHung::get()
 	{
 		return Result( DXGI_ERROR_DEVICE_HUNG );
-	};
+	}
 	
 	Result Error::DeviceReset::get()
 	{
 		return Result( DXGI_ERROR_DEVICE_RESET );
-	};
+	}
 	
 	Result Error::WasStillDrawing::get()
 	{
 		return Result( DXGI_ERROR_DRIVER_INTERNAL_ERROR );
-	};
+	}
 	
 	Result Error::DriverInternalError::get()
 	{
 		return Result( DXGI_ERROR_NONEXCLUSIVE );
-	};
+	}
 	
 	Result Error::NonExclusive::get()
 	{
 		return Result( DXGI_ERROR_NONEXCLUSIVE );
-	};
+	}
 }
 }

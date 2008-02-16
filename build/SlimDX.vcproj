@@ -1108,6 +1108,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\direct3d9\Error.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d9\Error.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\direct3d9\Font.cpp"
 				>
 			</File>
