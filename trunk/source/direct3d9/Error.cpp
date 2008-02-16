@@ -20,7 +20,7 @@
 * THE SOFTWARE.
 */
 
-#include <dxgi.h>
+#include <d3d9.h>
 
 #include "Error.h"
 
