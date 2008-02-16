@@ -33,5 +33,33 @@ namespace SlimDX
 #else
 		EnableObjectTracking = false;
 #endif	
+
+		resultWatches = gcnew List<Result>();
+	}
+	
+	Configuration::Configuration()
+	{
+	}
+	
+	bool Configuration::HasResultWatch( Result result )
+	{
+		return resultWatches->Contains( result );
+	}
+	
+	void Configuration::AddResultWatch( Result result )
+	{
+		if( !resultWatches->Contains( result ) )
+			resultWatches->Add( result );
+	}
+	
+	void Configuration::ClearResultWatch( Result result )
+	{
+		if( resultWatches->Contains( result ) )
+			resultWatches->Remove( result );
+	}
+	
+	void Configuration::ClearResultWatches()
+	{
+		resultWatches->Clear();
 	}
 }

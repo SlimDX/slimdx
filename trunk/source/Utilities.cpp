@@ -26,6 +26,10 @@
 
 namespace SlimDX
 {
+	Utilities::Utilities()
+	{
+	}
+	
 	GUID Utilities::GetNativeGuidForType( Type^ type )
 	{
 		if( type == nullptr )

@@ -39,6 +39,9 @@ namespace SlimDX
 		
 		public ref class Buffer : public Resource
 		{
+			COMOBJECT(ID3D10Buffer);
+			
+		private:
 			int m_SizeInBytes;
 			ResourceUsage m_Usage;
 			BindFlags m_BindFlags;

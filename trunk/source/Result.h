@@ -30,7 +30,7 @@ namespace SlimDX
 		int m_Code;
 		String^ m_Description;
 	
-		static int m_LastCode;
+		static Result m_Last;
 		
 	internal:
 		Result( int hr );

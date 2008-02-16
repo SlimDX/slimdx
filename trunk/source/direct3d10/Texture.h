@@ -23,6 +23,8 @@
 
 using namespace System;
 
+#include "../ComObject.h"
+
 #include "../dxgi/Enums.h"
 
 #include "Resource.h"

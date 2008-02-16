@@ -19,47 +19,67 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include <windows.h>
-#include <d3dx9.h>
+#include <dxgi.h>
 
-using namespace System;
-using namespace System::Diagnostics;
-using namespace System::IO;
-using namespace System::Globalization;
-using namespace System::Reflection;
-
-#include "Result.h"
+#include "Error.h"
 
 namespace SlimDX
 {
-	ref class ComObject;
-
-	ref class Utilities sealed
+namespace DXGI
+{
+	Error::Error()
 	{
-	private:
-		Utilities();
-		
-	internal:
-		static GUID GetNativeGuidForType( Type^ type );
-		
-	public:
-		static Guid ConvertNativeGuid( const GUID &guid );
-		static GUID ConvertManagedGuid( Guid guid );
-
-		/// <summary>
-		/// Function to convert a standard RECT to a GDI+ rectangle.
-		/// </summary>
-		/// <param name="rect">RECT to convert.</param>
-		/// <returns>A GDI+ rectangle structure.</returns>
-		static Drawing::Rectangle ConvertRect(RECT rect);
-
-		static String^ BufferToString( ID3DXBuffer *buffer );
-
-		static array<Byte>^ ReadStream( Stream^ stream, int readLength );
-
-		generic<typename T>
-		static void CheckArrayBounds( array<T>^ data, int offset, int% count );
+	}
+	
+	Result Error::InvalidCall::get()
+	{
+		return Result( DXGI_ERROR_INVALID_CALL );
 	};
+	
+	Result Error::NotFound::get()
+	{
+		return Result( DXGI_ERROR_NOT_FOUND );
+	};
+	
+	Result Error::MoreData::get()
+	{
+		return Result( DXGI_ERROR_MORE_DATA );
+	};
+	
+	Result Error::Unsupported::get()
+	{
+		return Result( DXGI_ERROR_UNSUPPORTED );
+	};
+	
+	Result Error::DeviceRemoved::get()
+	{
+		return Result( DXGI_ERROR_DEVICE_REMOVED );
+	};
+	
+	Result Error::DeviceHung::get()
+	{
+		return Result( DXGI_ERROR_DEVICE_HUNG );
+	};
+	
+	Result Error::DeviceReset::get()
+	{
+		return Result( DXGI_ERROR_DEVICE_RESET );
+	};
+	
+	Result Error::WasStillDrawing::get()
+	{
+		return Result( DXGI_ERROR_DRIVER_INTERNAL_ERROR );
+	};
+	
+	Result Error::DriverInternalError::get()
+	{
+		return Result( DXGI_ERROR_NONEXCLUSIVE );
+	};
+	
+	Result Error::NonExclusive::get()
+	{
+		return Result( DXGI_ERROR_NONEXCLUSIVE );
+	};
+}
 }

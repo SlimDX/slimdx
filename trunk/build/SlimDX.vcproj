@@ -295,10 +295,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\direct3d10\GraphicsException.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\direct3d10\InputElement.h"
 				>
 			</File>
@@ -1740,6 +1736,14 @@
 			</File>
 			<File
 				RelativePath="..\source\dxgi\Enums.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\dxgi\Error.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\dxgi\Error.h"
 				>
 			</File>
 			<File
