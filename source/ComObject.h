@@ -31,7 +31,7 @@
 #define COMOBJECT(type) \
 	internal: \
 	static property Guid NativeInterface { Guid get() { return Utilities::ConvertNativeGuid( IID_ ## type ); } } \
-	property type* InternalPointer { type* get() { return static_cast<type*>( UnknownPointer ); } } \
+	property type* InternalPointer { type* get() { type* result = 0; UnknownPointer->QueryInterface( IID_ ## type, reinterpret_cast< void** >( &result ) ); return result; } } \
 	private:
 
 namespace SlimDX
@@ -39,7 +39,10 @@ namespace SlimDX
 	public ref class ComObject abstract
 	{
 		IUnknown* m_Unknown;
-
+	
+	private:
+		
+	
 	protected:
 		ComObject();
 		
