@@ -1795,14 +1795,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\dxgi\GammaControlCapabilities.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\dxgi\GammaControlCapabilities.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\dxgi\ModeDescription.cpp"
 				>
 			</File>
@@ -2004,6 +1996,26 @@
 				</File>
 				<File
 					RelativePath="..\source\dxgi\Factory.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Gamma"
+				>
+				<File
+					RelativePath="..\source\dxgi\GammaControl.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\GammaControl.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\GammaControlCapabilities.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\GammaControlCapabilities.h"
 					>
 				</File>
 			</Filter>

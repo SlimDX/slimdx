@@ -37,7 +37,28 @@ namespace DXGI
 		for( int controlPointIndex = 0; controlPointIndex < 1025; ++controlPointIndex )
 			m_GammaCurve->Add( ColorRGB( native.GammaCurve[ controlPointIndex ].Red, native.GammaCurve[ controlPointIndex ].Green, native.GammaCurve[ controlPointIndex ].Blue ) );
 	}
-
+	
+	DXGI_GAMMA_CONTROL GammaControl::CreateNativeVersion()
+	{
+		DXGI_GAMMA_CONTROL native;
+		native.Scale.Red = m_Scale.Red;
+		native.Scale.Green = m_Scale.Green;
+		native.Scale.Blue = m_Scale.Blue;
+		native.Offset.Red = m_Offset.Red;
+		native.Offset.Green = m_Offset.Green;
+		native.Offset.Blue = m_Offset.Blue;
+		
+		// 1025 is hard-coded by the DXGI API, there doesn't seem to be a constant for it.
+		for( int controlPointIndex = 0; controlPointIndex < 1025; ++controlPointIndex )
+		{
+			native.GammaCurve[ controlPointIndex ].Red = m_GammaCurve[ controlPointIndex ].Red;
+			native.GammaCurve[ controlPointIndex ].Green = m_GammaCurve[ controlPointIndex ].Green;
+			native.GammaCurve[ controlPointIndex ].Blue = m_GammaCurve[ controlPointIndex ].Blue;
+		}
+		
+		return native;	
+	}
+	
 	ColorRGB GammaControl::Scale::get()
 	{
 		return m_Scale;
