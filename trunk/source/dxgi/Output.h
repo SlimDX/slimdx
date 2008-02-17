@@ -35,6 +35,7 @@ namespace SlimDX
 	{
 		ref class Surface;
 		value class FrameStatistics;
+		value class GammaControl;
 		value class GammaControlCapabilities;
 		value class ModeDescription;
 		value class OutputDescription;
@@ -91,11 +92,25 @@ namespace SlimDX
 			Result FindClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription %result );
 			
 			/// <summary>
+			/// Sets gamma control information.
+			/// </summary>
+			/// <param name="control">The gamma control information.</param>
+			/// <returns>A Result code.</returns>
+			Result SetGammaControl( GammaControl control );
+			
+			/// <summary>
 			/// Changes the current display surface to the specified surface.
 			/// </summary>
 			/// <param name="surface">The new display surface.</param>
 			/// <returns>A Result code.</returns>
 			Result SetDisplaySurface( Surface^ surface );
+			
+			/// <summary>
+			/// Copies the display surface content to the specified destination surface.
+			/// </summary>
+			/// <param name="surface">The destination surface.</param>
+			/// <returns>A Result code.</returns>
+			Result CopyDisplaySurfaceTo( Surface^ surface );
 			
 			/// <summary>
 			/// Take ownership of an output.

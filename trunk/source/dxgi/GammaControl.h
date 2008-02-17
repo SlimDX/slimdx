@@ -42,7 +42,9 @@ namespace SlimDX
 
 		internal:
 			GammaControl( const DXGI_GAMMA_CONTROL& native );
-
+			
+			DXGI_GAMMA_CONTROL CreateNativeVersion();
+			
 		public:
 			/// <summary>
 			/// Gets or sets a scaling factor applied to gamma RGB values.

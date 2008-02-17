@@ -27,6 +27,7 @@
 #include "DXGIException.h"
 
 #include "FrameStatistics.h"
+#include "GammaControl.h"
 #include "GammaControlCapabilities.h"
 #include "ModeDescription.h"
 #include "Output.h"
@@ -101,11 +102,24 @@ namespace DXGI
 		return Result::Last;
 	}
 	
+	Result Output::SetGammaControl( GammaControl control )
+	{
+		DXGI_GAMMA_CONTROL nativeControl = control.CreateNativeVersion();
+		return Result::Record( InternalPointer->SetGammaControl( &nativeControl ) );
+	}
+	
 	Result Output::SetDisplaySurface( Surface^ surface )
 	{
 		if( surface == nullptr )
 			throw gcnew ArgumentNullException( "surface" );
 		return Result::Record( InternalPointer->SetDisplaySurface( surface->InternalPointer ) );
+	}
+	
+	Result Output::CopyDisplaySurfaceTo( Surface^ surface )
+	{
+		if( surface == nullptr )
+			throw gcnew ArgumentNullException( "surface" );
+		return Result::Record( InternalPointer->GetDisplaySurfaceData( surface->InternalPointer ) );
 	}
 	
 	Result Output::TakeOwnership( ComObject^ device, bool exclusive )
