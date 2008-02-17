@@ -19,71 +19,43 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-using namespace System;
-
-#include "../Result.h"
+#include "ColorRGB.h"
 
 namespace SlimDX
 {
-	namespace DXGI
+	ColorRGB::ColorRGB( float red, float green, float blue )
+	: m_Red( red ), m_Green( green ), m_Blue( blue )
 	{
-		public ref class Error sealed
-		{
-			private:
-				Error();
-				
-			public:
-				property static Result InvalidCall
-				{
-					Result get();
-				}
-				
-				property static Result NotFound
-				{
-					Result get();
-				}
-				
-				property static Result MoreData
-				{
-					Result get();
-				}
-				
-				property static Result Unsupported
-				{
-					Result get();
-				}
-				
-				property static Result DeviceRemoved
-				{
-					Result get();
-				}
-				
-				property static Result DeviceHung
-				{
-					Result get();
-				}
-				
-				property static Result DeviceReset
-				{
-					Result get();
-				}
-				
-				property static Result WasStillDrawing
-				{
-					Result get();
-				}
-				
-				property static Result DriverInternalError
-				{
-					Result get();
-				}
-				
-				property static Result NonExclusive
-				{
-					Result get();
-				}
-		};
+	}
+	
+	float ColorRGB::Red::get()
+	{
+		return m_Red;
+	}
+	
+	void ColorRGB::Red::set( float value )
+	{
+		m_Red = value;
+	}
+	
+	float ColorRGB::Green::get()
+	{
+		return m_Green;
+	}
+	
+	void ColorRGB::Green::set( float value )
+	{
+		m_Green = value;
+	}
+	
+	float ColorRGB::Blue::get()
+	{
+		return m_Blue;
+	}
+	
+	void ColorRGB::Blue::set( float value )
+	{
+		m_Blue = value;
 	}
 }

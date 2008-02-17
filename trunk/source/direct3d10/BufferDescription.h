@@ -23,67 +23,57 @@
 
 using namespace System;
 
-#include "../Result.h"
+#include "Enums.h"
 
 namespace SlimDX
 {
-	namespace DXGI
-	{
-		public ref class Error sealed
+	namespace Direct3D10
+	{	
+		public value class BufferDescription
 		{
-			private:
-				Error();
-				
-			public:
-				property static Result InvalidCall
-				{
-					Result get();
-				}
-				
-				property static Result NotFound
-				{
-					Result get();
-				}
-				
-				property static Result MoreData
-				{
-					Result get();
-				}
-				
-				property static Result Unsupported
-				{
-					Result get();
-				}
-				
-				property static Result DeviceRemoved
-				{
-					Result get();
-				}
-				
-				property static Result DeviceHung
-				{
-					Result get();
-				}
-				
-				property static Result DeviceReset
-				{
-					Result get();
-				}
-				
-				property static Result WasStillDrawing
-				{
-					Result get();
-				}
-				
-				property static Result DriverInternalError
-				{
-					Result get();
-				}
-				
-				property static Result NonExclusive
-				{
-					Result get();
-				}
+			int m_ByteWidth;
+			ResourceUsage m_Usage;
+			BindFlags m_BindFlags;
+			CpuAccessFlags m_CPUAccessFlags;
+			ResourceOptionFlags m_MiscFlags;
+
+		internal:
+			BufferDescription( const D3D10_BUFFER_DESC& native );
+			
+			D3D10_BUFFER_DESC CreateNativeVersion();
+			
+		public:
+			property int SizeInBytes
+			{
+				int get();
+				void set( int value );
+			}
+
+			property ResourceUsage Usage
+			{
+				ResourceUsage get();
+				void set( ResourceUsage value );
+			}
+
+			property Direct3D10::BindFlags BindFlags
+			{
+				Direct3D10::BindFlags get();
+				void set( Direct3D10::BindFlags value );
+			}
+
+			property Direct3D10::CpuAccessFlags CpuAccessFlags
+			{
+				Direct3D10::CpuAccessFlags get();
+				void set( Direct3D10::CpuAccessFlags value );
+			}
+
+			property ResourceOptionFlags OptionFlags
+			{
+				ResourceOptionFlags get();
+				void set( ResourceOptionFlags value );
+			}
+			
+			BufferDescription( int sizeInBytes, ResourceUsage usage, Direct3D10::BindFlags bindFlags, Direct3D10::CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
 		};
 	}
-}
+};

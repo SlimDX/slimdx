@@ -21,43 +21,54 @@
 */
 #pragma once
 
-using namespace System::Runtime::InteropServices;
+using namespace System;
+using namespace System::Collections::Generic;
+using namespace System::Collections::ObjectModel;
+
+#include "../math/ColorRGB.h"
 
 namespace SlimDX
 {
-	namespace Direct3D
+	namespace DXGI
 	{
-		ref class SlimDX::DataStream;
-		
-		[StructLayout( LayoutKind::Sequential )]
-		public value class LockedBox
+		/// <remarks>
+		/// Describes gamma control settings.
+		/// </remarks>
+		public value class GammaControl
 		{
-		private:
-			int rowPitch;
-			int slicePitch;
-			SlimDX::DataStream^ data;
+			ColorRGB m_Scale;
+			ColorRGB m_Offset;
+			List<ColorRGB>^ m_GammaCurve;
 
 		internal:
-			LockedBox( int rowPitch, int slicePitch, SlimDX::DataStream^ data )
-			: rowPitch( rowPitch ), slicePitch( slicePitch ), data( data )
-			{
-			}
+			GammaControl( const DXGI_GAMMA_CONTROL& native );
 
 		public:
-			property int RowPitch
+			/// <summary>
+			/// Gets or sets a scaling factor applied to gamma RGB values.
+			/// </summary>
+			property ColorRGB Scale
 			{
-				int get() { return rowPitch; }
+				ColorRGB get();
+				void set( ColorRGB value );
 			}
-
-			property int SlicePitch
+			
+			/// <summary>
+			/// Gets or sets an offset applied to gamma RGB values.
+			/// </summary>
+			property ColorRGB Offset
 			{
-				int get() { return slicePitch; }
+				ColorRGB get();
+				void set( ColorRGB value );
 			}
-
-			property SlimDX::DataStream^ Data
+			
+			/// <summary>
+			/// Gets the list of RGB control points defining the gamma curve.
+			/// </summary>
+			property ReadOnlyCollection<ColorRGB>^ ControlPoints
 			{
-				SlimDX::DataStream^ get() { return data; }
+				ReadOnlyCollection<ColorRGB>^ get();
 			}
 		};
 	}
-}
+};

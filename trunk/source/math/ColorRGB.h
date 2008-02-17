@@ -21,69 +21,49 @@
 */
 #pragma once
 
-using namespace System;
-
-#include "../Result.h"
+using namespace System::Drawing;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	namespace DXGI
+	/// <remarks>
+	/// A three-component (RGB) color value; each component is a float in the range [0,1].
+	/// </remarks>
+	public value class ColorRGB
 	{
-		public ref class Error sealed
+	private:
+		float m_Red;
+		float m_Green;
+		float m_Blue;
+
+	public:
+		/// <summary>
+		/// Gets or sets the color's red component.
+		/// </summary>
+		property float Red
 		{
-			private:
-				Error();
-				
-			public:
-				property static Result InvalidCall
-				{
-					Result get();
-				}
-				
-				property static Result NotFound
-				{
-					Result get();
-				}
-				
-				property static Result MoreData
-				{
-					Result get();
-				}
-				
-				property static Result Unsupported
-				{
-					Result get();
-				}
-				
-				property static Result DeviceRemoved
-				{
-					Result get();
-				}
-				
-				property static Result DeviceHung
-				{
-					Result get();
-				}
-				
-				property static Result DeviceReset
-				{
-					Result get();
-				}
-				
-				property static Result WasStillDrawing
-				{
-					Result get();
-				}
-				
-				property static Result DriverInternalError
-				{
-					Result get();
-				}
-				
-				property static Result NonExclusive
-				{
-					Result get();
-				}
-		};
-	}
+			float get();
+			void set( float value );
+		}
+		
+		/// <summary>
+		/// Gets or sets the color's green component.
+		/// </summary>
+		property float Green
+		{
+			float get();
+			void set( float value );
+		}
+		
+		/// <summary>
+		/// Gets or sets the color's blue component.
+		/// </summary>
+		property float Blue
+		{
+			float get();
+			void set( float value );
+		}
+		
+		ColorRGB( float red, float green, float blue );
+	};
 }

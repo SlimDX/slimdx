@@ -24,7 +24,7 @@
 using namespace System;
 
 #include "../ComObject.h"
-#include "../direct3d/LockedRect.h"
+#include "../DataRectangle.h"
 
 #include "Enums.h"
 #include "SampleDescription.h"
@@ -118,7 +118,7 @@ namespace SlimDX
 				ResourceOptionFlags optionFlags );
 			virtual ~Texture2D() { }
 			
-			SlimDX::Direct3D::LockedRect Map( int subResource, MapMode mode, MapFlags flags );
+			SlimDX::DataRectangle Map( int subResource, MapMode mode, MapFlags flags );
 			void Unmap( int subResource );
 			
 			

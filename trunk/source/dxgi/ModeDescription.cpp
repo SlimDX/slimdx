@@ -34,6 +34,17 @@ namespace DXGI
 	{
 	}
 	
+	ModeDescription::ModeDescription( const DXGI_MODE_DESC& native )
+	{
+		m_Width = native.Width;
+		m_Height = native.Height;
+		m_RefreshRate.Numerator = native.RefreshRate.Numerator;
+		m_RefreshRate.Denominator = native.RefreshRate.Denominator;
+		m_Format = static_cast<DXGI::Format>( native.Format );
+		m_ScanlineOrdering = static_cast<DisplayModeScanlineOrdering>( native.ScanlineOrdering );
+		m_Scaling = static_cast<DisplayModeScaling>( native.Scaling );
+	}
+
 	DXGI_MODE_DESC ModeDescription::CreateNativeVersion()
 	{
 		DXGI_MODE_DESC native;
@@ -46,17 +57,6 @@ namespace DXGI
 		native.Scaling = static_cast<DXGI_MODE_SCALING>( m_Scaling );
 		
 		return native;
-	}
-	
-	ModeDescription::ModeDescription( const DXGI_MODE_DESC& native )
-	{
-		m_Width = native.Width;
-		m_Height = native.Height;
-		m_RefreshRate.Numerator = native.RefreshRate.Numerator;
-		m_RefreshRate.Denominator = native.RefreshRate.Denominator;
-		m_Format = static_cast<DXGI::Format>( native.Format );
-		m_ScanlineOrdering = static_cast<DisplayModeScanlineOrdering>( native.ScanlineOrdering );
-		m_Scaling = static_cast<DisplayModeScaling>( native.Scaling );
 	}
 
 	int ModeDescription::Width::get()

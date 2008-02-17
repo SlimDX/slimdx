@@ -22,7 +22,7 @@
 #pragma once
 
 #include "Resource.h"
-#include "../direct3d/LockedRect.h"
+#include "../DataRectangle.h"
 
 namespace SlimDX
 {
@@ -140,8 +140,8 @@ namespace SlimDX
 			static void ToFile( Surface^ surface, String^ fileName, ImageFileFormat format, System::Drawing::Rectangle rectangle );
 			static void ToFile( Surface^ surface, String^ fileName, ImageFileFormat format );
 
-			LockedRect LockRectangle( LockFlags flags );
-			LockedRect LockRectangle( System::Drawing::Rectangle rect, LockFlags flags );
+			DataRectangle LockRectangle( LockFlags flags );
+			DataRectangle LockRectangle( System::Drawing::Rectangle rect, LockFlags flags );
 			void UnlockRectangle();
 
 			property SurfaceDescription Description

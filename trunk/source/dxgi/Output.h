@@ -38,7 +38,10 @@ namespace SlimDX
 		value class GammaControlCapabilities;
 		value class ModeDescription;
 		value class OutputDescription;
-
+		
+		/// <remarks>
+		/// Represents the output of an adapter (such as a monitor).
+		/// </remarks>
 		public ref class Output : public ComObject
 		{
 			COMOBJECT(IDXGIOutput);
@@ -47,20 +50,70 @@ namespace SlimDX
 			Output( IDXGIOutput* pointer );
 
 		public:
+			/// <summary>
+			/// Gets the output's description.
+			/// </summary>
+			/// <param name="description">Receives the output description.</param>
+			/// <returns>A Result code.</returns>
 			Result GetDescription( [Out] OutputDescription% description );
 			
-			ReadOnlyCollection<ModeDescription>^ GetDisplayModeList( Format format, DisplayModeEnumerationFlags flags );
-			
+			/// <summary>
+			/// Gets statistics about recent frames.
+			/// </summary>
+			/// <param name="statistics">Receives the frame statistics.</param>
+			/// <returns>A Result code.</returns>
 			Result GetFrameStatistics( [Out] FrameStatistics% statistics );
+			
+			/// <summary>
+			/// Gets a description of the output's gamma-control capabilities.
+			/// </summary>
+			/// <param name="statistics">Receives the gamma-control capabilities.</param>
+			/// <returns>A Result code.</returns>
 			Result GetGammaControlCapabilities( [Out] GammaControlCapabilities% capabilities );
 			
+			/// <summary>
+			/// Gets a list of display modes matching certain specifications.
+			/// </summary>
+			/// <param name="format">The display mode color format.</param>
+			/// <param name="flags">Flags indicating how the display mode scanline order and scaling.</param>
+			/// <returns>A list of matching display mode descriptions. The list is null if an error occured.</returns>
+			ReadOnlyCollection<ModeDescription>^ GetDisplayModeList( Format format, DisplayModeEnumerationFlags flags );
+			
+			/// <summary>
+			/// Finds the display mode that best matches the requested mode.
+			/// </summary>
+			/// <param name="device">The device interface. If this parameter is null, only
+			/// modes whose format matches the specified mode will be returned; otherwise, only those
+			/// formats that are supported for scan-out by the device are returned.</param>
+			/// <param name="modeToMatch">The description of the display mode to match.</param>
+			/// <param name="result">Receives the best-matching display mode.</param>
+			/// <returns>A Result code.</returns>
 			Result FindClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription %result );
 			
+			/// <summary>
+			/// Changes the current display surface to the specified surface.
+			/// </summary>
+			/// <param name="surface">The new display surface.</param>
+			/// <returns>A Result code.</returns>
 			Result SetDisplaySurface( Surface^ surface );
 			
+			/// <summary>
+			/// Take ownership of an output.
+			/// </summary>
+			/// <param name="device">The device interface.</param>
+			/// <param name="exclusive">If true, ownership is exclusive.</param>
+			/// <returns>A Result code.</returns>
 			Result TakeOwnership( ComObject^ device, bool exclusive );
+			
+			/// <summary>
+			/// Release ownership of an output.
+			/// </summary>
 			void ReleaseOwnership();
 			
+			/// <summary>
+			/// Halts the current thread until a vertical blank occurs.
+			/// </summary>
+			/// <returns>A Result code.</returns>
 			Result WaitForVerticalBlank();
 		};
 	}

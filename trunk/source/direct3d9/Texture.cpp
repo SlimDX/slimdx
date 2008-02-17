@@ -403,7 +403,7 @@ namespace Direct3D9
 		Result::Record( hr );
 	}
 
-	LockedRect Texture::LockRectangle( int level, System::Drawing::Rectangle rect, LockFlags flags )
+	DataRectangle Texture::LockRectangle( int level, System::Drawing::Rectangle rect, LockFlags flags )
 	{
 		D3DLOCKED_RECT lockedRect;
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
@@ -411,28 +411,28 @@ namespace Direct3D9
 		HRESULT hr = TexturePointer->LockRect( level, &lockedRect, &nativeRect, static_cast<DWORD>( flags ) );
 		Result::Record( hr );
 		if( FAILED( hr ) )
-			return LockedRect();
+			return DataRectangle();
 		
 		int lockedSize = lockedRect.Pitch * GetLevelDescription( level ).Height;
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		LockedRect outRect( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
+		DataRectangle outRect( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
 		return outRect;
 	}
 
-	LockedRect Texture::LockRectangle( int level, LockFlags flags )
+	DataRectangle Texture::LockRectangle( int level, LockFlags flags )
 	{
 		D3DLOCKED_RECT lockedRect;
 
 		HRESULT hr = TexturePointer->LockRect( level, &lockedRect, NULL, static_cast<DWORD>( flags ) );
 		Result::Record( hr );
 		if( FAILED( hr ) )
-			return LockedRect();
+			return DataRectangle();
 		
 		int lockedSize = lockedRect.Pitch * GetLevelDescription( level ).Height;
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		LockedRect outRect( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
+		DataRectangle outRect( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
 		return outRect;
 	}
 
@@ -693,34 +693,34 @@ namespace Direct3D9
 		return CubeTexture::FromFile( device, fileName, Usage::None, Pool::Managed );
 	}
 
-	LockedRect CubeTexture::LockRectangle( CubeMapFace face, int level, System::Drawing::Rectangle rect, LockFlags flags )
+	DataRectangle CubeTexture::LockRectangle( CubeMapFace face, int level, System::Drawing::Rectangle rect, LockFlags flags )
 	{
 		D3DLOCKED_RECT lockedRect;
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
 		HRESULT hr = TexturePointer->LockRect( static_cast<D3DCUBEMAP_FACES>( face ), level, &lockedRect, &nativeRect, static_cast<DWORD>( flags ) );
 		Result::Record( hr );
 		if( FAILED( hr ) )
-			return LockedRect();
+			return DataRectangle();
 		
 		int lockedSize = lockedRect.Pitch * GetLevelDescription( level ).Height;
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		LockedRect outRect( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
+		DataRectangle outRect( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
 		return outRect;
 	}
 
-	LockedRect CubeTexture::LockRectangle( CubeMapFace face, int level, LockFlags flags )
+	DataRectangle CubeTexture::LockRectangle( CubeMapFace face, int level, LockFlags flags )
 	{
 		D3DLOCKED_RECT lockedRect;
 		HRESULT hr = TexturePointer->LockRect( static_cast<D3DCUBEMAP_FACES>( face ), level, &lockedRect, NULL, static_cast<DWORD>( flags ) );
 		Result::Record( hr );
 		if( FAILED( hr ) )
-			return LockedRect();
+			return DataRectangle();
 		
 		int lockedSize = lockedRect.Pitch * GetLevelDescription( level ).Height;
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		LockedRect outRect( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
+		DataRectangle outRect( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
 		return outRect;
 	}
 
@@ -1008,34 +1008,34 @@ namespace Direct3D9
 		return VolumeTexture::FromFile( device, fileName, Usage::None, Pool::Managed );
 	}
 
-	LockedBox VolumeTexture::LockBox( int level, Box box, LockFlags flags )
+	DataBox VolumeTexture::LockBox( int level, Box box, LockFlags flags )
 	{
 		D3DLOCKED_BOX lockedBox;
 		HRESULT hr = TexturePointer->LockBox( level, &lockedBox, reinterpret_cast<D3DBOX*>( &box ),
 			static_cast<DWORD>( flags ) );
 		Result::Record( hr );
 		if( FAILED( hr ) )
-			return LockedBox();
+			return DataBox();
 		
 		int lockedSize = lockedBox.RowPitch * lockedBox.SlicePitch * GetLevelDescription( level ).Height;
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		LockedBox outBox( lockedBox.RowPitch, lockedBox.SlicePitch, gcnew DataStream( lockedBox.pBits, lockedSize, true, !readOnly, false ) );
+		DataBox outBox( lockedBox.RowPitch, lockedBox.SlicePitch, gcnew DataStream( lockedBox.pBits, lockedSize, true, !readOnly, false ) );
 		return outBox;
 	}
 
-	LockedBox VolumeTexture::LockBox( int level, LockFlags flags )
+	DataBox VolumeTexture::LockBox( int level, LockFlags flags )
 	{
 		D3DLOCKED_BOX lockedBox;
 		HRESULT hr = TexturePointer->LockBox( level, &lockedBox, NULL, static_cast<DWORD>( flags ) );
 		Result::Record( hr );
 		if( FAILED( hr ) )
-			return LockedBox();
+			return DataBox();
 		
 		int lockedSize = lockedBox.RowPitch * lockedBox.SlicePitch * GetLevelDescription( level ).Height;
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		LockedBox outBox( lockedBox.RowPitch, lockedBox.SlicePitch, gcnew DataStream( lockedBox.pBits, lockedSize, true, !readOnly, false ) );
+		DataBox outBox( lockedBox.RowPitch, lockedBox.SlicePitch, gcnew DataStream( lockedBox.pBits, lockedSize, true, !readOnly, false ) );
 		return outBox;
 	}
 

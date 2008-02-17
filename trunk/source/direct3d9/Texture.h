@@ -28,8 +28,8 @@
 #include "Effect.h"
 #include "ConstantTable.h"
 #include "TextureShader.h"
-#include "../direct3d/LockedBox.h"
-#include "../direct3d/LockedRect.h"
+#include "../DataBox.h"
+#include "../DataRectangle.h"
 #include "../math/Math.h"
 
 namespace SlimDX
@@ -316,8 +316,8 @@ namespace SlimDX
 
 			void Fill( TextureShader^ shader );
 
-			LockedRect LockRectangle( int level, LockFlags flags );
-			LockedRect LockRectangle( int level, System::Drawing::Rectangle rect, LockFlags flags );
+			DataRectangle LockRectangle( int level, LockFlags flags );
+			DataRectangle LockRectangle( int level, System::Drawing::Rectangle rect, LockFlags flags );
 			void UnlockRectangle( int level );
 
 			void AddDirtyRect( System::Drawing::Rectangle rect );
@@ -365,8 +365,8 @@ namespace SlimDX
 			void Fill( Fill3DCallback^ callback );
 			void Fill( TextureShader^ shader );
 
-			LockedRect LockRectangle( CubeMapFace face, int level, LockFlags flags );
-			LockedRect LockRectangle( CubeMapFace face, int level, System::Drawing::Rectangle rect, LockFlags flags );
+			DataRectangle LockRectangle( CubeMapFace face, int level, LockFlags flags );
+			DataRectangle LockRectangle( CubeMapFace face, int level, System::Drawing::Rectangle rect, LockFlags flags );
 			void UnlockRectangle( CubeMapFace face, int level );
 
 			void AddDirtyRect( CubeMapFace face, System::Drawing::Rectangle rect );
@@ -413,8 +413,8 @@ namespace SlimDX
 			void Fill( Fill3DCallback^ callback );
 			void Fill( TextureShader^ shader );
 
-			SlimDX::Direct3D::LockedBox LockBox( int level, LockFlags flags );
-			SlimDX::Direct3D::LockedBox LockBox( int level, Box box, LockFlags flags );
+			SlimDX::DataBox LockBox( int level, LockFlags flags );
+			SlimDX::DataBox LockBox( int level, Box box, LockFlags flags );
 			void UnlockBox( int level );
 
 			void AddDirtyBox( Box box );

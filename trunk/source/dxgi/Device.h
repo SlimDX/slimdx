@@ -37,7 +37,7 @@ namespace SlimDX
 		ref class Adapter;
 		
 		/// <remarks>
-		/// A Device represents an object that produces image data.
+		/// An object that produces image data.
 		/// </remarks>
 		public ref class Device : public ComObject
 		{
@@ -47,13 +47,38 @@ namespace SlimDX
 			Device( IDXGIDevice* pointer );
 
 		public:
+			/// <summary>
+			/// Constructs a Device from an unmanaged pointer.
+			/// </summary>
+			/// <param name="pointer">The unmanaged IDXGIDevice pointer.</param>
 			Device( IntPtr pointer );
 			
+			/// <summary>
+			/// Gets the adapter associated with the device.
+			/// </summary>
+			/// <returns>The adapter, or null on failure.</returns>
 			Adapter^ GetAdapter();
 			
+			/// <summary>
+			/// Gets the device's GPU thread priority.
+			/// <summary>
+			/// <param name="priority">Receives the GPU thread priority.</param>
+			/// <returns>A Result code.</returns>
 			Result GetGPUThreadPriority( [Out] int% priority );
+			
+			/// <summary>
+			/// Sets the device's GPU thread priority.
+			/// </summary>
+			/// <param name="priority">The GPU thread priority. Must be between -7 and 7, inclusive, where 0 represents normal.</param>
+			/// <returns>A Result code.</returns>
 			Result SetGPUThreadPriority( int priority );
-
+			
+			/// <summary>
+			/// Gets the residency status of a list of resources.
+			/// <summary>
+			/// <param name="resources">The resources to query.</param>
+			/// <returns>A list of residency status values, one for each entry in the input resources list. The result will be
+			/// null on failure.</returns>
 			ReadOnlyCollection<Residency>^ QueryResourceResidency( IList<ComObject^>^ resources ); 
 		};
 	}

@@ -62,14 +62,33 @@ namespace DXGI
 			return nullptr;
 		return gcnew Adapter( adapter );
 	}
+	
+	Adapter^ Factory::CreateSoftwareAdapter( IntPtr module )
+	{
+		if( module == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "module" );
+			
+		HINSTANCE instance = reinterpret_cast<HINSTANCE>( module.ToInt32() );
+		IDXGIAdapter* adapter = 0;
+		Result::Record( InternalPointer->CreateSoftwareAdapter( instance, &adapter ) );
 		
-	IntPtr Factory::GetWindowAssociation()
+		if( adapter == 0 )
+			return nullptr;
+		return gcnew Adapter( adapter );
+	}
+	
+	Adapter^ Factory::CreateSoftwareAdapter( System::Reflection::Module^ module )
+	{
+		return CreateSoftwareAdapter( System::Runtime::InteropServices::Marshal::GetHINSTANCE( module ) );
+	}
+	
+	Result Factory::GetWindowAssociation( [Out] IntPtr% handle )
 	{
 		HWND window = 0;
 		Result::Record( InternalPointer->GetWindowAssociation( &window ) );
-		if( Result::Last.IsFailure )
-			return IntPtr::Zero;
-		return IntPtr( window );
+		if( Result::Last.IsSuccess )
+			handle = IntPtr( window );
+		return Result::Last;
 	}
 	
 	Result Factory::SetWindowAssociation( IntPtr handle, WindowAssociationFlags flags )

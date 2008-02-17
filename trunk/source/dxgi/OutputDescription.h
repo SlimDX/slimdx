@@ -29,6 +29,9 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
+		/// <remarks>
+		/// Describes various properties of an Output.
+		/// </remarks>
 		public value class OutputDescription
 		{
 			String^ m_DeviceName;
@@ -41,6 +44,9 @@ namespace SlimDX
 			OutputDescription( const DXGI_OUTPUT_DESC& native );
 
 		public:
+			/// <summary>
+			/// Gets the output's device name.
+			/// </summary>
 			property String^ Name
 			{
 				String^ get();

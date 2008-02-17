@@ -19,71 +19,23 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-using namespace System;
-
-#include "../Result.h"
+#include "DataRectangle.h"
 
 namespace SlimDX
 {
-	namespace DXGI
+	DataRectangle::DataRectangle( int pitch, DataStream^ data )
+	: m_Pitch( pitch), m_Data( data )
 	{
-		public ref class Error sealed
-		{
-			private:
-				Error();
-				
-			public:
-				property static Result InvalidCall
-				{
-					Result get();
-				}
-				
-				property static Result NotFound
-				{
-					Result get();
-				}
-				
-				property static Result MoreData
-				{
-					Result get();
-				}
-				
-				property static Result Unsupported
-				{
-					Result get();
-				}
-				
-				property static Result DeviceRemoved
-				{
-					Result get();
-				}
-				
-				property static Result DeviceHung
-				{
-					Result get();
-				}
-				
-				property static Result DeviceReset
-				{
-					Result get();
-				}
-				
-				property static Result WasStillDrawing
-				{
-					Result get();
-				}
-				
-				property static Result DriverInternalError
-				{
-					Result get();
-				}
-				
-				property static Result NonExclusive
-				{
-					Result get();
-				}
-		};
+	}
+	
+	int DataRectangle::Pitch::get()
+	{
+		return m_Pitch;
+	}
+	
+	DataStream^ DataRectangle::Data::get()
+	{
+		return m_Data;
 	}
 }

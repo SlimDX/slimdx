@@ -346,7 +346,7 @@ namespace Direct3D9
 		return description;
 	}
 
-	LockedRect Surface::LockRectangle( LockFlags flags )
+	DataRectangle Surface::LockRectangle( LockFlags flags )
 	{
 		D3DLOCKED_RECT lockedRect;
 		
@@ -356,11 +356,11 @@ namespace Direct3D9
 		int lockedSize = lockedRect.Pitch * Description.Height;
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		LockedRect outRect( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
+		DataRectangle outRect( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
 		return outRect;
 	}
 
-	LockedRect Surface::LockRectangle( System::Drawing::Rectangle rect, LockFlags flags )
+	DataRectangle Surface::LockRectangle( System::Drawing::Rectangle rect, LockFlags flags )
 	{
 		D3DLOCKED_RECT lockedRect;
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
@@ -371,7 +371,7 @@ namespace Direct3D9
 		int lockedSize = lockedRect.Pitch * Description.Height;
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
-		LockedRect outRect( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
+		DataRectangle outRect( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
 		return outRect;
 	}
 
