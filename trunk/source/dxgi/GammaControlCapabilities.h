@@ -29,6 +29,9 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
+		/// <remarks>
+		/// Describes gamma control capabilities.
+		/// </remarks>
 		public value class GammaControlCapabilities
 		{
 			bool m_ScaleAndOffsetSupported;
@@ -40,21 +43,33 @@ namespace SlimDX
 			GammaControlCapabilities( const DXGI_GAMMA_CONTROL_CAPABILITIES& native );
 
 		public:
-			property bool IsTransformationSupported
+			/// <summary>
+			/// Gets a value indicating whether gamma scale and offset transformation is supported.
+			/// </summary>
+			property bool IsScaleAndOffsetSupported
 			{
 				bool get();
 			}
 
+			/// <summary>
+			/// Gets a value indicating the maximum range of the curve control point positions.
+			/// </summary>
 			property float MaximumConvertedValue
 			{
 				float get();
 			}
 
+			/// <summary>
+			/// Gets a value indicating the minimum range of the curve control point positions.
+			/// </summary>
 			property float MinimumConvertedValue
 			{
 				float get();
 			}
 
+			/// <summary>
+			/// Gets the list of curve control point positions.
+			/// </summary>
 			property ReadOnlyCollection<float>^ ControlPoints
 			{
 				ReadOnlyCollection<float>^ get();

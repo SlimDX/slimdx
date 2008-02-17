@@ -118,7 +118,7 @@ namespace SlimDX
 				ResourceOptionFlags optionFlags );
 			virtual ~Texture2D() { }
 			
-			SlimDX::DataRectangle Map( int subResource, MapMode mode, MapFlags flags );
+			SlimDX::DataRectangle^ Map( int subResource, MapMode mode, MapFlags flags );
 			void Unmap( int subResource );
 			
 			

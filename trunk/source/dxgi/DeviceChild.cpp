@@ -24,32 +24,29 @@
 
 #include "DXGIException.h"
 
+#include "Device.h"
+#include "DeviceChild.h"
+
 namespace SlimDX
 {
 namespace DXGI
-{
-	DXGIException::DXGIException( SerializationInfo^ info, StreamingContext context )
-	: SlimDXException( info, context )
+{ 
+	DeviceChild::DeviceChild()
 	{
 	}
-
-	DXGIException::DXGIException()
+	
+	DeviceChild::DeviceChild( IntPtr pointer )
 	{
+		Construct( pointer, NativeInterface );
 	}
 
-	DXGIException::DXGIException( String^ message )
-	: SlimDXException( message )
+	Device^ DeviceChild::GetDevice()
 	{
-	}
-
-	DXGIException::DXGIException( String^ message, Exception^ innerException )
-	: SlimDXException( message, innerException )
-	{
-	}
-
-	DXGIException::DXGIException( Result result )
-	: SlimDXException( result.Code )
-	{
+		IDXGIDevice* device = 0;
+		Result::Record( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
+		if( Result::Last.IsFailure )
+			return nullptr;
+		return gcnew Device( device );
 	}
 }
 }

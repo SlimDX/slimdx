@@ -48,6 +48,15 @@ namespace SlimDX
 
 		public:
 			/// <summary>
+			/// Gets or sets the device's GPU thread priority.
+			/// <summary>
+			property int GpuThreadPriority
+			{
+				int get();
+				void set( int value );
+			}
+		
+			/// <summary>
 			/// Constructs a Device from an unmanaged pointer.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGIDevice pointer.</param>
@@ -58,20 +67,6 @@ namespace SlimDX
 			/// </summary>
 			/// <returns>The adapter, or null on failure.</returns>
 			Adapter^ GetAdapter();
-			
-			/// <summary>
-			/// Gets the device's GPU thread priority.
-			/// <summary>
-			/// <param name="priority">Receives the GPU thread priority.</param>
-			/// <returns>A Result code.</returns>
-			Result GetGPUThreadPriority( [Out] int% priority );
-			
-			/// <summary>
-			/// Sets the device's GPU thread priority.
-			/// </summary>
-			/// <param name="priority">The GPU thread priority. Must be between -7 and 7, inclusive, where 0 represents normal.</param>
-			/// <returns>A Result code.</returns>
-			Result SetGPUThreadPriority( int priority );
 			
 			/// <summary>
 			/// Gets the residency status of a list of resources.

@@ -42,13 +42,14 @@ namespace DXGI
 		Construct( pointer, NativeInterface );
 	}
 
-	Result Adapter::GetDescription([Out] AdapterDescription% description )
+	AdapterDescription Adapter::Description::get()
 	{
 		DXGI_ADAPTER_DESC nativeDescription;
 		Result::Record( InternalPointer->GetDesc( &nativeDescription ) );
 		if( Result::Last.IsSuccess )
-			description = AdapterDescription( nativeDescription );
-		return Result::Last;
+			return AdapterDescription( nativeDescription );
+		
+		throw gcnew DXGIException( Result::Last );
 	}
 		
 	int Adapter::GetOutputCount()

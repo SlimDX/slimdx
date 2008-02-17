@@ -97,8 +97,8 @@ namespace SlimDX
 			static void ToFile( Volume^ volume, String^ fileName, ImageFileFormat format, Box box );
 			static void ToFile( Volume^ volume, String^ fileName, ImageFileFormat format );
 
-			DataBox LockBox( LockFlags flags );
-			DataBox LockBox( Box box, LockFlags flags );
+			DataBox^ LockBox( LockFlags flags );
+			DataBox^ LockBox( Box box, LockFlags flags );
 			void UnlockBox();
 
 			Device^ GetDevice();

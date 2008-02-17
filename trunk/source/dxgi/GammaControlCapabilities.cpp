@@ -38,7 +38,7 @@ namespace DXGI
 			m_ControlPointPositions->Add( native.ControlPointPositions[ controlPointIndex ] );
 	}
 
-	bool GammaControlCapabilities::IsTransformationSupported::get()
+	bool GammaControlCapabilities::IsScaleAndOffsetSupported::get()
 	{
 		return m_ScaleAndOffsetSupported;
 	}

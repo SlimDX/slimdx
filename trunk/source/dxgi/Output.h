@@ -54,23 +54,32 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the output's description.
 			/// </summary>
-			/// <param name="description">Receives the output description.</param>
-			/// <returns>A Result code.</returns>
-			Result GetDescription( [Out] OutputDescription% description );
+			property OutputDescription Description
+			{
+				OutputDescription get();
+			}
 			
 			/// <summary>
 			/// Gets statistics about recent frames.
 			/// </summary>
-			/// <param name="statistics">Receives the frame statistics.</param>
-			/// <returns>A Result code.</returns>
-			Result GetFrameStatistics( [Out] FrameStatistics% statistics );
+			property DXGI::FrameStatistics FrameStatistics
+			{
+				DXGI::FrameStatistics get();
+			}
 			
 			/// <summary>
 			/// Gets a description of the output's gamma-control capabilities.
 			/// </summary>
-			/// <param name="statistics">Receives the gamma-control capabilities.</param>
-			/// <returns>A Result code.</returns>
-			Result GetGammaControlCapabilities( [Out] GammaControlCapabilities% capabilities );
+			property DXGI::GammaControlCapabilities GammaControlCapabilities
+			{
+				DXGI::GammaControlCapabilities get();
+			}
+			
+			/// <summary>
+			/// Constructs an Output from an unmanaged pointer.
+			/// </summary>
+			/// <param name="pointer">The unmanaged IDXGIOutput pointer.</param>
+			Output( IntPtr pointer );
 			
 			/// <summary>
 			/// Gets a list of display modes matching certain specifications.
@@ -81,7 +90,7 @@ namespace SlimDX
 			ReadOnlyCollection<ModeDescription>^ GetDisplayModeList( Format format, DisplayModeEnumerationFlags flags );
 			
 			/// <summary>
-			/// Finds the display mode that best matches the requested mode.
+			/// Gets the display mode that best matches the requested mode.
 			/// </summary>
 			/// <param name="device">The device interface. If this parameter is null, only
 			/// modes whose format matches the specified mode will be returned; otherwise, only those
@@ -89,7 +98,7 @@ namespace SlimDX
 			/// <param name="modeToMatch">The description of the display mode to match.</param>
 			/// <param name="result">Receives the best-matching display mode.</param>
 			/// <returns>A Result code.</returns>
-			Result FindClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription %result );
+			Result GetClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription %result );
 			
 			/// <summary>
 			/// Sets gamma control information.

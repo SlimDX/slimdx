@@ -45,28 +45,40 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Gets the output's device name.
+			/// Gets the output's name.
 			/// </summary>
 			property String^ Name
 			{
 				String^ get();
 			}
 
+			/// <summary>
+			/// Gets output's bounds in desktop coordinates.
+			/// </summary>
 			property Drawing::Rectangle^ DesktopBounds
 			{
 				Drawing::Rectangle^ get();
 			}
 
+			/// <summary>
+			/// Gets a value indicating whether the output is attached to the desktop.
+			/// </summary>
 			property bool IsAttachedToDesktop
 			{
 				bool get();
 			}
-
+			
+			/// <summary>
+			/// Gets rotation performed by the output on a presented image.
+			/// </summary>
 			property DisplayModeRotation Rotation
 			{
 				DisplayModeRotation get();
 			}
 
+			/// <summary>
+			/// Gets the unmanaged HMONITOR handle for the output.
+			/// </summary>
 			property IntPtr MonitorHandle
 			{
 				IntPtr get();

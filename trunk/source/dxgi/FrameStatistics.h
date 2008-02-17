@@ -29,6 +29,9 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
+		/// <remarks>
+		/// Provides basic rendering statistics. All counts are relative to machine boot. 
+		/// </remarks>
 		public value class FrameStatistics
 		{
 			int m_PresentCount;
@@ -41,26 +44,41 @@ namespace SlimDX
 			FrameStatistics( const DXGI_FRAME_STATISTICS& native );
 
 		public:
+			/// <summary>
+			/// Gets the number of times an image has been presented to an output.
+			/// </summary>
 			property int PresentCount
 			{
 				int get();
 			}
 
+			/// <summary>
+			/// Gets the number of times a vertical blank has occured.
+			/// </summary>
 			property int PresentRefreshCount
 			{
 				int get();
 			}
 
+			/// <summary>
+			/// Gets the number of times a vertical blank has occured.
+			/// </summary>
 			property int SyncRefreshCount
 			{
 				int get();
 			}
 
+			/// <summary>
+			/// Gets a value equivalent to that returned by the unmanaged function QueryPerformanceCounter.
+			/// </summary>
 			property __int64 SyncQPCTime
 			{
 				__int64 get();
 			}
 
+			/// <summary>
+			/// Reserved. Always returns 0.
+			/// </summary>
 			property __int64 SyncGPUTime
 			{
 				__int64 get();

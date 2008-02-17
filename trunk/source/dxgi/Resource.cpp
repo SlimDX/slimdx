@@ -24,32 +24,44 @@
 
 #include "DXGIException.h"
 
+#include "Resource.h"
+
 namespace SlimDX
 {
 namespace DXGI
-{
-	DXGIException::DXGIException( SerializationInfo^ info, StreamingContext context )
-	: SlimDXException( info, context )
+{ 	
+	Resource::Resource( IDXGIResource* pointer )
 	{
+		Construct( pointer );
 	}
-
-	DXGIException::DXGIException()
+	
+	Resource::Resource( IntPtr pointer )
 	{
+		Construct( pointer, NativeInterface );
 	}
-
-	DXGIException::DXGIException( String^ message )
-	: SlimDXException( message )
+	
+	ResourcePriority Resource::EvictionPriority::get()
 	{
+		UINT priority = 0;
+		if( Result::Record( InternalPointer->GetEvictionPriority( &priority ) ).IsFailure )
+			throw gcnew DXGIException( Result::Last );
+		
+		return static_cast<ResourcePriority>( priority );
 	}
-
-	DXGIException::DXGIException( String^ message, Exception^ innerException )
-	: SlimDXException( message, innerException )
+	
+	void Resource::EvictionPriority::set( ResourcePriority value )
 	{
+		if( Result::Record( InternalPointer->SetEvictionPriority( static_cast<UINT>( value ) ) ).IsFailure )
+			throw gcnew DXGIException( Result::Last );
 	}
-
-	DXGIException::DXGIException( Result result )
-	: SlimDXException( result.Code )
+	
+	DXGI::Usage Resource::Usage::get()
 	{
+		DXGI_USAGE usage = 0;
+		if( Result::Record( InternalPointer->GetUsage( &usage ) ).IsFailure )
+			throw gcnew DXGIException( Result::Last );
+		
+		return static_cast<DXGI::Usage>( usage );
 	}
 }
 }

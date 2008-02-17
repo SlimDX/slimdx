@@ -24,6 +24,8 @@
 using namespace System;
 using namespace System::IO;
 
+struct ID3DXBuffer;
+
 namespace SlimDX
 {
 	public ref class DataStream : public Stream

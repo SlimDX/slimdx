@@ -19,37 +19,43 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include <dxgi.h>
+using namespace System;
+using namespace System::Collections::Generic;
+using namespace System::Collections::ObjectModel;
+using namespace System::Runtime::InteropServices;
 
-#include "DXGIException.h"
+#include "../ComObject.h"
 
 namespace SlimDX
 {
-namespace DXGI
-{
-	DXGIException::DXGIException( SerializationInfo^ info, StreamingContext context )
-	: SlimDXException( info, context )
+	namespace DXGI
 	{
+		ref class Device;
+		
+		/// <remarks>
+		/// An object that is bound to a Device.
+		/// </remarks>
+		public ref class DeviceChild : public ComObject 
+		{
+			COMOBJECT(IDXGIDeviceSubObject);
+		
+		internal:
+			DeviceChild();
+			
+		public:
+			/// <summary>
+			/// Constructs a DeviceChild from an unmanaged pointer.
+			/// </summary>
+			/// <param name="pointer">The unmanaged IDXGIDeviceSubObject pointer.</param>
+			DeviceChild( IntPtr pointer );
+			
+			/// <summary>
+			/// Gets the device the object is bound to.
+			/// </summary>
+			/// <returns>The device, or null on failure.</returns>
+			Device^ GetDevice();
+		};
 	}
-
-	DXGIException::DXGIException()
-	{
-	}
-
-	DXGIException::DXGIException( String^ message )
-	: SlimDXException( message )
-	{
-	}
-
-	DXGIException::DXGIException( String^ message, Exception^ innerException )
-	: SlimDXException( message, innerException )
-	{
-	}
-
-	DXGIException::DXGIException( Result result )
-	: SlimDXException( result.Code )
-	{
-	}
-}
-}
+};

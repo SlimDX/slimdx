@@ -49,6 +49,12 @@ namespace SlimDX
 			Factory();
 			
 			/// <summary>
+			/// Constructs a Factory from an unmanaged pointer.
+			/// </summary>
+			/// <param name="pointer">The unmanaged IDXGIFactory pointer.</param>
+			Factory( IntPtr pointer );
+			
+			/// <summary>
 			/// Gets the number of available adapters.
 			/// </summary>
 			/// <returns>The number of available adapters.</returns>
@@ -79,9 +85,8 @@ namespace SlimDX
 			/// Gets the window handle associated with the factory (the window through which the user signals fullscreen
 			/// transitions).
 			/// </summary>
-			/// <param name="handle">Receives the window handle.</param>
-			/// <returns>A Result code.</returns>
-			Result GetWindowAssociation( [Out] IntPtr% handle );
+			/// <returns>The window handle.</returns>
+			IntPtr GetWindowAssociation();
 			
 			/// <summary>
 			/// Sets the window handle associated with the factory (the window through which the user signals fullscreen
