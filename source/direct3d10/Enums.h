@@ -24,8 +24,7 @@
 using namespace System;
 
 #include <windows.h>
-
-#include "../dxgi/Enums.h"
+#include <d3dx10.h>
 
 namespace SlimDX
 {

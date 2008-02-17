@@ -39,8 +39,8 @@ namespace SlimDX
 		value class SwapChainDescription;
 		
 		/// <remarks>
-		/// A swap chain holds one or more surfaces that store rendered data
-		/// prior to presenting that data to an output.
+		/// A swap chain holds one or more surfaces that store rendered data prior to
+		/// presenting that data to an output.
 		/// </remarks>
 		public ref class SwapChain : public ComObject
 		{
@@ -56,12 +56,12 @@ namespace SlimDX
 			generic< typename T > where T : ComObject, ref class
 			T GetBuffer( int buffer );
 
-			FrameStatistics GetFrameStatistics();
+			Result GetFrameStatistics( [Out] FrameStatistics% statistics );
 
-			void ResizeBuffers( int count, int width, int height, Format format, SwapChainFlags flags );
-			void ResizeTarget( ModeDescription description );
+			Result ResizeBuffers( int count, int width, int height, Format format, SwapChainFlags flags );
+			Result ResizeTarget( ModeDescription description );
 
-			PresentResult Present( int syncInterval, PresentFlags flags );
+			Result Present( int syncInterval, PresentFlags flags );
 		};
 	}
 };

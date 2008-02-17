@@ -19,71 +19,28 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-using namespace System;
-
-#include "../Result.h"
+#include "DataBox.h"
 
 namespace SlimDX
 {
-	namespace DXGI
+	DataBox::DataBox( int rowPitch, int slicePitch, DataStream^ data )
+	: m_RowPitch( rowPitch), m_SlicePitch( slicePitch ), m_Data( data )
 	{
-		public ref class Error sealed
-		{
-			private:
-				Error();
-				
-			public:
-				property static Result InvalidCall
-				{
-					Result get();
-				}
-				
-				property static Result NotFound
-				{
-					Result get();
-				}
-				
-				property static Result MoreData
-				{
-					Result get();
-				}
-				
-				property static Result Unsupported
-				{
-					Result get();
-				}
-				
-				property static Result DeviceRemoved
-				{
-					Result get();
-				}
-				
-				property static Result DeviceHung
-				{
-					Result get();
-				}
-				
-				property static Result DeviceReset
-				{
-					Result get();
-				}
-				
-				property static Result WasStillDrawing
-				{
-					Result get();
-				}
-				
-				property static Result DriverInternalError
-				{
-					Result get();
-				}
-				
-				property static Result NonExclusive
-				{
-					Result get();
-				}
-		};
+	}
+	
+	int DataBox::RowPitch::get()
+	{
+		return m_RowPitch;
+	}
+	
+	int DataBox::SlicePitch::get()
+	{
+		return m_SlicePitch;
+	}
+	
+	DataStream^ DataBox::Data::get()
+	{
+		return m_Data;
 	}
 }

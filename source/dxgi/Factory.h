@@ -22,6 +22,7 @@
 #pragma once
 
 using namespace System;
+using namespace System::Runtime::InteropServices;
 
 #include "../ComObject.h"
 
@@ -32,18 +33,63 @@ namespace SlimDX
 	namespace DXGI
 	{
 		ref class Adapter;
-
+		
+		/// <remarks>
+		/// Provides access to connected adapters and window associations. A Factory
+		/// is also required to create most DXGI objects.
+		/// </remarks>
 		public ref class Factory : public ComObject
 		{
 			COMOBJECT(IDXGIFactory);
 			
 		public:
+			/// <summary>
+			/// Constructs a new Factory.
+			/// </summary>
 			Factory();
 			
+			/// <summary>
+			/// Gets the number of available adapters.
+			/// </summary>
+			/// <returns>The number of available adapters.</returns>
 			int GetAdapterCount();
+			
+			/// <summary>
+			/// Gets the specified adapter.
+			/// </summary>
+			/// <param name="index">The index of the desired adapter.</param>
+			/// <returns>The specified adapter, or null on failure.</returns>
 			Adapter^ GetAdapter( int index );
-
-			IntPtr GetWindowAssociation();
+		
+			/// <summary>
+			/// Creates a software adapater interface.
+			/// </summary>
+			/// <param name="module">The unmanaged HMODULE for the software adapter DLL.</param>
+			/// <returns>The specified adapter, or null on failure.</returns>
+			Adapter^ CreateSoftwareAdapter( IntPtr module );
+			
+			/// <summary>
+			/// Creates a software adapater interface.
+			/// </summary>
+			/// <param name="module">The module for the software adapter DLL.</param>
+			/// <returns>The specified adapter, or null on failure.</returns>
+			Adapter^ CreateSoftwareAdapter( System::Reflection::Module^ module );
+			
+			/// <summary>
+			/// Gets the window handle associated with the factory (the window through which the user signals fullscreen
+			/// transitions).
+			/// </summary>
+			/// <param name="handle">Receives the window handle.</param>
+			/// <returns>A Result code.</returns>
+			Result GetWindowAssociation( [Out] IntPtr% handle );
+			
+			/// <summary>
+			/// Sets the window handle associated with the factory (the window through which the user signals fullscreen
+			/// transitions).
+			/// </summary>
+			/// <param name="handle">The window handle.</param>
+			/// <param name="flags">Flags controlling window association behavior.</param>
+			/// <returns>A Result code.</returns>
 			Result SetWindowAssociation( IntPtr handle, WindowAssociationFlags flags );
 		};
 	}

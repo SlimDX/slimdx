@@ -27,6 +27,9 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
+		/// <remarks>
+		/// Describes various properties of an Adapter.
+		/// </remarks>
 		public value class AdapterDescription
 		{
 			String^ m_Description;
@@ -43,46 +46,73 @@ namespace SlimDX
 			AdapterDescription( const DXGI_ADAPTER_DESC& native );
 
 		public:
+			/// <summary>
+			/// Gets the adapter's description.
+			/// </summary>
 			property String^ Description
 			{
 				String^ get();
 			}
-
+			
+			/// <summary>
+			/// Gets the adapter's vendor ID.
+			/// </summary>
 			property int VendorId
 			{
 				int get();
 			}
 
+			/// <summary>
+			/// Gets the adapter's device ID.
+			/// </summary>
 			property int DeviceId
 			{
 				int get();
 			}
 
+			/// <summary>
+			/// Gets the adapter's subsystem ID.
+			/// </summary>
 			property int SubsystemId
 			{
 				int get();
 			}
 
+			/// <summary>
+			/// Gets the adapter's revision number.
+			/// </summary>
 			property int Revision
 			{
 				int get();
 			}
 
+			/// <summary>
+			/// Gets the number of bytes of video memory not shared with the CPU.
+			/// </summary>
 			property int DedicatedVideoMemory
 			{
 				int get();
 			}
 
+			/// <summary>
+			/// Gets the number of bytes of system memory not shared with the CPU.
+			/// </summary>
 			property int DedicatedSystemMemory
 			{
 				int get();
 			}
 
+			/// <summary>
+			/// Gets the number of bytes of system memory shared with the CPU.
+			/// </summary>
 			property int SharedSystemMemory
 			{
 				int get();
 			}
 
+			/// <summary>
+			/// Gets the adapter's unique identifier.
+			/// </summary>
 			property Int64 Luid
 			{
 				Int64 get();

@@ -21,69 +21,39 @@
 */
 #pragma once
 
-using namespace System;
-
-#include "../Result.h"
-
 namespace SlimDX
 {
-	namespace DXGI
+	ref class DataStream;
+
+	/// <remarks>
+	/// A DataRectangle provides supporting information for a DataStream whose
+	/// data is organized within two dimensions (a rectangle).
+	/// </remarks>
+	public value class DataRectangle
 	{
-		public ref class Error sealed
+	private:
+		int m_Pitch;
+		DataStream^ m_Data;
+
+	internal:
+		DataRectangle( int pitch, DataStream^ data );
+
+	public:
+		/// <summary>
+		/// Gets the number of bytes of data between two consecutive (1D) rows of data.
+		/// </summary>
+		property int Pitch
 		{
-			private:
-				Error();
-				
-			public:
-				property static Result InvalidCall
-				{
-					Result get();
-				}
-				
-				property static Result NotFound
-				{
-					Result get();
-				}
-				
-				property static Result MoreData
-				{
-					Result get();
-				}
-				
-				property static Result Unsupported
-				{
-					Result get();
-				}
-				
-				property static Result DeviceRemoved
-				{
-					Result get();
-				}
-				
-				property static Result DeviceHung
-				{
-					Result get();
-				}
-				
-				property static Result DeviceReset
-				{
-					Result get();
-				}
-				
-				property static Result WasStillDrawing
-				{
-					Result get();
-				}
-				
-				property static Result DriverInternalError
-				{
-					Result get();
-				}
-				
-				property static Result NonExclusive
-				{
-					Result get();
-				}
-		};
-	}
+			int get();
+		}
+
+		/// <summary>
+		/// Gets the DataStream containing the actual data bytes.
+		/// </summary>
+		property DataStream^ Data
+		{
+			DataStream^ get();
+		}
+	};
 }
+

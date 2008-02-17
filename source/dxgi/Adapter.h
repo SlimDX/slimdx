@@ -34,7 +34,7 @@ namespace SlimDX
 		value class AdapterDescription;
 
 		/// <remarks>
-		/// An Adapter represents a display subsystem (one or more GPUs, DACs, and video memory).
+		/// A display subsystem (one or more GPUs, DACs, and video memory).
 		/// </remarks>
 		public ref class Adapter : public ComObject
 		{
@@ -44,34 +44,44 @@ namespace SlimDX
 			Adapter( IDXGIAdapter* pointer );
 
 		public:
-			/// <remarks>
-			/// Constructs a new Adapter from an unmanaged IDXGIAdapter pointer.
-			/// </remarks>
+			/// <summary>
+			/// Constructs an Adapter from an unmanaged pointer.
+			/// </summary>
+			/// <param name="pointer">The unmanaged IDXGIAdapter pointer.</param>
 			Adapter( IntPtr pointer );
 			
-			/// <remarks>
+			/// <summary>
 			/// Gets the adapter's description.
-			/// </remarks>
+			/// </summary>
+			/// <param name="description">Receives the adapter description.</param>
+			/// <returns>A Result code.</returns>
 			Result GetDescription( [Out] AdapterDescription% description );
 			
-			/// <remarks>
+			/// <summary>
 			/// Gets the number of outputs on the adapter.
-			/// </remarks>
+			/// </summary>
+			/// <returns>The number of outputs on the adapter.</returns>
 			int GetOutputCount();
 			
-			/// <remarks>
+			/// <summary>
 			/// Gets the specified output.
-			/// </remarks>
+			/// </summary>
+			/// <returns>The desired output, or null on failure.</returns>
 			Output^ GetOutput( int index );
 			
-			/// <remarks>
+			/// <summary>
 			/// Determines if a device interface for a graphics component is supported by the adapter.
-			/// </remarks>
+			/// </v>
+			/// <param name="type">The device interface type.</param>
+			/// <returns>True if the device interface is supported, false otherwise.</returns>
 			bool IsInterfaceSupported( Type^ type );
 			
-			/// <remarks>
+			/// <summary>
 			/// Determines if a device interface for a graphics component is supported by the adapter.
-			/// </remarks>
+			/// </summary>
+			/// <param name="type">The device interface type.</param>
+			/// <param name="userModeVersion">Receives the user-mode driver version of the interface.</param>
+			/// <returns>True if the device interface is supported, false otherwise.</returns>
 			bool IsInterfaceSupported( Type^ type, [Out] Int64% userModeVersion );	
 		};
 	}

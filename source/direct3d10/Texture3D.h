@@ -24,7 +24,7 @@
 using namespace System;
 
 #include "../ComObject.h"
-#include "../direct3d/LockedBox.h"
+#include "../DataBox.h"
 
 #include "Enums.h"
 #include "Texture.h"
@@ -111,7 +111,7 @@ namespace SlimDX
 				ResourceOptionFlags get() { return m_OptionFlags; }
 			}
 			
-			SlimDX::Direct3D::LockedBox Map( int subResource, MapMode mode, MapFlags flags );
+			SlimDX::DataBox Map( int subResource, MapMode mode, MapFlags flags );
 			void Unmap( int subResource );
 			
 			/// <summary>

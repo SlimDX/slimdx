@@ -22,7 +22,7 @@
 #pragma once
 
 #include "Resource.h"
-#include "../direct3d/LockedBox.h"
+#include "../DataBox.h"
 
 namespace SlimDX
 {
@@ -97,8 +97,8 @@ namespace SlimDX
 			static void ToFile( Volume^ volume, String^ fileName, ImageFileFormat format, Box box );
 			static void ToFile( Volume^ volume, String^ fileName, ImageFileFormat format );
 
-			LockedBox LockBox( LockFlags flags );
-			LockedBox LockBox( Box box, LockFlags flags );
+			DataBox LockBox( LockFlags flags );
+			DataBox LockBox( Box box, LockFlags flags );
 			void UnlockBox();
 
 			Device^ GetDevice();

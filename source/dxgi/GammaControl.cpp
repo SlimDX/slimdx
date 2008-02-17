@@ -19,40 +19,48 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-using namespace System::Runtime::InteropServices;
+#include <dxgi.h>
+
+#include "GammaControl.h"
 
 namespace SlimDX
 {
-	ref class DataStream;
-
-	namespace Direct3D
+namespace DXGI
+{ 	
+	GammaControl::GammaControl( const DXGI_GAMMA_CONTROL& native )
 	{
-		[StructLayout( LayoutKind::Sequential )]
-		public value class LockedRect
-		{
-		private:
-			int pitch;
-			SlimDX::DataStream^ data;
+		m_Scale = ColorRGB( native.Scale.Red, native.Scale.Green, native.Scale.Blue );
+		m_Offset = ColorRGB( native.Offset.Red, native.Offset.Green, native.Offset.Blue );
+		
+		// 1025 is hard-coded by the DXGI API, there doesn't seem to be a constant for it.
+		for( int controlPointIndex = 0; controlPointIndex < 1025; ++controlPointIndex )
+			m_GammaCurve->Add( ColorRGB( native.GammaCurve[ controlPointIndex ].Red, native.GammaCurve[ controlPointIndex ].Green, native.GammaCurve[ controlPointIndex ].Blue ) );
+	}
 
-		internal:
-			LockedRect( int pitch, SlimDX::DataStream^ data )
-			: pitch( pitch ), data( data )
-			{
-			}
+	ColorRGB GammaControl::Scale::get()
+	{
+		return m_Scale;
+	}
+	
+	void GammaControl::Scale::set( ColorRGB value )
+	{
+		m_Scale = value;
+	}
+	
+	ColorRGB GammaControl::Offset::get()
+	{
+		return m_Offset;
+	}
+	
+	void GammaControl::Offset::set( ColorRGB value )
+	{
+		m_Offset = value;
+	}
 
-		public:
-			property int Pitch
-			{
-				int get() { return pitch; }
-			}
-
-			property SlimDX::DataStream^ Data
-			{
-				SlimDX::DataStream^ get() { return data; }
-			}
-		};
+	ReadOnlyCollection<ColorRGB>^ GammaControl::ControlPoints::get()
+	{
+		return gcnew ReadOnlyCollection<ColorRGB>( m_GammaCurve );
 	}
 }
-
+}

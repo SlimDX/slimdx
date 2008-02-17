@@ -34,7 +34,7 @@ namespace DXGI
 		m_MaxConvertedValue = native.MaxConvertedValue;
 		m_MinConvertedValue = native.MinConvertedValue;
 		m_ControlPointPositions = gcnew List<float>();
-		for( int controlPointIndex = 0; controlPointIndex = native.NumGammaControlPoints; ++controlPointIndex )
+		for( UINT controlPointIndex = 0; controlPointIndex < native.NumGammaControlPoints; ++controlPointIndex )
 			m_ControlPointPositions->Add( native.ControlPointPositions[ controlPointIndex ] );
 	}
 

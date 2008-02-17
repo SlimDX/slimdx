@@ -78,7 +78,7 @@ namespace Direct3D10
 		Construct( texture );	
 	}
 	
-	SlimDX::Direct3D::LockedBox Texture3D::Map( int mipSlice, MapMode mode, MapFlags flags )
+	SlimDX::DataBox Texture3D::Map( int mipSlice, MapMode mode, MapFlags flags )
 	{
 		int subResource = D3D10CalcSubresource( mipSlice, 0, MipLevels );
 		int mipHeight = GetMipSize( mipSlice, Height );
@@ -90,7 +90,7 @@ namespace Direct3D10
 		int lockedSize = mipHeight * mappedBox.RowPitch * mappedBox.DepthPitch;
 		
 		bool readOnly = mode == MapMode::Read;
-		SlimDX::Direct3D::LockedBox box( mappedBox.RowPitch, mappedBox.DepthPitch, gcnew DataStream( mappedBox.pData, lockedSize, true, !readOnly, false ) );
+		SlimDX::DataBox box( mappedBox.RowPitch, mappedBox.DepthPitch, gcnew DataStream( mappedBox.pData, lockedSize, true, !readOnly, false ) );
 		
 		return box;
 	}

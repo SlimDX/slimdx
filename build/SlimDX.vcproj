@@ -808,6 +808,14 @@
 					RelativePath="..\source\direct3d10\Buffer.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d10\BufferDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\BufferDescription.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Resource"
@@ -968,8 +976,24 @@
 				>
 			</File>
 			<Filter
-				Name="DataStream"
+				Name="Data"
 				>
+				<File
+					RelativePath="..\source\DataBox.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\DataBox.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\DataRectangle.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\DataRectangle.h"
+					>
+				</File>
 				<File
 					RelativePath="..\source\DataStream.cpp"
 					>
@@ -1499,6 +1523,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\math\ColorRGB.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\math\ColorRGB.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\math\ColorValue.cpp"
 				>
 			</File>
@@ -1712,14 +1744,6 @@
 			>
 			<File
 				RelativePath="..\source\direct3d9\CapsEnums.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d\LockedBox.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d\LockedRect.h"
 				>
 			</File>
 			<File

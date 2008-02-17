@@ -72,37 +72,28 @@ namespace DXGI
 		return safe_cast<T>( Activator::CreateInstance( T::typeid, IntPtr( unknown ) ) );
 	}
 
-	FrameStatistics SwapChain::GetFrameStatistics()
+	Result SwapChain::GetFrameStatistics( [Out] FrameStatistics% statistics )
 	{
 		DXGI_FRAME_STATISTICS stats;
 		Result::Record( InternalPointer->GetFrameStatistics( &stats ) );
-		if( Result::Last.IsFailure )
-			return FrameStatistics();
-		return FrameStatistics( stats );
+		if( Result::Last.IsSuccess )
+			statistics = FrameStatistics( stats );
+		return Result::Last;
 	}
 
-	void SwapChain::ResizeBuffers( int count, int width, int height, SlimDX::DXGI::Format format, SwapChainFlags flags )
+	Result SwapChain::ResizeBuffers( int count, int width, int height, SlimDX::DXGI::Format format, SwapChainFlags flags )
 	{
-		HRESULT hr = InternalPointer->ResizeBuffers( count, width, height, static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ) );
-		Result::Record( hr );
+		return Result::Record( InternalPointer->ResizeBuffers( count, width, height, static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ) ) );
 	}
 	
-	void SwapChain::ResizeTarget( ModeDescription description )
+	Result SwapChain::ResizeTarget( ModeDescription description )
 	{
-		HRESULT hr = InternalPointer->ResizeTarget( reinterpret_cast<DXGI_MODE_DESC*>( &description ) );
-		Result::Record( hr );
+		return Result::Record( InternalPointer->ResizeTarget( reinterpret_cast<DXGI_MODE_DESC*>( &description ) ) );
 	}
 
-	PresentResult SwapChain::Present( int syncInterval, PresentFlags flags )
+	Result SwapChain::Present( int syncInterval, PresentFlags flags )
 	{
-		HRESULT hr = InternalPointer->Present( syncInterval, static_cast<UINT>( flags ) );
-		if( hr == S_OK )
-			return PresentResult::Okay;
-		else if( hr == DXGI_STATUS_OCCLUDED )
-			return PresentResult::Occluded;
-		
-		Result::Record( hr );
-		return PresentResult::Failed;
+		return Result::Record( InternalPointer->Present( syncInterval, static_cast<UINT>( flags ) ) );
 	}
 }
 }
