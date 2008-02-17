@@ -29,7 +29,7 @@ namespace SlimDX
 	/// A DataBox provides supporting information for a DataStream whose
 	/// data is organized within three dimensions (a box).
 	/// </remarks>
-	public value class DataBox
+	public ref class DataBox
 	{
 	private:
 		int m_RowPitch;

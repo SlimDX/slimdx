@@ -36,9 +36,14 @@ namespace DXGI
 		IDXGIFactory* factory = 0;
 		Result::Record( CreateDXGIFactory( __uuidof( IDXGIFactory ), reinterpret_cast<void**>( &factory ) ) );
 		if( Result::Last.IsFailure )
-			throw gcnew DXGIException( Result::Last.Code );
+			throw gcnew DXGIException( Result::Last );
 
 		Construct( factory );
+	}
+	
+	Factory::Factory( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
 	}
 	
 	int Factory::GetAdapterCount()
@@ -82,13 +87,11 @@ namespace DXGI
 		return CreateSoftwareAdapter( System::Runtime::InteropServices::Marshal::GetHINSTANCE( module ) );
 	}
 	
-	Result Factory::GetWindowAssociation( [Out] IntPtr% handle )
+	IntPtr Factory::GetWindowAssociation()
 	{
 		HWND window = 0;
 		Result::Record( InternalPointer->GetWindowAssociation( &window ) );
-		if( Result::Last.IsSuccess )
-			handle = IntPtr( window );
-		return Result::Last;
+		return IntPtr( window );
 	}
 	
 	Result Factory::SetWindowAssociation( IntPtr handle, WindowAssociationFlags flags )

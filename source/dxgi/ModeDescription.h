@@ -29,7 +29,10 @@ using namespace System;
 namespace SlimDX
 {
 	namespace DXGI
-	{	
+	{
+		/// <remarks>
+		/// Describes a display mode.
+		/// </remarks>
 		public value class ModeDescription
 		{
 			int m_Width;
@@ -45,42 +48,67 @@ namespace SlimDX
 			DXGI_MODE_DESC CreateNativeVersion();
 			
 		public:
+			/// <summary>
+			/// Gets or sets the display mode width.
+			/// </summary>
 			property int Width
 			{
 				int get();
 				void set( int value );
 			}
 
+			/// <summary>
+			/// Gets or sets the display mode height.
+			/// </summary>
 			property int Height
 			{
 				int get();
 				void set( int value );
 			}
 
+      /// <summary>
+			/// Gets or sets the display mode refresh rate.
+			/// </summary>
 			property Rational RefreshRate
 			{
 				Rational get();
 				void set( Rational value );
 			}
 
+			/// <summary>
+			/// Gets or sets the display mode format.
+			/// </summary>
 			property Format Format
 			{
 				DXGI::Format get();
 				void set( DXGI::Format value );
 			}
 
+			/// <summary>
+			/// Gets or sets the scanline ordering.
+			/// </summary>
 			property DisplayModeScanlineOrdering ScanlineOrdering
 			{
 				DisplayModeScanlineOrdering get();
 				void set( DisplayModeScanlineOrdering value );
 			}
 
+      /// <summary>
+			/// Gets or sets the display mode scaling.
+			/// </summary>
 			property DisplayModeScaling Scaling
 			{
 				DisplayModeScaling get();
 				void set( DisplayModeScaling value );
 			}
 			
+			/// <summary>
+			/// Constructs a new ModeDescription.
+			/// </summary>
+			/// <param name="width">The width.</param>
+			/// <param name="height">The height.</param>
+			/// <param name="refreshRate">The refresh rate.</param>
+			/// <param name="format">The format.</param>
 			ModeDescription( int width, int height, Rational refreshRate, DXGI::Format format );
 		};
 	}

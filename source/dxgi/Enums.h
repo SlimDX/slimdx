@@ -23,7 +23,7 @@
 
 using namespace System;
 
-#include <windows.h>
+#include <dxgi.h>
 
 namespace SlimDX
 {
@@ -155,6 +155,14 @@ namespace SlimDX
 			B5G5R5A1_UNorm = DXGI_FORMAT_B5G5R5A1_UNORM,
 			B8G8R8A8_UNorm = DXGI_FORMAT_B8G8R8A8_UNORM,
 			B8G8R8X8_UNorm = DXGI_FORMAT_B8G8R8X8_UNORM
+		};
+		
+		[Flags]
+		public enum class MapFlags : Int32
+		{
+			Read = DXGI_MAP_READ,
+			Write = DXGI_MAP_WRITE,
+			Discard = DXGI_MAP_DISCARD
 		};
 		
 		[Flags]

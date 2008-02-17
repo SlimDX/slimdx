@@ -26,16 +26,20 @@ using namespace System::Runtime::InteropServices;
 
 #include "../ComObject.h"
 
+#include "DeviceChild.h"
+#include "Enums.h"
+
 namespace SlimDX
 {
 	namespace DXGI
 	{
+		ref class DataRectangle;
 		value class SurfaceDescription;
 		
 		/// <remarks>
 		/// A Surface represents container for image data.
 		/// </remarks>
-		public ref class Surface : public ComObject
+		public ref class Surface : public DeviceChild
 		{
 			COMOBJECT(IDXGISurface);
 
@@ -43,9 +47,30 @@ namespace SlimDX
 			Surface( IDXGISurface* pointer );
 
 		public:
+			/// <summary>
+			/// Gets the surface's description.
+			property SurfaceDescription Description
+			{
+				SurfaceDescription get();
+			}
+			
+			/// <summary>
+			/// Constructs a Surface from an unmanaged pointer.
+			/// </summary>
+			/// <param name="pointer">The unmanaged IDXGISurface pointer.</param>
 			Surface( IntPtr pointer );
 			
-			Result GetDescription( [Out] SurfaceDescription% description );
+			/// <summary>
+			/// Acquires access to the surface data.
+			/// </summary>
+			/// <param name="flags">Flags specifying CPU access permissions.</param>
+			/// <returns>A DataRectangle for accessing the mapped data, or null on failure.</returns>.
+			DataRectangle^ Map( MapFlags flags );
+			
+			/// <summary>
+			/// Relinquishes access to the surface data.
+			/// </summary>
+			Result Unmap();
 		};
 	}
 };

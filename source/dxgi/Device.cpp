@@ -43,6 +43,22 @@ namespace DXGI
 		Construct( pointer, NativeInterface );
 	}
 
+	int Device::GpuThreadPriority::get()
+	{
+		int result = 0;
+		Result::Record( InternalPointer->GetGPUThreadPriority( &result ) );
+		if( Result::Last.IsSuccess )
+			return result;
+		
+		throw gcnew DXGIException( Result::Last );
+	}
+	
+	void Device::GpuThreadPriority::set( int value )
+	{
+		if( Result::Record( InternalPointer->SetGPUThreadPriority( value ) ).IsFailure )
+			throw gcnew DXGIException( Result::Last );
+	}
+
 	Adapter^ Device::GetAdapter()
 	{
 		IDXGIAdapter* adapter = 0;
@@ -50,20 +66,6 @@ namespace DXGI
 		if( Result::Last.IsFailure )
 			return nullptr;
 		return gcnew Adapter( adapter );
-	}
-		
-	Result Device::GetGPUThreadPriority( [Out] int% priority )
-	{
-		int result = 0;
-		Result::Record( InternalPointer->GetGPUThreadPriority( &result ) );
-		if( Result::Last.IsSuccess )
-			priority = result;
-		return Result::Last;
-	}
-	
-	Result Device::SetGPUThreadPriority( int priority )
-	{
-		return Result::Record( InternalPointer->SetGPUThreadPriority( priority ) );
 	}
 
 	ReadOnlyCollection<Residency>^ Device::QueryResourceResidency( IList<ComObject^>^ resources )

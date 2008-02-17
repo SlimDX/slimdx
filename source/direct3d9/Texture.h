@@ -316,8 +316,8 @@ namespace SlimDX
 
 			void Fill( TextureShader^ shader );
 
-			DataRectangle LockRectangle( int level, LockFlags flags );
-			DataRectangle LockRectangle( int level, System::Drawing::Rectangle rect, LockFlags flags );
+			DataRectangle^ LockRectangle( int level, LockFlags flags );
+			DataRectangle^ LockRectangle( int level, System::Drawing::Rectangle rect, LockFlags flags );
 			void UnlockRectangle( int level );
 
 			void AddDirtyRect( System::Drawing::Rectangle rect );
@@ -365,8 +365,8 @@ namespace SlimDX
 			void Fill( Fill3DCallback^ callback );
 			void Fill( TextureShader^ shader );
 
-			DataRectangle LockRectangle( CubeMapFace face, int level, LockFlags flags );
-			DataRectangle LockRectangle( CubeMapFace face, int level, System::Drawing::Rectangle rect, LockFlags flags );
+			DataRectangle^ LockRectangle( CubeMapFace face, int level, LockFlags flags );
+			DataRectangle^ LockRectangle( CubeMapFace face, int level, System::Drawing::Rectangle rect, LockFlags flags );
 			void UnlockRectangle( CubeMapFace face, int level );
 
 			void AddDirtyRect( CubeMapFace face, System::Drawing::Rectangle rect );
@@ -413,8 +413,8 @@ namespace SlimDX
 			void Fill( Fill3DCallback^ callback );
 			void Fill( TextureShader^ shader );
 
-			SlimDX::DataBox LockBox( int level, LockFlags flags );
-			SlimDX::DataBox LockBox( int level, Box box, LockFlags flags );
+			SlimDX::DataBox^ LockBox( int level, LockFlags flags );
+			SlimDX::DataBox^ LockBox( int level, Box box, LockFlags flags );
 			void UnlockBox( int level );
 
 			void AddDirtyBox( Box box );

@@ -140,8 +140,8 @@ namespace SlimDX
 			static void ToFile( Surface^ surface, String^ fileName, ImageFileFormat format, System::Drawing::Rectangle rectangle );
 			static void ToFile( Surface^ surface, String^ fileName, ImageFileFormat format );
 
-			DataRectangle LockRectangle( LockFlags flags );
-			DataRectangle LockRectangle( System::Drawing::Rectangle rect, LockFlags flags );
+			DataRectangle^ LockRectangle( LockFlags flags );
+			DataRectangle^ LockRectangle( System::Drawing::Rectangle rect, LockFlags flags );
 			void UnlockRectangle();
 
 			property SurfaceDescription Description

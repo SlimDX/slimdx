@@ -19,37 +19,53 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include <dxgi.h>
+using namespace System;
+using namespace System::Runtime::InteropServices;
 
-#include "DXGIException.h"
+#include "../ComObject.h"
+
+#include "DeviceChild.h"
+#include "Enums.h"
 
 namespace SlimDX
 {
-namespace DXGI
-{
-	DXGIException::DXGIException( SerializationInfo^ info, StreamingContext context )
-	: SlimDXException( info, context )
+	namespace DXGI
 	{
-	}
+		/// <remarks>
+		/// A sharable resource.
+		/// </remarks>
+		public ref class Resource : public DeviceChild
+		{
+			COMOBJECT(IDXGIResource);
 
-	DXGIException::DXGIException()
-	{
-	}
+		internal:
+			Resource( IDXGIResource* pointer );
 
-	DXGIException::DXGIException( String^ message )
-	: SlimDXException( message )
-	{
+		public:
+			/// <summary>
+			/// Gets or sets the eviction priority for the resource.
+			/// </summary>
+			property ResourcePriority EvictionPriority
+			{
+				ResourcePriority get();
+				void set( ResourcePriority value );
+			}
+			
+			/// <summary>
+			/// Gets the resource usage.
+			/// </summary>
+			property DXGI::Usage Usage
+			{
+				DXGI::Usage get();
+			}
+			
+			/// <summary>
+			/// Constructs a Resource from an unmanaged pointer.
+			/// </summary>
+			/// <param name="pointer">The unmanaged IDXGIResource pointer.</param>
+			Resource( IntPtr pointer );
+		};
 	}
-
-	DXGIException::DXGIException( String^ message, Exception^ innerException )
-	: SlimDXException( message, innerException )
-	{
-	}
-
-	DXGIException::DXGIException( Result result )
-	: SlimDXException( result.Code )
-	{
-	}
-}
-}
+};

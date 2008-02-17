@@ -40,7 +40,7 @@ namespace SlimDX
 			DXGIException();
 			DXGIException( String^ message );
 			DXGIException( String^ message, Exception^ innerException );
-			DXGIException( int errorCode );
+			DXGIException( Result result );
 		};
 	}
 }

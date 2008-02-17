@@ -27,6 +27,9 @@ namespace SlimDX
 {
 	namespace DXGI
 	{	
+		/// <remarks>
+		/// Describes multisample parameters.
+		/// </remarks>
 		public value class SampleDescription
 		{
 			int m_Count;
@@ -38,18 +41,29 @@ namespace SlimDX
 			DXGI_SAMPLE_DESC CreateNativeVersion();
 			
 		public:
+			/// <summary>
+			/// Gets or sets the number of samples per pixel.
+			/// </summary>
 			property int Count
 			{
 				int get();
 				void set( int value );
 			}
-
+			
+			/// <summary>
+			/// Gets or sets the sample quality.
+			/// </summary>
 			property int Quality
 			{
 				int get();
 				void set( int value );
 			}
 			
+			/// <summary>
+			/// Constructs a new SampleDescription.
+			/// </summary>
+			/// <param name="count">The sample count.</param>
+			/// <param name="quality">The sample quality.</param>
 			SampleDescription( int count, int quality );
 		};
 	}

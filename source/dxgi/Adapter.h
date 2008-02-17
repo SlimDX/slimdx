@@ -45,17 +45,18 @@ namespace SlimDX
 
 		public:
 			/// <summary>
+			/// Gets the adapter's description.
+			/// </summary>
+			property AdapterDescription Description
+			{
+				AdapterDescription get();
+			}
+			
+			/// <summary>
 			/// Constructs an Adapter from an unmanaged pointer.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGIAdapter pointer.</param>
 			Adapter( IntPtr pointer );
-			
-			/// <summary>
-			/// Gets the adapter's description.
-			/// </summary>
-			/// <param name="description">Receives the adapter description.</param>
-			/// <returns>A Result code.</returns>
-			Result GetDescription( [Out] AdapterDescription% description );
 			
 			/// <summary>
 			/// Gets the number of outputs on the adapter.

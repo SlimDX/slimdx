@@ -43,13 +43,39 @@ namespace DXGI
 		Construct( pointer );
 	}
 	
-	Result Output::GetDescription( [Out] OutputDescription% description )
+	Output::Output( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+	
+	OutputDescription Output::Description::get()
 	{
 		DXGI_OUTPUT_DESC nativeDescription;
 		Result::Record( InternalPointer->GetDesc( &nativeDescription ) );
 		if( Result::Last.IsSuccess )
-			description = OutputDescription( nativeDescription );
-		return Result::Last;
+			return OutputDescription( nativeDescription );
+		
+		throw gcnew DXGIException( Result::Last );
+	}
+	
+	DXGI::FrameStatistics Output::FrameStatistics::get()
+	{
+		DXGI_FRAME_STATISTICS stats;
+		Result::Record( InternalPointer->GetFrameStatistics( &stats ) );
+		if( Result::Last.IsSuccess )
+			return DXGI::FrameStatistics( stats );
+		
+		throw gcnew DXGIException( Result::Last );
+	}
+	
+	DXGI::GammaControlCapabilities Output::GammaControlCapabilities::get()
+	{
+		DXGI_GAMMA_CONTROL_CAPABILITIES caps;
+		Result::Record( InternalPointer->GetGammaControlCapabilities( &caps ) );
+		if( Result::Last.IsSuccess )
+			return DXGI::GammaControlCapabilities( caps );
+		
+		throw gcnew DXGIException( Result::Last );
 	}
 	
 	ReadOnlyCollection<ModeDescription>^ Output::GetDisplayModeList( Format format, DisplayModeEnumerationFlags flags )
@@ -71,25 +97,7 @@ namespace DXGI
 		return gcnew ReadOnlyCollection<ModeDescription>( descriptions );
 	}
 	
-	Result Output::GetFrameStatistics( [Out] FrameStatistics% statistics )
-	{
-		DXGI_FRAME_STATISTICS stats;
-		Result::Record( InternalPointer->GetFrameStatistics( &stats ) );
-		if( Result::Last.IsSuccess )
-			statistics = FrameStatistics( stats );
-		return Result::Last;
-	}
-
-	Result Output::GetGammaControlCapabilities( [Out] GammaControlCapabilities% capabilities )
-	{
-		DXGI_GAMMA_CONTROL_CAPABILITIES caps;
-		Result::Record( InternalPointer->GetGammaControlCapabilities( &caps ) );
-		if( Result::Last.IsFailure )
-			capabilities = GammaControlCapabilities( caps );
-		return Result::Last;
-	}
-	
-	Result Output::FindClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription% result )
+	Result Output::GetClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription% result )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );

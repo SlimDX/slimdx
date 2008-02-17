@@ -1786,30 +1786,6 @@
 				RelativePath="..\source\dxgi\Error.h"
 				>
 			</File>
-			<File
-				RelativePath="..\source\dxgi\FrameStatistics.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\dxgi\FrameStatistics.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\dxgi\ModeDescription.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\dxgi\ModeDescription.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\dxgi\SampleDescription.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\dxgi\SampleDescription.h"
-				>
-			</File>
 			<Filter
 				Name="Swap Chain"
 				>
@@ -1935,10 +1911,26 @@
 					RelativePath="..\source\dxgi\Device.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\dxgi\DeviceChild.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\DeviceChild.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Resource"
 				>
+				<File
+					RelativePath="..\source\dxgi\Resource.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\Resource.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Surface"
@@ -2016,6 +2008,38 @@
 				</File>
 				<File
 					RelativePath="..\source\dxgi\GammaControlCapabilities.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Statistics"
+				>
+				<File
+					RelativePath="..\source\dxgi\FrameStatistics.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\FrameStatistics.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Display Mode"
+				>
+				<File
+					RelativePath="..\source\dxgi\ModeDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\ModeDescription.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\SampleDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\SampleDescription.h"
 					>
 				</File>
 			</Filter>

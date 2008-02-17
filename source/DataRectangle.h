@@ -29,7 +29,7 @@ namespace SlimDX
 	/// A DataRectangle provides supporting information for a DataStream whose
 	/// data is organized within two dimensions (a rectangle).
 	/// </remarks>
-	public value class DataRectangle
+	public ref class DataRectangle
 	{
 	private:
 		int m_Pitch;

@@ -107,7 +107,7 @@ namespace Direct3D10
 		m_OptionFlags = optionFlags;	
 	}
 	
-	SlimDX::DataRectangle Texture2D::Map( int mipSlice, MapMode mode, MapFlags flags )
+	SlimDX::DataRectangle^ Texture2D::Map( int mipSlice, MapMode mode, MapFlags flags )
 	{
 		int subResource = D3D10CalcSubresource( mipSlice, 0, MipLevels );
 		int mipHeight = GetMipSize( mipSlice, Height );
@@ -119,8 +119,8 @@ namespace Direct3D10
 		int lockedSize = mipHeight * mappedRect.RowPitch;
 		
 		bool readOnly = mode == MapMode::Read;
-		SlimDX::DataRectangle rect( mappedRect.RowPitch, gcnew DataStream( mappedRect.pData, lockedSize, true, !readOnly, false ) );
-		return rect;
+		return gcnew SlimDX::DataRectangle( mappedRect.RowPitch, gcnew DataStream( mappedRect.pData, lockedSize, true, !readOnly, false ) );
+
 	}
 
 	void Texture2D::Unmap( int subResource )

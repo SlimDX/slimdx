@@ -56,9 +56,19 @@ namespace DXGI
 		DXGI_SWAP_CHAIN_DESC nativeDescription = description.CreateNativeVersion();
 		Result::Record( factory->InternalPointer->CreateSwapChain( device->UnknownPointer, &nativeDescription, &swapChain ) );
 		if( Result::Last.IsFailure )
-			throw gcnew DXGIException( Result::Last.Code );
+			throw gcnew DXGIException( Result::Last );
 		
 		Construct( swapChain );
+	}
+	
+	DXGI::FrameStatistics SwapChain::FrameStatistics::get()
+	{
+		DXGI_FRAME_STATISTICS stats;
+		Result::Record( InternalPointer->GetFrameStatistics( &stats ) );
+		if( Result::Last.IsSuccess )
+			return DXGI::FrameStatistics( stats );
+		
+		throw gcnew DXGIException( Result::Last );
 	}
 	
 	generic< class T > where T : ComObject, ref class
@@ -70,15 +80,6 @@ namespace DXGI
 		if( Result::Last.IsFailure )
 			return T();
 		return safe_cast<T>( Activator::CreateInstance( T::typeid, IntPtr( unknown ) ) );
-	}
-
-	Result SwapChain::GetFrameStatistics( [Out] FrameStatistics% statistics )
-	{
-		DXGI_FRAME_STATISTICS stats;
-		Result::Record( InternalPointer->GetFrameStatistics( &stats ) );
-		if( Result::Last.IsSuccess )
-			statistics = FrameStatistics( stats );
-		return Result::Last;
 	}
 
 	Result SwapChain::ResizeBuffers( int count, int width, int height, SlimDX::DXGI::Format format, SwapChainFlags flags )

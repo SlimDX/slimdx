@@ -111,7 +111,7 @@ namespace SlimDX
 				ResourceOptionFlags get() { return m_OptionFlags; }
 			}
 			
-			SlimDX::DataBox Map( int subResource, MapMode mode, MapFlags flags );
+			SlimDX::DataBox ^Map( int subResource, MapMode mode, MapFlags flags );
 			void Unmap( int subResource );
 			
 			/// <summary>

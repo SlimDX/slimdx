@@ -22,6 +22,9 @@
 
 #include <dxgi.h>
 
+#include "../DataRectangle.h"
+#include "../DataStream.h"
+
 #include "DXGIException.h"
 
 #include "Surface.h"
@@ -41,13 +44,33 @@ namespace DXGI
 		Construct( pointer, NativeInterface );
 	}
 
-	Result Surface::GetDescription([Out] SurfaceDescription% description )
+	SurfaceDescription Surface::Description::get()
 	{
 		DXGI_SURFACE_DESC nativeDescription;
 		Result::Record( InternalPointer->GetDesc( &nativeDescription ) );
 		if( Result::Last.IsSuccess )
-			description = SurfaceDescription( nativeDescription );
-		return Result::Last;
+			return SurfaceDescription( nativeDescription );
+		
+		throw gcnew DXGIException( Result::Last );
+	}
+	
+	DataRectangle^ Surface::Map( MapFlags flags )
+	{
+		DXGI_MAPPED_RECT mappedRect;
+		if( Result::Record( InternalPointer->Map( &mappedRect, static_cast<UINT>( flags ) ) ).IsFailure )
+			return nullptr;
+		
+			return nullptr;		
+		//bool canRead = (flags & DXGI_MAP_READ) != 0;
+		//bool canWrite = (flags & DXGI_MAP_WRITE) != 0;
+		//DataStream^ data = gcnew DataStream( mappedRect.pBits, size, canRead, canWrite, false );
+		//
+		//return gcnew DataRectangle( mappedRect.Pitch, data );
+	}
+	
+	Result Surface::Unmap()
+	{
+		return Result::Record( InternalPointer->Unmap() );
 	}
 }
 }

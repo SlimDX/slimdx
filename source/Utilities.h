@@ -23,17 +23,14 @@
 
 #include <windows.h>
 #include <d3dx9.h>
-
-using namespace System;
-using namespace System::Diagnostics;
-using namespace System::IO;
-using namespace System::Globalization;
-using namespace System::Reflection;
+#include <dxgi.h>
 
 #include "Result.h"
 
 namespace SlimDX
 {
+
+
 	ref class ComObject;
 
 	ref class Utilities sealed
@@ -48,16 +45,11 @@ namespace SlimDX
 		static Guid ConvertNativeGuid( const GUID &guid );
 		static GUID ConvertManagedGuid( Guid guid );
 
-		/// <summary>
-		/// Function to convert a standard RECT to a GDI+ rectangle.
-		/// </summary>
-		/// <param name="rect">RECT to convert.</param>
-		/// <returns>A GDI+ rectangle structure.</returns>
 		static Drawing::Rectangle ConvertRect(RECT rect);
 
 		static String^ BufferToString( ID3DXBuffer *buffer );
 
-		static array<Byte>^ ReadStream( Stream^ stream, int readLength );
+		static array<Byte>^ ReadStream( System::IO::Stream^ stream, int readLength );
 
 		generic<typename T>
 		static void CheckArrayBounds( array<T>^ data, int offset, int% count );

@@ -25,8 +25,9 @@ using namespace System;
 
 #include "../ComObject.h"
 
-#include "Factory.h"
+#include "DeviceChild.h"
 #include "Enums.h"
+#include "Factory.h"
 
 namespace SlimDX
 {
@@ -39,10 +40,10 @@ namespace SlimDX
 		value class SwapChainDescription;
 		
 		/// <remarks>
-		/// A swap chain holds one or more surfaces that store rendered data prior to
-		/// presenting that data to an output.
+		/// Holds one or more surfaces that store rendered data prior to presenting
+		/// that data to an output.
 		/// </remarks>
-		public ref class SwapChain : public ComObject
+		public ref class SwapChain : public DeviceChild
 		{
 			COMOBJECT(IDXGISwapChain);
 		
@@ -50,13 +51,16 @@ namespace SlimDX
 			SwapChain( IDXGISwapChain* pointer );
 			
 		public:
+			property DXGI::FrameStatistics FrameStatistics
+			{
+				DXGI::FrameStatistics get();
+			}
+			
 			SwapChain( IntPtr pointer );
 			SwapChain( Factory^ factory, ComObject^ device, SwapChainDescription description );
 			
 			generic< typename T > where T : ComObject, ref class
 			T GetBuffer( int buffer );
-
-			Result GetFrameStatistics( [Out] FrameStatistics% statistics );
 
 			Result ResizeBuffers( int count, int width, int height, Format format, SwapChainFlags flags );
 			Result ResizeTarget( ModeDescription description );
