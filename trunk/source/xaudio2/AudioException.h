@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,8 @@
 
 #ifdef WRAP_XAUDIO2
 
-using namespace System;
-using namespace System::Runtime::Serialization;
+//using namespace System;
+//using namespace System::Runtime::Serialization;
 
 #include "../SlimDXException.h"
 #include <dxerr.h>
@@ -33,7 +33,7 @@ namespace SlimDX
 {
 	namespace XAudio2
 	{
-		[Serializable]
+		[System::Serializable]
 		public ref class AudioException : public SlimDX::SlimDXException
 		{
 		private:
@@ -49,44 +49,44 @@ namespace SlimDX
 		public:
 			AudioException() : SlimDXException(E_FAIL, "An XAudio2 exception occurred.")
 			{ }
-			AudioException(String^ message) : SlimDXException(E_FAIL, message)
+			AudioException(System::String^ message) : SlimDXException(E_FAIL, message)
 			{ }
-			AudioException(int errorCode ) : SlimDXException( errorCode, gcnew String( DXGetErrorDescription( errorCode ) ) )
+			AudioException(int errorCode ) : SlimDXException( errorCode, gcnew System::String( DXGetErrorDescription( errorCode ) ) )
 			{ }
-			AudioException(int errorCode, String^ message) : SlimDXException( errorCode, message )
+			AudioException(int errorCode, System::String^ message) : SlimDXException( errorCode, message )
 			{ }
-			AudioException(String^ message, Exception^ innerException) : SlimDXException( message, innerException )
+			AudioException(System::String^ message, Exception^ innerException) : SlimDXException( message, innerException )
 			{ }
 
 			static property int LastError;
 
 			static AudioException^ GetExceptionFromHResult( HRESULT hr );
 			static void CheckHResult( HRESULT hr );
-			static void CheckHResult( HRESULT hr, String^ dataKey, Object^ dataValue );
+			static void CheckHResult( HRESULT hr, System::String^ dataKey, System::Object^ dataValue );
 		};
 
 #define DEFINE_AUDIO_EXCEPTION( ExName, ErrorCode ) \
-	[Serializable] \
+	[System::Serializable] \
 	public ref class ExName ## Exception : public AudioException \
 	{ \
 	protected: \
 		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : AudioException(info, context) { }\
 	public: \
 		ExName ## Exception () : AudioException( ErrorCode ) { } \
-		ExName ## Exception ( String^ message ) : AudioException( ErrorCode, message ) { } \
-		ExName ## Exception ( String^ message, Exception^ innerException ) : AudioException( message, innerException ) { } \
+		ExName ## Exception ( System::String^ message ) : AudioException( ErrorCode, message ) { } \
+		ExName ## Exception ( System::String^ message, Exception^ innerException ) : AudioException( message, innerException ) { } \
 	}
 
 #define DEFINE_CUSTOM_AUDIO_EXCEPTION( ExName, ErrorCode, Message ) \
-	[Serializable] \
+	[System::Serializable] \
 	public ref class ExName ## Exception : public AudioException \
 	{ \
 	protected: \
 		ExName ## Exception (SerializationInfo^ info, StreamingContext context) : AudioException(info, context) { }\
 	public: \
 		ExName ## Exception () : AudioException( ErrorCode, Message ) { } \
-		ExName ## Exception ( String^ message ) : AudioException( ErrorCode, message ) { } \
-		ExName ## Exception ( String^ message, Exception^ innerException ) : AudioException( message, innerException ) { } \
+		ExName ## Exception ( System::String^ message ) : AudioException( ErrorCode, message ) { } \
+		ExName ## Exception ( System::String^ message, Exception^ innerException ) : AudioException( message, innerException ) { } \
 	}
 
 		DEFINE_AUDIO_EXCEPTION( NotInitialized, XAUDIO2_E_NOT_INITIALIZED );
@@ -136,7 +136,7 @@ namespace SlimDX
 			return ex;
 		}
 
-		inline void AudioException::CheckHResult( HRESULT hr, String^ dataKey, Object^ dataValue )
+		inline void AudioException::CheckHResult( HRESULT hr, System::String^ dataKey, System::Object^ dataValue )
 		{
 			if( Configuration::EnableExceptions && FAILED(hr) )
 			{

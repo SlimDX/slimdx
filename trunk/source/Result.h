@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,14 +21,12 @@
 */
 #pragma once
 
-using namespace System;
-
 namespace SlimDX
 {
 	public value class Result
 	{
 		int m_Code;
-		String^ m_Description;
+		System::String^ m_Description;
 	
 		static Result m_Last;
 		
@@ -43,9 +41,9 @@ namespace SlimDX
 			int get();
 		};
 		
-		property String^ Description
+		property System::String^ Description
 		{
-			String^ get();
+			System::String^ get();
 		};
 		
 		property bool IsSuccess

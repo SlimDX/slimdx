@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 namespace SlimDX
 {
@@ -235,7 +235,7 @@ namespace SlimDX
 		/// <summary>
 		/// Defines possible mouse object codes.
 		/// </summary>
-		public enum class MouseObject : Int32
+		public enum class MouseObject : System::Int32
 		{
 			/// <summary>
 			/// The first button.
@@ -296,7 +296,7 @@ namespace SlimDX
 		/// <summary>
 		/// Defines possible keyboard key codes.
 		/// </summary>
-		public enum class Key : Int32
+		public enum class Key : System::Int32
 		{
 			/// <summary>
 			/// The number 0.

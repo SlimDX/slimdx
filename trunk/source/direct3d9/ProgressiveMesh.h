@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,8 @@
 */
 #pragma once
 
+using System::Runtime::InteropServices::OutAttribute;
+
 namespace SlimDX
 {
 	namespace Direct3D9
@@ -33,25 +35,25 @@ namespace SlimDX
 		ref class StreamShim : System::Runtime::InteropServices::ComTypes::IStream
 		{
 		private:
-			Stream^ m_WrappedStream;
+			System::IO::Stream^ m_WrappedStream;
 
 			long long position;
 			void SetSizeToPosition();
 
 		public:
-			StreamShim( Stream^ stream );
+			StreamShim( System::IO::Stream^ stream );
 
 			virtual void Clone( [Out] System::Runtime::InteropServices::ComTypes::IStream^% ppstm );
 			virtual void Commit( int grfCommitFlags );
-			virtual void CopyTo( System::Runtime::InteropServices::ComTypes::IStream^ pstm, long long cb, IntPtr pcbRead, IntPtr pcbWritten );
+			virtual void CopyTo( System::Runtime::InteropServices::ComTypes::IStream^ pstm, long long cb, System::IntPtr pcbRead, System::IntPtr pcbWritten );
 			virtual void LockRegion( long long libOffset, long long cb, int dwLockType );
-			virtual void Read( [Out] array<unsigned char>^ pv, int cb, IntPtr pcbRead );
+			virtual void Read( [Out] array<unsigned char>^ pv, int cb, System::IntPtr pcbRead );
 			virtual void Revert();
-			virtual void Seek( long long dlibMove, int dwOrigin, IntPtr plibNewPosition );
+			virtual void Seek( long long dlibMove, int dwOrigin, System::IntPtr plibNewPosition );
 			virtual void SetSize( long long libNewSize );
 			virtual void Stat( [Out] System::Runtime::InteropServices::ComTypes::STATSTG% pstatstg, int grfStatFlag );
 			virtual void UnlockRegion( long long libOffset, long long cb, int dwLockType );
-			virtual void Write( array<unsigned char>^ pv, int cb, IntPtr pcbWritten );
+			virtual void Write( array<unsigned char>^ pv, int cb, System::IntPtr pcbWritten );
 		};
 
 		public ref class ProgressiveMesh : public BaseMesh
@@ -69,14 +71,14 @@ namespace SlimDX
 			}
 
 		public:
-			ProgressiveMesh( IntPtr pointer );
+			ProgressiveMesh( System::IntPtr pointer );
 			ProgressiveMesh( Mesh^ mesh, array<AttributeWeights>^ attributeWeights, array<float>^ vertexWeights, int minimumValue, MeshSimplification options );
 			ProgressiveMesh( Mesh^ mesh, array<AttributeWeights>^ attributeWeights, int minimumValue, MeshSimplification options );
 			ProgressiveMesh( Mesh^ mesh, int minimumValue, MeshSimplification options );
 			virtual ~ProgressiveMesh() { }
 
-			static ProgressiveMesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags );
-			static void ToStream( ProgressiveMesh^ mesh, Stream^ stream );
+			static ProgressiveMesh^ FromStream( Device^ device, System::IO::Stream^ stream, MeshFlags flags );
+			static void ToStream( ProgressiveMesh^ mesh, System::IO::Stream^ stream );
 
 			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags flags, array<VertexElement>^ vertexDeclaration );
 			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags flags, SlimDX::Direct3D9::VertexFormat format );
@@ -118,7 +120,7 @@ namespace SlimDX
 			SimplificationMesh( ID3DXSPMesh *mesh ) { Construct(mesh); }
 
 		public:
-			SimplificationMesh( IntPtr pointer );
+			SimplificationMesh( System::IntPtr pointer );
 			SimplificationMesh( Mesh^ mesh, array<AttributeWeights>^ vertexAttributeWeights, array<float>^ vertexWeights );
 			SimplificationMesh( Mesh^ mesh, array<AttributeWeights>^ vertexAttributeWeights );
 			SimplificationMesh( Mesh^ mesh, array<float>^ vertexWeights );

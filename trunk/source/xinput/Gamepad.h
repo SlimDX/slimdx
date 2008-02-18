@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 namespace SlimDX
 {
@@ -40,12 +40,12 @@ namespace SlimDX
 		{
 		private:
 			GamepadButtons buttons;
-            Byte leftTrigger;
-            Byte rightTrigger;
-            Int16 leftThumbX;
-            Int16 leftThumbY;
-            Int16 rightThumbX;
-            Int16 rightThumbY;
+            System::Byte leftTrigger;
+            System::Byte rightTrigger;
+            System::Int16 leftThumbX;
+            System::Int16 leftThumbY;
+            System::Int16 rightThumbX;
+            System::Int16 rightThumbY;
 
 		internal:
 			Gamepad( const XINPUT_GAMEPAD &gamepad );
@@ -62,65 +62,65 @@ namespace SlimDX
 			/// <summary>
 			/// The current value of the left trigger analog control. The value is between 0 and 255.
 			/// </summary>
-            property Byte LeftTrigger
+            property System::Byte LeftTrigger
             {
-                Byte get() { return leftTrigger; }
+                System::Byte get() { return leftTrigger; }
             }
 
 			/// <summary>
 			/// The current value of the right trigger analog control. The value is between 0 and 255.
 			/// </summary>
-            property Byte RightTrigger
+            property System::Byte RightTrigger
             {
-                Byte get() { return rightTrigger; }
+                System::Byte get() { return rightTrigger; }
             }
 
 			/// <summary>
 			/// Right thumbstick y-axis value. The value is between -32768 and 32767.
 			/// </summary>
-            property Int16 LeftThumbX
+            property System::Int16 LeftThumbX
             {
-                Int16 get() { return leftThumbX; }
+                System::Int16 get() { return leftThumbX; }
             }
 
 			/// <summary>
 			/// Left thumbstick y-axis value. The value is between -32768 and 32767.
 			/// </summary>
-            property Int16 LeftThumbY
+            property System::Int16 LeftThumbY
             {
-                Int16 get() { return leftThumbY; }
+                System::Int16 get() { return leftThumbY; }
             }
 
 			/// <summary>
 			/// Right thumbstick x-axis value. The value is between -32768 and 32767.
 			/// </summary>
-            property Int16 RightThumbX
+            property System::Int16 RightThumbX
             {
-                Int16 get() { return rightThumbX; }
+                System::Int16 get() { return rightThumbX; }
             }
 
 			/// <summary>
 			/// Right thumbstick y-axis value. The value is between -32768 and 32767.
 			/// </summary>
-            property Int16 RightThumbY
+            property System::Int16 RightThumbY
             {
-                Int16 get() { return rightThumbY; }
+                System::Int16 get() { return rightThumbY; }
             }
 
 			/// <summary>
 			/// Can be used as a positive and negative value to filter the left thumbstick input.
 			/// </summary>
-			literal Int16 GamepadLeftThumbDeadZone = XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
+			literal System::Int16 GamepadLeftThumbDeadZone = XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
 
 			/// <summary>
 			/// Can be used as a positive and negative value to filter the right thumbstick input.
 			/// </summary>
-			literal Int16 GamepadRightThumbDeadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
+			literal System::Int16 GamepadRightThumbDeadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
 
 			/// <summary>
 			/// This constantmay be used as the value which LeftTrigger and RightTrigger must be greater than to register as pressed.
 			/// </summary>
-			literal Byte GamepadTriggerThreshold = XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
+			literal System::Byte GamepadTriggerThreshold = XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
 		};
 	}
 }

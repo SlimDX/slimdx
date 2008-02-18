@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,25 +21,22 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::Serialization;
-
 #include "../SlimDXException.h"
 
 namespace SlimDX
 {
 	namespace DXGI
 	{
-		[Serializable]
+		[System::Serializable]
 		public ref class DXGIException : public SlimDXException
 		{
 		protected:
-			DXGIException( SerializationInfo^ info, StreamingContext context );
+			DXGIException( System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context );
 			
 		public:
 			DXGIException();
-			DXGIException( String^ message );
-			DXGIException( String^ message, Exception^ innerException );
+			DXGIException( System::String^ message );
+			DXGIException( System::String^ message, System::Exception^ innerException );
 			DXGIException( Result result );
 		};
 	}

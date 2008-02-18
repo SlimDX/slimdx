@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System::Runtime::InteropServices;
+//using namespace System::Runtime::InteropServices;
 
 #include "../math/Math.h"
 
@@ -55,15 +55,15 @@ namespace SlimDX
 			static void GetRectanglePatchSize( float segmentCount, [Out] int% triangleCount, [Out] int% vertexCount );
 			static void GetTrianglePatchSize( float segmentCount, [Out] int% triangleCount, [Out] int% vertexCount );
 
-			static Format MakeFourCC( Byte c1, Byte c2, Byte c3, Byte c4 );
+			static Format MakeFourCC( System::Byte c1, System::Byte c2, System::Byte c3, System::Byte c4 );
 
 			static bool DebugMute( bool mute );
 
 			static array<int>^ OptimizeFaces( array<int>^ indices, int faceCount, int vertexCount );
-			static array<int>^ OptimizeFaces( array<Int16>^ indices, int faceCount, int vertexCount );
+			static array<int>^ OptimizeFaces( array<System::Int16>^ indices, int faceCount, int vertexCount );
 
 			static array<int>^ OptimizeVertices( array<int>^ indices, int faceCount, int vertexCount );
-			static array<int>^ OptimizeVertices( array<Int16>^ indices, int faceCount, int vertexCount );
+			static array<int>^ OptimizeVertices( array<System::Int16>^ indices, int faceCount, int vertexCount );
 
 			static bool CheckVersion( int d3dVersion, int d3dxVersion );
 

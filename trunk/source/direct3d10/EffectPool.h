@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,11 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::InteropServices;
-
 #include "../ComObject.h"
 
 #include "Enums.h"
+
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
@@ -52,8 +51,8 @@ namespace SlimDX
 		  /// <summary>
 			/// Construct( s ); a new <see cref="EffectPool"/>.
 			/// </summary>
-			/// <param name="effectPool">An IntPtr to an unmanaged ID3D10EffectPool.</param>
-			EffectPool( IntPtr effectPool );
+			/// <param name="effectPool">An System::IntPtr to an unmanaged ID3D10EffectPool.</param>
+			EffectPool( System::IntPtr effectPool );
 			
 			/// <summary>
 			/// Releases object resources.
@@ -65,12 +64,12 @@ namespace SlimDX
 			/// </summary>
 			Effect^ AsEffect();
 			
-			static EffectPool^ FromFile( Device^ device, String^ fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
-			static EffectPool^ FromFile( Device^ device, String^ fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, [Out] String^ %compilationErrors );
-			static EffectPool^ FromStream( Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
-			static EffectPool^ FromStream( Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, [Out] String^ %compilationErrors );
-			static EffectPool^ FromMemory( Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
-			static EffectPool^ FromMemory( Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, [Out] String^ %compilationErrors );
+			static EffectPool^ FromFile( Device^ device, System::String^ fileName, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
+			static EffectPool^ FromFile( Device^ device, System::String^ fileName, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, [Out] System::String^ %compilationErrors );
+			static EffectPool^ FromStream( Device^ device, System::IO::Stream^ stream, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
+			static EffectPool^ FromStream( Device^ device, System::IO::Stream^ stream, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, [Out] System::String^ %compilationErrors );
+			static EffectPool^ FromMemory( Device^ device, array<System::Byte>^ memory, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
+			static EffectPool^ FromMemory( Device^ device, array<System::Byte>^ memory, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, [Out] System::String^ %compilationErrors );
 		};
 	}
 };

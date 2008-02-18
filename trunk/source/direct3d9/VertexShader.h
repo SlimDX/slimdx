@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ namespace SlimDX
 			VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable );
 
 		public:
-			VertexShader( IntPtr vertexShader );
+			VertexShader( System::IntPtr vertexShader );
 			
 			~VertexShader()
 			{
@@ -53,7 +53,7 @@ namespace SlimDX
 				ConstantTable^ get() { return m_ConstantTable; }
 			}
 			
-			static VertexShader^ FromString( Device^ device, String^ sourceCode, String^ entryPoint, String^ profile, ShaderFlags flags, [Out] String^ %compilationErrors );
+			static VertexShader^ FromString( Device^ device, System::String^ sourceCode, System::String^ entryPoint, System::String^ profile, ShaderFlags flags, [Out] System::String^ %compilationErrors );
 		};
 	}
 }

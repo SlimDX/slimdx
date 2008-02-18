@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 #include "Enums.h"
 #include "ModeDescription.h"
@@ -38,7 +38,7 @@ namespace SlimDX
 			SampleDescription m_SampleDesc;
 			Usage m_BufferUsage;
 			int m_BufferCount;
-			IntPtr m_OutputWindow;
+			System::IntPtr m_OutputWindow;
 			bool m_Windowed;
 			SwapEffect m_SwapEffect;
 			SwapChainFlags m_Flags;
@@ -71,10 +71,10 @@ namespace SlimDX
                 void set( int value );
             }
 
-            property IntPtr OutputHandle
+            property System::IntPtr OutputHandle
             {
-                IntPtr get();
-                void set( IntPtr value );
+                System::IntPtr get();
+                void set( System::IntPtr value );
             }
 
             property bool IsWindowed

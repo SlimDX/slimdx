@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +21,9 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::InteropServices;
-
 #include "../ComObject.h"
+
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
@@ -56,7 +55,7 @@ namespace SlimDX
 			/// Constructs an Adapter from an unmanaged pointer.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGIAdapter pointer.</param>
-			Adapter( IntPtr pointer );
+			Adapter( System::IntPtr pointer );
 			
 			/// <summary>
 			/// Gets the number of outputs on the adapter.
@@ -75,7 +74,7 @@ namespace SlimDX
 			/// </v>
 			/// <param name="type">The device interface type.</param>
 			/// <returns>True if the device interface is supported, false otherwise.</returns>
-			bool IsInterfaceSupported( Type^ type );
+			bool IsInterfaceSupported( System::Type^ type );
 			
 			/// <summary>
 			/// Determines if a device interface for a graphics component is supported by the adapter.
@@ -83,7 +82,7 @@ namespace SlimDX
 			/// <param name="type">The device interface type.</param>
 			/// <param name="userModeVersion">Receives the user-mode driver version of the interface.</param>
 			/// <returns>True if the device interface is supported, false otherwise.</returns>
-			bool IsInterfaceSupported( Type^ type, [Out] Int64% userModeVersion );	
+			bool IsInterfaceSupported( System::Type^ type, [Out] System::Int64% userModeVersion );	
 		};
 	}
 };

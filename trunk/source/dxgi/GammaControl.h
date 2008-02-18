@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +21,6 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Collections::Generic;
-using namespace System::Collections::ObjectModel;
-
 #include "../math/ColorRGB.h"
 
 namespace SlimDX
@@ -38,7 +34,7 @@ namespace SlimDX
 		{
 			ColorRGB m_Scale;
 			ColorRGB m_Offset;
-			List<ColorRGB>^ m_GammaCurve;
+			System::Collections::Generic::List<ColorRGB>^ m_GammaCurve;
 
 		internal:
 			GammaControl( const DXGI_GAMMA_CONTROL& native );
@@ -67,9 +63,9 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the list of RGB control points defining the gamma curve.
 			/// </summary>
-			property ReadOnlyCollection<ColorRGB>^ ControlPoints
+			property System::Collections::ObjectModel::ReadOnlyCollection<ColorRGB>^ ControlPoints
 			{
-				ReadOnlyCollection<ColorRGB>^ get();
+				System::Collections::ObjectModel::ReadOnlyCollection<ColorRGB>^ get();
 			}
 		};
 	}

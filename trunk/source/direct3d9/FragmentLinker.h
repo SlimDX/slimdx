@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ namespace SlimDX
 		public value class FragmentDescription
 		{
 		public:
-			property String^ Name;
+			property System::String^ Name;
             property int Target;
 		};
 
@@ -46,17 +46,17 @@ namespace SlimDX
 			FragmentLinker( ID3DXFragmentLinker* linker );
 
 		public:
-			FragmentLinker( IntPtr pointer );
+			FragmentLinker( System::IntPtr pointer );
 			FragmentLinker( Device^ device, int cacheSize );
 			~FragmentLinker() { Destruct(); }
 
-			static DataStream^ Gather( array<Byte>^ sourceData, array<Macro>^ defines,
-				Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
-			static DataStream^ Gather( String^ sourceData, array<Macro>^ defines,
-				Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
+			static DataStream^ Gather( array<System::Byte>^ sourceData, array<Macro>^ defines,
+				Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
+			static DataStream^ Gather( System::String^ sourceData, array<Macro>^ defines,
+				Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 
-			static DataStream^ GatherFromFile( String^ fileName, array<Macro>^ defines,
-				Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
+			static DataStream^ GatherFromFile( System::String^ fileName, array<Macro>^ defines,
+				Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 
 			void AddFragments( array<int>^ fragments );
 			void AddFragments( DataStream^ fragments );
@@ -66,12 +66,12 @@ namespace SlimDX
 
 			FragmentDescription GetFragmentDescription( EffectHandle^ name );
 			EffectHandle^ GetFragmentHandle( int index );
-			EffectHandle^ GetFragmentHandle( String^ name );
+			EffectHandle^ GetFragmentHandle( System::String^ name );
 
 			void ClearCache();
-			ShaderBytecode^ LinkShader( String^ profile, ShaderFlags flags, array<EffectHandle^>^ fragmentHandles, [Out] String^% errors );
-			VertexShader^ LinkVertexShader( String^ profile, ShaderFlags flags, array<EffectHandle^>^ fragmentHandles, [Out] String^% errors );
-			PixelShader^ LinkPixelShader( String^ profile, ShaderFlags flags, array<EffectHandle^>^ fragmentHandles, [Out] String^% errors );
+			ShaderBytecode^ LinkShader( System::String^ profile, ShaderFlags flags, array<EffectHandle^>^ fragmentHandles, [Out] System::String^% errors );
+			VertexShader^ LinkVertexShader( System::String^ profile, ShaderFlags flags, array<EffectHandle^>^ fragmentHandles, [Out] System::String^% errors );
+			PixelShader^ LinkPixelShader( System::String^ profile, ShaderFlags flags, array<EffectHandle^>^ fragmentHandles, [Out] System::String^% errors );
 
 			property int FragmentCount
 			{

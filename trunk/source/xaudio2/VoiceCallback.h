@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 
 #include <vcclr.h>
 
-using namespace System;
+//using namespace System;
 
 namespace SlimDX
 {
@@ -50,9 +50,9 @@ namespace SlimDX
 
 			virtual void OnStreamEnd() = 0;
 
-			virtual void OnBufferStart( Object^ bufferContext ) = 0;
-			virtual void OnBufferEnd( Object^ bufferContext ) = 0;
-			virtual void OnLoopEnd( Object^ bufferContext ) = 0;
+			virtual void OnBufferStart( System::Object^ bufferContext ) = 0;
+			virtual void OnBufferEnd( System::Object^ bufferContext ) = 0;
+			virtual void OnLoopEnd( System::Object^ bufferContext ) = 0;
 		};
 
 		class VoiceCallbackShim : public IXAudio2VoiceCallback

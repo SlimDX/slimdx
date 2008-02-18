@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +21,6 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Collections::Generic;
-
-#include "ObjectTracker.h"
 #include "Result.h"
 
 namespace SlimDX
@@ -32,7 +28,7 @@ namespace SlimDX
 	public ref class Configuration sealed
 	{
 	private:
-		static List<Result>^ resultWatches;
+		static System::Collections::Generic::List<Result>^ resultWatches;
 	
 		static Configuration();
 		

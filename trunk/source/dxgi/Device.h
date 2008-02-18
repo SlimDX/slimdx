@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -20,11 +20,6 @@
 * THE SOFTWARE.
 */
 #pragma once
-
-using namespace System;
-using namespace System::Collections::Generic;
-using namespace System::Collections::ObjectModel;
-using namespace System::Runtime::InteropServices;
 
 #include "../ComObject.h"
 
@@ -60,7 +55,7 @@ namespace SlimDX
 			/// Constructs a Device from an unmanaged pointer.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGIDevice pointer.</param>
-			Device( IntPtr pointer );
+			Device( System::IntPtr pointer );
 			
 			/// <summary>
 			/// Gets the adapter associated with the device.
@@ -74,7 +69,7 @@ namespace SlimDX
 			/// <param name="resources">The resources to query.</param>
 			/// <returns>A list of residency status values, one for each entry in the input resources list. The result will be
 			/// null on failure.</returns>
-			ReadOnlyCollection<Residency>^ QueryResourceResidency( IList<ComObject^>^ resources ); 
+			System::Collections::ObjectModel::ReadOnlyCollection<Residency>^ QueryResourceResidency( System::Collections::Generic::IList<ComObject^>^ resources ); 
 		};
 	}
 };

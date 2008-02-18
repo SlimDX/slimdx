@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,8 @@
 #include "Device.h"
 #include "Surface.h"
 #include "RenderToSurface.h"
+
+using namespace System;
 
 namespace SlimDX
 {
@@ -69,7 +71,7 @@ namespace SlimDX
 			Construct(rtsPointer);
 		}
 
-		void RenderToSurface::BeginScene( Surface^ renderSurface, Viewport viewport )
+		void RenderToSurface::BeginScene( Surface^ renderSurface, SlimDX::Direct3D::Viewport viewport )
 		{
 			IDirect3DSurface9* surface = renderSurface->SurfacePointer;
 			HRESULT hr = InternalPointer->BeginScene( surface, reinterpret_cast<D3DVIEWPORT9*>( &viewport ) );

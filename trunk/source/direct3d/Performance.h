@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,8 @@ namespace SlimDX
 {
 	namespace Direct3D
 	{
-		[Flags]
-		public enum class PerformanceOptions : Int32
+		[System::Flags]
+		public enum class PerformanceOptions : System::Int32
 		{
 			None = 0,
 			DoNotAllowProfiling = 1,
@@ -38,18 +38,18 @@ namespace SlimDX
 			Performance() { }
 
 		public:
-			static int BeginEvent( int color, String^ name );
-			static int BeginEvent( System::Drawing::Color color, String^ name );
+			static int BeginEvent( int color, System::String^ name );
+			static int BeginEvent( System::Drawing::Color color, System::String^ name );
 			static int EndEvent();
 
 			static bool GetStatus();
 			static bool QueryRepeatFrame();
 
-			static void SetMarker( int color, String^ name );
-			static void SetMarker( System::Drawing::Color color, String^ name );
+			static void SetMarker( int color, System::String^ name );
+			static void SetMarker( System::Drawing::Color color, System::String^ name );
 			static void SetOptions( PerformanceOptions options );
-			static void SetRegion( int color, String^ name );
-			static void SetRegion( System::Drawing::Color color, String^ name );
+			static void SetRegion( int color, System::String^ name );
+			static void SetRegion( System::Drawing::Color color, System::String^ name );
 		};
 	}
 }

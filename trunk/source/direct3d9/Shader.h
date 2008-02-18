@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,14 @@
 */
 #pragma once
 
-using namespace System::IO;
-using namespace System::Runtime::InteropServices;
+//using namespace System::IO;
+//using namespace System::Runtime::InteropServices;
 
 #include "Device.h"
 #include "ConstantTable.h"
 #include <vcclr.h>
+
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
@@ -36,7 +38,7 @@ namespace SlimDX
 	{
 		class IncludeShim;
 
-		public enum class IncludeType : Int32
+		public enum class IncludeType : System::Int32
 		{
 			Local = D3DXINC_LOCAL,
 			System = D3DXINC_SYSTEM,
@@ -44,16 +46,16 @@ namespace SlimDX
 
 		public interface struct Include
 		{
-			virtual void Open( IncludeType includeType, String^ fileName, [Out] Stream^% stream ) = 0;
-			virtual void Close( Stream^ stream ) = 0;
+			virtual void Open( IncludeType includeType, System::String^ fileName, [Out] System::IO::Stream^ stream ) = 0;
+			virtual void Close( System::IO::Stream^stream ) = 0;
 		};
 
 		class IncludeShim : public ID3DXInclude
 		{
 		private:
 			gcroot<Include^> m_WrappedInterface;
-			gcroot<Stream^> m_stream;
-			GCHandle m_handle;
+			gcroot<System::IO::Stream^> m_stream;
+			System::Runtime::InteropServices::GCHandle m_handle;
 
 		public:
 			IncludeShim( Include^ wrappedInterface );
@@ -66,12 +68,12 @@ namespace SlimDX
 		{
 		internal:
 			//helper function to resolve array<Macro>^ to D3DXMACRO*
-			static D3DXMACRO* Marshal( array<Macro>^ macros, [Out] array<GCHandle>^% handles );
-			static void Unmarshal( D3DXMACRO* macros, array<GCHandle>^ handles );
+			static D3DXMACRO* Marshal( array<Macro>^ macros, [Out] array<System::Runtime::InteropServices::GCHandle>^% handles );
+			static void Unmarshal( D3DXMACRO* macros, array<System::Runtime::InteropServices::GCHandle>^ handles );
 
 		public:
-			property String^ Name;
-			property String^ Definition;
+			property System::String^ Name;
+			property System::String^ Definition;
 		};
 
 		public value class ShaderSemantic
@@ -89,7 +91,7 @@ namespace SlimDX
 			ShaderBytecode( ID3DXBuffer* buffer ) { Construct(buffer); }
 
 		public:
-			ShaderBytecode( IntPtr pointer );
+			ShaderBytecode( System::IntPtr pointer );
 			~ShaderBytecode() { Destruct(); }
 
 			DataStream^ GetData();
@@ -97,7 +99,7 @@ namespace SlimDX
 			ConstantTable^ GetConstantTable();
 			array<ShaderSemantic>^ GetInputSemantics();
 			array<ShaderSemantic>^ GetOutputSemantics();
-			array<String^>^ GetSamplers();
+			array<System::String^>^ GetSamplers();
 
 			property int Version
 			{
@@ -112,40 +114,40 @@ namespace SlimDX
 
 		public:
 			//D3DXAssembleShader
-			static ShaderBytecode^ Assemble( array<Byte>^ sourceData, array<Macro>^ defines,
-				Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
-			static ShaderBytecode^ Assemble( String^ sourceData, array<Macro>^ defines,
-				Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
+			static ShaderBytecode^ Assemble( array<System::Byte>^ sourceData, array<Macro>^ defines,
+				Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
+			static ShaderBytecode^ Assemble( System::String^ sourceData, array<Macro>^ defines,
+				Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 
 			//D3DXAssembleShaderFromFile
-			static ShaderBytecode^ AssembleFromFile( String^ fileName, array<Macro>^ defines,
-				Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
+			static ShaderBytecode^ AssembleFromFile( System::String^ fileName, array<Macro>^ defines,
+				Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 
 			//D3DXCompileShader
-			static ShaderBytecode^ Compile( array<Byte>^ sourceData, array<Macro>^ defines,
-				Include^ includeFile, String^ functionName, String^ profile, ShaderFlags flags,
-				[Out] String^% errors, [Out] ConstantTable^% constantTable );
-			static ShaderBytecode^ Compile( String^ sourceData, array<Macro>^ defines,
-				Include^ includeFile, String^ functionName, String^ profile, ShaderFlags flags,
-				[Out] String^% errors, [Out] ConstantTable^% constantTable );
-			static ShaderBytecode^ Compile( array<Byte>^ sourceData, array<Macro>^ defines,
-				Include^ includeFile, String^ functionName, String^ profile, ShaderFlags flags,
-				[Out] String^% errors );
-			static ShaderBytecode^ Compile( String^ sourceData, array<Macro>^ defines,
-				Include^ includeFile, String^ functionName, String^ profile, ShaderFlags flags,
-				[Out] String^% errors );
+			static ShaderBytecode^ Compile( array<System::Byte>^ sourceData, array<Macro>^ defines,
+				Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags,
+				[Out] System::String^% errors, [Out] ConstantTable^% constantTable );
+			static ShaderBytecode^ Compile( System::String^ sourceData, array<Macro>^ defines,
+				Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags,
+				[Out] System::String^% errors, [Out] ConstantTable^% constantTable );
+			static ShaderBytecode^ Compile( array<System::Byte>^ sourceData, array<Macro>^ defines,
+				Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags,
+				[Out] System::String^% errors );
+			static ShaderBytecode^ Compile( System::String^ sourceData, array<Macro>^ defines,
+				Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags,
+				[Out] System::String^% errors );
 
 			//D3DXCompileShaderFromFile
-			static ShaderBytecode^ CompileFromFile( String^ fileName, array<Macro>^ defines,
-				Include^ includeFile, String^ functionName, String^ profile, ShaderFlags flags,
-				[Out] String^% errors, [Out] ConstantTable^% constantTable );
-			static ShaderBytecode^ CompileFromFile( String^ fileName, array<Macro>^ defines,
-				Include^ includeFile, String^ functionName, String^ profile, ShaderFlags flags,
-				[Out] String^% errors );
+			static ShaderBytecode^ CompileFromFile( System::String^ fileName, array<Macro>^ defines,
+				Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags,
+				[Out] System::String^% errors, [Out] ConstantTable^% constantTable );
+			static ShaderBytecode^ CompileFromFile( System::String^ fileName, array<Macro>^ defines,
+				Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags,
+				[Out] System::String^% errors );
 
 			static int MajorVersion( int version );
 			static int MinorVersion( int version );
-			static Version^ ParseVersion( int version );
+			static System::Version^ ParseVersion( int version );
 		};
 	}
 }

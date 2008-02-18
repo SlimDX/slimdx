@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ namespace DXGI
 		Construct( pointer );
 	}
 	
-	SwapChain::SwapChain( IntPtr pointer )
+	SwapChain::SwapChain( System::IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
@@ -48,9 +48,9 @@ namespace DXGI
 	SwapChain::SwapChain( Factory^ factory, ComObject^ device, SwapChainDescription description )
 	{
 		if( factory == nullptr )
-			throw gcnew ArgumentNullException( "factory" );
+			throw gcnew System::ArgumentNullException( "factory" );
 		if( device == nullptr )
-			throw gcnew ArgumentNullException( "device" );
+			throw gcnew System::ArgumentNullException( "device" );
 		
 		IDXGISwapChain* swapChain = 0;
 		DXGI_SWAP_CHAIN_DESC nativeDescription = description.CreateNativeVersion();
@@ -79,7 +79,7 @@ namespace DXGI
 		Result::Record( InternalPointer->GetBuffer( index, guid, reinterpret_cast<void**>( &unknown ) ) );
 		if( Result::Last.IsFailure )
 			return T();
-		return safe_cast<T>( Activator::CreateInstance( T::typeid, IntPtr( unknown ) ) );
+		return safe_cast<T>( System::Activator::CreateInstance( T::typeid, System::IntPtr( unknown ) ) );
 	}
 
 	Result SwapChain::ResizeBuffers( int count, int width, int height, SlimDX::DXGI::Format format, SwapChainFlags flags )

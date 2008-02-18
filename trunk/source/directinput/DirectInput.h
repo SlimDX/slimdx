@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,9 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Windows::Forms;
-using namespace System::Runtime::InteropServices;
+//using namespace System;
+//using namespace System::Windows::Forms;
+//using namespace System::Runtime::InteropServices;
 
 #include "../SlimDXException.h"
 
@@ -40,7 +40,7 @@ namespace SlimDX
 			DirectInput() { }
 			static IDirectInput8W* m_DirectInput;
 
-			static void OnExit( Object^ sender, EventArgs^ e )
+			static void OnExit( System::Object^ sender, System::EventArgs^ e )
 			{
 				Terminate();
 			}
@@ -74,19 +74,19 @@ namespace SlimDX
 			/// input device or modify configurations.
 			/// </summary>
 			/// <param name="parent">The parent control.</param>
-			static void RunControlPanel( Control^ parent );
+			static void RunControlPanel( System::Windows::Forms::Control^ parent );
 
 			/// <summary>
 			/// Gets a value indicating whether the specified device is
 			/// attached to the user's system.
 			/// </summary>
-			static bool IsDeviceAttached( Guid device );
+			static bool IsDeviceAttached( System::Guid device );
 
 			/// <summary>
 			/// Retrieves the instance identifier of a device that
 			/// has been newly attached to the system.
 			/// </summary>
-			static Guid FindDevice( Guid deviceClass, String^ name );
+			static System::Guid FindDevice( System::Guid deviceClass, System::String^ name );
 		};
 	}
 }

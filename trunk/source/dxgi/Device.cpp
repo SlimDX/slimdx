@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ namespace DXGI
 		Construct( pointer );
 	}
 	
-	Device::Device( IntPtr pointer )
+	Device::Device( System::IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
@@ -68,7 +68,7 @@ namespace DXGI
 		return gcnew Adapter( adapter );
 	}
 
-	ReadOnlyCollection<Residency>^ Device::QueryResourceResidency( IList<ComObject^>^ resources )
+	System::Collections::ObjectModel::ReadOnlyCollection<Residency>^ Device::QueryResourceResidency( System::Collections::Generic::IList<ComObject^>^ resources )
 	{
 		std::vector<DXGI_RESIDENCY> nativeResidency( resources->Count );
 		std::vector<IUnknown*> nativeResources( resources->Count );
@@ -79,10 +79,10 @@ namespace DXGI
 		if( Result::Last.IsFailure )
 			return nullptr;
 		
-		List< Residency >^ result = gcnew List<Residency>( nativeResidency.size() );
+		System::Collections::Generic::List< Residency >^ result = gcnew System::Collections::Generic::List<Residency>( nativeResidency.size() );
 		for( unsigned int resourceIndex = 0; resourceIndex < nativeResidency.size(); ++resourceIndex )
 			result->Add( static_cast<Residency>( nativeResidency[ resourceIndex ] ) );
-		return gcnew ReadOnlyCollection<Residency>( result );
+		return gcnew System::Collections::ObjectModel::ReadOnlyCollection<Residency>( result );
 	}
 }
 }

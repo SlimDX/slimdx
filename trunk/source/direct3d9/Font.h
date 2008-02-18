@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System::Drawing;
+//using namespace System::Drawing;
 
 #include "Enums.h"
 
@@ -41,7 +41,7 @@ namespace SlimDX
             property Precision OutputPrecision;
             property FontQuality Quality;
             property PitchAndFamily PitchAndFamily;
-            property String^ FaceName;
+            property System::String^ FaceName;
 		};
 
 		public ref class Font : public ComObject
@@ -54,23 +54,23 @@ namespace SlimDX
 			*/
 
 		public:
-			Font( IntPtr font );
+			Font( System::IntPtr font );
 			Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,
 				CharacterSet characterSet, Precision outputPrecision, FontQuality quality,
-				PitchAndFamily pitchAndFamily, String^ faceName );
+				PitchAndFamily pitchAndFamily, System::String^ faceName );
 			Font( Device^ device, System::Drawing::Font^ font );
 			~Font() { Destruct(); }
 
-			int DrawString( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, int color );
-			int DrawString( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, Color color );
-			int DrawString( Sprite^ sprite, String^ text, int x, int y, int color );
-			int DrawString( Sprite^ sprite, String^ text, int x, int y, Color color );
+			int DrawString( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, int color );
+			int DrawString( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, System::Drawing::Color color );
+			int DrawString( Sprite^ sprite, System::String^ text, int x, int y, int color );
+			int DrawString( Sprite^ sprite, System::String^ text, int x, int y, System::Drawing::Color color );
 
-			System::Drawing::Rectangle MeasureString( Sprite^ sprite, String^ text, DrawTextFormat format );
+			System::Drawing::Rectangle MeasureString( Sprite^ sprite, System::String^ text, DrawTextFormat format );
 
 			void PreloadCharacters( int first, int last );
 			void PreloadGlyphs( int first, int last );
-			void PreloadText( String^ text );
+			void PreloadText( System::String^ text );
 
 			void OnLostDevice();
 			void OnResetDevice();
@@ -80,9 +80,9 @@ namespace SlimDX
 				FontDescription get();
 			}
 
-			property IntPtr DeviceContext
+			property System::IntPtr DeviceContext
 			{
-				IntPtr get();
+				System::IntPtr get();
 			}
 		};
 	}

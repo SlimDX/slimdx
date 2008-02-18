@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ namespace SlimDX
 {
 namespace DXGI
 {
-	DXGIException::DXGIException( SerializationInfo^ info, StreamingContext context )
+	DXGIException::DXGIException( System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context )
 	: SlimDXException( info, context )
 	{
 	}
@@ -37,12 +37,12 @@ namespace DXGI
 	{
 	}
 
-	DXGIException::DXGIException( String^ message )
+	DXGIException::DXGIException( System::String^ message )
 	: SlimDXException( message )
 	{
 	}
 
-	DXGIException::DXGIException( String^ message, Exception^ innerException )
+	DXGIException::DXGIException( System::String^ message, System::Exception^ innerException )
 	: SlimDXException( message, innerException )
 	{
 	}

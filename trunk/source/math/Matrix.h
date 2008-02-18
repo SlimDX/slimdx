@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,14 +21,14 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::InteropServices;
+//using namespace System;
+//using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	[Serializable]
-	[StructLayout( LayoutKind::Sequential )]
-	public value class Matrix : IEquatable<Matrix>
+	[System::Serializable]
+	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+	public value class Matrix : System::IEquatable<Matrix>
 	{
 	internal:
 		static D3DXMATRIX ToD3DXMATRIX( Matrix matrix );
@@ -175,9 +175,9 @@ namespace SlimDX
 		static bool operator == ( Matrix left, Matrix right );
 		static bool operator != ( Matrix left, Matrix right );
 		
-		virtual String^ ToString() override;
+		virtual System::String^ ToString() override;
 		virtual int GetHashCode() override;
-		virtual bool Equals( Object^ obj ) override;
+		virtual bool Equals( System::Object^ obj ) override;
 		virtual bool Equals( Matrix other );
 		static bool Equals( Matrix% value1, Matrix% value2 );
 	};

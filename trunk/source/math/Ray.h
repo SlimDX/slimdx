@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,14 +21,14 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::InteropServices;
+//using namespace System;
+//using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	[Serializable]
-	[StructLayout( LayoutKind::Sequential )]
-	public value class Ray : IEquatable<Ray>
+	[System::Serializable]
+	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+	public value class Ray : System::IEquatable<Ray>
 	{
 	public:
 		Vector3 Position;
@@ -45,9 +45,9 @@ namespace SlimDX
 		static bool operator == ( Ray left, Ray right );
 		static bool operator != ( Ray left, Ray right );
 
-		virtual String^ ToString() override;
+		virtual System::String^ ToString() override;
 		virtual int GetHashCode() override;
-		virtual bool Equals( Object^ obj ) override;
+		virtual bool Equals( System::Object^ obj ) override;
 		virtual bool Equals( Ray other );
 		static bool Equals( Ray% value1, Ray% value2 );
 	};

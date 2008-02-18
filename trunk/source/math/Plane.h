@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,12 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::InteropServices;
+//using namespace System;
+//using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	public enum class PlaneIntersectionType : Int32
+	public enum class PlaneIntersectionType : System::Int32
 	{
 		Back,
 		Front,
@@ -36,9 +36,9 @@ namespace SlimDX
 	/// <summary>
 	/// Defines a 3D mathematical plane.
 	/// </summary>
-	[Serializable]
-	[StructLayout( LayoutKind::Sequential )]
-	public value class Plane : IEquatable<Plane>
+	[System::Serializable]
+	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+	public value class Plane : System::IEquatable<Plane>
 	{
 	public:
 		/// <summary>
@@ -88,9 +88,9 @@ namespace SlimDX
 		static bool operator == ( Plane left, Plane right );
 		static bool operator != ( Plane left, Plane right );
 
-		virtual String^ ToString() override;
+		virtual System::String^ ToString() override;
 		virtual int GetHashCode() override;
-		virtual bool Equals( Object^ obj ) override;
+		virtual bool Equals( System::Object^ obj ) override;
 		virtual bool Equals( Plane other );
 		static bool Equals( Plane% value1, Plane% value2 );
 	};

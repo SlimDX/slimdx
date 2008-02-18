@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,7 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Collections::Generic;
-using namespace System::Collections::ObjectModel;
+
 
 #include "Enums.h"
 
@@ -35,14 +33,14 @@ namespace SlimDX
 		{
 		private:
 			bool alphaToCoverageEnabled;
-            List<bool>^ renderTargetBlendEnabled;
+            System::Collections::Generic::List<bool>^ renderTargetBlendEnabled;
             BlendOption sourceBlend;
             BlendOption destinationBlend;
             SlimDX::Direct3D10::BlendOperation blendOperation;
             BlendOption sourceAlphaBlend;
             BlendOption destinationAlphaBlend;
             SlimDX::Direct3D10::BlendOperation alphaBlendOperation;
-            List<ColorWriteMaskFlags>^ renderTargetWriteMask;
+            System::Collections::Generic::List<ColorWriteMaskFlags>^ renderTargetWriteMask;
 
 		internal:
 			BlendStateDescription( const D3D10_BLEND_DESC& description );
@@ -56,9 +54,9 @@ namespace SlimDX
                 void set( bool value ) { alphaToCoverageEnabled = value; }
             }
 
-            property ReadOnlyCollection<bool>^ RenderTargetBlendEnabled
+            property System::Collections::ObjectModel::ReadOnlyCollection<bool>^ RenderTargetBlendEnabled
             {
-                ReadOnlyCollection<bool>^ get() { return gcnew ReadOnlyCollection<bool>( renderTargetBlendEnabled ); }
+                System::Collections::ObjectModel::ReadOnlyCollection<bool>^ get() { return gcnew System::Collections::ObjectModel::ReadOnlyCollection<bool>( renderTargetBlendEnabled ); }
             }
 
             property BlendOption SourceBlend
@@ -97,9 +95,9 @@ namespace SlimDX
                 void set( SlimDX::Direct3D10::BlendOperation value ) { alphaBlendOperation = value; }
             }
 
-            property ReadOnlyCollection<ColorWriteMaskFlags>^ RenderTargetWriteMask
+            property System::Collections::ObjectModel::ReadOnlyCollection<ColorWriteMaskFlags>^ RenderTargetWriteMask
             {
-                ReadOnlyCollection<ColorWriteMaskFlags>^ get() { return gcnew ReadOnlyCollection<ColorWriteMaskFlags>( renderTargetWriteMask ); }
+                System::Collections::ObjectModel::ReadOnlyCollection<ColorWriteMaskFlags>^ get() { return gcnew System::Collections::ObjectModel::ReadOnlyCollection<ColorWriteMaskFlags>( renderTargetWriteMask ); }
             }
 			
 			BlendStateDescription();

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,25 @@
 
 #include "ObjectTracker.h"
 
+using namespace System;
+using namespace System::Globalization;
+using namespace System::Collections::Generic;
+using namespace System::Diagnostics;
+
 namespace SlimDX
 {
+	static ObjectTracker::ObjectTracker()
+	{
+		m_TrackedObjects = gcnew System::Collections::Generic::Dictionary<IDisposable^, StackTrace^>();
+
+		AppDomain::CurrentDomain->DomainUnload += gcnew System::EventHandler( OnExit );
+		AppDomain::CurrentDomain->ProcessExit += gcnew System::EventHandler( OnExit );
+	}
+	
+	ObjectTracker::ObjectTracker()
+	{
+	}
+	
 	void ObjectTracker::OnExit( Object^ sender, EventArgs^ e )
 	{
 		ReportLeaks();

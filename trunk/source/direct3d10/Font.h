@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System::Drawing;
+//using namespace System::Drawing;
 
 #include "../ComObject.h"
 
@@ -46,17 +46,17 @@ namespace SlimDX
 			Font( ID3DX10Font* font );
 
 		public:
-			Font( IntPtr pointer );
+			Font( System::IntPtr pointer );
 			Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic,
 				FontCharacterSet characterSet, FontPrecision outputPrecision, FontQuality quality,
-				FontPitchAndFamily pitchAndFamily, String^ faceName );
+				FontPitchAndFamily pitchAndFamily, System::String^ faceName );
 			~Font() { Destruct(); }
 
-			int Draw( Sprite^ sprite, String^ text, Drawing::Rectangle rect, FontDrawFlags flags, int color );
+			int Draw( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rect, FontDrawFlags flags, int color );
 
 			void PreloadCharacters( int first, int last );
 			void PreloadGlyphs( int first, int last );
-			void PreloadText( String^ text );
+			void PreloadText( System::String^ text );
 		};
 	}
 }

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -39,17 +39,17 @@ namespace SlimDX
 		Utilities();
 		
 	internal:
-		static GUID GetNativeGuidForType( Type^ type );
+		static GUID GetNativeGuidForType( System::Type^ type );
 		
 	public:
-		static Guid ConvertNativeGuid( const GUID &guid );
-		static GUID ConvertManagedGuid( Guid guid );
+		static System::Guid ConvertNativeGuid( const GUID &guid );
+		static GUID ConvertManagedGuid( System::Guid guid );
 
-		static Drawing::Rectangle ConvertRect(RECT rect);
+		static System::Drawing::Rectangle ConvertRect(RECT rect);
 
-		static String^ BufferToString( ID3DXBuffer *buffer );
+		static System::String^ BufferToString( ID3DXBuffer *buffer );
 
-		static array<Byte>^ ReadStream( System::IO::Stream^ stream, int readLength );
+		static array<System::Byte>^ ReadStream( System::IO::Stream^ stream, int readLength );
 
 		generic<typename T>
 		static void CheckArrayBounds( array<T>^ data, int offset, int% count );

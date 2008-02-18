@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,8 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::InteropServices;
+//using namespace System;
+//using namespace System::Runtime::InteropServices;
 
 #include "../ComObject.h"
 #include "Enums.h"
@@ -45,10 +45,10 @@ namespace SlimDX
 			property int SizeInBytes;
 			property BufferFlags Flags;
 			property WaveFormatExtended^ Format;
-			property Guid AlgorithmFor3D;
+			property System::Guid AlgorithmFor3D;
 		};
 
-		[StructLayout( LayoutKind::Sequential, Pack = 4 )]
+		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential, Pack = 4 )]
 		public value class BufferCaps
 		{
 			int Size;

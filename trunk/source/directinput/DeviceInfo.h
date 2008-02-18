@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 #include "Enums.h"
 
@@ -35,13 +35,13 @@ namespace SlimDX
 		public ref class DeviceInstance
 		{
 		private:
-			Guid instanceGuid;
-			Guid productGuid;
-			Guid ffDriverGuid;
+			System::Guid instanceGuid;
+			System::Guid productGuid;
+			System::Guid ffDriverGuid;
 			DeviceType type;
 			int subType;
-			String^ instanceName;
-			String^ productName;
+			System::String^ instanceName;
+			System::String^ productName;
 			int usage;
 			int usagePage;
 			bool hid;
@@ -54,27 +54,27 @@ namespace SlimDX
 			/// Gets the unique identifier for the instance of the device. Instance Guids are
 			/// specific to a particular computer.
 			/// </summary>
-			property Guid InstanceGuid
+			property System::Guid InstanceGuid
 			{
-				Guid get() { return instanceGuid; }
+				System::Guid get() { return instanceGuid; }
 			}
 
 			/// <summary>
 			/// Gets the unique identifier for the product. This identifier is established
 			/// by the manufacturer of the device.
 			/// </summary>
-			property Guid ProductGuid
+			property System::Guid ProductGuid
 			{
-				Guid get() { return productGuid; }
+				System::Guid get() { return productGuid; }
 			}
 
 			/// <summary>
 			/// Gets the unique identifier for the driver being used for force-feedback. The
 			/// driver's manufacturer establishes this identifier.
 			/// </summary>
-			property Guid ForceFeedbackDriverGuid
+			property System::Guid ForceFeedbackDriverGuid
 			{
-				Guid get() { return ffDriverGuid; }
+				System::Guid get() { return ffDriverGuid; }
 			}
 
 			/// <summary>
@@ -96,17 +96,17 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the friendly name for the instance.
 			/// </summary>
-			property String^ InstanceName
+			property System::String^ InstanceName
 			{
-				String^ get() { return instanceName; }
+				System::String^ get() { return instanceName; }
 			}
 
 			/// <summary>
 			/// Gets the friendly name for the product.
 			/// </summary>
-			property String^ ProductName
+			property System::String^ ProductName
 			{
-				String^ get() { return productName; }
+				System::String^ get() { return productName; }
 			}
 
 			/// <summary>

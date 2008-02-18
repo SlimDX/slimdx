@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -29,8 +29,8 @@ namespace SlimDX
 	{
 		ref class SkinInfo;
 
-		[Flags]
-		public enum class MeshFlags : Int32
+		[System::Flags]
+		public enum class MeshFlags : System::Int32
 		{
 			Use32Bit = D3DXMESH_32BIT,
 			DoNotClip = D3DXMESH_DONOTCLIP,
@@ -60,8 +60,8 @@ namespace SlimDX
 			Software = D3DXMESH_SOFTWAREPROCESSING,
 		};
 
-		[Flags]
-		public enum class TangentOptions : Int32
+		[System::Flags]
+		public enum class TangentOptions : System::Int32
 		{
 			None = 0,
 			WrapU = D3DXTANGENT_WRAP_U,
@@ -78,15 +78,15 @@ namespace SlimDX
 			GenerateInPlace = D3DXTANGENT_GENERATE_IN_PLACE,
 		};
 
-		public enum class EffectDefaultType : Int32
+		public enum class EffectDefaultType : System::Int32
 		{
 			String = D3DXEDT_STRING,
 			Floats = D3DXEDT_FLOATS,
 			Dword = D3DXEDT_DWORD,
 		};
 
-		[Flags]
-		public enum class MeshOptimizeFlags : Int32
+		[System::Flags]
+		public enum class MeshOptimizeFlags : System::Int32
 		{
 			Compact = D3DXMESHOPT_COMPACT,
 			AttributeSort = D3DXMESHOPT_ATTRSORT,
@@ -97,8 +97,8 @@ namespace SlimDX
 			DeviceIndependent = D3DXMESHOPT_DEVICEINDEPENDENT,
 		};
 
-		[Flags]
-		public enum class CleanType : Int32
+		[System::Flags]
+		public enum class CleanType : System::Int32
 		{
 			BackFacing = D3DXCLEAN_BACKFACING,
 			Bowties = D3DXCLEAN_BOWTIES,
@@ -107,7 +107,7 @@ namespace SlimDX
 			Simplification = D3DXCLEAN_SIMPLIFICATION
 		};
 
-		public enum class MeshSimplification : Int32
+		public enum class MeshSimplification : System::Int32
 		{
 			Vertex = D3DXMESHSIMP_VERTEX,
 			Face = D3DXMESHSIMP_FACE
@@ -122,13 +122,13 @@ namespace SlimDX
 
 		public:
 			property Material MaterialD3D;
-			property String^ TextureFileName;
+			property System::String^ TextureFileName;
 		};
 
 		public value class EffectDefault
 		{
 		public:
-			property String^ ParameterName;
+			property System::String^ ParameterName;
 			property EffectDefaultType Type;
 			property DataStream^ Value;
 		};
@@ -141,11 +141,11 @@ namespace SlimDX
 			static array<EffectInstance>^ FromBuffer( ID3DXBuffer* buffer, unsigned int count );
 
 		public:
-			property String^ EffectFileName;
+			property System::String^ EffectFileName;
 			property array<EffectDefault>^ Defaults;
 		};
 
-		[StructLayout(LayoutKind::Sequential)]
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class AttributeRange
 		{
 		public:
@@ -156,18 +156,18 @@ namespace SlimDX
 			property int VertexCount;
 		};
 
-		[StructLayout(LayoutKind::Sequential)]
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class GlyphMetricsFloat
 		{
 		public:
 			property float BlackBoxX;
 			property float BlackBoxY;
-			property PointF GlyphOrigin;
+			property System::Drawing::PointF GlyphOrigin;
 			property float CellIncX;
 			property float CellIncY;
 		};
 
-		[StructLayout(LayoutKind::Sequential)]
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class AttributeWeights
 		{
 		public:
@@ -188,7 +188,7 @@ namespace SlimDX
 			property float Binormal;
 		};
 
-		[StructLayout(LayoutKind::Sequential)]
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class IntersectInformation
 		{
 		public:
@@ -209,7 +209,7 @@ namespace SlimDX
 
 		protected:
 			BaseMesh() { }
-			BaseMesh( IntPtr pointer );
+			BaseMesh( System::IntPtr pointer );
 			BaseMesh( ID3DXBaseMesh* baseMesh ) { Construct(baseMesh); }
 
 		public:
@@ -272,18 +272,18 @@ namespace SlimDX
 			void SetAdjacency( DWORD *adjacency );
 
 		public:
-			Mesh( IntPtr pointer );
+			Mesh( System::IntPtr pointer );
 			Mesh( Device^ device, int faceCount, int vertexCount, MeshFlags options, array<VertexElement>^ vertexDeclaration );
 			Mesh( Device^ device, int faceCount, int vertexCount, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf );
 			virtual ~Mesh() { }
 			
-			static Mesh^ FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags );
-			static Mesh^ FromStream( Device^ device, Stream^ stream, MeshFlags flags );
-			static Mesh^ FromFile( Device^ device, String^ fileName, MeshFlags flags );
+			static Mesh^ FromMemory( Device^ device, array<System::Byte>^ memory, MeshFlags flags );
+			static Mesh^ FromStream( Device^ device, System::IO::Stream^ stream, MeshFlags flags );
+			static Mesh^ FromFile( Device^ device, System::String^ fileName, MeshFlags flags );
 			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags );
 
-			static void ToXFile( Mesh^ mesh, String^ fileName, XFileFormat format, CharSet charSet );
-			static void ToXFile( Mesh^ mesh, String^ fileName, XFileFormat format );
+			static void ToXFile( Mesh^ mesh, System::String^ fileName, XFileFormat format, System::Runtime::InteropServices::CharSet charSet );
+			static void ToXFile( Mesh^ mesh, System::String^ fileName, XFileFormat format );
 
 			static Mesh^ CreateBox( Device^ device, float width, float height, float depth );
 			static Mesh^ CreateCylinder( Device^ device, float radius1, float radius2, float length, int slices, int stacks );
@@ -291,8 +291,8 @@ namespace SlimDX
 			static Mesh^ CreateTeapot( Device^ device );
 			static Mesh^ CreateTorus( Device^ device, float innerRadius, float outerRadius, int sides, int rings );
 
-			static Mesh^ CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion, [Out] array<GlyphMetricsFloat>^% glyphMetrics );
-			static Mesh^ CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion );
+			static Mesh^ CreateText( Device^ device, System::Drawing::Font^ font, System::String^ text, float deviation, float extrusion, [Out] array<GlyphMetricsFloat>^% glyphMetrics );
+			static Mesh^ CreateText( Device^ device, System::Drawing::Font^ font, System::String^ text, float deviation, float extrusion );
 
 			static Mesh^ Concatenate( Device^ device, array<Mesh^>^ meshes, MeshFlags options, array<Matrix>^ geometryTransforms, array<Matrix>^ textureTransforms, array<VertexElement>^ vertexDeclaration );
 			static Mesh^ Concatenate( Device^ device, array<Mesh^>^ meshes, MeshFlags options, array<Matrix>^ geometryTransforms, array<Matrix>^ textureTransforms );
@@ -312,7 +312,7 @@ namespace SlimDX
 			Mesh^ Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
 			Mesh^ Optimize( MeshOptimizeFlags flags );
 
-			Mesh^ Clean( CleanType type, [Out] String^% errorsAndWarnings );
+			Mesh^ Clean( CleanType type, [Out] System::String^% errorsAndWarnings );
 			Mesh^ Clean( CleanType type );
 			
 			void ComputeNormals();

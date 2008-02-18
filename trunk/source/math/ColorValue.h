@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,14 @@
 */
 #pragma once
 
-using namespace System::Drawing;
-using namespace System::Runtime::InteropServices;
+//using namespace System::Drawing;
+//using namespace System::Runtime::InteropServices;
+
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
-	[StructLayout(LayoutKind::Sequential)]
+	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 	public value class ColorValue
 	{
 	internal:
@@ -40,10 +42,10 @@ namespace SlimDX
 
 		ColorValue( float alpha, float red, float green, float blue );
 		ColorValue( float red, float green, float blue );
-		ColorValue( Color color );
+		ColorValue( System::Drawing::Color color );
 		ColorValue( int argb );
 
-		Color ToColor();
+		System::Drawing::Color ToColor();
 		int ToArgb();
 
 		static ColorValue Add( ColorValue color1, ColorValue color2 );
@@ -80,9 +82,9 @@ namespace SlimDX
 		static bool operator == ( ColorValue left, ColorValue right );
 		static bool operator != ( ColorValue left, ColorValue right );
 
-		virtual String^ ToString() override;
+		virtual System::String^ ToString() override;
 		virtual int GetHashCode() override;
-		virtual bool Equals( Object^ obj ) override;
+		virtual bool Equals( System::Object^ obj ) override;
 		virtual bool Equals( ColorValue other );
 		static bool Equals( ColorValue% value1, ColorValue% value2 );
 	};

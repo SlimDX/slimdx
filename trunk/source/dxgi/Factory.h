@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,8 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::InteropServices;
+//using namespace System;
+//using namespace System::Runtime::InteropServices;
 
 #include "../ComObject.h"
 
@@ -52,7 +52,7 @@ namespace SlimDX
 			/// Constructs a Factory from an unmanaged pointer.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGIFactory pointer.</param>
-			Factory( IntPtr pointer );
+			Factory( System::IntPtr pointer );
 			
 			/// <summary>
 			/// Gets the number of available adapters.
@@ -72,7 +72,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="module">The unmanaged HMODULE for the software adapter DLL.</param>
 			/// <returns>The specified adapter, or null on failure.</returns>
-			Adapter^ CreateSoftwareAdapter( IntPtr module );
+			Adapter^ CreateSoftwareAdapter( System::IntPtr module );
 			
 			/// <summary>
 			/// Creates a software adapater interface.
@@ -86,7 +86,7 @@ namespace SlimDX
 			/// transitions).
 			/// </summary>
 			/// <returns>The window handle.</returns>
-			IntPtr GetWindowAssociation();
+			System::IntPtr GetWindowAssociation();
 			
 			/// <summary>
 			/// Sets the window handle associated with the factory (the window through which the user signals fullscreen
@@ -95,7 +95,7 @@ namespace SlimDX
 			/// <param name="handle">The window handle.</param>
 			/// <param name="flags">Flags controlling window association behavior.</param>
 			/// <returns>A Result code.</returns>
-			Result SetWindowAssociation( IntPtr handle, WindowAssociationFlags flags );
+			Result SetWindowAssociation( System::IntPtr handle, WindowAssociationFlags flags );
 		};
 	}
 };

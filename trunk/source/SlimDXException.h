@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,29 +21,26 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::Serialization;
-
 #include "Configuration.h"
 #include "Result.h"
 
 namespace SlimDX
 {
-	[Serializable]
-	public ref class SlimDXException : public Exception
+	[System::Serializable]
+	public ref class SlimDXException : public System::Exception
 	{	
 	protected:
-		SlimDXException( SerializationInfo^ info, StreamingContext context );	
+		SlimDXException( System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context );	
 		
 	public:
 		property int ErrorCode;
 
 		SlimDXException();
-		SlimDXException( String^ message );
-		SlimDXException( String^ message, Exception^ innerException );
+		SlimDXException( System::String^ message );
+		SlimDXException( System::String^ message, System::Exception^ innerException );
 		SlimDXException( int result );
 		
 		//TODO: Remove.
-		SlimDXException( int errorCode, String^ message );
+		SlimDXException( int errorCode, System::String^ message );
 	};
 }

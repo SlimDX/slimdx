@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,7 @@ namespace DXGI
 		Construct( pointer );
 	}
 	
-	Output::Output( IntPtr pointer )
+	Output::Output( System::IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
@@ -78,7 +78,7 @@ namespace DXGI
 		throw gcnew DXGIException( Result::Last );
 	}
 	
-	ReadOnlyCollection<ModeDescription>^ Output::GetDisplayModeList( Format format, DisplayModeEnumerationFlags flags )
+	System::Collections::ObjectModel::ReadOnlyCollection<ModeDescription>^ Output::GetDisplayModeList( Format format, DisplayModeEnumerationFlags flags )
 	{
 		UINT modeCount = 0;
 		Result::Record( InternalPointer->GetDisplayModeList( static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ), &modeCount, 0 ) );
@@ -94,13 +94,13 @@ namespace DXGI
 		for( unsigned int descriptionIndex = 0; descriptionIndex < nativeDescriptions.size(); ++descriptionIndex )
 			descriptions->Add( ModeDescription( nativeDescriptions[ descriptionIndex ] ) );
 		
-		return gcnew ReadOnlyCollection<ModeDescription>( descriptions );
+		return gcnew System::Collections::ObjectModel::ReadOnlyCollection<ModeDescription>( descriptions );
 	}
 	
 	Result Output::GetClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription% result )
 	{
 		if( device == nullptr )
-			throw gcnew ArgumentNullException( "device" );
+			throw gcnew System::ArgumentNullException( "device" );
 			
 		DXGI_MODE_DESC nativeModeToMatch = modeToMatch.CreateNativeVersion();
 		DXGI_MODE_DESC nativeResult;
@@ -119,21 +119,21 @@ namespace DXGI
 	Result Output::SetDisplaySurface( Surface^ surface )
 	{
 		if( surface == nullptr )
-			throw gcnew ArgumentNullException( "surface" );
+			throw gcnew System::ArgumentNullException( "surface" );
 		return Result::Record( InternalPointer->SetDisplaySurface( surface->InternalPointer ) );
 	}
 	
 	Result Output::CopyDisplaySurfaceTo( Surface^ surface )
 	{
 		if( surface == nullptr )
-			throw gcnew ArgumentNullException( "surface" );
+			throw gcnew System::ArgumentNullException( "surface" );
 		return Result::Record( InternalPointer->GetDisplaySurfaceData( surface->InternalPointer ) );
 	}
 	
 	Result Output::TakeOwnership( ComObject^ device, bool exclusive )
 	{
 		if( device == nullptr )
-			throw gcnew ArgumentNullException( "device" );
+			throw gcnew System::ArgumentNullException( "device" );
 		return Result::Record( InternalPointer->TakeOwnership( device->UnknownPointer, exclusive ) );
 	}
 	

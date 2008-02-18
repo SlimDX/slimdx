@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,6 @@
 
 #include "../Utilities.h"
 
-//#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
 #include "Direct3D9NotFoundException.h"
 #include "Direct3DX9NotFoundException.h"
@@ -36,6 +35,8 @@
 #include "Enums.h"
 
 #include "Direct3D.h"
+
+using namespace System;
 
 namespace SlimDX
 {
@@ -123,7 +124,7 @@ namespace Direct3D9
         {
 		    m_Direct3D = Direct3DCreate9( D3D_SDK_VERSION );
         }
-        catch( SEHException^ ex )
+        catch( System::Runtime::InteropServices::SEHException^ ex )
         {
             throw gcnew Direct3D9NotFoundException( "Direct3D 9 was not found. Reinstalling DirectX may fix the problem.", ex );
         }
@@ -142,7 +143,7 @@ namespace Direct3D9
         {
             D3DXCheckVersion( D3D_SDK_VERSION, D3DX_SDK_VERSION );
         }
-        catch( SEHException^ ex )
+        catch( System::Runtime::InteropServices::SEHException^ ex )
         {
             throw gcnew Direct3DX9NotFoundException( "Direct3DX 9 was not found. Please install "
                 "the latest DirectX end-user redistributable package from Microsoft.", ex );

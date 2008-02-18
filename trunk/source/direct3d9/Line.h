@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System::Drawing;
+//using namespace System::Drawing;
 
 namespace SlimDX
 {
@@ -37,7 +37,7 @@ namespace SlimDX
 			*/
 
 		public:
-			Line( IntPtr line );
+			Line( System::IntPtr line );
 			Line( Device^ device );
 			~Line() { Destruct(); }
 
@@ -45,9 +45,9 @@ namespace SlimDX
 			void End();
 
 			void Draw( array<Vector2>^ vertexList, int color );
-			void Draw( array<Vector2>^ vertexList, Color color );
+			void Draw( array<Vector2>^ vertexList, System::Drawing::Color color );
 			void DrawTransformed( array<Vector3>^ vertexList, Matrix matrix, int color );
-			void DrawTransformed( array<Vector3>^ vertexList, Matrix matrix, Color color );
+			void DrawTransformed( array<Vector3>^ vertexList, Matrix matrix, System::Drawing::Color color );
 			
 			void OnLostDevice();
 			void OnResetDevice();

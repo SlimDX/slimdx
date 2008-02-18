@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 #include "../ComObject.h"
 
@@ -45,7 +45,7 @@ namespace SlimDX
 			DepthStencilState( ID3D10DepthStencilState* state );
 		
 		public:
-			DepthStencilState( IntPtr state );
+			DepthStencilState( System::IntPtr state );
 			~DepthStencilState() { Destruct(); }
 
 			property bool DepthEnabled
@@ -68,14 +68,14 @@ namespace SlimDX
 				bool get() { return m_Description->StencilEnabled; }
 			}
 			
-			property Byte StencilReadMask
+			property System::Byte StencilReadMask
 			{
-				Byte get() { return m_Description->StencilReadMask; }
+				System::Byte get() { return m_Description->StencilReadMask; }
 			}
 			
-			property Byte StencilWriteMask
+			property System::Byte StencilWriteMask
 			{
-				Byte get() { return m_Description->StencilWriteMask; }
+				System::Byte get() { return m_Description->StencilWriteMask; }
 			}
 			
 			property Comparison FrontStencilComparison

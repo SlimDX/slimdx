@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +21,6 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Collections::Generic;
-using namespace System::Collections::ObjectModel;
-
 #include "../ComObject.h"
 
 #include "Enums.h"
@@ -44,7 +40,7 @@ namespace SlimDX
 
 		private:
 			int version;
-			String^ creator;
+			System::String^ creator;
 			int flags; //TODO: No idea what values this can take...?
 			int constantBuffers;
 			int boundResources;
@@ -76,8 +72,8 @@ namespace SlimDX
 			int conversionInstructionCount;
 			int bitwiseInstructionCount;
 			
-			List<ShaderParameterDescription>^ inputParametersInfo;
-			List<ShaderParameterDescription>^ outputParametersInfo;
+			System::Collections::Generic::List<ShaderParameterDescription>^ inputParametersInfo;
+			System::Collections::Generic::List<ShaderParameterDescription>^ outputParametersInfo;
 			
 			void Construct();
 			
@@ -98,9 +94,9 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the creator.
 			/// </summary>
-			property String^ Creator
+			property System::String^ Creator
 			{
-				String^ get() { return creator; }
+				System::String^ get() { return creator; }
 			}
 			
 			/// <summary>
@@ -260,23 +256,23 @@ namespace SlimDX
 			//	int get() { return bitwiseInstructionCount; }
 			//}
 			
-			property ReadOnlyCollection<ShaderParameterDescription>^ InputParameters
+			property System::Collections::ObjectModel::ReadOnlyCollection<ShaderParameterDescription>^ InputParameters
 			{
-				ReadOnlyCollection<ShaderParameterDescription>^ get()
+				System::Collections::ObjectModel::ReadOnlyCollection<ShaderParameterDescription>^ get()
 				{
-					return gcnew ReadOnlyCollection<ShaderParameterDescription>( inputParametersInfo );
+					return gcnew System::Collections::ObjectModel::ReadOnlyCollection<ShaderParameterDescription>( inputParametersInfo );
 				}
 			}
 			
-			property ReadOnlyCollection<ShaderParameterDescription>^ OutputParameters
+			property System::Collections::ObjectModel::ReadOnlyCollection<ShaderParameterDescription>^ OutputParameters
 			{
-				ReadOnlyCollection<ShaderParameterDescription>^ get()
+				System::Collections::ObjectModel::ReadOnlyCollection<ShaderParameterDescription>^ get()
 				{
-					return gcnew ReadOnlyCollection<ShaderParameterDescription>( outputParametersInfo );
+					return gcnew System::Collections::ObjectModel::ReadOnlyCollection<ShaderParameterDescription>( outputParametersInfo );
 				}
 			}
 		
-			ShaderReflection( IntPtr reflection );
+			ShaderReflection( System::IntPtr reflection );
 			ShaderReflection( ShaderBytecode^ shaderBytecode );
 			
 			virtual ~ShaderReflection() { Destruct(); }

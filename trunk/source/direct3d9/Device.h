@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,6 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Collections::Generic;
-using namespace System::Drawing;
-using namespace System::Runtime::InteropServices;
-using namespace System::Windows::Forms;
 
 #include "Enums.h"
 #include "Direct3D.h"
@@ -34,15 +29,13 @@ using namespace System::Windows::Forms;
 #include "../Direct3D/Viewport.h"
 #include "../math/Math.h"
 
-using namespace SlimDX::Direct3D;
-
 namespace SlimDX
 {
 	value class Matrix;
 
 	namespace Direct3D9
 	{
-		[StructLayout( LayoutKind::Sequential )]
+		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class Material
 		{
 		public:
@@ -53,7 +46,7 @@ namespace SlimDX
 			property float Power;
 		};
 
-		[StructLayout( LayoutKind::Sequential )]
+		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class TriPatchInfo
 		{
 		public:
@@ -63,7 +56,7 @@ namespace SlimDX
 			property Degree Degree;
 		};
 
-		[StructLayout( LayoutKind::Sequential )]
+		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class RectPatchInfo
 		{
 		public:
@@ -76,7 +69,7 @@ namespace SlimDX
 			property Degree Degree;
 		};
 
-		[StructLayout( LayoutKind::Sequential )]
+		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class Light
 		{
 		public:
@@ -95,14 +88,14 @@ namespace SlimDX
 			property float Phi;
 		};
 
-		[StructLayout(LayoutKind::Sequential)]
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class PaletteEntry
 		{
 		public:
-			property Byte Red;
-			property Byte Green;
-			property Byte Blue;
-			property Byte Flags;
+			property System::Byte Red;
+			property System::Byte Green;
+			property System::Byte Blue;
+			property System::Byte Flags;
 		};
 
 		public ref class PresentParameters
@@ -119,7 +112,7 @@ namespace SlimDX
 			property int MultisampleQuality;
 
 			property SwapEffect SwapEffect;
-			property IntPtr DeviceWindowHandle;
+			property System::IntPtr DeviceWindowHandle;
 			property bool Windowed;
 			property bool EnableAutoDepthStencil;
 			property Format AutoDepthStencilFormat;
@@ -147,8 +140,8 @@ namespace SlimDX
 			Device( IDirect3DDevice9* device );
 
 		public:
-			Device( IntPtr device );
-			Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParameters );
+			Device( System::IntPtr device );
+			Device( int adapter, DeviceType deviceType, System::IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParameters );
 			virtual ~Device() { Destruct(); }
 
 			// --- Properties ---
@@ -177,16 +170,16 @@ namespace SlimDX
 				void set( SlimDX::Direct3D9::Material value );
 			}
 
-			property Viewport Viewport
+			property SlimDX::Direct3D::Viewport Viewport
 			{
 				SlimDX::Direct3D::Viewport get();
 				void set( SlimDX::Direct3D::Viewport value );
 			}
 
-			property Drawing::Rectangle ScissorRect
+			property System::Drawing::Rectangle ScissorRect
 			{
-				Drawing::Rectangle get();
-				void set( Drawing::Rectangle value );
+				System::Drawing::Rectangle get();
+				void set( System::Drawing::Rectangle value );
 			}
 
 			property int AvailableTextureMemory
@@ -222,14 +215,14 @@ namespace SlimDX
 				SlimDX::Direct3D9::DriverLevel get();
 			}
 
-			property String^ VertexShaderProfile
+			property System::String^ VertexShaderProfile
 			{
-				String^ get();
+				System::String^ get();
 			}
 
-			property String^ PixelShaderProfile
+			property System::String^ PixelShaderProfile
 			{
-				String^ get();
+				System::String^ get();
 			}
 
 			// --- Methods ---
@@ -243,7 +236,7 @@ namespace SlimDX
 			void Reset( PresentParameters^ presentParameters );
 
 			void Clear( ClearFlags clearFlags, int color, float zdepth, int stencil );
-			void Clear( ClearFlags clearFlags, Color color, float zdepth, int stencil );
+			void Clear( ClearFlags clearFlags, System::Drawing::Color color, float zdepth, int stencil );
 			void BeginScene();
 			void EndScene();
 			void Present();
@@ -273,7 +266,7 @@ namespace SlimDX
 			void SetRenderState( RenderState state, int value );
 			void SetRenderState( RenderState state, bool value );
 			void SetRenderState( RenderState state, float value );
-			generic<typename T> where T : Enum
+			generic<typename T> where T : System::Enum
 				void SetRenderState( RenderState state, T value );
 
 			void SetTextureStageState( int stage, TextureStage type, int value );
@@ -292,7 +285,7 @@ namespace SlimDX
 			void SetLight( int lightIndex, Light lightData );
 			Light GetLight( int lightIndex );
 
-			void SetCursor( Cursor^ cursor, bool addWatermark );
+			void SetCursor( System::Windows::Forms::Cursor^ cursor, bool addWatermark );
 			void SetCursorPosition( int x, int y, bool immediateUpdate );
 			void SetCursorPosition( System::Drawing::Point position, bool immediateUpdate ) { SetCursorPosition( position.X, position.Y, immediateUpdate ); }
 			void SetCursorProperties( int hotspotX, int hotspotY, Surface^ cursorBitmap );

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ namespace SlimDX
 		value class VertexElement;
 		enum class VertexFormat;
 
-		[StructLayout(LayoutKind::Sequential)]
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public ref class BoneCombination
 		{
 		internal:
@@ -54,7 +54,7 @@ namespace SlimDX
 			SkinInfo( ID3DXSkinInfo* skinInfo );
 
 		public:
-			SkinInfo( IntPtr pointer );
+			SkinInfo( System::IntPtr pointer );
 			SkinInfo( int vertexCount, array<VertexElement>^ vertexDeclaration, int boneCount );
 			SkinInfo( BaseMesh^ mesh, int boneCount, array<BoneCombination^>^ boneCombinationTable );
 			SkinInfo( int vertexCount, VertexFormat fvf, int boneCount );
@@ -73,8 +73,8 @@ namespace SlimDX
 			void GetBoneInfluence( int bone, [Out] array<int>^% vertices, [Out] array<float>^% weights );
 			void SetBoneInfluence( int bone, array<int>^ vertices, array<float>^ weights );
 
-			String^ GetBoneName( int bone );
-			void SetBoneName( int bone, String^ name );
+			System::String^ GetBoneName( int bone );
+			void SetBoneName( int bone, System::String^ name );
 
 			void GetBoneVertexInfluence( int bone, int influence, [Out] float% weight, [Out] int% vertex );
 			void SetBoneVertexInfluence( int bone, int influence, float weight );

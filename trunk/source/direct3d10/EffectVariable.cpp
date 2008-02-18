@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,9 @@
 #include "EffectScalarVariable.h"
 #include "EffectVectorVariable.h"
 #include "EffectStringVariable.h"
+
+using namespace System;
+using namespace System::Globalization;
 
 namespace SlimDX
 {

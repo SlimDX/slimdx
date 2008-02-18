@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +42,7 @@ namespace SlimDX
             DeclarationType type;
             DeclarationMethod method;
             DeclarationUsage usage;
-            Byte usageIndex;
+            System::Byte usageIndex;
 
 		public:
 			property short Stream
@@ -75,16 +75,16 @@ namespace SlimDX
                 void set( DeclarationUsage value ) { usage = value; }
             }
 
-            property Byte UsageIndex
+            property System::Byte UsageIndex
             {
-                Byte get() { return usageIndex; }
-                void set( Byte value ) { usageIndex = value; }
+                System::Byte get() { return usageIndex; }
+                void set( System::Byte value ) { usageIndex = value; }
             }
 
 			static initonly VertexElement VertexDeclarationEnd;
 
 			VertexElement( short stream, short offset, DeclarationType declarationType, 
-				DeclarationMethod declarationMethod, DeclarationUsage declarationUsage, Byte usageIndex )
+				DeclarationMethod declarationMethod, DeclarationUsage declarationUsage, System::Byte usageIndex )
 				: stream( stream ), offset( offset ), type( declarationType ),
 				method( declarationMethod ), usage( declarationUsage ), usageIndex( usageIndex )
 			{
@@ -101,7 +101,7 @@ namespace SlimDX
 			VertexDeclaration( IDirect3DVertexDeclaration9* declaration );
 
 		public:
-			VertexDeclaration( IntPtr declaration );
+			VertexDeclaration( System::IntPtr declaration );
 			VertexDeclaration( Device^ device, array<VertexElement>^ elements );
 			~VertexDeclaration() { Destruct(); }
 

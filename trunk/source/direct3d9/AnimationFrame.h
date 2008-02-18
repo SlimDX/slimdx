@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,6 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Collections::ObjectModel;
-
 #include "XFile.h"
 
 namespace SlimDX
@@ -34,7 +31,7 @@ namespace SlimDX
 		ref class Frame;
 		ref class AnimationController;
 
-		public enum class MeshDataType : Int32
+		public enum class MeshDataType : System::Int32
 		{
 			Mesh = D3DXMESHTYPE_MESH,
 			ProgressiveMesh = D3DXMESHTYPE_PMESH,
@@ -99,7 +96,7 @@ namespace SlimDX
 
 			void Destruct();
 
-			String^ m_Name;
+			System::String^ m_Name;
 			MeshContainer^ m_NextContainer;
 			MeshData^ m_MeshData;
 			SkinInfo^ m_SkinInfo;
@@ -120,10 +117,10 @@ namespace SlimDX
 			array<int>^ GetAdjacency();
 			void SetAdjacency( array<int>^ adjacency );
 
-			property String^ Name
+			property System::String^ Name
 			{
-				String^ get();
-				void set( String^ value );
+				System::String^ get();
+				void set( System::String^ value );
 			}
 
 			property MeshData^ Mesh
@@ -147,10 +144,10 @@ namespace SlimDX
 
 		public interface struct IAllocateHierarchy
 		{
-			virtual MeshContainer^ CreateMeshContainer( String^ name, MeshData^ meshData, array<ExtendedMaterial>^ materials,
+			virtual MeshContainer^ CreateMeshContainer( System::String^ name, MeshData^ meshData, array<ExtendedMaterial>^ materials,
 				array<EffectInstance>^ effectInstances, array<int>^ adjacency, SkinInfo^ skinInfo ) = 0;
 
-			virtual Frame^ CreateFrame( String^ name ) = 0;
+			virtual Frame^ CreateFrame( System::String^ name ) = 0;
 			virtual void DestroyFrame( Frame^ frame ) = 0;
 			virtual void DestroyMeshContainer( MeshContainer^ container ) = 0;
 		};
@@ -240,7 +237,7 @@ namespace SlimDX
 
 			void Destruct();
 
-			String^ m_Name;
+			System::String^ m_Name;
 			Frame^ m_FirstChild;
 			Frame^ m_Sibling;
 			MeshContainer^ m_MeshContainer;
@@ -261,19 +258,19 @@ namespace SlimDX
 			virtual ~Frame();
 			!Frame();
 
-			static Frame^ LoadHierarchyFromX( Device^ device, String^ fileName, MeshFlags options, 
+			static Frame^ LoadHierarchyFromX( Device^ device, System::String^ fileName, MeshFlags options, 
 				IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController );
-			static Frame^ LoadHierarchyFromX( Device^ device, array<Byte>^ memory, MeshFlags options, 
+			static Frame^ LoadHierarchyFromX( Device^ device, array<System::Byte>^ memory, MeshFlags options, 
 				IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController );
-			static Frame^ LoadHierarchyFromX( Device^ device, Stream^ stream, MeshFlags options, 
+			static Frame^ LoadHierarchyFromX( Device^ device, System::IO::Stream^ stream, MeshFlags options, 
 				IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController );
 
-			static void SaveHierarchyToFile( String^ fileName, XFileFormat format, Frame^ root, 
+			static void SaveHierarchyToFile( System::String^ fileName, XFileFormat format, Frame^ root, 
 				AnimationController^ animationController, ISaveUserData^ userDataSaver );
-			static void SaveHierarchyToFile( String^ fileName, XFileFormat format, Frame^ root, 
+			static void SaveHierarchyToFile( System::String^ fileName, XFileFormat format, Frame^ root, 
 				AnimationController^ animationController );
 
-			Frame^ FindChild( String^ name );
+			Frame^ FindChild( System::String^ name );
 			void AppendChild( Frame^ child );
 
 			static BoundingSphere CalculateBoundingSphere( Frame^ root );
@@ -281,10 +278,10 @@ namespace SlimDX
 			static int CountNamedFrames( Frame^ root );
 			static void RegisterNamedMatrices( Frame^ root, AnimationController^ controller );
 
-			property String^ Name
+			property System::String^ Name
 			{
-				String^ get();
-				void set( String^ value );
+				System::String^ get();
+				void set( System::String^ value );
 			}
 
 			property Matrix TransformationMatrix
