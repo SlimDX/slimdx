@@ -60,12 +60,10 @@ namespace DXGI
 		if( Result::Record( InternalPointer->Map( &mappedRect, static_cast<UINT>( flags ) ) ).IsFailure )
 			return nullptr;
 		
-			return nullptr;		
-		//bool canRead = (flags & DXGI_MAP_READ) != 0;
-		//bool canWrite = (flags & DXGI_MAP_WRITE) != 0;
-		DataStream^ data = gcnew DataStream( mappedRect.pBits, 0, true, true, false );
-		//
-		return gcnew DataRectangle( mappedRect.Pitch, data );
+		int size = Description.Width * Description.Height * Utilities::SizeOfFormatElement( static_cast<DXGI_FORMAT>( Description.Format ) );
+		bool canRead = ( static_cast<UINT>( flags ) & DXGI_MAP_READ ) != 0;
+		bool canWrite = ( static_cast<UINT>( flags ) & DXGI_MAP_WRITE ) != 0;
+		return gcnew DataRectangle( mappedRect.Pitch, gcnew DataStream( mappedRect.pBits, size, canRead, canWrite, false ) );
 	}
 	
 	Result Surface::Unmap()
