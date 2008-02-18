@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System::Drawing;
-
 #include "../ComObject.h"
 
 #include "Enums.h"
@@ -33,30 +31,33 @@ namespace SlimDX
 	{
 		ref class Device;
 		ref class Sprite;
+		value class FontDescription;
 		
-		/// <remarks>
-		/// An interface for performing text rendering.
-		/// </remarks>
-		/// <unmanaged counterpart="ID3DX10Font" complete="no"/>
 		public ref class Font : public ComObject
 		{
 			COMOBJECT(ID3DX10Font);
+		
+		private:
+			ID3DX10Font* Build( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic, FontCharacterSet characterSet, FontPrecision precision, FontQuality quality, FontPitchAndFamily pitchAndFamily, System::String^ faceName );
 
 		internal:
 			Font( ID3DX10Font* font );
 
 		public:
+			property FontDescription Description
+			{
+				FontDescription get();
+			}
+			
 			Font( System::IntPtr pointer );
-			Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic,
-				FontCharacterSet characterSet, FontPrecision outputPrecision, FontQuality quality,
-				FontPitchAndFamily pitchAndFamily, System::String^ faceName );
-			~Font() { Destruct(); }
+			Font( Device^ device, FontDescription description );
+			Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic, FontCharacterSet characterSet, FontPrecision precision, FontQuality quality, FontPitchAndFamily pitchAndFamily, System::String^ faceName );
 
 			int Draw( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rect, FontDrawFlags flags, int color );
 
-			void PreloadCharacters( int first, int last );
-			void PreloadGlyphs( int first, int last );
-			void PreloadText( System::String^ text );
+			Result PreloadCharacters( int first, int last );
+			Result PreloadGlyphs( int first, int last );
+			Result PreloadText( System::String^ text );
 		};
 	}
 }
