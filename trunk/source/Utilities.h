@@ -29,8 +29,6 @@
 
 namespace SlimDX
 {
-
-
 	ref class ComObject;
 
 	ref class Utilities sealed
@@ -38,13 +36,14 @@ namespace SlimDX
 	private:
 		Utilities();
 		
-	internal:
-		static GUID GetNativeGuidForType( System::Type^ type );
-		
 	public:
+		static GUID GetNativeGuidForType( System::Type^ type );
+
 		static System::Guid ConvertNativeGuid( const GUID &guid );
 		static GUID ConvertManagedGuid( System::Guid guid );
-
+		
+		static int SizeOfFormatElement( DXGI_FORMAT format );
+		
 		static System::Drawing::Rectangle ConvertRect(RECT rect);
 
 		static System::String^ BufferToString( ID3DXBuffer *buffer );
