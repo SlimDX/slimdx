@@ -45,11 +45,11 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	//Utility function to convert from D3D color to SlimDX color. Can't put it in ColorValue because
+	//Utility function to convert from D3D color to SlimDX color. Can't put it in Color4 because
 	//that thing is shared between D3D 9 and D3D 10.
-	ColorValue ConvertColor( const D3DCOLORVALUE& color )
+	Color4 ConvertColor( const D3DCOLORVALUE& color )
 	{
-		ColorValue cv;
+		Color4 cv;
 		cv.Red = color.r;
 		cv.Green = color.g;
 		cv.Blue = color.b;
@@ -58,7 +58,7 @@ namespace Direct3D9
 		return cv;
 	}
 
-	D3DCOLORVALUE ConvertColor( ColorValue color )
+	D3DCOLORVALUE ConvertColor( Color4 color )
 	{
 		D3DCOLORVALUE cv;
 		cv.r = color.Red;

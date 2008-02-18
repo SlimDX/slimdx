@@ -37,7 +37,7 @@ namespace SlimDX
 			ShaderSignature^ m_Signature;
 			int m_StencilRef;
 			int m_SampleMask;
-			ColorValue m_BlendFactor;
+			Color4 m_BlendFactor;
 
 		internal:
 			EffectPassDescription( const D3D10_PASS_DESC& native );
@@ -68,9 +68,9 @@ namespace SlimDX
 				int get();
 			}
 			
-			property ColorValue BlendFactor
+			property Color4 BlendFactor
 			{
-				ColorValue get();
+				Color4 get();
 			}
 		};
 	}

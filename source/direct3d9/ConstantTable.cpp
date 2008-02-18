@@ -247,17 +247,17 @@ namespace Direct3D9
 		Result::Record( hr );
 	}
 
-	void ConstantTable::SetValue( EffectHandle^ constant, ColorValue value )
+	void ConstantTable::SetValue( EffectHandle^ constant, Color4 value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetVector( m_Device, handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
 		Result::Record( hr );
 	}
 
-	void ConstantTable::SetValue( EffectHandle^ constant, array<ColorValue>^ values )
+	void ConstantTable::SetValue( EffectHandle^ constant, array<Color4>^ values )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		pin_ptr<ColorValue> pinned_value = &values[0];
+		pin_ptr<Color4> pinned_value = &values[0];
 		HRESULT hr = InternalPointer->SetVectorArray( m_Device, handle, reinterpret_cast<const D3DXVECTOR4*>( pinned_value ), values->Length );
 		Result::Record( hr );
 	}

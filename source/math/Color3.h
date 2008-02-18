@@ -29,7 +29,7 @@ namespace SlimDX
 	/// <remarks>
 	/// A three-component (RGB) color value; each component is a float in the range [0,1].
 	/// </remarks>
-	public value class ColorRGB
+	public value class Color3
 	{
 	private:
 		float m_Red;
@@ -64,6 +64,6 @@ namespace SlimDX
 			void set( float value );
 		}
 		
-		ColorRGB( float red, float green, float blue );
+		Color3( float red, float green, float blue );
 	};
 }

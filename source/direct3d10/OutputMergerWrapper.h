@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../math/ColorValue.h"
+#include "../math/Color4.h"
 
 namespace SlimDX
 {
@@ -59,10 +59,10 @@ namespace SlimDX
 				SlimDX::Direct3D10::BlendState^ get();
 			}
 			
-			property ColorValue BlendFactor
+			property Color4 BlendFactor
 			{
-				void set( ColorValue value );
-				ColorValue get();
+				void set( Color4 value );
+				Color4 get();
 			}
 			
 			property int BlendSampleMask
