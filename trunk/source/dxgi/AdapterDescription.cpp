@@ -24,13 +24,15 @@
 
 #include "AdapterDescription.h"
 
+using namespace System;
+
 namespace SlimDX
 {
 namespace DXGI
 { 	
 	AdapterDescription::AdapterDescription( const DXGI_ADAPTER_DESC& native )
 	{
-		m_Description = gcnew System::String( native.Description );
+		m_Description = gcnew String( native.Description );
 		m_VendorId = native.VendorId;
 		m_DeviceId = native.DeviceId;
 		m_SubSysId = native.SubSysId;
@@ -38,10 +40,10 @@ namespace DXGI
 		m_DedicatedVideoMemory = native.DedicatedVideoMemory;
 		m_DedicatedSystemMemory = native.DedicatedSystemMemory;
 		m_SharedSystemMemory = native.SharedSystemMemory;
-		m_Luid = (static_cast<System::Int64>(native.AdapterLuid.HighPart) << 32) | native.AdapterLuid.LowPart;
+		m_Luid = (static_cast<Int64>(native.AdapterLuid.HighPart) << 32) | native.AdapterLuid.LowPart;
 	}
 
-	System::String^ AdapterDescription::Description::get()
+	String^ AdapterDescription::Description::get()
 	{
 		return m_Description;
 	}
@@ -81,7 +83,7 @@ namespace DXGI
 		return m_SharedSystemMemory;
 	}
 
-	System::Int64 AdapterDescription::Luid::get()
+	Int64 AdapterDescription::Luid::get()
 	{
 		return m_Luid;
 	}

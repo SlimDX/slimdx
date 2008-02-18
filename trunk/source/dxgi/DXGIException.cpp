@@ -24,11 +24,14 @@
 
 #include "DXGIException.h"
 
+using namespace System;
+using namespace System::Runtime::Serialization;
+
 namespace SlimDX
 {
 namespace DXGI
 {
-	DXGIException::DXGIException( System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context )
+	DXGIException::DXGIException( SerializationInfo^ info, StreamingContext context )
 	: SlimDXException( info, context )
 	{
 	}
@@ -37,12 +40,12 @@ namespace DXGI
 	{
 	}
 
-	DXGIException::DXGIException( System::String^ message )
+	DXGIException::DXGIException( String^ message )
 	: SlimDXException( message )
 	{
 	}
 
-	DXGIException::DXGIException( System::String^ message, System::Exception^ innerException )
+	DXGIException::DXGIException( String^ message, Exception^ innerException )
 	: SlimDXException( message, innerException )
 	{
 	}

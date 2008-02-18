@@ -24,10 +24,24 @@
 
 #include "SwapChainDescription.h"
 
+using namespace System;
+
 namespace SlimDX
 {
 namespace DXGI
-{ 	
+{ 
+	SwapChainDescription::SwapChainDescription( const DXGI_SWAP_CHAIN_DESC& native )
+	{
+		m_BufferDesc = DXGI::ModeDescription( native.BufferDesc );
+		m_SampleDesc = DXGI::SampleDescription( native.SampleDesc );
+		m_BufferUsage = static_cast<DXGI::Usage>( native.BufferUsage );
+		m_BufferCount = native.BufferCount;
+		m_OutputWindow = IntPtr( native.OutputWindow );
+		m_Windowed = native.Windowed ? true : false;
+		m_SwapEffect = static_cast<DXGI::SwapEffect>( native.SwapEffect );
+		m_Flags = static_cast<SwapChainFlags>( native.Flags );
+	}
+	
 	DXGI_SWAP_CHAIN_DESC SwapChainDescription::CreateNativeVersion()
 	{
 		DXGI_SWAP_CHAIN_DESC native;
@@ -84,12 +98,12 @@ namespace DXGI
 		m_BufferCount = value;
 	}
 	
-	System::IntPtr SwapChainDescription::OutputHandle::get()
+	IntPtr SwapChainDescription::OutputHandle::get()
 	{
 		return m_OutputWindow;
 	}
 	
-	void SwapChainDescription::OutputHandle::set( System::IntPtr value )
+	void SwapChainDescription::OutputHandle::set( IntPtr value )
 	{
 		m_OutputWindow = value;
 	}

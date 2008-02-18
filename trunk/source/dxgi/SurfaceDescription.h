@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "Enums.h"
 #include "SampleDescription.h"
 
@@ -30,6 +28,9 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
+		/// <remarks>
+		/// Describes properties of a surface.
+		/// </remarks>
 		public value class SurfaceDescription
 		{
 			int m_Width;
@@ -41,21 +42,33 @@ namespace SlimDX
 			SurfaceDescription( const DXGI_SURFACE_DESC& native );
 
 		public:
+			/// <summary>
+			/// Gets the width of the surface.
+			/// </summary>
 			property int Width
 			{
 				int get();
 			}
-
+		
+			/// <summary>
+			/// Gets the height of the surface.
+			/// </summary>
 			property int Height
 			{
 				int get();
 			}
 
+			/// <summary>
+			/// Gets the format of the surface.
+			/// </summary>
 			property DXGI::Format Format
 			{
 				DXGI::Format get();
 			}
 
+			/// <summary>
+			/// Gets the surface's multisampling properties.
+			/// </summary>
 			property DXGI::SampleDescription SampleDescription
 			{
 				DXGI::SampleDescription get();

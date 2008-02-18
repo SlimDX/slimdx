@@ -30,6 +30,8 @@
 #include "Surface.h"
 #include "SurfaceDescription.h"
 
+using namespace System;
+
 namespace SlimDX
 {
 namespace DXGI
@@ -39,7 +41,7 @@ namespace DXGI
 		Construct( pointer );
 	}
 	
-	Surface::Surface( System::IntPtr pointer )
+	Surface::Surface( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}

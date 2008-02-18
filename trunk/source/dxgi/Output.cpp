@@ -34,6 +34,10 @@
 #include "OutputDescription.h"
 #include "Surface.h"
 
+using namespace System;
+using namespace System::Collections::Generic;
+using namespace System::Collections::ObjectModel;
+
 namespace SlimDX
 {
 namespace DXGI
@@ -43,7 +47,7 @@ namespace DXGI
 		Construct( pointer );
 	}
 	
-	Output::Output( System::IntPtr pointer )
+	Output::Output( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
@@ -78,7 +82,7 @@ namespace DXGI
 		throw gcnew DXGIException( Result::Last );
 	}
 	
-	System::Collections::ObjectModel::ReadOnlyCollection<ModeDescription>^ Output::GetDisplayModeList( Format format, DisplayModeEnumerationFlags flags )
+	ReadOnlyCollection<ModeDescription>^ Output::GetDisplayModeList( Format format, DisplayModeEnumerationFlags flags )
 	{
 		UINT modeCount = 0;
 		Result::Record( InternalPointer->GetDisplayModeList( static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ), &modeCount, 0 ) );
@@ -90,11 +94,11 @@ namespace DXGI
 		if( Result::Last.IsFailure )
 			return nullptr;
 		
-		System::Collections::Generic::List<ModeDescription>^ descriptions = gcnew System::Collections::Generic::List<ModeDescription>( modeCount );
+		List<ModeDescription>^ descriptions = gcnew List<ModeDescription>( modeCount );
 		for( unsigned int descriptionIndex = 0; descriptionIndex < nativeDescriptions.size(); ++descriptionIndex )
 			descriptions->Add( ModeDescription( nativeDescriptions[ descriptionIndex ] ) );
 		
-		return gcnew System::Collections::ObjectModel::ReadOnlyCollection<ModeDescription>( descriptions );
+		return gcnew ReadOnlyCollection<ModeDescription>( descriptions );
 	}
 	
 	Result Output::GetClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription% result )

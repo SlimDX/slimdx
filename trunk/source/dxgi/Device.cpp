@@ -29,6 +29,10 @@
 #include "Adapter.h"
 #include "Device.h"
 
+using namespace System;
+using namespace System::Collections::Generic;
+using namespace System::Collections::ObjectModel;
+
 namespace SlimDX
 {
 namespace DXGI
@@ -38,7 +42,7 @@ namespace DXGI
 		Construct( pointer );
 	}
 	
-	Device::Device( System::IntPtr pointer )
+	Device::Device( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
@@ -68,7 +72,7 @@ namespace DXGI
 		return gcnew Adapter( adapter );
 	}
 
-	System::Collections::ObjectModel::ReadOnlyCollection<Residency>^ Device::QueryResourceResidency( System::Collections::Generic::IList<ComObject^>^ resources )
+	ReadOnlyCollection<Residency>^ Device::QueryResourceResidency( IList<ComObject^>^ resources )
 	{
 		std::vector<DXGI_RESIDENCY> nativeResidency( resources->Count );
 		std::vector<IUnknown*> nativeResources( resources->Count );
@@ -79,10 +83,10 @@ namespace DXGI
 		if( Result::Last.IsFailure )
 			return nullptr;
 		
-		System::Collections::Generic::List< Residency >^ result = gcnew System::Collections::Generic::List<Residency>( nativeResidency.size() );
+		List< Residency >^ result = gcnew List<Residency>( nativeResidency.size() );
 		for( unsigned int resourceIndex = 0; resourceIndex < nativeResidency.size(); ++resourceIndex )
 			result->Add( static_cast<Residency>( nativeResidency[ resourceIndex ] ) );
-		return gcnew System::Collections::ObjectModel::ReadOnlyCollection<Residency>( result );
+		return gcnew ReadOnlyCollection<Residency>( result );
 	}
 }
 }

@@ -26,10 +26,13 @@
 #include "DXGIException.h"
 
 #include "Factory.h"
-#include "SwapChain.h"
-#include "SwapChainDescription.h"
 #include "FrameStatistics.h"
 #include "ModeDescription.h"
+#include "Output.h"
+#include "SwapChain.h"
+#include "SwapChainDescription.h"
+
+using namespace System;
 
 namespace SlimDX
 {
@@ -40,7 +43,7 @@ namespace DXGI
 		Construct( pointer );
 	}
 	
-	SwapChain::SwapChain( System::IntPtr pointer )
+	SwapChain::SwapChain( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
@@ -48,9 +51,9 @@ namespace DXGI
 	SwapChain::SwapChain( Factory^ factory, ComObject^ device, SwapChainDescription description )
 	{
 		if( factory == nullptr )
-			throw gcnew System::ArgumentNullException( "factory" );
+			throw gcnew ArgumentNullException( "factory" );
 		if( device == nullptr )
-			throw gcnew System::ArgumentNullException( "device" );
+			throw gcnew ArgumentNullException( "device" );
 		
 		IDXGISwapChain* swapChain = 0;
 		DXGI_SWAP_CHAIN_DESC nativeDescription = description.CreateNativeVersion();
@@ -59,6 +62,16 @@ namespace DXGI
 			throw gcnew DXGIException( Result::Last );
 		
 		Construct( swapChain );
+	}
+	
+	SwapChainDescription SwapChain::Description::get()
+	{
+		DXGI_SWAP_CHAIN_DESC description;
+		Result::Record( InternalPointer->GetDesc( &description ) );
+		if( Result::Last.IsSuccess )
+			return SwapChainDescription( description );
+		
+		throw gcnew DXGIException( Result::Last );
 	}
 	
 	DXGI::FrameStatistics SwapChain::FrameStatistics::get()
@@ -71,6 +84,15 @@ namespace DXGI
 		throw gcnew DXGIException( Result::Last );
 	}
 	
+	int SwapChain::PresentCount::get()
+	{
+		UINT result = 0;
+		if( Result::Record( InternalPointer->GetLastPresentCount( &result ) ).IsFailure )
+			throw gcnew DXGIException( Result::Last );
+		
+		return result;
+	}
+	
 	generic< class T > where T : ComObject, ref class
 	T SwapChain::GetBuffer( int index )
 	{
@@ -79,9 +101,41 @@ namespace DXGI
 		Result::Record( InternalPointer->GetBuffer( index, guid, reinterpret_cast<void**>( &unknown ) ) );
 		if( Result::Last.IsFailure )
 			return T();
-		return safe_cast<T>( System::Activator::CreateInstance( T::typeid, System::IntPtr( unknown ) ) );
+			
+		return safe_cast<T>( Activator::CreateInstance( T::typeid, IntPtr( unknown ) ) );
 	}
 
+	Output^ SwapChain::GetContainingOutput()
+	{
+		IDXGIOutput* output = 0;
+		if( Result::Record( InternalPointer->GetContainingOutput( &output ) ).IsFailure )
+			return nullptr;
+			
+		return gcnew Output( output );
+	}
+	
+	Result SwapChain::GetFullScreenState( bool% isFullScreen, Output^% target )
+	{
+		BOOL result = false;
+		IDXGIOutput* output = 0;
+		if( Result::Record( InternalPointer->GetFullscreenState( &result, &output ) ).IsSuccess )
+		{
+			isFullScreen = result ? true : false;
+			if( output == 0 )
+				target = nullptr;
+			else
+				target = gcnew Output( output );
+		}
+		
+		return Result::Last;
+	}
+	
+	Result SwapChain::SetFullScreenState( bool isFullScreen, Output^ target )
+	{
+		IDXGIOutput* output = target == nullptr ? 0 : target->InternalPointer;
+		return Result::Record( InternalPointer->SetFullscreenState( isFullScreen, output ) );
+	}
+	
 	Result SwapChain::ResizeBuffers( int count, int width, int height, SlimDX::DXGI::Format format, SwapChainFlags flags )
 	{
 		return Result::Record( InternalPointer->ResizeBuffers( count, width, height, static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ) ) );

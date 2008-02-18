@@ -24,6 +24,8 @@
 
 #include "GammaControl.h"
 
+using namespace System::Collections::ObjectModel;
+
 namespace SlimDX
 {
 namespace DXGI
@@ -79,9 +81,9 @@ namespace DXGI
 		m_Offset = value;
 	}
 
-	System::Collections::ObjectModel::ReadOnlyCollection<ColorRGB>^ GammaControl::ControlPoints::get()
+	ReadOnlyCollection<ColorRGB>^ GammaControl::ControlPoints::get()
 	{
-		return gcnew System::Collections::ObjectModel::ReadOnlyCollection<ColorRGB>( m_GammaCurve );
+		return gcnew ReadOnlyCollection<ColorRGB>( m_GammaCurve );
 	}
 }
 }

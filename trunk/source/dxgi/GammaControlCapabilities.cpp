@@ -24,6 +24,8 @@
 
 #include "GammaControlCapabilities.h"
 
+using namespace System::Collections::ObjectModel;
+
 namespace SlimDX
 {
 namespace DXGI
@@ -53,9 +55,9 @@ namespace DXGI
 		return m_MinConvertedValue;
 	}
 
-	System::Collections::ObjectModel::ReadOnlyCollection<float>^ GammaControlCapabilities::ControlPoints::get()
+	ReadOnlyCollection<float>^ GammaControlCapabilities::ControlPoints::get()
 	{
-		return gcnew System::Collections::ObjectModel::ReadOnlyCollection<float>( m_ControlPointPositions );
+		return gcnew ReadOnlyCollection<float>( m_ControlPointPositions );
 	}
 }
 }

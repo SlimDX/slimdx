@@ -27,6 +27,10 @@
 #include "Adapter.h"
 #include "Factory.h"
 
+using namespace System;
+using namespace System::Reflection;
+using namespace System::Runtime::InteropServices;
+
 namespace SlimDX
 {
 namespace DXGI
@@ -41,7 +45,7 @@ namespace DXGI
 		Construct( factory );
 	}
 	
-	Factory::Factory( System::IntPtr pointer )
+	Factory::Factory( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
@@ -68,10 +72,10 @@ namespace DXGI
 		return gcnew Adapter( adapter );
 	}
 	
-	Adapter^ Factory::CreateSoftwareAdapter( System::IntPtr module )
+	Adapter^ Factory::CreateSoftwareAdapter( IntPtr module )
 	{
-		if( module == System::IntPtr::Zero )
-			throw gcnew System::ArgumentNullException( "module" );
+		if( module == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "module" );
 			
 		HINSTANCE instance = reinterpret_cast<HINSTANCE>( module.ToInt32() );
 		IDXGIAdapter* adapter = 0;
@@ -82,19 +86,19 @@ namespace DXGI
 		return gcnew Adapter( adapter );
 	}
 	
-	Adapter^ Factory::CreateSoftwareAdapter( System::Reflection::Module^ module )
+	Adapter^ Factory::CreateSoftwareAdapter( Module^ module )
 	{
-		return CreateSoftwareAdapter( System::Runtime::InteropServices::Marshal::GetHINSTANCE( module ) );
+		return CreateSoftwareAdapter( Marshal::GetHINSTANCE( module ) );
 	}
 	
-	System::IntPtr Factory::GetWindowAssociation()
+	IntPtr Factory::GetWindowAssociation()
 	{
 		HWND window = 0;
 		Result::Record( InternalPointer->GetWindowAssociation( &window ) );
-		return System::IntPtr( window );
+		return IntPtr( window );
 	}
 	
-	Result Factory::SetWindowAssociation( System::IntPtr handle, WindowAssociationFlags flags )
+	Result Factory::SetWindowAssociation( IntPtr handle, WindowAssociationFlags flags )
 	{
 		return Result::Record( InternalPointer->MakeWindowAssociation( reinterpret_cast<HWND>( handle.ToInt32() ), static_cast<UINT>( flags ) ) );
 	}
