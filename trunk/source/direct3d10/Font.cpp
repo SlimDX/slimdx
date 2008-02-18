@@ -20,14 +20,15 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
 #include <d3dx10.h>
+#include <vcclr.h>
+
+#include "Direct3D10Exception.h"
 
 #include "Device.h"
 #include "Font.h"
+#include "FontDescription.h"
 #include "Sprite.h"
-
-#include <vcclr.h>
 
 using namespace System;
 
@@ -35,32 +36,43 @@ namespace SlimDX
 {
 namespace Direct3D10
 {
+	Font::Font( ID3DX10Font* pointer )
+	{
+		Construct( pointer );
+	}
+	
 	Font::Font( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
-
-	Font::Font( ID3DX10Font* pointer )
+	
+	Font::Font( Device^ device, FontDescription description )
 	{
-		if( pointer == 0 )
-			throw gcnew ArgumentNullException( "pointer" );
+		Construct( Build( device, description.Width, description.Height, description.Weight, description.MipLevels, description.IsItalic, description.CharacterSet, description.Precision, description.Quality, description.PitchAndFamily, description.FaceName ) );
+	}
 
-		Construct(pointer);
+	Font::Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic, FontCharacterSet characterSet, FontPrecision precision, FontQuality quality, FontPitchAndFamily pitchAndFamily, String^ faceName )
+	{
+		Construct( Build( device, width, height, weight, mipLevels, isItalic, characterSet, precision, quality, pitchAndFamily, faceName ) );
 	}
 	
-	Font::Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic,
-		FontCharacterSet characterSet, FontPrecision outputPrecision, FontQuality quality,
-		FontPitchAndFamily pitchAndFamily, String^ faceName )
+	ID3DX10Font* Font::Build( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic, FontCharacterSet characterSet, FontPrecision precision, FontQuality quality, FontPitchAndFamily pitchAndFamily, String^ faceName )
 	{
-		pin_ptr<const wchar_t> pinned_name = PtrToStringChars( faceName );
-		
 		ID3DX10Font* font = 0;
-		HRESULT hr = D3DX10CreateFont( device->InternalPointer, height, width, static_cast<UINT>( weight ),
-			mipLevels, isItalic, static_cast<UINT>( characterSet ), static_cast<UINT>( outputPrecision ),
-			static_cast< UINT>( quality ), static_cast<UINT>( pitchAndFamily ), pinned_name, &font );
-		Result::Record( hr );
+		pin_ptr<const wchar_t> pinned_name = PtrToStringChars( faceName );
+		if( Result::Record( D3DX10CreateFont( device->InternalPointer, height, width, static_cast<UINT>( weight ), mipLevels, isItalic, static_cast<UINT>( characterSet ), static_cast<UINT>( precision ), static_cast< UINT>( quality ), static_cast<UINT>( pitchAndFamily ), pinned_name, &font ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
 
-		Construct(font);
+		return font;
+	}
+	
+	FontDescription Font::Description::get()
+	{
+		D3DX10_FONT_DESC nativeDescription;
+		if( Result::Record( InternalPointer->GetDesc( &nativeDescription ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+			
+		return FontDescription( nativeDescription );
 	}
 
 	int Font::Draw( Sprite^ sprite, String^ text, Drawing::Rectangle rect, FontDrawFlags flags, int color )
@@ -73,23 +85,20 @@ namespace Direct3D10
 		return result;
 	}
 
-	void Font::PreloadCharacters( int first, int last )
+	Result Font::PreloadCharacters( int first, int last )
 	{
-		HRESULT hr = InternalPointer->PreloadCharacters( first, last );
-		Result::Record( hr );
+		return Result::Record( InternalPointer->PreloadCharacters( first, last ) );
 	}
 
-	void Font::PreloadGlyphs( int first, int last )
+	Result Font::PreloadGlyphs( int first, int last )
 	{
-		HRESULT hr = InternalPointer->PreloadGlyphs( first, last );
-		Result::Record( hr );
+		return Result::Record( InternalPointer->PreloadGlyphs( first, last ) );
 	}
 
-	void Font::PreloadText( String^ text )
+	Result Font::PreloadText( String^ text )
 	{
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
-		HRESULT hr = InternalPointer->PreloadText( pinned_text, text->Length );
-		Result::Record( hr );
+		return Result::Record( InternalPointer->PreloadText( pinned_text, text->Length ) );
 	}
 }
 }

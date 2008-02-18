@@ -880,6 +880,14 @@
 					RelativePath="..\source\direct3d10\Font.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d10\FontDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\FontDescription.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Texture"
