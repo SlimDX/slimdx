@@ -25,25 +25,27 @@
 #include "OutputDescription.h"
 #include "../Utilities.h"
 
+using namespace System;
+
 namespace SlimDX
 {
 namespace DXGI
 { 	
 	OutputDescription::OutputDescription( const DXGI_OUTPUT_DESC& native )
 	{
-		m_DeviceName = gcnew System::String( native.DeviceName );
+		m_DeviceName = gcnew String( native.DeviceName );
 		m_DesktopCoordinates = Utilities::ConvertRect( native.DesktopCoordinates );
 		m_AttachedToDesktop = native.AttachedToDesktop ? true : false;
 		m_Rotation = static_cast<DisplayModeRotation>( native.Rotation );
-		m_Monitor = System::IntPtr( native.Monitor );
+		m_Monitor = IntPtr( native.Monitor );
 	}
 
-	System::String^ OutputDescription::Name::get()
+	String^ OutputDescription::Name::get()
 	{
 		return m_DeviceName;
 	}
 
-	System::Drawing::Rectangle^ OutputDescription::DesktopBounds::get()
+	Drawing::Rectangle^ OutputDescription::DesktopBounds::get()
 	{
 		return m_DesktopCoordinates;
 	}
@@ -58,7 +60,7 @@ namespace DXGI
 		return m_Rotation;
 	}
 
-	System::IntPtr OutputDescription::MonitorHandle::get()
+	IntPtr OutputDescription::MonitorHandle::get()
 	{
 		return m_Monitor;
 	}

@@ -35,8 +35,8 @@ namespace SlimDX
 			int m_PresentCount;
 			int m_PresentRefreshCount;
 			int m_SyncRefreshCount;
-			__int64 m_SyncQPCTime;
-			__int64 m_SyncGPUTime;
+			System::Int64 m_SyncQPCTime;
+			System::Int64 m_SyncGPUTime;
 		
 		internal:
 			FrameStatistics( const DXGI_FRAME_STATISTICS& native );
@@ -69,17 +69,17 @@ namespace SlimDX
 			/// <summary>
 			/// Gets a value equivalent to that returned by the unmanaged function QueryPerformanceCounter.
 			/// </summary>
-			property __int64 SyncQPCTime
+			property System::Int64 SyncQPCTime
 			{
-				__int64 get();
+				System::Int64 get();
 			}
 
 			/// <summary>
 			/// Reserved. Always returns 0.
 			/// </summary>
-			property __int64 SyncGPUTime
+			property System::Int64 SyncGPUTime
 			{
-				__int64 get();
+				System::Int64 get();
 			}
 		};
 	}

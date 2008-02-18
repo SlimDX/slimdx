@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "Enums.h"
 #include "ModeDescription.h"
 #include "SampleDescription.h"
@@ -31,6 +29,9 @@ namespace SlimDX
 {
 	namespace DXGI
 	{		
+		/// <remarks>
+		/// Describes properties of a swap chain.
+		/// </summary>
 		public value class SwapChainDescription
 		{
 		private:
@@ -44,56 +45,82 @@ namespace SlimDX
 			SwapChainFlags m_Flags;
 		
 		internal:
+			SwapChainDescription( const DXGI_SWAP_CHAIN_DESC& native );
+			
 			DXGI_SWAP_CHAIN_DESC CreateNativeVersion();
 
 		public:
+			/// <summary>
+			/// Gets or sets the swap chain's display mode properties.
+			/// <summary>
 			property ModeDescription ModeDescription
-            {
-                DXGI::ModeDescription get();
-                void set( DXGI::ModeDescription value );
-            }
+			{
+				DXGI::ModeDescription get();
+				void set( DXGI::ModeDescription value );
+			}
 
-            property SampleDescription SampleDescription
-            {
-                DXGI::SampleDescription get();
-                void set( DXGI::SampleDescription value );
-            }
+			/// <summary>
+			/// Gets or sets the swap chain's multisampling properties.
+			/// <summary>
+			property SampleDescription SampleDescription
+			{
+				DXGI::SampleDescription get();
+				void set( DXGI::SampleDescription value );
+			}
+			
+			/// <summary>
+			/// Gets or sets swap chain's surface usage.
+			/// <summary>
+			property Usage Usage
+			{
+				DXGI::Usage get();
+				void set( DXGI::Usage value );
+			}
 
-            property Usage Usage
-            {
-                DXGI::Usage get();
-                void set( DXGI::Usage value );
-            }
+			/// <summary>
+			/// Gets or sets the number of buffers in the swap chain.
+			/// <summary>
+			property int BufferCount
+			{
+				int get();
+				void set( int value );
+			}
+			
+			/// <summary>
+			/// Gets or sets the swap chain's output handle.
+			/// <summary>
+			property System::IntPtr OutputHandle
+			{
+				System::IntPtr get();
+				void set( System::IntPtr value );
+			}
 
-            property int BufferCount
-            {
-                int get();
-                void set( int value );
-            }
+			/// <summary>
+			/// Gets or sets a value indicating whether or not the swap chain is in windowed mode.
+			/// <summary>
+			property bool IsWindowed
+			{
+				bool get();
+				void set( bool value );
+			}
 
-            property System::IntPtr OutputHandle
-            {
-                System::IntPtr get();
-                void set( System::IntPtr value );
-            }
+			/// <summary>
+			/// Gets or sets swapping effect behavior.
+			/// <summary>
+			property DXGI::SwapEffect SwapEffect
+			{
+				DXGI::SwapEffect get();
+				void set( DXGI::SwapEffect value );
+			}
 
-            property bool IsWindowed
-            {
-                bool get();
-                void set( bool value );
-            }
-
-            property DXGI::SwapEffect SwapEffect
-            {
-                DXGI::SwapEffect get();
-                void set( DXGI::SwapEffect value );
-            }
-
-            property SwapChainFlags Flags
-            {
-                SwapChainFlags get();
-                void set( SwapChainFlags value );
-            }
+			/// <summary>
+			/// Gets or sets swap chain options.
+			/// <summary>
+			property SwapChainFlags Flags
+			{
+				SwapChainFlags get();
+				void set( SwapChainFlags value );
+			}
 		};
 	}
 };

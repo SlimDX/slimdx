@@ -28,6 +28,8 @@
 #include "AdapterDescription.h"
 #include "Output.h"
 
+using namespace System;
+
 namespace SlimDX
 {
 namespace DXGI
@@ -37,7 +39,7 @@ namespace DXGI
 		Construct( pointer );
 	}
 	
-	Adapter::Adapter( System::IntPtr pointer )
+	Adapter::Adapter( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
@@ -74,13 +76,13 @@ namespace DXGI
 		return gcnew Output( output );
 	}
 
-	bool Adapter::IsInterfaceSupported( System::Type^ type )
+	bool Adapter::IsInterfaceSupported( Type^ type )
 	{
-		System::Int64 version = 0;
+		Int64 version = 0;
 		return IsInterfaceSupported( type, version );
 	}
 
-	bool Adapter::IsInterfaceSupported( System::Type^ type, [Out] System::Int64% userModeVersion )
+	bool Adapter::IsInterfaceSupported( Type^ type, [Out] Int64% userModeVersion )
 	{
 		GUID guid = Utilities::GetNativeGuidForType( type );
 		LARGE_INTEGER version;

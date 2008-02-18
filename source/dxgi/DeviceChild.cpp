@@ -27,6 +27,8 @@
 #include "Device.h"
 #include "DeviceChild.h"
 
+using namespace System;
+
 namespace SlimDX
 {
 namespace DXGI
@@ -35,7 +37,7 @@ namespace DXGI
 	{
 	}
 	
-	DeviceChild::DeviceChild( System::IntPtr pointer )
+	DeviceChild::DeviceChild( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}

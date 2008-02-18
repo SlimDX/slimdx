@@ -26,6 +26,8 @@
 
 #include "Resource.h"
 
+using namespace System;
+
 namespace SlimDX
 {
 namespace DXGI

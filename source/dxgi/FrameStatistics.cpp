@@ -24,6 +24,8 @@
 
 #include "FrameStatistics.h"
 
+using namespace System;
+
 namespace SlimDX
 {
 namespace DXGI
@@ -52,12 +54,12 @@ namespace DXGI
 		return m_SyncRefreshCount;
 	}
 
-	__int64 FrameStatistics::SyncQPCTime::get()
+	Int64 FrameStatistics::SyncQPCTime::get()
 	{
 		return m_SyncQPCTime;
 	}
 
-	__int64 FrameStatistics::SyncGPUTime::get()
+	Int64 FrameStatistics::SyncGPUTime::get()
 	{
 		return m_SyncGPUTime;
 	}
