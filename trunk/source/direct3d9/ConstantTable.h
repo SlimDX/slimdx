@@ -115,8 +115,8 @@ namespace SlimDX
 			void SetValue( EffectHandle^ constant, array<float>^ values );
 			void SetValue( EffectHandle^ constant, Vector4 value );
 			void SetValue( EffectHandle^ constant, array<Vector4>^ values );
-			void SetValue( EffectHandle^ constant, ColorValue value );
-			void SetValue( EffectHandle^ constant, array<ColorValue>^ values );
+			void SetValue( EffectHandle^ constant, Color4 value );
+			void SetValue( EffectHandle^ constant, array<Color4>^ values );
 			void SetValue( EffectHandle^ constant, Matrix value );
 			void SetValue( EffectHandle^ constant, array<Matrix>^ values );
 			void SetValueTranspose( EffectHandle^ constant, Matrix value );

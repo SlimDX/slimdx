@@ -101,7 +101,7 @@ namespace Direct3D10
 		return gcnew SlimDX::Direct3D10::BlendState( oldState );
 	}
 	
-	void OutputMergerWrapper::BlendFactor::set( ColorValue value )
+	void OutputMergerWrapper::BlendFactor::set( Color4 value )
 	{
 		ID3D10BlendState* oldState = 0;
 		float oldFactor[4];
@@ -112,14 +112,14 @@ namespace Direct3D10
 		m_Device->OMSetBlendState( oldState, newFactor, oldMask );
 	}
 	
-	ColorValue OutputMergerWrapper::BlendFactor::get()
+	Color4 OutputMergerWrapper::BlendFactor::get()
 	{
 		ID3D10BlendState* oldState = 0;
 		float oldFactor[4];
 		int oldMask = 0;
 		m_Device->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
 		
-		return ColorValue( oldFactor[3], oldFactor[0], oldFactor[1], oldFactor[2] );
+		return Color4( oldFactor[3], oldFactor[0], oldFactor[1], oldFactor[2] );
 	}
 	
 	void OutputMergerWrapper::BlendSampleMask::set( int value )

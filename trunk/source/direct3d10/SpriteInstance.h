@@ -41,7 +41,7 @@ namespace SlimDX
 			Matrix transform;
 			Vector2 textureCoordinates;
 			Vector2 textureDimensions;
-			ColorValue color;
+			Color4 color;
 			ShaderResourceView^ texture;
 			int textureIndex;
 		
@@ -67,10 +67,10 @@ namespace SlimDX
 				void set( Vector2 value ) { textureDimensions = value; }
 			}
 			
-			property ColorValue Color
+			property Color4 Color
 			{
-				ColorValue get() { return color; }
-				void set( ColorValue value ) { color = value; }
+				Color4 get() { return color; }
+				void set( Color4 value ) { color = value; }
 			}
 
 			property ShaderResourceView^ Texture

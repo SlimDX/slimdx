@@ -39,7 +39,7 @@ namespace Direct3D10
 		m_Signature = gcnew ShaderSignature( native.pIAInputSignature, native.IAInputSignatureSize );
 		m_StencilRef = native.StencilRef;
 		m_SampleMask = native.SampleMask;
-		m_BlendFactor = ColorValue( native.BlendFactor[ 3 ], native.BlendFactor[ 0 ], native.BlendFactor[ 1 ], native.BlendFactor[ 2 ] );
+		m_BlendFactor = Color4( native.BlendFactor[ 3 ], native.BlendFactor[ 0 ], native.BlendFactor[ 1 ], native.BlendFactor[ 2 ] );
 	}
 	
 	String^ EffectPassDescription::Name::get()
@@ -67,7 +67,7 @@ namespace Direct3D10
 		return m_SampleMask;
 	}
 	
-	ColorValue EffectPassDescription::BlendFactor::get()
+	Color4 EffectPassDescription::BlendFactor::get()
 	{
 		return m_BlendFactor;
 	}

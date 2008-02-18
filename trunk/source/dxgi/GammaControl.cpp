@@ -32,12 +32,12 @@ namespace DXGI
 { 	
 	GammaControl::GammaControl( const DXGI_GAMMA_CONTROL& native )
 	{
-		m_Scale = ColorRGB( native.Scale.Red, native.Scale.Green, native.Scale.Blue );
-		m_Offset = ColorRGB( native.Offset.Red, native.Offset.Green, native.Offset.Blue );
+		m_Scale = Color3( native.Scale.Red, native.Scale.Green, native.Scale.Blue );
+		m_Offset = Color3( native.Offset.Red, native.Offset.Green, native.Offset.Blue );
 		
 		// 1025 is hard-coded by the DXGI API, there doesn't seem to be a constant for it.
 		for( int controlPointIndex = 0; controlPointIndex < 1025; ++controlPointIndex )
-			m_GammaCurve->Add( ColorRGB( native.GammaCurve[ controlPointIndex ].Red, native.GammaCurve[ controlPointIndex ].Green, native.GammaCurve[ controlPointIndex ].Blue ) );
+			m_GammaCurve->Add( Color3( native.GammaCurve[ controlPointIndex ].Red, native.GammaCurve[ controlPointIndex ].Green, native.GammaCurve[ controlPointIndex ].Blue ) );
 	}
 	
 	DXGI_GAMMA_CONTROL GammaControl::CreateNativeVersion()
@@ -61,29 +61,29 @@ namespace DXGI
 		return native;	
 	}
 	
-	ColorRGB GammaControl::Scale::get()
+	Color3 GammaControl::Scale::get()
 	{
 		return m_Scale;
 	}
 	
-	void GammaControl::Scale::set( ColorRGB value )
+	void GammaControl::Scale::set( Color3 value )
 	{
 		m_Scale = value;
 	}
 	
-	ColorRGB GammaControl::Offset::get()
+	Color3 GammaControl::Offset::get()
 	{
 		return m_Offset;
 	}
 	
-	void GammaControl::Offset::set( ColorRGB value )
+	void GammaControl::Offset::set( Color3 value )
 	{
 		m_Offset = value;
 	}
 
-	ReadOnlyCollection<ColorRGB>^ GammaControl::ControlPoints::get()
+	ReadOnlyCollection<Color3>^ GammaControl::ControlPoints::get()
 	{
-		return gcnew ReadOnlyCollection<ColorRGB>( m_GammaCurve );
+		return gcnew ReadOnlyCollection<Color3>( m_GammaCurve );
 	}
 }
 }

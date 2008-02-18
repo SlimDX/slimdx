@@ -326,17 +326,17 @@ namespace SlimDX
 			Result::Record( hr );
 		}
 
-		void BaseEffect::SetValue( EffectHandle^ parameter, ColorValue value )
+		void BaseEffect::SetValue( EffectHandle^ parameter, Color4 value )
 		{
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->SetVector( handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
 			Result::Record( hr );
 		}
 
-		void BaseEffect::SetValue( EffectHandle^ parameter, array<ColorValue>^ values )
+		void BaseEffect::SetValue( EffectHandle^ parameter, array<Color4>^ values )
 		{
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-			pin_ptr<ColorValue> pinnedValue = &values[0];
+			pin_ptr<Color4> pinnedValue = &values[0];
 			HRESULT hr = InternalPointer->SetVectorArray( handle, reinterpret_cast<const D3DXVECTOR4*>( pinnedValue ), values->Length );
 			Result::Record( hr );
 		}
@@ -491,9 +491,9 @@ namespace SlimDX
 			return data;
 		}
 
-		ColorValue BaseEffect::GetColor( EffectHandle^ parameter )
+		Color4 BaseEffect::GetColor( EffectHandle^ parameter )
 		{
-			ColorValue value = ColorValue();
+			Color4 value = Color4();
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->GetVector( handle, reinterpret_cast<D3DXVECTOR4*>( &value ) );
 			Result::Record( hr );
@@ -501,11 +501,11 @@ namespace SlimDX
 			return value;
 		}
 
-		array<ColorValue>^ BaseEffect::GetColorArray( EffectHandle^ parameter, int count )
+		array<Color4>^ BaseEffect::GetColorArray( EffectHandle^ parameter, int count )
 		{
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-			array<ColorValue>^ data = gcnew array<ColorValue>( count );
-			pin_ptr<ColorValue> pinnedData = &data[0];
+			array<Color4>^ data = gcnew array<Color4>( count );
+			pin_ptr<Color4> pinnedData = &data[0];
 
 			HRESULT hr = InternalPointer->GetVectorArray( handle, reinterpret_cast<D3DXVECTOR4*>( pinnedData ), count );
 			Result::Record( hr );

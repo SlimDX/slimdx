@@ -20,43 +20,43 @@
 * THE SOFTWARE.
 */
 
-#include "ColorRGB.h"
+#include "Color3.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-	ColorRGB::ColorRGB( float red, float green, float blue )
+	Color3::Color3( float red, float green, float blue )
 	: m_Red( red ), m_Green( green ), m_Blue( blue )
 	{
 	}
 	
-	float ColorRGB::Red::get()
+	float Color3::Red::get()
 	{
 		return m_Red;
 	}
 	
-	void ColorRGB::Red::set( float value )
+	void Color3::Red::set( float value )
 	{
 		m_Red = value;
 	}
 	
-	float ColorRGB::Green::get()
+	float Color3::Green::get()
 	{
 		return m_Green;
 	}
 	
-	void ColorRGB::Green::set( float value )
+	void Color3::Green::set( float value )
 	{
 		m_Green = value;
 	}
 	
-	float ColorRGB::Blue::get()
+	float Color3::Blue::get()
 	{
 		return m_Blue;
 	}
 	
-	void ColorRGB::Blue::set( float value )
+	void Color3::Blue::set( float value )
 	{
 		m_Blue = value;
 	}

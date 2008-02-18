@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../math/ColorRGB.h"
+#include "../math/Color3.h"
 
 namespace SlimDX
 {
@@ -32,9 +32,9 @@ namespace SlimDX
 		/// </remarks>
 		public value class GammaControl
 		{
-			ColorRGB m_Scale;
-			ColorRGB m_Offset;
-			System::Collections::Generic::List<ColorRGB>^ m_GammaCurve;
+			Color3 m_Scale;
+			Color3 m_Offset;
+			System::Collections::Generic::List<Color3>^ m_GammaCurve;
 
 		internal:
 			GammaControl( const DXGI_GAMMA_CONTROL& native );
@@ -45,27 +45,27 @@ namespace SlimDX
 			/// <summary>
 			/// Gets or sets a scaling factor applied to gamma RGB values.
 			/// </summary>
-			property ColorRGB Scale
+			property Color3 Scale
 			{
-				ColorRGB get();
-				void set( ColorRGB value );
+				Color3 get();
+				void set( Color3 value );
 			}
 			
 			/// <summary>
 			/// Gets or sets an offset applied to gamma RGB values.
 			/// </summary>
-			property ColorRGB Offset
+			property Color3 Offset
 			{
-				ColorRGB get();
-				void set( ColorRGB value );
+				Color3 get();
+				void set( Color3 value );
 			}
 			
 			/// <summary>
 			/// Gets the list of RGB control points defining the gamma curve.
 			/// </summary>
-			property System::Collections::ObjectModel::ReadOnlyCollection<ColorRGB>^ ControlPoints
+			property System::Collections::ObjectModel::ReadOnlyCollection<Color3>^ ControlPoints
 			{
-				System::Collections::ObjectModel::ReadOnlyCollection<ColorRGB>^ get();
+				System::Collections::ObjectModel::ReadOnlyCollection<Color3>^ get();
 			}
 		};
 	}

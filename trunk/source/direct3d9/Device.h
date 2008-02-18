@@ -39,10 +39,10 @@ namespace SlimDX
 		public value class Material
 		{
 		public:
-			property ColorValue Diffuse;
-			property ColorValue Ambient;
-			property ColorValue Specular;
-			property ColorValue Emissive;
+			property Color4 Diffuse;
+			property Color4 Ambient;
+			property Color4 Specular;
+			property Color4 Emissive;
 			property float Power;
 		};
 
@@ -74,9 +74,9 @@ namespace SlimDX
 		{
 		public:
 			property LightType Type;
-			property ColorValue Diffuse;
-			property ColorValue Specular;
-			property ColorValue Ambient;
+			property Color4 Diffuse;
+			property Color4 Specular;
+			property Color4 Ambient;
 			property Vector3 Position;
 			property Vector3 Direction;
 			property float Range;

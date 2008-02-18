@@ -45,7 +45,7 @@ namespace Direct3D10
 		pin_ptr<Matrix> pinnedTransform = &transform;
 		pin_ptr<Vector2> pinnedCoordinates = &textureCoordinates;
 		pin_ptr<Vector2> pinnedDimensions = &textureDimensions;
-		pin_ptr<ColorValue> pinnedColor = &color;
+		pin_ptr<Color4> pinnedColor = &color;
 
 		object.matWorld = *reinterpret_cast<D3DXMATRIX*>( pinnedTransform );
 		object.TexCoord = *reinterpret_cast<D3DXVECTOR2*>( pinnedCoordinates );

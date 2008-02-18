@@ -1560,19 +1560,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\math\ColorRGB.cpp"
+				RelativePath="..\source\math\Color3.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\source\math\ColorRGB.h"
+				RelativePath="..\source\math\Color3.h"
 				>
 			</File>
 			<File
-				RelativePath="..\source\math\ColorValue.cpp"
+				RelativePath="..\source\math\Color4.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\source\math\ColorValue.h"
+				RelativePath="..\source\math\Color4.h"
 				>
 			</File>
 			<File

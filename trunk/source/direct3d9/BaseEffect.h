@@ -130,8 +130,8 @@ namespace SlimDX
 			void SetValue( EffectHandle^ parameter, array<float>^ values );
 			void SetValue( EffectHandle^ parameter, Vector4 value );
 			void SetValue( EffectHandle^ parameter, array<Vector4>^ values );
-			void SetValue( EffectHandle^ parameter, ColorValue value );
-			void SetValue( EffectHandle^ parameter, array<ColorValue>^ values );
+			void SetValue( EffectHandle^ parameter, Color4 value );
+			void SetValue( EffectHandle^ parameter, array<Color4>^ values );
 			void SetValue( EffectHandle^ parameter, Matrix value );
 			void SetValue( EffectHandle^ parameter, array<Matrix>^ values );
 			void SetValue( EffectHandle^ parameter, BaseTexture^ value );
@@ -147,8 +147,8 @@ namespace SlimDX
 			array<float>^ GetFloatArray( EffectHandle^ parameter, int count );
 			Vector4 GetVector( EffectHandle^ parameter );
 			array<Vector4>^ GetVectorArray( EffectHandle^ parameter, int count );
-			ColorValue GetColor( EffectHandle^ parameter );
-			array<ColorValue>^ GetColorArray( EffectHandle^ parameter, int count );
+			Color4 GetColor( EffectHandle^ parameter );
+			array<Color4>^ GetColorArray( EffectHandle^ parameter, int count );
 			Matrix GetMatrix( EffectHandle^ parameter );
 			array<Matrix>^ GetMatrixArray( EffectHandle^ parameter, int count );
 			Matrix GetMatrixTranspose( EffectHandle^ parameter );
