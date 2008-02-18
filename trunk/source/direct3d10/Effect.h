@@ -36,64 +36,39 @@ namespace SlimDX
 		ref class EffectTechnique;
 		ref class EffectVariable;
 		ref class EffectPool;
+		value class EffectDescription;
 		
 		public ref class Effect : public ComObject
 		{
 			COMOBJECT(ID3D10Effect);
-
-		private:
-			bool m_IsChildEffect;
-			int m_ConstantBufferCount;
-			int m_SharedConstantBufferCount;
-			int m_GlobalVariableCount;
-			int m_TechniqueCount;
 		
 		internal:
 			Effect( ID3D10Effect* effect );
 		
 		public:
-			Effect( System::IntPtr effect );
-			virtual ~Effect() { Destruct(); }
-
-			property bool IsChildEffect
+			property EffectDescription Description
 			{
-				bool get() { return m_IsChildEffect; }
-			}
-			
-			property int ConstantBufferCount
-			{
-				int get() { return m_ConstantBufferCount; }
-			}
-			
-			property int SharedConstantBufferCount
-			{
-				int get() { return m_SharedConstantBufferCount; }
-			}
-			
-			property int SharedGlobalVariablesCount
-			{
-				int get() { return m_GlobalVariableCount; }
-			}
-			
-			property int TechniqueCount
-			{
-				int get() { return m_TechniqueCount; }
+				EffectDescription get();
 			}
 			
 			property bool IsOptimized
 			{
-				bool get() { return InternalPointer->IsOptimized() ? true : false; }
+				bool get();
 			}
 			
 			property bool IsPooled
 			{
-				bool get() { return InternalPointer->IsPool() ? true : false; }
+				bool get();
 			}
 			
 			property bool IsValid
 			{
-				bool get() { return InternalPointer->IsValid() ? true : false; }
+				bool get();
 			}
+			
+			Effect( System::IntPtr effect );
+			
+			Device^ GetDevice();
 			
 			EffectConstantBuffer^ GetConstantBufferByIndex( int index );
 			EffectConstantBuffer^ GetConstantBufferByName( System::String^ name );
@@ -105,7 +80,7 @@ namespace SlimDX
 			EffectVariable^ GetVariableByName( System::String^ name );
 			EffectVariable^ GetVariableBySemantic( System::String^ name );
 			
-			void Optimize();
+			Result Optimize();
 			
 			static Effect^ FromFile( Device^ device, System::String^ fileName, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool );
 			static Effect^ FromFile( Device^ device, System::String^ fileName, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] System::String^ %compilationErrors );

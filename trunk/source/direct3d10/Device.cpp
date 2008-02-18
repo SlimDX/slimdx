@@ -66,7 +66,7 @@ namespace Direct3D10
 		ID3D10Device* device = 0;
 		Result::Record( D3D10CreateDevice( 0, D3D10_DRIVER_TYPE_HARDWARE, 0, static_cast<UINT>( flags ), D3D10_SDK_VERSION, &device ) );
 		if( Result::Last.IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last.Code );
+			throw gcnew Direct3D10Exception( Result::Last );
 		
 		Construct( device );
 		

@@ -280,6 +280,14 @@
 			Name="Direct3D10"
 			>
 			<File
+				RelativePath="..\source\direct3d10\DepthStencilView.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d10\DepthStencilView.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\direct3d10\Direct3D10Exception.cpp"
 				>
 			</File>
@@ -321,41 +329,6 @@
 			</File>
 			<File
 				RelativePath="..\source\direct3d10\RenderTargetViewOptions.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d10\Resource.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Public|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\source\direct3d10\Resource.h"
 				>
 			</File>
 			<File
@@ -425,6 +398,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\EffectDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectDescription.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\EffectMatrixVariable.cpp"
 					>
 				</File>
@@ -441,11 +422,19 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\EffectPassShaderMapping.cpp"
+					RelativePath="..\source\direct3d10\EffectPassDescription.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\EffectPassShaderMapping.h"
+					RelativePath="..\source\direct3d10\EffectPassDescription.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectPassShaderDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectPassShaderDescription.h"
 					>
 				</File>
 				<File
@@ -497,6 +486,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\EffectTechniqueDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectTechniqueDescription.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\EffectVariable.cpp"
 					>
 				</File>
@@ -505,74 +502,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\EffectVariableDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\EffectVariableDescription.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\EffectVectorVariable.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\EffectVectorVariable.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Texture"
-				>
-				<File
-					RelativePath="..\source\direct3d10\Texture.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Public|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture1D.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture1D.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture2D.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture2D.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture3D.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture3D.h"
 					>
 				</File>
 			</Filter>
@@ -818,11 +760,38 @@
 				Name="Resource"
 				>
 				<File
-					RelativePath="..\source\direct3d10\DepthStencilView.cpp"
+					RelativePath="..\source\direct3d10\Resource.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\DepthStencilView.h"
+					RelativePath="..\source\direct3d10\Resource.h"
 					>
 				</File>
 			</Filter>
@@ -909,6 +878,69 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Font.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Texture"
+				>
+				<File
+					RelativePath="..\source\direct3d10\Texture.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Texture.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Texture1D.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Texture1D.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Texture2D.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Texture2D.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Texture3D.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Texture3D.h"
 					>
 				</File>
 			</Filter>

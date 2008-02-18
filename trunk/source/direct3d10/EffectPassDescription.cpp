@@ -23,7 +23,8 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "EffectVectorVariable.h"
+#include "EffectPassDescription.h"
+#include "ShaderSignature.h"
 
 using namespace System;
 
@@ -31,27 +32,44 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	EffectVectorVariable::EffectVectorVariable( ID3D10EffectVectorVariable* pointer )
-	: EffectVariable( pointer )
+	EffectPassDescription::EffectPassDescription( const D3D10_PASS_DESC& native )
 	{
-		m_Pointer = pointer;
+		m_Name = gcnew String( native.Name );
+		m_Annotations = native.Annotations;
+		m_Signature = gcnew ShaderSignature( native.pIAInputSignature, native.IAInputSignatureSize );
+		m_StencilRef = native.StencilRef;
+		m_SampleMask = native.SampleMask;
+		m_BlendFactor = ColorValue( native.BlendFactor[ 3 ], native.BlendFactor[ 0 ], native.BlendFactor[ 1 ], native.BlendFactor[ 2 ] );
 	}
 	
-	EffectVectorVariable::EffectVectorVariable( IntPtr pointer )
-	: EffectVariable( pointer )
+	String^ EffectPassDescription::Name::get()
 	{
-		m_Pointer = reinterpret_cast<ID3D10EffectVectorVariable*>( pointer.ToPointer() );
+		return m_Name;
 	}
 	
-	Result EffectVectorVariable::Set( Vector4 value )
+	int EffectPassDescription::AnnotationCount::get()
 	{
-		return Result::Record( m_Pointer->SetFloatVector( reinterpret_cast<float*>( &value ) ) );
+		return m_Annotations;
 	}
 	
-	Result EffectVectorVariable::Set( array<Vector4>^ values )
+	ShaderSignature^ EffectPassDescription::Signature::get()
 	{
-		pin_ptr<Vector4> pinnedValues = &values[ 0 ];
-		return Result::Record( m_Pointer->SetFloatVectorArray( reinterpret_cast<float*>( pinnedValues ), 0, values->Length ) );
+		return m_Signature;
+	}
+	
+	int EffectPassDescription::StencilReference::get()
+	{
+		return m_StencilRef;
+	}
+	
+	int EffectPassDescription::SampleMask::get()
+	{
+		return m_SampleMask;
+	}
+	
+	ColorValue EffectPassDescription::BlendFactor::get()
+	{
+		return m_BlendFactor;
 	}
 }
 }

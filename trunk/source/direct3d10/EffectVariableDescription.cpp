@@ -21,37 +21,53 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
 
-#include "EffectVectorVariable.h"
+#include "EffectVariableDescription.h"
 
 using namespace System;
 
 namespace SlimDX
 {
 namespace Direct3D10
-{ 
-	EffectVectorVariable::EffectVectorVariable( ID3D10EffectVectorVariable* pointer )
-	: EffectVariable( pointer )
+{ 	
+	EffectVariableDescription::EffectVariableDescription( const D3D10_EFFECT_VARIABLE_DESC& native )
 	{
-		m_Pointer = pointer;
+		m_Name = gcnew String( native.Name );
+		m_Semantic = gcnew String( native.Semantic );
+		m_Flags = static_cast<EffectVariableFlags>( native.Flags );
+		m_Annotations = native.Annotations;
+		m_BufferOffset = native.BufferOffset;
+		m_ExplicitBindPoint = native.ExplicitBindPoint;
+	}
+
+	String^ EffectVariableDescription::Name::get()
+	{
+		return m_Name;
 	}
 	
-	EffectVectorVariable::EffectVectorVariable( IntPtr pointer )
-	: EffectVariable( pointer )
+	String^ EffectVariableDescription::Semantic::get()
 	{
-		m_Pointer = reinterpret_cast<ID3D10EffectVectorVariable*>( pointer.ToPointer() );
+		return m_Semantic;
+	}
+
+	EffectVariableFlags EffectVariableDescription::Flags::get()
+	{
+		return m_Flags;
 	}
 	
-	Result EffectVectorVariable::Set( Vector4 value )
+	int EffectVariableDescription::AnnotationCount::get()
 	{
-		return Result::Record( m_Pointer->SetFloatVector( reinterpret_cast<float*>( &value ) ) );
+		return m_Annotations;
 	}
 	
-	Result EffectVectorVariable::Set( array<Vector4>^ values )
+	int EffectVariableDescription::ConstantBufferOffset::get()
 	{
-		pin_ptr<Vector4> pinnedValues = &values[ 0 ];
-		return Result::Record( m_Pointer->SetFloatVectorArray( reinterpret_cast<float*>( pinnedValues ), 0, values->Length ) );
+		return m_BufferOffset;
+	}
+	
+	int EffectVariableDescription::ExplicitBindPoint::get()
+	{
+		return m_ExplicitBindPoint;
 	}
 }
 }

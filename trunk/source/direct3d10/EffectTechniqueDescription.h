@@ -19,23 +19,37 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <d3d10.h>
-#include <d3dx10.h>
-
-//#include "Direct3D10ErrorHandler.h"
-
-#include "EffectPassShaderMapping.h"
-#include "EffectShaderVariable.h"
+#pragma once
 
 namespace SlimDX
 {
-namespace Direct3D10
-{ 
-	EffectPassShaderMapping::EffectPassShaderMapping( const D3D10_PASS_SHADER_DESC& description )
-	{
-		shaderVariable = gcnew EffectShaderVariable( description.pShaderVariable );
-		shaderIndex = description.ShaderIndex;
+	namespace Direct3D10
+	{	
+		public value class EffectTechniqueDescription
+		{
+		private:
+			System::String^ m_Name;
+			int m_Passes;
+			int m_Annotations;
+
+		internal:
+			EffectTechniqueDescription( const D3D10_TECHNIQUE_DESC& native );
+			
+		public:
+			property System::String^ Name
+			{
+				System::String^ get();
+			}
+			
+			property int PassCount
+			{
+				int get();
+			}
+			
+			property int AnnotationCount
+			{
+				int get();
+			}
+		};
 	}
-}
-}
+};

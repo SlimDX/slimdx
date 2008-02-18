@@ -23,7 +23,10 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
+#include "Direct3D10Exception.h"
+
 #include "Buffer.h"
+#include "BufferDescription.h"
 #include "Device.h"
 
 using namespace System;
@@ -32,16 +35,9 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	Buffer::Buffer( ID3D10Buffer* buffer ) : Resource( buffer )
+	Buffer::Buffer( ID3D10Buffer* pointer )
 	{
-		D3D10_BUFFER_DESC description;
-		buffer->GetDesc(&description);
-		
-		m_SizeInBytes = description.ByteWidth;
-		m_Usage = (SlimDX::Direct3D10::ResourceUsage) description.Usage;
-		m_BindFlags = (SlimDX::Direct3D10::BindFlags) description.BindFlags;
-		m_AccessFlags = (SlimDX::Direct3D10::CpuAccessFlags) description.CPUAccessFlags;
-		m_OptionFlags = (SlimDX::Direct3D10::ResourceOptionFlags) description.MiscFlags;
+		Construct( pointer );
 	}
 
 	Buffer::Buffer( IntPtr pointer )
@@ -49,49 +45,30 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 	
+	Buffer::Buffer( Device^ device, BufferDescription description )
+	{
+		Construct( Build( device, nullptr, description.SizeInBytes, description.Usage, description.BindFlags, description.CpuAccessFlags, description.OptionFlags ) );
+	}
+
+	Buffer::Buffer( Device^ device, DataStream^ data, BufferDescription description )
+	{
+		Construct( Build( device, data, description.SizeInBytes, description.Usage, description.BindFlags, description.CpuAccessFlags, description.OptionFlags ) );
+	}
+	
 	Buffer::Buffer( Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
 	{
-		if( sizeInBytes <= 0 )
-			throw gcnew ArgumentException( "The sizeInBytes parameter must be greater than zero.", "sizeInBytes" );
-		Construct(device,sizeInBytes,nullptr,usage,bindFlags,accessFlags,optionFlags);
+		Construct( Build( device, nullptr, sizeInBytes, usage, bindFlags, accessFlags, optionFlags ) );
 	}
 	
-	Buffer::Buffer( Device^ device, int sizeInBytes, DataStream^ data, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
+	Buffer::Buffer( Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
 	{		
-		if( data == nullptr )
-			throw gcnew ArgumentNullException( "data" );
-		Construct(device,sizeInBytes,data,usage,bindFlags,accessFlags,optionFlags);
+		Construct( Build( device, data, sizeInBytes, usage, bindFlags, accessFlags, optionFlags ) );
 	}
 	
-	DataStream^ Buffer::Map( MapMode mode, MapFlags flags )
+	ID3D10Buffer* Buffer::Build( Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
 	{
-		void* mappedPtr;
-		HRESULT hr = ( static_cast<ID3D10Buffer*>( InternalPointer ) )->Map( static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedPtr );
-		Result::Record( hr );
-
-		bool readOnly = mode == MapMode::Read;
-		DataStream^ stream = gcnew DataStream( mappedPtr, SizeInBytes, true, !readOnly, false );
-		return stream;
-	}
-
-	void Buffer::Unmap()
-	{
-		( static_cast<ID3D10Buffer*>( InternalPointer ) )->Unmap();
-	}
-	
-	void Buffer::Construct( Device^ device, int sizeInBytes, DataStream^ data, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
-	{	
-		if( device == nullptr )
-			throw gcnew ArgumentNullException( "device" );
-		
-		m_SizeInBytes = sizeInBytes;
-		m_Usage = usage;
-		m_BindFlags = bindFlags;
-		m_AccessFlags = accessFlags;
-		m_OptionFlags = optionFlags;
-		
 		D3D10_BUFFER_DESC description;
-		ZeroMemory( &description, sizeof(description) );
+		ZeroMemory( &description, sizeof( description ) );
 		description.ByteWidth = sizeInBytes;
 		description.Usage = static_cast<D3D10_USAGE>( usage );
 		description.BindFlags = static_cast<UINT>( bindFlags );
@@ -99,26 +76,44 @@ namespace Direct3D10
 		description.MiscFlags = static_cast<UINT>( optionFlags );
 		
 		ID3D10Buffer* buffer = 0;
-		HRESULT hr;
-		if( data != nullptr )
+		if( data == nullptr )
 		{
-			if( sizeInBytes > data->Length - data->Position )
-				throw gcnew InvalidOperationException( "Specified buffer size is greater than available data in specified data stream." );
-		
-			D3D10_SUBRESOURCE_DATA initData;
-			ZeroMemory( &initData, sizeof(initData) );
-			initData.pSysMem = data->RawPointer + data->Position;
-			data->Position += sizeInBytes;
-		
-			hr = device->InternalPointer->CreateBuffer( &description, &initData, &buffer );
+			if( Result::Record( device->InternalPointer->CreateBuffer( &description, 0, &buffer ) ).IsFailure )
+				throw gcnew Direct3D10Exception( Result::Last );
 		}
 		else
 		{
-			hr = device->InternalPointer->CreateBuffer( &description, NULL, &buffer );
+			D3D10_SUBRESOURCE_DATA initialData;
+			ZeroMemory( &initialData, sizeof( initialData ) );
+			initialData.pSysMem = data->RawPointer + data->Position;
+			data->Position += sizeInBytes;
+			
+			if( Result::Record( device->InternalPointer->CreateBuffer( &description, &initialData, &buffer ) ).IsFailure )
+				throw gcnew Direct3D10Exception( Result::Last );
 		}
-		Result::Record( hr );
 		
-		Construct(buffer);
+		return buffer;
+	}
+	
+	BufferDescription Buffer::Description::get()
+	{
+		D3D10_BUFFER_DESC nativeDescription;
+		InternalPointer->GetDesc( &nativeDescription );
+		return BufferDescription( nativeDescription );
+	}
+	
+	DataStream^ Buffer::Map( MapMode mode, MapFlags flags )
+	{
+		void* mappedPtr = 0;
+		if( Result::Record( InternalPointer->Map( static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedPtr ) ).IsFailure )
+			return nullptr;
+		
+		return gcnew DataStream( mappedPtr, Description.SizeInBytes, true, true, false );
+	}
+
+	void Buffer::Unmap()
+	{
+		InternalPointer->Unmap();
 	}
 }
 }

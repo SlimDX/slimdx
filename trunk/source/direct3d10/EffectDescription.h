@@ -19,39 +19,57 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include <d3d10.h>
-#include <d3dx10.h>
-
-#include "EffectVectorVariable.h"
-
-using namespace System;
+#include "Enums.h"
 
 namespace SlimDX
 {
-namespace Direct3D10
-{ 
-	EffectVectorVariable::EffectVectorVariable( ID3D10EffectVectorVariable* pointer )
-	: EffectVariable( pointer )
-	{
-		m_Pointer = pointer;
+	namespace Direct3D10
+	{	
+		public value class EffectDescription
+		{
+		private:
+			bool m_IsChildEffect;
+			int m_ConstantBuffers;
+			int m_SharedConstantBuffers;
+			int m_GlobalVariables;
+			int m_SharedGlobalVariables;
+			int m_Techniques;
+
+		internal:
+			EffectDescription( const D3D10_EFFECT_DESC& native );
+			
+		public:
+			property bool IsChildEffect
+			{
+				bool get();
+			}
+			
+			property int ConstantBufferCount
+			{
+				int get();
+			}
+			
+			property int SharedConstantBufferCount
+			{
+				int get();
+			}
+			
+			property int GlobalVariableCount
+			{
+				int get();
+			}
+			
+			property int SharedGlobalVariableCount
+			{
+				int get();
+			}
+			
+			property int TechniqueCount
+			{
+				int get();
+			}
+		};
 	}
-	
-	EffectVectorVariable::EffectVectorVariable( IntPtr pointer )
-	: EffectVariable( pointer )
-	{
-		m_Pointer = reinterpret_cast<ID3D10EffectVectorVariable*>( pointer.ToPointer() );
-	}
-	
-	Result EffectVectorVariable::Set( Vector4 value )
-	{
-		return Result::Record( m_Pointer->SetFloatVector( reinterpret_cast<float*>( &value ) ) );
-	}
-	
-	Result EffectVectorVariable::Set( array<Vector4>^ values )
-	{
-		pin_ptr<Vector4> pinnedValues = &values[ 0 ];
-		return Result::Record( m_Pointer->SetFloatVectorArray( reinterpret_cast<float*>( pinnedValues ), 0, values->Length ) );
-	}
-}
-}
+};

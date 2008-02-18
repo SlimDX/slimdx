@@ -34,7 +34,7 @@ namespace Direct3D10
 { 
 	RasterizerWrapper::RasterizerWrapper( ID3D10Device* device )
 	{
-		if( device == NULL )
+		if( device == 0 )
 			throw gcnew ArgumentNullException( "device" );
 		m_Device = device;
 	}
@@ -42,7 +42,7 @@ namespace Direct3D10
 	void RasterizerWrapper::State::set( RasterizerState^ value )
 	{
 		if( value == nullptr )
-			m_Device->RSSetState( NULL );
+			m_Device->RSSetState( 0 );
 		else
 			m_Device->RSSetState( value->InternalPointer );
 	}

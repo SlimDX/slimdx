@@ -24,9 +24,12 @@
 #include <d3dx10.h>
 #include <vcclr.h>
 
+#include "Direct3D10Exception.h"
+
 #include "EffectPass.h"
+#include "EffectPassDescription.h"
+#include "EffectPassShaderDescription.h"
 #include "EffectVariable.h"
-#include "ShaderBytecode.h"
 
 using namespace System;
 using namespace System::Globalization;
@@ -35,73 +38,88 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	EffectPass::EffectPass( ID3D10EffectPass* pass )
+	EffectPass::EffectPass( ID3D10EffectPass* pointer )
 	{
-		if( pass == NULL )
-			throw gcnew ArgumentNullException( "pass" );
-		m_Pointer = pass;
-		
-		D3D10_PASS_DESC description;
-		HRESULT hr = m_Pointer->GetDesc( &description );
-		Result::Record( hr );
-		
-		m_Name = gcnew String( description.Name );
-		m_AnnotationCount = description.Annotations;
-		m_Signature = gcnew ShaderSignature( description.pIAInputSignature, description.IAInputSignatureSize );
-		m_StencilReference = description.StencilRef;
-		m_SampleMask = description.SampleMask;
-		m_BlendFactor = ColorValue( description.BlendFactor[3], description.BlendFactor[0], description.BlendFactor[1], description.BlendFactor[2] );
+		if( pointer == 0 )
+			throw gcnew ArgumentNullException( "pointer" );
+			
+		m_Pointer = pointer;
 	}
 	
-	EffectPassShaderMapping EffectPass::PixelShaderDescription::get()
+	EffectPass::EffectPass( IntPtr pointer )
 	{
-		D3D10_PASS_SHADER_DESC description;
-		HRESULT hr = m_Pointer->GetPixelShaderDesc( &description );
-		Result::Record( hr );
-		
-		return EffectPassShaderMapping( description );
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+			
+		m_Pointer = reinterpret_cast<ID3D10EffectPass*>( pointer.ToPointer() );
 	}
 	
-	EffectPassShaderMapping EffectPass::VertexShaderDescription::get()
+	EffectPassDescription EffectPass::Description::get()
 	{
-		D3D10_PASS_SHADER_DESC description;
-		HRESULT hr = m_Pointer->GetVertexShaderDesc( &description );
-		Result::Record( hr );
+		D3D10_PASS_DESC nativeDescription;
+		Result::Record( m_Pointer->GetDesc( &nativeDescription ) );
+		if( Result::Last.IsSuccess )
+			return EffectPassDescription( nativeDescription );
 		
-		return EffectPassShaderMapping( description );
+		throw gcnew Direct3D10Exception( Result::Last );
 	}
 	
-	EffectPassShaderMapping EffectPass::GeometryShaderDescription::get()
+	bool EffectPass::IsValid::get()
+	{
+		return m_Pointer->IsValid() ? true : false;
+	}
+	
+	EffectPassShaderDescription EffectPass::GeometryShaderDescription::get()
 	{
 		D3D10_PASS_SHADER_DESC description;
-		HRESULT hr = m_Pointer->GetVertexShaderDesc( &description );
-		Result::Record( hr );
 		
-		return EffectPassShaderMapping( description );
+		if( Result::Record( m_Pointer->GetGeometryShaderDesc( &description ) ).IsFailure )
+			return EffectPassShaderDescription();
+		else
+			return EffectPassShaderDescription( description );
+	}
+	
+	EffectPassShaderDescription EffectPass::VertexShaderDescription::get()
+	{
+		D3D10_PASS_SHADER_DESC description;
+		
+		if( Result::Record( m_Pointer->GetVertexShaderDesc( &description ) ).IsFailure )
+			return EffectPassShaderDescription();
+		else
+			return EffectPassShaderDescription( description );
+	}
+	
+	EffectPassShaderDescription EffectPass::PixelShaderDescription::get()
+	{
+		D3D10_PASS_SHADER_DESC description;
+		
+		if( Result::Record( m_Pointer->GetPixelShaderDesc( &description ) ).IsFailure )
+			return EffectPassShaderDescription();
+		else
+			return EffectPassShaderDescription( description );
 	}
 	
 	EffectVariable^ EffectPass::GetAnnotationByIndex( int index )
 	{
 		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByIndex( index );
-		if( variable == NULL )
-			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Index '{0}' does not identify any annotation on the pass.", index ) );
+		if( variable == 0 )
+			return nullptr;
 		return gcnew EffectVariable( variable );
 	}
 	
 	EffectVariable^ EffectPass::GetAnnotationByName( String^ name )
 	{
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
-		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+		pin_ptr<unsigned char> pinnedName = &nameBytes[ 0 ];
 		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByName( reinterpret_cast<LPCSTR>( pinnedName ) );
-		if( variable == NULL )
-			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Name '{0}' does not identify any annotation on the pass.", name ) );
+		if( variable == 0 )
+			return nullptr;
 		return gcnew EffectVariable( variable );
 	}
 	
-	void EffectPass::Apply()
+	Result EffectPass::Apply()
 	{
-		HRESULT hr = m_Pointer->Apply(0);
-		Result::Record( hr );
+		return Result::Record( m_Pointer->Apply( 0 ) );
 	}
 }
 }

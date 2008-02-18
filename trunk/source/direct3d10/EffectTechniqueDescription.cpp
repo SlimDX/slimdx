@@ -23,7 +23,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "EffectVectorVariable.h"
+#include "EffectTechniqueDescription.h"
 
 using namespace System;
 
@@ -31,27 +31,26 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	EffectVectorVariable::EffectVectorVariable( ID3D10EffectVectorVariable* pointer )
-	: EffectVariable( pointer )
+	EffectTechniqueDescription::EffectTechniqueDescription( const D3D10_TECHNIQUE_DESC& native )
 	{
-		m_Pointer = pointer;
+		m_Name = gcnew String( native.Name );
+		m_Passes = native.Passes;
+		m_Annotations = native.Annotations;
 	}
 	
-	EffectVectorVariable::EffectVectorVariable( IntPtr pointer )
-	: EffectVariable( pointer )
+	String^ EffectTechniqueDescription::Name::get()
 	{
-		m_Pointer = reinterpret_cast<ID3D10EffectVectorVariable*>( pointer.ToPointer() );
+		return m_Name;
 	}
 	
-	Result EffectVectorVariable::Set( Vector4 value )
+	int EffectTechniqueDescription::PassCount::get()
 	{
-		return Result::Record( m_Pointer->SetFloatVector( reinterpret_cast<float*>( &value ) ) );
+		return m_Passes;
 	}
 	
-	Result EffectVectorVariable::Set( array<Vector4>^ values )
+	int EffectTechniqueDescription::AnnotationCount::get()
 	{
-		pin_ptr<Vector4> pinnedValues = &values[ 0 ];
-		return Result::Record( m_Pointer->SetFloatVectorArray( reinterpret_cast<float*>( pinnedValues ), 0, values->Length ) );
+		return m_Annotations;
 	}
 }
 }

@@ -21,10 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
-#include "Enums.h"
-
 #include "EffectVariable.h"
 #include "ShaderResourceView.h"
 
@@ -32,13 +28,18 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class EffectResourceVariable : EffectVariable
+		public ref class EffectResourceVariable : public EffectVariable
 		{	
+		private:
+			ID3D10EffectShaderResourceVariable* m_Pointer;
+			
 		internal:
-			EffectResourceVariable( ID3D10EffectShaderResourceVariable* variable );
+			EffectResourceVariable( ID3D10EffectShaderResourceVariable* pointer );
 			
 		public:
-			void SetResource( ShaderResourceView^ view );
+			EffectResourceVariable( System::IntPtr pointer );
+			
+			Result SetResource( ShaderResourceView^ view );
 			ShaderResourceView^ GetResource();
 		};
 	}

@@ -23,35 +23,39 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "Direct3D10Exception.h"
-
 #include "EffectScalarVariable.h"
 
+using namespace System;
 
 namespace SlimDX
 {
 namespace Direct3D10
 { 
-	EffectScalarVariable::EffectScalarVariable( ID3D10EffectScalarVariable* variable ) : EffectVariable( variable )
+	EffectScalarVariable::EffectScalarVariable( ID3D10EffectScalarVariable* pointer )
+	: EffectVariable( pointer )
 	{
+		m_Pointer = pointer;
 	}
 	
-	void EffectScalarVariable::Set( bool value )
+	EffectScalarVariable::EffectScalarVariable( IntPtr pointer )
+	: EffectVariable( pointer )
 	{
-		HRESULT hr = static_cast<ID3D10EffectScalarVariable*>( Pointer )->SetBool( value );
-		Result::Record( hr );
+		m_Pointer = reinterpret_cast<ID3D10EffectScalarVariable*>( pointer.ToPointer() );
 	}
 	
-	void EffectScalarVariable::Set( float value )
+	Result EffectScalarVariable::Set( bool value )
 	{
-		HRESULT hr = static_cast<ID3D10EffectScalarVariable*>( Pointer )->SetFloat( value );
-		Result::Record( hr );
+		return Result::Record( m_Pointer->SetBool( value ) );
 	}
 	
-	void EffectScalarVariable::Set( int value )
+	Result EffectScalarVariable::Set( float value )
 	{
-		HRESULT hr = static_cast<ID3D10EffectScalarVariable*>( Pointer )->SetInt( value );
-		Result::Record( hr );
+		return Result::Record( m_Pointer->SetFloat( value ) );
+	}
+	
+	Result EffectScalarVariable::Set( int value )
+	{
+		return Result::Record( m_Pointer->SetInt( value ) );
 	}
 }
 }

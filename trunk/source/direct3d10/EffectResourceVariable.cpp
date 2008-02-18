@@ -23,31 +23,38 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-//#include "Direct3D10ErrorHandler.h"
-
 #include "EffectResourceVariable.h"
 #include "ShaderResourceView.h"
+
+using namespace System;
 
 namespace SlimDX
 {
 namespace Direct3D10
 { 
-	EffectResourceVariable::EffectResourceVariable( ID3D10EffectShaderResourceVariable* variable ) : EffectVariable( variable )
+	EffectResourceVariable::EffectResourceVariable( ID3D10EffectShaderResourceVariable* pointer )
+	: EffectVariable( pointer )
 	{
+		m_Pointer = pointer;
 	}
 	
-	void EffectResourceVariable::SetResource( ShaderResourceView^ view )
+	EffectResourceVariable::EffectResourceVariable( IntPtr pointer )
+	: EffectVariable( pointer )
 	{
-		HRESULT hr = static_cast<ID3D10EffectShaderResourceVariable*>( Pointer )->SetResource( static_cast<ID3D10ShaderResourceView*>( view->InternalPointer ) );
-		Result::Record( hr );
+		m_Pointer = reinterpret_cast<ID3D10EffectShaderResourceVariable*>( pointer.ToPointer() );
+	}
+	
+	Result EffectResourceVariable::SetResource( ShaderResourceView^ view )
+	{
+		return Result::Record( m_Pointer->SetResource( static_cast<ID3D10ShaderResourceView*>( view->InternalPointer ) ) );
 	}
 	
 	ShaderResourceView^ EffectResourceVariable::GetResource()
 	{
 		ID3D10ShaderResourceView* view = 0;
-		HRESULT hr = static_cast<ID3D10EffectShaderResourceVariable*>( Pointer )->GetResource( &view );
-		Result::Record( hr );
-		
+		if( Result::Record( m_Pointer->GetResource( &view ) ).IsFailure )
+			return nullptr;
+			
 		return gcnew ShaderResourceView( view );
 	}
 }

@@ -23,35 +23,27 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "EffectVectorVariable.h"
-
-using namespace System;
+#include "EffectPassShaderDescription.h"
+#include "EffectShaderVariable.h"
 
 namespace SlimDX
 {
 namespace Direct3D10
 { 
-	EffectVectorVariable::EffectVectorVariable( ID3D10EffectVectorVariable* pointer )
-	: EffectVariable( pointer )
+	EffectPassShaderDescription::EffectPassShaderDescription( const D3D10_PASS_SHADER_DESC& native )
 	{
-		m_Pointer = pointer;
+		m_ShaderVariable = gcnew EffectShaderVariable( native.pShaderVariable );
+		m_ShaderIndex = native.ShaderIndex;
 	}
 	
-	EffectVectorVariable::EffectVectorVariable( IntPtr pointer )
-	: EffectVariable( pointer )
+	EffectShaderVariable^ EffectPassShaderDescription::Variable::get()
 	{
-		m_Pointer = reinterpret_cast<ID3D10EffectVectorVariable*>( pointer.ToPointer() );
+		return m_ShaderVariable;
 	}
 	
-	Result EffectVectorVariable::Set( Vector4 value )
+	int EffectPassShaderDescription::Index::get()
 	{
-		return Result::Record( m_Pointer->SetFloatVector( reinterpret_cast<float*>( &value ) ) );
-	}
-	
-	Result EffectVectorVariable::Set( array<Vector4>^ values )
-	{
-		pin_ptr<Vector4> pinnedValues = &values[ 0 ];
-		return Result::Record( m_Pointer->SetFloatVectorArray( reinterpret_cast<float*>( pinnedValues ), 0, values->Length ) );
+		return m_ShaderIndex;
 	}
 }
 }

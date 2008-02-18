@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "../dxgi/Enums.h"
 
 #include "Enums.h"
@@ -37,6 +35,7 @@ namespace SlimDX
 		
 		public ref class InputAssemblerWrapper
 		{
+		private:
 			ID3D10Device* m_Device;
 			
 		internal:

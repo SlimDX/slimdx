@@ -23,67 +23,54 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "EffectConstantBuffer.h"
-//#include "Direct3D10ErrorHandler.h"
-
 #include "Buffer.h"
+#include "EffectConstantBuffer.h"
 #include "ShaderResourceView.h"
+
+using namespace System;
 
 namespace SlimDX
 {
 namespace Direct3D10
 { 
-	/// 
-	EffectConstantBuffer::EffectConstantBuffer( ID3D10EffectConstantBuffer* variable ) : EffectVariable( variable )
+	EffectConstantBuffer::EffectConstantBuffer( ID3D10EffectConstantBuffer* pointer )
+	: EffectVariable( pointer )
 	{
+		m_Pointer = pointer;
 	}
 	
-	/// <summary>
-	/// Gets a constant buffer.
-	/// </summary>
+	EffectConstantBuffer::EffectConstantBuffer( IntPtr pointer )
+	: EffectVariable( pointer )
+	{
+		m_Pointer = reinterpret_cast<ID3D10EffectConstantBuffer*>( pointer.ToPointer() );
+	}
+	
 	Buffer^ EffectConstantBuffer::GetConstantBuffer()
 	{
 		ID3D10Buffer* buffer = 0;
-		HRESULT hr = static_cast<ID3D10EffectConstantBuffer*>( Pointer )->GetConstantBuffer( &buffer );
-		Result::Record( hr );
-		
-		if( buffer == 0 )
+		if( Result::Record( m_Pointer->GetConstantBuffer( &buffer ) ).IsFailure )
 			return nullptr;
+		
 		return gcnew Buffer( buffer );
 	}
 
-	/// <summary>
-	/// Sets a constant buffer.
-	/// </summary>
-	/// <param name="buffer">The buffer to set.</param>
-	void EffectConstantBuffer::SetConstantBuffer( Buffer^ buffer )
+	Result EffectConstantBuffer::SetConstantBuffer( Buffer^ buffer )
 	{
-		HRESULT hr = static_cast<ID3D10EffectConstantBuffer*>( Pointer )->SetConstantBuffer( static_cast<ID3D10Buffer*>( buffer->InternalPointer ) );
-		Result::Record( hr );
+		return Result::Record( m_Pointer->SetConstantBuffer( static_cast<ID3D10Buffer*>( buffer->InternalPointer ) ) );
 	}
 	
-	/// <summary>
-	/// Gets a texture buffer.
-	/// </summary>
 	ShaderResourceView^ EffectConstantBuffer::GetTextureBuffer()
 	{
 		ID3D10ShaderResourceView* buffer = 0;
-		HRESULT hr = static_cast<ID3D10EffectConstantBuffer*>( Pointer )->GetTextureBuffer( &buffer );
-		Result::Record( hr );
-		
-		if( buffer == 0 )
+		if( Result::Record( m_Pointer->GetTextureBuffer( &buffer ) ).IsFailure )
 			return nullptr;
+			
 		return gcnew ShaderResourceView( buffer );
 	}
 
-	/// <summary>
-	/// Sets a texture buffer.
-	/// </summary>
-	/// <param name="buffer">The buffer to set.</param>
-	void EffectConstantBuffer::SetTextureBuffer( ShaderResourceView^ buffer )
+	Result EffectConstantBuffer::SetTextureBuffer( ShaderResourceView^ buffer )
 	{
-		HRESULT hr = static_cast<ID3D10EffectConstantBuffer*>( Pointer )->SetTextureBuffer( static_cast<ID3D10ShaderResourceView*>( buffer->InternalPointer ) );
-		Result::Record( hr );
+		return Result::Record( m_Pointer->SetTextureBuffer( static_cast<ID3D10ShaderResourceView*>( buffer->InternalPointer ) ) );
 	}
 }
 }

@@ -23,10 +23,10 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "OutputMergerWrapper.h"
 #include "BlendState.h"
 #include "DepthStencilState.h"
 #include "DepthStencilView.h"
+#include "OutputMergerWrapper.h"
 #include "RenderTargetView.h"
 
 using namespace System;
@@ -37,7 +37,7 @@ namespace Direct3D10
 { 
 	OutputMergerWrapper::OutputMergerWrapper( ID3D10Device* device )
 	{
-		if( device == NULL )
+		if( device == 0 )
 			throw gcnew ArgumentNullException( "device" );
 		m_Device = device;
 	}
@@ -49,7 +49,7 @@ namespace Direct3D10
 		m_Device->OMGetDepthStencilState( &oldState, reinterpret_cast<UINT*>( &oldReference ) );
 	
 		if( value == nullptr )
-			m_Device->OMSetDepthStencilState( NULL, oldReference );
+			m_Device->OMSetDepthStencilState( 0, oldReference );
 		else
 			m_Device->OMSetDepthStencilState( value->InternalPointer, oldReference );
 	}

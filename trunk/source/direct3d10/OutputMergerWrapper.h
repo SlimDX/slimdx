@@ -21,9 +21,7 @@
 */
 #pragma once
 
-//using namespace System;
-
-#include "../math/Math.h"
+#include "../math/ColorValue.h"
 
 namespace SlimDX
 {
@@ -36,6 +34,7 @@ namespace SlimDX
 		
 		public ref class OutputMergerWrapper
 		{
+		private:
 			ID3D10Device* m_Device;
 			
 		internal:

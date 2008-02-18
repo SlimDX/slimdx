@@ -21,46 +21,33 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Globalization;
-
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
 		ref class EffectPass;
 		ref class EffectVariable;
+		value class EffectTechniqueDescription;
 		
 		public ref class EffectTechnique
 		{
 			ID3D10EffectTechnique *m_Pointer;
-			System::String^ m_Name;
-			int m_PassCount;
-			int m_AnnotationCount;
 			
 		internal:
-			EffectTechnique( ID3D10EffectTechnique* technique );
+			EffectTechnique( ID3D10EffectTechnique* pointer );
 			
 		public:
-			property System::String^ Name
+			property EffectTechniqueDescription Description
 			{
-				System::String^ get() { return m_Name; }
-			}
-			
-			property int AnnotationCount 
-			{
-				int get() { return m_AnnotationCount; }
-			}
-			
-			property int PassCount
-			{
-				int get() { return m_PassCount; }
+				EffectTechniqueDescription get();
 			}
 			
 			property bool IsValid
 			{
-				bool get() { return m_Pointer->IsValid() ? true : false; }
+				bool get();
 			}
+			
+			EffectTechnique( System::IntPtr pointer );
 			
 			EffectVariable^ GetAnnotationByIndex( int index );
 			EffectVariable^ GetAnnotationByName( System::String^ name );

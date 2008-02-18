@@ -23,8 +23,8 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "InputAssemblerWrapper.h"
 #include "Buffer.h"
+#include "InputAssemblerWrapper.h"
 #include "InputLayout.h"
 
 using namespace System;
@@ -35,7 +35,7 @@ namespace Direct3D10
 { 
 	InputAssemblerWrapper::InputAssemblerWrapper( ID3D10Device* device )
 	{
-		if( device == NULL )
+		if( device == 0 )
 			throw gcnew ArgumentNullException( "device" );
 		m_Device = device;
 	}

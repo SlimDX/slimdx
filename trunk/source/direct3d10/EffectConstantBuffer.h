@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "EffectVariable.h"
 
 namespace SlimDX
@@ -32,21 +30,22 @@ namespace SlimDX
 		ref class Buffer;
 		ref class ShaderResourceView;
 		
-		/// <remarks>
-		/// An <see cref="EffectVariable"/> for accessing constant or texture buffers.
-		/// </remarks>
-		/// <unmanaged counterpart="ID3D10EffectConstantBuffer" complete="yes"/>
-		public ref class EffectConstantBuffer : EffectVariable
+		public ref class EffectConstantBuffer : public EffectVariable
 		{	
-		internal:
-			EffectConstantBuffer( ID3D10EffectConstantBuffer* variable );
+		private:
+			ID3D10EffectConstantBuffer* m_Pointer;
 			
+		internal:
+			EffectConstantBuffer( ID3D10EffectConstantBuffer* pointer );
+
 		public:
+			EffectConstantBuffer( System::IntPtr pointer );
+			
 			Buffer^ GetConstantBuffer();
-			void SetConstantBuffer( Buffer^ buffer );
+			Result SetConstantBuffer( Buffer^ buffer );
 			
 			ShaderResourceView^ GetTextureBuffer();
-			void SetTextureBuffer( ShaderResourceView^ buffer );
+			Result SetTextureBuffer( ShaderResourceView^ buffer );
 		};
 	}
 };

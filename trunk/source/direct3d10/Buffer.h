@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#include <d3dx9.h>
-
 #include "../ComObject.h"
 #include "../DataStream.h"
 
@@ -34,54 +32,30 @@ namespace SlimDX
 	namespace Direct3D10
 	{
 		ref class Device;
+		value class BufferDescription;
 		
 		public ref class Buffer : public Resource
 		{
 			COMOBJECT(ID3D10Buffer);
 			
 		private:
-			int m_SizeInBytes;
-			ResourceUsage m_Usage;
-			BindFlags m_BindFlags;
-			CpuAccessFlags m_AccessFlags;
-			ResourceOptionFlags m_OptionFlags;
-			
-			void Construct( Device^ device, int sizeInBytes, DataStream^ data, ResourceUsage usage, BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
+			ID3D10Buffer* Build( Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
 		
 		internal:
 			Buffer( ID3D10Buffer* buffer );
 		
 		public:
-			property int SizeInBytes
+			property BufferDescription Description
 			{
-				int get() { return m_SizeInBytes; }
+				BufferDescription get();
 			}
 			
-			property ResourceUsage Usage
-			{
-				ResourceUsage get() { return m_Usage; }
-			}
-			
-			property SlimDX::Direct3D10::BindFlags BindFlags
-			{
-				SlimDX::Direct3D10::BindFlags get() { return m_BindFlags; }
-			}
-			
-			property CpuAccessFlags AccessFlags
-			{
-				CpuAccessFlags get() { return m_AccessFlags; }
-			}
-			
-			property ResourceOptionFlags OptionFlags
-			{
-				ResourceOptionFlags get() { return m_OptionFlags; }
-			}
-		
 			Buffer( System::IntPtr pointer );
+			Buffer( Device^ device, BufferDescription description );
+			Buffer( Device^ device, DataStream^ data, BufferDescription description );
 			Buffer( Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
-			Buffer( Device^ device, int sizeInBytes, DataStream^ data, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
-			virtual ~Buffer() { }
-
+			Buffer( Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
+			
 			DataStream^ Map( MapMode mode, MapFlags flags );
 			void Unmap();
 		};

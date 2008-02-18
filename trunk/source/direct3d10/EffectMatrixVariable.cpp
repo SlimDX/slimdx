@@ -23,30 +23,35 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "Direct3D10Exception.h"
-
 #include "EffectMatrixVariable.h"
 
+using namespace System;
 
 namespace SlimDX
 {
 namespace Direct3D10
 { 
-	EffectMatrixVariable::EffectMatrixVariable( ID3D10EffectMatrixVariable* variable ) : EffectVariable( variable )
+	EffectMatrixVariable::EffectMatrixVariable( ID3D10EffectMatrixVariable* pointer )
+	: EffectVariable( pointer )
 	{
+		m_Pointer = pointer;
 	}
 	
-	void EffectMatrixVariable::SetMatrix( Matrix matrix )
+	EffectMatrixVariable::EffectMatrixVariable( IntPtr pointer )
+	: EffectVariable( pointer )
 	{
-		HRESULT hr = static_cast<ID3D10EffectMatrixVariable*>( Pointer )->SetMatrix( reinterpret_cast<float*>( &matrix ) );
-		Result::Record( hr );
+		m_Pointer = reinterpret_cast<ID3D10EffectMatrixVariable*>( pointer.ToPointer() );
 	}
 	
-	void EffectMatrixVariable::SetMatrix( array<Matrix>^ matrices )
+	Result EffectMatrixVariable::SetMatrix( Matrix matrix )
 	{
-		pin_ptr<Matrix> pinnedMatrices = &matrices[0];
-		HRESULT hr = static_cast<ID3D10EffectMatrixVariable*>( Pointer )->SetMatrixArray( reinterpret_cast<float*>( pinnedMatrices ), 0, matrices->Length );
-		Result::Record( hr );
+		return Result::Record( m_Pointer->SetMatrix( reinterpret_cast<float*>( &matrix ) ) );
+	}
+	
+	Result EffectMatrixVariable::SetMatrix( array<Matrix>^ matrices )
+	{
+		pin_ptr<Matrix> pinnedMatrices = &matrices[ 0 ];
+		return Result::Record( m_Pointer->SetMatrixArray( reinterpret_cast<float*>( pinnedMatrices ), 0, matrices->Length ) );
 	}
 }
 }

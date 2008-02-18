@@ -21,23 +21,25 @@
 */
 #pragma once
 
-//using namespace System;
+#include "../ComObject.h"
 
-#include "../math/Math.h"
-
-#include "Enums.h"
 #include "EffectVariable.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class EffectStringVariable : EffectVariable
+		public ref class EffectStringVariable : public EffectVariable
 		{	
-		internal:
-			EffectStringVariable( ID3D10EffectStringVariable* variable );
+		private:
+			ID3D10EffectStringVariable* m_Pointer;
 			
+		internal:
+			EffectStringVariable( ID3D10EffectStringVariable* pointer );
+
 		public:
+			EffectStringVariable( System::IntPtr pointer );
+			
 			System::String^ GetString();
 		};
 	}

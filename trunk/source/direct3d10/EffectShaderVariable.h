@@ -21,14 +21,9 @@
 */
 #pragma once
 
-//using namespace System;
-
-#include "../math/Math.h"
-
-#include "Enums.h"
 #include "EffectVariable.h"
-#include "ShaderDescription.h"
-#include "ShaderParameterDescription.h"
+
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
@@ -37,21 +32,28 @@ namespace SlimDX
 		ref class PixelShader;
 		ref class VertexShader;
 		ref class GeometryShader;
+		value class ShaderDescription;
+		value class ShaderParameterDescription;
 		
-		public ref class EffectShaderVariable : EffectVariable
+		public ref class EffectShaderVariable : public EffectVariable
 		{	
+		private:
+			ID3D10EffectShaderVariable* m_Pointer;
+			
 		internal:
-			EffectShaderVariable( ID3D10EffectShaderVariable* variable );
-			
+			EffectShaderVariable( ID3D10EffectShaderVariable* pointer );
+
 		public:
-			PixelShader^ GetPixelShader(int index);
-			VertexShader^ GetVertexShader(int index);
-			GeometryShader^ GetGeometryShader(int index);
+			EffectShaderVariable( System::IntPtr pointer );
 			
-			ShaderParameterDescription GetInputParameterDescription( int shaderIndex, int parameterIndex );
-			ShaderParameterDescription GetOutputParameterDescription( int shaderIndex, int parameterIndex );
+			PixelShader^ GetPixelShader( int index );
+			VertexShader^ GetVertexShader( int index );
+			GeometryShader^ GetGeometryShader( int index );
 			
-			ShaderDescription GetShaderDescription( int shaderIndex );
+			Result GetInputParameterDescription( int shaderIndex, int parameterIndex, [Out] ShaderParameterDescription% result );
+			Result GetOutputParameterDescription( int shaderIndex, int parameterIndex, [Out] ShaderParameterDescription% result );
+			
+			Result GetShaderDescription( int shaderIndex, [Out] ShaderDescription% result );
 		};
 	}
 };

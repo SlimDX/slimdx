@@ -21,90 +21,55 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Globalization;
-
-#include "../math/Math.h"
-#include "EffectPassShaderMapping.h"
+#include "../Result.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
 		ref class EffectVariable;
-		ref class ShaderSignature;
+		value class EffectPassDescription;
+		value class EffectPassShaderDescription;
 		
 		public ref class EffectPass
 		{
-			ID3D10EffectPass *m_Pointer;
-			System::String^ m_Name;
-			int m_AnnotationCount;
-			ShaderSignature^ m_Signature;
-			int m_StencilReference;
-			int m_SampleMask;
-			ColorValue m_BlendFactor;
-			
-			
+		private:
+			ID3D10EffectPass* m_Pointer;
+
 		internal:
 			EffectPass( ID3D10EffectPass* pass );
 			
 		public:
-			property System::String^ Name
+			property EffectPassDescription Description
 			{
-				System::String^ get() { return m_Name; }
-			}
-			
-			property int AnnotationCount
-			{
-				int get() { return m_AnnotationCount; }
-			}
-			
-			property ShaderSignature^ Signature
-			{
-				ShaderSignature^ get() { return m_Signature; }
-			}
-			
-			property int StencilReference
-			{
-				int get() { return m_StencilReference; }
-			}
-			
-			property int SampleMask
-			{
-				int get() { return m_SampleMask; }
-			}
-			
-			property ColorValue BlendFactor
-			{
-				ColorValue get() { return m_BlendFactor; }
+				EffectPassDescription get();
 			}
 			
 			property bool IsValid
 			{
-				bool get() { return m_Pointer->IsValid() ? true : false; }
+				bool get();
 			}
 			
-			property EffectPassShaderMapping PixelShaderDescription
+			property EffectPassShaderDescription GeometryShaderDescription
 			{
-				EffectPassShaderMapping get();
+				EffectPassShaderDescription get();
 			}
 			
-			property EffectPassShaderMapping VertexShaderDescription
+			property EffectPassShaderDescription VertexShaderDescription
 			{
-				EffectPassShaderMapping get();
+				EffectPassShaderDescription get();
+			}
+			property EffectPassShaderDescription PixelShaderDescription
+			{
+				EffectPassShaderDescription get();
 			}
 			
-			property EffectPassShaderMapping GeometryShaderDescription
-			{
-				EffectPassShaderMapping get();
-			}
+			EffectPass( System::IntPtr pointer );
 			
 			EffectVariable^ GetAnnotationByIndex( int index );
 			EffectVariable^ GetAnnotationByName( System::String^ name );
 			
-			void Apply();
-		
-			
+			Result Apply();
 		};
 	}
 };

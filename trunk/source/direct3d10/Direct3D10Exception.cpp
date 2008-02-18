@@ -48,8 +48,8 @@ namespace Direct3D10
 	{
 	}
 
-	Direct3D10Exception::Direct3D10Exception( int errorCode )
-	: SlimDXException( errorCode )
+	Direct3D10Exception::Direct3D10Exception( Result result )
+	: SlimDXException( result.Code )
 	{
 	}
 }
