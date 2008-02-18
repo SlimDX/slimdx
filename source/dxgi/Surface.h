@@ -28,9 +28,10 @@
 
 namespace SlimDX
 {
+	ref class DataRectangle;
+
 	namespace DXGI
 	{
-		ref class DataRectangle;
 		value class SurfaceDescription;
 		
 		/// <remarks>

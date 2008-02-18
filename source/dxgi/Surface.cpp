@@ -22,8 +22,8 @@
 
 #include <dxgi.h>
 
-#include "../DataRectangle.h"
 #include "../DataStream.h"
+#include "../DataRectangle.h"
 
 #include "DXGIException.h"
 
@@ -63,9 +63,9 @@ namespace DXGI
 			return nullptr;		
 		//bool canRead = (flags & DXGI_MAP_READ) != 0;
 		//bool canWrite = (flags & DXGI_MAP_WRITE) != 0;
-		//DataStream^ data = gcnew DataStream( mappedRect.pBits, size, canRead, canWrite, false );
+		DataStream^ data = gcnew DataStream( mappedRect.pBits, 0, true, true, false );
 		//
-		//return gcnew DataRectangle( mappedRect.Pitch, data );
+		return gcnew DataRectangle( mappedRect.Pitch, data );
 	}
 	
 	Result Surface::Unmap()
