@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,17 +21,16 @@
 */
 #pragma once
 
-using namespace System::Runtime::InteropServices;
-
 #include "Enums.h"
 #include "CapsEnums.h"
-//#include "Direct3D9ErrorHandler.h"
+
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		[StructLayout( LayoutKind::Sequential )]
+		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class DisplayMode
 		{
 		public:
@@ -45,12 +44,12 @@ namespace SlimDX
 		{
 		public:
 			property int Adapter;
-			property String^ Description;
+			property System::String^ Description;
 			property int DeviceId;
-			property Guid DeviceIdentifier;
-			property String^ DeviceName;
-			property String^ DriverName;
-			property Version^ DriverVersion;
+			property System::Guid DeviceIdentifier;
+			property System::String^ DeviceName;
+			property System::String^ DriverName;
+			property System::Version^ DriverVersion;
 			property int Revision;
 			property int SubsystemId;
 			property int VendorId;
@@ -130,9 +129,9 @@ namespace SlimDX
             property int MaxVertexIndex;
             property int MaxStreams;
             property int MaxStreamStride;
-            property Version^ VertexShaderVersion;
+            property System::Version^ VertexShaderVersion;
             property int MaxVertexShaderConstants;
-            property Version^ PixelShaderVersion;
+            property System::Version^ PixelShaderVersion;
             property float PixelShader1xMaxValue;
             property DevCaps2 DeviceCaps2;
             property float MaxNPatchTessellationLevel;
@@ -198,7 +197,7 @@ namespace SlimDX
 				int get() { return m_Adapter; }
 			}
 
-			property IntPtr Monitor { IntPtr get(); }
+			property System::IntPtr Monitor { System::IntPtr get(); }
 			property DisplayMode CurrentDisplayMode { DisplayMode get(); }
             DisplayModeCollection^ GetDisplayModes( Format format );
             Capabilities GetCaps( DeviceType type );
@@ -246,7 +245,7 @@ namespace SlimDX
 			Direct3D() { }
 			static IDirect3D9* m_Direct3D;
 
-			static void OnExit(Object^ sender,EventArgs^ e)
+			static void OnExit(System::Object^ sender,System::EventArgs^ e)
 			{
 				Terminate();
 			}
@@ -318,7 +317,7 @@ namespace SlimDX
             static AdapterDetails^ GetAdapterIdentifier( int adapter );
             static int GetAdapterModeCount( int adapter, Format format );
             static DisplayMode EnumAdapterModes( int adapter, Format format, int modeIndex );
-            static IntPtr GetAdapterMonitor( int adapter );
+            static System::IntPtr GetAdapterMonitor( int adapter );
 			static Capabilities GetDeviceCaps( int adapter, DeviceType deviceType );
 			
 			//Extensions

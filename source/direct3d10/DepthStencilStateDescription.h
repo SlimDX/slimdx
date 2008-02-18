@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 #include "Enums.h"
 
@@ -36,8 +36,8 @@ namespace SlimDX
             DepthWriteMask depthWriteMask;
             Comparison depthComparison;
             bool stencilEnabled;
-            Byte stencilReadMask;
-            Byte stencilWriteMask;
+            System::Byte stencilReadMask;
+            System::Byte stencilWriteMask;
             Comparison frontStencilComparison;
             StencilOperation frontStencilFailureOperation;
             StencilOperation frontStencilDepthFailureOperation;
@@ -77,16 +77,16 @@ namespace SlimDX
                 void set( bool value ) { stencilEnabled = value; }
             }
 
-            property Byte StencilReadMask
+            property System::Byte StencilReadMask
             {
-                Byte get() { return stencilReadMask; }
-                void set( Byte value ) { stencilReadMask = value; }
+                System::Byte get() { return stencilReadMask; }
+                void set( System::Byte value ) { stencilReadMask = value; }
             }
 
-            property Byte StencilWriteMask
+            property System::Byte StencilWriteMask
             {
-                Byte get() { return stencilWriteMask; }
-                void set( Byte value ) { stencilWriteMask = value; }
+                System::Byte get() { return stencilWriteMask; }
+                void set( System::Byte value ) { stencilWriteMask = value; }
             }
 
             property Comparison FrontStencilComparison

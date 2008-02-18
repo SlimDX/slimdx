@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,17 +21,17 @@
 */
 #pragma once
 
-using namespace System::Runtime::InteropServices;
-
 #include "../ComObject.h"
 
 #include "Enums.h"
+
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
 	namespace DirectSound
 	{
-		[StructLayout( LayoutKind::Sequential, Pack = 4 )]
+		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential, Pack = 4 )]
 		public value class Capabilities
 		{
 			int Size;
@@ -72,15 +72,15 @@ namespace SlimDX
 			DirectSound( IDirectSound8* dsound );
 
 		public:
-			DirectSound( IntPtr pointer );
+			DirectSound( System::IntPtr pointer );
 			DirectSound();
-			DirectSound( Guid device );
+			DirectSound( System::Guid device );
 			~DirectSound() { Destruct(); }
 
 			void Initialize();
-			void Initialize( Guid device );
+			void Initialize( System::Guid device );
 
-			void SetCooperativeLevel( IntPtr windowHandle, CooperativeLevel coopLevel );
+			void SetCooperativeLevel( System::IntPtr windowHandle, CooperativeLevel coopLevel );
 			void SetSpeakerConfig( Speaker speakerSet, SpeakerGeometry geometry );
 			void GetSpeakerConfig( [Out] Speaker% speakerSet, [Out] SpeakerGeometry% geometry );
 			bool VerifyCertification();

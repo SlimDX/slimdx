@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,8 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::InteropServices;
+//using namespace System;
+//using namespace System::Runtime::InteropServices;
 
 #include "../dxgi/Enums.h"
 
@@ -32,11 +32,11 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		[StructLayout( LayoutKind::Sequential )]
+		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class InputElement
 		{
 		private:
-            String^ semanticName;
+            System::String^ semanticName;
             int semanticIndex;
             DXGI::Format aFormat;
             int inputSlot;
@@ -45,10 +45,10 @@ namespace SlimDX
             int instanceDataStepRate;
 
 		public:
-			property String^ SemanticName
+			property System::String^ SemanticName
             {
-                String^ get() { return semanticName; }
-                void set( String^ value ) { semanticName = value; }
+                System::String^ get() { return semanticName; }
+                void set( System::String^ value ) { semanticName = value; }
             }
 
             property int SemanticIndex
@@ -87,7 +87,7 @@ namespace SlimDX
                 void set( int value ) { instanceDataStepRate = value; }
             }
 
-			InputElement( String^ name, int index, DXGI::Format format, int offset, int slot  )
+			InputElement( System::String^ name, int index, DXGI::Format format, int offset, int slot  )
 			{
 				SemanticName = name;
 				SemanticIndex = index;
@@ -98,7 +98,7 @@ namespace SlimDX
 				InstanceDataStepRate = 0;
 			}
 
-			InputElement( String^ name, int index, DXGI::Format format, int offset, int slot, InputClassification slotClass, int stepRate )
+			InputElement( System::String^ name, int index, DXGI::Format format, int offset, int slot, InputClassification slotClass, int stepRate )
 			{
 				SemanticName = name;
 				SemanticIndex = index;

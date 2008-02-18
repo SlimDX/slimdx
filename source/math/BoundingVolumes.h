@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,21 +21,21 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::InteropServices;
+//using namespace System;
+//using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	public enum class ContainmentType : Int32
+	public enum class ContainmentType : System::Int32
 	{
 		Disjoint,
 		Contains,
 		Intersects
 	};
 
-	[Serializable]
-	[StructLayout( LayoutKind::Sequential )]
-	public value class BoundingBox : IEquatable<BoundingBox>
+	[System::Serializable]
+	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+	public value class BoundingBox : System::IEquatable<BoundingBox>
 	{
 	public:
 		Vector3 Maximum;
@@ -65,16 +65,16 @@ namespace SlimDX
 		static bool operator == ( BoundingBox left, BoundingBox right );
 		static bool operator != ( BoundingBox left, BoundingBox right );
 
-		virtual String^ ToString() override;
+		virtual System::String^ ToString() override;
 		virtual int GetHashCode() override;
-		virtual bool Equals( Object^ obj ) override;
+		virtual bool Equals( System::Object^ obj ) override;
 		virtual bool Equals( BoundingBox other );
 		static bool Equals( BoundingBox% value1, BoundingBox% value2 );
 	};
 
-	[Serializable]
-	[StructLayout( LayoutKind::Sequential )]
-	public value class BoundingFrustum : IEquatable<BoundingFrustum>
+	[System::Serializable]
+	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+	public value class BoundingFrustum : System::IEquatable<BoundingFrustum>
 	{
 	private:
 		array<Vector3>^ corners;
@@ -111,16 +111,16 @@ namespace SlimDX
 		static bool operator == ( BoundingFrustum left, BoundingFrustum right );
 		static bool operator != ( BoundingFrustum left, BoundingFrustum right );
 
-		virtual String^ ToString() override;
+		virtual System::String^ ToString() override;
 		virtual int GetHashCode() override;
-		virtual bool Equals( Object^ obj ) override;
+		virtual bool Equals( System::Object^ obj ) override;
 		virtual bool Equals( BoundingFrustum other );
 		static bool Equals( BoundingFrustum% value1, BoundingFrustum% value2 );
 	};
 
-	[Serializable]
-	[StructLayout( LayoutKind::Sequential )]
-	public value class BoundingSphere : IEquatable<BoundingSphere>
+	[System::Serializable]
+	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+	public value class BoundingSphere : System::IEquatable<BoundingSphere>
 	{
 	public:
 		Vector3 Center;
@@ -149,9 +149,9 @@ namespace SlimDX
 		static bool operator == ( BoundingSphere left, BoundingSphere right );
 		static bool operator != ( BoundingSphere left, BoundingSphere right );
 
-		virtual String^ ToString() override;
+		virtual System::String^ ToString() override;
 		virtual int GetHashCode() override;
-		virtual bool Equals( Object^ obj ) override;
+		virtual bool Equals( System::Object^ obj ) override;
 		virtual bool Equals( BoundingSphere other );
 		static bool Equals( BoundingSphere% value1, BoundingSphere% value2 );
 	};

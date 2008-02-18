@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,25 +21,22 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::Serialization;
-
 #include "../SlimDXException.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		[Serializable]
+		[System::Serializable]
 		public ref class Direct3D10Exception : public SlimDXException
 		{
 		protected:
-			Direct3D10Exception( SerializationInfo^ info, StreamingContext context );
+			Direct3D10Exception( System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context );
 			
 		public:
 			Direct3D10Exception();
-			Direct3D10Exception( String^ message );
-			Direct3D10Exception( String^ message, Exception^ innerException );
+			Direct3D10Exception( System::String^ message );
+			Direct3D10Exception( System::String^ message, System::Exception^ innerException );
 			Direct3D10Exception( int errorCode );
 		};
 	}

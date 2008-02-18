@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,6 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-//#include "Direct3D10ErrorHandler.h"
-
 #include "ShaderParameterDescription.h"
 
 namespace SlimDX
@@ -33,7 +31,7 @@ namespace Direct3D10
 { 
 	ShaderParameterDescription::ShaderParameterDescription( const D3D10_SIGNATURE_PARAMETER_DESC& description )
 	{
-		semanticName = gcnew String( description.SemanticName );
+		semanticName = gcnew System::String( description.SemanticName );
 		semanticIndex = description.SemanticIndex;
 		registerIndex = description.Register;
 		systemValueType = static_cast<SystemValueType>( description.SystemValueType );

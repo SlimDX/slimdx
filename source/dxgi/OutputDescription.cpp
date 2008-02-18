@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -31,19 +31,19 @@ namespace DXGI
 { 	
 	OutputDescription::OutputDescription( const DXGI_OUTPUT_DESC& native )
 	{
-		m_DeviceName = gcnew String( native.DeviceName );
+		m_DeviceName = gcnew System::String( native.DeviceName );
 		m_DesktopCoordinates = Utilities::ConvertRect( native.DesktopCoordinates );
 		m_AttachedToDesktop = native.AttachedToDesktop ? true : false;
 		m_Rotation = static_cast<DisplayModeRotation>( native.Rotation );
-		m_Monitor = IntPtr( native.Monitor );
+		m_Monitor = System::IntPtr( native.Monitor );
 	}
 
-	String^ OutputDescription::Name::get()
+	System::String^ OutputDescription::Name::get()
 	{
 		return m_DeviceName;
 	}
 
-	Drawing::Rectangle^ OutputDescription::DesktopBounds::get()
+	System::Drawing::Rectangle^ OutputDescription::DesktopBounds::get()
 	{
 		return m_DesktopCoordinates;
 	}
@@ -58,7 +58,7 @@ namespace DXGI
 		return m_Rotation;
 	}
 
-	IntPtr OutputDescription::MonitorHandle::get()
+	System::IntPtr OutputDescription::MonitorHandle::get()
 	{
 		return m_Monitor;
 	}

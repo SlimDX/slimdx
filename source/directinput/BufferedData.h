@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,8 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Reflection;
+//using namespace System;
+//using namespace System::Reflection;
 
 namespace SlimDX
 {
@@ -38,7 +38,7 @@ namespace SlimDX
 			DataFormat data;
 			int timeStamp;
 			int sequence;
-			Object^ appData;
+			System::Object^ appData;
 
 		internal:
 			BufferedData( const DIDEVICEOBJECTDATA &data );
@@ -85,17 +85,17 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the application-defined action value assigned to this object using action mapping.
 			/// </summary>
-			property Object^ ApplicationData
+			property System::Object^ ApplicationData
 			{
-				Object^ get() { return appData; }
+				System::Object^ get() { return appData; }
 			}
 		};
 
 		generic<typename DataFormat>
-		public ref class BufferedDataCollection : IEnumerable<BufferedData<DataFormat>^>
+		public ref class BufferedDataCollection : System::Collections::Generic::IEnumerable<BufferedData<DataFormat>^>
 		{
 		private:
-			List<BufferedData<DataFormat>^>^ list;
+			System::Collections::Generic::List<BufferedData<DataFormat>^>^ list;
 
 		internal:
 			BufferedDataCollection();
@@ -113,7 +113,7 @@ namespace SlimDX
 				BufferedData<DataFormat>^ get( int index ) { return list[index]; }
 			}
 
-			virtual IEnumerator<BufferedData<DataFormat>^>^ GetEnumerator() { return list->GetEnumerator(); }
+			virtual System::Collections::Generic::IEnumerator<BufferedData<DataFormat>^>^ GetEnumerator() { return list->GetEnumerator(); }
 
 			virtual System::Collections::IEnumerator^ GetEnumerator2() = System::Collections::IEnumerable::GetEnumerator
 			{

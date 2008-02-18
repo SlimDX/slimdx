@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,8 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::InteropServices;
+//using namespace System;
+//using namespace System::Runtime::InteropServices;
 
 #include "Enums.h"
 #include "ShaderBytecode.h"
@@ -32,14 +32,14 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		[StructLayout( LayoutKind::Sequential )]
+		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class ShaderDescription
 		{
 		private:
 			ShaderSignature^ signature;
 			ShaderBytecode^ bytecode;
 			bool isInline;
-			String^ streamOutputDeclaration;
+			System::String^ streamOutputDeclaration;
 			int inputParameterCount;
 			int outputParameterCount;
 		
@@ -72,9 +72,9 @@ namespace SlimDX
 			  int get() { return outputParameterCount; }
 			}
 			
-			property String^ StreamOutputDeclaration
+			property System::String^ StreamOutputDeclaration
 			{
-				String^ get() { return streamOutputDeclaration; }
+				System::String^ get() { return streamOutputDeclaration; }
 			}
 		};
 	}

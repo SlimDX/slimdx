@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 #include "../Utilities.h"
 
@@ -41,17 +41,17 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the system keyboard identifier.
 			/// </summary>
-			static property Guid Keyboard
+			static property System::Guid Keyboard
 			{
-				Guid get() { return Utilities::ConvertNativeGuid( GUID_SysKeyboard ); }
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_SysKeyboard ); }
 			}
 
 			/// <summary>
 			/// Gets the system mouse identifier.
 			/// </summary>
-			static property Guid Mouse
+			static property System::Guid Mouse
 			{
-				Guid get() { return Utilities::ConvertNativeGuid( GUID_SysMouse ); }
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_SysMouse ); }
 			}
 		};
 
@@ -64,59 +64,59 @@ namespace SlimDX
 			ObjectGuid() { }
 
 		public:
-			static property Guid XAxis
+			static property System::Guid XAxis
 			{
-				Guid get() { return Utilities::ConvertNativeGuid( GUID_XAxis ); }
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_XAxis ); }
 			}
 						
-			static property Guid YAxis
+			static property System::Guid YAxis
 			{
-				Guid get() { return Utilities::ConvertNativeGuid( GUID_YAxis ); }
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_YAxis ); }
 			}
 
-			static property Guid ZAxis
+			static property System::Guid ZAxis
 			{
-				Guid get() { return Utilities::ConvertNativeGuid( GUID_ZAxis ); }
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_ZAxis ); }
 			}
 
-			static property Guid RotationalXAxis
+			static property System::Guid RotationalXAxis
 			{
-				Guid get() { return Utilities::ConvertNativeGuid( GUID_RxAxis ); }
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_RxAxis ); }
 			}
 
-			static property Guid RotationalYAxis
+			static property System::Guid RotationalYAxis
 			{
-				Guid get() { return Utilities::ConvertNativeGuid( GUID_RyAxis ); }
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_RyAxis ); }
 			}
 
-			static property Guid RotationalZAxis
+			static property System::Guid RotationalZAxis
 			{
-				Guid get() { return Utilities::ConvertNativeGuid( GUID_RzAxis ); }
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_RzAxis ); }
 			}
 
-			static property Guid Slider
+			static property System::Guid Slider
 			{
-				Guid get() { return Utilities::ConvertNativeGuid( GUID_Slider ); }
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_Slider ); }
 			}
 
-			static property Guid Button
+			static property System::Guid Button
 			{
-				Guid get() { return Utilities::ConvertNativeGuid( GUID_Button ); }
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_Button ); }
 			}
 
-			static property Guid Key
+			static property System::Guid Key
 			{
-				Guid get() { return Utilities::ConvertNativeGuid( GUID_Key ); }
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_Key ); }
 			}
 
-			static property Guid PovController
+			static property System::Guid PovController
 			{
-				Guid get() { return Utilities::ConvertNativeGuid( GUID_POV ); }
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_POV ); }
 			}
 
-			static property Guid Unknown
+			static property System::Guid Unknown
 			{
-				Guid get() { return Utilities::ConvertNativeGuid( GUID_Unknown ); }
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_Unknown ); }
 			}
 		};
 	}

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@
 
 #define COMOBJECT(type) \
 	internal: \
-	static property Guid NativeInterface { Guid get() { return Utilities::ConvertNativeGuid( IID_ ## type ); } } \
+	static property System::Guid NativeInterface { System::Guid get() { return Utilities::ConvertNativeGuid( IID_ ## type ); } } \
 	property type* InternalPointer { type* get() { type* result = 0; UnknownPointer->QueryInterface( IID_ ## type, reinterpret_cast<void**>( &result ) ); return result; } } \
 	private:
 
@@ -47,11 +47,11 @@ namespace SlimDX
 		ComObject();
 		
 		void Construct( IUnknown* pointer );
-		void Construct( IntPtr pointer, Guid guid );
+		void Construct( System::IntPtr pointer, System::Guid guid );
 		void Destruct();
 	
 	internal:
-		virtual void DisposeHandler( Object^ sender, EventArgs^ e );
+		virtual void DisposeHandler( System::Object^ sender, System::EventArgs^ e );
 
 		property IUnknown* UnknownPointer
 		{
@@ -64,9 +64,9 @@ namespace SlimDX
 			bool get();
 		}
 
-		property IntPtr ComPointer
+		property System::IntPtr ComPointer
 		{
-			IntPtr get();
+			System::IntPtr get();
 		}
 
 		virtual ~ComObject();

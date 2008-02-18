@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,44 +21,41 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::InteropServices;
-
 #include "Enums.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		[StructLayout( LayoutKind::Sequential )]
+		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class ShaderParameterDescription
 		{
 		private:
-			String^ semanticName;
-			UInt32 semanticIndex;
-			UInt32 registerIndex;
+			System::String^ semanticName;
+			System::UInt32 semanticIndex;
+			System::UInt32 registerIndex;
 			SystemValueType systemValueType;
 			RegisterComponentType componentType;
-			Byte mask;///TODO: Might be able to make these more specific; I think they represent whether x y z or w is ued, etc.
-			Byte readWriteMask;
+			System::Byte mask;///TODO: Might be able to make these more specific; I think they represent whether x y z or w is ued, etc.
+			System::Byte readWriteMask;
 		
 		internal:
 			ShaderParameterDescription( const D3D10_SIGNATURE_PARAMETER_DESC& description );
 		
 		public:
-			property String^ SemanticName
+			property System::String^ SemanticName
 			{
-				String^ get() { return semanticName; }
+				System::String^ get() { return semanticName; }
 			}
 			
-			property UInt32 SemanticIndex
+			property System::UInt32 SemanticIndex
 			{
-				UInt32 get() { return semanticIndex; }
+				System::UInt32 get() { return semanticIndex; }
 			}
 			
-			property UInt32 Register
+			property System::UInt32 Register
 			{
-				UInt32 get() { return semanticIndex; }
+				System::UInt32 get() { return semanticIndex; }
 			}
 			
 			property SystemValueType SystemType
@@ -71,14 +68,14 @@ namespace SlimDX
 				RegisterComponentType get() { return componentType; }
 			}
 			
-			property Byte UsageMask
+			property System::Byte UsageMask
 			{
-				Byte get() { return mask; }
+				System::Byte get() { return mask; }
 			}
 			
-			property Byte ReadWriteMask
+			property System::Byte ReadWriteMask
 			{
-				Byte get() { return readWriteMask; }
+				System::Byte get() { return readWriteMask; }
 			}
 		};
 	}

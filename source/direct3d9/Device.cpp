@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,6 @@
 #include "../ComObject.h"
 #include "../Utilities.h"
 
-//#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9NotInitializedException.h"
 
 #include "Device.h"
@@ -41,6 +40,13 @@
 #include "SwapChain.h"
 #include "StateBlock.h"
 #include "D3DX.h"
+
+
+using namespace System;
+using namespace System::Collections::Generic;
+using namespace System::Drawing;
+using namespace System::Runtime::InteropServices;
+using namespace System::Windows::Forms;
 
 namespace SlimDX
 {

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 #include <xinput.h>
 
@@ -32,8 +32,8 @@ namespace SlimDX
 		/// <summary>
 		/// Bitmask of the device digital buttons
 		/// </summary>
-		[Flags]
-		public enum class GamepadButtons : UInt16
+		[System::Flags]
+		public enum class GamepadButtons : System::UInt16
 		{
 			None = 0,
 			DPadUp = XINPUT_GAMEPAD_DPAD_UP,
@@ -55,8 +55,8 @@ namespace SlimDX
 		/// <summary>
 		/// Flags that indicate the keyboard state at the time of the input event.
 		/// </summary>
-		[Flags]
-		public enum class KeystrokeFlags : Int32
+		[System::Flags]
+		public enum class KeystrokeFlags : System::Int32
 		{
 			None = 0,
 			KeyDown = XINPUT_KEYSTROKE_KEYDOWN,
@@ -67,7 +67,7 @@ namespace SlimDX
 		/// <summary>
 		/// Controller input virtual key codes
 		/// </summary>
-		public enum class GamepadKeyCode : Int32
+		public enum class GamepadKeyCode : System::Int32
 		{
 			A = VK_PAD_A,
 			B = VK_PAD_B,
@@ -106,7 +106,7 @@ namespace SlimDX
 		/// <summary>
 		/// Controller type.
 		/// </summary>
-		public enum class DeviceType : Int32
+		public enum class DeviceType : System::Int32
 		{
 			/// <summary>
 			/// The device is a game controller.
@@ -117,7 +117,7 @@ namespace SlimDX
 		/// <summary>
 		/// Subtype of the game controller.
 		/// </summary>
-		public enum class DeviceSubtype : Int32
+		public enum class DeviceSubtype : System::Int32
 		{
 			ArcadeStick = XINPUT_DEVSUBTYPE_ARCADE_STICK,
 			Gamepad = XINPUT_DEVSUBTYPE_GAMEPAD,
@@ -129,8 +129,8 @@ namespace SlimDX
 		/// <summary>
 		/// Features of the controller. 
 		/// </summary>
-		[Flags]
-		public enum class CapabilitiesFlags : Int32
+		[System::Flags]
+		public enum class CapabilitiesFlags : System::Int32
 		{
 			None = 0,
 
@@ -143,7 +143,7 @@ namespace SlimDX
 		/// <summary>
 		/// Flags for battery type
 		/// </summary>
-		public enum class BatteryType : Int32
+		public enum class BatteryType : System::Int32
 		{
 			Disconnected = BATTERY_TYPE_DISCONNECTED,
 			Wired = BATTERY_TYPE_WIRED,
@@ -158,7 +158,7 @@ namespace SlimDX
 		/// <remarks>
 		/// These are only valid for wireless, connected devices, with known battery types. The amount of use time remaining depends on the type of device.
 		/// </remarks>
-		public enum class BatteryLevel : Int32
+		public enum class BatteryLevel : System::Int32
 		{
 			Empty = BATTERY_LEVEL_EMPTY,
 			Low = BATTERY_LEVEL_LOW,
@@ -169,7 +169,7 @@ namespace SlimDX
 		/// <summary>
 		/// Flags that identify the device type.
 		/// </summary>
-		public enum class DeviceQueryType : Int32
+		public enum class DeviceQueryType : System::Int32
 		{
 			Any = 0,
 			Gamepad = XINPUT_FLAG_GAMEPAD
@@ -178,7 +178,7 @@ namespace SlimDX
 		/// <summary>
 		/// Devices that support batteries.
 		/// </summary>
-		public enum class BatteryDeviceType : Int32
+		public enum class BatteryDeviceType : System::Int32
 		{
 			Gamepad = BATTERY_DEVTYPE_GAMEPAD,
 			Headset = BATTERY_DEVTYPE_HEADSET
@@ -187,7 +187,7 @@ namespace SlimDX
 		/// <summary>
 		/// Index of the signed-in gamer associated with the device.
 		/// </summary>
-		public enum class UserIndex : Int32
+		public enum class UserIndex : System::Int32
 		{
 			Any = XUSER_INDEX_ANY,
 			One = 0,

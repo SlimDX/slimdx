@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,9 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Globalization;
-using namespace System::Runtime::InteropServices;
+//using namespace System;
+//using namespace System::Globalization;
+//using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
@@ -36,9 +36,9 @@ namespace SlimDX
 	/// <summary>
 	/// Defines a vector with four components.
 	/// </summary>
-	[Serializable]
-	[StructLayout( LayoutKind::Sequential )]
-	public value class Vector4 : IEquatable<Vector4>
+	[System::Serializable]
+	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+	public value class Vector4 : System::IEquatable<Vector4>
 	{
 	public:
 		/// <summary>
@@ -171,9 +171,9 @@ namespace SlimDX
 		static bool operator == ( Vector4 left, Vector4 right );
 		static bool operator != ( Vector4 left, Vector4 right );
 
-		virtual String^ ToString() override;
+		virtual System::String^ ToString() override;
 		virtual int GetHashCode() override;
-		virtual bool Equals( Object^ obj ) override;
+		virtual bool Equals( System::Object^ obj ) override;
 		virtual bool Equals( Vector4 other );
 		static bool Equals( Vector4% value1, Vector4% value2 );
 	};

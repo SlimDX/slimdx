@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,6 @@
 */
 #pragma once
 
-using namespace System;
-
 #include <windows.h>
 #include <d3dx10.h>
 
@@ -34,8 +32,8 @@ namespace SlimDX
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
 	
-		[Flags]
-		public enum class BindFlags : Int32
+		[System::Flags]
+		public enum class BindFlags : System::Int32
 		{
 			None = 0,
 			VertexBuffer = D3D10_BIND_VERTEX_BUFFER,
@@ -47,7 +45,7 @@ namespace SlimDX
 			DepthStencil = D3D10_BIND_DEPTH_STENCIL
 		};
 		
-		public enum class BlendOperation : Int32
+		public enum class BlendOperation : System::Int32
 		{
 			Add = D3D10_BLEND_OP_ADD,
 			Subtract = D3D10_BLEND_OP_SUBTRACT,
@@ -56,7 +54,7 @@ namespace SlimDX
 			Maximum = D3D10_BLEND_OP_MAX
 		};
 		
-		public enum class BlendOption : Int32
+		public enum class BlendOption : System::Int32
 		{
 			Zero = D3D10_BLEND_ZERO,
 			One = D3D10_BLEND_ONE,
@@ -77,8 +75,8 @@ namespace SlimDX
 			InverseSecondarySourceAlpha = D3D10_BLEND_INV_SRC1_ALPHA
 		};
 		
-		[Flags]
-		public enum class ColorWriteMaskFlags : Int32
+		[System::Flags]
+		public enum class ColorWriteMaskFlags : System::Int32
 		{
 			None = 0,
 			Red = D3D10_COLOR_WRITE_ENABLE_RED,
@@ -88,7 +86,7 @@ namespace SlimDX
 			All = D3D10_COLOR_WRITE_ENABLE_ALL
 		};
 		
-		public enum class Comparison : Int32
+		public enum class Comparison : System::Int32
 		{
 			Never = D3D10_COMPARISON_NEVER,
 			Less = D3D10_COMPARISON_LESS,
@@ -100,36 +98,36 @@ namespace SlimDX
 			Always = D3D10_COMPARISON_ALWAYS
 		};
 		
-		[Flags]
-		public enum class CpuAccessFlags : Int32
+		[System::Flags]
+		public enum class CpuAccessFlags : System::Int32
 		{
 			None = 0,
 			Write = D3D10_CPU_ACCESS_WRITE,
 			Read = D3D10_CPU_ACCESS_READ
 		};
 		
-		public enum class CullMode : Int32 
+		public enum class CullMode : System::Int32 
 		{
 			None = D3D10_CULL_NONE,
 			Front = D3D10_CULL_FRONT,
 			Back = D3D10_CULL_BACK
 		};
 		
-		[Flags]
-		public enum class DepthStencilClearFlags : Int32
+		[System::Flags]
+		public enum class DepthStencilClearFlags : System::Int32
 		{
 			Depth = D3D10_CLEAR_DEPTH,
 			Stencil = D3D10_CLEAR_STENCIL
 		};
 		
-		public enum class DepthWriteMask : Int32
+		public enum class DepthWriteMask : System::Int32
 		{
 			Zero = D3D10_DEPTH_WRITE_MASK_ZERO,
 			All = D3D10_DEPTH_WRITE_MASK_ALL
 		};
 		
-		[Flags]
-		public enum class DeviceCreationFlags : Int32
+		[System::Flags]
+		public enum class DeviceCreationFlags : System::Int32
 		{
 			None = 0,
 			SingleThreaded = D3D10_CREATE_DEVICE_SINGLETHREADED,
@@ -138,7 +136,7 @@ namespace SlimDX
 			PreventThreadingOptimizations = D3D10_CREATE_DEVICE_PREVENT_INTERNAL_THREADING_OPTIMIZATIONS
 		};
 	
-		public enum class DriverType : Int32
+		public enum class DriverType : System::Int32
 		{
 			Hardware = D3D10_DRIVER_TYPE_HARDWARE,
 			Reference = D3D10_DRIVER_TYPE_REFERENCE,
@@ -146,8 +144,8 @@ namespace SlimDX
 			Software = D3D10_DRIVER_TYPE_SOFTWARE
 		};
 
-		[Flags]
-		public enum class EffectFlags : Int32
+		[System::Flags]
+		public enum class EffectFlags : System::Int32
 		{
 			None = 0,
 			ChildEffect = D3D10_EFFECT_COMPILE_CHILD_EFFECT,
@@ -155,8 +153,8 @@ namespace SlimDX
 			SingleThreaded = D3D10_EFFECT_SINGLE_THREADED,
 		};
 
-		[Flags]
-		public enum class EffectVariableFlags : Int32
+		[System::Flags]
+		public enum class EffectVariableFlags : System::Int32
 		{
 			None = 0,
 			Annotation = D3D10_EFFECT_VARIABLE_ANNOTATION,
@@ -164,13 +162,13 @@ namespace SlimDX
 			ExplicitBindPoint = D3D10_EFFECT_VARIABLE_EXPLICIT_BIND_POINT,
 		};
 		
-		public enum class FillMode : Int32
+		public enum class FillMode : System::Int32
 		{
 			Wireframe = D3D10_FILL_WIREFRAME,
 			Solid = D3D10_FILL_SOLID
 		};
 	
-		public enum class FontCharacterSet : Int32
+		public enum class FontCharacterSet : System::Int32
 		{
 			Ansi = ANSI_CHARSET,
 			Default = DEFAULT_CHARSET,
@@ -195,8 +193,8 @@ namespace SlimDX
 			Mac = MAC_CHARSET
 		};
 
-		[Flags]
-		public enum class FontDrawFlags : Int32
+		[System::Flags]
+		public enum class FontDrawFlags : System::Int32
 		{
 			Bottom = DT_BOTTOM,
 			CalculateBounds = DT_CALCRECT,
@@ -212,8 +210,8 @@ namespace SlimDX
 			Wordbreak = DT_WORDBREAK
 		};
 		
-		[Flags]
-		public enum class FontPitchAndFamily : Int32
+		[System::Flags]
+		public enum class FontPitchAndFamily : System::Int32
 		{
 			Default = DEFAULT_PITCH,
 			Fixed = FIXED_PITCH,
@@ -228,7 +226,7 @@ namespace SlimDX
 			Decorative = FF_DECORATIVE
 		};
 
-		public enum class FontPrecision : Int32
+		public enum class FontPrecision : System::Int32
 		{
 			Default = OUT_DEFAULT_PRECIS,
 			String = OUT_STRING_PRECIS,
@@ -243,7 +241,7 @@ namespace SlimDX
 			PostScriptOnly = OUT_PS_ONLY_PRECIS
 		};
 
-		public enum class FontQuality : Int32
+		public enum class FontQuality : System::Int32
 		{
 			Default = DEFAULT_QUALITY,
 			Draft = DRAFT_QUALITY,
@@ -254,7 +252,7 @@ namespace SlimDX
 			ClearTypeNatural = CLEARTYPE_NATURAL_QUALITY
 		};
 
-		public enum class FontWeight : Int32
+		public enum class FontWeight : System::Int32
 		{
 			DoNotCare = FW_DONTCARE,
 			Thin = FW_THIN,
@@ -273,7 +271,7 @@ namespace SlimDX
 			Black = FW_BLACK
 		};
 		
-		public enum class ImageFileFormat : Int32
+		public enum class ImageFileFormat : System::Int32
 		{
 			Bmp = D3DX10_IFF_BMP,
 			Jpg = D3DX10_IFF_JPG,
@@ -284,13 +282,13 @@ namespace SlimDX
 			Wmp = D3DX10_IFF_WMP,
 		};
 
-		public enum class InputClassification : Int32
+		public enum class InputClassification : System::Int32
 		{
 			PerVertexData = D3D10_INPUT_PER_VERTEX_DATA,
 			PerInstanceData = D3D10_INPUT_PER_INSTANCE_DATA
 		};
 		
-		public enum class MapMode : Int32
+		public enum class MapMode : System::Int32
 		{
 			Read = D3D10_MAP_READ,
 			Write = D3D10_MAP_WRITE,
@@ -299,14 +297,14 @@ namespace SlimDX
 			WriteNoOverwrite = D3D10_MAP_WRITE_NO_OVERWRITE
 		};
 		
-		[Flags]
-		public enum class MapFlags : Int32
+		[System::Flags]
+		public enum class MapFlags : System::Int32
 		{
 			None = 0,
 			DoNotWait = D3D10_MAP_FLAG_DO_NOT_WAIT
 		};
 		
-		public enum class PrimitiveTopology : Int32
+		public enum class PrimitiveTopology : System::Int32
 		{
 			Undefined = D3D10_PRIMITIVE_TOPOLOGY_UNDEFINED,
 			PointList = D3D10_PRIMITIVE_TOPOLOGY_POINTLIST,
@@ -320,7 +318,7 @@ namespace SlimDX
 			TriangleStripWithAdjacency = D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP_ADJ
 		};
 		
-		public enum class RegisterComponentType : Int32
+		public enum class RegisterComponentType : System::Int32
 		{
 			Unknown = D3D10_REGISTER_COMPONENT_UNKNOWN,
 			UInt32 = D3D10_REGISTER_COMPONENT_UINT32,
@@ -328,7 +326,7 @@ namespace SlimDX
 			Float32 = D3D10_REGISTER_COMPONENT_FLOAT32
 		};
 		
-		public enum class ResourceDimension : Int32
+		public enum class ResourceDimension : System::Int32
 		{
 			Unknown = D3D10_RESOURCE_DIMENSION_UNKNOWN,
 			Buffer = D3D10_RESOURCE_DIMENSION_BUFFER,
@@ -338,8 +336,8 @@ namespace SlimDX
 		};
 		
 		
-		[Flags]
-		public enum class ResourceOptionFlags : Int32
+		[System::Flags]
+		public enum class ResourceOptionFlags : System::Int32
 		{
 			None = 0,
 			GenerateMipMaps = D3D10_RESOURCE_MISC_GENERATE_MIPS,
@@ -347,7 +345,7 @@ namespace SlimDX
 			TextureCube = D3D10_RESOURCE_MISC_TEXTURECUBE
 		};
 
-		public enum class ResourceUsage : Int32
+		public enum class ResourceUsage : System::Int32
 		{
 			Default = D3D10_USAGE_DEFAULT,
 			Immutable = D3D10_USAGE_IMMUTABLE,
@@ -355,7 +353,7 @@ namespace SlimDX
 			Staging = D3D10_USAGE_STAGING
 		};
 		
-		public enum class ResourceViewDimension : Int32
+		public enum class ResourceViewDimension : System::Int32
 		{
 			Unknown = D3D10_RTV_DIMENSION_UNKNOWN,
 			Buffer = D3D10_RTV_DIMENSION_BUFFER,
@@ -368,8 +366,8 @@ namespace SlimDX
 			Texture3D = D3D10_RTV_DIMENSION_TEXTURE3D
 		};
 		
-		[Flags]
-		public enum class ShaderFlags : Int32
+		[System::Flags]
+		public enum class ShaderFlags : System::Int32
 		{
 			None = 0,
 			Debug = D3D10_SHADER_DEBUG,
@@ -396,8 +394,8 @@ namespace SlimDX
 		/// Flags that control the behavior of <see cref="SlimDX.Direct3D10.Sprite"/> rendering.
 		/// </remarks>
 		/// <unmanaged counterpart="D3DX10_SPRITE_FLAG" complete="yes"/>
-		[Flags]
-		public enum class SpriteFlags : Int32
+		[System::Flags]
+		public enum class SpriteFlags : System::Int32
 		{
 			/// <summary>
 			/// No flags.
@@ -434,7 +432,7 @@ namespace SlimDX
 			IncreaseTextureReferenceCount = D3DX10_SPRITE_ADDREF_TEXTURES
 		};
 
-		public enum class StencilOperation : Int32
+		public enum class StencilOperation : System::Int32
 		{
 			Keep = D3D10_STENCIL_OP_KEEP,
 			Zero = D3D10_STENCIL_OP_ZERO,
@@ -446,7 +444,7 @@ namespace SlimDX
 			Decrement = D3D10_STENCIL_OP_DECR
 		};
 		
-		public enum class SystemValueType : Int32
+		public enum class SystemValueType : System::Int32
 		{
 			Undefined = D3D10_NAME_UNDEFINED,
 			Position = D3D10_NAME_POSITION,

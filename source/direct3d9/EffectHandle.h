@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,8 @@
 */
 #pragma once
 
-using namespace System::IO;
-using namespace System::Runtime::InteropServices;
+//using namespace System::IO;
+//using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
@@ -34,7 +34,7 @@ namespace SlimDX
 			D3DXHANDLE m_Handle;
 
 			//for when we were forced to allocate data for a string
-			IntPtr m_StringData;
+			System::IntPtr m_StringData;
 			bool m_HasString;
 
 		internal:
@@ -46,13 +46,13 @@ namespace SlimDX
 			EffectHandle( D3DXHANDLE handle )
 			{
 				m_Handle = handle;
-				m_StringData = IntPtr::Zero;
+				m_StringData = System::IntPtr::Zero;
 			}
 
 		public:
-			EffectHandle( String^ name )
+			EffectHandle( System::String^ name )
 			{
-				m_StringData = Marshal::StringToHGlobalAnsi( name );
+				m_StringData = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi( name );
 				m_HasString = true;
 
 				m_Handle = (D3DXHANDLE) m_StringData.ToPointer();
@@ -67,13 +67,13 @@ namespace SlimDX
 			!EffectHandle()
 			{
 				if( m_HasString )
-					Marshal::FreeHGlobal( m_StringData );
+					System::Runtime::InteropServices::Marshal::FreeHGlobal( m_StringData );
 			}
 
 			static bool operator == ( EffectHandle^ lhs, EffectHandle^ rhs )
 			{
-				Object^ lhsObj = lhs;
-				Object^ rhsObj = rhs;
+				System::Object^ lhsObj = lhs;
+				System::Object^ rhsObj = rhs;
 				if( lhsObj == nullptr )
 					return rhsObj == nullptr;
 				if( rhsObj == nullptr )
@@ -87,7 +87,7 @@ namespace SlimDX
 				return !(lhs == rhs);
 			}
 
-			virtual bool Equals( Object^ obj ) override
+			virtual bool Equals( System::Object^ obj ) override
 			{
 				if( obj == nullptr )
 					return false;
@@ -98,7 +98,7 @@ namespace SlimDX
 				return m_Handle == eh->m_Handle;
 			}
 
-			static operator EffectHandle^ ( String^ name )
+			static operator EffectHandle^ ( System::String^ name )
 			{
 				return gcnew EffectHandle( name );
 			}

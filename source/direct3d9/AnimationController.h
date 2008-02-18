@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,8 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::InteropServices;
+//using namespace System;
+//using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
@@ -31,21 +31,21 @@ namespace SlimDX
 		ref class AnimationSet;
 		ref class AnimationOutput;
 
-		public delegate void AnimationCallback( int track, Object^ data );
+		public delegate void AnimationCallback( int track, System::Object^ data );
 
-		public enum class TransitionType : Int32
+		public enum class TransitionType : System::Int32
 		{
 			Linear = D3DXTRANSITION_LINEAR,
 			EaseInEaseOut = D3DXTRANSITION_EASEINEASEOUT
 		};
 
-		public enum class TrackPriority : Int32
+		public enum class TrackPriority : System::Int32
 		{
 			Low = D3DXPRIORITY_LOW,
 			High = D3DXPRIORITY_HIGH
 		};
 
-		public enum class EventType : Int32
+		public enum class EventType : System::Int32
 		{
 			TrackSpeed = D3DXEVENT_TRACKSPEED,
 			TrackWeight = D3DXEVENT_TRACKWEIGHT,
@@ -54,7 +54,7 @@ namespace SlimDX
 			PriorityBlend = D3DXEVENT_PRIORITYBLEND
 		};
 
-		[StructLayout(LayoutKind::Sequential)]
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class EventDescription
 		{
 		public:
@@ -69,7 +69,7 @@ namespace SlimDX
 			property bool Enabled;
 		};
 
-		[StructLayout(LayoutKind::Sequential)]
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class TrackDescription
 		{
 		public:
@@ -88,7 +88,7 @@ namespace SlimDX
 			AnimationController( ID3DXAnimationController *controller );
 
 		public:
-			AnimationController( IntPtr pointer );
+			AnimationController( System::IntPtr pointer );
 			AnimationController( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents );
 			virtual ~AnimationController() { Destruct(); }
 
@@ -96,7 +96,7 @@ namespace SlimDX
 			AnimationController^ Clone( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents );
 			
 			AnimationSet^ GetAnimationSet( int index );
-			AnimationSet^ GetAnimationSet( String^ name );
+			AnimationSet^ GetAnimationSet( System::String^ name );
 			int GetCurrentTrackEvent( int track, EventType eventType );
 
 			EventDescription GetEventDescription( int handle );
@@ -112,7 +112,7 @@ namespace SlimDX
 			int KeyTrackSpeed( int track, float newSpeed, double startTime, double duration, TransitionType transition );
 			int KeyTrackWeight( int track, float newWeight, double startTime, double duration, TransitionType transition );
 
-			void RegisterAnimationOutput( String^ name, AnimationOutput^ output );
+			void RegisterAnimationOutput( System::String^ name, AnimationOutput^ output );
 			void RegisterAnimationSet( AnimationSet^ set );
 			void ResetTime();
 

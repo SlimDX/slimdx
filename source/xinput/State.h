@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 namespace SlimDX
 {
@@ -30,7 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// Represents the state of a controller.
 		/// </summary>
-		[StructLayout(LayoutKind::Sequential)]
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class State
 		{
 		public:
@@ -38,7 +38,7 @@ namespace SlimDX
 			/// State packet number. The packet number indicates whether there have been any changes in the state of the controller.
 			/// If the PacketNumber member is the same in sequentially returned State structures, the controller state has not changed. 
 			/// </summary>
-			property UInt32 PacketNumber;
+			property System::UInt32 PacketNumber;
 
 			/// <summary>
 			/// Gamepad structure containing the current state of an Xbox 360 Controller. 

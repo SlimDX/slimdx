@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,13 +21,13 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 namespace SlimDX
 {
 	namespace DirectSound
 	{
-		public enum class CooperativeLevel : Int32
+		public enum class CooperativeLevel : System::Int32
 		{
 			Normal = DSSCL_NORMAL,
 			Priority = DSSCL_PRIORITY,
@@ -35,7 +35,7 @@ namespace SlimDX
 			WritePrimary = DSSCL_WRITEPRIMARY,
 		};
 
-		public enum class Speaker : Int32
+		public enum class Speaker : System::Int32
 		{
 			DirectOut = DSSPEAKER_DIRECTOUT,
 			Headphone = DSSPEAKER_HEADPHONE,
@@ -49,7 +49,7 @@ namespace SlimDX
 			SevenPointOneWide = DSSPEAKER_7POINT1_WIDE
 		};
 
-		public enum class SpeakerGeometry : Int32
+		public enum class SpeakerGeometry : System::Int32
 		{
 			None = 0,
 			Min = DSSPEAKER_GEOMETRY_MIN,
@@ -58,8 +58,8 @@ namespace SlimDX
 			Max = DSSPEAKER_GEOMETRY_MAX,
 		};
 
-		[Flags]
-		public enum class PlayFlags : Int32
+		[System::Flags]
+		public enum class PlayFlags : System::Int32
 		{
 			None = 0,
 			Looping = DSBPLAY_LOOPING,
@@ -72,8 +72,8 @@ namespace SlimDX
 			TerminateByPriority = DSBPLAY_TERMINATEBY_PRIORITY,
 		};
 
-		[Flags]
-		public enum class BufferFlags : Int32
+		[System::Flags]
+		public enum class BufferFlags : System::Int32
 		{
 			None = 0,
 			PrimaryBuffer = DSBCAPS_PRIMARYBUFFER,
@@ -93,8 +93,8 @@ namespace SlimDX
 			Defer = DSBCAPS_LOCDEFER,
 		};
 
-		[Flags]
-		public enum class BufferStatus : Int32
+		[System::Flags]
+		public enum class BufferStatus : System::Int32
 		{
 			None = 0,
 			Playing = DSBSTATUS_PLAYING,
@@ -105,8 +105,8 @@ namespace SlimDX
 			Terminated = DSBSTATUS_TERMINATED,
 		};
 
-		[Flags]
-		public enum class LockFlags : Int32
+		[System::Flags]
+		public enum class LockFlags : System::Int32
 		{
 			None = 0,
 			FromWriteCursor = DSBLOCK_FROMWRITECURSOR,
@@ -115,7 +115,7 @@ namespace SlimDX
 
 		//warning C4369: 'Extensible' : enumerator value '65534' cannot be represented as 'short', value is '-2'
 //#pragma warning(disable: 4369)
-		public enum class WaveFormat : Int32
+		public enum class WaveFormat : System::Int32
 		{
 			Pcm = WAVE_FORMAT_PCM,
 			AdPcm = WAVE_FORMAT_ADPCM,

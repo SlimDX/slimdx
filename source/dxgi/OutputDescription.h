@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 #include "Enums.h"
 
@@ -34,11 +34,11 @@ namespace SlimDX
 		/// </remarks>
 		public value class OutputDescription
 		{
-			String^ m_DeviceName;
-			Drawing::Rectangle^ m_DesktopCoordinates;
+			System::String^ m_DeviceName;
+			System::Drawing::Rectangle^ m_DesktopCoordinates;
 			bool m_AttachedToDesktop;
 			DisplayModeRotation m_Rotation;
-			IntPtr m_Monitor;
+			System::IntPtr m_Monitor;
 
 		internal:
 			OutputDescription( const DXGI_OUTPUT_DESC& native );
@@ -47,17 +47,17 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the output's name.
 			/// </summary>
-			property String^ Name
+			property System::String^ Name
 			{
-				String^ get();
+				System::String^ get();
 			}
 
 			/// <summary>
 			/// Gets output's bounds in desktop coordinates.
 			/// </summary>
-			property Drawing::Rectangle^ DesktopBounds
+			property System::Drawing::Rectangle^ DesktopBounds
 			{
-				Drawing::Rectangle^ get();
+				System::Drawing::Rectangle^ get();
 			}
 
 			/// <summary>
@@ -79,9 +79,9 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the unmanaged HMONITOR handle for the output.
 			/// </summary>
-			property IntPtr MonitorHandle
+			property System::IntPtr MonitorHandle
 			{
-				IntPtr get();
+				System::IntPtr get();
 			}
 		};
 	}

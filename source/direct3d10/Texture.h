@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 #include "../ComObject.h"
 
@@ -50,11 +50,11 @@ namespace SlimDX
 		public:
 			Texture();
 
-			static Texture^ FromFile( Device^ device, String^ fileName );
-			static Texture^ FromMemory( Device^ device, array<Byte>^ memory );
-			static Texture^ FromStream( Device^ device, Stream^ stream, int sizeInBytes );
+			static Texture^ FromFile( Device^ device, System::String^ fileName );
+			static Texture^ FromMemory( Device^ device, array<System::Byte>^ memory );
+			static Texture^ FromStream( Device^ device, System::IO::Stream^ stream, int sizeInBytes );
 
-			static bool ToFile( Texture^ texture, ImageFileFormat format, String^ fileName );
+			static bool ToFile( Texture^ texture, ImageFileFormat format, System::String^ fileName );
 		};
 	}
 };

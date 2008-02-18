@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -33,12 +33,12 @@ namespace SlimDX
 			TextureShader( ID3DXTextureShader* pointer );
 
 		public:
-			TextureShader( IntPtr pointer );
+			TextureShader( System::IntPtr pointer );
 			TextureShader( DataStream^ stream );
 			virtual ~TextureShader() { Destruct(); }
 
 			EffectHandle^ GetConstant( EffectHandle^ parent, int index );
-			EffectHandle^ GetConstant( EffectHandle^ parent, String^ name );
+			EffectHandle^ GetConstant( EffectHandle^ parent, System::String^ name );
 			EffectHandle^ GetConstantElement( EffectHandle^ handle, int index );
 
 			ConstantDescription GetConstantDescription( EffectHandle^ handle );

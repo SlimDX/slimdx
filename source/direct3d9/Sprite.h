@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,14 +21,14 @@
 */
 #pragma once
 
-using namespace System::Drawing;
+//using namespace System::Drawing;
 
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		[Flags]
-		public enum class SpriteFlags : Int32
+		[System::Flags]
+		public enum class SpriteFlags : System::Int32
 		{
 			None = 0,
 			DoNotSaveState = D3DXSPRITE_DONOTSAVESTATE,
@@ -51,7 +51,7 @@ namespace SlimDX
 			Sprite( ID3DXSprite* sprite );
 
 		public:
-			Sprite( IntPtr pointer );
+			Sprite( System::IntPtr pointer );
 			Sprite( Device^ device );
 			~Sprite() { Destruct(); }
 
@@ -74,13 +74,13 @@ namespace SlimDX
 			void SetWorldViewRH( Matrix world, Matrix view );
 
 			void Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, int color );
-			void Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color color );
+			void Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, System::Drawing::Color color );
 			void Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, int color );
-			void Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color color );
+			void Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, System::Drawing::Color color );
 			void Draw( Texture^ texture, Vector3 center, Vector3 position, int color );
-			void Draw( Texture^ texture, Vector3 center, Vector3 position, Color color );
+			void Draw( Texture^ texture, Vector3 center, Vector3 position, System::Drawing::Color color );
 			void Draw( Texture^ texture, int color );
-			void Draw( Texture^ texture, Color color );
+			void Draw( Texture^ texture, System::Drawing::Color color );
 		};
 	}
 }

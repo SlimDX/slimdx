@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 #include "../ComObject.h"
 #include "../DataRectangle.h"
@@ -112,7 +112,7 @@ namespace SlimDX
 				ResourceOptionFlags get() { return m_OptionFlags; }
 			}
 			
-			Texture2D( IntPtr texture );
+			Texture2D( System::IntPtr texture );
 			Texture2D( Device^ device, int width, int height, int mipLevels, int arraySize, DXGI::Format format,
 				int sampleCount, int sampleQuality, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,
 				ResourceOptionFlags optionFlags );
@@ -122,8 +122,8 @@ namespace SlimDX
 			void Unmap( int subResource );
 			
 			
-			static Texture2D^ FromFile( Device^ device, String^ fileName );
-			static Texture2D^ FromStream( Device^ device, Stream^ stream, int sizeInBytes );
+			static Texture2D^ FromFile( Device^ device, System::String^ fileName );
+			static Texture2D^ FromStream( Device^ device, System::IO::Stream^ stream, int sizeInBytes );
 		};
 	}
 };

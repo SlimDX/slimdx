@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,8 @@
 */
 #pragma once
 
-using namespace System::IO;
-using namespace System::Runtime::InteropServices;
+//using namespace System::IO;
+//using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
@@ -46,7 +46,7 @@ namespace SlimDX
 			RenderToEnvironmentMap( ID3DXRenderToEnvMap* pointer );
 
 		public:
-			RenderToEnvironmentMap( IntPtr pointer );
+			RenderToEnvironmentMap( System::IntPtr pointer );
 			RenderToEnvironmentMap( Device^ device, int size, int mipLevels, Format format );
 			RenderToEnvironmentMap( Device^ device, int size, int mipLevels, Format format, Format depthStencilFormat );
 			virtual ~RenderToEnvironmentMap() { Destruct(); }

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ namespace DXGI
 { 	
 	AdapterDescription::AdapterDescription( const DXGI_ADAPTER_DESC& native )
 	{
-		m_Description = gcnew String( native.Description );
+		m_Description = gcnew System::String( native.Description );
 		m_VendorId = native.VendorId;
 		m_DeviceId = native.DeviceId;
 		m_SubSysId = native.SubSysId;
@@ -38,10 +38,10 @@ namespace DXGI
 		m_DedicatedVideoMemory = native.DedicatedVideoMemory;
 		m_DedicatedSystemMemory = native.DedicatedSystemMemory;
 		m_SharedSystemMemory = native.SharedSystemMemory;
-		m_Luid = (static_cast<Int64>(native.AdapterLuid.HighPart) << 32) | native.AdapterLuid.LowPart;
+		m_Luid = (static_cast<System::Int64>(native.AdapterLuid.HighPart) << 32) | native.AdapterLuid.LowPart;
 	}
 
-	String^ AdapterDescription::Description::get()
+	System::String^ AdapterDescription::Description::get()
 	{
 		return m_Description;
 	}
@@ -81,7 +81,7 @@ namespace DXGI
 		return m_SharedSystemMemory;
 	}
 
-	Int64 AdapterDescription::Luid::get()
+	System::Int64 AdapterDescription::Luid::get()
 	{
 		return m_Luid;
 	}

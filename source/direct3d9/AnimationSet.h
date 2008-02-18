@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@
 */
 #pragma once
 
-using namespace System;
 
 namespace SlimDX
 {
@@ -29,8 +28,8 @@ namespace SlimDX
 	{
 		ref class Frame;
 
-		[Flags]
-		public enum class AnimationOutputFlags : Int32
+		[System::Flags]
+		public enum class AnimationOutputFlags : System::Int32
 		{
 			None,
 			Transformation,
@@ -39,13 +38,13 @@ namespace SlimDX
 			Rotation
 		};
 
-		public enum class CallbackSearchFlags : Int32
+		public enum class CallbackSearchFlags : System::Int32
 		{
 			SearchExcludingInitialPosition = D3DXCALLBACK_SEARCH_EXCLUDING_INITIAL_POSITION,
 			SearchBehindInitialPosition = D3DXCALLBACK_SEARCH_BEHIND_INITIAL_POSITION
 		};
 
-		public enum class PlaybackType : Int32
+		public enum class PlaybackType : System::Int32
 		{
 			Loop = D3DXPLAY_LOOP,
 			Once = D3DXPLAY_ONCE,
@@ -71,7 +70,7 @@ namespace SlimDX
 
 		public:
 			property float Time;
-			property IntPtr Data;
+			property System::IntPtr Data;
 		};
 
 		public value class RotationKey
@@ -115,16 +114,16 @@ namespace SlimDX
 			AnimationSet( ID3DXAnimationSet* set );
 
 		public:
-			AnimationSet( IntPtr pointer );
+			AnimationSet( System::IntPtr pointer );
 			virtual ~AnimationSet() { Destruct(); }
 
-			int GetAnimationIndex( String^ name );
-			String^ GetAnimationName( int index );
-			IntPtr GetCallback( double position, CallbackSearchFlags flags, [Out] double% callbackPosition );
+			int GetAnimationIndex( System::String^ name );
+			System::String^ GetAnimationName( int index );
+			System::IntPtr GetCallback( double position, CallbackSearchFlags flags, [Out] double% callbackPosition );
 			AnimationOutput^ GetTransformation( double periodicPosition, int animation );
 			double GetPeriodicPosition( double position );
 
-			property String^ Name { String^ get(); }
+			property System::String^ Name { System::String^ get(); }
 			property int AnimationCount { int get(); }
 			property double Period { double get(); }
 		};
@@ -138,8 +137,8 @@ namespace SlimDX
 			}
 
 		public:
-			CompressedAnimationSet( IntPtr pointer );
-			CompressedAnimationSet( String^ name, double ticksPerSecond, PlaybackType playbackType, 
+			CompressedAnimationSet( System::IntPtr pointer );
+			CompressedAnimationSet( System::String^ name, double ticksPerSecond, PlaybackType playbackType, 
 				DataStream^ compressedData, array<CallbackKey>^ callbackKeys );
 			virtual ~CompressedAnimationSet() { }
 
@@ -160,8 +159,8 @@ namespace SlimDX
 			}
 
 		public:
-			KeyframedAnimationSet( IntPtr pointer );
-			KeyframedAnimationSet( String^ name, double ticksPerSecond, PlaybackType playbackType,
+			KeyframedAnimationSet( System::IntPtr pointer );
+			KeyframedAnimationSet( System::String^ name, double ticksPerSecond, PlaybackType playbackType,
 				int animationCount, array<CallbackKey>^ callbackKeys );
 			virtual ~KeyframedAnimationSet() { }
 
@@ -190,7 +189,7 @@ namespace SlimDX
 			void UnregisterTranslationKey( int animation, int key );
 			int GetTranslationKeyCount( int animation );
 
-			int RegisterAnimationKeys( String^ name, array<ScaleKey>^ scaleKeys, 
+			int RegisterAnimationKeys( System::String^ name, array<ScaleKey>^ scaleKeys, 
 				array<RotationKey>^ rotationKeys, array<TranslationKey>^ translationKeys );
 			void UnregisterAnimation( int animation );
 

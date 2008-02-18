@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -30,14 +30,14 @@ namespace SlimDX
 		ref class VertexBuffer;
 		ref class IndexBuffer;
 
-		public enum class PatchMeshType : Int32
+		public enum class PatchMeshType : System::Int32
 		{
 			Rectangle = D3DXPATCHMESH_RECT,
 			Triangle = D3DXPATCHMESH_TRI,
 			NPatch = D3DXPATCHMESH_NPATCH
 		};
 
-		[StructLayout(LayoutKind::Sequential)]
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class PatchInfo
 		{
 		public:
@@ -65,7 +65,7 @@ namespace SlimDX
 			PatchMesh( ID3DXPatchMesh *mesh ) { Construct(mesh); }
 
 		public:
-			PatchMesh( IntPtr pointer );
+			PatchMesh( System::IntPtr pointer );
 			PatchMesh( Device^ device, PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration );
 			PatchMesh( Mesh^ mesh );
 			virtual ~PatchMesh() { Destruct(); }

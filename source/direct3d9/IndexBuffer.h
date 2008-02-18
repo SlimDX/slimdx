@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@
 #include "Resource.h"
 #include "../DataStream.h"
 
-using namespace SlimDX::Direct3D;
+//using namespace SlimDX::Direct3D;
 
 namespace SlimDX
 {
@@ -52,7 +52,7 @@ namespace SlimDX
 			IndexBuffer( IDirect3DIndexBuffer9* buffer );
 
 		public:
-			IndexBuffer( IntPtr buffer );
+			IndexBuffer( System::IntPtr buffer );
 			IndexBuffer( Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit );
 			virtual ~IndexBuffer() { }
 

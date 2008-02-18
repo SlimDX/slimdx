@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ namespace SlimDX
 		public ref class EffectCompiler : public BaseEffect
 		{
 		private:
-			void InitThis( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
+			void InitThis( array<System::Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 
 		internal:
 			property ID3DXEffectCompiler* CompilerPointer
@@ -43,21 +43,21 @@ namespace SlimDX
 			EffectCompiler( ID3DXEffectCompiler* compiler );
 
 		public:
-			EffectCompiler( IntPtr compiler );
-			EffectCompiler( String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
-			EffectCompiler( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
+			EffectCompiler( System::IntPtr compiler );
+			EffectCompiler( System::String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
+			EffectCompiler( array<System::Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 			virtual ~EffectCompiler() { }
 
-			static EffectCompiler^ FromFile( String^ fileName, array<Macro>^ defines,
-				Include^ includeFile, ShaderFlags flags, [Out] String^% errors );
+			static EffectCompiler^ FromFile( System::String^ fileName, array<Macro>^ defines,
+				Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 
-			ShaderBytecode^ CompileShader( EffectHandle^ functionHandle, String^ target, ShaderFlags flags,
-				[Out] String^% compilationErrors, [Out] ConstantTable^% constantTable );
-			ShaderBytecode^ CompileShader( EffectHandle^ functionHandle, String^ target, ShaderFlags flags,
-				[Out] String^% compilationErrors );
-			ShaderBytecode^ CompileShader( EffectHandle^ functionHandle, String^ target, ShaderFlags flags );
+			ShaderBytecode^ CompileShader( EffectHandle^ functionHandle, System::String^ target, ShaderFlags flags,
+				[Out] System::String^% compilationErrors, [Out] ConstantTable^% constantTable );
+			ShaderBytecode^ CompileShader( EffectHandle^ functionHandle, System::String^ target, ShaderFlags flags,
+				[Out] System::String^% compilationErrors );
+			ShaderBytecode^ CompileShader( EffectHandle^ functionHandle, System::String^ target, ShaderFlags flags );
 
-			DataStream^ CompileEffect( ShaderFlags flags, [Out] String^% compilationErrors );
+			DataStream^ CompileEffect( ShaderFlags flags, [Out] System::String^% compilationErrors );
 			DataStream^ CompileEffect( ShaderFlags flags );
 
 			void SetLiteral( EffectHandle^ handle, bool literal );

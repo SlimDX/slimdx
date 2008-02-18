@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ namespace DXGI
 		Construct( factory );
 	}
 	
-	Factory::Factory( IntPtr pointer )
+	Factory::Factory( System::IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
@@ -68,10 +68,10 @@ namespace DXGI
 		return gcnew Adapter( adapter );
 	}
 	
-	Adapter^ Factory::CreateSoftwareAdapter( IntPtr module )
+	Adapter^ Factory::CreateSoftwareAdapter( System::IntPtr module )
 	{
-		if( module == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "module" );
+		if( module == System::IntPtr::Zero )
+			throw gcnew System::ArgumentNullException( "module" );
 			
 		HINSTANCE instance = reinterpret_cast<HINSTANCE>( module.ToInt32() );
 		IDXGIAdapter* adapter = 0;
@@ -87,14 +87,14 @@ namespace DXGI
 		return CreateSoftwareAdapter( System::Runtime::InteropServices::Marshal::GetHINSTANCE( module ) );
 	}
 	
-	IntPtr Factory::GetWindowAssociation()
+	System::IntPtr Factory::GetWindowAssociation()
 	{
 		HWND window = 0;
 		Result::Record( InternalPointer->GetWindowAssociation( &window ) );
-		return IntPtr( window );
+		return System::IntPtr( window );
 	}
 	
-	Result Factory::SetWindowAssociation( IntPtr handle, WindowAssociationFlags flags )
+	Result Factory::SetWindowAssociation( System::IntPtr handle, WindowAssociationFlags flags )
 	{
 		return Result::Record( InternalPointer->MakeWindowAssociation( reinterpret_cast<HWND>( handle.ToInt32() ), static_cast<UINT>( flags ) ) );
 	}

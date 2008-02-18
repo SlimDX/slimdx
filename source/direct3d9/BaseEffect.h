@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,8 @@
 */
 #pragma once
 
-using namespace System::IO;
-using namespace System::Runtime::InteropServices;
+//using namespace System::IO;
+//using namespace System::Runtime::InteropServices;
 
 #include "../math/Math.h"
 #include "Device.h"
@@ -38,7 +38,7 @@ namespace SlimDX
 		public value class EffectDescription
 		{
 		public:
-			property String^ Creator;
+			property System::String^ Creator;
             property int Parameters;
             property int Techniques;
             property int Functions;
@@ -47,7 +47,7 @@ namespace SlimDX
 		public value class TechniqueDescription
 		{
 		public:
-			property String^ Name;
+			property System::String^ Name;
             property int Passes;
             property int Annotations;
 		};
@@ -55,24 +55,24 @@ namespace SlimDX
 		public value class FunctionDescription
 		{
 		public:
-			property String^ Name;
+			property System::String^ Name;
             property int Annotations;
 		};
 
 		public value class PassDescription
 		{
 		public:
-			property String^ Name;
+			property System::String^ Name;
             property int Annotations;
-            property IntPtr VertexShaderFunction;
-            property IntPtr PixelShaderFunction;
+            property System::IntPtr VertexShaderFunction;
+            property System::IntPtr PixelShaderFunction;
 		};
 
 		public value class ParameterDescription
 		{
 		public:
-			property String^ Name;
-            property String^ Semantic;
+			property System::String^ Name;
+            property System::String^ Semantic;
             property ParameterClass Class;
             property ParameterType Type;
             property int Rows;
@@ -90,31 +90,31 @@ namespace SlimDX
 
 		protected:
 			BaseEffect() { }
-			BaseEffect( IntPtr pointer );
+			BaseEffect( System::IntPtr pointer );
 			BaseEffect( ID3DXBaseEffect* pointer ) { Construct(pointer); }
 
 		public:
 			virtual ~BaseEffect() { Destruct(); }
 
 			EffectHandle^ GetAnnotation( EffectHandle^ handle, int index );
-			EffectHandle^ GetAnnotation( EffectHandle^ handle, String^ name );
+			EffectHandle^ GetAnnotation( EffectHandle^ handle, System::String^ name );
 
 			EffectHandle^ GetParameter( EffectHandle^ parameter, int index );
-			EffectHandle^ GetParameter( EffectHandle^ parameter, String^ name );
-			EffectHandle^ GetParameterBySemantic( EffectHandle^ parameter, String^ name );
+			EffectHandle^ GetParameter( EffectHandle^ parameter, System::String^ name );
+			EffectHandle^ GetParameterBySemantic( EffectHandle^ parameter, System::String^ name );
 			EffectHandle^ GetParameterElement( EffectHandle^ parameter, int index );
 			ParameterDescription GetParameterDescription( EffectHandle^ parameter );
 
 			EffectHandle^ GetFunction( int index );
-			EffectHandle^ GetFunction( String^ name );
+			EffectHandle^ GetFunction( System::String^ name );
 			FunctionDescription GetFunctionDescription( EffectHandle^ handle );
 
 			EffectHandle^ GetTechnique( int index );
-			EffectHandle^ GetTechnique( String^ name );
+			EffectHandle^ GetTechnique( System::String^ name );
 			TechniqueDescription GetTechniqueDescription( EffectHandle^ handle );
 
 			EffectHandle^ GetPass( EffectHandle^ technique, int index );
-			EffectHandle^ GetPass( EffectHandle^ technique, String^ name );
+			EffectHandle^ GetPass( EffectHandle^ technique, System::String^ name );
 			PassDescription GetPassDescription( EffectHandle^ handle );
 
 			property EffectDescription Description
@@ -135,7 +135,7 @@ namespace SlimDX
 			void SetValue( EffectHandle^ parameter, Matrix value );
 			void SetValue( EffectHandle^ parameter, array<Matrix>^ values );
 			void SetValue( EffectHandle^ parameter, BaseTexture^ value );
-			void SetValue( EffectHandle^ parameter, String^ value );
+			void SetValue( EffectHandle^ parameter, System::String^ value );
 			void SetValueTranspose( EffectHandle^ parameter, Matrix value );
 			void SetValueTranspose( EffectHandle^ parameter, array<Matrix>^ values );
 
@@ -155,7 +155,7 @@ namespace SlimDX
 			array<Matrix>^ GetMatrixTransposeArray( EffectHandle^ parameter, int count );
 			BaseTexture^ GetTexture( EffectHandle^ parameter );
 
-			String^ GetString( EffectHandle^ parameter );
+			System::String^ GetString( EffectHandle^ parameter );
 			DataStream^ GetValue( EffectHandle^ parameter, int bytes );
 		};
    }

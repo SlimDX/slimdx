@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System::Drawing;
+//using namespace System::Drawing;
 
 #include "../ComObject.h"
 
@@ -58,7 +58,7 @@ namespace SlimDX
 				void set( Matrix value );
 			}
 
-			Sprite( IntPtr pointer );
+			Sprite( System::IntPtr pointer );
 			Sprite( Device^ device, int bufferSize );
 			~Sprite() { Destruct(); }
 

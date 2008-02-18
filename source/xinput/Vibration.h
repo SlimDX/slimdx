@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 namespace SlimDX
 {
@@ -34,7 +34,7 @@ namespace SlimDX
 		/// The left motor is the low-frequency rumble motor. The right motor is the high-frequency rumble motor. 
 		/// The two motors are not the same, and they create different vibration effects.
 		/// </remarks>
-		[StructLayout(LayoutKind::Sequential)]
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class Vibration
 		{
 		public:
@@ -42,13 +42,13 @@ namespace SlimDX
 			/// Speed of the left motor. Valid values are in the range 0 to 65,535. Zero signifies no motor use; 
 			/// 65,535 signifies 100 percent motor use.
 			/// </summary>
-			property UInt16 LeftMotorSpeed;
+			property System::UInt16 LeftMotorSpeed;
 
 			/// <summary>
 			/// Speed of the right motor. Valid values are in the range 0 to 65,535. Zero signifies no motor use; 
 			/// 65,535 signifies 100 percent motor use.
 			/// </summary>
-            property UInt16 RightMotorSpeed;
+            property System::UInt16 RightMotorSpeed;
 		};
 	}
 }

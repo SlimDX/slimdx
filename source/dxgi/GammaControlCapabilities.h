@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +21,6 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Collections::Generic;
-using namespace System::Collections::ObjectModel;
-
 namespace SlimDX
 {
 	namespace DXGI
@@ -37,7 +33,7 @@ namespace SlimDX
 			bool m_ScaleAndOffsetSupported;
 			float m_MaxConvertedValue;
 			float m_MinConvertedValue;
-			List<float>^ m_ControlPointPositions;
+			System::Collections::Generic::List<float>^ m_ControlPointPositions;
 		
 		internal:
 			GammaControlCapabilities( const DXGI_GAMMA_CONTROL_CAPABILITIES& native );
@@ -70,9 +66,9 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the list of curve control point positions.
 			/// </summary>
-			property ReadOnlyCollection<float>^ ControlPoints
+			property System::Collections::ObjectModel::ReadOnlyCollection<float>^ ControlPoints
 			{
-				ReadOnlyCollection<float>^ get();
+				System::Collections::ObjectModel::ReadOnlyCollection<float>^ get();
 			}
 		};
 	}

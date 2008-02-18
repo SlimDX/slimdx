@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,32 +21,27 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Globalization;
-using namespace System::Collections::Generic;
-using namespace System::Diagnostics;
+//using namespace System;
+//using namespace System::Globalization;
+//using namespace System::Collections::Generic;
+//using namespace System::Diagnostics;
 
 namespace SlimDX
 {
 	ref class ObjectTracker
 	{
-		static ObjectTracker()
-		{
-			m_TrackedObjects = gcnew Dictionary<IDisposable^, StackTrace^>();
-
-			AppDomain::CurrentDomain->DomainUnload += gcnew EventHandler( OnExit );
-			AppDomain::CurrentDomain->ProcessExit += gcnew EventHandler( OnExit );
-		}
+	private:
+		static ObjectTracker();
 	
-		ObjectTracker() { }
+		ObjectTracker();
 
-		static Dictionary<IDisposable^, StackTrace^>^ m_TrackedObjects;
+		static System::Collections::Generic::Dictionary<System::IDisposable^, System::Diagnostics::StackTrace^>^ m_TrackedObjects;
 
-		static void OnExit( Object^ sender, EventArgs^ e );
+		static void OnExit( System::Object^ sender, System::EventArgs^ e );
 
 	public:
-		static void Add( IDisposable^ obj );
-		static void Remove( IDisposable^ obj );
+		static void Add( System::IDisposable^ obj );
+		static void Remove( System::IDisposable^ obj );
 		static void ReportLeaks();
 	};
 }

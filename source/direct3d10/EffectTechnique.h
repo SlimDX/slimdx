@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,8 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Globalization;
+//using namespace System;
+//using namespace System::Globalization;
 
 namespace SlimDX
 {
@@ -34,7 +34,7 @@ namespace SlimDX
 		public ref class EffectTechnique
 		{
 			ID3D10EffectTechnique *m_Pointer;
-			String^ m_Name;
+			System::String^ m_Name;
 			int m_PassCount;
 			int m_AnnotationCount;
 			
@@ -42,9 +42,9 @@ namespace SlimDX
 			EffectTechnique( ID3D10EffectTechnique* technique );
 			
 		public:
-			property String^ Name
+			property System::String^ Name
 			{
-				String^ get() { return m_Name; }
+				System::String^ get() { return m_Name; }
 			}
 			
 			property int AnnotationCount 
@@ -63,10 +63,10 @@ namespace SlimDX
 			}
 			
 			EffectVariable^ GetAnnotationByIndex( int index );
-			EffectVariable^ GetAnnotationByName( String^ name );
+			EffectVariable^ GetAnnotationByName( System::String^ name );
 			
 			EffectPass^ GetPassByIndex( int index );
-			EffectPass^ GetPassByName( String^ name );
+			EffectPass^ GetPassByName( System::String^ name );
 		};
 	}
 };

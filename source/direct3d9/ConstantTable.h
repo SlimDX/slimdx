@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,8 @@
 
 #include "../math/Math.h"
 
-using namespace System::Runtime::InteropServices;
-using namespace SlimDX::Direct3D;
+//using namespace System::Runtime::InteropServices;
+//using namespace SlimDX::Direct3D;
 
 namespace SlimDX
 {
@@ -32,7 +32,7 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
-		public enum class RegisterSet : Int32
+		public enum class RegisterSet : System::Int32
 		{
 			Bool = D3DXRS_BOOL,
 			Int4 = D3DXRS_INT4,
@@ -43,8 +43,8 @@ namespace SlimDX
 		public value class ConstantTableDescription
 		{
 		public:
-			property String^ Creator;
-			property Version^ Version;
+			property System::String^ Creator;
+			property System::Version^ Version;
 			property int Constants;
 		};
 
@@ -54,7 +54,7 @@ namespace SlimDX
 			void Initialize( const D3DXCONSTANT_DESC& description );
 
 		public:
-			property String^ Name;
+			property System::String^ Name;
 			property RegisterSet RegisterSet;
 			property int RegisterIndex;
 			property int RegisterCount;
@@ -82,11 +82,11 @@ namespace SlimDX
 			ConstantTable( IDirect3DDevice9* device, ID3DXConstantTable* constantTable );
 
 		public:
-			ConstantTable( IntPtr table );
+			ConstantTable( System::IntPtr table );
 			~ConstantTable();
 			
 			EffectHandle^ GetConstant( EffectHandle^ handle, int index );
-			EffectHandle^ GetConstant( EffectHandle^ handle, String^ name );
+			EffectHandle^ GetConstant( EffectHandle^ handle, System::String^ name );
 			EffectHandle^ GetConstantElement( EffectHandle^ handle, int index );
 			ConstantDescription GetConstantDescription( EffectHandle^ handle );
 			array<ConstantDescription>^ GetConstantDescriptionArray( EffectHandle^ handle );

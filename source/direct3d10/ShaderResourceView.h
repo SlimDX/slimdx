@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 #include "ResourceView.h"
 
@@ -41,7 +41,7 @@ namespace SlimDX
 			ShaderResourceView( ID3D10ShaderResourceView* view );
 			
 		public:
-			ShaderResourceView( IntPtr pointer );
+			ShaderResourceView( System::IntPtr pointer );
 			ShaderResourceView( Device^ device, Texture1D^ resource );
 			ShaderResourceView( Device^ device, Texture2D^ resource );
 			ShaderResourceView( Device^ device, Texture3D^ resource );

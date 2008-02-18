@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
@@ -33,7 +33,7 @@ namespace SlimDX
 		public ref class Controller
 		{
 		private:
-			UInt32 userIndex;
+			System::UInt32 userIndex;
 
 		public:
 			/// <summary>
@@ -69,7 +69,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="soundRenderGuid">Out reference to Guid structure that receives the GUID of the headset sound rendering device.</param>
 			/// <param name="soundCaptureGuid">Out reference to Guid structure that receives the GUID of the headset sound capture device.</param>
-			void GetDirectSoundAudioDeviceGuids([Out] Guid% soundRenderGuid, [Out] Guid% soundCaptureGuid);
+			void GetDirectSoundAudioDeviceGuids([Out] System::Guid% soundRenderGuid, [Out] System::Guid% soundCaptureGuid);
 
 			/// <summary>
 			/// Retrieves a gamepad input event.
@@ -109,14 +109,14 @@ namespace SlimDX
 				SlimDX::XInput::Capabilities get();
 			}
 
-			property Guid SoundRenderGuid
+			property System::Guid SoundRenderGuid
 			{
-				Guid get();
+				System::Guid get();
 			}
 
-			property Guid SoundCaptureGuid
+			property System::Guid SoundCaptureGuid
 			{
-				Guid get();
+				System::Guid get();
 			}
 		};
 	}

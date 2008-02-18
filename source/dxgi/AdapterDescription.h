@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,6 @@
 */
 #pragma once
 
-using namespace System;
-
 namespace SlimDX
 {
 	namespace DXGI
@@ -32,7 +30,7 @@ namespace SlimDX
 		/// </remarks>
 		public value class AdapterDescription
 		{
-			String^ m_Description;
+			System::String^ m_Description;
 			int m_VendorId;
 			int m_DeviceId;
 			int m_SubSysId;
@@ -40,7 +38,7 @@ namespace SlimDX
 			int m_DedicatedVideoMemory;
 			int m_DedicatedSystemMemory;
 			int m_SharedSystemMemory;
-			Int64 m_Luid;
+			System::Int64 m_Luid;
 
 		internal:
 			AdapterDescription( const DXGI_ADAPTER_DESC& native );
@@ -49,9 +47,9 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the adapter's description.
 			/// </summary>
-			property String^ Description
+			property System::String^ Description
 			{
-				String^ get();
+				System::String^ get();
 			}
 			
 			/// <summary>
@@ -113,9 +111,9 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the adapter's unique identifier.
 			/// </summary>
-			property Int64 Luid
+			property System::Int64 Luid
 			{
-				Int64 get();
+				System::Int64 get();
 			}
 		};
 	}

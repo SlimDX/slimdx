@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,9 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Reflection;
-using namespace System::Windows::Forms;
+//using namespace System;
+//using namespace System::Reflection;
+//using namespace System::Windows::Forms;
 
 #include "../ComObject.h"
 
@@ -60,13 +60,13 @@ namespace SlimDX
 			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::Device"/> class.
 			/// </summary>
 			/// <param name="subsystem">The subsystem identifier.</param>
-			Device( Guid subsystem );
+			Device( System::Guid subsystem );
 
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::Device"/> class.
 			/// </summary>
 			/// <param name="device">A pointer to a previously created DirectInput device.</param>
-			Device( IntPtr device );
+			Device( System::IntPtr device );
 
 			/// <summary>
 			/// Disposes of managed and unmanaged resources contained by this class.
@@ -88,14 +88,14 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="handle">A handle of a window to associate with the device.</param>
 			/// <param name="flags">Flags that describe the cooperative level of the device.</param>
-			void SetCooperativeLevel( IntPtr handle, CooperativeLevel flags );
+			void SetCooperativeLevel( System::IntPtr handle, CooperativeLevel flags );
 
 			/// <summary>
 			/// Sets the device's cooperative level.
 			/// </summary>
 			/// <param name="control">A control to associate with the device.</param>
 			/// <param name="flags">Flags that describe the cooperative level of the device.</param>
-			void SetCooperativeLevel( Control^ control, CooperativeLevel flags );
+			void SetCooperativeLevel( System::Windows::Forms::Control^ control, CooperativeLevel flags );
 
 			/// <summary>
 			/// Runs the DirectInput control panel associated with this device. If the
@@ -110,7 +110,7 @@ namespace SlimDX
 			/// device control panel is launched.
 			/// </summary>
 			/// <param name="parent">The parent control.</param>
-			void RunControlPanel( Control^ parent );
+			void RunControlPanel( System::Windows::Forms::Control^ parent );
 
 			/// <summary>
 			/// Retrieves the current device state.
@@ -150,12 +150,12 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the device's data buffer overflows.
 			/// </summary>
-			event EventHandler^ BufferOverflow;
+			event System::EventHandler^ BufferOverflow;
 
 			/// <summary>
 			/// Occurs when the device is lost.
 			/// </summary>
-			event EventHandler^ DeviceLost;
+			event System::EventHandler^ DeviceLost;
 		};
 	}
 }

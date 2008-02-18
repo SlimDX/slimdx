@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,28 +21,29 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::IO;
+//using namespace System;
+//using namespace System::IO;
 
-struct ID3DXBuffer;
+#include <d3dx9.h>
 
 namespace SlimDX
 {
-	public ref class DataStream : public Stream
+	public ref class DataStream : public System::IO::Stream
 	{
+		private:
 		char* m_Buffer;
 		bool m_OwnsBuffer;
 		ID3DXBuffer *m_ID3DXBuffer;
 		
-		Int64 m_Size;
-		Int64 m_Position;
+		System::Int64 m_Size;
+		System::Int64 m_Position;
 		
 		initonly bool m_CanRead;
 		initonly bool m_CanWrite;
 
 	internal:
 		DataStream( ID3DXBuffer *buffer );
-		DataStream( void* buffer, Int64 sizeInBytes, bool canRead, bool canWrite, bool makeCopy );
+		DataStream( void* buffer, System::Int64 sizeInBytes, bool canRead, bool canWrite, bool makeCopy );
 
 		property char* RawPointer
 		{
@@ -54,18 +55,18 @@ namespace SlimDX
 		ID3DXBuffer* GetD3DBuffer();
 
 	public:
-		DataStream( Int64 sizeInBytes, bool canRead, bool canWrite );
-		DataStream( IntPtr userBuffer, Int64 sizeInBytes, bool canRead, bool canWrite );
+		DataStream( System::Int64 sizeInBytes, bool canRead, bool canWrite );
+		DataStream( System::IntPtr userBuffer, System::Int64 sizeInBytes, bool canRead, bool canWrite );
 		
 		~DataStream();
 		!DataStream();
 		
-		virtual Int64 Seek( Int64 offset, SeekOrigin origin ) override;
+		virtual System::Int64 Seek( System::Int64 offset, System::IO::SeekOrigin origin ) override;
 
 		generic<typename T> where T : value class
 		void Write( T value );
 
-		virtual void Write( array<Byte>^ buffer, int offset, int count ) override;
+		virtual void Write( array<System::Byte>^ buffer, int offset, int count ) override;
 
 		generic<typename T> where T : value class
 		void WriteRange( array<T>^ data, int startIndex, int count );
@@ -73,19 +74,19 @@ namespace SlimDX
 		generic<typename T> where T : value class
 		void WriteRange( array<T>^ data ) { WriteRange( data, 0, 0 ); }
 		
-		void WriteRange( IntPtr source, Int64 count );
+		void WriteRange( System::IntPtr source, System::Int64 count );
 
 		generic<typename T> where T : value class
 		T Read();
 
-		virtual int Read( array<Byte>^ buffer, int offset, int count ) override;
+		virtual int Read( array<System::Byte>^ buffer, int offset, int count ) override;
 
 		generic<typename T> where T : value class
 		array<T>^ ReadRange( int count );
 
 		virtual void Flush() override;
 
-		virtual void SetLength( Int64 value ) override;
+		virtual void SetLength( System::Int64 value ) override;
 
 		property bool CanRead
 		{
@@ -102,27 +103,27 @@ namespace SlimDX
 			virtual bool get() override { return m_CanWrite; }
 		}
 
-		property Int64 Length
+		property System::Int64 Length
 		{
-			virtual Int64 get() override;
+			virtual System::Int64 get() override;
 		}
 
-		property Int64 Position
+		property System::Int64 Position
 		{
-			virtual Int64 get() override
+			virtual System::Int64 get() override
 			{
 				return m_Position;
 			}
 
-			virtual void set( Int64 value ) override
+			virtual void set( System::Int64 value ) override
 			{
-				Seek( value, SeekOrigin::Begin );
+				Seek( value, System::IO::SeekOrigin::Begin );
 			}
 		}
 
-		property IntPtr DataPointer
+		property System::IntPtr DataPointer
 		{
-			IntPtr get() { return IntPtr( m_Buffer ); }
+			System::IntPtr get() { return System::IntPtr( m_Buffer ); }
 		}
 	};
 }

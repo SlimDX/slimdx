@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,20 +21,20 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		[Flags]
-		public enum class Caps : Int32
+		[System::Flags]
+		public enum class Caps : System::Int32
 		{
 			ReadScanline = D3DCAPS_READ_SCANLINE,
 		};
 
-		[Flags]
-		public enum class Caps2 : Int32
+		[System::Flags]
+		public enum class Caps2 : System::Int32
 		{
 			FullScreenGamma = D3DCAPS2_FULLSCREENGAMMA,
 			CanCalibrateGamma = D3DCAPS2_CANCALIBRATEGAMMA,
@@ -43,8 +43,8 @@ namespace SlimDX
 			CanAutoGenMipMap = D3DCAPS2_CANAUTOGENMIPMAP
 		};
 
-		[Flags]
-		public enum class Caps3 : Int32
+		[System::Flags]
+		public enum class Caps3 : System::Int32
 		{
 			AlphaFullScreenFlipOrDiscard = D3DCAPS3_ALPHA_FULLSCREEN_FLIP_OR_DISCARD,
 			LinearToSrgbPresentation = D3DCAPS3_LINEAR_TO_SRGB_PRESENTATION,
@@ -52,15 +52,15 @@ namespace SlimDX
 			CopyToSystemMemory = D3DCAPS3_COPY_TO_SYSTEMMEM,
 		};
 
-		[Flags]
-		public enum class CursorCaps : Int32
+		[System::Flags]
+		public enum class CursorCaps : System::Int32
 		{
 			Color = D3DCURSORCAPS_COLOR,
 			LowRes = D3DCURSORCAPS_LOWRES,
 		};
 
-		[Flags]
-		public enum class DeviceCaps : Int32
+		[System::Flags]
+		public enum class DeviceCaps : System::Int32
 		{
 			ExecuteSystemMemory = D3DDEVCAPS_EXECUTESYSTEMMEMORY,
 			ExecuteVideoMemory = D3DDEVCAPS_EXECUTEVIDEOMEMORY,
@@ -84,8 +84,8 @@ namespace SlimDX
 			NPatches = D3DDEVCAPS_NPATCHES,
 		};
 
-		[Flags]
-		public enum class PrimitiveMiscCaps : Int32
+		[System::Flags]
+		public enum class PrimitiveMiscCaps : System::Int32
 		{
 			MaskZ = D3DPMISCCAPS_MASKZ,
 			CullNone = D3DPMISCCAPS_CULLNONE,
@@ -106,8 +106,8 @@ namespace SlimDX
 			FogVertexClamped = D3DPMISCCAPS_FOGVERTEXCLAMPED,
 		};
 
-		[Flags]
-		public enum class LineCaps : Int32
+		[System::Flags]
+		public enum class LineCaps : System::Int32
 		{
 			Texture = D3DLINECAPS_TEXTURE,
 			DepthTest = D3DLINECAPS_ZTEST,
@@ -117,8 +117,8 @@ namespace SlimDX
 			Antialias = D3DLINECAPS_ANTIALIAS,
 		};
 
-		[Flags]
-		public enum class RasterCaps : Int32
+		[System::Flags]
+		public enum class RasterCaps : System::Int32
 		{
 			Dither = D3DPRASTERCAPS_DITHER,
 			DepthTest = D3DPRASTERCAPS_ZTEST,
@@ -138,8 +138,8 @@ namespace SlimDX
 			MultisampleToggle = D3DPRASTERCAPS_MULTISAMPLE_TOGGLE,
 		};
 
-		[Flags]
-		public enum class CompareCaps : Int32
+		[System::Flags]
+		public enum class CompareCaps : System::Int32
 		{
 			Never = D3DPCMPCAPS_NEVER,
 			Less = D3DPCMPCAPS_LESS,
@@ -151,8 +151,8 @@ namespace SlimDX
 			Always = D3DPCMPCAPS_ALWAYS,
 		};
 
-		[Flags]
-		public enum class BlendCaps : Int32
+		[System::Flags]
+		public enum class BlendCaps : System::Int32
 		{
 			Zero = D3DPBLENDCAPS_ZERO,
 			One = D3DPBLENDCAPS_ONE,
@@ -170,8 +170,8 @@ namespace SlimDX
 			BlendFactor = D3DPBLENDCAPS_BLENDFACTOR,
 		};
 
-		[Flags]
-		public enum class ShadeCaps : Int32
+		[System::Flags]
+		public enum class ShadeCaps : System::Int32
 		{
 			ColorGouraudRgb = D3DPSHADECAPS_COLORGOURAUDRGB,
 			SpecularGouraudRgb = D3DPSHADECAPS_SPECULARGOURAUDRGB,
@@ -179,8 +179,8 @@ namespace SlimDX
 			FogGouraud = D3DPSHADECAPS_FOGGOURAUD,
 		};
 
-		[Flags]
-		public enum class TextureCaps : Int32
+		[System::Flags]
+		public enum class TextureCaps : System::Int32
 		{
 			Perspective = D3DPTEXTURECAPS_PERSPECTIVE,
 			Pow2 = D3DPTEXTURECAPS_POW2,
@@ -200,8 +200,8 @@ namespace SlimDX
 			NoProjectedBumpEnvironment = D3DPTEXTURECAPS_NOPROJECTEDBUMPENV,
 		};
 
-		[Flags]
-		public enum class FilterCaps : Int32
+		[System::Flags]
+		public enum class FilterCaps : System::Int32
 		{
 			MinPoint = D3DPTFILTERCAPS_MINFPOINT,
 			MinLinear = D3DPTFILTERCAPS_MINFLINEAR,
@@ -217,8 +217,8 @@ namespace SlimDX
 			MagGaussianQuad = D3DPTFILTERCAPS_MAGFGAUSSIANQUAD,
 		};
 
-		[Flags]
-		public enum class TextureAddressCaps : Int32
+		[System::Flags]
+		public enum class TextureAddressCaps : System::Int32
 		{
 			Wrap = D3DPTADDRESSCAPS_WRAP,
 			Mirror = D3DPTADDRESSCAPS_MIRROR,
@@ -228,8 +228,8 @@ namespace SlimDX
 			MirrorOnce = D3DPTADDRESSCAPS_MIRRORONCE,
 		};
 
-		[Flags]
-		public enum class StencilCaps : Int32
+		[System::Flags]
+		public enum class StencilCaps : System::Int32
 		{
 			Keep = D3DSTENCILCAPS_KEEP,
 			Zero = D3DSTENCILCAPS_ZERO,
@@ -242,8 +242,8 @@ namespace SlimDX
 			TwoSided = D3DSTENCILCAPS_TWOSIDED,
 		};
 
-		[Flags]
-		public enum class TextureOperationCaps : Int32
+		[System::Flags]
+		public enum class TextureOperationCaps : System::Int32
 		{
 			Disable = D3DTEXOPCAPS_DISABLE,
 			SelectArg1 = D3DTEXOPCAPS_SELECTARG1,
@@ -273,15 +273,15 @@ namespace SlimDX
 			Lerp = D3DTEXOPCAPS_LERP,
 		};
 
-		[Flags]
-		public enum class VertexFormatCaps : Int32
+		[System::Flags]
+		public enum class VertexFormatCaps : System::Int32
 		{
 			TextureCoordCountMask = D3DFVFCAPS_TEXCOORDCOUNTMASK,
 			DoNotStripElements = D3DFVFCAPS_DONOTSTRIPELEMENTS,
 			PointSize = D3DFVFCAPS_PSIZE,
 		};
 
-		[Flags]
+		[System::Flags]
 		public enum class VertexProcessingCaps
 		{
 			TextureGen = D3DVTXPCAPS_TEXGEN,
@@ -294,7 +294,7 @@ namespace SlimDX
 			NoTexGenNonLocalViewer = D3DVTXPCAPS_NO_TEXGEN_NONLOCALVIEWER,
 		};
 
-		[Flags]
+		[System::Flags]
 		public enum class DevCaps2
 		{
 			StreamOffset = D3DDEVCAPS2_STREAMOFFSET,
@@ -306,7 +306,7 @@ namespace SlimDX
 			VertexElementsCanShareStreamOffset = D3DDEVCAPS2_VERTEXELEMENTSCANSHARESTREAMOFFSET,
 		};
 
-		[Flags]
+		[System::Flags]
 		public enum class DeclarationTypeCaps
 		{
 			UByte4 = D3DDTCAPS_UBYTE4,

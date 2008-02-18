@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ namespace DXGI
 		m_ScaleAndOffsetSupported = native.ScaleAndOffsetSupported ? true : false;
 		m_MaxConvertedValue = native.MaxConvertedValue;
 		m_MinConvertedValue = native.MinConvertedValue;
-		m_ControlPointPositions = gcnew List<float>();
+		m_ControlPointPositions = gcnew System::Collections::Generic::List<float>();
 		for( UINT controlPointIndex = 0; controlPointIndex < native.NumGammaControlPoints; ++controlPointIndex )
 			m_ControlPointPositions->Add( native.ControlPointPositions[ controlPointIndex ] );
 	}
@@ -53,9 +53,9 @@ namespace DXGI
 		return m_MinConvertedValue;
 	}
 
-	ReadOnlyCollection<float>^ GammaControlCapabilities::ControlPoints::get()
+	System::Collections::ObjectModel::ReadOnlyCollection<float>^ GammaControlCapabilities::ControlPoints::get()
 	{
-		return gcnew ReadOnlyCollection<float>( m_ControlPointPositions );
+		return gcnew System::Collections::ObjectModel::ReadOnlyCollection<float>( m_ControlPointPositions );
 	}
 }
 }

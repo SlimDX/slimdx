@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -23,13 +23,13 @@
 
 #ifdef WRAP_XAUDIO2
 
-using namespace System;
+//using namespace System;
 
 namespace SlimDX
 {
 	namespace XAudio2
 	{
-		public enum class DeviceRole : Int32
+		public enum class DeviceRole : System::Int32
 		{
 			NotDefaultDevice = NotDefaultDevice,
 			DefaultConsoleDevice = DefaultConsoleDevice,
@@ -40,14 +40,14 @@ namespace SlimDX
 			InvalidDeviceRole = InvalidDeviceRole
 		};
 
-		public enum class FilterType : Int32
+		public enum class FilterType : System::Int32
 		{
 			LowPassFilter = LowPassFilter,
 			BandPassFilter = BandPassFilter,
 			HighPassFilter = HighPassFilter
 		};
 
-		public enum class WindowsProcessorSpecifier : Int32
+		public enum class WindowsProcessorSpecifier : System::Int32
 		{
 			Processor0 = Processor0,
 			Processor1 = Processor1,
@@ -71,14 +71,14 @@ namespace SlimDX
 			DefaultProcessor = XAUDIO2_DEFAULT_PROCESSOR
 		};
 
-		[Flags]
-		public enum class XAudio2Flags : Int32
+		[System::Flags]
+		public enum class XAudio2Flags : System::Int32
 		{
 			DebugEngine = XAUDIO2_DEBUG_ENGINE,
 		};
 
-		[Flags]
-		public enum class VoiceFlags : Int32
+		[System::Flags]
+		public enum class VoiceFlags : System::Int32
 		{
 			//Used in IXAudio2::CreateSourceVoice()
 			NoPitch = XAUDIO2_VOICE_NOPITCH,
@@ -91,14 +91,14 @@ namespace SlimDX
 			FlushBuffers = XAUDIO2_FLUSH_BUFFERS,
 		};
 
-		[Flags]
-		public enum class BufferFlags : Int32
+		[System::Flags]
+		public enum class BufferFlags : System::Int32
 		{
 			EndOfStream = XAUDIO2_END_OF_STREAM,
 		};
 
-		[Flags]
-		public enum class Speakers : Int32
+		[System::Flags]
+		public enum class Speakers : System::Int32
 		{
 			FrontLeft = SPEAKER_FRONT_LEFT,
 			FrontRight = SPEAKER_FRONT_RIGHT,

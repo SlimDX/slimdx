@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,8 @@
 
 #include "Enums.h"
 
-using namespace System;
-using namespace System::Runtime::InteropServices;
+//using namespace System;
+//using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
@@ -34,28 +34,28 @@ namespace SlimDX
 	{
 		ref class EngineCallback;
 
-		[StructLayout( LayoutKind::Sequential )]
+		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class PerformanceData
 		{
-			Int64 AudioCyclesSinceLastQuery;
-			Int64 TotalCyclesSinceLastQuery;
-			Int32 MinimumCyclesPerQuantum;
-			Int32 MaximumCyclesPerQuantum;
+			System::Int64 AudioCyclesSinceLastQuery;
+			System::Int64 TotalCyclesSinceLastQuery;
+			System::Int32 MinimumCyclesPerQuantum;
+			System::Int32 MaximumCyclesPerQuantum;
 
-			Int32 CurrentLatencyInSamples;
-			Int32 CurrentOutputSamplesQueued;
-			Int32 GlitchesSinceLastQuery;
+			System::Int32 CurrentLatencyInSamples;
+			System::Int32 CurrentOutputSamplesQueued;
+			System::Int32 GlitchesSinceLastQuery;
 
-			Int32 ActiveSourceVoiceCount;
-			Int32 TotalSourceVoiceCount;
-			Int32 ActiveSubmixVoiceCount;
-			Int32 TotalSubmixVoiceCount;
+			System::Int32 ActiveSourceVoiceCount;
+			System::Int32 TotalSourceVoiceCount;
+			System::Int32 ActiveSubmixVoiceCount;
+			System::Int32 TotalSubmixVoiceCount;
 
-			Int32 ActiveXmaSourceVoices;
-			Int32 ActiveXmaStreams;
+			System::Int32 ActiveXmaSourceVoices;
+			System::Int32 ActiveXmaStreams;
 		};
 
-		[StructLayout( LayoutKind::Explicit, Pack = 2)]
+		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Explicit, Pack = 2)]
 		public value class WaveFormatExtended
 		{
 			[FieldOffset( 0 )]
@@ -89,8 +89,8 @@ namespace SlimDX
 
 		public value class DeviceDetails
 		{
-			String^ DeviceId;
-			String^ DisplayName;
+			System::String^ DeviceId;
+			System::String^ DisplayName;
 			DeviceRole Role;
 			WaveFormatExtended OutputFormat;
 		};

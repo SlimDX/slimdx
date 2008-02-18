@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,13 +21,11 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Collections::ObjectModel;
-using namespace System::Runtime::InteropServices;
-
 #include "../ComObject.h"
 
 #include "Enums.h"
+
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
@@ -79,7 +77,7 @@ namespace SlimDX
 			/// Constructs an Output from an unmanaged pointer.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGIOutput pointer.</param>
-			Output( IntPtr pointer );
+			Output( System::IntPtr pointer );
 			
 			/// <summary>
 			/// Gets a list of display modes matching certain specifications.
@@ -87,7 +85,7 @@ namespace SlimDX
 			/// <param name="format">The display mode color format.</param>
 			/// <param name="flags">Flags indicating how the display mode scanline order and scaling.</param>
 			/// <returns>A list of matching display mode descriptions. The list is null if an error occured.</returns>
-			ReadOnlyCollection<ModeDescription>^ GetDisplayModeList( Format format, DisplayModeEnumerationFlags flags );
+			System::Collections::ObjectModel::ReadOnlyCollection<ModeDescription>^ GetDisplayModeList( Format format, DisplayModeEnumerationFlags flags );
 			
 			/// <summary>
 			/// Gets the display mode that best matches the requested mode.

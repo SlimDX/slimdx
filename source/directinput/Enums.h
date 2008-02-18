@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 namespace SlimDX
 {
@@ -30,7 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the axis mode for the device.
 		/// </summary>
-		public enum class DeviceAxisMode : Int32
+		public enum class DeviceAxisMode : System::Int32
 		{
 			/// <summary>
 			/// The axis works with absolute data.
@@ -46,8 +46,8 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the device type of an object data format.
 		/// </summary>
-		[Flags]
-		public enum class ObjectDeviceType : Int32
+		[System::Flags]
+		public enum class ObjectDeviceType : System::Int32
 		{
 			/// <summary>
 		    /// The object must be an absolute axis.
@@ -103,8 +103,8 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies other attributes of an object data format.
 		/// </summary>
-		[Flags]
-		public enum class ObjectDataFormatFlags : Int32
+		[System::Flags]
+		public enum class ObjectDataFormatFlags : System::Int32
 		{
 			/// <summary>
 		    /// No extra flags specified.
@@ -135,7 +135,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies other attributes of a data format.
 		/// </summary>
-		public enum class DataFormatFlag : Int32
+		public enum class DataFormatFlag : System::Int32
 		{
 			/// <summary>
 			/// The axes are in absolute mode.
@@ -151,7 +151,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the main type of a DirectInput device.
 		/// </summary>
-		public enum class DeviceType : Int32
+		public enum class DeviceType : System::Int32
 		{
 			/// <summary>
 			/// A first-person action game device.
@@ -219,8 +219,8 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the flags that can be associated with a DirectInput device.
 		/// </summary>
-		[Flags]
-		public enum class DeviceFlags : Int32
+		[System::Flags]
+		public enum class DeviceFlags : System::Int32
 		{
 			/// <summary>
 			/// The device is a duplicate of another DirectInput device.
@@ -304,8 +304,8 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the cooperative level for a DirectInput device.
 		/// </summary>
-		[Flags]
-		public enum class CooperativeLevel : Int32
+		[System::Flags]
+		public enum class CooperativeLevel : System::Int32
 		{
 			/// <summary>
 			/// Exclusive access to the device.
@@ -336,7 +336,7 @@ namespace SlimDX
 		/// <summary>
 		/// The data format for a DirectInput device.
 		/// </summary>
-		public enum class DeviceDataFormat : Int32
+		public enum class DeviceDataFormat : System::Int32
 		{
 			/// <summary>
 			/// Keyboard data.

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,6 @@
 */
 #pragma once
 
-using namespace System;
-
 #include <dxgi.h>
 
 namespace SlimDX
@@ -33,14 +31,14 @@ namespace SlimDX
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
 		
-		[Flags]
-		public enum class DisplayModeEnumerationFlags : Int32
+		[System::Flags]
+		public enum class DisplayModeEnumerationFlags : System::Int32
 		{
 			Interlaced = DXGI_ENUM_MODES_INTERLACED,
 			Scaling = DXGI_ENUM_MODES_SCALING
 		};
 		
-		public enum class DisplayModeRotation : Int32
+		public enum class DisplayModeRotation : System::Int32
 		{
 			Unspecified = DXGI_MODE_ROTATION_UNSPECIFIED,
 			Identity = DXGI_MODE_ROTATION_IDENTITY,
@@ -49,14 +47,14 @@ namespace SlimDX
 			Rotate270Degrees = DXGI_MODE_ROTATION_ROTATE270
 		};
 
-		public enum class DisplayModeScaling : Int32
+		public enum class DisplayModeScaling : System::Int32
 		{
 			Unspecified = DXGI_MODE_SCALING_UNSPECIFIED,
 			Centered = DXGI_MODE_SCALING_CENTERED,
 			Stretched = DXGI_MODE_SCALING_STRETCHED
 		};
 
-		public enum class DisplayModeScanlineOrdering : Int32
+		public enum class DisplayModeScanlineOrdering : System::Int32
 		{
 			Unspecified = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED,
 			Progressive = DXGI_MODE_SCANLINE_ORDER_PROGRESSIVE,
@@ -64,7 +62,7 @@ namespace SlimDX
 			LowerFieldFirst = DXGI_MODE_SCANLINE_ORDER_LOWER_FIELD_FIRST
 		};
 		
-		public enum class Format : Int32
+		public enum class Format : System::Int32
 		{
 			Unknown = DXGI_FORMAT_UNKNOWN,
 			R32G32B32A32_Typeless = DXGI_FORMAT_R32G32B32A32_TYPELESS,
@@ -157,16 +155,16 @@ namespace SlimDX
 			B8G8R8X8_UNorm = DXGI_FORMAT_B8G8R8X8_UNORM
 		};
 		
-		[Flags]
-		public enum class MapFlags : Int32
+		[System::Flags]
+		public enum class MapFlags : System::Int32
 		{
 			Read = DXGI_MAP_READ,
 			Write = DXGI_MAP_WRITE,
 			Discard = DXGI_MAP_DISCARD
 		};
 		
-		[Flags]
-		public enum class PresentFlags : Int32
+		[System::Flags]
+		public enum class PresentFlags : System::Int32
 		{
 			None = 0,
 			DoNotSequence = DXGI_PRESENT_DO_NOT_SEQUENCE,
@@ -174,21 +172,21 @@ namespace SlimDX
 			Test = DXGI_PRESENT_TEST
 		};
 
-		public enum class PresentResult : Int32
+		public enum class PresentResult : System::Int32
 		{
 			Okay = S_OK,
 			Occluded = DXGI_STATUS_OCCLUDED,
 			Failed
 		};
 		
-		public enum class Residency : Int32
+		public enum class Residency : System::Int32
 		{
 			FullyResident = DXGI_RESIDENCY_FULLY_RESIDENT,
 			ResidentInSharedMemory = DXGI_RESIDENCY_RESIDENT_IN_SHARED_MEMORY,
 			EvictedToDisk = DXGI_RESIDENCY_EVICTED_TO_DISK
 		};
 		
-		public enum class ResourcePriority : UInt32
+		public enum class ResourcePriority : System::UInt32
 		{
 			Minimum = DXGI_RESOURCE_PRIORITY_MINIMUM,
 			Low = DXGI_RESOURCE_PRIORITY_LOW,
@@ -197,21 +195,21 @@ namespace SlimDX
 			Maximum = DXGI_RESOURCE_PRIORITY_MAXIMUM
 		};
 
-		[Flags]
-		public enum class SwapChainFlags : Int32
+		[System::Flags]
+		public enum class SwapChainFlags : System::Int32
 		{
 			None = 0,
 			NonPrerotated = DXGI_SWAP_CHAIN_FLAG_NONPREROTATED,
 			AllowModeSwitch = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH
 		};
 
-		public enum class SwapEffect : Int32
+		public enum class SwapEffect : System::Int32
 		{
 			Discard = DXGI_SWAP_EFFECT_DISCARD,
 			Sequential = DXGI_SWAP_EFFECT_SEQUENTIAL
 		};
 		
-		public enum class Usage : Int32
+		public enum class Usage : System::Int32
 		{
 			ShaderInput = DXGI_USAGE_SHADER_INPUT,
 			RenderTargetOutput = DXGI_USAGE_RENDER_TARGET_OUTPUT,
@@ -223,8 +221,8 @@ namespace SlimDX
 		/// <remarks>
 		/// Values which control a swap chain's window association behavior.
 		/// </remarks>
-		[Flags]
-		public enum class WindowAssociationFlags : Int32
+		[System::Flags]
+		public enum class WindowAssociationFlags : System::Int32
 		{
 			None = 0,
 			IgnoreAll = DXGI_MWA_NO_WINDOW_CHANGES,

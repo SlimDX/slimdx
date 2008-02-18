@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 #include <windows.h>
 
@@ -35,14 +35,14 @@ namespace SlimDX
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
 		
-		public enum class Basis : Int32
+		public enum class Basis : System::Int32
 		{
 			Bezier = D3DBASIS_BEZIER,
 			BSpline = D3DBASIS_BSPLINE,
 			CatmullRom = D3DBASIS_CATMULL_ROM,
 		};
 		
-		public enum class Blend : Int32
+		public enum class Blend : System::Int32
 		{
 			Zero = D3DBLEND_ZERO,
 			One = D3DBLEND_ONE,
@@ -61,7 +61,7 @@ namespace SlimDX
 			InvBlendFactor = D3DBLEND_INVBLENDFACTOR,
 		};
 		
-		public enum class BlendOperation : Int32
+		public enum class BlendOperation : System::Int32
 		{
 			Add = D3DBLENDOP_ADD,
 			Subtract = D3DBLENDOP_SUBTRACT,
@@ -70,7 +70,7 @@ namespace SlimDX
 			Maximum = D3DBLENDOP_MAX,
 		};
 		
-		public enum class Channel : Int32
+		public enum class Channel : System::Int32
 		{
 			Red = D3DX_CHANNEL_RED,
 			Blue = D3DX_CHANNEL_BLUE,
@@ -79,8 +79,8 @@ namespace SlimDX
 			Luminance = D3DX_CHANNEL_LUMINANCE
 		};
 
-		[Flags]
-		public enum class ClearFlags : Int32
+		[System::Flags]
+		public enum class ClearFlags : System::Int32
 		{
 			None = 0,
 			Stencil = D3DCLEAR_STENCIL,
@@ -88,15 +88,15 @@ namespace SlimDX
 			ZBuffer = D3DCLEAR_ZBUFFER
 		};
 		
-		public enum class ColorSource : Int32
+		public enum class ColorSource : System::Int32
 		{
 			Material = D3DMCS_MATERIAL,
 			Color1 = D3DMCS_COLOR1,
 			Color2 = D3DMCS_COLOR2,
 		};
 		
-		[Flags]
-		public enum class ColorWriteEnable : Int32
+		[System::Flags]
+		public enum class ColorWriteEnable : System::Int32
 		{
 			Alpha = D3DCOLORWRITEENABLE_ALPHA,
 			Blue = D3DCOLORWRITEENABLE_BLUE,
@@ -128,7 +128,7 @@ namespace SlimDX
 			Always = D3DCMP_ALWAYS
 		};
 
-		public enum class CooperativeLevel : Int32
+		public enum class CooperativeLevel : System::Int32
 		{
 			Ok = D3D_OK,
 			DeviceLost = D3DERR_DEVICELOST,
@@ -136,7 +136,7 @@ namespace SlimDX
 			DriverInternalError = D3DERR_DRIVERINTERNALERROR,
 		};
 		
-		public enum class CubeMapFace : Int32
+		public enum class CubeMapFace : System::Int32
 		{
 			PositiveX = D3DCUBEMAP_FACE_POSITIVE_X,
 			NegativeX = D3DCUBEMAP_FACE_NEGATIVE_X,
@@ -146,14 +146,14 @@ namespace SlimDX
 			NegativeZ = D3DCUBEMAP_FACE_NEGATIVE_Z
 		};
 		
-		public enum class Cull : Int32
+		public enum class Cull : System::Int32
 		{
 			Clockwise = D3DCULL_CW,
 			Counterclockwise = D3DCULL_CCW,
 			None = D3DCULL_NONE
 		};
 		
-		public enum class CharacterSet : Int32
+		public enum class CharacterSet : System::Int32
 		{
 			Ansi = ANSI_CHARSET,
 			Default = DEFAULT_CHARSET,
@@ -178,8 +178,8 @@ namespace SlimDX
 			Mac = MAC_CHARSET,
 		};
 
-		[Flags]
-		public enum class CreateFlags : Int32
+		[System::Flags]
+		public enum class CreateFlags : System::Int32
 		{
 			None = 0,
 			AdapterGroupDevice = D3DCREATE_ADAPTERGROUP_DEVICE,
@@ -194,7 +194,7 @@ namespace SlimDX
 			SoftwareVertexProcessing = D3DCREATE_SOFTWARE_VERTEXPROCESSING,
 		};
 		
-		public enum class DeclarationMethod : Byte
+		public enum class DeclarationMethod : System::Byte
 		{
 			Default = D3DDECLMETHOD_DEFAULT,
 			PartialU = D3DDECLMETHOD_PARTIALU,
@@ -205,7 +205,7 @@ namespace SlimDX
 			LookupPresampled = D3DDECLMETHOD_LOOKUPPRESAMPLED
 		};
 
-		public enum class DeclarationType : Byte
+		public enum class DeclarationType : System::Byte
 		{
 			Float1 = D3DDECLTYPE_FLOAT1,
 			Float2 = D3DDECLTYPE_FLOAT2,
@@ -230,7 +230,7 @@ namespace SlimDX
 			Unused = D3DDECLTYPE_UNUSED
 		};
 
-		public enum class DeclarationUsage : Byte
+		public enum class DeclarationUsage : System::Byte
 		{
 			Position = D3DDECLUSAGE_POSITION,
 			BlendWeight = D3DDECLUSAGE_BLENDWEIGHT,
@@ -248,7 +248,7 @@ namespace SlimDX
 			Sample = D3DDECLUSAGE_SAMPLE
 		};
 		
-		public enum class Degree : Int32
+		public enum class Degree : System::Int32
 		{
 			Linear = D3DDEGREE_LINEAR,
 			Quadratic = D3DDEGREE_QUADRATIC,
@@ -256,7 +256,7 @@ namespace SlimDX
 			Quintic = D3DDEGREE_QUINTIC,
 		};
 		
-		public enum class DeviceType : Int32
+		public enum class DeviceType : System::Int32
 		{
 			Hardware = D3DDEVTYPE_HAL,
 			NullReference = D3DDEVTYPE_NULLREF,
@@ -264,8 +264,8 @@ namespace SlimDX
 			Software = D3DDEVTYPE_SW
 		};
 		
-		[Flags]
-		public enum class DrawTextFormat : Int32
+		[System::Flags]
+		public enum class DrawTextFormat : System::Int32
 		{
 			Top = DT_TOP,
 			Left = DT_LEFT,
@@ -281,22 +281,22 @@ namespace SlimDX
 			RtlReading = DT_RTLREADING,
 		};
 		
-		public enum class DriverLevel : Int32
+		public enum class DriverLevel : System::Int32
 		{
 			Direct3D7 = 700,
 			Direct3D8 = 800,
 			Direct3D9 = 900,
 		};
 		
-		public enum class FillMode : Int32
+		public enum class FillMode : System::Int32
 		{
 			Point = D3DFILL_POINT,
 			Wireframe = D3DFILL_WIREFRAME,
 			Solid = D3DFILL_SOLID
 		};
 		
-		[Flags]
-		public enum class Filter : Int32
+		[System::Flags]
+		public enum class Filter : System::Int32
 		{
 			Default = (int) D3DX_DEFAULT,
 			None = D3DX_FILTER_NONE,
@@ -314,7 +314,7 @@ namespace SlimDX
 			SrgbOut = D3DX_FILTER_SRGB_OUT
 		};
 		
-		public enum class FontQuality : Int32
+		public enum class FontQuality : System::Int32
 		{
 			Default = DEFAULT_QUALITY,
 			Draft = DRAFT_QUALITY,
@@ -325,7 +325,7 @@ namespace SlimDX
 			ClearTypeNatural = CLEARTYPE_NATURAL_QUALITY,
 		};
 
-		public enum class FontWeight : Int32
+		public enum class FontWeight : System::Int32
 		{
 			DoNotCare = FW_DONTCARE,
 			Thin = FW_THIN,
@@ -344,7 +344,7 @@ namespace SlimDX
 			Black = FW_BLACK,
 		};
 
-		public enum class Format : Int32
+		public enum class Format : System::Int32
 		{
 			R8G8B8 = D3DFMT_R8G8B8,
 			A8R8G8B8 = D3DFMT_A8R8G8B8,
@@ -423,8 +423,8 @@ namespace SlimDX
 			Unknown = D3DFMT_UNKNOWN,
 		};
 		
-		[Flags]
-		public enum class FX : Int32
+		[System::Flags]
+		public enum class FX : System::Int32
 		{
 			None = 0,
 			DoNotSaveState = D3DXFX_DONOTSAVESTATE,
@@ -432,7 +432,7 @@ namespace SlimDX
 			DoNotSaveSamplerState = D3DXFX_DONOTSAVESAMPLERSTATE,
 		};
 		
-		public enum class ImageFileFormat : Int32
+		public enum class ImageFileFormat : System::Int32
 		{
 			Bmp = D3DXIFF_BMP,
 			Jpg = D3DXIFF_JPG,
@@ -445,15 +445,15 @@ namespace SlimDX
 			Pfm = D3DXIFF_PFM,
 		};
 		
-		public enum class LightType : Int32
+		public enum class LightType : System::Int32
 		{
 			Point = D3DLIGHT_POINT,
 			Spot = D3DLIGHT_SPOT,
 			Directional = D3DLIGHT_DIRECTIONAL,
 		};
 		
-		[Flags]
-		public enum class LockFlags : Int32
+		[System::Flags]
+		public enum class LockFlags : System::Int32
 		{
 			Discard = D3DLOCK_DISCARD,
 			DoNotWait = D3DLOCK_DONOTWAIT,
@@ -467,7 +467,7 @@ namespace SlimDX
 			DoNotCopyData = D3DPV_DONOTCOPYDATA,
 		};
 		
-		public enum class MultisampleType : Int32
+		public enum class MultisampleType : System::Int32
 		{
 			None = D3DMULTISAMPLE_NONE,
 			NonMaskable = D3DMULTISAMPLE_NONMASKABLE,
@@ -488,8 +488,8 @@ namespace SlimDX
 			SixteenSamples = D3DMULTISAMPLE_16_SAMPLES
 		};
 		
-		[Flags]
-		public enum class NormalMapFlags : Int32
+		[System::Flags]
+		public enum class NormalMapFlags : System::Int32
 		{
 			MirrorU = D3DX_NORMALMAP_MIRROR_U,
 			MirrorV = D3DX_NORMALMAP_MIRROR_V,
@@ -498,7 +498,7 @@ namespace SlimDX
 			ComputeOcclusion = D3DX_NORMALMAP_COMPUTE_OCCLUSION
 		};
 		
-		public enum class ParameterClass : Int32
+		public enum class ParameterClass : System::Int32
 		{
 			Scalar = D3DXPC_SCALAR,
 			Vector = D3DXPC_VECTOR,
@@ -508,8 +508,8 @@ namespace SlimDX
 			Struct = D3DXPC_STRUCT,
 		};
 
-		[Flags]
-		public enum class ParameterFlags : Int32
+		[System::Flags]
+		public enum class ParameterFlags : System::Int32
 		{
 			None = 0,
 			Shared = D3DX_PARAMETER_SHARED,
@@ -517,7 +517,7 @@ namespace SlimDX
 			Annotation = D3DX_PARAMETER_ANNOTATION,
 		};
 
-		public enum class ParameterType : Int32
+		public enum class ParameterType : System::Int32
 		{
 			Void = D3DXPT_VOID,
 			Bool = D3DXPT_BOOL,
@@ -541,8 +541,8 @@ namespace SlimDX
 			X = D3DX_PARAMETER_ANNOTATION
 		};
 		
-		[Flags]
-		public enum class PitchAndFamily : Int32
+		[System::Flags]
+		public enum class PitchAndFamily : System::Int32
 		{
 			Default = DEFAULT_PITCH,
 			Fixed = FIXED_PITCH,
@@ -557,7 +557,7 @@ namespace SlimDX
 			Decorative = FF_DECORATIVE,
 		};
 		
-		public enum class Pool : Int32
+		public enum class Pool : System::Int32
 		{
 			Default = D3DPOOL_DEFAULT,
 			Managed = D3DPOOL_MANAGED,
@@ -565,7 +565,7 @@ namespace SlimDX
 			Scratch = D3DPOOL_SCRATCH,
 		};
 
-		public enum class Precision : Int32
+		public enum class Precision : System::Int32
 		{
 			Default = OUT_DEFAULT_PRECIS,
 			String = OUT_STRING_PRECIS,
@@ -580,16 +580,16 @@ namespace SlimDX
 			PostScriptOnly = OUT_PS_ONLY_PRECIS,
 		};
 		
-		[Flags]
-		public enum class Present : Int32
+		[System::Flags]
+		public enum class Present : System::Int32
 		{
 			None = 0,
 			DoNotWait = D3DPRESENT_DONOTWAIT,
 			LinearContent = D3DPRESENT_LINEAR_CONTENT
 		};
 		
-		[Flags]
-		public enum class PresentFlags : Int32
+		[System::Flags]
+		public enum class PresentFlags : System::Int32
 		{
 			DeviceClip = D3DPRESENTFLAG_DEVICECLIP,
 			DiscardDepthStencil = D3DPRESENTFLAG_DISCARD_DEPTHSTENCIL,
@@ -598,8 +598,8 @@ namespace SlimDX
 			Video = D3DPRESENTFLAG_VIDEO
 		};
 
-		[Flags]
-		public enum class PresentInterval : Int32
+		[System::Flags]
+		public enum class PresentInterval : System::Int32
 		{
 			Default = D3DPRESENT_INTERVAL_DEFAULT,
 			Immediate = (int) D3DPRESENT_INTERVAL_IMMEDIATE,
@@ -609,7 +609,7 @@ namespace SlimDX
 			Four = D3DPRESENT_INTERVAL_FOUR,
 		};
 		
-		public enum class PrimitiveType : Int32
+		public enum class PrimitiveType : System::Int32
 		{
 			PointList = D3DPT_POINTLIST,
 			LineList = D3DPT_LINELIST,
@@ -619,7 +619,7 @@ namespace SlimDX
 			TriangleFan = D3DPT_TRIANGLEFAN
 		};
 
-		public enum class QueryType : Int32
+		public enum class QueryType : System::Int32
 		{
 			VCache = D3DQUERYTYPE_VCACHE,
 			ResourceManager = D3DQUERYTYPE_RESOURCEMANAGER,
@@ -637,7 +637,7 @@ namespace SlimDX
 			CacheUtilization = D3DQUERYTYPE_CACHEUTILIZATION,
 		};
 
-		public enum class R2VBSampler : Int32
+		public enum class R2VBSampler : System::Int32
 		{
 			OverrideDMap = R2VB_VSMP_OVR_DMAP,
 			OverrideVtx0 = R2VB_VSMP_OVR_VTX0,
@@ -648,7 +648,7 @@ namespace SlimDX
 			Count = R2VB_VSMP_NUM,
 		};
 		
-		public enum class RenderState : Int32
+		public enum class RenderState : System::Int32
 		{
 			ZEnable = D3DRS_ZENABLE,
 			FillMode = D3DRS_FILLMODE,
@@ -755,7 +755,7 @@ namespace SlimDX
 			BlendOperationAlpha = D3DRS_BLENDOPALPHA,
 		};
 		
-		public enum class ResourceType : Int32
+		public enum class ResourceType : System::Int32
 		{
 			Surface = D3DRTYPE_SURFACE,
 			Volume = D3DRTYPE_VOLUME,
@@ -766,7 +766,7 @@ namespace SlimDX
 			IndexBuffer = D3DRTYPE_INDEXBUFFER,
 		};
 		
-		public enum class SamplerState : Int32
+		public enum class SamplerState : System::Int32
 		{
 			AddressU = D3DSAMP_ADDRESSU,
 			AddressV = D3DSAMP_ADDRESSV,
@@ -786,7 +786,7 @@ namespace SlimDX
 		/// <summary>
 		/// Shading modes.
 		/// </summary>
-		public enum class ShadeMode : Int32
+		public enum class ShadeMode : System::Int32
 		{
 			/// <summary>Flat shading.</summary>
 			Flat = D3DSHADE_FLAT,
@@ -794,8 +794,8 @@ namespace SlimDX
 			Gouraud = D3DSHADE_GOURAUD
 		};
 		
-		[Flags]
-		public enum class ShaderFlags : Int32
+		[System::Flags]
+		public enum class ShaderFlags : System::Int32
 		{
 			None = 0,
 
@@ -842,14 +842,14 @@ namespace SlimDX
 			Decrement = D3DSTENCILOP_DECR
 		};
 		
-		public enum class SwapEffect : Int32
+		public enum class SwapEffect : System::Int32
 		{
 			Discard = D3DSWAPEFFECT_DISCARD,
 			Flip = D3DSWAPEFFECT_FLIP,
 			Copy = D3DSWAPEFFECT_COPY,
 		};
 		
-		public enum class TextureAddress : Int32
+		public enum class TextureAddress : System::Int32
 		{
 			Wrap = D3DTADDRESS_WRAP,
 			Mirror = D3DTADDRESS_MIRROR,
@@ -858,7 +858,7 @@ namespace SlimDX
 			MirrorOnce = D3DTADDRESS_MIRRORONCE,
 		};
 		
-		public enum class TextureArgument : Int32
+		public enum class TextureArgument : System::Int32
 		{
 			SelectMask = D3DTA_SELECTMASK,
 			Diffuse = D3DTA_DIFFUSE,
@@ -872,8 +872,8 @@ namespace SlimDX
 			AlphaReplicate = D3DTA_ALPHAREPLICATE,
 		};
 		
-		[Flags]
-		public enum class TextureCoordIndex : Int32
+		[System::Flags]
+		public enum class TextureCoordIndex : System::Int32
 		{
 			PassThru = D3DTSS_TCI_PASSTHRU,
 			CameraSpaceNormal = D3DTSS_TCI_CAMERASPACENORMAL,
@@ -882,7 +882,7 @@ namespace SlimDX
 			SphereMap = D3DTSS_TCI_SPHEREMAP,
 		};
 		
-		public enum class TextureFilter : Int32
+		public enum class TextureFilter : System::Int32
 		{
 			None = D3DTEXF_NONE,
 			Point = D3DTEXF_POINT,
@@ -892,7 +892,7 @@ namespace SlimDX
 			GaussianQuad = D3DTEXF_GAUSSIANQUAD,
 		};
 
-		public enum class TextureOperation : Int32
+		public enum class TextureOperation : System::Int32
 		{
 			Disable = D3DTOP_DISABLE,
 			SelectArg1 = D3DTOP_SELECTARG1,
@@ -930,7 +930,7 @@ namespace SlimDX
 			Lerp = D3DTOP_LERP,
 		};
 		
-		public enum class TextureStage : Int32
+		public enum class TextureStage : System::Int32
 		{
 			ColorOperation = D3DTSS_COLOROP,
 			ColorArg1 = D3DTSS_COLORARG1,
@@ -952,7 +952,7 @@ namespace SlimDX
 			Constant = D3DTSS_CONSTANT,
 		};
 		
-		public enum class TextureTransform : Int32
+		public enum class TextureTransform : System::Int32
 		{
 			Disable = D3DTTFF_DISABLE,
 			Count1 = D3DTTFF_COUNT1,
@@ -962,7 +962,7 @@ namespace SlimDX
 			Projected = D3DTTFF_PROJECTED,
 		};
 		
-		public enum class TransformState : Int32
+		public enum class TransformState : System::Int32
 		{
 			View = D3DTS_VIEW,
 			Projection = D3DTS_PROJECTION,
@@ -980,8 +980,8 @@ namespace SlimDX
 			Texture7 = D3DTS_TEXTURE7,
 		};
 		
-		[Flags]
-		public enum class Usage : Int32
+		[System::Flags]
+		public enum class Usage : System::Int32
 		{
 			None = 0,
 			AutoGenerateMipMap = D3DUSAGE_AUTOGENMIPMAP,
@@ -1008,8 +1008,8 @@ namespace SlimDX
 			R2VBTarget = RenderTarget | QueryDisplacementMap,
 		};
 		
-		[Flags]
-		public enum class VertexFormat : Int32
+		[System::Flags]
+		public enum class VertexFormat : System::Int32
 		{
 			None = 0,
 

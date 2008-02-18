@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 #include "../ComObject.h"
 #include "../DataBox.h"
@@ -117,14 +117,14 @@ namespace SlimDX
 			/// <summary>
 			/// Construct( s ); a <see cref="Texture3D"/> from a native pointer.
 			/// </summary>
-			/// <param name="nativeObject">A native ID3D10Texture3D pointer, as an IntPtr.</param>
-			Texture3D( IntPtr nativeObject );
+			/// <param name="nativeObject">A native ID3D10Texture3D pointer, as an System::IntPtr.</param>
+			Texture3D( System::IntPtr nativeObject );
 			Texture3D( Device^ device, int width, int height, int depth, int mipLevels, DXGI::Format format,
 				ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,ResourceOptionFlags optionFlags );
 			virtual ~Texture3D() { }
 
-			static Texture3D^ FromFile( Device^ device, String^ fileName );
-			static Texture3D^ FromStream( Device^ device, Stream^ stream, int sizeInBytes );
+			static Texture3D^ FromFile( Device^ device, System::String^ fileName );
+			static Texture3D^ FromStream( Device^ device, System::IO::Stream^ stream, int sizeInBytes );
 		};
 	}
 };

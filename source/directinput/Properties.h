@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,9 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::InteropServices;
-using namespace System::Collections::Generic;
+//using namespace System;
+//using namespace System::Runtime::InteropServices;
+//using namespace System::Collections::Generic;
 
 namespace SlimDX
 {
@@ -45,7 +45,7 @@ namespace SlimDX
 			/// <summary>
 			/// Retrieves the localized key name for the specified keyboard key.
 			/// </summary>
-			String^ GetKeyName( Key key );
+			System::String^ GetKeyName( Key key );
 
 			/// <summary>
 			/// Retrieves the scan code for the specified keyboard key.
@@ -60,10 +60,10 @@ namespace SlimDX
 			/// <summary>
 			/// Gets or sets an application-defined value associated with the device.
 			/// </summary>
-			property Object^ ApplicationData
+			property System::Object^ ApplicationData
 			{
-				Object^ get();
-				void set( Object^ value );
+				System::Object^ get();
+				void set( System::Object^ value );
 			}
 
 			/// <summary>
@@ -122,9 +122,9 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the human-readable display name of the port to which the device is connected.
 			/// </summary>
-			property String^ PortDisplayName
+			property System::String^ PortDisplayName
 			{
-				String^ get();
+				System::String^ get();
 			}
 
 			/// <summary>
@@ -138,26 +138,26 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the class identifier for the device.
 			/// </summary>
-			property Guid ClassGuid
+			property System::Guid ClassGuid
 			{
-				Guid get();
+				System::Guid get();
 			}
 
 			/// <summary>
 			/// Gets the physical interface path to which the device is connected.
 			/// </summary>
-			property String^ InterfacePath
+			property System::String^ InterfacePath
 			{
-				String^ get();
+				System::String^ get();
 			}
 
 			/// <summary>
 			/// Gets or sets the friendly instance name of the device.
 			/// </summary>
-			property String^ InstanceName
+			property System::String^ InstanceName
 			{
-				String^ get();
-				void set( String^ value );
+				System::String^ get();
+				void set( System::String^ value );
 			}
 
 			/// <summary>
@@ -171,10 +171,10 @@ namespace SlimDX
 			/// <summary>
 			/// Gets or sets the friendly product name of the device.
 			/// </summary>
-			property String^ ProductName
+			property System::String^ ProductName
 			{
-				String^ get();
-				void set( String^ value );
+				System::String^ get();
+				void set( System::String^ value );
 			}
 
 			/// <summary>
@@ -205,17 +205,17 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the type name of the device.
 			/// </summary>
-			property String^ TypeName
+			property System::String^ TypeName
 			{
-				String^ get();
+				System::String^ get();
 			}
 
 			/// <summary>
 			/// Gets the user name for a user currently assigned to the device.
 			/// </summary>
-			property String^ UserName
+			property System::String^ UserName
 			{
-				String^ get();
+				System::String^ get();
 			}
 
 			/// <summary>
@@ -247,7 +247,7 @@ namespace SlimDX
 
 		internal:
 			/* Unused.
-			ObjectProperties( IDirectInputDevice8W* pointer, String^ name, Type^ dataFormat );
+			ObjectProperties( IDirectInputDevice8W* pointer, System::String^ name, System::Type^ dataFormat );
 			ObjectProperties( IDirectInputDevice8W* pointer, int value, bool isUsageCode );
 			*/
 
@@ -260,10 +260,10 @@ namespace SlimDX
 			/// <summary>
 			/// Gets or sets an application-defined value associated with the object.
 			/// </summary>
-			property Object^ ApplicationData
+			property System::Object^ ApplicationData
 			{
-				Object^ get();
-				void set( Object^ value );
+				System::Object^ get();
+				void set( System::Object^ value );
 			}
 
 			/// <summary>

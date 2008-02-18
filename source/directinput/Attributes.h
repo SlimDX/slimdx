@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 namespace SlimDX
 {
@@ -30,8 +30,8 @@ namespace SlimDX
 		/// <summary>
 		/// Indicates that a type is a data format specification for DirectInput.
 		/// </summary>
-		[AttributeUsage(AttributeTargets::Class | AttributeTargets::Struct)]
-		public ref class DataFormatAttribute sealed : public Attribute
+		[System::AttributeUsage(System::AttributeTargets::Class | System::AttributeTargets::Struct)]
+		public ref class DataFormatAttribute sealed : public System::Attribute
 		{
 		private:
 			DataFormatFlag flags;
@@ -54,11 +54,11 @@ namespace SlimDX
 		/// <summary>
 		/// Indicates that a type is a data format specification for DirectInput.
 		/// </summary>
-		[AttributeUsage(AttributeTargets::Field)]
-		public ref class DataObjectAttribute sealed : public Attribute
+		[System::AttributeUsage(System::AttributeTargets::Field)]
+		public ref class DataObjectAttribute sealed : public System::Attribute
 		{
 		private:
-			Guid sourceGuid;
+			System::Guid sourceGuid;
 			int instanceNumber;
 			ObjectDeviceType type;
 			ObjectDataFormatFlags flags;
@@ -77,7 +77,7 @@ namespace SlimDX
 			/// </summary>
 			DataObjectAttribute()
 			{
-				sourceGuid = Guid::Empty;
+				sourceGuid = System::Guid::Empty;
 				instanceNumber = -1;
 				type = ( ObjectDeviceType )0;
 				flags = ObjectDataFormatFlags::None;
@@ -89,10 +89,10 @@ namespace SlimDX
 			/// <see cref="System::Guid::Empty"/> indicates that any type of object
 			/// is permissible.
 		    /// </summary>
-			property Guid SourceGuid
+			property System::Guid SourceGuid
 			{
-				Guid get() { return sourceGuid; }
-				void set( Guid value ) { sourceGuid = value; }
+				System::Guid get() { return sourceGuid; }
+				void set( System::Guid value ) { sourceGuid = value; }
 			}
 
 			/// <summary>

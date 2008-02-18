@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,8 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::Serialization;
+//using namespace System;
+//using namespace System::Runtime::Serialization;
 
 #include "Direct3D9Exception.h"
 
@@ -30,16 +30,16 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		[Serializable]
+		[System::Serializable]
 		public ref class Direct3D9NotFoundException : public Direct3D9Exception
 		{
 		protected:
-			Direct3D9NotFoundException( SerializationInfo^ info, StreamingContext context );
+			Direct3D9NotFoundException( System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context );
 			
 		public:
 			Direct3D9NotFoundException();
-			Direct3D9NotFoundException( String^ message );
-			Direct3D9NotFoundException( String^ message, Exception^ innerException );
+			Direct3D9NotFoundException( System::String^ message );
+			Direct3D9NotFoundException( System::String^ message, System::Exception^ innerException );
 		};
 	}
 }

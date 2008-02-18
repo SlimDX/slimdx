@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,8 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Globalization;
+//using namespace System;
+//using namespace System::Globalization;
 
 #include "Enums.h"
 
@@ -42,8 +42,8 @@ namespace SlimDX
 		{
 		private:
 			ID3D10EffectVariable* m_Pointer;
-			String^ m_Name;
-			String^ m_Semantic;
+			System::String^ m_Name;
+			System::String^ m_Semantic;
 			EffectVariableFlags m_Flags;
 			int m_AnnotationCount;
 			int m_BufferOffset;
@@ -60,18 +60,18 @@ namespace SlimDX
 			EffectVariable( ID3D10EffectVariable* variable );
 			
 		public:
-			property String^ Name
+			property System::String^ Name
 			{
-				String^ get() { return m_Name; }
+				System::String^ get() { return m_Name; }
 			protected:
-				void set( String^ value ) { m_Name = value; }
+				void set( System::String^ value ) { m_Name = value; }
 			}
 			
-			property String^ Semantic
+			property System::String^ Semantic
 			{
-				String^ get() { return m_Semantic; }
+				System::String^ get() { return m_Semantic; }
 			protected:
-				void set( String^ value ) { m_Semantic = value; }
+				void set( System::String^ value ) { m_Semantic = value; }
 			}
 			
 			property EffectVariableFlags Flags
@@ -108,13 +108,13 @@ namespace SlimDX
 			}
 			
 			EffectVariable^ GetAnnotationByIndex( int index );
-			EffectVariable^ GetAnnotationByName( String^ name );
+			EffectVariable^ GetAnnotationByName( System::String^ name );
 			
 			EffectVariable^ GetElement( int index );
 			
 			EffectVariable^ GetMemberByIndex( int index );
-			EffectVariable^ GetMemberByName( String^ name );
-			EffectVariable^ GetMemberBySemantic( String^ name );
+			EffectVariable^ GetMemberByName( System::String^ name );
+			EffectVariable^ GetMemberBySemantic( System::String^ name );
 			
 			EffectConstantBuffer^ AsConstantBuffer();
 			EffectMatrixVariable^ AsMatrix();

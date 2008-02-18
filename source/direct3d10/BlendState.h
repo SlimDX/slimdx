@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using namespace System;
+//using namespace System;
 
 #include "../ComObject.h"
 
@@ -45,7 +45,7 @@ namespace SlimDX
 			BlendState( ID3D10BlendState* state );
 		
 		public:
-			BlendState( IntPtr state );
+			BlendState( System::IntPtr state );
 			~BlendState() { Destruct(); }
 
 			property bool AlphaToCoverageEnabled
@@ -53,9 +53,9 @@ namespace SlimDX
 				bool get() { return m_Description->AlphaToCoverageEnabled; }
 			}
 			
-			property ReadOnlyCollection<bool>^ RenderTargetBlendEnabled
+			property System::Collections::ObjectModel::ReadOnlyCollection<bool>^ RenderTargetBlendEnabled
 			{
-				ReadOnlyCollection<bool>^ get() { return m_Description->RenderTargetBlendEnabled; }
+				System::Collections::ObjectModel::ReadOnlyCollection<bool>^ get() { return m_Description->RenderTargetBlendEnabled; }
 			}
 			
 			property BlendOption SourceBlend
@@ -88,9 +88,9 @@ namespace SlimDX
 				SlimDX::Direct3D10::BlendOperation get() { return m_Description->AlphaBlendOperation; }
 			}
 			
-			property ReadOnlyCollection<ColorWriteMaskFlags>^ RenderTargetWriteMask
+			property System::Collections::ObjectModel::ReadOnlyCollection<ColorWriteMaskFlags>^ RenderTargetWriteMask
 			{
-				ReadOnlyCollection<ColorWriteMaskFlags>^ get() { return m_Description->RenderTargetWriteMask; }
+				System::Collections::ObjectModel::ReadOnlyCollection<ColorWriteMaskFlags>^ get() { return m_Description->RenderTargetWriteMask; }
 			}
 			
 			BlendState( Device^ device, BlendStateDescription^ description );

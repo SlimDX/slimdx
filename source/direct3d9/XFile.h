@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,8 @@
 */
 #pragma once
 
-using namespace System;
-using namespace System::Runtime::InteropServices;
+//using namespace System;
+//using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
@@ -33,8 +33,8 @@ namespace SlimDX
 		ref class XFileEnumerationObject;
 		ref class XFileData;
 
-		[Flags]
-		public enum class XFileFormat : Int32
+		[System::Flags]
+		public enum class XFileFormat : System::Int32
 		{
 			Binary = D3DXF_FILEFORMAT_BINARY,
 			Text = D3DXF_FILEFORMAT_TEXT,
@@ -49,18 +49,18 @@ namespace SlimDX
 			XFileSaveData( ID3DXFileSaveData *object );
 
 		public:
-			XFileSaveData( IntPtr pointer );
+			XFileSaveData( System::IntPtr pointer );
 			virtual ~XFileSaveData() { Destruct(); }
 
-			XFileSaveData^ AddDataObject( Guid dataTemplate, String^ name, Guid id, array<Byte>^ data );
-			XFileSaveData^ AddDataObject( Guid dataTemplate, String^ name, Guid id, Stream^ data );
+			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, array<System::Byte>^ data );
+			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, System::IO::Stream^ data );
 
-			void AddDataReference( String^ name, Guid id );
+			void AddDataReference( System::String^ name, System::Guid id );
 
-			property Guid Id { Guid get(); }
-			property String^ Name { String^ get(); }
+			property System::Guid Id { System::Guid get(); }
+			property System::String^ Name { System::String^ get(); }
 			property XFileSaveObject^ SaveObject { XFileSaveObject^ get(); }
-			property Guid Type { Guid get(); }
+			property System::Guid Type { System::Guid get(); }
 		};
 
 		public ref class XFileSaveObject : public ComObject
@@ -71,11 +71,11 @@ namespace SlimDX
 			XFileSaveObject( ID3DXFileSaveObject *object );
 
 		public:
-			XFileSaveObject( IntPtr pointer );
+			XFileSaveObject( System::IntPtr pointer );
 			virtual ~XFileSaveObject() { Destruct(); }
 
-			XFileSaveData^ AddDataObject( Guid dataTemplate, String^ name, Guid id, array<Byte>^ data );
-			XFileSaveData^ AddDataObject( Guid dataTemplate, String^ name, Guid id, Stream^ data );
+			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, array<System::Byte>^ data );
+			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, System::IO::Stream^ data );
 			XFile^ GetFile();
 			void Save();
 		};
@@ -88,19 +88,19 @@ namespace SlimDX
 			XFile( ID3DXFile *object );
 
 		public:
-			XFile( IntPtr pointer );
+			XFile( System::IntPtr pointer );
 			XFile();
 			virtual ~XFile() { Destruct(); }
 
-			XFileEnumerationObject^ CreateEnumerationObject( String^ fileName, CharSet charSet );
-			XFileEnumerationObject^ CreateEnumerationObject( array<Byte>^ memory );
-			XFileEnumerationObject^ CreateEnumerationObject( Stream^ stream );
-			XFileSaveObject^ CreateSaveObject( String^ fileName, CharSet charSet, XFileFormat format );
+			XFileEnumerationObject^ CreateEnumerationObject( System::String^ fileName, System::Runtime::InteropServices::CharSet charSet );
+			XFileEnumerationObject^ CreateEnumerationObject( array<System::Byte>^ memory );
+			XFileEnumerationObject^ CreateEnumerationObject( System::IO::Stream^ stream );
+			XFileSaveObject^ CreateSaveObject( System::String^ fileName, System::Runtime::InteropServices::CharSet charSet, XFileFormat format );
 
 			void RegisterEnumerationTemplates( XFileEnumerationObject^ enumerationObject );
-			void RegisterTemplates( array<Byte>^ memory );
-			void RegisterTemplates( Stream^ memory );
-			void RegisterTemplates( String^ name );
+			void RegisterTemplates( array<System::Byte>^ memory );
+			void RegisterTemplates( System::IO::Stream^ memory );
+			void RegisterTemplates( System::String^ name );
 		};
 
 		public ref class XFileEnumerationObject : public ComObject
@@ -111,12 +111,12 @@ namespace SlimDX
 			XFileEnumerationObject( ID3DXFileEnumObject *object );
 
 		public:
-			XFileEnumerationObject( IntPtr pointer );
+			XFileEnumerationObject( System::IntPtr pointer );
 			virtual ~XFileEnumerationObject() { Destruct(); }
 
 			XFileData^ GetChild( int id );
-			XFileData^ GetDataObject( Guid id );
-			XFileData^ GetDataObject( String^ name );
+			XFileData^ GetDataObject( System::Guid id );
+			XFileData^ GetDataObject( System::String^ name );
 			XFile^ GetFile();
 
 			property int ChildCount { int get(); }
@@ -130,7 +130,7 @@ namespace SlimDX
 			XFileData( ID3DXFileData *data );
 
 		public:
-			XFileData( IntPtr pointer );
+			XFileData( System::IntPtr pointer );
 			virtual ~XFileData() { Destruct(); }
 
 			XFileData^ GetChild( int id );
@@ -140,9 +140,9 @@ namespace SlimDX
 			void Unlock();
 
 			property int ChildCount { int get(); }
-			property Guid Id { Guid get(); }
-			property Guid Type { Guid get(); }
-			property String^ Name { String^ get(); }
+			property System::Guid Id { System::Guid get(); }
+			property System::Guid Type { System::Guid get(); }
+			property System::String^ Name { System::String^ get(); }
 			property bool IsReference { bool get(); }
 		};
 	}

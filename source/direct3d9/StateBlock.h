@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007 SlimDX Group
+* Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ namespace SlimDX
 	{
 		ref class Device;
 
-		public enum class StateBlockType : Int32
+		public enum class StateBlockType : System::Int32
 		{
 			All = D3DSBT_ALL,
 			PixelState = D3DSBT_PIXELSTATE,
@@ -44,7 +44,7 @@ namespace SlimDX
 			StateBlock( IDirect3DStateBlock9* stateBlock );
 
 		public:
-			StateBlock( IntPtr pointer );
+			StateBlock( System::IntPtr pointer );
 			StateBlock( Device^ device, StateBlockType type );
 			~StateBlock() { Destruct(); }
 
