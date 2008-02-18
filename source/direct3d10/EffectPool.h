@@ -34,34 +34,16 @@ namespace SlimDX
 		ref class Device;
 		ref class Effect;
 		
-		/// <remarks>
-		/// EffectPool is a common memory space for sharing variables between effects.
-		/// Using EffectPools can improve performance by reducing the number state change
-		/// API calls.
-		/// </remarks>
 		public ref class EffectPool : public ComObject
 		{
 			COMOBJECT(ID3D10EffectPool);
 
 		internal:
-			EffectPool( ID3D10EffectPool* effectPool );
+			EffectPool( ID3D10EffectPool* pointer );
 		
 		public:
+			EffectPool( System::IntPtr pointer );
 			
-		  /// <summary>
-			/// Construct( s ); a new <see cref="EffectPool"/>.
-			/// </summary>
-			/// <param name="effectPool">An System::IntPtr to an unmanaged ID3D10EffectPool.</param>
-			EffectPool( System::IntPtr effectPool );
-			
-			/// <summary>
-			/// Releases object resources.
-			/// </summary>
-			virtual ~EffectPool() { Destruct(); }
-			
-			/// <summary>
-			/// Get the effect that created the effect pool.
-			/// </summary>
 			Effect^ AsEffect();
 			
 			static EffectPool^ FromFile( Device^ device, System::String^ fileName, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );

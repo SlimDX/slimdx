@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "Enums.h"
 
 namespace SlimDX
@@ -31,6 +29,7 @@ namespace SlimDX
 	{	
 		public value class BufferDescription
 		{
+		private:
 			int m_ByteWidth;
 			ResourceUsage m_Usage;
 			BindFlags m_BindFlags;

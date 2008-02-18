@@ -21,26 +21,26 @@
 */
 #pragma once
 
-//using namespace System;
-
-#include "../math/Math.h"
-
-#include "Enums.h"
 #include "EffectVariable.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class EffectScalarVariable : EffectVariable
+		public ref class EffectScalarVariable : public EffectVariable
 		{	
+		private:
+			ID3D10EffectScalarVariable* m_Pointer;
+			
 		internal:
-			EffectScalarVariable( ID3D10EffectScalarVariable* variable );
+			EffectScalarVariable( ID3D10EffectScalarVariable* pointer );
 			
 		public:
-			void Set( bool value );
-			void Set( float value );
-			void Set( int value );
+			EffectScalarVariable( System::IntPtr pointer );
+			
+			Result Set( bool value );
+			Result Set( float value );
+			Result Set( int value );
 		};
 	}
 };

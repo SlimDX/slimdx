@@ -34,7 +34,7 @@ namespace Direct3D10
 { 
 	StreamOutputWrapper::StreamOutputWrapper( ID3D10Device* device )
 	{
-		if( device == NULL )
+		if( device == 0 )
 			throw gcnew ArgumentNullException( "device" );
 		m_Device = device;
 	}

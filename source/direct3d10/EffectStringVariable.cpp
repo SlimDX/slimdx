@@ -23,8 +23,6 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "Direct3D10Exception.h"
-
 #include "EffectStringVariable.h"
 
 using namespace System;
@@ -33,15 +31,23 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	EffectStringVariable::EffectStringVariable( ID3D10EffectStringVariable* variable ) : EffectVariable( variable )
+	EffectStringVariable::EffectStringVariable( ID3D10EffectStringVariable* pointer )
+	: EffectVariable( pointer )
 	{
+		m_Pointer = pointer;
+	}
+	
+	EffectStringVariable::EffectStringVariable( IntPtr pointer )
+	: EffectVariable( pointer )
+	{
+		m_Pointer = reinterpret_cast<ID3D10EffectStringVariable*>( pointer.ToPointer() );
 	}
 	
 	String^ EffectStringVariable::GetString()
 	{
-		LPCSTR result;
-		HRESULT hr = static_cast<ID3D10EffectStringVariable*>( Pointer )->GetString( &result );
-		Result::Record( hr );
+		LPCSTR result = 0;
+		if( Result::Record( m_Pointer->GetString( &result ) ).IsFailure )
+			return nullptr;
 		
 		return gcnew String( result );
 	}

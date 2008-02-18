@@ -21,9 +21,8 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "../ComObject.h"
+
 #include "../dxgi/Enums.h"
 
 #include "Enums.h"
@@ -32,18 +31,23 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class Resource abstract : public ComObject
+		public ref class Resource : public ComObject
 		{
 			COMOBJECT(ID3D10Resource);
-
+		
 		protected:
 			Resource();
-			Resource( System::IntPtr pointer );
-			Resource(ID3D10Resource *resource);
 			
+		internal:
+			Resource( ID3D10Resource* pointer );
+		
 		public:
-			virtual ~Resource() { Destruct(); }
-
+			/// <summary>
+			/// Constructs a Resource from an unmanaged pointer.
+			/// </summary>
+			/// <param name="pointer">The unmanaged ID3D10Resource pointer.</param>
+			Resource( System::IntPtr pointer );
+			
 			/// <summary>
 			/// Gets or sets the resource's eviction priority.
 			/// </summary>

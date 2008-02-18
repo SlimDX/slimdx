@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 namespace SlimDX
 {
 	namespace Direct3D10
@@ -33,27 +31,27 @@ namespace SlimDX
 		{
 		private:
 			Buffer^ buffer;
-            int stride;
-            int offset;
+			int stride;
+			int offset;
 
 		public:
 			property SlimDX::Direct3D10::Buffer^ Buffer
-            {
-                SlimDX::Direct3D10::Buffer^ get() { return buffer; }
-                void set( SlimDX::Direct3D10::Buffer^ value ) { buffer = value; }
-            }
+			{
+				SlimDX::Direct3D10::Buffer^ get() { return buffer; }
+				void set( SlimDX::Direct3D10::Buffer^ value ) { buffer = value; }
+			}
 
-            property int Stride
-            {
-                int get() { return stride; }
-                void set( int value ) { stride = value; }
-            }
+			property int Stride
+			{
+				int get() { return stride; }
+				void set( int value ) { stride = value; }
+			}
 
-            property int Offset
-            {
-                int get() { return offset; }
-                void set( int value ) { offset = value; }
-            }
+			property int Offset
+			{
+				int get() { return offset; }
+				void set( int value ) { offset = value; }
+			}
 			
 			VertexBufferBinding( SlimDX::Direct3D10::Buffer^ buffer, int stride, int offset )
 				: buffer( buffer ), stride (stride ), offset( offset )

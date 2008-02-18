@@ -19,39 +19,32 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <d3d10.h>
-#include <d3dx10.h>
-
-#include "EffectVectorVariable.h"
-
-using namespace System;
+#pragma once
 
 namespace SlimDX
 {
-namespace Direct3D10
-{ 
-	EffectVectorVariable::EffectVectorVariable( ID3D10EffectVectorVariable* pointer )
-	: EffectVariable( pointer )
-	{
-		m_Pointer = pointer;
+	namespace Direct3D10	
+	{	
+		ref class EffectShaderVariable;
+		
+		public value class EffectPassShaderDescription
+		{
+			EffectShaderVariable^ m_ShaderVariable;
+			int m_ShaderIndex;
+			
+		internal:
+			EffectPassShaderDescription( const D3D10_PASS_SHADER_DESC& native );
+			
+		public:
+			property EffectShaderVariable^ Variable
+			{
+				EffectShaderVariable^ get();
+			}
+			
+			property int Index
+			{
+				int get();
+			}
+		};
 	}
-	
-	EffectVectorVariable::EffectVectorVariable( IntPtr pointer )
-	: EffectVariable( pointer )
-	{
-		m_Pointer = reinterpret_cast<ID3D10EffectVectorVariable*>( pointer.ToPointer() );
-	}
-	
-	Result EffectVectorVariable::Set( Vector4 value )
-	{
-		return Result::Record( m_Pointer->SetFloatVector( reinterpret_cast<float*>( &value ) ) );
-	}
-	
-	Result EffectVectorVariable::Set( array<Vector4>^ values )
-	{
-		pin_ptr<Vector4> pinnedValues = &values[ 0 ];
-		return Result::Record( m_Pointer->SetFloatVectorArray( reinterpret_cast<float*>( pinnedValues ), 0, values->Length ) );
-	}
-}
-}
+};

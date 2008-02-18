@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "../direct3d/Viewport.h"
 
 namespace SlimDX
@@ -33,6 +31,7 @@ namespace SlimDX
 		
 		public ref class RasterizerWrapper
 		{
+		private:
 			ID3D10Device* m_Device;
 			
 		internal:

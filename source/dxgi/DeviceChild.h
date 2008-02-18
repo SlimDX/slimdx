@@ -36,7 +36,7 @@ namespace SlimDX
 		{
 			COMOBJECT(IDXGIDeviceSubObject);
 		
-		internal:
+		protected:
 			DeviceChild();
 			
 		public:

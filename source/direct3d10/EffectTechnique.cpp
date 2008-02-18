@@ -25,8 +25,9 @@
 
 #include "Direct3D10Exception.h"
 
-#include "EffectTechnique.h"
 #include "EffectPass.h"
+#include "EffectTechnique.h"
+#include "EffectTechniqueDescription.h"
 #include "EffectVariable.h"
 
 using namespace System;
@@ -36,54 +37,64 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	EffectTechnique::EffectTechnique( ID3D10EffectTechnique* technique )
+	EffectTechnique::EffectTechnique( ID3D10EffectTechnique* pointer )
 	{
-		if( technique == NULL )
-			throw gcnew ArgumentNullException( "technique" );
-		m_Pointer = technique;
+		m_Pointer = pointer;
+	}
 	
-		D3D10_TECHNIQUE_DESC description;
-		HRESULT hr = m_Pointer->GetDesc( &description );
-		Result::Record( hr );
+	EffectTechnique::EffectTechnique( IntPtr pointer )
+	{
+		m_Pointer = reinterpret_cast<ID3D10EffectTechnique*>( pointer.ToPointer() );
+	}
+	
+	EffectTechniqueDescription EffectTechnique::Description::get()
+	{
+		D3D10_TECHNIQUE_DESC nativeDescription;
+		Result::Record( m_Pointer->GetDesc( &nativeDescription ) );
+		if( Result::Last.IsSuccess )
+			return EffectTechniqueDescription( nativeDescription );
 		
-		m_Name = gcnew String( description.Name );
-		m_PassCount = description.Passes;
-		m_AnnotationCount = description.Annotations;
+		throw gcnew Direct3D10Exception( Result::Last );
+	}
+	
+	bool EffectTechnique::IsValid::get()
+	{
+		return m_Pointer->IsValid() ? true : false;
 	}
 	
 	EffectVariable^ EffectTechnique::GetAnnotationByIndex( int index )
 	{
 		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByIndex( index );
-		if( variable == NULL )
-			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Index '{0}' does not identify any annotation on the technique.", index ) );
+		if( variable == 0 )
+			return nullptr;
 		return gcnew EffectVariable( variable );
 	}
 	
 	EffectVariable^ EffectTechnique::GetAnnotationByName( String^ name )
 	{
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
-		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+		pin_ptr<unsigned char> pinnedName = &nameBytes[ 0 ];
 		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByName( reinterpret_cast<LPCSTR>( pinnedName ) );
-		if( variable == NULL )
-			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Name '{0}' does not identify any annotation on the techinque.", name ) );
+		if( variable == 0 )
+			return nullptr;
 		return gcnew EffectVariable( variable );
 	}
 	
 	EffectPass^ EffectTechnique::GetPassByIndex( int index )
 	{
 		ID3D10EffectPass* pass = m_Pointer->GetPassByIndex( index );
-		if( pass == NULL )
-			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Index '{0}' does not identify any pass in the technique.", index ) );
+		if( pass == 0 )
+			return nullptr;
 		return gcnew EffectPass( pass );
 	}
 	
 	EffectPass^ EffectTechnique::GetPassByName( String^ name )
 	{
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
-		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+		pin_ptr<unsigned char> pinnedName = &nameBytes[ 0 ];
 		ID3D10EffectPass* pass = m_Pointer->GetPassByName( reinterpret_cast<LPCSTR>( pinnedName ) );
-		if( pass == NULL )
-			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Name '{0}' does not identify any pass in the technique.", name ) );
+		if( pass == 0 )
+			return nullptr;
 		return gcnew EffectPass( pass );
 	}
 }

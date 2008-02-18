@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "StreamOutputBufferBinding.h"
 
 namespace SlimDX
@@ -31,6 +29,7 @@ namespace SlimDX
 	{
 		public ref class StreamOutputWrapper
 		{
+		private:
 			ID3D10Device* m_Device;
 			
 		internal:

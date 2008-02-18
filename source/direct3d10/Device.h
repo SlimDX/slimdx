@@ -25,8 +25,6 @@
 
 #include "Enums.h"
 
-#include "InputElement.h"
-
 namespace SlimDX
 {
 	namespace Direct3D10
@@ -46,10 +44,11 @@ namespace SlimDX
 		public ref class Device : ComObject
 		{
 			COMOBJECT(ID3D10Device);
-			
+		
+		private:
 			InputAssemblerWrapper^ m_InputAssembler;
-            OutputMergerWrapper^ m_OutputMerger;
-            StreamOutputWrapper^ m_StreamOutput;
+			OutputMergerWrapper^ m_OutputMerger;
+			StreamOutputWrapper^ m_StreamOutput;
 			RasterizerWrapper^ m_Rasterizer;
 
 		internal:
@@ -57,24 +56,24 @@ namespace SlimDX
 		
 		public:
 			property InputAssemblerWrapper^ InputAssembler
-            {
-                InputAssemblerWrapper^ get();
-            }
+			{
+				InputAssemblerWrapper^ get();
+			}
 
-            property OutputMergerWrapper^ OutputMerger
-            {
-                OutputMergerWrapper^ get();
-            }
+			property OutputMergerWrapper^ OutputMerger
+			{
+				OutputMergerWrapper^ get();
+			}
 
-            property StreamOutputWrapper^ StreamOutput
-            {
-                StreamOutputWrapper^ get();
-            }
-            
-            property RasterizerWrapper^ Rasterizer
-            {
-                RasterizerWrapper^ get();
-            }
+			property StreamOutputWrapper^ StreamOutput
+			{
+				StreamOutputWrapper^ get();
+			}
+
+			property RasterizerWrapper^ Rasterizer
+			{
+				RasterizerWrapper^ get();
+			}
 			
 			Device( System::IntPtr pointer );
 			Device( DeviceCreationFlags flags );

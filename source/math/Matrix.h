@@ -21,8 +21,7 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Runtime::InteropServices;
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {

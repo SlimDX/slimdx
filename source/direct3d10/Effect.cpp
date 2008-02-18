@@ -30,6 +30,7 @@
 
 #include "Device.h"
 #include "EffectConstantBuffer.h"
+#include "EffectDescription.h"
 #include "EffectTechnique.h"
 #include "EffectVariable.h"
 #include "EffectPool.h"
@@ -39,127 +40,128 @@ using namespace System::IO;
 using namespace System::Globalization;
 using namespace System::Runtime::InteropServices;
 
-
 namespace SlimDX
 {
 namespace Direct3D10
 { 
-	Effect::Effect( ID3D10Effect* effect )
+	Effect::Effect( ID3D10Effect* pointer )
 	{
-		Construct(effect);
-
-		D3D10_EFFECT_DESC description;
-		HRESULT hr = effect->GetDesc( &description );
-		Result::Record( hr );
-		if( FAILED( hr ) )
-			throw gcnew Direct3D10Exception( "Failed to get description for effect." );
-		
-		m_IsChildEffect = description.IsChildEffect ? true : false;
-		m_ConstantBufferCount = description.ConstantBuffers;
-		m_SharedConstantBufferCount = description.SharedConstantBuffers;
-		m_GlobalVariableCount = description.GlobalVariables;
-		m_TechniqueCount = description.Techniques;
+		Construct( pointer );
 	}
 
-	Effect::Effect( IntPtr effect )
+	Effect::Effect( IntPtr pointer )
 	{
-		Construct( effect, NativeInterface );
-
-		D3D10_EFFECT_DESC description;
-		HRESULT hr = InternalPointer->GetDesc( &description );
-		Result::Record( hr );
-		if( FAILED( hr ) )
-			throw gcnew Direct3D10Exception( "Failed to get description for effect." );
-
-		m_IsChildEffect = description.IsChildEffect ? true : false;
-		m_ConstantBufferCount = description.ConstantBuffers;
-		m_SharedConstantBufferCount = description.SharedConstantBuffers;
-		m_GlobalVariableCount = description.GlobalVariables;
-		m_TechniqueCount = description.Techniques;
+		Construct( pointer, NativeInterface );
+	}
+	
+	EffectDescription Effect::Description::get()
+	{
+		D3D10_EFFECT_DESC nativeDescription;
+		Result::Record( InternalPointer->GetDesc( &nativeDescription ) );
+		if( Result::Last.IsSuccess )
+			return EffectDescription( nativeDescription );
+		
+		throw gcnew Direct3D10Exception( Result::Last );
+	}
+	
+	bool Effect::IsOptimized::get()
+	{
+		return InternalPointer->IsOptimized() ? true : false;
+	}
+	
+	bool Effect::IsPooled::get()
+	{
+		return InternalPointer->IsPool() ? true : false;
+	}
+	
+	bool Effect::IsValid::get()
+	{
+		return InternalPointer->IsValid() ? true : false;
+	}
+	
+	Device^ Effect::GetDevice()
+	{
+		ID3D10Device* device = 0;
+		if( Result::Record( InternalPointer->GetDevice( &device ) ).IsFailure )
+			return nullptr;
+		
+		return gcnew Device( device );
 	}
 	
 	EffectConstantBuffer^ Effect::GetConstantBufferByIndex( int index )
 	{
-		ID3D10EffectConstantBuffer* buffer = 0;
-
-		buffer = InternalPointer->GetConstantBufferByIndex( index );
+		ID3D10EffectConstantBuffer* buffer = InternalPointer->GetConstantBufferByIndex( index );
 		if( buffer == 0 )
-			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Index '{0}' does not identify any constant buffer in the effect.", index ) );
+			return nullptr;
+			
 		return gcnew EffectConstantBuffer( buffer );
 	}
 	
 	EffectConstantBuffer^ Effect::GetConstantBufferByName( String^ name )
 	{
-		ID3D10EffectConstantBuffer* buffer = 0;
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
-		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
-
-		buffer = InternalPointer->GetConstantBufferByName( reinterpret_cast<LPCSTR>( pinnedName ) );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[ 0 ];
+		ID3D10EffectConstantBuffer* buffer = InternalPointer->GetConstantBufferByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( buffer == 0 )
-			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Name '{0}' does not identify any constant buffer in the effect.", name ) );
+			return nullptr;
+			
 		return gcnew EffectConstantBuffer( buffer );
 	}
 	
 	EffectTechnique^ Effect::GetTechniqueByIndex( int index )
 	{
-		ID3D10EffectTechnique* technique;
-
-		technique = InternalPointer->GetTechniqueByIndex( index );
-		if( technique == NULL )
-			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Index '{0}' does not identify any technique in the effect.", index ) );
+		ID3D10EffectTechnique* technique = InternalPointer->GetTechniqueByIndex( index );
+		if( technique == 0 )
+			return nullptr;
+			
 		return gcnew EffectTechnique( technique );
 	}
 
 	EffectTechnique^ Effect::GetTechniqueByName( System::String^ name )
 	{
-		ID3D10EffectTechnique* technique;
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
-		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
-
-		technique = InternalPointer->GetTechniqueByName( reinterpret_cast<LPCSTR>( pinnedName ) );
-		if( technique == NULL )
-			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Name '{0}' does not identify any technique in the effect.", name ) );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[ 0 ];
+		ID3D10EffectTechnique* technique = InternalPointer->GetTechniqueByName( reinterpret_cast<LPCSTR>( pinnedName ) );
+		if( technique == 0 )
+			return nullptr;
+			
 		return gcnew EffectTechnique( technique );
 	}
 	
 	EffectVariable^ Effect::GetVariableByIndex( int index )
 	{
-		ID3D10EffectVariable* variable;
-		
-		variable = InternalPointer->GetVariableByIndex( index );
-		if( variable == NULL )
-			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Index '{0}' does not identify any variable in the effect.", index ) );
+		ID3D10EffectVariable* variable = InternalPointer->GetVariableByIndex( index );
+		if( variable == 0 )
+			return nullptr;
+			
 		return gcnew EffectVariable( variable );
 	}
 	
 	EffectVariable^ Effect::GetVariableByName( System::String^ name )
 	{
-		ID3D10EffectVariable* variable;
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
-		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
-
-		variable = InternalPointer->GetVariableByName( reinterpret_cast<LPCSTR>( pinnedName ) );
-		if( variable == NULL )
-			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Name '{0}' does not identify any variable in the effect.", name ) );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[ 0 ];
+		ID3D10EffectVariable* variable = InternalPointer->GetVariableByName( reinterpret_cast<LPCSTR>( pinnedName ) );
+		if( variable == 0 )
+			return nullptr;
+		
 		return gcnew EffectVariable( variable );
 	}
 	
 	EffectVariable^ Effect::GetVariableBySemantic( System::String^ name )
 	{
-		ID3D10EffectVariable* variable;
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
-		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
-
-		variable = InternalPointer->GetVariableBySemantic( reinterpret_cast<LPCSTR>( pinnedName ) );
-		if( variable == NULL )
-			throw gcnew ArgumentException( String::Format( CultureInfo::InvariantCulture, "Semantic '{0}' does not identify any variable in the effect.", name ) );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[ 0 ];
+		ID3D10EffectVariable* variable = InternalPointer->GetVariableBySemantic( reinterpret_cast<LPCSTR>( pinnedName ) );
+		if( variable == 0 )
+			return nullptr;
+		
 		return gcnew EffectVariable( variable );
 	}
 	
-	void Effect::Optimize()
+	Result Effect::Optimize()
 	{
-		HRESULT hr = InternalPointer->Optimize();
-		Result::Record( hr );
+		return Result::Record( InternalPointer->Optimize() );
 	}
 
 	Effect^ Effect::FromFile( Device^ device, String ^fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool )
@@ -172,7 +174,7 @@ namespace Direct3D10
 	{
 		pin_ptr<const wchar_t> pinnedFileName = PtrToStringChars( fileName );
 		array<unsigned char>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
-		pin_ptr<unsigned char> pinnedProfile = &profileBytes[0];
+		pin_ptr<unsigned char> pinnedProfile = &profileBytes[ 0 ];
 		ID3D10Effect* effect;
 		ID3D10Blob* errorBlob;
 		
@@ -205,9 +207,9 @@ namespace Direct3D10
 	
 	Effect^ Effect::FromMemory( Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] String^ %compilationErrors  )
 	{
-		pin_ptr<unsigned char> pinnedData = &memory[0];
+		pin_ptr<unsigned char> pinnedData = &memory[ 0 ];
 		array<unsigned char>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
-		pin_ptr<unsigned char> pinnedProfile = &profileBytes[0];
+		pin_ptr<unsigned char> pinnedProfile = &profileBytes[ 0 ];
 		ID3D10Effect* effect;
 		ID3D10Blob* errorBlob;
 		
@@ -253,9 +255,9 @@ namespace Direct3D10
 	Effect^ Effect::FromString( Device^ device, String^ code, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] String^ %compilationErrors  )
 	{
 		array<unsigned char>^ codeBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( code );
-		pin_ptr<unsigned char> pinnedCode = &codeBytes[0];
+		pin_ptr<unsigned char> pinnedCode = &codeBytes[ 0 ];
 		array<unsigned char>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
-		pin_ptr<unsigned char> pinnedProfile = &profileBytes[0];
+		pin_ptr<unsigned char> pinnedProfile = &profileBytes[ 0 ];
 		ID3D10Effect* effect;
 		ID3D10Blob* errorBlob;
 		

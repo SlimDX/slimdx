@@ -23,73 +23,83 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-//#include "Direct3D10ErrorHandler.h"
-
 #include "EffectShaderVariable.h"
-#include "PixelShader.h"
-#include "VertexShader.h"
 #include "GeometryShader.h"
+#include "PixelShader.h"
+#include "ShaderDescription.h"
+#include "ShaderParameterDescription.h"
+#include "VertexShader.h"
+
+using namespace System;
 
 namespace SlimDX
 {
 namespace Direct3D10
 { 
-	EffectShaderVariable::EffectShaderVariable( ID3D10EffectShaderVariable* variable ) : EffectVariable( variable )
+	EffectShaderVariable::EffectShaderVariable( ID3D10EffectShaderVariable* pointer )
+	: EffectVariable( pointer )
 	{
+		m_Pointer = pointer;
+	}
+	
+	EffectShaderVariable::EffectShaderVariable( IntPtr pointer )
+	: EffectVariable( pointer )
+	{
+		m_Pointer = reinterpret_cast<ID3D10EffectShaderVariable*>( pointer.ToPointer() );
 	}
 	
 	PixelShader^ EffectShaderVariable::GetPixelShader( int index )
 	{
-		ID3D10PixelShader* shader;
-		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetPixelShader( index, &shader );
-		Result::Record( hr );
-		
+		ID3D10PixelShader* shader = 0;
+		if( Result::Record( m_Pointer->GetPixelShader( index, &shader ) ).IsFailure )
+			return nullptr;
+			
 		return gcnew PixelShader( shader );
 	}
 	
 	VertexShader^ EffectShaderVariable::GetVertexShader( int index )
 	{
-		ID3D10VertexShader* shader;
-		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetVertexShader( index, &shader );
-		Result::Record( hr );
+		ID3D10VertexShader* shader = 0;
+		if( Result::Record( m_Pointer->GetVertexShader( index, &shader ) ).IsFailure )
+			return nullptr;
 		
 		return gcnew VertexShader( shader );
 	}
 	
 	GeometryShader^ EffectShaderVariable::GetGeometryShader( int index )
 	{
-		ID3D10GeometryShader* shader;
-		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetGeometryShader( index, &shader );
-		Result::Record( hr );
-		
+		ID3D10GeometryShader* shader = 0;
+		if( Result::Record( m_Pointer->GetGeometryShader( index, &shader ) ).IsFailure )
+			return nullptr;
+			
 		return gcnew GeometryShader( shader );
 	}
 	
-	ShaderParameterDescription EffectShaderVariable::GetInputParameterDescription( int shaderIndex, int parameterIndex )
+	Result EffectShaderVariable::GetInputParameterDescription( int shaderIndex, int parameterIndex, ShaderParameterDescription% result )
 	{
 		D3D10_SIGNATURE_PARAMETER_DESC description;
-		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetInputSignatureElementDesc( shaderIndex, parameterIndex, &description );
-		Result::Record( hr );
-		
-		return ShaderParameterDescription( description );
+		if( Result::Record( m_Pointer->GetInputSignatureElementDesc( shaderIndex, parameterIndex, &description ) ).IsSuccess )
+			result = ShaderParameterDescription( description );
+			
+		return Result::Last;
 	}
 	
-	ShaderParameterDescription EffectShaderVariable::GetOutputParameterDescription( int shaderIndex, int parameterIndex )
+	Result EffectShaderVariable::GetOutputParameterDescription( int shaderIndex, int parameterIndex, ShaderParameterDescription% result )
 	{
 		D3D10_SIGNATURE_PARAMETER_DESC description;
-		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetOutputSignatureElementDesc( shaderIndex, parameterIndex, &description );
-		Result::Record( hr );
+		if( Result::Record( m_Pointer->GetOutputSignatureElementDesc( shaderIndex, parameterIndex, &description ) ).IsSuccess )
+			result = ShaderParameterDescription( description );
 		
-		return ShaderParameterDescription( description );
+		return Result::Last;
 	}
 	
-	ShaderDescription EffectShaderVariable::GetShaderDescription( int shaderIndex )
+	Result EffectShaderVariable::GetShaderDescription( int shaderIndex, ShaderDescription% result )
 	{
 		D3D10_EFFECT_SHADER_DESC description;
-		HRESULT hr = static_cast<ID3D10EffectShaderVariable*>( Pointer )->GetShaderDesc( shaderIndex, &description );
-		Result::Record( hr );
-		
-		return ShaderDescription( description );
+		if( Result::Record( m_Pointer->GetShaderDesc( shaderIndex, &description ) ).IsSuccess )
+			result = ShaderDescription( description );
+	
+		return Result::Last;
 	}
 }
 }

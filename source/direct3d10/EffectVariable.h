@@ -21,8 +21,7 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Globalization;
+#include "../ComObject.h"
 
 #include "Enums.h"
 
@@ -37,75 +36,28 @@ namespace SlimDX
 		ref class EffectScalarVariable;
 		ref class EffectVectorVariable;
 		ref class EffectStringVariable;
+		value class EffectVariableDescription;
 		
 		public ref class EffectVariable
 		{
 		private:
 			ID3D10EffectVariable* m_Pointer;
-			System::String^ m_Name;
-			System::String^ m_Semantic;
-			EffectVariableFlags m_Flags;
-			int m_AnnotationCount;
-			int m_BufferOffset;
-			int m_ExplicitBindPoint;
-
-		protected:
-			property ID3D10EffectVariable* Pointer
-			{
-				ID3D10EffectVariable* get() { return m_Pointer; }
-				void set( ID3D10EffectVariable* value ) { m_Pointer = value; }
-			}
 			
 		internal:
-			EffectVariable( ID3D10EffectVariable* variable );
-			
+			EffectVariable( ID3D10EffectVariable* pointer );
+
 		public:
-			property System::String^ Name
+			property EffectVariableDescription Description
 			{
-				System::String^ get() { return m_Name; }
-			protected:
-				void set( System::String^ value ) { m_Name = value; }
-			}
-			
-			property System::String^ Semantic
-			{
-				System::String^ get() { return m_Semantic; }
-			protected:
-				void set( System::String^ value ) { m_Semantic = value; }
-			}
-			
-			property EffectVariableFlags Flags
-			{
-				EffectVariableFlags get() { return m_Flags; }
-			protected:
-				void set( EffectVariableFlags value ) { m_Flags = value; }
-			}
-			
-			property int AnnotationCount
-			{
-				int get() { return m_AnnotationCount; }
-			protected:
-				void set( int value ) { m_AnnotationCount = value; }
-			}
-			
-			property int BufferOffset
-			{
-				int get() { return m_BufferOffset; }
-			protected:
-				void set( int value ) { m_BufferOffset = value; }
-			}
-			
-			property int ExplicitBindPoint
-			{
-				int get() { return m_ExplicitBindPoint; }
-			protected:
-				void set( int value ) { m_ExplicitBindPoint = value; }
+				EffectVariableDescription get();
 			}
 			
 			property bool IsValid
 			{
-				bool get() { return m_Pointer->IsValid() ? true : false; }
+				bool get();
 			}
+			
+			EffectVariable( System::IntPtr pointer );
 			
 			EffectVariable^ GetAnnotationByIndex( int index );
 			EffectVariable^ GetAnnotationByName( System::String^ name );

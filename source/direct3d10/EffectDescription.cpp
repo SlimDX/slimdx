@@ -19,34 +19,53 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-//using namespace System;
+#include <d3d10.h>
+
+#include "EffectDescription.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
-	{	
-		ref class EffectShaderVariable;
-		
-		public value class EffectPassShaderMapping
-		{
-			EffectShaderVariable^ shaderVariable;
-			int shaderIndex;
-			
-		internal:
-			EffectPassShaderMapping( const D3D10_PASS_SHADER_DESC& description );
-			
-		public:
-			property EffectShaderVariable^ Shader
-			{
-				EffectShaderVariable^ get() { return shaderVariable; }
-			}
-			
-			property int Index
-			{
-				int get() { return shaderIndex; }
-			}
-		};
+namespace Direct3D10
+{ 	
+	EffectDescription::EffectDescription( const D3D10_EFFECT_DESC& native )
+	{
+		m_IsChildEffect = native.IsChildEffect ? true : false;
+		m_ConstantBuffers = native.ConstantBuffers;
+		m_SharedConstantBuffers = native.SharedConstantBuffers;
+		m_GlobalVariables = native.GlobalVariables;
+		m_SharedGlobalVariables = native.SharedGlobalVariables;
+		m_Techniques = native.Techniques;
 	}
-};
+
+	bool EffectDescription::IsChildEffect::get()
+	{
+		return m_IsChildEffect;
+	}
+
+	int EffectDescription::ConstantBufferCount::get()
+	{
+		return m_ConstantBuffers;
+	}
+	
+	int EffectDescription::SharedConstantBufferCount::get()
+	{
+		return m_SharedConstantBuffers;
+	}
+	
+	int EffectDescription::GlobalVariableCount::get()
+	{
+		return m_GlobalVariables;
+	}
+	
+	int EffectDescription::SharedGlobalVariableCount::get()
+	{
+		return m_SharedGlobalVariables;
+	}
+	
+	int EffectDescription::TechniqueCount::get()
+	{
+		return m_Techniques;
+	}
+}
+}
