@@ -228,19 +228,19 @@ namespace SlimDX
 			// --- Methods ---
 
 			bool IsQuerySupported( QueryType type );
-			void EvictManagedResources();
+			Result EvictManagedResources();
 
 			int ValidateDevice();
-			void TestCooperativeLevel();
+			Result TestCooperativeLevel();
 			CooperativeLevel CheckCooperativeLevel();
-			void Reset( PresentParameters^ presentParameters );
+			Result Reset( PresentParameters^ presentParameters );
 
-			void Clear( ClearFlags clearFlags, int color, float zdepth, int stencil );
-			void Clear( ClearFlags clearFlags, System::Drawing::Color color, float zdepth, int stencil );
-			void BeginScene();
-			void EndScene();
-			void Present();
-			void Present( SlimDX::Direct3D9::Present flags );
+			Result Clear( ClearFlags clearFlags, int color, float zdepth, int stencil );
+			Result Clear( ClearFlags clearFlags, System::Drawing::Color color, float zdepth, int stencil );
+			Result BeginScene();
+			Result EndScene();
+			Result Present();
+			Result Present( SlimDX::Direct3D9::Present flags );
 
 			Surface^ GetBackBuffer( int swapChain, int backBuffer );
 			Surface^ GetDepthStencilSurface();
@@ -257,107 +257,107 @@ namespace SlimDX
 			int GetRenderState( RenderState state );
 
 			Capabilities GetDeviceCaps();
-			void GetStreamSource( int stream, [Out] VertexBuffer^% streamData, [Out] int% offsetBytes, [Out] int% stride );
+			Result GetStreamSource( int stream, [Out] VertexBuffer^% streamData, [Out] int% offsetBytes, [Out] int% stride );
 			int GetStreamSourceFreq( int stream );
 
-			void GetFrontBufferData( int swapChain, Surface^ destinationSurface );
-			void GetRenderTargetData( Surface^ renderTarget, Surface^ destinationSurface );
+			Result GetFrontBufferData( int swapChain, Surface^ destinationSurface );
+			Result GetRenderTargetData( Surface^ renderTarget, Surface^ destinationSurface );
 
-			void SetRenderState( RenderState state, int value );
-			void SetRenderState( RenderState state, bool value );
-			void SetRenderState( RenderState state, float value );
+			Result SetRenderState( RenderState state, int value );
+			Result SetRenderState( RenderState state, bool value );
+			Result SetRenderState( RenderState state, float value );
 			generic<typename T> where T : System::Enum
-				void SetRenderState( RenderState state, T value );
+				Result SetRenderState( RenderState state, T value );
 
-			void SetTextureStageState( int stage, TextureStage type, int value );
-			void SetTextureStageState( int stage, TextureStage type, TextureOperation textureOperation );
-			void SetTextureStageState( int stage, TextureStage type, TextureArgument textureArgument );
-			void SetTextureStageState( int stage, TextureStage type, TextureTransform textureTransform );
-			void SetTextureStageState( int stage, TextureStage type, float value );
+			Result SetTextureStageState( int stage, TextureStage type, int value );
+			Result SetTextureStageState( int stage, TextureStage type, TextureOperation textureOperation );
+			Result SetTextureStageState( int stage, TextureStage type, TextureArgument textureArgument );
+			Result SetTextureStageState( int stage, TextureStage type, TextureTransform textureTransform );
+			Result SetTextureStageState( int stage, TextureStage type, float value );
 
-			void SetSamplerState( int sampler, SamplerState type, int value );
-			void SetSamplerState( int sampler, SamplerState type, float value );
-			void SetSamplerState( int sampler, SamplerState type, TextureAddress textureAddress );
-			void SetSamplerState( int sampler, SamplerState type, TextureFilter texFilter );
+			Result SetSamplerState( int sampler, SamplerState type, int value );
+			Result SetSamplerState( int sampler, SamplerState type, float value );
+			Result SetSamplerState( int sampler, SamplerState type, TextureAddress textureAddress );
+			Result SetSamplerState( int sampler, SamplerState type, TextureFilter texFilter );
 
-			void LightEnable( int lightIndex, bool enable );
+			Result LightEnable( int lightIndex, bool enable );
 			bool GetLightEnable( int lightIndex );
-			void SetLight( int lightIndex, Light lightData );
+			Result SetLight( int lightIndex, Light lightData );
 			Light GetLight( int lightIndex );
 
-			void SetCursor( System::Windows::Forms::Cursor^ cursor, bool addWatermark );
+			Result SetCursor( System::Windows::Forms::Cursor^ cursor, bool addWatermark );
 			void SetCursorPosition( int x, int y, bool immediateUpdate );
 			void SetCursorPosition( System::Drawing::Point position, bool immediateUpdate ) { SetCursorPosition( position.X, position.Y, immediateUpdate ); }
-			void SetCursorProperties( int hotspotX, int hotspotY, Surface^ cursorBitmap );
-			void SetCursorProperties( System::Drawing::Point position, Surface^ cursorBitmap ) { SetCursorProperties( position.X, position.Y, cursorBitmap ); }
+			Result SetCursorProperties( int hotspotX, int hotspotY, Surface^ cursorBitmap );
+			Result SetCursorProperties( System::Drawing::Point position, Surface^ cursorBitmap ) { return SetCursorProperties( position.X, position.Y, cursorBitmap ); }
 
-			void SetTransform( TransformState state, Matrix value );
+			Result SetTransform( TransformState state, Matrix value );
 			Matrix GetTransform( TransformState state );
 
-			void SetTransform( int index, Matrix value );
+			Result SetTransform( int index, Matrix value );
 			Matrix GetTransform( int index );
 			
-			void MultiplyTransform( TransformState state, Matrix value );
-			void SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride );
-			void SetStreamSourceFreq( int stream, int frequency );
-			void SetTexture( int sampler, BaseTexture^ texture );
-			void SetRenderTarget( int rtIndex, Surface^ target );
-			void SetPixelShader( PixelShader^ pixelShader );
-			void SetVertexShader( VertexShader^ vertexShader );			
-			void SetDepthStencilSurface( Surface^ target );
-			void SetDialogBoxMode( bool enableDialogs );
-			void SetIndices( IndexBuffer^ indices );
-			void SetClipPlane( int index, Plane clipPlane );
+			Result MultiplyTransform( TransformState state, Matrix value );
+			Result SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride );
+			Result SetStreamSourceFreq( int stream, int frequency );
+			Result SetTexture( int sampler, BaseTexture^ texture );
+			Result SetRenderTarget( int rtIndex, Surface^ target );
+			Result SetPixelShader( PixelShader^ pixelShader );
+			Result SetVertexShader( VertexShader^ vertexShader );			
+			Result SetDepthStencilSurface( Surface^ target );
+			Result SetDialogBoxMode( bool enableDialogs );
+			Result SetIndices( IndexBuffer^ indices );
+			Result SetClipPlane( int index, Plane clipPlane );
 
-			void SetVertexShaderConstant( int startRegister, array<bool>^ data, int offset, int count );
-			void SetVertexShaderConstant( int startRegister, array<float>^ data, int offset, int count );
-			void SetVertexShaderConstant( int startRegister, array<int>^ data, int offset, int count );
-			void SetVertexShaderConstant( int startRegister, array<bool>^ data ) { SetVertexShaderConstant( startRegister, data, 0, 0 ); }
-			void SetVertexShaderConstant( int startRegister, array<float>^ data ) { SetVertexShaderConstant( startRegister, data, 0, 0 ); }
-			void SetVertexShaderConstant( int startRegister, array<int>^ data ) { SetVertexShaderConstant( startRegister, data, 0, 0 ); }
+			Result SetVertexShaderConstant( int startRegister, array<bool>^ data, int offset, int count );
+			Result SetVertexShaderConstant( int startRegister, array<float>^ data, int offset, int count );
+			Result SetVertexShaderConstant( int startRegister, array<int>^ data, int offset, int count );
+			Result SetVertexShaderConstant( int startRegister, array<bool>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, 0 ); }
+			Result SetVertexShaderConstant( int startRegister, array<float>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, 0 ); }
+			Result SetVertexShaderConstant( int startRegister, array<int>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, 0 ); }
 
-			void SetPixelShaderConstant( int startRegister, array<bool>^ data, int offset, int count );
-			void SetPixelShaderConstant( int startRegister, array<float>^ data, int offset, int count );
-			void SetPixelShaderConstant( int startRegister, array<int>^ data, int offset, int count );
-			void SetPixelShaderConstant( int startRegister, array<bool>^ data ) { SetPixelShaderConstant( startRegister, data, 0, 0 ); }
-			void SetPixelShaderConstant( int startRegister, array<float>^ data ) { SetPixelShaderConstant( startRegister, data, 0, 0 ); }
-			void SetPixelShaderConstant( int startRegister, array<int>^ data ) { SetPixelShaderConstant( startRegister, data, 0, 0 ); }
+			Result SetPixelShaderConstant( int startRegister, array<bool>^ data, int offset, int count );
+			Result SetPixelShaderConstant( int startRegister, array<float>^ data, int offset, int count );
+			Result SetPixelShaderConstant( int startRegister, array<int>^ data, int offset, int count );
+			Result SetPixelShaderConstant( int startRegister, array<bool>^ data ) { return SetPixelShaderConstant( startRegister, data, 0, 0 ); }
+			Result SetPixelShaderConstant( int startRegister, array<float>^ data ) { return SetPixelShaderConstant( startRegister, data, 0, 0 ); }
+			Result SetPixelShaderConstant( int startRegister, array<int>^ data ) { return SetPixelShaderConstant( startRegister, data, 0, 0 ); }
 
-			void BeginStateBlock();
+			Result BeginStateBlock();
 			StateBlock^ EndStateBlock();
 
-			void ProcessVertices( int sourceStartIndex, int destinationIndex, int vertexCount, VertexBuffer^ destinationBuffer,
+			Result ProcessVertices( int sourceStartIndex, int destinationIndex, int vertexCount, VertexBuffer^ destinationBuffer,
 				SlimDX::Direct3D9::VertexDeclaration^ vertexDeclaration, LockFlags flags );
 
-			void DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount );
-			void DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minVertexIndex, 
+			Result DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount );
+			Result DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minVertexIndex, 
 				int vertexCount, int startIndex, int primCount );
 
 			generic<typename T> where T : value class
-			void DrawUserPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount, array<T>^ data );
+			Result DrawUserPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount, array<T>^ data );
 
 			generic<typename S, typename T> where S : value class where T : value class
-			void DrawIndexedUserPrimitives( PrimitiveType primitiveType, int minVertexIndex, int vertexCount, int primitiveCount,
+			Result DrawIndexedUserPrimitives( PrimitiveType primitiveType, int minVertexIndex, int vertexCount, int primitiveCount,
 				array<S>^ indexData, Format indexDataFormat, array<T>^ vertexData, int vertexStride );
 
-			void DrawTriPatch( int handle, array<float>^ segmentCount, TriPatchInfo info );
-			void DrawTriPatch( int handle, array<float>^ segmentCount );
-			void DrawRectPatch( int handle, array<float>^ segmentCount, RectPatchInfo info );
-			void DrawRectPatch( int handle, array<float>^ segmentCount );
-			void DeletePatch( int handle );
+			Result DrawTriPatch( int handle, array<float>^ segmentCount, TriPatchInfo info );
+			Result DrawTriPatch( int handle, array<float>^ segmentCount );
+			Result DrawRectPatch( int handle, array<float>^ segmentCount, RectPatchInfo info );
+			Result DrawRectPatch( int handle, array<float>^ segmentCount );
+			Result DeletePatch( int handle );
 
-			void StretchRect( Surface^ source, System::Drawing::Rectangle sourceRect, Surface^ destination,
+			Result StretchRect( Surface^ source, System::Drawing::Rectangle sourceRect, Surface^ destination,
 				System::Drawing::Rectangle destinationRectangle, TextureFilter filter );
-			void UpdateSurface( Surface^ source, System::Drawing::Rectangle sourceRect,
+			Result UpdateSurface( Surface^ source, System::Drawing::Rectangle sourceRect,
 				Surface^ destination, System::Drawing::Point destinationPoint );
-			void UpdateTexture( BaseTexture^ sourceTexture, BaseTexture^ destinationTexture );
-			void ColorFill( Surface^ destinationSurface, System::Drawing::Rectangle destinationRect, int color );
-			void ColorFill( Surface^ destinationSurface, System::Drawing::Rectangle destinationRect, System::Drawing::Color color );
+			Result UpdateTexture( BaseTexture^ sourceTexture, BaseTexture^ destinationTexture );
+			Result ColorFill( Surface^ destinationSurface, System::Drawing::Rectangle destinationRect, int color );
+			Result ColorFill( Surface^ destinationSurface, System::Drawing::Rectangle destinationRect, System::Drawing::Color color );
 
 			//ATI R2VB functionality, based on work by Oliver 'acid2' Charles
-			void SetR2VBMode( bool enableR2VB );
-			void BindRenderTargetToVertexStream( R2VBSampler sampler, Texture^ r2vbTarget, int stream, int stride, VertexBuffer^ dummyVertexBuffer );
-			void RestoreVertexStream( int stream );
+			Result SetR2VBMode( bool enableR2VB );
+			Result BindRenderTargetToVertexStream( R2VBSampler sampler, Texture^ r2vbTarget, int stream, int stride, VertexBuffer^ dummyVertexBuffer );
+			Result RestoreVertexStream( int stream );
 		};
 	}
 }

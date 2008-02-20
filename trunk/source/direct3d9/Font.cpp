@@ -31,6 +31,7 @@
 #include "Device.h"
 #include "Sprite.h"
 #include "Font.h"
+#include "Direct3D9Exception.h"
 
 #include <vcclr.h>
 
@@ -64,7 +65,9 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateFont( device->InternalPointer, height, width, static_cast<UINT>( weight ), mipLevels, italic, static_cast<DWORD>( charSet ),
 			static_cast<DWORD>( outputPrecision ), static_cast<DWORD>( quality ), static_cast<DWORD>( pitchAndFamily ), reinterpret_cast<LPCWSTR>( pinned_name ), &font );
-		Result::Record( hr );
+
+		if( Result::Record( hr ).IsFailure )
+			throw gcnew Direct3D9Exception();
 
 		Construct(font);
 	}
@@ -113,35 +116,35 @@ namespace Direct3D9
 			nativeRect.right - nativeRect.left, nativeRect.bottom - nativeRect.top );
 	}
 
-	void Font::PreloadCharacters( int first, int last )
+	Result Font::PreloadCharacters( int first, int last )
 	{
 		HRESULT hr = InternalPointer->PreloadCharacters( first, last );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Font::PreloadGlyphs( int first, int last )
+	Result Font::PreloadGlyphs( int first, int last )
 	{
 		HRESULT hr = InternalPointer->PreloadGlyphs( first, last );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Font::PreloadText( String^ text )
+	Result Font::PreloadText( String^ text )
 	{
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
 		HRESULT hr = InternalPointer->PreloadTextW( reinterpret_cast<LPCWSTR>( pinned_text ), text->Length );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Font::OnLostDevice()
+	Result Font::OnLostDevice()
 	{
 		HRESULT hr = InternalPointer->OnLostDevice();
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Font::OnResetDevice()
+	Result Font::OnResetDevice()
 	{
 		HRESULT hr = InternalPointer->OnResetDevice();
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	FontDescription Font::Description::get()
@@ -149,7 +152,8 @@ namespace Direct3D9
 		D3DXFONT_DESC description;
 		
 		HRESULT hr = InternalPointer->GetDesc( &description );
-		Result::Record( hr );
+		if( Result::Record( hr ).IsFailure )
+			return FontDescription();
 
 		FontDescription outDesc;
 		outDesc.Height = description.Height;

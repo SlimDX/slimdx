@@ -25,6 +25,7 @@
 #include "../Utilities.h"
 #include "Device.h"
 #include "IndexBuffer.h"
+#include "Direct3D9Exception.h"
 
 using namespace System;
 
@@ -62,7 +63,8 @@ namespace Direct3D9
 		IDirect3DIndexBuffer9* ib;
 		D3DFORMAT format = sixteenBit ? D3DFMT_INDEX16 : D3DFMT_INDEX32;
 		HRESULT hr = device->InternalPointer->CreateIndexBuffer( sizeBytes, static_cast<DWORD>( usage ), format, static_cast<D3DPOOL>( pool ), &ib, NULL );
-		Result::Record( hr );
+		if( Result::Record( hr ).IsFailure )
+			throw gcnew Direct3D9Exception();
 
 		Construct(ib);
 		InitDescription();
@@ -94,9 +96,9 @@ namespace Direct3D9
 		return stream;
 	}
 
-	void IndexBuffer::Unlock()
+	Result IndexBuffer::Unlock()
 	{
-		IbPointer->Unlock();
+		return Result::Record( IbPointer->Unlock() );
 	}
 }
 }

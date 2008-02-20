@@ -55,12 +55,12 @@ namespace SlimDX
 			Sprite( Device^ device );
 			~Sprite() { Destruct(); }
 
-			void Begin( SpriteFlags flags );
-			void End();
-			void Flush();
+			Result Begin( SpriteFlags flags );
+			Result End();
+			Result Flush();
 
-			void OnLostDevice();
-			void OnResetDevice();
+			Result OnLostDevice();
+			Result OnResetDevice();
 
 			Device^ GetDevice();
 
@@ -70,17 +70,17 @@ namespace SlimDX
 				void set( Matrix value );
 			}
 
-			void SetWorldViewLH( Matrix world, Matrix view );
-			void SetWorldViewRH( Matrix world, Matrix view );
+			Result SetWorldViewLH( Matrix world, Matrix view );
+			Result SetWorldViewRH( Matrix world, Matrix view );
 
-			void Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, int color );
-			void Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, System::Drawing::Color color );
-			void Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, int color );
-			void Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, System::Drawing::Color color );
-			void Draw( Texture^ texture, Vector3 center, Vector3 position, int color );
-			void Draw( Texture^ texture, Vector3 center, Vector3 position, System::Drawing::Color color );
-			void Draw( Texture^ texture, int color );
-			void Draw( Texture^ texture, System::Drawing::Color color );
+			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, int color );
+			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, System::Drawing::Color color );
+			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, int color );
+			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, System::Drawing::Color color );
+			Result Draw( Texture^ texture, Vector3 center, Vector3 position, int color );
+			Result Draw( Texture^ texture, Vector3 center, Vector3 position, System::Drawing::Color color );
+			Result Draw( Texture^ texture, int color );
+			Result Draw( Texture^ texture, System::Drawing::Color color );
 		};
 	}
 }

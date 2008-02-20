@@ -33,6 +33,8 @@
 #include "Mesh.h"
 #include "PatchMesh.h"
 
+#include "Direct3D9Exception.h"
+
 using namespace System;
 
 namespace SlimDX
@@ -51,7 +53,9 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreatePatchMesh( reinterpret_cast<D3DXPATCHINFO*>( &info ), patchCount, vertexCount, 0, 
 			reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedElements ), device->InternalPointer, &result );
-		Result::Record( hr );
+		
+		if( Result::Record( hr ).IsFailure )
+			throw gcnew Direct3D9Exception();
 
 		Construct(result);
 	}
@@ -61,7 +65,9 @@ namespace Direct3D9
 		ID3DXPatchMesh *result;
 
 		HRESULT hr = D3DXCreateNPatchMesh( mesh->MeshPointer, &result );
-		Result::Record( hr );
+		
+		if( Result::Record( hr ).IsFailure )
+			throw gcnew Direct3D9Exception();
 
 		Construct(result);
 	}
@@ -76,8 +82,8 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXLoadPatchMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
 			&materialBuffer, &instanceBuffer, &materialCount, &mesh );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+
+		if( Result::Record( hr ).IsFailure )
 		{
 			materials = nullptr;
 			effectInstances = nullptr;
@@ -103,9 +109,8 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXLoadPatchMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
 			&materialBuffer, NULL, &materialCount, &mesh );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 		{
 			materials = nullptr;
 			return nullptr;
@@ -123,9 +128,8 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXLoadPatchMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), 
 			device->InternalPointer, NULL, NULL, NULL, &mesh );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew PatchMesh( mesh );
@@ -137,18 +141,17 @@ namespace Direct3D9
 		pin_ptr<VertexElement> pinnedElements = &vertexDeclaration[0];
 
 		HRESULT hr = InternalPointer->CloneMesh( static_cast<DWORD>( flags ), reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedElements ), &result );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew PatchMesh( result );
 	}
 
-	void PatchMesh::GenerateAdjacency( float tolerance )
+	Result PatchMesh::GenerateAdjacency( float tolerance )
 	{
 		HRESULT hr = InternalPointer->GenerateAdjacency( tolerance );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	array<VertexElement>^ PatchMesh::GetDeclaration()
@@ -156,9 +159,8 @@ namespace Direct3D9
 		D3DVERTEXELEMENT9 elementBuffer[MAX_FVF_DECL_SIZE];
 
 		HRESULT hr = InternalPointer->GetDeclaration( elementBuffer );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		// Apparently the returned decl does not include an End element. This is bizarre and confusing,
@@ -177,9 +179,8 @@ namespace Direct3D9
 		IDirect3DDevice9* device;
 
 		HRESULT hr = InternalPointer->GetDevice( &device );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Device( device );
@@ -190,9 +191,8 @@ namespace Direct3D9
 		IDirect3DIndexBuffer9* ib;
 
 		HRESULT hr = InternalPointer->GetIndexBuffer( &ib );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew IndexBuffer( ib );
@@ -203,9 +203,8 @@ namespace Direct3D9
 		IDirect3DVertexBuffer9* vb;
 
 		HRESULT hr = InternalPointer->GetVertexBuffer( &vb );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew VertexBuffer( vb );
@@ -221,10 +220,10 @@ namespace Direct3D9
 		return result;
 	}
 
-	void PatchMesh::Optimize()
+	Result PatchMesh::Optimize()
 	{
 		HRESULT hr = InternalPointer->Optimize( 0 );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	DisplacementParameters PatchMesh::GetDisplacementParameters()
@@ -238,9 +237,8 @@ namespace Direct3D9
 		DWORD lodBias;
 
 		HRESULT hr = InternalPointer->GetDisplaceParam( &texture, &minFilter, &magFilter, &mipFilter, &wrap, &lodBias );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return result;
 
 		result.Texture = gcnew Texture( reinterpret_cast<IDirect3DTexture9*>( texture ) );
@@ -253,12 +251,12 @@ namespace Direct3D9
 		return result;
 	}
 
-	void PatchMesh::SetDisplacementParameters( DisplacementParameters parameters )
+	Result PatchMesh::SetDisplacementParameters( DisplacementParameters parameters )
 	{
 		HRESULT hr = InternalPointer->SetDisplaceParam( reinterpret_cast<IDirect3DTexture9*>( parameters.Texture->InternalPointer ), 
 			static_cast<D3DTEXTUREFILTERTYPE>( parameters.MinFilter ), static_cast<D3DTEXTUREFILTERTYPE>( parameters.MagFilter ),
 			static_cast<D3DTEXTUREFILTERTYPE>( parameters.MipFilter ), static_cast<D3DTEXTUREADDRESS>( parameters.Wrap ), parameters.LevelOfDetailBias );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	DataStream^ PatchMesh::LockAttributeBuffer( LockFlags flags )
@@ -267,19 +265,18 @@ namespace Direct3D9
 		int faceCount = InternalPointer->GetNumPatches();
 		
 		HRESULT hr = InternalPointer->LockAttributeBuffer( static_cast<DWORD>( flags ), &data );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		return gcnew DataStream( data, faceCount * sizeof( DWORD ), true, !readOnly, false );
 	}
 
-	void PatchMesh::UnlockAttributeBuffer()
+	Result PatchMesh::UnlockAttributeBuffer()
 	{
 		HRESULT hr = InternalPointer->UnlockAttributeBuffer();
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	DataStream^ PatchMesh::LockIndexBuffer( LockFlags flags )
@@ -295,19 +292,18 @@ namespace Direct3D9
 		indexBuffer->Release();
 		
 		hr = InternalPointer->LockIndexBuffer( static_cast<DWORD>( flags ), &data );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		return gcnew DataStream( data, description.Size, true, !readOnly, false );
 	}
 
-	void PatchMesh::UnlockIndexBuffer()
+	Result PatchMesh::UnlockIndexBuffer()
 	{
 		HRESULT hr = InternalPointer->UnlockIndexBuffer();
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	DataStream^ PatchMesh::LockVertexBuffer( LockFlags flags )
@@ -323,42 +319,41 @@ namespace Direct3D9
 		vertexBuffer->Release();
 		
 		hr = InternalPointer->LockVertexBuffer( static_cast<DWORD>( flags ), &data );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		return gcnew DataStream( data, description.Size, true, !readOnly, false );
 	}
 
-	void PatchMesh::UnlockVertexBuffer()
+	Result PatchMesh::UnlockVertexBuffer()
 	{
 		HRESULT hr = InternalPointer->UnlockVertexBuffer();
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void PatchMesh::GetTessellationSize( float tessellationLevel, bool adaptive, [Out] int% triangleCount, [Out] int% vertexCount )
+	Result PatchMesh::GetTessellationSize( float tessellationLevel, bool adaptive, [Out] int% triangleCount, [Out] int% vertexCount )
 	{
 		pin_ptr<int> pinnedTriCount = &triangleCount;
 		pin_ptr<int> pinnedVertexCount = &vertexCount;
 
 		HRESULT hr = InternalPointer->GetTessSize( tessellationLevel, adaptive, reinterpret_cast<DWORD*>( pinnedTriCount ), 
 			reinterpret_cast<DWORD*>( pinnedVertexCount ) );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void PatchMesh::Tessellate( float tessellationLevel, Mesh^ mesh )
+	Result PatchMesh::Tessellate( float tessellationLevel, Mesh^ mesh )
 	{
 		HRESULT hr = InternalPointer->Tessellate( tessellationLevel, reinterpret_cast<ID3DXMesh*>( mesh->InternalPointer ) );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void PatchMesh::Tessellate( Vector4 translation, int minimumLevel, int maximumLevel, Mesh^ mesh )
+	Result PatchMesh::Tessellate( Vector4 translation, int minimumLevel, int maximumLevel, Mesh^ mesh )
 	{
 		HRESULT hr = InternalPointer->TessellateAdaptive( reinterpret_cast<D3DXVECTOR4*>( &translation ), maximumLevel, minimumLevel, 
 			reinterpret_cast<ID3DXMesh*>( mesh->InternalPointer ) );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	int PatchMesh::ControlVerticesPerPatch::get()

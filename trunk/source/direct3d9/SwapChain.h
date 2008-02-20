@@ -72,9 +72,9 @@ namespace SlimDX
 
 			Device^ GetDevice();
 			Surface^ GetBackBuffer( int index );
-			void GetFrontBufferData( Surface^ destinationSurface );
+			Result GetFrontBufferData( Surface^ destinationSurface );
 
-			void Present( SlimDX::Direct3D9::Present flags );
+			Result Present( SlimDX::Direct3D9::Present flags );
 		};
 	}
 }

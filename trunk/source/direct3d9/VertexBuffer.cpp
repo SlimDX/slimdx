@@ -38,12 +38,11 @@ namespace Direct3D9
 {
 	VertexBuffer::VertexBuffer( IDirect3DVertexBuffer9* buffer )
 	{
-		if( buffer == NULL )
-			throw gcnew ArgumentNullException( "buffer" );
-
 		D3DVERTEXBUFFER_DESC description;
 		HRESULT hr = buffer->GetDesc( &description );
-		Result::Record( hr );
+		
+		if( Result::Record(hr).IsFailure )
+			throw gcnew Direct3D9Exception();
 		
 		Format = static_cast<SlimDX::Direct3D9::Format>( description.Format );
 		Usage = static_cast<SlimDX::Direct3D9::Usage>( description.Usage );
@@ -56,9 +55,6 @@ namespace Direct3D9
 
 	VertexBuffer::VertexBuffer( IntPtr buffer )
 	{
-		if( buffer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "buffer" );
-
 		void* pointer;
 		IUnknown* unknown = static_cast<IUnknown*>( buffer.ToPointer() );
 		HRESULT hr = unknown->QueryInterface( IID_IDirect3DVertexBuffer9, &pointer );
@@ -69,8 +65,8 @@ namespace Direct3D9
 
 		D3DVERTEXBUFFER_DESC description;
 		hr = vbPtr->GetDesc( &description );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			throw gcnew Direct3D9Exception( hr );
 		
 		Format = static_cast<SlimDX::Direct3D9::Format>( description.Format );
@@ -87,11 +83,15 @@ namespace Direct3D9
 		IDirect3DVertexBuffer9* vb;
 		HRESULT hr = device->InternalPointer->CreateVertexBuffer( sizeBytes, static_cast<DWORD>( usage ), 
 			static_cast<DWORD>( format ), static_cast<D3DPOOL>( pool ), &vb, NULL );
-		Result::Record( hr );
+		
+		if( Result::Record(hr).IsFailure )
+			throw gcnew Direct3D9Exception();
 		
 		D3DVERTEXBUFFER_DESC description;
 		hr = vb->GetDesc( &description );
-		Result::Record( hr );
+		
+		if( Result::Record(hr).IsFailure )
+			throw gcnew Direct3D9Exception();
 		
 		Format = static_cast<SlimDX::Direct3D9::Format>( description.Format );
 		Usage = static_cast<SlimDX::Direct3D9::Usage>( description.Usage );
@@ -106,7 +106,9 @@ namespace Direct3D9
 	{
 		void* lockedPtr;
 		HRESULT hr = VbPointer->Lock( offset, size, &lockedPtr, static_cast<DWORD>( flags ) );
-		Result::Record( hr );
+		
+		if( Result::Record(hr).IsFailure )
+			return nullptr;
 		
 		int lockedSize = size == 0 ? SizeInBytes : size;
 		
@@ -115,9 +117,9 @@ namespace Direct3D9
 		return stream;
 	}
 
-	void VertexBuffer::Unlock()
+	Result VertexBuffer::Unlock()
 	{
-		VbPointer->Unlock();
+		return Result::Record( VbPointer->Unlock() );
 	}
 }
 }

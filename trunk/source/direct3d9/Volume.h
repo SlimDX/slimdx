@@ -70,36 +70,36 @@ namespace SlimDX
 			Volume( System::IntPtr volume );
 			virtual ~Volume() { }
 
-			static void FromMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
-			static void FromMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox, [Out] ImageInformation% imageInformation );
-			static void FromMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox );
-			static void FromMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey );
+			static Result FromMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
+			static Result FromMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox, [Out] ImageInformation% imageInformation );
+			static Result FromMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox );
+			static Result FromMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey );
 
-			static void FromStream( Volume^ volume, System::IO::Stream^stream, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
-			static void FromStream( Volume^ volume, System::IO::Stream^stream, Filter filter, int colorKey, Box sourceBox, Box destinationBox, [Out] ImageInformation% imageInformation );
-			static void FromStream( Volume^ volume, System::IO::Stream^stream, Filter filter, int colorKey, Box sourceBox, Box destinationBox );
-			static void FromStream( Volume^ volume, System::IO::Stream^stream, Filter filter, int colorKey );
+			static Result FromStream( Volume^ volume, System::IO::Stream^stream, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
+			static Result FromStream( Volume^ volume, System::IO::Stream^stream, Filter filter, int colorKey, Box sourceBox, Box destinationBox, [Out] ImageInformation% imageInformation );
+			static Result FromStream( Volume^ volume, System::IO::Stream^stream, Filter filter, int colorKey, Box sourceBox, Box destinationBox );
+			static Result FromStream( Volume^ volume, System::IO::Stream^stream, Filter filter, int colorKey );
 
-			static void FromFile( Volume^ volume, System::String^ fileName, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
-			static void FromFile( Volume^ volume, System::String^ fileName, Filter filter, int colorKey, Box sourceBox, Box destinationBox, [Out] ImageInformation% imageInformation );
-			static void FromFile( Volume^ volume, System::String^ fileName, Filter filter, int colorKey, Box sourceBox, Box destinationBox );
-			static void FromFile( Volume^ volume, System::String^ fileName, Filter filter, int colorKey );
+			static Result FromFile( Volume^ volume, System::String^ fileName, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
+			static Result FromFile( Volume^ volume, System::String^ fileName, Filter filter, int colorKey, Box sourceBox, Box destinationBox, [Out] ImageInformation% imageInformation );
+			static Result FromFile( Volume^ volume, System::String^ fileName, Filter filter, int colorKey, Box sourceBox, Box destinationBox );
+			static Result FromFile( Volume^ volume, System::String^ fileName, Filter filter, int colorKey );
 
-			static void FromVolume( Volume^ destinationVolume, Volume^ sourceVolume, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ destinationPalette, array<PaletteEntry>^ sourcePalette );
-			static void FromVolume( Volume^ destinationVolume, Volume^ sourceVolume, Filter filter, int colorKey, Box sourceBox, Box destinationBox );
-			static void FromVolume( Volume^ destinationVolume, Volume^ sourceVolume, Filter filter, int colorKey );
+			static Result FromVolume( Volume^ destinationVolume, Volume^ sourceVolume, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ destinationPalette, array<PaletteEntry>^ sourcePalette );
+			static Result FromVolume( Volume^ destinationVolume, Volume^ sourceVolume, Filter filter, int colorKey, Box sourceBox, Box destinationBox );
+			static Result FromVolume( Volume^ destinationVolume, Volume^ sourceVolume, Filter filter, int colorKey );
 
 			static DataStream^ ToStream( Volume^ volume, ImageFileFormat format, Box box, array<PaletteEntry>^ palette );
 			static DataStream^ ToStream( Volume^ volume, ImageFileFormat format, Box box );
 			static DataStream^ ToStream( Volume^ volume, ImageFileFormat format );
 
-			static void ToFile( Volume^ volume, System::String^ fileName, ImageFileFormat format, Box box, array<PaletteEntry>^ palette );
-			static void ToFile( Volume^ volume, System::String^ fileName, ImageFileFormat format, Box box );
-			static void ToFile( Volume^ volume, System::String^ fileName, ImageFileFormat format );
+			static Result ToFile( Volume^ volume, System::String^ fileName, ImageFileFormat format, Box box, array<PaletteEntry>^ palette );
+			static Result ToFile( Volume^ volume, System::String^ fileName, ImageFileFormat format, Box box );
+			static Result ToFile( Volume^ volume, System::String^ fileName, ImageFileFormat format );
 
 			DataBox^ LockBox( LockFlags flags );
 			DataBox^ LockBox( Box box, LockFlags flags );
-			void UnlockBox();
+			Result UnlockBox();
 
 			Device^ GetDevice();
 

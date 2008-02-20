@@ -105,22 +105,22 @@ namespace SlimDX
 				int get() { return InternalPointer->GetBufferSize(); }
 			}
 
-			void SetDefaults();
+			Result SetDefaults();
 
-			void SetValue( EffectHandle^ constant, bool value );
-			void SetValue( EffectHandle^ constant, array<bool>^ value );
-			void SetValue( EffectHandle^ constant, int value );
-			void SetValue( EffectHandle^ constant, array<int>^ values );
-			void SetValue( EffectHandle^ constant, float value );
-			void SetValue( EffectHandle^ constant, array<float>^ values );
-			void SetValue( EffectHandle^ constant, Vector4 value );
-			void SetValue( EffectHandle^ constant, array<Vector4>^ values );
-			void SetValue( EffectHandle^ constant, Color4 value );
-			void SetValue( EffectHandle^ constant, array<Color4>^ values );
-			void SetValue( EffectHandle^ constant, Matrix value );
-			void SetValue( EffectHandle^ constant, array<Matrix>^ values );
-			void SetValueTranspose( EffectHandle^ constant, Matrix value );
-			void SetValueTranspose( EffectHandle^ constant, array<Matrix>^ values );
+			Result SetValue( EffectHandle^ constant, bool value );
+			Result SetValue( EffectHandle^ constant, array<bool>^ value );
+			Result SetValue( EffectHandle^ constant, int value );
+			Result SetValue( EffectHandle^ constant, array<int>^ values );
+			Result SetValue( EffectHandle^ constant, float value );
+			Result SetValue( EffectHandle^ constant, array<float>^ values );
+			Result SetValue( EffectHandle^ constant, Vector4 value );
+			Result SetValue( EffectHandle^ constant, array<Vector4>^ values );
+			Result SetValue( EffectHandle^ constant, Color4 value );
+			Result SetValue( EffectHandle^ constant, array<Color4>^ values );
+			Result SetValue( EffectHandle^ constant, Matrix value );
+			Result SetValue( EffectHandle^ constant, array<Matrix>^ values );
+			Result SetValueTranspose( EffectHandle^ constant, Matrix value );
+			Result SetValueTranspose( EffectHandle^ constant, array<Matrix>^ values );
 		};
 	}
 }

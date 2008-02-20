@@ -89,17 +89,17 @@ namespace SlimDX
 				ShaderFlags flags, EffectPool^ pool);
 
 			int Begin( FX flags );
-			void End();
-			void BeginPass( int pass );
-			void EndPass();
+			Result End();
+			Result BeginPass( int pass );
+			Result EndPass();
 
-			void BeginParameterBlock();
+			Result BeginParameterBlock();
 			EffectHandle^ EndParameterBlock();
-			void ApplyParameterBlock( EffectHandle^ parameterBlock );
-			void DeleteParameterBlock( EffectHandle^ parameterBlock );
+			Result ApplyParameterBlock( EffectHandle^ parameterBlock );
+			Result DeleteParameterBlock( EffectHandle^ parameterBlock );
 
 			bool IsParameterUsed( EffectHandle^ parameter, EffectHandle^ technique );
-			void CommitChanges();
+			Result CommitChanges();
 
 			EffectHandle^ FindNextValidTechnique( EffectHandle^ technique );
 			bool ValidateTechnique( EffectHandle^ technique );
@@ -110,8 +110,8 @@ namespace SlimDX
 				void set( EffectHandle^ value );
 			}
 
-			void OnLostDevice();
-			void OnResetDevice();
+			Result OnLostDevice();
+			Result OnResetDevice();
 		};
 	}
 }

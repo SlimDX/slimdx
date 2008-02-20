@@ -55,7 +55,7 @@ namespace SlimDX
 			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, array<System::Byte>^ data );
 			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, System::IO::Stream^ data );
 
-			void AddDataReference( System::String^ name, System::Guid id );
+			Result AddDataReference( System::String^ name, System::Guid id );
 
 			property System::Guid Id { System::Guid get(); }
 			property System::String^ Name { System::String^ get(); }
@@ -77,7 +77,7 @@ namespace SlimDX
 			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, array<System::Byte>^ data );
 			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, System::IO::Stream^ data );
 			XFile^ GetFile();
-			void Save();
+			Result Save();
 		};
 
 		public ref class XFile : public ComObject
@@ -97,10 +97,10 @@ namespace SlimDX
 			XFileEnumerationObject^ CreateEnumerationObject( System::IO::Stream^ stream );
 			XFileSaveObject^ CreateSaveObject( System::String^ fileName, System::Runtime::InteropServices::CharSet charSet, XFileFormat format );
 
-			void RegisterEnumerationTemplates( XFileEnumerationObject^ enumerationObject );
-			void RegisterTemplates( array<System::Byte>^ memory );
-			void RegisterTemplates( System::IO::Stream^ memory );
-			void RegisterTemplates( System::String^ name );
+			Result RegisterEnumerationTemplates( XFileEnumerationObject^ enumerationObject );
+			Result RegisterTemplates( array<System::Byte>^ memory );
+			Result RegisterTemplates( System::IO::Stream^ memory );
+			Result RegisterTemplates( System::String^ name );
 		};
 
 		public ref class XFileEnumerationObject : public ComObject
@@ -137,7 +137,7 @@ namespace SlimDX
 			XFileEnumerationObject^ GetEnumerationObject();
 
 			DataStream^ Lock();
-			void Unlock();
+			Result Unlock();
 
 			property int ChildCount { int get(); }
 			property System::Guid Id { System::Guid get(); }

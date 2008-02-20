@@ -68,12 +68,12 @@ namespace SlimDX
 
 			System::Drawing::Rectangle MeasureString( Sprite^ sprite, System::String^ text, DrawTextFormat format );
 
-			void PreloadCharacters( int first, int last );
-			void PreloadGlyphs( int first, int last );
-			void PreloadText( System::String^ text );
+			Result PreloadCharacters( int first, int last );
+			Result PreloadGlyphs( int first, int last );
+			Result PreloadText( System::String^ text );
 
-			void OnLostDevice();
-			void OnResetDevice();
+			Result OnLostDevice();
+			Result OnResetDevice();
 
 			property FontDescription Description
 			{

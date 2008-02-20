@@ -58,12 +58,12 @@ namespace SlimDX
 			RenderToSurface( Device^ device, int width, int height, Format format, Format depthStencilFormat );
 			~RenderToSurface() { Destruct(); }
 
-			void BeginScene( Surface^ renderSurface, SlimDX::Direct3D::Viewport viewport );
-			void EndScene( Filter mipFilter );
+			Result BeginScene( Surface^ renderSurface, SlimDX::Direct3D::Viewport viewport );
+			Result EndScene( Filter mipFilter );
 
 			Device^ GetDevice();
-			void OnLostDevice();
-			void OnResetDevice();
+			Result OnLostDevice();
+			Result OnResetDevice();
 
 			property RenderToSurfaceDescription Description
 			{

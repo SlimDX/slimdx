@@ -161,8 +161,8 @@ namespace SlimDX
 		{
 			ID3DXConstantTable* constantTable;
 			HRESULT hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( InternalPointer->GetBufferPointer() ), &constantTable );
-			Result::Record( hr );
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 
 			return gcnew ConstantTable( constantTable );
@@ -174,16 +174,16 @@ namespace SlimDX
 			const DWORD* function = reinterpret_cast<const DWORD*>( InternalPointer->GetBufferPointer() );
 
 			HRESULT hr = D3DXGetShaderInputSemantics( function, NULL, &count );
-			Result::Record( hr );
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 			
 			array<ShaderSemantic>^ inputs = gcnew array<ShaderSemantic>( count );
 			pin_ptr<ShaderSemantic> pinnedInputs = &inputs[0];
 
 			hr = D3DXGetShaderInputSemantics( function, reinterpret_cast<D3DXSEMANTIC*>( pinnedInputs ), &count );
-			Result::Record( hr );
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 			
 			return inputs;
@@ -195,16 +195,16 @@ namespace SlimDX
 			const DWORD* function = reinterpret_cast<const DWORD*>( InternalPointer->GetBufferPointer() );
 
 			HRESULT hr = D3DXGetShaderOutputSemantics( function, NULL, &count );
-			Result::Record( hr );
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 			
 			array<ShaderSemantic>^ outputs = gcnew array<ShaderSemantic>( count );
 			pin_ptr<ShaderSemantic> pinnedOutputs = &outputs[0];
 
 			hr = D3DXGetShaderOutputSemantics( function, reinterpret_cast<D3DXSEMANTIC*>( pinnedOutputs ), &count );
-			Result::Record( hr );
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 			
 			return outputs;
@@ -216,15 +216,15 @@ namespace SlimDX
 			const DWORD* function = reinterpret_cast<const DWORD*>( InternalPointer->GetBufferPointer() );
 
 			HRESULT hr = D3DXGetShaderSamplers( function, NULL, &count );
-			Result::Record( hr );
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 			
 			std::auto_ptr<LPCSTR> samplers(new LPCSTR[count]);
 
 			hr = D3DXGetShaderSamplers( function, samplers.get(), &count );
-			Result::Record( hr );
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 			
 			array<String^>^ outputSamplers = gcnew array<String^>( count );
@@ -265,9 +265,8 @@ namespace SlimDX
 			Macro::Unmarshal( macros, handles );
 			//marshal errors if necessary
 			errors = Utilities::BufferToString( errorBuffer );
-			
-			Result::Record( hr );
-			if( FAILED( hr ) )
+
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 
 			return gcnew ShaderBytecode( shaderBuffer );
@@ -304,8 +303,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			errors = Utilities::BufferToString( errorBuffer );
 			
-			Result::Record( hr );
-			if( FAILED( hr ) )
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 
 			return gcnew ShaderBytecode( shaderBuffer );
@@ -343,8 +341,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			errors = Utilities::BufferToString( errorBuffer );
 			
-			Result::Record( hr );
-			if( FAILED( hr ) )
+			if( Result::Record( hr ).IsFailure )
 			{
 				constantTable = nullptr;
 				return nullptr;
@@ -391,8 +388,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			errors = Utilities::BufferToString( errorBuffer );
 			
-			Result::Record( hr );
-			if( FAILED( hr ) )
+			if( Result::Record( hr ).IsFailure )
 			{
 				return nullptr;
 			}
@@ -440,8 +436,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			errors = Utilities::BufferToString( errorBuffer );
 			
-			Result::Record( hr );
-			if( FAILED( hr ) )
+			if( Result::Record( hr ).IsFailure )
 			{
 				constantTable = nullptr;
 				return nullptr;
@@ -475,16 +470,11 @@ namespace SlimDX
 				reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
 				static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, NULL );
 
-			//clean up after marshaling macros
 			Macro::Unmarshal( macros, handles );
-			//marshal errors if necessary
 			errors = Utilities::BufferToString( errorBuffer );
 			
-			Result::Record( hr );
-			if( FAILED( hr ) )
-			{
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
-			}
 
 			return gcnew ShaderBytecode( shaderBuffer );
 		}

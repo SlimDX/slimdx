@@ -58,8 +58,8 @@ namespace SlimDX
 			static DataStream^ GatherFromFile( System::String^ fileName, array<Macro>^ defines,
 				Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 
-			void AddFragments( array<int>^ fragments );
-			void AddFragments( DataStream^ fragments );
+			Result AddFragments( array<int>^ fragments );
+			Result AddFragments( DataStream^ fragments );
 			DataStream^ GetFragment( EffectHandle^ name );
 			DataStream^ GetAllFragments();
 			Device^ GetDevice();

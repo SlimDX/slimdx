@@ -111,8 +111,7 @@ namespace Direct3D9
 		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );
 		
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew EffectCompiler( compiler );
@@ -231,11 +230,11 @@ namespace Direct3D9
 		return CompileEffect( flags, errors );
 	}
 
-	void EffectCompiler::SetLiteral( EffectHandle^ handle, bool literal )
+	Result EffectCompiler::SetLiteral( EffectHandle^ handle, bool literal )
 	{
 		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		HRESULT hr = CompilerPointer->SetLiteral( nativeHandle, literal );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	bool EffectCompiler::GetLiteral( EffectHandle^ handle )

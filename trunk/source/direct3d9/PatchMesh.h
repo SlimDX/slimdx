@@ -75,30 +75,30 @@ namespace SlimDX
 			static PatchMesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags );
 
 			PatchMesh^ Clone( MeshFlags flags, array<VertexElement>^ vertexDeclaration );
-			void GenerateAdjacency( float tolerance );
+			Result GenerateAdjacency( float tolerance );
 
 			array<VertexElement>^ GetDeclaration();
 			Device^ GetDevice();
 			IndexBuffer^ GetIndexBuffer();
 			VertexBuffer^ GetVertexBuffer();
 			PatchInfo GetPatchInfo();
-			void Optimize();
+			Result Optimize();
 
 			DisplacementParameters GetDisplacementParameters();
-			void SetDisplacementParameters( DisplacementParameters parameters );
+			Result SetDisplacementParameters( DisplacementParameters parameters );
 
 			DataStream^ LockAttributeBuffer( LockFlags flags );
-			void UnlockAttributeBuffer();
+			Result UnlockAttributeBuffer();
 
 			DataStream^ LockIndexBuffer( LockFlags flags );
-			void UnlockIndexBuffer();
+			Result UnlockIndexBuffer();
 
 			DataStream^ LockVertexBuffer( LockFlags flags );
-			void UnlockVertexBuffer();
+			Result UnlockVertexBuffer();
 
-			void GetTessellationSize( float tessellationLevel, bool adaptive, [Out] int% triangleCount, [Out] int% vertexCount );
-			void Tessellate( float tessellationLevel, Mesh^ mesh );
-			void Tessellate( Vector4 translation, int minimumLevel, int maximumLevel, Mesh^ mesh );
+			Result GetTessellationSize( float tessellationLevel, bool adaptive, [Out] int% triangleCount, [Out] int% vertexCount );
+			Result Tessellate( float tessellationLevel, Mesh^ mesh );
+			Result Tessellate( Vector4 translation, int minimumLevel, int maximumLevel, Mesh^ mesh );
 
 			property int ControlVerticesPerPatch { int get(); }
 			property int PatchCount { int get(); }

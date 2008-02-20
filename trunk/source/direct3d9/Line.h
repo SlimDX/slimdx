@@ -41,16 +41,16 @@ namespace SlimDX
 			Line( Device^ device );
 			~Line() { Destruct(); }
 
-			void Begin();
-			void End();
+			Result Begin();
+			Result End();
 
-			void Draw( array<Vector2>^ vertexList, int color );
-			void Draw( array<Vector2>^ vertexList, System::Drawing::Color color );
-			void DrawTransformed( array<Vector3>^ vertexList, Matrix matrix, int color );
-			void DrawTransformed( array<Vector3>^ vertexList, Matrix matrix, System::Drawing::Color color );
+			Result Draw( array<Vector2>^ vertexList, int color );
+			Result Draw( array<Vector2>^ vertexList, System::Drawing::Color color );
+			Result DrawTransformed( array<Vector3>^ vertexList, Matrix matrix, int color );
+			Result DrawTransformed( array<Vector3>^ vertexList, Matrix matrix, System::Drawing::Color color );
 			
-			void OnLostDevice();
-			void OnResetDevice();
+			Result OnLostDevice();
+			Result OnResetDevice();
 
 			Device^ GetDevice();
 

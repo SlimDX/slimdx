@@ -92,7 +92,7 @@ namespace SlimDX
 			AnimationController( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents );
 			virtual ~AnimationController() { Destruct(); }
 
-			void AdvanceTime( double time, AnimationCallback^ handler );
+			Result AdvanceTime( double time, AnimationCallback^ handler );
 			AnimationController^ Clone( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents );
 			
 			AnimationSet^ GetAnimationSet( int index );
@@ -112,23 +112,23 @@ namespace SlimDX
 			int KeyTrackSpeed( int track, float newSpeed, double startTime, double duration, TransitionType transition );
 			int KeyTrackWeight( int track, float newWeight, double startTime, double duration, TransitionType transition );
 
-			void RegisterAnimationOutput( System::String^ name, AnimationOutput^ output );
-			void RegisterAnimationSet( AnimationSet^ set );
-			void ResetTime();
+			Result RegisterAnimationOutput( System::String^ name, AnimationOutput^ output );
+			Result RegisterAnimationSet( AnimationSet^ set );
+			Result ResetTime();
 
-			void SetTrackAnimationSet( int track, AnimationSet^ set );
-			void SetTrackDescription( int track, TrackDescription description );
-			void EnableTrack( int track );
-			void DisableTrack( int track );
-			void SetTrackPosition( int track, double position );
-			void SetTrackPriority( int track, TrackPriority priority );
-			void SetTrackSpeed( int track, float speed );
-			void SetTrackWeight( int track, float weight );
+			Result SetTrackAnimationSet( int track, AnimationSet^ set );
+			Result SetTrackDescription( int track, TrackDescription description );
+			Result EnableTrack( int track );
+			Result DisableTrack( int track );
+			Result SetTrackPosition( int track, double position );
+			Result SetTrackPriority( int track, TrackPriority priority );
+			Result SetTrackSpeed( int track, float speed );
+			Result SetTrackWeight( int track, float weight );
 
-			void UnkeyAllPriorityBlends();
-			void UnkeyAllTrackEvents( int track );
-			void UnkeyEvent( int handle );
-			void UnregisterAnimationSet( AnimationSet^ set );
+			Result UnkeyAllPriorityBlends();
+			Result UnkeyAllTrackEvents( int track );
+			Result UnkeyEvent( int handle );
+			Result UnregisterAnimationSet( AnimationSet^ set );
 
 			bool ValidateEvent( int handle );
 

@@ -70,27 +70,27 @@ namespace SlimDX
 
 			int FindBoneVertexInfluenceIndex( int bone, int vertex );
 
-			void GetBoneInfluence( int bone, [Out] array<int>^% vertices, [Out] array<float>^% weights );
-			void SetBoneInfluence( int bone, array<int>^ vertices, array<float>^ weights );
+			Result GetBoneInfluence( int bone, [Out] array<int>^% vertices, [Out] array<float>^% weights );
+			Result SetBoneInfluence( int bone, array<int>^ vertices, array<float>^ weights );
 
 			System::String^ GetBoneName( int bone );
-			void SetBoneName( int bone, System::String^ name );
+			Result SetBoneName( int bone, System::String^ name );
 
-			void GetBoneVertexInfluence( int bone, int influence, [Out] float% weight, [Out] int% vertex );
-			void SetBoneVertexInfluence( int bone, int influence, float weight );
+			Result GetBoneVertexInfluence( int bone, int influence, [Out] float% weight, [Out] int% vertex );
+			Result SetBoneVertexInfluence( int bone, int influence, float weight );
 
 			Matrix GetBoneOffsetMatrix( int bone );
-			void SetBoneOffsetMatrix( int bone, Matrix transform );
+			Result SetBoneOffsetMatrix( int bone, Matrix transform );
 
 			array<VertexElement>^ GetDeclaration();
-			void SetDeclaration( array<VertexElement>^ declaration );
+			Result SetDeclaration( array<VertexElement>^ declaration );
 
 			int GetMaxFaceInfluences( IndexBuffer^ indexBuffer, int faceCount );
 			int GetBoneInfluenceCount( int bone );
 
-			void Remap( array<int>^ remapData );
+			Result Remap( array<int>^ remapData );
 
-			void UpdateSkinnedMesh( Matrix boneTransform, Matrix boneInvTranspose, DataStream^ source, DataStream^ destination );
+			Result UpdateSkinnedMesh( Matrix boneTransform, Matrix boneInvTranspose, DataStream^ source, DataStream^ destination );
 
 			property int MaximumVertexInfluences { int get(); }
 			property int BoneCount { int get(); }

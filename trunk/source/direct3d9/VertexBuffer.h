@@ -53,7 +53,7 @@ namespace SlimDX
 			virtual ~VertexBuffer() { }
 
 			DataStream^ Lock( int offset, int size, LockFlags flags );
-			void Unlock();
+			Result Unlock();
 
 			property SlimDX::Direct3D9::Format Format
 			{

@@ -51,16 +51,16 @@ namespace SlimDX
 			RenderToEnvironmentMap( Device^ device, int size, int mipLevels, Format format, Format depthStencilFormat );
 			virtual ~RenderToEnvironmentMap() { Destruct(); }
 
-			void BeginCube( CubeTexture^ texture );
-			void BeginHemisphere( Texture^ positiveZTexture, Texture^ negativeZTexture );
-			void BeginParabolic( Texture^ positiveZTexture, Texture^ negativeZTexture );
-			void BeginSphere( Texture^ texture );
-			void End( Filter mipFilter );
-			void Face( CubeMapFace face, Filter mipFilter );
+			Result BeginCube( CubeTexture^ texture );
+			Result BeginHemisphere( Texture^ positiveZTexture, Texture^ negativeZTexture );
+			Result BeginParabolic( Texture^ positiveZTexture, Texture^ negativeZTexture );
+			Result BeginSphere( Texture^ texture );
+			Result End( Filter mipFilter );
+			Result Face( CubeMapFace face, Filter mipFilter );
 
 			Device^ GetDevice();
-			void OnLostDevice();
-			void OnResetDevice();
+			Result OnLostDevice();
+			Result OnResetDevice();
 
 			property RenderToEnvironmentMapDescription Description { RenderToEnvironmentMapDescription get(); }
 		};

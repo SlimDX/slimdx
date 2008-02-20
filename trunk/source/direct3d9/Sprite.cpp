@@ -30,6 +30,8 @@
 #include "Sprite.h"
 #include "Texture.h"
 
+#include "Direct3D9Exception.h"
+
 using namespace System;
 using namespace System::Drawing;
 
@@ -44,9 +46,6 @@ namespace Direct3D9
 
 	Sprite::Sprite( ID3DXSprite* sprite )
 	{
-		if( sprite == NULL )
-			throw gcnew ArgumentNullException( "sprite" );
-
 		Construct(sprite);
 	}
 
@@ -55,39 +54,41 @@ namespace Direct3D9
 		ID3DXSprite* sprite;
 		
 		HRESULT hr = D3DXCreateSprite( device->InternalPointer, &sprite );
-		Result::Record( hr );
+		
+		if( Result::Record( hr ).IsFailure )
+			throw gcnew Direct3D9Exception();
 
 		Construct(sprite);
 	}
 
-	void Sprite::Begin( SpriteFlags flags )
+	Result Sprite::Begin( SpriteFlags flags )
 	{
 		HRESULT hr = InternalPointer->Begin( static_cast<DWORD>( flags ) );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Sprite::End()
+	Result Sprite::End()
 	{
 		HRESULT hr = InternalPointer->End();
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Sprite::Flush()
+	Result Sprite::Flush()
 	{
 		HRESULT hr = InternalPointer->Flush();
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Sprite::OnLostDevice()
+	Result Sprite::OnLostDevice()
 	{
 		HRESULT hr = InternalPointer->OnLostDevice();
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Sprite::OnResetDevice()
+	Result Sprite::OnResetDevice()
 	{
 		HRESULT hr = InternalPointer->OnResetDevice();
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	Device^ Sprite::GetDevice()
@@ -95,7 +96,9 @@ namespace Direct3D9
 		IDirect3DDevice9* device;
 
 		HRESULT hr = InternalPointer->GetDevice( &device );
-		Result::Record( hr );
+		
+		if( Result::Record( hr ).IsFailure )
+			return nullptr;
 
 		return gcnew Device( device );
 	}
@@ -116,66 +119,66 @@ namespace Direct3D9
 		Result::Record( hr );
 	}
 
-	void Sprite::SetWorldViewLH( Matrix world, Matrix view )
+	Result Sprite::SetWorldViewLH( Matrix world, Matrix view )
 	{
 		HRESULT hr = InternalPointer->SetWorldViewLH( reinterpret_cast<const D3DXMATRIX*>( &world ), reinterpret_cast<const D3DXMATRIX*>( &view ) );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Sprite::SetWorldViewRH( Matrix world, Matrix view )
+	Result Sprite::SetWorldViewRH( Matrix world, Matrix view )
 	{
 		HRESULT hr = InternalPointer->SetWorldViewRH( reinterpret_cast<const D3DXMATRIX*>( &world ), reinterpret_cast<const D3DXMATRIX*>( &view ) );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, int color )
+	Result Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, int color )
 	{
 		RECT rect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
 
 		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, &rect, reinterpret_cast<const D3DXVECTOR3*>( &center ),
 			reinterpret_cast<const D3DXVECTOR3*>( &position ), color );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color color )
+	Result Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color color )
 	{
-		Draw( texture, sourceRect, center, position, color.ToArgb() );
+		return Draw( texture, sourceRect, center, position, color.ToArgb() );
 	}
 
-	void Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, int color )
+	Result Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, int color )
 	{
 		RECT rect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
 
 		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, &rect, NULL, NULL, color );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color color )
+	Result Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color color )
 	{
-		Draw( texture, sourceRect, color.ToArgb() );
+		return Draw( texture, sourceRect, color.ToArgb() );
 	}
 
-	void Sprite::Draw( Texture^ texture, Vector3 center, Vector3 position, int color )
+	Result Sprite::Draw( Texture^ texture, Vector3 center, Vector3 position, int color )
 	{
 		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, NULL, reinterpret_cast<const D3DXVECTOR3*>( &center ),
 			reinterpret_cast<const D3DXVECTOR3*>( &position ), color );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Sprite::Draw( Texture^ texture, Vector3 center, Vector3 position, Color color )
+	Result Sprite::Draw( Texture^ texture, Vector3 center, Vector3 position, Color color )
 	{
-		Draw( texture, center, position, color.ToArgb() );
+		return Draw( texture, center, position, color.ToArgb() );
 	}
 
-	void Sprite::Draw( Texture^ texture, int color )
+	Result Sprite::Draw( Texture^ texture, int color )
 	{
 		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, NULL, NULL, NULL, color );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Sprite::Draw( Texture^ texture, Color color )
+	Result Sprite::Draw( Texture^ texture, Color color )
 	{
-		Draw( texture, color.ToArgb() );
+		return Draw( texture, color.ToArgb() );
 	}
 }
 }

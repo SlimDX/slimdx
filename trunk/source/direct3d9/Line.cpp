@@ -56,69 +56,67 @@ namespace Direct3D9
 		ID3DXLine* line;
 
 		HRESULT hr = D3DXCreateLine( device->InternalPointer, &line );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		if( Result::Record( hr ).IsFailure )
 			throw gcnew Direct3D9Exception();
 
 		Construct(line);
 	}
 
-	void Line::Begin()
+	Result Line::Begin()
 	{
 		HRESULT hr = InternalPointer->Begin();
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Line::End()
+	Result Line::End()
 	{
 		HRESULT hr = InternalPointer->End();
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Line::Draw( array<Vector2>^ vertexList, int color )
+	Result Line::Draw( array<Vector2>^ vertexList, int color )
 	{
 		pin_ptr<Vector2> pinnedVerts = &vertexList[0];
 
 		HRESULT hr = InternalPointer->Draw( reinterpret_cast<D3DXVECTOR2*>( pinnedVerts ), vertexList->Length, color );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Line::Draw( array<Vector2>^ vertexList, Color color )
+	Result Line::Draw( array<Vector2>^ vertexList, Color color )
 	{
-		Draw( vertexList, color.ToArgb() );
+		return Draw( vertexList, color.ToArgb() );
 	}
 	
-	void Line::DrawTransformed( array<Vector3>^ vertexList, Matrix transform, int color )
+	Result Line::DrawTransformed( array<Vector3>^ vertexList, Matrix transform, int color )
 	{
 		pin_ptr<Vector3> pinnedVerts = &vertexList[0];
 
 		HRESULT hr = InternalPointer->DrawTransform( reinterpret_cast<D3DXVECTOR3*>( pinnedVerts ), vertexList->Length, reinterpret_cast<const D3DXMATRIX*>( &transform ), color );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 	
-	void Line::DrawTransformed( array<Vector3>^ vertexList, Matrix transform, Color color )
+	Result Line::DrawTransformed( array<Vector3>^ vertexList, Matrix transform, Color color )
 	{
-		DrawTransformed( vertexList, transform, color.ToArgb() );
+		return DrawTransformed( vertexList, transform, color.ToArgb() );
 	}
 	
-	void Line::OnLostDevice()
+	Result Line::OnLostDevice()
 	{
 		HRESULT hr = InternalPointer->OnLostDevice();
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Line::OnResetDevice()
+	Result Line::OnResetDevice()
 	{
 		HRESULT hr = InternalPointer->OnResetDevice();
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	Device^ Line::GetDevice()
 	{
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Device( device );

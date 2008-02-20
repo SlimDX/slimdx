@@ -42,9 +42,6 @@ namespace Direct3D9
 
 	SwapChain::SwapChain( IDirect3DSwapChain9* swapChain )
 	{
-		if( swapChain == NULL )
-			throw gcnew ArgumentNullException( "swapChain" );
-
 		Construct(swapChain);
 	}
 
@@ -57,6 +54,7 @@ namespace Direct3D9
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
+
 		if( presentParameters == nullptr )
 			throw gcnew ArgumentNullException( "presentParameters" );
 
@@ -65,8 +63,8 @@ namespace Direct3D9
 
 		IDirect3DSwapChain9* swapChain;
 		HRESULT hr = device->InternalPointer->CreateAdditionalSwapChain( &d3dpp, &swapChain );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( "Failed to create swap chain." );
 
 		Construct(swapChain);
@@ -76,27 +74,29 @@ namespace Direct3D9
 	{
 		IDirect3DSurface9* surface;
 		HRESULT hr = InternalPointer->GetBackBuffer( index, D3DBACKBUFFER_TYPE_MONO, &surface );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Surface( surface );
 	}
 
-	void SwapChain::GetFrontBufferData( Surface^ destinationSurface )
+	Result SwapChain::GetFrontBufferData( Surface^ destinationSurface )
 	{
 		if( destinationSurface == nullptr )
 			throw gcnew ArgumentNullException( "destinationSurface" );
 
 		HRESULT hr = InternalPointer->GetFrontBufferData( destinationSurface->SurfacePointer );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	Device^ SwapChain::GetDevice()
 	{
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
-		Result::Record( hr );
+		
+		if( Result::Record( hr ).IsFailure )
+			return nullptr;
 
 		return gcnew Device( device );
 	}
@@ -114,7 +114,9 @@ namespace Direct3D9
 	{
 		D3DRASTER_STATUS status;
 		HRESULT hr = InternalPointer->GetRasterStatus( &status );
-		Result::Record( hr );
+		
+		if( Result::Record( hr ).IsFailure )
+			return SlimDX::Direct3D9::RasterStatus();
 
 		SlimDX::Direct3D9::RasterStatus result;
 		result.InVBlank = status.InVBlank > 0;
@@ -122,10 +124,10 @@ namespace Direct3D9
 		return result;
 	}
 
-	void SwapChain::Present( SlimDX::Direct3D9::Present flags )
+	Result SwapChain::Present( SlimDX::Direct3D9::Present flags )
 	{
 		HRESULT hr = InternalPointer->Present( 0, 0, 0, 0, static_cast<DWORD>( flags ) );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 }
 }

@@ -37,24 +37,24 @@ namespace SlimDX
 			MatrixStack();
 			~MatrixStack() { Destruct(); }
 
-			void Push();
-			void Pop();
+			Result Push();
+			Result Pop();
 
-			void LoadIdentity();
-			void LoadMatrix( Matrix matrix );
-			void MultiplyMatrix( Matrix matrix );
-			void MultiplyMatrixLocal( Matrix matrix );
+			Result LoadIdentity();
+			Result LoadMatrix( Matrix matrix );
+			Result MultiplyMatrix( Matrix matrix );
+			Result MultiplyMatrixLocal( Matrix matrix );
 
-			void RotateAxis( Vector3 axis, float angle );
-			void RotateAxisLocal( Vector3 axis, float angle );
-			void RotateYawPitchRoll( float yaw, float pitch, float roll );
-			void RotateYawPitchRollLocal( float yaw, float pitch, float roll );
+			Result RotateAxis( Vector3 axis, float angle );
+			Result RotateAxisLocal( Vector3 axis, float angle );
+			Result RotateYawPitchRoll( float yaw, float pitch, float roll );
+			Result RotateYawPitchRollLocal( float yaw, float pitch, float roll );
 
-			void Scale( float x, float y, float z );
-			void ScaleLocal( float x, float y, float z );
+			Result Scale( float x, float y, float z );
+			Result ScaleLocal( float x, float y, float z );
 
-			void Translate( float x, float y, float z );
-			void TranslateLocal( float x, float y, float z );
+			Result Translate( float x, float y, float z );
+			Result TranslateLocal( float x, float y, float z );
 
 			property Matrix Top
 			{
