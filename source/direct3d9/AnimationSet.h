@@ -169,29 +169,29 @@ namespace SlimDX
 
 			CallbackKey GetCallbackKey( int animation );
 			array<CallbackKey>^ GetCallbackKeys();
-			void SetCallbackKey( int animation, CallbackKey callbackKey );
+			Result SetCallbackKey( int animation, CallbackKey callbackKey );
 
 			RotationKey GetRotationKey( int animation, int key );
 			array<RotationKey>^ GetRotationKeys( int animation );
-			void SetRotationKey( int animation, int key, RotationKey rotationKey );
-			void UnregisterRotationKey( int animation, int key );
+			Result SetRotationKey( int animation, int key, RotationKey rotationKey );
+			Result UnregisterRotationKey( int animation, int key );
 			int GetRotationKeyCount( int animation );
 
 			ScaleKey GetScaleKey( int animation, int key );
 			array<ScaleKey>^ GetScaleKeys( int animation );
-			void SetScaleKey( int animation, int key, ScaleKey scaleKey );
-			void UnregisterScaleKey( int animation, int key );
+			Result SetScaleKey( int animation, int key, ScaleKey scaleKey );
+			Result UnregisterScaleKey( int animation, int key );
 			int GetScaleKeyCount( int animation );
 
 			TranslationKey GetTranslationKey( int animation, int key );
 			array<TranslationKey>^ GetTranslationKeys( int animation );
-			void SetTranslationKey( int animation, int key, TranslationKey translationKey );
-			void UnregisterTranslationKey( int animation, int key );
+			Result SetTranslationKey( int animation, int key, TranslationKey translationKey );
+			Result UnregisterTranslationKey( int animation, int key );
 			int GetTranslationKeyCount( int animation );
 
 			int RegisterAnimationKeys( System::String^ name, array<ScaleKey>^ scaleKeys, 
 				array<RotationKey>^ rotationKeys, array<TranslationKey>^ translationKeys );
-			void UnregisterAnimation( int animation );
+			Result UnregisterAnimation( int animation );
 
 			property int CallbackKeyCount { int get(); }
 			property PlaybackType PlaybackType { SlimDX::Direct3D9::PlaybackType get(); }

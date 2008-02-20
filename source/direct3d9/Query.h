@@ -412,7 +412,7 @@ namespace SlimDX
 			}
 
 			Device^ GetDevice();
-			void Issue( SlimDX::Direct3D9::Issue flags );
+			Result Issue( SlimDX::Direct3D9::Issue flags );
 			bool CheckStatus( bool flush );
 
 			generic<typename T> where T : value class

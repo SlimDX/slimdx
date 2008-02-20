@@ -56,8 +56,8 @@ namespace Direct3D9
 	{
 		IDirect3DQuery9* query;
 		HRESULT hr = device->InternalPointer->CreateQuery( static_cast<D3DQUERYTYPE>( type ), &query );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( "Failed to create Query." );
 
 		Construct(query);
@@ -77,17 +77,17 @@ namespace Direct3D9
 	{
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Device( device );
 	}
 
-	void Query::Issue( SlimDX::Direct3D9::Issue flags )
+	Result Query::Issue( SlimDX::Direct3D9::Issue flags )
 	{
 		HRESULT hr = InternalPointer->Issue( static_cast<DWORD>( flags ) );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	bool Query::CheckStatus( bool flush )

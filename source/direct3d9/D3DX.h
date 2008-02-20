@@ -52,8 +52,8 @@ namespace SlimDX
 			static array<VertexElement>^ GenerateOutputDeclaration( array<VertexElement>^ declaration );
 			static int GetDeclarationLength( array<VertexElement>^ declaration );
 
-			static void GetRectanglePatchSize( float segmentCount, [Out] int% triangleCount, [Out] int% vertexCount );
-			static void GetTrianglePatchSize( float segmentCount, [Out] int% triangleCount, [Out] int% vertexCount );
+			static Result GetRectanglePatchSize( float segmentCount, [Out] int% triangleCount, [Out] int% vertexCount );
+			static Result GetTrianglePatchSize( float segmentCount, [Out] int% triangleCount, [Out] int% vertexCount );
 
 			static Format MakeFourCC( System::Byte c1, System::Byte c2, System::Byte c3, System::Byte c4 );
 

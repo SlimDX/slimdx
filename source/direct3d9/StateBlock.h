@@ -48,8 +48,8 @@ namespace SlimDX
 			StateBlock( Device^ device, StateBlockType type );
 			~StateBlock() { Destruct(); }
 
-			void Apply();
-			void Capture();
+			Result Apply();
+			Result Capture();
 
 			Device^ GetDevice();
 		};

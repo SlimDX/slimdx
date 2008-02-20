@@ -305,22 +305,22 @@ namespace SlimDX
 			static Texture^ FromFile( Device^ device, System::String^ fileName, Usage usage, Pool pool );
 			static Texture^ FromFile( Device^ device, System::String^ fileName );
 
-			static void ComputeNormalMap( Texture^ texture, Texture^ sourceTexture, array<PaletteEntry>^ palette, NormalMapFlags flags, Channel channel, float amplitude );
-			static void ComputeNormalMap( Texture^ texture, Texture^ sourceTexture, NormalMapFlags flags, Channel channel, float amplitude );
+			static Result ComputeNormalMap( Texture^ texture, Texture^ sourceTexture, array<PaletteEntry>^ palette, NormalMapFlags flags, Channel channel, float amplitude );
+			static Result ComputeNormalMap( Texture^ texture, Texture^ sourceTexture, NormalMapFlags flags, Channel channel, float amplitude );
 
 			/// <summary>
 			/// Uses a user-provided function to fill each texel of each mip level of a given texture.
 			/// </summary>
 			/// <param name="callback">A function that uses the signature of the Fill2DCallback delegate.</param>
-			void Fill(Fill2DCallback^ callback);
+			Result Fill(Fill2DCallback^ callback);
 
-			void Fill( TextureShader^ shader );
+			Result Fill( TextureShader^ shader );
 
 			DataRectangle^ LockRectangle( int level, LockFlags flags );
 			DataRectangle^ LockRectangle( int level, System::Drawing::Rectangle rect, LockFlags flags );
-			void UnlockRectangle( int level );
+			Result UnlockRectangle( int level );
 
-			void AddDirtyRect( System::Drawing::Rectangle rect );
+			Result AddDirtyRect( System::Drawing::Rectangle rect );
 			SurfaceDescription GetLevelDescription( int level );
 			Surface^ GetSurfaceLevel( int level );
 		};
@@ -362,14 +362,14 @@ namespace SlimDX
 			static CubeTexture^ FromFile( Device^ device, System::String^ fileName, Usage usage, Pool pool );
 			static CubeTexture^ FromFile( Device^ device, System::String^ fileName );
 
-			void Fill( Fill3DCallback^ callback );
-			void Fill( TextureShader^ shader );
+			Result Fill( Fill3DCallback^ callback );
+			Result Fill( TextureShader^ shader );
 
 			DataRectangle^ LockRectangle( CubeMapFace face, int level, LockFlags flags );
 			DataRectangle^ LockRectangle( CubeMapFace face, int level, System::Drawing::Rectangle rect, LockFlags flags );
-			void UnlockRectangle( CubeMapFace face, int level );
+			Result UnlockRectangle( CubeMapFace face, int level );
 
-			void AddDirtyRect( CubeMapFace face, System::Drawing::Rectangle rect );
+			Result AddDirtyRect( CubeMapFace face, System::Drawing::Rectangle rect );
 			SurfaceDescription GetLevelDescription( int level );
 			Surface^ GetCubeMapSurface( CubeMapFace face, int level );
 		};
@@ -410,14 +410,14 @@ namespace SlimDX
 			static VolumeTexture^ FromFile( Device^ device, System::String^ fileName, Usage usage, Pool pool );
 			static VolumeTexture^ FromFile( Device^ device, System::String^ fileName );
 
-			void Fill( Fill3DCallback^ callback );
-			void Fill( TextureShader^ shader );
+			Result Fill( Fill3DCallback^ callback );
+			Result Fill( TextureShader^ shader );
 
 			SlimDX::DataBox^ LockBox( int level, LockFlags flags );
 			SlimDX::DataBox^ LockBox( int level, Box box, LockFlags flags );
-			void UnlockBox( int level );
+			Result UnlockBox( int level );
 
-			void AddDirtyBox( Box box );
+			Result AddDirtyBox( Box box );
 			
 			VolumeDescription GetLevelDescription( int level );
 			Volume^ GetVolumeLevel( int level );

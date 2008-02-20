@@ -94,8 +94,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			compilationErrors = Utilities::BufferToString( errorBuffer );
 			
-			Result::Record( hr );	
-			if( FAILED( hr ) )
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 
 			return gcnew Effect( effect );
@@ -178,9 +177,12 @@ namespace SlimDX
 			//marshal errors if necessary
 			compilationErrors = Utilities::BufferToString( errorBuffer );
 			
-			Result::Record( hr );
-			if( effect == NULL)
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
+
+			if( effect == NULL )
+				return nullptr;
+
 			return gcnew Effect( effect );
 		}
 
@@ -207,28 +209,28 @@ namespace SlimDX
 			return passCount;
 		}
 
-		void Effect::End()
+		Result Effect::End()
 		{
 			HRESULT hr = EffectPointer->End();
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
-		void Effect::BeginPass( int pass )
+		Result Effect::BeginPass( int pass )
 		{
 			HRESULT hr = EffectPointer->BeginPass( pass );
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
-		void Effect::EndPass()
+		Result Effect::EndPass()
 		{
 			HRESULT hr = EffectPointer->EndPass();
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
-		void Effect::BeginParameterBlock()
+		Result Effect::BeginParameterBlock()
 		{
 			HRESULT hr = EffectPointer->BeginParameterBlock();
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
 		EffectHandle^ Effect::EndParameterBlock()
@@ -239,18 +241,18 @@ namespace SlimDX
 			return gcnew EffectHandle( handle );
 		}
 
-		void Effect::ApplyParameterBlock( EffectHandle^ parameterBlock )
+		Result Effect::ApplyParameterBlock( EffectHandle^ parameterBlock )
 		{
 			D3DXHANDLE handle = parameterBlock != nullptr ? parameterBlock->InternalHandle : NULL;
 			HRESULT hr = EffectPointer->ApplyParameterBlock( handle );
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
-		void Effect::DeleteParameterBlock( EffectHandle^ parameterBlock )
+		Result Effect::DeleteParameterBlock( EffectHandle^ parameterBlock )
 		{
 			D3DXHANDLE handle = parameterBlock != nullptr ? parameterBlock->InternalHandle : NULL;
 			HRESULT hr = EffectPointer->DeleteParameterBlock( handle );
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
 		bool Effect::IsParameterUsed( EffectHandle^ parameter, EffectHandle^ technique )
@@ -261,10 +263,10 @@ namespace SlimDX
 			return used > 0;
 		}
 
-		void Effect::CommitChanges()
+		Result Effect::CommitChanges()
 		{
 			HRESULT hr = EffectPointer->CommitChanges();
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
 		EffectHandle^ Effect::FindNextValidTechnique( EffectHandle^ technique )
@@ -273,10 +275,10 @@ namespace SlimDX
 			D3DXHANDLE parentHandle = technique != nullptr ? technique->InternalHandle : NULL;
 
 			HRESULT hr = EffectPointer->FindNextValidTechnique( parentHandle, &handle );
-			Result::Record( hr );
 
-			if( handle == NULL )
+			if( Result::Record( hr ).IsFailure || handle == NULL )
 				return nullptr;
+
 			return gcnew EffectHandle( handle );
 		}
 
@@ -301,16 +303,16 @@ namespace SlimDX
 			Result::Record( hr );
 		}
 
-		void Effect::OnLostDevice()
+		Result Effect::OnLostDevice()
 		{
 			HRESULT hr = EffectPointer->OnLostDevice();
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
-		void Effect::OnResetDevice()
+		Result Effect::OnResetDevice()
 		{
 			HRESULT hr = EffectPointer->OnResetDevice();
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 	}
 }

@@ -34,7 +34,7 @@
 #include "SkinInfo.h"
 #include "AnimationFrame.h"
 #include "AnimationSet.h"
-
+#include "Direct3D9Exception.h"
 
 using namespace System;
 
@@ -59,9 +59,8 @@ namespace Direct3D9
 		unsigned int result;
 
 		HRESULT hr = InternalPointer->GetAnimationIndexByName( reinterpret_cast<LPCSTR>( pinnedName ), &result );
-		Result::Record( hr );
 
-		if( FAILED( hr ) )
+		if( Result::Record( hr ).IsFailure )
 			return 0;
 
 		return static_cast<int>( result );
@@ -71,9 +70,8 @@ namespace Direct3D9
 	{
 		LPCSTR result;
 		HRESULT hr = InternalPointer->GetAnimationNameByIndex( index, &result );
-		Result::Record( hr );
 
-		if( FAILED( hr ) )
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew String( result );
@@ -85,9 +83,8 @@ namespace Direct3D9
 		LPVOID data;
 
 		HRESULT hr = InternalPointer->GetCallback( position, static_cast<DWORD>( flags ), pinPosition, &data );
-		Result::Record( hr );
 
-		if( FAILED( hr ) )
+		if( Result::Record( hr ).IsFailure )
 			return IntPtr::Zero;
 
 		return IntPtr( data );
@@ -101,9 +98,8 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetSRT( periodicPosition, animation, reinterpret_cast<D3DXVECTOR3*>( &scale ), 
 			reinterpret_cast<D3DXQUATERNION*>( &rotation ), reinterpret_cast<D3DXVECTOR3*>( &translation ) );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		AnimationOutput^ output = gcnew AnimationOutput();
@@ -183,9 +179,11 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateCompressedAnimationSet( reinterpret_cast<LPCSTR>( pinnedName ), ticksPerSecond,
 			static_cast<D3DXPLAYBACK_TYPE>( playbackType ), compressedData->GetD3DBuffer(), count,
 			keys, &pointer );
-		Result::Record( hr );
 
 		delete[] keys;
+		
+		if( Result::Record( hr ).IsFailure )
+			throw gcnew Direct3D9Exception();
 
 		Construct(pointer);
 	}
@@ -196,10 +194,12 @@ namespace Direct3D9
 		D3DXKEY_CALLBACK *keys = new D3DXKEY_CALLBACK[count];
 
 		HRESULT hr = CASPointer->GetCallbackKeys( keys );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
+		{
+			delete[] keys;
 			return nullptr;
+		}
 
 		array<CallbackKey>^ results = gcnew array<CallbackKey>( count );
 		for( int i = 0; i < count; i++ )
@@ -215,9 +215,8 @@ namespace Direct3D9
 		LPD3DXBUFFER buffer;
 
 		HRESULT hr = CASPointer->GetCompressedData( &buffer );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew DataStream( buffer );
@@ -261,9 +260,11 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateKeyframedAnimationSet( reinterpret_cast<LPCSTR>( pinnedName ), ticksPerSecond, static_cast<D3DXPLAYBACK_TYPE>( playbackType ),
 			animationCount, count, keys, &pointer );
-		Result::Record( hr );
-
+		
 		delete[] keys;
+
+		if( Result::Record( hr ).IsFailure )
+			throw gcnew Direct3D9Exception();
 
 		Construct(pointer);
 	}
@@ -273,9 +274,8 @@ namespace Direct3D9
 		LPD3DXBUFFER data;
 
 		HRESULT hr = KASPointer->Compress( D3DXCOMPRESS_DEFAULT, lossiness, NULL, &data);
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew DataStream( data );
@@ -286,9 +286,8 @@ namespace Direct3D9
 		LPD3DXBUFFER data;
 
 		HRESULT hr = KASPointer->Compress( D3DXCOMPRESS_DEFAULT, lossiness, frame->Pointer, &data);
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew DataStream( data );
@@ -310,10 +309,12 @@ namespace Direct3D9
 		D3DXKEY_CALLBACK *keys = new D3DXKEY_CALLBACK[count];
 
 		HRESULT hr = KASPointer->GetCallbackKeys( keys );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
+		{
+			delete[] keys;
 			return nullptr;
+		}
 
 		array<CallbackKey>^ results = gcnew array<CallbackKey>( count );
 		for( int i = 0; i < count; i++ )
@@ -324,14 +325,14 @@ namespace Direct3D9
 		return results;
 	}
 
-	void KeyframedAnimationSet::SetCallbackKey( int animation, CallbackKey callbackKey )
+	Result KeyframedAnimationSet::SetCallbackKey( int animation, CallbackKey callbackKey )
 	{
 		D3DXKEY_CALLBACK key;
 		key.Time = callbackKey.Time;
 		key.pCallbackData = callbackKey.Data.ToPointer();
 
 		HRESULT hr = KASPointer->SetCallbackKey( animation, &key );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	RotationKey KeyframedAnimationSet::GetRotationKey( int animation, int key )
@@ -350,10 +351,12 @@ namespace Direct3D9
 		D3DXKEY_QUATERNION *keys = new D3DXKEY_QUATERNION[count];
 
 		HRESULT hr = KASPointer->GetRotationKeys( animation, keys );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
+		{
+			delete[] keys;
 			return nullptr;
+		}
 
 		array<RotationKey>^ results = gcnew array<RotationKey>( count );
 		for( int i = 0; i < count; i++ )
@@ -364,20 +367,20 @@ namespace Direct3D9
 		return results;
 	}
 
-	void KeyframedAnimationSet::SetRotationKey( int animation, int key, RotationKey callbackKey )
+	Result KeyframedAnimationSet::SetRotationKey( int animation, int key, RotationKey callbackKey )
 	{
 		D3DXKEY_QUATERNION qkey;
 		qkey.Time = callbackKey.Time;
 		qkey.Value = D3DXQUATERNION( callbackKey.Value.X, callbackKey.Value.Y, callbackKey.Value.Z, callbackKey.Value.W );
 
 		HRESULT hr = KASPointer->SetRotationKey( animation, key, &qkey );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void KeyframedAnimationSet::UnregisterRotationKey( int animation, int key )
+	Result KeyframedAnimationSet::UnregisterRotationKey( int animation, int key )
 	{
 		HRESULT hr = KASPointer->UnregisterRotationKey( animation, key );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	int KeyframedAnimationSet::GetRotationKeyCount( int animation )
@@ -401,10 +404,12 @@ namespace Direct3D9
 		D3DXKEY_VECTOR3 *keys = new D3DXKEY_VECTOR3[count];
 
 		HRESULT hr = KASPointer->GetScaleKeys( animation, keys );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
+		{
+			delete[] keys;
 			return nullptr;
+	    }
 
 		array<ScaleKey>^ results = gcnew array<ScaleKey>( count );
 		for( int i = 0; i < count; i++ )
@@ -415,20 +420,20 @@ namespace Direct3D9
 		return results;
 	}
 
-	void KeyframedAnimationSet::SetScaleKey( int animation, int key, ScaleKey callbackKey )
+	Result KeyframedAnimationSet::SetScaleKey( int animation, int key, ScaleKey callbackKey )
 	{
 		D3DXKEY_VECTOR3 qkey;
 		qkey.Time = callbackKey.Time;
 		qkey.Value = D3DXVECTOR3( callbackKey.Value.X, callbackKey.Value.Y, callbackKey.Value.Z );
 
 		HRESULT hr = KASPointer->SetScaleKey( animation, key, &qkey );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void KeyframedAnimationSet::UnregisterScaleKey( int animation, int key )
+	Result KeyframedAnimationSet::UnregisterScaleKey( int animation, int key )
 	{
 		HRESULT hr = KASPointer->UnregisterScaleKey( animation, key );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	int KeyframedAnimationSet::GetScaleKeyCount( int animation )
@@ -452,10 +457,12 @@ namespace Direct3D9
 		D3DXKEY_VECTOR3 *keys = new D3DXKEY_VECTOR3[count];
 
 		HRESULT hr = KASPointer->GetTranslationKeys( animation, keys );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
+		{
+			delete[] keys;
 			return nullptr;
+		}
 
 		array<TranslationKey>^ results = gcnew array<TranslationKey>( count );
 		for( int i = 0; i < count; i++ )
@@ -466,20 +473,20 @@ namespace Direct3D9
 		return results;
 	}
 
-	void KeyframedAnimationSet::SetTranslationKey( int animation, int key, TranslationKey callbackKey )
+	Result KeyframedAnimationSet::SetTranslationKey( int animation, int key, TranslationKey callbackKey )
 	{
 		D3DXKEY_VECTOR3 qkey;
 		qkey.Time = callbackKey.Time;
 		qkey.Value = D3DXVECTOR3( callbackKey.Value.X, callbackKey.Value.Y, callbackKey.Value.Z );
 
 		HRESULT hr = KASPointer->SetTranslationKey( animation, key, &qkey );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void KeyframedAnimationSet::UnregisterTranslationKey( int animation, int key )
+	Result KeyframedAnimationSet::UnregisterTranslationKey( int animation, int key )
 	{
 		HRESULT hr = KASPointer->UnregisterTranslationKey( animation, key );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	int KeyframedAnimationSet::GetTranslationKeyCount( int animation )
@@ -510,16 +517,16 @@ namespace Direct3D9
 		delete[] rotations;
 		delete[] translations;
 
-		if( FAILED( hr ) )
+		if( Result::Last.IsFailure )
 			return 0;
 
 		return result;
 	}
 
-	void KeyframedAnimationSet::UnregisterAnimation( int animation )
+	Result KeyframedAnimationSet::UnregisterAnimation( int animation )
 	{
 		HRESULT hr = KASPointer->UnregisterAnimation( animation );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	int KeyframedAnimationSet::CallbackKeyCount::get()

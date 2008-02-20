@@ -224,17 +224,17 @@ namespace SlimDX
 			array<AttributeRange>^ GetAttributeTable();
 
 			DataStream^ LockIndexBuffer( LockFlags flags );
-			void UnlockIndexBuffer();
+			Result UnlockIndexBuffer();
 
 			DataStream^ LockVertexBuffer( LockFlags flags );
-			void UnlockVertexBuffer();
+			Result UnlockVertexBuffer();
 
 			array<int>^ GenerateAdjacency( float epsilon );
 			array<int>^ ConvertAdjacencyToPointReps( array<int>^ adjacency );
 			array<int>^ ConvertPointRepsToAdjacency( array<int>^ pointReps );
-			void UpdateSemantics( array<VertexElement>^ elements );
+			Result UpdateSemantics( array<VertexElement>^ elements );
 
-			void DrawSubset( int subset );
+			Result DrawSubset( int subset );
 
 			IndexBuffer^ ConvertSubsetToSingleStrip( int attributeId, MeshFlags options, [Out] int% indexCount );
 			IndexBuffer^ ConvertSubsetToStrips( int attributeId, MeshFlags options, [Out] int% indexCount, [Out] array<int>^% stripLengths );
@@ -282,8 +282,8 @@ namespace SlimDX
 			static Mesh^ FromFile( Device^ device, System::String^ fileName, MeshFlags flags );
 			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags );
 
-			static void ToXFile( Mesh^ mesh, System::String^ fileName, XFileFormat format, System::Runtime::InteropServices::CharSet charSet );
-			static void ToXFile( Mesh^ mesh, System::String^ fileName, XFileFormat format );
+			static Result ToXFile( Mesh^ mesh, System::String^ fileName, XFileFormat format, System::Runtime::InteropServices::CharSet charSet );
+			static Result ToXFile( Mesh^ mesh, System::String^ fileName, XFileFormat format );
 
 			static Mesh^ CreateBox( Device^ device, float width, float height, float depth );
 			static Mesh^ CreateCylinder( Device^ device, float radius1, float radius2, float length, int slices, int stacks );
@@ -303,11 +303,11 @@ namespace SlimDX
 			static Mesh^ Simplify( Mesh^ mesh, int minimumValue, MeshSimplification options );
 
 			DataStream^ LockAttributeBuffer( LockFlags flags );
-			void UnlockAttributeBuffer();
-			void SetAttributeTable( array<AttributeRange>^ table );
+			Result UnlockAttributeBuffer();
+			Result SetAttributeTable( array<AttributeRange>^ table );
 
-			void OptimizeInPlace( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
-			void OptimizeInPlace( MeshOptimizeFlags flags );
+			Result OptimizeInPlace( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
+			Result OptimizeInPlace( MeshOptimizeFlags flags );
 
 			Mesh^ Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
 			Mesh^ Optimize( MeshOptimizeFlags flags );
@@ -315,9 +315,9 @@ namespace SlimDX
 			Mesh^ Clean( CleanType type, [Out] System::String^% errorsAndWarnings );
 			Mesh^ Clean( CleanType type );
 			
-			void ComputeNormals();
-			void ComputeTangent( int textureStage, int tangentIndex, int binormalIndex, bool wrap );
-			void ComputeTangentFrame( TangentOptions options );
+			Result ComputeNormals();
+			Result ComputeTangent( int textureStage, int tangentIndex, int binormalIndex, bool wrap );
+			Result ComputeTangentFrame( TangentOptions options );
 
 			Mesh^ ComputeTangentFrame( int textureInSemantic, int textureInIndex, int partialOutSemanticU, 
 				int partialOutIndexU, int partialOutSemanticV, int partialOutIndexV, int normalOutSemantic,

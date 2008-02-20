@@ -60,16 +60,16 @@ namespace SlimDX
 				void set(int value) { BaseTexturePointer->SetLOD( value ); }
 			}
 
-			void FilterTexture( int sourceLevel, Filter filter, array<PaletteEntry>^ palette );
-			void FilterTexture( int sourceLevel, Filter filter );
+			Result FilterTexture( int sourceLevel, Filter filter, array<PaletteEntry>^ palette );
+			Result FilterTexture( int sourceLevel, Filter filter );
 			
 			void GenerateMipSublevels();
 
 			static DataStream^ ToStream( BaseTexture^ texture, ImageFileFormat format );
 			static DataStream^ ToStream( BaseTexture^ texture, ImageFileFormat format, array<PaletteEntry>^ palette );
 
-			static void ToFile( BaseTexture^ texture, System::String^ fileName, ImageFileFormat format );
-			static void ToFile( BaseTexture^ texture, System::String^ fileName, ImageFileFormat format, array<PaletteEntry>^ palette );
+			static Result ToFile( BaseTexture^ texture, System::String^ fileName, ImageFileFormat format );
+			static Result ToFile( BaseTexture^ texture, System::String^ fileName, ImageFileFormat format, array<PaletteEntry>^ palette );
 		};
 	}
 }

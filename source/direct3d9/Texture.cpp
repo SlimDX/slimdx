@@ -31,6 +31,8 @@
 #include "D3DX.h"
 #include "Texture.h"
 
+#include "Direct3D9Exception.h"
+
 using namespace System;
 using namespace System::IO;
 using namespace System::Runtime::InteropServices;
@@ -100,9 +102,6 @@ namespace Direct3D9
 
 	Texture::Texture( IDirect3DTexture9* texture )
 	{
-		if( texture == NULL )
-			throw gcnew ArgumentNullException( "texture" );
-
 		Construct(texture);
 	}
 
@@ -116,7 +115,9 @@ namespace Direct3D9
 		IDirect3DTexture9* texture;
 		HRESULT hr = device->InternalPointer->CreateTexture( width, height, numLevels, static_cast<DWORD>( usage ), 
 			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, NULL );
-		Result::Record( hr );
+		
+		if( Result::Record( hr ).IsFailure )
+			throw gcnew Direct3D9Exception();
 
 		Construct(texture);
 	}
@@ -132,7 +133,9 @@ namespace Direct3D9
 		hr = D3DXCheckTextureRequirements(device->InternalPointer, reinterpret_cast<UINT*>( &width ), 
 			reinterpret_cast<UINT*>( &height ), reinterpret_cast<UINT*>( &numMipLevels ), static_cast<DWORD>( usage ),
 			&d3dFormat, static_cast<D3DPOOL>( pool ) );
-		Result::Record(hr);
+		
+		if( Result::Record(hr).IsFailure )
+			return TextureRequirements();
 
 		// Return proposed values.
 		result.Width = width;
@@ -158,9 +161,8 @@ namespace Direct3D9
 			height, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
 			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), 
 			reinterpret_cast<PALETTEENTRY*>( pinnedPalette ), &texture );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 		{
 			palette = nullptr;
 			return nullptr;
@@ -182,9 +184,8 @@ namespace Direct3D9
 			height, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
 			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), 
 			NULL, &texture );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
 		return gcnew Texture( texture );
@@ -199,9 +200,8 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, width,
 			height, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
 			static_cast<D3DCOLOR>( colorKey ), 0, 0, &texture );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
 		return gcnew Texture( texture );
@@ -274,8 +274,8 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateTextureFromFileEx( device->InternalPointer, pinnedName, width, height, 
 			numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), 
 			colorKey, reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), reinterpret_cast<PALETTEENTRY*>( pinnedPalette ), &texture );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 		{
 			palette = nullptr;
 			return nullptr;
@@ -295,8 +295,8 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateTextureFromFileEx( device->InternalPointer, pinnedName, width, height, 
 			numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), 
 			colorKey, reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), NULL, &texture );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
 		return gcnew Texture( texture );
@@ -311,8 +311,8 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateTextureFromFileEx( device->InternalPointer, pinnedName, width, height, 
 			numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), 
 			colorKey, NULL, NULL, &texture );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
 		return gcnew Texture( texture );
@@ -329,20 +329,20 @@ namespace Direct3D9
 		return Texture::FromFile( device, fileName, Usage::None, Pool::Managed );
 	}
 
-	void Texture::ComputeNormalMap( Texture^ texture, Texture^ sourceTexture, array<PaletteEntry>^ palette, NormalMapFlags flags, Channel channel, float amplitude )
+	Result Texture::ComputeNormalMap( Texture^ texture, Texture^ sourceTexture, array<PaletteEntry>^ palette, NormalMapFlags flags, Channel channel, float amplitude )
 	{
 		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
 
 		HRESULT hr = D3DXComputeNormalMap( texture->TexturePointer, sourceTexture->TexturePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
 			static_cast<DWORD>( flags ), static_cast<DWORD>( channel ), amplitude );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Texture::ComputeNormalMap( Texture^ texture, Texture^ sourceTexture, NormalMapFlags flags, Channel channel, float amplitude )
+	Result Texture::ComputeNormalMap( Texture^ texture, Texture^ sourceTexture, NormalMapFlags flags, Channel channel, float amplitude )
 	{
 		HRESULT hr = D3DXComputeNormalMap( texture->TexturePointer, sourceTexture->TexturePointer, NULL,
 			static_cast<DWORD>( flags ), static_cast<DWORD>( channel ), amplitude );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	// Native callback used by FillTexture.
@@ -391,20 +391,20 @@ namespace Direct3D9
 	/// Uses a user-provided function to fill each texel of each mip level of a given texture.
 	/// </summary>
 	/// <param name="callback">A function that uses the signature of the Fill2DCallback delegate.</param>
-	void Texture::Fill(Fill2DCallback^ callback)
+	Result Texture::Fill(Fill2DCallback^ callback)
 	{
 		HRESULT hr;		// Error code.
 
 		// Call the function.
 		hr = D3DXFillTexture(TexturePointer, NativeD3DXFill2D, Marshal::GetFunctionPointerForDelegate(callback).ToPointer());
 
-		Result::Record(hr);
+		return Result::Record(hr);
 	}
 
-	void Texture::Fill( TextureShader^ shader )
+	Result Texture::Fill( TextureShader^ shader )
 	{
 		HRESULT hr = D3DXFillTextureTX( TexturePointer, shader->InternalPointer );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	DataRectangle^ Texture::LockRectangle( int level, System::Drawing::Rectangle rect, LockFlags flags )
@@ -413,8 +413,8 @@ namespace Direct3D9
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
 
 		HRESULT hr = TexturePointer->LockRect( level, &lockedRect, &nativeRect, static_cast<DWORD>( flags ) );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 		
 		int lockedSize = lockedRect.Pitch * GetLevelDescription( level ).Height;
@@ -429,8 +429,8 @@ namespace Direct3D9
 		D3DLOCKED_RECT lockedRect;
 
 		HRESULT hr = TexturePointer->LockRect( level, &lockedRect, NULL, static_cast<DWORD>( flags ) );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 		
 		int lockedSize = lockedRect.Pitch * GetLevelDescription( level ).Height;
@@ -440,17 +440,17 @@ namespace Direct3D9
 		return outRect;
 	}
 
-	void Texture::UnlockRectangle( int level )
+	Result Texture::UnlockRectangle( int level )
 	{
 		HRESULT hr = TexturePointer->UnlockRect( level );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void Texture::AddDirtyRect( System::Drawing::Rectangle rect )
+	Result Texture::AddDirtyRect( System::Drawing::Rectangle rect )
 	{
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
 		HRESULT hr = TexturePointer->AddDirtyRect( &nativeRect );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	SurfaceDescription Texture::GetLevelDescription( int level )
@@ -465,17 +465,14 @@ namespace Direct3D9
 	{
 		IDirect3DSurface9* surface;
 		HRESULT hr = TexturePointer->GetSurfaceLevel( level, &surface );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 		return gcnew Surface( surface );
 	}
 
 	CubeTexture::CubeTexture( IDirect3DCubeTexture9* texture )
 	{
-		if( texture == NULL )
-			throw gcnew ArgumentNullException( "texture" );
-
 		Construct(texture);
 	}
 
@@ -489,7 +486,9 @@ namespace Direct3D9
 		IDirect3DCubeTexture9* texture;
 		HRESULT hr = device->InternalPointer->CreateCubeTexture( edgeLength, numLevels, static_cast<DWORD>( usage ),
 			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, NULL );
-		Result::Record( hr );
+		
+		if( Result::Record(hr).IsFailure )
+			throw gcnew Direct3D9Exception();
 
 		Construct(texture);
 	}
@@ -505,7 +504,9 @@ namespace Direct3D9
 		hr = D3DXCheckCubeTextureRequirements(device->InternalPointer, reinterpret_cast<UINT*>( &size ), 
 			reinterpret_cast<UINT*>( &numMipLevels ),
 			static_cast<DWORD>( usage ), reinterpret_cast<D3DFORMAT*>( &d3dFormat ), static_cast<D3DPOOL>( pool ) );
-		Result::Record(hr);
+		
+		if( Result::Record(hr).IsFailure )
+			return CubeTextureRequirements();
 
 		// Return proposed values.
 		result.Size = size;
@@ -530,8 +531,8 @@ namespace Direct3D9
 			static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
 			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), 
 			reinterpret_cast<PALETTEENTRY*>( pinnedPalette ), &texture );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 		{
 			palette = nullptr;
 			return nullptr;
@@ -552,8 +553,8 @@ namespace Direct3D9
 			static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
 			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), 
 			NULL, &texture );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
 		return gcnew CubeTexture( texture );
@@ -568,8 +569,8 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateCubeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, size, numLevels,
 			static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
 			static_cast<D3DCOLOR>( colorKey ), 0, 0, &texture );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
 		return gcnew CubeTexture( texture );
@@ -642,8 +643,8 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateCubeTextureFromFileEx( device->InternalPointer, pinnedName, size, 
 			numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), 
 			colorKey, reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), reinterpret_cast<PALETTEENTRY*>( pinnedPalette ), &texture );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 		{
 			palette = nullptr;
 			return nullptr;
@@ -663,8 +664,8 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateCubeTextureFromFileEx( device->InternalPointer, pinnedName, size, 
 			numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), 
 			colorKey, reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), NULL, &texture );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
 		return gcnew CubeTexture( texture );
@@ -679,8 +680,8 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateCubeTextureFromFileEx( device->InternalPointer, pinnedName, size, 
 			numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), 
 			colorKey, NULL, NULL, &texture );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
 		return gcnew CubeTexture( texture );
@@ -702,8 +703,8 @@ namespace Direct3D9
 		D3DLOCKED_RECT lockedRect;
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
 		HRESULT hr = TexturePointer->LockRect( static_cast<D3DCUBEMAP_FACES>( face ), level, &lockedRect, &nativeRect, static_cast<DWORD>( flags ) );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 		
 		int lockedSize = lockedRect.Pitch * GetLevelDescription( level ).Height;
@@ -717,8 +718,8 @@ namespace Direct3D9
 	{
 		D3DLOCKED_RECT lockedRect;
 		HRESULT hr = TexturePointer->LockRect( static_cast<D3DCUBEMAP_FACES>( face ), level, &lockedRect, NULL, static_cast<DWORD>( flags ) );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 		
 		int lockedSize = lockedRect.Pitch * GetLevelDescription( level ).Height;
@@ -728,17 +729,17 @@ namespace Direct3D9
 		return outRect;
 	}
 
-	void CubeTexture::UnlockRectangle( CubeMapFace face, int level )
+	Result CubeTexture::UnlockRectangle( CubeMapFace face, int level )
 	{
 		HRESULT hr = TexturePointer->UnlockRect( static_cast<D3DCUBEMAP_FACES>( face ), level );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void CubeTexture::AddDirtyRect( CubeMapFace face, System::Drawing::Rectangle rect )
+	Result CubeTexture::AddDirtyRect( CubeMapFace face, System::Drawing::Rectangle rect )
 	{
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
 		HRESULT hr = TexturePointer->AddDirtyRect( static_cast<D3DCUBEMAP_FACES>( face ), &nativeRect );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	SurfaceDescription CubeTexture::GetLevelDescription( int level )
@@ -753,33 +754,30 @@ namespace Direct3D9
 	{
 		IDirect3DSurface9* surface;
 		HRESULT hr = TexturePointer->GetCubeMapSurface( static_cast<D3DCUBEMAP_FACES>( face ), level, &surface );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 		return gcnew Surface( surface );
 	}
 
-	void CubeTexture::Fill(Fill3DCallback^ callback)
+	Result CubeTexture::Fill(Fill3DCallback^ callback)
 	{
 		HRESULT hr;		// Error code.
 
 		// Call the function.
 		hr = D3DXFillCubeTexture(TexturePointer, NativeD3DXFill3D, Marshal::GetFunctionPointerForDelegate(callback).ToPointer());
 
-		Result::Record(hr);
+		return Result::Record(hr);
 	}
 
-	void CubeTexture::Fill( TextureShader^ shader )
+	Result CubeTexture::Fill( TextureShader^ shader )
 	{
 		HRESULT hr = D3DXFillCubeTextureTX( TexturePointer, shader->InternalPointer );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	VolumeTexture::VolumeTexture( IDirect3DVolumeTexture9* texture )
 	{
-		if( texture == NULL )
-			throw gcnew ArgumentNullException( "texture" );
-
 		Construct(texture);
 	}
 
@@ -793,7 +791,9 @@ namespace Direct3D9
 		IDirect3DVolumeTexture9* texture;
 		HRESULT hr = device->InternalPointer->CreateVolumeTexture( width, height, depth, numLevels,
 			static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, NULL );
-		Result::Record( hr );
+		
+		if( Result::Record(hr).IsFailure )
+			throw gcnew Direct3D9Exception();
 
 		Construct(texture);
 	}
@@ -814,7 +814,9 @@ namespace Direct3D9
 			static_cast<DWORD>( usage ),
 			&d3dFormat,
 			static_cast<D3DPOOL>( pool ) );
-		Result::Record(hr);
+		
+		if( Result::Record(hr).IsFailure )
+			return VolumeTextureRequirements();
 
 		// Return proposed values.
 		result.Width = width;
@@ -841,8 +843,8 @@ namespace Direct3D9
 			width, height, depth, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ),
 			static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), static_cast<D3DCOLOR>( colorKey ), 
 			reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), reinterpret_cast<PALETTEENTRY*>( pinnedPalette ), &texture );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 		{
 			palette = nullptr;
 			return nullptr;
@@ -863,8 +865,8 @@ namespace Direct3D9
 			width, height, depth, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ),
 			static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), static_cast<D3DCOLOR>( colorKey ), 
 			reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), NULL, &texture );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
 		return gcnew VolumeTexture( texture );
@@ -879,8 +881,8 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateVolumeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length,
 			width, height, depth, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ),
 			static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), static_cast<D3DCOLOR>( colorKey ), 0, 0, &texture );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
 		return gcnew VolumeTexture( texture );
@@ -956,8 +958,8 @@ namespace Direct3D9
 			depth, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ),
 			static_cast<DWORD>( mipFilter ), colorKey, reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), 
 			reinterpret_cast<PALETTEENTRY*>( pinnedPalette ), &texture );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 		{
 			palette = nullptr;
 			return nullptr;
@@ -978,8 +980,8 @@ namespace Direct3D9
 			depth, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ),
 			static_cast<DWORD>( mipFilter ), colorKey, reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), 
 			NULL, &texture );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
 		return gcnew VolumeTexture( texture );
@@ -994,8 +996,8 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateVolumeTextureFromFileEx( device->InternalPointer, pinnedName, width, height,
 			depth, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ),
 			static_cast<DWORD>( mipFilter ), colorKey, NULL, NULL, &texture );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
 		return gcnew VolumeTexture( texture );
@@ -1017,8 +1019,8 @@ namespace Direct3D9
 		D3DLOCKED_BOX lockedBox;
 		HRESULT hr = TexturePointer->LockBox( level, &lockedBox, reinterpret_cast<D3DBOX*>( &box ),
 			static_cast<DWORD>( flags ) );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 		
 		int lockedSize = lockedBox.RowPitch * lockedBox.SlicePitch * GetLevelDescription( level ).Height;
@@ -1032,8 +1034,8 @@ namespace Direct3D9
 	{
 		D3DLOCKED_BOX lockedBox;
 		HRESULT hr = TexturePointer->LockBox( level, &lockedBox, NULL, static_cast<DWORD>( flags ) );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 		
 		int lockedSize = lockedBox.RowPitch * lockedBox.SlicePitch * GetLevelDescription( level ).Height;
@@ -1043,23 +1045,25 @@ namespace Direct3D9
 		return outBox;
 	}
 
-	void VolumeTexture::UnlockBox( int level )
+	Result VolumeTexture::UnlockBox( int level )
 	{
 		HRESULT hr = TexturePointer->UnlockBox( level );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void VolumeTexture::AddDirtyBox( Box box )
+	Result VolumeTexture::AddDirtyBox( Box box )
 	{
 		HRESULT hr = TexturePointer->AddDirtyBox( reinterpret_cast<D3DBOX*>( &box ) );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 	
 	VolumeDescription VolumeTexture::GetLevelDescription( int level )
 	{
 		D3DVOLUME_DESC description;
 		HRESULT hr = TexturePointer->GetLevelDesc( level, &description );
-		Result::Record( hr );
+		
+		if( Result::Record(hr).IsFailure )
+			return VolumeDescription();
 		
 		VolumeDescription outDesc;
 		outDesc.Format = static_cast<Format>( description.Format );
@@ -1078,28 +1082,27 @@ namespace Direct3D9
 		IDirect3DVolume9 *result;
 
 		HRESULT hr = TexturePointer->GetVolumeLevel( level, &result );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
 		return gcnew Volume( result );
 	}
 
-	void VolumeTexture::Fill(Fill3DCallback^ callback)
+	Result VolumeTexture::Fill(Fill3DCallback^ callback)
 	{
 		HRESULT hr;		// Error code.
 
 		// Call the function.
 		hr = D3DXFillVolumeTexture(TexturePointer, NativeD3DXFill3D, Marshal::GetFunctionPointerForDelegate(callback).ToPointer());
 
-		Result::Record(hr);
+		return Result::Record(hr);
 	}
 
-	void VolumeTexture::Fill( TextureShader^ shader )
+	Result VolumeTexture::Fill( TextureShader^ shader )
 	{
 		HRESULT hr = D3DXFillVolumeTextureTX( TexturePointer, shader->InternalPointer );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 }
 }

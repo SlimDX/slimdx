@@ -67,7 +67,9 @@ namespace SlimDX
 
 			IDirect3DDevice9* device;
 			HRESULT hr = pixelShader->GetDevice(&device);
-			Result::Record( hr );
+			
+			if( Result::Record( hr ).IsFailure )
+				throw gcnew Direct3D9Exception();
 			
 			m_ConstantTable = gcnew ConstantTable( device, constantTable );
 			device->Release();
@@ -116,32 +118,32 @@ namespace SlimDX
 			return gcnew PixelShader( pixelShader, constantTable );
 		}
 
-		void PixelShader::RetrieveConstantTable()
+		Result PixelShader::RetrieveConstantTable()
 		{
 			if( m_ConstantTable != nullptr )
-				return;
+				return Result::Record( E_FAIL );
 
 			//Retrieve the binary data
 			UINT size = 0;
 			HRESULT hr = InternalPointer->GetFunction( NULL, &size );
-			Result::Record( hr );
-			if( FAILED( hr ) )
-				return;
+			if( Result::Record( hr ).IsFailure )
+				return Result::Last;
 
 			std::auto_ptr<char> data( new char[size] );
 			hr = InternalPointer->GetFunction( data.get(), &size );
-			Result::Record( hr );
-			if( FAILED( hr ) )
-				return;
+			if( Result::Record( hr ).IsFailure )
+				return Result::Last;
 
 			//Ask D3DX to give us the actual table
 			ID3DXConstantTable* constantTable = NULL;
 			hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( data.get() ), &constantTable );
-			Result::Record( hr );
-			if( FAILED( hr ) )
-				return;
+			
+			if( Result::Record( hr ).IsFailure )
+				return Result::Last;
 
 			m_ConstantTable = gcnew ConstantTable( constantTable );
+
+			return Result::Last;
 		}
 	}
 }

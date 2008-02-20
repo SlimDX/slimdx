@@ -78,27 +78,27 @@ namespace SlimDX
 			virtual ~ProgressiveMesh() { }
 
 			static ProgressiveMesh^ FromStream( Device^ device, System::IO::Stream^ stream, MeshFlags flags );
-			static void ToStream( ProgressiveMesh^ mesh, System::IO::Stream^ stream );
+			static Result ToStream( ProgressiveMesh^ mesh, System::IO::Stream^ stream );
 
 			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags flags, array<VertexElement>^ vertexDeclaration );
 			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags flags, SlimDX::Direct3D9::VertexFormat format );
 
-			void GenerateVertexHistory( array<int>^ vertexHistory );
+			Result GenerateVertexHistory( array<int>^ vertexHistory );
 			array<int>^ GetAdjacency();
 		
 			Mesh^ Optimize( MeshOptimizeFlags flags );
 			Mesh^ Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
 
-			void OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags );
-			void OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap );
+			Result OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags );
+			Result OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap );
 
-			void SetFaceCount( int faceCount );
-			void SetVertexCount( int vertexCount );
+			Result SetFaceCount( int faceCount );
+			Result SetVertexCount( int vertexCount );
 
-			void TrimFaces( int newFaceMinimum, int newFaceMaximum );
-			void TrimFaces( int newFaceMinimum, int newFaceMaximum, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
-			void TrimVertices( int newVertexMinimum, int newVertexMaximum );
-			void TrimVertices( int newVertexMinimum, int newVertexMaximum, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
+			Result TrimFaces( int newFaceMinimum, int newFaceMaximum );
+			Result TrimFaces( int newFaceMinimum, int newFaceMaximum, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
+			Result TrimVertices( int newVertexMinimum, int newVertexMaximum );
+			Result TrimVertices( int newVertexMinimum, int newVertexMaximum, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
 
 			array<ExtendedMaterial>^ GetMaterials() { return materials; }
 			void SetMaterials( array<ExtendedMaterial>^ value ) { materials = value; }
@@ -147,8 +147,8 @@ namespace SlimDX
 			array<AttributeWeights>^ GetVertexAttributeWeights();
 			array<float>^ GetVertexWeights();
 
-			void ReduceFaces( int faces );
-			void ReduceVertices( int vertices );
+			Result ReduceFaces( int faces );
+			Result ReduceVertices( int vertices );
 
 			property VertexFormat VertexFormat { SlimDX::Direct3D9::VertexFormat get(); }
 			property int MaximumFaceCount { int get(); }

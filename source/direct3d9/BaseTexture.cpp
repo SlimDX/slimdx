@@ -44,9 +44,8 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXSaveTextureToFileInMemory( &buffer, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			texture->BaseTexturePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ) );
-		Result::Record( hr );
 
-		if( FAILED( hr ) )
+		if( Result::Record( hr ).IsFailure )
 		{
 			if( buffer != NULL )
 				buffer->Release();
@@ -62,9 +61,8 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXSaveTextureToFileInMemory( &buffer, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			texture->BaseTexturePointer, NULL );
-		Result::Record( hr );
 
-		if( FAILED( hr ) )
+		if( Result::Record( hr ).IsFailure )
 		{
 			if( buffer != NULL )
 				buffer->Release();
@@ -74,38 +72,38 @@ namespace Direct3D9
 		return gcnew DataStream( buffer );
 	}
 
-	void BaseTexture::ToFile( BaseTexture^ texture, String^ fileName, ImageFileFormat format, array<PaletteEntry>^ palette )
+	Result BaseTexture::ToFile( BaseTexture^ texture, String^ fileName, ImageFileFormat format, array<PaletteEntry>^ palette )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fileName);
 		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
 		
 		HRESULT hr = D3DXSaveTextureToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			texture->BaseTexturePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ) );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void BaseTexture::ToFile( BaseTexture^ texture, String^ fileName, ImageFileFormat format )
+	Result BaseTexture::ToFile( BaseTexture^ texture, String^ fileName, ImageFileFormat format )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fileName);
 		
 		HRESULT hr = D3DXSaveTextureToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			texture->BaseTexturePointer, NULL );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void BaseTexture::FilterTexture( int sourceLevel, Filter filter, array<PaletteEntry>^ palette )
+	Result BaseTexture::FilterTexture( int sourceLevel, Filter filter, array<PaletteEntry>^ palette )
 	{
 		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
 
 		HRESULT hr = D3DXFilterTexture( BaseTexturePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
 			sourceLevel, static_cast<DWORD>( filter ) );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void BaseTexture::FilterTexture( int sourceLevel, Filter filter )
+	Result BaseTexture::FilterTexture( int sourceLevel, Filter filter )
 	{
 		HRESULT hr = D3DXFilterTexture( BaseTexturePointer, NULL, sourceLevel, static_cast<DWORD>( filter ) );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 }
 }

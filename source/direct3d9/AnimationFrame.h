@@ -265,16 +265,16 @@ namespace SlimDX
 			static Frame^ LoadHierarchyFromX( Device^ device, System::IO::Stream^ stream, MeshFlags options, 
 				IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController );
 
-			static void SaveHierarchyToFile( System::String^ fileName, XFileFormat format, Frame^ root, 
+			static Result SaveHierarchyToFile( System::String^ fileName, XFileFormat format, Frame^ root, 
 				AnimationController^ animationController, ISaveUserData^ userDataSaver );
-			static void SaveHierarchyToFile( System::String^ fileName, XFileFormat format, Frame^ root, 
+			static Result SaveHierarchyToFile( System::String^ fileName, XFileFormat format, Frame^ root, 
 				AnimationController^ animationController );
 
 			Frame^ FindChild( System::String^ name );
 			void AppendChild( Frame^ child );
 
 			static BoundingSphere CalculateBoundingSphere( Frame^ root );
-			static void DestroyHierarchy( Frame^ root, IAllocateHierarchy^ allocator );
+			static Result DestroyHierarchy( Frame^ root, IAllocateHierarchy^ allocator );
 			static int CountNamedFrames( Frame^ root );
 			static void RegisterNamedMatrices( Frame^ root, AnimationController^ controller );
 

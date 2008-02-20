@@ -26,6 +26,8 @@
 #include "Device.h"
 #include "Vertex.h"
 
+#include "Direct3D9Exception.h"
+
 using namespace System;
 
 namespace SlimDX
@@ -34,9 +36,6 @@ namespace Direct3D9
 {
 	VertexDeclaration::VertexDeclaration( IDirect3DVertexDeclaration9* declaration )
 	{
-		if( declaration == NULL )
-			throw gcnew ArgumentNullException( "declaration" );
-
 		Construct(declaration);
 	}
 
@@ -54,7 +53,9 @@ namespace Direct3D9
 		IDirect3DVertexDeclaration9* decl;
 
 		HRESULT hr = device->InternalPointer->CreateVertexDeclaration( reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedElements ), &decl );
-		Result::Record( hr );
+		
+		if( Result::Record(hr).IsFailure )
+			throw gcnew Direct3D9Exception();
 
 		Construct(decl);
 	}
@@ -64,16 +65,16 @@ namespace Direct3D9
 		unsigned int count = 0;
 
 		HRESULT hr = InternalPointer->GetDeclaration( 0, &count );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
 		array<VertexElement>^ decl = gcnew array<VertexElement>( count );
 		pin_ptr<VertexElement> pinnedDecl = &decl[0];
 
 		hr = InternalPointer->GetDeclaration( reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedDecl ), &count );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
 		return decl;

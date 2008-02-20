@@ -60,7 +60,7 @@ namespace SlimDX
 			DataStream^ CompileEffect( ShaderFlags flags, [Out] System::String^% compilationErrors );
 			DataStream^ CompileEffect( ShaderFlags flags );
 
-			void SetLiteral( EffectHandle^ handle, bool literal );
+			Result SetLiteral( EffectHandle^ handle, bool literal );
 			bool GetLiteral( EffectHandle^ handle );
 		};
 	}

@@ -692,9 +692,8 @@ namespace Direct3D9
 		FrameShim* shim = Frame::BuildHierarchyFromManaged( root );
 
 		HRESULT hr = D3DXFrameCalculateBoundingSphere( shim, reinterpret_cast<D3DXVECTOR3*>( &objectCenter ), &radius );
-		Result::Record( hr );
 
-		if( FAILED( hr ) )
+		if( Result::Record( hr ).IsFailure )
 		{
 			delete shim;
 			return BoundingSphere( Vector3( 0, 0, 0 ), 0.0f );
@@ -704,7 +703,7 @@ namespace Direct3D9
 		return BoundingSphere( objectCenter, radius );
 	}
 
-	void Frame::DestroyHierarchy( Frame^ root, IAllocateHierarchy^ allocator )
+	Result Frame::DestroyHierarchy( Frame^ root, IAllocateHierarchy^ allocator )
 	{
 		IAllocateHierarchyShim* shim = new IAllocateHierarchyShim( allocator );
 		FrameShim* frameShim = Frame::BuildHierarchyFromManaged( root );
@@ -714,6 +713,8 @@ namespace Direct3D9
 
 		delete shim;
 		delete frameShim;
+
+		return Result::Last;
 	}
 
 	int Frame::CountNamedFrames( Frame^ root )
@@ -826,10 +827,12 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXLoadMeshHierarchyFromX( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( options ), device->InternalPointer,
 			allocatorShim, userDataLoaderShim, &result, &animationResult);
-		Result::Record( hr );
 
-		if( FAILED( hr ) )
+		if( Result::Record( hr ).IsFailure )
 		{
+			delete allocatorShim;
+			delete userDataLoaderShim;
+
 			animationController = nullptr;
 			return nullptr;
 		}
@@ -872,10 +875,12 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXLoadMeshHierarchyFromX( reinterpret_cast<LPCWSTR>( pinnedMemory ), static_cast<DWORD>( options ), device->InternalPointer,
 			allocatorShim, userDataLoaderShim, &result, &animationResult);
-		Result::Record( hr );
 
-		if( FAILED( hr ) )
+		if( Result::Record( hr ).IsFailure )
 		{
+			delete allocatorShim;
+			delete userDataLoaderShim;
+
 			animationController = nullptr;
 			return nullptr;
 		}
@@ -908,7 +913,7 @@ namespace Direct3D9
 		return Frame::LoadHierarchyFromX( device, data, options, allocator, userDataLoader, animationController );
 	}
 
-	void Frame::SaveHierarchyToFile( String^ fileName, XFileFormat format, Frame^ root, AnimationController^ animationController, ISaveUserData^ userDataSaver )
+	Result Frame::SaveHierarchyToFile( String^ fileName, XFileFormat format, Frame^ root, AnimationController^ animationController, ISaveUserData^ userDataSaver )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 		ISaveUserDataShim *shim = new ISaveUserDataShim( userDataSaver );
@@ -919,16 +924,17 @@ namespace Direct3D9
 		if(animationController != nullptr)
 			animation = animationController->InternalPointer;
 
-
 		HRESULT hr = D3DXSaveMeshHierarchyToFile( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( format ),
 			frameShim, animation, shim );
 		Result::Record( hr );
 
 		delete shim;
 		delete frameShim;
+
+		return Result::Last;
 	}
 
-	void Frame::SaveHierarchyToFile( String^ fileName, XFileFormat format, Frame^ root, AnimationController^ animationController )
+	Result Frame::SaveHierarchyToFile( String^ fileName, XFileFormat format, Frame^ root, AnimationController^ animationController )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 		FrameShim *frameShim = Frame::BuildHierarchyFromManaged( root );
@@ -943,6 +949,8 @@ namespace Direct3D9
 		Result::Record( hr );
 
 		delete frameShim;
+
+		return Result::Last;
 	}
 
 	void Frame::RegisterAnimations( Frame^ frame, LPD3DXANIMATIONCONTROLLER animation )

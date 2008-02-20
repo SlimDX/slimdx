@@ -51,9 +51,8 @@ namespace SlimDX
 
 			HRESULT hr = D3DXCreateRenderToEnvMap( device->InternalPointer, size, mipLevels, static_cast<D3DFORMAT>( format ),
 				true, static_cast<D3DFORMAT>( depthStencilFormat ), &result );
-			Result::Record( hr );
-
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				throw gcnew Direct3D9Exception();
 
 			Construct(result);
@@ -65,48 +64,47 @@ namespace SlimDX
 
 			HRESULT hr = D3DXCreateRenderToEnvMap( device->InternalPointer, size, mipLevels, static_cast<D3DFORMAT>( format ),
 				false, D3DFMT_UNKNOWN, &result );
-			Result::Record( hr );
 
-			if( FAILED( hr ) )
+			if( Result::Record( hr ).IsFailure )
 				throw gcnew Direct3D9Exception();
 
 			Construct(result);
 		}
 
-		void RenderToEnvironmentMap::BeginCube( CubeTexture^ texture )
+		Result RenderToEnvironmentMap::BeginCube( CubeTexture^ texture )
 		{
 			HRESULT hr = InternalPointer->BeginCube( texture->TexturePointer );
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
-		void RenderToEnvironmentMap::BeginHemisphere( Texture^ positiveZTexture, Texture^ negativeZTexture )
+		Result RenderToEnvironmentMap::BeginHemisphere( Texture^ positiveZTexture, Texture^ negativeZTexture )
 		{
 			HRESULT hr = InternalPointer->BeginHemisphere( positiveZTexture->TexturePointer, negativeZTexture->TexturePointer );
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
-		void RenderToEnvironmentMap::BeginParabolic( Texture^ positiveZTexture, Texture^ negativeZTexture )
+		Result RenderToEnvironmentMap::BeginParabolic( Texture^ positiveZTexture, Texture^ negativeZTexture )
 		{
 			HRESULT hr = InternalPointer->BeginParabolic( positiveZTexture->TexturePointer, negativeZTexture->TexturePointer );
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
-		void RenderToEnvironmentMap::BeginSphere( Texture^ texture )
+		Result RenderToEnvironmentMap::BeginSphere( Texture^ texture )
 		{
 			HRESULT hr = InternalPointer->BeginSphere( texture->TexturePointer );
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
-		void RenderToEnvironmentMap::End( Filter mipFilter )
+		Result RenderToEnvironmentMap::End( Filter mipFilter )
 		{
 			HRESULT hr = InternalPointer->End( static_cast<DWORD>( mipFilter ) );
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
-		void RenderToEnvironmentMap::Face( CubeMapFace face, Filter mipFilter )
+		Result RenderToEnvironmentMap::Face( CubeMapFace face, Filter mipFilter )
 		{
 			HRESULT hr = InternalPointer->Face( static_cast<D3DCUBEMAP_FACES>( face ), static_cast<DWORD>( mipFilter ) );
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
 		Device^ RenderToEnvironmentMap::GetDevice()
@@ -114,24 +112,23 @@ namespace SlimDX
 			IDirect3DDevice9* device;
 
 			HRESULT hr = InternalPointer->GetDevice( &device );
-			Result::Record( hr );
-
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 
 			return gcnew Device( device );
 		}
 
-		void RenderToEnvironmentMap::OnLostDevice()
+		Result RenderToEnvironmentMap::OnLostDevice()
 		{
 			HRESULT hr = InternalPointer->OnLostDevice();
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
-		void RenderToEnvironmentMap::OnResetDevice()
+		Result RenderToEnvironmentMap::OnResetDevice()
 		{
 			HRESULT hr = InternalPointer->OnResetDevice();
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
 		RenderToEnvironmentMapDescription RenderToEnvironmentMap::Description::get()
@@ -139,7 +136,9 @@ namespace SlimDX
 			D3DXRTE_DESC description = {0};
 
 			HRESULT hr = InternalPointer->GetDesc( &description );
-			Result::Record( hr );
+			
+			if( Result::Record( hr ).IsFailure )
+				return RenderToEnvironmentMapDescription();
 
 			RenderToEnvironmentMapDescription outDesc;
 			outDesc.Size = description.Size;

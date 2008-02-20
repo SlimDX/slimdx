@@ -122,22 +122,22 @@ namespace SlimDX
 				EffectDescription get();
 			}
 
-			void SetValue( EffectHandle^ parameter, bool value );
-			void SetValue( EffectHandle^ parameter, array<bool>^ values );
-			void SetValue( EffectHandle^ parameter, int value );
-			void SetValue( EffectHandle^ parameter, array<int>^ values );
-			void SetValue( EffectHandle^ parameter, float value );
-			void SetValue( EffectHandle^ parameter, array<float>^ values );
-			void SetValue( EffectHandle^ parameter, Vector4 value );
-			void SetValue( EffectHandle^ parameter, array<Vector4>^ values );
-			void SetValue( EffectHandle^ parameter, Color4 value );
-			void SetValue( EffectHandle^ parameter, array<Color4>^ values );
-			void SetValue( EffectHandle^ parameter, Matrix value );
-			void SetValue( EffectHandle^ parameter, array<Matrix>^ values );
-			void SetValue( EffectHandle^ parameter, BaseTexture^ value );
-			void SetValue( EffectHandle^ parameter, System::String^ value );
-			void SetValueTranspose( EffectHandle^ parameter, Matrix value );
-			void SetValueTranspose( EffectHandle^ parameter, array<Matrix>^ values );
+			Result SetValue( EffectHandle^ parameter, bool value );
+			Result SetValue( EffectHandle^ parameter, array<bool>^ values );
+			Result SetValue( EffectHandle^ parameter, int value );
+			Result SetValue( EffectHandle^ parameter, array<int>^ values );
+			Result SetValue( EffectHandle^ parameter, float value );
+			Result SetValue( EffectHandle^ parameter, array<float>^ values );
+			Result SetValue( EffectHandle^ parameter, Vector4 value );
+			Result SetValue( EffectHandle^ parameter, array<Vector4>^ values );
+			Result SetValue( EffectHandle^ parameter, Color4 value );
+			Result SetValue( EffectHandle^ parameter, array<Color4>^ values );
+			Result SetValue( EffectHandle^ parameter, Matrix value );
+			Result SetValue( EffectHandle^ parameter, array<Matrix>^ values );
+			Result SetValue( EffectHandle^ parameter, BaseTexture^ value );
+			Result SetValue( EffectHandle^ parameter, System::String^ value );
+			Result SetValueTranspose( EffectHandle^ parameter, Matrix value );
+			Result SetValueTranspose( EffectHandle^ parameter, array<Matrix>^ values );
 
 			bool GetBool( EffectHandle^ parameter );
 			array<bool>^ GetBoolArray( EffectHandle^ parameter, int count );

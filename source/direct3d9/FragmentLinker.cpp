@@ -88,8 +88,7 @@ namespace Direct3D9
 		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );
 		
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew DataStream( fragmentBuffer );
@@ -125,24 +124,23 @@ namespace Direct3D9
 		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );
 		
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew DataStream( fragmentBuffer );
 	}
 
-	void FragmentLinker::AddFragments( array<int>^ fragments )
+	Result FragmentLinker::AddFragments( array<int>^ fragments )
 	{
 		pin_ptr<int> pinnedFragments = &fragments[0];
 		HRESULT hr = InternalPointer->AddFragments( reinterpret_cast<const DWORD*>( pinnedFragments ) );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void FragmentLinker::AddFragments( DataStream^ fragments )
+	Result FragmentLinker::AddFragments( DataStream^ fragments )
 	{
 		HRESULT hr = InternalPointer->AddFragments( reinterpret_cast<const DWORD*>( fragments->RawPointer ) );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	DataStream^ FragmentLinker::GetFragment( EffectHandle^ name )
@@ -151,8 +149,8 @@ namespace Direct3D9
 		ID3DXBuffer* fragment;
 
 		HRESULT hr = InternalPointer->GetFragment( handle, &fragment );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew DataStream( fragment );
@@ -163,8 +161,8 @@ namespace Direct3D9
 		ID3DXBuffer* fragments;
 
 		HRESULT hr = InternalPointer->GetAllFragments( &fragments );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew DataStream( fragments );
@@ -185,8 +183,7 @@ namespace Direct3D9
 		D3DXFRAGMENT_DESC description;
 
 		HRESULT hr = InternalPointer->GetFragmentDesc( handle, &description );
-		Result::Record( hr );
-		if( FAILED( hr ) )
+		if( Result::Record( hr ).IsFailure )
 			return FragmentDescription();
 
 		FragmentDescription outDesc;
@@ -242,7 +239,7 @@ namespace Direct3D9
 		
 		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );
-		if( FAILED( hr ) )
+		if( Result::Last.IsFailure )
 			return nullptr;
 
 		return gcnew ShaderBytecode( bytecode );
@@ -267,7 +264,7 @@ namespace Direct3D9
 		
 		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );
-		if( FAILED( hr ) )
+		if( Result::Last.IsFailure )
 			return nullptr;
 
 		return gcnew VertexShader( shader );
@@ -292,7 +289,7 @@ namespace Direct3D9
 		
 		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );
-		if( FAILED( hr ) )
+		if( Result::Last.IsFailure )
 			return nullptr;
 
 		return gcnew PixelShader( shader );

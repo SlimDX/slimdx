@@ -53,9 +53,8 @@ namespace SlimDX
 			D3DVERTEXELEMENT9 elementBuffer[MAX_FVF_DECL_SIZE];
 
 			HRESULT hr = D3DXDeclaratorFromFVF( static_cast<DWORD>( fvf ), elementBuffer );
-			Result::Record( hr );
-
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 
 			// Apparently the returned decl does not include an End element. This is bizarre and confusing,
@@ -86,9 +85,8 @@ namespace SlimDX
 			pin_ptr<VertexElement> pinnedDecl = &declaration[0];
 
 			HRESULT hr = D3DXGenerateOutputDecl( elementBuffer, reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ) );
-			Result::Record( hr );
-
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 
 			// Apparently the returned decl does not include an End element. This is bizarre and confusing,
@@ -109,15 +107,14 @@ namespace SlimDX
 			return D3DXGetDeclLength( reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ) );
 		}
 
-		void D3DX::GetRectanglePatchSize( float segmentCount, [Out] int% triangleCount, [Out] int% vertexCount )
+		Result D3DX::GetRectanglePatchSize( float segmentCount, [Out] int% triangleCount, [Out] int% vertexCount )
 		{
 			DWORD tris;
 			DWORD verts;
 
 			HRESULT hr = D3DXRectPatchSize( &segmentCount, &tris, &verts );
-			Result::Record( hr );
 
-			if( FAILED( hr ) )
+			if( Result::Record( hr ).IsFailure )
 			{
 				triangleCount = 0;
 				vertexCount = 0;
@@ -127,17 +124,18 @@ namespace SlimDX
 				triangleCount = tris;
 				vertexCount = verts;
 			}
+
+			return Result::Last;
 		}
 
-		void D3DX::GetTrianglePatchSize( float segmentCount, [Out] int% triangleCount, [Out] int% vertexCount )
+		Result D3DX::GetTrianglePatchSize( float segmentCount, [Out] int% triangleCount, [Out] int% vertexCount )
 		{
 			DWORD tris;
 			DWORD verts;
 
 			HRESULT hr = D3DXTriPatchSize( &segmentCount, &tris, &verts );
-			Result::Record( hr );
 
-			if( FAILED( hr ) )
+			if( Result::Record( hr ).IsFailure )
 			{
 				triangleCount = 0;
 				vertexCount = 0;
@@ -147,6 +145,8 @@ namespace SlimDX
 				triangleCount = tris;
 				vertexCount = verts;
 			}
+
+			return Result::Last;
 		}
 
 		Format D3DX::MakeFourCC( Byte c1, Byte c2, Byte c3, Byte c4 )
@@ -169,9 +169,8 @@ namespace SlimDX
 
 			HRESULT hr = D3DXOptimizeFaces( reinterpret_cast<LPCVOID>( pinnedIndices ), faceCount, vertexCount,
 				TRUE, reinterpret_cast<DWORD*>( pinnedResults ) );
-			Result::Record( hr );
-
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 
 			return results;
@@ -186,9 +185,8 @@ namespace SlimDX
 
 			HRESULT hr = D3DXOptimizeFaces( reinterpret_cast<LPCVOID>( pinnedIndices ), faceCount, vertexCount,
 				FALSE, reinterpret_cast<DWORD*>( pinnedResults ) );
-			Result::Record( hr );
-
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 
 			return results;
@@ -203,9 +201,8 @@ namespace SlimDX
 
 			HRESULT hr = D3DXOptimizeVertices( reinterpret_cast<LPCVOID>( pinnedIndices ), faceCount, vertexCount,
 				TRUE, reinterpret_cast<DWORD*>( pinnedResults ) );
-			Result::Record( hr );
-
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 
 			return results;
@@ -220,9 +217,8 @@ namespace SlimDX
 
 			HRESULT hr = D3DXOptimizeVertices( reinterpret_cast<LPCVOID>( pinnedIndices ), faceCount, vertexCount,
 				FALSE, reinterpret_cast<DWORD*>( pinnedResults ) );
-			Result::Record( hr );
-
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 
 			return results;

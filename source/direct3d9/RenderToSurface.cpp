@@ -52,8 +52,8 @@ namespace SlimDX
 		{
 			ID3DXRenderToSurface* rtsPointer;
 			HRESULT hr = D3DXCreateRenderToSurface( device->InternalPointer, width, height, static_cast<D3DFORMAT>( format ), FALSE, D3DFMT_UNKNOWN, &rtsPointer );
-			Result::Record( hr );
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				throw gcnew Direct3D9Exception();
 
 			Construct(rtsPointer);
@@ -64,54 +64,56 @@ namespace SlimDX
 			ID3DXRenderToSurface* rtsPointer;
 			HRESULT hr = D3DXCreateRenderToSurface( device->InternalPointer, width, height,
 				static_cast<D3DFORMAT>( format ), TRUE, static_cast<D3DFORMAT>( depthStencilFormat ), &rtsPointer );
-			Result::Record( hr );
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				throw gcnew Direct3D9Exception();
 
 			Construct(rtsPointer);
 		}
 
-		void RenderToSurface::BeginScene( Surface^ renderSurface, SlimDX::Direct3D::Viewport viewport )
+		Result RenderToSurface::BeginScene( Surface^ renderSurface, SlimDX::Direct3D::Viewport viewport )
 		{
 			IDirect3DSurface9* surface = renderSurface->SurfacePointer;
 			HRESULT hr = InternalPointer->BeginScene( surface, reinterpret_cast<D3DVIEWPORT9*>( &viewport ) );
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
-		void RenderToSurface::EndScene( Filter mipFilter )
+		Result RenderToSurface::EndScene( Filter mipFilter )
 		{
 			HRESULT hr = InternalPointer->EndScene( static_cast<DWORD>( mipFilter ) );
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
 		Device^ RenderToSurface::GetDevice()
 		{
 			IDirect3DDevice9* device;
 			HRESULT hr = InternalPointer->GetDevice( &device );
-			Result::Record( hr );
-			if( FAILED( hr ) )
+			
+			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 
 			return gcnew Device( device );
 		}
 
-		void RenderToSurface::OnLostDevice()
+		Result RenderToSurface::OnLostDevice()
 		{
 			HRESULT hr = InternalPointer->OnLostDevice();
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
-		void RenderToSurface::OnResetDevice()
+		Result RenderToSurface::OnResetDevice()
 		{
 			HRESULT hr = InternalPointer->OnResetDevice();
-			Result::Record( hr );
+			return Result::Record( hr );
 		}
 
 		RenderToSurfaceDescription RenderToSurface::Description::get()
 		{
 			D3DXRTS_DESC description = {0};
 			HRESULT hr = InternalPointer->GetDesc( &description );
-			Result::Record( hr );
+			
+			if( Result::Record( hr ).IsFailure )
+				return RenderToSurfaceDescription();
 
 			RenderToSurfaceDescription outDesc;
 			outDesc.Width = description.Width;

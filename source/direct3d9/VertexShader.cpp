@@ -43,9 +43,6 @@ namespace Direct3D9
 {
 	VertexShader::VertexShader( IDirect3DVertexShader9* vertexShader )
 	{
-		if( vertexShader == NULL )
-			throw gcnew ArgumentNullException( "vertexShader" );
-
 		Construct(vertexShader);
 
 		m_ConstantTable = nullptr;
@@ -58,8 +55,6 @@ namespace Direct3D9
 
 	VertexShader::VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable )
 	{
-		if( vertexShader == NULL )
-			throw gcnew ArgumentNullException( "vertexShader" );
 		if( constantTable == NULL )
 			throw gcnew ArgumentNullException( "constantTable" );
 
@@ -67,7 +62,9 @@ namespace Direct3D9
 
 		IDirect3DDevice9* device;
 		HRESULT hr = vertexShader->GetDevice(&device);
-		Result::Record( hr );
+		
+		if( Result::Record(hr).IsFailure )
+			throw gcnew Direct3D9Exception();
 		
 		m_ConstantTable = gcnew ConstantTable( device, constantTable );
 		device->Release();
@@ -116,32 +113,34 @@ namespace Direct3D9
 		return gcnew VertexShader( vertexShader, constantTable );
 	}
 
-	void VertexShader::RetrieveConstantTable()
+	Result VertexShader::RetrieveConstantTable()
 	{
 		if( m_ConstantTable != nullptr )
-			return;
+			return Result::Record( D3D_OK );
 
 		//Retrieve the binary data
 		UINT size;
 		HRESULT hr = InternalPointer->GetFunction( NULL, &size );
-		Result::Record( hr );
-		if( FAILED( hr ) )
-			return;
+		
+		if( Result::Record(hr).IsFailure )
+			return Result::Last;
 
 		std::auto_ptr<char> data( new char[size] );
 		hr = InternalPointer->GetFunction( data.get(), &size );
-		Result::Record( hr );
-		if( FAILED( hr ) )
-			return;
+		
+		if( Result::Record(hr).IsFailure )
+			return Result::Last;
 
 		//Ask D3DX to give us the actual table
 		ID3DXConstantTable* constantTable;
 		hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( data.get() ), &constantTable );
-		Result::Record( hr );
-		if( FAILED( hr ) )
-			return;
+		
+		if( Result::Record(hr).IsFailure )
+			return Result::Last;
 
 		m_ConstantTable = gcnew ConstantTable( constantTable );
+
+		return Result::Last;
 	}
 }
 }
