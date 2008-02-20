@@ -47,18 +47,17 @@ namespace SlimDX
 			if( FAILED( hr ) )
 				throw gcnew Direct3D9Exception();
 
-			Construct(pointer);
+			Construct( pointer );
 		}
 
-		Effect::Effect( ID3DXEffect* effect ) : BaseEffect( effect )
+		Effect::Effect( ID3DXEffect* pointer )
 		{
-			if( effect == NULL )
-				throw gcnew ArgumentNullException( "effect" );
+			Construct( pointer );
 		}
 
-		Effect::Effect( IntPtr effect )
+		Effect::Effect( IntPtr pointer )
 		{
-			Construct( effect, NativeInterface );
+			Construct( pointer, NativeInterface );
 		}
 
 		Effect^ Effect::FromMemory( Device^ device, array<Byte>^ memory, array<Macro>^ preprocessorDefines,
