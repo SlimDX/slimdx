@@ -46,10 +46,12 @@ namespace SlimDX
 
 		public ref class Effect : public BaseEffect
 		{
+			COMOBJECT(ID3DXEffect);
+			
 		internal:
 			property ID3DXEffect* EffectPointer
 			{
-				ID3DXEffect* get() { return static_cast<ID3DXEffect*>( InternalPointer ); }
+				ID3DXEffect* get() { return InternalPointer; }
 			}
 
 			Effect( ID3DXEffect* effect );
