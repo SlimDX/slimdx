@@ -20,7 +20,7 @@
 * THE SOFTWARE.
 */
 
-#include "Color3.h"
+#include "Math.h"
 
 using namespace System;
 

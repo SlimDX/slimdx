@@ -202,15 +202,10 @@ namespace Direct3D9
 		return Result::Record( hr );
 	}
 
-	Result Device::Clear( ClearFlags clearFlags, int color, float zdepth, int stencil )
+	Result Device::Clear( ClearFlags clearFlags, Color4 color, float zdepth, int stencil )
 	{
-		HRESULT hr = InternalPointer->Clear( 0, 0, static_cast<DWORD>( clearFlags ), static_cast<D3DCOLOR>( color ), zdepth, stencil );
+		HRESULT hr = InternalPointer->Clear( 0, 0, static_cast<DWORD>( clearFlags ), static_cast<D3DCOLOR>( color.ToArgb() ), zdepth, stencil );
 		return Result::Record( hr );
-	}
-
-	Result Device::Clear( ClearFlags clearFlags, Color color, float zdepth, int stencil )
-	{
-		return Clear( clearFlags, color.ToArgb(), zdepth, stencil );
 	}
 
 	Result Device::BeginScene()
@@ -753,17 +748,12 @@ namespace Direct3D9
 		return Result::Record( hr );
 	}
 
-	Result Device::ColorFill( Surface^ destSurface, System::Drawing::Rectangle destRect, int color )
+	Result Device::ColorFill( Surface^ destSurface, System::Drawing::Rectangle destRect, Color4 color )
 	{
 		RECT nativeDestRect = { destRect.Left, destRect.Top, destRect.Right, destRect.Bottom };
 
-		HRESULT hr = InternalPointer->ColorFill( destSurface->SurfacePointer, &nativeDestRect, static_cast<D3DCOLOR>( color ) );
+		HRESULT hr = InternalPointer->ColorFill( destSurface->SurfacePointer, &nativeDestRect, static_cast<D3DCOLOR>( color.ToArgb() ) );
 		return Result::Record( hr );
-	}
-
-	Result Device::ColorFill( Surface^ destSurface, System::Drawing::Rectangle destRect, System::Drawing::Color color )
-	{
-		return ColorFill( destSurface, destRect, color.ToArgb() );
 	}
 
 	Result Device::BeginStateBlock()

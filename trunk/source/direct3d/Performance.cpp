@@ -23,6 +23,7 @@
 #include <d3dx9.h>
 
 #include "../Utilities.h"
+#include "../math/Math.h"
 #include "Performance.h"
 #include <vcclr.h>
 
@@ -33,15 +34,10 @@ namespace SlimDX
 {
 namespace Direct3D
 {
-	int Performance::BeginEvent( int color, String^ name )
+	int Performance::BeginEvent( Color4 color, String^ name )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( name );
-		return D3DPERF_BeginEvent( color, pinnedName );
-	}
-
-	int Performance::BeginEvent( System::Drawing::Color color, String^ name )
-	{
-		return BeginEvent( color.ToArgb(), name );
+		return D3DPERF_BeginEvent( static_cast<int>( color ), pinnedName );
 	}
 
 	int Performance::EndEvent()
@@ -59,31 +55,21 @@ namespace Direct3D
 		return D3DPERF_QueryRepeatFrame() > 0;
 	}
 
-	void Performance::SetMarker( int color, String^ name )
+	void Performance::SetMarker( Color4 color, String^ name )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( name );
-		D3DPERF_SetMarker( color, pinnedName );
-	}
-
-	void Performance::SetMarker( System::Drawing::Color color, String^ name )
-	{
-		SetMarker( color.ToArgb(), name );
+		D3DPERF_SetMarker( static_cast<int>( color ), pinnedName );
 	}
 
 	void Performance::SetOptions( PerformanceOptions options )
 	{
-		D3DPERF_SetOptions( (DWORD) options );
+		D3DPERF_SetOptions( static_cast<DWORD>( options ) );
 	}
 
-	void Performance::SetRegion( int color, String^ name )
+	void Performance::SetRegion( Color4 color, String^ name )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( name );
-		D3DPERF_SetRegion( color, pinnedName );
-	}
-
-	void Performance::SetRegion( System::Drawing::Color color, String^ name )
-	{
-		return SetRegion( color.ToArgb(), name );
+		D3DPERF_SetRegion( static_cast<int>( color ), pinnedName );
 	}
 }
 }

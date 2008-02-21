@@ -44,10 +44,8 @@ namespace SlimDX
 			Result Begin();
 			Result End();
 
-			Result Draw( array<Vector2>^ vertexList, int color );
-			Result Draw( array<Vector2>^ vertexList, System::Drawing::Color color );
-			Result DrawTransformed( array<Vector3>^ vertexList, Matrix matrix, int color );
-			Result DrawTransformed( array<Vector3>^ vertexList, Matrix matrix, System::Drawing::Color color );
+			Result Draw( array<Vector2>^ vertexList, Color4 color );
+			Result DrawTransformed( array<Vector3>^ vertexList, Matrix matrix, Color4 color );
 			
 			Result OnLostDevice();
 			Result OnResetDevice();

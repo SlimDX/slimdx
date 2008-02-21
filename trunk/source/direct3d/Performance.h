@@ -38,18 +38,15 @@ namespace SlimDX
 			Performance() { }
 
 		public:
-			static int BeginEvent( int color, System::String^ name );
-			static int BeginEvent( System::Drawing::Color color, System::String^ name );
+			static int BeginEvent( Color4 color, System::String^ name );
 			static int EndEvent();
 
 			static bool GetStatus();
 			static bool QueryRepeatFrame();
 
-			static void SetMarker( int color, System::String^ name );
-			static void SetMarker( System::Drawing::Color color, System::String^ name );
+			static void SetMarker( Color4 color, System::String^ name );
 			static void SetOptions( PerformanceOptions options );
-			static void SetRegion( int color, System::String^ name );
-			static void SetRegion( System::Drawing::Color color, System::String^ name );
+			static void SetRegion( Color4 color, System::String^ name );
 		};
 	}
 }

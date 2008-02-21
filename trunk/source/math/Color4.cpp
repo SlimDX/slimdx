@@ -59,6 +59,30 @@ namespace SlimDX
 		Blue = color.B / 255.0f;
 	}
 
+	Color4::Color4( Color3 color )
+	{
+		Alpha = 1.0f;
+		Red = color.Red;
+		Green = color.Green;
+		Blue = color.Blue;
+	}
+
+	Color4::Color4( Vector3 color )
+	{
+		Alpha = 1.0f;
+		Red = color.X;
+		Green = color.Y;
+		Blue = color.Z;
+	}
+
+	Color4::Color4( Vector4 color )
+	{
+		Alpha = color.W;
+		Red = color.X;
+		Green = color.Y;
+		Blue = color.Z;
+	}
+
 	Color4::Color4( int argb )
 	{
 		Alpha = ( ( argb >> 24 ) & 255 ) / 255.0f;
@@ -69,7 +93,12 @@ namespace SlimDX
 
 	Color Color4::ToColor()
 	{
-		return Color::FromArgb( (int)Alpha * 255, (int)Red * 255, (int)Green * 255, (int)Blue * 255 );
+		return Color::FromArgb( (int)(Alpha * 255), (int)(Red * 255), (int)(Green * 255), (int)(Blue * 255) );
+	}
+
+	Color3 Color4::ToColor3()
+	{
+		return Color3( Red, Green, Blue );
 	}
 
 	int Color4::ToArgb()
@@ -87,6 +116,16 @@ namespace SlimDX
 		value += a << 24;
 
 		return (int) value;
+	}
+
+	Vector3 Color4::ToVector3()
+	{
+		return Vector3( Red, Green, Blue );
+	}
+
+	Vector4 Color4::ToVector4()
+	{
+		return Vector4( Red, Green, Blue, Alpha );
 	}
 
 	Color4 Color4::Add( Color4 color1, Color4 color2 )
@@ -235,6 +274,56 @@ namespace SlimDX
 	bool Color4::operator != ( Color4 left, Color4 right )
 	{
 		return !Color4::Equals( left, right );
+	}
+
+	Color4::operator int( Color4 value )
+	{
+		return value.ToArgb();
+	}
+
+	Color4::operator Color3( Color4 value )
+	{
+		return value.ToColor3();
+	}
+
+	Color4::operator System::Drawing::Color( Color4 value )
+	{
+		return value.ToColor();
+	}
+
+	Color4::operator Vector3( Color4 value )
+	{
+		return value.ToVector3();
+	}
+
+	Color4::operator Vector4( Color4 value )
+	{
+		return value.ToVector4();
+	}
+
+	Color4::operator Color4( int value )
+	{
+		return Color4( value );
+	}
+
+	Color4::operator Color4( Color3 value )
+	{
+		return Color4( value );
+	}
+
+	Color4::operator Color4( System::Drawing::Color value )
+	{
+		return Color4( value );
+	}
+
+	Color4::operator Color4( Vector3 value )
+	{
+		return Color4( value );
+	}
+
+	Color4::operator Color4( Vector4 value )
+	{
+		return Color4( value );
 	}
 
 	String^ Color4::ToString()

@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../math/Color3.h"
+#include "../math/Math.h"
 
 namespace SlimDX
 {

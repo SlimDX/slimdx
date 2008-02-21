@@ -235,8 +235,7 @@ namespace SlimDX
 			CooperativeLevel CheckCooperativeLevel();
 			Result Reset( PresentParameters^ presentParameters );
 
-			Result Clear( ClearFlags clearFlags, int color, float zdepth, int stencil );
-			Result Clear( ClearFlags clearFlags, System::Drawing::Color color, float zdepth, int stencil );
+			Result Clear( ClearFlags clearFlags, Color4 color, float zdepth, int stencil );
 			Result BeginScene();
 			Result EndScene();
 			Result Present();
@@ -351,8 +350,7 @@ namespace SlimDX
 			Result UpdateSurface( Surface^ source, System::Drawing::Rectangle sourceRect,
 				Surface^ destination, System::Drawing::Point destinationPoint );
 			Result UpdateTexture( BaseTexture^ sourceTexture, BaseTexture^ destinationTexture );
-			Result ColorFill( Surface^ destinationSurface, System::Drawing::Rectangle destinationRect, int color );
-			Result ColorFill( Surface^ destinationSurface, System::Drawing::Rectangle destinationRect, System::Drawing::Color color );
+			Result ColorFill( Surface^ destinationSurface, System::Drawing::Rectangle destinationRect, Color4 color );
 
 			//ATI R2VB functionality, based on work by Oliver 'acid2' Charles
 			Result SetR2VBMode( bool enableR2VB );

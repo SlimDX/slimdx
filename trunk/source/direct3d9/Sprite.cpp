@@ -131,54 +131,34 @@ namespace Direct3D9
 		return Result::Record( hr );
 	}
 
-	Result Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, int color )
+	Result Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color4 color )
 	{
 		RECT rect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
 
 		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, &rect, reinterpret_cast<const D3DXVECTOR3*>( &center ),
-			reinterpret_cast<const D3DXVECTOR3*>( &position ), color );
+			reinterpret_cast<const D3DXVECTOR3*>( &position ), color.ToArgb() );
 		return Result::Record( hr );
 	}
 
-	Result Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color color )
-	{
-		return Draw( texture, sourceRect, center, position, color.ToArgb() );
-	}
-
-	Result Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, int color )
+	Result Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color4 color )
 	{
 		RECT rect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
 
-		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, &rect, NULL, NULL, color );
+		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, &rect, NULL, NULL, color.ToArgb() );
 		return Result::Record( hr );
 	}
 
-	Result Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color color )
-	{
-		return Draw( texture, sourceRect, color.ToArgb() );
-	}
-
-	Result Sprite::Draw( Texture^ texture, Vector3 center, Vector3 position, int color )
+	Result Sprite::Draw( Texture^ texture, Vector3 center, Vector3 position, Color4 color )
 	{
 		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, NULL, reinterpret_cast<const D3DXVECTOR3*>( &center ),
-			reinterpret_cast<const D3DXVECTOR3*>( &position ), color );
+			reinterpret_cast<const D3DXVECTOR3*>( &position ), color.ToArgb() );
 		return Result::Record( hr );
 	}
 
-	Result Sprite::Draw( Texture^ texture, Vector3 center, Vector3 position, Color color )
+	Result Sprite::Draw( Texture^ texture, Color4 color )
 	{
-		return Draw( texture, center, position, color.ToArgb() );
-	}
-
-	Result Sprite::Draw( Texture^ texture, int color )
-	{
-		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, NULL, NULL, NULL, color );
+		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, NULL, NULL, NULL, color.ToArgb() );
 		return Result::Record( hr );
-	}
-
-	Result Sprite::Draw( Texture^ texture, Color color )
-	{
-		return Draw( texture, color.ToArgb() );
 	}
 }
 }

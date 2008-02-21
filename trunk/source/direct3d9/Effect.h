@@ -25,6 +25,7 @@
 #include "Device.h"
 #include "BaseEffect.h"
 #include "Shader.h"
+#include "EffectStateManager.h"
 
 namespace SlimDX
 {
@@ -47,6 +48,9 @@ namespace SlimDX
 		public ref class Effect : public BaseEffect
 		{
 			COMOBJECT(ID3DXEffect);
+
+		private:
+			IEffectStateManagerShim *shim;
 			
 		internal:
 			property ID3DXEffect* EffectPointer
@@ -58,7 +62,7 @@ namespace SlimDX
 
 		public:
 			Effect( System::IntPtr effect );
-			virtual ~Effect() { }
+			virtual ~Effect() { if( shim != NULL ) delete shim; }
 
 			//FromMemory
 			static Effect^ FromMemory( Device^ device, array<System::Byte>^ memory, array<Macro>^ preprocessorDefines, Include^ includeFile,
@@ -109,6 +113,9 @@ namespace SlimDX
 				EffectHandle^ get();
 				void set( EffectHandle^ value );
 			}
+
+			Result SetStateManager( IEffectStateManager^ manager );
+			IEffectStateManager^ GetStateManager();
 
 			Result OnLostDevice();
 			Result OnResetDevice();

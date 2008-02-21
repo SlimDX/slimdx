@@ -22,7 +22,7 @@
 #pragma once
 
 //using namespace System;
-//using namespace System::Runtime::InteropServices;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
@@ -38,9 +38,11 @@ namespace SlimDX
 	value class BoundingSphere;
 	value class BoundingFrustum;
 	value class Color4;
+	value class Color3;
 	value class Float16;
 }
 
+#include "Color3.h"
 #include "Color4.h"
 #include "Vector4.h"
 #include "Vector2.h"
