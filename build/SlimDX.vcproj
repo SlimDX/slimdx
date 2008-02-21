@@ -1272,6 +1272,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\direct3d9\EffectStateManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d9\EffectStateManager.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\direct3d9\Enums.h"
 				>
 			</File>

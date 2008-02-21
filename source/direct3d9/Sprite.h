@@ -73,14 +73,10 @@ namespace SlimDX
 			Result SetWorldViewLH( Matrix world, Matrix view );
 			Result SetWorldViewRH( Matrix world, Matrix view );
 
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, int color );
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, System::Drawing::Color color );
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, int color );
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, System::Drawing::Color color );
-			Result Draw( Texture^ texture, Vector3 center, Vector3 position, int color );
-			Result Draw( Texture^ texture, Vector3 center, Vector3 position, System::Drawing::Color color );
-			Result Draw( Texture^ texture, int color );
-			Result Draw( Texture^ texture, System::Drawing::Color color );
+			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color4 color );
+			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color4 color );
+			Result Draw( Texture^ texture, Vector3 center, Vector3 position, Color4 color );
+			Result Draw( Texture^ texture, Color4 color );
 		};
 	}
 }

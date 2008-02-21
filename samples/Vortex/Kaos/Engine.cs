@@ -27,6 +27,7 @@ using SlimDX.Direct3D;
 using SlimDX.Direct3D9;
 using Demo.Demo;
 using Demo.Kaos;
+using System.Drawing;
 
 namespace Demo.Kaos
 {
@@ -93,7 +94,7 @@ namespace Demo.Kaos
 
 			mCamera.Update(mTicker.Delta);
 
-			mDevice.Clear(ClearFlags.Target | ClearFlags.ZBuffer, System.Drawing.Color.LightSteelBlue, 1.0f, 0);
+			mDevice.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.LightSteelBlue, 1.0f, 0);
 			mDevice.BeginScene();
 
 			// Fill the background with a texture.

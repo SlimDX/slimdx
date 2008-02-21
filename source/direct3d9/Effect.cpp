@@ -52,11 +52,13 @@ namespace SlimDX
 
 		Effect::Effect( ID3DXEffect* pointer )
 		{
+			shim = NULL;
 			Construct( pointer );
 		}
 
 		Effect::Effect( IntPtr pointer )
 		{
+			shim = NULL;
 			Construct( pointer, NativeInterface );
 		}
 
@@ -313,6 +315,26 @@ namespace SlimDX
 		{
 			HRESULT hr = EffectPointer->OnResetDevice();
 			return Result::Record( hr );
+		}
+
+		Result Effect::SetStateManager( IEffectStateManager^ manager )
+		{
+			if( shim != NULL )
+				delete shim;
+
+			// TODO: Fix following line
+			//shim = new IEffectStateManagerShim( manager );
+
+			HRESULT hr = EffectPointer->SetStateManager( shim );
+			return Result::Record( hr );
+		}
+
+		IEffectStateManager^ Effect::GetStateManager()
+		{
+			if( shim != NULL )
+				return shim->GetManager();
+			else
+				return nullptr;
 		}
 	}
 }

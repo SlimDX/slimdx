@@ -61,10 +61,8 @@ namespace SlimDX
 			Font( Device^ device, System::Drawing::Font^ font );
 			~Font() { Destruct(); }
 
-			int DrawString( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, int color );
-			int DrawString( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, System::Drawing::Color color );
-			int DrawString( Sprite^ sprite, System::String^ text, int x, int y, int color );
-			int DrawString( Sprite^ sprite, System::String^ text, int x, int y, System::Drawing::Color color );
+			int DrawString( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, Color4 color );
+			int DrawString( Sprite^ sprite, System::String^ text, int x, int y, Color4 color );
 
 			System::Drawing::Rectangle MeasureString( Sprite^ sprite, System::String^ text, DrawTextFormat format );
 

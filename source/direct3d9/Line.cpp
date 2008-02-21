@@ -74,30 +74,20 @@ namespace Direct3D9
 		return Result::Record( hr );
 	}
 
-	Result Line::Draw( array<Vector2>^ vertexList, int color )
+	Result Line::Draw( array<Vector2>^ vertexList, Color4 color )
 	{
 		pin_ptr<Vector2> pinnedVerts = &vertexList[0];
 
-		HRESULT hr = InternalPointer->Draw( reinterpret_cast<D3DXVECTOR2*>( pinnedVerts ), vertexList->Length, color );
+		HRESULT hr = InternalPointer->Draw( reinterpret_cast<D3DXVECTOR2*>( pinnedVerts ), vertexList->Length, color.ToArgb() );
 		return Result::Record( hr );
 	}
-
-	Result Line::Draw( array<Vector2>^ vertexList, Color color )
-	{
-		return Draw( vertexList, color.ToArgb() );
-	}
 	
-	Result Line::DrawTransformed( array<Vector3>^ vertexList, Matrix transform, int color )
+	Result Line::DrawTransformed( array<Vector3>^ vertexList, Matrix transform, Color4 color )
 	{
 		pin_ptr<Vector3> pinnedVerts = &vertexList[0];
 
-		HRESULT hr = InternalPointer->DrawTransform( reinterpret_cast<D3DXVECTOR3*>( pinnedVerts ), vertexList->Length, reinterpret_cast<const D3DXMATRIX*>( &transform ), color );
+		HRESULT hr = InternalPointer->DrawTransform( reinterpret_cast<D3DXVECTOR3*>( pinnedVerts ), vertexList->Length, reinterpret_cast<const D3DXMATRIX*>( &transform ), color.ToArgb() );
 		return Result::Record( hr );
-	}
-	
-	Result Line::DrawTransformed( array<Vector3>^ vertexList, Matrix transform, Color color )
-	{
-		return DrawTransformed( vertexList, transform, color.ToArgb() );
 	}
 	
 	Result Line::OnLostDevice()

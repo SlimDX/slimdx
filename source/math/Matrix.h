@@ -21,7 +21,7 @@
 */
 #pragma once
 
-using System::Runtime::InteropServices::OutAttribute;
+struct D3DXMATRIX;
 
 namespace SlimDX
 {

@@ -21,10 +21,7 @@
 */
 #pragma once
 
-//using namespace System::Drawing;
-//using namespace System::Runtime::InteropServices;
-
-using System::Runtime::InteropServices::OutAttribute;
+struct D3DXCOLOR;
 
 namespace SlimDX
 {
@@ -43,10 +40,16 @@ namespace SlimDX
 		Color4( float alpha, float red, float green, float blue );
 		Color4( float red, float green, float blue );
 		Color4( System::Drawing::Color color );
+		Color4( Color3 color );
+		Color4( Vector3 color );
+		Color4( Vector4 color );
 		Color4( int argb );
 
+		Color3 ToColor3();
 		System::Drawing::Color ToColor();
 		int ToArgb();
+		Vector3 ToVector3();
+		Vector4 ToVector4();
 
 		static Color4 Add( Color4 color1, Color4 color2 );
 		static void Add( Color4% color1, Color4% color2, [Out] Color4% result );
@@ -81,6 +84,19 @@ namespace SlimDX
 
 		static bool operator == ( Color4 left, Color4 right );
 		static bool operator != ( Color4 left, Color4 right );
+
+		static explicit operator int( Color4 value );
+		static explicit operator Color3( Color4 value );
+		static explicit operator Vector3( Color4 value );
+		static explicit operator Vector4( Color4 value );
+
+		static explicit operator Color4( int value );
+		static explicit operator Color4( Color3 value );
+		static explicit operator Color4( Vector3 value );
+		static explicit operator Color4( Vector4 value );
+
+		static operator Color4( System::Drawing::Color value );
+		static operator System::Drawing::Color( Color4 value );
 
 		virtual System::String^ ToString() override;
 		virtual int GetHashCode() override;
