@@ -28,6 +28,7 @@ namespace SlimDX
 		int m_Code;
 		System::String^ m_Description;
 	
+		[System::ThreadStatic]
 		static Result m_Last;
 		
 	internal:
