@@ -26,7 +26,7 @@
 
 namespace SlimDX
 {
-namespace DXGI
+namespace Direct3D9
 {
 	Error::Error()
 	{
