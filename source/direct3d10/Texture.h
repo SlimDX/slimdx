@@ -21,12 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
-#include "../ComObject.h"
-
-#include "../dxgi/Enums.h"
-
 #include "Resource.h"
 
 namespace SlimDX
@@ -35,14 +29,10 @@ namespace SlimDX
 	{
 		ref class Device;
 		
-		/// <remarks>
-		/// A base class for texture resources.
-		/// </remarks>
 		public ref class Texture : public Resource
 		{
 		internal:
 			static int GetMipSize( int mipSlice, int baseSliceSize );
-			static int GetElementSize( DXGI::Format format );
 			
 		protected:
 			Texture( ID3D10Resource *pointer );

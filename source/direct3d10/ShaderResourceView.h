@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "ResourceView.h"
 
 namespace SlimDX
@@ -31,21 +29,23 @@ namespace SlimDX
 	{
 		ref class Device;
 		ref class Resource;
-		ref class Texture1D;
-		ref class Texture2D;
-		ref class Texture3D;
+		value class ShaderResourceViewDescription;
 
 		public ref class ShaderResourceView : public ResourceView
 		{
+			COMOBJECT(ID3D10ShaderResourceView);
+			
 		internal:
 			ShaderResourceView( ID3D10ShaderResourceView* view );
 			
 		public:
+			property ShaderResourceViewDescription Description
+			{
+				ShaderResourceViewDescription get();
+			}
+			
 			ShaderResourceView( System::IntPtr pointer );
-			ShaderResourceView( Device^ device, Texture1D^ resource );
-			ShaderResourceView( Device^ device, Texture2D^ resource );
-			ShaderResourceView( Device^ device, Texture3D^ resource );
-			virtual ~ShaderResourceView() { }
+			ShaderResourceView( Device^ device, Resource^ resource, ShaderResourceViewDescription description );
 		};
 	}
 };

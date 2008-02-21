@@ -27,55 +27,54 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class ShaderParameterDescription
 		{
 		private:
-			System::String^ semanticName;
-			System::UInt32 semanticIndex;
-			System::UInt32 registerIndex;
-			SystemValueType systemValueType;
-			RegisterComponentType componentType;
-			System::Byte mask;///TODO: Might be able to make these more specific; I think they represent whether x y z or w is ued, etc.
-			System::Byte readWriteMask;
+			System::String^ m_SemanticName;
+			System::UInt32 m_SemanticIndex;
+			System::UInt32 m_Register;
+			SystemValueType m_SystemValueType;
+			RegisterComponentType m_ComponentType;
+			System::Byte m_Mask;
+			System::Byte m_ReadWriteMask;
 		
 		internal:
-			ShaderParameterDescription( const D3D10_SIGNATURE_PARAMETER_DESC& description );
+			ShaderParameterDescription( const D3D10_SIGNATURE_PARAMETER_DESC& native );
 		
 		public:
 			property System::String^ SemanticName
 			{
-				System::String^ get() { return semanticName; }
+				System::String^ get();
 			}
 			
 			property System::UInt32 SemanticIndex
 			{
-				System::UInt32 get() { return semanticIndex; }
+				System::UInt32 get();
 			}
 			
 			property System::UInt32 Register
 			{
-				System::UInt32 get() { return semanticIndex; }
+				System::UInt32 get();
 			}
 			
 			property SystemValueType SystemType
 			{
-				SystemValueType get() { return systemValueType; }
+				SystemValueType get();
 			}
 			
 			property RegisterComponentType ComponentType
 			{
-				RegisterComponentType get() { return componentType; }
+				RegisterComponentType get();
 			}
 			
 			property System::Byte UsageMask
 			{
-				System::Byte get() { return mask; }
+				System::Byte get();
 			}
 			
 			property System::Byte ReadWriteMask
 			{
-				System::Byte get() { return readWriteMask; }
+				System::Byte get();
 			}
 		};
 	}

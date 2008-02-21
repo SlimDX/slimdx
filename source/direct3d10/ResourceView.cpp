@@ -21,9 +21,10 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
 
 #include "ResourceView.h"
+
+using namespace System;
 
 namespace SlimDX
 {
@@ -31,35 +32,16 @@ namespace Direct3D10
 { 
 	ResourceView::ResourceView()
 	{
-		Format = DXGI::Format::Unknown;
-		Dimension = ResourceViewDimension::Unknown;
-		ElementOffset = 0;
-		ElementWidth = 0;
-		MipSlice = 0;
-		FirstArraySlice = 0;
-		ArraySize = 0;
-		FirstDepthSlice = 0;
-		DepthSize = 0;
 	}
 	
-	ResourceView::ResourceView( ID3D10ShaderResourceView* view )
+	ResourceView::ResourceView( ID3D10View* pointer )
 	{
-		Construct(view);
-
-		D3D10_SHADER_RESOURCE_VIEW_DESC description;
-		view->GetDesc( &description );
-		
-		Format = static_cast<DXGI::Format>( description.Format );
-		Dimension = static_cast<ResourceViewDimension>( description.ViewDimension );
-		
-		//@TODO D3D10: Figure out the proper way to set these.
-		ElementOffset = 0;
-		ElementWidth = 0;
-		MipSlice = 0;
-		FirstArraySlice = 0;
-		ArraySize = 0;
-		FirstDepthSlice = 0;
-		DepthSize = 0;
+		Construct( pointer );
+	}
+	
+	ResourceView::ResourceView( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
 	}
 }
 }

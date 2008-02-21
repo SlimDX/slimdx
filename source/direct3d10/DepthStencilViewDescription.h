@@ -21,21 +21,58 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Runtime::InteropServices;
+#include "../dxgi/Enums.h"
+
+#include "Enums.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
-	{
-		ref class Buffer;
-		
-		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Explicit )]
-		public value class RenderTargetViewOptions
+	{	
+		public value class DepthStencilViewDescription
 		{
+		private:
+			DXGI::Format m_Format;
+			DepthStencilViewDimension m_ViewDimension;
+			int m_MipSlice;
+			int m_FirstArraySlice;
+			int m_ArraySize;
+				
+		internal:
+			DepthStencilViewDescription( const D3D10_DEPTH_STENCIL_VIEW_DESC& native );
+			
+			D3D10_DEPTH_STENCIL_VIEW_DESC CreateNativeVersion();
+		
 		public:
-			[FieldOffset( 0 )]
-			int ElementOffset;
+			property DXGI::Format Format
+			{
+				DXGI::Format get();
+				void set( DXGI::Format value );
+			}
+			
+			property DepthStencilViewDimension Dimension
+			{
+				DepthStencilViewDimension get();
+				void set( DepthStencilViewDimension value );
+			}
+			
+			property int MipSlice
+			{
+				int get();
+				void set( int value );
+			}
+			
+			property int FirstArraySlice
+			{
+				int get();
+				void set( int value );
+			}
+			
+			property int ArraySize
+			{
+				int get();
+				void set( int value );
+			}
 		};
 	}
 };

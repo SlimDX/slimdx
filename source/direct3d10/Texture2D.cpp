@@ -25,10 +25,14 @@
 #include <d3dx9.h>
 #include <vcclr.h>
 
+#include "../DataRectangle.h"
 #include "../DataStream.h"
 
-#include "Texture2D.h"
+#include "Direct3D10Exception.h"
+
 #include "Device.h"
+#include "Texture2D.h"
+#include "Texture2DDescription.h"
 
 using namespace System;
 using namespace System::IO;
@@ -37,97 +41,49 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	Texture2D::Texture2D( ID3D10Texture2D* texture ) : Texture( texture )
+	Texture2D::Texture2D( ID3D10Texture2D* pointer )
 	{
-		D3D10_TEXTURE2D_DESC description;
-		texture->GetDesc( &description );
-		m_Width = description.Width;
-		m_Height = description.Height;
-		m_MipLevels = description.MipLevels;
-		m_ArraySize = description.ArraySize;
-		m_Format = static_cast<DXGI::Format>( description.Format );
-		m_SampleDesc.Count = description.SampleDesc.Count;
-		m_SampleDesc.Quality = description.SampleDesc.Quality;
-		m_Usage = static_cast<ResourceUsage>( description.Usage );
-		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( description.BindFlags );
-		m_AccessFlags = static_cast<CpuAccessFlags>( description.CPUAccessFlags );
-		m_OptionFlags = static_cast<ResourceOptionFlags>( description.MiscFlags );
+		Construct( pointer );
 	}
 	
 	Texture2D::Texture2D( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
-		
-		D3D10_TEXTURE2D_DESC description;
-		static_cast<ID3D10Texture2D*>( InternalPointer )->GetDesc( &description );
-		m_Width = description.Width;
-		m_Height = description.Height;
-		m_MipLevels = description.MipLevels;
-		m_ArraySize = description.ArraySize;
-		m_Format = static_cast<DXGI::Format>( description.Format );
-		m_SampleDesc.Count = description.SampleDesc.Count;
-		m_SampleDesc.Quality = description.SampleDesc.Quality;
-		m_Usage = static_cast<ResourceUsage>( description.Usage );
-		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( description.BindFlags );
-		m_AccessFlags = static_cast<CpuAccessFlags>( description.CPUAccessFlags );
-		m_OptionFlags = static_cast<ResourceOptionFlags>( description.MiscFlags );
 	}
 	
-	Texture2D::Texture2D( Device^ device, int width, int height, int mipLevels, int arraySize, DXGI::Format format,
-		int sampleCount, int sampleQuality, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,
-		ResourceOptionFlags optionFlags )
+	Texture2D::Texture2D( Device^ device, Texture2DDescription description )
 	{
-		D3D10_TEXTURE2D_DESC description;
-		ZeroMemory( &description, sizeof( description ) );
-		description.Width = width;
-		description.Height = height;
-		description.MipLevels = mipLevels;
-		description.ArraySize = arraySize;
-		description.Format = static_cast<DXGI_FORMAT>( format );
-		description.SampleDesc.Count = sampleCount;
-		description.SampleDesc.Quality = sampleQuality;
-		description.Usage = static_cast<D3D10_USAGE>( usage );
-		description.BindFlags = static_cast<UINT>( bindFlags );
-		description.CPUAccessFlags = static_cast<UINT>( accessFlags );
-		description.MiscFlags = static_cast<UINT>( optionFlags );
-	
 		ID3D10Texture2D* texture = 0;
-		HRESULT hr = device->InternalPointer->CreateTexture2D( &description, NULL, &texture );
-		Result::Record( hr );
+		D3D10_TEXTURE2D_DESC nativeDescription = description.CreateNativeVersion();
+		if( Result::Record( device->InternalPointer->CreateTexture2D( &nativeDescription, 0, &texture ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
 		
-		Construct(texture);
-		m_Width = width;
-		m_Height = height;
-		m_MipLevels = mipLevels;
-		m_ArraySize = arraySize;
-		m_Format = format;
-		m_SampleDesc.Count = sampleCount;
-		m_SampleDesc.Quality = sampleQuality;
-		m_Usage = usage;
-		m_BindFlags = bindFlags;
-		m_AccessFlags = accessFlags;
-		m_OptionFlags = optionFlags;	
+		Construct( texture );	
+	}
+	
+	Texture2DDescription Texture2D::Description::get()
+	{
+		D3D10_TEXTURE2D_DESC nativeDescription;
+		InternalPointer->GetDesc( &nativeDescription );
+		return Texture2DDescription( nativeDescription );
 	}
 	
 	SlimDX::DataRectangle^ Texture2D::Map( int mipSlice, MapMode mode, MapFlags flags )
 	{
-		int subResource = D3D10CalcSubresource( mipSlice, 0, MipLevels );
-		int mipHeight = GetMipSize( mipSlice, Height );
+		int subResource = D3D10CalcSubresource( mipSlice, 0, Description.MipLevels );
+		int mipHeight = GetMipSize( mipSlice, Description.Height );
 		
 		D3D10_MAPPED_TEXTURE2D mappedRect;
-		HRESULT hr = static_cast<ID3D10Texture2D*>( InternalPointer )->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedRect );
-		Result::Record( hr );
-		
+		if( Result::Record( InternalPointer->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedRect ) ).IsFailure )
+			return nullptr;
+			
 		int lockedSize = mipHeight * mappedRect.RowPitch;
-		
-		bool readOnly = mode == MapMode::Read;
-		return gcnew SlimDX::DataRectangle( mappedRect.RowPitch, gcnew DataStream( mappedRect.pData, lockedSize, true, !readOnly, false ) );
-
+		return gcnew SlimDX::DataRectangle( mappedRect.RowPitch, gcnew DataStream( mappedRect.pData, lockedSize, true, true, false ) );
 	}
 
 	void Texture2D::Unmap( int subResource )
 	{
-		static_cast<ID3D10Texture2D*>( InternalPointer )->Unmap( subResource );
+		InternalPointer->Unmap( subResource );
 	}
 	
 	Texture2D^ Texture2D::FromFile( Device^ device, String^ fileName )

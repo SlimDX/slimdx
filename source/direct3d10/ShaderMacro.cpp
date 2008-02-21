@@ -19,43 +19,23 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "../ComObject.h"
+#include "ShaderMacro.h"
 
-#include "Enums.h"
-#include "Texture.h"
+using namespace System;
 
 namespace SlimDX
 {
-	ref class DataStream;
-
-	namespace Direct3D10
+namespace Direct3D10
+{ 
+	String^ ShaderMacro::Name::get()
 	{
-		ref class Device;
-		value class Texture1DDescription;
-		
-		public ref class Texture1D : public Texture
-		{
-			COMOBJECT(ID3D10Texture1D);
-			
-		internal:
-			Texture1D( ID3D10Texture1D* pointer );
-			
-		public:
-			property Texture1DDescription Description
-			{
-				Texture1DDescription get();
-			}
-			
-			Texture1D( System::IntPtr nativeObject );
-			Texture1D( Device^ device, Texture1DDescription description );
-		
-		  DataStream^ Map( int subResource, MapMode mode, MapFlags flags );
-			void Unmap( int subResource );
-			
-			static Texture1D^ FromFile( Device^ device, System::String^ fileName );
-			static Texture1D^ FromStream( Device^ device, System::IO::Stream^ stream, int sizeInBytes );
-		};
+		return m_Name;
 	}
-};
+	
+	String^ ShaderMacro::Value::get()
+	{
+		return m_Value;
+	}
+}
+}

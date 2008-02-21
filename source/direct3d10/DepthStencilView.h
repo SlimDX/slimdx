@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "Enums.h"
 #include "ResourceView.h"
 
@@ -32,14 +30,23 @@ namespace SlimDX
 	{
 		ref class Device;
 		ref class Resource;
+		value class DepthStencilViewDescription;
 		
 		public ref class DepthStencilView : public ResourceView
 		{
-		public:
-			DepthStencilView( Device^ device, Resource^ resource );
-			virtual ~DepthStencilView() { }
+			COMOBJECT(ID3D10DepthStencilView);
+		
+		internal:
+			DepthStencilView( ID3D10DepthStencilView* pointer );
 			
-			void Clear( DepthStencilClearFlags flags, float depthValue, System::Byte stencilValue );
+		public:
+			property DepthStencilViewDescription Description
+			{
+				DepthStencilViewDescription get();
+			}
+			
+			DepthStencilView( System::IntPtr pointer );
+			DepthStencilView( Device^ device, Resource^ resource );
 		};
 	}
 };

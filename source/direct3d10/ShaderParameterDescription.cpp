@@ -21,9 +21,10 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
 
 #include "ShaderParameterDescription.h"
+
+using namespace System;
 
 namespace SlimDX
 {
@@ -31,13 +32,48 @@ namespace Direct3D10
 { 
 	ShaderParameterDescription::ShaderParameterDescription( const D3D10_SIGNATURE_PARAMETER_DESC& description )
 	{
-		semanticName = gcnew System::String( description.SemanticName );
-		semanticIndex = description.SemanticIndex;
-		registerIndex = description.Register;
-		systemValueType = static_cast<SystemValueType>( description.SystemValueType );
-		componentType = static_cast<RegisterComponentType>( description.ComponentType );
-		mask = description.Mask;
-		readWriteMask = description.ReadWriteMask;
+		m_SemanticName = gcnew System::String( description.SemanticName );
+		m_SemanticIndex = description.SemanticIndex;
+		m_Register = description.Register;
+		m_SystemValueType = static_cast<SystemValueType>( description.SystemValueType );
+		m_ComponentType = static_cast<RegisterComponentType>( description.ComponentType );
+		m_Mask = description.Mask;
+		m_ReadWriteMask = description.ReadWriteMask;
+	}
+	
+	System::String^ ShaderParameterDescription::SemanticName::get()
+	{
+		return m_SemanticName;
+	}
+
+	System::UInt32 ShaderParameterDescription::SemanticIndex::get()
+	{
+		return m_SemanticIndex;
+	}
+
+	System::UInt32 ShaderParameterDescription::Register::get()
+	{
+		return m_Register;
+	}
+
+	SystemValueType ShaderParameterDescription::SystemType::get()
+	{
+		return m_SystemValueType;
+	}
+
+	RegisterComponentType ShaderParameterDescription::ComponentType::get()
+	{
+		return m_ComponentType;
+	}
+
+	System::Byte ShaderParameterDescription::UsageMask::get()
+	{
+		return m_Mask;
+	}
+
+	System::Byte ShaderParameterDescription::ReadWriteMask::get()
+	{
+		return m_ReadWriteMask;
 	}
 }
 }

@@ -19,34 +19,25 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-//using namespace System;
-//using namespace System::Runtime::InteropServices;
+#include <d3d10.h>
+
+#include "PixelShader.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct3D10
+namespace Direct3D10
+{ 
+	PixelShader::PixelShader( ID3D10PixelShader* pointer )
 	{
-		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
-		public value class SampleDescription
-		{
-		private:
-			int count;
-			int quality;
-
-		public:
-			property int Count
-			{
-				int get() { return count; }
-				void set( int value ) { count = value; }
-			}
-
-			property int Quality
-			{
-				int get() { return quality; }
-				void set( int value ) { quality = value; }
-			}
-		};
+		Construct( pointer );
 	}
-};
+	
+	PixelShader::PixelShader( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+}
+}

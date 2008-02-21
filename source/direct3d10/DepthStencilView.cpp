@@ -21,9 +21,11 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
+
+#include "Direct3D10Exception.h"
 
 #include "DepthStencilView.h"
+#include "DepthStencilViewDescription.h"
 #include "Device.h"
 #include "Resource.h"
 
@@ -33,24 +35,35 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
+	DepthStencilView::DepthStencilView( ID3D10DepthStencilView* pointer )
+	{
+		Construct( pointer );
+	}
+	
+	DepthStencilView::DepthStencilView( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+	
 	DepthStencilView::DepthStencilView( Device^ device, Resource^ resource )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
-		
-		ID3D10DepthStencilView *view;
-		HRESULT hr = device->InternalPointer->CreateDepthStencilView( resource->InternalPointer, NULL, &view );
-		Result::Record( hr );
-		
-		Construct(view);
+		if( resource == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+			
+		ID3D10DepthStencilView *view = 0;
+		if( Result::Record( device->InternalPointer->CreateDepthStencilView( resource->InternalPointer, NULL, &view ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+			
+		Construct( view );
 	}
 	
-	void DepthStencilView::Clear( DepthStencilClearFlags flags, float depthValue, Byte stencilValue )
+	DepthStencilViewDescription DepthStencilView::Description::get()
 	{
-		ID3D10Device* device;
-		InternalPointer->GetDevice( &device );
-		device->ClearDepthStencilView( static_cast<ID3D10DepthStencilView*>( InternalPointer ), static_cast<D3D10_CLEAR_FLAG>( flags ), 
-			depthValue, stencilValue );
+		D3D10_DEPTH_STENCIL_VIEW_DESC nativeDescription;
+		InternalPointer->GetDesc( &nativeDescription );
+		return DepthStencilViewDescription( nativeDescription );
 	}
 }
 }

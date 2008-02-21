@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "../ComObject.h"
 
 namespace SlimDX
@@ -34,16 +32,10 @@ namespace SlimDX
 			COMOBJECT(ID3D10GeometryShader);
 
 		internal:
-			GeometryShader(ID3D10GeometryShader *shader) { Construct(shader); }
+			GeometryShader( ID3D10GeometryShader* pointer );
 			
 		public:
-			GeometryShader( System::IntPtr shader )
-			{
-				Construct( shader, NativeInterface );
-
-			}
-
-			virtual ~GeometryShader() { Destruct(); }
+			GeometryShader( System::IntPtr pointer );
 		};
 	}
 };

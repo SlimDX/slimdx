@@ -21,12 +21,7 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "../ComObject.h"
-#include "../dxgi/Enums.h"
-
-#include "Enums.h"
 
 namespace SlimDX
 {
@@ -36,86 +31,14 @@ namespace SlimDX
 		{
 			COMOBJECT(ID3D10View);
 
-		private:
-			DXGI::Format format;
-            ResourceViewDimension dimension;
-            int elementOffset;
-            int elementWidth;
-            int mipSlice;
-            int firstArraySlice;
-            int arraySize;
-            int firstDepthSlice;
-            int depthSize;
-
 		protected:
 			ResourceView();
-			ResourceView( ID3D10ShaderResourceView* view );
 			
+		internal:
+			ResourceView( ID3D10View* pointer );
+		
 		public:
-			virtual ~ResourceView() { Destruct(); }
-
-			property DXGI::Format Format
-            {
-				DXGI::Format get() { return format; }
-			protected:
-                void set( DXGI::Format value ) { format = value; }
-            }
-
-            property ResourceViewDimension Dimension
-            {
-                ResourceViewDimension get() { return dimension; }
-			protected:
-                void set( ResourceViewDimension value ) { dimension = value; }
-            }
-
-            property int ElementOffset
-            {
-                int get() { return elementOffset; }
-			protected:
-                void set( int value ) { elementOffset = value; }
-            }
-
-            property int ElementWidth
-            {
-                int get() { return elementWidth; }
-			protected:
-                void set( int value ) { elementWidth = value; }
-            }
-
-            property int MipSlice
-            {
-                int get() { return mipSlice; }
-			protected:
-                void set( int value ) { mipSlice = value; }
-            }
-
-            property int FirstArraySlice
-            {
-                int get() { return firstArraySlice; }
-			protected:
-                void set( int value ) { firstArraySlice = value; }
-            }
-
-            property int ArraySize
-            {
-                int get() { return arraySize; }
-			protected:
-                void set( int value ) { arraySize = value; }
-            }
-
-            property int FirstDepthSlice
-            {
-                int get() { return firstDepthSlice; }
-			protected:
-                void set( int value ) { firstDepthSlice = value; }
-            }
-
-            property int DepthSize
-            {
-                int get() { return depthSize; }
-			protected:
-                void set( int value ) { depthSize = value; }
-            }
+			ResourceView( System::IntPtr pointer );
 		};
 	}
 };

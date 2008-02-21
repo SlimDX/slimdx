@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "../ComObject.h"
 
 namespace SlimDX
@@ -34,16 +32,10 @@ namespace SlimDX
 			COMOBJECT(ID3D10PixelShader);
 
 		internal:
-			PixelShader(ID3D10PixelShader *shader) { Construct(shader); }
+			PixelShader( ID3D10PixelShader *pointer );
 			
 		public:
-			PixelShader( System::IntPtr shader )
-			{
-				Construct( shader, NativeInterface );
-
-			}
-
-			virtual ~PixelShader() { Destruct(); }
+			PixelShader( System::IntPtr pointer );
 		};
 	}
 };

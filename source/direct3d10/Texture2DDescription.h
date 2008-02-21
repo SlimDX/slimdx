@@ -28,66 +28,79 @@
 namespace SlimDX
 {
 	namespace Direct3D10
-	{
-		public value class InputElement
+	{	
+		public value class Texture2DDescription
 		{
 		private:
-			System::String^ m_SemanticName;
-			int m_SemanticIndex;
+			int m_Width;
+			int m_Height;
+			int m_MipLevels;
+			int m_ArraySize;
 			DXGI::Format m_Format;
-			int m_InputSlot;
-			int m_AlignedByteOffset;
-			InputClassification m_InputSlotClass;
-			int m_InstanceDataStepRate;
-	
+			ResourceUsage m_Usage;
+			BindFlags m_BindFlags;
+			CpuAccessFlags m_CPUAccessFlags;
+			ResourceOptionFlags m_MiscFlags;
+
 		internal:
-			D3D10_INPUT_ELEMENT_DESC CreateNativeVersion();
+			Texture2DDescription( const D3D10_TEXTURE2D_DESC& native );
+			
+			D3D10_TEXTURE2D_DESC CreateNativeVersion();
 			
 		public:
-			property System::String^ SemanticName
-			{
-				System::String^ get();
-				void set( System::String^ value );
-			}
-
-			property int SemanticIndex
+			property int Width
 			{
 				int get();
 				void set( int value );
 			}
-
+			
+			property int Height
+			{
+				int get();
+				void set( int value );
+			}
+			
+			property int MipLevels
+			{
+				int get();
+				void set( int value );
+			}
+			
+			property int ArraySize
+			{
+				int get();
+				void set( int value );
+			}
+			
 			property DXGI::Format Format
 			{
 				DXGI::Format get();
 				void set( DXGI::Format value );
 			}
-
-			property int Slot
+			
+			property ResourceUsage Usage
 			{
-				int get();
-				void set( int value );
+				ResourceUsage get();
+				void set( ResourceUsage value );
 			}
-
-			property int AlignedByteOffset
+			
+			property Direct3D10::BindFlags BindFlags
 			{
-				int get();
-				void set( int value );
+				Direct3D10::BindFlags get();
+				void set( Direct3D10::BindFlags value );
 			}
-
-			property InputClassification Classification
+			
+			property Direct3D10::CpuAccessFlags CpuAccessFlags
 			{
-				InputClassification get();
-				void set( InputClassification value );
+				Direct3D10::CpuAccessFlags get();
+				void set( Direct3D10::CpuAccessFlags value );
 			}
-
-			property int InstanceDataStepRate
+			
+			property ResourceOptionFlags OptionFlags
 			{
-				int get();
-				void set( int value );
+				ResourceOptionFlags get();
+				void set( ResourceOptionFlags value );
 			}
-
-			InputElement( System::String^ name, int index, DXGI::Format format, int offset, int slot );
-			InputElement( System::String^ name, int index, DXGI::Format format, int offset, int slot, InputClassification slotClass, int stepRate );
 		};
 	}
 };

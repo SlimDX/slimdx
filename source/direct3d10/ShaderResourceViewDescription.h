@@ -21,41 +21,79 @@
 */
 #pragma once
 
-#include "../ComObject.h"
+#include "../dxgi/Enums.h"
 
 #include "Enums.h"
-#include "Texture.h"
 
 namespace SlimDX
 {
-	ref class DataStream;
-
 	namespace Direct3D10
-	{
-		ref class Device;
-		value class Texture1DDescription;
-		
-		public ref class Texture1D : public Texture
+	{	
+		public value class ShaderResourceViewDescription
 		{
-			COMOBJECT(ID3D10Texture1D);
-			
+		private:
+			DXGI::Format m_Format;
+			ShaderResourceViewDimension m_ViewDimension;
+			int m_ElementOffset;
+			int m_ElementWidth;
+			int m_MostDetailedMip;
+			int m_MipLevels;
+			int m_FirstArraySlice;
+			int m_ArraySize;
+				
 		internal:
-			Texture1D( ID3D10Texture1D* pointer );
+			ShaderResourceViewDescription( const D3D10_SHADER_RESOURCE_VIEW_DESC& native );
 			
+			D3D10_SHADER_RESOURCE_VIEW_DESC CreateNativeVersion();
+		
 		public:
-			property Texture1DDescription Description
+			property DXGI::Format Format
 			{
-				Texture1DDescription get();
+				DXGI::Format get();
+				void set( DXGI::Format value );
 			}
 			
-			Texture1D( System::IntPtr nativeObject );
-			Texture1D( Device^ device, Texture1DDescription description );
-		
-		  DataStream^ Map( int subResource, MapMode mode, MapFlags flags );
-			void Unmap( int subResource );
+			property ShaderResourceViewDimension Dimension
+			{
+				ShaderResourceViewDimension get();
+				void set( ShaderResourceViewDimension value );
+			}
 			
-			static Texture1D^ FromFile( Device^ device, System::String^ fileName );
-			static Texture1D^ FromStream( Device^ device, System::IO::Stream^ stream, int sizeInBytes );
+			property int ElementOffset
+			{
+				int get();
+				void set( int value );
+			}
+			
+			property int ElementWidth
+			{
+				int get();
+				void set( int value );
+			}
+			
+			property int MostDetailedMip
+			{
+				int get();
+				void set( int value );
+			}
+			
+			property int MipLevels
+			{
+				int get();
+				void set( int value );
+			}
+			
+			property int FirstArraySlice
+			{
+				int get();
+				void set( int value );
+			}
+			
+			property int ArraySize
+			{
+				int get();
+				void set( int value );
+			}
 		};
 	}
 };

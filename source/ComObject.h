@@ -39,8 +39,8 @@ namespace SlimDX
 	public ref class ComObject abstract
 	{
 	private:
-	
 		IUnknown* m_Unknown;
+		
 	protected:
 		ComObject();
 		
