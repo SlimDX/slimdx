@@ -21,12 +21,11 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
 
-//#include "Direct3D10ErrorHandler.h"
+#include "Direct3D10Exception.h"
 
-#include "InputLayout.h"
 #include "Device.h"
+#include "InputLayout.h"
 #include "ShaderBytecode.h"
 
 using namespace System;
@@ -35,6 +34,11 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
+	InputLayout::InputLayout( ID3D10InputLayout* pointer )
+	{
+		Construct( pointer );
+	}
+	
 	InputLayout::InputLayout( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
@@ -44,28 +48,20 @@ namespace Direct3D10
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
-			
+		if( elements == nullptr )
+			throw gcnew ArgumentNullException( "elements" );
+		if( shaderSignature == nullptr )
+			throw gcnew ArgumentNullException( "shaderSignature" );
+				
 		D3D10_INPUT_ELEMENT_DESC nativeElements[D3D10_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT];
-		
 		for( int i = 0; i < elements->Length; ++i )
-		{
-			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( elements[i].SemanticName );
-			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
-		
-			nativeElements[i].SemanticName = reinterpret_cast<LPCSTR>( pinnedName );
-			nativeElements[i].SemanticIndex = elements[i].SemanticIndex;
-			nativeElements[i].Format = static_cast<DXGI_FORMAT>( elements[i].AFormat );
-			nativeElements[i].InputSlot = elements[i].InputSlot;
-			nativeElements[i].AlignedByteOffset = elements[i].AlignedByteOffset;
-			nativeElements[i].InputSlotClass = static_cast<D3D10_INPUT_CLASSIFICATION>( elements[i].InputSlotClass );
-			nativeElements[i].InstanceDataStepRate = elements[i].InstanceDataStepRate;
-		}
+			nativeElements[i] = elements[i].CreateNativeVersion();
+			
+		ID3D10InputLayout* layout = 0;
+		if( Result::Record( device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->Buffer, shaderSignature->Length, &layout ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
 
-		ID3D10InputLayout* layout;
-		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->Buffer, shaderSignature->Length, &layout );
-		Result::Record( hr );
-
-		Construct(layout);
+		Construct( layout );
 	}
 }
 }

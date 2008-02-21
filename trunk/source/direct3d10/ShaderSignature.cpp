@@ -20,17 +20,25 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
-#include <d3dx10.h>
-
 #include "ShaderSignature.h"
 
 namespace SlimDX
 {
 namespace Direct3D10
 { 
-	ShaderSignature::ShaderSignature( void* buffer, int length ) : buffer( buffer ), length( length )
+	ShaderSignature::ShaderSignature( const void* buffer, int length )
+	: m_Buffer( buffer ), m_Length( length )
 	{
+	}
+	
+	const void* ShaderSignature::Buffer::get()
+	{
+		return m_Buffer;
+	}
+	
+	int ShaderSignature::Length::get()
+	{
+		return m_Length;
 	}
 }
 }

@@ -23,12 +23,12 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "ShaderResourceView.h"
+#include "Direct3D10Exception.h"
+
 #include "Device.h"
 #include "Resource.h"
-#include "Texture1D.h"
-#include "Texture2D.h"
-#include "Texture3D.h"
+#include "ShaderResourceView.h"
+#include "ShaderResourceViewDescription.h"
 
 using namespace System;
 
@@ -36,8 +36,9 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	ShaderResourceView::ShaderResourceView( ID3D10ShaderResourceView* view ) : ResourceView( view )
+	ShaderResourceView::ShaderResourceView( ID3D10ShaderResourceView* pointer )
 	{
+		Construct( pointer );
 	}
 
 	ShaderResourceView::ShaderResourceView( IntPtr pointer )
@@ -45,70 +46,26 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 	
-	ShaderResourceView::ShaderResourceView( Device^ device, Texture1D^ resource )
+	ShaderResourceView::ShaderResourceView( Device^ device, Resource^ resource, ShaderResourceViewDescription description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
 		if( resource == nullptr )
 			throw gcnew ArgumentNullException( "resource" );
 		
-		D3D10_SHADER_RESOURCE_VIEW_DESC viewDesc;
-		ZeroMemory( &viewDesc, sizeof( viewDesc ) );
-		viewDesc.Format = static_cast<DXGI_FORMAT>( resource->Format );
-	    Format = resource->Format;
-		viewDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE1D;
-		Dimension = ResourceViewDimension::Texture1D;
-		viewDesc.Texture2D.MipLevels = resource->MipLevels;
-		
-		ID3D10ShaderResourceView *view;
-		HRESULT hr = device->InternalPointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
-		Result::Record( hr );
-		
-		Construct(view);
+		ID3D10ShaderResourceView *view = 0;
+		D3D10_SHADER_RESOURCE_VIEW_DESC nativeDescription = description.CreateNativeVersion();
+		if( Result::Record( device->InternalPointer->CreateShaderResourceView( resource->InternalPointer, &nativeDescription, &view ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+			
+		Construct( view );
 	}
-
-	ShaderResourceView::ShaderResourceView( Device^ device, Texture2D^ resource )
+	
+	ShaderResourceViewDescription ShaderResourceView::Description::get()
 	{
-		if( device == nullptr )
-			throw gcnew ArgumentNullException( "device" );
-		if( resource == nullptr )
-			throw gcnew ArgumentNullException( "resource" );
-		
-		D3D10_SHADER_RESOURCE_VIEW_DESC viewDesc;
-		ZeroMemory( &viewDesc, sizeof( viewDesc ) );
-		viewDesc.Format = static_cast<DXGI_FORMAT>( resource->Format );
-	    Format = resource->Format;
-		viewDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;
-		Dimension = ResourceViewDimension::Texture2D;
-		viewDesc.Texture2D.MipLevels = resource->MipLevels;
-		
-		ID3D10ShaderResourceView *view;
-		HRESULT hr = device->InternalPointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
-		Result::Record( hr );
-		
-		Construct(view);
-	}
-
-	ShaderResourceView::ShaderResourceView( Device^ device, Texture3D^ resource )
-	{
-		if( device == nullptr )
-			throw gcnew ArgumentNullException( "device" );
-		if( resource == nullptr )
-			throw gcnew ArgumentNullException( "resource" );
-		
-		D3D10_SHADER_RESOURCE_VIEW_DESC viewDesc;
-		ZeroMemory( &viewDesc, sizeof( viewDesc ) );
-		viewDesc.Format = static_cast<DXGI_FORMAT>( resource->Format );
-	    Format = resource->Format;
-		viewDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE3D;
-		Dimension = ResourceViewDimension::Texture3D;
-		viewDesc.Texture3D.MipLevels = resource->MipLevels;
-		
-		ID3D10ShaderResourceView *view;
-		HRESULT hr = device->InternalPointer->CreateShaderResourceView( resource->InternalPointer, &viewDesc, &view );
-		Result::Record( hr );
-		
-		Construct(view);
+		D3D10_SHADER_RESOURCE_VIEW_DESC nativeDescription;
+		InternalPointer->GetDesc( &nativeDescription );
+		return ShaderResourceViewDescription( nativeDescription );
 	}
 }
 }

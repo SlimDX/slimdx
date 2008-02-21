@@ -21,12 +21,12 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
 
-//#include "Direct3D10ErrorHandler.h"
+#include "Direct3D10Exception.h"
 
-#include "RenderTargetView.h"
 #include "Device.h"
+#include "RenderTargetView.h"
+#include "RenderTargetViewDescription.h"
 #include "Resource.h"
 
 using namespace System;
@@ -35,24 +35,36 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
+	RenderTargetView::RenderTargetView( ID3D10RenderTargetView* pointer )
+	{
+		Construct( pointer );
+	}
+	
+	RenderTargetView::RenderTargetView( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+	
 	RenderTargetView::RenderTargetView( Device^ device, Resource^ resource )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
+		if( resource == nullptr )
+			throw gcnew ArgumentNullException( "resource" );
 		
-		ID3D10RenderTargetView *view;
-		HRESULT hr = device->InternalPointer->CreateRenderTargetView( resource->InternalPointer, NULL, &view );
-		Result::Record( hr );
 		
-		Construct(view);
+		ID3D10RenderTargetView *view = 0;
+		if( Result::Record( device->InternalPointer->CreateRenderTargetView( resource->InternalPointer, NULL, &view ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+		
+		Construct( view );
 	}
 	
-	void RenderTargetView::Clear( Color4 color )
+	RenderTargetViewDescription RenderTargetView::Description::get()
 	{
-		float colorArray[] = { color.Red, color.Green, color.Blue, color.Alpha };
-		ID3D10Device* device;
-		InternalPointer->GetDevice( &device );
-		device->ClearRenderTargetView( static_cast<ID3D10RenderTargetView*>( InternalPointer ), colorArray );
+		D3D10_RENDER_TARGET_VIEW_DESC nativeDescription;
+		InternalPointer->GetDesc( &nativeDescription );
+		return RenderTargetViewDescription( nativeDescription );
 	}
 }
 }

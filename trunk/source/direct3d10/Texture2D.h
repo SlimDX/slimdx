@@ -21,106 +21,39 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "../ComObject.h"
 #include "../DataRectangle.h"
 
 #include "Enums.h"
-#include "SampleDescription.h"
 #include "Texture.h"
 
 namespace SlimDX
 {
+	ref class DataRectangle;
+	
 	namespace Direct3D10
 	{
 		ref class Device;
+		value class Texture2DDescription;
 		
 		public ref class Texture2D : public Texture
 		{
 			COMOBJECT(ID3D10Texture2D);
 		
-		private:
-			int m_Width;
-			int m_Height;
-			int m_MipLevels;
-			int m_ArraySize;
-			DXGI::Format m_Format;
-			SlimDX::Direct3D10::SampleDescription m_SampleDesc;
-			ResourceUsage m_Usage;
-			SlimDX::Direct3D10::BindFlags m_BindFlags;
-			CpuAccessFlags m_AccessFlags;
-			ResourceOptionFlags m_OptionFlags;
-			
 		internal:
-			Texture2D( ID3D10Texture2D* texture );
+			Texture2D( ID3D10Texture2D* pointer );
 			
 		public:
-			/// <summary>
-			/// Gets the width of the texture in texels.
-			/// </summary>
-			property int Width
+			property Texture2DDescription Description
 			{
-				int get() { return m_Width; }
+				Texture2DDescription get();
 			}
 			
-			/// <summary>
-			/// Gets the height of the texture in texels.
-			/// </summary>
-			property int Height
-			{
-				int get() { return m_Height; }
-			}
-		
-			property int MipLevels
-			{
-				int get() { return m_MipLevels; }
-			}
+			Texture2D( System::IntPtr pointer );
+			Texture2D( Device^ device, Texture2DDescription description );
 			
-			property int ArraySize
-			{
-				int get() { return m_ArraySize; }
-			}
-			
-			property DXGI::Format Format
-			{
-				DXGI::Format get() { return m_Format; }
-			}
-			
-			property SlimDX::Direct3D10::SampleDescription SampleDescription
-			{
-				SlimDX::Direct3D10::SampleDescription get() { return m_SampleDesc; }
-			}
-			
-			property ResourceUsage Usage
-			{
-				ResourceUsage get() { return m_Usage; }
-			}
-			
-			property SlimDX::Direct3D10::BindFlags BindFlags
-			{
-				SlimDX::Direct3D10::BindFlags get() { return m_BindFlags; }
-			}
-			
-			property CpuAccessFlags AccessFlags
-			{
-				CpuAccessFlags get() { return m_AccessFlags; }
-			}
-			
-			property ResourceOptionFlags OptionFlags
-			{
-				ResourceOptionFlags get() { return m_OptionFlags; }
-			}
-			
-			Texture2D( System::IntPtr texture );
-			Texture2D( Device^ device, int width, int height, int mipLevels, int arraySize, DXGI::Format format,
-				int sampleCount, int sampleQuality, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,
-				ResourceOptionFlags optionFlags );
-			virtual ~Texture2D() { }
-			
-			SlimDX::DataRectangle^ Map( int subResource, MapMode mode, MapFlags flags );
+			DataRectangle^ Map( int subResource, MapMode mode, MapFlags flags );
 			void Unmap( int subResource );
-			
 			
 			static Texture2D^ FromFile( Device^ device, System::String^ fileName );
 			static Texture2D^ FromStream( Device^ device, System::IO::Stream^ stream, int sizeInBytes );

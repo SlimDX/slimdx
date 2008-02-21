@@ -22,13 +22,16 @@
 
 #include <d3d10.h>
 #include <d3dx10.h>
-#include <d3dx9.h>
 #include <vcclr.h>
 
 #include "../DataStream.h"
+#include "../Utilities.h"
 
-#include "Texture1D.h"
+#include "Direct3D10Exception.h"
+
 #include "Device.h"
+#include "Texture1D.h"
+#include "Texture1DDescription.h"
 
 using namespace System;
 using namespace System::IO;
@@ -37,76 +40,49 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	Texture1D::Texture1D( ID3D10Texture1D* texture ) : Texture( texture )
+	Texture1D::Texture1D( ID3D10Texture1D* pointer )
 	{
-		D3D10_TEXTURE1D_DESC description;
-		static_cast<ID3D10Texture1D*>( InternalPointer )->GetDesc( &description );
-		
-		m_Width = description.Width;
-		m_MipLevels = description.MipLevels;
-		m_ArraySize = description.ArraySize;
-		m_Format = static_cast<DXGI::Format>( description.Format );
-		m_Usage = static_cast<ResourceUsage>( description.Usage );
-		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( description.BindFlags );
-		m_AccessFlags = static_cast<CpuAccessFlags>( description.CPUAccessFlags );
-		m_OptionFlags = static_cast<ResourceOptionFlags>( description.MiscFlags );
+		Construct( pointer );
 	}
 	
-	Texture1D::Texture1D( IntPtr nativeObject )
+	Texture1D::Texture1D( IntPtr pointer )
 	{
-		Construct( nativeObject, NativeInterface );
-		
-		D3D10_TEXTURE1D_DESC description;
-		static_cast<ID3D10Texture1D*>( InternalPointer )->GetDesc( &description );
-		
-		m_Width = description.Width;
-		m_MipLevels = description.MipLevels;
-		m_ArraySize = description.ArraySize;
-		m_Format = static_cast<DXGI::Format>( description.Format );
-		m_Usage = static_cast<ResourceUsage>( description.Usage );
-		m_BindFlags = static_cast<SlimDX::Direct3D10::BindFlags>( description.BindFlags );
-		m_AccessFlags = static_cast<CpuAccessFlags>( description.CPUAccessFlags );
-		m_OptionFlags = static_cast<ResourceOptionFlags>( description.MiscFlags );
+		Construct( pointer, NativeInterface );
 	}
 	
-	Texture1D::Texture1D( Device^ device, int width, int mipLevels, int arraySize, DXGI::Format format,
-		ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
+	Texture1D::Texture1D( Device^ device, Texture1DDescription description )
 	{
-		D3D10_TEXTURE1D_DESC description;
-		ZeroMemory( &description, sizeof( description ) );
-		description.Width = width;
-		description.MipLevels = mipLevels;
-		description.ArraySize = arraySize;
-		description.Format = static_cast<DXGI_FORMAT>( format );
-		description.Usage = static_cast<D3D10_USAGE>( usage );
-		description.BindFlags = static_cast<UINT>( bindFlags );
-		description.CPUAccessFlags = static_cast<UINT>( accessFlags );
-		description.MiscFlags = static_cast<UINT>( optionFlags );
-	
-		ID3D10Texture1D* texture;
-		HRESULT hr = device->InternalPointer->CreateTexture1D( &description, NULL, &texture );
-		Result::Record( hr );
+		ID3D10Texture1D* texture = 0;
+		D3D10_TEXTURE1D_DESC nativeDescription = description.CreateNativeVersion();
+		if( Result::Record( device->InternalPointer->CreateTexture1D( &nativeDescription, 0, &texture ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
 		
 		Construct( texture );	
 	}
 	
+	Texture1DDescription Texture1D::Description::get()
+	{
+		D3D10_TEXTURE1D_DESC nativeDescription;
+		InternalPointer->GetDesc( &nativeDescription );
+		return Texture1DDescription( nativeDescription );
+	}
+	
 	SlimDX::DataStream^ Texture1D::Map( int mipSlice, MapMode mode, MapFlags flags )
 	{
-		int subResource = D3D10CalcSubresource( mipSlice, 0, MipLevels );
-		int mipWidth = GetMipSize( mipSlice, Width );
-		int bufferSize = mipWidth * GetElementSize( Format );
+		int subResource = D3D10CalcSubresource( mipSlice, 0, Description.MipLevels );
+		int mipWidth = GetMipSize( mipSlice, Description.Width );
+		int bufferSize = mipWidth * Utilities::SizeOfFormatElement( static_cast<DXGI_FORMAT>( Description.Format ) );
 		
-		void* mappedArray;
-		HRESULT hr = static_cast<ID3D10Texture1D*>( InternalPointer )->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedArray );
-		Result::Record( hr );
-		
-		bool readOnly = mode == MapMode::Read;
-		return gcnew SlimDX::DataStream( mappedArray, bufferSize, true, !readOnly, false );
+		void* mappedArray = 0;
+		if( Result::Record( InternalPointer->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedArray ) ).IsFailure )
+			return nullptr;
+			
+		return gcnew SlimDX::DataStream( mappedArray, bufferSize, true, true, false );
 	}
 
 	void Texture1D::Unmap( int subResource )
 	{
-		static_cast<ID3D10Texture1D*>( InternalPointer )->Unmap( subResource );
+		InternalPointer->Unmap( subResource );
 	}
 	
 	Texture1D^ Texture1D::FromFile( Device^ device, String^ fileName )

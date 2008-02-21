@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "../ComObject.h"
 #include "../DataBox.h"
 
@@ -31,98 +29,32 @@
 
 namespace SlimDX
 {
+	ref class DataBox;
+	
 	namespace Direct3D10
 	{
 		ref class Device;
-		
+		value class Texture3DDescription;
+			
 		public ref class Texture3D : public Texture
 		{
 			COMOBJECT(ID3D10Texture3D);
-		
-		private:
-			int m_Width;
-			int m_Height;
-			int m_Depth;
-			int m_MipLevels;
-			DXGI::Format m_Format;
-			ResourceUsage m_Usage;
-			SlimDX::Direct3D10::BindFlags m_BindFlags;
-			CpuAccessFlags m_AccessFlags;
-			ResourceOptionFlags m_OptionFlags;
-			
+	
 		internal:
 			Texture3D( ID3D10Texture3D* pointer );
 			
 		public:
-			/// <summary>
-			/// Gets the width of the texture in texels.
-			/// </summary>
-			property int Width
+			property Texture3DDescription Description
 			{
-				int get() { return m_Width; }
+				Texture3DDescription get();
 			}
+
+			Texture3D( System::IntPtr nativeObject );
+			Texture3D( Device^ device, Texture3DDescription description );
 			
-			/// <summary>
-			/// Gets the height of the texture in texels.
-			/// </summary>
-			property int Height
-			{
-				int get() { return m_Height; }
-			}
-			
-			/// <summary>
-			/// Gets the depth of the texture in texels.
-			/// </summary>
-			property int Depth
-			{
-				int get() { return m_Depth; }
-			}
-					
-			/// <summary>
-			/// Gets the number of subtextures (mipmap levels).
-			/// </summary>
-			property int MipLevels
-			{
-				int get() { return m_MipLevels; }
-			}
-			
-			property DXGI::Format Format
-			{
-				DXGI::Format get() { return m_Format; }
-			}
-			
-			property ResourceUsage Usage
-			{
-				ResourceUsage get() { return m_Usage; }
-			}
-			
-			property SlimDX::Direct3D10::BindFlags BindFlags
-			{
-				SlimDX::Direct3D10::BindFlags get() { return m_BindFlags; }
-			}
-			
-			property CpuAccessFlags AccessFlags
-			{
-				CpuAccessFlags get() { return m_AccessFlags; }
-			}
-			
-			property ResourceOptionFlags OptionFlags
-			{
-				ResourceOptionFlags get() { return m_OptionFlags; }
-			}
-			
-			SlimDX::DataBox ^Map( int subResource, MapMode mode, MapFlags flags );
+			DataBox^ Map( int subResource, MapMode mode, MapFlags flags );
 			void Unmap( int subResource );
 			
-			/// <summary>
-			/// Construct( s ); a <see cref="Texture3D"/> from a native pointer.
-			/// </summary>
-			/// <param name="nativeObject">A native ID3D10Texture3D pointer, as an System::IntPtr.</param>
-			Texture3D( System::IntPtr nativeObject );
-			Texture3D( Device^ device, int width, int height, int depth, int mipLevels, DXGI::Format format,
-				ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags,ResourceOptionFlags optionFlags );
-			virtual ~Texture3D() { }
-
 			static Texture3D^ FromFile( Device^ device, System::String^ fileName );
 			static Texture3D^ FromStream( Device^ device, System::IO::Stream^ stream, int sizeInBytes );
 		};

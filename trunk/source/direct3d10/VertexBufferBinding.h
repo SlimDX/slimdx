@@ -30,33 +30,30 @@ namespace SlimDX
 		public value class VertexBufferBinding
 		{
 		private:
-			Buffer^ buffer;
-			int stride;
-			int offset;
+			Buffer^ m_Buffer;
+			int m_Stride;
+			int m_Offset;
 
 		public:
-			property SlimDX::Direct3D10::Buffer^ Buffer
+			property Direct3D10::Buffer^ Buffer
 			{
-				SlimDX::Direct3D10::Buffer^ get() { return buffer; }
-				void set( SlimDX::Direct3D10::Buffer^ value ) { buffer = value; }
+				Direct3D10::Buffer^ get();
+				void set( Direct3D10::Buffer^ value );
 			}
 
 			property int Stride
 			{
-				int get() { return stride; }
-				void set( int value ) { stride = value; }
+				int get();
+				void set( int value );
 			}
 
 			property int Offset
 			{
-				int get() { return offset; }
-				void set( int value ) { offset = value; }
+				int get();
+				void set( int value );
 			}
 			
-			VertexBufferBinding( SlimDX::Direct3D10::Buffer^ buffer, int stride, int offset )
-				: buffer( buffer ), stride (stride ), offset( offset )
-			{
-			}
+			VertexBufferBinding( Direct3D10::Buffer^ buffer, int stride, int offset );
 		};
 	}
 };

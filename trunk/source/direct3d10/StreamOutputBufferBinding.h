@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 namespace SlimDX
 {
 	namespace Direct3D10
@@ -32,26 +30,23 @@ namespace SlimDX
 		public value class StreamOutputBufferBinding
 		{
 		private:
-			Buffer^ buffer;
-            int offset;
+			Buffer^ m_Buffer;
+			int m_Offset;
 
 		public:
 			property SlimDX::Direct3D10::Buffer^ Buffer
-            {
-                SlimDX::Direct3D10::Buffer^ get() { return buffer; }
-                void set( SlimDX::Direct3D10::Buffer^ value ) { buffer = value; }
-            }
-
-            property int Offset
-            {
-                int get() { return offset; }
-                void set( int value ) { offset = value; }
-            }
-			
-			StreamOutputBufferBinding( SlimDX::Direct3D10::Buffer^ buffer, int offset )
-				: buffer( buffer ), offset( offset )
 			{
+				Direct3D10::Buffer^ get();
+				void set( Direct3D10::Buffer^ value );
 			}
+
+			property int Offset
+			{
+				int get();
+				void set( int value );
+			}
+
+			StreamOutputBufferBinding( Direct3D10::Buffer^ buffer, int offset );
 		};
 	}
 };

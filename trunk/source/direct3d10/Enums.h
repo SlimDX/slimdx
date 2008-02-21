@@ -22,6 +22,7 @@
 #pragma once
 
 #include <windows.h>
+#include <d3d10.h>
 #include <d3dx10.h>
 
 namespace SlimDX
@@ -118,6 +119,17 @@ namespace SlimDX
 		{
 			Depth = D3D10_CLEAR_DEPTH,
 			Stencil = D3D10_CLEAR_STENCIL
+		};
+		
+		public enum class DepthStencilViewDimension : System::Int32
+		{
+			Unknown = D3D10_DSV_DIMENSION_UNKNOWN,
+			Texture1D = D3D10_DSV_DIMENSION_TEXTURE1D,
+			Texture1DArray = D3D10_DSV_DIMENSION_TEXTURE1DARRAY,
+			Texture2D = D3D10_DSV_DIMENSION_TEXTURE2D,
+			Texture2DArray = D3D10_DSV_DIMENSION_TEXTURE2DARRAY,
+			Texture2DMultisampled = D3D10_DSV_DIMENSION_TEXTURE2DMS,
+			Texture2DMultisampledArray = D3D10_DSV_DIMENSION_TEXTURE2DMSARRAY
 		};
 		
 		public enum class DepthWriteMask : System::Int32
@@ -326,6 +338,19 @@ namespace SlimDX
 			Float32 = D3D10_REGISTER_COMPONENT_FLOAT32
 		};
 		
+		public enum class RenderTargetViewDimension : System::Int32
+		{
+			Unknown = D3D10_RTV_DIMENSION_UNKNOWN,
+			Buffer = D3D10_RTV_DIMENSION_BUFFER,
+			Texture1D = D3D10_RTV_DIMENSION_TEXTURE1D ,
+			Texture1DArray = D3D10_RTV_DIMENSION_TEXTURE1DARRAY,
+			Texture2D = D3D10_RTV_DIMENSION_TEXTURE2D,
+			Texture2DArray = D3D10_RTV_DIMENSION_TEXTURE2DARRAY,
+			Texture2DMultisampled = D3D10_RTV_DIMENSION_TEXTURE2DMS,
+			Texture2DMultisampledArray = D3D10_RTV_DIMENSION_TEXTURE2DMSARRAY,
+			Texture3D = D3D10_RTV_DIMENSION_TEXTURE3D
+		};
+		
 		public enum class ResourceDimension : System::Int32
 		{
 			Unknown = D3D10_RESOURCE_DIMENSION_UNKNOWN,
@@ -334,7 +359,6 @@ namespace SlimDX
 			Texture2D = D3D10_RESOURCE_DIMENSION_TEXTURE2D,
 			Texture3D = D3D10_RESOURCE_DIMENSION_TEXTURE3D
 		};
-		
 		
 		[System::Flags]
 		public enum class ResourceOptionFlags : System::Int32
@@ -388,6 +412,20 @@ namespace SlimDX
 			OptimizationLevel1 = D3D10_SHADER_OPTIMIZATION_LEVEL1,
 			OptimizationLevel2 = D3D10_SHADER_OPTIMIZATION_LEVEL2,
 			OptimizationLevel3 = D3D10_SHADER_OPTIMIZATION_LEVEL3
+		};
+		
+		public enum class ShaderResourceViewDimension : System::Int32
+		{
+			Unknown = D3D10_SRV_DIMENSION_UNKNOWN,
+			Buffer = D3D10_SRV_DIMENSION_BUFFER,
+			Texture1D = D3D10_SRV_DIMENSION_TEXTURE1D,
+			Texture1DArray = D3D10_SRV_DIMENSION_TEXTURE1DARRAY,
+			Texture2D = D3D10_SRV_DIMENSION_TEXTURE2D,
+			Texture2DArray = D3D10_SRV_DIMENSION_TEXTURE2DARRAY,
+			Texture2DMultisampled = D3D10_SRV_DIMENSION_TEXTURE2DMS,
+			Texture2DMultisampledArray = D3D10_SRV_DIMENSION_TEXTURE2DMSARRAY,
+			Texture3D = D3D10_SRV_DIMENSION_TEXTURE3D,
+			TextureCube = D3D10_SRV_DIMENSION_TEXTURECUBE
 		};
 		
 		/// <remarks>

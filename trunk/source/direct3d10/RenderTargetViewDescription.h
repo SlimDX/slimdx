@@ -28,66 +28,79 @@
 namespace SlimDX
 {
 	namespace Direct3D10
-	{
-		public value class InputElement
+	{	
+		public value class RenderTargetViewDescription
 		{
 		private:
-			System::String^ m_SemanticName;
-			int m_SemanticIndex;
 			DXGI::Format m_Format;
-			int m_InputSlot;
-			int m_AlignedByteOffset;
-			InputClassification m_InputSlotClass;
-			int m_InstanceDataStepRate;
-	
+			RenderTargetViewDimension m_ViewDimension;
+			int m_ElementOffset;
+			int m_ElementWidth;
+			int m_MipSlice;
+			int m_FirstArraySlice;
+			int m_ArraySize;
+			int m_FirstDepthSlice;
+			int m_DepthSliceCount;
+				
 		internal:
-			D3D10_INPUT_ELEMENT_DESC CreateNativeVersion();
+			RenderTargetViewDescription( const D3D10_RENDER_TARGET_VIEW_DESC& native );
 			
+			D3D10_RENDER_TARGET_VIEW_DESC CreateNativeVersion();
+		
 		public:
-			property System::String^ SemanticName
-			{
-				System::String^ get();
-				void set( System::String^ value );
-			}
-
-			property int SemanticIndex
-			{
-				int get();
-				void set( int value );
-			}
-
 			property DXGI::Format Format
 			{
 				DXGI::Format get();
 				void set( DXGI::Format value );
 			}
-
-			property int Slot
+			
+			property RenderTargetViewDimension Dimension
+			{
+				RenderTargetViewDimension get();
+				void set( RenderTargetViewDimension value );
+			}
+			
+			property int ElementOffset
 			{
 				int get();
 				void set( int value );
 			}
-
-			property int AlignedByteOffset
+			
+			property int ElementWidth
 			{
 				int get();
 				void set( int value );
 			}
-
-			property InputClassification Classification
-			{
-				InputClassification get();
-				void set( InputClassification value );
-			}
-
-			property int InstanceDataStepRate
+			
+			property int MipSlice
 			{
 				int get();
 				void set( int value );
 			}
-
-			InputElement( System::String^ name, int index, DXGI::Format format, int offset, int slot );
-			InputElement( System::String^ name, int index, DXGI::Format format, int offset, int slot, InputClassification slotClass, int stepRate );
+			
+			property int FirstArraySlice
+			{
+				int get();
+				void set( int value );
+			}
+			
+			property int ArraySize
+			{
+				int get();
+				void set( int value );
+			}
+			
+			property int FirstDepthSlice
+			{
+				int get();
+				void set( int value );
+			}
+			
+			property int DepthSliceCount
+			{
+				int get();
+				void set( int value );
+			}
 		};
 	}
 };

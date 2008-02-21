@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "../ComObject.h"
 
 namespace SlimDX
@@ -34,15 +32,10 @@ namespace SlimDX
 			COMOBJECT(ID3D10VertexShader);
 
 		internal:
-			VertexShader(ID3D10VertexShader *shader) { Construct(shader); }
+			VertexShader( ID3D10VertexShader *pointer );
 			
 		public:
-			VertexShader( System::IntPtr shader )
-			{
-				Construct( shader, NativeInterface );
-			}
-
-			virtual ~VertexShader() { Destruct(); }
+			VertexShader( System::IntPtr pointer );
 		};
 	}
 };

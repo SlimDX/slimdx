@@ -21,19 +21,26 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Runtime::InteropServices;
-
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class ShaderMacro
 		{
+		private:
+			System::String^ m_Name;
+			System::String^ m_Value;
+			
 		public:
-			property System::String^ Name;
-			property System::String^ Value;
+			property System::String^ Name
+			{
+				System::String^ get();
+			}
+			
+			property System::String^ Value
+			{
+				System::String^ get();
+			}
 		};
 	}
 };

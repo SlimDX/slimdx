@@ -280,14 +280,6 @@
 			Name="Direct3D10"
 			>
 			<File
-				RelativePath="..\source\direct3d10\DepthStencilView.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d10\DepthStencilView.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\direct3d10\Direct3D10Exception.cpp"
 				>
 			</File>
@@ -305,50 +297,6 @@
 			</File>
 			<File
 				RelativePath="..\source\direct3d10\Error.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d10\InputElement.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d10\InputLayout.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d10\InputLayout.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d10\RenderTargetView.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d10\RenderTargetView.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d10\RenderTargetViewOptions.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d10\ResourceView.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d10\ResourceView.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d10\SampleDescription.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d10\StreamOutputBufferBinding.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d10\VertexBufferBinding.h"
 				>
 			</File>
 			<Filter
@@ -593,43 +541,15 @@
 				Name="Shader"
 				>
 				<File
+					RelativePath="..\source\direct3d10\GeometryShader.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\GeometryShader.h"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\PixelShader.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\ShaderBytecode.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\ShaderBytecode.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\ShaderDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\ShaderDescription.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\ShaderMacro.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\ShaderParameterDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\ShaderParameterDescription.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\ShaderReflection.cpp"
+					RelativePath="..\source\direct3d10\PixelShader.cpp"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
@@ -660,15 +580,39 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\ShaderReflection.h"
+					RelativePath="..\source\direct3d10\PixelShader.h"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\ShaderResourceView.cpp"
+					RelativePath="..\source\direct3d10\ShaderBytecode.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\ShaderResourceView.h"
+					RelativePath="..\source\direct3d10\ShaderBytecode.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderDescription.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderMacro.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderMacro.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderParameterDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderParameterDescription.h"
 					>
 				</File>
 				<File
@@ -678,6 +622,37 @@
 				<File
 					RelativePath="..\source\direct3d10\ShaderSignature.h"
 					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\VertexShader.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\VertexShader.h"
@@ -753,6 +728,14 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\BufferDescription.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\VertexBufferBinding.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\VertexBufferBinding.h"
 					>
 				</File>
 			</Filter>
@@ -936,6 +919,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\Texture1DDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Texture1DDescription.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\Texture2D.cpp"
 					>
 				</File>
@@ -944,11 +935,119 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\Texture2DDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Texture2DDescription.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\Texture3D.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Texture3D.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Texture3DDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Texture3DDescription.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Resource Views"
+				>
+				<File
+					RelativePath="..\source\direct3d10\DepthStencilView.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\DepthStencilView.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\DepthStencilViewDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\DepthStencilViewDescription.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\RenderTargetView.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\RenderTargetView.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\RenderTargetViewDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\RenderTargetViewDescription.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ResourceView.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ResourceView.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderResourceView.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderResourceView.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderResourceViewDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ShaderResourceViewDescription.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Stream Output"
+				>
+				<File
+					RelativePath="..\source\direct3d10\StreamOutputBufferBinding.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\StreamOutputBufferBinding.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Stream Input"
+				>
+				<File
+					RelativePath="..\source\direct3d10\InputElement.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\InputElement.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\InputLayout.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\InputLayout.h"
 					>
 				</File>
 			</Filter>

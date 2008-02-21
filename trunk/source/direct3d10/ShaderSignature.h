@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "../ComObject.h"
 
 #include "Enums.h"
@@ -34,21 +32,21 @@ namespace SlimDX
 	{
 		public ref class ShaderSignature
 		{
-			void* buffer;
-			int length;
+			const void* m_Buffer;
+			int m_Length;
 		
 		internal:
-			property void* Buffer
+			property const void* Buffer
 			{
-				void* get() { return buffer; }
+				const void* get();
 			}
 			
 			property int Length
 			{
-				int get() { return length; }
+				int get();
 			}
 			
-			ShaderSignature( void* buffer, int length );
+			ShaderSignature( const void* buffer, int length );
 		};
 	}
 };

@@ -21,9 +21,8 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "../ComObject.h"
+
 #include "InputElement.h"
 
 namespace SlimDX
@@ -36,11 +35,13 @@ namespace SlimDX
 		public ref class InputLayout : public ComObject
 		{
 			COMOBJECT(ID3D10InputLayout);
-
+		
+		internal:
+			InputLayout( ID3D10InputLayout* pointer );
+			
 		public:
 			InputLayout( System::IntPtr pointer );
 			InputLayout( Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature );
-			~InputLayout() { Destruct(); }
 		};
 	}
 };

@@ -20,53 +20,47 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
-#include <d3dx10.h>
+#include "VertexBufferBinding.h"
 
-#include "ShaderDescription.h"
+using namespace System;
 
 namespace SlimDX
 {
 namespace Direct3D10
 { 
-	ShaderDescription::ShaderDescription( const D3D10_EFFECT_SHADER_DESC& native )
+	VertexBufferBinding::VertexBufferBinding( Direct3D10::Buffer^ buffer, int stride, int offset )
+	: m_Buffer( buffer ), m_Stride( stride ), m_Offset( offset )
 	{
-		m_InputSignature = gcnew ShaderSignature( static_cast<const void*>( native.pInputSignature ), native.BytecodeLength - (native.pInputSignature - native.pBytecode) );
-		m_IsInline = native.IsInline ? true : false;
-		m_Bytecode = gcnew ShaderBytecode( static_cast<const void*>( native.pBytecode ), native.BytecodeLength );
-		m_SODecl = gcnew System::String( native.SODecl );
-		m_NumInputSignatureEntries = native.NumInputSignatureEntries;
-		m_NumOutputSignatureEntries = native.NumOutputSignatureEntries;
 	}
 	
-	ShaderSignature^ ShaderDescription::Signature::get()
+	Direct3D10::Buffer^ VertexBufferBinding::Buffer::get()
 	{
-		return m_InputSignature;
+		return m_Buffer;
 	}
 	
-	bool ShaderDescription::IsInline::get()
+	void VertexBufferBinding::Buffer::set( Direct3D10::Buffer^ value )
 	{
-		return m_IsInline;
+		m_Buffer = value;
 	}
 	
-	ShaderBytecode^ ShaderDescription::Bytecode::get()
+	int VertexBufferBinding::Stride::get()
 	{
-		return m_Bytecode;
+		return m_Stride;
 	}
 	
-	System::String^ ShaderDescription::StreamOutputDeclaration::get()
+	void VertexBufferBinding::Stride::set( int value )
 	{
-		return m_SODecl;
-	}
-
-	int ShaderDescription::InputParameterCount::get()
-	{
-		return m_NumInputSignatureEntries;
+		m_Stride = value;
 	}
 	
-	int ShaderDescription::OutputParameterCount::get()
+	int VertexBufferBinding::Offset::get()
 	{
-	  return m_NumOutputSignatureEntries;
+		return m_Offset;
+	}
+	
+	void VertexBufferBinding::Offset::set( int value )
+	{
+		m_Offset = value;
 	}
 }
 }

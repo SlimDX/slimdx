@@ -21,10 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
-#include "../math/Math.h"
-
 #include "ResourceView.h"
 
 namespace SlimDX
@@ -33,14 +29,23 @@ namespace SlimDX
 	{
 		ref class Device;
 		ref class Resource;
+		value class RenderTargetViewDescription;
 		
 		public ref class RenderTargetView : public ResourceView
 		{
-		public:
-			RenderTargetView( Device^ device, Resource^ resource );
-			virtual ~RenderTargetView() { }
+			COMOBJECT(ID3D10RenderTargetView);
+		
+		internal:
+			RenderTargetView( ID3D10RenderTargetView* pointer );
 			
-			void Clear( Color4 color );
+		public:
+			property RenderTargetViewDescription Description
+			{
+				RenderTargetViewDescription get();
+			}
+			
+			RenderTargetView( System::IntPtr );
+			RenderTargetView( Device^ device, Resource^ resource );
 		};
 	}
 };

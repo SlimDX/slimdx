@@ -21,52 +21,23 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
 
-#include "ShaderDescription.h"
+#include "VertexShader.h"
+
+using namespace System;
 
 namespace SlimDX
 {
 namespace Direct3D10
 { 
-	ShaderDescription::ShaderDescription( const D3D10_EFFECT_SHADER_DESC& native )
+	VertexShader::VertexShader( ID3D10VertexShader* pointer )
 	{
-		m_InputSignature = gcnew ShaderSignature( static_cast<const void*>( native.pInputSignature ), native.BytecodeLength - (native.pInputSignature - native.pBytecode) );
-		m_IsInline = native.IsInline ? true : false;
-		m_Bytecode = gcnew ShaderBytecode( static_cast<const void*>( native.pBytecode ), native.BytecodeLength );
-		m_SODecl = gcnew System::String( native.SODecl );
-		m_NumInputSignatureEntries = native.NumInputSignatureEntries;
-		m_NumOutputSignatureEntries = native.NumOutputSignatureEntries;
+		Construct( pointer );
 	}
 	
-	ShaderSignature^ ShaderDescription::Signature::get()
+	VertexShader::VertexShader( IntPtr pointer )
 	{
-		return m_InputSignature;
-	}
-	
-	bool ShaderDescription::IsInline::get()
-	{
-		return m_IsInline;
-	}
-	
-	ShaderBytecode^ ShaderDescription::Bytecode::get()
-	{
-		return m_Bytecode;
-	}
-	
-	System::String^ ShaderDescription::StreamOutputDeclaration::get()
-	{
-		return m_SODecl;
-	}
-
-	int ShaderDescription::InputParameterCount::get()
-	{
-		return m_NumInputSignatureEntries;
-	}
-	
-	int ShaderDescription::OutputParameterCount::get()
-	{
-	  return m_NumOutputSignatureEntries;
+		Construct( pointer, NativeInterface );
 	}
 }
 }

@@ -21,12 +21,7 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "../ComObject.h"
-
-#include "Enums.h"
-#include "Resource.h"
 
 #include "ShaderSignature.h"
 
@@ -37,7 +32,7 @@ namespace SlimDX
 		public ref class ShaderBytecode : public ShaderSignature
 		{
 		internal:
-			ShaderBytecode( void* buffer, int length );
+			ShaderBytecode( const void* buffer, int length );
 		};
 	}
 };

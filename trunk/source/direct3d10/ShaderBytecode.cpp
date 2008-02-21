@@ -20,16 +20,14 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
-#include <d3dx10.h>
-
 #include "ShaderBytecode.h"
 
 namespace SlimDX
 {
 namespace Direct3D10
 { 
-	ShaderBytecode::ShaderBytecode( void* buffer, int length ) : ShaderSignature( buffer, length )
+	ShaderBytecode::ShaderBytecode( const void* buffer, int length )
+	: ShaderSignature( buffer, length )
 	{
 	}
 }

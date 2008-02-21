@@ -21,9 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Runtime::InteropServices;
-
 #include "Enums.h"
 #include "ShaderBytecode.h"
 #include "ShaderSignature.h"
@@ -32,49 +29,48 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class ShaderDescription
 		{
 		private:
-			ShaderSignature^ signature;
-			ShaderBytecode^ bytecode;
-			bool isInline;
-			System::String^ streamOutputDeclaration;
-			int inputParameterCount;
-			int outputParameterCount;
+			ShaderSignature^ m_InputSignature;
+			bool m_IsInline;
+			ShaderBytecode^ m_Bytecode;
+			System::String^ m_SODecl;
+			int m_NumInputSignatureEntries;
+			int m_NumOutputSignatureEntries;
 		
 		internal:
-			ShaderDescription( const D3D10_EFFECT_SHADER_DESC& description );
+			ShaderDescription( const D3D10_EFFECT_SHADER_DESC& native );
 		
 		public:
 			property ShaderSignature^ Signature
 			{
-				ShaderSignature^ get() { return signature; }
-			}
-			
-			property ShaderBytecode^ Bytecode
-			{
-				ShaderBytecode^ get() { return bytecode; }
+				ShaderSignature^ get();
 			}
 			
 			property bool IsInline
 			{
-				bool get() { return isInline; }
+				bool get();
 			}
 			
-			property int InputParameterCount
+			property ShaderBytecode^ Bytecode
 			{
-				int get() { return inputParameterCount; }
-			}
-			
-			property int OutputParameterCount
-			{
-			  int get() { return outputParameterCount; }
+				ShaderBytecode^ get();
 			}
 			
 			property System::String^ StreamOutputDeclaration
 			{
-				System::String^ get() { return streamOutputDeclaration; }
+				System::String^ get();
+			}
+			
+			property int InputParameterCount
+			{
+				int get();
+			}
+			
+			property int OutputParameterCount
+			{
+			  int get();
 			}
 		};
 	}
