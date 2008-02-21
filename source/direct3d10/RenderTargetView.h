@@ -44,7 +44,7 @@ namespace SlimDX
 				RenderTargetViewDescription get();
 			}
 			
-			RenderTargetView( System::IntPtr );
+			RenderTargetView( System::IntPtr pointer );
 			RenderTargetView( Device^ device, Resource^ resource );
 		};
 	}
