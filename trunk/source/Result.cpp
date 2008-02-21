@@ -52,7 +52,7 @@ namespace SlimDX
 				if( FormatMessage( flags, 0, m_Code, lang, reinterpret_cast<wchar_t*>( &message ), 0, 0 ) )
 					m_Description = gcnew String( message );
 				else
-					m_Description = String::Format( "HRESULT: {0}", m_Code );
+					m_Description = String::Format( System::Globalization::CultureInfo::CurrentCulture, "HRESULT: {0}", m_Code );
 			}
 			finally
 			{
