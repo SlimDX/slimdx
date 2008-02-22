@@ -23,9 +23,10 @@
 #include <d3dx9.h>
 
 #include "../ComObject.h"
-#include "../math/Math.h"
 
-//#include "Direct3D9ErrorHandler.h"
+#include "../math/Matrix.h"
+#include "../math/Vector3.h"
+
 #include "Direct3D9Exception.h"
 
 #include "MatrixStack.h"

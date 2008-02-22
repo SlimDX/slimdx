@@ -21,6 +21,9 @@
 */
 #pragma once
 
+#include "../math/Matrix.h"
+#include "../math/Ray.h"
+
 #include "XFile.h"
 
 namespace SlimDX

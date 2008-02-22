@@ -21,16 +21,19 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Globalization;
-//using namespace System::Runtime::InteropServices;
+#include "Vector4.h"
+
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
+	value class Quaternion;
+	value class Matrix;
+	value class Vector3;
+	
     namespace Direct3D
     {
         value class Viewport;
-		value class Vector4;
     }
 
 	/// <summary>

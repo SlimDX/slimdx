@@ -21,17 +21,17 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Runtime::InteropServices;
+#include "Enums.h"
+#include "Vector3.h"
+
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
-	public enum class PlaneIntersectionType : System::Int32
-	{
-		Back,
-		Front,
-		Intersecting
-	};
+	value class BoundingBox;
+	value class BoundingFrustum;
+	value class BoundingSphere;
+	value class Quaternion;
 
 	/// <summary>
 	/// Defines a 3D mathematical plane.

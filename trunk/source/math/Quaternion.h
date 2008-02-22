@@ -21,11 +21,13 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Runtime::InteropServices;
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
+	value class Matrix;
+	value class Vector3;
+	
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 	public value class Quaternion : System::IEquatable<Quaternion>

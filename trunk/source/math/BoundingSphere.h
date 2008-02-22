@@ -21,40 +21,51 @@
 */
 #pragma once
 
+#include "Enums.h"
 #include "Vector3.h"
-
-using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
 	value class BoundingBox;
 	value class BoundingFrustum;
-	value class BoundingSphere;
 	value class Plane;
-
+	value class Ray;
+	
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
-	public value class Ray : System::IEquatable<Ray>
+	public value class BoundingSphere : System::IEquatable<BoundingSphere>
 	{
 	public:
-		Vector3 Position;
-		Vector3 Direction;
+		Vector3 Center;
+		float Radius;
 
-		Ray( Vector3 position, Vector3 direction );
+		BoundingSphere( Vector3 center, float radius );
 
-		static bool Intersects( Ray ray, Plane plane, [Out] float% distance );
-		static bool Intersects( Ray ray, Vector3 vertex1, Vector3 vertex2, Vector3 vector3, [Out] float% distance );
-		static bool Intersects( Ray ray, BoundingBox box, [Out] float% distance );
-		static bool Intersects( Ray ray, BoundingSphere sphere, [Out] float% distance );
-		static bool Intersects( Ray ray, BoundingFrustum frustum, [Out] float% distance );
+		static ContainmentType Contains( BoundingSphere sphere, BoundingBox box );
+		static ContainmentType Contains( BoundingSphere sphere1, BoundingSphere sphere2 );
+		static ContainmentType Contains( BoundingSphere sphere, BoundingFrustum frustum );
+		static ContainmentType Contains( BoundingSphere sphere, Vector3 vector );
 
-		static bool operator == ( Ray left, Ray right );
-		static bool operator != ( Ray left, Ray right );
+		static BoundingSphere FromBox( BoundingBox box );
+		static BoundingSphere FromFrustum( BoundingFrustum frustum );
+		static BoundingSphere FromPoints( array<Vector3>^ points );
+
+		static BoundingSphere Merge( BoundingSphere sphere1, BoundingSphere sphere2 );
+
+		static bool Intersects( BoundingSphere sphere, BoundingBox box );
+		static bool Intersects( BoundingSphere sphere, BoundingFrustum frustum );
+		static bool Intersects( BoundingSphere sphere1, BoundingSphere sphere2 );
+		static bool Intersects( BoundingSphere sphere, Ray ray, [Out] float% distance );
+
+		static PlaneIntersectionType Intersects( BoundingSphere sphere, Plane plane );
+
+		static bool operator == ( BoundingSphere left, BoundingSphere right );
+		static bool operator != ( BoundingSphere left, BoundingSphere right );
 
 		virtual System::String^ ToString() override;
 		virtual int GetHashCode() override;
 		virtual bool Equals( System::Object^ obj ) override;
-		virtual bool Equals( Ray other );
-		static bool Equals( Ray% value1, Ray% value2 );
+		virtual bool Equals( BoundingSphere other );
+		static bool Equals( BoundingSphere% value1, BoundingSphere% value2 );
 	};
 }

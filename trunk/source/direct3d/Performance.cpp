@@ -23,7 +23,7 @@
 #include <d3dx9.h>
 
 #include "../Utilities.h"
-#include "../math/Math.h"
+#include "../math/Color4.h"
 #include "Performance.h"
 #include <vcclr.h>
 

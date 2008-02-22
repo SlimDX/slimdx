@@ -21,13 +21,15 @@
 */
 #pragma once
 
-
 #include "Enums.h"
 #include "Direct3D.h"
 #include "Vertex.h"
 
 #include "../Direct3D/Viewport.h"
-#include "../math/Math.h"
+
+#include "../math/Color4.h"
+#include "../math/Plane.h"
+#include "../math/Vector3.h"
 
 namespace SlimDX
 {

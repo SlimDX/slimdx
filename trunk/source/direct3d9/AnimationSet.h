@@ -21,6 +21,9 @@
 */
 #pragma once
 
+#include "../math/Quaternion.h"
+#include "../math/Matrix.h"
+#include "../math/Vector4.h"
 
 namespace SlimDX
 {

@@ -21,9 +21,10 @@
 */
 #pragma once
 
-//using namespace System::Runtime::InteropServices;
-
-#include "../math/Math.h"
+#include "../math/Color4.h"
+#include "../math/Matrix.h"
+#include "../math/Vector2.h"
+#include "../math/Vector3.h"
 
 namespace SlimDX
 {

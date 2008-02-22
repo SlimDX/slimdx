@@ -19,10 +19,12 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <windows.h>
+
 #include <d3dx9.h>
 
-#include "Math.h"
+#include "Matrix.h"
+#include "Quaternion.h"
+#include "Vector2.h"
 
 using namespace System;
 using namespace System::Globalization;

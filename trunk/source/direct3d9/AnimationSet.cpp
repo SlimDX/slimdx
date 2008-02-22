@@ -24,7 +24,7 @@
 #include <vcclr.h>
 
 #include "../ComObject.h"
-#include "../Math/Math.h"
+#include "../Math/Vector3.h"
 #include "../DataStream.h"
 
 #include "Device.h"

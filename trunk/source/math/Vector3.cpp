@@ -19,11 +19,15 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <windows.h>
+
 #include <d3dx9.h>
 
-#include "Math.h"
 #include "../Direct3D/Viewport.h"
+
+#include "Quaternion.h"
+#include "Matrix.h"
+#include "Vector2.h"
+#include "Vector3.h"
 
 using namespace System;
 using namespace System::Globalization;

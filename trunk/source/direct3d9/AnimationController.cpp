@@ -19,13 +19,16 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <vcclr.h>
 
 #include "../DataStream.h"
 #include "../ComObject.h"
-#include "../Math/Math.h"
+
+#include "../Math/Matrix.h"
+#include "../Math/Vector3.h"
 
 #include "Direct3D9Exception.h"
 

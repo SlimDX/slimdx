@@ -1659,11 +1659,27 @@
 			Name="Math"
 			>
 			<File
-				RelativePath="..\source\math\BoundingVolumes.cpp"
+				RelativePath="..\source\math\BoundingBox.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\source\math\BoundingVolumes.h"
+				RelativePath="..\source\math\BoundingBox.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\math\BoundingFrustum.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\math\BoundingFrustum.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\math\BoundingSphere.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\math\BoundingSphere.h"
 				>
 			</File>
 			<File
@@ -1683,15 +1699,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\math\Enums.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\math\Float16.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\source\math\Float16.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\math\Math.h"
 				>
 			</File>
 			<File

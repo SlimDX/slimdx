@@ -21,40 +21,54 @@
 */
 #pragma once
 
+#include "Enums.h"
 #include "Vector3.h"
 
 using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
-	value class BoundingBox;
 	value class BoundingFrustum;
 	value class BoundingSphere;
 	value class Plane;
+	value class Ray;
 
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
-	public value class Ray : System::IEquatable<Ray>
+	public value class BoundingBox : System::IEquatable<BoundingBox>
 	{
 	public:
-		Vector3 Position;
-		Vector3 Direction;
+		Vector3 Maximum;
+		Vector3 Minimum;
 
-		Ray( Vector3 position, Vector3 direction );
+		BoundingBox( Vector3 minimum, Vector3 maximum );
 
-		static bool Intersects( Ray ray, Plane plane, [Out] float% distance );
-		static bool Intersects( Ray ray, Vector3 vertex1, Vector3 vertex2, Vector3 vector3, [Out] float% distance );
-		static bool Intersects( Ray ray, BoundingBox box, [Out] float% distance );
-		static bool Intersects( Ray ray, BoundingSphere sphere, [Out] float% distance );
-		static bool Intersects( Ray ray, BoundingFrustum frustum, [Out] float% distance );
+		array<Vector3>^ GetCorners();
 
-		static bool operator == ( Ray left, Ray right );
-		static bool operator != ( Ray left, Ray right );
+		static ContainmentType Contains( BoundingBox box1, BoundingBox box2 );
+		static ContainmentType Contains( BoundingBox box, BoundingSphere sphere );
+		static ContainmentType Contains( BoundingBox box, BoundingFrustum frustum );
+		static ContainmentType Contains( BoundingBox box, Vector3 vector );
+
+		static BoundingBox FromPoints( array<Vector3>^ points );
+		static BoundingBox FromSphere( BoundingSphere sphere );
+
+		static BoundingBox Merge( BoundingBox box1, BoundingBox box2 );
+
+		static bool Intersects( BoundingBox box1, BoundingBox box2 );
+		static bool Intersects( BoundingBox box, BoundingSphere sphere );
+		static bool Intersects( BoundingBox box, BoundingFrustum frustum );
+		static bool Intersects( BoundingBox box, Ray ray, [Out] float% distance );
+
+		static PlaneIntersectionType Intersects( BoundingBox box, Plane plane );
+
+		static bool operator == ( BoundingBox left, BoundingBox right );
+		static bool operator != ( BoundingBox left, BoundingBox right );
 
 		virtual System::String^ ToString() override;
 		virtual int GetHashCode() override;
 		virtual bool Equals( System::Object^ obj ) override;
-		virtual bool Equals( Ray other );
-		static bool Equals( Ray% value1, Ray% value2 );
+		virtual bool Equals( BoundingBox other );
+		static bool Equals( BoundingBox% value1, BoundingBox% value2 );
 	};
 }

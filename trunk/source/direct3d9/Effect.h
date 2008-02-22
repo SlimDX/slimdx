@@ -21,7 +21,6 @@
 */
 #pragma once
 
-#include "../math/Math.h"
 #include "Device.h"
 #include "BaseEffect.h"
 #include "Shader.h"
