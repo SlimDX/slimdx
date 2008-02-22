@@ -23,6 +23,8 @@
 
 #include "../ComObject.h"
 
+#include "../math/Math.h"
+
 #include "Enums.h"
 
 namespace SlimDX
@@ -30,6 +32,7 @@ namespace SlimDX
 	namespace Direct3D10
 	{
 		ref class Buffer;
+		ref class DepthStencilView;
 		ref class InputAssemblerWrapper;
 		ref class InputLayout;
 		ref class OutputMergerWrapper;
@@ -78,6 +81,8 @@ namespace SlimDX
 			Device( System::IntPtr pointer );
 			Device( DeviceCreationFlags flags );
 
+			void ClearDepthStencilView( DepthStencilView^ view, DepthStencilClearFlags flags, float depth, System::Byte stencil );
+			void ClearRenderTargetView( RenderTargetView^ view, Color4 color );
 			void ClearState();
 			
 			void Draw( int vertexCount, int startVertexLocation );
