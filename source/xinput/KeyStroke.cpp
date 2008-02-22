@@ -19,38 +19,42 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include <windows.h>
+#include <xinput.h>
 
+#include "XInput.h"
 #include "XInputException.h"
-
-using namespace System;
-using namespace System::Runtime::Serialization;
 
 namespace SlimDX
 {
-namespace XInput
-{
-	XInputException::XInputException( SerializationInfo^ info, StreamingContext context )
-	: SlimDXException( info, context )
+	namespace XInput
 	{
+		Keystroke::Keystroke( const XINPUT_KEYSTROKE &native )
+		{
+			m_VirtualKey = static_cast<GamepadKeyCode>( native.VirtualKey );
+			m_Flags = static_cast<KeystrokeFlags>( native.Flags );
+			m_UserIndex = static_cast<XInput::UserIndex>( native.UserIndex );
+			m_HidCode = native.HidCode;
+		}
+		
+		GamepadKeyCode Keystroke::VirtualKey::get()
+		{
+			return m_VirtualKey;
+		}
+		
+		KeystrokeFlags Keystroke::Flags::get()
+		{
+			return m_Flags;
+		}
+		
+		XInput::UserIndex Keystroke::UserIndex::get()
+		{
+			return m_UserIndex;
+		}
+		
+		int Keystroke::HidCode::get()
+		{
+			return m_HidCode;
+		}
 	}
-
-	XInputException::XInputException()
-	{
-	}
-
-	XInputException::XInputException( String^ message )
-	: SlimDXException( message )
-	{
-	}
-
-	XInputException::XInputException( String^ message, Exception^ innerException )
-	: SlimDXException( message, innerException )
-	{
-	}
-
-	XInputException::XInputException( Result result )
-	: SlimDXException( result.Code )
-	{
-	}
-}
 }

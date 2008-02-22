@@ -21,62 +21,53 @@
 */
 #pragma once
 
-//using namespace System;
-
 namespace SlimDX
 {
 	namespace XInput
 	{
-		/// <summary>
-		/// Specifies keystroke data returned by Controller.GetKeystroke
-		/// </summary>
 		public value class Keystroke
 		{
 		private:
-			GamepadKeyCode virtualKey;
-            KeystrokeFlags flags;
-            UserIndex userIndex;
-            int hidCode;
-
+			GamepadKeyCode m_VirtualKey;
+			KeystrokeFlags m_Flags;
+			XInput::UserIndex m_UserIndex;
+			int m_HidCode;
+		
+		internal:
+			Keystroke( const XINPUT_KEYSTROKE& native );
+			
 		public:
 			/// <summary>
 			/// Virtual-key code of the key, button, or stick movement.
 			/// </summary>
 			property GamepadKeyCode VirtualKey
-            {
-                GamepadKeyCode get() { return virtualKey; }
-			internal:
-                void set( GamepadKeyCode value ) { virtualKey = value; }
-            }
+			{
+				GamepadKeyCode get();
+			}
 
 			/// <summary>
 			/// Combination of flags that indicate the keyboard state at the time of the input event.
 			/// </summary>
-            property KeystrokeFlags Flags
-            {
-                KeystrokeFlags get() { return flags; }
-			internal:
-                void set( KeystrokeFlags value ) { flags = value; }
-            }
+			property KeystrokeFlags Flags
+			{
+				KeystrokeFlags get();
+			}
 
 			/// <summary>
 			/// Index of the signed-in gamer associated with the device. Can be a value in the range 0–3.
 			/// </summary>
-			property SlimDX::XInput::UserIndex UserIndex
-            {
-                SlimDX::XInput::UserIndex get() { return userIndex; }
-			internal:
-                void set( SlimDX::XInput::UserIndex value ) { userIndex = value; }
-            }
+			property XInput::UserIndex UserIndex
+			{
+				XInput::UserIndex get();
+			}
 
 			/// <summary>
 			/// HID code corresponding to the input. If there is no corresponding HID code, this value is zero.
 			/// </summary>
-            property int HidCode
-            {
-                int get() { return hidCode; }
-                void set( int value ) { hidCode = value; }
-            }
+			property int HidCode
+			{
+				int get();
+			}
 		};
 	}
 }

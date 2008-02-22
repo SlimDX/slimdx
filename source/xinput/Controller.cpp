@@ -28,135 +28,35 @@
 #include "XInput.h"
 #include "XInputException.h"
 
+#include "Error.h"
+
 using namespace System;
 
 namespace SlimDX
 {
 	namespace XInput
 	{
-		Controller::Controller(UserIndex userIndex)
+		Controller::Controller( UserIndex userIndex )
 		{
-			XInputEnable(true);
-			this->userIndex = static_cast<System::UInt32>( userIndex );
-		}
-
-		void Controller::GetState([Out] State% currentState)
-		{
-			pin_ptr<State> state = &currentState;
-			Result::Record(XInputGetState(userIndex, reinterpret_cast<XINPUT_STATE*>(state)));
+			m_UserIndex = static_cast<System::UInt32>( userIndex );
 		}
 		
-		void Controller::SetVibration(Vibration% vibration)
-		{
-			pin_ptr<Vibration> vib = &vibration;
-			Result::Record(XInputSetState(userIndex, reinterpret_cast<XINPUT_VIBRATION*>(vib)));
-		}
-
-		void Controller::SetVibration(Vibration vibration)
-		{
-			Result::Record(XInputSetState(userIndex, reinterpret_cast<XINPUT_VIBRATION*>(&vibration)));
-		}
-		
-		void Controller::GetCapabilities(DeviceQueryType flags, SlimDX::XInput::Capabilities% capabilities)
-		{
-			XINPUT_CAPABILITIES caps;
-			Result::Record(XInputGetCapabilities(userIndex, static_cast<DWORD>(flags), &caps));
-
-			capabilities.Type = static_cast<DeviceType>(caps.Type);
-			capabilities.Subtype = static_cast<DeviceSubtype>(caps.SubType);
-			capabilities.Gamepad = Gamepad( caps.Gamepad );
-			capabilities.Flags = static_cast<CapabilitiesFlags>(caps.Flags);
-			capabilities.Vibration.LeftMotorSpeed = caps.Vibration.wLeftMotorSpeed;
-			capabilities.Vibration.RightMotorSpeed = caps.Vibration.wRightMotorSpeed;
-		}
-		
-		void Controller::GetDirectSoundAudioDeviceGuids(Guid% soundRenderGuid, Guid% soundCaptureGuid)
-		{
-			pin_ptr<Guid> renderGuid = &soundRenderGuid;
-			pin_ptr<Guid> captureGuid = &soundCaptureGuid;
-			Result::Record(XInputGetDSoundAudioDeviceGuids(userIndex,
-				reinterpret_cast<GUID*>(renderGuid), reinterpret_cast<GUID*>(captureGuid)));
-		}
-		
-		bool Controller::GetKeystroke(DeviceQueryType flags, Keystroke% keystroke)
-		{
-			XINPUT_KEYSTROKE keys;
-			UInt32 result = XInputGetKeystroke(userIndex, static_cast<DWORD>(flags), &keys);
-			Result::Record(result);
-
-			keystroke.VirtualKey = static_cast<GamepadKeyCode>(keys.VirtualKey);
-			keystroke.Flags = static_cast<KeystrokeFlags>(keys.Flags);
-			keystroke.UserIndex = static_cast<UserIndex>(keys.UserIndex);
-			keystroke.HidCode = keys.HidCode;
-
-			if(result == ERROR_EMPTY)
-				return false;
-
-			return true;
-		}
-
-		void Controller::GetBatteryInformation(BatteryDeviceType flag, [Out] BatteryInformation% batteryInfo)
-		{
-			XINPUT_BATTERY_INFORMATION info;
-			Result::Record( XInputGetBatteryInformation( userIndex, static_cast<BYTE>(flag), &info ) );
-
-			batteryInfo.Level = static_cast<BatteryLevel>(info.BatteryLevel);
-			batteryInfo.Type = static_cast<BatteryType>(info.BatteryType);
-		}
-
-		BatteryInformation Controller::GetBatteryInformation(BatteryDeviceType flag)
-		{
-			XINPUT_BATTERY_INFORMATION info;
-			Result::Record( XInputGetBatteryInformation( userIndex, static_cast<BYTE>(flag), &info ) );
-
-			BatteryInformation batteryInfo;
-			batteryInfo.Level = static_cast<BatteryLevel>(info.BatteryLevel);
-			batteryInfo.Type = static_cast<BatteryType>(info.BatteryType);
-			return batteryInfo;
-		}
-
 		bool Controller::IsConnected::get()
 		{
 			XINPUT_STATE state;
-			UInt32 result = XInputGetState(userIndex, &state);
+			UInt32 result = XInputGetState( m_UserIndex, &state );
 
-			if(result == ERROR_DEVICE_NOT_CONNECTED)
+			if( result == ERROR_DEVICE_NOT_CONNECTED )
 				return false;
-			else if(result != ERROR_SUCCESS)
-				Result::Record(result);
-
 			return true;
 		}
-
-		State Controller::CurrentState::get()
-		{
-			State state;
-			Result::Record(XInputGetState(userIndex, reinterpret_cast<XINPUT_STATE*>(&state)));
-			return state;
-		}
-
-		Capabilities Controller::Capabilities::get()
-		{
-			SlimDX::XInput::Capabilities capabilities;
-			XINPUT_CAPABILITIES caps;
-			Result::Record(XInputGetCapabilities(userIndex, XINPUT_FLAG_GAMEPAD, &caps));
-
-			capabilities.Type = static_cast<DeviceType>(caps.Type);
-			capabilities.Subtype = static_cast<DeviceSubtype>(caps.SubType);
-			capabilities.Gamepad = Gamepad( caps.Gamepad );
-			capabilities.Flags = static_cast<CapabilitiesFlags>(caps.Flags);
-			capabilities.Vibration.LeftMotorSpeed = caps.Vibration.wLeftMotorSpeed;
-			capabilities.Vibration.RightMotorSpeed = caps.Vibration.wRightMotorSpeed;
-
-			return capabilities;
-		}
-
+		
 		Guid Controller::SoundRenderGuid::get()
 		{
 			GUID renderGuid;
 			GUID captureGuid;
-			Result::Record(XInputGetDSoundAudioDeviceGuids(userIndex, &renderGuid, &captureGuid));
-
+			Result::Record( XInputGetDSoundAudioDeviceGuids( m_UserIndex, &renderGuid, &captureGuid ) );
+			
 			return Utilities::ConvertNativeGuid( renderGuid );
 		}
 
@@ -164,9 +64,61 @@ namespace SlimDX
 		{
 			GUID renderGuid;
 			GUID captureGuid;
-			Result::Record(XInputGetDSoundAudioDeviceGuids(userIndex, &renderGuid, &captureGuid));
+			Result::Record( XInputGetDSoundAudioDeviceGuids( m_UserIndex, &renderGuid, &captureGuid ) );
 
 			return Utilities::ConvertNativeGuid( captureGuid );
+		}
+		
+		BatteryInformation Controller::GetBatteryInformation( BatteryDeviceType battery )
+		{
+			XINPUT_BATTERY_INFORMATION information;
+			if( Result::Record( ConvertError( XInputGetBatteryInformation( m_UserIndex, static_cast<BYTE>( battery ), &information) ) ).IsFailure )
+				return BatteryInformation();
+			
+			return BatteryInformation( information );
+		}
+		
+		Capabilities Controller::GetCapabilities( DeviceQueryType device )
+		{
+			XINPUT_CAPABILITIES capabilities;
+			if( Result::Record( ConvertError( XInputGetCapabilities( m_UserIndex, static_cast<DWORD>( device ), &capabilities) ) ).IsFailure )
+				return Capabilities();
+			
+			return Capabilities( capabilities );
+		}
+		
+		State Controller::GetState()
+		{
+			XINPUT_STATE state;
+			if( Result::Record( ConvertError( XInputGetState( m_UserIndex, &state ) ) ).IsFailure )
+				return State();
+		
+			return State( state ); 
+		}
+		
+		Result Controller::GetKeystroke( DeviceQueryType device, Keystroke% result )
+		{
+			XINPUT_KEYSTROKE keystroke;
+			if( Result::Record( ConvertError( XInputGetKeystroke( m_UserIndex, static_cast<DWORD>( device ), &keystroke ) ) ).IsSuccess )
+				result = Keystroke( keystroke );
+			
+			return Result::Last;
+		}
+		
+		Result Controller::SetVibration( Vibration vibration )
+		{
+			XINPUT_VIBRATION nativeVibration = vibration.CreateNativeVersion();
+			return Result::Record( ConvertError( XInputSetState( m_UserIndex, &nativeVibration ) ) );
+		}
+		
+		void Controller::SetReporting( bool value )
+		{
+			XInputEnable( value );
+		}
+
+		int Controller::ConvertError( int errorCode )
+		{
+			return HRESULT_FROM_WIN32( errorCode );
 		}
 	}
 }

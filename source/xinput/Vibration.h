@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 namespace SlimDX
 {
 	namespace XInput
@@ -34,21 +32,41 @@ namespace SlimDX
 		/// The left motor is the low-frequency rumble motor. The right motor is the high-frequency rumble motor. 
 		/// The two motors are not the same, and they create different vibration effects.
 		/// </remarks>
-		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class Vibration
 		{
+		private:
+			System::UInt16 m_LeftMotorSpeed;
+			System::UInt16 m_RightMotorSpeed;
+		
+		internal:
+			Vibration( const XINPUT_VIBRATION& native );
+			
+			XINPUT_VIBRATION CreateNativeVersion();
+			
 		public:
 			/// <summary>
-			/// Speed of the left motor. Valid values are in the range 0 to 65,535. Zero signifies no motor use; 
-			/// 65,535 signifies 100 percent motor use.
+			/// Gets or sets the left motor speed. 
 			/// </summary>
-			property System::UInt16 LeftMotorSpeed;
+			/// <remarks>
+			/// Valid values are in the range 0 to 65,535. Zero signifies no motor use; 65,535 signifies 100% motor use.
+			/// </remarks>
+			property System::UInt16 LeftMotorSpeed
+			{
+				System::UInt16 get();
+				void set( System::UInt16 value );
+			}
 
 			/// <summary>
-			/// Speed of the right motor. Valid values are in the range 0 to 65,535. Zero signifies no motor use; 
-			/// 65,535 signifies 100 percent motor use.
+			/// Gets or sets the right motor speed. 
 			/// </summary>
-            property System::UInt16 RightMotorSpeed;
+			/// <remarks>
+			/// Valid values are in the range 0 to 65,535. Zero signifies no motor use; 65,535 signifies 100% motor use.
+			/// </remarks>
+			property System::UInt16 RightMotorSpeed
+			{
+				System::UInt16 get();
+				void set( System::UInt16 value );
+			}
 		};
 	}
 }

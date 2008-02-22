@@ -19,38 +19,29 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include "XInputException.h"
-
-using namespace System;
-using namespace System::Runtime::Serialization;
+#include "../Result.h"
 
 namespace SlimDX
 {
-namespace XInput
-{
-	XInputException::XInputException( SerializationInfo^ info, StreamingContext context )
-	: SlimDXException( info, context )
+	namespace XInput
 	{
+		public ref class Error sealed
+		{
+			private:
+				Error();
+				
+			public:
+				property static Result NotConnected
+				{
+					Result get();
+				}
+				
+				property static Result Empty
+				{
+					Result get();
+				}
+		};
 	}
-
-	XInputException::XInputException()
-	{
-	}
-
-	XInputException::XInputException( String^ message )
-	: SlimDXException( message )
-	{
-	}
-
-	XInputException::XInputException( String^ message, Exception^ innerException )
-	: SlimDXException( message, innerException )
-	{
-	}
-
-	XInputException::XInputException( Result result )
-	: SlimDXException( result.Code )
-	{
-	}
-}
 }

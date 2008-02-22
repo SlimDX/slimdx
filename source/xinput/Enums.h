@@ -21,19 +21,87 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include <xinput.h>
 
 namespace SlimDX
 {
 	namespace XInput
 	{
+		// NOTE: The enumerations defined in this file are in alphabetical order. When
+		//       adding new enumerations or renaming existing ones, please make sure
+		//       the ordering is maintained.
+		
+		public enum class BatteryDeviceType : System::Int32
+		{
+			Gamepad = BATTERY_DEVTYPE_GAMEPAD,
+			Headset = BATTERY_DEVTYPE_HEADSET
+		};
+		
 		/// <summary>
-		/// Bitmask of the device digital buttons
+		/// Values indicating the amount of charge remaining in a battery.
 		/// </summary>
+		/// <remarks>
+		/// These are only valid for wireless, connected devices, with known battery types. The amount of use time remaining depends on the type of device.
+		/// </remarks>
+		public enum class BatteryLevel : System::Int32
+		{
+			Empty = BATTERY_LEVEL_EMPTY,
+			Low = BATTERY_LEVEL_LOW,
+			Medium = BATTERY_LEVEL_MEDIUM,
+			Full = BATTERY_LEVEL_FULL
+		};
+		
+		public enum class BatteryType : System::Int32
+		{
+			Disconnected = BATTERY_TYPE_DISCONNECTED,
+			Wired = BATTERY_TYPE_WIRED,
+			Alkaline = BATTERY_TYPE_ALKALINE,
+			NickelMetalHydride = BATTERY_TYPE_NIMH,
+			Unknown = BATTERY_TYPE_UNKNOWN
+		};
+		
 		[System::Flags]
-		public enum class GamepadButtons : System::UInt16
+		public enum class CapabilityFlags : System::Int32
+		{
+			None = 0,
+
+			/// <summary>
+			/// The device has an integrated voice device.
+			/// </summary>
+			VoiceSupported = XINPUT_CAPS_VOICE_SUPPORTED
+		};
+		
+		/// <summary>
+		/// Vales specifying controller type.
+		/// </summary>
+		public enum class DeviceType : System::Int32
+		{
+			/// <summary>
+			/// The device is a game controller.
+			/// </summary>
+			Gamepad = XINPUT_DEVTYPE_GAMEPAD
+		};
+		
+		public enum class DeviceQueryType : System::Int32
+		{
+			Any = 0,
+			Gamepad = XINPUT_FLAG_GAMEPAD
+		};
+		
+		/// <summary>
+		/// Values specifying controller subtype.
+		/// </summary>
+		public enum class DeviceSubtype : System::Int32
+		{
+			ArcadeStick = XINPUT_DEVSUBTYPE_ARCADE_STICK,
+			Gamepad = XINPUT_DEVSUBTYPE_GAMEPAD,
+			Wheel = XINPUT_DEVSUBTYPE_WHEEL,
+			DancePad = XINPUT_DEVSUBTYPE_DANCE_PAD,
+			FlightStick = XINPUT_DEVSUBTYPE_FLIGHT_SICK
+		};
+		
+		[System::Flags]
+		public enum class GamepadButtonFlags : System::UInt16
 		{
 			None = 0,
 			DPadUp = XINPUT_GAMEPAD_DPAD_UP,
@@ -49,24 +117,9 @@ namespace SlimDX
 			A = XINPUT_GAMEPAD_A,
 			B = XINPUT_GAMEPAD_B,
 			X = XINPUT_GAMEPAD_X,
-			Y = XINPUT_GAMEPAD_Y,
+			Y = XINPUT_GAMEPAD_Y
 		};
-
-		/// <summary>
-		/// Flags that indicate the keyboard state at the time of the input event.
-		/// </summary>
-		[System::Flags]
-		public enum class KeystrokeFlags : System::Int32
-		{
-			None = 0,
-			KeyDown = XINPUT_KEYSTROKE_KEYDOWN,
-			KeyUp = XINPUT_KEYSTROKE_KEYUP,
-			Repeat = XINPUT_KEYSTROKE_REPEAT
-		};
-
-		/// <summary>
-		/// Controller input virtual key codes
-		/// </summary>
+		
 		public enum class GamepadKeyCode : System::Int32
 		{
 			A = VK_PAD_A,
@@ -102,91 +155,16 @@ namespace SlimDX
 			RightThumbDownLeft = VK_PAD_RTHUMB_DOWNLEFT,
 			RightThumbDownRight = VK_PAD_RTHUMB_DOWNRIGHT
 		};
-
-		/// <summary>
-		/// Controller type.
-		/// </summary>
-		public enum class DeviceType : System::Int32
-		{
-			/// <summary>
-			/// The device is a game controller.
-			/// </summary>
-			Gamepad = XINPUT_DEVTYPE_GAMEPAD
-		};
-
-		/// <summary>
-		/// Subtype of the game controller.
-		/// </summary>
-		public enum class DeviceSubtype : System::Int32
-		{
-			ArcadeStick = XINPUT_DEVSUBTYPE_ARCADE_STICK,
-			Gamepad = XINPUT_DEVSUBTYPE_GAMEPAD,
-			Wheel = XINPUT_DEVSUBTYPE_WHEEL,
-			DancePad = XINPUT_DEVSUBTYPE_DANCE_PAD,
-			FlightStick = XINPUT_DEVSUBTYPE_FLIGHT_SICK
-		};
 		
-		/// <summary>
-		/// Features of the controller. 
-		/// </summary>
 		[System::Flags]
-		public enum class CapabilitiesFlags : System::Int32
+		public enum class KeystrokeFlags : System::Int32
 		{
 			None = 0,
-
-			/// <summary>
-			/// The device has an integrated voice device.
-			/// </summary>
-			VoiceSupported = XINPUT_CAPS_VOICE_SUPPORTED
+			KeyDown = XINPUT_KEYSTROKE_KEYDOWN,
+			KeyUp = XINPUT_KEYSTROKE_KEYUP,
+			Repeat = XINPUT_KEYSTROKE_REPEAT
 		};
 
-		/// <summary>
-		/// Flags for battery type
-		/// </summary>
-		public enum class BatteryType : System::Int32
-		{
-			Disconnected = BATTERY_TYPE_DISCONNECTED,
-			Wired = BATTERY_TYPE_WIRED,
-			Alkaline = BATTERY_TYPE_ALKALINE,
-			NickelMetalHydride = BATTERY_TYPE_NIMH,
-			Unknown = BATTERY_TYPE_UNKNOWN
-		};
-
-		/// <summary>
-		/// The amount of charge remaining in the battery.
-		/// </summary>
-		/// <remarks>
-		/// These are only valid for wireless, connected devices, with known battery types. The amount of use time remaining depends on the type of device.
-		/// </remarks>
-		public enum class BatteryLevel : System::Int32
-		{
-			Empty = BATTERY_LEVEL_EMPTY,
-			Low = BATTERY_LEVEL_LOW,
-			Medium = BATTERY_LEVEL_MEDIUM,
-			Full = BATTERY_LEVEL_FULL
-		};
-
-		/// <summary>
-		/// Flags that identify the device type.
-		/// </summary>
-		public enum class DeviceQueryType : System::Int32
-		{
-			Any = 0,
-			Gamepad = XINPUT_FLAG_GAMEPAD
-		};
-
-		/// <summary>
-		/// Devices that support batteries.
-		/// </summary>
-		public enum class BatteryDeviceType : System::Int32
-		{
-			Gamepad = BATTERY_DEVTYPE_GAMEPAD,
-			Headset = BATTERY_DEVTYPE_HEADSET
-		};
-
-		/// <summary>
-		/// Index of the signed-in gamer associated with the device.
-		/// </summary>
 		public enum class UserIndex : System::Int32
 		{
 			Any = XUSER_INDEX_ANY,

@@ -20,37 +20,29 @@
 * THE SOFTWARE.
 */
 
-#include "XInputException.h"
+#include <windows.h>
+#include <xinput.h>
 
-using namespace System;
-using namespace System::Runtime::Serialization;
+#include "BatteryInformation.h"
 
 namespace SlimDX
 {
-namespace XInput
-{
-	XInputException::XInputException( SerializationInfo^ info, StreamingContext context )
-	: SlimDXException( info, context )
+	namespace XInput
 	{
-	}
+		BatteryInformation::BatteryInformation( const XINPUT_BATTERY_INFORMATION& native )
+		{
+			m_Type = static_cast<BatteryType>( native.BatteryType );
+			m_Level = static_cast<BatteryLevel>( native.BatteryLevel );
+		}
+		
+		BatteryType BatteryInformation::Type::get()
+		{
+			return m_Type;
+		}
 
-	XInputException::XInputException()
-	{
+		BatteryLevel BatteryInformation::Level::get()
+		{
+			return m_Level;
+		}
 	}
-
-	XInputException::XInputException( String^ message )
-	: SlimDXException( message )
-	{
-	}
-
-	XInputException::XInputException( String^ message, Exception^ innerException )
-	: SlimDXException( message, innerException )
-	{
-	}
-
-	XInputException::XInputException( Result result )
-	: SlimDXException( result.Code )
-	{
-	}
-}
 }

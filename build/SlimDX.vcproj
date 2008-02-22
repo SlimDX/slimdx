@@ -1831,43 +1831,42 @@
 			Name="XInput"
 			>
 			<File
-				RelativePath="..\source\xinput\BatteryInformation.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\xinput\Capabilities.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\xinput\Controller.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\xinput\Controller.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\xinput\Enums.h"
 				>
 			</File>
 			<File
-				RelativePath="..\source\xinput\Gamepad.cpp"
+				RelativePath="..\source\xinput\Error.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Public|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\source\xinput\Gamepad.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\xinput\KeyStroke.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\xinput\State.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\xinput\Vibration.h"
+				RelativePath="..\source\xinput\Error.h"
 				>
 			</File>
 			<File
@@ -1882,6 +1881,74 @@
 				RelativePath="..\source\xinput\XInputException.h"
 				>
 			</File>
+			<Filter
+				Name="Controller"
+				>
+				<File
+					RelativePath="..\source\xinput\Controller.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\Controller.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="State"
+				>
+				<File
+					RelativePath="..\source\xinput\Gamepad.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\Gamepad.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\KeyStroke.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\KeyStroke.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\State.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\State.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\Vibration.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\Vibration.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Capabilities"
+				>
+				<File
+					RelativePath="..\source\xinput\BatteryInformation.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\BatteryInformation.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\Capabilities.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xinput\Capabilities.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Direct3D"

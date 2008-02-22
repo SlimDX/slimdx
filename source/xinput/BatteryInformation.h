@@ -21,7 +21,7 @@
 */
 #pragma once
 
-//using namespace System;
+#include "Enums.h"
 
 namespace SlimDX
 {
@@ -30,22 +30,21 @@ namespace SlimDX
 		public value class BatteryInformation
 		{
 		private:
-			BatteryType type;
-			BatteryLevel level;
-
+			BatteryType m_Type;
+			BatteryLevel m_Level;
+		
+		internal:
+			BatteryInformation( const XINPUT_BATTERY_INFORMATION& native );
+			
 		public:
 			property BatteryType Type
 			{
-				BatteryType get() { return type; }
-			internal:
-				void set( BatteryType value ) { type = value; }
+				BatteryType get();
 			}
 
 			property BatteryLevel Level
 			{
-				BatteryLevel get() { return level; }
-			internal:
-				void set( BatteryLevel value ) { level = value; }
+				BatteryLevel get();
 			}
 		};
 	}

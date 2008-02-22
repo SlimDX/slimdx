@@ -21,29 +21,38 @@
 */
 #pragma once
 
-//using namespace System;
+#include "Gamepad.h"
 
 namespace SlimDX
 {
 	namespace XInput
 	{
-		/// <summary>
-		/// Represents the state of a controller.
-		/// </summary>
-		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class State
 		{
+		private:
+			System::UInt32 m_PacketNumber;
+			XInput::Gamepad m_Gamepad;
+		
+		internal:
+			State( const XINPUT_STATE& native );
+		
 		public:
 			/// <summary>
-			/// State packet number. The packet number indicates whether there have been any changes in the state of the controller.
-			/// If the PacketNumber member is the same in sequentially returned State structures, the controller state has not changed. 
-			/// </summary>
-			property System::UInt32 PacketNumber;
-
-			/// <summary>
-			/// Gamepad structure containing the current state of an Xbox 360 Controller. 
-			/// </summary>
-            property Gamepad Gamepad;
+			/// Gets the state packet number.
+			/// <summar>
+			/// <remarks>
+			/// The packet number indicates whether there have been any changes in the state of the controller. If the value
+			/// does not change in sequentially returned State structures, the controller state has not changed. 
+			/// </remarks>
+			property System::UInt32 PacketNumber
+			{
+				System::UInt32 get();
+			}
+      
+      property XInput::Gamepad Gamepad
+      {
+				XInput::Gamepad get();
+      }
 		};
 	}
 }
