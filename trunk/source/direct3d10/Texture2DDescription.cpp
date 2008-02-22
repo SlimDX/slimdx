@@ -35,6 +35,7 @@ namespace Direct3D10
 		m_MipLevels = native.MipLevels;
 		m_ArraySize = native.ArraySize;
 		m_Format = static_cast<DXGI::Format>( native.Format );
+		m_SampleDesc = DXGI::SampleDescription( native.SampleDesc );
 		m_Usage = static_cast<ResourceUsage>( native.Usage );
 		m_BindFlags = static_cast<Direct3D10::BindFlags>( native.BindFlags );
 		m_CPUAccessFlags = static_cast<Direct3D10::CpuAccessFlags>( native.CPUAccessFlags );
@@ -49,6 +50,7 @@ namespace Direct3D10
 		native.MipLevels = m_MipLevels;
 		native.ArraySize = m_ArraySize;
 		native.Format = static_cast<DXGI_FORMAT>( m_Format );
+		native.SampleDesc = m_SampleDesc.CreateNativeVersion();
 		native.Usage = static_cast<D3D10_USAGE>( m_Usage );
 		native.BindFlags = static_cast<UINT>( m_BindFlags );
 		native.CPUAccessFlags = static_cast<UINT>( m_CPUAccessFlags );
@@ -105,6 +107,16 @@ namespace Direct3D10
 	void Texture2DDescription::Format::set( DXGI::Format value )
 	{
 		m_Format = value;
+	}
+	
+	DXGI::SampleDescription Texture2DDescription::SampleDescription::get()
+	{
+		return m_SampleDesc;
+	}
+
+	void Texture2DDescription::SampleDescription::set( DXGI::SampleDescription value )
+	{
+		m_SampleDesc = value;
 	}
 	
 	ResourceUsage Texture2DDescription::Usage::get()

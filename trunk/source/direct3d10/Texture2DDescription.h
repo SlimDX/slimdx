@@ -22,6 +22,7 @@
 #pragma once
 
 #include "../dxgi/Enums.h"
+#include "../dxgi/SampleDescription.h"
 
 #include "Enums.h"
 
@@ -37,6 +38,7 @@ namespace SlimDX
 			int m_MipLevels;
 			int m_ArraySize;
 			DXGI::Format m_Format;
+			DXGI::SampleDescription m_SampleDesc;
 			ResourceUsage m_Usage;
 			BindFlags m_BindFlags;
 			CpuAccessFlags m_CPUAccessFlags;
@@ -76,6 +78,12 @@ namespace SlimDX
 			{
 				DXGI::Format get();
 				void set( DXGI::Format value );
+			}
+			
+			property DXGI::SampleDescription SampleDescription
+			{
+				DXGI::SampleDescription get();
+				void set( DXGI::SampleDescription value );
 			}
 			
 			property ResourceUsage Usage
