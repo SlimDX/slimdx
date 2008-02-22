@@ -139,7 +139,7 @@ namespace Direct3D9
 		return gcnew SkinInfo( result );
 	}
 
-	Mesh^ SkinInfo::ConvertToBlendedMesh( Mesh^ mesh,
+	Mesh^ SkinInfo::ConvertToBlendedMesh( Mesh^ mesh, array<int>^ adjacency,
 		[Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap, [Out] int% maxVertexInfluence,
 		[Out] array<BoneCombination^>^% boneCombinationTable )
 	{
@@ -152,7 +152,6 @@ namespace Direct3D9
 
 		faceRemap = gcnew array<int>( mesh->FaceCount );
 
-		array<int>^ adjacency = mesh->GetAdjacency();
 		array<int>^ adjacencyOut = gcnew array<int>( mesh->FaceCount * 3 );
 
 		pin_ptr<int> pinnedAdjIn;
@@ -199,7 +198,7 @@ namespace Direct3D9
 		return out;
 	}
 
-	Mesh^ SkinInfo::ConvertToBlendedMesh( Mesh^ mesh,
+	Mesh^ SkinInfo::ConvertToBlendedMesh( Mesh^ mesh, array<int>^ adjacency,
 		[Out] int% maxVertexInfluence, [Out] array<BoneCombination^>^% boneCombinationTable )
 	{
 		ID3DXMesh *result;
@@ -208,7 +207,6 @@ namespace Direct3D9
 		DWORD bcc;
 		DWORD *adjacencyIn = NULL;
 
-		array<int>^ adjacency = mesh->GetAdjacency();
 		array<int>^ adjacencyOut = gcnew array<int>( mesh->FaceCount * 3 );
 
 		pin_ptr<int> pinnedAdjIn;
@@ -251,7 +249,7 @@ namespace Direct3D9
 		return out;
 	}
 
-	Mesh^ SkinInfo::ConvertToIndexedBlendedMesh( Mesh^ mesh, int paletteSize,
+	Mesh^ SkinInfo::ConvertToIndexedBlendedMesh( Mesh^ mesh, int paletteSize, array<int>^ adjacency,
 		[Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap, [Out] int% maxVertexInfluence,
 		[Out] array<BoneCombination^>^% boneCombinationTable )
 	{
@@ -264,7 +262,6 @@ namespace Direct3D9
 
 		faceRemap = gcnew array<int>( mesh->FaceCount );
 
-		array<int>^ adjacency = mesh->GetAdjacency();
 		array<int>^ adjacencyOut = gcnew array<int>( mesh->FaceCount * 3 );
 
 		pin_ptr<int> pinnedAdjIn;
@@ -312,7 +309,7 @@ namespace Direct3D9
 		return out;
 	}
 
-	Mesh^ SkinInfo::ConvertToIndexedBlendedMesh( Mesh^ mesh, int paletteSize,
+	Mesh^ SkinInfo::ConvertToIndexedBlendedMesh( Mesh^ mesh, int paletteSize, array<int>^ adjacency,
 		[Out] int% maxVertexInfluence, [Out] array<BoneCombination^>^% boneCombinationTable )
 	{
 		ID3DXMesh *result;
@@ -321,7 +318,6 @@ namespace Direct3D9
 		DWORD bcc;
 		DWORD *adjacencyIn = NULL;
 
-		array<int>^ adjacency = mesh->GetAdjacency();
 		array<int>^ adjacencyOut = gcnew array<int>( mesh->FaceCount * 3 );
 
 		pin_ptr<int> pinnedAdjIn;

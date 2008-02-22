@@ -414,7 +414,6 @@ namespace Direct3D9
 		try
 		{
 			m_WrappedInterface->DestroyFrame( ((FrameShim*)pFrameToFree)->GetFrame() );
-			delete pFrameToFree;
 		}
 		catch( Exception^ )
 		{
@@ -429,7 +428,6 @@ namespace Direct3D9
 		try
 		{
 			m_WrappedInterface->DestroyMeshContainer( ((MeshContainerShim*)pMeshContainerToFree)->GetMeshContainer() );
-			delete pMeshContainerToFree;
 		}
 		catch( Exception^ )
 		{
