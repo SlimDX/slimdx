@@ -26,6 +26,7 @@
 #include "../DataStream.h"
 #include "../ComObject.h"
 #include "../Utilities.h"
+#include "../StackAlloc.h"
 
 #include "Direct3D9NotInitializedException.h"
 
@@ -890,8 +891,8 @@ namespace Direct3D9
 		int width = 0;
 		int heightSrc = 0;
 		int heightDest = 0;
-		COLORREF *arrayMask = NULL;
-		COLORREF *arrayColor = NULL;
+		stack_vector<COLORREF> arrayMask;
+		stack_vector<COLORREF> arrayColor;
 		COLORREF color;
 		COLORREF mask;
 		HDC hdcColor = NULL;
@@ -936,7 +937,7 @@ namespace Direct3D9
 			return Result::Record( hr );
 		}
 
-		arrayMask = new DWORD[width * heightSrc];
+		arrayMask.resize( width * heightSrc );
 
 		bmi.bmiHeader.biSize = sizeof( bmi.bmiHeader );
 		bmi.bmiHeader.biWidth = width;
@@ -955,20 +956,18 @@ namespace Direct3D9
 				DeleteObject( iconInfo.hbmColor );
 			if( hdcScreen != NULL )
 				ReleaseDC( NULL, hdcScreen );
-			if( arrayMask != NULL )
-				delete[] arrayMask;
 			if( cursorSurface != NULL )
 				cursorSurface->Release();
 			return Result::Record( E_FAIL );
 		}
 
 		oldObject = SelectObject( hdcMask, iconInfo.hbmMask );
-		GetDIBits( hdcMask, iconInfo.hbmMask, 0, heightSrc, arrayMask, &bmi, DIB_RGB_COLORS );
+		GetDIBits( hdcMask, iconInfo.hbmMask, 0, heightSrc, &arrayMask[0], &bmi, DIB_RGB_COLORS );
 		SelectObject( hdcMask, oldObject );
 
 		if( !bwCursor )
 		{
-			arrayColor = new DWORD[width * heightDest];
+			arrayColor.resize( width * heightDest );
 			hdcColor = CreateCompatibleDC( hdcScreen );
 			if( hdcColor == NULL )
 			{
@@ -982,17 +981,13 @@ namespace Direct3D9
 					DeleteDC( hdcMask );
 				if( hdcColor != NULL )
 					DeleteDC( hdcColor );
-				if( arrayColor != NULL )
-					delete[] arrayColor;
-				if( arrayMask != NULL )
-					delete[] arrayMask;
 				if( cursorSurface != NULL )
 					cursorSurface->Release();
 				return Result::Record( E_FAIL );
 			}
 
 			SelectObject( hdcColor, iconInfo.hbmColor );
-			GetDIBits( hdcColor, iconInfo.hbmColor, 0, heightDest, arrayColor, &bmi, DIB_RGB_COLORS );
+			GetDIBits( hdcColor, iconInfo.hbmColor, 0, heightDest, &arrayColor[0], &bmi, DIB_RGB_COLORS );
 		}
 
 		D3DLOCKED_RECT lr;
@@ -1042,10 +1037,6 @@ namespace Direct3D9
 			DeleteDC( hdcMask );
 		if( hdcColor != NULL )
 			DeleteDC( hdcColor );
-		if( arrayColor != NULL )
-			delete[] arrayColor;
-		if( arrayMask != NULL )
-			delete[] arrayMask;
 		if( cursorSurface != NULL )
 			cursorSurface->Release();
 		return Result::Record( hr );

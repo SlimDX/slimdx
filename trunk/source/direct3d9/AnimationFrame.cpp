@@ -22,6 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <vcclr.h>
+#include <memory>
 
 #include "../ComObject.h"
 #include "../DataStream.h"
@@ -91,12 +92,15 @@ namespace Direct3D9
 	MeshContainer::MeshContainer()
 	{
 		Pointer = new D3DXMESHCONTAINER();
+		Pointer->Name = NULL;
 		Pointer->MeshData = D3DXMESHDATA();
 		Pointer->pMaterials = NULL;
 		Pointer->pEffects = NULL;
+		Pointer->NumMaterials = 0;
 		Pointer->pAdjacency = NULL;
 		Pointer->pSkinInfo = NULL;
 		Pointer->pNextMeshContainer = NULL;
+
 		m_Name = String::Empty;
 		m_NextContainer = nullptr;
 		m_SkinInfo = nullptr;
@@ -116,24 +120,17 @@ namespace Direct3D9
 	{
 		if( Pointer != NULL )
 		{
-			if( Pointer->pMaterials != NULL )
-			{
-				delete[] Pointer->pMaterials;
-				Pointer->pMaterials = NULL;
-			}
+			delete[] Pointer->pMaterials;
+			Pointer->pMaterials = NULL;
 
-			if( Pointer->pAdjacency != NULL )
-			{
-				delete[] Pointer->pAdjacency;
-				Pointer->pAdjacency = NULL;
-			}
+			delete[] Pointer->pAdjacency;
+			Pointer->pAdjacency = NULL;
 
 			if( Pointer->pEffects != NULL )
 			{
 				for( unsigned int i = 0; i < Pointer->NumMaterials; i++ )
 				{
-					if( Pointer->pEffects[i].pDefaults != NULL )
-						delete[] Pointer->pEffects[i].pDefaults;
+					delete[] Pointer->pEffects[i].pDefaults;
 				}
 
 				delete[] Pointer->pEffects;
@@ -142,24 +139,12 @@ namespace Direct3D9
 
 			if(m_MeshData != nullptr )
 			{
-				if(m_MeshData->Mesh != nullptr)
-				{
-					m_MeshData->Mesh->~Mesh();
-				}
-				if(m_MeshData->PatchMesh != nullptr)
-				{
-					m_MeshData->PatchMesh->~PatchMesh();
-				}
-				if(m_MeshData->ProgressiveMesh != nullptr)
-				{
-					m_MeshData->ProgressiveMesh->~ProgressiveMesh();
-				}
+				delete m_MeshData->Mesh;
+				delete m_MeshData->PatchMesh;
+				delete m_MeshData->ProgressiveMesh;
 			}
 
-			if(m_SkinInfo != nullptr)
-			{
-				m_SkinInfo->~SkinInfo();
-			}
+			delete m_SkinInfo;
 
 			delete Pointer;
 			Pointer = NULL;
@@ -255,6 +240,7 @@ namespace Direct3D9
 			Pointer->Name = NULL;
 		else
 		{
+			//FIXME: saving pointer to pinned string
 			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( value );
 			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
@@ -631,11 +617,8 @@ namespace Direct3D9
 
 	void Frame::Destruct()
 	{
-		if( Pointer != NULL )
-		{
-			delete Pointer;
-			Pointer = NULL;
-		}
+		delete Pointer;
+		Pointer = NULL;
 	}
 
 	void Frame::AppendChild( Frame^ child )
@@ -704,24 +687,20 @@ namespace Direct3D9
 
 	Result Frame::DestroyHierarchy( Frame^ root, IAllocateHierarchy^ allocator )
 	{
-		IAllocateHierarchyShim* shim = new IAllocateHierarchyShim( allocator );
-		FrameShim* frameShim = Frame::BuildHierarchyFromManaged( root );
+		std::auto_ptr<IAllocateHierarchyShim> shim( new IAllocateHierarchyShim( allocator ) );
+		std::auto_ptr<FrameShim> frameShim( Frame::BuildHierarchyFromManaged( root ) );
 
-		HRESULT hr = D3DXFrameDestroy( frameShim, shim );
+		HRESULT hr = D3DXFrameDestroy( frameShim.get(), shim.get() );
 		Result::Record( hr );
-
-		delete shim;
-		delete frameShim;
 
 		return Result::Last;
 	}
 
 	int Frame::CountNamedFrames( Frame^ root )
 	{
-		FrameShim* frameShim = Frame::BuildHierarchyFromManaged( root );
-		int count = D3DXFrameNumNamedMatrices( frameShim );
+		std::auto_ptr<FrameShim> frameShim( Frame::BuildHierarchyFromManaged( root ) );
+		int count = D3DXFrameNumNamedMatrices( frameShim.get() );
 
-		delete frameShim;
 		return count;
 	}
 
@@ -746,6 +725,7 @@ namespace Direct3D9
 			Pointer->Name = NULL;
 		else
 		{
+			//FIXME: saving pointer to pinned string
 			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( value );
 			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
@@ -812,27 +792,23 @@ namespace Direct3D9
 	Frame^ Frame::LoadHierarchyFromX( Device^ device, String^ fileName, MeshFlags options, 
 		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
 	{
-		IAllocateHierarchyShim* allocatorShim = new IAllocateHierarchyShim( allocator );
-		ILoadUserDataShim* userDataLoaderShim = NULL;
+		std::auto_ptr<IAllocateHierarchyShim> allocatorShim( new IAllocateHierarchyShim( allocator ) );
+		std::auto_ptr<ILoadUserDataShim> userDataLoaderShim( NULL );
 		LPD3DXFRAME result = NULL;
 		LPD3DXANIMATIONCONTROLLER animationResult;
 
-		if( userDataLoader == nullptr )
-			userDataLoaderShim = NULL;
-		else
-			userDataLoaderShim = new ILoadUserDataShim( userDataLoader );
+		animationController = nullptr;
+
+		if( userDataLoader != nullptr )
+			userDataLoaderShim.reset( new ILoadUserDataShim( userDataLoader ) );
 
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
 		HRESULT hr = D3DXLoadMeshHierarchyFromX( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( options ), device->InternalPointer,
-			allocatorShim, userDataLoaderShim, &result, &animationResult);
+			allocatorShim.get(), userDataLoaderShim.get(), &result, &animationResult);
 
 		if( Result::Record( hr ).IsFailure )
 		{
-			delete allocatorShim;
-			delete userDataLoaderShim;
-
-			animationController = nullptr;
 			return nullptr;
 		}
 
@@ -841,12 +817,7 @@ namespace Direct3D9
 		{
 			animationController = gcnew AnimationController( animationResult );
 		}
-		else
-			animationController = nullptr;
 
-		delete allocatorShim;
-		delete userDataLoaderShim;
-		
 		// Build frame hierarchy.
 		Frame^ frame = Frame::BuildHierarchyFromUnmanaged( ((FrameShim*)result) );
 
@@ -860,27 +831,23 @@ namespace Direct3D9
 	Frame^ Frame::LoadHierarchyFromX( Device^ device, array<Byte>^ memory, MeshFlags options, 
 		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
 	{
-		IAllocateHierarchyShim* allocatorShim = new IAllocateHierarchyShim( allocator );
-		ILoadUserDataShim* userDataLoaderShim = NULL;
+		std::auto_ptr<IAllocateHierarchyShim> allocatorShim( new IAllocateHierarchyShim( allocator ) );
+		std::auto_ptr<ILoadUserDataShim> userDataLoaderShim( NULL );
 		LPD3DXFRAME result = NULL;
 		LPD3DXANIMATIONCONTROLLER animationResult = NULL;
 
-		if( userDataLoader == nullptr )
-			userDataLoaderShim = NULL;
-		else
-			userDataLoaderShim = new ILoadUserDataShim( userDataLoader );
+		animationController = nullptr;
+
+		if( userDataLoader != nullptr )
+			userDataLoaderShim.reset( new ILoadUserDataShim( userDataLoader ) );
 
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
 		HRESULT hr = D3DXLoadMeshHierarchyFromX( reinterpret_cast<LPCWSTR>( pinnedMemory ), static_cast<DWORD>( options ), device->InternalPointer,
-			allocatorShim, userDataLoaderShim, &result, &animationResult);
+			allocatorShim.get(), userDataLoaderShim.get(), &result, &animationResult);
 
 		if( Result::Record( hr ).IsFailure )
 		{
-			delete allocatorShim;
-			delete userDataLoaderShim;
-
-			animationController = nullptr;
 			return nullptr;
 		}
 
@@ -889,12 +856,7 @@ namespace Direct3D9
 		{
 			animationController = gcnew AnimationController( animationResult );
 		}
-		else
-			animationController = nullptr;
 
-		delete allocatorShim;
-		delete userDataLoaderShim;
-		
 		// Build frame hierarchy.
 		Frame^ frame = Frame::BuildHierarchyFromUnmanaged( (FrameShim*)result );
 
@@ -915,8 +877,8 @@ namespace Direct3D9
 	Result Frame::SaveHierarchyToFile( String^ fileName, XFileFormat format, Frame^ root, AnimationController^ animationController, ISaveUserData^ userDataSaver )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
-		ISaveUserDataShim *shim = new ISaveUserDataShim( userDataSaver );
-		FrameShim *frameShim = Frame::BuildHierarchyFromManaged( root );
+		std::auto_ptr<ISaveUserDataShim> shim( new ISaveUserDataShim( userDataSaver ) );
+		std::auto_ptr<FrameShim> frameShim( Frame::BuildHierarchyFromManaged( root ) );
 
 		// If animation controller is null, handle it.
 		LPD3DXANIMATIONCONTROLLER animation = NULL;
@@ -924,11 +886,8 @@ namespace Direct3D9
 			animation = animationController->InternalPointer;
 
 		HRESULT hr = D3DXSaveMeshHierarchyToFile( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( format ),
-			frameShim, animation, shim );
+			frameShim.get(), animation, shim.get() );
 		Result::Record( hr );
-
-		delete shim;
-		delete frameShim;
 
 		return Result::Last;
 	}
@@ -1035,6 +994,7 @@ namespace Direct3D9
 			pFrame->Name = NULL;
 		else
 		{
+			//FIXME: saving pointer to pinned string
 			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( frame->Name );
 			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
@@ -1072,6 +1032,7 @@ namespace Direct3D9
 			pMesh->Name = NULL;
 		else
 		{
+			//FIXME: saving pointer to pinned string
 			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( mesh->Name );
 			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 

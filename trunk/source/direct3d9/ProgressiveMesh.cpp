@@ -26,6 +26,7 @@
 #include "../ComObject.h"
 #include "../Utilities.h"
 #include "../DataStream.h"
+#include "../StackAlloc.h"
 
 #include "Device.h"
 #include "Texture.h"
@@ -425,28 +426,25 @@ namespace Direct3D9
 		array<ExtendedMaterial>^ materials = mesh->GetMaterials();
 		array<EffectInstance>^ effects = mesh->GetEffects();
 
-		D3DXMATERIAL *nativeMaterials = NULL;
-		D3DXEFFECTINSTANCE *nativeEffects = NULL;
+		stack_vector<D3DXMATERIAL> nativeMaterials;
+		stack_vector<D3DXEFFECTINSTANCE> nativeEffects;
 
 		if( materials != nullptr )
 		{
-			nativeMaterials = new D3DXMATERIAL[materials->Length];
+			nativeMaterials.resize( materials->Length );
 			for( int i = 0; i < materials->Length; i++ )
 				nativeMaterials[i] = ExtendedMaterial::ToUnmanaged( materials[i] );
 		}
 
 		if( effects != nullptr )
 		{
-			nativeEffects = new D3DXEFFECTINSTANCE[effects->Length];
+			nativeEffects.resize( effects->Length );
 			for( int i = 0; i < effects->Length; i++ )
 				nativeEffects[i] = EffectInstance::ToUnmanaged( effects[i] );
 		}
 
-		HRESULT hr = mesh->MeshPointer->Save( reinterpret_cast<IStream*>( nativeStream ), nativeMaterials, nativeEffects, materials->Length );
+		HRESULT hr = mesh->MeshPointer->Save( reinterpret_cast<IStream*>( nativeStream ), &nativeMaterials[0], &nativeEffects[0], materials->Length );
 		Result::Record( hr );
-
-		delete[] nativeMaterials;
-		delete[] nativeEffects;
 
 		return Result::Last;
 	}

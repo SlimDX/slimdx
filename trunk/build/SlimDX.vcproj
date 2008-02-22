@@ -1104,6 +1104,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\StackAlloc.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\Utilities.cpp"
 				>
 			</File>

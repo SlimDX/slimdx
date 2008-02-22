@@ -23,6 +23,8 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
+#include "../StackAlloc.h"
+
 #include "Sprite.h"
 #include "Device.h"
 
@@ -103,19 +105,19 @@ namespace Direct3D10
 
 	void Sprite::DrawBuffered( array<SpriteInstance^>^ instances )
 	{
-		D3DX10_SPRITE* nativeInstances = new D3DX10_SPRITE[instances->Length];
+		stack_vector<D3DX10_SPRITE> nativeInstances( instances->Length );
 		for( int instanceIndex = 0; instanceIndex < instances->Length; ++instanceIndex )
 			instances[instanceIndex]->ToNativeObject( nativeInstances[instanceIndex] );
-		HRESULT hr = InternalPointer->DrawSpritesBuffered( nativeInstances, instances->Length );
+		HRESULT hr = InternalPointer->DrawSpritesBuffered( &nativeInstances[0], instances->Length );
 		Result::Record( hr );
 	}
 
 	void Sprite::DrawImmediate( array<SpriteInstance^>^ instances )
 	{
-		D3DX10_SPRITE* nativeInstances = new D3DX10_SPRITE[instances->Length];
+		stack_vector<D3DX10_SPRITE> nativeInstances( instances->Length );
 		for( int instanceIndex = 0; instanceIndex < instances->Length; ++instanceIndex )
 			instances[instanceIndex]->ToNativeObject( nativeInstances[instanceIndex] );
-		HRESULT hr = InternalPointer->DrawSpritesImmediate( nativeInstances, instances->Length, sizeof(D3DX10_SPRITE), 0 );
+		HRESULT hr = InternalPointer->DrawSpritesImmediate( &nativeInstances[0], instances->Length, sizeof(D3DX10_SPRITE), 0 );
 		Result::Record( hr );
 	}
 }

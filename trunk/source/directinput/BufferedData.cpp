@@ -51,6 +51,7 @@ namespace DirectInput
 				result->keys[objectData.dwOfs] = true;
 			else
 				result->keys[objectData.dwOfs] = false;
+			//FIXME: Shouldn't this be safe_cast?
 			data = reinterpret_cast<DataFormat>( result );
 		}
 		else if( type == MouseState::typeid )
@@ -119,6 +120,7 @@ namespace DirectInput
 			else if( objectData.dwOfs == DIMOFS_Z )
 				result->z = objectData.dwData;
 
+			//FIXME: Shouldn't this be safe_cast?
 			data = reinterpret_cast<DataFormat>( result );
 		}
 		else if( type == JoystickState::typeid )

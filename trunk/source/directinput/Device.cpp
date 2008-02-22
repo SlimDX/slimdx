@@ -24,6 +24,7 @@
 
 #include "../ComObject.h"
 #include "../Utilities.h"
+#include "../StackAlloc.h"
 
 #include "DirectInput.h"
 #include "DirectInputException.h"
@@ -105,7 +106,7 @@ namespace DirectInput
 			format.dwDataSize = Marshal::SizeOf( type );
 			format.dwNumObjs = objectAttributes->Count;
 
-			DIOBJECTDATAFORMAT *objectFormats = new DIOBJECTDATAFORMAT[objectAttributes->Count];
+			stack_vector<DIOBJECTDATAFORMAT> objectFormats( objectAttributes->Count );
 			for( int i = 0; i < objectAttributes->Count; i++ )
 			{
 				GUID *guid = new GUID( Utilities::ConvertManagedGuid( objectAttributes[i]->SourceGuid ) );
@@ -119,12 +120,11 @@ namespace DirectInput
 				objectFormats[i].dwOfs = objectAttributes[i]->Offset;
 			}
 
-			format.rgodf = objectFormats;
+			format.rgodf = &objectFormats[0];
 			hr = InternalPointer->SetDataFormat( &format );
 
 			for( int i = 0; i < objectAttributes->Count; i++ )
 				delete objectFormats[i].pguid;
-			delete[] objectFormats;
 		}
 
 		if( Result::Record( hr ).IsFailure )
@@ -199,8 +199,8 @@ namespace DirectInput
 		if( FAILED( hr ) )
 			return nullptr;
 
-		DIDEVICEOBJECTDATA *data = new DIDEVICEOBJECTDATA[size];
-		hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), data, reinterpret_cast<LPDWORD>( &size ), 0 );
+		stack_vector<DIDEVICEOBJECTDATA> data( size );
+		hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), &data[0], reinterpret_cast<LPDWORD>( &size ), 0 );
 		Result::Record( hr );
 
 		if( hr == DI_BUFFEROVERFLOW && &Device::BufferOverflow != nullptr )
@@ -211,7 +211,6 @@ namespace DirectInput
 
 		if( FAILED( hr ) )
 		{
-			delete[] data;
 			return nullptr;
 		}
 
@@ -220,8 +219,6 @@ namespace DirectInput
 			BufferedData<DataFormat>^ bufferedData = gcnew BufferedData<DataFormat>( data[i] );
 			list->Add( bufferedData );
 		}
-
-		delete[] data;
 
 		return list;
 	}
@@ -244,6 +241,7 @@ namespace DirectInput
 				return Result::Last;
 			}
 
+			//FIXME: Shouldn't this be safe_cast?
 			KeyboardState^ state = reinterpret_cast<KeyboardState^>( data );
 			for( int i = 0; i < 256; i++ )
 			{
@@ -266,6 +264,7 @@ namespace DirectInput
 				return Result::Last;
 			}
 
+			//FIXME: Shouldn't this be safe_cast?
 			MouseState^ result = reinterpret_cast<MouseState^>( data );
 			for( int i = 0; i < 8; i++ )
 			{
@@ -288,6 +287,7 @@ namespace DirectInput
 				return Result::Last;
 			}
 
+			//FIXME: Shouldn't this be safe_cast?
 			JoystickState^ state = reinterpret_cast<JoystickState^>( data );
 			state->x = joystate.lX;
 			state->y = joystate.lY;
@@ -336,8 +336,8 @@ namespace DirectInput
 		else
 		{
 			int typeSize = Marshal::SizeOf( type );
-			BYTE *bytes = new BYTE[typeSize];
-			HRESULT hr = InternalPointer->GetDeviceState( sizeof( BYTE ) * typeSize, bytes );
+			stack_vector<BYTE> bytes(typeSize);
+			HRESULT hr = InternalPointer->GetDeviceState( sizeof( BYTE ) * typeSize, &bytes[0] );
 			Result::Record( hr );
 
 			if( hr == DIERR_INPUTLOST )
@@ -347,12 +347,10 @@ namespace DirectInput
 				return Result::Last;
 			}
 
-			IntPtr pointerData( bytes );
+			IntPtr pointerData( &bytes[0] );
 			GCHandle handle = GCHandle::Alloc( data, GCHandleType::Pinned );
 			memcpy( handle.AddrOfPinnedObject().ToPointer(), pointerData.ToPointer(), typeSize );
 			handle.Free();
-
-			delete[] bytes;
 		}
 
 		return Result::Last;
@@ -430,8 +428,8 @@ namespace DirectInput
 		else
 		{
 			int typeSize = Marshal::SizeOf( type );
-			BYTE *bytes = new BYTE[typeSize];
-			HRESULT hr = InternalPointer->GetDeviceState( sizeof( BYTE ) * typeSize, bytes );
+			stack_vector<BYTE> bytes(typeSize);
+			HRESULT hr = InternalPointer->GetDeviceState( sizeof( BYTE ) * typeSize, &bytes[0] );
 			Result::Record( hr );
 
 			if( hr == DIERR_INPUTLOST )
@@ -443,12 +441,10 @@ namespace DirectInput
 
 			DataFormat result = Activator::CreateInstance<DataFormat>();
 
-			IntPtr pointerData( bytes );
+			IntPtr pointerData( &bytes[0] );
 			GCHandle handle = GCHandle::Alloc( result, GCHandleType::Pinned );
 			memcpy( handle.AddrOfPinnedObject().ToPointer(), pointerData.ToPointer(), typeSize );
 			handle.Free();
-
-			delete[] bytes;
 
 			return result;
 		}

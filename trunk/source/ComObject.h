@@ -49,8 +49,6 @@ namespace SlimDX
 		void Destruct();
 	
 	internal:
-		virtual void DisposeHandler( System::Object^ sender, System::EventArgs^ e );
-
 		property IUnknown* UnknownPointer
 		{
 			IUnknown* get();
