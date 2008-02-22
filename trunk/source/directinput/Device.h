@@ -21,10 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Reflection;
-//using namespace System::Windows::Forms;
-
 #include "../ComObject.h"
 
 #include "DeviceState.h"
@@ -76,33 +72,33 @@ namespace SlimDX
 			/// <summary>
 			/// Obtains access to the input device.
 			/// </summary>
-			void Acquire();
+			Result Acquire();
 
 			/// <summary>
 			/// Releases access to the device.
 			/// </summary>
-			void Unacquire();
+			Result Unacquire();
 			
 			/// <summary>
 			/// Sets the device's cooperative level.
 			/// </summary>
 			/// <param name="handle">A handle of a window to associate with the device.</param>
 			/// <param name="flags">Flags that describe the cooperative level of the device.</param>
-			void SetCooperativeLevel( System::IntPtr handle, CooperativeLevel flags );
+			Result SetCooperativeLevel( System::IntPtr handle, CooperativeLevel flags );
 
 			/// <summary>
 			/// Sets the device's cooperative level.
 			/// </summary>
 			/// <param name="control">A control to associate with the device.</param>
 			/// <param name="flags">Flags that describe the cooperative level of the device.</param>
-			void SetCooperativeLevel( System::Windows::Forms::Control^ control, CooperativeLevel flags );
+			Result SetCooperativeLevel( System::Windows::Forms::Control^ control, CooperativeLevel flags );
 
 			/// <summary>
 			/// Runs the DirectInput control panel associated with this device. If the
 			/// device does not have a control panel associated with it, the default
 			/// device control panel is launched.
 			/// </summary>
-			void RunControlPanel();
+			Result RunControlPanel();
 
 			/// <summary>
 			/// Runs the DirectInput control panel associated with this device. If the
@@ -110,7 +106,7 @@ namespace SlimDX
 			/// device control panel is launched.
 			/// </summary>
 			/// <param name="parent">The parent control.</param>
-			void RunControlPanel( System::Windows::Forms::Control^ parent );
+			Result RunControlPanel( System::Windows::Forms::Control^ parent );
 
 			/// <summary>
 			/// Retrieves the current device state.
@@ -120,7 +116,7 @@ namespace SlimDX
 			/// <summary>
 			/// Retrieves the current device state.
 			/// </summary>
-			void GetCurrentState( DataFormat% data );
+			Result GetCurrentState( DataFormat% data );
 
 			/// <summary>
 			/// Retrieves buffered data from the device.
@@ -130,7 +126,7 @@ namespace SlimDX
 			/// <summary>
 			/// Retrieves data from polled objects on a DirectInput device.
 			/// </summary>
-			void Poll();
+			Result Poll();
 
 			/// <summary>
 			/// Gets a set of properties that control the behavior of the device.

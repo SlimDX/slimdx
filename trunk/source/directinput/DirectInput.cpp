@@ -79,16 +79,16 @@ namespace DirectInput
 		System::AppDomain::CurrentDomain->ProcessExit -= gcnew System::EventHandler( OnExit );
 	}
 
-	void DirectInput::RunControlPanel()
+	Result DirectInput::RunControlPanel()
 	{
 		HRESULT hr = m_DirectInput->RunControlPanel( NULL, 0 );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
-	void DirectInput::RunControlPanel( Control^ parent )
+	Result DirectInput::RunControlPanel( Control^ parent )
 	{
 		HRESULT hr = m_DirectInput->RunControlPanel( static_cast<HWND>( parent->Handle.ToPointer() ), 0 );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	bool DirectInput::IsDeviceAttached( Guid device )

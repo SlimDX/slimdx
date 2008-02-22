@@ -117,6 +117,9 @@ namespace SlimDX
 			EffectHandle^ GetPass( EffectHandle^ technique, System::String^ name );
 			PassDescription GetPassDescription( EffectHandle^ handle );
 
+			PixelShader^ GetPixelShader( EffectHandle^ parameter );
+			VertexShader^ GetVertexShader( EffectHandle^ parameter );
+
 			property EffectDescription Description
 			{
 				EffectDescription get();

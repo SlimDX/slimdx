@@ -67,14 +67,14 @@ namespace SlimDX
 			/// Runs Control Panel to enable the user to install a new
 			/// input device or modify configurations.
 			/// </summary>
-			static void RunControlPanel();
+			static Result RunControlPanel();
 
 			/// <summary>
 			/// Runs Control Panel to enable the user to install a new
 			/// input device or modify configurations.
 			/// </summary>
 			/// <param name="parent">The parent control.</param>
-			static void RunControlPanel( System::Windows::Forms::Control^ parent );
+			static Result RunControlPanel( System::Windows::Forms::Control^ parent );
 
 			/// <summary>
 			/// Gets a value indicating whether the specified device is

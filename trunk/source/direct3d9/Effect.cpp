@@ -322,7 +322,6 @@ namespace SlimDX
 			if( shim != NULL )
 				delete shim;
 
-			// TODO: Fix following line
 			//shim = new IEffectStateManagerShim( manager );
 
 			HRESULT hr = EffectPointer->SetStateManager( shim );
