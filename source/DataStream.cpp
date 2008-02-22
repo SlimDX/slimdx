@@ -24,8 +24,8 @@
 #include <d3dx9.h>
 
 #include "DataStream.h"
-
 #include "Utilities.h"
+#include "InternalHelpers.h"
 
 using namespace System;
 using namespace System::IO;
@@ -152,7 +152,7 @@ namespace SlimDX
 
 	Int64 DataStream::Seek( Int64 offset, SeekOrigin origin )
 	{
-		Int64 targetPosition;
+		Int64 targetPosition = 0;
 
 		switch( origin )
 		{
@@ -300,6 +300,7 @@ namespace SlimDX
 
 	void DataStream::SetLength( Int64 value )
 	{
+		SLIMDX_UNREFERENCED_PARAMETER(value);
 		throw gcnew NotSupportedException("DataStream objects cannot be resized.");
 	}
 	

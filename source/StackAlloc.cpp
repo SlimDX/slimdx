@@ -19,58 +19,24 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include "StackAlloc.h"
 
-#include <unknwn.h>
+const stackalloc_t stackalloc;
 
-#include "Configuration.h"
-#include "ObjectTracker.h"
-#include "Result.h"
-#include "Utilities.h"
-#include "InternalHelpers.h"
-
-#define COMOBJECT(type) \
-	internal: \
-	static property System::Guid NativeInterface { System::Guid get() { return Utilities::ConvertNativeGuid( IID_ ## type ); } } \
-	property type* InternalPointer { type* get() new { return static_cast<type*>( UnknownPointer ); } } \
-	private:
-
-namespace SlimDX
+void* operator new(std::size_t size, stackalloc_t stackalloc)
 {
-	public ref class ComObject abstract
-	{
-	private:
-		IUnknown* m_Unknown;
-		
-	protected:
-		ComObject();
-		
-		void Construct( IUnknown* pointer );
-		void Construct( System::IntPtr pointer, System::Guid guid );
-		void Destruct();
-	
-	internal:
-		property IUnknown* UnknownPointer
-		{
-			IUnknown* get();
-		}
+	SLIMDX_UNREFERENCED_PARAMETER(stackalloc);
 
-		property IUnknown* InternalPointer
-		{
-			IUnknown* get();
-		}
+	void* p = _malloca(size);
+	if(!p)
+		throw std::bad_alloc();
 
-	public:
-		property bool Disposed
-		{
-			bool get();
-		}
+	return p;
+}
 
-		property System::IntPtr ComPointer
-		{
-			System::IntPtr get();
-		}
+void operator delete(void* p, stackalloc_t stackalloc)
+{
+	SLIMDX_UNREFERENCED_PARAMETER(stackalloc);
 
-		virtual ~ComObject();
-	};
+	_freea(p);
 }

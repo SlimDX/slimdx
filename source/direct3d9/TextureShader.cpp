@@ -26,6 +26,7 @@
 #include "../DataStream.h"
 #include "../ComObject.h"
 #include "../Utilities.h"
+#include "../StackAlloc.h"
 
 #include "Direct3D9Exception.h"
 
@@ -123,8 +124,8 @@ namespace Direct3D9
 		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
-		std::auto_ptr<D3DXCONSTANT_DESC> nativeDescArray(new D3DXCONSTANT_DESC[count]);
-		hr = InternalPointer->GetConstantDesc( nativeHandle, nativeDescArray.get(), &count );
+		stack_vector<D3DXCONSTANT_DESC> nativeDescArray( count );
+		hr = InternalPointer->GetConstantDesc( nativeHandle, &nativeDescArray[0], &count );
 		
 		if( Result::Record(hr).IsFailure )
 			return nullptr;
@@ -132,8 +133,7 @@ namespace Direct3D9
 		array<ConstantDescription>^ descArray = gcnew array<ConstantDescription>( count );
 		for( unsigned int i = 0; i < count; ++i )
 		{
-			const D3DXCONSTANT_DESC* nativeDesc = nativeDescArray.get() + i;
-			descArray[i].Initialize( *nativeDesc );
+			descArray[i].Initialize( nativeDescArray[i] );
 		}
 
 		return descArray;

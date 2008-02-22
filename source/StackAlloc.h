@@ -25,15 +25,65 @@
 #include <stdexcept>
 #include <vector>
 
+#include "InternalHelpers.h"
+
+struct stackalloc_t { };
+extern const stackalloc_t stackalloc;
+
+void* operator new(std::size_t size, stackalloc_t stackalloc);
+void operator delete(void* p, stackalloc_t stackalloc);
+
 namespace SlimDX
 {
+	template<typename T> class stack_ptr
+	{
+	public:
+		typedef T element_type;
+
+		explicit stack_ptr(T* p = 0) throw() : pointer(p)
+		{ }
+		stack_ptr(stack_ptr<T>& other) throw() : pointer(other.release())
+		{ }
+
+		~stack_ptr()
+		{
+			_freea(pointer);
+		}
+
+		T* get()
+		{
+			return pointer;
+		}
+
+		T* release()
+		{
+			T* temp = pointer;
+			pointer = 0;
+			return temp;
+		}
+
+		void reset(T* p)
+		{
+			if(p != pointer)
+				_freea(pointer);
+
+			pointer = p;
+		}
+
+	private:
+		T* pointer;
+	};
+
 	template<typename T> inline void destroy(T* p)
 	{
+		//Why the hell does -W4 demand this?
+		SLIMDX_UNREFERENCED_PARAMETER(p);
+
 		p->~T();
 	}
 
-	template<> inline void destroy(char* p) { }
-	template<> inline void destroy(wchar_t* p) { }
+	template<> inline void destroy(char* p) { SLIMDX_UNREFERENCED_PARAMETER(p); }
+	template<> inline void destroy(wchar_t* p) { SLIMDX_UNREFERENCED_PARAMETER(p); }
 
 	template<typename T> struct StackAllocator;
 
@@ -59,8 +109,8 @@ namespace SlimDX
 		template<typename U> struct rebind { typedef StackAllocator<U> other; };
 
 		StackAllocator() throw() { }
-		StackAllocator(const StackAllocator<T>& other) throw() { }
-		template<typename U> StackAllocator(const StackAllocator<U>& other ) throw() { }
+		StackAllocator(const StackAllocator<T>& other) throw() { SLIMDX_UNREFERENCED_PARAMETER(other); }
+		template<typename U> StackAllocator(const StackAllocator<U>& other ) throw() { SLIMDX_UNREFERENCED_PARAMETER(other); }
 
 		template<typename U> StackAllocator<T>& operator=(const StackAllocator<U>& other)
 		{
@@ -72,7 +122,9 @@ namespace SlimDX
 
 		pointer allocate(size_type size, StackAllocator<void>::const_pointer hint = 0)
 		{
-			pointer p = static_cast<pointer>(_malloca(size));
+			SLIMDX_UNREFERENCED_PARAMETER(hint);
+
+			pointer p = static_cast<pointer>( _malloca(size) );
 			if(!p)
 				throw std::bad_alloc();
 			return p;
@@ -80,7 +132,8 @@ namespace SlimDX
 
 		void deallocate(pointer p, size_type size)
 		{
-			::_freea(p);
+			SLIMDX_UNREFERENCED_PARAMETER(size);
+			_freea(p);
 		}
 
 		size_type max_size() const throw()

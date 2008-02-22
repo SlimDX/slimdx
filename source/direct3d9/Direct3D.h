@@ -21,6 +21,7 @@
 */
 #pragma once
 
+#include "../InternalHelpers.h"
 #include "Enums.h"
 #include "CapsEnums.h"
 
@@ -150,7 +151,7 @@ namespace SlimDX
 			property int MaxPixelShader30InstructionSlots;
 
 		internal:
-			Capabilities( const D3DCAPS9& caps );
+			Capabilities( D3DCAPS9& caps );
 		};
 
         public ref class DisplayModeCollection : public System::Collections::IEnumerable
@@ -245,8 +246,11 @@ namespace SlimDX
 			Direct3D() { }
 			static IDirect3D9* m_Direct3D;
 
-			static void OnExit(System::Object^ sender,System::EventArgs^ e)
+			static void OnExit(System::Object^ sender, System::EventArgs^ e)
 			{
+				SLIMDX_UNREFERENCED_PARAMETER(sender);
+				SLIMDX_UNREFERENCED_PARAMETER(e);
+
 				Terminate();
 			}
 

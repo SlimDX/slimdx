@@ -26,6 +26,7 @@
 //using namespace System::Runtime::InteropServices;
 
 #include "../SlimDXException.h"
+#include "../InternalHelpers.h"
 
 namespace SlimDX
 {
@@ -42,6 +43,9 @@ namespace SlimDX
 
 			static void OnExit( System::Object^ sender, System::EventArgs^ e )
 			{
+				SLIMDX_UNREFERENCED_PARAMETER(sender);
+				SLIMDX_UNREFERENCED_PARAMETER(e);
+
 				Terminate();
 			}
 
