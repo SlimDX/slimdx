@@ -26,6 +26,7 @@
 #include "../ComObject.h"
 #include "../Math/Vector3.h"
 #include "../DataStream.h"
+#include "../StackAlloc.h"
 
 #include "Device.h"
 #include "Mesh.h"
@@ -169,7 +170,7 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 		int count = callbackKeys->Length;
 
-		D3DXKEY_CALLBACK *keys = new D3DXKEY_CALLBACK[count];
+		stack_vector<D3DXKEY_CALLBACK> keys( count );
 		for( int i = 0; i < count; i++ )
 		{
 			keys[i].Time = callbackKeys[i].Time;
@@ -178,10 +179,8 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateCompressedAnimationSet( reinterpret_cast<LPCSTR>( pinnedName ), ticksPerSecond,
 			static_cast<D3DXPLAYBACK_TYPE>( playbackType ), compressedData->GetD3DBuffer(), count,
-			keys, &pointer );
+			&keys[0], &pointer );
 
-		delete[] keys;
-		
 		if( Result::Record( hr ).IsFailure )
 			throw gcnew Direct3D9Exception();
 
@@ -191,21 +190,18 @@ namespace Direct3D9
 	array<CallbackKey>^ CompressedAnimationSet::GetCallbackKeys()
 	{
 		int count = CallbackKeyCount;
-		D3DXKEY_CALLBACK *keys = new D3DXKEY_CALLBACK[count];
+		stack_vector<D3DXKEY_CALLBACK> keys( count );
 
-		HRESULT hr = CASPointer->GetCallbackKeys( keys );
+		HRESULT hr = CASPointer->GetCallbackKeys( &keys[0] );
 		
 		if( Result::Record( hr ).IsFailure )
 		{
-			delete[] keys;
 			return nullptr;
 		}
 
 		array<CallbackKey>^ results = gcnew array<CallbackKey>( count );
 		for( int i = 0; i < count; i++ )
 			results[i] = CallbackKey( keys[i] );
-
-		delete[] keys;
 
 		return results;
 	}
@@ -251,7 +247,7 @@ namespace Direct3D9
 
 		int count = callbackKeys->Length;
 
-		D3DXKEY_CALLBACK *keys = new D3DXKEY_CALLBACK[count];
+		stack_vector<D3DXKEY_CALLBACK> keys( count );
 		for( int i = 0; i < count; i++ )
 		{
 			keys[i].Time = callbackKeys[i].Time;
@@ -259,9 +255,7 @@ namespace Direct3D9
 		}
 
 		HRESULT hr = D3DXCreateKeyframedAnimationSet( reinterpret_cast<LPCSTR>( pinnedName ), ticksPerSecond, static_cast<D3DXPLAYBACK_TYPE>( playbackType ),
-			animationCount, count, keys, &pointer );
-		
-		delete[] keys;
+			animationCount, count, &keys[0], &pointer );
 
 		if( Result::Record( hr ).IsFailure )
 			throw gcnew Direct3D9Exception();
@@ -306,21 +300,18 @@ namespace Direct3D9
 	array<CallbackKey>^ KeyframedAnimationSet::GetCallbackKeys()
 	{
 		int count = CallbackKeyCount;
-		D3DXKEY_CALLBACK *keys = new D3DXKEY_CALLBACK[count];
+		stack_vector<D3DXKEY_CALLBACK> keys( count );
 
-		HRESULT hr = KASPointer->GetCallbackKeys( keys );
+		HRESULT hr = KASPointer->GetCallbackKeys( &keys[0] );
 		
 		if( Result::Record( hr ).IsFailure )
 		{
-			delete[] keys;
 			return nullptr;
 		}
 
 		array<CallbackKey>^ results = gcnew array<CallbackKey>( count );
 		for( int i = 0; i < count; i++ )
 			results[i] = CallbackKey( keys[i] );
-
-		delete[] keys;
 
 		return results;
 	}
@@ -348,21 +339,18 @@ namespace Direct3D9
 	array<RotationKey>^ KeyframedAnimationSet::GetRotationKeys( int animation )
 	{
 		int count = GetRotationKeyCount( animation );
-		D3DXKEY_QUATERNION *keys = new D3DXKEY_QUATERNION[count];
+		stack_vector<D3DXKEY_QUATERNION> keys(count);
 
-		HRESULT hr = KASPointer->GetRotationKeys( animation, keys );
+		HRESULT hr = KASPointer->GetRotationKeys( animation, &keys[0] );
 		
 		if( Result::Record( hr ).IsFailure )
 		{
-			delete[] keys;
 			return nullptr;
 		}
 
 		array<RotationKey>^ results = gcnew array<RotationKey>( count );
 		for( int i = 0; i < count; i++ )
 			results[i] = RotationKey( keys[i] );
-
-		delete[] keys;
 
 		return results;
 	}
@@ -401,21 +389,18 @@ namespace Direct3D9
 	array<ScaleKey>^ KeyframedAnimationSet::GetScaleKeys( int animation )
 	{
 		int count = GetScaleKeyCount( animation );
-		D3DXKEY_VECTOR3 *keys = new D3DXKEY_VECTOR3[count];
+		stack_vector<D3DXKEY_VECTOR3> keys(count);
 
-		HRESULT hr = KASPointer->GetScaleKeys( animation, keys );
+		HRESULT hr = KASPointer->GetScaleKeys( animation, &keys[0] );
 		
 		if( Result::Record( hr ).IsFailure )
 		{
-			delete[] keys;
 			return nullptr;
 	    }
 
 		array<ScaleKey>^ results = gcnew array<ScaleKey>( count );
 		for( int i = 0; i < count; i++ )
 			results[i] = ScaleKey( keys[i] );
-
-		delete[] keys;
 
 		return results;
 	}
@@ -454,21 +439,18 @@ namespace Direct3D9
 	array<TranslationKey>^ KeyframedAnimationSet::GetTranslationKeys( int animation )
 	{
 		int count = GetTranslationKeyCount( animation );
-		D3DXKEY_VECTOR3 *keys = new D3DXKEY_VECTOR3[count];
+		stack_vector<D3DXKEY_VECTOR3> keys(count);
 
-		HRESULT hr = KASPointer->GetTranslationKeys( animation, keys );
+		HRESULT hr = KASPointer->GetTranslationKeys( animation, &keys[0] );
 		
 		if( Result::Record( hr ).IsFailure )
 		{
-			delete[] keys;
 			return nullptr;
 		}
 
 		array<TranslationKey>^ results = gcnew array<TranslationKey>( count );
 		for( int i = 0; i < count; i++ )
 			results[i] = TranslationKey( keys[i] );
-
-		delete[] keys;
 
 		return results;
 	}
@@ -505,17 +487,13 @@ namespace Direct3D9
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		D3DXKEY_VECTOR3* scales = new D3DXKEY_VECTOR3[scaleCount];
-		D3DXKEY_QUATERNION* rotations = new D3DXKEY_QUATERNION[rotateCount];
-		D3DXKEY_VECTOR3* translations = new D3DXKEY_VECTOR3[translateCount];
+		stack_vector<D3DXKEY_VECTOR3> scales( scaleCount );
+		stack_vector<D3DXKEY_QUATERNION> rotations( rotateCount );
+		stack_vector<D3DXKEY_VECTOR3> translations( translateCount );
 
 		HRESULT hr = KASPointer->RegisterAnimationSRTKeys( reinterpret_cast<LPCSTR>( pinnedName ), scaleCount, rotateCount,
-			translateCount, scales, rotations, translations, &result );
+			translateCount, &scales[0], &rotations[0], &translations[0], &result );
 		Result::Record( hr );
-
-		delete[] scales;
-		delete[] rotations;
-		delete[] translations;
 
 		if( Result::Last.IsFailure )
 			return 0;

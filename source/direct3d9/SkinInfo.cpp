@@ -25,6 +25,7 @@
 
 #include "../DataStream.h"
 #include "../ComObject.h"
+#include "../StackAlloc.h"
 
 #include "Device.h"
 #include "IndexBuffer.h"
@@ -98,18 +99,17 @@ namespace Direct3D9
 		ID3DXSkinInfo *result;
 
 		int length = boneCombinationTable->Length;
-		D3DXBONECOMBINATION *bones = new D3DXBONECOMBINATION[length];
+		stack_vector<D3DXBONECOMBINATION> bones( length );
 		for( int i = 0; i < length; i++ )
 			bones[i] = boneCombinationTable[i]->ToUnmanaged();
 
-		HRESULT hr = D3DXCreateSkinInfoFromBlendedMesh( mesh->InternalPointer, boneCount, bones, &result );
-		
-		if( Result::Record( hr ).IsFailure )
-			throw gcnew Direct3D9Exception();
+		HRESULT hr = D3DXCreateSkinInfoFromBlendedMesh( mesh->InternalPointer, boneCount, &bones[0], &result );
 
 		for( int i = 0; i < length; i++ )
 			delete[] bones[i].BoneId;
-		delete[] bones;
+
+		if( Result::Record( hr ).IsFailure )
+			throw gcnew Direct3D9Exception();
 
 		Construct( result );
 	}

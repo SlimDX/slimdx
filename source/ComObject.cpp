@@ -82,9 +82,4 @@ namespace SlimDX
 		if( Configuration::EnableObjectTracking )
 			ObjectTracker::Remove( this );
 	}
-
-	void ComObject::DisposeHandler( Object^ sender, EventArgs^ e )
-	{
-		delete this;
-	};
 }

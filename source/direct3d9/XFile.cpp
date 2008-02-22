@@ -24,6 +24,7 @@
 
 #include "../ComObject.h"
 #include "../DataStream.h"
+#include "../StackAlloc.h"
 #include "XFile.h"
 
 #include "Direct3D9Exception.h"
@@ -101,7 +102,7 @@ namespace Direct3D9
 
 	String^ XFileSaveData::Name::get()
 	{
-		char *name;
+		stack_vector<char> name;
 		SIZE_T size = 0;
 
 		HRESULT hr = InternalPointer->GetName( NULL, &size );
@@ -109,16 +110,14 @@ namespace Direct3D9
 		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
-		name = new char[size];
+		name.resize( size );
 
-		hr = InternalPointer->GetName( name, &size );
-
-		delete name;
+		hr = InternalPointer->GetName( &name[0], &size );
 
 		if( Result::Record(hr).IsFailure )
 			return nullptr;
 
-		return gcnew String( name );
+		return gcnew String( &name[0] );
 	}
 
 	XFileSaveObject^ XFileSaveData::SaveObject::get()
@@ -463,7 +462,7 @@ namespace Direct3D9
 
 	String^ XFileData::Name::get()
 	{
-		char *name;
+		stack_vector<char> name;
 		SIZE_T size = 0;
 
 		HRESULT hr = InternalPointer->GetName( NULL, &size );
@@ -471,16 +470,14 @@ namespace Direct3D9
 		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
-		name = new char[size];
+		name.resize( size );
 
-		hr = InternalPointer->GetName( name, &size );
-
-		delete name;
+		hr = InternalPointer->GetName( &name[0], &size );
 
 		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew String( name );
+		return gcnew String( &name[0] );
 	}
 
 	Guid XFileData::Type::get()

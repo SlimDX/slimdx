@@ -63,6 +63,7 @@ namespace Direct3D10
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( m_SemanticName );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 	
+		//FIXME: saving pointer to pinned string
 		native.SemanticName = reinterpret_cast<LPCSTR>( pinnedName );
 		native.SemanticIndex = m_SemanticIndex;
 		native.Format = static_cast<DXGI_FORMAT>( m_Format );
