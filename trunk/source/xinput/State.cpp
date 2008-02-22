@@ -20,37 +20,31 @@
 * THE SOFTWARE.
 */
 
-#include "XInputException.h"
+#include <windows.h>
+#include <xinput.h>
+
+#include "State.h"
 
 using namespace System;
-using namespace System::Runtime::Serialization;
 
 namespace SlimDX
 {
-namespace XInput
-{
-	XInputException::XInputException( SerializationInfo^ info, StreamingContext context )
-	: SlimDXException( info, context )
+	namespace XInput
 	{
+		State::State( const XINPUT_STATE& native )
+		{
+			m_PacketNumber = native.dwPacketNumber;
+			m_Gamepad = XInput::Gamepad( native.Gamepad );
+		}
+		
+		UInt32 State::PacketNumber::get()
+		{
+			return m_PacketNumber;
+		}
+		
+		XInput::Gamepad State::Gamepad::get()
+		{
+			return m_Gamepad;
+		}
 	}
-
-	XInputException::XInputException()
-	{
-	}
-
-	XInputException::XInputException( String^ message )
-	: SlimDXException( message )
-	{
-	}
-
-	XInputException::XInputException( String^ message, Exception^ innerException )
-	: SlimDXException( message, innerException )
-	{
-	}
-
-	XInputException::XInputException( Result result )
-	: SlimDXException( result.Code )
-	{
-	}
-}
 }

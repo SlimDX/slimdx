@@ -29,15 +29,20 @@ namespace SlimDX
 {
 	namespace XInput
 	{
-		Gamepad::Gamepad( const XINPUT_GAMEPAD &gamepad )
+		Gamepad::Gamepad( const XINPUT_GAMEPAD &native )
 		{
-			buttons = static_cast<GamepadButtons>(gamepad.wButtons);
-			leftTrigger = gamepad.bLeftTrigger;
-			rightTrigger = gamepad.bRightTrigger;
-			leftThumbX = gamepad.sThumbLX;
-			leftThumbY = gamepad.sThumbLY;
-			rightThumbX = gamepad.sThumbRX;
-			rightThumbY = gamepad.sThumbRY;
+			m_Buttons = static_cast<GamepadButtonFlags>( native.wButtons );
+			leftTrigger = native.bLeftTrigger;
+			rightTrigger = native.bRightTrigger;
+			leftThumbX = native.sThumbLX;
+			leftThumbY = native.sThumbLY;
+			rightThumbX = native.sThumbRX;
+			rightThumbY = native.sThumbRY;
+		}
+		
+		GamepadButtonFlags Gamepad::Buttons::get()
+		{
+			return m_Buttons;
 		}
 	}
 }

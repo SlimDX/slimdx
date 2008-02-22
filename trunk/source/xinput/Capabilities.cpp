@@ -20,37 +20,47 @@
 * THE SOFTWARE.
 */
 
-#include "XInputException.h"
+#include <windows.h>
+#include <xinput.h>
 
-using namespace System;
-using namespace System::Runtime::Serialization;
+#include "Capabilities.h"
 
 namespace SlimDX
 {
-namespace XInput
-{
-	XInputException::XInputException( SerializationInfo^ info, StreamingContext context )
-	: SlimDXException( info, context )
+	namespace XInput
 	{
-	}
+		Capabilities::Capabilities( const XINPUT_CAPABILITIES& native )
+		{
+			m_Type = static_cast<DeviceType>( native.Type );
+			m_SubType = static_cast<DeviceSubtype>( native.SubType );
+			m_Flags = static_cast<CapabilityFlags>( native.Flags );
+			m_Gamepad = XInput::Gamepad( native.Gamepad );
+			m_Vibration = XInput::Vibration( native.Vibration );
+		}
+		
+		DeviceType Capabilities::Type::get()
+		{
+			return m_Type;
+		}
 
-	XInputException::XInputException()
-	{
-	}
+		DeviceSubtype Capabilities::Subtype::get()
+		{
+			return m_SubType;
+		}
+		
+		CapabilityFlags Capabilities::Flags::get()
+		{
+			return m_Flags;
+		}
 
-	XInputException::XInputException( String^ message )
-	: SlimDXException( message )
-	{
-	}
+		XInput::Gamepad Capabilities::Gamepad::get()
+		{
+			return m_Gamepad;
+		}
 
-	XInputException::XInputException( String^ message, Exception^ innerException )
-	: SlimDXException( message, innerException )
-	{
+		XInput::Vibration Capabilities::Vibration::get()
+		{
+			return m_Vibration;
+		}
 	}
-
-	XInputException::XInputException( Result result )
-	: SlimDXException( result.Code )
-	{
-	}
-}
 }

@@ -37,7 +37,7 @@ namespace SlimDX
 			XInputException();
 			XInputException( System::String^ message );
 			XInputException( System::String^ message, System::Exception^ innerException );
-			XInputException( int errorCode );
+			XInputException( Result result );
 		};
 	}
 }

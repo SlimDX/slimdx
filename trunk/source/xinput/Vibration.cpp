@@ -20,37 +20,50 @@
 * THE SOFTWARE.
 */
 
-#include "XInputException.h"
+#include <windows.h>
+#include <xinput.h>
+
+#include "Vibration.h"
 
 using namespace System;
-using namespace System::Runtime::Serialization;
 
 namespace SlimDX
 {
-namespace XInput
-{
-	XInputException::XInputException( SerializationInfo^ info, StreamingContext context )
-	: SlimDXException( info, context )
+	namespace XInput
 	{
+		Vibration::Vibration( const XINPUT_VIBRATION& native )
+		{
+			m_LeftMotorSpeed = native.wLeftMotorSpeed;
+			m_RightMotorSpeed = native.wRightMotorSpeed;
+		}
+		
+		XINPUT_VIBRATION Vibration::CreateNativeVersion()
+		{
+			XINPUT_VIBRATION native;
+			native.wLeftMotorSpeed = m_LeftMotorSpeed;
+			native.wRightMotorSpeed = m_RightMotorSpeed;
+			
+			return native;
+		}
+		
+		UInt16 Vibration::LeftMotorSpeed::get()
+		{
+			return m_LeftMotorSpeed;
+		}
+		
+		void Vibration::LeftMotorSpeed::set( UInt16 value )
+		{
+			m_LeftMotorSpeed = value;
+		}
+		
+		UInt16 Vibration::RightMotorSpeed::get()
+		{
+			return m_RightMotorSpeed;
+		}
+		
+		void Vibration::RightMotorSpeed::set( UInt16 value )
+		{
+			m_RightMotorSpeed = value;
+		}
 	}
-
-	XInputException::XInputException()
-	{
-	}
-
-	XInputException::XInputException( String^ message )
-	: SlimDXException( message )
-	{
-	}
-
-	XInputException::XInputException( String^ message, Exception^ innerException )
-	: SlimDXException( message, innerException )
-	{
-	}
-
-	XInputException::XInputException( Result result )
-	: SlimDXException( result.Code )
-	{
-	}
-}
 }

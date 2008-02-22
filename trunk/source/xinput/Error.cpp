@@ -20,37 +20,26 @@
 * THE SOFTWARE.
 */
 
-#include "XInputException.h"
+#include <windows.h>
 
-using namespace System;
-using namespace System::Runtime::Serialization;
+#include "Error.h"
 
 namespace SlimDX
 {
 namespace XInput
 {
-	XInputException::XInputException( SerializationInfo^ info, StreamingContext context )
-	: SlimDXException( info, context )
+	Error::Error()
 	{
 	}
-
-	XInputException::XInputException()
+	
+	Result Error::NotConnected::get()
 	{
+		return Result( HRESULT_FROM_WIN32( ERROR_NOT_CONNECTED ) );
 	}
-
-	XInputException::XInputException( String^ message )
-	: SlimDXException( message )
+	
+	Result Error::Empty::get()
 	{
-	}
-
-	XInputException::XInputException( String^ message, Exception^ innerException )
-	: SlimDXException( message, innerException )
-	{
-	}
-
-	XInputException::XInputException( Result result )
-	: SlimDXException( result.Code )
-	{
+		return Result( HRESULT_FROM_WIN32( ERROR_EMPTY ) );
 	}
 }
 }

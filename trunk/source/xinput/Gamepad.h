@@ -21,7 +21,7 @@
 */
 #pragma once
 
-//using namespace System;
+#include "Enums.h"
 
 namespace SlimDX
 {
@@ -39,25 +39,22 @@ namespace SlimDX
 		public value class Gamepad
 		{
 		private:
-			GamepadButtons buttons;
-            System::Byte leftTrigger;
-            System::Byte rightTrigger;
-            System::Int16 leftThumbX;
-            System::Int16 leftThumbY;
-            System::Int16 rightThumbX;
-            System::Int16 rightThumbY;
+			GamepadButtonFlags m_Buttons;
+			System::Byte leftTrigger;
+			System::Byte rightTrigger;
+			System::Int16 leftThumbX;
+			System::Int16 leftThumbY;
+			System::Int16 rightThumbX;
+			System::Int16 rightThumbY;
 
 		internal:
-			Gamepad( const XINPUT_GAMEPAD &gamepad );
+			Gamepad( const XINPUT_GAMEPAD &native );
 
 		public:
-			/// <summary>
-			/// Bitmask of the device digital buttons
-			/// </summary>
-			property GamepadButtons Buttons
-            {
-                GamepadButtons get() { return buttons; }
-            }
+			property GamepadButtonFlags Buttons
+			{
+				GamepadButtonFlags get();
+			}
 
 			/// <summary>
 			/// The current value of the left trigger analog control. The value is between 0 and 255.
