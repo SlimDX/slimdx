@@ -31,6 +31,8 @@
 #include "Device.h"
 #include "Texture.h"
 #include "BaseEffect.h"
+#include "PixelShader.h"
+#include "VertexShader.h"
 
 using namespace System;
 
@@ -248,6 +250,32 @@ namespace SlimDX
 			passDesc.PixelShaderFunction = IntPtr( const_cast<void*>( static_cast<const void*>( description.pPixelShaderFunction ) ) );
 
 			return passDesc;
+		}
+
+		PixelShader^ BaseEffect::GetPixelShader( EffectHandle^ parameter )
+		{
+			IDirect3DPixelShader9 *pixelShader;
+
+			D3DXHANDLE nativeHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
+			HRESULT hr = InternalPointer->GetPixelShader( nativeHandle, &pixelShader );
+
+			if( Result::Record( hr ).IsFailure )
+				return nullptr;
+
+			return gcnew PixelShader( pixelShader );
+		}
+
+		VertexShader^ BaseEffect::GetVertexShader( EffectHandle^ parameter )
+		{
+			IDirect3DVertexShader9 *vertexShader;
+
+			D3DXHANDLE nativeHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
+			HRESULT hr = InternalPointer->GetVertexShader( nativeHandle, &vertexShader );
+
+			if( Result::Record( hr ).IsFailure )
+				return nullptr;
+
+			return gcnew VertexShader( vertexShader );
 		}
 
 		EffectDescription BaseEffect::Description::get()

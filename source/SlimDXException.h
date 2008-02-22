@@ -39,8 +39,5 @@ namespace SlimDX
 		SlimDXException( System::String^ message );
 		SlimDXException( System::String^ message, System::Exception^ innerException );
 		SlimDXException( int result );
-		
-		//TODO: Remove.
-		SlimDXException( int errorCode, System::String^ message );
 	};
 }

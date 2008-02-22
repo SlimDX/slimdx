@@ -26,7 +26,6 @@
 #include "../Utilities.h"
 
 #include "DirectInput.h"
-//#include "DirectInputErrorHandler.h"
 #include "DirectInputException.h"
 
 #include "Device.h"
@@ -44,9 +43,6 @@ namespace DirectInput
 	generic<typename DataFormat>
 	Device<DataFormat>::Device( IDirectInputDevice8W* device )
 	{
-		if( device == NULL )
-			throw gcnew ArgumentNullException( "device" );
-
 		Construct(device);
 
 		properties = gcnew DeviceProperties( InternalPointer );
@@ -64,9 +60,8 @@ namespace DirectInput
 	{
 		IDirectInputDevice8W* device;
 		HRESULT hr = DirectInput::InternalPointer->CreateDevice( Utilities::ConvertManagedGuid( subsystem ), &device, NULL );
-		Result::Record( hr );
 
-		if( FAILED( hr ) )
+		if( Result::Record( hr ).IsFailure )
 			throw gcnew DirectInputException();
 
 		Construct(device);
@@ -132,60 +127,58 @@ namespace DirectInput
 			delete[] objectFormats;
 		}
 
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		if( Result::Record( hr ).IsFailure )
 			throw gcnew DirectInputException();
 
 		properties = gcnew DeviceProperties( InternalPointer );
 	}
 
 	generic<typename DataFormat>
-	void Device<DataFormat>::SetCooperativeLevel( IntPtr handle, CooperativeLevel flags )
+	Result Device<DataFormat>::SetCooperativeLevel( IntPtr handle, CooperativeLevel flags )
 	{
 		HRESULT hr = InternalPointer->SetCooperativeLevel( static_cast<HWND>( handle.ToPointer() ), static_cast<DWORD>( flags ) );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	generic<typename DataFormat>
-	void Device<DataFormat>::SetCooperativeLevel( Control^ control, CooperativeLevel flags )
+	Result Device<DataFormat>::SetCooperativeLevel( Control^ control, CooperativeLevel flags )
 	{
-		SetCooperativeLevel( control->Handle, flags );
+		return SetCooperativeLevel( control->Handle, flags );
 	}
 
 	generic<typename DataFormat>
-	void Device<DataFormat>::Acquire()
+	Result Device<DataFormat>::Acquire()
 	{
 		HRESULT hr = InternalPointer->Acquire();
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	generic<typename DataFormat>
-	void Device<DataFormat>::Unacquire()
+	Result Device<DataFormat>::Unacquire()
 	{
 		HRESULT hr = InternalPointer->Unacquire();
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	generic<typename DataFormat>
-	void Device<DataFormat>::Poll()
+	Result Device<DataFormat>::Poll()
 	{
 		HRESULT hr = InternalPointer->Poll();
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	generic<typename DataFormat>
-	void Device<DataFormat>::RunControlPanel()
+	Result Device<DataFormat>::RunControlPanel()
 	{
 		HRESULT hr = InternalPointer->RunControlPanel( NULL, 0 );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	generic<typename DataFormat>
-	void Device<DataFormat>::RunControlPanel( Control^ parent )
+	Result Device<DataFormat>::RunControlPanel( Control^ parent )
 	{
 		HRESULT hr = InternalPointer->RunControlPanel( static_cast<HWND>( parent->Handle.ToPointer() ), 0 );
-		Result::Record( hr );
+		return Result::Record( hr );
 	}
 
 	generic<typename DataFormat>
@@ -234,7 +227,7 @@ namespace DirectInput
 	}
 
 	generic<typename DataFormat>
-	void Device<DataFormat>::GetCurrentState( DataFormat% data )
+	Result Device<DataFormat>::GetCurrentState( DataFormat% data )
 	{
 		Type^ type = DataFormat::typeid;
 
@@ -248,7 +241,7 @@ namespace DirectInput
 			{
 				if( &Device::DeviceLost != nullptr )
 					DeviceLost( this, EventArgs::Empty );
-				return;
+				return Result::Last;
 			}
 
 			KeyboardState^ state = reinterpret_cast<KeyboardState^>( data );
@@ -270,7 +263,7 @@ namespace DirectInput
 			{
 				if( &Device::DeviceLost != nullptr )
 					DeviceLost( this, EventArgs::Empty );
-				return;
+				return Result::Last;
 			}
 
 			MouseState^ result = reinterpret_cast<MouseState^>( data );
@@ -292,7 +285,7 @@ namespace DirectInput
 			{
 				if( &Device::DeviceLost != nullptr )
 					DeviceLost( this, EventArgs::Empty );
-				return;
+				return Result::Last;
 			}
 
 			JoystickState^ state = reinterpret_cast<JoystickState^>( data );
@@ -351,7 +344,7 @@ namespace DirectInput
 			{
 				if( &Device::DeviceLost != nullptr )
 					DeviceLost( this, EventArgs::Empty );
-				return;
+				return Result::Last;
 			}
 
 			IntPtr pointerData( bytes );
@@ -361,6 +354,8 @@ namespace DirectInput
 
 			delete[] bytes;
 		}
+
+		return Result::Last;
 	}
 
 	generic<typename DataFormat>
@@ -470,9 +465,8 @@ namespace DirectInput
 	{
 		DIDEVCAPS caps;
 		HRESULT hr = InternalPointer->GetCapabilities( &caps );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Capabilities( caps );
@@ -483,9 +477,8 @@ namespace DirectInput
 	{
 		DIDEVICEINSTANCE deviceInstance;
 		HRESULT hr = InternalPointer->GetDeviceInfo( &deviceInstance );
-		Result::Record( hr );
-
-		if( FAILED( hr ) )
+		
+		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew DeviceInstance( deviceInstance );

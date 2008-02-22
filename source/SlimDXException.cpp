@@ -60,11 +60,4 @@ namespace SlimDX
 	{
 		ErrorCode = errorCode;
 	}
-	
-	// REMOVE THIS
-	SlimDXException::SlimDXException( int errorCode, String^ message )
-	: Exception( message )
-	{
-		ErrorCode = errorCode;
-	}
 }

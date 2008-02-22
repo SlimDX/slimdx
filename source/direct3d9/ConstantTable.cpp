@@ -131,24 +131,20 @@ namespace Direct3D9
 
 	array<ConstantDescription>^ ConstantTable::GetConstantDescriptionArray( EffectHandle^ handle )
 	{
-		//TODO: Check that the logic here is actually correct. The SDK doesn't bother to explain.
 		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		unsigned int count = 0;
 
-		//Determine the count
 		HRESULT hr = InternalPointer->GetConstantDesc( nativeHandle, NULL, &count );
 		
 		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
-		//Get the actual data
 		std::auto_ptr<D3DXCONSTANT_DESC> nativeDescArray(new D3DXCONSTANT_DESC[count]);
 		hr = InternalPointer->GetConstantDesc( nativeHandle, nativeDescArray.get(), &count );
 		
 		if( Result::Record( hr ).IsFailure )
 			return nullptr;
 
-		//Marshal the data
 		array<ConstantDescription>^ descArray = gcnew array<ConstantDescription>( count );
 		for( unsigned int i = 0; i < count; ++i )
 		{

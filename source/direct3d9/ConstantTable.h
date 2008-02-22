@@ -64,7 +64,6 @@ namespace SlimDX
 			property int Elements;
 			property int StructMembers;
 			property int Bytes;
-			//TODO: default value?
 		};
 
 		ref class EffectHandle;
