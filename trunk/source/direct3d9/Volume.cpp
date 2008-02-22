@@ -100,18 +100,6 @@ namespace Direct3D9
 		return Result::Record( hr );
 	}
 
-	Device^ Volume::GetDevice()
-	{
-		IDirect3DDevice9 *result;
-
-		HRESULT hr = VolumePointer->GetDevice( &result );
-		
-		if( Result::Record(hr).IsFailure )
-			return nullptr;
-
-		return gcnew Device( result );
-	}
-
 	Result Volume::FromMemory( Volume^ volume, array<Byte>^ memory, Filter filter, int colorKey, Box sourceBox,
 		Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation )
 	{

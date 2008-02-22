@@ -21,6 +21,7 @@
 */
 
 #include "ObjectTracker.h"
+#include "InternalHelpers.h"
 
 using namespace System;
 using namespace System::Globalization;
@@ -43,6 +44,9 @@ namespace SlimDX
 	
 	void ObjectTracker::OnExit( Object^ sender, EventArgs^ e )
 	{
+		SLIMDX_UNREFERENCED_PARAMETER(sender);
+		SLIMDX_UNREFERENCED_PARAMETER(e);
+
 		ReportLeaks();
 	}
 

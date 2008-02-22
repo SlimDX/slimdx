@@ -205,7 +205,7 @@ namespace Direct3D9
 	Mesh^ BaseMesh::Clone( Device^ device, MeshFlags flags, array<VertexElement>^ elements )
 	{
 		ID3DXMesh* mesh;
-		pin_ptr<const VertexElement> pinned_elements = &elements[0];
+		pin_ptr<VertexElement> pinned_elements = &elements[0];
 
 		HRESULT hr = InternalPointer->CloneMesh( static_cast<DWORD>( flags ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinned_elements ),
 			device->InternalPointer, &mesh );

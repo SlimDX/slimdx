@@ -52,6 +52,11 @@ namespace SlimDX
 		return m_Unknown;
 	}
 	
+	IUnknown* ComObject::InternalPointer::get()
+	{
+		return m_Unknown;
+	}
+
 	void ComObject::Construct( IUnknown* pointer )
 	{
 		if( pointer == 0 )

@@ -27,6 +27,7 @@
 
 #include "../ComObject.h"
 #include "../Utilities.h"
+#include "../StackAlloc.h"
 
 //#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
@@ -129,7 +130,7 @@ namespace SlimDX
 			if( Result::Record( hr ).IsFailure )
 				return Result::Last;
 
-			std::auto_ptr<char> data( new char[size] );
+			stack_ptr<char> data( new (stackalloc) char[size] );
 			hr = InternalPointer->GetFunction( data.get(), &size );
 			if( Result::Record( hr ).IsFailure )
 				return Result::Last;

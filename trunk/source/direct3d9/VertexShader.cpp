@@ -27,6 +27,7 @@
 
 #include "../ComObject.h"
 #include "../Utilities.h"
+#include "../StackAlloc.h"
 
 //#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
@@ -125,15 +126,14 @@ namespace Direct3D9
 		if( Result::Record(hr).IsFailure )
 			return Result::Last;
 
-		std::auto_ptr<char> data( new char[size] );
-		hr = InternalPointer->GetFunction( data.get(), &size );
-		
+		stack_vector<char> data( size  );
+		hr = InternalPointer->GetFunction( &data[0], &size );		
 		if( Result::Record(hr).IsFailure )
 			return Result::Last;
 
 		//Ask D3DX to give us the actual table
 		ID3DXConstantTable* constantTable;
-		hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( data.get() ), &constantTable );
+		hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( &data[0] ), &constantTable );
 		
 		if( Result::Record(hr).IsFailure )
 			return Result::Last;

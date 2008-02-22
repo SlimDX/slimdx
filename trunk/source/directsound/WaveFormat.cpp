@@ -95,7 +95,7 @@ namespace DirectSound
 			m_ExtraData = gcnew DataStream( data + offset, extraDataBytes, true, true, false );
 		}
 
-		m_Format->cbSize = extraSize + extraDataBytes;
+		m_Format->cbSize = (WORD) (extraSize + extraDataBytes);
 		this->FormatTag = WaveFormat::Pcm;
 		this->Channels = 0;
 		this->SamplesPerSecond = 0;

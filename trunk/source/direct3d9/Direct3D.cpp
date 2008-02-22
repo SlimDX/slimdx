@@ -321,7 +321,7 @@ namespace Direct3D9
 		return CheckDeviceFormat( adapter, deviceType, Format::X8R8G8B8, Usage::None, ResourceType::Surface, Format::ATI_R2VB );
 	}
 
-	Capabilities::Capabilities( const D3DCAPS9& caps )
+	Capabilities::Capabilities( D3DCAPS9& caps )
 	{
 		DeviceType = static_cast<SlimDX::Direct3D9::DeviceType>( caps.DeviceType );
 		AdapterOrdinal = caps.AdapterOrdinal;
@@ -404,8 +404,8 @@ namespace Direct3D9
 		DeclarationTypes = static_cast<DeclarationTypeCaps>( caps.DeclTypes );
 		SimultaneousRTCount = caps.NumSimultaneousRTs;
 		StretchRectFilterCaps = static_cast<FilterCaps>( caps.StretchRectFilterCaps );
-		VS20Caps = *reinterpret_cast<const VertexShader20Caps*>( &caps.VS20Caps );
-		PS20Caps = *reinterpret_cast<const PixelShader20Caps*>( &caps.PS20Caps );
+		VS20Caps = *reinterpret_cast<VertexShader20Caps*>( &caps.VS20Caps );
+		PS20Caps = *reinterpret_cast<PixelShader20Caps*>( &caps.PS20Caps );
 		VertexTextureFilterCaps = static_cast<FilterCaps>( caps.VertexTextureFilterCaps );
 		MaxVShaderInstructionsExecuted = caps.MaxVShaderInstructionsExecuted;
 		MaxPShaderInstructionsExecuted = caps.MaxPShaderInstructionsExecuted;

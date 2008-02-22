@@ -146,7 +146,7 @@ namespace DirectInput
 			else
 			{
 				bool found = false;
-				for( int i = 0; i < 4; i++ )
+				for( unsigned int i = 0; i < 4; i++ )
 				{
 					if( objectData.dwOfs == DIJOFS_POV( i ) )
 					{
@@ -158,7 +158,7 @@ namespace DirectInput
 
 				if( !found )
 				{
-					for( int i = 0; i < 128; i++ )
+					for( unsigned int i = 0; i < 128; i++ )
 					{
 						if( objectData.dwOfs == DIJOFS_BUTTON( i ) )
 						{
@@ -177,7 +177,7 @@ namespace DirectInput
 			array<FieldInfo^>^ fields = type->GetFields();
 			for each( FieldInfo^ field in fields )
 			{
-				int o = Marshal::OffsetOf( type, field->Name ).ToInt32();
+				unsigned int o = Marshal::OffsetOf( type, field->Name ).ToInt32();
 				if( o == objectData.dwOfs )
 				{
 					field->SetValue( data, objectData.dwData );

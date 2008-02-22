@@ -21,56 +21,10 @@
 */
 #pragma once
 
-#include <unknwn.h>
+#define SLIMDX_UNREFERENCED_PARAMETER(P) (P)
 
-#include "Configuration.h"
-#include "ObjectTracker.h"
-#include "Result.h"
-#include "Utilities.h"
-#include "InternalHelpers.h"
-
-#define COMOBJECT(type) \
-	internal: \
-	static property System::Guid NativeInterface { System::Guid get() { return Utilities::ConvertNativeGuid( IID_ ## type ); } } \
-	property type* InternalPointer { type* get() new { return static_cast<type*>( UnknownPointer ); } } \
-	private:
-
-namespace SlimDX
-{
-	public ref class ComObject abstract
-	{
-	private:
-		IUnknown* m_Unknown;
-		
-	protected:
-		ComObject();
-		
-		void Construct( IUnknown* pointer );
-		void Construct( System::IntPtr pointer, System::Guid guid );
-		void Destruct();
-	
-	internal:
-		property IUnknown* UnknownPointer
-		{
-			IUnknown* get();
-		}
-
-		property IUnknown* InternalPointer
-		{
-			IUnknown* get();
-		}
-
-	public:
-		property bool Disposed
-		{
-			bool get();
-		}
-
-		property System::IntPtr ComPointer
-		{
-			System::IntPtr get();
-		}
-
-		virtual ~ComObject();
-	};
-}
+#ifdef NDEBUG
+#	define SLIMDX_DEBUG_UNREFERENCED_PARAMETER(P)
+#else
+#	define SLIMDX_DEBUG_UNREFERENCED_PARAMETER(P) (P)
+#endif

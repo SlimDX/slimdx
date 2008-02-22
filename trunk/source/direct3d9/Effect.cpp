@@ -319,6 +319,8 @@ namespace SlimDX
 
 		Result Effect::SetStateManager( IEffectStateManager^ manager )
 		{
+			SLIMDX_DEBUG_UNREFERENCED_PARAMETER(manager);
+
 			if( shim != NULL )
 				delete shim;
 

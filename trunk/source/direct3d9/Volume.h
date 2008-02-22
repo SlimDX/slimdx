@@ -101,8 +101,6 @@ namespace SlimDX
 			DataBox^ LockBox( Box box, LockFlags flags );
 			Result UnlockBox();
 
-			Device^ GetDevice();
-
 			property VolumeDescription Description
 			{
 				VolumeDescription get();

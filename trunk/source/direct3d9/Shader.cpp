@@ -25,6 +25,8 @@
 #include <memory>
 
 #include "../DataStream.h"
+#include "../StackAlloc.h"
+
 #include "Device.h"
 #include "Shader.h"
 
@@ -44,6 +46,9 @@ namespace SlimDX
 
 		HRESULT IncludeShim::Open( D3DXINCLUDE_TYPE includeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID* ppData, UINT* pBytes )
 		{
+			SLIMDX_DEBUG_UNREFERENCED_PARAMETER(pParentData);
+			SLIMDX_DEBUG_UNREFERENCED_PARAMETER(ppData);
+
 			try
 			{
 				Stream^ stream;
@@ -84,6 +89,8 @@ namespace SlimDX
 
 		HRESULT IncludeShim::Close( LPCVOID pData )
 		{
+			SLIMDX_DEBUG_UNREFERENCED_PARAMETER(pData);
+
 			try
 			{
 				if( m_handle.IsAllocated )
@@ -220,9 +227,9 @@ namespace SlimDX
 			if( Result::Record( hr ).IsFailure )
 				return nullptr;
 			
-			std::auto_ptr<LPCSTR> samplers(new LPCSTR[count]);
+			stack_vector<LPCSTR> samplers( count );
 
-			hr = D3DXGetShaderSamplers( function, samplers.get(), &count );
+			hr = D3DXGetShaderSamplers( function, &samplers[0], &count );
 			
 			if( Result::Record( hr ).IsFailure )
 				return nullptr;
@@ -230,7 +237,7 @@ namespace SlimDX
 			array<String^>^ outputSamplers = gcnew array<String^>( count );
 			for( UINT i = 0; i < count; ++i )
 			{
-				outputSamplers[i] = gcnew String( samplers.get()[i] );
+				outputSamplers[i] = gcnew String( samplers[i] );
 			}
 
 			return outputSamplers;
