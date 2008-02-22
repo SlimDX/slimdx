@@ -23,12 +23,11 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-//#include "Direct3D10ErrorHandler.h"
-
 #include "SpriteInstance.h"
 #include "ShaderResourceView.h"
 
-#include "../math/math.h"
+#include "../math/Matrix.h"
+#include "../math/Vector2.h"
 
 namespace SlimDX
 {

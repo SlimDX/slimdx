@@ -23,8 +23,14 @@
 
 struct D3DXCOLOR;
 
+using System::Runtime::InteropServices::OutAttribute;
+
 namespace SlimDX
 {
+	value class Color3;
+	value class Vector3;
+	value class Vector4;
+		
 	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 	public value class Color4
 	{

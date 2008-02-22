@@ -21,10 +21,9 @@
 */
 #pragma once
 
-#include "../math/Math.h"
-
-//using namespace System::Runtime::InteropServices;
-//using namespace SlimDX::Direct3D;
+#include "../math/Color4.h"
+#include "../math/Matrix.h"
+#include "../math/Vector4.h"
 
 namespace SlimDX
 {

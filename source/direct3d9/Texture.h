@@ -21,6 +21,9 @@
 */
 #pragma once
 
+#include "../DataBox.h"
+#include "../DataRectangle.h"
+
 #include "BaseTexture.h"
 #include "Resource.h"
 #include "Surface.h"
@@ -28,9 +31,7 @@
 #include "Effect.h"
 #include "ConstantTable.h"
 #include "TextureShader.h"
-#include "../DataBox.h"
-#include "../DataRectangle.h"
-#include "../math/Math.h"
+
 
 namespace SlimDX
 {

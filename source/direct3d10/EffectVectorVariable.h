@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../math/Math.h"
+#include "../math/Vector4.h"
 
 #include "EffectVariable.h"
 

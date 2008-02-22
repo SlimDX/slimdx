@@ -24,7 +24,9 @@
 #include <d3dx9.h>
 
 #include "../ComObject.h"
-#include "../math/Math.h"
+
+#include "../math/Color4.h"
+#include "../math/Vector3.h"
 
 #include "Device.h"
 #include "Sprite.h"

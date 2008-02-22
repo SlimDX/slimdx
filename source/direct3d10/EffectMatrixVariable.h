@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../math/Math.h"
+#include "../math/Matrix.h"
 
 #include "EffectVariable.h"
 

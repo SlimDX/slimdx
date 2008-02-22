@@ -26,7 +26,6 @@
 
 #include "../ComObject.h"
 #include "../Utilities.h"
-#include "../math/Math.h"
 
 #include "Device.h"
 #include "Sprite.h"

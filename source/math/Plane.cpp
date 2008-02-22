@@ -19,10 +19,16 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <windows.h>
+
 #include <d3dx9.h>
 
-#include "Math.h"
+#include "BoundingBox.h"
+#include "BoundingFrustum.h"
+#include "BoundingSphere.h"
+#include "Matrix.h"
+#include "Plane.h"
+#include "Quaternion.h"
+#include "Vector3.h"
 
 using namespace System;
 using namespace System::Globalization;

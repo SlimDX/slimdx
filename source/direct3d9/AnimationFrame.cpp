@@ -24,9 +24,10 @@
 #include <vcclr.h>
 
 #include "../ComObject.h"
-#include "../Math/Math.h"
 #include "../DataStream.h"
 #include "../Utilities.h"
+
+#include "../math/BoundingSphere.h"
 
 #include "Direct3D9Exception.h"
 #include "Device.h"

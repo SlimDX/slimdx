@@ -21,9 +21,9 @@
 */
 #pragma once
 
-//using namespace System::Runtime::InteropServices;
+#include "../math/Vector3.h"
 
-#include "../math/Math.h"
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {

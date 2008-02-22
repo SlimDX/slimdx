@@ -23,7 +23,7 @@
 
 #include "../ComObject.h"
 
-#include "../math/Math.h"
+#include "../math/Color4.h"
 
 #include "Enums.h"
 

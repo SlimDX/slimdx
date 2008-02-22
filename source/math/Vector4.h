@@ -25,14 +25,15 @@
 //using namespace System::Globalization;
 //using namespace System::Runtime::InteropServices;
 
+using System::Runtime::InteropServices::OutAttribute;
+
 namespace SlimDX
 {
-    namespace Direct3D
-    {
-        value class Viewport;
-		value class Vector4;
-    }
-
+	value class Matrix;
+	value class Quaternion;
+	value class Vector2;
+	value class Vector3;
+	
 	/// <summary>
 	/// Defines a vector with four components.
 	/// </summary>

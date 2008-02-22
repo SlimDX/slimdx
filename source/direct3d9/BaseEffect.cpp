@@ -23,7 +23,10 @@
 #include <d3dx9.h>
 #include <vcclr.h>
 
-#include "../math/Math.h"
+#include "../math/Color4.h"
+#include "../math/Matrix.h"
+#include "../math/Vector4.h"
+
 #include "../DataStream.h"
 #include "Device.h"
 #include "Texture.h"

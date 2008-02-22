@@ -23,8 +23,16 @@
 
 struct D3DXMATRIX;
 
+using System::Runtime::InteropServices::OutAttribute;
+
 namespace SlimDX
 {
+	value class Plane;
+	value class Quaternion;
+	value class Vector2;
+	value class Vector3;
+	value class Vector4;
+	
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 	public value class Matrix : System::IEquatable<Matrix>

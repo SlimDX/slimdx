@@ -21,10 +21,10 @@
 */
 #pragma once
 
-//using namespace System::IO;
-//using namespace System::Runtime::InteropServices;
+#include "../math/Color4.h"
+#include "../math/Matrix.h"
+#include "../math/Vector4.h"
 
-#include "../math/Math.h"
 #include "Device.h"
 #include "EffectHandle.h"
 

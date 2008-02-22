@@ -27,6 +27,8 @@
 #include "../ComObject.h"
 #include "../Utilities.h"
 
+#include "../math/Vector2.h"
+
 #include "Device.h"
 #include "D3DX.h"
 #include "Texture.h"
