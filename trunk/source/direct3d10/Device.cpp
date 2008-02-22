@@ -26,6 +26,7 @@
 #include "Direct3D10Exception.h"
 
 #include "Buffer.h"
+#include "DepthStencilView.h"
 #include "Device.h"
 #include "InputAssemblerWrapper.h"
 #include "InputLayout.h"
@@ -94,6 +95,17 @@ namespace Direct3D10
 	RasterizerWrapper^ Device::Rasterizer::get()
 	{
 		return m_Rasterizer;
+	}
+	
+	void Device::ClearDepthStencilView( DepthStencilView^ view, DepthStencilClearFlags flags, float depth, Byte stencil )
+	{
+		InternalPointer->ClearDepthStencilView( view->InternalPointer, static_cast<UINT>( flags ), depth, stencil );
+	}
+	
+	void Device::ClearRenderTargetView( RenderTargetView^ view, Color4 color )
+	{
+		const float nativeColor[] = { color.Red, color.Green, color.Blue, color.Alpha };
+		InternalPointer->ClearRenderTargetView( view->InternalPointer, nativeColor );
 	}
 	
 	void Device::ClearState()
