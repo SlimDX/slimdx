@@ -52,9 +52,23 @@ namespace Direct3D10
 		if( resource == nullptr )
 			throw gcnew ArgumentNullException( "resource" );
 		
-		
 		ID3D10RenderTargetView *view = 0;
 		if( Result::Record( device->InternalPointer->CreateRenderTargetView( resource->InternalPointer, NULL, &view ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+		
+		Construct( view );
+	}
+	
+	RenderTargetView::RenderTargetView( Device^ device, Resource^ resource, RenderTargetViewDescription description )
+	{
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+		if( resource == nullptr )
+			throw gcnew ArgumentNullException( "resource" );
+		
+		ID3D10RenderTargetView *view = 0;
+		D3D10_RENDER_TARGET_VIEW_DESC nativeDescription = description.CreateNativeVersion();
+		if( Result::Record( device->InternalPointer->CreateRenderTargetView( resource->InternalPointer, &nativeDescription, &view ) ).IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 		
 		Construct( view );
