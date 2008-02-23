@@ -45,6 +45,7 @@ namespace SlimDX
 			}
 			
 			ShaderResourceView( System::IntPtr pointer );
+			ShaderResourceView( Device^ device, Resource^ resource );
 			ShaderResourceView( Device^ device, Resource^ resource, ShaderResourceViewDescription description );
 		};
 	}

@@ -46,6 +46,20 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 	
+	ShaderResourceView::ShaderResourceView( Device^ device, Resource^ resource )
+	{
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+		if( resource == nullptr )
+			throw gcnew ArgumentNullException( "resource" );
+		
+		ID3D10ShaderResourceView *view = 0;
+		if( Result::Record( device->InternalPointer->CreateShaderResourceView( resource->InternalPointer, 0, &view ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+			
+		Construct( view );
+	}
+	
 	ShaderResourceView::ShaderResourceView( Device^ device, Resource^ resource, ShaderResourceViewDescription description )
 	{
 		if( device == nullptr )
