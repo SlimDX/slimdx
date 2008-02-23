@@ -59,7 +59,7 @@ namespace Direct3D9
 		Result::Record( hr );
 
 		if( FAILED( hr ) )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 	}
 
 	Result AnimationController::AdvanceTime( double time, AnimationCallback^ handler )

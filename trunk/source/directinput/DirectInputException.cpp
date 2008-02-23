@@ -30,7 +30,7 @@ namespace SlimDX
 namespace DirectInput
 {
 	DirectInputException::DirectInputException( SerializationInfo^ info, StreamingContext context )
-	: SlimDXException( info, context )
+		: SlimDXException( info, context )
 	{
 	}
 
@@ -39,17 +39,17 @@ namespace DirectInput
 	}
 
 	DirectInputException::DirectInputException( String^ message )
-	: SlimDXException( message )
+		: SlimDXException( message )
 	{
 	}
 
 	DirectInputException::DirectInputException( String^ message, Exception^ innerException )
-	: SlimDXException( message, innerException )
+		: SlimDXException( message, innerException )
 	{
 	}
 
-	DirectInputException::DirectInputException( int errorCode )
-	: SlimDXException( errorCode )
+	DirectInputException::DirectInputException( Result result )
+		: SlimDXException( result.Code )
 	{
 	}
 }

@@ -602,7 +602,7 @@ namespace Direct3D9
 			reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedDecl ), device->InternalPointer, &mesh );
 
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(mesh);
 	}
@@ -615,7 +615,7 @@ namespace Direct3D9
 			static_cast<DWORD>( fvf ), device->InternalPointer, &mesh );
 
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(mesh);
 	}

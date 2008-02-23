@@ -37,7 +37,7 @@ namespace SlimDX
 			Direct3D9Exception();
 			Direct3D9Exception( System::String^ message );
 			Direct3D9Exception( System::String^ message, Exception^ innerException );
-			Direct3D9Exception( int errorCode );
+			Direct3D9Exception( Result result );
 		};
 	}
 }

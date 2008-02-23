@@ -58,7 +58,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateSprite( device->InternalPointer, &sprite );
 		
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(sprite);
 	}

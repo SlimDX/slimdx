@@ -83,7 +83,7 @@ namespace Direct3D9
 		
 		Result::Record( hr );
 		if( FAILED( hr ) )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(compiler);
 	}
@@ -136,7 +136,7 @@ namespace Direct3D9
 		// CheckHResult() is not used because we need to include the compiler errors.
 		if( Configuration::EnableExceptions && FAILED(hr) )
 		{
-			Direct3D9Exception^ ex = gcnew Direct3D9Exception( hr );
+			Direct3D9Exception^ ex = gcnew Direct3D9Exception( Result::Last );
 			ex->Data->Add( "CompilationErrors", compilationErrors );
 			throw ex;
 		}
@@ -174,7 +174,7 @@ namespace Direct3D9
 		// CheckHResult() is not used because we need to include the compiler errors.
 		if( Configuration::EnableExceptions && FAILED(hr) )
 		{
-			Direct3D9Exception^ ex = gcnew Direct3D9Exception( hr );
+			Direct3D9Exception^ ex = gcnew Direct3D9Exception( Result::Last );
 			ex->Data->Add( "CompilationErrors", compilationErrors );
 			throw ex;
 		}
@@ -212,7 +212,7 @@ namespace Direct3D9
 		// CheckHResult() is not used because we need to include the compiler errors.
 		if( Configuration::EnableExceptions && FAILED(hr) )
 		{
-			Direct3D9Exception^ ex = gcnew Direct3D9Exception( hr );
+			Direct3D9Exception^ ex = gcnew Direct3D9Exception( Result::Last );
 			ex->Data->Add( "CompilationErrors", compilationErrors );
 			throw ex;
 		}

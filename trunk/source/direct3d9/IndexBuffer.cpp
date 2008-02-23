@@ -64,7 +64,7 @@ namespace Direct3D9
 		D3DFORMAT format = sixteenBit ? D3DFMT_INDEX16 : D3DFMT_INDEX32;
 		HRESULT hr = device->InternalPointer->CreateIndexBuffer( sizeBytes, static_cast<DWORD>( usage ), format, static_cast<D3DPOOL>( pool ), &ib, NULL );
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(ib);
 		InitDescription();

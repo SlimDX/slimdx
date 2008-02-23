@@ -45,7 +45,7 @@ namespace SlimDX
 			ID3DXEffectPool* pointer;
 			HRESULT hr = D3DXCreateEffectPool( &pointer );
 			if( FAILED( hr ) )
-				throw gcnew Direct3D9Exception();
+				throw gcnew Direct3D9Exception( Result::Last );
 
 			Construct( pointer );
 		}

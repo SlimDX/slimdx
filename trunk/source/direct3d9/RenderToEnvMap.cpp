@@ -53,7 +53,7 @@ namespace SlimDX
 				true, static_cast<D3DFORMAT>( depthStencilFormat ), &result );
 			
 			if( Result::Record( hr ).IsFailure )
-				throw gcnew Direct3D9Exception();
+				throw gcnew Direct3D9Exception( Result::Last );
 
 			Construct(result);
 		}
@@ -66,7 +66,7 @@ namespace SlimDX
 				false, D3DFMT_UNKNOWN, &result );
 
 			if( Result::Record( hr ).IsFailure )
-				throw gcnew Direct3D9Exception();
+				throw gcnew Direct3D9Exception( Result::Last );
 
 			Construct(result);
 		}

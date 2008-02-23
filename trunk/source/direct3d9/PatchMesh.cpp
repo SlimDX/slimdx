@@ -55,7 +55,7 @@ namespace Direct3D9
 			reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedElements ), device->InternalPointer, &result );
 		
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
 	}
@@ -67,7 +67,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateNPatchMesh( mesh->MeshPointer, &result );
 		
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
 	}

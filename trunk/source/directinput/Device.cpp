@@ -63,7 +63,7 @@ namespace DirectInput
 		HRESULT hr = DirectInput::InternalPointer->CreateDevice( Utilities::ConvertManagedGuid( subsystem ), &device, NULL );
 
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew DirectInputException();
+			throw gcnew DirectInputException( Result::Last );
 
 		Construct(device);
 
@@ -128,7 +128,7 @@ namespace DirectInput
 		}
 
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew DirectInputException();
+			throw gcnew DirectInputException( Result::Last );
 
 		properties = gcnew DeviceProperties( InternalPointer );
 	}
