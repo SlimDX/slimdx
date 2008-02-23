@@ -22,7 +22,7 @@
 
 #include <d3dx9.h>
 
-#include "../Direct3D/Viewport.h"
+#include "../Viewport.h"
 
 #include "Quaternion.h"
 #include "Matrix.h"
@@ -933,7 +933,7 @@ namespace SlimDX
 	/// <param name="view">The view matrix.</param>
 	/// <param name="world">The world matrix.</param>
 	/// <returns>The vector in screen space.</returns>
-	Vector3 Vector3::Project( Vector3 vector, Direct3D::Viewport viewport, Matrix projection, Matrix view, Matrix world )
+	Vector3 Vector3::Project( Vector3 vector, SlimDX::Viewport viewport, Matrix projection, Matrix view, Matrix world )
 	{
 		Vector3 result;
 
@@ -952,10 +952,10 @@ namespace SlimDX
 	/// <param name="view">The view matrix.</param>
 	/// <param name="world">The world matrix.</param>
 	/// <param name="result">When the method completes, contains the vector in screen space.</param>
-	void Vector3::Project( Vector3% vector, Direct3D::Viewport% viewport, Matrix% projection, Matrix% view, Matrix% world, [Out] Vector3% result )
+	void Vector3::Project( Vector3% vector, SlimDX::Viewport% viewport, Matrix% projection, Matrix% view, Matrix% world, [Out] Vector3% result )
 	{
 		pin_ptr<Vector3> pinVector = &vector;
-		pin_ptr<Direct3D::Viewport> pinViewport = &viewport;
+		pin_ptr<SlimDX::Viewport> pinViewport = &viewport;
 		pin_ptr<Matrix> pinProjection = &projection;
 		pin_ptr<Matrix> pinView = &view;
 		pin_ptr<Matrix> pinWorld = &world;
@@ -974,7 +974,7 @@ namespace SlimDX
 	/// <param name="view">The view matrix.</param>
 	/// <param name="world">The world matrix.</param>
 	/// <returns>The vector in object space.</returns>
-	Vector3 Vector3::Unproject( Vector3 vector, Direct3D::Viewport viewport, Matrix projection, Matrix view, Matrix world )
+	Vector3 Vector3::Unproject( Vector3 vector, SlimDX::Viewport viewport, Matrix projection, Matrix view, Matrix world )
 	{
 		Vector3 result;
 
@@ -993,10 +993,10 @@ namespace SlimDX
 	/// <param name="view">The view matrix.</param>
 	/// <param name="world">The world matrix.</param>
 	/// <param name="result">When the method completes, contains the vector in object space.</param>
-	void Vector3::Unproject( Vector3% vector, Direct3D::Viewport% viewport, Matrix% projection, Matrix% view, Matrix% world, [Out] Vector3% result )
+	void Vector3::Unproject( Vector3% vector, SlimDX::Viewport% viewport, Matrix% projection, Matrix% view, Matrix% world, [Out] Vector3% result )
 	{
 		pin_ptr<Vector3> pinVector = &vector;
-		pin_ptr<Direct3D::Viewport> pinViewport = &viewport;
+		pin_ptr<SlimDX::Viewport> pinViewport = &viewport;
 		pin_ptr<Matrix> pinProjection = &projection;
 		pin_ptr<Matrix> pinView = &view;
 		pin_ptr<Matrix> pinWorld = &world;

@@ -25,7 +25,7 @@
 //using namespace System::Runtime::InteropServices;
 
 #include "Enums.h"
-#include "../Direct3D/Viewport.h"
+#include "../Viewport.h"
 
 namespace SlimDX
 {
@@ -58,7 +58,7 @@ namespace SlimDX
 			RenderToSurface( Device^ device, int width, int height, Format format, Format depthStencilFormat );
 			~RenderToSurface() { Destruct(); }
 
-			Result BeginScene( Surface^ renderSurface, SlimDX::Direct3D::Viewport viewport );
+			Result BeginScene( Surface^ renderSurface, SlimDX::Viewport viewport );
 			Result EndScene( Filter mipFilter );
 
 			Device^ GetDevice();

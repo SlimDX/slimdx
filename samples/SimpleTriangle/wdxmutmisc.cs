@@ -10,7 +10,6 @@ using System.IO;
 using System.Collections;
 using System.Runtime.InteropServices;
 using SlimDX;
-using SlimDX.Direct3D;
 using SlimDX.Direct3D9;
 
 //stripped down version of wdxmutmisc.cs

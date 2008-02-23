@@ -71,7 +71,7 @@ namespace SlimDX
 			Construct(rtsPointer);
 		}
 
-		Result RenderToSurface::BeginScene( Surface^ renderSurface, SlimDX::Direct3D::Viewport viewport )
+		Result RenderToSurface::BeginScene( Surface^ renderSurface, SlimDX::Viewport viewport )
 		{
 			IDirect3DSurface9* surface = renderSurface->SurfacePointer;
 			HRESULT hr = InternalPointer->BeginScene( surface, reinterpret_cast<D3DVIEWPORT9*>( &viewport ) );

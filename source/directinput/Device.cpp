@@ -241,8 +241,7 @@ namespace DirectInput
 				return Result::Last;
 			}
 
-			//FIXME: Shouldn't this be safe_cast?
-			KeyboardState^ state = reinterpret_cast<KeyboardState^>( data );
+			KeyboardState^ state = safe_cast<KeyboardState^>( data );
 			for( int i = 0; i < 256; i++ )
 			{
 				if( keys[i] )
@@ -264,8 +263,7 @@ namespace DirectInput
 				return Result::Last;
 			}
 
-			//FIXME: Shouldn't this be safe_cast?
-			MouseState^ result = reinterpret_cast<MouseState^>( data );
+			MouseState^ result = safe_cast<MouseState^>( data );
 			for( int i = 0; i < 8; i++ )
 			{
 				if( state.rgbButtons[i] & 0x80 )
@@ -287,8 +285,7 @@ namespace DirectInput
 				return Result::Last;
 			}
 
-			//FIXME: Shouldn't this be safe_cast?
-			JoystickState^ state = reinterpret_cast<JoystickState^>( data );
+			JoystickState^ state = safe_cast<JoystickState^>( data );
 			state->x = joystate.lX;
 			state->y = joystate.lY;
 			state->z = joystate.lZ;

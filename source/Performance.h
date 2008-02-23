@@ -23,30 +23,27 @@
 
 namespace SlimDX
 {
-	namespace Direct3D
+	[System::Flags]
+	public enum class PerformanceOptions : System::Int32
 	{
-		[System::Flags]
-		public enum class PerformanceOptions : System::Int32
-		{
-			None = 0,
-			DoNotAllowProfiling = 1,
-		};
+		None = 0,
+		DoNotAllowProfiling = 1,
+	};
 
-		public ref class Performance sealed
-		{
-		private:
-			Performance() { }
+	public ref class Performance sealed
+	{
+	private:
+		Performance() { }
 
-		public:
-			static int BeginEvent( Color4 color, System::String^ name );
-			static int EndEvent();
+	public:
+		static int BeginEvent( Color4 color, System::String^ name );
+		static int EndEvent();
 
-			static bool GetStatus();
-			static bool QueryRepeatFrame();
+		static bool GetStatus();
+		static bool QueryRepeatFrame();
 
-			static void SetMarker( Color4 color, System::String^ name );
-			static void SetOptions( PerformanceOptions options );
-			static void SetRegion( Color4 color, System::String^ name );
-		};
-	}
+		static void SetMarker( Color4 color, System::String^ name );
+		static void SetOptions( PerformanceOptions options );
+		static void SetRegion( Color4 color, System::String^ name );
+	};
 }

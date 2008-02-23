@@ -52,5 +52,10 @@ namespace SlimDX
 
 		generic<typename T>
 		static void CheckArrayBounds( array<T>^ data, int offset, int% count );
+
+		static void FreeNativeString( LPCSTR string );
+		static void FreeNativeString( LPSTR string );
+
+		static LPSTR AllocateNativeString( System::String^ string );
 	};
 }

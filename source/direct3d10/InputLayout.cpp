@@ -58,7 +58,12 @@ namespace Direct3D10
 			nativeElements[i] = elements[i].CreateNativeVersion();
 			
 		ID3D10InputLayout* layout = 0;
-		if( Result::Record( device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->Buffer, shaderSignature->Length, &layout ) ).IsFailure )
+		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->Buffer, shaderSignature->Length, &layout );
+
+		for( int i = 0; i < elements->Length; i++ )
+			Utilities::FreeNativeString( nativeElements[i].SemanticName );
+
+		if( Result::Record( hr ).IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 
 		Construct( layout );

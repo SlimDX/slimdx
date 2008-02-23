@@ -33,6 +33,13 @@ namespace SlimDX
 	private:
 		System::UInt16 m_Value;
 
+		static Float16()
+		{
+			Float16::Epsilon = 0.0004887581f;
+			Float16::MaxValue = 65504.0f;
+			Float16::MinValue = 6.103516E-05f;
+		}
+
 	public:
 		literal int PrecisionDigits = 3;
 		literal int MantissaBits = 11;
@@ -45,13 +52,6 @@ namespace SlimDX
 		static initonly float Epsilon;
 		static initonly float MaxValue;
 		static initonly float MinValue;
-
-		static Float16()
-		{
-			Float16::Epsilon = 0.0004887581f;
-			Float16::MaxValue = 65504.0f;
-			Float16::MinValue = 6.103516E-05f;
-		}
 
 		Float16( float value );
 

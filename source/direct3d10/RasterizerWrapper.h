@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../direct3d/Viewport.h"
+#include "../Viewport.h"
 
 namespace SlimDX
 {
@@ -44,8 +44,8 @@ namespace SlimDX
 				RasterizerState^ get();
 			}
 		
-			void SetViewports( Direct3D::Viewport viewport );
-			void SetViewports( ... array<Direct3D::Viewport>^ viewports );
+			void SetViewports( SlimDX::Viewport viewport );
+			void SetViewports( ... array<SlimDX::Viewport>^ viewports );
 		};
 	}
 };

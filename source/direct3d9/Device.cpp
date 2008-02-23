@@ -27,6 +27,7 @@
 #include "../ComObject.h"
 #include "../Utilities.h"
 #include "../StackAlloc.h"
+#include "../Viewport.h"
 
 #include "Direct3D9NotInitializedException.h"
 
@@ -527,16 +528,16 @@ namespace Direct3D9
 		return gcnew Surface( surface );
 	}
 
-	SlimDX::Direct3D::Viewport Device::Viewport::get()
+	SlimDX::Viewport Device::Viewport::get()
 	{
-		SlimDX::Direct3D::Viewport viewport;
+		SlimDX::Viewport viewport;
 		HRESULT hr = InternalPointer->GetViewport( reinterpret_cast<D3DVIEWPORT9*>( &viewport ) );
 		Result::Record( hr );
 
 		return viewport;
 	}
 
-	void Device::Viewport::set( SlimDX::Direct3D::Viewport value )
+	void Device::Viewport::set( SlimDX::Viewport value )
 	{
 		HRESULT hr = InternalPointer->SetViewport( reinterpret_cast<const D3DVIEWPORT9*>( &value ) );
 		Result::Record( hr );

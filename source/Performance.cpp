@@ -22,8 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../Utilities.h"
-#include "../math/Color4.h"
+#include "math/Color4.h"
 #include "Performance.h"
 #include <vcclr.h>
 
@@ -31,8 +30,6 @@ using namespace System;
 using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
-{
-namespace Direct3D
 {
 	int Performance::BeginEvent( Color4 color, String^ name )
 	{
@@ -71,5 +68,4 @@ namespace Direct3D
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( name );
 		D3DPERF_SetRegion( static_cast<int>( color ), pinnedName );
 	}
-}
 }
