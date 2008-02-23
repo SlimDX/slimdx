@@ -34,357 +34,90 @@ namespace SlimDX
 
 		public value class BandwidthTimings
 		{
-		private:
-			float maxBandwidthUtilized;
-			float frontEndUploadMemoryUtilizedPercent;
-			float vertexRateUtilizedPercent;
-			float triangleSetupRateUtilizedPercent;
-			float fillRateUtilizedPercent;
-
 		public:
-			property float MaxBandwidthUtilized
-			{
-				float get() { return maxBandwidthUtilized; }
-				void set( float value ) { maxBandwidthUtilized = value; }
-			}
-
-			property float FrontEndUploadMemoryUtilizedPercent
-			{
-				float get() { return frontEndUploadMemoryUtilizedPercent; }
-				void set( float value ) { frontEndUploadMemoryUtilizedPercent = value; }
-			}
-
-			property float VertexRateUtilizedPercent
-			{
-				float get() { return vertexRateUtilizedPercent; }
-				void set( float value ) { vertexRateUtilizedPercent = value; }
-			}
-
-			property float TriangleSetupRateUtilizedPercent
-			{
-				float get() { return triangleSetupRateUtilizedPercent; }
-				void set( float value ) { triangleSetupRateUtilizedPercent = value; }
-			}
-
-			property float FillRateUtilizedPercent
-			{
-				float get() { return fillRateUtilizedPercent; }
-				void set( float value ) { fillRateUtilizedPercent = value; }
-			}
+			property float MaximumBandwidthUtilized;
+			property float FrontEndUploadMemoryUtilizedPercent;
+			property float VertexRateUtilizedPercent;
+			property float TriangleSetupRateUtilizedPercent;
+			property float FillRateUtilizedPercent;
 		};
 
 		public value class CacheUtilization
 		{
-		private:
-			float textureCacheHitRate;
-			float postTransformVertexCacheHitRate;
-
 		public:
-			property float TextureCacheHitRate
-			{
-				float get() { return textureCacheHitRate; }
-				void set( float value ) { textureCacheHitRate = value; }
-			}
-
-			property float PostTransformVertexCacheHitRate
-			{
-				float get() { return postTransformVertexCacheHitRate; }
-				void set( float value ) { postTransformVertexCacheHitRate = value; }
-			}
+			property float TextureCacheHitRate;
+			property float PostTransformVertexCacheHitRate;
 		};
 
 		public value class InterfaceTimings
 		{
-		private:
-			float waitingForGPUToUseApplicationResourceTimePercent;
-			float waitingForGPUToAcceptMoreCommandsTimePercent;
-			float waitingForGPUToStayWithinLatencyTimePercent;
-			float waitingForGPUExclusiveResourceTimePercent;
-			float waitingForGPUOtherTimePercent;
-
 		public:
-			property float WaitingForGpuToUseApplicationResourceTimePercent
-			{
-				float get() { return waitingForGPUToUseApplicationResourceTimePercent; }
-				void set( float value ) { waitingForGPUToUseApplicationResourceTimePercent = value; }
-			}
-
-			property float WaitingForGpuToAcceptMoreCommandsTimePercent
-			{
-				float get() { return waitingForGPUToAcceptMoreCommandsTimePercent; }
-				void set( float value ) { waitingForGPUToAcceptMoreCommandsTimePercent = value; }
-			}
-
-			property float WaitingForGpuToStayWithinLatencyTimePercent
-			{
-				float get() { return waitingForGPUToStayWithinLatencyTimePercent; }
-				void set( float value ) { waitingForGPUToStayWithinLatencyTimePercent = value; }
-			}
-
-			property float WaitingForGpuExclusiveResourceTimePercent
-			{
-				float get() { return waitingForGPUExclusiveResourceTimePercent; }
-				void set( float value ) { waitingForGPUExclusiveResourceTimePercent = value; }
-			}
-
-			property float WaitingForGpuOtherTimePercent
-			{
-				float get() { return waitingForGPUOtherTimePercent; }
-				void set( float value ) { waitingForGPUOtherTimePercent = value; }
-			}
+			property float WaitingForGPUToUseApplicationResourceTimePercent;
+			property float WaitingForGPUToAcceptMoreCommandsTimePercent;
+			property float WaitingForGPUToStayWithinLatencyTimePercent;
+			property float WaitingForGPUExclusiveResourceTimePercent;
+			property float WaitingForGPUOtherTimePercent;
 		};
 
 		public value class PipelineTimings
 		{
-		private:
-			float vertexProcessingTimePercent;
-			float pixelProcessingTimePercent;
-			float otherGPUProcessingTimePercent;
-			float gPUIdleTimePercent;
-
 		public:
-			property float VertexProcessingTimePercent
-			{
-				float get() { return vertexProcessingTimePercent; }
-				void set( float value ) { vertexProcessingTimePercent = value; }
-			}
-
-			property float PixelProcessingTimePercent
-			{
-				float get() { return pixelProcessingTimePercent; }
-				void set( float value ) { pixelProcessingTimePercent = value; }
-			}
-
-			property float OtherGpuProcessingTimePercent
-			{
-				float get() { return otherGPUProcessingTimePercent; }
-				void set( float value ) { otherGPUProcessingTimePercent = value; }
-			}
-
-			property float GpuIdleTimePercent
-			{
-				float get() { return gPUIdleTimePercent; }
-				void set( float value ) { gPUIdleTimePercent = value; }
-			}
+			property float VertexProcessingTimePercent;
+			property float PixelProcessingTimePercent;
+			property float OtherGPUProcessingTimePercent;
+			property float GPUIdleTimePercent;
 		};
 
 		public value class ResourceStats
 		{
-		private:
-			bool thrashing;
-			int approxBytesDownloaded;
-			int numberEvicted;
-			int numberVidCreated;
-			int lastPriority;
-			int numberUsed;
-			int numberUsedInVidMemory;
-			int workingSet;
-			int workingSetBytes;
-			int totalManaged;
-			int totalBytes;
-
 		public:
-			property bool Thrashing
-			{
-				bool get() { return thrashing; }
-				void set( bool value ) { thrashing = value; }
-			}
-
-			property int ApproxBytesDownloaded
-			{
-				int get() { return approxBytesDownloaded; }
-				void set( int value ) { approxBytesDownloaded = value; }
-			}
-
-			property int NumberEvicted
-			{
-				int get() { return numberEvicted; }
-				void set( int value ) { numberEvicted = value; }
-			}
-
-			property int NumberVideoCreated
-			{
-				int get() { return numberVidCreated; }
-				void set( int value ) { numberVidCreated = value; }
-			}
-
-			property int LastPriority
-			{
-				int get() { return lastPriority; }
-				void set( int value ) { lastPriority = value; }
-			}
-
-			property int NumberUsed
-			{
-				int get() { return numberUsed; }
-				void set( int value ) { numberUsed = value; }
-			}
-
-			property int NumberUsedInVideoMemory
-			{
-				int get() { return numberUsedInVidMemory; }
-				void set( int value ) { numberUsedInVidMemory = value; }
-			}
-
-			property int WorkingSet
-			{
-				int get() { return workingSet; }
-				void set( int value ) { workingSet = value; }
-			}
-
-			property int WorkingSetBytes
-			{
-				int get() { return workingSetBytes; }
-				void set( int value ) { workingSetBytes = value; }
-			}
-
-			property int TotalManaged
-			{
-				int get() { return totalManaged; }
-				void set( int value ) { totalManaged = value; }
-			}
-
-			property int TotalBytes
-			{
-				int get() { return totalBytes; }
-				void set( int value ) { totalBytes = value; }
-			}
+			property bool Thrashing;
+			property int ApproximateBytesDownloaded;
+			property int NumberEvicted;
+			property int NumberVideoCreated;
+			property int LastPriority;
+			property int NumberUsed;
+			property int NumberUsedInVideoMemory;
+			property int WorkingSet;
+			property int WorkingSetBytes;
+			property int TotalManaged;
+			property int TotalBytes;
 		};
 
 		public value class ResourceManager
 		{
-		private:
-			ResourceStats stats;
-			ResourceStats surfaceStats;
-			ResourceStats volumeStats;
-			ResourceStats textureStats;
-			ResourceStats volumeTextureStats;
-			ResourceStats cubeTextureStats;
-			ResourceStats vertexBufferStats;
-			ResourceStats indexBufferStats;
-
 		public:
-			property ResourceStats Stats
-			{
-				ResourceStats get() { return stats; }
-				void set( ResourceStats value ) { stats = value; }
-			}
-
-			property ResourceStats SurfaceStats
-			{
-				ResourceStats get() { return surfaceStats; }
-				void set( ResourceStats value ) { surfaceStats = value; }
-			}
-
-			property ResourceStats VolumeStats
-			{
-				ResourceStats get() { return volumeStats; }
-				void set( ResourceStats value ) { volumeStats = value; }
-			}
-
-			property ResourceStats TextureStats
-			{
-				ResourceStats get() { return textureStats; }
-				void set( ResourceStats value ) { textureStats = value; }
-			}
-
-			property ResourceStats VolumeTextureStats
-			{
-				ResourceStats get() { return volumeTextureStats; }
-				void set( ResourceStats value ) { volumeTextureStats = value; }
-			}
-
-			property ResourceStats CubeTextureStats
-			{
-				ResourceStats get() { return cubeTextureStats; }
-				void set( ResourceStats value ) { cubeTextureStats = value; }
-			}
-
-			property ResourceStats VertexBufferStats
-			{
-				ResourceStats get() { return vertexBufferStats; }
-				void set( ResourceStats value ) { vertexBufferStats = value; }
-			}
-
-			property ResourceStats IndexBufferStats
-			{
-				ResourceStats get() { return indexBufferStats; }
-				void set( ResourceStats value ) { indexBufferStats = value; }
-			}
+			property ResourceStats Stats;
+			property ResourceStats SurfaceStats;
+			property ResourceStats VolumeStats;
+			property ResourceStats TextureStats;
+			property ResourceStats VolumeTextureStats;
+			property ResourceStats CubeTextureStats;
+			property ResourceStats VertexBufferStats;
+			property ResourceStats IndexBufferStats;
 		};
 
 		public value class VCache
 		{
-		private:
-			int pattern;
-			int optMethod;
-			int cacheSize;
-			int magicNumber;
-
 		public:
-			property int Pattern
-			{
-				int get() { return pattern; }
-				void set( int value ) { pattern = value; }
-			}
-
-			property int OptMethod
-			{
-				int get() { return optMethod; }
-				void set( int value ) { optMethod = value; }
-			}
-
-			property int CacheSize
-			{
-				int get() { return cacheSize; }
-				void set( int value ) { cacheSize = value; }
-			}
-
-			property int MagicNumber
-			{
-				int get() { return magicNumber; }
-				void set( int value ) { magicNumber = value; }
-			}
+			property int Pattern;
+			property int OptMethod;
+			property int CacheSize;
+			property int MagicNumber;
 		};
 
 		public value class VertexStats
 		{
-		private:
-			int numRenderedTriangles;
-			int numExtraClippingTriangles;
-
 		public:
-			property int RenderedTriangleCount
-			{
-				int get() { return numRenderedTriangles; }
-				void set( int value ) { numRenderedTriangles = value; }
-			}
-
-			property int ExtraClippingTriangleCount
-			{
-				int get() { return numExtraClippingTriangles; }
-				void set( int value ) { numExtraClippingTriangles = value; }
-			}
+			property int RenderedTriangleCount;
+			property int ExtraClippingTriangleCount;
 		};
 
 		public value class StageTimings
 		{
-		private:
-			float memoryProcessingPercent;
-			float computationProcessingPercent;
-
 		public:
-			property float MemoryProcessingPercent
-			{
-				float get() { return memoryProcessingPercent; }
-				void set( float value ) { memoryProcessingPercent = value; }
-			}
-
-			property float ComputationProcessingPercent
-			{
-				float get() { return computationProcessingPercent; }
-				void set( float value ) { computationProcessingPercent = value; }
-			}
+			property float MemoryProcessingPercent;
+			property float ComputationProcessingPercent;
 		};
 
 		public ref class Query : public ComObject
@@ -401,6 +134,13 @@ namespace SlimDX
 			Query( Device^ device, QueryType type );
 			~Query() { Destruct(); }
 
+			Device^ GetDevice();
+			Result Issue( SlimDX::Direct3D9::Issue flags );
+			bool CheckStatus( bool flush );
+
+			generic<typename T> where T : value class
+			T GetData( bool flush );
+
 			property QueryType Type
 			{
 				QueryType get();
@@ -410,13 +150,6 @@ namespace SlimDX
 			{
 				int get();
 			}
-
-			Device^ GetDevice();
-			Result Issue( SlimDX::Direct3D9::Issue flags );
-			bool CheckStatus( bool flush );
-
-			generic<typename T> where T : value class
-			T GetData( bool flush );
 		};
 	}
 }

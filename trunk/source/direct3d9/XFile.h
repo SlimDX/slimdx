@@ -21,9 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Runtime::InteropServices;
-
 namespace SlimDX
 {
 	namespace Direct3D9

@@ -29,124 +29,124 @@ namespace SlimDX
 	{
 		public ref class Error sealed
 		{
-			private:
-				Error();
-				
-			public:
-				property static Result NoneButNoAutomaticGeneration
-				{
-					Result get();
-				};
-				
-				property static Result ConflictingRenderState
-				{
-					Result get();
-				};
-				
-				property static Result ConflictingTextureFilter
-				{
-					Result get();
-				};
-				
-				property static Result ConflictingTexturePalette
-				{
-					Result get();
-				};
-				
-				property static Result DeviceLost
-				{
-					Result get();
-				};
-				
-				property static Result DeviceNotReset
-				{
-					Result get();
-				};
-				
-				property static Result DriverInternalError
-				{
-					Result get();
-				};
-				
-				property static Result DriverInvalidCall
-				{
-					Result get();
-				};
-				
-				property static Result InvalidCall
-				{
-					Result get();
-				};
-				
-				property static Result InvalidDevice
-				{
-					Result get();
-				};
-				
-				property static Result MoreData
-				{
-					Result get();
-				};
-				
-				property static Result NotAvailable
-				{
-					Result get();
-				};
-				
-				property static Result NotFound
-				{
-					Result get();
-				};
-				
-				property static Result OutOfVideoMemory
-				{
-					Result get();
-				};
-				
-				property static Result TooManyOperations
-				{
-					Result get();
-				};
-				
-				property static Result UnsupportedAlphaArgument
-				{
-					Result get();
-				};
-				
-				property static Result UnsupportedAlphaOperation
-				{
-					Result get();
-				};
-				
-				property static Result UnsupportedColorArgument
-				{
-					Result get();
-				};
-				
-				property static Result UnsupportedColorOperation
-				{
-					Result get();
-				};
-				
-				property static Result UnsupportedFactorValue
-				{
-					Result get();
-				};
-				
-				property static Result UnsupportedTextureFilter
-				{
-					Result get();
-				};
+		private:
+			Error();
 			
-				property static Result WasStillDrawing
-				{
-					Result get();
-				};
-				
-				property static Result WrongTextureFormat
-				{
-					Result get();
-				};
+		public:
+			property static Result NoneButNoAutomaticGeneration
+			{
+				Result get();
+			};
+			
+			property static Result ConflictingRenderState
+			{
+				Result get();
+			};
+			
+			property static Result ConflictingTextureFilter
+			{
+				Result get();
+			};
+			
+			property static Result ConflictingTexturePalette
+			{
+				Result get();
+			};
+			
+			property static Result DeviceLost
+			{
+				Result get();
+			};
+			
+			property static Result DeviceNotReset
+			{
+				Result get();
+			};
+			
+			property static Result DriverInternalError
+			{
+				Result get();
+			};
+			
+			property static Result DriverInvalidCall
+			{
+				Result get();
+			};
+			
+			property static Result InvalidCall
+			{
+				Result get();
+			};
+			
+			property static Result InvalidDevice
+			{
+				Result get();
+			};
+			
+			property static Result MoreData
+			{
+				Result get();
+			};
+			
+			property static Result NotAvailable
+			{
+				Result get();
+			};
+			
+			property static Result NotFound
+			{
+				Result get();
+			};
+			
+			property static Result OutOfVideoMemory
+			{
+				Result get();
+			};
+			
+			property static Result TooManyOperations
+			{
+				Result get();
+			};
+			
+			property static Result UnsupportedAlphaArgument
+			{
+				Result get();
+			};
+			
+			property static Result UnsupportedAlphaOperation
+			{
+				Result get();
+			};
+			
+			property static Result UnsupportedColorArgument
+			{
+				Result get();
+			};
+			
+			property static Result UnsupportedColorOperation
+			{
+				Result get();
+			};
+			
+			property static Result UnsupportedFactorValue
+			{
+				Result get();
+			};
+			
+			property static Result UnsupportedTextureFilter
+			{
+				Result get();
+			};
+		
+			property static Result WasStillDrawing
+			{
+				Result get();
+			};
+			
+			property static Result WrongTextureFormat
+			{
+				Result get();
+			};
 		};
 	}
 }

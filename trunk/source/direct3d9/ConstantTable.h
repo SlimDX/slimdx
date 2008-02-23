@@ -91,18 +91,7 @@ namespace SlimDX
 			
 			int GetSamplerIndex( EffectHandle^ sampler );
 
-			property ConstantTableDescription Description
-			{
-				ConstantTableDescription get();
-			}
-			
 			DataStream^ GetBuffer();
-
-			property int BufferSize
-			{
-				int get() { return InternalPointer->GetBufferSize(); }
-			}
-
 			Result SetDefaults();
 
 			Result SetValue( EffectHandle^ constant, bool value );
@@ -119,6 +108,16 @@ namespace SlimDX
 			Result SetValue( EffectHandle^ constant, array<Matrix>^ values );
 			Result SetValueTranspose( EffectHandle^ constant, Matrix value );
 			Result SetValueTranspose( EffectHandle^ constant, array<Matrix>^ values );
+
+			property int BufferSize
+			{
+				int get() { return InternalPointer->GetBufferSize(); }
+			}
+
+			property ConstantTableDescription Description
+			{
+				ConstantTableDescription get();
+			}
 		};
 	}
 }

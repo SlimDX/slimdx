@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System::Drawing;
-
 namespace SlimDX
 {
 	namespace Direct3D9

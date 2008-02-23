@@ -37,7 +37,7 @@ namespace SlimDX
 			ID3D10EffectPass* m_Pointer;
 
 		internal:
-			EffectPass( ID3D10EffectPass* pass );
+			EffectPass( ID3D10EffectPass* pointer );
 			
 		public:
 			property EffectPassDescription Description

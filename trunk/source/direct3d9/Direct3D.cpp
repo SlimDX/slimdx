@@ -70,9 +70,7 @@ namespace Direct3D9
 		m_Modes = gcnew array<DisplayMode>( count );
 
 		for( int i = 0; i < count; ++i )
-		{
-			m_Modes[i] = Direct3D::EnumAdapterModes( adapter, format, i );
-		}
+			m_Modes[i] = Direct3D::EnumerateAdapterModes( adapter, format, i );
 	}
 
 	AdapterInformation::AdapterInformation( unsigned int adapter )
@@ -293,7 +291,7 @@ namespace Direct3D9
         return m_Direct3D->GetAdapterModeCount( adapter, static_cast<D3DFORMAT>( format ) );
     }
 
-    DisplayMode Direct3D::EnumAdapterModes( int adapter, Format format, int modeIndex )
+    DisplayMode Direct3D::EnumerateAdapterModes( int adapter, Format format, int modeIndex )
     {
         DisplayMode displayMode;
         HRESULT hr = m_Direct3D->EnumAdapterModes( adapter, static_cast<D3DFORMAT>( format ),

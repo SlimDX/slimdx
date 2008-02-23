@@ -21,9 +21,6 @@
 */
 #pragma once
 
-//using namespace System::IO;
-//using namespace System::Runtime::InteropServices;
-
 #include "Enums.h"
 #include "../Viewport.h"
 

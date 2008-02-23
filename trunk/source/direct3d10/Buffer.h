@@ -39,7 +39,7 @@ namespace SlimDX
 			COMOBJECT(ID3D10Buffer);
 			
 		private:
-			ID3D10Buffer* Build( Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
+			static ID3D10Buffer* Build( Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
 		
 		internal:
 			Buffer( ID3D10Buffer* buffer );

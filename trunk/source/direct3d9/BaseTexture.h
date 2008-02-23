@@ -43,6 +43,17 @@ namespace SlimDX
 		public:
 			virtual ~BaseTexture() { }
 
+			Result FilterTexture( int sourceLevel, Filter filter, array<PaletteEntry>^ palette );
+			Result FilterTexture( int sourceLevel, Filter filter );
+			
+			void GenerateMipSublevels();
+
+			static DataStream^ ToStream( BaseTexture^ texture, ImageFileFormat format );
+			static DataStream^ ToStream( BaseTexture^ texture, ImageFileFormat format, array<PaletteEntry>^ palette );
+
+			static Result ToFile( BaseTexture^ texture, System::String^ fileName, ImageFileFormat format );
+			static Result ToFile( BaseTexture^ texture, System::String^ fileName, ImageFileFormat format, array<PaletteEntry>^ palette );
+		
 			property TextureFilter AutoMipGenerationFilter
 			{
 				TextureFilter get() { return ( TextureFilter ) BaseTexturePointer->GetAutoGenFilterType(); }
@@ -59,17 +70,6 @@ namespace SlimDX
 				int get() { return BaseTexturePointer->GetLOD(); }
 				void set(int value) { BaseTexturePointer->SetLOD( value ); }
 			}
-
-			Result FilterTexture( int sourceLevel, Filter filter, array<PaletteEntry>^ palette );
-			Result FilterTexture( int sourceLevel, Filter filter );
-			
-			void GenerateMipSublevels();
-
-			static DataStream^ ToStream( BaseTexture^ texture, ImageFileFormat format );
-			static DataStream^ ToStream( BaseTexture^ texture, ImageFileFormat format, array<PaletteEntry>^ palette );
-
-			static Result ToFile( BaseTexture^ texture, System::String^ fileName, ImageFileFormat format );
-			static Result ToFile( BaseTexture^ texture, System::String^ fileName, ImageFileFormat format, array<PaletteEntry>^ palette );
 		};
 	}
 }

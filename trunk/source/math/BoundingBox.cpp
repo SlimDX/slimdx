@@ -126,7 +126,7 @@ namespace SlimDX
 	BoundingBox BoundingBox::FromPoints( array<Vector3>^ points )
 	{
 		if( points == nullptr || points->Length <= 0 )
-			throw gcnew ArgumentNullException();
+			throw gcnew ArgumentNullException( "points" );
 
 		Vector3 min = Vector3( float::MaxValue );
 		Vector3 max = Vector3( float::MinValue );

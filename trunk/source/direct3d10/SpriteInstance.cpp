@@ -35,7 +35,7 @@ namespace Direct3D10
 {
 	SpriteInstance::SpriteInstance( ShaderResourceView^ texture, Vector2 coordinates, Vector2 dimensions )
 	: transform( Matrix::Identity ), textureCoordinates( coordinates ), textureDimensions( dimensions),
-		color( 1.0f, 1.0f, 1.0f, 1.0 ), texture( texture ), textureIndex( 0 )
+		color( 1.0f, 1.0f, 1.0f, 1.0 ), texture( texture )
 	{
 	}
 

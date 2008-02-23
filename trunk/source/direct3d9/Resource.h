@@ -41,6 +41,9 @@ namespace SlimDX
 
 		public:
 			virtual ~Resource() { Destruct(); }
+			
+			Device^ GetDevice();
+			void Preload();
 
 			property int Priority
 			{
@@ -52,10 +55,6 @@ namespace SlimDX
 			{
 				SlimDX::Direct3D9::ResourceType get() { return ( SlimDX::Direct3D9::ResourceType ) InternalPointer->GetType(); }
 			}
-			
-			Device^ GetDevice();
-			
-			void Preload();
 		};
 	}
 }

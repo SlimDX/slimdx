@@ -141,8 +141,7 @@ namespace SlimDX
 
 		public:
 			CompressedAnimationSet( System::IntPtr pointer );
-			CompressedAnimationSet( System::String^ name, double ticksPerSecond, PlaybackType playbackType, 
-				DataStream^ compressedData, array<CallbackKey>^ callbackKeys );
+			CompressedAnimationSet( System::String^ name, double ticksPerSecond, PlaybackType playbackType, DataStream^ compressedData, array<CallbackKey>^ callbackKeys );
 			virtual ~CompressedAnimationSet() { }
 
 			array<CallbackKey>^ GetCallbackKeys();
@@ -163,8 +162,7 @@ namespace SlimDX
 
 		public:
 			KeyframedAnimationSet( System::IntPtr pointer );
-			KeyframedAnimationSet( System::String^ name, double ticksPerSecond, PlaybackType playbackType,
-				int animationCount, array<CallbackKey>^ callbackKeys );
+			KeyframedAnimationSet( System::String^ name, double ticksPerSecond, PlaybackType playbackType, int animationCount, array<CallbackKey>^ callbackKeys );
 			virtual ~KeyframedAnimationSet() { }
 
 			DataStream^ Compress( float lossiness );
@@ -192,8 +190,7 @@ namespace SlimDX
 			Result UnregisterTranslationKey( int animation, int key );
 			int GetTranslationKeyCount( int animation );
 
-			int RegisterAnimationKeys( System::String^ name, array<ScaleKey>^ scaleKeys, 
-				array<RotationKey>^ rotationKeys, array<TranslationKey>^ translationKeys );
+			int RegisterAnimationKeys( System::String^ name, array<ScaleKey>^ scaleKeys, array<RotationKey>^ rotationKeys, array<TranslationKey>^ translationKeys );
 			Result UnregisterAnimation( int animation );
 
 			property int CallbackKeyCount { int get(); }

@@ -125,7 +125,7 @@ namespace DirectSound
 		if( format == NULL )
 			throw gcnew ArgumentNullException( "format" );
 		if( format->Format.wFormatTag != WAVE_FORMAT_EXTENSIBLE )
-			throw gcnew ArgumentException( "format" );
+			throw gcnew ArgumentException( "Must be an extensible wave format." );
 
 		Format = reinterpret_cast<WAVEFORMATEX*>( format );
 

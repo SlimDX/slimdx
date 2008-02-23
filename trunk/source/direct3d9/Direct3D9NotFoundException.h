@@ -21,9 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Runtime::Serialization;
-
 #include "Direct3D9Exception.h"
 
 namespace SlimDX

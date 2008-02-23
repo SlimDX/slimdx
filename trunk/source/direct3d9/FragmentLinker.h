@@ -50,13 +50,10 @@ namespace SlimDX
 			FragmentLinker( Device^ device, int cacheSize );
 			~FragmentLinker() { Destruct(); }
 
-			static DataStream^ Gather( array<System::Byte>^ sourceData, array<Macro>^ defines,
-				Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
-			static DataStream^ Gather( System::String^ sourceData, array<Macro>^ defines,
-				Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
+			static DataStream^ Gather( array<System::Byte>^ sourceData, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
+			static DataStream^ Gather( System::String^ sourceData, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 
-			static DataStream^ GatherFromFile( System::String^ fileName, array<Macro>^ defines,
-				Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
+			static DataStream^ GatherFromFile( System::String^ fileName, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 
 			Result AddFragments( array<int>^ fragments );
 			Result AddFragments( DataStream^ fragments );
@@ -69,6 +66,7 @@ namespace SlimDX
 			EffectHandle^ GetFragmentHandle( System::String^ name );
 
 			void ClearCache();
+
 			ShaderBytecode^ LinkShader( System::String^ profile, ShaderFlags flags, array<EffectHandle^>^ fragmentHandles, [Out] System::String^% errors );
 			VertexShader^ LinkVertexShader( System::String^ profile, ShaderFlags flags, array<EffectHandle^>^ fragmentHandles, [Out] System::String^% errors );
 			PixelShader^ LinkPixelShader( System::String^ profile, ShaderFlags flags, array<EffectHandle^>^ fragmentHandles, [Out] System::String^% errors );

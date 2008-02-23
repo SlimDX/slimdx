@@ -39,8 +39,8 @@ namespace SlimDX
 		array<Plane>^ planes;
 		Matrix frustumMatrix;
 
-		Ray ComputeIntersectionLine( Plane% plane1, Plane% plane2 );
-		Vector3 ComputeIntersection( Plane% plane, Ray% ray );
+		static Ray ComputeIntersectionLine( Plane% plane1, Plane% plane2 );
+		static Vector3 ComputeIntersection( Plane% plane, Ray% ray );
 
 	public:
 		property Matrix FrustumMatrix { Matrix get() { return frustumMatrix; } void set( Matrix value ); }

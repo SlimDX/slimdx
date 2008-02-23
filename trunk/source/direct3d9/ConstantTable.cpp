@@ -29,9 +29,9 @@
 #include "../ComObject.h"
 #include "../Utilities.h"
 #include "../StackAlloc.h"
+#include "../DataStream.h"
 
 #include "Effect.h"
-#include "../Direct3D/..\DataStream.h"
 #include "ConstantTable.h"
 #include "Device.h"
 

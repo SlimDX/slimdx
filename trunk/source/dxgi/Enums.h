@@ -209,6 +209,7 @@ namespace SlimDX
 			Sequential = DXGI_SWAP_EFFECT_SEQUENTIAL
 		};
 		
+		[System::Flags]
 		public enum class Usage : System::Int32
 		{
 			ShaderInput = DXGI_USAGE_SHADER_INPUT,

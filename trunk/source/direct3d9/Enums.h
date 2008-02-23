@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include <windows.h>
 
 #include "external/atir2vb.h"
@@ -70,6 +68,7 @@ namespace SlimDX
 			Maximum = D3DBLENDOP_MAX,
 		};
 		
+		[System::Flags]
 		public enum class Channel : System::Int32
 		{
 			Red = D3DX_CHANNEL_RED,
@@ -126,14 +125,6 @@ namespace SlimDX
 			GreaterEqual = D3DCMP_GREATEREQUAL,
 			/// <summary>Always accept.</summary>
 			Always = D3DCMP_ALWAYS
-		};
-
-		public enum class CooperativeLevel : System::Int32
-		{
-			Ok = D3D_OK,
-			DeviceLost = D3DERR_DEVICELOST,
-			DeviceNotReset = D3DERR_DEVICENOTRESET,
-			DriverInternalError = D3DERR_DRIVERINTERNALERROR,
 		};
 		
 		public enum class CubeMapFace : System::Int32
