@@ -27,11 +27,7 @@ using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
-	namespace Direct3D
-	{
-		value class Viewport;
-	}
-	
+	value class Viewport;
 	value class Matrix;
 	value class Vector2;
 	
@@ -158,11 +154,11 @@ namespace SlimDX
 		static void TransformNormal( Vector3% normal, Matrix% transformation, [Out] Vector3% result );
 		static array<Vector3>^ TransformNormal( array<Vector3>^ normals, Matrix% transformation );
 
-		static Vector3 Project( Vector3 vector, Direct3D::Viewport viewport, Matrix projection, Matrix view, Matrix world );
-		static void Project( Vector3% vector, Direct3D::Viewport% viewport, Matrix% projection, Matrix% view, Matrix% world, [Out] Vector3% result );
+		static Vector3 Project( Vector3 vector, SlimDX::Viewport viewport, Matrix projection, Matrix view, Matrix world );
+		static void Project( Vector3% vector, SlimDX::Viewport% viewport, Matrix% projection, Matrix% view, Matrix% world, [Out] Vector3% result );
 		
-		static Vector3 Unproject( Vector3 vector, Direct3D::Viewport viewport, Matrix projection, Matrix view, Matrix world );
-		static void Unproject( Vector3% vector, Direct3D::Viewport% viewport, Matrix% projection, Matrix% view, Matrix% world, [Out] Vector3% result );
+		static Vector3 Unproject( Vector3 vector, SlimDX::Viewport viewport, Matrix projection, Matrix view, Matrix world );
+		static void Unproject( Vector3% vector, SlimDX::Viewport% viewport, Matrix% projection, Matrix% view, Matrix% world, [Out] Vector3% result );
 		
 		static Vector3 Minimize( Vector3 value1, Vector3 value2 );
 		static void Minimize( Vector3% value1, Vector3% value2, [Out] Vector3% result );

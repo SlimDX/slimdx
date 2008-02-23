@@ -197,25 +197,29 @@ namespace Direct3D9
 
 		if( (output->Flags & AnimationOutputFlags::Transformation) == AnimationOutputFlags::Transformation )
 		{
-			pinMatrix = &output->Transformation;
+			Matrix temp = output->Transformation;
+			pinMatrix = &temp;
 			matrix = reinterpret_cast<D3DXMATRIX*>( pinMatrix );
 		}
 
 		if( (output->Flags & AnimationOutputFlags::Scale) == AnimationOutputFlags::Scale )
 		{
-			pinScale = &output->Scaling;
+			Vector3 temp = output->Scaling;
+			pinScale = &temp;
 			scale = reinterpret_cast<D3DXVECTOR3*>( pinScale );
 		}
 
 		if( (output->Flags & AnimationOutputFlags::Translation) == AnimationOutputFlags::Translation )
 		{
-			pinTranslation = &output->Translation;
+			Vector3 temp = output->Translation;
+			pinTranslation = &temp;
 			translation = reinterpret_cast<D3DXVECTOR3*>( pinTranslation );
 		}
 
 		if( (output->Flags & AnimationOutputFlags::Rotation) == AnimationOutputFlags::Rotation )
 		{
-			pinQuaternion = &output->Rotation;
+			Quaternion temp = output->Rotation;
+			pinQuaternion = &temp;
 			rotation = reinterpret_cast<D3DXQUATERNION*>( pinQuaternion );
 		}
 

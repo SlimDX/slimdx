@@ -246,4 +246,28 @@ namespace SlimDX
 			return String::Empty;
 		}
 	}
+
+	void Utilities::FreeNativeString( LPCSTR string )
+	{
+		if( string == NULL )
+			return;
+
+		System::Runtime::InteropServices::Marshal::FreeHGlobal( IntPtr( const_cast<void*>( reinterpret_cast<const void*>( string ) ) ) );
+	}
+
+	void Utilities::FreeNativeString( LPSTR string )
+	{
+		if( string == NULL )
+			return;
+
+		System::Runtime::InteropServices::Marshal::FreeHGlobal( IntPtr( reinterpret_cast<void*>( string ) ) );
+	}
+
+	LPSTR Utilities::AllocateNativeString( String^ value )
+	{
+		if( value == nullptr || String::IsNullOrEmpty( value ) )
+			return NULL;
+		else
+			return reinterpret_cast<LPSTR>( System::Runtime::InteropServices::Marshal::StringToHGlobalAuto( value ).ToPointer() );
+	}
 }

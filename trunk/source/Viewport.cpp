@@ -24,8 +24,6 @@
 
 namespace SlimDX
 {
-namespace Direct3D
-{
 	int Viewport::X::get()
 	{
 		return m_X;
@@ -85,5 +83,4 @@ namespace Direct3D
 	{
 		m_MaxZ = value;
 	}
-}
 }

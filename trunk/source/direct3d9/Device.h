@@ -25,7 +25,7 @@
 #include "Direct3D.h"
 #include "Vertex.h"
 
-#include "../Direct3D/Viewport.h"
+#include "../Viewport.h"
 
 #include "../math/Color4.h"
 #include "../math/Plane.h"
@@ -172,10 +172,10 @@ namespace SlimDX
 				void set( SlimDX::Direct3D9::Material value );
 			}
 
-			property SlimDX::Direct3D::Viewport Viewport
+			property SlimDX::Viewport Viewport
 			{
-				SlimDX::Direct3D::Viewport get();
-				void set( SlimDX::Direct3D::Viewport value );
+				SlimDX::Viewport get();
+				void set( SlimDX::Viewport value );
 			}
 
 			property System::Drawing::Rectangle ScissorRect

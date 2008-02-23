@@ -455,9 +455,19 @@ namespace Direct3D9
 		}
 
 		HRESULT hr = mesh->MeshPointer->Save( reinterpret_cast<IStream*>( nativeStream ), &nativeMaterials[0], &nativeEffects[0], materials->Length );
-		Result::Record( hr );
+		
+		for( int i = 0; i < materials->Length; i++ )
+			Utilities::FreeNativeString( nativeMaterials[i].pTextureFilename );
 
-		return Result::Last;
+		for( int i = 0; i < effects->Length; i++ )
+		{
+			for( UINT j = 0; j < nativeEffects[i].NumDefaults; j++ )
+				Utilities::FreeNativeString( nativeEffects[i].pDefaults[j].pParamName );
+
+			delete[] nativeEffects[i].pDefaults;
+		}
+
+		return Result::Record( hr );
 	}
 
 	Result ProgressiveMesh::SetFaceCount( int faceCount )

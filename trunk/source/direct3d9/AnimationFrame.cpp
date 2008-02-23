@@ -121,16 +121,27 @@ namespace Direct3D9
 	{
 		if( Pointer != NULL )
 		{
-			delete[] Pointer->pMaterials;
-			Pointer->pMaterials = NULL;
+			if( Pointer->pMaterials != NULL )
+			{
+				for( UINT i = 0; i < Pointer->NumMaterials; i++ )
+					Utilities::FreeNativeString( Pointer->pMaterials[i].pTextureFilename );
+
+				delete[] Pointer->pMaterials;
+				Pointer->pMaterials = NULL;
+			}
 
 			delete[] Pointer->pAdjacency;
 			Pointer->pAdjacency = NULL;
+
+			Utilities::FreeNativeString( Pointer->Name );
 
 			if( Pointer->pEffects != NULL )
 			{
 				for( unsigned int i = 0; i < Pointer->NumMaterials; i++ )
 				{
+					for( UINT j = 0; j < Pointer->pEffects[i].NumDefaults; j++ )
+						Utilities::FreeNativeString( Pointer->pEffects[i].pDefaults[j].pParamName );
+
 					delete[] Pointer->pEffects[i].pDefaults;
 				}
 
@@ -143,6 +154,7 @@ namespace Direct3D9
 				delete m_MeshData->Mesh;
 				delete m_MeshData->PatchMesh;
 				delete m_MeshData->ProgressiveMesh;
+				m_MeshData = nullptr;
 			}
 
 			delete m_SkinInfo;
@@ -165,7 +177,11 @@ namespace Direct3D9
 	void MeshContainer::SetMaterials( array<ExtendedMaterial>^ materials )
 	{
 		if( Pointer->pMaterials != NULL )
+		{
+			for( UINT i = 0; i < Pointer->NumMaterials; i++ )
+				Utilities::FreeNativeString( Pointer->pMaterials[i].pTextureFilename );
 			delete[] Pointer->pMaterials;
+		}
 
 		Pointer->NumMaterials = materials->Length;
 		Pointer->pMaterials = new D3DXMATERIAL[Pointer->NumMaterials];
@@ -187,7 +203,17 @@ namespace Direct3D9
 	void MeshContainer::SetEffects( array<EffectInstance>^ effects )
 	{
 		if( Pointer->pEffects != NULL )
+		{
+			for( UINT i = 0; i < Pointer->NumMaterials; i++ )
+			{
+				for( UINT j = 0; j < Pointer->pEffects[i].NumDefaults; j++ )
+					Utilities::FreeNativeString( Pointer->pEffects[i].pDefaults[j].pParamName );
+
+				delete[] Pointer->pEffects[i].pDefaults;
+			}
+
 			delete[] Pointer->pEffects;
+		}
 
 		Pointer->NumMaterials = effects->Length;
 		Pointer->pEffects = new D3DXEFFECTINSTANCE[effects->Length];
@@ -237,16 +263,8 @@ namespace Direct3D9
 	{
 		m_Name = value;
 
-		if( value == nullptr || String::IsNullOrEmpty( value ) )
-			Pointer->Name = NULL;
-		else
-		{
-			//FIXME: saving pointer to pinned string
-			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( value );
-			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
-
-			Pointer->Name = reinterpret_cast<LPSTR>( pinnedName );
-		}
+		Utilities::FreeNativeString( Pointer->Name );
+		Pointer->Name = Utilities::AllocateNativeString( value );
 	}
 
 	MeshData^ MeshContainer::Mesh::get()
@@ -261,17 +279,11 @@ namespace Direct3D9
 		Pointer->MeshData.Type = static_cast<D3DXMESHDATATYPE>( value->Type );
 		
 		if( Pointer->MeshData.Type == D3DXMESHTYPE_MESH )
-		{
 			Pointer->MeshData.pMesh = value->Mesh->MeshPointer;
-		}
 		else if( Pointer->MeshData.Type == D3DXMESHTYPE_PMESH )
-		{
 			Pointer->MeshData.pPMesh = value->ProgressiveMesh->MeshPointer;
-		}
 		else if( Pointer->MeshData.Type == D3DXMESHTYPE_PATCHMESH )
-		{
 			Pointer->MeshData.pPatchMesh = value->PatchMesh->InternalPointer;
-		}
 	}
 
 	SlimDX::Direct3D9::SkinInfo^ MeshContainer::SkinInfo::get()
@@ -618,8 +630,13 @@ namespace Direct3D9
 
 	void Frame::Destruct()
 	{
-		delete Pointer;
-		Pointer = NULL;
+		if( Pointer != NULL )
+		{
+			Utilities::FreeNativeString( Pointer->Name );
+
+			delete Pointer;
+			Pointer = NULL;
+		}
 	}
 
 	void Frame::AppendChild( Frame^ child )
@@ -722,16 +739,8 @@ namespace Direct3D9
 	{
 		m_Name = value;
 
-		if( value == nullptr || String::IsNullOrEmpty( value ) )
-			Pointer->Name = NULL;
-		else
-		{
-			//FIXME: saving pointer to pinned string
-			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( value );
-			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
-
-			Pointer->Name = reinterpret_cast<LPSTR>( pinnedName );
-		}
+		Utilities::FreeNativeString( Pointer->Name );
+		Pointer->Name = Utilities::AllocateNativeString( m_Name );
 	}
 
 	Matrix Frame::TransformationMatrix::get()
@@ -753,7 +762,6 @@ namespace Direct3D9
 	{
 		m_MeshContainer = value;
 
-		/* Update Unmanaged */
 		if(value == nullptr)
 			Pointer->pMeshContainer = NULL;
 		else
@@ -809,20 +817,13 @@ namespace Direct3D9
 			allocatorShim.get(), userDataLoaderShim.get(), &result, &animationResult);
 
 		if( Result::Record( hr ).IsFailure )
-		{
 			return nullptr;
-		}
 
-		// If there is no animation, return a nullptr.
 		if( animationResult != NULL )
-		{
 			animationController = gcnew AnimationController( animationResult );
-		}
 
-		// Build frame hierarchy.
 		Frame^ frame = Frame::BuildHierarchyFromUnmanaged( ((FrameShim*)result) );
 
-		// Register frame animations.
 		if( animationResult != NULL )
 			Frame::RegisterAnimations( frame, animationResult );
 
@@ -905,9 +906,11 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXSaveMeshHierarchyToFile( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( format ),
 			frameShim, animation, NULL );
-		Result::Record( hr );
-
+		
+		Utilities::FreeNativeString( frameShim->Name );
 		delete frameShim;
+
+		Result::Record( hr );
 
 		return Result::Last;
 	}
@@ -990,17 +993,7 @@ namespace Direct3D9
 	void Frame::BuildUnmanagedFrames( FrameShim*% pFrame, Frame^ frame )
 	{
 		pFrame = new FrameShim( frame );
-
-		if( frame->Name == nullptr || String::IsNullOrEmpty(frame->Name) )
-			pFrame->Name = NULL;
-		else
-		{
-			//FIXME: saving pointer to pinned string
-			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( frame->Name );
-			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
-
-			pFrame->Name = reinterpret_cast<LPSTR>( pinnedName );
-		}
+		pFrame->Name = Utilities::AllocateNativeString( frame->Name );
 
 		// Get any meshes.
 		if( frame->MeshContainer != nullptr )
@@ -1028,17 +1021,7 @@ namespace Direct3D9
 	void Frame::BuildUnmanagedMeshes( MeshContainerShim*% pMesh, SlimDX::Direct3D9::MeshContainer^ mesh )
 	{
 		pMesh = new MeshContainerShim( mesh );
-
-		if( mesh->Name == nullptr || String::IsNullOrEmpty( mesh->Name ) )
-			pMesh->Name = NULL;
-		else
-		{
-			//FIXME: saving pointer to pinned string
-			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( mesh->Name );
-			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
-
-			pMesh->Name = reinterpret_cast<LPSTR>( pinnedName );
-		}
+		pMesh->Name = Utilities::AllocateNativeString( mesh->Name );
 
 		if( mesh->Pointer != NULL )
 		{

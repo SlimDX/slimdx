@@ -1151,6 +1151,30 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Performance"
+				>
+				<File
+					RelativePath="..\source\Performance.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\Performance.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Viewport"
+				>
+				<File
+					RelativePath="..\source\Viewport.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\Viewport.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Direct3D9"
@@ -1197,6 +1221,10 @@
 			</File>
 			<File
 				RelativePath="..\source\direct3d9\BaseTexture.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d9\CapsEnums.h"
 				>
 			</File>
 			<File
@@ -1977,30 +2005,6 @@
 					>
 				</File>
 			</Filter>
-		</Filter>
-		<Filter
-			Name="Direct3D"
-			>
-			<File
-				RelativePath="..\source\direct3d9\CapsEnums.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d\Performance.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d\Performance.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d\Viewport.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d\Viewport.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="DXGI"

@@ -73,16 +73,7 @@ namespace Direct3D9
 	D3DXMATERIAL ExtendedMaterial::ToUnmanaged( ExtendedMaterial material )
 	{
 		D3DXMATERIAL result;
-		if( !String::IsNullOrEmpty( material.TextureFileName ) )
-		{
-			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( material.TextureFileName );
-			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
-			//FIXME: saving pointer to pinned string
-			result.pTextureFilename = reinterpret_cast<LPSTR>( pinnedName );
-		}
-		else
-			result.pTextureFilename = NULL;
-
+		result.pTextureFilename = Utilities::AllocateNativeString( material.TextureFileName );
 		result.MatD3D.Ambient = ConvertColor( material.MaterialD3D.Ambient );
 		result.MatD3D.Diffuse = ConvertColor( material.MaterialD3D.Diffuse );
 		result.MatD3D.Specular = ConvertColor( material.MaterialD3D.Specular );
@@ -149,26 +140,13 @@ namespace Direct3D9
 		D3DXEFFECTINSTANCE result;
 		int count = effect.Defaults->Length;
 		result.NumDefaults = count;
-		//FIXME: Is this memory leaked?
-		result.pDefaults = new D3DXEFFECTDEFAULT[count];
 
-		if( String::IsNullOrEmpty( effect.EffectFileName ) )
-			result.pEffectFilename = NULL;
-		else
-		{
-			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( effect.EffectFileName );
-			pin_ptr<unsigned char> pinnedName = &nameBytes[0];
-			//FIXME: saving pointer to pinned string
-			result.pEffectFilename = reinterpret_cast<LPSTR>( pinnedName );
-		}
+		result.pDefaults = new D3DXEFFECTDEFAULT[count];
+		result.pEffectFilename = Utilities::AllocateNativeString( effect.EffectFileName );
 
 		for( int i = 0; i < effect.Defaults->Length; i++ )
 		{
-			array<unsigned char>^ nameBytes2 = System::Text::ASCIIEncoding::ASCII->GetBytes( effect.Defaults[i].ParameterName );
-			pin_ptr<unsigned char> pinnedName2 = &nameBytes2[0];
-
-			//FIXME: saving pointer to pinned string
-			result.pDefaults[i].pParamName = reinterpret_cast<LPSTR>( pinnedName2 );
+			result.pDefaults[i].pParamName = Utilities::AllocateNativeString( effect.Defaults[i].ParameterName );
 			result.pDefaults[i].Type = static_cast<D3DXEFFECTDEFAULTTYPE>( effect.Defaults[i].Type );
 			result.pDefaults[i].NumBytes = static_cast<DWORD>( effect.Defaults[i].Value->Length );
 			result.pDefaults[i].pValue = effect.Defaults[i].Value->RawPointer;
@@ -1374,6 +1352,17 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXSaveMeshToX( reinterpret_cast<LPCWSTR>( pinnedName ), mesh->MeshPointer, 
 			adjacencyIn, &nativeMaterials[0], &nativeEffects[0], length, f );
+
+		for( int i = 0; i < length; i++ )
+			Utilities::FreeNativeString( nativeMaterials[i].pTextureFilename );
+
+		for( int i = 0; i < effects->Length; i++ )
+		{
+			for( UINT j = 0; j < nativeEffects[i].NumDefaults; j++ )
+				Utilities::FreeNativeString( nativeEffects[i].pDefaults[j].pParamName );
+
+			delete[] nativeEffects[i].pDefaults;
+		}
 
 		return Result::Record( hr );
 	}

@@ -29,6 +29,7 @@
 #include "ShaderBytecode.h"
 
 using namespace System;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
@@ -59,12 +60,8 @@ namespace Direct3D10
 	D3D10_INPUT_ELEMENT_DESC InputElement::CreateNativeVersion()
 	{
 		D3D10_INPUT_ELEMENT_DESC native;
-		
-		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( m_SemanticName );
-		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 	
-		//FIXME: saving pointer to pinned string
-		native.SemanticName = reinterpret_cast<LPCSTR>( pinnedName );
+		native.SemanticName = Utilities::AllocateNativeString( m_SemanticName );
 		native.SemanticIndex = m_SemanticIndex;
 		native.Format = static_cast<DXGI_FORMAT>( m_Format );
 		native.InputSlot = m_InputSlot;

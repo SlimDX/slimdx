@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SlimDX;
-using SlimDX.Direct3D;
 using SlimDX.Direct3D9;
 using Demo.Demo;
 using Demo.Kaos;

@@ -22,7 +22,7 @@
 
 #include <d3dx9.h>
 
-#include "../Direct3D/Viewport.h"
+#include "../Viewport.h"
 
 #include "Float16.h"
 
