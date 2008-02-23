@@ -9,15 +9,8 @@
 
     <ProjectsRoot>$(SlimDXRoot)build\</ProjectsRoot>
     <ExternalRoot>$(SlimDXRoot)external\</ExternalRoot>
-
-    <DocumentationOutRoot>$(SlimDXRoot)artifact\docs\</DocumentationOutRoot>
   </PropertyGroup>
 
-  <!-- =====================================================================
-  Tools -->
-  <PropertyGroup>
-    <XslTool>&quot;$(ExternalRoot)saxon\bin\Transform.exe&quot;</XslTool>
-  </PropertyGroup>
 
   <!-- =====================================================================
   Options -->
@@ -31,16 +24,11 @@
   <ItemGroup>
     <VCProjects Include="$(ProjectsRoot)SlimDX.vcproj"/>
   </ItemGroup>
-  
-  <ItemGroup>
-    <VolatileDirectories Include="$(DocumentationOutRoot)"/>
-  </ItemGroup>
-
+ 
   <!-- ===================================================================== 
   Target: CreateDirectories                                                 
     Creates any directories that do not currently exist. -->
   <Target Name="CreateDirectories">
-    <MakeDir Directories="@(VolatileDirectories)"/>
   </Target>
 
   <!-- ===================================================================== 
@@ -52,53 +40,11 @@
   <Target Name="BuildProjects" DependsOnTargets="CreateDirectories">
     <VCBuild Projects="@(VCProjects)"
              Configuration="$(Configuration)|$(Platform)"/>
-
-    <CreateItem Include="@(VCProjects->'%(RelativeDir)$(Configuration)\*.xdc')">
-      <Output ItemName="Documentation" TaskParameter="Include"/>
-    </CreateItem>
   </Target>
 
-  <!-- ===================================================================== 
-  Target: BuildDocumentation                                                 
-    Builds the documentation from the input XML items in the @(Documentation)
-    list. This produces intermediate restructured and formatted XML files in
-    the same directory as the input XML.
-    
-  Output: @(ProcessedDocumentation)                   
-    The set of XML files containing processed (restructured, reformatted) documentation. -->
-  <Target Name="BuildDocumentation" DependsOnTargets="BuildProjects">
-    <Exec Command="$(XslTool) -s &quot;%(Documentation.FileName)%(Documentation.Extension)&quot; -o &quot;%(Documentation.FileName).Structured.xml&quot; &quot;$(SlimDXRoot)docs\xsl\api-structure.xsl&quot; DeclarationUnit=&quot;%(Documentation.FileName)&quot;"
-          WorkingDirectory="%(Documentation.RelativeDir)"/>
-    <Exec Command="$(XslTool) -s &quot;%(Documentation.FileName).Structured.xml&quot; -o &quot;%(Documentation.FileName).Formatted.xml&quot; &quot;$(SlimDXRoot)docs\xsl\api-format.xsl&quot;"
-          WorkingDirectory="%(Documentation.RelativeDir)"/>
-
-    <CreateItem Include="@(Documentation->'%(RelativeDir)%(FileName).Formatted.xml')">
-      <Output ItemName="ProcessedDocumentation" TaskParameter="Include"/>
-    </CreateItem>
-  </Target>
-
-  <!-- ===================================================================== 
-  Target: PerformDocumentationBuild                                                 
-    Performs a complete documentation build. -->
-  <Target Name="PerformDocumentationBuild" DependsOnTargets="BuildDocumentation">
-    <Delete Condition="Exists('$(DocumentationOutRoot)MediaWiki.xml')" Files="$(DocumentationOutRoot)MediaWiki.xml"/>
-    <ReadLinesFromFile File="$(SlimDXRoot)docs\parts\mediawiki-header.txt">
-      <Output ItemName="HeaderLines" TaskParameter="Lines"/>
-    </ReadLinesFromFile>
-    <ReadLinesFromFile File="$(SlimDXRoot)docs\parts\mediawiki-footer.txt">
-      <Output ItemName="FooterLines" TaskParameter="Lines"/>
-    </ReadLinesFromFile>
-    <ReadLinesFromFile File="%(ProcessedDocumentation.FullPath)">
-      <Output ItemName="DocumentationLines" TaskParameter="Lines"/>
-    </ReadLinesFromFile>
-    <WriteLinesToFile File="$(DocumentationOutRoot)MediaWiki.xml" Lines="@(HeaderLines)" Overwrite="false" />
-    <WriteLinesToFile File="$(DocumentationOutRoot)MediaWiki.xml" Lines="@(DocumentationLines)" Overwrite="false" />
-    <WriteLinesToFile File="$(DocumentationOutRoot)MediaWiki.xml" Lines="@(FooterLines)" Overwrite="false" />
-  </Target>
-  
   <!-- ===================================================================== 
   Target: Build-Complete                                                 
     Builds everything. -->
-  <Target Name="Build-Complete" DependsOnTargets="BuildProjects;PerformDocumentationBuild">
+  <Target Name="Build-Complete" DependsOnTargets="BuildProjects">
   </Target>
 </Project>
