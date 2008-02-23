@@ -248,7 +248,7 @@ namespace SlimDX
 
 		memcpy( &result, m_Buffer + m_Position, size );
 		m_Position += size;
-		return (result);
+		return result;
 	}
 	
 	int DataStream::Read( array<Byte>^ buffer, int offset, int count )
@@ -270,7 +270,7 @@ namespace SlimDX
 		memcpy( pinnedBuffer, m_Buffer + m_Position, actualCount );
 
 		m_Position += actualCount;
-		return count;
+		return actualCount;
 	}
 		
 	generic<typename T> where T : value class
