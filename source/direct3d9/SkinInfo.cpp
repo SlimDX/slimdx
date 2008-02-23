@@ -89,7 +89,7 @@ namespace Direct3D9
 			boneCount, &result );
 		
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct( result );
 	}
@@ -109,7 +109,7 @@ namespace Direct3D9
 			delete[] bones[i].BoneId;
 
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct( result );
 	}
@@ -122,7 +122,7 @@ namespace Direct3D9
 			boneCount, &result );
 		
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct( result );
 	}

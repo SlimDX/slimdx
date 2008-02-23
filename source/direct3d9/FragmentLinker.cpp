@@ -61,7 +61,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateFragmentLinker( devicePointer, cacheSize, &linker );
 		Result::Record( hr );
 		if( FAILED( hr ) )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(linker);
 	}

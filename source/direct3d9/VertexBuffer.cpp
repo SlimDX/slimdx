@@ -42,7 +42,7 @@ namespace Direct3D9
 		HRESULT hr = buffer->GetDesc( &description );
 		
 		if( Result::Record(hr).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 		
 		Format = static_cast<SlimDX::Direct3D9::Format>( description.Format );
 		Usage = static_cast<SlimDX::Direct3D9::Usage>( description.Usage );
@@ -67,7 +67,7 @@ namespace Direct3D9
 		hr = vbPtr->GetDesc( &description );
 		
 		if( Result::Record(hr).IsFailure )
-			throw gcnew Direct3D9Exception( hr );
+			throw gcnew Direct3D9Exception( Result::Last );
 		
 		Format = static_cast<SlimDX::Direct3D9::Format>( description.Format );
 		Usage = static_cast<SlimDX::Direct3D9::Usage>( description.Usage );
@@ -85,13 +85,13 @@ namespace Direct3D9
 			static_cast<DWORD>( format ), static_cast<D3DPOOL>( pool ), &vb, NULL );
 		
 		if( Result::Record(hr).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 		
 		D3DVERTEXBUFFER_DESC description;
 		hr = vb->GetDesc( &description );
 		
 		if( Result::Record(hr).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 		
 		Format = static_cast<SlimDX::Direct3D9::Format>( description.Format );
 		Usage = static_cast<SlimDX::Direct3D9::Usage>( description.Usage );

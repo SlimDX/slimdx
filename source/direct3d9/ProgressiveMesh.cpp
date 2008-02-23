@@ -243,7 +243,7 @@ namespace Direct3D9
 			minimumValue, static_cast<DWORD>( options ), &result );
 		
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
 	}
@@ -270,7 +270,7 @@ namespace Direct3D9
 			minimumValue, static_cast<DWORD>( options ), &result );
 		
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
 	}
@@ -293,7 +293,7 @@ namespace Direct3D9
 			NULL, NULL, minimumValue, static_cast<DWORD>( options ), &result );
 		
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
 	}
@@ -564,7 +564,7 @@ namespace Direct3D9
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedVAW ), reinterpret_cast<const FLOAT *>( pinnedVW ), &result );
 		
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
 	}
@@ -589,7 +589,7 @@ namespace Direct3D9
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedVAW ), NULL, &result );
 		
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
 	}
@@ -614,7 +614,7 @@ namespace Direct3D9
 			NULL, reinterpret_cast<const FLOAT *>( pinnedVW ), &result );
 		
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
 	}
@@ -636,7 +636,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateSPMesh( mesh->MeshPointer, adjacencyIn, NULL, NULL, &result );
 		
 		if( Result::Record( hr ).IsFailure )
-			throw gcnew Direct3D9Exception();
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
 	}

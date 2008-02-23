@@ -70,7 +70,7 @@ namespace SlimDX
 			HRESULT hr = pixelShader->GetDevice(&device);
 			
 			if( Result::Record( hr ).IsFailure )
-				throw gcnew Direct3D9Exception();
+				throw gcnew Direct3D9Exception( Result::Last );
 			
 			m_ConstantTable = gcnew ConstantTable( device, constantTable );
 			device->Release();
@@ -105,7 +105,7 @@ namespace SlimDX
 			// CheckHResult() is not used because we need to include the compiler errors.
 			if( Configuration::EnableExceptions && FAILED(hr) )
 			{
-				Direct3D9Exception^ ex = gcnew Direct3D9Exception( hr );
+				Direct3D9Exception^ ex = gcnew Direct3D9Exception( Result::Last );
 				ex->Data->Add( "CompilationErrors", compilationErrors );
 				throw ex;
 			}

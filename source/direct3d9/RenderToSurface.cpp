@@ -54,7 +54,7 @@ namespace SlimDX
 			HRESULT hr = D3DXCreateRenderToSurface( device->InternalPointer, width, height, static_cast<D3DFORMAT>( format ), FALSE, D3DFMT_UNKNOWN, &rtsPointer );
 			
 			if( Result::Record( hr ).IsFailure )
-				throw gcnew Direct3D9Exception();
+				throw gcnew Direct3D9Exception( Result::Last );
 
 			Construct(rtsPointer);
 		}
@@ -66,7 +66,7 @@ namespace SlimDX
 				static_cast<D3DFORMAT>( format ), TRUE, static_cast<D3DFORMAT>( depthStencilFormat ), &rtsPointer );
 			
 			if( Result::Record( hr ).IsFailure )
-				throw gcnew Direct3D9Exception();
+				throw gcnew Direct3D9Exception( Result::Last );
 
 			Construct(rtsPointer);
 		}

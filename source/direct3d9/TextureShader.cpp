@@ -59,7 +59,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateTextureShader( reinterpret_cast<const DWORD*>( stream->RawPointer ), &result );
 		
 		if( Result::Record(hr).IsFailure )
-			throw gcnew Direct3D9Exception( hr );
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
 	}

@@ -77,7 +77,7 @@ namespace DXGI
 		return Result( DXGI_ERROR_NONEXCLUSIVE );
 	}
 	
-	Result Error::NonExclusive::get()
+	Result Error::Nonexclusive::get()
 	{
 		return Result( DXGI_ERROR_NONEXCLUSIVE );
 	}
