@@ -40,15 +40,6 @@
  </Rules>
  <FxCopReport Version="1.36">
   <Namespaces>
-   <Namespace Name="SlimDX.Direct3D">
-    <Messages>
-     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-02-21 21:35:22Z">
-      <Issue>
-       <Item>SlimDX.Direct3D</Item>
-      </Issue>
-     </Message>
-    </Messages>
-   </Namespace>
    <Namespace Name="SlimDX.DXGI">
     <Messages>
      <Message Id="DXGI" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-27 22:23:52Z">
@@ -485,6 +476,19 @@
               </Issue>
              </Message>
             </Messages>
+           </Member>
+           <Member Name="#InternalPointer">
+            <Accessors>
+             <Accessor Name="#get_InternalPointer()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-23 15:03:39Z">
+                <Issue>
+                 <Item>'ComObject::InternalPointer::get(void)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -1625,6 +1629,19 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="Performance">
+          <Members>
+           <Member Name="#GetStatus()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-02-23 15:03:39Z">
+              <Issue Certainty="50">
+               <Item>'Performance::GetStatus(void)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="Plane">
           <Members>
            <Member Name="#D">
@@ -2290,6 +2307,163 @@
             </Issue>
            </Message>
           </Messages>
+         </Type>
+         <Type Name="Utilities">
+          <Members>
+           <Member Name="#AllocateNativeString(System.String)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-23 15:03:39Z">
+              <Issue>
+               <Item>'Utilities::AllocateNativeString(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'EffectInstance::ToUnmanaged(EffectInstance)'&#xD;&#xA;   -&gt;'Mesh::ToXFile(Mesh^, String^, XFileFormat, CharSet)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::AllocateNativeString(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'EffectInstance::ToUnmanaged(EffectInstance)'&#xD;&#xA;   -&gt;'MeshContainer::SetEffects(array&lt;EffectInstance&gt;^)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::AllocateNativeString(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'EffectInstance::ToUnmanaged(EffectInstance)'&#xD;&#xA;   -&gt;'ProgressiveMesh::ToStream(ProgressiveMesh^, Stream^)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::AllocateNativeString(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'ExtendedMaterial::ToUnmanaged(ExtendedMaterial)'&#xD;&#xA;   -&gt;'Mesh::ToXFile(Mesh^, String^, XFileFormat, CharSet)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::AllocateNativeString(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'ExtendedMaterial::ToUnmanaged(ExtendedMaterial)'&#xD;&#xA;   -&gt;'MeshContainer::SetMaterials(array&lt;ExtendedMaterial&gt;^)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::AllocateNativeString(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'ExtendedMaterial::ToUnmanaged(ExtendedMaterial)'&#xD;&#xA;   -&gt;'ProgressiveMesh::ToStream(ProgressiveMesh^, Stream^)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::AllocateNativeString(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Frame::BuildUnmanagedFrames(FrameShim*%, Frame^)'&#xD;&#xA;   -&gt;'Frame::BuildHierarchyFromManaged(Frame^)'&#xD;&#xA;   -&gt;'Frame::CalculateBoundingSphere(Frame^)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::AllocateNativeString(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Frame::BuildUnmanagedFrames(FrameShim*%, Frame^)'&#xD;&#xA;   -&gt;'Frame::BuildHierarchyFromManaged(Frame^)'&#xD;&#xA;   -&gt;'Frame::CountNamedFrames(Frame^)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::AllocateNativeString(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Frame::BuildUnmanagedFrames(FrameShim*%, Frame^)'&#xD;&#xA;   -&gt;'Frame::BuildHierarchyFromManaged(Frame^)'&#xD;&#xA;   -&gt;'Frame::DestroyHierarchy(Frame^, IAllocateHierarchy^)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::AllocateNativeString(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Frame::BuildUnmanagedFrames(FrameShim*%, Frame^)'&#xD;&#xA;   -&gt;'Frame::BuildHierarchyFromManaged(Frame^)'&#xD;&#xA;   -&gt;'Frame::FindChild(String^)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::AllocateNativeString(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Frame::BuildUnmanagedFrames(FrameShim*%, Frame^)'&#xD;&#xA;   -&gt;'Frame::BuildHierarchyFromManaged(Frame^)'&#xD;&#xA;   -&gt;'Frame::SaveHierarchyToFile(String^, XFileFormat, Frame^, AnimationController^)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::AllocateNativeString(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Frame::BuildUnmanagedFrames(FrameShim*%, Frame^)'&#xD;&#xA;   -&gt;'Frame::BuildHierarchyFromManaged(Frame^)'&#xD;&#xA;   -&gt;'Frame::SaveHierarchyToFile(String^, XFileFormat, Frame^, AnimationController^, ISaveUserData^)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::AllocateNativeString(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Frame::Name::set(String^)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::AllocateNativeString(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'InputElement::CreateNativeVersion(D3D10_INPUT_ELEMENT_DESC*)'&#xD;&#xA;   -&gt;'InputLayout::InputLayout(Device^, array&lt;InputElement&gt;^, ShaderSignature^)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::AllocateNativeString(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'MeshContainer::Name::set(String^)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FreeNativeString({modopt(System.Runtime.CompilerServices.IsConst),modopt(System.Runtime.CompilerServices.IsSignUnspecifiedByte)}System.SByte*)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-23 15:03:39Z">
+              <Issue>
+               <Item>'Utilities::FreeNativeString(const char*)'</Item>
+               <Item>'Marshal::FreeHGlobal(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(const char*)'&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(const char*)'&#xD;&#xA;   -&gt;'InputLayout::InputLayout(Device^, array&lt;InputElement&gt;^, ShaderSignature^)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FreeNativeString({modopt(System.Runtime.CompilerServices.IsSignUnspecifiedByte)}System.SByte*)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-23 15:03:39Z">
+              <Issue>
+               <Item>'Utilities::FreeNativeString(char*)'</Item>
+               <Item>'Marshal::FreeHGlobal(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'Frame::Destruct(void)'&#xD;&#xA;   -&gt;'Frame::!Frame(void)'&#xD;&#xA;   -&gt;'Frame::Dispose(bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::FreeNativeString(char*)'</Item>
+               <Item>'Marshal::FreeHGlobal(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'Frame::Destruct(void)'&#xD;&#xA;   -&gt;'Frame::~Frame(void)'&#xD;&#xA;   -&gt;'Frame::Dispose(bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::FreeNativeString(char*)'</Item>
+               <Item>'Marshal::FreeHGlobal(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'Frame::Name::set(String^)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::FreeNativeString(char*)'</Item>
+               <Item>'Marshal::FreeHGlobal(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'Frame::SaveHierarchyToFile(String^, XFileFormat, Frame^, AnimationController^)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::FreeNativeString(char*)'</Item>
+               <Item>'Marshal::FreeHGlobal(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'Mesh::ToXFile(Mesh^, String^, XFileFormat, CharSet)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::FreeNativeString(char*)'</Item>
+               <Item>'Marshal::FreeHGlobal(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'MeshContainer::Destruct(void)'&#xD;&#xA;   -&gt;'MeshContainer::!MeshContainer(void)'&#xD;&#xA;   -&gt;'MeshContainer::Dispose(bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::FreeNativeString(char*)'</Item>
+               <Item>'Marshal::FreeHGlobal(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'MeshContainer::Destruct(void)'&#xD;&#xA;   -&gt;'MeshContainer::~MeshContainer(void)'&#xD;&#xA;   -&gt;'MeshContainer::Dispose(bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::FreeNativeString(char*)'</Item>
+               <Item>'Marshal::FreeHGlobal(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'MeshContainer::Name::set(String^)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::FreeNativeString(char*)'</Item>
+               <Item>'Marshal::FreeHGlobal(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'MeshContainer::SetEffects(array&lt;EffectInstance&gt;^)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::FreeNativeString(char*)'</Item>
+               <Item>'Marshal::FreeHGlobal(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'MeshContainer::SetMaterials(array&lt;ExtendedMaterial&gt;^)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Utilities::FreeNativeString(char*)'</Item>
+               <Item>'Marshal::FreeHGlobal(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'Utilities::FreeNativeString(char*)'&#xD;&#xA;   -&gt;'ProgressiveMesh::ToStream(ProgressiveMesh^, Stream^)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
          <Type Name="Vector2">
           <Members>
@@ -3008,34 +3182,34 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#Project(SlimDX.Vector3&amp;,SlimDX.Direct3D.Viewport&amp;,SlimDX.Matrix&amp;,SlimDX.Matrix&amp;,SlimDX.Matrix&amp;,SlimDX.Vector3&amp;)">
+           <Member Name="#Project(SlimDX.Vector3&amp;,SlimDX.Viewport&amp;,SlimDX.Matrix&amp;,SlimDX.Matrix&amp;,SlimDX.Matrix&amp;,SlimDX.Vector3&amp;)">
             <Messages>
-             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'result'</Item>
               </Issue>
              </Message>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue Certainty="50">
                <Item>'vector'</Item>
               </Issue>
              </Message>
-             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue Certainty="50">
                <Item>'viewport'</Item>
               </Issue>
              </Message>
-             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue Certainty="50">
                <Item>'projection'</Item>
               </Issue>
              </Message>
-             <Message Id="3#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+             <Message Id="3#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue Certainty="50">
                <Item>'view'</Item>
               </Issue>
              </Message>
-             <Message Id="4#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+             <Message Id="4#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue Certainty="50">
                <Item>'world'</Item>
               </Issue>
@@ -3211,34 +3385,34 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#Unproject(SlimDX.Vector3&amp;,SlimDX.Direct3D.Viewport&amp;,SlimDX.Matrix&amp;,SlimDX.Matrix&amp;,SlimDX.Matrix&amp;,SlimDX.Vector3&amp;)">
+           <Member Name="#Unproject(SlimDX.Vector3&amp;,SlimDX.Viewport&amp;,SlimDX.Matrix&amp;,SlimDX.Matrix&amp;,SlimDX.Matrix&amp;,SlimDX.Vector3&amp;)">
             <Messages>
-             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-03 22:28:55Z">
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'result'</Item>
               </Issue>
              </Message>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue Certainty="50">
                <Item>'vector'</Item>
               </Issue>
              </Message>
-             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue Certainty="50">
                <Item>'viewport'</Item>
               </Issue>
              </Message>
-             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue Certainty="50">
                <Item>'projection'</Item>
               </Issue>
              </Message>
-             <Message Id="3#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+             <Message Id="3#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue Certainty="50">
                <Item>'view'</Item>
               </Issue>
              </Message>
-             <Message Id="4#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-03 22:28:55Z">
+             <Message Id="4#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue Certainty="50">
                <Item>'world'</Item>
               </Issue>
@@ -3616,26 +3790,9 @@
            </Member>
           </Members>
          </Type>
-        </Types>
-       </Namespace>
-       <Namespace Name="SlimDX.Direct3D">
-        <Types>
-         <Type Name="Performance">
-          <Members>
-           <Member Name="#GetStatus()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue Certainty="50">
-               <Item>'Performance::GetStatus(void)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Viewport">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-23 15:03:39Z">
             <Issue Name="Equals">
              <Item>'Viewport'</Item>
             </Issue>
@@ -3940,17 +4097,6 @@
             </Issue>
            </Message>
           </Messages>
-          <Members>
-           <Member Name="#CreateNativeVersion(D3D10_DEPTH_STENCIL_VIEW_DESC*)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-21 21:35:22Z">
-              <Issue>
-               <Item>'DepthStencilViewDescription::CreateNativeVersion(D3D10_DEPTH_STENCIL_VIEW_DESC*)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
          </Type>
          <Type Name="Device">
           <Members>
@@ -3972,6 +4118,17 @@
                <Item>'Device::Device(IntPtr)'</Item>
                <Item>pointer</Item>
                <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ClearDepthStencilView(SlimDX.Direct3D10.DepthStencilView,SlimDX.Direct3D10.DepthStencilClearFlags,System.Single,System.Byte)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-02-23 15:03:39Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Device::ClearDepthStencilView(DepthStencilView^, DepthStencilClearFlags, float, unsigned char)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5148,17 +5305,6 @@
             </Issue>
            </Message>
           </Messages>
-          <Members>
-           <Member Name="#CreateNativeVersion(D3D10_RENDER_TARGET_VIEW_DESC*)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-21 21:35:22Z">
-              <Issue>
-               <Item>'RenderTargetViewDescription::CreateNativeVersion(D3D10_RENDER_TARGET_VIEW_DESC*)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
          </Type>
          <Type Name="Resource">
           <Members>
@@ -8117,6 +8263,16 @@
             </Messages>
            </Member>
           </Members>
+         </Type>
+         <Type Name="Error">
+          <Messages>
+           <Message Id="Error" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Status="Excluded" Created="2008-02-23 15:03:39Z">
+            <Issue Name="Type">
+             <Item>'Error'</Item>
+             <Item>Error</Item>
+            </Issue>
+           </Message>
+          </Messages>
          </Type>
          <Type Name="EventDescription">
           <Messages>
@@ -11387,76 +11543,76 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#ConvertToBlendedMesh(SlimDX.Direct3D9.Mesh,System.Int32&amp;,SlimDX.Direct3D9.BoneCombination[]&amp;)">
+           <Member Name="#ConvertToBlendedMesh(SlimDX.Direct3D9.Mesh,System.Int32[],System.Int32&amp;,SlimDX.Direct3D9.BoneCombination[]&amp;)">
             <Messages>
-             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-01-27 22:23:52Z">
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'maxVertexInfluence'</Item>
               </Issue>
              </Message>
-             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-01-27 22:23:52Z">
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'boneCombinationTable'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#ConvertToBlendedMesh(SlimDX.Direct3D9.Mesh,System.Int32[]&amp;,System.Int32[]&amp;,System.Int32&amp;,SlimDX.Direct3D9.BoneCombination[]&amp;)">
+           <Member Name="#ConvertToBlendedMesh(SlimDX.Direct3D9.Mesh,System.Int32[],System.Int32[]&amp;,System.Int32[]&amp;,System.Int32&amp;,SlimDX.Direct3D9.BoneCombination[]&amp;)">
             <Messages>
-             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-01-27 22:23:52Z">
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'faceRemap'</Item>
               </Issue>
              </Message>
-             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-01-27 22:23:52Z">
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'vertexRemap'</Item>
               </Issue>
              </Message>
-             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-01-27 22:23:52Z">
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'maxVertexInfluence'</Item>
               </Issue>
              </Message>
-             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-01-27 22:23:52Z">
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'boneCombinationTable'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#ConvertToIndexedBlendedMesh(SlimDX.Direct3D9.Mesh,System.Int32,System.Int32&amp;,SlimDX.Direct3D9.BoneCombination[]&amp;)">
+           <Member Name="#ConvertToIndexedBlendedMesh(SlimDX.Direct3D9.Mesh,System.Int32,System.Int32[],System.Int32&amp;,SlimDX.Direct3D9.BoneCombination[]&amp;)">
             <Messages>
-             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-01-27 22:23:52Z">
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'maxVertexInfluence'</Item>
               </Issue>
              </Message>
-             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-01-27 22:23:52Z">
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'boneCombinationTable'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#ConvertToIndexedBlendedMesh(SlimDX.Direct3D9.Mesh,System.Int32,System.Int32[]&amp;,System.Int32[]&amp;,System.Int32&amp;,SlimDX.Direct3D9.BoneCombination[]&amp;)">
+           <Member Name="#ConvertToIndexedBlendedMesh(SlimDX.Direct3D9.Mesh,System.Int32,System.Int32[],System.Int32[]&amp;,System.Int32[]&amp;,System.Int32&amp;,SlimDX.Direct3D9.BoneCombination[]&amp;)">
             <Messages>
-             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-01-27 22:23:52Z">
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'faceRemap'</Item>
               </Issue>
              </Message>
-             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-01-27 22:23:52Z">
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'vertexRemap'</Item>
               </Issue>
              </Message>
-             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-01-27 22:23:52Z">
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'maxVertexInfluence'</Item>
               </Issue>
              </Message>
-             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-01-27 22:23:52Z">
+             <Message Id="6#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'boneCombinationTable'</Item>
               </Issue>
@@ -12501,15 +12657,6 @@
              <Message Id="7#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-01-06 19:04:15Z">
               <Issue>
                <Item>'imageInformation'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetDevice()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Certainty="50">
-               <Item>'Volume::GetDevice(void)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -13995,6 +14142,29 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="Error">
+          <Messages>
+           <Message Id="Error" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Status="Excluded" Created="2008-02-23 15:03:39Z">
+            <Issue Name="Type">
+             <Item>'Error'</Item>
+             <Item>Error</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#NonExclusive">
+            <Messages>
+             <Message Id="NonExclusive" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-02-23 15:03:39Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>NonExclusive</Item>
+               <Item>'Error::NonExclusive'</Item>
+               <Item>Nonexclusive</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="Factory">
           <Members>
            <Member Name="#.ctor(System.IntPtr)">
@@ -15404,34 +15574,18 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="CapabilitiesFlags">
+         <Type Name="CapabilityFlags">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
-            <Issue>
-             <Item>SlimDX.XInput.CapabilitiesFlags</Item>
-             <Item>Flags</Item>
-            </Issue>
-           </Message>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-02-23 15:03:39Z">
             <Issue Name="TypeNoAlternate">
              <Item>Flags</Item>
-             <Item>'CapabilitiesFlags'</Item>
+             <Item>'CapabilityFlags'</Item>
             </Issue>
            </Message>
           </Messages>
          </Type>
          <Type Name="Controller">
           <Members>
-           <Member Name="#Capabilities">
-            <Messages>
-             <Message TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721" Status="Excluded" Created="2007-10-07 17:22:23Z">
-              <Issue Name="SameType">
-               <Item>'Controller::Capabilities'</Item>
-               <Item>'Controller::GetCapabilities(DeviceQueryType, Capabilities%)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#GetBatteryInformation(SlimDX.XInput.BatteryDeviceType)">
             <Messages>
              <Message Id="flag" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
@@ -15439,52 +15593,6 @@
                <Item>'Controller::GetBatteryInformation(BatteryDeviceType)'</Item>
                <Item>flag</Item>
                <Item>'flag'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetBatteryInformation(SlimDX.XInput.BatteryDeviceType,SlimDX.XInput.BatteryInformation&amp;)">
-            <Messages>
-             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>'batteryInfo'</Item>
-              </Issue>
-             </Message>
-             <Message Id="flag" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="MemberParameterNoAlternate">
-               <Item>'Controller::GetBatteryInformation(BatteryDeviceType, BatteryInformation%)'</Item>
-               <Item>flag</Item>
-               <Item>'flag'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetCapabilities(SlimDX.XInput.DeviceQueryType,SlimDX.XInput.Capabilities&amp;)">
-            <Messages>
-             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>'capabilities'</Item>
-              </Issue>
-             </Message>
-             <Message Id="flag" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="MemberParameterNoAlternate">
-               <Item>'Controller::GetCapabilities(DeviceQueryType, Capabilities%)'</Item>
-               <Item>flag</Item>
-               <Item>'flag'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetDirectSoundAudioDeviceGuids(System.Guid&amp;,System.Guid&amp;)">
-            <Messages>
-             <Message Id="0#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>'soundRenderGuid'</Item>
-              </Issue>
-             </Message>
-             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>'soundCaptureGuid'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -15505,20 +15613,11 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#GetState(SlimDX.XInput.State&amp;)">
+           <Member Name="#GetState()">
             <Messages>
-             <Message Id="0#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>'currentState'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#SetVibration(SlimDX.XInput.Vibration&amp;)">
-            <Messages>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-07 17:22:23Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue Certainty="50">
-               <Item>'vibration'</Item>
+               <Item>'Controller::GetState(void)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -15543,6 +15642,16 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="Error">
+          <Messages>
+           <Message Id="Error" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Status="Excluded" Created="2008-02-23 15:03:39Z">
+            <Issue Name="Type">
+             <Item>'Error'</Item>
+             <Item>Error</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="Gamepad">
           <Messages>
            <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-07 17:22:23Z">
@@ -15555,12 +15664,18 @@
            </Message>
           </Messages>
          </Type>
-         <Type Name="GamepadButtons">
+         <Type Name="GamepadButtonFlags">
           <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2007-12-02 22:23:38Z">
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2008-02-23 15:03:39Z">
             <Issue Name="NotIntegral">
-             <Item>'GamepadButtons'</Item>
+             <Item>'GamepadButtonFlags'</Item>
              <Item>'unsigned short'</Item>
+            </Issue>
+           </Message>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-02-23 15:03:39Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'GamepadButtonFlags'</Item>
             </Issue>
            </Message>
           </Messages>
@@ -15688,9 +15803,6 @@
   <Rules>
    <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
     <Resolution Name="NoStrongName">Sign {0} with a strong name key.</Resolution>
-   </Rule>
-   <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
-    <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
    </Rule>
    <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
     <Resolution Name="Default">Consider a design that does not require that {0} be an out parameter.</Resolution>
@@ -15827,7 +15939,6 @@
    </Rule>
    <Rule TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721">
     <Resolution Name="BaseType">The property name {0} is confusing given the existence of inherited method {1}. Rename or remove this property.</Resolution>
-    <Resolution Name="SameType">The property name {0} is confusing given the existence of method {1}. Rename or remove one of these members.</Resolution>
    </Rule>
    <Rule TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025">
     <Resolution Name="Default">Consider implementing a version of {0} that accepts a parameter array argument.</Resolution>

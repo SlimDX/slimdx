@@ -78,7 +78,7 @@ namespace SlimDX
 					Result get();
 				}
 				
-				property static Result NonExclusive
+				property static Result Nonexclusive
 				{
 					Result get();
 				}
