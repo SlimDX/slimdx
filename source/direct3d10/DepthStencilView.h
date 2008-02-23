@@ -47,6 +47,7 @@ namespace SlimDX
 			
 			DepthStencilView( System::IntPtr pointer );
 			DepthStencilView( Device^ device, Resource^ resource );
+			DepthStencilView( Device^ device, Resource^ resource, DepthStencilViewDescription description );
 		};
 	}
 };

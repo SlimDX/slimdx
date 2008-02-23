@@ -50,10 +50,25 @@ namespace Direct3D10
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
 		if( resource == nullptr )
-			throw gcnew ArgumentNullException( "device" );
+			throw gcnew ArgumentNullException( "resource" );
 			
 		ID3D10DepthStencilView *view = 0;
 		if( Result::Record( device->InternalPointer->CreateDepthStencilView( resource->InternalPointer, NULL, &view ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+			
+		Construct( view );
+	}
+	
+	DepthStencilView::DepthStencilView( Device^ device, Resource^ resource, DepthStencilViewDescription description )
+	{
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+		if( resource == nullptr )
+			throw gcnew ArgumentNullException( "resource" );
+			
+		ID3D10DepthStencilView *view = 0;
+		D3D10_DEPTH_STENCIL_VIEW_DESC nativeDescription = description.CreateNativeVersion();
+		if( Result::Record( device->InternalPointer->CreateDepthStencilView( resource->InternalPointer, &nativeDescription , &view ) ).IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 			
 		Construct( view );
