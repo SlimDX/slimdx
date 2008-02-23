@@ -144,9 +144,7 @@ namespace SlimDX
 
 		public interface struct IAllocateHierarchy
 		{
-			virtual MeshContainer^ CreateMeshContainer( System::String^ name, MeshData^ meshData, array<ExtendedMaterial>^ materials,
-				array<EffectInstance>^ effectInstances, array<int>^ adjacency, SkinInfo^ skinInfo ) = 0;
-
+			virtual MeshContainer^ CreateMeshContainer( System::String^ name, MeshData^ meshData, array<ExtendedMaterial>^ materials, array<EffectInstance>^ effectInstances, array<int>^ adjacency, SkinInfo^ skinInfo ) = 0;
 			virtual Frame^ CreateFrame( System::String^ name ) = 0;
 			virtual void DestroyFrame( Frame^ frame ) = 0;
 			virtual void DestroyMeshContainer( MeshContainer^ container ) = 0;
@@ -178,10 +176,7 @@ namespace SlimDX
 			IAllocateHierarchyShim( IAllocateHierarchy^ wrappedInterface );
 
 			HRESULT WINAPI CreateFrame( LPCSTR Name, LPD3DXFRAME *ppNewFrame );
-			HRESULT WINAPI CreateMeshContainer( LPCSTR Name, const D3DXMESHDATA *pMeshData,
-				const D3DXMATERIAL *pMaterials, const D3DXEFFECTINSTANCE *pEffectInstances,
-				DWORD NumMaterials, const DWORD *pAdjacency, LPD3DXSKININFO pSkinInfo,
-				LPD3DXMESHCONTAINER *ppNewMeshContainer );
+			HRESULT WINAPI CreateMeshContainer( LPCSTR Name, const D3DXMESHDATA *pMeshData, const D3DXMATERIAL *pMaterials, const D3DXEFFECTINSTANCE *pEffectInstances, DWORD NumMaterials, const DWORD *pAdjacency, LPD3DXSKININFO pSkinInfo, LPD3DXMESHCONTAINER *ppNewMeshContainer );
 			HRESULT WINAPI DestroyFrame( LPD3DXFRAME pFrameToFree );
 			HRESULT WINAPI DestroyMeshContainer( LPD3DXMESHCONTAINER pMeshContainerToFree );
 		};
@@ -258,17 +253,12 @@ namespace SlimDX
 			virtual ~Frame();
 			!Frame();
 
-			static Frame^ LoadHierarchyFromX( Device^ device, System::String^ fileName, MeshFlags options, 
-				IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController );
-			static Frame^ LoadHierarchyFromX( Device^ device, array<System::Byte>^ memory, MeshFlags options, 
-				IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController );
-			static Frame^ LoadHierarchyFromX( Device^ device, System::IO::Stream^ stream, MeshFlags options, 
-				IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController );
+			static Frame^ LoadHierarchyFromX( Device^ device, System::String^ fileName, MeshFlags options, IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController );
+			static Frame^ LoadHierarchyFromX( Device^ device, array<System::Byte>^ memory, MeshFlags options, IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController );
+			static Frame^ LoadHierarchyFromX( Device^ device, System::IO::Stream^ stream, MeshFlags options, IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController );
 
-			static Result SaveHierarchyToFile( System::String^ fileName, XFileFormat format, Frame^ root, 
-				AnimationController^ animationController, ISaveUserData^ userDataSaver );
-			static Result SaveHierarchyToFile( System::String^ fileName, XFileFormat format, Frame^ root, 
-				AnimationController^ animationController );
+			static Result SaveHierarchyToFile( System::String^ fileName, XFileFormat format, Frame^ root, AnimationController^ animationController, ISaveUserData^ userDataSaver );
+			static Result SaveHierarchyToFile( System::String^ fileName, XFileFormat format, Frame^ root, AnimationController^ animationController );
 
 			Frame^ FindChild( System::String^ name );
 			void AppendChild( Frame^ child );

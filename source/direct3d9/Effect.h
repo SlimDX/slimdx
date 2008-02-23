@@ -40,8 +40,6 @@ namespace SlimDX
 			EffectPool( System::IntPtr pointer );
 			EffectPool();
 			~EffectPool() { Destruct(); }
-
-			//ID3DXEffectPool has no methods
 		};
 
 		public ref class Effect : public BaseEffect
@@ -63,33 +61,19 @@ namespace SlimDX
 			Effect( System::IntPtr effect );
 			virtual ~Effect() { if( shim != NULL ) delete shim; }
 
-			//FromMemory
-			static Effect^ FromMemory( Device^ device, array<System::Byte>^ memory, array<Macro>^ preprocessorDefines, Include^ includeFile,
-				System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] System::String^ %compilationErrors );
+			static Effect^ FromMemory( Device^ device, array<System::Byte>^ memory, array<Macro>^ preprocessorDefines, Include^ includeFile, System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] System::String^ %compilationErrors );
 
-			//FromStream
-			static Effect^ FromStream( Device^ device, System::IO::Stream^stream, array<Macro>^ preprocessorDefines, Include^ includeFile,
-				System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] System::String^ %compilationErrors );
-			static Effect^ FromStream( Device^ device, System::IO::Stream^stream, Include^ includeFile, System::String^ skipConstants,
-				ShaderFlags flags, EffectPool^ pool, [Out] System::String^ %compilationErrors );
-			static Effect^ FromStream( Device^ device, System::IO::Stream^stream, Include^ includeFile, 
-				System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool );
+			static Effect^ FromStream( Device^ device, System::IO::Stream^stream, array<Macro>^ preprocessorDefines, Include^ includeFile, System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] System::String^ %compilationErrors );
+			static Effect^ FromStream( Device^ device, System::IO::Stream^stream, Include^ includeFile, System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] System::String^ %compilationErrors );
+			static Effect^ FromStream( Device^ device, System::IO::Stream^stream, Include^ includeFile, System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool );
 
-			//FromString
-			static Effect^ FromString( Device^ device, System::String^ sourceData, array<Macro>^ preprocessorDefines, Include^ includeFile,
-				System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] System::String^ %compilationErrors );
-			static Effect^ FromString( Device^ device, System::String^ sourceData, Include^ includeFile, System::String^ skipConstants,
-				ShaderFlags flags, EffectPool^ pool, [Out] System::String^ %compilationErrors);
-			static Effect^ FromString( Device^ device, System::String^ sourceData, Include^ includeFile, System::String^ skipConstants,
-				ShaderFlags flags, EffectPool^ pool);
+			static Effect^ FromString( Device^ device, System::String^ sourceData, array<Macro>^ preprocessorDefines, Include^ includeFile, System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] System::String^ %compilationErrors );
+			static Effect^ FromString( Device^ device, System::String^ sourceData, Include^ includeFile, System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] System::String^ %compilationErrors);
+			static Effect^ FromString( Device^ device, System::String^ sourceData, Include^ includeFile, System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool);
 
-			//FromFile
-			static Effect^ FromFile( Device^ device, System::String^ fileName, array<Macro>^ preprocessorDefines, Include^ includeFile,
-				System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] System::String^ %compilationErrors );
-			static Effect^ FromFile( Device^ device, System::String^ sourceData, Include^ includeFile, System::String^ skipConstants,
-				ShaderFlags flags, EffectPool^ pool, [Out] System::String^ %compilationErrors);
-			static Effect^ FromFile( Device^ device, System::String^ sourceData, Include^ includeFile, System::String^ skipConstants,
-				ShaderFlags flags, EffectPool^ pool);
+			static Effect^ FromFile( Device^ device, System::String^ fileName, array<Macro>^ preprocessorDefines, Include^ includeFile, System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] System::String^ %compilationErrors );
+			static Effect^ FromFile( Device^ device, System::String^ sourceData, Include^ includeFile, System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] System::String^ %compilationErrors);
+			static Effect^ FromFile( Device^ device, System::String^ sourceData, Include^ includeFile, System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool);
 
 			int Begin( FX flags );
 			Result End();
@@ -107,17 +91,17 @@ namespace SlimDX
 			EffectHandle^ FindNextValidTechnique( EffectHandle^ technique );
 			bool ValidateTechnique( EffectHandle^ technique );
 
-			property EffectHandle^ Technique
-			{
-				EffectHandle^ get();
-				void set( EffectHandle^ value );
-			}
-
 			Result SetStateManager( IEffectStateManager^ manager );
 			IEffectStateManager^ GetStateManager();
 
 			Result OnLostDevice();
 			Result OnResetDevice();
+
+			property EffectHandle^ Technique
+			{
+				EffectHandle^ get();
+				void set( EffectHandle^ value );
+			}
 		};
 	}
 }

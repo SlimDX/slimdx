@@ -43,7 +43,6 @@
 #include "StateBlock.h"
 #include "D3DX.h"
 
-
 using namespace System;
 using namespace System::Collections::Generic;
 using namespace System::Drawing;
@@ -54,9 +53,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	//ATI R2VB functions
-
-	//quick utility function
 	void ConvertPresentParams( PresentParameters^ presentParameters, D3DPRESENT_PARAMETERS& d3dpp )
 	{
 		d3dpp.AutoDepthStencilFormat = static_cast<D3DFORMAT>( presentParameters->AutoDepthStencilFormat );
@@ -77,7 +73,6 @@ namespace Direct3D9
 
 	PresentParameters::PresentParameters()
 	{
-		//set sane defaults
 		BackBufferWidth = 640;
 		BackBufferHeight = 480;
 		BackBufferFormat = Format::X8R8G8B8;
@@ -359,7 +354,7 @@ namespace Direct3D9
 		return Result::Record( hr );
 	}
 
-	Result Device::SetStreamSourceFreq( int stream, int frequency )
+	Result Device::SetStreamSourceFrequency( int stream, int frequency )
 	{
 		HRESULT hr = InternalPointer->SetStreamSourceFreq( stream, frequency );
 		return Result::Record( hr );
@@ -384,13 +379,7 @@ namespace Direct3D9
 	Result Device::TestCooperativeLevel()
 	{
 		HRESULT hr = InternalPointer->TestCooperativeLevel();
-		return Result::Record( hr );
-	}
-
-	CooperativeLevel Device::CheckCooperativeLevel()
-	{
-		HRESULT hr = InternalPointer->TestCooperativeLevel();
-		return static_cast<CooperativeLevel>( hr );
+		return Result( hr );
 	}
 
 	Result Device::Reset( PresentParameters^ presentParameters )
@@ -609,7 +598,7 @@ namespace Direct3D9
 		return Result::Last;
 	}
 
-	int Device::GetStreamSourceFreq( int stream )
+	int Device::GetStreamSourceFrequency( int stream )
 	{
 		UINT localFreq = 0;
 
@@ -722,7 +711,7 @@ namespace Direct3D9
 		return Result::Record( hr );
 	}
 
-	Result Device::StretchRect( Surface^ source, System::Drawing::Rectangle sourceRect, Surface^ destination,
+	Result Device::StretchRectangle( Surface^ source, System::Drawing::Rectangle sourceRect, Surface^ destination,
 		System::Drawing::Rectangle destRect, TextureFilter filter )
 	{
 		RECT nativeSourceRect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
@@ -791,7 +780,7 @@ namespace Direct3D9
 		Result::Record( hr );
 	}
 
-	Result Device::DrawTriPatch( int handle, array<float>^ numSegments, TriPatchInfo info )
+	Result Device::DrawTrianglePatch( int handle, array<float>^ numSegments, TrianglePatchInfo info )
 	{
 		pin_ptr<float> pinnedSegments = &numSegments[0];
 
@@ -799,7 +788,7 @@ namespace Direct3D9
 		return Result::Record( hr );
 	}
 
-	Result Device::DrawTriPatch( int handle, array<float>^ numSegments )
+	Result Device::DrawTrianglePatch( int handle, array<float>^ numSegments )
 	{
 		pin_ptr<float> pinnedSegments = &numSegments[0];
 
@@ -807,7 +796,7 @@ namespace Direct3D9
 		return Result::Record( hr );
 	}
 
-	Result Device::DrawRectPatch( int handle, array<float>^ numSegments, RectPatchInfo info )
+	Result Device::DrawRectanglePatch( int handle, array<float>^ numSegments, RectanglePatchInfo info )
 	{
 		pin_ptr<float> pinnedSegments = &numSegments[0];
 
@@ -815,7 +804,7 @@ namespace Direct3D9
 		return Result::Record( hr );
 	}
 
-	Result Device::DrawRectPatch( int handle, array<float>^ numSegments )
+	Result Device::DrawRectanglePatch( int handle, array<float>^ numSegments )
 	{
 		pin_ptr<float> pinnedSegments = &numSegments[0];
 
@@ -851,13 +840,13 @@ namespace Direct3D9
 		return Result::Record( hr );
 	}
 
-	Result Device::LightEnable( int lightIndex, bool enable )
+	Result Device::EnableLight( int lightIndex, bool enable )
 	{
 		HRESULT hr = InternalPointer->LightEnable( lightIndex, enable );
 		return Result::Record( hr );
 	}
 
-	bool Device::GetLightEnable( int lightIndex )
+	bool Device::IsLightEnabled( int lightIndex )
 	{
 		BOOL enabled = FALSE;
 		HRESULT hr = InternalPointer->GetLightEnable( lightIndex, &enabled );

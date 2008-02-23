@@ -27,8 +27,6 @@
 #include "Resource.h"
 #include "../DataStream.h"
 
-//using namespace SlimDX::Direct3D;
-
 namespace SlimDX
 {
 	namespace Direct3D9

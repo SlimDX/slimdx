@@ -34,64 +34,15 @@ namespace SlimDX
 
 		public value class SurfaceDescription
 		{
-		private:
-			Format format;
-            ResourceType type;
-            Usage usage;
-            Pool pool;
-            MultisampleType multiSampleType;
-            int multiSampleQuality;
-            int width;
-            int height;
-
 		public:
-			property SlimDX::Direct3D9::Format Format
-            {
-                SlimDX::Direct3D9::Format get() { return format; }
-                void set( SlimDX::Direct3D9::Format value ) { format = value; }
-            }
-
-            property ResourceType Type
-            {
-                ResourceType get() { return type; }
-                void set( ResourceType value ) { type = value; }
-            }
-
-            property SlimDX::Direct3D9::Usage Usage
-            {
-                SlimDX::Direct3D9::Usage get() { return usage; }
-                void set( SlimDX::Direct3D9::Usage value ) { usage = value; }
-            }
-
-            property SlimDX::Direct3D9::Pool Pool
-            {
-                SlimDX::Direct3D9::Pool get() { return pool; }
-                void set( SlimDX::Direct3D9::Pool value ) { pool = value; }
-            }
-
-            property SlimDX::Direct3D9::MultisampleType MultisampleType
-            {
-                SlimDX::Direct3D9::MultisampleType get() { return multiSampleType; }
-                void set( SlimDX::Direct3D9::MultisampleType value ) { multiSampleType = value; }
-            }
-
-            property int MultisampleQuality
-            {
-                int get() { return multiSampleQuality; }
-                void set( int value ) { multiSampleQuality = value; }
-            }
-
-            property int Width
-            {
-                int get() { return width; }
-                void set( int value ) { width = value; }
-            }
-
-            property int Height
-            {
-                int get() { return height; }
-                void set( int value ) { height = value; }
-            }
+			property Format Format;
+            property ResourceType Type;
+            property Usage Usage;
+            property Pool Pool;
+            property MultisampleType MultisampleType;
+            property int MultisampleQuality;
+            property int Width;
+            property int Height;
 		};
 
 		public ref class Surface : public Resource
@@ -107,11 +58,9 @@ namespace SlimDX
 			Surface( System::IntPtr surface );
 			virtual ~Surface() { }
 
-			static Surface^ CreateRenderTarget( Device^ device, int width, int height, Format format,
-				MultisampleType multisampleType, int multisampleQuality, bool lockable );
+			static Surface^ CreateRenderTarget( Device^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool lockable );
 			static Surface^ CreateOffscreenPlain( Device^ device, int width, int height, Format format, Pool pool );
-			static Surface^ CreateDepthStencil( Device^ device, int width, int height, Format format,
-				MultisampleType multisampleType, int multisampleQuality, bool discard );
+			static Surface^ CreateDepthStencil( Device^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool discard );
 
 			static Result FromMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
 			static Result FromMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, [Out] ImageInformation% imageInformation );
@@ -144,13 +93,13 @@ namespace SlimDX
 			DataRectangle^ LockRectangle( System::Drawing::Rectangle rect, LockFlags flags );
 			Result UnlockRectangle();
 
+			System::IntPtr GetDC();
+			Result ReleaseDC( System::IntPtr hdc );
+
 			property SurfaceDescription Description
 			{
 				SurfaceDescription get();
 			}
-
-			System::IntPtr GetDC();
-			Result ReleaseDC( System::IntPtr hdc );
 		};
 	}
 }

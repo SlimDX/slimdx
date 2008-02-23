@@ -38,7 +38,7 @@ namespace SlimDX
 			COMOBJECT(ID3DX10Font);
 		
 		private:
-			ID3DX10Font* Build( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic, FontCharacterSet characterSet, FontPrecision precision, FontQuality quality, FontPitchAndFamily pitchAndFamily, System::String^ faceName );
+			static ID3DX10Font* Build( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic, FontCharacterSet characterSet, FontPrecision precision, FontQuality quality, FontPitchAndFamily pitchAndFamily, System::String^ faceName );
 
 		internal:
 			Font( ID3DX10Font* font );

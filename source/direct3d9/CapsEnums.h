@@ -21,12 +21,33 @@
 */
 #pragma once
 
-//using namespace System;
-
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		// NOTE: The enumerations defined in this file are in alphabetical order. When
+		//       adding new enumerations or renaming existing ones, please make sure
+		//       the ordering is maintained.
+
+		[System::Flags]
+		public enum class BlendCaps : System::Int32
+		{
+			Zero = D3DPBLENDCAPS_ZERO,
+			One = D3DPBLENDCAPS_ONE,
+			SourceColor = D3DPBLENDCAPS_SRCCOLOR,
+			InvSourceColor = D3DPBLENDCAPS_INVSRCCOLOR,
+			SourceAlpha = D3DPBLENDCAPS_SRCALPHA,
+			InvSourceAlpha = D3DPBLENDCAPS_INVSRCALPHA,
+			DestinationAlpha = D3DPBLENDCAPS_DESTALPHA,
+			InvDestinationAlpha = D3DPBLENDCAPS_INVDESTALPHA,
+			DestinationColor = D3DPBLENDCAPS_DESTCOLOR,
+			InvDestinationColor = D3DPBLENDCAPS_INVDESTCOLOR,
+			SourceAlphaSaturated = D3DPBLENDCAPS_SRCALPHASAT,
+			BothSourceAlpha = D3DPBLENDCAPS_BOTHSRCALPHA,
+			BothInvSourceAlpha = D3DPBLENDCAPS_BOTHINVSRCALPHA,
+			BlendFactor = D3DPBLENDCAPS_BLENDFACTOR,
+		};
+
 		[System::Flags]
 		public enum class Caps : System::Int32
 		{
@@ -53,10 +74,50 @@ namespace SlimDX
 		};
 
 		[System::Flags]
+		public enum class CompareCaps : System::Int32
+		{
+			Never = D3DPCMPCAPS_NEVER,
+			Less = D3DPCMPCAPS_LESS,
+			Equal = D3DPCMPCAPS_EQUAL,
+			LessEqual = D3DPCMPCAPS_LESSEQUAL,
+			Greater = D3DPCMPCAPS_GREATER,
+			NotEqual = D3DPCMPCAPS_NOTEQUAL,
+			GreaterEqual = D3DPCMPCAPS_GREATEREQUAL,
+			Always = D3DPCMPCAPS_ALWAYS,
+		};
+
+		[System::Flags]
 		public enum class CursorCaps : System::Int32
 		{
 			Color = D3DCURSORCAPS_COLOR,
 			LowRes = D3DCURSORCAPS_LOWRES,
+		};
+
+		[System::Flags]
+		public enum class DeclarationTypeCaps
+		{
+			UByte4 = D3DDTCAPS_UBYTE4,
+			UByte4N = D3DDTCAPS_UBYTE4N,
+			Short2N = D3DDTCAPS_SHORT2N,
+			Short4N = D3DDTCAPS_SHORT4N,
+			UShort2N = D3DDTCAPS_USHORT2N,
+			UShort4N = D3DDTCAPS_USHORT4N,
+			UDec3 = D3DDTCAPS_UDEC3,
+			Dec3N = D3DDTCAPS_DEC3N,
+			Float16_2 = D3DDTCAPS_FLOAT16_2,
+			Float16_4 = D3DDTCAPS_FLOAT16_4,
+		};
+
+		[System::Flags]
+		public enum class DevCaps2
+		{
+			StreamOffset = D3DDEVCAPS2_STREAMOFFSET,
+			DMapNPatch = D3DDEVCAPS2_DMAPNPATCH,
+			AdaptiveTessRTPatch = D3DDEVCAPS2_ADAPTIVETESSRTPATCH,
+			AdaptiveTessNPatch = D3DDEVCAPS2_ADAPTIVETESSNPATCH,
+			CanStretchRectFromTextures = D3DDEVCAPS2_CAN_STRETCHRECT_FROM_TEXTURES,
+			PresampledMapNPatch = D3DDEVCAPS2_PRESAMPLEDDMAPNPATCH,
+			VertexElementsCanShareStreamOffset = D3DDEVCAPS2_VERTEXELEMENTSCANSHARESTREAMOFFSET,
 		};
 
 		[System::Flags]
@@ -85,6 +146,34 @@ namespace SlimDX
 		};
 
 		[System::Flags]
+		public enum class FilterCaps : System::Int32
+		{
+			MinPoint = D3DPTFILTERCAPS_MINFPOINT,
+			MinLinear = D3DPTFILTERCAPS_MINFLINEAR,
+			MinAnisotropic = D3DPTFILTERCAPS_MINFANISOTROPIC,
+			MinPyramidalQuad = D3DPTFILTERCAPS_MINFPYRAMIDALQUAD,
+			MinGaussianQuad = D3DPTFILTERCAPS_MINFGAUSSIANQUAD,
+			MipPoint = D3DPTFILTERCAPS_MIPFPOINT,
+			MipLinear = D3DPTFILTERCAPS_MIPFLINEAR,
+			MagPoint = D3DPTFILTERCAPS_MAGFPOINT,
+			MagLinear = D3DPTFILTERCAPS_MAGFLINEAR,
+			MagAnisotropic = D3DPTFILTERCAPS_MAGFANISOTROPIC,
+			MagPyramidalQuad = D3DPTFILTERCAPS_MAGFPYRAMIDALQUAD,
+			MagGaussianQuad = D3DPTFILTERCAPS_MAGFGAUSSIANQUAD,
+		};		
+
+		[System::Flags]
+		public enum class LineCaps : System::Int32
+		{
+			Texture = D3DLINECAPS_TEXTURE,
+			DepthTest = D3DLINECAPS_ZTEST,
+			Blend = D3DLINECAPS_BLEND,
+			AlphaCompare = D3DLINECAPS_ALPHACMP,
+			Fog = D3DLINECAPS_FOG,
+			Antialias = D3DLINECAPS_ANTIALIAS,
+		};
+
+		[System::Flags]
 		public enum class PrimitiveMiscCaps : System::Int32
 		{
 			MaskZ = D3DPMISCCAPS_MASKZ,
@@ -104,17 +193,6 @@ namespace SlimDX
 			MrtIndependentBitDepths = D3DPMISCCAPS_MRTINDEPENDENTBITDEPTHS,
 			MrtPostPixelShaderBlending = D3DPMISCCAPS_MRTPOSTPIXELSHADERBLENDING,
 			FogVertexClamped = D3DPMISCCAPS_FOGVERTEXCLAMPED,
-		};
-
-		[System::Flags]
-		public enum class LineCaps : System::Int32
-		{
-			Texture = D3DLINECAPS_TEXTURE,
-			DepthTest = D3DLINECAPS_ZTEST,
-			Blend = D3DLINECAPS_BLEND,
-			AlphaCompare = D3DLINECAPS_ALPHACMP,
-			Fog = D3DLINECAPS_FOG,
-			Antialias = D3DLINECAPS_ANTIALIAS,
 		};
 
 		[System::Flags]
@@ -139,44 +217,37 @@ namespace SlimDX
 		};
 
 		[System::Flags]
-		public enum class CompareCaps : System::Int32
-		{
-			Never = D3DPCMPCAPS_NEVER,
-			Less = D3DPCMPCAPS_LESS,
-			Equal = D3DPCMPCAPS_EQUAL,
-			LessEqual = D3DPCMPCAPS_LESSEQUAL,
-			Greater = D3DPCMPCAPS_GREATER,
-			NotEqual = D3DPCMPCAPS_NOTEQUAL,
-			GreaterEqual = D3DPCMPCAPS_GREATEREQUAL,
-			Always = D3DPCMPCAPS_ALWAYS,
-		};
-
-		[System::Flags]
-		public enum class BlendCaps : System::Int32
-		{
-			Zero = D3DPBLENDCAPS_ZERO,
-			One = D3DPBLENDCAPS_ONE,
-			SourceColor = D3DPBLENDCAPS_SRCCOLOR,
-			InvSourceColor = D3DPBLENDCAPS_INVSRCCOLOR,
-			SourceAlpha = D3DPBLENDCAPS_SRCALPHA,
-			InvSourceAlpha = D3DPBLENDCAPS_INVSRCALPHA,
-			DestinationAlpha = D3DPBLENDCAPS_DESTALPHA,
-			InvDestinationAlpha = D3DPBLENDCAPS_INVDESTALPHA,
-			DestinationColor = D3DPBLENDCAPS_DESTCOLOR,
-			InvDestinationColor = D3DPBLENDCAPS_INVDESTCOLOR,
-			SourceAlphaSaturated = D3DPBLENDCAPS_SRCALPHASAT,
-			BothSourceAlpha = D3DPBLENDCAPS_BOTHSRCALPHA,
-			BothInvSourceAlpha = D3DPBLENDCAPS_BOTHINVSRCALPHA,
-			BlendFactor = D3DPBLENDCAPS_BLENDFACTOR,
-		};
-
-		[System::Flags]
 		public enum class ShadeCaps : System::Int32
 		{
 			ColorGouraudRgb = D3DPSHADECAPS_COLORGOURAUDRGB,
 			SpecularGouraudRgb = D3DPSHADECAPS_SPECULARGOURAUDRGB,
 			AlphaGouraudBlend = D3DPSHADECAPS_ALPHAGOURAUDBLEND,
 			FogGouraud = D3DPSHADECAPS_FOGGOURAUD,
+		};
+
+		[System::Flags]
+		public enum class StencilCaps : System::Int32
+		{
+			Keep = D3DSTENCILCAPS_KEEP,
+			Zero = D3DSTENCILCAPS_ZERO,
+			Replace = D3DSTENCILCAPS_REPLACE,
+			IncrementClamp = D3DSTENCILCAPS_INCRSAT,
+			DecrementClamp = D3DSTENCILCAPS_DECRSAT,
+			Invert = D3DSTENCILCAPS_INVERT,
+			Increment = D3DSTENCILCAPS_INCR,
+			Decrement = D3DSTENCILCAPS_DECR,
+			TwoSided = D3DSTENCILCAPS_TWOSIDED,
+		};
+
+		[System::Flags]
+		public enum class TextureAddressCaps : System::Int32
+		{
+			Wrap = D3DPTADDRESSCAPS_WRAP,
+			Mirror = D3DPTADDRESSCAPS_MIRROR,
+			Clamp = D3DPTADDRESSCAPS_CLAMP,
+			Border = D3DPTADDRESSCAPS_BORDER,
+			IndependentUV = D3DPTADDRESSCAPS_INDEPENDENTUV,
+			MirrorOnce = D3DPTADDRESSCAPS_MIRRORONCE,
 		};
 
 		[System::Flags]
@@ -198,48 +269,6 @@ namespace SlimDX
 			CubeMapPow2 = D3DPTEXTURECAPS_CUBEMAP_POW2,
 			VolumeMapPow2 = D3DPTEXTURECAPS_VOLUMEMAP_POW2,
 			NoProjectedBumpEnvironment = D3DPTEXTURECAPS_NOPROJECTEDBUMPENV,
-		};
-
-		[System::Flags]
-		public enum class FilterCaps : System::Int32
-		{
-			MinPoint = D3DPTFILTERCAPS_MINFPOINT,
-			MinLinear = D3DPTFILTERCAPS_MINFLINEAR,
-			MinAnisotropic = D3DPTFILTERCAPS_MINFANISOTROPIC,
-			MinPyramidalQuad = D3DPTFILTERCAPS_MINFPYRAMIDALQUAD,
-			MinGaussianQuad = D3DPTFILTERCAPS_MINFGAUSSIANQUAD,
-			MipPoint = D3DPTFILTERCAPS_MIPFPOINT,
-			MipLinear = D3DPTFILTERCAPS_MIPFLINEAR,
-			MagPoint = D3DPTFILTERCAPS_MAGFPOINT,
-			MagLinear = D3DPTFILTERCAPS_MAGFLINEAR,
-			MagAnisotropic = D3DPTFILTERCAPS_MAGFANISOTROPIC,
-			MagPyramidalQuad = D3DPTFILTERCAPS_MAGFPYRAMIDALQUAD,
-			MagGaussianQuad = D3DPTFILTERCAPS_MAGFGAUSSIANQUAD,
-		};
-
-		[System::Flags]
-		public enum class TextureAddressCaps : System::Int32
-		{
-			Wrap = D3DPTADDRESSCAPS_WRAP,
-			Mirror = D3DPTADDRESSCAPS_MIRROR,
-			Clamp = D3DPTADDRESSCAPS_CLAMP,
-			Border = D3DPTADDRESSCAPS_BORDER,
-			IndependentUV = D3DPTADDRESSCAPS_INDEPENDENTUV,
-			MirrorOnce = D3DPTADDRESSCAPS_MIRRORONCE,
-		};
-
-		[System::Flags]
-		public enum class StencilCaps : System::Int32
-		{
-			Keep = D3DSTENCILCAPS_KEEP,
-			Zero = D3DSTENCILCAPS_ZERO,
-			Replace = D3DSTENCILCAPS_REPLACE,
-			IncrementClamp = D3DSTENCILCAPS_INCRSAT,
-			DecrementClamp = D3DSTENCILCAPS_DECRSAT,
-			Invert = D3DSTENCILCAPS_INVERT,
-			Increment = D3DSTENCILCAPS_INCR,
-			Decrement = D3DSTENCILCAPS_DECR,
-			TwoSided = D3DSTENCILCAPS_TWOSIDED,
 		};
 
 		[System::Flags]
@@ -292,33 +321,6 @@ namespace SlimDX
 			Tweening = D3DVTXPCAPS_TWEENING,
 			TexGenSphereMap = D3DVTXPCAPS_TEXGEN_SPHEREMAP,
 			NoTexGenNonLocalViewer = D3DVTXPCAPS_NO_TEXGEN_NONLOCALVIEWER,
-		};
-
-		[System::Flags]
-		public enum class DevCaps2
-		{
-			StreamOffset = D3DDEVCAPS2_STREAMOFFSET,
-			DMapNPatch = D3DDEVCAPS2_DMAPNPATCH,
-			AdaptiveTessRTPatch = D3DDEVCAPS2_ADAPTIVETESSRTPATCH,
-			AdaptiveTessNPatch = D3DDEVCAPS2_ADAPTIVETESSNPATCH,
-			CanStretchRectFromTextures = D3DDEVCAPS2_CAN_STRETCHRECT_FROM_TEXTURES,
-			PresampledMapNPatch = D3DDEVCAPS2_PRESAMPLEDDMAPNPATCH,
-			VertexElementsCanShareStreamOffset = D3DDEVCAPS2_VERTEXELEMENTSCANSHARESTREAMOFFSET,
-		};
-
-		[System::Flags]
-		public enum class DeclarationTypeCaps
-		{
-			UByte4 = D3DDTCAPS_UBYTE4,
-			UByte4N = D3DDTCAPS_UBYTE4N,
-			Short2N = D3DDTCAPS_SHORT2N,
-			Short4N = D3DDTCAPS_SHORT4N,
-			UShort2N = D3DDTCAPS_USHORT2N,
-			UShort4N = D3DDTCAPS_USHORT4N,
-			UDec3 = D3DDTCAPS_UDEC3,
-			Dec3N = D3DDTCAPS_DEC3N,
-			Float16_2 = D3DDTCAPS_FLOAT16_2,
-			Float16_4 = D3DDTCAPS_FLOAT16_4,
 		};
 	}
 }

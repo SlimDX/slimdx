@@ -82,15 +82,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#FromPoints(SlimDX.Vector3[])">
-            <Messages>
-             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2007-11-28 21:30:41Z">
-              <Issue Name="NoArguments">
-               <Item>'ArgumentNullException'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Intersects(SlimDX.BoundingBox,SlimDX.Ray,System.Single&amp;)">
             <Messages>
              <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2007-11-28 21:30:41Z">
@@ -122,24 +113,6 @@
          </Type>
          <Type Name="BoundingFrustum">
           <Members>
-           <Member Name="#ComputeIntersection(SlimDX.Plane&amp;,SlimDX.Ray&amp;)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2007-11-28 21:30:41Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'BoundingFrustum::ComputeIntersection(Plane%, Ray%)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ComputeIntersectionLine(SlimDX.Plane&amp;,SlimDX.Plane&amp;)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2007-11-28 21:30:41Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'BoundingFrustum::ComputeIntersectionLine(Plane%, Plane%)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Equals(SlimDX.BoundingFrustum&amp;,SlimDX.BoundingFrustum&amp;)">
             <Messages>
              <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-11-28 21:30:41Z">
@@ -192,7 +165,7 @@
            </Member>
            <Member Name="#FromPoints(SlimDX.Vector3[])">
             <Messages>
-             <Message Id="&lt;Module&gt;.D3DXComputeBoundingSphere(optional(IsConst) D3DXVECTOR3*,optional(System.Runtime.CompilerServices.IsLong) System.UInt32,optional(System.Runtime.CompilerServices.IsLong) System.UInt32,D3DXVECTOR3*,System.Single*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-01-06 19:04:15Z">
+             <Message Id="&lt;Module&gt;.D3DXComputeBoundingSphere(optional(IsConst) D3DXVECTOR3*,optional(System.Runtime.CompilerServices.IsLong) System.UInt32,optional(System.Runtime.CompilerServices.IsLong) System.UInt32,D3DXVECTOR3*,System.Single*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-01-06 19:04:15Z">
               <Issue Name="HResultOrErrorCode">
                <Item>'BoundingSphere::FromPoints(array&lt;Vector3&gt;^)'</Item>
                <Item>'Global::D3DXComputeBoundingSphere(const D3DXVECTOR3*, unsigned int, unsigned int, D3DXVECTOR3*, float*)'</Item>
@@ -504,38 +477,6 @@
          </Type>
          <Type Name="DataStream">
           <Members>
-           <Member Name="#.ctor(ID3DXBuffer*)">
-            <Messages>
-             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2007-12-02 22:23:38Z">
-              <Issue>
-               <Item>'DataStream::DataStream(ID3DXBuffer*)'</Item>
-               <Item>'DataStream::m_OwnsBuffer'</Item>
-               <Item>'bool'</Item>
-               <Item>false</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2008-01-06 19:04:15Z">
-              <Issue Name="IncorrectMessage">
-               <Item>'DataStream::DataStream(ID3DXBuffer*)'</Item>
-               <Item>buffer</Item>
-               <Item>'message'</Item>
-               <Item>'ArgumentException'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#.ctor(System.IntPtr,System.Int64,System.Boolean,System.Boolean)">
-            <Messages>
-             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2007-10-31 21:47:02Z">
-              <Issue>
-               <Item>'DataStream::DataStream(IntPtr, long long, bool, bool)'</Item>
-               <Item>'DataStream::m_OwnsBuffer'</Item>
-               <Item>'bool'</Item>
-               <Item>false</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Dispose(System.Boolean)">
             <Messages>
              <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -3900,15 +3841,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#Build(SlimDX.Direct3D10.Device,SlimDX.DataStream,System.Int32,SlimDX.Direct3D10.ResourceUsage,SlimDX.Direct3D10.BindFlags,SlimDX.Direct3D10.CpuAccessFlags,SlimDX.Direct3D10.ResourceOptionFlags)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-02-21 21:35:22Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Buffer::Build(Device^, DataStream^, int, ResourceUsage, BindFlags, CpuAccessFlags, ResourceOptionFlags)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Map(SlimDX.Direct3D10.MapMode,SlimDX.Direct3D10.MapFlags)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
@@ -4452,18 +4384,6 @@
          </Type>
          <Type Name="EffectPass">
           <Members>
-           <Member Name="#.ctor(ID3D10EffectPass*)">
-            <Messages>
-             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2008-02-21 21:35:22Z">
-              <Issue Name="IncorrectParameterName">
-               <Item>'EffectPass::EffectPass(ID3D10EffectPass*)'</Item>
-               <Item>pointer</Item>
-               <Item>'paramName'</Item>
-               <Item>'ArgumentNullException'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#.ctor(System.IntPtr)">
             <Messages>
              <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-02-21 21:35:22Z">
@@ -4920,15 +4840,6 @@
                <Item>'Font::Font(IntPtr)'</Item>
                <Item>pointer</Item>
                <Item>'pointer'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Build(SlimDX.Direct3D10.Device,System.Int32,System.Int32,SlimDX.Direct3D10.FontWeight,System.Int32,System.Boolean,SlimDX.Direct3D10.FontCharacterSet,SlimDX.Direct3D10.FontPrecision,SlimDX.Direct3D10.FontQuality,SlimDX.Direct3D10.FontPitchAndFamily,System.String)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-02-21 21:35:22Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Font::Build(Device^, int, int, FontWeight, int, bool, FontCharacterSet, FontPrecision, FontQuality, FontPitchAndFamily, String^)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5520,22 +5431,6 @@
             </Issue>
            </Message>
           </Messages>
-         </Type>
-         <Type Name="SpriteInstance">
-          <Members>
-           <Member Name="#.ctor(SlimDX.Direct3D10.ShaderResourceView,SlimDX.Vector2,SlimDX.Vector2)">
-            <Messages>
-             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2008-01-06 19:04:15Z">
-              <Issue>
-               <Item>'SpriteInstance::SpriteInstance(ShaderResourceView^, Vector2, Vector2)'</Item>
-               <Item>'SpriteInstance::textureIndex'</Item>
-               <Item>'int'</Item>
-               <Item>0</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
          </Type>
          <Type Name="StencilOperation">
           <Messages>
@@ -6446,7 +6341,7 @@
          </Type>
          <Type Name="Channel">
           <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2008-01-06 19:04:15Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2008-02-23 19:14:50Z">
             <Issue>
              <Item>'Channel'</Item>
             </Issue>
@@ -7321,7 +7216,7 @@
            </Member>
            <Member Name="#SetCursor(System.Windows.Forms.Cursor,System.Boolean)">
             <Messages>
-             <Message Id="&lt;Module&gt;.DeleteDC(HDC__*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-01-06 19:04:15Z">
+             <Message Id="&lt;Module&gt;.DeleteDC(HDC__*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-01-06 19:04:15Z">
               <Issue Name="HResultOrErrorCode">
                <Item>'Device::SetCursor(Cursor^, bool)'</Item>
                <Item>'Global::DeleteDC(HDC__*)'</Item>
@@ -7339,7 +7234,7 @@
                <Item>'Global::DeleteDC(HDC__*)'</Item>
               </Issue>
              </Message>
-             <Message Id="&lt;Module&gt;.DeleteObject(System.Void*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-01-06 19:04:15Z">
+             <Message Id="&lt;Module&gt;.DeleteObject(System.Void*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-01-06 19:04:15Z">
               <Issue Name="HResultOrErrorCode">
                <Item>'Device::SetCursor(Cursor^, bool)'</Item>
                <Item>'Global::DeleteObject(void*)'</Item>
@@ -7381,7 +7276,7 @@
                <Item>'Global::DeleteObject(void*)'</Item>
               </Issue>
              </Message>
-             <Message Id="&lt;Module&gt;.GetDIBits(HDC__*,HBITMAP__*,System.UInt32,System.UInt32,System.Void*,tagBITMAPINFO*,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-01-06 19:04:15Z">
+             <Message Id="&lt;Module&gt;.GetDIBits(HDC__*,HBITMAP__*,System.UInt32,System.UInt32,System.Void*,tagBITMAPINFO*,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-01-06 19:04:15Z">
               <Issue Name="HResultOrErrorCode">
                <Item>'Device::SetCursor(Cursor^, bool)'</Item>
                <Item>'Global::GetDIBits(HDC__*, HBITMAP__*, unsigned int, unsigned int, void*, tagBITMAPINFO*, unsigned int)'</Item>
@@ -7391,7 +7286,7 @@
                <Item>'Global::GetDIBits(HDC__*, HBITMAP__*, unsigned int, unsigned int, void*, tagBITMAPINFO*, unsigned int)'</Item>
               </Issue>
              </Message>
-             <Message Id="&lt;Module&gt;.ReleaseDC(HWND__*,HDC__*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-01-06 19:04:15Z">
+             <Message Id="&lt;Module&gt;.ReleaseDC(HWND__*,HDC__*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-01-06 19:04:15Z">
               <Issue Name="HResultOrErrorCode">
                <Item>'Device::SetCursor(Cursor^, bool)'</Item>
                <Item>'Global::ReleaseDC(HWND__*, HDC__*)'</Item>
@@ -7631,12 +7526,6 @@
            </Member>
            <Member Name="#Initialize()">
             <Messages>
-             <Message Id="&lt;Module&gt;.D3DXCheckVersion(System.UInt32,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-01-06 19:04:15Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'Direct3D::Initialize(void)'</Item>
-               <Item>'Global::D3DXCheckVersion(unsigned int, unsigned int)'</Item>
-              </Issue>
-             </Message>
              <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>'Direct3D::Initialize(void)'</Item>
@@ -7647,6 +7536,12 @@
                <Item>'Direct3D::Initialize(void)'</Item>
                <Item>'AppDomain::ProcessExit::add(EventHandler^)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Direct3D::Initialize(void)'&#xD;&#xA;   -&gt;'Direct3D::Initialize(void)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="&lt;Module&gt;.D3DXCheckVersion(System.UInt32,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-01-06 19:04:15Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'Direct3D::Initialize(void)'</Item>
+               <Item>'Global::D3DXCheckVersion(unsigned int, unsigned int)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -8750,11 +8645,6 @@
            </Member>
            <Member Name="#RegisterNamedMatrices(SlimDX.Direct3D9.Frame,SlimDX.Direct3D9.AnimationController)">
             <Messages>
-             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2008-01-27 23:38:09Z">
-              <Issue Name="NoArguments">
-               <Item>'ArgumentNullException'</Item>
-              </Issue>
-             </Message>
              <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-10-31 21:12:23Z">
               <Issue>
                <Item>controller</Item>
@@ -9010,52 +8900,57 @@
            </Message>
           </Messages>
           <Members>
-           <Member Name="#WaitingForGpuExclusiveResourceTimePercent">
+           <Member Name="#WaitingForGPUExclusiveResourceTimePercent">
             <Messages>
-             <Message Id="Gpu" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-06 19:04:15Z">
+             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-02-23 19:14:50Z">
               <Issue Name="Member">
+               <Item>GPU</Item>
+               <Item>'InterfaceTimings::WaitingForGPUExclusiveResourceTimePercent'</Item>
                <Item>Gpu</Item>
-               <Item>'InterfaceTimings::WaitingForGpuExclusiveResourceTimePercent'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#WaitingForGpuOtherTimePercent">
+           <Member Name="#WaitingForGPUOtherTimePercent">
             <Messages>
-             <Message Id="Gpu" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-06 19:04:15Z">
+             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-02-23 19:14:50Z">
               <Issue Name="Member">
+               <Item>GPU</Item>
+               <Item>'InterfaceTimings::WaitingForGPUOtherTimePercent'</Item>
                <Item>Gpu</Item>
-               <Item>'InterfaceTimings::WaitingForGpuOtherTimePercent'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#WaitingForGpuToAcceptMoreCommandsTimePercent">
+           <Member Name="#WaitingForGPUToAcceptMoreCommandsTimePercent">
             <Messages>
-             <Message Id="Gpu" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-06 19:04:15Z">
+             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-02-23 19:14:50Z">
               <Issue Name="Member">
+               <Item>GPU</Item>
+               <Item>'InterfaceTimings::WaitingForGPUToAcceptMoreCommandsTimePercent'</Item>
                <Item>Gpu</Item>
-               <Item>'InterfaceTimings::WaitingForGpuToAcceptMoreCommandsTimePercent'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#WaitingForGpuToStayWithinLatencyTimePercent">
+           <Member Name="#WaitingForGPUToStayWithinLatencyTimePercent">
             <Messages>
-             <Message Id="Gpu" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-06 19:04:15Z">
+             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-02-23 19:14:50Z">
               <Issue Name="Member">
+               <Item>GPU</Item>
+               <Item>'InterfaceTimings::WaitingForGPUToStayWithinLatencyTimePercent'</Item>
                <Item>Gpu</Item>
-               <Item>'InterfaceTimings::WaitingForGpuToStayWithinLatencyTimePercent'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#WaitingForGpuToUseApplicationResourceTimePercent">
+           <Member Name="#WaitingForGPUToUseApplicationResourceTimePercent">
             <Messages>
-             <Message Id="Gpu" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-06 19:04:15Z">
+             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-02-23 19:14:50Z">
               <Issue Name="Member">
+               <Item>GPU</Item>
+               <Item>'InterfaceTimings::WaitingForGPUToUseApplicationResourceTimePercent'</Item>
                <Item>Gpu</Item>
-               <Item>'InterfaceTimings::WaitingForGpuToUseApplicationResourceTimePercent'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -9559,24 +9454,24 @@
            </Member>
            <Member Name="#CreateText(SlimDX.Direct3D9.Device,System.Drawing.Font,System.String,System.Single,System.Single)">
             <Messages>
-             <Message Id="&lt;Module&gt;.DeleteDC(HDC__*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-01-06 19:04:15Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'Mesh::CreateText(Device^, Font^, String^, float, float)'</Item>
-               <Item>'Global::DeleteDC(HDC__*)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="&lt;Module&gt;.DeleteObject(System.Void*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-01-06 19:04:15Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'Mesh::CreateText(Device^, Font^, String^, float, float)'</Item>
-               <Item>'Global::DeleteObject(void*)'</Item>
-              </Issue>
-             </Message>
              <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-17 19:46:05Z">
               <Issue>
                <Item>device</Item>
                <Item>Mesh.CreateText(Device, Font, String, Single, Single):Mesh</Item>
                <Item>SlimDX.Direct3D9.Device</Item>
                <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+             <Message Id="&lt;Module&gt;.DeleteDC(HDC__*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-01-06 19:04:15Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'Mesh::CreateText(Device^, Font^, String^, float, float)'</Item>
+               <Item>'Global::DeleteDC(HDC__*)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="&lt;Module&gt;.DeleteObject(System.Void*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-01-06 19:04:15Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'Mesh::CreateText(Device^, Font^, String^, float, float)'</Item>
+               <Item>'Global::DeleteObject(void*)'</Item>
               </Issue>
              </Message>
              <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Status="Excluded" Created="2008-01-27 22:23:52Z">
@@ -9589,21 +9484,21 @@
            </Member>
            <Member Name="#CreateText(SlimDX.Direct3D9.Device,System.Drawing.Font,System.String,System.Single,System.Single,SlimDX.Direct3D9.GlyphMetricsFloat[]&amp;)">
             <Messages>
-             <Message Id="&lt;Module&gt;.DeleteDC(HDC__*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-01-27 22:23:52Z">
+             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-01-27 22:23:52Z">
+              <Issue>
+               <Item>'glyphMetrics'</Item>
+              </Issue>
+             </Message>
+             <Message Id="&lt;Module&gt;.DeleteDC(HDC__*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-01-27 22:23:52Z">
               <Issue Name="HResultOrErrorCode">
                <Item>'Mesh::CreateText(Device^, Font^, String^, float, float, array&lt;GlyphMetricsFloat&gt;^%)'</Item>
                <Item>'Global::DeleteDC(HDC__*)'</Item>
               </Issue>
              </Message>
-             <Message Id="&lt;Module&gt;.DeleteObject(System.Void*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-01-27 22:23:52Z">
+             <Message Id="&lt;Module&gt;.DeleteObject(System.Void*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-01-27 22:23:52Z">
               <Issue Name="HResultOrErrorCode">
                <Item>'Mesh::CreateText(Device^, Font^, String^, float, float, array&lt;GlyphMetricsFloat&gt;^%)'</Item>
                <Item>'Global::DeleteObject(void*)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="5#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-01-27 22:23:52Z">
-              <Issue>
-               <Item>'glyphMetrics'</Item>
               </Issue>
              </Message>
              <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Status="Excluded" Created="2008-01-27 22:23:52Z">
@@ -10240,22 +10135,24 @@
            </Message>
           </Messages>
           <Members>
-           <Member Name="#GpuIdleTimePercent">
+           <Member Name="#GPUIdleTimePercent">
             <Messages>
-             <Message Id="Gpu" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-06 19:04:15Z">
+             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-02-23 19:14:50Z">
               <Issue Name="Member">
+               <Item>GPU</Item>
+               <Item>'PipelineTimings::GPUIdleTimePercent'</Item>
                <Item>Gpu</Item>
-               <Item>'PipelineTimings::GpuIdleTimePercent'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#OtherGpuProcessingTimePercent">
+           <Member Name="#OtherGPUProcessingTimePercent">
             <Messages>
-             <Message Id="Gpu" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-06 19:04:15Z">
+             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-02-23 19:14:50Z">
               <Issue Name="Member">
+               <Item>GPU</Item>
+               <Item>'PipelineTimings::OtherGPUProcessingTimePercent'</Item>
                <Item>Gpu</Item>
-               <Item>'PipelineTimings::OtherGpuProcessingTimePercent'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -10754,14 +10651,14 @@
            </Message>
           </Messages>
          </Type>
-         <Type Name="RectPatchInfo">
+         <Type Name="RectanglePatchInfo">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-23 19:14:50Z">
             <Issue Name="Equals">
-             <Item>'RectPatchInfo'</Item>
+             <Item>'RectanglePatchInfo'</Item>
             </Issue>
             <Issue Name="op_Equality">
-             <Item>'RectPatchInfo'</Item>
+             <Item>'RectanglePatchInfo'</Item>
             </Issue>
            </Message>
           </Messages>
@@ -12388,14 +12285,14 @@
            </Message>
           </Messages>
          </Type>
-         <Type Name="TriPatchInfo">
+         <Type Name="TrianglePatchInfo">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-23 19:14:50Z">
             <Issue Name="Equals">
-             <Item>'TriPatchInfo'</Item>
+             <Item>'TrianglePatchInfo'</Item>
             </Issue>
             <Issue Name="op_Equality">
-             <Item>'TriPatchInfo'</Item>
+             <Item>'TrianglePatchInfo'</Item>
             </Issue>
            </Message>
           </Messages>
@@ -13523,6 +13420,16 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="Error">
+          <Messages>
+           <Message Id="Error" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2008-02-23 19:14:50Z">
+            <Issue Name="Type">
+             <Item>'Error'</Item>
+             <Item>Error</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="JoystickObjects">
           <Members>
            <Member Name="#Button(System.Int32)">
@@ -13960,22 +13867,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="WaveFormatExtensible">
-          <Members>
-           <Member Name="#.ctor(WAVEFORMATEXTENSIBLE*)">
-            <Messages>
-             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2008-01-06 19:04:15Z">
-              <Issue Name="IncorrectMessage">
-               <Item>'WaveFormatExtensible::WaveFormatExtensible(WAVEFORMATEXTENSIBLE*)'</Item>
-               <Item>format</Item>
-               <Item>'message'</Item>
-               <Item>'ArgumentException'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
         </Types>
        </Namespace>
        <Namespace Name="SlimDX.DXGI">
@@ -14151,19 +14042,6 @@
             </Issue>
            </Message>
           </Messages>
-          <Members>
-           <Member Name="#NonExclusive">
-            <Messages>
-             <Message Id="NonExclusive" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-02-23 15:03:39Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>NonExclusive</Item>
-               <Item>'Error::NonExclusive'</Item>
-               <Item>Nonexclusive</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
          </Type>
          <Type Name="Factory">
           <Members>
@@ -15490,7 +15368,7 @@
          </Type>
          <Type Name="Usage">
           <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2008-01-27 22:23:52Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2008-02-23 19:14:50Z">
             <Issue>
              <Item>'Usage'</Item>
             </Issue>
@@ -15831,9 +15709,6 @@
    <Rule TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122">
     <Resolution Name="Default">{0} calls into {1} which has a LinkDemand. By making this call, {1} is indirectly exposed to user code. Review the following call stack that might expose a way to circumvent security protection: {2}</Resolution>
    </Rule>
-   <Rule TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805">
-    <Resolution Name="Default">{0} initializes field {1} of type {2} to {3}. Remove this initialization because it will be done automatically by the runtime.</Resolution>
-   </Rule>
    <Rule TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217">
     <Resolution Name="Default">{0} is marked with FlagsAttribute but a discrete member cannot be found for every settable bit that is used across the range of enum values. Remove FlagsAttribute from the type or define new members for the following (currently missing) values: {1}</Resolution>
    </Rule>
@@ -15894,16 +15769,8 @@
    <Rule TypeName="ImplementISerializableCorrectly" Category="Microsoft.Usage" CheckId="CA2240">
     <Resolution Name="Default">Add an implementation of GetObjectData to type {0}.</Resolution>
    </Rule>
-   <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
-    <Resolution Name="IncorrectMessage">Method {0} passes parameter name '{1}' as the {2} argument to a {3} constructor. Replace this argument with a descriptive message and pass the parameter name in the correct position.</Resolution>
-    <Resolution Name="IncorrectParameterName">Method {0} passes '{1}' as the {2} argument to a {3} constructor. Replace this argument with one of the method's parameter names. Note that the provided parameter name should have the exact casing as declared on the method.</Resolution>
-    <Resolution Name="NoArguments">Call the {0} constructor that contains a message and/or paramName parameter.</Resolution>
-   </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
-   </Rule>
-   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
-    <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
    </Rule>
    <Rule TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223">
     <Resolution Name="Default">'{0}' should differ from other members by more than its return type.</Resolution>

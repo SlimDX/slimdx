@@ -37,14 +37,13 @@ namespace SlimDX
 	DataStream::DataStream( ID3DXBuffer* buffer )
 	{
 		if( buffer->GetBufferSize() < 1 )
-			throw gcnew ArgumentException( "buffer" );
+			throw gcnew ArgumentException( "Buffer size is less than 1." );
 
 		m_Buffer = static_cast<char*>( buffer->GetBufferPointer() );
 		m_Size = buffer->GetBufferSize();
 		
 		m_CanRead = true;
 		m_CanWrite = true;
-		m_OwnsBuffer = false;
 		
 		m_ID3DXBuffer = buffer;
 	}
@@ -100,7 +99,6 @@ namespace SlimDX
 		m_Buffer = static_cast<char*>( userBuffer.ToPointer() );
 		m_Size = sizeInBytes;
 
-		m_OwnsBuffer = false;
 		m_CanRead = canRead;
 		m_CanWrite = canWrite;
 		

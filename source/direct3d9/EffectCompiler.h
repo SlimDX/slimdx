@@ -48,13 +48,10 @@ namespace SlimDX
 			EffectCompiler( array<System::Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 			virtual ~EffectCompiler() { }
 
-			static EffectCompiler^ FromFile( System::String^ fileName, array<Macro>^ defines,
-				Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
+			static EffectCompiler^ FromFile( System::String^ fileName, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 
-			ShaderBytecode^ CompileShader( EffectHandle^ functionHandle, System::String^ target, ShaderFlags flags,
-				[Out] System::String^% compilationErrors, [Out] ConstantTable^% constantTable );
-			ShaderBytecode^ CompileShader( EffectHandle^ functionHandle, System::String^ target, ShaderFlags flags,
-				[Out] System::String^% compilationErrors );
+			ShaderBytecode^ CompileShader( EffectHandle^ functionHandle, System::String^ target, ShaderFlags flags, [Out] System::String^% compilationErrors, [Out] ConstantTable^% constantTable );
+			ShaderBytecode^ CompileShader( EffectHandle^ functionHandle, System::String^ target, ShaderFlags flags, [Out] System::String^% compilationErrors );
 			ShaderBytecode^ CompileShader( EffectHandle^ functionHandle, System::String^ target, ShaderFlags flags );
 
 			DataStream^ CompileEffect( ShaderFlags flags, [Out] System::String^% compilationErrors );

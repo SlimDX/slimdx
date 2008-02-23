@@ -51,7 +51,7 @@ namespace Demo.Kaos
 			Surface backBuffer = device.GetRenderTarget(0);
 			System.Drawing.Rectangle backBufferRect = new System.Drawing.Rectangle(0, 0, backBuffer.Description.Width, backBuffer.Description.Height);
 			device.ColorFill(mSurface, myRect, (Color4)0);
-			device.StretchRect(backBuffer, backBufferRect, mSurface, myRect, TextureFilter.Linear);
+			device.StretchRectangle(backBuffer, backBufferRect, mSurface, myRect, TextureFilter.Linear);
 		}
 
 		public Texture Texture

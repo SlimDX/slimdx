@@ -281,8 +281,7 @@ namespace SlimDX
 			/// <param name="targetFormat">Format to convert into.</param>
 			/// <param name="result">0 if successful.  Otherwise an HRESULT error code for the function.</param>
 			/// <returns>TRUE if successful, FALSE if not.</returns>
-			static bool CheckDeviceFormatConversion(int adapter, DeviceType deviceType,
-                Format sourceFormat, Format targetFormat, [Out] int% result);
+			static bool CheckDeviceFormatConversion(int adapter, DeviceType deviceType, Format sourceFormat, Format targetFormat, [Out] int% result);
 
 			/// <summary>
 			/// Tests the device to see if it supports conversion from one display format to another.
@@ -292,39 +291,28 @@ namespace SlimDX
 			/// <param name="sourceFormat">Format to convert from.</param>
 			/// <param name="targetFormat">Format to convert into.</param>
 			/// <returns>TRUE if successful, FALSE if not.</returns>
-			static bool CheckDeviceFormatConversion(int adapter, DeviceType deviceType,
-                Format sourceFormat, Format targetFormat);
+			static bool CheckDeviceFormatConversion(int adapter, DeviceType deviceType, Format sourceFormat, Format targetFormat);
 
-			static bool CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat,
-				Usage usage, ResourceType resourceType, Format checkFormat, [Out] int% result );
-			static bool CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat,
-				Usage usage, ResourceType resourceType, Format checkFormat );
+			static bool CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat, Usage usage, ResourceType resourceType, Format checkFormat, [Out] int% result );
+			static bool CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat, Usage usage, ResourceType resourceType, Format checkFormat );
 
-			static bool CheckDeviceType( int adapter, DeviceType deviceType, Format adapterFormat, 
-				Format backBufferFormat, bool windowed, [Out] int% result );
-			static bool CheckDeviceType( int adapter, DeviceType deviceType, Format adapterFormat, 
-				Format backBufferFormat, bool windowed );
+			static bool CheckDeviceType( int adapter, DeviceType deviceType, Format adapterFormat, Format backBufferFormat, bool windowed, [Out] int% result );
+			static bool CheckDeviceType( int adapter, DeviceType deviceType, Format adapterFormat, Format backBufferFormat, bool windowed );
 
-			static bool CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, 
-				Format renderTargetFormat, Format depthStencilFormat, [Out] int% result );
-			static bool CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, 
-				Format renderTargetFormat, Format depthStencilFormat );
+			static bool CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, Format renderTargetFormat, Format depthStencilFormat, [Out] int% result );
+			static bool CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, Format renderTargetFormat, Format depthStencilFormat );
 
-			static bool CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
-				bool windowed, MultisampleType multisampleType, [Out] int% qualityLevels, [Out] int% result );
-			static bool CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
-				bool windowed, MultisampleType multisampleType, [Out] int% qualityLevels );
-			static bool CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
-				bool windowed, MultisampleType multisampleType );
+			static bool CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat, bool windowed, MultisampleType multisampleType, [Out] int% qualityLevels, [Out] int% result );
+			static bool CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat, bool windowed, MultisampleType multisampleType, [Out] int% qualityLevels );
+			static bool CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat, bool windowed, MultisampleType multisampleType );
 
             static DisplayMode GetAdapterDisplayMode( int adapter );
             static AdapterDetails^ GetAdapterIdentifier( int adapter );
             static int GetAdapterModeCount( int adapter, Format format );
-            static DisplayMode EnumAdapterModes( int adapter, Format format, int modeIndex );
+            static DisplayMode EnumerateAdapterModes( int adapter, Format format, int modeIndex );
             static System::IntPtr GetAdapterMonitor( int adapter );
 			static Capabilities GetDeviceCaps( int adapter, DeviceType deviceType );
-			
-			//Extensions
+
 			static bool SupportsR2VB( int adapter, DeviceType deviceType );
 		};
 	}

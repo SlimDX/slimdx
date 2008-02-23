@@ -21,9 +21,6 @@
 */
 #pragma once
 
-//using namespace System::IO;
-//using namespace System::Runtime::InteropServices;
-
 #include "Device.h"
 #include "ConstantTable.h"
 #include <vcclr.h>
@@ -67,7 +64,6 @@ namespace SlimDX
 		public value class Macro
 		{
 		internal:
-			//helper function to resolve array<Macro>^ to D3DXMACRO*
 			static D3DXMACRO* Marshal( array<Macro>^ macros, [Out] array<System::Runtime::InteropServices::GCHandle>^% handles );
 			static void Unmarshal( D3DXMACRO* macros, array<System::Runtime::InteropServices::GCHandle>^ handles );
 
@@ -113,37 +109,18 @@ namespace SlimDX
 			Shader() { }
 
 		public:
-			//D3DXAssembleShader
-			static ShaderBytecode^ Assemble( array<System::Byte>^ sourceData, array<Macro>^ defines,
-				Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
-			static ShaderBytecode^ Assemble( System::String^ sourceData, array<Macro>^ defines,
-				Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
+			static ShaderBytecode^ Assemble( array<System::Byte>^ sourceData, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
+			static ShaderBytecode^ Assemble( System::String^ sourceData, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 
-			//D3DXAssembleShaderFromFile
-			static ShaderBytecode^ AssembleFromFile( System::String^ fileName, array<Macro>^ defines,
-				Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
+			static ShaderBytecode^ AssembleFromFile( System::String^ fileName, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 
-			//D3DXCompileShader
-			static ShaderBytecode^ Compile( array<System::Byte>^ sourceData, array<Macro>^ defines,
-				Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags,
-				[Out] System::String^% errors, [Out] ConstantTable^% constantTable );
-			static ShaderBytecode^ Compile( System::String^ sourceData, array<Macro>^ defines,
-				Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags,
-				[Out] System::String^% errors, [Out] ConstantTable^% constantTable );
-			static ShaderBytecode^ Compile( array<System::Byte>^ sourceData, array<Macro>^ defines,
-				Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags,
-				[Out] System::String^% errors );
-			static ShaderBytecode^ Compile( System::String^ sourceData, array<Macro>^ defines,
-				Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags,
-				[Out] System::String^% errors );
+			static ShaderBytecode^ Compile( array<System::Byte>^ sourceData, array<Macro>^ defines, Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags, [Out] System::String^% errors, [Out] ConstantTable^% constantTable );
+			static ShaderBytecode^ Compile( System::String^ sourceData, array<Macro>^ defines, Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags, [Out] System::String^% errors, [Out] ConstantTable^% constantTable );
+			static ShaderBytecode^ Compile( array<System::Byte>^ sourceData, array<Macro>^ defines, Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags, [Out] System::String^% errors );
+			static ShaderBytecode^ Compile( System::String^ sourceData, array<Macro>^ defines, Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags, [Out] System::String^% errors );
 
-			//D3DXCompileShaderFromFile
-			static ShaderBytecode^ CompileFromFile( System::String^ fileName, array<Macro>^ defines,
-				Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags,
-				[Out] System::String^% errors, [Out] ConstantTable^% constantTable );
-			static ShaderBytecode^ CompileFromFile( System::String^ fileName, array<Macro>^ defines,
-				Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags,
-				[Out] System::String^% errors );
+			static ShaderBytecode^ CompileFromFile( System::String^ fileName, array<Macro>^ defines, Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags, [Out] System::String^% errors, [Out] ConstantTable^% constantTable );
+			static ShaderBytecode^ CompileFromFile( System::String^ fileName, array<Macro>^ defines, Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags, [Out] System::String^% errors );
 
 			static int MajorVersion( int version );
 			static int MinorVersion( int version );

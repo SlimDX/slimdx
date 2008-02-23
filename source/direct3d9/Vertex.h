@@ -22,7 +22,6 @@
 #pragma once
 
 #include "../ComObject.h"
-//#include "Direct3D9ErrorHandler.h"
 
 namespace SlimDX
 {
@@ -36,58 +35,25 @@ namespace SlimDX
 				VertexDeclarationEnd = VertexElement( 255, 0, DeclarationType::Unused, 
 					DeclarationMethod::Default, DeclarationUsage::Position, 0 );
 			}
-			
-			short stream;
-            short offset;
-            DeclarationType type;
-            DeclarationMethod method;
-            DeclarationUsage usage;
-            System::Byte usageIndex;
 
 		public:
-			property short Stream
-            {
-                short get() { return stream; }
-                void set( short value ) { stream = value; }
-            }
-
-            property short Offset
-            {
-                short get() { return offset; }
-                void set( short value ) { offset = value; }
-            }
-
-            property DeclarationType Type
-            {
-                DeclarationType get() { return type; }
-                void set( DeclarationType value ) { type = value; }
-            }
-
-            property DeclarationMethod Method
-            {
-                DeclarationMethod get() { return method; }
-                void set( DeclarationMethod value ) { method = value; }
-            }
-
-            property DeclarationUsage Usage
-            {
-                DeclarationUsage get() { return usage; }
-                void set( DeclarationUsage value ) { usage = value; }
-            }
-
-            property System::Byte UsageIndex
-            {
-                System::Byte get() { return usageIndex; }
-                void set( System::Byte value ) { usageIndex = value; }
-            }
+			property short Stream;
+            property short Offset;
+            property DeclarationType Type;
+            property DeclarationMethod Method;
+            property DeclarationUsage Usage;
+            property System::Byte UsageIndex;
 
 			static initonly VertexElement VertexDeclarationEnd;
 
-			VertexElement( short stream, short offset, DeclarationType declarationType, 
-				DeclarationMethod declarationMethod, DeclarationUsage declarationUsage, System::Byte usageIndex )
-				: stream( stream ), offset( offset ), type( declarationType ),
-				method( declarationMethod ), usage( declarationUsage ), usageIndex( usageIndex )
+			VertexElement( short stream, short offset, DeclarationType declarationType, DeclarationMethod declarationMethod, DeclarationUsage declarationUsage, System::Byte usageIndex )
 			{
+				Stream = stream;
+				Offset = offset;
+				Type = declarationType;
+				Method = declarationMethod;
+				Usage = declarationUsage;
+				UsageIndex = usageIndex;
 			}
 		};
 

@@ -30,22 +30,9 @@ namespace SlimDX
 
 		public value class RasterStatus
 		{
-		private:
-			bool inVBlank;
-            int scanLine;
-
 		public:
-			property bool InVBlank
-            {
-                bool get() { return inVBlank; }
-                void set( bool value ) { inVBlank = value; }
-            }
-
-            property int Scanline
-            {
-                int get() { return scanLine; }
-                void set( int value ) { scanLine = value; }
-            }
+			property bool InVBlank;
+            property int Scanline;
 		};
 
 		public ref class SwapChain : public ComObject
@@ -60,6 +47,12 @@ namespace SlimDX
 			SwapChain( Device^ device, PresentParameters^ presentParameters );
 			~SwapChain() { Destruct(); }
 
+			Device^ GetDevice();
+			Surface^ GetBackBuffer( int index );
+			Result GetFrontBufferData( Surface^ destinationSurface );
+
+			Result Present( SlimDX::Direct3D9::Present flags );
+
 			property SlimDX::Direct3D9::DisplayMode DisplayMode
 			{
 				SlimDX::Direct3D9::DisplayMode get();
@@ -69,12 +62,6 @@ namespace SlimDX
 			{
 				SlimDX::Direct3D9::RasterStatus get();
 			}
-
-			Device^ GetDevice();
-			Surface^ GetBackBuffer( int index );
-			Result GetFrontBufferData( Surface^ destinationSurface );
-
-			Result Present( SlimDX::Direct3D9::Present flags );
 		};
 	}
 }

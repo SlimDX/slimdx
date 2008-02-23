@@ -34,7 +34,6 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
-		//description structures for various things
 		public value class EffectDescription
 		{
 		public:
@@ -120,11 +119,6 @@ namespace SlimDX
 			PixelShader^ GetPixelShader( EffectHandle^ parameter );
 			VertexShader^ GetVertexShader( EffectHandle^ parameter );
 
-			property EffectDescription Description
-			{
-				EffectDescription get();
-			}
-
 			Result SetValue( EffectHandle^ parameter, bool value );
 			Result SetValue( EffectHandle^ parameter, array<bool>^ values );
 			Result SetValue( EffectHandle^ parameter, int value );
@@ -144,22 +138,34 @@ namespace SlimDX
 
 			bool GetBool( EffectHandle^ parameter );
 			array<bool>^ GetBoolArray( EffectHandle^ parameter, int count );
+
 			int GetInt( EffectHandle^ parameter );
 			array<int>^ GetIntArray( EffectHandle^ parameter, int count );
+
 			float GetFloat( EffectHandle^ parameter );
 			array<float>^ GetFloatArray( EffectHandle^ parameter, int count );
+
 			Vector4 GetVector( EffectHandle^ parameter );
 			array<Vector4>^ GetVectorArray( EffectHandle^ parameter, int count );
+
 			Color4 GetColor( EffectHandle^ parameter );
 			array<Color4>^ GetColorArray( EffectHandle^ parameter, int count );
+
 			Matrix GetMatrix( EffectHandle^ parameter );
 			array<Matrix>^ GetMatrixArray( EffectHandle^ parameter, int count );
+
 			Matrix GetMatrixTranspose( EffectHandle^ parameter );
 			array<Matrix>^ GetMatrixTransposeArray( EffectHandle^ parameter, int count );
+
 			BaseTexture^ GetTexture( EffectHandle^ parameter );
 
 			System::String^ GetString( EffectHandle^ parameter );
 			DataStream^ GetValue( EffectHandle^ parameter, int bytes );
+
+			property EffectDescription Description
+			{
+				EffectDescription get();
+			}
 		};
    }
 }

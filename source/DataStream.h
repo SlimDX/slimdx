@@ -21,9 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::IO;
-
 #include <d3dx9.h>
 
 namespace SlimDX
