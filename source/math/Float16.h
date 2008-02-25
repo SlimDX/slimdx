@@ -21,10 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Globalization;
-//using namespace System::Runtime::InteropServices;
-
 namespace SlimDX
 {
 	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]

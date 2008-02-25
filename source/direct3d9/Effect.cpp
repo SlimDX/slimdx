@@ -324,7 +324,7 @@ namespace SlimDX
 			if( shim != NULL )
 				delete shim;
 
-			//shim = new IEffectStateManagerShim( manager );
+			shim = new IEffectStateManagerShim( manager );
 
 			HRESULT hr = EffectPointer->SetStateManager( shim );
 			return RECORD_D3D9( hr );

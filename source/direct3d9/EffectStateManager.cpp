@@ -44,6 +44,31 @@ namespace Direct3D9
 	IEffectStateManagerShim::IEffectStateManagerShim( IEffectStateManager^ wrappedInterface )
 	{
 		m_WrappedInterface = wrappedInterface;
+		refCount = 1;
+	}
+
+	HRESULT IEffectStateManagerShim::QueryInterface( const IID &iid, LPVOID *ppv )
+	{
+		if( iid == IID_ID3DXEffectStateManager )
+		{
+			AddRef();
+			*reinterpret_cast<ID3DXEffectStateManager**>( ppv ) = this;
+			return S_OK;
+		}
+
+		return E_NOTIMPL;
+	}
+
+	ULONG IEffectStateManagerShim::AddRef()
+	{
+		return ++refCount;
+	}
+
+	ULONG IEffectStateManagerShim::Release()
+	{
+		if( --refCount == 0 )
+			delete this;
+		return refCount;
 	}
 
 	HRESULT IEffectStateManagerShim::LightEnable( DWORD Index, BOOL Enable )
