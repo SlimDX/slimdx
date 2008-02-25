@@ -56,6 +56,7 @@ namespace SlimDX
 			void Unmap( int subResource );
 			
 			static Texture2D^ FromFile( Device^ device, System::String^ fileName );
+			static Texture2D^ FromMemory( Device^ device, array<System::Byte>^ memory );
 			static Texture2D^ FromStream( Device^ device, System::IO::Stream^ stream, int sizeInBytes );
 		};
 	}
