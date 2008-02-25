@@ -21,107 +21,33 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "../ComObject.h"
 
 #include "Enums.h"
-#include "DepthStencilStateDescription.h"
+#include "DeviceChild.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{	
 		ref class Device;
+		value class DepthStencilStateDescription;
 		
-		public ref class DepthStencilState : ComObject
+		public ref class DepthStencilState : public DeviceChild
 		{
 			COMOBJECT(ID3D10DepthStencilState);
-
-		private:
-			DepthStencilStateDescription^ m_Description;
 		
 		internal:
-			DepthStencilState( ID3D10DepthStencilState* state );
+			DepthStencilState( ID3D10DepthStencilState* pointer );
 		
 		public:
-			DepthStencilState( System::IntPtr state );
-			~DepthStencilState() { Destruct(); }
-
-			property bool DepthEnabled
+			property DepthStencilStateDescription Description
 			{
-				bool get() { return m_Description->DepthEnabled; }
+				DepthStencilStateDescription get();
 			}
 			
-			property SlimDX::Direct3D10::DepthWriteMask DepthWriteMask
-			{
-				SlimDX::Direct3D10::DepthWriteMask get() { return m_Description->DepthWriteMask; }
-			}
-			
-			property Comparison DepthComparison
-			{
-				Comparison get() { return m_Description->DepthComparison; }
-			}
-			
-			property bool StencilEnabled
-			{
-				bool get() { return m_Description->StencilEnabled; }
-			}
-			
-			property System::Byte StencilReadMask
-			{
-				System::Byte get() { return m_Description->StencilReadMask; }
-			}
-			
-			property System::Byte StencilWriteMask
-			{
-				System::Byte get() { return m_Description->StencilWriteMask; }
-			}
-			
-			property Comparison FrontStencilComparison
-			{
-				Comparison get() { return m_Description->FrontStencilComparison; }
-			}
-			
-			property StencilOperation FrontStencilFailureOperation
-			{
-				StencilOperation get() { return m_Description->FrontStencilFailureOperation; }
-			}
-			
-			property StencilOperation FrontStencilDepthFailureOperation
-			{
-				StencilOperation get() { return m_Description->FrontStencilDepthFailureOperation; }
-			}
-			
-			property StencilOperation FrontStencilPassOperation
-			{
-				StencilOperation get() { return m_Description->FrontStencilPassOperation; }
-			}
-			
-			property Comparison BackStencilComparison
-			{
-				Comparison get() { return m_Description->BackStencilComparison; }
-			}
-			
-			property StencilOperation BackStencilFailureOperation
-			{
-				StencilOperation get() { return m_Description->BackStencilFailureOperation; }
-			}
-			
-			property StencilOperation BackStencilDepthFailureOperation
-			{
-				StencilOperation get() { return m_Description->BackStencilDepthFailureOperation; }
-			}
-			
-			property StencilOperation BackStencilPassOperation
-			{
-				StencilOperation get() { return m_Description->BackStencilPassOperation; }
-			}
-			
-			
-			DepthStencilState( Device^ device, DepthStencilStateDescription^ description );
-			
-			DepthStencilStateDescription^ CloneDescription();
+			DepthStencilState( System::IntPtr pointer );
+			DepthStencilState( Device^ device, DepthStencilStateDescription description );
 		};
 	}
 };

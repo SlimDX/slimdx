@@ -21,9 +21,6 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
-
-//#include "Direct3D10ErrorHandler.h"
 
 #include "RasterizerStateDescription.h"
 
@@ -31,47 +28,135 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	RasterizerStateDescription::RasterizerStateDescription()
+	RasterizerStateDescription::RasterizerStateDescription( const D3D10_RASTERIZER_DESC& native )
 	{
-		FillMode = SlimDX::Direct3D10::FillMode::Solid;
-		CullMode = SlimDX::Direct3D10::CullMode::None;
-		FrontIsCounterclockwise = true;
-		DepthBias = 0;
-		DepthBiasClamp = 0.0f;
-		SlopeScaledDepthBias = 0.0f;
-		DepthClipEnabled = false;
-		ScissorEnabled = false;
-		MultisampleEnabled = false;
-		AntialiasedLineEnabled = false;
+		m_FillMode = static_cast<Direct3D10::FillMode>( native.FillMode );
+		m_CullMode = static_cast<Direct3D10::CullMode>( native.CullMode );
+		m_FrontCounterClockwise = native.FrontCounterClockwise ? true : false;
+		m_DepthBias = native.DepthBias;
+		m_DepthBiasClamp = native.DepthBiasClamp;
+		m_SlopeScaledDepthBias = native.SlopeScaledDepthBias;
+		m_DepthClipEnable = native.DepthClipEnable ? true : false;
+		m_ScissorEnable = native.ScissorEnable ? true : false;
+		m_MultisampleEnable = native.MultisampleEnable ? true : false;
+		m_AntialiasedLineEnable = native.AntialiasedLineEnable ? true : false;
 	}
 	
-	RasterizerStateDescription::RasterizerStateDescription( const D3D10_RASTERIZER_DESC& description )
+	D3D10_RASTERIZER_DESC RasterizerStateDescription::CreateNativeVersion()
 	{
-		FillMode = static_cast<SlimDX::Direct3D10::FillMode>( description.FillMode );
-		CullMode = static_cast<SlimDX::Direct3D10::CullMode>( description.CullMode );
-		FrontIsCounterclockwise = description.FrontCounterClockwise ? true : false;
-		DepthBias = description.DepthBias;
-		DepthBiasClamp = description.DepthBiasClamp;
-		SlopeScaledDepthBias = description.SlopeScaledDepthBias;
-		DepthClipEnabled = description.DepthClipEnable ? true : false;
-		ScissorEnabled = description.ScissorEnable ? true : false;
-		MultisampleEnabled = description.MultisampleEnable ? true : false;
-		AntialiasedLineEnabled = description.AntialiasedLineEnable ? true : false;
+		D3D10_RASTERIZER_DESC native;
+		native.FillMode = static_cast<D3D10_FILL_MODE>( m_FillMode );
+		native.CullMode = static_cast<D3D10_CULL_MODE>( m_CullMode );
+		native.FrontCounterClockwise = m_FrontCounterClockwise;
+		native.DepthBias = m_DepthBias;
+		native.DepthBiasClamp = m_DepthBiasClamp;
+		native.SlopeScaledDepthBias = m_SlopeScaledDepthBias;
+		native.DepthClipEnable = m_DepthClipEnable;
+		native.ScissorEnable = m_ScissorEnable;
+		native.MultisampleEnable = m_MultisampleEnable;
+		native.AntialiasedLineEnable = m_AntialiasedLineEnable;
+		
+		return native;
 	}
 	
-	void RasterizerStateDescription::FillNativeObject( D3D10_RASTERIZER_DESC& description )
+	Direct3D10::FillMode RasterizerStateDescription::FillMode::get()
 	{
-		ZeroMemory( &description, sizeof( description ) );
-		description.FillMode = static_cast<D3D10_FILL_MODE>( FillMode );
-		description.CullMode = static_cast<D3D10_CULL_MODE>( CullMode );
-		description.FrontCounterClockwise = FrontIsCounterclockwise;
-		description.DepthBias = DepthBias;
-		description.DepthBiasClamp = DepthBiasClamp;
-		description.SlopeScaledDepthBias = SlopeScaledDepthBias;
-		description.DepthClipEnable = DepthClipEnabled;
-		description.ScissorEnable = ScissorEnabled;
-		description.MultisampleEnable = MultisampleEnabled;
-		description.AntialiasedLineEnable = AntialiasedLineEnabled;
+		return m_FillMode;
+	}
+	
+	void RasterizerStateDescription::FillMode::set( Direct3D10::FillMode value )
+	{
+		m_FillMode = value;	
+	}
+	
+	Direct3D10::CullMode RasterizerStateDescription::CullMode::get()
+	{
+		return m_CullMode;
+	}
+	
+	void RasterizerStateDescription::CullMode::set( Direct3D10::CullMode value )
+	{
+		m_CullMode = value;	
+	}
+	
+	bool RasterizerStateDescription::IsFrontCounterclockwise::get()
+	{
+		return m_FrontCounterClockwise;
+	}
+	
+	void RasterizerStateDescription::IsFrontCounterclockwise::set( bool value )
+	{
+		m_FrontCounterClockwise = value;	
+	}
+	
+	int RasterizerStateDescription::DepthBias::get()
+	{
+		return m_DepthBias;
+	}
+	
+	void RasterizerStateDescription::DepthBias::set( int value )
+	{
+		m_DepthBias = value;	
+	}
+	
+	float RasterizerStateDescription::DepthBiasClamp::get()
+	{
+		return m_DepthBiasClamp;
+	}
+	
+	void RasterizerStateDescription::DepthBiasClamp::set( float value )
+	{
+		m_DepthBiasClamp = value;	
+	}
+	
+	float RasterizerStateDescription::SlopeScaledDepthBias::get()
+	{
+		return m_SlopeScaledDepthBias;
+	}
+	
+	void RasterizerStateDescription::SlopeScaledDepthBias::set( float value )
+	{
+		m_SlopeScaledDepthBias = value;	
+	}
+	
+	bool RasterizerStateDescription::IsDepthClipEnabled::get()
+	{
+		return m_DepthClipEnable;
+	}
+	
+	void RasterizerStateDescription::IsDepthClipEnabled::set( bool value )
+	{
+		m_DepthClipEnable = value;	
+	}
+	
+	bool RasterizerStateDescription::IsScissorEnabled::get()
+	{
+		return m_ScissorEnable;
+	}
+	
+	void RasterizerStateDescription::IsScissorEnabled::set( bool value )
+	{
+		m_ScissorEnable = value;	
+	}
+	
+	bool RasterizerStateDescription::IsMultisampleEnabled::get()
+	{
+		return m_MultisampleEnable;
+	}
+	
+	void RasterizerStateDescription::IsMultisampleEnabled::set( bool value )
+	{
+		m_MultisampleEnable = value;	
+	}
+	
+	bool RasterizerStateDescription::IsAntialiasedLineEnabled::get()
+	{
+		return m_AntialiasedLineEnable;
+	}
+	
+	void RasterizerStateDescription::IsAntialiasedLineEnabled::set( bool value )
+	{
+		m_AntialiasedLineEnable = value;	
 	}
 }
 }

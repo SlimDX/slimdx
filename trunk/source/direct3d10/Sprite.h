@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System::Drawing;
-
 #include "../ComObject.h"
 
 #include "Enums.h"
@@ -33,17 +31,13 @@ namespace SlimDX
 	namespace Direct3D10
 	{
 		ref class Device;
-		
-		/// <remarks>
-		/// An interface for performing sprite rendering.
-		/// </remarks>
-		/// <unmanaged counterpart="ID3DX10Sprite" complete="no"/>
+
 		public ref class Sprite : public ComObject
 		{
 			COMOBJECT(ID3DX10Sprite);
 
 		internal:
-			Sprite( ID3DX10Sprite* sprite );
+			Sprite( ID3DX10Sprite* pointer );
 
 		public:
 			property Matrix ViewTransform
@@ -60,14 +54,15 @@ namespace SlimDX
 
 			Sprite( System::IntPtr pointer );
 			Sprite( Device^ device, int bufferSize );
-			~Sprite() { Destruct(); }
+			
+			Device^ GetDevice();
+			
+			Result Begin( SpriteFlags flags );
+			Result End();
+			Result Flush();
 
-			void Begin( SpriteFlags flags );
-			void End();
-			void Flush();
-
-			void DrawBuffered( array<SpriteInstance^>^ instances );
-			void DrawImmediate( array<SpriteInstance^>^ instances );
+			Result DrawBuffered( array<SpriteInstance^>^ instances );
+			Result DrawImmediate( array<SpriteInstance^>^ instances );
 		};
 	}
 }

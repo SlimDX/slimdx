@@ -21,86 +21,82 @@
 */
 #pragma once
 
-
-
 #include "Enums.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public ref class BlendStateDescription
+		public value class BlendStateDescription
 		{
-		private:
-			bool alphaToCoverageEnabled;
-            System::Collections::Generic::List<bool>^ renderTargetBlendEnabled;
-            BlendOption sourceBlend;
-            BlendOption destinationBlend;
-            SlimDX::Direct3D10::BlendOperation blendOperation;
-            BlendOption sourceAlphaBlend;
-            BlendOption destinationAlphaBlend;
-            SlimDX::Direct3D10::BlendOperation alphaBlendOperation;
-            System::Collections::Generic::List<ColorWriteMaskFlags>^ renderTargetWriteMask;
+		private:		
+			bool m_AlphaToCoverageEnable;
+			System::Collections::Generic::List<bool>^ m_BlendEnable;
+			BlendOption m_SrcBlend;
+			BlendOption m_DestBlend;
+			Direct3D10::BlendOperation m_BlendOp;
+			BlendOption m_SrcBlendAlpha;
+			BlendOption m_DestBlendAlpha;
+			Direct3D10::BlendOperation m_BlendOpAlpha;
+			System::Collections::Generic::List<ColorWriteMaskFlags>^ m_RenderTargetWriteMask;
 
 		internal:
-			BlendStateDescription( const D3D10_BLEND_DESC& description );
+			BlendStateDescription( const D3D10_BLEND_DESC& native );
 			
-			void FillNativeObject( D3D10_BLEND_DESC& description);
+			D3D10_BLEND_DESC CreateNativeVersion();
 			
 		public:
-			property bool AlphaToCoverageEnabled
-            {
-                bool get() { return alphaToCoverageEnabled; }
-                void set( bool value ) { alphaToCoverageEnabled = value; }
-            }
+			property bool IsAlphaToCoverageEnabled
+			{
+				bool get();
+				void set( bool value );
+			}
 
-            property System::Collections::ObjectModel::ReadOnlyCollection<bool>^ RenderTargetBlendEnabled
-            {
-                System::Collections::ObjectModel::ReadOnlyCollection<bool>^ get() { return gcnew System::Collections::ObjectModel::ReadOnlyCollection<bool>( renderTargetBlendEnabled ); }
-            }
+			property System::Collections::ObjectModel::ReadOnlyCollection<bool>^ IsRenderTargetBlendEnabled
+			{
+				System::Collections::ObjectModel::ReadOnlyCollection<bool>^ get();
+			}
 
-            property BlendOption SourceBlend
-            {
-                BlendOption get() { return sourceBlend; }
-                void set( BlendOption value ) { sourceBlend = value; }
-            }
+			property BlendOption SourceBlend
+			{
+				BlendOption get();
+				void set( BlendOption value );
+			}
 
-            property BlendOption DestinationBlend
-            {
-                BlendOption get() { return destinationBlend; }
-                void set( BlendOption value ) { destinationBlend = value; }
-            }
+			property BlendOption DestinationBlend
+			{
+				BlendOption get();
+				void set( BlendOption value );
+			}
 
-            property SlimDX::Direct3D10::BlendOperation BlendOperation
-            {
-                SlimDX::Direct3D10::BlendOperation get() { return blendOperation; }
-                void set( SlimDX::Direct3D10::BlendOperation value ) { blendOperation = value; }
-            }
+			property Direct3D10::BlendOperation BlendOperation
+			{
+				Direct3D10::BlendOperation get();
+				void set( Direct3D10::BlendOperation value );
+			}
 
-            property BlendOption SourceAlphaBlend
-            {
-                BlendOption get() { return sourceAlphaBlend; }
-                void set( BlendOption value ) { sourceAlphaBlend = value; }
-            }
+			property BlendOption SourceAlphaBlend
+			{
+				BlendOption get();
+				void set( BlendOption value );
+			}
 
-            property BlendOption DestinationAlphaBlend
-            {
-                BlendOption get() { return destinationAlphaBlend; }
-                void set( BlendOption value ) { destinationAlphaBlend = value; }
-            }
+			property BlendOption DestinationAlphaBlend
+			{
+				BlendOption get();
+				void set( BlendOption value );
+			}
 
-            property SlimDX::Direct3D10::BlendOperation AlphaBlendOperation
-            {
-                SlimDX::Direct3D10::BlendOperation get() { return alphaBlendOperation; }
-                void set( SlimDX::Direct3D10::BlendOperation value ) { alphaBlendOperation = value; }
-            }
+			property Direct3D10::BlendOperation AlphaBlendOperation
+			{
+				Direct3D10::BlendOperation get();
+				void set( Direct3D10::BlendOperation value );
+			}
 
-            property System::Collections::ObjectModel::ReadOnlyCollection<ColorWriteMaskFlags>^ RenderTargetWriteMask
-            {
-                System::Collections::ObjectModel::ReadOnlyCollection<ColorWriteMaskFlags>^ get() { return gcnew System::Collections::ObjectModel::ReadOnlyCollection<ColorWriteMaskFlags>( renderTargetWriteMask ); }
-            }
-			
-			BlendStateDescription();
+			property System::Collections::ObjectModel::ReadOnlyCollection<ColorWriteMaskFlags>^ RenderTargetWriteMask
+			{
+				System::Collections::ObjectModel::ReadOnlyCollection<ColorWriteMaskFlags>^ get();
+			}
 		};
 	}
 };

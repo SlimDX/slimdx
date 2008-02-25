@@ -19,49 +19,51 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include <d3d10.h>
-
-#include "Direct3D10Exception.h"
-
-#include "Device.h"
-#include "RasterizerState.h"
-#include "RasterizerStateDescription.h"
-
-using namespace System;
+#include "Enums.h"
 
 namespace SlimDX
 {
-namespace Direct3D10
-{ 
-	RasterizerState::RasterizerState( ID3D10RasterizerState* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	RasterizerState::RasterizerState( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
+	namespace Direct3D10
+	{	
+		public value class DepthStencilOperationDescription
+		{
+		private:		
+			StencilOperation m_StencilFailOp;
+			StencilOperation m_StencilDepthFailOp;
+			StencilOperation m_StencilPassOp;
+			Direct3D10::Comparison m_StencilFunc;
 
-	RasterizerState::RasterizerState( Device^ device, RasterizerStateDescription description )
-	{
-		if( device == nullptr )
-			throw gcnew ArgumentNullException( "device" );
-		
-		ID3D10RasterizerState* state = 0;
-		D3D10_RASTERIZER_DESC nativeDescription = description.CreateNativeVersion();
-		if( RECORD_D3D10( device->InternalPointer->CreateRasterizerState( &nativeDescription, &state ) ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
-		
-		Construct( state );
+		internal:
+			DepthStencilOperationDescription( const D3D10_DEPTH_STENCILOP_DESC& native );
+			
+			D3D10_DEPTH_STENCILOP_DESC CreateNativeVersion();
+			
+		public:
+			property StencilOperation FailOperation
+			{
+				StencilOperation get();
+				void set( StencilOperation value );
+			}
+
+			property StencilOperation DepthFailOperation
+			{
+				StencilOperation get();
+				void set( StencilOperation value );
+			}
+
+			property StencilOperation PassOperation
+			{
+				StencilOperation get();
+				void set( StencilOperation value );
+			}
+
+			property Direct3D10::Comparison Comparison
+			{
+				Direct3D10::Comparison get();
+				void set( Direct3D10::Comparison value );
+			}
+		};
 	}
-	
-	RasterizerStateDescription RasterizerState::Description::get()
-	{
-		D3D10_RASTERIZER_DESC description;
-		InternalPointer->GetDesc( &description );
-		return RasterizerStateDescription( description );
-	}
-}
-}
+};

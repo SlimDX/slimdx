@@ -21,11 +21,9 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "../ComObject.h"
 
-#include "BlendStateDescription.h"
+#include "DeviceChild.h"
 #include "Enums.h"
 
 namespace SlimDX
@@ -33,69 +31,23 @@ namespace SlimDX
 	namespace Direct3D10
 	{	
 		ref class Device;
+		value class BlendStateDescription;
 		
-		public ref class BlendState : ComObject
+		public ref class BlendState : public DeviceChild
 		{
 			COMOBJECT(ID3D10BlendState);
-
-		private:
-			BlendStateDescription^ m_Description;
 		
 		internal:
-			BlendState( ID3D10BlendState* state );
+			BlendState( ID3D10BlendState* pointer );
 		
 		public:
-			BlendState( System::IntPtr state );
-			~BlendState() { Destruct(); }
-
-			property bool AlphaToCoverageEnabled
+			property BlendStateDescription Description
 			{
-				bool get() { return m_Description->AlphaToCoverageEnabled; }
+				BlendStateDescription get();
 			}
 			
-			property System::Collections::ObjectModel::ReadOnlyCollection<bool>^ RenderTargetBlendEnabled
-			{
-				System::Collections::ObjectModel::ReadOnlyCollection<bool>^ get() { return m_Description->RenderTargetBlendEnabled; }
-			}
-			
-			property BlendOption SourceBlend
-			{
-				BlendOption get() { return m_Description->SourceBlend; }
-			}
-			
-			property BlendOption DestinationBlend
-			{
-				BlendOption get() { return m_Description->DestinationBlend; }
-			}
-			
-			property SlimDX::Direct3D10::BlendOperation BlendOperation
-			{
-				SlimDX::Direct3D10::BlendOperation get() { return m_Description->BlendOperation; }
-			}
-			
-			property BlendOption SourceAlphaBlend
-			{
-				BlendOption get() { return m_Description->SourceAlphaBlend; }
-			}
-			
-			property BlendOption DestinationAlphaBlend
-			{
-				BlendOption get() { return m_Description->DestinationAlphaBlend; }
-			}
-			
-			property SlimDX::Direct3D10::BlendOperation AlphaBlendOperation
-			{
-				SlimDX::Direct3D10::BlendOperation get() { return m_Description->AlphaBlendOperation; }
-			}
-			
-			property System::Collections::ObjectModel::ReadOnlyCollection<ColorWriteMaskFlags>^ RenderTargetWriteMask
-			{
-				System::Collections::ObjectModel::ReadOnlyCollection<ColorWriteMaskFlags>^ get() { return m_Description->RenderTargetWriteMask; }
-			}
-			
-			BlendState( Device^ device, BlendStateDescription^ description );
-			
-			BlendStateDescription^ CloneDescription();
+			BlendState( System::IntPtr pointer );
+			BlendState( Device^ device, BlendStateDescription description );
 		};
 	}
 };

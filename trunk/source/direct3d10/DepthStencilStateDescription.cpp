@@ -21,70 +21,121 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
 
-//#include "Direct3D10ErrorHandler.h"
-
+#include "DepthStencilOperationDescription.h"
 #include "DepthStencilStateDescription.h"
+
+using namespace System;
 
 namespace SlimDX
 {
 namespace Direct3D10
 { 
-	DepthStencilStateDescription::DepthStencilStateDescription()
+	DepthStencilStateDescription::DepthStencilStateDescription( const D3D10_DEPTH_STENCIL_DESC& native )
 	{
-		DepthEnabled = true;
-		DepthWriteMask = SlimDX::Direct3D10::DepthWriteMask::All;
-		DepthComparison = Comparison::Less;
-		StencilEnabled = false;
-		StencilReadMask = D3D10_DEFAULT_STENCIL_READ_MASK;
-		StencilWriteMask = D3D10_DEFAULT_STENCIL_WRITE_MASK;
-		FrontStencilComparison = Comparison::Always;
-		FrontStencilFailureOperation = StencilOperation::Keep;
-		FrontStencilDepthFailureOperation = StencilOperation::Keep;
-		FrontStencilPassOperation = StencilOperation::Keep;
-		BackStencilComparison = Comparison::Always;
-		BackStencilFailureOperation = StencilOperation::Keep;
-		BackStencilDepthFailureOperation = StencilOperation::Keep;
-		BackStencilPassOperation = StencilOperation::Keep;
+		m_DepthEnable = native.DepthEnable ? true : false;
+		m_DepthWriteMask = static_cast<Direct3D10::DepthWriteMask>( native.DepthWriteMask );
+		m_DepthFunc = static_cast<Comparison>( native.DepthFunc );
+		m_StencilEnable = native.StencilEnable ? true : false;
+		m_StencilReadMask = native.StencilReadMask;
+		m_StencilWriteMask = native.StencilWriteMask;
+		m_FrontFace = DepthStencilOperationDescription( native.FrontFace );
+		m_BackFace = DepthStencilOperationDescription( native.BackFace );
 	}
 	
-	DepthStencilStateDescription::DepthStencilStateDescription( const D3D10_DEPTH_STENCIL_DESC& description )
+	D3D10_DEPTH_STENCIL_DESC DepthStencilStateDescription::CreateNativeVersion()
 	{
-		DepthEnabled = description.DepthEnable ? true : false;
-		DepthWriteMask = static_cast<SlimDX::Direct3D10::DepthWriteMask>( description.DepthWriteMask );
-		DepthComparison = static_cast<Comparison>( description.DepthFunc );
-		StencilEnabled = description.StencilEnable ? true : false;
-		StencilReadMask = description.StencilReadMask;
-		StencilWriteMask = description.StencilWriteMask;
-		FrontStencilComparison = static_cast<Comparison>( description.FrontFace.StencilFunc );
-		FrontStencilFailureOperation = static_cast<StencilOperation>( description.FrontFace.StencilFailOp );
-		FrontStencilDepthFailureOperation = static_cast<StencilOperation>( description.FrontFace.StencilDepthFailOp );
-		FrontStencilPassOperation = static_cast<StencilOperation>( description.FrontFace.StencilPassOp );
-		BackStencilComparison = static_cast<Comparison>( description.BackFace.StencilFunc );
-		BackStencilFailureOperation = static_cast<StencilOperation>( description.BackFace.StencilFailOp );
-		BackStencilDepthFailureOperation = static_cast<StencilOperation>( description.BackFace.StencilDepthFailOp );
-		BackStencilPassOperation = static_cast<StencilOperation>( description.BackFace.StencilPassOp );
-	}
-	
-	void DepthStencilStateDescription::FillNativeObject( D3D10_DEPTH_STENCIL_DESC& description )
-	{
-		ZeroMemory( &description, sizeof( description ) );
+		D3D10_DEPTH_STENCIL_DESC native;
+		native.DepthEnable = m_DepthEnable;
+		native.DepthWriteMask = static_cast<D3D10_DEPTH_WRITE_MASK>( m_DepthWriteMask );
+		native.DepthFunc = static_cast<D3D10_COMPARISON_FUNC>( m_DepthFunc );
+		native.StencilEnable = m_StencilEnable;
+		native.StencilReadMask = m_StencilReadMask;
+		native.StencilWriteMask = m_StencilWriteMask;
+		native.FrontFace = m_FrontFace.CreateNativeVersion();
+		native.BackFace = m_BackFace.CreateNativeVersion();
 		
-		description.DepthEnable = DepthEnabled;
-		description.DepthWriteMask = static_cast<D3D10_DEPTH_WRITE_MASK>( DepthWriteMask );
-		description.DepthFunc = static_cast<D3D10_COMPARISON_FUNC>( DepthComparison );
-		description.StencilEnable = StencilEnabled;
-		description.StencilReadMask = StencilReadMask;
-		description.StencilWriteMask = StencilWriteMask;
-		description.FrontFace.StencilFunc = static_cast<D3D10_COMPARISON_FUNC>( FrontStencilComparison );
-		description.FrontFace.StencilFailOp = static_cast<D3D10_STENCIL_OP>( FrontStencilFailureOperation );
-		description.FrontFace.StencilDepthFailOp = static_cast< D3D10_STENCIL_OP>( FrontStencilDepthFailureOperation );
-		description.FrontFace.StencilPassOp = static_cast<D3D10_STENCIL_OP>( FrontStencilPassOperation );
-		description.BackFace.StencilFunc = static_cast<D3D10_COMPARISON_FUNC>( BackStencilComparison );
-		description.BackFace.StencilFailOp = static_cast<D3D10_STENCIL_OP>( BackStencilFailureOperation );
-		description.BackFace.StencilDepthFailOp = static_cast<D3D10_STENCIL_OP>( BackStencilDepthFailureOperation );
-		description.BackFace.StencilPassOp = static_cast<D3D10_STENCIL_OP>( BackStencilPassOperation );
+		return native;
+	}
+	
+	bool DepthStencilStateDescription::IsDepthEnabled::get()
+	{
+		return m_DepthEnable;
+	}
+	
+	void DepthStencilStateDescription::IsDepthEnabled::set( bool value )
+	{
+		m_DepthEnable = value;
+	}
+	
+	Direct3D10::DepthWriteMask DepthStencilStateDescription::DepthWriteMask::get()
+	{
+		return m_DepthWriteMask;
+	}
+	
+	void DepthStencilStateDescription::DepthWriteMask::set( Direct3D10::DepthWriteMask value )
+	{
+		m_DepthWriteMask = value;
+	}
+	
+	Comparison DepthStencilStateDescription::DepthComparison::get()
+	{
+		return m_DepthFunc;
+	}
+	
+	void DepthStencilStateDescription::DepthComparison::set( Comparison value )
+	{
+		m_DepthFunc = value;
+	}
+	
+	bool DepthStencilStateDescription::IsStencilEnabled::get()
+	{
+		return m_StencilEnable;
+	}
+	
+	void DepthStencilStateDescription::IsStencilEnabled::set( bool value )
+	{
+		m_StencilEnable = value;
+	}
+	
+	Byte DepthStencilStateDescription::StencilReadMask::get()
+	{
+		return m_StencilReadMask;
+	}
+	
+	void DepthStencilStateDescription::StencilReadMask::set( Byte value )
+	{
+		m_StencilReadMask = value;
+	}
+	
+	Byte DepthStencilStateDescription::StencilWriteMask::get()
+	{
+		return m_StencilWriteMask;
+	}
+	
+	void DepthStencilStateDescription::StencilWriteMask::set( Byte value )
+	{
+		m_StencilWriteMask = value;
+	}
+	
+	DepthStencilOperationDescription DepthStencilStateDescription::FrontFace::get()
+	{
+		return m_FrontFace;
+	}
+	
+	void DepthStencilStateDescription::FrontFace::set( DepthStencilOperationDescription value )
+	{
+		m_FrontFace = value;
+	}
+	
+	DepthStencilOperationDescription DepthStencilStateDescription::BackFace::get()
+	{
+		return m_BackFace;
+	}
+	
+	void DepthStencilStateDescription::BackFace::set( DepthStencilOperationDescription value )
+	{
+		m_BackFace = value;
 	}
 }
 }

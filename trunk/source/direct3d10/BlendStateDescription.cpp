@@ -21,7 +21,6 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
 
 #include "BlendStateDescription.h"
 
@@ -33,59 +32,123 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	BlendStateDescription::BlendStateDescription()
+	BlendStateDescription::BlendStateDescription( const D3D10_BLEND_DESC& native )
 	{
-		AlphaToCoverageEnabled = false;
-		SourceBlend = BlendOption::One;
-		DestinationBlend = BlendOption::Zero;
-		BlendOperation = SlimDX::Direct3D10::BlendOperation::Add;
-		SourceAlphaBlend = BlendOption::One;
-		DestinationAlphaBlend = BlendOption::Zero;
-		AlphaBlendOperation = SlimDX::Direct3D10::BlendOperation::Add;
+		m_AlphaToCoverageEnable = native.AlphaToCoverageEnable ? true : false;
+		m_SrcBlend = static_cast<BlendOption>( native.SrcBlend );
+		m_DestBlend = static_cast<BlendOption>( native.DestBlend );
+		m_BlendOp = static_cast<Direct3D10::BlendOperation>( native.BlendOp );
+		m_SrcBlendAlpha = static_cast<BlendOption>( native.SrcBlendAlpha );
+		m_DestBlendAlpha = static_cast<BlendOption>( native.DestBlendAlpha );
+		m_BlendOpAlpha = static_cast<Direct3D10::BlendOperation>( native.BlendOpAlpha );
 		
-		renderTargetBlendEnabled = gcnew List<bool>();
-		renderTargetWriteMask = gcnew List<ColorWriteMaskFlags>();
-		for(int i = 0; i < 8; ++i)
+		m_BlendEnable = gcnew List<bool>(8);
+		m_RenderTargetWriteMask = gcnew List<ColorWriteMaskFlags>(8);
+		for(int index = 0; index < 8; ++index)
 		{
-			renderTargetBlendEnabled->Add( false );
-			renderTargetWriteMask->Add( ColorWriteMaskFlags::All );
-		}
-	}
-
-	BlendStateDescription::BlendStateDescription( const D3D10_BLEND_DESC& description )
-	{
-		AlphaToCoverageEnabled = description.AlphaToCoverageEnable ? true : false;
-		SourceBlend = static_cast<BlendOption>( description.SrcBlend );
-		DestinationBlend = static_cast<BlendOption>( description.DestBlend );
-		BlendOperation = static_cast<SlimDX::Direct3D10::BlendOperation>( description.BlendOp );
-		SourceAlphaBlend = static_cast<BlendOption>( description.SrcBlend );
-		DestinationAlphaBlend = static_cast<BlendOption>( description.DestBlend );
-		AlphaBlendOperation = static_cast<SlimDX::Direct3D10::BlendOperation>( description.BlendOp );
-		
-		renderTargetBlendEnabled = gcnew List<bool>();
-		renderTargetWriteMask = gcnew List<ColorWriteMaskFlags>();
-		for(int i = 0; i < 8; ++i)
-		{
-			renderTargetBlendEnabled->Add( false );
-			renderTargetWriteMask->Add( ColorWriteMaskFlags::All );
+			m_BlendEnable->Add( false );
+			m_RenderTargetWriteMask->Add( ColorWriteMaskFlags::All );
 		}
 	}
 	
-	void BlendStateDescription::FillNativeObject( D3D10_BLEND_DESC& description )
+	D3D10_BLEND_DESC BlendStateDescription::CreateNativeVersion()
 	{
-		ZeroMemory( &description, sizeof( description ) );
-		description.SrcBlend = static_cast<D3D10_BLEND>( SourceBlend );
-		description.DestBlend = static_cast<D3D10_BLEND>( DestinationBlend );
-		description.BlendOp = static_cast<D3D10_BLEND_OP>( BlendOperation );
-		description.SrcBlendAlpha = static_cast<D3D10_BLEND>( SourceAlphaBlend );
-		description.DestBlendAlpha = static_cast<D3D10_BLEND>( DestinationAlphaBlend );
-		description.BlendOpAlpha = static_cast<D3D10_BLEND_OP>( AlphaBlendOperation );
+		D3D10_BLEND_DESC native;
+		native.AlphaToCoverageEnable = m_AlphaToCoverageEnable;
+		native.SrcBlend = static_cast<D3D10_BLEND>( m_SrcBlend );
+		native.DestBlend = static_cast<D3D10_BLEND>( m_DestBlend );
+		native.BlendOp = static_cast<D3D10_BLEND_OP>( m_BlendOp );
+		native.SrcBlendAlpha = static_cast<D3D10_BLEND>( m_SrcBlendAlpha );
+		native.DestBlendAlpha = static_cast<D3D10_BLEND>( m_DestBlendAlpha );
+		native.BlendOpAlpha = static_cast<D3D10_BLEND_OP>( m_BlendOpAlpha );
 		
-		for(int i = 0; i < 8; ++i)
+		for(int index = 0; index < 8; ++index)
 		{
-			description.BlendEnable[i] = RenderTargetBlendEnabled[i];
-			description.RenderTargetWriteMask[i] = static_cast<UINT8>( RenderTargetWriteMask[i] );
+			native.BlendEnable[ index ] = m_BlendEnable[ index ];
+			native.RenderTargetWriteMask[ index ] = static_cast<UINT8>( m_RenderTargetWriteMask[ index ] );
 		}
+		
+		return native;
+	}
+	
+	bool BlendStateDescription::IsAlphaToCoverageEnabled::get()
+	{
+		return m_AlphaToCoverageEnable;
+	}
+	
+	void BlendStateDescription::IsAlphaToCoverageEnabled::set( bool value )
+	{
+		m_AlphaToCoverageEnable = value;
+	}
+
+	ReadOnlyCollection<bool>^ BlendStateDescription::IsRenderTargetBlendEnabled::get()
+	{
+		return gcnew ReadOnlyCollection<bool>( m_BlendEnable );
+	}
+
+	BlendOption BlendStateDescription::SourceBlend::get()
+	{
+		return m_SrcBlend;
+	}
+	
+	void BlendStateDescription::SourceBlend::set( BlendOption value )
+	{
+		m_SrcBlend = value;
+	}
+	
+	BlendOption BlendStateDescription::DestinationBlend::get()
+	{
+		return m_DestBlend;
+	}
+	
+	void BlendStateDescription::DestinationBlend::set( BlendOption value )
+	{
+		m_DestBlend = value;
+	}
+
+	Direct3D10::BlendOperation BlendStateDescription::BlendOperation::get()
+	{
+		return m_BlendOp;
+	}
+
+	void BlendStateDescription::BlendOperation::set( Direct3D10::BlendOperation value )
+	{
+		m_BlendOp = value;
+	}
+	
+	BlendOption BlendStateDescription::SourceAlphaBlend::get()
+	{
+		return m_SrcBlendAlpha;
+	}
+	
+	void BlendStateDescription::SourceAlphaBlend::set( BlendOption value )
+	{
+		m_SrcBlendAlpha = value;
+	}
+
+	BlendOption BlendStateDescription::DestinationAlphaBlend::get()
+	{
+		return m_DestBlendAlpha;
+	}
+	
+	void BlendStateDescription::DestinationAlphaBlend::set( BlendOption value )
+	{
+		m_DestBlendAlpha = value;
+	}
+	
+	Direct3D10::BlendOperation BlendStateDescription::AlphaBlendOperation::get()
+	{
+		return m_BlendOpAlpha;
+	}
+	
+	void BlendStateDescription::AlphaBlendOperation::set( Direct3D10::BlendOperation value )
+	{
+		m_BlendOpAlpha = value;
+	}
+
+	ReadOnlyCollection<ColorWriteMaskFlags>^ BlendStateDescription::RenderTargetWriteMask::get()
+	{
+		return gcnew ReadOnlyCollection<ColorWriteMaskFlags>( m_RenderTargetWriteMask );
 	}
 }
 }

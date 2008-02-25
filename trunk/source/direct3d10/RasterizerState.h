@@ -21,87 +21,33 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "../ComObject.h"
 
+#include "DeviceChild.h"
 #include "Enums.h"
-#include "RasterizerStateDescription.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{	
 		ref class Device;
+		value class RasterizerStateDescription;
 		
-		public ref class RasterizerState : ComObject
+		public ref class RasterizerState : public DeviceChild
 		{
 			COMOBJECT(ID3D10RasterizerState);
 
-		private:
-			RasterizerStateDescription^ m_Description;
-		
 		internal:
-			RasterizerState( ID3D10RasterizerState* state );
+			RasterizerState( ID3D10RasterizerState* pointer );
 		
 		public:
-			~RasterizerState() { Destruct(); }
-
-			property SlimDX::Direct3D10::FillMode FillMode
+			property RasterizerStateDescription Description
 			{
-				SlimDX::Direct3D10::FillMode get() { return m_Description->FillMode; }
+				RasterizerStateDescription get();
 			}
 			
-			property SlimDX::Direct3D10::CullMode CullMode
-			{
-				SlimDX::Direct3D10::CullMode get() { return m_Description->CullMode; }
-			}
-			
-			property bool FrontIsCounterclockwise
-			{
-				bool get() { return m_Description->FrontIsCounterclockwise; }
-			}
-			
-			property int DepthBias
-			{
-				int get() { return m_Description->DepthBias; }
-			}
-			
-			property float DepthBiasClamp
-			{
-				float get() { return m_Description->DepthBiasClamp; }
-			}
-			
-			property float SlopeScaledDepthBias
-			{
-				float get() { return m_Description->SlopeScaledDepthBias; }
-			}
-			
-			property bool DepthClipEnabled
-			{
-				bool get() { return m_Description->DepthClipEnabled; }
-			}
-			
-			property bool ScissorEnabled
-			{
-				bool get() { return m_Description->ScissorEnabled; }
-			}
-			
-			property bool MultisampleEnabled
-			{
-				bool get() { return m_Description->MultisampleEnabled; }
-			}
-			
-			property bool AntialiasedLineEnabled
-			{
-				bool get() { return m_Description->AntialiasedLineEnabled; }
-			}
-			
-			
-			RasterizerState( System::IntPtr state );
-			RasterizerState( Device^ device, RasterizerStateDescription^ description );
-			
-			RasterizerStateDescription^ CloneDescription();
+			RasterizerState( System::IntPtr pointer );
+			RasterizerState( Device^ device, RasterizerStateDescription description );
 		};
 	}
 };
