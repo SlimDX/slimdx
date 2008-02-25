@@ -94,7 +94,7 @@ namespace Direct3D10
 	Texture2D^ Texture2D::FromMemory( Device^ device, array<Byte>^ memory )
 	{
 		Texture^ baseTexture = Texture::FromMemory( device, memory );
-		if( baseTexture->Dimension != ResourceDimension::Texture2D );
+		if( baseTexture->Dimension != ResourceDimension::Texture2D )
 			throw gcnew InvalidOperationException( "Could not load file as 2D texture." ); 
 		return static_cast<Texture2D^>( baseTexture );
 	}

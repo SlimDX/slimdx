@@ -1099,14 +1099,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\DirectX.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\DirectX.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\Enums.h"
 				>
 			</File>
