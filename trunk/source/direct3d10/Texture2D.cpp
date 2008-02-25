@@ -21,9 +21,6 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
-#include <d3dx9.h>
-#include <vcclr.h>
 
 #include "../DataRectangle.h"
 #include "../DataStream.h"
@@ -91,7 +88,15 @@ namespace Direct3D10
 		Texture^ baseTexture = Texture::FromFile( device, fileName );
 		if( baseTexture->Dimension != ResourceDimension::Texture2D )
 			throw gcnew InvalidOperationException( "Could not load file as 2D texture." ); 
-		return static_cast< Texture2D^ >( baseTexture );
+		return static_cast<Texture2D^>( baseTexture );
+	}
+	
+	Texture2D^ Texture2D::FromMemory( Device^ device, array<Byte>^ memory )
+	{
+		Texture^ baseTexture = Texture::FromMemory( device, memory );
+		if( baseTexture->Dimension != ResourceDimension::Texture2D );
+			throw gcnew InvalidOperationException( "Could not load file as 2D texture." ); 
+		return static_cast<Texture2D^>( baseTexture );
 	}
 	
 	Texture2D^ Texture2D::FromStream( Device^ device, Stream^ stream, int sizeInBytes )
@@ -99,7 +104,7 @@ namespace Direct3D10
 		Texture^ baseTexture = Texture::FromStream( device, stream, sizeInBytes );
 		if( baseTexture->Dimension != ResourceDimension::Texture2D )
 			throw gcnew InvalidOperationException( "Could not load file as 2D texture." ); 
-		return static_cast< Texture2D^ >( baseTexture );
+		return static_cast<Texture2D^>( baseTexture );
 	}
 }
 }

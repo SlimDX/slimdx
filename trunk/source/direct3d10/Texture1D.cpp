@@ -21,8 +21,6 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
-#include <vcclr.h>
 
 #include "../DataStream.h"
 #include "../Utilities.h"
@@ -91,6 +89,14 @@ namespace Direct3D10
 		if( baseTexture->Dimension != ResourceDimension::Texture1D )
 			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
 		return static_cast< Texture1D^ >( baseTexture );
+	}
+	
+	Texture1D^ Texture1D::FromMemory( Device^ device, array<Byte>^ memory )
+	{
+		Texture^ baseTexture = Texture::FromMemory( device, memory );
+		if( baseTexture->Dimension != ResourceDimension::Texture1D );
+			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
+		return static_cast<Texture1D^>( baseTexture );
 	}
 	
 	Texture1D^ Texture1D::FromStream( Device^ device, Stream^ stream, int sizeInBytes )
