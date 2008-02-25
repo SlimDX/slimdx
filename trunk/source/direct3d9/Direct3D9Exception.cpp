@@ -30,7 +30,7 @@ namespace SlimDX
 namespace Direct3D9
 {
 	Direct3D9Exception::Direct3D9Exception( SerializationInfo^ info, StreamingContext context )
-		: SlimDXException( info, context )
+	: SlimDXException( info, context )
 	{
 	}
 
@@ -39,17 +39,17 @@ namespace Direct3D9
 	}
 
 	Direct3D9Exception::Direct3D9Exception( String^ message )
-		: SlimDXException( message )
+	: SlimDXException( message )
 	{
 	}
 
 	Direct3D9Exception::Direct3D9Exception( String^ message, Exception^ innerException )
-		: SlimDXException( message, innerException )
+	: SlimDXException( message, innerException )
 	{
 	}
 
 	Direct3D9Exception::Direct3D9Exception( Result result )
-		: SlimDXException( result.Code )
+	: SlimDXException( result )
 	{
 	}
 }

@@ -55,7 +55,7 @@ namespace DXGI
 	OutputDescription Output::Description::get()
 	{
 		DXGI_OUTPUT_DESC nativeDescription;
-		Result::Record( InternalPointer->GetDesc( &nativeDescription ) );
+		RECORD_DXGI( InternalPointer->GetDesc( &nativeDescription ) );
 		if( Result::Last.IsSuccess )
 			return OutputDescription( nativeDescription );
 		
@@ -65,7 +65,7 @@ namespace DXGI
 	DXGI::FrameStatistics Output::FrameStatistics::get()
 	{
 		DXGI_FRAME_STATISTICS stats;
-		Result::Record( InternalPointer->GetFrameStatistics( &stats ) );
+		RECORD_DXGI( InternalPointer->GetFrameStatistics( &stats ) );
 		if( Result::Last.IsSuccess )
 			return DXGI::FrameStatistics( stats );
 		
@@ -75,7 +75,7 @@ namespace DXGI
 	DXGI::GammaControlCapabilities Output::GammaControlCapabilities::get()
 	{
 		DXGI_GAMMA_CONTROL_CAPABILITIES caps;
-		Result::Record( InternalPointer->GetGammaControlCapabilities( &caps ) );
+		RECORD_DXGI( InternalPointer->GetGammaControlCapabilities( &caps ) );
 		if( Result::Last.IsSuccess )
 			return DXGI::GammaControlCapabilities( caps );
 		
@@ -85,12 +85,12 @@ namespace DXGI
 	ReadOnlyCollection<ModeDescription>^ Output::GetDisplayModeList( Format format, DisplayModeEnumerationFlags flags )
 	{
 		UINT modeCount = 0;
-		Result::Record( InternalPointer->GetDisplayModeList( static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ), &modeCount, 0 ) );
+		RECORD_DXGI( InternalPointer->GetDisplayModeList( static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ), &modeCount, 0 ) );
 		if( Result::Last.IsFailure )
 			return nullptr;
 		
 		std::vector<DXGI_MODE_DESC> nativeDescriptions(modeCount);
-		Result::Record( InternalPointer->GetDisplayModeList( static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ), &modeCount, &nativeDescriptions[0] ) );
+		RECORD_DXGI( InternalPointer->GetDisplayModeList( static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ), &modeCount, &nativeDescriptions[0] ) );
 		if( Result::Last.IsFailure )
 			return nullptr;
 		
@@ -108,7 +108,7 @@ namespace DXGI
 			
 		DXGI_MODE_DESC nativeModeToMatch = modeToMatch.CreateNativeVersion();
 		DXGI_MODE_DESC nativeResult;
-		Result::Record( InternalPointer->FindClosestMatchingMode( &nativeModeToMatch, &nativeResult, device->UnknownPointer ) );
+		RECORD_DXGI( InternalPointer->FindClosestMatchingMode( &nativeModeToMatch, &nativeResult, device->UnknownPointer ) );
 		if( Result::Last.IsSuccess )
 			result = ModeDescription( nativeResult );
 		return Result::Last;
@@ -117,28 +117,28 @@ namespace DXGI
 	Result Output::SetGammaControl( GammaControl control )
 	{
 		DXGI_GAMMA_CONTROL nativeControl = control.CreateNativeVersion();
-		return Result::Record( InternalPointer->SetGammaControl( &nativeControl ) );
+		return RECORD_DXGI( InternalPointer->SetGammaControl( &nativeControl ) );
 	}
 	
 	Result Output::SetDisplaySurface( Surface^ surface )
 	{
 		if( surface == nullptr )
 			throw gcnew System::ArgumentNullException( "surface" );
-		return Result::Record( InternalPointer->SetDisplaySurface( surface->InternalPointer ) );
+		return RECORD_DXGI( InternalPointer->SetDisplaySurface( surface->InternalPointer ) );
 	}
 	
 	Result Output::CopyDisplaySurfaceTo( Surface^ surface )
 	{
 		if( surface == nullptr )
 			throw gcnew System::ArgumentNullException( "surface" );
-		return Result::Record( InternalPointer->GetDisplaySurfaceData( surface->InternalPointer ) );
+		return RECORD_DXGI( InternalPointer->GetDisplaySurfaceData( surface->InternalPointer ) );
 	}
 	
 	Result Output::TakeOwnership( ComObject^ device, bool exclusive )
 	{
 		if( device == nullptr )
 			throw gcnew System::ArgumentNullException( "device" );
-		return Result::Record( InternalPointer->TakeOwnership( device->UnknownPointer, exclusive ) );
+		return RECORD_DXGI( InternalPointer->TakeOwnership( device->UnknownPointer, exclusive ) );
 	}
 	
 	void Output::ReleaseOwnership()
@@ -148,7 +148,7 @@ namespace DXGI
 	
 	Result Output::WaitForVerticalBlank()
 	{
-		return Result::Record( InternalPointer->WaitForVBlank() );
+		return RECORD_DXGI( InternalPointer->WaitForVBlank() );
 	}
 }
 }

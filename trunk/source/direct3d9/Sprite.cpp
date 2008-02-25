@@ -57,7 +57,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXCreateSprite( device->InternalPointer, &sprite );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(sprite);
@@ -66,31 +66,31 @@ namespace Direct3D9
 	Result Sprite::Begin( SpriteFlags flags )
 	{
 		HRESULT hr = InternalPointer->Begin( static_cast<DWORD>( flags ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Sprite::End()
 	{
 		HRESULT hr = InternalPointer->End();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Sprite::Flush()
 	{
 		HRESULT hr = InternalPointer->Flush();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Sprite::OnLostDevice()
 	{
 		HRESULT hr = InternalPointer->OnLostDevice();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Sprite::OnResetDevice()
 	{
 		HRESULT hr = InternalPointer->OnResetDevice();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Device^ Sprite::GetDevice()
@@ -99,7 +99,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetDevice( &device );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Device( device );
@@ -110,7 +110,7 @@ namespace Direct3D9
 		Matrix result;
 
 		HRESULT hr = InternalPointer->GetTransform( reinterpret_cast<D3DXMATRIX*>( &result ) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return result;
 	}
@@ -118,19 +118,19 @@ namespace Direct3D9
 	void Sprite::Transform::set( Matrix value )
 	{
 		HRESULT hr = InternalPointer->SetTransform( reinterpret_cast<const D3DXMATRIX*>( &value ) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 	}
 
 	Result Sprite::SetWorldViewLH( Matrix world, Matrix view )
 	{
 		HRESULT hr = InternalPointer->SetWorldViewLH( reinterpret_cast<const D3DXMATRIX*>( &world ), reinterpret_cast<const D3DXMATRIX*>( &view ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Sprite::SetWorldViewRH( Matrix world, Matrix view )
 	{
 		HRESULT hr = InternalPointer->SetWorldViewRH( reinterpret_cast<const D3DXMATRIX*>( &world ), reinterpret_cast<const D3DXMATRIX*>( &view ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color4 color )
@@ -139,7 +139,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, &rect, reinterpret_cast<const D3DXVECTOR3*>( &center ),
 			reinterpret_cast<const D3DXVECTOR3*>( &position ), color.ToArgb() );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color4 color )
@@ -147,20 +147,20 @@ namespace Direct3D9
 		RECT rect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
 
 		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, &rect, NULL, NULL, color.ToArgb() );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Sprite::Draw( Texture^ texture, Vector3 center, Vector3 position, Color4 color )
 	{
 		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, NULL, reinterpret_cast<const D3DXVECTOR3*>( &center ),
 			reinterpret_cast<const D3DXVECTOR3*>( &position ), color.ToArgb() );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Sprite::Draw( Texture^ texture, Color4 color )
 	{
 		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, NULL, NULL, NULL, color.ToArgb() );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 }
 }

@@ -120,7 +120,7 @@ namespace Direct3D9
 			reinterpret_cast<D3DPRESENT_PARAMETERS*>( &d3dpp ),
 			&device );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(device);
@@ -129,14 +129,14 @@ namespace Direct3D9
 	void Device::VertexFormat::set( SlimDX::Direct3D9::VertexFormat value )
 	{
 		HRESULT hr = InternalPointer->SetFVF( static_cast<DWORD>( value ) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 	}
 
 	SlimDX::Direct3D9::VertexFormat Device::VertexFormat::get()
 	{
 		DWORD fvf = 0;
 		HRESULT hr = InternalPointer->GetFVF( &fvf );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return static_cast<SlimDX::Direct3D9::VertexFormat>( fvf );
 	}
@@ -149,7 +149,7 @@ namespace Direct3D9
 		else
 			hr = InternalPointer->SetVertexDeclaration( NULL );
 
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 	}
 
 	SlimDX::Direct3D9::VertexDeclaration^ Device::VertexDeclaration::get()
@@ -157,7 +157,7 @@ namespace Direct3D9
 		IDirect3DVertexDeclaration9* decl;
 		HRESULT hr = InternalPointer->GetVertexDeclaration( &decl );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew SlimDX::Direct3D9::VertexDeclaration( decl );
@@ -166,7 +166,7 @@ namespace Direct3D9
 	Result Device::DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount )
 	{
 		HRESULT hr = InternalPointer->DrawPrimitive( static_cast<D3DPRIMITIVETYPE>( primitiveType ), startIndex, primitiveCount );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	generic<typename T>
@@ -176,7 +176,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->DrawPrimitiveUP( static_cast<D3DPRIMITIVETYPE>( primitiveType ), primitiveCount,
 			pinned_data, Marshal::SizeOf( T::typeid ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minVertexIndex, 
@@ -184,7 +184,7 @@ namespace Direct3D9
 	{
 		HRESULT hr = InternalPointer->DrawIndexedPrimitive( static_cast<D3DPRIMITIVETYPE>( primitiveType ), baseVertexIndex,
 			minVertexIndex, numVertices, startIndex, primCount );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	generic<typename S, typename T>
@@ -196,31 +196,31 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->DrawIndexedPrimitiveUP( static_cast<D3DPRIMITIVETYPE>( primitiveType ), minVertexIndex, numVertices,
 			primitiveCount, pinnedIndices, static_cast<D3DFORMAT>( indexDataFormat ), pinnedVertices, vertexStride );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::Clear( ClearFlags clearFlags, Color4 color, float zdepth, int stencil )
 	{
 		HRESULT hr = InternalPointer->Clear( 0, 0, static_cast<DWORD>( clearFlags ), static_cast<D3DCOLOR>( color.ToArgb() ), zdepth, stencil );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::BeginScene()
 	{
 		HRESULT hr = InternalPointer->BeginScene();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::EndScene()
 	{
 		HRESULT hr = InternalPointer->EndScene();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::Present()
 	{
 		HRESULT hr = InternalPointer->Present( 0, 0, 0, 0 );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::Present( SlimDX::Direct3D9::Present flags )
@@ -229,14 +229,14 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetSwapChain( 0, &swapChain );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return Result::Last;
 
 		hr = swapChain->Present( 0, 0, 0, 0, static_cast<DWORD>( flags ) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		hr = swapChain->Release();
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return Result::Last;
 	}
@@ -244,21 +244,21 @@ namespace Direct3D9
 	Result Device::SetRenderState( RenderState state, int value )
 	{
 		HRESULT hr = InternalPointer->SetRenderState( static_cast<D3DRENDERSTATETYPE>( state ), value );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetRenderState( RenderState state, bool value )
 	{
 		BOOL boolValue = value ? TRUE : FALSE;
 		HRESULT hr = InternalPointer->SetRenderState( static_cast<D3DRENDERSTATETYPE>( state ), boolValue );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetRenderState( RenderState state, float value )
 	{
 		DWORD* dwValue = reinterpret_cast<DWORD*>( &value );
 		HRESULT hr = InternalPointer->SetRenderState( static_cast<D3DRENDERSTATETYPE>( state ), *dwValue );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	generic<typename T>
@@ -270,7 +270,7 @@ namespace Direct3D9
 	Result Device::SetTextureStageState( int stage, TextureStage type, int value )
 	{
 		HRESULT hr = InternalPointer->SetTextureStageState( stage, static_cast<D3DTEXTURESTAGESTATETYPE>( type ), value );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetTextureStageState( int stage, TextureStage type, TextureOperation texOp )
@@ -297,14 +297,14 @@ namespace Direct3D9
 	Result Device::SetSamplerState( int sampler, SamplerState type, int value )
 	{
 		HRESULT hr = InternalPointer->SetSamplerState( sampler, static_cast<D3DSAMPLERSTATETYPE>( type ), value );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetSamplerState( int sampler, SamplerState type, float value )
 	{
 		DWORD* dwValue = reinterpret_cast<DWORD*>( &value );
 		HRESULT hr = InternalPointer->SetSamplerState( sampler, static_cast<D3DSAMPLERSTATETYPE>( type ), *dwValue );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetSamplerState( int sampler, SamplerState type, TextureAddress textureAddress )
@@ -320,14 +320,14 @@ namespace Direct3D9
 	Result Device::SetTransform( TransformState state, Matrix value )
 	{
 		HRESULT hr = InternalPointer->SetTransform( static_cast<D3DTRANSFORMSTATETYPE>( state ), reinterpret_cast<const D3DMATRIX*>( &value ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 	
 	Matrix Device::GetTransform( TransformState state )
 	{
 		Matrix result;
 		HRESULT hr = InternalPointer->GetTransform( static_cast<D3DTRANSFORMSTATETYPE>( state ), reinterpret_cast<D3DMATRIX*>( &result ) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 		return result;
 	}
 
@@ -344,20 +344,20 @@ namespace Direct3D9
 	Result Device::MultiplyTransform( TransformState state, Matrix value )
 	{
 		HRESULT hr = InternalPointer->MultiplyTransform( static_cast<D3DTRANSFORMSTATETYPE>( state ), reinterpret_cast<const D3DMATRIX*>( &value ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride )
 	{
 		IDirect3DVertexBuffer9* vbPointer = streamData != nullptr ? streamData->VbPointer : NULL;
 		HRESULT hr = InternalPointer->SetStreamSource( stream, vbPointer, offsetInBytes, stride );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetStreamSourceFrequency( int stream, int frequency )
 	{
 		HRESULT hr = InternalPointer->SetStreamSourceFreq( stream, frequency );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	SlimDX::Direct3D9::Material Device::Material::get()
@@ -365,7 +365,7 @@ namespace Direct3D9
 		SlimDX::Direct3D9::Material material;
 
 		HRESULT hr = InternalPointer->GetMaterial( reinterpret_cast<D3DMATERIAL9*>( &material ) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return material;
 	}
@@ -373,7 +373,7 @@ namespace Direct3D9
 	void Device::Material::set( SlimDX::Direct3D9::Material material )
 	{
 		HRESULT hr = InternalPointer->SetMaterial( reinterpret_cast<const D3DMATERIAL9*>( &material ) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 	}
 
 	Result Device::TestCooperativeLevel()
@@ -388,7 +388,7 @@ namespace Direct3D9
 
 		ConvertPresentParams( presentParameters, d3dpp );
 		HRESULT hr = InternalPointer->Reset( &d3dpp );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		presentParameters->BackBufferCount = d3dpp.BackBufferCount;
 		presentParameters->BackBufferFormat = static_cast<Format>( d3dpp.BackBufferFormat );
@@ -402,35 +402,35 @@ namespace Direct3D9
 	{
 		IDirect3DBaseTexture9* texturePointer = texture != nullptr ? texture->BaseTexturePointer : NULL;
 		HRESULT hr = InternalPointer->SetTexture( sampler, texturePointer );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetRenderTarget( int rtIndex, Surface^ target )
 	{
 		IDirect3DSurface9* surfacePointer = target != nullptr ? target->SurfacePointer : NULL;
 		HRESULT hr = InternalPointer->SetRenderTarget( rtIndex, surfacePointer );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 	
 	Result Device::SetPixelShader( PixelShader^ shader )
 	{
 		IDirect3DPixelShader9 *ptr = shader != nullptr ? shader->InternalPointer : NULL; 
 		HRESULT hr = InternalPointer->SetPixelShader( ptr );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 	
 	Result Device::SetVertexShader( VertexShader^ shader )
 	{
 		IDirect3DVertexShader9 *ptr = shader != nullptr ? shader->InternalPointer : NULL; 
 		HRESULT hr = InternalPointer->SetVertexShader( ptr );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 	
 	Result Device::SetDepthStencilSurface( Surface^ target )
 	{	
 		IDirect3DSurface9* surface = target != nullptr ? target->SurfacePointer : NULL;
 		HRESULT hr = InternalPointer->SetDepthStencilSurface( surface );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Surface^ Device::GetBackBuffer( int swapChain, int backBuffer )
@@ -439,7 +439,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetBackBuffer( swapChain, backBuffer, D3DBACKBUFFER_TYPE_MONO, &buffer );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Surface( buffer );
@@ -451,7 +451,7 @@ namespace Direct3D9
 		if( hr == D3DERR_NOTAVAILABLE )
 			return false;
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return false;
 
 		return true;
@@ -461,7 +461,7 @@ namespace Direct3D9
 	{
 		D3DCAPS9 caps;
 		HRESULT hr = InternalPointer->GetDeviceCaps( &caps );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return Capabilities( caps );
 	}
@@ -476,7 +476,7 @@ namespace Direct3D9
 		DWORD passCount = 0;
 
 		HRESULT hr = InternalPointer->ValidateDevice( &passCount );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return passCount;
 	}
@@ -484,14 +484,14 @@ namespace Direct3D9
 	bool Device::ShowCursor::get()
 	{
 		BOOL prev = InternalPointer->ShowCursor( true );
-		Result::Record( InternalPointer->ShowCursor( prev ) );
+		RECORD_D3D9( InternalPointer->ShowCursor( prev ) );
 
 		return prev > 0;
 	}
 
 	void Device::ShowCursor::set( bool value )
 	{
-		Result::Record( InternalPointer->ShowCursor( value ) );
+		RECORD_D3D9( InternalPointer->ShowCursor( value ) );
 	}
 
 	bool Device::SoftwareVertexProcessing::get()
@@ -502,7 +502,7 @@ namespace Direct3D9
 	void Device::SoftwareVertexProcessing::set( bool value )
 	{
 		HRESULT hr = InternalPointer->SetSoftwareVertexProcessing( value );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 	}
 
 	Surface^ Device::GetDepthStencilSurface()
@@ -511,7 +511,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetDepthStencilSurface( &surface );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Surface( surface );
@@ -521,7 +521,7 @@ namespace Direct3D9
 	{
 		SlimDX::Viewport viewport;
 		HRESULT hr = InternalPointer->GetViewport( reinterpret_cast<D3DVIEWPORT9*>( &viewport ) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return viewport;
 	}
@@ -529,14 +529,14 @@ namespace Direct3D9
 	void Device::Viewport::set( SlimDX::Viewport value )
 	{
 		HRESULT hr = InternalPointer->SetViewport( reinterpret_cast<const D3DVIEWPORT9*>( &value ) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 	}
 
 	void Device::ScissorRect::set(Drawing::Rectangle rect)
 	{
 		RECT scissorRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
 		HRESULT hr = InternalPointer->SetScissorRect(&scissorRect);
-		Result::Record(hr);
+		RECORD_D3D9(hr);
 	}
 
 	Drawing::Rectangle Device::ScissorRect::get()
@@ -544,7 +544,7 @@ namespace Direct3D9
 		RECT scissorRect;		// Scissor rectangle.
 
 		HRESULT hr = InternalPointer->GetScissorRect(&scissorRect);
-		Result::Record(hr);
+		RECORD_D3D9(hr);
 
 		return Utilities::ConvertRect(scissorRect);
 	}
@@ -555,7 +555,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetRenderTarget( index, &surface );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Surface( surface );
@@ -566,7 +566,7 @@ namespace Direct3D9
 	{
 		DWORD value = 0;
 		HRESULT hr = InternalPointer->GetRenderState( static_cast<D3DRENDERSTATETYPE>( state ), &value );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return (T) value;
 	}
@@ -583,7 +583,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetStreamSource( stream, &localVb, &localOffset, &localStride );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			streamData = nullptr;
 			offsetBytes = 0;
@@ -603,7 +603,7 @@ namespace Direct3D9
 		UINT localFreq = 0;
 
 		HRESULT hr = InternalPointer->GetStreamSourceFreq( stream, &localFreq );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 		
 		return localFreq;
 	}
@@ -614,7 +614,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetSwapChain( swapChainIndex, &swapChain );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew SwapChain( swapChain );
@@ -626,7 +626,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetIndices( &indices );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew IndexBuffer( indices );
@@ -640,7 +640,7 @@ namespace Direct3D9
 		else
 			hr = InternalPointer->SetIndices( NULL );
 
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::ProcessVertices( int sourceStartIndex, int destinationIndex, int vertexCount, VertexBuffer^ destinationBuffer,
@@ -650,7 +650,7 @@ namespace Direct3D9
 		IDirect3DVertexDeclaration9* decl = vertexDeclaration != nullptr ? vertexDeclaration->InternalPointer : NULL;
 
 		HRESULT hr = InternalPointer->ProcessVertices( sourceStartIndex, destinationIndex, vertexCount, vb, decl, static_cast<DWORD>( flags ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetVertexShaderConstant( int startRegister, array<bool>^ data, int offset, int count )
@@ -661,7 +661,7 @@ namespace Direct3D9
 
 		Utilities::CheckArrayBounds( data, offset, count );
 		HRESULT hr = InternalPointer->SetVertexShaderConstantB( startRegister, pinnedData + offset, count );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetVertexShaderConstant( int startRegister, array<float>^ data, int offset, int count )
@@ -670,7 +670,7 @@ namespace Direct3D9
 
 		Utilities::CheckArrayBounds( data, offset, count );
 		HRESULT hr = InternalPointer->SetVertexShaderConstantF( startRegister, pinnedData + offset, count );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetVertexShaderConstant( int startRegister, array<int>^ data, int offset, int count )
@@ -679,7 +679,7 @@ namespace Direct3D9
 
 		Utilities::CheckArrayBounds( data, offset, count );
 		HRESULT hr = InternalPointer->SetVertexShaderConstantI( startRegister, pinnedData + offset, count );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetPixelShaderConstant( int startRegister, array<bool>^ data, int offset, int count )
@@ -690,7 +690,7 @@ namespace Direct3D9
 
 		Utilities::CheckArrayBounds( data, offset, count );
 		HRESULT hr = InternalPointer->SetPixelShaderConstantB( startRegister, pinnedData + offset, count );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetPixelShaderConstant( int startRegister, array<float>^ data, int offset, int count )
@@ -699,7 +699,7 @@ namespace Direct3D9
 
 		Utilities::CheckArrayBounds( data, offset, count );
 		HRESULT hr = InternalPointer->SetPixelShaderConstantF( startRegister, pinnedData + offset, count );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetPixelShaderConstant( int startRegister, array<int>^ data, int offset, int count )
@@ -708,7 +708,7 @@ namespace Direct3D9
 
 		Utilities::CheckArrayBounds( data, offset, count );
 		HRESULT hr = InternalPointer->SetPixelShaderConstantI( startRegister, pinnedData + offset, count );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::StretchRectangle( Surface^ source, System::Drawing::Rectangle sourceRect, Surface^ destination,
@@ -719,7 +719,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->StretchRect( source->SurfacePointer, &nativeSourceRect, destination->SurfacePointer,
 			&nativeDestRect, static_cast<D3DTEXTUREFILTERTYPE>( filter ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::UpdateSurface( Surface^ source, System::Drawing::Rectangle sourceRect,
@@ -730,13 +730,13 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->UpdateSurface( source->SurfacePointer, &nativeSourceRect,
 			destination->SurfacePointer, &nativeDestPoint );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::UpdateTexture( BaseTexture^ sourceTexture, BaseTexture^ destinationTexture )
 	{
 		HRESULT hr = InternalPointer->UpdateTexture( sourceTexture->BaseTexturePointer, destinationTexture->BaseTexturePointer );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::ColorFill( Surface^ destSurface, System::Drawing::Rectangle destRect, Color4 color )
@@ -744,13 +744,13 @@ namespace Direct3D9
 		RECT nativeDestRect = { destRect.Left, destRect.Top, destRect.Right, destRect.Bottom };
 
 		HRESULT hr = InternalPointer->ColorFill( destSurface->SurfacePointer, &nativeDestRect, static_cast<D3DCOLOR>( color.ToArgb() ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::BeginStateBlock()
 	{
 		HRESULT hr = InternalPointer->BeginStateBlock();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	StateBlock^ Device::EndStateBlock()
@@ -758,7 +758,7 @@ namespace Direct3D9
 		IDirect3DStateBlock9* stateBlock;
 		HRESULT hr = InternalPointer->EndStateBlock( &stateBlock );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew StateBlock( stateBlock );
@@ -777,7 +777,7 @@ namespace Direct3D9
 	void Device::NPatchMode::set( float value )
 	{
 		HRESULT hr = InternalPointer->SetNPatchMode( value );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 	}
 
 	Result Device::DrawTrianglePatch( int handle, array<float>^ numSegments, TrianglePatchInfo info )
@@ -785,7 +785,7 @@ namespace Direct3D9
 		pin_ptr<float> pinnedSegments = &numSegments[0];
 
 		HRESULT hr = InternalPointer->DrawTriPatch( handle, pinnedSegments, reinterpret_cast<D3DTRIPATCH_INFO*>( &info ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::DrawTrianglePatch( int handle, array<float>^ numSegments )
@@ -793,7 +793,7 @@ namespace Direct3D9
 		pin_ptr<float> pinnedSegments = &numSegments[0];
 
 		HRESULT hr = InternalPointer->DrawTriPatch( handle, pinnedSegments, NULL );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::DrawRectanglePatch( int handle, array<float>^ numSegments, RectanglePatchInfo info )
@@ -801,7 +801,7 @@ namespace Direct3D9
 		pin_ptr<float> pinnedSegments = &numSegments[0];
 
 		HRESULT hr = InternalPointer->DrawRectPatch( handle, pinnedSegments, reinterpret_cast<D3DRECTPATCH_INFO*>( &info ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::DrawRectanglePatch( int handle, array<float>^ numSegments )
@@ -809,13 +809,13 @@ namespace Direct3D9
 		pin_ptr<float> pinnedSegments = &numSegments[0];
 
 		HRESULT hr = InternalPointer->DrawRectPatch( handle, pinnedSegments, NULL );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::DeletePatch( int handle )
 	{
 		HRESULT hr = InternalPointer->DeletePatch( handle );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	DisplayMode Device::GetDisplayMode( int swapChain )
@@ -823,7 +823,7 @@ namespace Direct3D9
 		DisplayMode displayMode;
 
 		HRESULT hr = InternalPointer->GetDisplayMode( swapChain, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 		
 		return displayMode;
 	}
@@ -831,26 +831,26 @@ namespace Direct3D9
 	Result Device::EvictManagedResources()
 	{
 		HRESULT hr = InternalPointer->EvictManagedResources();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetDialogBoxMode( bool enableDialogs )
 	{
 		HRESULT hr = InternalPointer->SetDialogBoxMode( enableDialogs );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::EnableLight( int lightIndex, bool enable )
 	{
 		HRESULT hr = InternalPointer->LightEnable( lightIndex, enable );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	bool Device::IsLightEnabled( int lightIndex )
 	{
 		BOOL enabled = FALSE;
 		HRESULT hr = InternalPointer->GetLightEnable( lightIndex, &enabled );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return enabled > 0;
 	}
@@ -858,14 +858,14 @@ namespace Direct3D9
 	Result Device::SetLight( int lightIndex, Light lightData )
 	{
 		HRESULT hr = InternalPointer->SetLight( lightIndex, reinterpret_cast<const D3DLIGHT9*>( &lightData ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Light Device::GetLight( int lightIndex )
 	{
 		Light light;
 		HRESULT hr = InternalPointer->GetLight( lightIndex, reinterpret_cast<D3DLIGHT9*>( &light ) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 		
 		return light;
 	}
@@ -892,7 +892,7 @@ namespace Direct3D9
 		DWORD *bitmap;
 
 		if( !GetIconInfo( static_cast<HICON>( cursor->Handle.ToPointer() ), &iconInfo ) )
-			return Result::Record( E_FAIL );
+			return RECORD_D3D9( E_FAIL );
 
 		if( GetObject( static_cast<HGDIOBJ>( iconInfo.hbmMask ), sizeof( BITMAP ), static_cast<LPVOID>( &bmp ) ) == 0 )
 		{
@@ -900,7 +900,7 @@ namespace Direct3D9
 				DeleteObject( iconInfo.hbmMask );
 			if( iconInfo.hbmColor != NULL )
 				DeleteObject( iconInfo.hbmColor );
-			return Result::Record( E_FAIL );
+			return RECORD_D3D9( E_FAIL );
 		}
 
 		width = bmp.bmWidth;
@@ -924,7 +924,7 @@ namespace Direct3D9
 				DeleteObject( iconInfo.hbmMask );
 			if( iconInfo.hbmColor != NULL )
 				DeleteObject( iconInfo.hbmColor );
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		arrayMask.resize( width * heightSrc );
@@ -948,7 +948,7 @@ namespace Direct3D9
 				ReleaseDC( NULL, hdcScreen );
 			if( cursorSurface != NULL )
 				cursorSurface->Release();
-			return Result::Record( E_FAIL );
+			return RECORD_D3D9( E_FAIL );
 		}
 
 		oldObject = SelectObject( hdcMask, iconInfo.hbmMask );
@@ -973,7 +973,7 @@ namespace Direct3D9
 					DeleteDC( hdcColor );
 				if( cursorSurface != NULL )
 					cursorSurface->Release();
-				return Result::Record( E_FAIL );
+				return RECORD_D3D9( E_FAIL );
 			}
 
 			SelectObject( hdcColor, iconInfo.hbmColor );
@@ -1029,7 +1029,7 @@ namespace Direct3D9
 			DeleteDC( hdcColor );
 		if( cursorSurface != NULL )
 			cursorSurface->Release();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	void Device::SetCursorPosition( int x, int y, bool immediateUpdate )
@@ -1042,20 +1042,20 @@ namespace Direct3D9
 	{
 		IDirect3DSurface9* surface = cursorBitmap != nullptr ? cursorBitmap->SurfacePointer : NULL;
 		HRESULT hr = InternalPointer->SetCursorProperties( hotspotX, hotspotY, surface );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	void Device::CurrentTexturePalette::set( int value )
 	{
 		HRESULT hr = InternalPointer->SetCurrentTexturePalette( value );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 	}
 
 	int Device::CurrentTexturePalette::get()
 	{
 		unsigned int palette = 0;
 		HRESULT hr = InternalPointer->GetCurrentTexturePalette( &palette );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return (int) palette;
 	}
@@ -1065,7 +1065,7 @@ namespace Direct3D9
 		IDirect3DVertexShader9* vs;
 		HRESULT hr = InternalPointer->GetVertexShader( &vs );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew VertexShader( vs );
@@ -1076,7 +1076,7 @@ namespace Direct3D9
 		IDirect3DPixelShader9* ps;
 		HRESULT hr = InternalPointer->GetPixelShader( &ps );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew PixelShader( ps );
@@ -1115,7 +1115,7 @@ namespace Direct3D9
 		if( SetStreamSource( stream, dummyVb, 0, stride ).IsFailure )
 			return Result::Last;
 
-		return Result::Record( D3D_OK );
+		return RECORD_D3D9( D3D_OK );
 	}
 
 	Result Device::RestoreVertexStream( int stream )
@@ -1129,14 +1129,14 @@ namespace Direct3D9
 	Result Device::SetClipPlane( int index, Plane clipPlane )
 	{
 		HRESULT hr = InternalPointer->SetClipPlane( index, reinterpret_cast<const float*>( &clipPlane ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Plane Device::GetClipPlane( int index )
 	{
 		Plane plane;
 		HRESULT hr = InternalPointer->GetClipPlane( index, reinterpret_cast<float*>( &plane ) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return plane;
 	}
@@ -1145,7 +1145,7 @@ namespace Direct3D9
 	{
 		IDirect3DSurface9* surface = destinationSurface != nullptr ? destinationSurface->SurfacePointer : NULL;
 		HRESULT hr = InternalPointer->GetFrontBufferData( swapChain, surface );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Device::GetRenderTargetData( Surface^ renderTarget, Surface^ destinationSurface )
@@ -1153,7 +1153,7 @@ namespace Direct3D9
 		IDirect3DSurface9* target = renderTarget != nullptr	? renderTarget->SurfacePointer : NULL;
 		IDirect3DSurface9* destination = destinationSurface != nullptr ? destinationSurface->SurfacePointer : NULL;
 		HRESULT hr = InternalPointer->GetRenderTargetData( target, destination );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 }
 }

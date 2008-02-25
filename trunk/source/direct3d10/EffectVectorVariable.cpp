@@ -21,7 +21,8 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
+
+#include "Direct3D10Exception.h"
 
 #include "EffectVectorVariable.h"
 
@@ -45,13 +46,13 @@ namespace Direct3D10
 	
 	Result EffectVectorVariable::Set( Vector4 value )
 	{
-		return Result::Record( m_Pointer->SetFloatVector( reinterpret_cast<float*>( &value ) ) );
+		return RECORD_D3D10( m_Pointer->SetFloatVector( reinterpret_cast<float*>( &value ) ) );
 	}
 	
 	Result EffectVectorVariable::Set( array<Vector4>^ values )
 	{
 		pin_ptr<Vector4> pinnedValues = &values[ 0 ];
-		return Result::Record( m_Pointer->SetFloatVectorArray( reinterpret_cast<float*>( pinnedValues ), 0, values->Length ) );
+		return RECORD_D3D10( m_Pointer->SetFloatVectorArray( reinterpret_cast<float*>( pinnedValues ), 0, values->Length ) );
 	}
 }
 }

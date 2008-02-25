@@ -54,7 +54,7 @@ namespace Direct3D9
 
 		HRESULT hr = device->InternalPointer->CreateVertexDeclaration( reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedElements ), &decl );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(decl);
@@ -66,7 +66,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetDeclaration( 0, &count );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
 		array<VertexElement>^ decl = gcnew array<VertexElement>( count );
@@ -74,7 +74,7 @@ namespace Direct3D9
 
 		hr = InternalPointer->GetDeclaration( reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedDecl ), &count );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
 		return decl;

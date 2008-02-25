@@ -50,7 +50,7 @@ namespace DXGI
 	int Device::GpuThreadPriority::get()
 	{
 		int result = 0;
-		Result::Record( InternalPointer->GetGPUThreadPriority( &result ) );
+		RECORD_DXGI( InternalPointer->GetGPUThreadPriority( &result ) );
 		if( Result::Last.IsSuccess )
 			return result;
 		
@@ -59,14 +59,14 @@ namespace DXGI
 	
 	void Device::GpuThreadPriority::set( int value )
 	{
-		if( Result::Record( InternalPointer->SetGPUThreadPriority( value ) ).IsFailure )
+		if( RECORD_DXGI( InternalPointer->SetGPUThreadPriority( value ) ).IsFailure )
 			throw gcnew DXGIException( Result::Last );
 	}
 
 	Adapter^ Device::GetAdapter()
 	{
 		IDXGIAdapter* adapter = 0;
-		Result::Record( InternalPointer->GetAdapter( &adapter ) );
+		RECORD_DXGI( InternalPointer->GetAdapter( &adapter ) );
 		if( Result::Last.IsFailure )
 			return nullptr;
 		return gcnew Adapter( adapter );
@@ -79,7 +79,7 @@ namespace DXGI
 		for( int resourceIndex = 0; resourceIndex < resources->Count; ++resourceIndex )
 			nativeResources[ resourceIndex ] = resources[ resourceIndex ]->UnknownPointer;
 		
-		Result::Record( InternalPointer->QueryResourceResidency( &nativeResources[0], &nativeResidency[0], resources->Count ) );
+		RECORD_DXGI( InternalPointer->QueryResourceResidency( &nativeResources[0], &nativeResidency[0], resources->Count ) );
 		if( Result::Last.IsFailure )
 			return nullptr;
 		

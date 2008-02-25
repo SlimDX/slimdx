@@ -55,7 +55,7 @@ namespace Direct3D10
 	{
 		ID3D10Texture2D* texture = 0;
 		D3D10_TEXTURE2D_DESC nativeDescription = description.CreateNativeVersion();
-		if( Result::Record( device->InternalPointer->CreateTexture2D( &nativeDescription, 0, &texture ) ).IsFailure )
+		if( RECORD_D3D10( device->InternalPointer->CreateTexture2D( &nativeDescription, 0, &texture ) ).IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 		
 		Construct( texture );	
@@ -74,7 +74,7 @@ namespace Direct3D10
 		int mipHeight = GetMipSize( mipSlice, Description.Height );
 		
 		D3D10_MAPPED_TEXTURE2D mappedRect;
-		if( Result::Record( InternalPointer->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedRect ) ).IsFailure )
+		if( RECORD_D3D10( InternalPointer->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedRect ) ).IsFailure )
 			return nullptr;
 			
 		int lockedSize = mipHeight * mappedRect.RowPitch;

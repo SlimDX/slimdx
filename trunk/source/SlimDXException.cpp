@@ -34,30 +34,35 @@ namespace SlimDX
 	SlimDXException::SlimDXException( SerializationInfo^ info, StreamingContext context )
 	: Exception( info, context )
 	{
-		info->GetInt32( "ErrorCode" );
+		m_Result = safe_cast<Result>( info->GetValue( "Result", Result::typeid ) );
 	}
 
 	SlimDXException::SlimDXException()
 	: Exception( "A SlimDX exception occurred." )
 	{
-		ErrorCode = E_FAIL;
+		m_Result = Result( E_FAIL );
 	}
 
 	SlimDXException::SlimDXException( String^ message )
 	: Exception( message )
 	{
-		ErrorCode = E_FAIL;
+		m_Result = Result( E_FAIL );
 	}
 
 	SlimDXException::SlimDXException( String^ message, Exception^ innerException )
 	: Exception( message, innerException )
 	{
-		ErrorCode = E_FAIL;
+		m_Result = Result( E_FAIL );
 	}
 	
-	SlimDXException::SlimDXException( int errorCode )
-		: Exception( String::Format( CultureInfo::CurrentCulture, "{0}: {1}", gcnew String( DXGetErrorString( errorCode ) ), gcnew String( DXGetErrorDescription( errorCode ) ) ) )
+	SlimDXException::SlimDXException( Result result )
+	: Exception( String::Format( CultureInfo::CurrentCulture, "{0}: {1}", result.Code, result.Description ) )
 	{
-		ErrorCode = errorCode;
+		m_Result = result;
+	}
+	
+	Result SlimDXException::ResultCode::get()
+	{
+		return m_Result;
 	}
 }

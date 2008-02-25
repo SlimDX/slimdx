@@ -69,7 +69,7 @@ namespace SlimDX
 			IDirect3DDevice9* device;
 			HRESULT hr = pixelShader->GetDevice(&device);
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				throw gcnew Direct3D9Exception( Result::Last );
 			
 			m_ConstantTable = gcnew ConstantTable( device, constantTable );
@@ -103,7 +103,7 @@ namespace SlimDX
 			}
 			
 			// CheckHResult() is not used because we need to include the compiler errors.
-			if( Configuration::EnableExceptions && FAILED(hr) )
+			if( FAILED(hr) )
 			{
 				Direct3D9Exception^ ex = gcnew Direct3D9Exception( Result::Last );
 				ex->Data->Add( "CompilationErrors", compilationErrors );
@@ -122,24 +122,24 @@ namespace SlimDX
 		Result PixelShader::RetrieveConstantTable()
 		{
 			if( m_ConstantTable != nullptr )
-				return Result::Record( E_FAIL );
+				return RECORD_D3D9( E_FAIL );
 
 			//Retrieve the binary data
 			UINT size = 0;
 			HRESULT hr = InternalPointer->GetFunction( NULL, &size );
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return Result::Last;
 
 			stack_ptr<char> data( new (stackalloc) char[size] );
 			hr = InternalPointer->GetFunction( data.get(), &size );
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return Result::Last;
 
 			//Ask D3DX to give us the actual table
 			ID3DXConstantTable* constantTable = NULL;
 			hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( data.get() ), &constantTable );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return Result::Last;
 
 			m_ConstantTable = gcnew ConstantTable( constantTable );

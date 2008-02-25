@@ -64,7 +64,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateFont( device->InternalPointer, height, width, static_cast<UINT>( weight ), mipLevels, italic, static_cast<DWORD>( charSet ),
 			static_cast<DWORD>( outputPrecision ), static_cast<DWORD>( quality ), static_cast<DWORD>( pitchAndFamily ), reinterpret_cast<LPCWSTR>( pinned_name ), &font );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(font);
@@ -107,32 +107,32 @@ namespace Direct3D9
 	Result Font::PreloadCharacters( int first, int last )
 	{
 		HRESULT hr = InternalPointer->PreloadCharacters( first, last );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Font::PreloadGlyphs( int first, int last )
 	{
 		HRESULT hr = InternalPointer->PreloadGlyphs( first, last );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Font::PreloadText( String^ text )
 	{
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
 		HRESULT hr = InternalPointer->PreloadTextW( reinterpret_cast<LPCWSTR>( pinned_text ), text->Length );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Font::OnLostDevice()
 	{
 		HRESULT hr = InternalPointer->OnLostDevice();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Font::OnResetDevice()
 	{
 		HRESULT hr = InternalPointer->OnResetDevice();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	FontDescription Font::Description::get()
@@ -140,7 +140,7 @@ namespace Direct3D9
 		D3DXFONT_DESC description;
 		
 		HRESULT hr = InternalPointer->GetDesc( &description );
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return FontDescription();
 
 		FontDescription outDesc;

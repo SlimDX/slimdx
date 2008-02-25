@@ -57,7 +57,7 @@ namespace Direct3D10
 	EffectDescription Effect::Description::get()
 	{
 		D3D10_EFFECT_DESC nativeDescription;
-		Result::Record( InternalPointer->GetDesc( &nativeDescription ) );
+		RECORD_D3D10( InternalPointer->GetDesc( &nativeDescription ) );
 		if( Result::Last.IsSuccess )
 			return EffectDescription( nativeDescription );
 		
@@ -82,7 +82,7 @@ namespace Direct3D10
 	Device^ Effect::GetDevice()
 	{
 		ID3D10Device* device = 0;
-		if( Result::Record( InternalPointer->GetDevice( &device ) ).IsFailure )
+		if( RECORD_D3D10( InternalPointer->GetDevice( &device ) ).IsFailure )
 			return nullptr;
 		
 		return gcnew Device( device );
@@ -161,7 +161,7 @@ namespace Direct3D10
 	
 	Result Effect::Optimize()
 	{
-		return Result::Record( InternalPointer->Optimize() );
+		return RECORD_D3D10( InternalPointer->Optimize() );
 	}
 
 	Effect^ Effect::FromFile( Device^ device, String ^fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool )
@@ -193,7 +193,7 @@ namespace Direct3D10
 			compilationErrors = String::Empty;
 		}
 		
-		Result::Record( hr );
+		RECORD_D3D10( hr );
 		if( effect == NULL)
 			return nullptr;
 		return gcnew Effect( effect );
@@ -228,7 +228,7 @@ namespace Direct3D10
 			compilationErrors = String::Empty;
 		}
 		
-		Result::Record( hr );
+		RECORD_D3D10( hr );
 		if( effect == NULL )
 			return nullptr;
 		return gcnew Effect( effect );
@@ -276,7 +276,7 @@ namespace Direct3D10
 			compilationErrors = String::Empty;
 		}
 		
-		Result::Record( hr );
+		RECORD_D3D10( hr );
 		if( effect == NULL )
 			return nullptr;
 		return gcnew Effect( effect );

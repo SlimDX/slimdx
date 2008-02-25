@@ -21,8 +21,8 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
 
+#include "Direct3D10Exception.h"
 #include "EffectScalarVariable.h"
 
 using namespace System;
@@ -45,17 +45,17 @@ namespace Direct3D10
 	
 	Result EffectScalarVariable::Set( bool value )
 	{
-		return Result::Record( m_Pointer->SetBool( value ) );
+		return RECORD_D3D10( m_Pointer->SetBool( value ) );
 	}
 	
 	Result EffectScalarVariable::Set( float value )
 	{
-		return Result::Record( m_Pointer->SetFloat( value ) );
+		return RECORD_D3D10( m_Pointer->SetFloat( value ) );
 	}
 	
 	Result EffectScalarVariable::Set( int value )
 	{
-		return Result::Record( m_Pointer->SetInt( value ) );
+		return RECORD_D3D10( m_Pointer->SetInt( value ) );
 	}
 }
 }

@@ -24,6 +24,7 @@
 
 #include "Configuration.h"
 #include "Result.h"
+#include "SlimDXException.h"
 
 using namespace System;
 
@@ -48,7 +49,7 @@ namespace SlimDX
 			try
 			{
 				int flags = FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM;
-				int lang = MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT);
+				int lang = MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT );
 				if( FormatMessage( flags, 0, m_Code, lang, reinterpret_cast<wchar_t*>( &message ), 0, 0 ) )
 					m_Description = gcnew String( message );
 				else
@@ -73,14 +74,22 @@ namespace SlimDX
 		return FAILED( m_Code );
 	}
 	
+	generic< typename T >
 	Result Result::Record( int hr )
 	{
 		m_Last = Result( hr );
 
+		ResultWatchFlags flags;
+		if( Configuration::TryGetResultWatch( m_Last, flags ) )
+		{
 #ifdef _DEBUG
-		if( Configuration::HasResultWatch( m_Last ) )
-			System::Diagnostics::Debugger::Break();
+			if( static_cast<int>( flags & ResultWatchFlags::Assert ) != 0 )
+				System::Diagnostics::Debugger::Break();
 #endif
+			if( static_cast<int>( flags & ResultWatchFlags::Throw ) != 0 )
+				throw safe_cast<SlimDXException^>( Activator::CreateInstance( T::typeid, Result::Last ) );
+		}
+
 		
 		return Result( hr );
 	}

@@ -54,7 +54,7 @@ namespace Direct3D10
 			throw gcnew ArgumentNullException( "resource" );
 		
 		ID3D10ShaderResourceView *view = 0;
-		if( Result::Record( device->InternalPointer->CreateShaderResourceView( resource->InternalPointer, 0, &view ) ).IsFailure )
+		if( RECORD_D3D10( device->InternalPointer->CreateShaderResourceView( resource->InternalPointer, 0, &view ) ).IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 			
 		Construct( view );
@@ -69,7 +69,7 @@ namespace Direct3D10
 		
 		ID3D10ShaderResourceView *view = 0;
 		D3D10_SHADER_RESOURCE_VIEW_DESC nativeDescription = description.CreateNativeVersion();
-		if( Result::Record( device->InternalPointer->CreateShaderResourceView( resource->InternalPointer, &nativeDescription, &view ) ).IsFailure )
+		if( RECORD_D3D10( device->InternalPointer->CreateShaderResourceView( resource->InternalPointer, &nativeDescription, &view ) ).IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 			
 		Construct( view );

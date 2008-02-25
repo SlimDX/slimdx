@@ -242,7 +242,7 @@ namespace Direct3D9
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedAW ), reinterpret_cast<const FLOAT*>( pinnedVW ),
 			minimumValue, static_cast<DWORD>( options ), &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
@@ -269,7 +269,7 @@ namespace Direct3D9
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedAW ), NULL,
 			minimumValue, static_cast<DWORD>( options ), &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
@@ -292,7 +292,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXGeneratePMesh( mesh->MeshPointer, adjacencyIn,
 			NULL, NULL, minimumValue, static_cast<DWORD>( options ), &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
@@ -311,7 +311,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreatePMeshFromStream( reinterpret_cast<IStream*>( nativeStream ), static_cast<DWORD>( flags ),
 			device->InternalPointer, &om, &oe, &numMaterials, &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 		
 		ProgressiveMesh^ mesh = gcnew ProgressiveMesh( result );
@@ -330,7 +330,7 @@ namespace Direct3D9
 		HRESULT hr = MeshPointer->ClonePMesh( static_cast<DWORD>( flags ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinned_elements ),
 			device->InternalPointer, &mesh );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew ProgressiveMesh( mesh );
@@ -343,7 +343,7 @@ namespace Direct3D9
 		HRESULT hr = MeshPointer->ClonePMeshFVF( static_cast<DWORD>( flags ), static_cast<DWORD>( format ), 
 			device->InternalPointer, &mesh );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew ProgressiveMesh( mesh );
@@ -354,7 +354,7 @@ namespace Direct3D9
 		pin_ptr<int> pinned = &vertexHistory[0];
 
 		HRESULT hr = MeshPointer->GenerateVertexHistory( reinterpret_cast<DWORD*>( pinned ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	array<int>^ ProgressiveMesh::GetAdjacency()
@@ -364,7 +364,7 @@ namespace Direct3D9
 
 		HRESULT hr = MeshPointer->GetAdjacency( reinterpret_cast<DWORD*>( pinnedAdj ) );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return adjacency;
@@ -379,7 +379,7 @@ namespace Direct3D9
 
 		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), reinterpret_cast<DWORD*>( pinnedAdj ), NULL, NULL, &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		Mesh^ mesh = gcnew Mesh( result );
@@ -401,7 +401,7 @@ namespace Direct3D9
 		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), reinterpret_cast<DWORD*>( pinnedAdj ), 
 			reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			vertexRemap = nullptr;
 			return nullptr;
@@ -418,7 +418,7 @@ namespace Direct3D9
 	Result ProgressiveMesh::OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags )
 	{
 		HRESULT hr = MeshPointer->OptimizeBaseLOD( static_cast<DWORD>( flags ), NULL );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result ProgressiveMesh::OptimizeBaseLevelOfDetail( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap )
@@ -426,7 +426,7 @@ namespace Direct3D9
 		faceRemap = gcnew array<int>( FaceCount );
 		pin_ptr<int> pinnedFR = &faceRemap[0];
 		HRESULT hr = MeshPointer->OptimizeBaseLOD( static_cast<DWORD>( flags ), reinterpret_cast<DWORD*>( pinnedFR ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result ProgressiveMesh::ToStream( ProgressiveMesh^ mesh, Stream^ stream )
@@ -467,25 +467,25 @@ namespace Direct3D9
 			delete[] nativeEffects[i].pDefaults;
 		}
 
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result ProgressiveMesh::SetFaceCount( int faceCount )
 	{
 		HRESULT hr = MeshPointer->SetNumFaces( faceCount );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result ProgressiveMesh::SetVertexCount( int vertexCount )
 	{
 		HRESULT hr = MeshPointer->SetNumVertices( vertexCount );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result ProgressiveMesh::TrimFaces( int newFaceMinimum, int newFaceMaximum )
 	{
 		HRESULT hr = MeshPointer->TrimByFaces( newFaceMinimum, newFaceMaximum, NULL, NULL );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result ProgressiveMesh::TrimFaces( int newFaceMinimum, int newFaceMaximum, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
@@ -497,13 +497,13 @@ namespace Direct3D9
 
 		HRESULT hr = MeshPointer->TrimByFaces( newFaceMinimum, newFaceMaximum, reinterpret_cast<DWORD*>( pinnedFR ), 
 			reinterpret_cast<DWORD*>( pinnedVR ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result ProgressiveMesh::TrimVertices( int newVertexMinimum, int newVertexMaximum )
 	{
 		HRESULT hr = MeshPointer->TrimByVertices( newVertexMinimum, newVertexMaximum, NULL, NULL );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result ProgressiveMesh::TrimVertices( int newVertexMinimum, int newVertexMaximum, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
@@ -515,7 +515,7 @@ namespace Direct3D9
 
 		HRESULT hr = MeshPointer->TrimByVertices( newVertexMinimum, newVertexMaximum, reinterpret_cast<DWORD*>( pinnedFR ), 
 			reinterpret_cast<DWORD*>( pinnedVR ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	int ProgressiveMesh::MaximumFaceCount::get()
@@ -563,7 +563,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateSPMesh( mesh->MeshPointer, adjacencyIn,
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedVAW ), reinterpret_cast<const FLOAT *>( pinnedVW ), &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
@@ -588,7 +588,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateSPMesh( mesh->MeshPointer, adjacencyIn,
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedVAW ), NULL, &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
@@ -613,7 +613,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateSPMesh( mesh->MeshPointer, adjacencyIn,
 			NULL, reinterpret_cast<const FLOAT *>( pinnedVW ), &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
@@ -635,7 +635,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateSPMesh( mesh->MeshPointer, adjacencyIn, NULL, NULL, &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
@@ -654,7 +654,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->CloneMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
 			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedAdj ), reinterpret_cast<DWORD*>( pinnedVR ), &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			vertexRemap = nullptr;
 			return nullptr;
@@ -677,7 +677,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->CloneMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
 			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedAdj ), NULL, &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		Mesh^ mesh = gcnew Mesh( result );
@@ -698,7 +698,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->CloneMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
 			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedAdj ), reinterpret_cast<DWORD*>( pinnedVR ), &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			vertexRemap = nullptr;
 			return nullptr;
@@ -720,7 +720,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->CloneMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
 			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedAdj ), NULL, &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		Mesh^ mesh = gcnew Mesh( result );
@@ -742,7 +742,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->ClonePMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
 			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedVR ), reinterpret_cast<FLOAT*>( pinnedEBF ), &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			errorsByFace = nullptr;
 			vertexRemap = nullptr;
@@ -763,7 +763,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->ClonePMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
 			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedVR ), NULL, &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			vertexRemap = nullptr;
 			return nullptr;
@@ -781,7 +781,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->ClonePMesh( static_cast<DWORD>( options ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ),
 			device->InternalPointer, NULL, NULL, &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew ProgressiveMesh( result );
@@ -800,7 +800,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->ClonePMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
 			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedVR ), reinterpret_cast<FLOAT*>( pinnedEBF ), &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			errorsByFace = nullptr;
 			vertexRemap = nullptr;
@@ -820,7 +820,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->ClonePMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
 			device->InternalPointer, reinterpret_cast<DWORD*>( pinnedVR ), NULL, &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			vertexRemap = nullptr;
 			return nullptr;
@@ -836,7 +836,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->ClonePMeshFVF( static_cast<DWORD>( options ), static_cast<DWORD>( fvf ),
 			device->InternalPointer, NULL, NULL, &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew ProgressiveMesh( result );
@@ -847,7 +847,7 @@ namespace Direct3D9
 		D3DVERTEXELEMENT9 elementBuffer[MAX_FVF_DECL_SIZE];
 		HRESULT hr = InternalPointer->GetDeclaration( elementBuffer );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		int count = D3DXGetDeclLength( elementBuffer ) + 1;
@@ -864,7 +864,7 @@ namespace Direct3D9
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Device( device );
@@ -877,7 +877,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetVertexAttributeWeights( reinterpret_cast<D3DXATTRIBUTEWEIGHTS*>( pinnedResults ) );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return results;
@@ -890,7 +890,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetVertexWeights( reinterpret_cast<FLOAT*>( pinnedResults ) );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return results;
@@ -899,13 +899,13 @@ namespace Direct3D9
 	Result SimplificationMesh::ReduceFaces( int faces )
 	{
 		HRESULT hr = InternalPointer->ReduceFaces( faces );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result SimplificationMesh::ReduceVertices( int vertices )
 	{
 		HRESULT hr = InternalPointer->ReduceVertices( vertices );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	int SimplificationMesh::MaximumFaceCount::get()

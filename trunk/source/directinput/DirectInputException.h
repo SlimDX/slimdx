@@ -23,6 +23,8 @@
 
 #include "../SlimDXException.h"
 
+#define RECORD_DINPUT(x) Result::Record<DirectInputException^>( (x) )
+
 namespace SlimDX
 {
 	namespace DirectInput

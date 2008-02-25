@@ -21,7 +21,8 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
+
+#include "Direct3D10Exception.h"
 
 #include "RasterizerState.h"
 #include "Device.h"
@@ -66,7 +67,7 @@ namespace Direct3D10
 		
 		ID3D10RasterizerState* state;
 		HRESULT hr = device->InternalPointer->CreateRasterizerState( &desc, &state );
-		Result::Record( hr );
+		RECORD_D3D10( hr );
 		
 		Construct(state);
 	}

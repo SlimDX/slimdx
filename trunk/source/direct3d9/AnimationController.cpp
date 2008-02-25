@@ -56,7 +56,7 @@ namespace Direct3D9
 	{
 		HRESULT hr = D3DXCreateAnimationController( maxAnimationOutputs, maxAnimationSets, maxTracks, maxEvents, 
 			reinterpret_cast<LPD3DXANIMATIONCONTROLLER*>(InternalPointer) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		if( FAILED( hr ) )
 			throw gcnew Direct3D9Exception( Result::Last );
@@ -69,7 +69,7 @@ namespace Direct3D9
 			callback = reinterpret_cast< LPD3DXANIMATIONCALLBACKHANDLER >( Marshal::GetFunctionPointerForDelegate( handler ).ToPointer() );
 
 		HRESULT hr = InternalPointer->AdvanceTime( time, callback );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	AnimationController^ AnimationController::Clone( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents )
@@ -78,7 +78,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->CloneAnimationController( maxAnimationOutputs, maxAnimationSets, maxTracks, maxEvents, &pointer );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew AnimationController( pointer );
@@ -90,7 +90,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetAnimationSet( index, &set );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew AnimationSet( set );
@@ -104,7 +104,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetAnimationSetByName( reinterpret_cast<LPCSTR>( pinnedName ), &set );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew AnimationSet( set );
@@ -120,7 +120,7 @@ namespace Direct3D9
 		EventDescription result;
 
 		HRESULT hr = InternalPointer->GetEventDesc( handle, reinterpret_cast<LPD3DXEVENT_DESC>( &result ) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return result;
 	}
@@ -131,7 +131,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetTrackAnimationSet( track, &set );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew AnimationSet( set );
@@ -142,7 +142,7 @@ namespace Direct3D9
 		TrackDescription result;
 
 		HRESULT hr = InternalPointer->GetTrackDesc( track, reinterpret_cast<LPD3DXTRACK_DESC>( &result ) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return result;
 	}
@@ -224,91 +224,91 @@ namespace Direct3D9
 		}
 
 		HRESULT hr = InternalPointer->RegisterAnimationOutput( reinterpret_cast<LPCSTR>( pinnedName ), matrix, scale, rotation, translation );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result AnimationController::RegisterAnimationSet( AnimationSet^ set )
 	{
 		HRESULT hr = InternalPointer->RegisterAnimationSet( reinterpret_cast<LPD3DXANIMATIONSET>( set->ComPointer.ToPointer() ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result AnimationController::ResetTime()
 	{
 		HRESULT hr = InternalPointer->ResetTime();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result AnimationController::SetTrackAnimationSet( int track, AnimationSet^ set )
 	{
 		HRESULT hr = InternalPointer->SetTrackAnimationSet( track, reinterpret_cast<LPD3DXANIMATIONSET>( set->ComPointer.ToPointer() ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result AnimationController::SetTrackDescription( int track, TrackDescription description )
 	{
 		HRESULT hr = InternalPointer->SetTrackDesc( track, reinterpret_cast<LPD3DXTRACK_DESC>( &description ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result AnimationController::EnableTrack( int track )
 	{
 		HRESULT hr = InternalPointer->SetTrackEnable( track, true );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result AnimationController::DisableTrack( int track )
 	{
 		HRESULT hr = InternalPointer->SetTrackEnable( track, false );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result AnimationController::SetTrackPosition( int track, double position )
 	{
 		HRESULT hr = InternalPointer->SetTrackPosition( track, position );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result AnimationController::SetTrackPriority( int track, TrackPriority priority )
 	{
 		HRESULT hr = InternalPointer->SetTrackPriority( track, static_cast<D3DXPRIORITY_TYPE>( priority ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result AnimationController::SetTrackSpeed( int track, float speed )
 	{
 		HRESULT hr = InternalPointer->SetTrackSpeed( track, speed );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result AnimationController::SetTrackWeight( int track, float weight )
 	{
 		HRESULT hr = InternalPointer->SetTrackWeight( track, weight );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result AnimationController::UnkeyAllPriorityBlends()
 	{
 		HRESULT hr = InternalPointer->UnkeyAllPriorityBlends();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result AnimationController::UnkeyAllTrackEvents( int track )
 	{
 		HRESULT hr = InternalPointer->UnkeyAllTrackEvents( track );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result AnimationController::UnkeyEvent( int handle )
 	{
 		HRESULT hr = InternalPointer->UnkeyEvent( handle );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result AnimationController::UnregisterAnimationSet( AnimationSet^ set )
 	{
 		HRESULT hr = InternalPointer->UnregisterAnimationSet( reinterpret_cast<LPD3DXANIMATIONSET>( set->ComPointer.ToPointer() ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	bool AnimationController::ValidateEvent( int handle )

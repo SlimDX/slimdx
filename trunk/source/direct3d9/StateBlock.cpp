@@ -51,7 +51,7 @@ namespace Direct3D9
 
 		HRESULT hr = device->InternalPointer->CreateStateBlock( static_cast<D3DSTATEBLOCKTYPE>( type ), &stateBlock );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(stateBlock);
@@ -60,13 +60,13 @@ namespace Direct3D9
 	Result StateBlock::Apply()
 	{
 		HRESULT hr = InternalPointer->Apply();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result StateBlock::Capture()
 	{
 		HRESULT hr = InternalPointer->Apply();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Device^ StateBlock::GetDevice()
@@ -74,7 +74,7 @@ namespace Direct3D9
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Device( device );

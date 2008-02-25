@@ -49,7 +49,7 @@ namespace XInput
 	}
 
 	XInputException::XInputException( Result result )
-	: SlimDXException( result.Code )
+	: SlimDXException( result )
 	{
 	}
 }

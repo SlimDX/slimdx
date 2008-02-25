@@ -63,7 +63,7 @@ namespace Direct3D10
 		for( int i = 0; i < elements->Length; i++ )
 			Utilities::FreeNativeString( nativeElements[i].SemanticName );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D10( hr ).IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 
 		Construct( layout );

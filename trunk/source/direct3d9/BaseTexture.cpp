@@ -23,6 +23,8 @@
 #include <d3dx9.h>
 #include <vcclr.h>
 
+#include "Direct3D9Exception.h"
+
 #include "Device.h"
 #include "BaseTexture.h"
 
@@ -45,7 +47,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXSaveTextureToFileInMemory( &buffer, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			texture->BaseTexturePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ) );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			if( buffer != NULL )
 				buffer->Release();
@@ -62,7 +64,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXSaveTextureToFileInMemory( &buffer, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			texture->BaseTexturePointer, NULL );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			if( buffer != NULL )
 				buffer->Release();
@@ -79,7 +81,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXSaveTextureToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			texture->BaseTexturePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result BaseTexture::ToFile( BaseTexture^ texture, String^ fileName, ImageFileFormat format )
@@ -88,7 +90,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXSaveTextureToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			texture->BaseTexturePointer, NULL );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result BaseTexture::FilterTexture( int sourceLevel, Filter filter, array<PaletteEntry>^ palette )
@@ -97,13 +99,13 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXFilterTexture( BaseTexturePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
 			sourceLevel, static_cast<DWORD>( filter ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result BaseTexture::FilterTexture( int sourceLevel, Filter filter )
 	{
 		HRESULT hr = D3DXFilterTexture( BaseTexturePointer, NULL, sourceLevel, static_cast<DWORD>( filter ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 }
 }

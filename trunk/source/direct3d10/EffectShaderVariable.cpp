@@ -21,7 +21,8 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
+
+#include "Direct3D10Exception.h"
 
 #include "EffectShaderVariable.h"
 #include "GeometryShader.h"
@@ -51,7 +52,7 @@ namespace Direct3D10
 	PixelShader^ EffectShaderVariable::GetPixelShader( int index )
 	{
 		ID3D10PixelShader* shader = 0;
-		if( Result::Record( m_Pointer->GetPixelShader( index, &shader ) ).IsFailure )
+		if( RECORD_D3D10( m_Pointer->GetPixelShader( index, &shader ) ).IsFailure )
 			return nullptr;
 			
 		return gcnew PixelShader( shader );
@@ -60,7 +61,7 @@ namespace Direct3D10
 	VertexShader^ EffectShaderVariable::GetVertexShader( int index )
 	{
 		ID3D10VertexShader* shader = 0;
-		if( Result::Record( m_Pointer->GetVertexShader( index, &shader ) ).IsFailure )
+		if( RECORD_D3D10( m_Pointer->GetVertexShader( index, &shader ) ).IsFailure )
 			return nullptr;
 		
 		return gcnew VertexShader( shader );
@@ -69,7 +70,7 @@ namespace Direct3D10
 	GeometryShader^ EffectShaderVariable::GetGeometryShader( int index )
 	{
 		ID3D10GeometryShader* shader = 0;
-		if( Result::Record( m_Pointer->GetGeometryShader( index, &shader ) ).IsFailure )
+		if( RECORD_D3D10( m_Pointer->GetGeometryShader( index, &shader ) ).IsFailure )
 			return nullptr;
 			
 		return gcnew GeometryShader( shader );
@@ -78,7 +79,7 @@ namespace Direct3D10
 	Result EffectShaderVariable::GetInputParameterDescription( int shaderIndex, int parameterIndex, ShaderParameterDescription% result )
 	{
 		D3D10_SIGNATURE_PARAMETER_DESC description;
-		if( Result::Record( m_Pointer->GetInputSignatureElementDesc( shaderIndex, parameterIndex, &description ) ).IsSuccess )
+		if( RECORD_D3D10( m_Pointer->GetInputSignatureElementDesc( shaderIndex, parameterIndex, &description ) ).IsSuccess )
 			result = ShaderParameterDescription( description );
 			
 		return Result::Last;
@@ -87,7 +88,7 @@ namespace Direct3D10
 	Result EffectShaderVariable::GetOutputParameterDescription( int shaderIndex, int parameterIndex, ShaderParameterDescription% result )
 	{
 		D3D10_SIGNATURE_PARAMETER_DESC description;
-		if( Result::Record( m_Pointer->GetOutputSignatureElementDesc( shaderIndex, parameterIndex, &description ) ).IsSuccess )
+		if( RECORD_D3D10( m_Pointer->GetOutputSignatureElementDesc( shaderIndex, parameterIndex, &description ) ).IsSuccess )
 			result = ShaderParameterDescription( description );
 		
 		return Result::Last;
@@ -96,7 +97,7 @@ namespace Direct3D10
 	Result EffectShaderVariable::GetShaderDescription( int shaderIndex, ShaderDescription% result )
 	{
 		D3D10_EFFECT_SHADER_DESC description;
-		if( Result::Record( m_Pointer->GetShaderDesc( shaderIndex, &description ) ).IsSuccess )
+		if( RECORD_D3D10( m_Pointer->GetShaderDesc( shaderIndex, &description ) ).IsSuccess )
 			result = ShaderDescription( description );
 	
 		return Result::Last;

@@ -23,6 +23,8 @@
 
 #include "../SlimDXException.h"
 
+#define RECORD_DSOUND(x) Result::Record<DirectSoundException^>( (x) )
+
 namespace SlimDX
 {
 	namespace DirectSound
@@ -37,7 +39,7 @@ namespace SlimDX
 			DirectSoundException();
 			DirectSoundException( System::String^ message );
 			DirectSoundException( System::String^ message, System::Exception^ innerException );
-			DirectSoundException( int errorCode );
+			DirectSoundException( Result result );
 		};
 	}
 }

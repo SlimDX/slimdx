@@ -57,7 +57,7 @@ namespace DXGI
 		
 		IDXGISwapChain* swapChain = 0;
 		DXGI_SWAP_CHAIN_DESC nativeDescription = description.CreateNativeVersion();
-		Result::Record( factory->InternalPointer->CreateSwapChain( device->UnknownPointer, &nativeDescription, &swapChain ) );
+		RECORD_DXGI( factory->InternalPointer->CreateSwapChain( device->UnknownPointer, &nativeDescription, &swapChain ) );
 		if( Result::Last.IsFailure )
 			throw gcnew DXGIException( Result::Last );
 		
@@ -67,7 +67,7 @@ namespace DXGI
 	SwapChainDescription SwapChain::Description::get()
 	{
 		DXGI_SWAP_CHAIN_DESC description;
-		Result::Record( InternalPointer->GetDesc( &description ) );
+		RECORD_DXGI( InternalPointer->GetDesc( &description ) );
 		if( Result::Last.IsSuccess )
 			return SwapChainDescription( description );
 		
@@ -77,7 +77,7 @@ namespace DXGI
 	DXGI::FrameStatistics SwapChain::FrameStatistics::get()
 	{
 		DXGI_FRAME_STATISTICS stats;
-		Result::Record( InternalPointer->GetFrameStatistics( &stats ) );
+		RECORD_DXGI( InternalPointer->GetFrameStatistics( &stats ) );
 		if( Result::Last.IsSuccess )
 			return DXGI::FrameStatistics( stats );
 		
@@ -87,7 +87,7 @@ namespace DXGI
 	int SwapChain::PresentCount::get()
 	{
 		UINT result = 0;
-		if( Result::Record( InternalPointer->GetLastPresentCount( &result ) ).IsFailure )
+		if( RECORD_DXGI( InternalPointer->GetLastPresentCount( &result ) ).IsFailure )
 			throw gcnew DXGIException( Result::Last );
 		
 		return result;
@@ -98,7 +98,7 @@ namespace DXGI
 	{
 		IUnknown* unknown = 0;
 		GUID guid = Utilities::GetNativeGuidForType( T::typeid );
-		Result::Record( InternalPointer->GetBuffer( index, guid, reinterpret_cast<void**>( &unknown ) ) );
+		RECORD_DXGI( InternalPointer->GetBuffer( index, guid, reinterpret_cast<void**>( &unknown ) ) );
 		if( Result::Last.IsFailure )
 			return T();
 			
@@ -108,7 +108,7 @@ namespace DXGI
 	Output^ SwapChain::GetContainingOutput()
 	{
 		IDXGIOutput* output = 0;
-		if( Result::Record( InternalPointer->GetContainingOutput( &output ) ).IsFailure )
+		if( RECORD_DXGI( InternalPointer->GetContainingOutput( &output ) ).IsFailure )
 			return nullptr;
 			
 		return gcnew Output( output );
@@ -118,7 +118,7 @@ namespace DXGI
 	{
 		BOOL result = false;
 		IDXGIOutput* output = 0;
-		if( Result::Record( InternalPointer->GetFullscreenState( &result, &output ) ).IsSuccess )
+		if( RECORD_DXGI( InternalPointer->GetFullscreenState( &result, &output ) ).IsSuccess )
 		{
 			isFullScreen = result ? true : false;
 			if( output == 0 )
@@ -133,22 +133,22 @@ namespace DXGI
 	Result SwapChain::SetFullScreenState( bool isFullScreen, Output^ target )
 	{
 		IDXGIOutput* output = target == nullptr ? 0 : target->InternalPointer;
-		return Result::Record( InternalPointer->SetFullscreenState( isFullScreen, output ) );
+		return RECORD_DXGI( InternalPointer->SetFullscreenState( isFullScreen, output ) );
 	}
 	
 	Result SwapChain::ResizeBuffers( int count, int width, int height, SlimDX::DXGI::Format format, SwapChainFlags flags )
 	{
-		return Result::Record( InternalPointer->ResizeBuffers( count, width, height, static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ) ) );
+		return RECORD_DXGI( InternalPointer->ResizeBuffers( count, width, height, static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ) ) );
 	}
 	
 	Result SwapChain::ResizeTarget( ModeDescription description )
 	{
-		return Result::Record( InternalPointer->ResizeTarget( reinterpret_cast<DXGI_MODE_DESC*>( &description ) ) );
+		return RECORD_DXGI( InternalPointer->ResizeTarget( reinterpret_cast<DXGI_MODE_DESC*>( &description ) ) );
 	}
 
 	Result SwapChain::Present( int syncInterval, PresentFlags flags )
 	{
-		return Result::Record( InternalPointer->Present( syncInterval, static_cast<UINT>( flags ) ) );
+		return RECORD_DXGI( InternalPointer->Present( syncInterval, static_cast<UINT>( flags ) ) );
 	}
 }
 }

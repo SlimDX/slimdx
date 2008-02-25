@@ -28,16 +28,22 @@ namespace SlimDX
 {
 	[System::Serializable]
 	public ref class SlimDXException : public System::Exception
-	{	
+	{
+	private:
+		Result m_Result;
+	
 	protected:
 		SlimDXException( System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context );	
-		
-	public:
-		property int ErrorCode;
 
+	public:
+		property Result ResultCode
+		{
+			Result get();
+		}
+		
 		SlimDXException();
 		SlimDXException( System::String^ message );
 		SlimDXException( System::String^ message, System::Exception^ innerException );
-		SlimDXException( int result );
+		SlimDXException( Result result );
 	};
 }

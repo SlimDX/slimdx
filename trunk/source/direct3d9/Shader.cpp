@@ -27,6 +27,8 @@
 #include "../DataStream.h"
 #include "../StackAlloc.h"
 
+#include "Direct3D9Exception.h"
+
 #include "Device.h"
 #include "Shader.h"
 
@@ -169,7 +171,7 @@ namespace SlimDX
 			ID3DXConstantTable* constantTable;
 			HRESULT hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( InternalPointer->GetBufferPointer() ), &constantTable );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
 			return gcnew ConstantTable( constantTable );
@@ -182,7 +184,7 @@ namespace SlimDX
 
 			HRESULT hr = D3DXGetShaderInputSemantics( function, NULL, &count );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 			
 			array<ShaderSemantic>^ inputs = gcnew array<ShaderSemantic>( count );
@@ -190,7 +192,7 @@ namespace SlimDX
 
 			hr = D3DXGetShaderInputSemantics( function, reinterpret_cast<D3DXSEMANTIC*>( pinnedInputs ), &count );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 			
 			return inputs;
@@ -203,7 +205,7 @@ namespace SlimDX
 
 			HRESULT hr = D3DXGetShaderOutputSemantics( function, NULL, &count );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 			
 			array<ShaderSemantic>^ outputs = gcnew array<ShaderSemantic>( count );
@@ -211,7 +213,7 @@ namespace SlimDX
 
 			hr = D3DXGetShaderOutputSemantics( function, reinterpret_cast<D3DXSEMANTIC*>( pinnedOutputs ), &count );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 			
 			return outputs;
@@ -224,14 +226,14 @@ namespace SlimDX
 
 			HRESULT hr = D3DXGetShaderSamplers( function, NULL, &count );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 			
 			stack_vector<LPCSTR> samplers( count );
 
 			hr = D3DXGetShaderSamplers( function, &samplers[0], &count );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 			
 			array<String^>^ outputSamplers = gcnew array<String^>( count );
@@ -273,7 +275,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			errors = Utilities::BufferToString( errorBuffer );
 
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
 			return gcnew ShaderBytecode( shaderBuffer );
@@ -310,7 +312,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			errors = Utilities::BufferToString( errorBuffer );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
 			return gcnew ShaderBytecode( shaderBuffer );
@@ -348,7 +350,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			errors = Utilities::BufferToString( errorBuffer );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 			{
 				constantTable = nullptr;
 				return nullptr;
@@ -395,7 +397,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			errors = Utilities::BufferToString( errorBuffer );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 			{
 				return nullptr;
 			}
@@ -443,7 +445,7 @@ namespace SlimDX
 			//marshal errors if necessary
 			errors = Utilities::BufferToString( errorBuffer );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 			{
 				constantTable = nullptr;
 				return nullptr;
@@ -480,7 +482,7 @@ namespace SlimDX
 			Macro::Unmarshal( macros, handles );
 			errors = Utilities::BufferToString( errorBuffer );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
 			return gcnew ShaderBytecode( shaderBuffer );

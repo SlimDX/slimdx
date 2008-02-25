@@ -49,7 +49,7 @@ namespace DXGI
 	SurfaceDescription Surface::Description::get()
 	{
 		DXGI_SURFACE_DESC nativeDescription;
-		Result::Record( InternalPointer->GetDesc( &nativeDescription ) );
+		RECORD_DXGI( InternalPointer->GetDesc( &nativeDescription ) );
 		if( Result::Last.IsSuccess )
 			return SurfaceDescription( nativeDescription );
 		
@@ -59,7 +59,7 @@ namespace DXGI
 	DataRectangle^ Surface::Map( MapFlags flags )
 	{
 		DXGI_MAPPED_RECT mappedRect;
-		if( Result::Record( InternalPointer->Map( &mappedRect, static_cast<UINT>( flags ) ) ).IsFailure )
+		if( RECORD_DXGI( InternalPointer->Map( &mappedRect, static_cast<UINT>( flags ) ) ).IsFailure )
 			return nullptr;
 		
 		int size = Description.Width * Description.Height * Utilities::SizeOfFormatElement( static_cast<DXGI_FORMAT>( Description.Format ) );
@@ -70,7 +70,7 @@ namespace DXGI
 	
 	Result Surface::Unmap()
 	{
-		return Result::Record( InternalPointer->Unmap() );
+		return RECORD_DXGI( InternalPointer->Unmap() );
 	}
 }
 }

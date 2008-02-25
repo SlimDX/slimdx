@@ -57,7 +57,7 @@ namespace Direct3D10
 	EffectPassDescription EffectPass::Description::get()
 	{
 		D3D10_PASS_DESC nativeDescription;
-		Result::Record( m_Pointer->GetDesc( &nativeDescription ) );
+		RECORD_D3D10( m_Pointer->GetDesc( &nativeDescription ) );
 		if( Result::Last.IsSuccess )
 			return EffectPassDescription( nativeDescription );
 		
@@ -73,7 +73,7 @@ namespace Direct3D10
 	{
 		D3D10_PASS_SHADER_DESC description;
 		
-		if( Result::Record( m_Pointer->GetGeometryShaderDesc( &description ) ).IsFailure )
+		if( RECORD_D3D10( m_Pointer->GetGeometryShaderDesc( &description ) ).IsFailure )
 			return EffectPassShaderDescription();
 		else
 			return EffectPassShaderDescription( description );
@@ -83,7 +83,7 @@ namespace Direct3D10
 	{
 		D3D10_PASS_SHADER_DESC description;
 		
-		if( Result::Record( m_Pointer->GetVertexShaderDesc( &description ) ).IsFailure )
+		if( RECORD_D3D10( m_Pointer->GetVertexShaderDesc( &description ) ).IsFailure )
 			return EffectPassShaderDescription();
 		else
 			return EffectPassShaderDescription( description );
@@ -93,7 +93,7 @@ namespace Direct3D10
 	{
 		D3D10_PASS_SHADER_DESC description;
 		
-		if( Result::Record( m_Pointer->GetPixelShaderDesc( &description ) ).IsFailure )
+		if( RECORD_D3D10( m_Pointer->GetPixelShaderDesc( &description ) ).IsFailure )
 			return EffectPassShaderDescription();
 		else
 			return EffectPassShaderDescription( description );
@@ -119,7 +119,7 @@ namespace Direct3D10
 	
 	Result EffectPass::Apply()
 	{
-		return Result::Record( m_Pointer->Apply( 0 ) );
+		return RECORD_D3D10( m_Pointer->Apply( 0 ) );
 	}
 }
 }

@@ -59,7 +59,7 @@ namespace Direct3D10
 	EffectVariableDescription EffectVariable::Description::get()
 	{
 		D3D10_EFFECT_VARIABLE_DESC nativeDescription;
-		Result::Record( m_Pointer->GetDesc( &nativeDescription ) );
+		RECORD_D3D10( m_Pointer->GetDesc( &nativeDescription ) );
 		if( Result::Last.IsSuccess )
 			return EffectVariableDescription( nativeDescription );
 		

@@ -48,8 +48,8 @@ namespace DirectSound
 	{
 	}
 
-	DirectSoundException::DirectSoundException( int errorCode )
-	: SlimDXException( errorCode )
+	DirectSoundException::DirectSoundException( Result result )
+	: SlimDXException( result )
 	{
 	}
 }

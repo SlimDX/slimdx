@@ -21,27 +21,34 @@
 */
 #pragma once
 
+#include "Enums.h"
 #include "Result.h"
+
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
 	public ref class Configuration sealed
 	{
 	private:
-		static System::Collections::Generic::List<Result>^ resultWatches;
+		static bool m_EnableObjectTracking;
+		static System::Collections::Generic::Dictionary<Result,ResultWatchFlags>^ m_Watches;
 	
 		static Configuration();
 		
 		Configuration();
 	
 	internal:
-		static bool HasResultWatch( Result result );
+		static bool TryGetResultWatch( Result result, [Out] ResultWatchFlags% flags );
 
 	public:
-		property static bool EnableExceptions;
-		property static bool EnableObjectTracking;
+		property static bool EnableObjectTracking
+		{
+			bool get();
+			void set( bool value );
+		}
 		
-		static void AddResultWatch( Result result );
+		static void AddResultWatch( Result result, ResultWatchFlags flags );
 		static void ClearResultWatch( Result result );
 		static void ClearResultWatches();
 	};

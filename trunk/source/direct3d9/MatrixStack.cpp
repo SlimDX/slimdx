@@ -46,7 +46,7 @@ namespace SlimDX
 		{
 			ID3DXMatrixStack* matrixStack;
 			HRESULT hr = D3DXCreateMatrixStack( 0, &matrixStack );
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				throw gcnew Direct3D9Exception( "Failed to create MatrixStack." );
 
 			Construct(matrixStack);
@@ -55,85 +55,85 @@ namespace SlimDX
 		Result MatrixStack::Push()
 		{
 			HRESULT hr = InternalPointer->Push();
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		Result MatrixStack::Pop()
 		{
 			HRESULT hr = InternalPointer->Pop();
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		Result MatrixStack::LoadIdentity()
 		{
 			HRESULT hr = InternalPointer->LoadIdentity();
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		Result MatrixStack::LoadMatrix( Matrix matrix )
 		{
 			HRESULT hr = InternalPointer->LoadMatrix( reinterpret_cast<D3DXMATRIX*>( &matrix ) );
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		Result MatrixStack::MultiplyMatrix( Matrix matrix )
 		{
 			HRESULT hr = InternalPointer->MultMatrix( reinterpret_cast<D3DXMATRIX*>( &matrix ) );
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		Result MatrixStack::MultiplyMatrixLocal( Matrix matrix )
 		{
 			HRESULT hr = InternalPointer->MultMatrixLocal( reinterpret_cast<D3DXMATRIX*>( &matrix ) );
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		Result MatrixStack::RotateAxis( Vector3 axis, float angle )
 		{
 			HRESULT hr = InternalPointer->RotateAxis( reinterpret_cast<D3DXVECTOR3*>( &axis ), angle );
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		Result MatrixStack::RotateAxisLocal( Vector3 axis, float angle )
 		{
 			HRESULT hr = InternalPointer->RotateAxisLocal( reinterpret_cast<D3DXVECTOR3*>( &axis ), angle );
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		Result MatrixStack::RotateYawPitchRoll( float yaw, float pitch, float roll )
 		{
 			HRESULT hr = InternalPointer->RotateYawPitchRoll( yaw, pitch, roll );
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		Result MatrixStack::RotateYawPitchRollLocal( float yaw, float pitch, float roll )
 		{
 			HRESULT hr = InternalPointer->RotateYawPitchRollLocal( yaw, pitch, roll );
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		Result MatrixStack::Scale( float x, float y, float z )
 		{
 			HRESULT hr = InternalPointer->Scale( x, y, z );
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		Result MatrixStack::ScaleLocal( float x, float y, float z )
 		{
 			HRESULT hr = InternalPointer->ScaleLocal( x, y, z );
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		Result MatrixStack::Translate( float x, float y, float z )
 		{
 			HRESULT hr = InternalPointer->Translate( x, y, z );
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		Result MatrixStack::TranslateLocal( float x, float y, float z )
 		{
 			HRESULT hr = InternalPointer->TranslateLocal( x, y, z );
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		Matrix MatrixStack::Top::get()

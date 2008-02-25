@@ -64,7 +64,7 @@ namespace Direct3D9
 		IDirect3DSwapChain9* swapChain;
 		HRESULT hr = device->InternalPointer->CreateAdditionalSwapChain( &d3dpp, &swapChain );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( "Failed to create swap chain." );
 
 		Construct(swapChain);
@@ -75,7 +75,7 @@ namespace Direct3D9
 		IDirect3DSurface9* surface;
 		HRESULT hr = InternalPointer->GetBackBuffer( index, D3DBACKBUFFER_TYPE_MONO, &surface );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Surface( surface );
@@ -87,7 +87,7 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "destinationSurface" );
 
 		HRESULT hr = InternalPointer->GetFrontBufferData( destinationSurface->SurfacePointer );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Device^ SwapChain::GetDevice()
@@ -95,7 +95,7 @@ namespace Direct3D9
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Device( device );
@@ -105,7 +105,7 @@ namespace Direct3D9
 	{
 		SlimDX::Direct3D9::DisplayMode mode;
 		HRESULT hr = InternalPointer->GetDisplayMode( reinterpret_cast<D3DDISPLAYMODE*>( &mode ) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return mode;
 	}
@@ -115,7 +115,7 @@ namespace Direct3D9
 		D3DRASTER_STATUS status;
 		HRESULT hr = InternalPointer->GetRasterStatus( &status );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return SlimDX::Direct3D9::RasterStatus();
 
 		SlimDX::Direct3D9::RasterStatus result;
@@ -127,7 +127,7 @@ namespace Direct3D9
 	Result SwapChain::Present( SlimDX::Direct3D9::Present flags )
 	{
 		HRESULT hr = InternalPointer->Present( 0, 0, 0, 0, static_cast<DWORD>( flags ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 }
 }
