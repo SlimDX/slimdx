@@ -2086,6 +2086,34 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Half"
+				>
+				<File
+					RelativePath="..\source\math\Half2.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Half2.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Half3.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Half3.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Half4.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Half4.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="XAudio2"

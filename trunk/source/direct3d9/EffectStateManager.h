@@ -53,12 +53,17 @@ namespace SlimDX
 		class IEffectStateManagerShim : public ID3DXEffectStateManager
 		{
 		private:
+			int refCount;
 			gcroot<IEffectStateManager^> m_WrappedInterface;
 
 		public:
 			IEffectStateManagerShim( IEffectStateManager^ wrappedInterface );
 
 			IEffectStateManager^ GetManager() { return m_WrappedInterface; }
+
+			HRESULT WINAPI QueryInterface( const IID &iid, LPVOID *ppv );
+			ULONG   WINAPI AddRef();
+			ULONG   WINAPI Release();
 
 			HRESULT WINAPI LightEnable( DWORD Index, BOOL Enable );
 			HRESULT WINAPI SetFVF( DWORD FVF );
