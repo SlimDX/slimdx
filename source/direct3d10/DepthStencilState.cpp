@@ -25,6 +25,7 @@
 #include "Direct3D10Exception.h"
 
 #include "DepthStencilState.h"
+#include "DepthStencilStateDescription.h"
 #include "Device.h"
 
 using namespace System;
@@ -33,50 +34,34 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	DepthStencilState::DepthStencilState( ID3D10DepthStencilState* state )
+	DepthStencilState::DepthStencilState( ID3D10DepthStencilState* pointer )
 	{
-		if( state == NULL )
-			throw gcnew ArgumentNullException( "state" );
-
-		Construct(state);
-		
-		D3D10_DEPTH_STENCIL_DESC description;
-		state->GetDesc( &description );
-		m_Description = gcnew DepthStencilStateDescription( description );
+		Construct( pointer );
 	}
 	
-	DepthStencilState::DepthStencilState( IntPtr state )
+	DepthStencilState::DepthStencilState( IntPtr pointer )
 	{
-		Construct( state, NativeInterface );
-
-		D3D10_DEPTH_STENCIL_DESC description;
-		InternalPointer->GetDesc( &description );
-		m_Description = gcnew DepthStencilStateDescription( description );
+		Construct( pointer, NativeInterface );
 	}
 
-	DepthStencilState::DepthStencilState( Device^ device, DepthStencilStateDescription^ description )
+	DepthStencilState::DepthStencilState( Device^ device, DepthStencilStateDescription description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
-		if( description == nullptr )
-			throw gcnew ArgumentNullException( "description" );
-	
-		D3D10_DEPTH_STENCIL_DESC desc;
-		m_Description = description;
-		m_Description->FillNativeObject( desc );
 		
-		ID3D10DepthStencilState* state;
-		HRESULT hr = device->InternalPointer->CreateDepthStencilState( &desc, &state );
-		RECORD_D3D10( hr );
+		ID3D10DepthStencilState* state = 0;
+		D3D10_DEPTH_STENCIL_DESC nativeDescription = description.CreateNativeVersion();
+		if( RECORD_D3D10( device->InternalPointer->CreateDepthStencilState( &nativeDescription, &state ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
 		
-		Construct(state);
+		Construct( state );
 	}
 	
-	DepthStencilStateDescription^ DepthStencilState::CloneDescription()
+	DepthStencilStateDescription DepthStencilState::Description::get()
 	{
 		D3D10_DEPTH_STENCIL_DESC description;
 		InternalPointer->GetDesc( &description );
-		return gcnew DepthStencilStateDescription( description );
+		return DepthStencilStateDescription( description );
 	}
 }
 }

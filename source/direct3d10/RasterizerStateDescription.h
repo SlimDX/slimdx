@@ -21,95 +21,91 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "Enums.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public ref class RasterizerStateDescription
+		public value class RasterizerStateDescription
 		{
 		private:
-			FillMode fillMode;
-            CullMode cullMode;
-            bool frontIsCounterclockwise;
-            int depthBias;
-            float depthBiasClamp;
-            float slopeScaledDepthBias;
-            bool depthClipEnabled;
-            bool scissorEnabled;
-            bool multisampleEnabled;
-            bool antialiasedLineEnabled;
+			Direct3D10::FillMode m_FillMode;
+			Direct3D10::CullMode m_CullMode;
+			bool m_FrontCounterClockwise;
+			int m_DepthBias;
+			float m_DepthBiasClamp;
+			float m_SlopeScaledDepthBias;
+			bool m_DepthClipEnable;
+			bool m_ScissorEnable;
+			bool m_MultisampleEnable;
+			bool m_AntialiasedLineEnable;
 
 		internal:
 			RasterizerStateDescription( const D3D10_RASTERIZER_DESC& description );
 			
-			void FillNativeObject( D3D10_RASTERIZER_DESC& description);
+			D3D10_RASTERIZER_DESC CreateNativeVersion();
 			
 		public:
-			property SlimDX::Direct3D10::FillMode FillMode
-            {
-                SlimDX::Direct3D10::FillMode get() { return fillMode; }
-                void set( SlimDX::Direct3D10::FillMode value ) { fillMode = value; }
-            }
+			property Direct3D10::FillMode FillMode
+			{
+				Direct3D10::FillMode get();
+				void set( Direct3D10::FillMode value );
+			}
 
-            property SlimDX::Direct3D10::CullMode CullMode
-            {
-                SlimDX::Direct3D10::CullMode get() { return cullMode; }
-                void set( SlimDX::Direct3D10::CullMode value ) { cullMode = value; }
-            }
+			property Direct3D10::CullMode CullMode
+			{
+				Direct3D10::CullMode get();
+				void set( Direct3D10::CullMode value );
+			}
 
-            property bool FrontIsCounterclockwise
-            {
-                bool get() { return frontIsCounterclockwise; }
-                void set( bool value ) { frontIsCounterclockwise = value; }
-            }
+			property bool IsFrontCounterclockwise
+			{
+				bool get();
+				void set( bool value );
+			}
 
-            property int DepthBias
-            {
-                int get() { return depthBias; }
-                void set( int value ) { depthBias = value; }
-            }
+			property int DepthBias
+			{
+				int get();
+				void set( int value );
+			}
 
-            property float DepthBiasClamp
-            {
-                float get() { return depthBiasClamp; }
-                void set( float value ) { depthBiasClamp = value; }
-            }
+			property float DepthBiasClamp
+			{
+				float get();
+				void set( float value );
+			}
 
-            property float SlopeScaledDepthBias
-            {
-                float get() { return slopeScaledDepthBias; }
-                void set( float value ) { slopeScaledDepthBias = value; }
-            }
+			property float SlopeScaledDepthBias
+			{
+				float get();
+				void set( float value );
+			}
 
-            property bool DepthClipEnabled
-            {
-                bool get() { return depthClipEnabled; }
-                void set( bool value ) { depthClipEnabled = value; }
-            }
+			property bool IsDepthClipEnabled
+			{
+				bool get();
+				void set( bool value );
+			}
 
-            property bool ScissorEnabled
-            {
-                bool get() { return scissorEnabled; }
-                void set( bool value ) { scissorEnabled = value; }
-            }
+			property bool IsScissorEnabled
+			{
+				bool get();
+				void set( bool value );
+			}
 
-            property bool MultisampleEnabled
-            {
-                bool get() { return multisampleEnabled; }
-                void set( bool value ) { multisampleEnabled = value; }
-            }
+			property bool IsMultisampleEnabled
+			{
+				bool get();
+				void set( bool value );
+			}
 
-            property bool AntialiasedLineEnabled
-            {
-                bool get() { return antialiasedLineEnabled; }
-                void set( bool value ) { antialiasedLineEnabled = value; }
-            }
-			
-			RasterizerStateDescription();
+			property bool IsAntialiasedLineEnabled
+			{
+				bool get();
+				void set( bool value );
+			}
 		};
 	}
 };

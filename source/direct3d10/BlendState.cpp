@@ -26,6 +26,7 @@
 #include "Direct3D10Exception.h"
 
 #include "BlendState.h"
+#include "BlendStateDescription.h"
 #include "Device.h"
 
 using namespace System;
@@ -34,50 +35,35 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	BlendState::BlendState( ID3D10BlendState* state )
+	BlendState::BlendState( ID3D10BlendState* pointer )
 	{
-		if( state == NULL )
-			throw gcnew ArgumentNullException( "state" );
-
-		Construct(state);
-		
-		D3D10_BLEND_DESC description;
-		state->GetDesc( &description );
-		m_Description = gcnew BlendStateDescription( description );
+		Construct( pointer );
 	}
 	
-	BlendState::BlendState( IntPtr state )
+	BlendState::BlendState( IntPtr pointer )
 	{
-		Construct( state, NativeInterface );
-
-		D3D10_BLEND_DESC description;
-		InternalPointer->GetDesc( &description );
-		m_Description = gcnew BlendStateDescription( description );
+		Construct( pointer, NativeInterface );
 	}
 
-	BlendState::BlendState( Device^ device, BlendStateDescription^ description )
+	BlendState::BlendState( Device^ device, BlendStateDescription description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
-		if( description == nullptr )
-			throw gcnew ArgumentNullException( "description" );
 	
-		D3D10_BLEND_DESC desc;
-		m_Description = description;
-		m_Description->FillNativeObject( desc );
+		ID3D10BlendState* state = 0;
+		D3D10_BLEND_DESC nativeDescription = description.CreateNativeVersion();
 		
-		ID3D10BlendState* state;
-		HRESULT hr = device->InternalPointer->CreateBlendState( &desc, &state );
-		RECORD_D3D10( hr );
+		if( RECORD_D3D10( device->InternalPointer->CreateBlendState( &nativeDescription, &state ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
 		
-		Construct(state);
+		Construct( state );
 	}
 	
-	BlendStateDescription^ BlendState::CloneDescription()
+	BlendStateDescription BlendState::Description::get()
 	{
 		D3D10_BLEND_DESC description;
 		InternalPointer->GetDesc( &description );
-		return gcnew BlendStateDescription( description );
+		return BlendStateDescription( description );
 	}
 }
 }
