@@ -58,6 +58,20 @@ namespace Direct3D9
 		CharacterSet charSet, Precision outputPrecision, FontQuality quality,
 		PitchAndFamily pitchAndFamily, String^ faceName )
 	{
+		Build( device, height, width, weight, mipLevels, italic, charSet, outputPrecision, quality,
+			pitchAndFamily, faceName );
+	}
+
+	Font::Font( Device^ device, System::Drawing::Font^ font )
+	{
+		Build( device, font->Height, 0, (font->Bold) ? FontWeight::Bold : FontWeight::Normal, 0, font->Italic, 
+			CharacterSet::Default, Precision::Default, FontQuality::Default, PitchAndFamily::Default, font->Name );
+	}
+
+	void Font::Build( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,
+		CharacterSet charSet, Precision outputPrecision, FontQuality quality,
+		PitchAndFamily pitchAndFamily, String^ faceName )
+	{
 		ID3DXFont* font;
 		pin_ptr<const wchar_t> pinned_name = PtrToStringChars( faceName );
 
@@ -68,12 +82,6 @@ namespace Direct3D9
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(font);
-	}
-
-	Font::Font( Device^ device, System::Drawing::Font^ font )
-	{
-		Font( device, font->Height, 0, (font->Bold) ? FontWeight::Bold : FontWeight::Normal, 0, font->Italic, 
-			CharacterSet::Default, Precision::Default, FontQuality::Default, PitchAndFamily::Default, font->Name );
 	}
 
 	int Font::DrawString( Sprite^ sprite, String^ text, System::Drawing::Rectangle rect, DrawTextFormat format, Color4 color )

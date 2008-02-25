@@ -51,6 +51,8 @@ namespace SlimDX
 			Font( ID3DXFont* font );
 			*/
 
+			void Build( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic, CharacterSet characterSet, Precision outputPrecision, FontQuality quality, PitchAndFamily pitchAndFamily, System::String^ faceName );
+
 		public:
 			Font( System::IntPtr font );
 			Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic, CharacterSet characterSet, Precision outputPrecision, FontQuality quality, PitchAndFamily pitchAndFamily, System::String^ faceName );
