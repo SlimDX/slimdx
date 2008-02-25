@@ -78,7 +78,7 @@ namespace Direct3D10
 		ID3D10Buffer* buffer = 0;
 		if( data == nullptr )
 		{
-			if( Result::Record( device->InternalPointer->CreateBuffer( &description, 0, &buffer ) ).IsFailure )
+			if( RECORD_D3D10( device->InternalPointer->CreateBuffer( &description, 0, &buffer ) ).IsFailure )
 				throw gcnew Direct3D10Exception( Result::Last );
 		}
 		else
@@ -88,7 +88,7 @@ namespace Direct3D10
 			initialData.pSysMem = data->RawPointer + data->Position;
 			data->Position += sizeInBytes;
 			
-			if( Result::Record( device->InternalPointer->CreateBuffer( &description, &initialData, &buffer ) ).IsFailure )
+			if( RECORD_D3D10( device->InternalPointer->CreateBuffer( &description, &initialData, &buffer ) ).IsFailure )
 				throw gcnew Direct3D10Exception( Result::Last );
 		}
 		
@@ -105,7 +105,7 @@ namespace Direct3D10
 	DataStream^ Buffer::Map( MapMode mode, MapFlags flags )
 	{
 		void* mappedPtr = 0;
-		if( Result::Record( InternalPointer->Map( static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedPtr ) ).IsFailure )
+		if( RECORD_D3D10( InternalPointer->Map( static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedPtr ) ).IsFailure )
 			return nullptr;
 		
 		return gcnew DataStream( mappedPtr, Description.SizeInBytes, true, true, false );
