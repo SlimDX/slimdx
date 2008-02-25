@@ -23,11 +23,13 @@
 
 #include "../ComObject.h"
 
+#include "DeviceChild.h"
+
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class PixelShader : public ComObject
+		public ref class PixelShader : public DeviceChild
 		{
 			COMOBJECT(ID3D10PixelShader);
 

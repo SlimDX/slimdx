@@ -25,13 +25,14 @@
 
 #include "../dxgi/Enums.h"
 
+#include "DeviceChild.h"
 #include "Enums.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class Resource : public ComObject
+		public ref class Resource : public DeviceChild
 		{
 			COMOBJECT(ID3D10Resource);
 		

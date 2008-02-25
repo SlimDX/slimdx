@@ -19,25 +19,34 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "../ComObject.h"
+#include <d3d10.h>
 
+#include "Direct3D10Exception.h"
+
+#include "Device.h"
 #include "DeviceChild.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct3D10
+namespace Direct3D10
+{ 
+	DeviceChild::DeviceChild()
 	{
-		public ref class GeometryShader : public DeviceChild
-		{
-			COMOBJECT(ID3D10GeometryShader);
-
-		internal:
-			GeometryShader( ID3D10GeometryShader* pointer );
-			
-		public:
-			GeometryShader( System::IntPtr pointer );
-		};
 	}
-};
+	
+	DeviceChild::DeviceChild( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+
+	Device^ DeviceChild::GetDevice()
+	{
+		ID3D10Device* device = 0;
+		InternalPointer->GetDevice( &device );
+		return gcnew Device( device );
+	}
+}
+}

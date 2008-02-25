@@ -23,11 +23,13 @@
 
 #include "../ComObject.h"
 
+#include "DeviceChild.h"
+
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class VertexShader : public ComObject
+		public ref class VertexShader : public DeviceChild
 		{
 			COMOBJECT(ID3D10VertexShader);
 
