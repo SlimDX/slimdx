@@ -34,6 +34,7 @@ namespace SlimDX
 	internal:
 		Result( int hr );
 		
+		generic< typename T >
 		static Result Record( int hr );
 		
 	public:

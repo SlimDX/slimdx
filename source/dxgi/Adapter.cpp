@@ -47,7 +47,7 @@ namespace DXGI
 	AdapterDescription Adapter::Description::get()
 	{
 		DXGI_ADAPTER_DESC nativeDescription;
-		Result::Record( InternalPointer->GetDesc( &nativeDescription ) );
+		RECORD_DXGI( InternalPointer->GetDesc( &nativeDescription ) );
 		if( Result::Last.IsSuccess )
 			return AdapterDescription( nativeDescription );
 		
@@ -70,7 +70,7 @@ namespace DXGI
 	Output^ Adapter::GetOutput( int index )
 	{
 		IDXGIOutput* output = 0;
-		Result::Record( InternalPointer->EnumOutputs( index, &output) );
+		RECORD_DXGI( InternalPointer->EnumOutputs( index, &output) );
 		if( Result::Last.IsFailure )
 			return nullptr;
 		return gcnew Output( output );
@@ -86,7 +86,7 @@ namespace DXGI
 	{
 		GUID guid = Utilities::GetNativeGuidForType( type );
 		LARGE_INTEGER version;
-		Result::Record( InternalPointer->CheckInterfaceSupport( guid, &version ) );
+		RECORD_DXGI( InternalPointer->CheckInterfaceSupport( guid, &version ) );
 		if( Result::Last == Result( DXGI_ERROR_UNSUPPORTED ) )
 		{
 			userModeVersion = 0;

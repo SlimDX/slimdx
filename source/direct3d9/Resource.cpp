@@ -24,6 +24,8 @@
 
 #include "../ComObject.h"
 
+#include "Direct3D9Exception.h"
+
 #include "Device.h"
 #include "Resource.h"
 
@@ -43,7 +45,7 @@ namespace Direct3D9
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Device( device );

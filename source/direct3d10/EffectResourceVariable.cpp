@@ -21,7 +21,8 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
+
+#include "Direct3D10Exception.h"
 
 #include "EffectResourceVariable.h"
 #include "ShaderResourceView.h"
@@ -46,13 +47,13 @@ namespace Direct3D10
 	
 	Result EffectResourceVariable::SetResource( ShaderResourceView^ view )
 	{
-		return Result::Record( m_Pointer->SetResource( static_cast<ID3D10ShaderResourceView*>( view->InternalPointer ) ) );
+		return RECORD_D3D10( m_Pointer->SetResource( static_cast<ID3D10ShaderResourceView*>( view->InternalPointer ) ) );
 	}
 	
 	ShaderResourceView^ EffectResourceVariable::GetResource()
 	{
 		ID3D10ShaderResourceView* view = 0;
-		if( Result::Record( m_Pointer->GetResource( &view ) ).IsFailure )
+		if( RECORD_D3D10( m_Pointer->GetResource( &view ) ).IsFailure )
 			return nullptr;
 			
 		return gcnew ShaderResourceView( view );

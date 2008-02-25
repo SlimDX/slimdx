@@ -24,6 +24,9 @@
 #include <d3dx9.h>
 
 #include "../DataStream.h"
+
+#include "Direct3D9Exception.h"
+
 #include "Enums.h"
 #include "Vertex.h"
 #include "D3DX.h"
@@ -54,7 +57,7 @@ namespace SlimDX
 
 			HRESULT hr = D3DXDeclaratorFromFVF( static_cast<DWORD>( fvf ), elementBuffer );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
 			// Apparently the returned decl does not include an End element. This is bizarre and confusing,
@@ -74,7 +77,7 @@ namespace SlimDX
 			pin_ptr<VertexElement> pinnedDecl = &declarator[0];
 
 			HRESULT hr = D3DXFVFFromDeclarator( reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ), &result );
-			Result::Record( hr );
+			RECORD_D3D9( hr );
 
 			return static_cast<VertexFormat>( result );
 		}
@@ -86,7 +89,7 @@ namespace SlimDX
 
 			HRESULT hr = D3DXGenerateOutputDecl( elementBuffer, reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDecl ) );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
 			// Apparently the returned decl does not include an End element. This is bizarre and confusing,
@@ -114,7 +117,7 @@ namespace SlimDX
 
 			HRESULT hr = D3DXRectPatchSize( &segmentCount, &tris, &verts );
 
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 			{
 				triangleCount = 0;
 				vertexCount = 0;
@@ -135,7 +138,7 @@ namespace SlimDX
 
 			HRESULT hr = D3DXTriPatchSize( &segmentCount, &tris, &verts );
 
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 			{
 				triangleCount = 0;
 				vertexCount = 0;
@@ -170,7 +173,7 @@ namespace SlimDX
 			HRESULT hr = D3DXOptimizeFaces( reinterpret_cast<LPCVOID>( pinnedIndices ), faceCount, vertexCount,
 				TRUE, reinterpret_cast<DWORD*>( pinnedResults ) );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
 			return results;
@@ -186,7 +189,7 @@ namespace SlimDX
 			HRESULT hr = D3DXOptimizeFaces( reinterpret_cast<LPCVOID>( pinnedIndices ), faceCount, vertexCount,
 				FALSE, reinterpret_cast<DWORD*>( pinnedResults ) );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
 			return results;
@@ -202,7 +205,7 @@ namespace SlimDX
 			HRESULT hr = D3DXOptimizeVertices( reinterpret_cast<LPCVOID>( pinnedIndices ), faceCount, vertexCount,
 				TRUE, reinterpret_cast<DWORD*>( pinnedResults ) );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
 			return results;
@@ -218,7 +221,7 @@ namespace SlimDX
 			HRESULT hr = D3DXOptimizeVertices( reinterpret_cast<LPCVOID>( pinnedIndices ), faceCount, vertexCount,
 				FALSE, reinterpret_cast<DWORD*>( pinnedResults ) );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
 			return results;

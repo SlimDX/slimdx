@@ -53,7 +53,7 @@ namespace SlimDX
 			ID3DXRenderToSurface* rtsPointer;
 			HRESULT hr = D3DXCreateRenderToSurface( device->InternalPointer, width, height, static_cast<D3DFORMAT>( format ), FALSE, D3DFMT_UNKNOWN, &rtsPointer );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				throw gcnew Direct3D9Exception( Result::Last );
 
 			Construct(rtsPointer);
@@ -65,7 +65,7 @@ namespace SlimDX
 			HRESULT hr = D3DXCreateRenderToSurface( device->InternalPointer, width, height,
 				static_cast<D3DFORMAT>( format ), TRUE, static_cast<D3DFORMAT>( depthStencilFormat ), &rtsPointer );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				throw gcnew Direct3D9Exception( Result::Last );
 
 			Construct(rtsPointer);
@@ -75,13 +75,13 @@ namespace SlimDX
 		{
 			IDirect3DSurface9* surface = renderSurface->SurfacePointer;
 			HRESULT hr = InternalPointer->BeginScene( surface, reinterpret_cast<D3DVIEWPORT9*>( &viewport ) );
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		Result RenderToSurface::EndScene( Filter mipFilter )
 		{
 			HRESULT hr = InternalPointer->EndScene( static_cast<DWORD>( mipFilter ) );
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		Device^ RenderToSurface::GetDevice()
@@ -89,7 +89,7 @@ namespace SlimDX
 			IDirect3DDevice9* device;
 			HRESULT hr = InternalPointer->GetDevice( &device );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
 			return gcnew Device( device );
@@ -98,13 +98,13 @@ namespace SlimDX
 		Result RenderToSurface::OnLostDevice()
 		{
 			HRESULT hr = InternalPointer->OnLostDevice();
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		Result RenderToSurface::OnResetDevice()
 		{
 			HRESULT hr = InternalPointer->OnResetDevice();
-			return Result::Record( hr );
+			return RECORD_D3D9( hr );
 		}
 
 		RenderToSurfaceDescription RenderToSurface::Description::get()
@@ -112,7 +112,7 @@ namespace SlimDX
 			D3DXRTS_DESC description = {0};
 			HRESULT hr = InternalPointer->GetDesc( &description );
 			
-			if( Result::Record( hr ).IsFailure )
+			if( RECORD_D3D9( hr ).IsFailure )
 				return RenderToSurfaceDescription();
 
 			RenderToSurfaceDescription outDesc;

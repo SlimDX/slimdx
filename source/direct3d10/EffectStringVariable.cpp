@@ -21,7 +21,8 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
+
+#include "Direct3D10Exception.h"
 
 #include "EffectStringVariable.h"
 
@@ -46,7 +47,7 @@ namespace Direct3D10
 	String^ EffectStringVariable::GetString()
 	{
 		LPCSTR result = 0;
-		if( Result::Record( m_Pointer->GetString( &result ) ).IsFailure )
+		if( RECORD_D3D10( m_Pointer->GetString( &result ) ).IsFailure )
 			return nullptr;
 		
 		return gcnew String( result );

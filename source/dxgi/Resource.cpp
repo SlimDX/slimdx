@@ -45,7 +45,7 @@ namespace DXGI
 	ResourcePriority Resource::EvictionPriority::get()
 	{
 		UINT priority = 0;
-		if( Result::Record( InternalPointer->GetEvictionPriority( &priority ) ).IsFailure )
+		if( RECORD_DXGI( InternalPointer->GetEvictionPriority( &priority ) ).IsFailure )
 			throw gcnew DXGIException( Result::Last );
 		
 		return static_cast<ResourcePriority>( priority );
@@ -53,14 +53,14 @@ namespace DXGI
 	
 	void Resource::EvictionPriority::set( ResourcePriority value )
 	{
-		if( Result::Record( InternalPointer->SetEvictionPriority( static_cast<UINT>( value ) ) ).IsFailure )
+		if( RECORD_DXGI( InternalPointer->SetEvictionPriority( static_cast<UINT>( value ) ) ).IsFailure )
 			throw gcnew DXGIException( Result::Last );
 	}
 	
 	DXGI::Usage Resource::Usage::get()
 	{
 		DXGI_USAGE usage = 0;
-		if( Result::Record( InternalPointer->GetUsage( &usage ) ).IsFailure )
+		if( RECORD_DXGI( InternalPointer->GetUsage( &usage ) ).IsFailure )
 			throw gcnew DXGIException( Result::Last );
 		
 		return static_cast<DXGI::Usage>( usage );

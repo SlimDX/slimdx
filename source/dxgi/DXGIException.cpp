@@ -51,7 +51,7 @@ namespace DXGI
 	}
 
 	DXGIException::DXGIException( Result result )
-	: SlimDXException( result.Code )
+	: SlimDXException( result )
 	{
 	}
 }

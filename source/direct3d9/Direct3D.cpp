@@ -48,7 +48,7 @@ namespace Direct3D9
 		DWORD flags = Direct3D::CheckWhql ? D3DENUM_WHQL_LEVEL : 0;
 
 		HRESULT hr = Direct3D::InternalPointer->GetAdapterIdentifier( adapter, flags, &ident );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 		
 		Adapter = adapter;
 		DriverName = gcnew String( ident.Driver );
@@ -296,7 +296,7 @@ namespace Direct3D9
         DisplayMode displayMode;
         HRESULT hr = m_Direct3D->EnumAdapterModes( adapter, static_cast<D3DFORMAT>( format ),
 			modeIndex, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
-        Result::Record( hr );
+        RECORD_D3D9( hr );
         return displayMode;
     }
 
@@ -309,7 +309,7 @@ namespace Direct3D9
 	{
 		D3DCAPS9 caps;
 		HRESULT hr = Direct3D::InternalPointer->GetDeviceCaps( adapter, static_cast<D3DDEVTYPE>( deviceType ), &caps );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return Capabilities( caps );
 	}

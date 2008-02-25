@@ -24,9 +24,11 @@
 #include <vcclr.h>
 
 #include "../ComObject.h"
+#include "../DataStream.h"
+
+#include "Direct3D9Exception.h"
 
 #include "Device.h"
-#include "../DataStream.h"
 #include "Surface.h"
 #include "Texture.h"
 
@@ -55,7 +57,7 @@ namespace Direct3D9
 		HRESULT hr = device->InternalPointer->CreateRenderTarget( width, height, static_cast<D3DFORMAT>( format ),
 			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality, lockable, &surface, NULL );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Surface( surface );
@@ -68,7 +70,7 @@ namespace Direct3D9
 		HRESULT hr = device->InternalPointer->CreateOffscreenPlainSurface( width, height,
 			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &surface, NULL );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Surface( surface );
@@ -82,7 +84,7 @@ namespace Direct3D9
 		HRESULT hr = device->InternalPointer->CreateDepthStencilSurface( width, height, static_cast<D3DFORMAT>( format ),
 			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality, discard, &surface, NULL );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Surface( surface );
@@ -101,7 +103,7 @@ namespace Direct3D9
 			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ),
 			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
 		
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Surface::FromMemory( Surface^ surface, array<Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle,
@@ -115,7 +117,7 @@ namespace Direct3D9
 			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ),
 			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
 
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Surface::FromMemory( Surface^ surface, array<Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle,
@@ -128,7 +130,7 @@ namespace Direct3D9
 			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ),
 			static_cast<D3DCOLOR>( colorKey ), NULL );
 
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Surface::FromMemory( Surface^ surface, array<Byte>^ memory, Filter filter, int colorKey )
@@ -138,7 +140,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXLoadSurfaceFromFileInMemory( surface->SurfacePointer, NULL, NULL, pinnedMemory, 
 			memory->Length, NULL, static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ), NULL );
 
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Surface::FromStream( Surface^ surface, Stream^ stream, Filter filter, int colorKey,
@@ -185,7 +187,7 @@ namespace Direct3D9
 			reinterpret_cast<const RECT*>( &destinationRectangle ), pinnedName,
 			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ),
 			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Surface::FromFile( Surface^ surface, String^ fileName, Filter filter, int colorKey, 
@@ -199,7 +201,7 @@ namespace Direct3D9
 			reinterpret_cast<const RECT*>( &destinationRectangle ), pinnedName,
 			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ),
 			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Surface::FromFile( Surface^ surface, String^ fileName, Filter filter, int colorKey, 
@@ -211,7 +213,7 @@ namespace Direct3D9
 			reinterpret_cast<const RECT*>( &destinationRectangle ), pinnedName,
 			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ),
 			static_cast<D3DCOLOR>( colorKey ), NULL );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Surface::FromFile( Surface^ surface, String^ fileName, Filter filter, int colorKey )
@@ -220,7 +222,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXLoadSurfaceFromFile( surface->SurfacePointer, NULL, NULL, pinnedName,
 			NULL, static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ), NULL );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Surface::FromSurface( Surface^ destinationSurface, Surface^ sourceSurface, Filter filter, int colorKey,
@@ -234,7 +236,7 @@ namespace Direct3D9
 			reinterpret_cast<const PALETTEENTRY*>( pinnedDest ), reinterpret_cast<const RECT*>( &destinationRectangle ),
 			sourceSurface->SurfacePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedSource ), 
 			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Surface::FromSurface( Surface^ destinationSurface, Surface^ sourceSurface, Filter filter, int colorKey,
@@ -243,14 +245,14 @@ namespace Direct3D9
 		HRESULT hr = D3DXLoadSurfaceFromSurface( destinationSurface->SurfacePointer, 
 			NULL, reinterpret_cast<const RECT*>( &destinationRectangle ), sourceSurface->SurfacePointer, NULL, 
 			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Surface::FromSurface( Surface^ destinationSurface, Surface^ sourceSurface, Filter filter, int colorKey )
 	{
 		HRESULT hr = D3DXLoadSurfaceFromSurface( destinationSurface->SurfacePointer, NULL, NULL, 
 			sourceSurface->SurfacePointer, NULL, NULL, static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	DataStream^ Surface::ToStream( Surface^ surface, ImageFileFormat format, System::Drawing::Rectangle rectangle,
@@ -262,7 +264,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXSaveSurfaceToFileInMemory( &result, static_cast<D3DXIMAGE_FILEFORMAT>( format ),
 			surface->SurfacePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ), reinterpret_cast<const RECT*>( &rectangle ) );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			if( result != NULL )
 				result->Release();
@@ -279,7 +281,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXSaveSurfaceToFileInMemory( &result, static_cast<D3DXIMAGE_FILEFORMAT>( format ),
 			surface->SurfacePointer, NULL, reinterpret_cast<const RECT*>( &rectangle ) );
 	
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			if( result != NULL )
 				result->Release();
@@ -296,7 +298,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXSaveSurfaceToFileInMemory( &result, static_cast<D3DXIMAGE_FILEFORMAT>( format ),
 			surface->SurfacePointer, NULL, NULL );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			if( result != NULL )
 				result->Release();
@@ -315,7 +317,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXSaveSurfaceToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			surface->SurfacePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
 			reinterpret_cast<const RECT*>( &rectangle ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Surface::ToFile( Surface^ surface, String^ fileName, ImageFileFormat format, 
@@ -325,7 +327,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXSaveSurfaceToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			surface->SurfacePointer, NULL, reinterpret_cast<const RECT*>( &rectangle ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Surface::ToFile( Surface^ surface, String^ fileName, ImageFileFormat format )
@@ -334,7 +336,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXSaveSurfaceToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			surface->SurfacePointer, NULL, NULL );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	SurfaceDescription Surface::Description::get()
@@ -342,7 +344,7 @@ namespace Direct3D9
 		SurfaceDescription description;
 
 		HRESULT hr = SurfacePointer->GetDesc( reinterpret_cast<D3DSURFACE_DESC*>( &description ) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return description;
 	}
@@ -353,7 +355,7 @@ namespace Direct3D9
 		
 		HRESULT hr = SurfacePointer->LockRect( &lockedRect, NULL, static_cast<DWORD>( flags ) );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 		
 		int lockedSize = lockedRect.Pitch * Description.Height;
@@ -370,7 +372,7 @@ namespace Direct3D9
 
 		HRESULT hr = SurfacePointer->LockRect( &lockedRect, &nativeRect, static_cast<DWORD>( flags ) );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 		
 		int lockedSize = lockedRect.Pitch * Description.Height;
@@ -383,7 +385,7 @@ namespace Direct3D9
 	Result Surface::UnlockRectangle()
 	{
 		HRESULT hr = SurfacePointer->UnlockRect();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	IntPtr Surface::GetDC()
@@ -392,7 +394,7 @@ namespace Direct3D9
 		
 		HRESULT hr = SurfacePointer->GetDC( &hdc );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return IntPtr::Zero;
 
 		IntPtr ptr( hdc );
@@ -402,7 +404,7 @@ namespace Direct3D9
 	Result Surface::ReleaseDC( IntPtr hdc )
 	{
 		HRESULT hr = SurfacePointer->ReleaseDC( static_cast<HDC>( hdc.ToPointer() ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 }
 }

@@ -24,9 +24,11 @@
 #include <vcclr.h>
 
 #include "../ComObject.h"
+#include "../DataStream.h"
+
+#include "Direct3D9Exception.h"
 
 #include "Device.h"
-#include "../DataStream.h"
 #include "Volume.h"
 #include "Texture.h"
 
@@ -57,7 +59,7 @@ namespace Direct3D9
 		VolumeDescription description;
 
 		HRESULT hr = VolumePointer->GetDesc( reinterpret_cast<D3DVOLUME_DESC*>( &description ) );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return description;
 	}
@@ -68,7 +70,7 @@ namespace Direct3D9
 
 		HRESULT hr = VolumePointer->LockBox( &lockedBox, NULL, static_cast<DWORD>( flags ) );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
 		int lockedSize = lockedBox.RowPitch * lockedBox.SlicePitch * Description.Height;
@@ -84,7 +86,7 @@ namespace Direct3D9
 
 		HRESULT hr = VolumePointer->LockBox( &lockedBox, reinterpret_cast<D3DBOX*>( &box ), static_cast<DWORD>( flags ) );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 		
 		int lockedSize = lockedBox.RowPitch * lockedBox.SlicePitch * Description.Height;
@@ -97,7 +99,7 @@ namespace Direct3D9
 	Result Volume::UnlockBox()
 	{
 		HRESULT hr = VolumePointer->UnlockBox();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Volume::FromMemory( Volume^ volume, array<Byte>^ memory, Filter filter, int colorKey, Box sourceBox,
@@ -112,7 +114,7 @@ namespace Direct3D9
 			reinterpret_cast<const D3DBOX*>( &destinationBox ), pinnedMemory, memory->Length,
 			reinterpret_cast<const D3DBOX*>( &sourceBox ), static_cast<DWORD>( filter ),
 			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Volume::FromMemory( Volume^ volume, array<Byte>^ memory, Filter filter, int colorKey, Box sourceBox,
@@ -125,7 +127,7 @@ namespace Direct3D9
 			reinterpret_cast<const D3DBOX*>( &destinationBox ), pinnedMemory, memory->Length,
 			reinterpret_cast<const D3DBOX*>( &sourceBox ), static_cast<DWORD>( filter ),
 			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Volume::FromMemory( Volume^ volume, array<Byte>^ memory, Filter filter, int colorKey, Box sourceBox,
@@ -137,7 +139,7 @@ namespace Direct3D9
 			reinterpret_cast<const D3DBOX*>( &destinationBox ), pinnedMemory, memory->Length,
 			reinterpret_cast<const D3DBOX*>( &sourceBox ), static_cast<DWORD>( filter ),
 			static_cast<D3DCOLOR>( colorKey ), NULL );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Volume::FromMemory( Volume^ volume, array<Byte>^ memory, Filter filter, int colorKey )
@@ -146,7 +148,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXLoadVolumeFromFileInMemory( volume->VolumePointer, NULL, NULL, pinnedMemory, 
 			memory->Length, NULL, static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ), NULL );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Volume::FromStream( Volume^ volume, Stream^ stream, Filter filter, int colorKey, Box sourceBox, 
@@ -191,7 +193,7 @@ namespace Direct3D9
 			reinterpret_cast<const D3DBOX*>( &destinationBox ), pinnedName,
 			reinterpret_cast<const D3DBOX*>( &sourceBox ), static_cast<DWORD>( filter ),
 			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Volume::FromFile( Volume^ volume, String^ fileName, Filter filter, int colorKey, 
@@ -205,7 +207,7 @@ namespace Direct3D9
 			reinterpret_cast<const D3DBOX*>( &destinationBox ), pinnedName,
 			reinterpret_cast<const D3DBOX*>( &sourceBox ), static_cast<DWORD>( filter ),
 			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Volume::FromFile( Volume^ volume, String^ fileName, Filter filter, int colorKey, 
@@ -217,7 +219,7 @@ namespace Direct3D9
 			reinterpret_cast<const D3DBOX*>( &destinationBox ), pinnedName,
 			reinterpret_cast<const D3DBOX*>( &sourceBox ), static_cast<DWORD>( filter ),
 			static_cast<D3DCOLOR>( colorKey ), NULL );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Volume::FromFile( Volume^ volume, String^ fileName, Filter filter, int colorKey )
@@ -226,7 +228,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXLoadVolumeFromFile( volume->VolumePointer, NULL, NULL, pinnedName,
 			NULL, static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ), NULL );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Volume::FromVolume( Volume^ destinationVolume, Volume^ sourceVolume, Filter filter, int colorKey,
@@ -240,7 +242,7 @@ namespace Direct3D9
 			reinterpret_cast<const PALETTEENTRY*>( pinnedDest ), reinterpret_cast<const D3DBOX*>( &destinationBox ),
 			sourceVolume->VolumePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedSource ), 
 			reinterpret_cast<const D3DBOX*>( &sourceBox ), static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Volume::FromVolume( Volume^ destinationVolume, Volume^ sourceVolume, Filter filter, int colorKey,
@@ -249,14 +251,14 @@ namespace Direct3D9
 		HRESULT hr = D3DXLoadVolumeFromVolume( destinationVolume->VolumePointer, 
 			NULL, reinterpret_cast<const D3DBOX*>( &destinationBox ), sourceVolume->VolumePointer, NULL, 
 			reinterpret_cast<const D3DBOX*>( &sourceBox ), static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Volume::FromVolume( Volume^ destinationVolume, Volume^ sourceVolume, Filter filter, int colorKey )
 	{
 		HRESULT hr = D3DXLoadVolumeFromVolume( destinationVolume->VolumePointer, NULL, NULL, 
 			sourceVolume->VolumePointer, NULL, NULL, static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	DataStream^ Volume::ToStream( Volume^ volume, ImageFileFormat format, Box box,
@@ -268,7 +270,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXSaveVolumeToFileInMemory( &result, static_cast<D3DXIMAGE_FILEFORMAT>( format ),
 			volume->VolumePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ), reinterpret_cast<const D3DBOX*>( &box ) );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 		{
 			if( result != NULL )
 				result->Release();
@@ -285,7 +287,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXSaveVolumeToFileInMemory( &result, static_cast<D3DXIMAGE_FILEFORMAT>( format ),
 			volume->VolumePointer, NULL, reinterpret_cast<const D3DBOX*>( &box ) );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 		{
 			if( result != NULL )
 				result->Release();
@@ -302,7 +304,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXSaveVolumeToFileInMemory( &result, static_cast<D3DXIMAGE_FILEFORMAT>( format ),
 			volume->VolumePointer, NULL, NULL );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 		{
 			if( result != NULL )
 				result->Release();
@@ -321,7 +323,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXSaveVolumeToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			volume->VolumePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
 			reinterpret_cast<const D3DBOX*>( &box ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Volume::ToFile( Volume^ volume, String^ fileName, ImageFileFormat format, 
@@ -331,7 +333,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXSaveVolumeToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			volume->VolumePointer, NULL, reinterpret_cast<const D3DBOX*>( &box ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Volume::ToFile( Volume^ volume, String^ fileName, ImageFileFormat format )
@@ -340,7 +342,7 @@ namespace Direct3D9
 		
 		HRESULT hr = D3DXSaveVolumeToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			volume->VolumePointer, NULL, NULL );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 }
 }

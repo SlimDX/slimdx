@@ -38,7 +38,7 @@ namespace DXGI
 	Factory::Factory()
 	{
 		IDXGIFactory* factory = 0;
-		Result::Record( CreateDXGIFactory( __uuidof( IDXGIFactory ), reinterpret_cast<void**>( &factory ) ) );
+		RECORD_DXGI( CreateDXGIFactory( __uuidof( IDXGIFactory ), reinterpret_cast<void**>( &factory ) ) );
 		if( Result::Last.IsFailure )
 			throw gcnew DXGIException( Result::Last );
 
@@ -66,7 +66,7 @@ namespace DXGI
 	Adapter^ Factory::GetAdapter( int index )
 	{
 		IDXGIAdapter* adapter = 0;
-		Result::Record( InternalPointer->EnumAdapters( index, &adapter) );
+		RECORD_DXGI( InternalPointer->EnumAdapters( index, &adapter) );
 		if( Result::Last.IsFailure )
 			return nullptr;
 		return gcnew Adapter( adapter );
@@ -79,7 +79,7 @@ namespace DXGI
 			
 		HINSTANCE instance = reinterpret_cast<HINSTANCE>( module.ToInt32() );
 		IDXGIAdapter* adapter = 0;
-		Result::Record( InternalPointer->CreateSoftwareAdapter( instance, &adapter ) );
+		RECORD_DXGI( InternalPointer->CreateSoftwareAdapter( instance, &adapter ) );
 		
 		if( adapter == 0 )
 			return nullptr;
@@ -94,13 +94,13 @@ namespace DXGI
 	IntPtr Factory::GetWindowAssociation()
 	{
 		HWND window = 0;
-		Result::Record( InternalPointer->GetWindowAssociation( &window ) );
+		RECORD_DXGI( InternalPointer->GetWindowAssociation( &window ) );
 		return IntPtr( window );
 	}
 	
 	Result Factory::SetWindowAssociation( IntPtr handle, WindowAssociationFlags flags )
 	{
-		return Result::Record( InternalPointer->MakeWindowAssociation( reinterpret_cast<HWND>( handle.ToInt32() ), static_cast<UINT>( flags ) ) );
+		return RECORD_DXGI( InternalPointer->MakeWindowAssociation( reinterpret_cast<HWND>( handle.ToInt32() ), static_cast<UINT>( flags ) ) );
 	}
 }
 }

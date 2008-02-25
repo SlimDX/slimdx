@@ -60,7 +60,7 @@ namespace Direct3D10
 	{
 		ID3DX10Font* font = 0;
 		pin_ptr<const wchar_t> pinned_name = PtrToStringChars( faceName );
-		if( Result::Record( D3DX10CreateFont( device->InternalPointer, height, width, static_cast<UINT>( weight ), mipLevels, isItalic, static_cast<UINT>( characterSet ), static_cast<UINT>( precision ), static_cast< UINT>( quality ), static_cast<UINT>( pitchAndFamily ), pinned_name, &font ) ).IsFailure )
+		if( RECORD_D3D10( D3DX10CreateFont( device->InternalPointer, height, width, static_cast<UINT>( weight ), mipLevels, isItalic, static_cast<UINT>( characterSet ), static_cast<UINT>( precision ), static_cast< UINT>( quality ), static_cast<UINT>( pitchAndFamily ), pinned_name, &font ) ).IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 
 		return font;
@@ -69,7 +69,7 @@ namespace Direct3D10
 	FontDescription Font::Description::get()
 	{
 		D3DX10_FONT_DESC nativeDescription;
-		if( Result::Record( InternalPointer->GetDesc( &nativeDescription ) ).IsFailure )
+		if( RECORD_D3D10( InternalPointer->GetDesc( &nativeDescription ) ).IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 			
 		return FontDescription( nativeDescription );
@@ -87,18 +87,18 @@ namespace Direct3D10
 
 	Result Font::PreloadCharacters( int first, int last )
 	{
-		return Result::Record( InternalPointer->PreloadCharacters( first, last ) );
+		return RECORD_D3D10( InternalPointer->PreloadCharacters( first, last ) );
 	}
 
 	Result Font::PreloadGlyphs( int first, int last )
 	{
-		return Result::Record( InternalPointer->PreloadGlyphs( first, last ) );
+		return RECORD_D3D10( InternalPointer->PreloadGlyphs( first, last ) );
 	}
 
 	Result Font::PreloadText( String^ text )
 	{
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
-		return Result::Record( InternalPointer->PreloadText( pinned_text, text->Length ) );
+		return RECORD_D3D10( InternalPointer->PreloadText( pinned_text, text->Length ) );
 	}
 }
 }

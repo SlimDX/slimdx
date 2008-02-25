@@ -55,7 +55,7 @@ namespace SlimDX
 		{
 			GUID renderGuid;
 			GUID captureGuid;
-			Result::Record( XInputGetDSoundAudioDeviceGuids( m_UserIndex, &renderGuid, &captureGuid ) );
+			RECORD_XINPUT( XInputGetDSoundAudioDeviceGuids( m_UserIndex, &renderGuid, &captureGuid ) );
 			
 			return Utilities::ConvertNativeGuid( renderGuid );
 		}
@@ -64,7 +64,7 @@ namespace SlimDX
 		{
 			GUID renderGuid;
 			GUID captureGuid;
-			Result::Record( XInputGetDSoundAudioDeviceGuids( m_UserIndex, &renderGuid, &captureGuid ) );
+			RECORD_XINPUT( XInputGetDSoundAudioDeviceGuids( m_UserIndex, &renderGuid, &captureGuid ) );
 
 			return Utilities::ConvertNativeGuid( captureGuid );
 		}
@@ -72,7 +72,7 @@ namespace SlimDX
 		BatteryInformation Controller::GetBatteryInformation( BatteryDeviceType battery )
 		{
 			XINPUT_BATTERY_INFORMATION information;
-			if( Result::Record( ConvertError( XInputGetBatteryInformation( m_UserIndex, static_cast<BYTE>( battery ), &information) ) ).IsFailure )
+			if( RECORD_XINPUT( ConvertError( XInputGetBatteryInformation( m_UserIndex, static_cast<BYTE>( battery ), &information) ) ).IsFailure )
 				return BatteryInformation();
 			
 			return BatteryInformation( information );
@@ -81,7 +81,7 @@ namespace SlimDX
 		Capabilities Controller::GetCapabilities( DeviceQueryType device )
 		{
 			XINPUT_CAPABILITIES capabilities;
-			if( Result::Record( ConvertError( XInputGetCapabilities( m_UserIndex, static_cast<DWORD>( device ), &capabilities) ) ).IsFailure )
+			if( RECORD_XINPUT( ConvertError( XInputGetCapabilities( m_UserIndex, static_cast<DWORD>( device ), &capabilities) ) ).IsFailure )
 				return Capabilities();
 			
 			return Capabilities( capabilities );
@@ -90,7 +90,7 @@ namespace SlimDX
 		State Controller::GetState()
 		{
 			XINPUT_STATE state;
-			if( Result::Record( ConvertError( XInputGetState( m_UserIndex, &state ) ) ).IsFailure )
+			if( RECORD_XINPUT( ConvertError( XInputGetState( m_UserIndex, &state ) ) ).IsFailure )
 				return State();
 		
 			return State( state ); 
@@ -99,7 +99,7 @@ namespace SlimDX
 		Result Controller::GetKeystroke( DeviceQueryType device, Keystroke% result )
 		{
 			XINPUT_KEYSTROKE keystroke;
-			if( Result::Record( ConvertError( XInputGetKeystroke( m_UserIndex, static_cast<DWORD>( device ), &keystroke ) ) ).IsSuccess )
+			if( RECORD_XINPUT( ConvertError( XInputGetKeystroke( m_UserIndex, static_cast<DWORD>( device ), &keystroke ) ) ).IsSuccess )
 				result = Keystroke( keystroke );
 			
 			return Result::Last;
@@ -108,7 +108,7 @@ namespace SlimDX
 		Result Controller::SetVibration( Vibration vibration )
 		{
 			XINPUT_VIBRATION nativeVibration = vibration.CreateNativeVersion();
-			return Result::Record( ConvertError( XInputSetState( m_UserIndex, &nativeVibration ) ) );
+			return RECORD_XINPUT( ConvertError( XInputSetState( m_UserIndex, &nativeVibration ) ) );
 		}
 		
 		void Controller::SetReporting( bool value )

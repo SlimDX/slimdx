@@ -54,7 +54,7 @@ namespace Direct3D10
 	{
 		ID3D10Texture1D* texture = 0;
 		D3D10_TEXTURE1D_DESC nativeDescription = description.CreateNativeVersion();
-		if( Result::Record( device->InternalPointer->CreateTexture1D( &nativeDescription, 0, &texture ) ).IsFailure )
+		if( RECORD_D3D10( device->InternalPointer->CreateTexture1D( &nativeDescription, 0, &texture ) ).IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 		
 		Construct( texture );	
@@ -74,7 +74,7 @@ namespace Direct3D10
 		int bufferSize = mipWidth * Utilities::SizeOfFormatElement( static_cast<DXGI_FORMAT>( Description.Format ) );
 		
 		void* mappedArray = 0;
-		if( Result::Record( InternalPointer->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedArray ) ).IsFailure )
+		if( RECORD_D3D10( InternalPointer->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedArray ) ).IsFailure )
 			return nullptr;
 			
 		return gcnew SlimDX::DataStream( mappedArray, bufferSize, true, true, false );

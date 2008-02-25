@@ -64,7 +64,7 @@ namespace Direct3D9
 		IDirect3DDevice9* device;
 		HRESULT hr = vertexShader->GetDevice(&device);
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 		
 		m_ConstantTable = gcnew ConstantTable( device, constantTable );
@@ -98,7 +98,7 @@ namespace Direct3D9
 		}
 		
 		// CheckHResult() is not used because we need to include the compiler errors.
-		if( Configuration::EnableExceptions && FAILED( hr ) )
+		if( FAILED( hr ) )
 		{
 			Direct3D9Exception^ ex = gcnew Direct3D9Exception( Result::Last );
 			ex->Data->Add( "CompilationErrors", compilationErrors );
@@ -117,25 +117,25 @@ namespace Direct3D9
 	Result VertexShader::RetrieveConstantTable()
 	{
 		if( m_ConstantTable != nullptr )
-			return Result::Record( D3D_OK );
+			return RECORD_D3D9( D3D_OK );
 
 		//Retrieve the binary data
 		UINT size;
 		HRESULT hr = InternalPointer->GetFunction( NULL, &size );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return Result::Last;
 
 		stack_vector<char> data( size  );
 		hr = InternalPointer->GetFunction( &data[0], &size );		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return Result::Last;
 
 		//Ask D3DX to give us the actual table
 		ID3DXConstantTable* constantTable;
 		hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( &data[0] ), &constantTable );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return Result::Last;
 
 		m_ConstantTable = gcnew ConstantTable( constantTable );

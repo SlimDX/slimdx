@@ -188,7 +188,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->CloneMesh( static_cast<DWORD>( flags ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinned_elements ),
 			device->InternalPointer, &mesh );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Mesh( mesh );
@@ -201,7 +201,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->CloneMeshFVF( static_cast<DWORD>( flags ), static_cast<DWORD>( fvf ), 
 			device->InternalPointer, &mesh );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Mesh( mesh );
@@ -210,7 +210,7 @@ namespace Direct3D9
 	Result BaseMesh::DrawSubset( int subset )
 	{
 		HRESULT hr = InternalPointer->DrawSubset( subset );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Device^ BaseMesh::GetDevice()
@@ -218,7 +218,7 @@ namespace Direct3D9
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Device( device );
@@ -229,7 +229,7 @@ namespace Direct3D9
 		IDirect3DIndexBuffer9* ib;
 		HRESULT hr = InternalPointer->GetIndexBuffer( &ib );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew IndexBuffer( ib );
@@ -240,7 +240,7 @@ namespace Direct3D9
 		IDirect3DVertexBuffer9* vb;
 		HRESULT hr = InternalPointer->GetVertexBuffer( &vb );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew VertexBuffer( vb );
@@ -251,7 +251,7 @@ namespace Direct3D9
 		D3DVERTEXELEMENT9 elementBuffer[MAX_FVF_DECL_SIZE];
 		HRESULT hr = InternalPointer->GetDeclaration( elementBuffer );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		// Apparently the returned decl does not include an End element. This is bizarre and confusing,
@@ -270,14 +270,14 @@ namespace Direct3D9
 		DWORD count = 0;
 		HRESULT hr = InternalPointer->GetAttributeTable( NULL, &count );
 
-		if( Result::Record( hr ).IsFailure || count == 0 )
+		if( RECORD_D3D9( hr ).IsFailure || count == 0 )
 			return nullptr;
 
 		array<AttributeRange>^ attribTable = gcnew array<AttributeRange>( count );
 		pin_ptr<AttributeRange> pinnedTable = &attribTable[0];
 		hr = InternalPointer->GetAttributeTable( reinterpret_cast<D3DXATTRIBUTERANGE*>( pinnedTable ), &count );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return attribTable;
@@ -288,7 +288,7 @@ namespace Direct3D9
 		void* data;
 		HRESULT hr = InternalPointer->LockIndexBuffer( static_cast<DWORD>( flags ), &data );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		// determine the size of the buffer
@@ -303,7 +303,7 @@ namespace Direct3D9
 	Result BaseMesh::UnlockIndexBuffer()
 	{
 		HRESULT hr = InternalPointer->UnlockIndexBuffer();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	DataStream^ BaseMesh::LockVertexBuffer( LockFlags flags )
@@ -311,7 +311,7 @@ namespace Direct3D9
 		void* data;
 		HRESULT hr = InternalPointer->LockVertexBuffer( static_cast<DWORD>( flags ), &data );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		// determine the size of the buffer
@@ -324,7 +324,7 @@ namespace Direct3D9
 	Result BaseMesh::UnlockVertexBuffer()
 	{
 		HRESULT hr = InternalPointer->UnlockVertexBuffer();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	array<int>^ BaseMesh::GenerateAdjacency( float epsilon )
@@ -335,7 +335,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GenerateAdjacency( epsilon, reinterpret_cast<DWORD*>( pinnedAdj ) );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return adjacency;
@@ -350,7 +350,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->ConvertAdjacencyToPointReps( reinterpret_cast<const DWORD*>( pinnedAdj ),
 			reinterpret_cast<DWORD*>( pinnedPoints ) );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return points;
@@ -365,7 +365,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->ConvertPointRepsToAdjacency( reinterpret_cast<const DWORD*>( pinnedPoints ),
 			reinterpret_cast<DWORD*>( pinnedAdj ) );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return adjacency;
@@ -376,7 +376,7 @@ namespace Direct3D9
 		pin_ptr<VertexElement> pinnedElements = &elements[0];
 
 		HRESULT hr = InternalPointer->UpdateSemantics( reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedElements ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	IndexBuffer^ BaseMesh::ConvertSubsetToSingleStrip( int attributeId, MeshFlags options, [Out] int% indexCount )
@@ -387,7 +387,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXConvertMeshSubsetToSingleStrip( InternalPointer, attributeId, static_cast<DWORD>( options ),
 			&result, &count );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			indexCount = 0;
 			return nullptr;
@@ -408,7 +408,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXConvertMeshSubsetToStrips( InternalPointer, attributeId, static_cast<DWORD>( options ),
 			&result, &numIndices, &buffer, &numStrips );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			indexCount = 0;
 			stripLengths = nullptr;
@@ -431,7 +431,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXIntersect( InternalPointer, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
 			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, &face, NULL, NULL, &dist, &allHits, &count );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			hits = nullptr;
 			faceIndex = 0;
@@ -458,7 +458,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXIntersect( InternalPointer, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
 			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, NULL, NULL, NULL, &dist, NULL, NULL );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			distance = 0;
 			return false;
@@ -478,7 +478,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXIntersect( InternalPointer, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
 			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, NULL, NULL, NULL, NULL, NULL, NULL );
 
-		if( Result::Record( hr ).IsFailure || !result )
+		if( RECORD_D3D9( hr ).IsFailure || !result )
 			return false;
 
 		return true;
@@ -495,7 +495,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXIntersectSubset( InternalPointer, attributeId, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
 			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, &face, NULL, NULL, &dist, &allHits, &count );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			hits = nullptr;
 			faceIndex = 0;
@@ -521,7 +521,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXIntersectSubset( InternalPointer, attributeId, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
 			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, NULL, NULL, NULL, &dist, NULL, NULL );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			distance = 0;
 			return false;
@@ -541,7 +541,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXIntersectSubset( InternalPointer, attributeId, reinterpret_cast<const D3DXVECTOR3*>( &ray.Position ),
 			reinterpret_cast<const D3DXVECTOR3*>( &ray.Direction ), &result, NULL, NULL, NULL, NULL, NULL, NULL );
 
-		if( Result::Record( hr ).IsFailure || !result )
+		if( RECORD_D3D9( hr ).IsFailure || !result )
 			return false;
 
 		return true;
@@ -601,7 +601,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateMesh( numFaces, numVertices, static_cast<DWORD>( options ),
 			reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedDecl ), device->InternalPointer, &mesh );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(mesh);
@@ -614,7 +614,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCreateMeshFVF( numFaces, numVertices, static_cast<DWORD>( options ), 
 			static_cast<DWORD>( fvf ), device->InternalPointer, &mesh );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(mesh);
@@ -632,7 +632,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXLoadMeshFromXInMemory( pinnedMemory, memory->Length, static_cast<DWORD>( flags ), device->InternalPointer,
 			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		Mesh^ result = gcnew Mesh( mesh );
@@ -669,7 +669,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXLoadMeshFromX( pinnedFileName, static_cast<DWORD>( flags ), device->InternalPointer,
 			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		Mesh^ result = gcnew Mesh( mesh );
@@ -699,7 +699,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXLoadSkinMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
 			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &skin, &mesh );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		Mesh^ result = gcnew Mesh( mesh );
@@ -722,7 +722,7 @@ namespace Direct3D9
 	Result Mesh::ComputeTangentFrame( TangentOptions options )
 	{
 		HRESULT hr = D3DXComputeTangentFrame( MeshPointer, static_cast<DWORD>( options ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Mesh^ Mesh::CreateBox( Device^ device, float width, float height, float depth )
@@ -732,7 +732,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateBox( device->InternalPointer, width, height, depth, &result, &adj );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		Mesh^ mesh = gcnew Mesh( result );
@@ -748,7 +748,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateCylinder( device->InternalPointer, radius1, radius2, length, slices, stacks, &result, &adj );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		Mesh^ mesh = gcnew Mesh( result );
@@ -764,7 +764,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateSphere( device->InternalPointer, radius, slices, stacks, &result, &adj );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		Mesh^ mesh = gcnew Mesh( result );
@@ -780,7 +780,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateTeapot( device->InternalPointer, &result, &adj );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		Mesh^ mesh = gcnew Mesh( result );
@@ -796,7 +796,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateTorus( device->InternalPointer, innerRadius, outerRadius, sides, rings, &result, &adj );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		Mesh^ mesh = gcnew Mesh( result );
@@ -831,7 +831,7 @@ namespace Direct3D9
 		DeleteObject( newFont );
 		DeleteDC( hdc );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			glyphMetrics = nullptr;
 			return nullptr;
@@ -866,7 +866,7 @@ namespace Direct3D9
 		DeleteObject( newFont );
 		DeleteDC( hdc );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		Mesh^ mesh = gcnew Mesh( result );
@@ -882,7 +882,7 @@ namespace Direct3D9
 		
 		HRESULT hr = MeshPointer->LockAttributeBuffer( static_cast<DWORD>( flags ), &data );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
@@ -892,7 +892,7 @@ namespace Direct3D9
 	Result Mesh::UnlockAttributeBuffer()
 	{
 		HRESULT hr = MeshPointer->UnlockAttributeBuffer();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Mesh::SetAttributeTable( array<AttributeRange>^ table )
@@ -900,7 +900,7 @@ namespace Direct3D9
 		pin_ptr<AttributeRange> pinnedTable = &table[0];
 
 		HRESULT hr = MeshPointer->SetAttributeTable( reinterpret_cast<const D3DXATTRIBUTERANGE*>( pinnedTable ), table->Length );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Mesh::OptimizeInPlace( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
@@ -924,7 +924,7 @@ namespace Direct3D9
 
 		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), adjacencyIn,
 			&adjacencyOut[0], reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		if( FAILED( hr ) )
 		{
@@ -960,7 +960,7 @@ namespace Direct3D9
 
 		HRESULT hr = MeshPointer->OptimizeInplace( static_cast<DWORD>( flags ), adjacencyIn,
 			&adjacencyOut[0], NULL, NULL );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		if( FAILED( hr ) )
 			SetAdjacency( NULL );
@@ -998,7 +998,7 @@ namespace Direct3D9
 		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), adjacencyIn,
 			&adjacencyOut[0], reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			faceRemap = nullptr;
 			vertexRemap = nullptr;
@@ -1034,7 +1034,7 @@ namespace Direct3D9
 		HRESULT hr = MeshPointer->Optimize( static_cast<DWORD>( flags ), adjacencyIn,
 			&adjacencyOut[0], NULL, NULL, &result );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		Mesh^ mesh = gcnew Mesh( result );
@@ -1065,7 +1065,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
 			adjacencyIn, &result, &adjacencyOut[0], &errors );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			errorsAndWarnings = nullptr;
 			return nullptr;
@@ -1100,7 +1100,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), MeshPointer, 
 			&adjacencyIn[0], &result, &adjacencyOut[0], NULL );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		Mesh^ mesh = gcnew Mesh( result );
@@ -1124,7 +1124,7 @@ namespace Direct3D9
 		}
 
 		HRESULT hr = D3DXComputeNormals( MeshPointer, adjacencyIn );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Mesh::ComputeTangent( int textureStage, int tangentIndex, int binormalIndex, bool wrap )
@@ -1140,7 +1140,7 @@ namespace Direct3D9
 		}
 
 		HRESULT hr = D3DXComputeTangent( MeshPointer, textureStage, tangentIndex, binormalIndex, wrap, adjacencyIn );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Mesh^ Mesh::ComputeTangentFrame( int textureInSemantic, int textureInIndex, int partialOutSemanticU, 
@@ -1166,7 +1166,7 @@ namespace Direct3D9
 			normalOutIndex, static_cast<DWORD>( options ), adjacencyIn,
 			partialEdgeThreshold, singularPointThreshold, normalEdgeThreshold, &result, &vertex );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			vertexMapping = nullptr;
 			return nullptr;
@@ -1202,7 +1202,7 @@ namespace Direct3D9
 			normalOutIndex, static_cast<DWORD>( options ), adjacencyIn,
 			partialEdgeThreshold, singularPointThreshold, normalEdgeThreshold, &result, NULL );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		if( (options & TangentOptions::GenerateInPlace) == TangentOptions::GenerateInPlace )
@@ -1249,7 +1249,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXConcatenateMeshes( &input[0], meshes->Length, static_cast<DWORD>( options ), geoXForms,
 			textureXForms, decl, device->InternalPointer, &result );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Mesh( result );
@@ -1285,7 +1285,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXConcatenateMeshes( &input[0], meshes->Length, static_cast<DWORD>( options ), geoXForms,
 			textureXForms, NULL, device->InternalPointer, &result );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Mesh( result );
@@ -1303,7 +1303,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXConcatenateMeshes( &input[0], meshes->Length, static_cast<DWORD>( options ), NULL,
 			NULL, NULL, device->InternalPointer, &result );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Mesh( result );
@@ -1364,7 +1364,7 @@ namespace Direct3D9
 			delete[] nativeEffects[i].pDefaults;
 		}
 
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result Mesh::ToXFile( Mesh^ mesh, String^ fileName, XFileFormat format )
@@ -1394,7 +1394,7 @@ namespace Direct3D9
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedAW ), reinterpret_cast<const FLOAT*>( pinnedVW ),
 			minimumValue, static_cast<DWORD>( options ), &result );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Mesh( result );
@@ -1421,7 +1421,7 @@ namespace Direct3D9
 			reinterpret_cast<const D3DXATTRIBUTEWEIGHTS*>( pinnedAW ), NULL,
 			minimumValue, static_cast<DWORD>( options ), &result );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Mesh( result );
@@ -1444,7 +1444,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXSimplifyMesh( mesh->MeshPointer, adjacencyIn,
 			NULL, NULL, minimumValue, static_cast<DWORD>( options ), &result );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew Mesh( result );

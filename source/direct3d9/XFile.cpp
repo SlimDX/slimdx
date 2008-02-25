@@ -62,7 +62,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->AddDataObject( Utilities::ConvertManagedGuid( dataTemplate ), reinterpret_cast<LPCSTR>( pinnedName ), pointer, 
 			data->Length, reinterpret_cast<LPCVOID>( pinnedMemory ), &result );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
 		return gcnew XFileSaveData( result );
@@ -85,7 +85,7 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
 		HRESULT hr = InternalPointer->AddDataReference( reinterpret_cast<LPCSTR>( pinnedName ), pointer );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Guid XFileSaveData::Id::get()
@@ -94,7 +94,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetId( &guid );
 
-		if( Result::Record(hr).IsFailure || guid == GUID_NULL )
+		if( RECORD_D3D9(hr).IsFailure || guid == GUID_NULL )
 			return Guid::Empty;
 
 		return Utilities::ConvertNativeGuid( guid );
@@ -107,14 +107,14 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetName( NULL, &size );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
 		name.resize( size );
 
 		hr = InternalPointer->GetName( &name[0], &size );
 
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
 		return gcnew String( &name[0] );
@@ -126,7 +126,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetSave( &result );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
 		return gcnew XFileSaveObject( result );
@@ -138,7 +138,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetType( &result );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return Guid::Empty;
 
 		return Utilities::ConvertNativeGuid( result );
@@ -169,7 +169,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->AddDataObject( Utilities::ConvertManagedGuid( dataTemplate ), reinterpret_cast<LPCSTR>( pinnedName ), pointer, 
 			data->Length, reinterpret_cast<LPCVOID>( pinnedMemory ), &result );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
 		return gcnew XFileSaveData( result );
@@ -187,7 +187,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetFile( &result );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
 		return gcnew XFile( result );
@@ -196,7 +196,7 @@ namespace Direct3D9
 	Result XFileSaveObject::Save()
 	{
 		HRESULT hr = InternalPointer->Save();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	XFile::XFile( ID3DXFile *object )
@@ -215,7 +215,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXFileCreate( &result );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
@@ -235,7 +235,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->CreateEnumObject( reinterpret_cast<LPCVOID>( pinnedName ), flag, &result );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
 		return gcnew XFileEnumerationObject( result );
@@ -252,7 +252,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->CreateEnumObject( reinterpret_cast<LPCVOID>( &mem ), D3DXF_FILELOAD_FROMMEMORY, &result );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
 		return gcnew XFileEnumerationObject( result );
@@ -278,7 +278,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->CreateSaveObject( reinterpret_cast<LPCVOID>( pinnedName ), flag, static_cast<D3DXF_FILEFORMAT>( format ), &result );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
 		return gcnew XFileSaveObject( result );
@@ -287,7 +287,7 @@ namespace Direct3D9
 	Result XFile::RegisterEnumerationTemplates( XFileEnumerationObject^ enumerationObject )
 	{
 		HRESULT hr = InternalPointer->RegisterEnumTemplates( enumerationObject->InternalPointer );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result XFile::RegisterTemplates( array<Byte>^ memory )
@@ -295,7 +295,7 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
 		HRESULT hr = InternalPointer->RegisterTemplates( reinterpret_cast<LPCVOID>( pinnedMemory ), memory->Length );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result XFile::RegisterTemplates( Stream^ stream )
@@ -326,7 +326,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetChild( id, &result );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew XFileData( result );
@@ -338,7 +338,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetDataObjectById( Utilities::ConvertManagedGuid( id ), &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew XFileData( result );
@@ -352,7 +352,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetDataObjectByName( reinterpret_cast<LPCSTR>( pinnedName ), &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew XFileData( result );
@@ -364,7 +364,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetFile( &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew XFile( result );
@@ -376,7 +376,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetChildren( &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return 0;
 
 		return result;
@@ -398,7 +398,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetChild( id, &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew XFileData( result );
@@ -410,7 +410,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetEnum( &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew XFileEnumerationObject( result );
@@ -423,7 +423,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->Lock( &size, &data );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew DataStream( const_cast<void*>( data ), size, true, true, true );
@@ -432,7 +432,7 @@ namespace Direct3D9
 	Result XFileData::Unlock()
 	{
 		HRESULT hr = InternalPointer->Unlock();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	int XFileData::ChildCount::get()
@@ -440,7 +440,7 @@ namespace Direct3D9
 		SIZE_T result;
 
 		HRESULT hr = InternalPointer->GetChildren( &result );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		if( FAILED( hr ) )
 			return 0;
@@ -454,7 +454,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetId( &guid );
 
-		if( Result::Record( hr ).IsFailure || guid == GUID_NULL )
+		if( RECORD_D3D9( hr ).IsFailure || guid == GUID_NULL )
 			return Guid::Empty;
 
 		return Utilities::ConvertNativeGuid( guid );
@@ -467,14 +467,14 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetName( NULL, &size );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		name.resize( size );
 
 		hr = InternalPointer->GetName( &name[0], &size );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew String( &name[0] );
@@ -486,7 +486,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetType( &result );
 		
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return Guid::Empty;
 
 		return Utilities::ConvertNativeGuid( result );

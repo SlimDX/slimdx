@@ -58,7 +58,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateTextureShader( reinterpret_cast<const DWORD*>( stream->RawPointer ), &result );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
@@ -107,7 +107,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetConstantDesc( nativeHandle, &nativeDesc, &count );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return description;
 
 		description.Initialize( nativeDesc );
@@ -121,13 +121,13 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetConstantDesc( nativeHandle, NULL, &count );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
 		stack_vector<D3DXCONSTANT_DESC> nativeDescArray( count );
 		hr = InternalPointer->GetConstantDesc( nativeHandle, &nativeDescArray[0], &count );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
 		array<ConstantDescription>^ descArray = gcnew array<ConstantDescription>( count );
@@ -145,7 +145,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetConstantBuffer( &result );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 		{
 			if( result != NULL )
 				result->Release();
@@ -161,7 +161,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetFunction( &result );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 		{
 			if( result != NULL )
 				result->Release();
@@ -174,14 +174,14 @@ namespace Direct3D9
 	Result TextureShader::SetDefaults()
 	{
 		HRESULT hr = InternalPointer->SetDefaults();
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result TextureShader::SetValue( EffectHandle^ constant, bool value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetBool( handle, value );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result TextureShader::SetValue( EffectHandle^ parameter, array<bool>^ values )
@@ -194,14 +194,14 @@ namespace Direct3D9
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		pin_ptr<BOOL> pinnedValue = &expandedArray[0];
 		HRESULT hr = InternalPointer->SetBoolArray( handle, pinnedValue, values->Length );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result TextureShader::SetValue( EffectHandle^ constant, int value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetInt( handle, value );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result TextureShader::SetValue( EffectHandle^ constant, array<int>^ values )
@@ -209,14 +209,14 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<int> pinned_value = &values[0];
 		HRESULT hr = InternalPointer->SetIntArray( handle, pinned_value, values->Length );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result TextureShader::SetValue( EffectHandle^ constant, float value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetFloat( handle, value );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result TextureShader::SetValue( EffectHandle^ constant, array<float>^ values )
@@ -224,14 +224,14 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<float> pinned_values = &values[0];
 		HRESULT hr = InternalPointer->SetFloatArray( handle, pinned_values, values->Length );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result TextureShader::SetValue( EffectHandle^ constant, Vector4 value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetVector( handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result TextureShader::SetValue( EffectHandle^ constant, array<Vector4>^ values )
@@ -239,14 +239,14 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<Vector4> pinned_value = &values[0];
 		HRESULT hr = InternalPointer->SetVectorArray( handle, reinterpret_cast<const D3DXVECTOR4*>( pinned_value ), values->Length );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result TextureShader::SetValue( EffectHandle^ constant, Color4 value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetVector( handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result TextureShader::SetValue( EffectHandle^ constant, array<Color4>^ values )
@@ -254,14 +254,14 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<Color4> pinned_value = &values[0];
 		HRESULT hr = InternalPointer->SetVectorArray( handle, reinterpret_cast<const D3DXVECTOR4*>( pinned_value ), values->Length );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result TextureShader::SetValue( EffectHandle^ constant, Matrix value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetMatrix( handle, reinterpret_cast<const D3DXMATRIX*>( &value ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result TextureShader::SetValue( EffectHandle^ constant, array<Matrix>^ values )
@@ -269,14 +269,14 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<Matrix> pinned_value = &values[0];
 		HRESULT hr = InternalPointer->SetMatrixArray( handle, reinterpret_cast<const D3DXMATRIX*>( pinned_value ), values->Length );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result TextureShader::SetValueTranspose( EffectHandle^ constant, Matrix value )
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetMatrixTranspose( handle, reinterpret_cast<const D3DXMATRIX*>( &value ) );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	Result TextureShader::SetValueTranspose( EffectHandle^ constant, array<Matrix>^ values )
@@ -284,7 +284,7 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<Matrix> pinned_value = &values[0];
 		HRESULT hr = InternalPointer->SetMatrixTransposeArray( handle, reinterpret_cast<const D3DXMATRIX*>( pinned_value ), values->Length );
-		return Result::Record( hr );
+		return RECORD_D3D9( hr );
 	}
 
 	ConstantTableDescription TextureShader::Description::get()
@@ -294,7 +294,7 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->GetDesc( &nativeDesc );
 		
-		if( Result::Record(hr).IsFailure )
+		if( RECORD_D3D9(hr).IsFailure )
 			return description;
 
 		description.Creator = gcnew String( nativeDesc.Creator );

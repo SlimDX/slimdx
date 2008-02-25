@@ -25,6 +25,8 @@
 
 #include "../StackAlloc.h"
 
+#include "Direct3D10Exception.h"
+
 #include "Sprite.h"
 #include "Device.h"
 
@@ -52,7 +54,7 @@ namespace Direct3D10
 		ID3DX10Sprite* sprite;
 		
 		HRESULT hr = D3DX10CreateSprite( device->InternalPointer, bufferSize, &sprite );
-		Result::Record( hr );
+		RECORD_D3D10( hr );
 
 		Construct(sprite);
 	}
@@ -61,46 +63,46 @@ namespace Direct3D10
 	{
 		D3DXMATRIX matrix;
 		HRESULT hr = InternalPointer->GetViewTransform( &matrix );
-		Result::Record( hr );
+		RECORD_D3D10( hr );
 		return Matrix::FromD3DXMATRIX( matrix );
 	}
 
 	void Sprite::ViewTransform::set( Matrix value )
 	{
 		HRESULT hr = InternalPointer->SetViewTransform( reinterpret_cast<D3DXMATRIX*>( &value ) );
-		Result::Record( hr );
+		RECORD_D3D10( hr );
 	}
 
 	Matrix Sprite::ProjectionTransform::get()
 	{
 		D3DXMATRIX matrix;
 		HRESULT hr = InternalPointer->GetProjectionTransform( &matrix );
-		Result::Record( hr );
+		RECORD_D3D10( hr );
 		return Matrix::FromD3DXMATRIX( matrix );
 	}
 
 	void Sprite::ProjectionTransform::set( Matrix value )
 	{
 		HRESULT hr = InternalPointer->SetProjectionTransform( reinterpret_cast<D3DXMATRIX*>( &value ) );
-		Result::Record( hr );
+		RECORD_D3D10( hr );
 	}
 
 	void Sprite::Begin( SpriteFlags flags )
 	{
 		HRESULT hr = InternalPointer->Begin( static_cast<DWORD>( flags ) );
-		Result::Record( hr );
+		RECORD_D3D10( hr );
 	}
 
 	void Sprite::End()
 	{
 		HRESULT hr = InternalPointer->End();
-		Result::Record( hr );
+		RECORD_D3D10( hr );
 	}
 
 	void Sprite::Flush()
 	{
 		HRESULT hr = InternalPointer->Flush();
-		Result::Record( hr );
+		RECORD_D3D10( hr );
 	}
 
 	void Sprite::DrawBuffered( array<SpriteInstance^>^ instances )
@@ -109,7 +111,7 @@ namespace Direct3D10
 		for( int instanceIndex = 0; instanceIndex < instances->Length; ++instanceIndex )
 			instances[instanceIndex]->ToNativeObject( nativeInstances[instanceIndex] );
 		HRESULT hr = InternalPointer->DrawSpritesBuffered( &nativeInstances[0], instances->Length );
-		Result::Record( hr );
+		RECORD_D3D10( hr );
 	}
 
 	void Sprite::DrawImmediate( array<SpriteInstance^>^ instances )
@@ -118,7 +120,7 @@ namespace Direct3D10
 		for( int instanceIndex = 0; instanceIndex < instances->Length; ++instanceIndex )
 			instances[instanceIndex]->ToNativeObject( nativeInstances[instanceIndex] );
 		HRESULT hr = InternalPointer->DrawSpritesImmediate( &nativeInstances[0], instances->Length, sizeof(D3DX10_SPRITE), 0 );
-		Result::Record( hr );
+		RECORD_D3D10( hr );
 	}
 }
 }

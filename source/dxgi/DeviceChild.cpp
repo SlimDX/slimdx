@@ -45,7 +45,7 @@ namespace DXGI
 	Device^ DeviceChild::GetDevice()
 	{
 		IDXGIDevice* device = 0;
-		Result::Record( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
+		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
 		if( Result::Last.IsFailure )
 			return nullptr;
 		return gcnew Device( device );

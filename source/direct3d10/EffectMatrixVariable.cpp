@@ -23,6 +23,8 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
+#include "Direct3D10Exception.h"
+
 #include "EffectMatrixVariable.h"
 
 using namespace System;
@@ -45,13 +47,13 @@ namespace Direct3D10
 	
 	Result EffectMatrixVariable::SetMatrix( Matrix matrix )
 	{
-		return Result::Record( m_Pointer->SetMatrix( reinterpret_cast<float*>( &matrix ) ) );
+		return RECORD_D3D10( m_Pointer->SetMatrix( reinterpret_cast<float*>( &matrix ) ) );
 	}
 	
 	Result EffectMatrixVariable::SetMatrix( array<Matrix>^ matrices )
 	{
 		pin_ptr<Matrix> pinnedMatrices = &matrices[ 0 ];
-		return Result::Record( m_Pointer->SetMatrixArray( reinterpret_cast<float*>( pinnedMatrices ), 0, matrices->Length ) );
+		return RECORD_D3D10( m_Pointer->SetMatrixArray( reinterpret_cast<float*>( pinnedMatrices ), 0, matrices->Length ) );
 	}
 }
 }

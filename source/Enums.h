@@ -19,57 +19,22 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include "Configuration.h"
+#pragma once
 
 namespace SlimDX
 {
-	static Configuration::Configuration()
+	// NOTE: The enumerations defined in this file are in alphabetical order. When
+	//       adding new enumerations or renaming existing ones, please make sure
+	//       the ordering is maintained.
+	
+	/// <remarks>
+	/// Values which control the behavior of a result watch.
+	/// </remarks>
+	[System::Flags]
+	public enum class ResultWatchFlags : System::Int32
 	{
-#ifdef _DEBUG
-		m_EnableObjectTracking = true;
-#else
-		m_EnableObjectTracking = false;
-#endif	
+		Assert = 1,
+		Throw = 2,
+	};
 
-		m_Watches = gcnew System::Collections::Generic::Dictionary<Result,ResultWatchFlags>();
-	}
-	
-	Configuration::Configuration()
-	{
-	}
-	
-	bool Configuration::EnableObjectTracking::get()
-	{
-		return m_EnableObjectTracking;
-	}
-	
-	void Configuration::EnableObjectTracking::set( bool value )
-	{
-		m_EnableObjectTracking = value;
-	}
-	
-	bool Configuration::TryGetResultWatch( Result result, ResultWatchFlags% flags )
-	{
-		return m_Watches->TryGetValue( result, flags );
-	}
-	
-	void Configuration::AddResultWatch( Result result, ResultWatchFlags flags )
-	{
-		if( m_Watches->ContainsKey( result ) )
-			m_Watches[ result ] = flags;
-		else
-			m_Watches->Add( result, flags );
-	}
-	
-	void Configuration::ClearResultWatch( Result result )
-	{
-		if( m_Watches->ContainsKey( result ) )
-			m_Watches->Remove( result );
-	}
-	
-	void Configuration::ClearResultWatches()
-	{
-		m_Watches->Clear();
-	}
 }

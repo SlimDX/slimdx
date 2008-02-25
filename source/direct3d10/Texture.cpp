@@ -26,6 +26,8 @@
 #include <vcclr.h>
 #include <cmath>
 
+#include "Direct3D10Exception.h"
+
 #include "../DataStream.h"
 
 #include "Texture.h"
@@ -52,7 +54,7 @@ namespace Direct3D10
 		ID3D10Resource* resource = 0;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 		HRESULT hr = D3DX10CreateTextureFromFile( device->InternalPointer, pinnedName, 0, 0, &resource, 0 );
-		Result::Record( hr );
+		RECORD_D3D10( hr );
 		
 		if( resource == 0 )
 			return nullptr;
@@ -65,7 +67,7 @@ namespace Direct3D10
 		
 		ID3D10Resource* resource = 0;
 		HRESULT hr = D3DX10CreateTextureFromMemory( device->InternalPointer, pinnedMemory, memory->Length, 0, 0, &resource, 0 ); 
-		Result::Record( hr );
+		RECORD_D3D10( hr );
 		
 		if( resource == 0 )
 			return nullptr;
@@ -83,7 +85,7 @@ namespace Direct3D10
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 		HRESULT hr = D3DX10SaveTextureToFile( texture->InternalPointer, (D3DX10_IMAGE_FILE_FORMAT) format, pinnedName );
-		Result::Record( hr );
+		RECORD_D3D10( hr );
 		
 		return ( FAILED( hr ) );
 	}

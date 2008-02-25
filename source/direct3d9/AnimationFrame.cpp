@@ -693,7 +693,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXFrameCalculateBoundingSphere( shim, reinterpret_cast<D3DXVECTOR3*>( &objectCenter ), &radius );
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			delete shim;
 			return BoundingSphere( Vector3( 0, 0, 0 ), 0.0f );
@@ -709,7 +709,7 @@ namespace Direct3D9
 		std::auto_ptr<FrameShim> frameShim( Frame::BuildHierarchyFromManaged( root ) );
 
 		HRESULT hr = D3DXFrameDestroy( frameShim.get(), shim.get() );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return Result::Last;
 	}
@@ -818,7 +818,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXLoadMeshHierarchyFromX( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( options ), device->InternalPointer,
 			allocatorShim.get(), userDataLoaderShim.get(), &result, &animationResult);
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		if( animationResult != NULL )
@@ -850,7 +850,7 @@ namespace Direct3D9
 		HRESULT hr = D3DXLoadMeshHierarchyFromX( reinterpret_cast<LPCWSTR>( pinnedMemory ), static_cast<DWORD>( options ), device->InternalPointer,
 			allocatorShim.get(), userDataLoaderShim.get(), &result, &animationResult);
 
-		if( Result::Record( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure )
 		{
 			return nullptr;
 		}
@@ -891,7 +891,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXSaveMeshHierarchyToFile( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( format ),
 			frameShim.get(), animation, shim.get() );
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return Result::Last;
 	}
@@ -912,7 +912,7 @@ namespace Direct3D9
 		Utilities::FreeNativeString( frameShim->Name );
 		delete frameShim;
 
-		Result::Record( hr );
+		RECORD_D3D9( hr );
 
 		return Result::Last;
 	}
