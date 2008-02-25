@@ -532,6 +532,41 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\DeviceChild.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\DeviceChild.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\InputAssemblerWrapper.cpp"
 					>
 				</File>
@@ -1908,7 +1943,7 @@
 				>
 			</File>
 			<Filter
-				Name="BoundingVolume"
+				Name="Bounding Volumes"
 				>
 				<File
 					RelativePath="..\source\math\BoundingBox.cpp"

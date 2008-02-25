@@ -23,6 +23,7 @@
 
 #include "../ComObject.h"
 
+#include "DeviceChild.h"
 #include "InputElement.h"
 
 namespace SlimDX
@@ -32,7 +33,7 @@ namespace SlimDX
 		ref class Device;
 		ref class ShaderSignature;
 		
-		public ref class InputLayout : public ComObject
+		public ref class InputLayout : public DeviceChild
 		{
 			COMOBJECT(ID3D10InputLayout);
 		

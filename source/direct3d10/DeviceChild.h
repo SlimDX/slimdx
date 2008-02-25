@@ -23,21 +23,34 @@
 
 #include "../ComObject.h"
 
-#include "DeviceChild.h"
-
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class GeometryShader : public DeviceChild
+		ref class Device;
+		
+		/// <remarks>
+		/// An object that is bound to a Device.
+		/// </remarks>
+		public ref class DeviceChild : public ComObject 
 		{
-			COMOBJECT(ID3D10GeometryShader);
-
-		internal:
-			GeometryShader( ID3D10GeometryShader* pointer );
+			COMOBJECT(ID3D10DeviceChild);
+		
+		protected:
+			DeviceChild();
 			
 		public:
-			GeometryShader( System::IntPtr pointer );
+			/// <summary>
+			/// Constructs a DeviceChild from an unmanaged pointer.
+			/// </summary>
+			/// <param name="pointer">The unmanaged ID3D10DeviceChild pointer.</param>
+			DeviceChild( System::IntPtr pointer );
+			
+			/// <summary>
+			/// Gets the device the object is bound to.
+			/// </summary>
+			/// <returns>The device, or null on failure.</returns>
+			Device^ GetDevice();
 		};
 	}
 };
