@@ -32,7 +32,14 @@ namespace SlimDX
 		// NOTE: The enumerations defined in this file are in alphabetical order. When
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
-	
+		
+		[System::Flags]
+		public enum class AsynchronousFlags : System::Int32
+		{
+			None = 0,
+			DoNotFlush = D3D10_ASYNC_GETDATA_DONOTFLUSH
+		};
+		
 		[System::Flags]
 		public enum class BindFlags : System::Int32
 		{
@@ -99,6 +106,28 @@ namespace SlimDX
 			Always = D3D10_COMPARISON_ALWAYS
 		};
 		
+		public enum class CounterKind : System::Int32
+		{
+			Idle = D3D10_COUNTER_GPU_IDLE,
+			VertexProcessing = D3D10_COUNTER_VERTEX_PROCESSING,
+			GeometryProcessing = D3D10_COUNTER_GEOMETRY_PROCESSING,
+			PixelProcessing = D3D10_COUNTER_PIXEL_PROCESSING,
+			OtherProcessing = D3D10_COUNTER_OTHER_GPU_PROCESSING,
+			HostAdapterBandwidth = D3D10_COUNTER_HOST_ADAPTER_BANDWIDTH_UTILIZATION,
+			LocalVideoMemoryBandwidth = D3D10_COUNTER_LOCAL_VIDMEM_BANDWIDTH_UTILIZATION,
+			VertexThroughput = D3D10_COUNTER_VERTEX_THROUGHPUT_UTILIZATION,
+			TriangleSetupThroughput = D3D10_COUNTER_TRIANGLE_SETUP_THROUGHPUT_UTILIZATION,
+			FillrateThroughput = D3D10_COUNTER_FILLRATE_THROUGHPUT_UTILIZATION,
+			VertexShaderMemoryLimited = D3D10_COUNTER_VS_MEMORY_LIMITED,
+			VertexShaderComputationLimited = D3D10_COUNTER_VS_COMPUTATION_LIMITED,
+			GeometryShaderMemoryLimited = D3D10_COUNTER_GS_MEMORY_LIMITED,
+			GeometryShaderComputationLimited = D3D10_COUNTER_GS_COMPUTATION_LIMITED,
+			PixelShaderMemoryLimited = D3D10_COUNTER_PS_MEMORY_LIMITED,
+			PixelShaderComputationLimited = D3D10_COUNTER_PS_COMPUTATION_LIMITED,
+			PostTransformCacheHitRate = D3D10_COUNTER_POST_TRANSFORM_CACHE_HIT_RATE,
+			TextureCacheHitRate = D3D10_COUNTER_TEXTURE_CACHE_HIT_RATE
+		};
+		
 		[System::Flags]
 		public enum class CpuAccessFlags : System::Int32
 		{
@@ -112,6 +141,14 @@ namespace SlimDX
 			None = D3D10_CULL_NONE,
 			Front = D3D10_CULL_FRONT,
 			Back = D3D10_CULL_BACK
+		};
+		
+		[System::Flags]
+		public enum class DebugFeatureFlags : System::Int32
+		{
+			FinishPerRender = D3D10_DEBUG_FEATURE_FINISH_PER_RENDER_OP,
+			FlushPerRender = D3D10_DEBUG_FEATURE_FLUSH_PER_RENDER_OP,
+			PresentPerRender = D3D10_DEBUG_FEATURE_PRESENT_PER_RENDER_OP
 		};
 		
 		[System::Flags]

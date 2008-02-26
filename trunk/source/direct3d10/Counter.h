@@ -22,42 +22,31 @@
 #pragma once
 
 #include "../ComObject.h"
-#include "../DataStream.h"
 
-#include "Enums.h"
-#include "Resource.h"
+#include "Asynchronous.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
 		ref class Device;
-		value class BufferDescription;
+		value class CounterDescription;
 		
-		public ref class Buffer : public Resource
+		public ref class Counter : public Asynchronous
 		{
-			COMOBJECT(ID3D10Buffer);
-			
-		private:
-			static ID3D10Buffer* Build( Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
+			COMOBJECT(ID3D10Counter);
 		
 		internal:
-			Buffer( ID3D10Buffer* pointer );
+			Counter( ID3D10Counter* pointer );
 		
 		public:
-			property BufferDescription Description
+			property CounterDescription Description
 			{
-				BufferDescription get();
+				CounterDescription get();
 			}
 			
-			Buffer( System::IntPtr pointer );
-			Buffer( Device^ device, BufferDescription description );
-			Buffer( Device^ device, DataStream^ data, BufferDescription description );
-			Buffer( Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
-			Buffer( Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
-			
-			DataStream^ Map( MapMode mode, MapFlags flags );
-			void Unmap();
+			Counter( System::IntPtr pointer );
+			Counter( Device^ device, CounterDescription description );
 		};
 	}
 };
