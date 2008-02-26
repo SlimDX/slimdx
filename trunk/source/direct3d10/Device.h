@@ -23,6 +23,7 @@
 
 #include "../ComObject.h"
 
+#include "../dxgi/Enums.h"
 #include "../math/Color4.h"
 
 #include "Enums.h"
@@ -39,9 +40,14 @@ namespace SlimDX
 		ref class RasterizerWrapper;
 		ref class RenderTargetView;
 		ref class Resource;
+		ref class ShaderResourceView;
 		ref class StreamOutputWrapper;
 		ref class SwapChain;
+		value class CounterCapabilities;
+		value class CounterDescription;
+		value class CounterMetadata;
 		value class RenderTargetViewDescription;
+		value class ResourceRegion;
 		value class SwapChainDescription;
 
 		public ref class Device : ComObject
@@ -78,12 +84,27 @@ namespace SlimDX
 				RasterizerWrapper^ get();
 			}
 			
+			property DeviceCreationFlags CreationFlags
+			{
+				DeviceCreationFlags get();
+			}
+			
 			Device( System::IntPtr pointer );
 			Device( DeviceCreationFlags flags );
-
+		
+			CounterCapabilities GetCounterCapabilities();
+			CounterMetadata GetCounterMetadata( CounterDescription description );
+			
+			FormatSupport CheckFormatSupport( DXGI::Format format );
+			int CheckMultisampleQualityLevels( DXGI::Format format, int sampleCount );
+			
 			void ClearDepthStencilView( DepthStencilView^ view, DepthStencilClearFlags flags, float depth, System::Byte stencil );
 			void ClearRenderTargetView( RenderTargetView^ view, Color4 color );
 			void ClearState();
+			
+			void CopyResource( Resource^ source, Resource^ destination );
+			void CopySubresourceRegion( Resource^ source, int sourceSubresource, ResourceRegion region, Resource^ destination, int destinationSubresource, int x, int y, int z );
+			void ResolveSubresource( Resource^ source, int sourceSubresource, Resource^ destination, int destinationSubresource, DXGI::Format format );
 			
 			void Draw( int vertexCount, int startVertexLocation );
 			void DrawAuto();
@@ -92,6 +113,8 @@ namespace SlimDX
 			void DrawInstanced( int vertexCountPerInstance, int instanceCount, int startVertexLocation, int startInstanceLocation );
 		
 			void Flush();
+			
+			void GenerateMips( ShaderResourceView^ view );
 		};
 	}
 };
