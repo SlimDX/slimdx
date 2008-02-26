@@ -1120,6 +1120,14 @@
 					RelativePath="..\source\direct3d10\Resource.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d10\ResourceRegion.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ResourceRegion.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Threading"
@@ -1132,6 +1140,10 @@
 					RelativePath="..\source\direct3d10\Asynchronous.h"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="Diagnostics"
+				>
 				<File
 					RelativePath="..\source\direct3d10\Counter.cpp"
 					>
@@ -1141,11 +1153,27 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\CounterCapabilities.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\CounterCapabilities.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\CounterDescription.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\CounterDescription.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\CounterMetadata.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\CounterMetadata.h"
 					>
 				</File>
 			</Filter>

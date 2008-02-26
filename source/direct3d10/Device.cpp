@@ -21,11 +21,15 @@
 */
 
 #include <d3d10.h>
-#include <d3dx10.h>
+
+#include "../StackAlloc.h"
 
 #include "Direct3D10Exception.h"
 
 #include "Buffer.h"
+#include "CounterCapabilities.h"
+#include "CounterDescription.h"
+#include "CounterMetadata.h"
 #include "DepthStencilView.h"
 #include "Device.h"
 #include "InputAssemblerWrapper.h"
@@ -34,6 +38,8 @@
 #include "RasterizerWrapper.h"
 #include "RenderTargetView.h"
 #include "Resource.h"
+#include "ResourceRegion.h"
+#include "ShaderResourceView.h"
 #include "StreamOutputWrapper.h"
 
 using namespace System;
@@ -97,6 +103,52 @@ namespace Direct3D10
 		return m_Rasterizer;
 	}
 	
+	DeviceCreationFlags Device::CreationFlags::get()
+	{
+		return static_cast<DeviceCreationFlags>( InternalPointer->GetCreationFlags() );
+	}
+	
+	CounterCapabilities Device::GetCounterCapabilities()
+	{
+		D3D10_COUNTER_INFO info;
+		InternalPointer->CheckCounterInfo( &info );
+		return CounterCapabilities( info );
+	}
+	
+	CounterMetadata Device::GetCounterMetadata( CounterDescription description )
+	{
+		D3D10_COUNTER_DESC nativeDescription = description.CreateNativeVersion();
+		D3D10_COUNTER_TYPE type;
+		UINT count = 0;
+		UINT nameLength = 0;
+		UINT unitsLength = 0;
+		UINT descriptionLength = 0;
+		if( RECORD_D3D10( InternalPointer->CheckCounter( &nativeDescription, &type, &count, 0, &nameLength, 0, &unitsLength, 0, &descriptionLength ) ).IsFailure )
+			return CounterMetadata();
+		
+		stack_vector<char> nameChars( nameLength );
+		stack_vector<char> unitsChars( unitsLength );
+		stack_vector<char> descriptionChars( descriptionLength );
+		if( RECORD_D3D10( InternalPointer->CheckCounter( &nativeDescription, &type, &count, &nameChars[ 0 ], &nameLength, &unitsChars[ 0 ], &unitsLength, &descriptionChars[ 0 ], &descriptionLength ) ).IsFailure )
+			return CounterMetadata();
+			
+		return CounterMetadata( static_cast<CounterType>( type ), count, gcnew String( &nameChars[ 0 ] ), gcnew String( &unitsChars[ 0 ] ), gcnew String( &descriptionChars[ 0 ] ) );	
+	}
+	
+	FormatSupport Device::CheckFormatSupport( DXGI::Format format )
+	{
+		UINT support = 0;
+		InternalPointer->CheckFormatSupport( static_cast<DXGI_FORMAT>( format ), &support );
+		return static_cast<FormatSupport>( support );
+	}
+	
+	int Device::CheckMultisampleQualityLevels( DXGI::Format format, int sampleCount )
+	{
+		UINT result = 0;
+		InternalPointer->CheckMultisampleQualityLevels( static_cast<DXGI_FORMAT>( format ), sampleCount, &result );
+		return result;
+	}
+	
 	void Device::ClearDepthStencilView( DepthStencilView^ view, DepthStencilClearFlags flags, float depth, Byte stencil )
 	{
 		InternalPointer->ClearDepthStencilView( view->InternalPointer, static_cast<UINT>( flags ), depth, stencil );
@@ -111,6 +163,22 @@ namespace Direct3D10
 	void Device::ClearState()
 	{
 		InternalPointer->ClearState();
+	}
+	
+	void Device::CopyResource( Resource^ source, Resource^ destination )
+	{
+		InternalPointer->CopyResource( destination->InternalPointer, source->InternalPointer );
+	}
+	
+	void Device::CopySubresourceRegion( Resource^ source, int sourceSubresource, ResourceRegion region, Resource^ destination, int destinationSubresource, int x, int y, int z )
+	{
+		D3D10_BOX nativeRegion = region.CreateNativeVersion();
+		InternalPointer->CopySubresourceRegion( destination->InternalPointer, destinationSubresource, x, y, z, source->InternalPointer, sourceSubresource, &nativeRegion );
+	}
+	
+	void Device::ResolveSubresource( Resource^ source, int sourceSubresource, Resource^ destination, int destinationSubresource, DXGI::Format format )
+	{
+		InternalPointer->ResolveSubresource( destination->InternalPointer, destinationSubresource, source->InternalPointer, sourceSubresource, static_cast<DXGI_FORMAT>( format ) );
 	}
 	
 	void Device::Draw( int vertexCount, int startVertexLocation )
@@ -141,6 +209,11 @@ namespace Direct3D10
 	void Device::Flush()
 	{
 		InternalPointer->Flush();
+	}
+	
+	void Device::GenerateMips( ShaderResourceView^ view )
+	{
+		InternalPointer->GenerateMips( view->InternalPointer );
 	}
 }
 }

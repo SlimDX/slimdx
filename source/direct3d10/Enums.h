@@ -128,6 +128,14 @@ namespace SlimDX
 			TextureCacheHitRate = D3D10_COUNTER_TEXTURE_CACHE_HIT_RATE
 		};
 		
+		public enum class CounterType : System::Int32
+		{
+			Float32 = D3D10_COUNTER_TYPE_FLOAT32,
+			UnsignedInt16 = D3D10_COUNTER_TYPE_UINT16,
+			UnsignedInt32 = D3D10_COUNTER_TYPE_UINT32, 
+			UnsignedInt64 = D3D10_COUNTER_TYPE_UINT64
+		};
+		
 		[System::Flags]
 		public enum class CpuAccessFlags : System::Int32
 		{
@@ -318,6 +326,34 @@ namespace SlimDX
 			UltraBold = FW_ULTRABOLD,
 			Heavy = FW_HEAVY,
 			Black = FW_BLACK
+		};
+		
+		[System::Flags]
+		public enum class FormatSupport : System::Int32
+		{
+			Buffer = D3D10_FORMAT_SUPPORT_BUFFER,
+			VertexBuffer = D3D10_FORMAT_SUPPORT_IA_VERTEX_BUFFER,
+			IndexBuffer = D3D10_FORMAT_SUPPORT_IA_INDEX_BUFFER,
+			StreamOutputBuffer = D3D10_FORMAT_SUPPORT_SO_BUFFER,
+			Texture1D = D3D10_FORMAT_SUPPORT_TEXTURE1D,
+			Texture2D = D3D10_FORMAT_SUPPORT_TEXTURE2D,
+			Texture3D = D3D10_FORMAT_SUPPORT_TEXTURE3D,
+			TextureCube = D3D10_FORMAT_SUPPORT_TEXTURECUBE,
+			ShaderLoadIntrinsic = D3D10_FORMAT_SUPPORT_SHADER_LOAD,
+			ShaderSampleIntrinsic = D3D10_FORMAT_SUPPORT_SHADER_SAMPLE,
+			ShaderSampleComparisonInstrinsic = D3D10_FORMAT_SUPPORT_SHADER_SAMPLE_COMPARISON,
+			Reserved = D3D10_FORMAT_SUPPORT_SHADER_SAMPLE_MONO_TEXT,
+			MipMap = D3D10_FORMAT_SUPPORT_MIP,
+			MipMapAutogeneration = D3D10_FORMAT_SUPPORT_MIP_AUTOGEN,
+			RenderTarget = D3D10_FORMAT_SUPPORT_RENDER_TARGET,
+			BlendOperation = D3D10_FORMAT_SUPPORT_BLENDABLE,
+			DepthStencil = D3D10_FORMAT_SUPPORT_DEPTH_STENCIL,
+			CpuLocking = D3D10_FORMAT_SUPPORT_CPU_LOCKABLE,
+			MultisampleResolve = D3D10_FORMAT_SUPPORT_MULTISAMPLE_RESOLVE,
+			FormatDisplaySupport = D3D10_FORMAT_SUPPORT_DISPLAY,
+			FormatCastSupport = D3D10_FORMAT_SUPPORT_CAST_WITHIN_BIT_LAYOUT,
+			FormatMultisampleRenderTargetSupport = D3D10_FORMAT_SUPPORT_MULTISAMPLE_RENDERTARGET,
+			FormatMultisampleLoadSupport = D3D10_FORMAT_SUPPORT_MULTISAMPLE_LOAD
 		};
 		
 		public enum class ImageFileFormat : System::Int32
