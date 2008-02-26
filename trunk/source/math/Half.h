@@ -23,17 +23,18 @@
 
 namespace SlimDX
 {
+	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
-	public value class Float16
+	public value class Half
 	{
 	private:
 		System::UInt16 m_Value;
 
-		static Float16()
+		static Half()
 		{
-			Float16::Epsilon = 0.0004887581f;
-			Float16::MaxValue = 65504.0f;
-			Float16::MinValue = 6.103516E-05f;
+			Half::Epsilon = 0.0004887581f;
+			Half::MaxValue = 65504.0f;
+			Half::MinValue = 6.103516E-05f;
 		}
 
 	public:
@@ -49,21 +50,21 @@ namespace SlimDX
 		static initonly float MaxValue;
 		static initonly float MinValue;
 
-		Float16( float value );
+		Half( float value );
 
-		static array<float>^ ConvertToFloat( array<Float16>^ values );
-		static array<Float16>^ ConvertToFloat16( array<float>^ values );
+		static array<float>^ ConvertToFloat( array<Half>^ values );
+		static array<Half>^ ConvertToHalf( array<float>^ values );
 
-		static explicit operator Float16( float value );
-		static operator float( Float16 value );
+		static explicit operator Half( float value );
+		static operator float( Half value );
 
-		static bool operator == ( Float16 left, Float16 right );
-		static bool operator != ( Float16 left, Float16 right );
+		static bool operator == ( Half left, Half right );
+		static bool operator != ( Half left, Half right );
 
 		virtual System::String^ ToString() override;
 		virtual int GetHashCode() override;
 		virtual bool Equals( System::Object^ obj ) override;
-		virtual bool Equals( Float16 other );
-		static bool Equals( Float16% value1, Float16% value2 );
+		virtual bool Equals( Half other );
+		static bool Equals( Half% value1, Half% value2 );
 	};
 }

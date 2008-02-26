@@ -22,7 +22,7 @@
 
 #include <d3dx9.h>
 
-#include "Float16.h"
+#include "Half.h"
 #include "Half2.h"
 
 using namespace System;
@@ -30,13 +30,13 @@ using namespace System::Globalization;
 
 namespace SlimDX
 {
-	Half2::Half2( Float16 value )
+	Half2::Half2( Half value )
 	{
 		X = value;
 		Y = value;
 	}
 
-	Half2::Half2( Float16 x, Float16 y )
+	Half2::Half2( Half x, Half y )
 	{
 		X = x;
 		Y = y;

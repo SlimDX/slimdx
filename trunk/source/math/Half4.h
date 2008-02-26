@@ -30,12 +30,12 @@ namespace SlimDX
 	public value class Half4
 	{
 	public:
-		property Float16 X;
-		property Float16 Y;
-		property Float16 Z;
-		property Float16 W;
+		property Half X;
+		property Half Y;
+		property Half Z;
+		property Half W;
 
-		Half4( Float16 value );
-		Half4( Float16 x, Float16 y, Float16 z, Float16 w );
+		Half4( Half value );
+		Half4( Half x, Half y, Half z, Half w );
 	};
 }

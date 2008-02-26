@@ -22,6 +22,7 @@
 #pragma once
 
 #include "Configuration.h"
+#include "InternalHelpers.h"
 #include "Result.h"
 
 namespace SlimDX
@@ -45,5 +46,16 @@ namespace SlimDX
 		SlimDXException( System::String^ message );
 		SlimDXException( System::String^ message, System::Exception^ innerException );
 		SlimDXException( Result result );
+
+		[System::Security::Permissions::SecurityPermission(System::Security::Permissions::SecurityAction::LinkDemand, Flags = System::Security::Permissions::SecurityPermissionFlag::SerializationFormatter)]
+		virtual void GetObjectData(System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context) override
+        {
+			if( info == nullptr )
+				throw gcnew System::ArgumentNullException( "info" );
+
+            info->AddValue("Result", m_Result);
+
+			System::Exception::GetObjectData( info, context );
+        }
 	};
 }
