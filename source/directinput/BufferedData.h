@@ -102,6 +102,11 @@ namespace SlimDX
 
 			void Add( BufferedData<DataFormat>^ data );
 
+			virtual System::Collections::IEnumerator^ GetEnumerator2() = System::Collections::IEnumerable::GetEnumerator
+			{
+				return ((System::Collections::IEnumerable^)list)->GetEnumerator();
+			}
+
 		public:
 			property int Count
 			{
@@ -114,11 +119,6 @@ namespace SlimDX
 			}
 
 			virtual System::Collections::Generic::IEnumerator<BufferedData<DataFormat>^>^ GetEnumerator() { return list->GetEnumerator(); }
-
-			virtual System::Collections::IEnumerator^ GetEnumerator2() = System::Collections::IEnumerable::GetEnumerator
-			{
-				return ((System::Collections::IEnumerable^)list)->GetEnumerator();
-			}
 		};
 	}
 }

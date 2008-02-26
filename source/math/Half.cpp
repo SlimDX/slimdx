@@ -24,25 +24,25 @@
 
 #include "../Viewport.h"
 
-#include "Float16.h"
+#include "Half.h"
 
 using namespace System;
 using namespace System::Globalization;
 
 namespace SlimDX
 {
-	Float16::Float16( float value )
+	Half::Half( float value )
 	{
-		Float16 temp;
+		Half temp;
 		D3DXFloat32To16Array( reinterpret_cast<D3DXFLOAT16*>( &temp ), &value, 1 );
 		m_Value = temp.m_Value;
 	}
 
-	array<float>^ Float16::ConvertToFloat( array<Float16>^ values )
+	array<float>^ Half::ConvertToFloat( array<Half>^ values )
 	{
 		array<float>^ results = gcnew array<float>( values->Length );
 		pin_ptr<float> pinnedResults = &results[0];
-		pin_ptr<Float16> pinnedValues = &values[0];
+		pin_ptr<Half> pinnedValues = &values[0];
 
 		D3DXFloat16To32Array( reinterpret_cast<FLOAT*>( pinnedResults ), 
 			reinterpret_cast<const D3DXFLOAT16*>( pinnedValues ), values->Length );
@@ -50,10 +50,10 @@ namespace SlimDX
 		return results;
 	}
 
-	array<Float16>^ Float16::ConvertToFloat16( array<float>^ values )
+	array<Half>^ Half::ConvertToHalf( array<float>^ values )
 	{
-		array<Float16>^ results = gcnew array<Float16>( values->Length );
-		pin_ptr<Float16> pinnedResults = &results[0];
+		array<Half>^ results = gcnew array<Half>( values->Length );
+		pin_ptr<Half> pinnedResults = &results[0];
 		pin_ptr<float> pinnedValues = &values[0];
 
 		D3DXFloat32To16Array( reinterpret_cast<D3DXFLOAT16*>( pinnedResults ), 
@@ -62,40 +62,40 @@ namespace SlimDX
 		return results;
 	}
 
-	Float16::operator Float16( float value )
+	Half::operator Half( float value )
 	{
-		return Float16( value );
+		return Half( value );
 	}
 
-	Float16::operator float( Float16 value )
+	Half::operator float( Half value )
 	{
 		float result;
 		D3DXFloat16To32Array( &result, reinterpret_cast<D3DXFLOAT16*>( &value ), 1 );
 		return result;
 	}
 
-	bool Float16::operator == ( Float16 left, Float16 right )
+	bool Half::operator == ( Half left, Half right )
 	{
-		return Float16::Equals( left, right );
+		return Half::Equals( left, right );
 	}
 
-	bool Float16::operator != ( Float16 left, Float16 right )
+	bool Half::operator != ( Half left, Half right )
 	{
-		return !Float16::Equals( left, right );
+		return !Half::Equals( left, right );
 	}
 
-	String^ Float16::ToString()
+	String^ Half::ToString()
 	{
-		Float16 temp = Float16( m_Value );
+		Half temp = Half( m_Value );
 		return ( static_cast<float>( temp ) ).ToString( CultureInfo::CurrentCulture );
 	}
 
-	int Float16::GetHashCode()
+	int Half::GetHashCode()
 	{
 		return (m_Value * 3 / 2) ^ m_Value;
 	}
 
-	bool Float16::Equals( Object^ value )
+	bool Half::Equals( Object^ value )
 	{
 		if( value == nullptr )
 			return false;
@@ -103,15 +103,15 @@ namespace SlimDX
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Float16>( value ) );
+		return Equals( static_cast<Half>( value ) );
 	}
 
-	bool Float16::Equals( Float16 value )
+	bool Half::Equals( Half value )
 	{
 		return ( value.m_Value == m_Value );
 	}
 
-	bool Float16::Equals( Float16% value1, Float16% value2 )
+	bool Half::Equals( Half% value1, Half% value2 )
 	{
 		return ( value1.m_Value == value2.m_Value );
 	}

@@ -474,6 +474,19 @@
             </Issue>
            </Message>
           </Messages>
+          <Members>
+           <Member Name="#AddResultWatch(SlimDX.Result,SlimDX.ResultWatchFlags)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-02-26 17:46:03Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Configuration::AddResultWatch(Result, ResultWatchFlags)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
          <Type Name="DataStream">
           <Members>
@@ -557,16 +570,16 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Float16">
+         <Type Name="Half">
           <Members>
-           <Member Name="#Equals(SlimDX.Float16&amp;,SlimDX.Float16&amp;)">
+           <Member Name="#Equals(SlimDX.Half&amp;,SlimDX.Half&amp;)">
             <Messages>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-12-02 22:23:38Z">
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2008-02-26 17:46:03Z">
               <Issue Certainty="50">
                <Item>'value1'</Item>
               </Issue>
              </Message>
-             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-12-02 22:23:38Z">
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2008-02-26 17:46:03Z">
               <Issue Certainty="50">
                <Item>'value2'</Item>
               </Issue>
@@ -574,6 +587,42 @@
             </Messages>
            </Member>
           </Members>
+         </Type>
+         <Type Name="Half2">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-26 17:46:03Z">
+            <Issue Name="Equals">
+             <Item>'Half2'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'Half2'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="Half3">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-26 17:46:03Z">
+            <Issue Name="Equals">
+             <Item>'Half3'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'Half3'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="Half4">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-26 17:46:03Z">
+            <Issue Name="Equals">
+             <Item>'Half4'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'Half4'</Item>
+            </Issue>
+           </Message>
+          </Messages>
          </Type>
          <Type Name="Matrix">
           <Members>
@@ -2240,11 +2289,12 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="SlimDXException">
+         <Type Name="ResultWatchFlags">
           <Messages>
-           <Message TypeName="ImplementISerializableCorrectly" Category="Microsoft.Usage" CheckId="CA2240" Created="2008-01-27 22:23:52Z">
-            <Issue>
-             <Item>'SlimDXException'</Item>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-02-26 17:46:03Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'ResultWatchFlags'</Item>
             </Issue>
            </Message>
           </Messages>
@@ -4067,6 +4117,30 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="DeviceChild">
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-02-26 17:46:03Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'DeviceChild::DeviceChild(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetDevice()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-02-26 17:46:03Z">
+              <Issue Certainty="50">
+               <Item>'DeviceChild::GetDevice(void)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="DeviceCreationFlags">
           <Messages>
            <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -5749,16 +5823,6 @@
        </Namespace>
        <Namespace Name="SlimDX.Direct3D9">
         <Types>
-         <Type Name="AdapterCollection">
-          <Messages>
-           <Message TypeName="CollectionsShouldImplementGenericInterface" Category="Microsoft.Design" CheckId="CA1010" Created="2007-10-01 21:38:08Z">
-            <Issue Certainty="60">
-             <Item>'AdapterCollection'</Item>
-             <Item>IEnumerable</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="AdapterDetails">
           <Members>
            <Member Name="#WhqlLevel">
@@ -6341,13 +6405,13 @@
          </Type>
          <Type Name="Channel">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2008-02-23 19:14:50Z">
-            <Issue>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2008-01-06 19:04:15Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
              <Item>'Channel'</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2008-01-06 19:04:15Z" FixCategory="NonBreaking">
-            <Issue Name="NotFlagsNoZeroValue">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2008-02-23 19:14:50Z">
+            <Issue>
              <Item>'Channel'</Item>
             </Issue>
            </Message>
@@ -6813,7 +6877,7 @@
            </Member>
            <Member Name="#GetVectors(SlimDX.DataStream,System.Int32,System.Int32)">
             <Messages>
-             <Message Id="stride-12" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Created="2007-12-02 22:23:38Z">
+             <Message Id="stride-12" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2007-12-02 22:23:38Z">
               <Issue>
                <Item>stride-12</Item>
                <Item>'D3DX::GetVectors(DataStream^, int, int)'</Item>
@@ -7167,7 +7231,7 @@
            </Member>
            <Member Name="#GetTransform(System.Int32)">
             <Messages>
-             <Message Id="index+256" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Created="2008-01-27 22:23:52Z">
+             <Message Id="index+256" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2008-01-27 22:23:52Z">
               <Issue>
                <Item>index+256</Item>
                <Item>'Device::GetTransform(int)'</Item>
@@ -7384,7 +7448,7 @@
            </Member>
            <Member Name="#SetTransform(System.Int32,SlimDX.Matrix)">
             <Messages>
-             <Message Id="index+256" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Created="2008-01-27 22:23:52Z">
+             <Message Id="index+256" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2008-01-27 22:23:52Z">
               <Issue>
                <Item>index+256</Item>
                <Item>'Device::SetTransform(int, Matrix)'</Item>
@@ -7596,16 +7660,6 @@
             </Issue>
             <Issue Name="op_Equality">
              <Item>'DisplayMode'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="DisplayModeCollection">
-          <Messages>
-           <Message TypeName="CollectionsShouldImplementGenericInterface" Category="Microsoft.Design" CheckId="CA1010" Created="2007-10-01 21:38:08Z">
-            <Issue Certainty="60">
-             <Item>'DisplayModeCollection'</Item>
-             <Item>IEnumerable</Item>
             </Issue>
            </Message>
           </Messages>
@@ -7836,16 +7890,6 @@
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-02-21 21:35:22Z">
               <Issue Certainty="50">
                <Item>'Effect::GetStateManager(void)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#SetStateManager(SlimDX.Direct3D9.IEffectStateManager)">
-            <Messages>
-             <Message Id="manager" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-02-21 21:35:22Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'manager'</Item>
-               <Item>'Effect::SetStateManager(IEffectStateManager^)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -8814,19 +8858,6 @@
          </Type>
          <Type Name="IndexBuffer">
           <Members>
-           <Member Name="#Format">
-            <Accessors>
-             <Accessor Name="#set_Format(SlimDX.Direct3D9.Format)">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-01-06 19:04:15Z">
-                <Issue>
-                 <Item>'IndexBuffer::Format::set(Format)'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
            <Member Name="#Lock(System.Int32,System.Int32,SlimDX.Direct3D9.LockFlags)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
@@ -8838,53 +8869,29 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#m_Type">
+          </Members>
+         </Type>
+         <Type Name="IndexBufferDescription">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-26 18:27:11Z">
+            <Issue Name="Equals">
+             <Item>'IndexBufferDescription'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'IndexBufferDescription'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Type">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2007-12-02 22:23:38Z">
-              <Issue>
-               <Item>'IndexBuffer::m_Type'</Item>
+             <Message TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721" Status="Excluded" Created="2008-02-26 18:27:11Z" FixCategory="NonBreaking">
+              <Issue Name="BaseType">
+               <Item>'IndexBufferDescription::Type'</Item>
+               <Item>'Object::GetType(void)'</Item>
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#Pool">
-            <Accessors>
-             <Accessor Name="#set_Pool(SlimDX.Direct3D9.Pool)">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-01-06 19:04:15Z">
-                <Issue>
-                 <Item>'IndexBuffer::Pool::set(Pool)'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#SizeInBytes">
-            <Accessors>
-             <Accessor Name="#set_SizeInBytes(System.Int32)">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-01-06 19:04:15Z">
-                <Issue>
-                 <Item>'IndexBuffer::SizeInBytes::set(int)'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#Usage">
-            <Accessors>
-             <Accessor Name="#set_Usage(SlimDX.Direct3D9.Usage)">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-01-06 19:04:15Z">
-                <Issue>
-                 <Item>'IndexBuffer::Usage::set(Usage)'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -8902,7 +8909,7 @@
           <Members>
            <Member Name="#WaitingForGPUExclusiveResourceTimePercent">
             <Messages>
-             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-02-23 19:14:50Z">
+             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-02-23 19:14:50Z">
               <Issue Name="Member">
                <Item>GPU</Item>
                <Item>'InterfaceTimings::WaitingForGPUExclusiveResourceTimePercent'</Item>
@@ -8913,7 +8920,7 @@
            </Member>
            <Member Name="#WaitingForGPUOtherTimePercent">
             <Messages>
-             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-02-23 19:14:50Z">
+             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-02-23 19:14:50Z">
               <Issue Name="Member">
                <Item>GPU</Item>
                <Item>'InterfaceTimings::WaitingForGPUOtherTimePercent'</Item>
@@ -8924,7 +8931,7 @@
            </Member>
            <Member Name="#WaitingForGPUToAcceptMoreCommandsTimePercent">
             <Messages>
-             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-02-23 19:14:50Z">
+             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-02-23 19:14:50Z">
               <Issue Name="Member">
                <Item>GPU</Item>
                <Item>'InterfaceTimings::WaitingForGPUToAcceptMoreCommandsTimePercent'</Item>
@@ -8935,7 +8942,7 @@
            </Member>
            <Member Name="#WaitingForGPUToStayWithinLatencyTimePercent">
             <Messages>
-             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-02-23 19:14:50Z">
+             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-02-23 19:14:50Z">
               <Issue Name="Member">
                <Item>GPU</Item>
                <Item>'InterfaceTimings::WaitingForGPUToStayWithinLatencyTimePercent'</Item>
@@ -8946,7 +8953,7 @@
            </Member>
            <Member Name="#WaitingForGPUToUseApplicationResourceTimePercent">
             <Messages>
-             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-02-23 19:14:50Z">
+             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-02-23 19:14:50Z">
               <Issue Name="Member">
                <Item>GPU</Item>
                <Item>'InterfaceTimings::WaitingForGPUToUseApplicationResourceTimePercent'</Item>
@@ -10137,7 +10144,7 @@
           <Members>
            <Member Name="#GPUIdleTimePercent">
             <Messages>
-             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-02-23 19:14:50Z">
+             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-02-23 19:14:50Z">
               <Issue Name="Member">
                <Item>GPU</Item>
                <Item>'PipelineTimings::GPUIdleTimePercent'</Item>
@@ -10148,7 +10155,7 @@
            </Member>
            <Member Name="#OtherGPUProcessingTimePercent">
             <Messages>
-             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-02-23 19:14:50Z">
+             <Message Id="GPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-02-23 19:14:50Z">
               <Issue Name="Member">
                <Item>GPU</Item>
                <Item>'PipelineTimings::OtherGPUProcessingTimePercent'</Item>
@@ -13422,7 +13429,7 @@
          </Type>
          <Type Name="Error">
           <Messages>
-           <Message Id="Error" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2008-02-23 19:14:50Z">
+           <Message Id="Error" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Status="Excluded" Created="2008-02-23 19:14:50Z">
             <Issue Name="Type">
              <Item>'Error'</Item>
              <Item>Error</Item>
@@ -15368,13 +15375,13 @@
          </Type>
          <Type Name="Usage">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2008-02-23 19:14:50Z">
-            <Issue>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2008-01-27 22:23:52Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
              <Item>'Usage'</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2008-01-27 22:23:52Z" FixCategory="NonBreaking">
-            <Issue Name="NotFlagsNoZeroValue">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2008-02-23 19:14:50Z">
+            <Issue>
              <Item>'Usage'</Item>
             </Issue>
            </Message>
@@ -15688,12 +15695,6 @@
    <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
     <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
    </Rule>
-   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
-    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
-   </Rule>
-   <Rule TypeName="CollectionsShouldImplementGenericInterface" Category="Microsoft.Design" CheckId="CA1010">
-    <Resolution Name="Default">{0} appears to be a non-generic, strongly typed collection. Add an implementation to the instance of {1}&lt;T&gt; where T is the underlying element type of {0}.</Resolution>
-   </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
    </Rule>
@@ -15766,9 +15767,6 @@
    <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
     <Resolution Name="Type">Rename type {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a type makes it harder for consumers in other languages to use the type.</Resolution>
    </Rule>
-   <Rule TypeName="ImplementISerializableCorrectly" Category="Microsoft.Usage" CheckId="CA2240">
-    <Resolution Name="Default">Add an implementation of GetObjectData to type {0}.</Resolution>
-   </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
    </Rule>
@@ -15810,9 +15808,6 @@
    <Rule TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025">
     <Resolution Name="Default">Consider implementing a version of {0} that accepts a parameter array argument.</Resolution>
    </Rule>
-   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
-    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
-   </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
     <Resolution Name="System">The type name {0} conflicts in whole or in part with the namespace name '{1}' defined in the .NET Framework. Rename the type to eliminate the conflict.</Resolution>
@@ -15822,7 +15817,6 @@
     <Resolution Name="MemberNoAlternate">Replace the term '{0}' in member name {1} with an appropriate alternate or remove it entirely.</Resolution>
     <Resolution Name="MemberParameter">In member {0}, replace the term '{1}' in parameter name {2} with the preferred alternate '{3}'.</Resolution>
     <Resolution Name="MemberParameterNoAlternate">In member {0}, replace the term '{1}' in parameter name {2} with an appropriate alternate or remove it entirely.</Resolution>
-    <Resolution Name="Parameter" />
     <Resolution Name="TypeNoAlternate">Replace the term '{0}' in type name {1} with an appropriate alternate or remove it entirely.</Resolution>
    </Rule>
    <Rule TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024">

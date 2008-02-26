@@ -2103,16 +2103,8 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Numbers"
+				Name="Rational"
 				>
-				<File
-					RelativePath="..\source\math\Float16.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\math\Float16.h"
-					>
-				</File>
 				<File
 					RelativePath="..\source\math\Rational.cpp"
 					>
@@ -2125,6 +2117,14 @@
 			<Filter
 				Name="Half"
 				>
+				<File
+					RelativePath="..\source\math\Half.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Half.h"
+					>
+				</File>
 				<File
 					RelativePath="..\source\math\Half2.cpp"
 					>

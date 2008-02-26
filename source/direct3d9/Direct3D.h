@@ -154,13 +154,18 @@ namespace SlimDX
 			Capabilities( D3DCAPS9& caps );
 		};
 
-        public ref class DisplayModeCollection : public System::Collections::IEnumerable
+		public ref class DisplayModeCollection : public System::Collections::Generic::IEnumerable<DisplayMode>
 		{
 		private:
 			array<DisplayMode>^ m_Modes;
 
 		internal:
 			DisplayModeCollection( unsigned int adapter, Format format );
+
+			virtual System::Collections::IEnumerator^ GetEnumerator2() = System::Collections::IEnumerable::GetEnumerator
+			{
+                return m_Modes->GetEnumerator();
+			}
 
 		public:
             property int Count
@@ -176,9 +181,9 @@ namespace SlimDX
 				}
 			}
 
-			virtual System::Collections::IEnumerator^ GetEnumerator()
+			virtual System::Collections::Generic::IEnumerator<DisplayMode>^ GetEnumerator()
 			{
-                return m_Modes->GetEnumerator();
+                return (System::Collections::Generic::IEnumerator<DisplayMode>^) m_Modes->GetEnumerator();
 			}
 		};
 
@@ -212,13 +217,18 @@ namespace SlimDX
 			}
 		};
 
-        public ref class AdapterCollection : public System::Collections::IEnumerable
+		public ref class AdapterCollection : public System::Collections::Generic::IEnumerable<AdapterInformation^>
 		{
 		private:
             array<AdapterInformation^>^ m_Adapters;
 
 		internal:
 			AdapterCollection( unsigned int adapterCount );
+
+			virtual System::Collections::IEnumerator^ GetEnumerator2() = System::Collections::IEnumerable::GetEnumerator
+			{
+				return m_Adapters->GetEnumerator();
+			}
 
 		public:
             property int Count
@@ -234,9 +244,9 @@ namespace SlimDX
 				}
 			}
 
-			virtual System::Collections::IEnumerator^ GetEnumerator()
+			virtual System::Collections::Generic::IEnumerator<AdapterInformation^>^ GetEnumerator()
 			{
-                return m_Adapters->GetEnumerator();
+                return (System::Collections::Generic::IEnumerator<AdapterInformation^>^) m_Adapters->GetEnumerator();
 			}
 		};
 

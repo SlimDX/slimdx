@@ -30,11 +30,11 @@ namespace SlimDX
 	public value class Half3
 	{
 	public:
-		property Float16 X;
-		property Float16 Y;
-		property Float16 Z;
+		property Half X;
+		property Half Y;
+		property Half Z;
 
-		Half3( Float16 value );
-		Half3( Float16 x, Float16 y, Float16 z );
+		Half3( Half value );
+		Half3( Half x, Half y, Half z );
 	};
 }
