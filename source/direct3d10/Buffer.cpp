@@ -97,9 +97,9 @@ namespace Direct3D10
 	
 	BufferDescription Buffer::Description::get()
 	{
-		D3D10_BUFFER_DESC nativeDescription;
-		InternalPointer->GetDesc( &nativeDescription );
-		return BufferDescription( nativeDescription );
+		D3D10_BUFFER_DESC description;
+		InternalPointer->GetDesc( &description );
+		return BufferDescription( description );
 	}
 	
 	DataStream^ Buffer::Map( MapMode mode, MapFlags flags )

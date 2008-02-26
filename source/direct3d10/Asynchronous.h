@@ -24,40 +24,36 @@
 #include "../ComObject.h"
 #include "../DataStream.h"
 
+#include "DeviceChild.h"
 #include "Enums.h"
-#include "Resource.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		ref class Device;
-		value class BufferDescription;
-		
-		public ref class Buffer : public Resource
+		public ref class Asynchronous : public DeviceChild
 		{
-			COMOBJECT(ID3D10Buffer);
-			
-		private:
-			static ID3D10Buffer* Build( Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
+			COMOBJECT(ID3D10Asynchronous);
+		
+		protected:
+			Asynchronous();
 		
 		internal:
-			Buffer( ID3D10Buffer* pointer );
+			Asynchronous( ID3D10Asynchronous* pointer );
 		
 		public:
-			property BufferDescription Description
+			property bool IsDataAvailable
 			{
-				BufferDescription get();
+				bool get();
 			}
 			
-			Buffer( System::IntPtr pointer );
-			Buffer( Device^ device, BufferDescription description );
-			Buffer( Device^ device, DataStream^ data, BufferDescription description );
-			Buffer( Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
-			Buffer( Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
+			Asynchronous( System::IntPtr pointer );
 			
-			DataStream^ Map( MapMode mode, MapFlags flags );
-			void Unmap();
+			void Begin();
+			void End();
+			
+			DataStream^ GetData();
+			DataStream^ GetData( AsynchronousFlags flags );
 		};
 	}
 };

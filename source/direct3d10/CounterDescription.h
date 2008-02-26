@@ -21,43 +21,30 @@
 */
 #pragma once
 
-#include "../ComObject.h"
-#include "../DataStream.h"
-
 #include "Enums.h"
-#include "Resource.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
-	{
-		ref class Device;
-		value class BufferDescription;
-		
-		public ref class Buffer : public Resource
+	{	
+		public value class CounterDescription
 		{
-			COMOBJECT(ID3D10Buffer);
-			
 		private:
-			static ID3D10Buffer* Build( Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
-		
+			Direct3D10::CounterKind m_Counter;
+
 		internal:
-			Buffer( ID3D10Buffer* pointer );
-		
+			CounterDescription( const D3D10_COUNTER_DESC& native );
+			
+			D3D10_COUNTER_DESC CreateNativeVersion();
+			
 		public:
-			property BufferDescription Description
+			property Direct3D10::CounterKind CounterKind
 			{
-				BufferDescription get();
+				Direct3D10::CounterKind get();
+				void set( Direct3D10::CounterKind value );
 			}
 			
-			Buffer( System::IntPtr pointer );
-			Buffer( Device^ device, BufferDescription description );
-			Buffer( Device^ device, DataStream^ data, BufferDescription description );
-			Buffer( Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
-			Buffer( Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
-			
-			DataStream^ Map( MapMode mode, MapFlags flags );
-			void Unmap();
+			CounterDescription( Direct3D10::CounterKind kind );
 		};
 	}
 };
