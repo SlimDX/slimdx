@@ -21,6 +21,7 @@
 */
 
 #include <windows.h>
+#include <dxerr.h>
 
 #include "Configuration.h"
 #include "Result.h"
@@ -40,25 +41,21 @@ namespace SlimDX
 		return m_Code;
 	}
 	
+	String^ Result::Name::get()
+	{
+		if( m_Name == nullptr )
+		{
+			m_Name = gcnew String( DXGetErrorString( m_Code ) );
+		}
+
+		return m_Name;
+	}
+
 	String^ Result::Description::get()
 	{
 		if( m_Description == nullptr )
 		{
-			wchar_t * message = 0;
-			
-			try
-			{
-				int flags = FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM;
-				int lang = MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT );
-				if( FormatMessage( flags, 0, m_Code, lang, reinterpret_cast<wchar_t*>( &message ), 0, 0 ) )
-					m_Description = gcnew String( message );
-				else
-					m_Description = String::Format( System::Globalization::CultureInfo::CurrentCulture, "HRESULT: {0}", m_Code );
-			}
-			finally
-			{
-				LocalFree( message );
-			}
+			m_Description = gcnew String( DXGetErrorDescription( m_Code ) );
 		}
 		
 		return m_Description;
@@ -75,7 +72,13 @@ namespace SlimDX
 	}
 	
 	generic< typename T >
-	Result Result::Record( int hr )
+	void Result::Throw()
+	{
+		throw safe_cast<SlimDXException^>( Activator::CreateInstance( T::typeid, m_Last ) );
+	}
+
+	generic< typename T >
+	Result Result::Record( int hr, bool failed )
 	{
 		m_Last = Result( hr );
 
@@ -86,12 +89,27 @@ namespace SlimDX
 			if( static_cast<int>( flags & ResultWatchFlags::Assert ) != 0 )
 				System::Diagnostics::Debugger::Break();
 #endif
+
 			if( static_cast<int>( flags & ResultWatchFlags::Throw ) != 0 )
-				throw safe_cast<SlimDXException^>( Activator::CreateInstance( T::typeid, Result::Last ) );
+				Throw<T>();
 		}
 
-		
+		if( failed && Configuration::AlwaysThrowOnError )
+			Throw<T>();
+
 		return Result( hr );
+	}
+
+	generic< typename T >
+	Result Result::Fail( int hr )
+	{
+		return Record<T>( hr, true );
+	}
+
+	generic< typename T >
+	Result Result::Record( int hr )
+	{
+		return Record<T>( hr, hr < 0 );
 	}
 	
 	Result Result::Last::get()

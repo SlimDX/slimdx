@@ -256,7 +256,7 @@ namespace SlimDX
 		{
 			unsigned int passCount;
 
-			HRESULT hr = EffectPointer->Begin( &passCount, static_cast<DWORD>( flags ) );
+			HRESULT hr = InternalPointer->Begin( &passCount, static_cast<DWORD>( flags ) );
 			RECORD_D3D9( hr );
 
 			return passCount;
@@ -264,31 +264,31 @@ namespace SlimDX
 
 		Result Effect::End()
 		{
-			HRESULT hr = EffectPointer->End();
+			HRESULT hr = InternalPointer->End();
 			return RECORD_D3D9( hr );
 		}
 
 		Result Effect::BeginPass( int pass )
 		{
-			HRESULT hr = EffectPointer->BeginPass( pass );
+			HRESULT hr = InternalPointer->BeginPass( pass );
 			return RECORD_D3D9( hr );
 		}
 
 		Result Effect::EndPass()
 		{
-			HRESULT hr = EffectPointer->EndPass();
+			HRESULT hr = InternalPointer->EndPass();
 			return RECORD_D3D9( hr );
 		}
 
 		Result Effect::BeginParameterBlock()
 		{
-			HRESULT hr = EffectPointer->BeginParameterBlock();
+			HRESULT hr = InternalPointer->BeginParameterBlock();
 			return RECORD_D3D9( hr );
 		}
 
 		EffectHandle^ Effect::EndParameterBlock()
 		{
-			D3DXHANDLE handle = EffectPointer->EndParameterBlock();
+			D3DXHANDLE handle = InternalPointer->EndParameterBlock();
 			if( handle == NULL )
 				return nullptr;
 			return gcnew EffectHandle( handle );
@@ -297,14 +297,14 @@ namespace SlimDX
 		Result Effect::ApplyParameterBlock( EffectHandle^ parameterBlock )
 		{
 			D3DXHANDLE handle = parameterBlock != nullptr ? parameterBlock->InternalHandle : NULL;
-			HRESULT hr = EffectPointer->ApplyParameterBlock( handle );
+			HRESULT hr = InternalPointer->ApplyParameterBlock( handle );
 			return RECORD_D3D9( hr );
 		}
 
 		Result Effect::DeleteParameterBlock( EffectHandle^ parameterBlock )
 		{
 			D3DXHANDLE handle = parameterBlock != nullptr ? parameterBlock->InternalHandle : NULL;
-			HRESULT hr = EffectPointer->DeleteParameterBlock( handle );
+			HRESULT hr = InternalPointer->DeleteParameterBlock( handle );
 			return RECORD_D3D9( hr );
 		}
 
@@ -312,13 +312,13 @@ namespace SlimDX
 		{
 			D3DXHANDLE paramHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			D3DXHANDLE techHandle = technique != nullptr ? technique->InternalHandle : NULL;
-			BOOL used = EffectPointer->IsParameterUsed( paramHandle, techHandle );
+			BOOL used = InternalPointer->IsParameterUsed( paramHandle, techHandle );
 			return used > 0;
 		}
 
 		Result Effect::CommitChanges()
 		{
-			HRESULT hr = EffectPointer->CommitChanges();
+			HRESULT hr = InternalPointer->CommitChanges();
 			return RECORD_D3D9( hr );
 		}
 
@@ -327,7 +327,7 @@ namespace SlimDX
 			D3DXHANDLE handle;
 			D3DXHANDLE parentHandle = technique != nullptr ? technique->InternalHandle : NULL;
 
-			HRESULT hr = EffectPointer->FindNextValidTechnique( parentHandle, &handle );
+			HRESULT hr = InternalPointer->FindNextValidTechnique( parentHandle, &handle );
 
 			if( RECORD_D3D9( hr ).IsFailure || handle == NULL )
 				return nullptr;
@@ -338,12 +338,12 @@ namespace SlimDX
 		bool Effect::ValidateTechnique( EffectHandle^ technique )
 		{
 			D3DXHANDLE handle = technique != nullptr ? technique->InternalHandle : NULL;
-			return FAILED( EffectPointer->ValidateTechnique( handle ) );
+			return FAILED( InternalPointer->ValidateTechnique( handle ) );
 		}
 
 		EffectHandle^ Effect::Technique::get()
 		{
-			D3DXHANDLE handle = EffectPointer->GetCurrentTechnique();
+			D3DXHANDLE handle = InternalPointer->GetCurrentTechnique();
 			if( handle == NULL )
 				return nullptr;
 			return gcnew EffectHandle( handle );
@@ -352,19 +352,19 @@ namespace SlimDX
 		void Effect::Technique::set( EffectHandle^ value )
 		{
 			D3DXHANDLE handle = value != nullptr ? value->InternalHandle : NULL;
-			HRESULT hr = EffectPointer->SetTechnique( handle );
+			HRESULT hr = InternalPointer->SetTechnique( handle );
 			RECORD_D3D9( hr );
 		}
 
 		Result Effect::OnLostDevice()
 		{
-			HRESULT hr = EffectPointer->OnLostDevice();
+			HRESULT hr = InternalPointer->OnLostDevice();
 			return RECORD_D3D9( hr );
 		}
 
 		Result Effect::OnResetDevice()
 		{
-			HRESULT hr = EffectPointer->OnResetDevice();
+			HRESULT hr = InternalPointer->OnResetDevice();
 			return RECORD_D3D9( hr );
 		}
 
@@ -375,7 +375,7 @@ namespace SlimDX
 
 			shim = new IEffectStateManagerShim( manager );
 
-			HRESULT hr = EffectPointer->SetStateManager( shim );
+			HRESULT hr = InternalPointer->SetStateManager( shim );
 			return RECORD_D3D9( hr );
 		}
 

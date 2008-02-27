@@ -48,12 +48,6 @@ namespace SlimDX
 		private:
 			IEffectStateManagerShim *shim;
 			
-		internal:
-			property ID3DXEffect* EffectPointer
-			{
-				ID3DXEffect* get() { return InternalPointer; }
-			}
-
 		public:
 			virtual ~Effect() { if( shim != NULL ) delete shim; }
 			static Effect^ FromPointer( System::IntPtr effect );
