@@ -67,5 +67,41 @@ namespace DXGI
 	{
 		m_Quality = value;
 	}
+
+	bool SampleDescription::operator == ( SampleDescription left, SampleDescription right )
+	{
+		return SampleDescription::Equals( left, right );
+	}
+
+	bool SampleDescription::operator != ( SampleDescription left, SampleDescription right )
+	{
+		return !SampleDescription::Equals( left, right );
+	}
+
+	int SampleDescription::GetHashCode()
+	{
+		return m_Count.GetHashCode() + m_Quality.GetHashCode();
+	}
+
+	bool SampleDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<SampleDescription>( value ) );
+	}
+
+	bool SampleDescription::Equals( SampleDescription value )
+	{
+		return ( m_Count == value.m_Count && m_Quality == value.m_Quality );
+	}
+
+	bool SampleDescription::Equals( SampleDescription% value1, SampleDescription% value2 )
+	{
+		return ( value1.m_Count == value2.m_Count && value1.m_Quality == value2.m_Quality );
+	}
 }
 }

@@ -149,5 +149,44 @@ namespace Direct3D10
 	{
 		m_FirstArraySlice = value;
 	}
+
+	bool DepthStencilViewDescription::operator == ( DepthStencilViewDescription left, DepthStencilViewDescription right )
+	{
+		return DepthStencilViewDescription::Equals( left, right );
+	}
+
+	bool DepthStencilViewDescription::operator != ( DepthStencilViewDescription left, DepthStencilViewDescription right )
+	{
+		return !DepthStencilViewDescription::Equals( left, right );
+	}
+
+	int DepthStencilViewDescription::GetHashCode()
+	{
+		return m_Format.GetHashCode() + m_ViewDimension.GetHashCode() + m_MipSlice.GetHashCode()
+			 + m_FirstArraySlice.GetHashCode() + m_ArraySize.GetHashCode();
+	}
+
+	bool DepthStencilViewDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<DepthStencilViewDescription>( value ) );
+	}
+
+	bool DepthStencilViewDescription::Equals( DepthStencilViewDescription value )
+	{
+		return ( m_Format == value.m_Format && m_ViewDimension == value.m_ViewDimension && m_MipSlice == value.m_MipSlice
+			 && m_FirstArraySlice == value.m_FirstArraySlice && m_ArraySize == value.m_ArraySize );
+	}
+
+	bool DepthStencilViewDescription::Equals( DepthStencilViewDescription% value1, DepthStencilViewDescription% value2 )
+	{
+		return ( value1.m_Format == value2.m_Format && value1.m_ViewDimension == value2.m_ViewDimension && value1.m_MipSlice == value2.m_MipSlice
+			 && value1.m_FirstArraySlice == value2.m_FirstArraySlice && value1.m_ArraySize == value2.m_ArraySize );
+	}
 }
 }

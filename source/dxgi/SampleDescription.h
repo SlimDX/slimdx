@@ -28,7 +28,7 @@ namespace SlimDX
 		/// <remarks>
 		/// Describes multisample parameters.
 		/// </remarks>
-		public value class SampleDescription
+		public value class SampleDescription : System::IEquatable<SampleDescription>
 		{
 			int m_Count;
 			int m_Quality;
@@ -63,6 +63,14 @@ namespace SlimDX
 			/// <param name="count">The sample count.</param>
 			/// <param name="quality">The sample quality.</param>
 			SampleDescription( int count, int quality );
+
+			static bool operator == ( SampleDescription left, SampleDescription right );
+			static bool operator != ( SampleDescription left, SampleDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( SampleDescription other );
+			static bool Equals( SampleDescription% value1, SampleDescription% value2 );
 		};
 	}
 };

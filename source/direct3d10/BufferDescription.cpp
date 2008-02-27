@@ -103,5 +103,44 @@ namespace Direct3D10
 	{
 		m_MiscFlags = value;
 	}
+
+	bool BufferDescription::operator == ( BufferDescription left, BufferDescription right )
+	{
+		return BufferDescription::Equals( left, right );
+	}
+
+	bool BufferDescription::operator != ( BufferDescription left, BufferDescription right )
+	{
+		return !BufferDescription::Equals( left, right );
+	}
+
+	int BufferDescription::GetHashCode()
+	{
+		return m_ByteWidth.GetHashCode() + m_Usage.GetHashCode() + m_BindFlags.GetHashCode()
+			 + m_CPUAccessFlags.GetHashCode() + m_MiscFlags.GetHashCode();
+	}
+
+	bool BufferDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<BufferDescription>( value ) );
+	}
+
+	bool BufferDescription::Equals( BufferDescription value )
+	{
+		return ( m_ByteWidth == value.m_ByteWidth && m_Usage == value.m_Usage && m_BindFlags == value.m_BindFlags
+			 && m_CPUAccessFlags == value.m_CPUAccessFlags && m_MiscFlags == value.m_MiscFlags );
+	}
+
+	bool BufferDescription::Equals( BufferDescription% value1, BufferDescription% value2 )
+	{
+		return ( value1.m_ByteWidth == value2.m_ByteWidth && value1.m_Usage == value2.m_Usage && value1.m_BindFlags == value2.m_BindFlags
+			 && value1.m_CPUAccessFlags == value2.m_CPUAccessFlags && value1.m_MiscFlags == value2.m_MiscFlags );
+	}
 }
 }

@@ -88,5 +88,44 @@ namespace Direct3D10
 	{
 		m_StencilFunc = value;
 	}
+
+	bool DepthStencilOperationDescription::operator == ( DepthStencilOperationDescription left, DepthStencilOperationDescription right )
+	{
+		return DepthStencilOperationDescription::Equals( left, right );
+	}
+
+	bool DepthStencilOperationDescription::operator != ( DepthStencilOperationDescription left, DepthStencilOperationDescription right )
+	{
+		return !DepthStencilOperationDescription::Equals( left, right );
+	}
+
+	int DepthStencilOperationDescription::GetHashCode()
+	{
+		return m_StencilFailOp.GetHashCode() + m_StencilDepthFailOp.GetHashCode() + m_StencilPassOp.GetHashCode()
+			 + m_StencilFunc.GetHashCode();
+	}
+
+	bool DepthStencilOperationDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<DepthStencilOperationDescription>( value ) );
+	}
+
+	bool DepthStencilOperationDescription::Equals( DepthStencilOperationDescription value )
+	{
+		return ( m_StencilFailOp == value.m_StencilFailOp && m_StencilDepthFailOp == value.m_StencilDepthFailOp && m_StencilPassOp == value.m_StencilPassOp
+			 && m_StencilFunc == value.m_StencilFunc );
+	}
+
+	bool DepthStencilOperationDescription::Equals( DepthStencilOperationDescription% value1, DepthStencilOperationDescription% value2 )
+	{
+		return ( value1.m_StencilFailOp == value2.m_StencilFailOp && value1.m_StencilDepthFailOp == value2.m_StencilDepthFailOp && value1.m_StencilPassOp == value2.m_StencilPassOp
+			 && value1.m_StencilFunc == value2.m_StencilFunc );
+	}
 }
 }

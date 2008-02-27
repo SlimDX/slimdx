@@ -141,5 +141,47 @@ namespace Direct3D10
 	{
 		m_InstanceDataStepRate = value;
 	}
+
+	bool InputElement::operator == ( InputElement left, InputElement right )
+	{
+		return InputElement::Equals( left, right );
+	}
+
+	bool InputElement::operator != ( InputElement left, InputElement right )
+	{
+		return !InputElement::Equals( left, right );
+	}
+
+	int InputElement::GetHashCode()
+	{
+		return m_SemanticName->GetHashCode() + m_SemanticIndex.GetHashCode() + m_Format.GetHashCode()
+			 + m_InputSlot.GetHashCode() + m_AlignedByteOffset.GetHashCode() + m_InputSlotClass.GetHashCode()
+			 + m_InstanceDataStepRate.GetHashCode();
+	}
+
+	bool InputElement::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<InputElement>( value ) );
+	}
+
+	bool InputElement::Equals( InputElement value )
+	{
+		return ( m_SemanticName == value.m_SemanticName && m_SemanticIndex == value.m_SemanticIndex && m_Format == value.m_Format
+			 && m_InputSlot == value.m_InputSlot && m_AlignedByteOffset == value.m_AlignedByteOffset && m_InputSlotClass == value.m_InputSlotClass
+			 && m_InstanceDataStepRate == value.m_InstanceDataStepRate );
+	}
+
+	bool InputElement::Equals( InputElement% value1, InputElement% value2 )
+	{
+		return ( value1.m_SemanticName == value2.m_SemanticName && value1.m_SemanticIndex == value2.m_SemanticIndex && value1.m_Format == value2.m_Format
+			 && value1.m_InputSlot == value2.m_InputSlot && value1.m_AlignedByteOffset == value2.m_AlignedByteOffset && value1.m_InputSlotClass == value2.m_InputSlotClass
+			 && value1.m_InstanceDataStepRate == value2.m_InstanceDataStepRate );
+	}
 }
 }

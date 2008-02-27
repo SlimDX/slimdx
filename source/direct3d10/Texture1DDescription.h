@@ -29,7 +29,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public value class Texture1DDescription
+		public value class Texture1DDescription : System::IEquatable<Texture1DDescription>
 		{
 		private:
 			int m_Width;
@@ -94,6 +94,14 @@ namespace SlimDX
 				ResourceOptionFlags get();
 				void set( ResourceOptionFlags value );
 			}
+
+			static bool operator == ( Texture1DDescription left, Texture1DDescription right );
+			static bool operator != ( Texture1DDescription left, Texture1DDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( Texture1DDescription other );
+			static bool Equals( Texture1DDescription% value1, Texture1DDescription% value2 );
 		};
 	}
 };

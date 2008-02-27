@@ -59,5 +59,45 @@ namespace Direct3D10
 	{
 		return m_Description;
 	}
+
+	bool CounterMetadata::operator == ( CounterMetadata left, CounterMetadata right )
+	{
+		return CounterMetadata::Equals( left, right );
+	}
+
+	bool CounterMetadata::operator != ( CounterMetadata left, CounterMetadata right )
+	{
+		return !CounterMetadata::Equals( left, right );
+	}
+
+	int CounterMetadata::GetHashCode()
+	{
+		return m_Type.GetHashCode() + m_ActiveCounters.GetHashCode() + m_Name->GetHashCode()
+			 + m_Units->GetHashCode() + m_Description->GetHashCode();
+	}
+
+	bool CounterMetadata::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<CounterMetadata>( value ) );
+	}
+
+	bool CounterMetadata::Equals( CounterMetadata value )
+	{
+		return ( m_Type == value.m_Type && m_ActiveCounters == value.m_ActiveCounters && m_Name == value.m_Name
+			 && m_Units == value.m_Units && m_Description == value.m_Description );
+	}
+
+	bool CounterMetadata::Equals( CounterMetadata% value1, CounterMetadata% value2 )
+	{
+		return ( value1.m_Type == value2.m_Type && value1.m_ActiveCounters == value2.m_ActiveCounters && value1.m_Name == value2.m_Name
+			 && value1.m_Units == value2.m_Units && value1.m_Description == value2.m_Description );
+	}
+
 }
 }

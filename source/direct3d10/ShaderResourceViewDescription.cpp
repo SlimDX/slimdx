@@ -211,5 +211,48 @@ namespace Direct3D10
 	{
 		m_FirstArraySlice = value;
 	}
+
+	
+	bool ShaderResourceViewDescription::operator == ( ShaderResourceViewDescription left, ShaderResourceViewDescription right )
+	{
+		return ShaderResourceViewDescription::Equals( left, right );
+	}
+
+	bool ShaderResourceViewDescription::operator != ( ShaderResourceViewDescription left, ShaderResourceViewDescription right )
+	{
+		return !ShaderResourceViewDescription::Equals( left, right );
+	}
+
+	int ShaderResourceViewDescription::GetHashCode()
+	{
+		return m_Format.GetHashCode() + m_ViewDimension.GetHashCode() + m_ElementOffset.GetHashCode()
+			 + m_ElementWidth.GetHashCode() + m_MostDetailedMip.GetHashCode() + m_MipLevels.GetHashCode()
+			 + m_FirstArraySlice.GetHashCode() + m_ArraySize.GetHashCode();
+	}
+
+	bool ShaderResourceViewDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<ShaderResourceViewDescription>( value ) );
+	}
+
+	bool ShaderResourceViewDescription::Equals( ShaderResourceViewDescription value )
+	{
+		return ( m_Format == value.m_Format && m_ViewDimension == value.m_ViewDimension && m_ElementOffset == value.m_ElementOffset
+			 && m_ElementWidth == value.m_ElementWidth && m_MostDetailedMip == value.m_MostDetailedMip && m_MipLevels == value.m_MipLevels
+			 && m_FirstArraySlice == value.m_FirstArraySlice && m_ArraySize == value.m_ArraySize );
+	}
+
+	bool ShaderResourceViewDescription::Equals( ShaderResourceViewDescription% value1, ShaderResourceViewDescription% value2 )
+	{
+		return ( value1.m_Format == value2.m_Format && value1.m_ViewDimension == value2.m_ViewDimension && value1.m_ElementOffset == value2.m_ElementOffset
+			 && value1.m_ElementWidth == value2.m_ElementWidth && value1.m_MostDetailedMip == value2.m_MostDetailedMip && value1.m_MipLevels == value2.m_MipLevels
+			 && value1.m_FirstArraySlice == value2.m_FirstArraySlice && value1.m_ArraySize == value2.m_ArraySize );
+	}
 }
 }

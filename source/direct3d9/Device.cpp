@@ -53,6 +53,213 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	bool Material::operator == ( Material left, Material right )
+	{
+		return Material::Equals( left, right );
+	}
+
+	bool Material::operator != ( Material left, Material right )
+	{
+		return !Material::Equals( left, right );
+	}
+
+	int Material::GetHashCode()
+	{
+		return Diffuse.GetHashCode() + Ambient.GetHashCode() + Specular.GetHashCode()
+			 + Emissive.GetHashCode() + Power.GetHashCode();
+	}
+
+	bool Material::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<Material>( value ) );
+	}
+
+	bool Material::Equals( Material value )
+	{
+		return ( Diffuse == value.Diffuse && Ambient == value.Ambient && Specular == value.Specular
+			 && Emissive == value.Emissive && Power == value.Power );
+	}
+
+	bool Material::Equals( Material% value1, Material% value2 )
+	{
+		return ( value1.Diffuse == value2.Diffuse && value1.Ambient == value2.Ambient && value1.Specular == value2.Specular
+			 && value1.Emissive == value2.Emissive && value1.Power == value2.Power );
+	}
+
+	bool TrianglePatchInfo::operator == ( TrianglePatchInfo left, TrianglePatchInfo right )
+	{
+		return TrianglePatchInfo::Equals( left, right );
+	}
+
+	bool TrianglePatchInfo::operator != ( TrianglePatchInfo left, TrianglePatchInfo right )
+	{
+		return !TrianglePatchInfo::Equals( left, right );
+	}
+
+	int TrianglePatchInfo::GetHashCode()
+	{
+		return StartVertexOffset.GetHashCode() + VertexCount.GetHashCode() + Basis.GetHashCode()
+			 + Degree.GetHashCode();
+	}
+
+	bool TrianglePatchInfo::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<TrianglePatchInfo>( value ) );
+	}
+
+	bool TrianglePatchInfo::Equals( TrianglePatchInfo value )
+	{
+		return ( StartVertexOffset == value.StartVertexOffset && VertexCount == value.VertexCount && Basis == value.Basis
+			 && Degree == value.Degree );
+	}
+
+	bool TrianglePatchInfo::Equals( TrianglePatchInfo% value1, TrianglePatchInfo% value2 )
+	{
+		return ( value1.StartVertexOffset == value2.StartVertexOffset && value1.VertexCount == value2.VertexCount && value1.Basis == value2.Basis
+			 && value1.Degree == value2.Degree );
+	}
+
+	bool RectanglePatchInfo::operator == ( RectanglePatchInfo left, RectanglePatchInfo right )
+	{
+		return RectanglePatchInfo::Equals( left, right );
+	}
+
+	bool RectanglePatchInfo::operator != ( RectanglePatchInfo left, RectanglePatchInfo right )
+	{
+		return !RectanglePatchInfo::Equals( left, right );
+	}
+
+	int RectanglePatchInfo::GetHashCode()
+	{
+		return StartVertexOffsetWidth.GetHashCode() + StartVertexOffsetHeight.GetHashCode() + Width.GetHashCode()
+			 + Height.GetHashCode() + Stride.GetHashCode() + Basis.GetHashCode()
+			 + Degree.GetHashCode();
+	}
+
+	bool RectanglePatchInfo::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<RectanglePatchInfo>( value ) );
+	}
+
+	bool RectanglePatchInfo::Equals( RectanglePatchInfo value )
+	{
+		return ( StartVertexOffsetWidth == value.StartVertexOffsetWidth && StartVertexOffsetHeight == value.StartVertexOffsetHeight && Width == value.Width
+			 && Height == value.Height && Stride == value.Stride && Basis == value.Basis
+			 && Degree == value.Degree );
+	}
+
+	bool RectanglePatchInfo::Equals( RectanglePatchInfo% value1, RectanglePatchInfo% value2 )
+	{
+		return ( value1.StartVertexOffsetWidth == value2.StartVertexOffsetWidth && value1.StartVertexOffsetHeight == value2.StartVertexOffsetHeight && value1.Width == value2.Width
+			 && value1.Height == value2.Height && value1.Stride == value2.Stride && value1.Basis == value2.Basis
+			 && value1.Degree == value2.Degree );
+	}
+
+	bool Light::operator == ( Light left, Light right )
+	{
+		return Light::Equals( left, right );
+	}
+
+	bool Light::operator != ( Light left, Light right )
+	{
+		return !Light::Equals( left, right );
+	}
+
+	int Light::GetHashCode()
+	{
+		return Type.GetHashCode() + Diffuse.GetHashCode() + Specular.GetHashCode()
+			 + Ambient.GetHashCode() + Position.GetHashCode() + Direction.GetHashCode()
+			 + Range.GetHashCode() + Falloff.GetHashCode() + Attenuation0.GetHashCode()
+			 + Attenuation1.GetHashCode() + Attenuation2.GetHashCode() + Theta.GetHashCode()
+			 + Phi.GetHashCode();
+	}
+
+	bool Light::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<Light>( value ) );
+	}
+
+	bool Light::Equals( Light value )
+	{
+		return ( Type == value.Type && Diffuse == value.Diffuse && Specular == value.Specular
+			 && Ambient == value.Ambient && Position == value.Position && Direction == value.Direction
+			 && Range == value.Range && Falloff == value.Falloff && Attenuation0 == value.Attenuation0
+			 && Attenuation1 == value.Attenuation1 && Attenuation2 == value.Attenuation2 && Theta == value.Theta
+			 && Phi == value.Phi );
+	}
+
+	bool Light::Equals( Light% value1, Light% value2 )
+	{
+		return ( value1.Type == value2.Type && value1.Diffuse == value2.Diffuse && value1.Specular == value2.Specular
+			 && value1.Ambient == value2.Ambient && value1.Position == value2.Position && value1.Direction == value2.Direction
+			 && value1.Range == value2.Range && value1.Falloff == value2.Falloff && value1.Attenuation0 == value2.Attenuation0
+			 && value1.Attenuation1 == value2.Attenuation1 && value1.Attenuation2 == value2.Attenuation2 && value1.Theta == value2.Theta
+			 && value1.Phi == value2.Phi );
+	}
+
+	bool PaletteEntry::operator == ( PaletteEntry left, PaletteEntry right )
+	{
+		return PaletteEntry::Equals( left, right );
+	}
+
+	bool PaletteEntry::operator != ( PaletteEntry left, PaletteEntry right )
+	{
+		return !PaletteEntry::Equals( left, right );
+	}
+
+	int PaletteEntry::GetHashCode()
+	{
+		return Red.GetHashCode() + Green.GetHashCode() + Blue.GetHashCode()
+			 + Flags.GetHashCode();
+	}
+
+	bool PaletteEntry::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<PaletteEntry>( value ) );
+	}
+
+	bool PaletteEntry::Equals( PaletteEntry value )
+	{
+		return ( Red == value.Red && Green == value.Green && Blue == value.Blue
+			 && Flags == value.Flags );
+	}
+
+	bool PaletteEntry::Equals( PaletteEntry% value1, PaletteEntry% value2 )
+	{
+		return ( value1.Red == value2.Red && value1.Green == value2.Green && value1.Blue == value2.Blue
+			 && value1.Flags == value2.Flags );
+	}
+
 	void ConvertPresentParams( PresentParameters^ presentParameters, D3DPRESENT_PARAMETERS& d3dpp )
 	{
 		d3dpp.AutoDepthStencilFormat = static_cast<D3DFORMAT>( presentParameters->AutoDepthStencilFormat );

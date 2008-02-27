@@ -27,7 +27,7 @@ namespace SlimDX
 	{
 		ref class Buffer;
 		
-		public value class VertexBufferBinding
+		public value class VertexBufferBinding : System::IEquatable<VertexBufferBinding>
 		{
 		private:
 			Buffer^ m_Buffer;
@@ -54,6 +54,14 @@ namespace SlimDX
 			}
 			
 			VertexBufferBinding( Direct3D10::Buffer^ buffer, int stride, int offset );
+
+			static bool operator == ( VertexBufferBinding left, VertexBufferBinding right );
+			static bool operator != ( VertexBufferBinding left, VertexBufferBinding right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( VertexBufferBinding other );
+			static bool Equals( VertexBufferBinding% value1, VertexBufferBinding% value2 );
 		};
 	}
 };

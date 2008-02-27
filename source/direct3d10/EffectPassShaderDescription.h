@@ -27,7 +27,7 @@ namespace SlimDX
 	{	
 		ref class EffectShaderVariable;
 		
-		public value class EffectPassShaderDescription
+		public value class EffectPassShaderDescription : System::IEquatable<EffectPassShaderDescription>
 		{
 			EffectShaderVariable^ m_ShaderVariable;
 			int m_ShaderIndex;
@@ -45,6 +45,14 @@ namespace SlimDX
 			{
 				int get();
 			}
+
+			static bool operator == ( EffectPassShaderDescription left, EffectPassShaderDescription right );
+			static bool operator != ( EffectPassShaderDescription left, EffectPassShaderDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( EffectPassShaderDescription other );
+			static bool Equals( EffectPassShaderDescription% value1, EffectPassShaderDescription% value2 );
 		};
 	}
 };

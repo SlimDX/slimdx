@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public value class DepthStencilOperationDescription
+		public value class DepthStencilOperationDescription : System::IEquatable<DepthStencilOperationDescription>
 		{
 		private:		
 			StencilOperation m_StencilFailOp;
@@ -64,6 +64,14 @@ namespace SlimDX
 				Direct3D10::Comparison get();
 				void set( Direct3D10::Comparison value );
 			}
+
+			static bool operator == ( DepthStencilOperationDescription left, DepthStencilOperationDescription right );
+			static bool operator != ( DepthStencilOperationDescription left, DepthStencilOperationDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( DepthStencilOperationDescription other );
+			static bool Equals( DepthStencilOperationDescription% value1, DepthStencilOperationDescription% value2 );
 		};
 	}
 };

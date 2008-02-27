@@ -28,7 +28,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public value class DepthStencilStateDescription
+		public value class DepthStencilStateDescription : System::IEquatable<DepthStencilStateDescription>
 		{
 		private:
 			bool m_DepthEnable;
@@ -93,6 +93,14 @@ namespace SlimDX
 				DepthStencilOperationDescription get();
 				void set( DepthStencilOperationDescription value );
 			}
+
+			static bool operator == ( DepthStencilStateDescription left, DepthStencilStateDescription right );
+			static bool operator != ( DepthStencilStateDescription left, DepthStencilStateDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( DepthStencilStateDescription other );
+			static bool Equals( DepthStencilStateDescription% value1, DepthStencilStateDescription% value2 );
 		};
 	}
 };

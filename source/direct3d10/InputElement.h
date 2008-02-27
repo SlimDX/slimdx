@@ -29,7 +29,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public value class InputElement
+		public value class InputElement : System::IEquatable<InputElement>
 		{
 		private:
 			System::String^ m_SemanticName;
@@ -88,6 +88,14 @@ namespace SlimDX
 
 			InputElement( System::String^ name, int index, DXGI::Format format, int offset, int slot );
 			InputElement( System::String^ name, int index, DXGI::Format format, int offset, int slot, InputClassification slotClass, int stepRate );
+		
+			static bool operator == ( InputElement left, InputElement right );
+			static bool operator != ( InputElement left, InputElement right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( InputElement other );
+			static bool Equals( InputElement% value1, InputElement% value2 );
 		};
 	}
 };

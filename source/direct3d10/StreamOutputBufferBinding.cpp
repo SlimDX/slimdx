@@ -20,6 +20,7 @@
 * THE SOFTWARE.
 */
 
+#include "Buffer.h"
 #include "StreamOutputBufferBinding.h"
 
 using namespace System;
@@ -51,6 +52,42 @@ namespace Direct3D10
 	void StreamOutputBufferBinding::Offset::set( int value )
 	{
 		m_Offset = value;
+	}
+
+	bool StreamOutputBufferBinding::operator == ( StreamOutputBufferBinding left, StreamOutputBufferBinding right )
+	{
+		return StreamOutputBufferBinding::Equals( left, right );
+	}
+
+	bool StreamOutputBufferBinding::operator != ( StreamOutputBufferBinding left, StreamOutputBufferBinding right )
+	{
+		return !StreamOutputBufferBinding::Equals( left, right );
+	}
+
+	int StreamOutputBufferBinding::GetHashCode()
+	{
+		return m_Buffer->GetHashCode() + m_Offset.GetHashCode();
+	}
+
+	bool StreamOutputBufferBinding::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<StreamOutputBufferBinding>( value ) );
+	}
+
+	bool StreamOutputBufferBinding::Equals( StreamOutputBufferBinding value )
+	{
+		return ( m_Buffer == value.m_Buffer && m_Offset == value.m_Offset );
+	}
+
+	bool StreamOutputBufferBinding::Equals( StreamOutputBufferBinding% value1, StreamOutputBufferBinding% value2 )
+	{
+		return ( value1.m_Buffer == value2.m_Buffer && value1.m_Offset == value2.m_Offset );
 	}
 }
 }

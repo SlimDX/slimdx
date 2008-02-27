@@ -67,5 +67,41 @@ namespace Direct3D10
 	{
 		return m_Techniques;
 	}
+
+	bool EffectDescription::operator == ( EffectDescription left, EffectDescription right )
+	{
+		return EffectDescription::Equals( left, right );
+	}
+
+	bool EffectDescription::operator != ( EffectDescription left, EffectDescription right )
+	{
+		return !EffectDescription::Equals( left, right );
+	}
+
+	int EffectDescription::GetHashCode()
+	{
+		return m_IsChildEffect.GetHashCode() + m_ConstantBuffers.GetHashCode() + m_SharedConstantBuffers.GetHashCode() + m_GlobalVariables.GetHashCode() + m_SharedGlobalVariables.GetHashCode() + m_Techniques.GetHashCode();
+	}
+
+	bool EffectDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<EffectDescription>( value ) );
+	}
+
+	bool EffectDescription::Equals( EffectDescription value )
+	{
+		return ( m_IsChildEffect == value.m_IsChildEffect && m_ConstantBuffers == value.m_ConstantBuffers && m_SharedConstantBuffers == value.m_SharedConstantBuffers && m_GlobalVariables == value.m_GlobalVariables && m_SharedGlobalVariables == value.m_SharedGlobalVariables && m_Techniques == value.m_Techniques );
+	}
+
+	bool EffectDescription::Equals( EffectDescription% value1, EffectDescription% value2 )
+	{
+		return ( value1.m_IsChildEffect == value2.m_IsChildEffect && value1.m_ConstantBuffers == value2.m_ConstantBuffers && value1.m_SharedConstantBuffers == value2.m_SharedConstantBuffers && value1.m_GlobalVariables == value2.m_GlobalVariables && value1.m_SharedGlobalVariables == value2.m_SharedGlobalVariables && value1.m_Techniques == value2.m_Techniques );
+	}
 }
 }

@@ -45,5 +45,41 @@ namespace Direct3D10
 	{
 		return m_ShaderIndex;
 	}
+
+	bool EffectPassShaderDescription::operator == ( EffectPassShaderDescription left, EffectPassShaderDescription right )
+	{
+		return EffectPassShaderDescription::Equals( left, right );
+	}
+
+	bool EffectPassShaderDescription::operator != ( EffectPassShaderDescription left, EffectPassShaderDescription right )
+	{
+		return !EffectPassShaderDescription::Equals( left, right );
+	}
+
+	int EffectPassShaderDescription::GetHashCode()
+	{
+		return m_ShaderVariable->GetHashCode() + m_ShaderIndex.GetHashCode();
+	}
+
+	bool EffectPassShaderDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<EffectPassShaderDescription>( value ) );
+	}
+
+	bool EffectPassShaderDescription::Equals( EffectPassShaderDescription value )
+	{
+		return ( m_ShaderVariable == value.m_ShaderVariable && m_ShaderIndex == value.m_ShaderIndex );
+	}
+
+	bool EffectPassShaderDescription::Equals( EffectPassShaderDescription% value1, EffectPassShaderDescription% value2 )
+	{
+		return ( value1.m_ShaderVariable == value2.m_ShaderVariable && value1.m_ShaderIndex == value2.m_ShaderIndex );
+	}
 }
 }

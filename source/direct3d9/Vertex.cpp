@@ -79,5 +79,44 @@ namespace Direct3D9
 
 		return decl;
 	}
+
+	bool VertexElement::operator == ( VertexElement left, VertexElement right )
+	{
+		return VertexElement::Equals( left, right );
+	}
+
+	bool VertexElement::operator != ( VertexElement left, VertexElement right )
+	{
+		return !VertexElement::Equals( left, right );
+	}
+
+	int VertexElement::GetHashCode()
+	{
+		return Stream.GetHashCode() + Offset.GetHashCode() + Type.GetHashCode()
+			 + Method.GetHashCode() + Usage.GetHashCode() + UsageIndex.GetHashCode();
+	}
+
+	bool VertexElement::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<VertexElement>( value ) );
+	}
+
+	bool VertexElement::Equals( VertexElement value )
+	{
+		return ( Stream == value.Stream && Offset == value.Offset && Type == value.Type
+			 && Method == value.Method && Usage == value.Usage && UsageIndex == value.UsageIndex );
+	}
+
+	bool VertexElement::Equals( VertexElement% value1, VertexElement% value2 )
+	{
+		return ( value1.Stream == value2.Stream && value1.Offset == value2.Offset && value1.Type == value2.Type
+			 && value1.Method == value2.Method && value1.Usage == value2.Usage && value1.UsageIndex == value2.UsageIndex );
+	}
 }
 }

@@ -49,5 +49,41 @@ namespace Direct3D10
 	{
 		return m_NumDetectableParallelUnits;
 	}
+
+	bool CounterCapabilities::operator == ( CounterCapabilities left, CounterCapabilities right )
+	{
+		return CounterCapabilities::Equals( left, right );
+	}
+
+	bool CounterCapabilities::operator != ( CounterCapabilities left, CounterCapabilities right )
+	{
+		return !CounterCapabilities::Equals( left, right );
+	}
+
+	int CounterCapabilities::GetHashCode()
+	{
+		return m_LastDeviceDependentCounter.GetHashCode() + m_NumSimultaneousCounters.GetHashCode() + m_NumDetectableParallelUnits.GetHashCode();
+	}
+
+	bool CounterCapabilities::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<CounterCapabilities>( value ) );
+	}
+
+	bool CounterCapabilities::Equals( CounterCapabilities value )
+	{
+		return ( m_LastDeviceDependentCounter == value.m_LastDeviceDependentCounter && m_NumSimultaneousCounters == value.m_NumSimultaneousCounters && m_NumDetectableParallelUnits == value.m_NumDetectableParallelUnits );
+	}
+
+	bool CounterCapabilities::Equals( CounterCapabilities% value1, CounterCapabilities% value2 )
+	{
+		return ( value1.m_LastDeviceDependentCounter == value2.m_LastDeviceDependentCounter && value1.m_NumSimultaneousCounters == value2.m_NumSimultaneousCounters && value1.m_NumDetectableParallelUnits == value2.m_NumDetectableParallelUnits );
+	}
 }
 }

@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public value class RasterizerStateDescription
+		public value class RasterizerStateDescription : System::IEquatable<RasterizerStateDescription>
 		{
 		private:
 			Direct3D10::FillMode m_FillMode;
@@ -106,6 +106,14 @@ namespace SlimDX
 				bool get();
 				void set( bool value );
 			}
+
+			static bool operator == ( RasterizerStateDescription left, RasterizerStateDescription right );
+			static bool operator != ( RasterizerStateDescription left, RasterizerStateDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( RasterizerStateDescription other );
+			static bool Equals( RasterizerStateDescription% value1, RasterizerStateDescription% value2 );
 		};
 	}
 };

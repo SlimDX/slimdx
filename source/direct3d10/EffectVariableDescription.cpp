@@ -69,5 +69,41 @@ namespace Direct3D10
 	{
 		return m_ExplicitBindPoint;
 	}
+
+	bool EffectVariableDescription::operator == ( EffectVariableDescription left, EffectVariableDescription right )
+	{
+		return EffectVariableDescription::Equals( left, right );
+	}
+
+	bool EffectVariableDescription::operator != ( EffectVariableDescription left, EffectVariableDescription right )
+	{
+		return !EffectVariableDescription::Equals( left, right );
+	}
+
+	int EffectVariableDescription::GetHashCode()
+	{
+		return m_Name->GetHashCode() + m_Semantic->GetHashCode() + m_Flags.GetHashCode() + m_Annotations.GetHashCode() + m_BufferOffset.GetHashCode() + m_ExplicitBindPoint.GetHashCode();
+	}
+
+	bool EffectVariableDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<EffectVariableDescription>( value ) );
+	}
+
+	bool EffectVariableDescription::Equals( EffectVariableDescription value )
+	{
+		return ( m_Name == value.m_Name && m_Semantic == value.m_Semantic && m_Flags == value.m_Flags && m_Annotations == value.m_Annotations && m_BufferOffset == value.m_BufferOffset && m_ExplicitBindPoint == value.m_ExplicitBindPoint );
+	}
+
+	bool EffectVariableDescription::Equals( EffectVariableDescription% value1, EffectVariableDescription% value2 )
+	{
+		return ( value1.m_Name == value2.m_Name && value1.m_Semantic == value2.m_Semantic && value1.m_Flags == value2.m_Flags && value1.m_Annotations == value2.m_Annotations && value1.m_BufferOffset == value2.m_BufferOffset && value1.m_ExplicitBindPoint == value2.m_ExplicitBindPoint );
+	}
 }
 }

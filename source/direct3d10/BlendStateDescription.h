@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public value class BlendStateDescription
+		public value class BlendStateDescription : System::IEquatable<BlendStateDescription>
 		{
 		private:		
 			bool m_AlphaToCoverageEnable;
@@ -97,6 +97,15 @@ namespace SlimDX
 			{
 				System::Collections::ObjectModel::ReadOnlyCollection<ColorWriteMaskFlags>^ get();
 			}
+
+			static bool operator == ( BlendStateDescription left, BlendStateDescription right );
+			static bool operator != ( BlendStateDescription left, BlendStateDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( BlendStateDescription other );
+			static bool Equals( BlendStateDescription% value1, BlendStateDescription% value2 );
+
 		};
 	}
 };

@@ -20,6 +20,7 @@
 * THE SOFTWARE.
 */
 
+#include "Buffer.h"
 #include "VertexBufferBinding.h"
 
 using namespace System;
@@ -61,6 +62,42 @@ namespace Direct3D10
 	void VertexBufferBinding::Offset::set( int value )
 	{
 		m_Offset = value;
+	}
+
+	bool VertexBufferBinding::operator == ( VertexBufferBinding left, VertexBufferBinding right )
+	{
+		return VertexBufferBinding::Equals( left, right );
+	}
+
+	bool VertexBufferBinding::operator != ( VertexBufferBinding left, VertexBufferBinding right )
+	{
+		return !VertexBufferBinding::Equals( left, right );
+	}
+
+	int VertexBufferBinding::GetHashCode()
+	{
+		return m_Buffer->GetHashCode() + m_Stride.GetHashCode() + m_Offset.GetHashCode();
+	}
+
+	bool VertexBufferBinding::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<VertexBufferBinding>( value ) );
+	}
+
+	bool VertexBufferBinding::Equals( VertexBufferBinding value )
+	{
+		return ( m_Buffer == value.m_Buffer && m_Stride == value.m_Stride && m_Offset == value.m_Offset );
+	}
+
+	bool VertexBufferBinding::Equals( VertexBufferBinding% value1, VertexBufferBinding% value2 )
+	{
+		return ( value1.m_Buffer == value2.m_Buffer && value1.m_Stride == value2.m_Stride && value1.m_Offset == value2.m_Offset );
 	}
 }
 }

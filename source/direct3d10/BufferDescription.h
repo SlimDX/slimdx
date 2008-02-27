@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public value class BufferDescription
+		public value class BufferDescription : System::IEquatable<BufferDescription>
 		{
 		private:
 			int m_ByteWidth;
@@ -73,6 +73,14 @@ namespace SlimDX
 			}
 			
 			BufferDescription( int sizeInBytes, ResourceUsage usage, Direct3D10::BindFlags bindFlags, Direct3D10::CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
+		
+			static bool operator == ( BufferDescription left, BufferDescription right );
+			static bool operator != ( BufferDescription left, BufferDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( BufferDescription other );
+			static bool Equals( BufferDescription% value1, BufferDescription% value2 );
 		};
 	}
 };
