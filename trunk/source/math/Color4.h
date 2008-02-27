@@ -69,8 +69,8 @@ namespace SlimDX
 		static Color4 Lerp( Color4 color1, Color4 color2, float amount );
 		static void Lerp( Color4% color1, Color4% color2, float amount, [Out] Color4% result );
 
-		static Color4 Negative( Color4 color );
-		static void Negative( Color4% color, [Out] Color4% result );
+		static Color4 Negate( Color4 color );
+		static void Negate( Color4% color, [Out] Color4% result );
 
 		static Color4 Scale( Color4 color, float scale );
 		static void Scale( Color4% color, float scale, [Out] Color4% result );

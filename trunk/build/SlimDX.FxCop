@@ -317,14 +317,14 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#Negative(SlimDX.Color4&amp;,SlimDX.Color4&amp;)">
+           <Member Name="#Negate(SlimDX.Color4&amp;,SlimDX.Color4&amp;)">
             <Messages>
-             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-02-21 21:35:22Z">
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-02-27 00:22:50Z">
               <Issue>
                <Item>'result'</Item>
               </Issue>
              </Message>
-             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2008-02-21 21:35:22Z">
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2008-02-27 00:22:50Z">
               <Issue Certainty="50">
                <Item>'color'</Item>
               </Issue>
@@ -333,7 +333,7 @@
            </Member>
            <Member Name="#op_Multiply(SlimDX.Color4,SlimDX.Color4)">
             <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2008-02-21 21:35:22Z">
+             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Status="Excluded" Created="2008-02-21 21:35:22Z">
               <Issue>
                <Item>Multiply</Item>
                <Item>'Color4::operator *(Color4, Color4)'</Item>
@@ -343,7 +343,7 @@
            </Member>
            <Member Name="#op_Multiply(SlimDX.Color4,System.Single)">
             <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2008-02-21 21:35:22Z">
+             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Status="Excluded" Created="2008-02-21 21:35:22Z">
               <Issue>
                <Item>Multiply</Item>
                <Item>'Color4::operator *(Color4, float)'</Item>
@@ -353,20 +353,10 @@
            </Member>
            <Member Name="#op_Multiply(System.Single,SlimDX.Color4)">
             <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2008-02-21 21:35:22Z">
+             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Status="Excluded" Created="2008-02-21 21:35:22Z">
               <Issue>
                <Item>Multiply</Item>
                <Item>'Color4::operator *(float, Color4)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#op_UnaryNegation(SlimDX.Color4)">
-            <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2008-02-21 21:35:22Z">
-              <Issue>
-               <Item>Negate</Item>
-               <Item>'Color4::operator -(Color4)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -454,7 +444,7 @@
             <Accessors>
              <Accessor Name="#get_InternalPointer()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-23 15:03:39Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-02-23 15:03:39Z">
                 <Issue>
                  <Item>'ComObject::InternalPointer::get(void)'</Item>
                 </Issue>
@@ -1666,6 +1656,20 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#Multiply(SlimDX.Plane&amp;,System.Single,SlimDX.Plane&amp;)">
+            <Messages>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2008-02-27 00:16:34Z">
+              <Issue>
+               <Item>'result'</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2008-02-27 00:16:34Z">
+              <Issue Certainty="50">
+               <Item>'plane'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#Normal">
             <Messages>
              <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2007-11-28 21:30:41Z">
@@ -1685,26 +1689,6 @@
              <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2007-10-15 20:36:30Z">
               <Issue Certainty="50">
                <Item>'plane'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#op_Multiply(SlimDX.Plane,System.Single)">
-            <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>Multiply</Item>
-               <Item>'Plane::operator *(Plane, float)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#op_Multiply(System.Single,SlimDX.Plane)">
-            <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2007-10-15 20:36:30Z">
-              <Issue>
-               <Item>Multiply</Item>
-               <Item>'Plane::operator *(float, Plane)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -2254,35 +2238,17 @@
           </Members>
          </Type>
          <Type Name="Result">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-21 21:35:22Z">
-            <Issue Name="Equals">
-             <Item>'Result'</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="OverrideEqualsOnOverloadingOperatorEquals" Category="Microsoft.Usage" CheckId="CA2224" Created="2008-02-21 21:35:22Z">
-            <Issue>
-             <Item>'Result'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
-           <Member Name="#op_Equality(SlimDX.Result,SlimDX.Result)">
+           <Member Name="#Equals(SlimDX.Result&amp;,SlimDX.Result&amp;)">
             <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2008-02-21 21:35:22Z">
-              <Issue>
-               <Item>Equals</Item>
-               <Item>'Result::operator ==(Result, Result)'</Item>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2008-02-26 23:46:35Z">
+              <Issue Certainty="50">
+               <Item>'value1'</Item>
               </Issue>
              </Message>
-            </Messages>
-           </Member>
-           <Member Name="#op_Inequality(SlimDX.Result,SlimDX.Result)">
-            <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2008-02-21 21:35:22Z">
-              <Issue>
-               <Item>Equals</Item>
-               <Item>'Result::operator !=(Result, Result)'</Item>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2008-02-26 23:46:35Z">
+              <Issue Certainty="50">
+               <Item>'value2'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3797,6 +3763,51 @@
        </Namespace>
        <Namespace Name="SlimDX.Direct3D10">
         <Types>
+         <Type Name="Asynchronous">
+          <Members>
+           <Member Name="#.ctor(ID3D10Asynchronous*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-26 23:46:35Z">
+              <Issue>
+               <Item>'Asynchronous::Asynchronous(ID3D10Asynchronous*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-02-26 23:46:35Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Asynchronous::Asynchronous(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetData(SlimDX.Direct3D10.AsynchronousFlags)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-02-26 23:46:35Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Asynchronous::GetData(AsynchronousFlags)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="AsynchronousFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-02-26 23:46:35Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'AsynchronousFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="BindFlags">
           <Messages>
            <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -3832,6 +3843,33 @@
            <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>'BlendOption'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="BlendState">
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-02-26 23:46:35Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'BlendState::BlendState(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="BlendStateDescription">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-26 23:46:35Z">
+            <Issue Name="Equals">
+             <Item>'BlendStateDescription'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'BlendStateDescription'</Item>
             </Issue>
            </Message>
           </Messages>
@@ -3957,15 +3995,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#CreateNativeVersion(D3D10_BUFFER_DESC*)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-21 21:35:22Z">
-              <Issue>
-               <Item>'BufferDescription::CreateNativeVersion(D3D10_BUFFER_DESC*)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#OptionFlags">
             <Messages>
              <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-02-21 21:35:22Z">
@@ -4003,6 +4032,78 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="Counter">
+          <Members>
+           <Member Name="#.ctor(ID3D10Counter*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-26 23:46:35Z">
+              <Issue>
+               <Item>'Counter::Counter(ID3D10Counter*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-02-26 23:46:35Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Counter::Counter(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="CounterCapabilities">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-27 00:31:09Z">
+            <Issue Name="Equals">
+             <Item>'CounterCapabilities'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'CounterCapabilities'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="CounterDescription">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-26 23:46:35Z">
+            <Issue Name="Equals">
+             <Item>'CounterDescription'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'CounterDescription'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="CounterMetadata">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-27 00:31:09Z">
+            <Issue Name="Equals">
+             <Item>'CounterMetadata'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'CounterMetadata'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Type">
+            <Messages>
+             <Message TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721" Status="Excluded" Created="2008-02-27 00:31:09Z" FixCategory="NonBreaking">
+              <Issue Name="BaseType">
+               <Item>'CounterMetadata::Type'</Item>
+               <Item>'Object::GetType(void)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="CpuAccessFlags">
           <Messages>
            <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -4028,6 +4129,16 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="DebugFeatureFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-02-26 23:46:35Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'DebugFeatureFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="DepthStencilClearFlags">
           <Messages>
            <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -4040,6 +4151,45 @@
             <Issue Name="TypeNoAlternate">
              <Item>Flags</Item>
              <Item>'DepthStencilClearFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="DepthStencilOperationDescription">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-26 23:46:35Z">
+            <Issue Name="Equals">
+             <Item>'DepthStencilOperationDescription'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'DepthStencilOperationDescription'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="DepthStencilState">
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-02-26 23:46:35Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'DepthStencilState::DepthStencilState(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="DepthStencilStateDescription">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-26 23:46:35Z">
+            <Issue Name="Equals">
+             <Item>'DepthStencilStateDescription'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'DepthStencilStateDescription'</Item>
             </Issue>
            </Message>
           </Messages>
@@ -4111,6 +4261,65 @@
                <Item>'Device::ClearDepthStencilView(DepthStencilView^, DepthStencilClearFlags, float, unsigned char)'</Item>
                <Item>flags</Item>
                <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CopySubresourceRegion(SlimDX.Direct3D10.Resource,System.Int32,SlimDX.Direct3D10.ResourceRegion,SlimDX.Direct3D10.Resource,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <Messages>
+             <Message Id="Subresource" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-02-27 00:44:58Z">
+              <Issue Name="Member">
+               <Item>Subresource</Item>
+               <Item>'Device::CopySubresourceRegion(Resource^, int, ResourceRegion, Resource^, int, int, int, int)'</Item>
+              </Issue>
+              <Issue Name="MemberParameter">
+               <Item>'Device::CopySubresourceRegion(Resource^, int, ResourceRegion, Resource^, int, int, int, int)'</Item>
+               <Item>Subresource</Item>
+               <Item>'destinationSubresource'</Item>
+              </Issue>
+              <Issue Name="MemberParameter">
+               <Item>'Device::CopySubresourceRegion(Resource^, int, ResourceRegion, Resource^, int, int, int, int)'</Item>
+               <Item>Subresource</Item>
+               <Item>'sourceSubresource'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreationFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-02-27 00:31:09Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'Device::CreationFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetCounterCapabilities()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-02-27 00:31:09Z">
+              <Issue Certainty="50">
+               <Item>'Device::GetCounterCapabilities(void)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ResolveSubresource(SlimDX.Direct3D10.Resource,System.Int32,SlimDX.Direct3D10.Resource,System.Int32,SlimDX.DXGI.Format)">
+            <Messages>
+             <Message Id="Subresource" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-02-27 00:44:58Z">
+              <Issue Name="Member">
+               <Item>Subresource</Item>
+               <Item>'Device::ResolveSubresource(Resource^, int, Resource^, int, Format)'</Item>
+              </Issue>
+              <Issue Name="MemberParameter">
+               <Item>'Device::ResolveSubresource(Resource^, int, Resource^, int, Format)'</Item>
+               <Item>Subresource</Item>
+               <Item>'destinationSubresource'</Item>
+              </Issue>
+              <Issue Name="MemberParameter">
+               <Item>'Device::ResolveSubresource(Resource^, int, Resource^, int, Format)'</Item>
+               <Item>Subresource</Item>
+               <Item>'sourceSubresource'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4971,17 +5180,6 @@
             </Issue>
            </Message>
           </Messages>
-          <Members>
-           <Member Name="#CreateNativeVersion(_D3DX10_FONT_DESCW*)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-21 21:35:22Z">
-              <Issue>
-               <Item>'FontDescription::CreateNativeVersion(_D3DX10_FONT_DESCW*)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
          </Type>
          <Type Name="FontDrawFlags">
           <Messages>
@@ -5052,6 +5250,26 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="FormatSupport">
+          <Messages>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2008-02-27 00:31:09Z">
+            <Issue>
+             <Item>'FormatSupport'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Reserved">
+            <Messages>
+             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Status="Excluded" Created="2008-02-27 00:31:09Z">
+              <Issue>
+               <Item>'FormatSupport::Reserved'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="GeometryShader">
           <Members>
            <Member Name="#.ctor(System.IntPtr)">
@@ -5069,7 +5287,7 @@
             <Accessors>
              <Accessor Name="#get_InternalPointer()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-01-06 19:04:15Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-01-06 19:04:15Z">
                 <Issue>
                  <Item>'GeometryShader::InternalPointer::get(void)'</Item>
                 </Issue>
@@ -5244,7 +5462,7 @@
             <Accessors>
              <Accessor Name="#get_InternalPointer()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-01-06 19:04:15Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-01-06 19:04:15Z">
                 <Issue>
                  <Item>'PixelShader::InternalPointer::get(void)'</Item>
                 </Issue>
@@ -5254,6 +5472,33 @@
             </Accessors>
            </Member>
           </Members>
+         </Type>
+         <Type Name="RasterizerState">
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-02-26 23:46:35Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'RasterizerState::RasterizerState(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="RasterizerStateDescription">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-26 23:46:35Z">
+            <Issue Name="Equals">
+             <Item>'RasterizerStateDescription'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'RasterizerStateDescription'</Item>
+            </Issue>
+           </Message>
+          </Messages>
          </Type>
          <Type Name="RenderTargetView">
           <Members>
@@ -5322,6 +5567,29 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="ResourceRegion">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-27 00:31:09Z">
+            <Issue Name="Equals">
+             <Item>'ResourceRegion'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'ResourceRegion'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#.ctor({modopt(System.Runtime.CompilerServices.IsConst)}D3D10_BOX{modopt(System.Runtime.CompilerServices.IsImplicitlyDereferenced)}*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-27 00:31:09Z">
+              <Issue>
+               <Item>'ResourceRegion::ResourceRegion(const D3D10_BOX&amp;)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="ResourceView">
           <Members>
            <Member Name="#.ctor(ID3D10View*)">
@@ -5348,7 +5616,7 @@
             <Accessors>
              <Accessor Name="#get_InternalPointer()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-21 21:35:22Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-02-21 21:35:22Z">
                 <Issue>
                  <Item>'ResourceView::InternalPointer::get(void)'</Item>
                 </Issue>
@@ -5493,6 +5761,43 @@
               </Issue>
              </Message>
             </Messages>
+           </Member>
+           <Member Name="#GetDevice()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-02-26 23:46:35Z">
+              <Issue Certainty="50">
+               <Item>'Sprite::GetDevice(void)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ProjectionTransform">
+            <Accessors>
+             <Accessor Name="#get_ProjectionTransform()">
+              <Messages>
+               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Excluded" Created="2008-02-26 23:46:35Z" FixCategory="Breaking">
+                <Issue Name="PropertyGetter" Level="Warning">
+                 <Item>'Sprite::ProjectionTransform::get(void)'</Item>
+                 <Item>'Direct3D10Exception'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#ViewTransform">
+            <Accessors>
+             <Accessor Name="#get_ViewTransform()">
+              <Messages>
+               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Excluded" Created="2008-02-26 23:46:35Z" FixCategory="Breaking">
+                <Issue Name="PropertyGetter" Level="Warning">
+                 <Item>'Sprite::ViewTransform::get(void)'</Item>
+                 <Item>'Direct3D10Exception'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -5808,7 +6113,7 @@
             <Accessors>
              <Accessor Name="#get_InternalPointer()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-01-06 19:04:15Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-01-06 19:04:15Z">
                 <Issue>
                  <Item>'VertexShader::InternalPointer::get(void)'</Item>
                 </Issue>
@@ -8095,30 +8400,7 @@
           </Messages>
          </Type>
          <Type Name="EffectHandle">
-          <Messages>
-           <Message TypeName="OverrideGetHashCodeOnOverridingEquals" Category="Microsoft.Usage" CheckId="CA2218" Created="2007-10-01 21:38:08Z">
-            <Issue>
-             <Item>'EffectHandle'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
-           <Member Name="#!EffectHandle()">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>'EffectHandle::!EffectHandle(void)'</Item>
-               <Item>'Marshal::FreeHGlobal(IntPtr)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'EffectHandle::!EffectHandle(void)'&#xD;&#xA;   -&gt;'EffectHandle::!EffectHandle(void)'&#xD;&#xA;   -&gt;'EffectHandle::Dispose(bool)'</Item>
-              </Issue>
-              <Issue>
-               <Item>'EffectHandle::!EffectHandle(void)'</Item>
-               <Item>'Marshal::FreeHGlobal(IntPtr)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'EffectHandle::!EffectHandle(void)'&#xD;&#xA;   -&gt;'EffectHandle::!EffectHandle(void)'&#xD;&#xA;   -&gt;'EffectHandle::~EffectHandle(void)'&#xD;&#xA;   -&gt;'EffectHandle::Dispose(bool)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#.ctor(System.String)">
             <Messages>
              <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
@@ -8130,6 +8412,22 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#Destruct()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-27 00:16:34Z">
+              <Issue>
+               <Item>'EffectHandle::Destruct(void)'</Item>
+               <Item>'Marshal::FreeHGlobal(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'EffectHandle::Destruct(void)'&#xD;&#xA;   -&gt;'EffectHandle::Destruct(void)'&#xD;&#xA;   -&gt;'EffectHandle::!EffectHandle(void)'&#xD;&#xA;   -&gt;'EffectHandle::Dispose(bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'EffectHandle::Destruct(void)'</Item>
+               <Item>'Marshal::FreeHGlobal(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'EffectHandle::Destruct(void)'&#xD;&#xA;   -&gt;'EffectHandle::Destruct(void)'&#xD;&#xA;   -&gt;'EffectHandle::~EffectHandle(void)'&#xD;&#xA;   -&gt;'EffectHandle::Dispose(bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#op_Equality(SlimDX.Direct3D9.EffectHandle,SlimDX.Direct3D9.EffectHandle)">
             <Messages>
              <Message Id="rhs" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-06 19:04:15Z">
@@ -8137,17 +8435,6 @@
                <Item>'EffectHandle::operator ==(EffectHandle^, EffectHandle^)'</Item>
                <Item>rhs</Item>
                <Item>'rhs'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#op_Implicit(System.String):SlimDX.Direct3D9.EffectHandle">
-            <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2007-10-01 21:38:08Z">
-              <Issue Name="Multiple">
-               <Item>ToXXX</Item>
-               <Item>FromXXX</Item>
-               <Item>'EffectHandle::operator EffectHandle^(String^)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -13811,7 +14098,7 @@
             <Accessors>
              <Accessor Name="#get_NativeInterface()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-01-27 22:23:52Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-01-27 22:23:52Z">
                 <Issue>
                  <Item>'SoundBuffer::NativeInterface::get(void)'</Item>
                 </Issue>
@@ -14976,17 +15263,6 @@
             </Issue>
            </Message>
           </Messages>
-          <Members>
-           <Member Name="#.ctor({modopt(System.Runtime.CompilerServices.IsConst)}DXGI_GAMMA_CONTROL{modopt(System.Runtime.CompilerServices.IsImplicitlyDereferenced)}*)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-21 21:35:22Z">
-              <Issue>
-               <Item>'GammaControl::GammaControl(const DXGI_GAMMA_CONTROL&amp;)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
          </Type>
          <Type Name="GammaControlCapabilities">
           <Messages>
@@ -15713,6 +15989,9 @@
    <Rule TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217">
     <Resolution Name="Default">{0} is marked with FlagsAttribute but a discrete member cannot be found for every settable bit that is used across the range of enum values. Remove FlagsAttribute from the type or define new members for the following (currently missing) values: {1}</Resolution>
    </Rule>
+   <Rule TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700">
+    <Resolution Name="Default">If {0} is not used in the current implementation, remove it. Otherwise give it a meaningful name.</Resolution>
+   </Rule>
    <Rule TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045">
     <Resolution Name="Default">Consider a design that does not require that {0} be a reference parameter.</Resolution>
    </Rule>
@@ -15781,17 +16060,10 @@
    </Rule>
    <Rule TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225">
     <Resolution Name="Default">Provide a method named '{0}' as a friendly alternate for operator {1}.</Resolution>
-    <Resolution Name="Multiple">Provide a method named '{0}' or '{1}' as an alternate for operator {2}.</Resolution>
    </Rule>
    <Rule TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815">
     <Resolution Name="Equals">{0} should override Equals.</Resolution>
     <Resolution Name="op_Equality">{0} should override the equality (==) and inequality (!=) operators.</Resolution>
-   </Rule>
-   <Rule TypeName="OverrideEqualsOnOverloadingOperatorEquals" Category="Microsoft.Usage" CheckId="CA2224">
-    <Resolution Name="Default">Override Equals on {0}.</Resolution>
-   </Rule>
-   <Rule TypeName="OverrideGetHashCodeOnOverridingEquals" Category="Microsoft.Usage" CheckId="CA2218">
-    <Resolution Name="Default">Since {0} redefines Equals, it should also redefine GetHashCode.</Resolution>
    </Rule>
    <Rule TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725">
     <Resolution Name="Default">Change parameter name '{0}' of method {1} to '{2}' in order to match the identifier as it has been declared in {3}.</Resolution>
@@ -15817,6 +16089,7 @@
     <Resolution Name="MemberNoAlternate">Replace the term '{0}' in member name {1} with an appropriate alternate or remove it entirely.</Resolution>
     <Resolution Name="MemberParameter">In member {0}, replace the term '{1}' in parameter name {2} with the preferred alternate '{3}'.</Resolution>
     <Resolution Name="MemberParameterNoAlternate">In member {0}, replace the term '{1}' in parameter name {2} with an appropriate alternate or remove it entirely.</Resolution>
+    <Resolution Name="Parameter" />
     <Resolution Name="TypeNoAlternate">Replace the term '{0}' in type name {1} with an appropriate alternate or remove it entirely.</Resolution>
    </Rule>
    <Rule TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024">

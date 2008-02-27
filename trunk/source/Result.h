@@ -23,7 +23,7 @@
 
 namespace SlimDX
 {
-	public value class Result
+	public value class Result : System::IEquatable<Result>
 	{
 		int m_Code;
 		System::String^ m_Description;
@@ -63,7 +63,13 @@ namespace SlimDX
 			Result get();
 		};
 		
-		static bool operator==( Result left, Result right );
-		static bool operator!=( Result left, Result right );
+		static bool operator == ( Result left, Result right );
+		static bool operator != ( Result left, Result right );
+
+		virtual System::String^ ToString() override;
+		virtual int GetHashCode() override;
+		virtual bool Equals( System::Object^ obj ) override;
+		virtual bool Equals( Result other );
+		static bool Equals( Result% value1, Result% value2 );
 	};
 }

@@ -42,7 +42,7 @@ namespace Direct3D10
 		m_MiscFlags = static_cast<ResourceOptionFlags>( native.MiscFlags );
 	}
 	
-	D3D10_BUFFER_DESC BufferDescription::CreateNativeVersion()
+	/*D3D10_BUFFER_DESC BufferDescription::CreateNativeVersion()
 	{
 		D3D10_BUFFER_DESC native;
 		native.ByteWidth = m_ByteWidth;
@@ -52,7 +52,7 @@ namespace Direct3D10
 		native.MiscFlags = static_cast<UINT>( m_MiscFlags );
 		
 		return native;
-	}
+	}*/
 
 	int BufferDescription::SizeInBytes::get()
 	{

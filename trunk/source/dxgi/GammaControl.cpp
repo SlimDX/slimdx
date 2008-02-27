@@ -30,7 +30,7 @@ namespace SlimDX
 {
 namespace DXGI
 { 	
-	GammaControl::GammaControl( const DXGI_GAMMA_CONTROL& native )
+	/*GammaControl::GammaControl( const DXGI_GAMMA_CONTROL& native )
 	{
 		m_Scale = Color3( native.Scale.Red, native.Scale.Green, native.Scale.Blue );
 		m_Offset = Color3( native.Offset.Red, native.Offset.Green, native.Offset.Blue );
@@ -38,7 +38,7 @@ namespace DXGI
 		// 1025 is hard-coded by the DXGI API, there doesn't seem to be a constant for it.
 		for( int controlPointIndex = 0; controlPointIndex < 1025; ++controlPointIndex )
 			m_GammaCurve->Add( Color3( native.GammaCurve[ controlPointIndex ].Red, native.GammaCurve[ controlPointIndex ].Green, native.GammaCurve[ controlPointIndex ].Blue ) );
-	}
+	}*/
 	
 	DXGI_GAMMA_CONTROL GammaControl::CreateNativeVersion()
 	{

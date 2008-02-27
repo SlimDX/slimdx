@@ -39,7 +39,7 @@ namespace SlimDX
 		internal:
 			BufferDescription( const D3D10_BUFFER_DESC& native );
 			
-			D3D10_BUFFER_DESC CreateNativeVersion();
+			//D3D10_BUFFER_DESC CreateNativeVersion();
 			
 		public:
 			property int SizeInBytes
