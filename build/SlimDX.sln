@@ -16,21 +16,85 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{A2525864
 		SlimDX.proj = SlimDX.proj
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{244939F5-A4C6-4EB4-AC83-BBFF05962869}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Direct3D9", "Direct3D9", "{9B1D5449-9859-49A2-8099-1703FECE1914}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Direct3D10", "Direct3D10", "{1E10C518-5E15-4626-A1E5-1998001D1611}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DirectInput", "DirectInput", "{FE87CDB5-65BC-4252-8615-D4B41DF301D7}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DirectSound", "DirectSound", "{E322BF00-631F-4042-BEE3-E6F4FD53C82F}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTri", "..\samples\Direct3D9\MiniTri\MiniTri.csproj", "{05C0E1FD-697C-47E2-AC1B-3A42601FB121}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{8ECCE443-0440-40F4-A94C-F02E027282C3} = {8ECCE443-0440-40F4-A94C-F02E027282C3}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Public|Any CPU = Public|Any CPU
 		Public|Mixed Platforms = Public|Mixed Platforms
+		Release|Any CPU = Release|Any CPU
 		Release|Mixed Platforms = Release|Mixed Platforms
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Public|Any CPU.ActiveCfg = Public|Win32
 		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Public|Mixed Platforms.ActiveCfg = Public|Win32
 		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Public|Mixed Platforms.Build.0 = Public|Win32
+		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Release|Any CPU.ActiveCfg = Release|Win32
 		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Release|Mixed Platforms.ActiveCfg = Release|Win32
 		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{05C0E1FD-697C-47E2-AC1B-3A42601FB121}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05C0E1FD-697C-47E2-AC1B-3A42601FB121}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05C0E1FD-697C-47E2-AC1B-3A42601FB121}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{05C0E1FD-697C-47E2-AC1B-3A42601FB121}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{05C0E1FD-697C-47E2-AC1B-3A42601FB121}.Public|Any CPU.ActiveCfg = Release|Any CPU
+		{05C0E1FD-697C-47E2-AC1B-3A42601FB121}.Public|Any CPU.Build.0 = Release|Any CPU
+		{05C0E1FD-697C-47E2-AC1B-3A42601FB121}.Public|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{05C0E1FD-697C-47E2-AC1B-3A42601FB121}.Public|Mixed Platforms.Build.0 = Release|Any CPU
+		{05C0E1FD-697C-47E2-AC1B-3A42601FB121}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05C0E1FD-697C-47E2-AC1B-3A42601FB121}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05C0E1FD-697C-47E2-AC1B-3A42601FB121}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{05C0E1FD-697C-47E2-AC1B-3A42601FB121}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9B1D5449-9859-49A2-8099-1703FECE1914} = {244939F5-A4C6-4EB4-AC83-BBFF05962869}
+		{1E10C518-5E15-4626-A1E5-1998001D1611} = {244939F5-A4C6-4EB4-AC83-BBFF05962869}
+		{FE87CDB5-65BC-4252-8615-D4B41DF301D7} = {244939F5-A4C6-4EB4-AC83-BBFF05962869}
+		{E322BF00-631F-4042-BEE3-E6F4FD53C82F} = {244939F5-A4C6-4EB4-AC83-BBFF05962869}
+		{05C0E1FD-697C-47E2-AC1B-3A42601FB121} = {9B1D5449-9859-49A2-8099-1703FECE1914}
 	EndGlobalSection
 EndGlobal
