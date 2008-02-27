@@ -23,8 +23,8 @@
 
 #include <unknwn.h>
 
-#include "Configuration.h"
 #include "ObjectTable.h"
+#include "Configuration.h"
 #include "Result.h"
 #include "Utilities.h"
 #include "InternalHelpers.h"
