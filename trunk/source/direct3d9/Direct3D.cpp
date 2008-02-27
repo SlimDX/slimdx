@@ -37,6 +37,7 @@
 #include "Direct3D.h"
 
 using namespace System;
+using namespace System::Collections::Generic;
 
 namespace SlimDX
 {
@@ -286,10 +287,10 @@ namespace Direct3D9
 	DisplayModeCollection::DisplayModeCollection( unsigned int adapter, Format format )
 	{
 		int count = Direct3D::GetAdapterModeCount( adapter, format );
-		m_Modes = gcnew array<DisplayMode>( count );
+		m_Modes = gcnew List<DisplayMode>();
 
 		for( int i = 0; i < count; ++i )
-			m_Modes[i] = Direct3D::EnumerateAdapterModes( adapter, format, i );
+			m_Modes->Add( Direct3D::EnumerateAdapterModes( adapter, format, i ) );
 	}
 
 	AdapterInformation::AdapterInformation( unsigned int adapter )
@@ -325,11 +326,10 @@ namespace Direct3D9
 
     AdapterCollection::AdapterCollection( unsigned int adapterCount )
     {
-        m_Adapters = gcnew array<AdapterInformation^>( adapterCount );
+		m_Adapters = gcnew List<AdapterInformation^>();
+
         for( unsigned int i = 0; i < adapterCount; ++i )
-        {
-            m_Adapters[i] = gcnew AdapterInformation( i );
-        }
+            m_Adapters->Add( gcnew AdapterInformation( i ) );
     }
 
 	void Direct3D::Initialize()

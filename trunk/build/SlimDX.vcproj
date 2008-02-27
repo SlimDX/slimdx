@@ -1925,14 +1925,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\directinput\DeviceState.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directinput\DeviceState.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\directinput\DirectInput.cpp"
 					>
 				</File>
@@ -1982,6 +1974,18 @@
 				</File>
 				<File
 					RelativePath="..\source\directinput\BufferedData.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="State"
+				>
+				<File
+					RelativePath="..\source\directinput\DeviceState.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DeviceState.h"
 					>
 				</File>
 			</Filter>
