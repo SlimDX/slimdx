@@ -56,7 +56,7 @@ namespace SlimDX
 	}
 	
 	SlimDXException::SlimDXException( Result result )
-	: Exception( String::Format( CultureInfo::CurrentCulture, "{0}: {1}", result.Code, result.Description ) )
+	: Exception( String::Format( CultureInfo::CurrentCulture, "{0}: {1} ({2})", result.Name, result.Description, result.Code ) )
 	{
 		m_Result = result;
 	}

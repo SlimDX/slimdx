@@ -26,23 +26,38 @@ namespace SlimDX
 	public value class Result : System::IEquatable<Result>
 	{
 		int m_Code;
+		System::String^ m_Name;
 		System::String^ m_Description;
 	
 		[System::ThreadStatic]
 		static Result m_Last;
 		
+		generic< typename T >
+		static void Throw();
+
+		generic< typename T >
+		static Result Record( int hr, bool failed );
+
 	internal:
 		Result( int hr );
 		
 		generic< typename T >
+		static Result Fail( int hr );
+
+		generic< typename T >
 		static Result Record( int hr );
-		
+
 	public:
 		property int Code
 		{
 			int get();
 		};
 		
+		property System::String^ Name
+		{
+			System::String^ get();
+		}
+
 		property System::String^ Description
 		{
 			System::String^ get();

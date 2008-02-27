@@ -32,6 +32,7 @@ namespace SlimDX
 		m_EnableObjectTracking = false;
 #endif	
 
+		m_AlwaysThrowOnError = true;
 		m_Watches = gcnew System::Collections::Generic::Dictionary<Result,ResultWatchFlags>();
 	}
 	
@@ -49,6 +50,16 @@ namespace SlimDX
 		m_EnableObjectTracking = value;
 	}
 	
+	bool Configuration::AlwaysThrowOnError::get()
+	{
+		return m_AlwaysThrowOnError;
+	}
+
+	void Configuration::AlwaysThrowOnError::set( bool value )
+	{
+		m_AlwaysThrowOnError = value;
+	}
+
 	bool Configuration::TryGetResultWatch( Result result, ResultWatchFlags% flags )
 	{
 		return m_Watches->TryGetValue( result, flags );

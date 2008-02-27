@@ -32,6 +32,7 @@ namespace SlimDX
 	{
 	private:
 		static bool m_EnableObjectTracking;
+		static bool m_AlwaysThrowOnError;
 		static System::Collections::Generic::Dictionary<Result,ResultWatchFlags>^ m_Watches;
 	
 		static Configuration();
@@ -48,6 +49,12 @@ namespace SlimDX
 			void set( bool value );
 		}
 		
+		property static bool AlwaysThrowOnError
+		{
+			bool get();
+			void set( bool value );
+		}
+
 		static void AddResultWatch( Result result, ResultWatchFlags flags );
 		static void ClearResultWatch( Result result );
 		static void ClearResultWatches();
