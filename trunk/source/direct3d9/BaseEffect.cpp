@@ -43,6 +43,201 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		bool EffectDescription::operator == ( EffectDescription left, EffectDescription right )
+		{
+			return EffectDescription::Equals( left, right );
+		}
+
+		bool EffectDescription::operator != ( EffectDescription left, EffectDescription right )
+		{
+			return !EffectDescription::Equals( left, right );
+		}
+
+		int EffectDescription::GetHashCode()
+		{
+			return Creator->GetHashCode() + Parameters.GetHashCode() + Techniques.GetHashCode()
+				 + Functions.GetHashCode();
+		}
+
+		bool EffectDescription::Equals( Object^ value )
+		{
+			if( value == nullptr )
+				return false;
+
+			if( value->GetType() != GetType() )
+				return false;
+
+			return Equals( static_cast<EffectDescription>( value ) );
+		}
+
+		bool EffectDescription::Equals( EffectDescription value )
+		{
+			return ( Creator == value.Creator && Parameters == value.Parameters && Techniques == value.Techniques
+				 && Functions == value.Functions );
+		}
+
+		bool EffectDescription::Equals( EffectDescription% value1, EffectDescription% value2 )
+		{
+			return ( value1.Creator == value2.Creator && value1.Parameters == value2.Parameters && value1.Techniques == value2.Techniques
+				 && value1.Functions == value2.Functions );
+		}
+
+		bool TechniqueDescription::operator == ( TechniqueDescription left, TechniqueDescription right )
+		{
+			return TechniqueDescription::Equals( left, right );
+		}
+
+		bool TechniqueDescription::operator != ( TechniqueDescription left, TechniqueDescription right )
+		{
+			return !TechniqueDescription::Equals( left, right );
+		}
+
+		int TechniqueDescription::GetHashCode()
+		{
+			return Name->GetHashCode() + Passes.GetHashCode() + Annotations.GetHashCode();
+		}
+
+		bool TechniqueDescription::Equals( Object^ value )
+		{
+			if( value == nullptr )
+				return false;
+
+			if( value->GetType() != GetType() )
+				return false;
+
+			return Equals( static_cast<TechniqueDescription>( value ) );
+		}
+
+		bool TechniqueDescription::Equals( TechniqueDescription value )
+		{
+			return ( Name == value.Name && Passes == value.Passes && Annotations == value.Annotations );
+		}
+
+		bool TechniqueDescription::Equals( TechniqueDescription% value1, TechniqueDescription% value2 )
+		{
+			return ( value1.Name == value2.Name && value1.Passes == value2.Passes && value1.Annotations == value2.Annotations );
+		}
+		
+		bool FunctionDescription::operator == ( FunctionDescription left, FunctionDescription right )
+		{
+			return FunctionDescription::Equals( left, right );
+		}
+
+		bool FunctionDescription::operator != ( FunctionDescription left, FunctionDescription right )
+		{
+			return !FunctionDescription::Equals( left, right );
+		}
+
+		int FunctionDescription::GetHashCode()
+		{
+			return Name->GetHashCode() + Annotations.GetHashCode();
+		}
+
+		bool FunctionDescription::Equals( Object^ value )
+		{
+			if( value == nullptr )
+				return false;
+
+			if( value->GetType() != GetType() )
+				return false;
+
+			return Equals( static_cast<FunctionDescription>( value ) );
+		}
+
+		bool FunctionDescription::Equals( FunctionDescription value )
+		{
+			return ( Name == value.Name && Annotations == value.Annotations );
+		}
+
+		bool FunctionDescription::Equals( FunctionDescription% value1, FunctionDescription% value2 )
+		{
+			return ( value1.Name == value2.Name && value1.Annotations == value2.Annotations );
+		}
+
+		bool PassDescription::operator == ( PassDescription left, PassDescription right )
+		{
+			return PassDescription::Equals( left, right );
+		}
+
+		bool PassDescription::operator != ( PassDescription left, PassDescription right )
+		{
+			return !PassDescription::Equals( left, right );
+		}
+
+		int PassDescription::GetHashCode()
+		{
+			return Name->GetHashCode() + Annotations.GetHashCode() + VertexShaderFunction.GetHashCode()
+				 + PixelShaderFunction.GetHashCode();
+		}
+
+		bool PassDescription::Equals( Object^ value )
+		{
+			if( value == nullptr )
+				return false;
+
+			if( value->GetType() != GetType() )
+				return false;
+
+			return Equals( static_cast<PassDescription>( value ) );
+		}
+
+		bool PassDescription::Equals( PassDescription value )
+		{
+			return ( Name == value.Name && Annotations == value.Annotations && VertexShaderFunction == value.VertexShaderFunction
+				 && PixelShaderFunction == value.PixelShaderFunction );
+		}
+
+		bool PassDescription::Equals( PassDescription% value1, PassDescription% value2 )
+		{
+			return ( value1.Name == value2.Name && value1.Annotations == value2.Annotations && value1.VertexShaderFunction == value2.VertexShaderFunction
+				 && value1.PixelShaderFunction == value2.PixelShaderFunction );
+		}
+
+		bool ParameterDescription::operator == ( ParameterDescription left, ParameterDescription right )
+		{
+			return ParameterDescription::Equals( left, right );
+		}
+
+		bool ParameterDescription::operator != ( ParameterDescription left, ParameterDescription right )
+		{
+			return !ParameterDescription::Equals( left, right );
+		}
+
+		int ParameterDescription::GetHashCode()
+		{
+			return Name->GetHashCode() + Semantic->GetHashCode() + Class.GetHashCode()
+				 + Type.GetHashCode() + Rows.GetHashCode() + Columns.GetHashCode()
+				 + Elements.GetHashCode() + Annotations.GetHashCode() + StructMembers.GetHashCode()
+				 + Flags.GetHashCode() + Bytes.GetHashCode();
+		}
+
+		bool ParameterDescription::Equals( Object^ value )
+		{
+			if( value == nullptr )
+				return false;
+
+			if( value->GetType() != GetType() )
+				return false;
+
+			return Equals( static_cast<ParameterDescription>( value ) );
+		}
+
+		bool ParameterDescription::Equals( ParameterDescription value )
+		{
+			return ( Name == value.Name && Semantic == value.Semantic && Class == value.Class
+				 && Type == value.Type && Rows == value.Rows && Columns == value.Columns
+				 && Elements == value.Elements && Annotations == value.Annotations && StructMembers == value.StructMembers
+				 && Flags == value.Flags && Bytes == value.Bytes );
+		}
+
+		bool ParameterDescription::Equals( ParameterDescription% value1, ParameterDescription% value2 )
+		{
+			return ( value1.Name == value2.Name && value1.Semantic == value2.Semantic && value1.Class == value2.Class
+				 && value1.Type == value2.Type && value1.Rows == value2.Rows && value1.Columns == value2.Columns
+				 && value1.Elements == value2.Elements && value1.Annotations == value2.Annotations && value1.StructMembers == value2.StructMembers
+				 && value1.Flags == value2.Flags && value1.Bytes == value2.Bytes );
+		}
+
 		BaseEffect::BaseEffect( IntPtr pointer )
 		{
 			Construct( pointer, NativeInterface );

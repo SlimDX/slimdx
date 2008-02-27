@@ -43,6 +43,87 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	bool ConstantTableDescription::operator == ( ConstantTableDescription left, ConstantTableDescription right )
+	{
+		return ConstantTableDescription::Equals( left, right );
+	}
+
+	bool ConstantTableDescription::operator != ( ConstantTableDescription left, ConstantTableDescription right )
+	{
+		return !ConstantTableDescription::Equals( left, right );
+	}
+
+	int ConstantTableDescription::GetHashCode()
+	{
+		return Creator->GetHashCode() + Version->GetHashCode() + Constants.GetHashCode();
+	}
+
+	bool ConstantTableDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<ConstantTableDescription>( value ) );
+	}
+
+	bool ConstantTableDescription::Equals( ConstantTableDescription value )
+	{
+		return ( Creator == value.Creator && Version == value.Version && Constants == value.Constants );
+	}
+
+	bool ConstantTableDescription::Equals( ConstantTableDescription% value1, ConstantTableDescription% value2 )
+	{
+		return ( value1.Creator == value2.Creator && value1.Version == value2.Version && value1.Constants == value2.Constants );
+	}
+
+	bool ConstantDescription::operator == ( ConstantDescription left, ConstantDescription right )
+	{
+		return ConstantDescription::Equals( left, right );
+	}
+
+	bool ConstantDescription::operator != ( ConstantDescription left, ConstantDescription right )
+	{
+		return !ConstantDescription::Equals( left, right );
+	}
+
+	int ConstantDescription::GetHashCode()
+	{
+		return Name->GetHashCode() + RegisterSet.GetHashCode() + RegisterIndex.GetHashCode()
+			 + RegisterCount.GetHashCode() + Class.GetHashCode() + Type.GetHashCode()
+			 + Rows.GetHashCode() + Columns.GetHashCode() + Elements.GetHashCode()
+			 + StructMembers.GetHashCode() + Bytes.GetHashCode();
+	}
+
+	bool ConstantDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<ConstantDescription>( value ) );
+	}
+
+	bool ConstantDescription::Equals( ConstantDescription value )
+	{
+		return ( Name == value.Name && RegisterSet == value.RegisterSet && RegisterIndex == value.RegisterIndex
+			 && RegisterCount == value.RegisterCount && Class == value.Class && Type == value.Type
+			 && Rows == value.Rows && Columns == value.Columns && Elements == value.Elements
+			 && StructMembers == value.StructMembers && Bytes == value.Bytes );
+	}
+
+	bool ConstantDescription::Equals( ConstantDescription% value1, ConstantDescription% value2 )
+	{
+		return ( value1.Name == value2.Name && value1.RegisterSet == value2.RegisterSet && value1.RegisterIndex == value2.RegisterIndex
+			 && value1.RegisterCount == value2.RegisterCount && value1.Class == value2.Class && value1.Type == value2.Type
+			 && value1.Rows == value2.Rows && value1.Columns == value2.Columns && value1.Elements == value2.Elements
+			 && value1.StructMembers == value2.StructMembers && value1.Bytes == value2.Bytes );
+	}
+
 	void ConstantDescription::Initialize( const D3DXCONSTANT_DESC& description )
 	{
 		Name = gcnew String( description.Name );

@@ -35,6 +35,45 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		bool RenderToSurfaceDescription::operator == ( RenderToSurfaceDescription left, RenderToSurfaceDescription right )
+		{
+			return RenderToSurfaceDescription::Equals( left, right );
+		}
+
+		bool RenderToSurfaceDescription::operator != ( RenderToSurfaceDescription left, RenderToSurfaceDescription right )
+		{
+			return !RenderToSurfaceDescription::Equals( left, right );
+		}
+
+		int RenderToSurfaceDescription::GetHashCode()
+		{
+			return Width.GetHashCode() + Height.GetHashCode() + Format.GetHashCode()
+				 + DepthStencil.GetHashCode() + DepthStencilFormat.GetHashCode();
+		}
+
+		bool RenderToSurfaceDescription::Equals( Object^ value )
+		{
+			if( value == nullptr )
+				return false;
+
+			if( value->GetType() != GetType() )
+				return false;
+
+			return Equals( static_cast<RenderToSurfaceDescription>( value ) );
+		}
+
+		bool RenderToSurfaceDescription::Equals( RenderToSurfaceDescription value )
+		{
+			return ( Width == value.Width && Height == value.Height && Format == value.Format
+				 && DepthStencil == value.DepthStencil && DepthStencilFormat == value.DepthStencilFormat );
+		}
+
+		bool RenderToSurfaceDescription::Equals( RenderToSurfaceDescription% value1, RenderToSurfaceDescription% value2 )
+		{
+			return ( value1.Width == value2.Width && value1.Height == value2.Height && value1.Format == value2.Format
+				 && value1.DepthStencil == value2.DepthStencil && value1.DepthStencilFormat == value2.DepthStencilFormat );
+		}
+
 		/* Unused for now.
 		RenderToSurface::RenderToSurface( ID3DXRenderToSurface* pointer ) : ComObject( pointer )
 		{

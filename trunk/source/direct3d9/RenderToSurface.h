@@ -30,7 +30,7 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
-		public value class RenderToSurfaceDescription
+		public value class RenderToSurfaceDescription : System::IEquatable<RenderToSurfaceDescription>
 		{
 		public:
 			property int Width;
@@ -38,6 +38,14 @@ namespace SlimDX
 			property SlimDX::Direct3D9::Format Format;
 			property bool DepthStencil;
 			property SlimDX::Direct3D9::Format DepthStencilFormat;
+
+			static bool operator == ( RenderToSurfaceDescription left, RenderToSurfaceDescription right );
+			static bool operator != ( RenderToSurfaceDescription left, RenderToSurfaceDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( RenderToSurfaceDescription other );
+			static bool Equals( RenderToSurfaceDescription% value1, RenderToSurfaceDescription% value2 );
 		};
 
 		public ref class RenderToSurface : public ComObject

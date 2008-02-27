@@ -3264,18 +3264,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="BandwidthTimings">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'BandwidthTimings'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'BandwidthTimings'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="BaseEffect">
           <Members>
            <Member Name="#.ctor(System.IntPtr)">
@@ -3471,30 +3459,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Box">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'Box'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'Box'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="CacheUtilization">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'CacheUtilization'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'CacheUtilization'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="CallbackSearchFlags">
           <Messages>
            <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-10-22 22:46:50Z" FixCategory="NonBreaking">
@@ -3684,16 +3648,6 @@
           </Members>
          </Type>
          <Type Name="ConstantDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'ConstantDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'ConstantDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Type">
             <Messages>
@@ -3719,18 +3673,6 @@
             </Messages>
            </Member>
           </Members>
-         </Type>
-         <Type Name="ConstantTableDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'ConstantTableDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'ConstantTableDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
          <Type Name="CreateFlags">
           <Messages>
@@ -3832,18 +3774,6 @@
             </Messages>
            </Member>
           </Members>
-         </Type>
-         <Type Name="CubeTextureRequirements">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'CubeTextureRequirements'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'CubeTextureRequirements'</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
          <Type Name="Cull">
           <Messages>
@@ -4984,18 +4914,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="EffectDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'EffectDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'EffectDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="EffectHandle">
           <Members>
            <Member Name="#.ctor(System.String)">
@@ -5173,18 +5091,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="FontDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'FontDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'FontDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="FontWeight">
           <Members>
            <Member Name="#DemiBold">
@@ -5343,18 +5249,6 @@
             </Messages>
            </Member>
           </Members>
-         </Type>
-         <Type Name="FragmentDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'FragmentDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'FragmentDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
          <Type Name="FragmentLinker">
           <Members>
@@ -5528,18 +5422,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="FunctionDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'FunctionDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'FunctionDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="FX">
           <Messages>
            <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -5615,18 +5497,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="ImageInformation">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'ImageInformation'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'ImageInformation'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="Include">
           <Messages>
            <Message Id="I" TypeName="IdentifiersShouldHaveCorrectPrefix" Category="Microsoft.Naming" CheckId="CA1715" Status="Excluded" Created="2008-01-06 19:04:15Z" FixCategory="Breaking">
@@ -5652,16 +5522,6 @@
           </Members>
          </Type>
          <Type Name="IndexBufferDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-26 18:27:11Z">
-            <Issue Name="Equals">
-             <Item>'IndexBufferDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'IndexBufferDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Type">
             <Messages>
@@ -5676,16 +5536,6 @@
           </Members>
          </Type>
          <Type Name="InterfaceTimings">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'InterfaceTimings'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'InterfaceTimings'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#WaitingForGPUExclusiveResourceTimePercent">
             <Messages>
@@ -5836,16 +5686,6 @@
           </Messages>
          </Type>
          <Type Name="Macro">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'Macro'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'Macro'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Marshal(SlimDX.Direct3D9.Macro[],System.Runtime.InteropServices.GCHandle[]&amp;)">
             <Messages>
@@ -6478,16 +6318,6 @@
           </Members>
          </Type>
          <Type Name="ParameterDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'ParameterDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'ParameterDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Flags">
             <Messages>
@@ -6523,18 +6353,6 @@
             <Issue Name="TypeNoAlternate">
              <Item>Flags</Item>
              <Item>'ParameterFlags'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="PassDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'PassDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'PassDescription'</Item>
             </Issue>
            </Message>
           </Messages>
@@ -6783,16 +6601,6 @@
           </Messages>
          </Type>
          <Type Name="PipelineTimings">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'PipelineTimings'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'PipelineTimings'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#GPUIdleTimePercent">
             <Messages>
@@ -7238,18 +7046,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="RasterStatus">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'RasterStatus'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'RasterStatus'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="RenderState">
           <Messages>
            <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
@@ -7353,18 +7149,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="RenderToEnvironmentMapDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-01-06 19:04:15Z">
-            <Issue Name="Equals">
-             <Item>'RenderToEnvironmentMapDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'RenderToEnvironmentMapDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="RenderToSurface">
           <Members>
            <Member Name="#.ctor(System.IntPtr)">
@@ -7389,18 +7173,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="RenderToSurfaceDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'RenderToSurfaceDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'RenderToSurfaceDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="Resource">
           <Members>
            <Member Name="#.ctor(System.IntPtr)">
@@ -7424,30 +7196,6 @@
             </Messages>
            </Member>
           </Members>
-         </Type>
-         <Type Name="ResourceManager">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'ResourceManager'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'ResourceManager'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="ResourceStats">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'ResourceStats'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'ResourceStats'</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
          <Type Name="ResourceType">
           <Messages>
@@ -7675,18 +7423,6 @@
             <Issue Name="TypeNoAlternate">
              <Item>Flags</Item>
              <Item>'ShaderFlags'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="ShaderSemantic">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'ShaderSemantic'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'ShaderSemantic'</Item>
             </Issue>
            </Message>
           </Messages>
@@ -7987,18 +7723,6 @@
            </Message>
           </Messages>
          </Type>
-         <Type Name="StageTimings">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'StageTimings'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'StageTimings'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="StateBlock">
           <Members>
            <Member Name="#.ctor(System.IntPtr)">
@@ -8171,16 +7895,6 @@
           </Members>
          </Type>
          <Type Name="SurfaceDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'SurfaceDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'SurfaceDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Type">
             <Messages>
@@ -8263,18 +7977,6 @@
             </Messages>
            </Member>
           </Members>
-         </Type>
-         <Type Name="TechniqueDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'TechniqueDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'TechniqueDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
          <Type Name="Texture">
           <Members>
@@ -8404,18 +8106,6 @@
            </Message>
           </Messages>
          </Type>
-         <Type Name="TextureRequirements">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'TextureRequirements'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'TextureRequirements'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="TextureShader">
           <Members>
            <Member Name="#.ctor(ID3DXTextureShader*)">
@@ -8527,18 +8217,6 @@
             </Messages>
            </Member>
           </Members>
-         </Type>
-         <Type Name="VCache">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'VCache'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'VCache'</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
          <Type Name="VertexBuffer">
           <Members>
@@ -8663,18 +8341,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="VertexStats">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'VertexStats'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'VertexStats'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="Volume">
           <Members>
            <Member Name="#LockBox(SlimDX.Direct3D9.Box,SlimDX.Direct3D9.LockFlags)">
@@ -8716,16 +8382,6 @@
           </Members>
          </Type>
          <Type Name="VolumeDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'VolumeDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'VolumeDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Type">
             <Messages>
@@ -8825,18 +8481,6 @@
             </Messages>
            </Member>
           </Members>
-         </Type>
-         <Type Name="VolumeTextureRequirements">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'VolumeTextureRequirements'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'VolumeTextureRequirements'</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
          <Type Name="XFile">
           <Members>

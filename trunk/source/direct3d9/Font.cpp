@@ -41,6 +41,51 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	bool FontDescription::operator == ( FontDescription left, FontDescription right )
+	{
+		return FontDescription::Equals( left, right );
+	}
+
+	bool FontDescription::operator != ( FontDescription left, FontDescription right )
+	{
+		return !FontDescription::Equals( left, right );
+	}
+
+	int FontDescription::GetHashCode()
+	{
+		return Height.GetHashCode() + Width.GetHashCode() + Weight.GetHashCode()
+			 + MipLevels.GetHashCode() + Italic.GetHashCode() + CharSet.GetHashCode()
+			 + OutputPrecision.GetHashCode() + Quality.GetHashCode() + PitchAndFamily.GetHashCode()
+			 + FaceName->GetHashCode();
+	}
+
+	bool FontDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<FontDescription>( value ) );
+	}
+
+	bool FontDescription::Equals( FontDescription value )
+	{
+		return ( Height == value.Height && Width == value.Width && Weight == value.Weight
+			 && MipLevels == value.MipLevels && Italic == value.Italic && CharSet == value.CharSet
+			 && OutputPrecision == value.OutputPrecision && Quality == value.Quality && PitchAndFamily == value.PitchAndFamily
+			 && FaceName == value.FaceName );
+	}
+
+	bool FontDescription::Equals( FontDescription% value1, FontDescription% value2 )
+	{
+		return ( value1.Height == value2.Height && value1.Width == value2.Width && value1.Weight == value2.Weight
+			 && value1.MipLevels == value2.MipLevels && value1.Italic == value2.Italic && value1.CharSet == value2.CharSet
+			 && value1.OutputPrecision == value2.OutputPrecision && value1.Quality == value2.Quality && value1.PitchAndFamily == value2.PitchAndFamily
+			 && value1.FaceName == value2.FaceName );
+	}
+
 	/* Unused for now.
 	Font::Font( ID3DXFont* font ) : ComObject( font )
 	{

@@ -39,15 +39,23 @@ namespace SlimDX
 			Sampler = D3DXRS_SAMPLER,
 		};
 
-		public value class ConstantTableDescription
+		public value class ConstantTableDescription : System::IEquatable<ConstantTableDescription>
 		{
 		public:
 			property System::String^ Creator;
 			property System::Version^ Version;
 			property int Constants;
+
+			static bool operator == ( ConstantTableDescription left, ConstantTableDescription right );
+			static bool operator != ( ConstantTableDescription left, ConstantTableDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( ConstantTableDescription other );
+			static bool Equals( ConstantTableDescription% value1, ConstantTableDescription% value2 );
 		};
 
-		public value class ConstantDescription
+		public value class ConstantDescription : System::IEquatable<ConstantDescription>
 		{
 		internal:
 			void Initialize( const D3DXCONSTANT_DESC& description );
@@ -64,6 +72,14 @@ namespace SlimDX
 			property int Elements;
 			property int StructMembers;
 			property int Bytes;
+
+			static bool operator == ( ConstantDescription left, ConstantDescription right );
+			static bool operator != ( ConstantDescription left, ConstantDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( ConstantDescription other );
+			static bool Equals( ConstantDescription% value1, ConstantDescription% value2 );
 		};
 
 		ref class EffectHandle;

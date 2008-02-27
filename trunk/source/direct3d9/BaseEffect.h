@@ -34,40 +34,72 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
-		public value class EffectDescription
+		public value class EffectDescription : System::IEquatable<EffectDescription>
 		{
 		public:
 			property System::String^ Creator;
             property int Parameters;
             property int Techniques;
             property int Functions;
+
+			static bool operator == ( EffectDescription left, EffectDescription right );
+			static bool operator != ( EffectDescription left, EffectDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( EffectDescription other );
+			static bool Equals( EffectDescription% value1, EffectDescription% value2 );
 		};
 
-		public value class TechniqueDescription
+		public value class TechniqueDescription : System::IEquatable<TechniqueDescription>
 		{
 		public:
 			property System::String^ Name;
             property int Passes;
             property int Annotations;
+
+			static bool operator == ( TechniqueDescription left, TechniqueDescription right );
+			static bool operator != ( TechniqueDescription left, TechniqueDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( TechniqueDescription other );
+			static bool Equals( TechniqueDescription% value1, TechniqueDescription% value2 );
 		};
 
-		public value class FunctionDescription
+		public value class FunctionDescription : System::IEquatable<FunctionDescription>
 		{
 		public:
 			property System::String^ Name;
             property int Annotations;
+
+			static bool operator == ( FunctionDescription left, FunctionDescription right );
+			static bool operator != ( FunctionDescription left, FunctionDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( FunctionDescription other );
+			static bool Equals( FunctionDescription% value1, FunctionDescription% value2 );
 		};
 
-		public value class PassDescription
+		public value class PassDescription : System::IEquatable<PassDescription>
 		{
 		public:
 			property System::String^ Name;
             property int Annotations;
             property System::IntPtr VertexShaderFunction;
             property System::IntPtr PixelShaderFunction;
+
+			static bool operator == ( PassDescription left, PassDescription right );
+			static bool operator != ( PassDescription left, PassDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( PassDescription other );
+			static bool Equals( PassDescription% value1, PassDescription% value2 );
 		};
 
-		public value class ParameterDescription
+		public value class ParameterDescription : System::IEquatable<ParameterDescription>
 		{
 		public:
 			property System::String^ Name;
@@ -81,6 +113,14 @@ namespace SlimDX
             property int StructMembers;
             property ParameterFlags Flags;
             property int Bytes;
+
+			static bool operator == ( ParameterDescription left, ParameterDescription right );
+			static bool operator != ( ParameterDescription left, ParameterDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( ParameterDescription other );
+			static bool Equals( ParameterDescription% value1, ParameterDescription% value2 );
 		};
 
 		public ref class BaseEffect abstract : public ComObject

@@ -40,6 +40,78 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		bool Macro::operator == ( Macro left, Macro right )
+		{
+			return Macro::Equals( left, right );
+		}
+
+		bool Macro::operator != ( Macro left, Macro right )
+		{
+			return !Macro::Equals( left, right );
+		}
+
+		int Macro::GetHashCode()
+		{
+			return Name->GetHashCode() + Definition->GetHashCode();
+		}
+
+		bool Macro::Equals( Object^ value )
+		{
+			if( value == nullptr )
+				return false;
+
+			if( value->GetType() != GetType() )
+				return false;
+
+			return Equals( static_cast<Macro>( value ) );
+		}
+
+		bool Macro::Equals( Macro value )
+		{
+			return ( Name == value.Name && Definition == value.Definition );
+		}
+
+		bool Macro::Equals( Macro% value1, Macro% value2 )
+		{
+			return ( value1.Name == value2.Name && value1.Definition == value2.Definition );
+		}
+
+		bool ShaderSemantic::operator == ( ShaderSemantic left, ShaderSemantic right )
+		{
+			return ShaderSemantic::Equals( left, right );
+		}
+
+		bool ShaderSemantic::operator != ( ShaderSemantic left, ShaderSemantic right )
+		{
+			return !ShaderSemantic::Equals( left, right );
+		}
+
+		int ShaderSemantic::GetHashCode()
+		{
+			return Usage.GetHashCode() + UsageIndex.GetHashCode();
+		}
+
+		bool ShaderSemantic::Equals( Object^ value )
+		{
+			if( value == nullptr )
+				return false;
+
+			if( value->GetType() != GetType() )
+				return false;
+
+			return Equals( static_cast<ShaderSemantic>( value ) );
+		}
+
+		bool ShaderSemantic::Equals( ShaderSemantic value )
+		{
+			return ( Usage == value.Usage && UsageIndex == value.UsageIndex );
+		}
+
+		bool ShaderSemantic::Equals( ShaderSemantic% value1, ShaderSemantic% value2 )
+		{
+			return ( value1.Usage == value2.Usage && value1.UsageIndex == value2.UsageIndex );
+		}
+
 		IncludeShim::IncludeShim( Include^ wrappedInterface )
 		{
 			m_WrappedInterface = wrappedInterface;
