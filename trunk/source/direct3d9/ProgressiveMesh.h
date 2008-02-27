@@ -58,24 +58,18 @@ namespace SlimDX
 
 		public ref class ProgressiveMesh : public BaseMesh
 		{
+			COMOBJECT(ID3DXPMesh, ProgressiveMesh);
+
 		private:
 			array<ExtendedMaterial>^ materials;
 			array<EffectInstance>^ effects;
 
-		internal:
-			ProgressiveMesh( ID3DXPMesh* mesh ) : BaseMesh( mesh ) { }
-
-			property ID3DXPMesh* MeshPointer
-			{
-				ID3DXPMesh* get() { return static_cast<ID3DXPMesh*>( InternalPointer ); }
-			}
-
 		public:
-			ProgressiveMesh( System::IntPtr pointer );
 			ProgressiveMesh( Mesh^ mesh, array<AttributeWeights>^ attributeWeights, array<float>^ vertexWeights, int minimumValue, MeshSimplification options );
 			ProgressiveMesh( Mesh^ mesh, array<AttributeWeights>^ attributeWeights, int minimumValue, MeshSimplification options );
 			ProgressiveMesh( Mesh^ mesh, int minimumValue, MeshSimplification options );
 			virtual ~ProgressiveMesh() { }
+			static ProgressiveMesh^ FromPointer( System::IntPtr pointer );
 
 			static ProgressiveMesh^ FromStream( Device^ device, System::IO::Stream^ stream, MeshFlags flags );
 			static Result ToStream( ProgressiveMesh^ mesh, System::IO::Stream^ stream );
@@ -114,18 +108,14 @@ namespace SlimDX
 
 		public ref class SimplificationMesh : ComObject
 		{
-			COMOBJECT(ID3DXSPMesh);
-
-		internal:
-			SimplificationMesh( ID3DXSPMesh *mesh ) { Construct(mesh); }
+			COMOBJECT(ID3DXSPMesh, SimplificationMesh);
 
 		public:
-			SimplificationMesh( System::IntPtr pointer );
 			SimplificationMesh( Mesh^ mesh, array<AttributeWeights>^ vertexAttributeWeights, array<float>^ vertexWeights );
 			SimplificationMesh( Mesh^ mesh, array<AttributeWeights>^ vertexAttributeWeights );
 			SimplificationMesh( Mesh^ mesh, array<float>^ vertexWeights );
 			SimplificationMesh( Mesh^ mesh );
-			virtual ~SimplificationMesh() { Destruct(); }
+			static SimplificationMesh^ FromPointer( System::IntPtr pointer );
 
 			Mesh^ Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap );
 			Mesh^ Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration );

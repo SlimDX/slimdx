@@ -36,7 +36,7 @@ namespace Direct3D9
 {
 	void BaseTexture::GenerateMipSublevels()
 	{
-		BaseTexturePointer->GenerateMipSubLevels();
+		InternalPointer->GenerateMipSubLevels();
 	}
 
 	DataStream^ BaseTexture::ToStream( BaseTexture^ texture, ImageFileFormat format, array<PaletteEntry>^ palette )
@@ -45,7 +45,7 @@ namespace Direct3D9
 		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
 		
 		HRESULT hr = D3DXSaveTextureToFileInMemory( &buffer, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
-			texture->BaseTexturePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ) );
+			texture->InternalPointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ) );
 
 		if( RECORD_D3D9( hr ).IsFailure )
 		{
@@ -62,7 +62,7 @@ namespace Direct3D9
 		ID3DXBuffer *buffer = NULL;
 		
 		HRESULT hr = D3DXSaveTextureToFileInMemory( &buffer, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
-			texture->BaseTexturePointer, NULL );
+			texture->InternalPointer, NULL );
 
 		if( RECORD_D3D9( hr ).IsFailure )
 		{
@@ -80,7 +80,7 @@ namespace Direct3D9
 		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
 		
 		HRESULT hr = D3DXSaveTextureToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
-			texture->BaseTexturePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ) );
+			texture->InternalPointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ) );
 		return RECORD_D3D9( hr );
 	}
 
@@ -89,7 +89,7 @@ namespace Direct3D9
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fileName);
 		
 		HRESULT hr = D3DXSaveTextureToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
-			texture->BaseTexturePointer, NULL );
+			texture->InternalPointer, NULL );
 		return RECORD_D3D9( hr );
 	}
 
@@ -97,14 +97,14 @@ namespace Direct3D9
 	{
 		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
 
-		HRESULT hr = D3DXFilterTexture( BaseTexturePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
+		HRESULT hr = D3DXFilterTexture( InternalPointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
 			sourceLevel, static_cast<DWORD>( filter ) );
 		return RECORD_D3D9( hr );
 	}
 
 	Result BaseTexture::FilterTexture( int sourceLevel, Filter filter )
 	{
-		HRESULT hr = D3DXFilterTexture( BaseTexturePointer, NULL, sourceLevel, static_cast<DWORD>( filter ) );
+		HRESULT hr = D3DXFilterTexture( InternalPointer, NULL, sourceLevel, static_cast<DWORD>( filter ) );
 		return RECORD_D3D9( hr );
 	}
 }

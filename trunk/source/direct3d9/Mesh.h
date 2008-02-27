@@ -264,17 +264,14 @@ namespace SlimDX
 
 		public ref class BaseMesh abstract : public ComObject
 		{
-			COMOBJECT(ID3DXBaseMesh);
+			COMOBJECT_BASE(ID3DXBaseMesh);
 
 		protected:
 			BaseMesh() { }
-			BaseMesh( System::IntPtr pointer );
-			BaseMesh( ID3DXBaseMesh* baseMesh ) { Construct(baseMesh); }
 
 		public:
 			Mesh^ Clone( Device^ device, MeshFlags flags, array<VertexElement>^ elements );
 			Mesh^ Clone( Device^ device, MeshFlags flags, VertexFormat fvf );
-			virtual ~BaseMesh() { Destruct(); }
 
 			Device^ GetDevice();
 			IndexBuffer^ GetIndexBuffer();
@@ -315,6 +312,8 @@ namespace SlimDX
 
 		public ref class Mesh : public BaseMesh
 		{
+			COMOBJECT(ID3DXMesh, Mesh);
+
 		private:
 			array<int>^ adjacency;
 			array<ExtendedMaterial>^ materials;
@@ -322,20 +321,14 @@ namespace SlimDX
 			SkinInfo^ skinInfo;			
 
 		internal:
-			Mesh( ID3DXMesh* mesh );
-			property ID3DXMesh* MeshPointer
-			{
-				ID3DXMesh* get() { return static_cast<ID3DXMesh*>( InternalPointer ); }
-			}
-
 			void SetAdjacency( DWORD *adjacency );
 
 		public:
-			Mesh( System::IntPtr pointer );
 			Mesh( Device^ device, int faceCount, int vertexCount, MeshFlags options, array<VertexElement>^ vertexDeclaration );
 			Mesh( Device^ device, int faceCount, int vertexCount, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf );
 			virtual ~Mesh() { }
-			
+			static Mesh^ FromPointer( System::IntPtr pointer );
+
 			static Mesh^ FromMemory( Device^ device, array<System::Byte>^ memory, MeshFlags flags );
 			static Mesh^ FromStream( Device^ device, System::IO::Stream^ stream, MeshFlags flags );
 			static Mesh^ FromFile( Device^ device, System::String^ fileName, MeshFlags flags );

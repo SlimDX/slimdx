@@ -48,17 +48,13 @@ namespace SlimDX
 
 		public ref class SkinInfo : public ComObject
 		{
-			COMOBJECT(ID3DXSkinInfo);
-
-		internal:
-			SkinInfo( ID3DXSkinInfo* skinInfo );
+			COMOBJECT(ID3DXSkinInfo, SkinInfo);
 
 		public:
-			SkinInfo( System::IntPtr pointer );
 			SkinInfo( int vertexCount, array<VertexElement>^ vertexDeclaration, int boneCount );
 			SkinInfo( BaseMesh^ mesh, int boneCount, array<BoneCombination^>^ boneCombinationTable );
 			SkinInfo( int vertexCount, VertexFormat fvf, int boneCount );
-			virtual ~SkinInfo() { Destruct(); }
+			static SkinInfo^ FromPointer( System::IntPtr skinInfo );
 
 			SkinInfo^ Clone();
 

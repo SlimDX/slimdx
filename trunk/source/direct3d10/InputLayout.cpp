@@ -68,5 +68,28 @@ namespace Direct3D10
 
 		Construct( layout );
 	}
+
+	InputLayout^ InputLayout::FromPointer( ID3D10InputLayout* pointer )
+	{
+		InputLayout^ tableEntry = safe_cast<InputLayout^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew InputLayout( pointer );
+	}
+
+	InputLayout^ InputLayout::FromPointer( IntPtr pointer )
+	{
+		InputLayout^ tableEntry = safe_cast<InputLayout^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew InputLayout( pointer );
+	}
 }
 }

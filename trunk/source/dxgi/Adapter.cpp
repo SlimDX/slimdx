@@ -44,6 +44,29 @@ namespace DXGI
 		Construct( pointer, NativeInterface );
 	}
 
+	Adapter^ Adapter::FromPointer( IDXGIAdapter* pointer )
+	{
+		Adapter^ tableEntry = safe_cast<Adapter^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Adapter( pointer );
+	}
+
+	Adapter^ Adapter::FromPointer( IntPtr pointer )
+	{
+		Adapter^ tableEntry = safe_cast<Adapter^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Adapter( pointer );
+	}
+
 	AdapterDescription Adapter::Description::get()
 	{
 		DXGI_ADAPTER_DESC nativeDescription;
@@ -73,7 +96,7 @@ namespace DXGI
 		RECORD_DXGI( InternalPointer->EnumOutputs( index, &output) );
 		if( Result::Last.IsFailure )
 			return nullptr;
-		return gcnew Output( output );
+		return Output::FromPointer( output );
 	}
 
 	bool Adapter::IsInterfaceSupported( Type^ type )

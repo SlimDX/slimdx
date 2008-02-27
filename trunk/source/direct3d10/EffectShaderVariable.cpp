@@ -55,7 +55,7 @@ namespace Direct3D10
 		if( RECORD_D3D10( m_Pointer->GetPixelShader( index, &shader ) ).IsFailure )
 			return nullptr;
 			
-		return gcnew PixelShader( shader );
+		return PixelShader::FromPointer( shader );
 	}
 	
 	VertexShader^ EffectShaderVariable::GetVertexShader( int index )
@@ -64,7 +64,7 @@ namespace Direct3D10
 		if( RECORD_D3D10( m_Pointer->GetVertexShader( index, &shader ) ).IsFailure )
 			return nullptr;
 		
-		return gcnew VertexShader( shader );
+		return VertexShader::FromPointer( shader );
 	}
 	
 	GeometryShader^ EffectShaderVariable::GetGeometryShader( int index )
@@ -73,7 +73,7 @@ namespace Direct3D10
 		if( RECORD_D3D10( m_Pointer->GetGeometryShader( index, &shader ) ).IsFailure )
 			return nullptr;
 			
-		return gcnew GeometryShader( shader );
+		return GeometryShader::FromPointer( shader );
 	}
 	
 	Result EffectShaderVariable::GetInputParameterDescription( int shaderIndex, int parameterIndex, ShaderParameterDescription% result )

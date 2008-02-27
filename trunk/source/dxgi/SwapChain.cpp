@@ -47,7 +47,30 @@ namespace DXGI
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
+
+	SwapChain^ SwapChain::FromPointer( IDXGISwapChain* pointer )
+	{
+		SwapChain^ tableEntry = safe_cast<SwapChain^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew SwapChain( pointer );
+	}
+
+	SwapChain^ SwapChain::FromPointer( IntPtr pointer )
+	{
+		SwapChain^ tableEntry = safe_cast<SwapChain^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew SwapChain( pointer );
+	}
+
 	SwapChain::SwapChain( Factory^ factory, ComObject^ device, SwapChainDescription description )
 	{
 		if( factory == nullptr )
@@ -111,7 +134,7 @@ namespace DXGI
 		if( RECORD_DXGI( InternalPointer->GetContainingOutput( &output ) ).IsFailure )
 			return nullptr;
 			
-		return gcnew Output( output );
+		return Output::FromPointer( output );
 	}
 	
 	Result SwapChain::GetFullScreenState( bool% isFullScreen, Output^% target )
@@ -124,7 +147,7 @@ namespace DXGI
 			if( output == 0 )
 				target = nullptr;
 			else
-				target = gcnew Output( output );
+				target = Output::FromPointer( output );
 		}
 		
 		return Result::Last;

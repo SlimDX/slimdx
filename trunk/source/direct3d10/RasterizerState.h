@@ -35,19 +35,16 @@ namespace SlimDX
 		
 		public ref class RasterizerState : public DeviceChild
 		{
-			COMOBJECT(ID3D10RasterizerState);
+			COMOBJECT(ID3D10RasterizerState, RasterizerState);
 
-		internal:
-			RasterizerState( ID3D10RasterizerState* pointer );
-		
 		public:
 			property RasterizerStateDescription Description
 			{
 				RasterizerStateDescription get();
 			}
-			
-			RasterizerState( System::IntPtr pointer );
+
 			RasterizerState( Device^ device, RasterizerStateDescription description );
+			static RasterizerState^ FromPointer( System::IntPtr state );
 		};
 	}
 };

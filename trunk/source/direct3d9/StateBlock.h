@@ -38,15 +38,11 @@ namespace SlimDX
 
 		public ref class StateBlock : ComObject
 		{
-			COMOBJECT(IDirect3DStateBlock9);
-
-		internal:
-			StateBlock( IDirect3DStateBlock9* stateBlock );
+			COMOBJECT(IDirect3DStateBlock9, StateBlock);
 
 		public:
-			StateBlock( System::IntPtr pointer );
 			StateBlock( Device^ device, StateBlockType type );
-			~StateBlock() { Destruct(); }
+			static StateBlock^ FromPointer( System::IntPtr pointer );
 
 			Result Apply();
 			Result Capture();

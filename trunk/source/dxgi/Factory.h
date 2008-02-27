@@ -40,7 +40,7 @@ namespace SlimDX
 		/// </remarks>
 		public ref class Factory : public ComObject
 		{
-			COMOBJECT(IDXGIFactory);
+			COMOBJECT(IDXGIFactory, Factory);
 			
 		public:
 			/// <summary>
@@ -52,7 +52,7 @@ namespace SlimDX
 			/// Constructs a Factory from an unmanaged pointer.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGIFactory pointer.</param>
-			Factory( System::IntPtr pointer );
+			static Factory^ FromPointer( System::IntPtr pointer );
 			
 			/// <summary>
 			/// Gets the number of available adapters.

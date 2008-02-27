@@ -41,14 +41,14 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	Sprite::Sprite( IntPtr pointer )
+	Sprite::Sprite( ID3DXSprite* pointer )
 	{
-		Construct( pointer, NativeInterface );
+		Construct( pointer );
 	}
 
-	Sprite::Sprite( ID3DXSprite* sprite )
+	Sprite::Sprite( IntPtr pointer )
 	{
-		Construct(sprite);
+		Construct( pointer, NativeInterface	);
 	}
 
 	Sprite::Sprite( Device^ device )
@@ -61,6 +61,29 @@ namespace Direct3D9
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(sprite);
+	}
+
+	Sprite^ Sprite::FromPointer( ID3DXSprite* pointer )
+	{
+		Sprite^ tableEntry = safe_cast<Sprite^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Sprite( pointer );
+	}
+
+	Sprite^ Sprite::FromPointer( IntPtr pointer )
+	{
+		Sprite^ tableEntry = safe_cast<Sprite^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Sprite( pointer );
 	}
 
 	Result Sprite::Begin( SpriteFlags flags )
@@ -102,7 +125,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Device( device );
+		return Device::FromPointer( device );
 	}
 
 	Matrix Sprite::Transform::get()
@@ -137,7 +160,7 @@ namespace Direct3D9
 	{
 		RECT rect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
 
-		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, &rect, reinterpret_cast<const D3DXVECTOR3*>( &center ),
+		HRESULT hr = InternalPointer->Draw( texture->InternalPointer, &rect, reinterpret_cast<const D3DXVECTOR3*>( &center ),
 			reinterpret_cast<const D3DXVECTOR3*>( &position ), color.ToArgb() );
 		return RECORD_D3D9( hr );
 	}
@@ -146,20 +169,20 @@ namespace Direct3D9
 	{
 		RECT rect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
 
-		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, &rect, NULL, NULL, color.ToArgb() );
+		HRESULT hr = InternalPointer->Draw( texture->InternalPointer, &rect, NULL, NULL, color.ToArgb() );
 		return RECORD_D3D9( hr );
 	}
 
 	Result Sprite::Draw( Texture^ texture, Vector3 center, Vector3 position, Color4 color )
 	{
-		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, NULL, reinterpret_cast<const D3DXVECTOR3*>( &center ),
+		HRESULT hr = InternalPointer->Draw( texture->InternalPointer, NULL, reinterpret_cast<const D3DXVECTOR3*>( &center ),
 			reinterpret_cast<const D3DXVECTOR3*>( &position ), color.ToArgb() );
 		return RECORD_D3D9( hr );
 	}
 
 	Result Sprite::Draw( Texture^ texture, Color4 color )
 	{
-		HRESULT hr = InternalPointer->Draw( texture->TexturePointer, NULL, NULL, NULL, color.ToArgb() );
+		HRESULT hr = InternalPointer->Draw( texture->InternalPointer, NULL, NULL, NULL, color.ToArgb() );
 		return RECORD_D3D9( hr );
 	}
 }

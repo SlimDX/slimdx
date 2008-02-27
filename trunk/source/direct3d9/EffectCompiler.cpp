@@ -36,7 +36,7 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	EffectCompiler::EffectCompiler( ID3DXEffectCompiler* compiler ) : BaseEffect( compiler )
+	EffectCompiler::EffectCompiler( ID3DXEffectCompiler* compiler )
 	{
 		if( compiler == NULL )
 			throw gcnew ArgumentNullException( "compiler" );
@@ -145,8 +145,8 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			return nullptr;
 
-		constantTable = gcnew ConstantTable( table );
-		return gcnew ShaderBytecode( shader );
+		constantTable = ConstantTable::FromPointer( table );
+		return ShaderBytecode::FromPointer( shader );
 	}
 
 	ShaderBytecode^ EffectCompiler::CompileShader( EffectHandle^ functionHandle, String^ target, ShaderFlags flags,
@@ -183,7 +183,7 @@ namespace Direct3D9
 		if( FAILED( hr ) )
 			return nullptr;
 
-		return gcnew ShaderBytecode( shader );
+		return ShaderBytecode::FromPointer( shader );
 	}
 
 	ShaderBytecode^ EffectCompiler::CompileShader( EffectHandle^ functionHandle, String^ target, ShaderFlags flags )

@@ -45,6 +45,29 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 	
+	DepthStencilView^ DepthStencilView::FromPointer( ID3D10DepthStencilView* pointer )
+	{
+		DepthStencilView^ tableEntry = safe_cast<DepthStencilView^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew DepthStencilView( pointer );
+	}
+
+	DepthStencilView^ DepthStencilView::FromPointer( IntPtr pointer )
+	{
+		DepthStencilView^ tableEntry = safe_cast<DepthStencilView^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew DepthStencilView( pointer );
+	}
+
 	DepthStencilView::DepthStencilView( Device^ device, Resource^ resource )
 	{
 		if( device == nullptr )

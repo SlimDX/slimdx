@@ -31,6 +31,8 @@ namespace SlimDX
 		
 		public ref class Texture : public Resource
 		{
+			COMOBJECT_BASE(ID3D10Resource);
+
 		internal:
 			static int GetMipSize( int mipSlice, int baseSliceSize );
 			

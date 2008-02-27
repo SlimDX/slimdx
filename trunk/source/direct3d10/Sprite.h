@@ -34,10 +34,7 @@ namespace SlimDX
 
 		public ref class Sprite : public ComObject
 		{
-			COMOBJECT(ID3DX10Sprite);
-
-		internal:
-			Sprite( ID3DX10Sprite* pointer );
+			COMOBJECT(ID3DX10Sprite, Sprite);
 
 		public:
 			property Matrix ViewTransform
@@ -52,9 +49,9 @@ namespace SlimDX
 				void set( Matrix value );
 			}
 
-			Sprite( System::IntPtr pointer );
 			Sprite( Device^ device, int bufferSize );
-			
+			static Sprite^ FromPointer( System::IntPtr pointer );
+
 			Device^ GetDevice();
 			
 			Result Begin( SpriteFlags flags );

@@ -27,17 +27,11 @@ namespace SlimDX
 	{
 		public ref class Line : ComObject
 		{
-			COMOBJECT(ID3DXLine);
-
-		internal:
-			/* Unused for now.
-			Line( ID3DXLine* line );
-			*/
+			COMOBJECT(ID3DXLine, Line);
 
 		public:
-			Line( System::IntPtr line );
 			Line( Device^ device );
-			~Line() { Destruct(); }
+			static Line^ FromPointer( System::IntPtr line );
 
 			Result Begin();
 			Result End();

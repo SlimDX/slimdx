@@ -33,15 +33,12 @@ namespace SlimDX
 		
 		public ref class Resource abstract : public ComObject
 		{
-			COMOBJECT(IDirect3DResource9);
+			COMOBJECT_BASE(IDirect3DResource9);
 
 		protected:
 			Resource() { }
-			Resource( System::IntPtr pointer );
 
 		public:
-			virtual ~Resource() { Destruct(); }
-			
 			Device^ GetDevice();
 			void Preload();
 

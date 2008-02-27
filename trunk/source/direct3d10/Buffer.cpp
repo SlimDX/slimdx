@@ -64,7 +64,30 @@ namespace Direct3D10
 	{		
 		Construct( Build( device, data, sizeInBytes, usage, bindFlags, accessFlags, optionFlags ) );
 	}
-	
+
+	Buffer^ Buffer::FromPointer( ID3D10Buffer* pointer )
+	{
+		Buffer^ tableEntry = safe_cast<Buffer^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Buffer( pointer );
+	}
+
+	Buffer^ Buffer::FromPointer( IntPtr pointer )
+	{
+		Buffer^ tableEntry = safe_cast<Buffer^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Buffer( pointer );
+	}
+
 	ID3D10Buffer* Buffer::Build( Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
 	{
 		D3D10_BUFFER_DESC description;

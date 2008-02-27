@@ -125,16 +125,12 @@ namespace SlimDX
 
 		public ref class BaseEffect abstract : public ComObject
 		{
-			COMOBJECT(ID3DXBaseEffect);
+			COMOBJECT_BASE(ID3DXBaseEffect);
 
 		protected:
 			BaseEffect() { }
-			BaseEffect( System::IntPtr pointer );
-			BaseEffect( ID3DXBaseEffect* pointer ) { Construct(pointer); }
 
 		public:
-			virtual ~BaseEffect() { Destruct(); }
-
 			EffectHandle^ GetAnnotation( EffectHandle^ handle, int index );
 			EffectHandle^ GetAnnotation( EffectHandle^ handle, System::String^ name );
 

@@ -37,6 +37,11 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		MatrixStack::MatrixStack( ID3DXMatrixStack* pointer )
+		{
+			Construct( pointer );
+		}
+
 		MatrixStack::MatrixStack( IntPtr pointer )
 		{
 			Construct( pointer, NativeInterface );
@@ -50,6 +55,29 @@ namespace SlimDX
 				throw gcnew Direct3D9Exception( "Failed to create MatrixStack." );
 
 			Construct(matrixStack);
+		}
+
+		MatrixStack^ MatrixStack::FromPointer( ID3DXMatrixStack* pointer )
+		{
+			MatrixStack^ tableEntry = safe_cast<MatrixStack^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				pointer->Release();
+				return tableEntry;
+			}
+
+			return gcnew MatrixStack( pointer );
+		}
+
+		MatrixStack^ MatrixStack::FromPointer( IntPtr pointer )
+		{
+			MatrixStack^ tableEntry = safe_cast<MatrixStack^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				return tableEntry;
+			}
+
+			return gcnew MatrixStack( pointer );
 		}
 
 		Result MatrixStack::Push()

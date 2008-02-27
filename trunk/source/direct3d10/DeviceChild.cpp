@@ -37,16 +37,44 @@ namespace Direct3D10
 	{
 	}
 	
+	DeviceChild::DeviceChild( ID3D10DeviceChild* pointer )
+	{
+		Construct( pointer );
+	}
+
 	DeviceChild::DeviceChild( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
+	}
+
+	DeviceChild^ DeviceChild::FromPointer( ID3D10DeviceChild* pointer )
+	{
+		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew DeviceChild( pointer );
+	}
+
+	DeviceChild^ DeviceChild::FromPointer( IntPtr pointer )
+	{
+		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew DeviceChild( pointer );
 	}
 
 	Device^ DeviceChild::GetDevice()
 	{
 		ID3D10Device* device = 0;
 		InternalPointer->GetDevice( &device );
-		return gcnew Device( device );
+		return Device::FromPointer( device );
 	}
 }
 }

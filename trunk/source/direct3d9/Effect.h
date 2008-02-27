@@ -34,17 +34,16 @@ namespace SlimDX
 	{
 		public ref class EffectPool : public ComObject
 		{
-			COMOBJECT(ID3DXEffectPool);
+			COMOBJECT(ID3DXEffectPool, EffectPool);
 
 		public:
-			EffectPool( System::IntPtr pointer );
 			EffectPool();
-			~EffectPool() { Destruct(); }
+			static EffectPool^ FromPointer( System::IntPtr pointer );
 		};
 
 		public ref class Effect : public BaseEffect
 		{
-			COMOBJECT(ID3DXEffect);
+			COMOBJECT(ID3DXEffect, Effect);
 
 		private:
 			IEffectStateManagerShim *shim;
@@ -55,11 +54,9 @@ namespace SlimDX
 				ID3DXEffect* get() { return InternalPointer; }
 			}
 
-			Effect( ID3DXEffect* effect );
-
 		public:
-			Effect( System::IntPtr effect );
 			virtual ~Effect() { if( shim != NULL ) delete shim; }
+			static Effect^ FromPointer( System::IntPtr effect );
 
 			static Effect^ FromMemory( Device^ device, array<System::Byte>^ memory, array<Macro>^ preprocessorDefines, Include^ includeFile, System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] System::String^ %compilationErrors );
 

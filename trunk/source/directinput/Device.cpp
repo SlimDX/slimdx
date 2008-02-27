@@ -134,6 +134,31 @@ namespace DirectInput
 	}
 
 	generic<typename DataFormat>
+	Device<DataFormat>^ Device<DataFormat>::FromPointer( IDirectInputDevice8W* pointer )
+	{
+		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Device( pointer );
+	}
+
+	generic<typename DataFormat>
+	Device<DataFormat>^ Device<DataFormat>::FromPointer( IntPtr pointer )
+	{
+		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Device( pointer );
+	}
+
+	generic<typename DataFormat>
 	Result Device<DataFormat>::SetCooperativeLevel( IntPtr handle, CooperativeLevel flags )
 	{
 		HRESULT hr = InternalPointer->SetCooperativeLevel( static_cast<HWND>( handle.ToPointer() ), static_cast<DWORD>( flags ) );

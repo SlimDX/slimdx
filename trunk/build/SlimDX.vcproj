@@ -1206,11 +1206,38 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\ObjectTracker.cpp"
+				RelativePath="..\source\ObjectTable.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Public|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\source\ObjectTracker.h"
+				RelativePath="..\source\ObjectTable.h"
 				>
 			</File>
 			<File
@@ -1303,14 +1330,6 @@
 			>
 			<File
 				RelativePath="..\source\direct3d9\external\atir2vb.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d9\Direct3D9Exception.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d9\Direct3D9Exception.h"
 				>
 			</File>
 			<File
@@ -1452,6 +1471,14 @@
 				Name="Exceptions"
 				>
 				<File
+					RelativePath="..\source\direct3d9\Direct3D9Exception.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Direct3D9Exception.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\Direct3D9NotFoundException.cpp"
 					>
 				</File>
@@ -1560,6 +1587,14 @@
 				Name="Shader"
 				>
 				<File
+					RelativePath="..\source\direct3d9\ConstantTable.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ConstantTable.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\PixelShader.cpp"
 					>
 				</File>
@@ -1581,18 +1616,6 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\VertexShader.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="ConstantTable"
-				>
-				<File
-					RelativePath="..\source\direct3d9\ConstantTable.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d9\ConstantTable.h"
 					>
 				</File>
 			</Filter>

@@ -36,10 +36,7 @@ namespace SlimDX
 		/// </remarks>
 		public ref class Device : public ComObject
 		{
-			COMOBJECT(IDXGIDevice);
-
-		internal:
-			Device( IDXGIDevice* pointer );
+			COMOBJECT(IDXGIDevice, Device);
 
 		public:
 			/// <summary>
@@ -55,7 +52,7 @@ namespace SlimDX
 			/// Constructs a Device from an unmanaged pointer.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGIDevice pointer.</param>
-			Device( System::IntPtr pointer );
+			static Device^ FromPointer( System::IntPtr pointer );
 			
 			/// <summary>
 			/// Gets the adapter associated with the device.

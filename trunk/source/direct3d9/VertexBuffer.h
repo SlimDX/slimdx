@@ -32,25 +32,18 @@ namespace SlimDX
 	{
 		public ref class VertexBuffer : public Resource
 		{
-		private:
+			COMOBJECT( IDirect3DVertexBuffer9, VertexBuffer );
+
 			Format format;
 			Usage usage;
 			Pool pool;
 			int sizeInBytes;
 			VertexFormat fVF;
 
-		internal:
-			property IDirect3DVertexBuffer9* VbPointer
-			{
-				IDirect3DVertexBuffer9* get() { return static_cast<IDirect3DVertexBuffer9*>( InternalPointer ); }
-			}
-
-			VertexBuffer( IDirect3DVertexBuffer9* buffer );
-
 		public:
-			VertexBuffer( System::IntPtr buffer );
 			VertexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool );
 			virtual ~VertexBuffer() { }
+			static VertexBuffer^ FromPointer( System::IntPtr buffer );
 
 			DataStream^ Lock( int offset, int size, LockFlags flags );
 			Result Unlock();

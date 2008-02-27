@@ -228,10 +228,39 @@ namespace SlimDX
 			}
 		}
 
+		ShaderBytecode::ShaderBytecode( ID3DXBuffer* pointer )
+		{
+			Construct( pointer );
+		}
+
 		ShaderBytecode::ShaderBytecode( IntPtr pointer )
 		{
 			Construct( pointer, NativeInterface );
 		}
+
+		ShaderBytecode^ ShaderBytecode::FromPointer( ID3DXBuffer* pointer )
+		{
+			ShaderBytecode^ tableEntry = safe_cast<ShaderBytecode^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				pointer->Release();
+				return tableEntry;
+			}
+
+			return gcnew ShaderBytecode( pointer );
+		}
+
+		ShaderBytecode^ ShaderBytecode::FromPointer( IntPtr pointer )
+		{
+			ShaderBytecode^ tableEntry = safe_cast<ShaderBytecode^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				return tableEntry;
+			}
+
+			return gcnew ShaderBytecode( pointer );
+		}
+
 
 		DataStream^ ShaderBytecode::GetData()
 		{
@@ -246,7 +275,7 @@ namespace SlimDX
 			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
-			return gcnew ConstantTable( constantTable );
+			return ConstantTable::FromPointer( constantTable );
 		}
 
 		array<ShaderSemantic>^ ShaderBytecode::GetInputSemantics()
@@ -350,7 +379,7 @@ namespace SlimDX
 			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
-			return gcnew ShaderBytecode( shaderBuffer );
+			return ShaderBytecode::FromPointer( shaderBuffer );
 		}
 
 		ShaderBytecode^ Shader::Assemble( String^ sourceData, array<Macro>^ defines,
@@ -387,7 +416,7 @@ namespace SlimDX
 			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
-			return gcnew ShaderBytecode( shaderBuffer );
+			return ShaderBytecode::FromPointer( shaderBuffer );
 	   }
 
 		//D3DXCompileShader
@@ -428,7 +457,7 @@ namespace SlimDX
 				return nullptr;
 			}
 
-			return gcnew ShaderBytecode( shaderBuffer );
+			return ShaderBytecode::FromPointer( shaderBuffer );
 		}
 
 		ShaderBytecode^ Shader::Compile( String^ sourceData, array<Macro>^ defines,
@@ -474,7 +503,7 @@ namespace SlimDX
 				return nullptr;
 			}
 
-			return gcnew ShaderBytecode( shaderBuffer );
+			return ShaderBytecode::FromPointer( shaderBuffer );
 		}
 
 		ShaderBytecode^ Shader::Compile( String^ sourceData, array<Macro>^ defines,
@@ -523,7 +552,7 @@ namespace SlimDX
 				return nullptr;
 			}
 
-			return gcnew ShaderBytecode( shaderBuffer );
+			return ShaderBytecode::FromPointer( shaderBuffer );
 		}
 
 		ShaderBytecode^ Shader::CompileFromFile( String^ fileName, array<Macro>^ defines,
@@ -557,7 +586,7 @@ namespace SlimDX
 			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
-			return gcnew ShaderBytecode( shaderBuffer );
+			return ShaderBytecode::FromPointer( shaderBuffer );
 		}
 
 		int Shader::MajorVersion( int version )

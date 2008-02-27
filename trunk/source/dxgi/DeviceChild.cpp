@@ -36,11 +36,6 @@ namespace DXGI
 	DeviceChild::DeviceChild()
 	{
 	}
-	
-	DeviceChild::DeviceChild( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
 
 	Device^ DeviceChild::GetDevice()
 	{
@@ -48,7 +43,7 @@ namespace DXGI
 		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
 		if( Result::Last.IsFailure )
 			return nullptr;
-		return gcnew Device( device );
+		return Device::FromPointer( device );
 	}
 }
 }

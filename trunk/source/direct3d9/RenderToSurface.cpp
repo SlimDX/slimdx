@@ -22,7 +22,6 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-//#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
 
 #include "Device.h"
@@ -74,17 +73,14 @@ namespace SlimDX
 				 && value1.DepthStencil == value2.DepthStencil && value1.DepthStencilFormat == value2.DepthStencilFormat );
 		}
 
-		/* Unused for now.
-		RenderToSurface::RenderToSurface( ID3DXRenderToSurface* pointer ) : ComObject( pointer )
+		RenderToSurface::RenderToSurface( ID3DXRenderToSurface* pointer )
 		{
-			if( pointer == NULL )
-				throw gcnew ArgumentNullException( "pointer" );
+			Construct( pointer );
 		}
-		*/
 
-		RenderToSurface::RenderToSurface( IntPtr rts )
+		RenderToSurface::RenderToSurface( IntPtr pointer )
 		{
-			Construct( rts, NativeInterface );
+			Construct( pointer, NativeInterface );
 		}
 
 		RenderToSurface::RenderToSurface( Device^ device, int width, int height, Format format )
@@ -110,9 +106,32 @@ namespace SlimDX
 			Construct(rtsPointer);
 		}
 
+		RenderToSurface^ RenderToSurface::FromPointer( ID3DXRenderToSurface* pointer )
+		{
+			RenderToSurface^ tableEntry = safe_cast<RenderToSurface^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				pointer->Release();
+				return tableEntry;
+			}
+
+			return gcnew RenderToSurface( pointer );
+		}
+
+		RenderToSurface^ RenderToSurface::FromPointer( IntPtr pointer )
+		{
+			RenderToSurface^ tableEntry = safe_cast<RenderToSurface^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				return tableEntry;
+			}
+
+			return gcnew RenderToSurface( pointer );
+		}
+
 		Result RenderToSurface::BeginScene( Surface^ renderSurface, SlimDX::Viewport viewport )
 		{
-			IDirect3DSurface9* surface = renderSurface->SurfacePointer;
+			IDirect3DSurface9* surface = renderSurface->InternalPointer;
 			HRESULT hr = InternalPointer->BeginScene( surface, reinterpret_cast<D3DVIEWPORT9*>( &viewport ) );
 			return RECORD_D3D9( hr );
 		}
@@ -131,7 +150,7 @@ namespace SlimDX
 			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
-			return gcnew Device( device );
+			return Device::FromPointer( device );
 		}
 
 		Result RenderToSurface::OnLostDevice()

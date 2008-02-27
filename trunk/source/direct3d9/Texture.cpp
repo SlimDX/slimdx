@@ -280,6 +280,29 @@ namespace Direct3D9
 		Construct(texture);
 	}
 
+	Texture^ Texture::FromPointer( IDirect3DTexture9* pointer )
+	{
+		Texture^ tableEntry = safe_cast<Texture^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Texture( pointer );
+	}
+
+	Texture^ Texture::FromPointer( IntPtr pointer )
+	{
+		Texture^ tableEntry = safe_cast<Texture^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Texture( pointer );
+	}
+
 	TextureRequirements Texture::CheckRequirements(Device^ device, int width, int height,
 		int numMipLevels, Usage usage, Format format, Pool pool)
 	{
@@ -491,14 +514,14 @@ namespace Direct3D9
 	{
 		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
 
-		HRESULT hr = D3DXComputeNormalMap( texture->TexturePointer, sourceTexture->TexturePointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
+		HRESULT hr = D3DXComputeNormalMap( texture->InternalPointer, sourceTexture->InternalPointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
 			static_cast<DWORD>( flags ), static_cast<DWORD>( channel ), amplitude );
 		return RECORD_D3D9( hr );
 	}
 
 	Result Texture::ComputeNormalMap( Texture^ texture, Texture^ sourceTexture, NormalMapFlags flags, Channel channel, float amplitude )
 	{
-		HRESULT hr = D3DXComputeNormalMap( texture->TexturePointer, sourceTexture->TexturePointer, NULL,
+		HRESULT hr = D3DXComputeNormalMap( texture->InternalPointer, sourceTexture->InternalPointer, NULL,
 			static_cast<DWORD>( flags ), static_cast<DWORD>( channel ), amplitude );
 		return RECORD_D3D9( hr );
 	}
@@ -554,14 +577,14 @@ namespace Direct3D9
 		HRESULT hr;		// Error code.
 
 		// Call the function.
-		hr = D3DXFillTexture(TexturePointer, NativeD3DXFill2D, Marshal::GetFunctionPointerForDelegate(callback).ToPointer());
+		hr = D3DXFillTexture(InternalPointer, NativeD3DXFill2D, Marshal::GetFunctionPointerForDelegate(callback).ToPointer());
 
 		return RECORD_D3D9(hr);
 	}
 
 	Result Texture::Fill( TextureShader^ shader )
 	{
-		HRESULT hr = D3DXFillTextureTX( TexturePointer, shader->InternalPointer );
+		HRESULT hr = D3DXFillTextureTX( InternalPointer, shader->InternalPointer );
 		return RECORD_D3D9( hr );
 	}
 
@@ -570,7 +593,7 @@ namespace Direct3D9
 		D3DLOCKED_RECT lockedRect;
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
 
-		HRESULT hr = TexturePointer->LockRect( level, &lockedRect, &nativeRect, static_cast<DWORD>( flags ) );
+		HRESULT hr = InternalPointer->LockRect( level, &lockedRect, &nativeRect, static_cast<DWORD>( flags ) );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
@@ -586,7 +609,7 @@ namespace Direct3D9
 	{
 		D3DLOCKED_RECT lockedRect;
 
-		HRESULT hr = TexturePointer->LockRect( level, &lockedRect, NULL, static_cast<DWORD>( flags ) );
+		HRESULT hr = InternalPointer->LockRect( level, &lockedRect, NULL, static_cast<DWORD>( flags ) );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
@@ -600,21 +623,21 @@ namespace Direct3D9
 
 	Result Texture::UnlockRectangle( int level )
 	{
-		HRESULT hr = TexturePointer->UnlockRect( level );
+		HRESULT hr = InternalPointer->UnlockRect( level );
 		return RECORD_D3D9( hr );
 	}
 
 	Result Texture::AddDirtyRect( System::Drawing::Rectangle rect )
 	{
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
-		HRESULT hr = TexturePointer->AddDirtyRect( &nativeRect );
+		HRESULT hr = InternalPointer->AddDirtyRect( &nativeRect );
 		return RECORD_D3D9( hr );
 	}
 
 	SurfaceDescription Texture::GetLevelDescription( int level )
 	{
 		SurfaceDescription description;
-		HRESULT hr = TexturePointer->GetLevelDesc( level, reinterpret_cast<D3DSURFACE_DESC*>( &description ) );
+		HRESULT hr = InternalPointer->GetLevelDesc( level, reinterpret_cast<D3DSURFACE_DESC*>( &description ) );
 		RECORD_D3D9( hr );
 		return description;
 	}
@@ -622,11 +645,11 @@ namespace Direct3D9
 	Surface^ Texture::GetSurfaceLevel( int level )
 	{
 		IDirect3DSurface9* surface;
-		HRESULT hr = TexturePointer->GetSurfaceLevel( level, &surface );
+		HRESULT hr = InternalPointer->GetSurfaceLevel( level, &surface );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
-		return gcnew Surface( surface );
+		return Surface::FromPointer( surface );
 	}
 
 	CubeTexture::CubeTexture( IDirect3DCubeTexture9* texture )
@@ -649,6 +672,29 @@ namespace Direct3D9
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(texture);
+	}
+
+	CubeTexture^ CubeTexture::FromPointer( IDirect3DCubeTexture9* pointer )
+	{
+		CubeTexture^ tableEntry = safe_cast<CubeTexture^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew CubeTexture( pointer );
+	}
+
+	CubeTexture^ CubeTexture::FromPointer( IntPtr pointer )
+	{
+		CubeTexture^ tableEntry = safe_cast<CubeTexture^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew CubeTexture( pointer );
 	}
 
 	CubeTextureRequirements CubeTexture::CheckRequirements(Device^ device, int size,
@@ -860,7 +906,7 @@ namespace Direct3D9
 	{
 		D3DLOCKED_RECT lockedRect;
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
-		HRESULT hr = TexturePointer->LockRect( static_cast<D3DCUBEMAP_FACES>( face ), level, &lockedRect, &nativeRect, static_cast<DWORD>( flags ) );
+		HRESULT hr = InternalPointer->LockRect( static_cast<D3DCUBEMAP_FACES>( face ), level, &lockedRect, &nativeRect, static_cast<DWORD>( flags ) );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
@@ -875,7 +921,7 @@ namespace Direct3D9
 	DataRectangle^ CubeTexture::LockRectangle( CubeMapFace face, int level, LockFlags flags )
 	{
 		D3DLOCKED_RECT lockedRect;
-		HRESULT hr = TexturePointer->LockRect( static_cast<D3DCUBEMAP_FACES>( face ), level, &lockedRect, NULL, static_cast<DWORD>( flags ) );
+		HRESULT hr = InternalPointer->LockRect( static_cast<D3DCUBEMAP_FACES>( face ), level, &lockedRect, NULL, static_cast<DWORD>( flags ) );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
@@ -889,21 +935,21 @@ namespace Direct3D9
 
 	Result CubeTexture::UnlockRectangle( CubeMapFace face, int level )
 	{
-		HRESULT hr = TexturePointer->UnlockRect( static_cast<D3DCUBEMAP_FACES>( face ), level );
+		HRESULT hr = InternalPointer->UnlockRect( static_cast<D3DCUBEMAP_FACES>( face ), level );
 		return RECORD_D3D9( hr );
 	}
 
 	Result CubeTexture::AddDirtyRect( CubeMapFace face, System::Drawing::Rectangle rect )
 	{
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
-		HRESULT hr = TexturePointer->AddDirtyRect( static_cast<D3DCUBEMAP_FACES>( face ), &nativeRect );
+		HRESULT hr = InternalPointer->AddDirtyRect( static_cast<D3DCUBEMAP_FACES>( face ), &nativeRect );
 		return RECORD_D3D9( hr );
 	}
 
 	SurfaceDescription CubeTexture::GetLevelDescription( int level )
 	{
 		SurfaceDescription description;
-		HRESULT hr = TexturePointer->GetLevelDesc( level, reinterpret_cast<D3DSURFACE_DESC*>( &description ) );
+		HRESULT hr = InternalPointer->GetLevelDesc( level, reinterpret_cast<D3DSURFACE_DESC*>( &description ) );
 		RECORD_D3D9( hr );
 		return description;
 	}
@@ -911,11 +957,11 @@ namespace Direct3D9
 	Surface^ CubeTexture::GetCubeMapSurface( CubeMapFace face, int level )
 	{
 		IDirect3DSurface9* surface;
-		HRESULT hr = TexturePointer->GetCubeMapSurface( static_cast<D3DCUBEMAP_FACES>( face ), level, &surface );
+		HRESULT hr = InternalPointer->GetCubeMapSurface( static_cast<D3DCUBEMAP_FACES>( face ), level, &surface );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
-		return gcnew Surface( surface );
+		return Surface::FromPointer( surface );
 	}
 
 	Result CubeTexture::Fill(Fill3DCallback^ callback)
@@ -923,14 +969,14 @@ namespace Direct3D9
 		HRESULT hr;		// Error code.
 
 		// Call the function.
-		hr = D3DXFillCubeTexture(TexturePointer, NativeD3DXFill3D, Marshal::GetFunctionPointerForDelegate(callback).ToPointer());
+		hr = D3DXFillCubeTexture(InternalPointer, NativeD3DXFill3D, Marshal::GetFunctionPointerForDelegate(callback).ToPointer());
 
 		return RECORD_D3D9(hr);
 	}
 
 	Result CubeTexture::Fill( TextureShader^ shader )
 	{
-		HRESULT hr = D3DXFillCubeTextureTX( TexturePointer, shader->InternalPointer );
+		HRESULT hr = D3DXFillCubeTextureTX( InternalPointer, shader->InternalPointer );
 		return RECORD_D3D9( hr );
 	}
 
@@ -954,6 +1000,29 @@ namespace Direct3D9
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(texture);
+	}
+
+	VolumeTexture^ VolumeTexture::FromPointer( IDirect3DVolumeTexture9* pointer )
+	{
+		VolumeTexture^ tableEntry = safe_cast<VolumeTexture^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew VolumeTexture( pointer );
+	}
+
+	VolumeTexture^ VolumeTexture::FromPointer( IntPtr pointer )
+	{
+		VolumeTexture^ tableEntry = safe_cast<VolumeTexture^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew VolumeTexture( pointer );
 	}
 
 	VolumeTextureRequirements VolumeTexture::CheckRequirements(Device^ device, int width, int height, int depth,
@@ -1175,7 +1244,7 @@ namespace Direct3D9
 	DataBox^ VolumeTexture::LockBox( int level, Box box, LockFlags flags )
 	{
 		D3DLOCKED_BOX lockedBox;
-		HRESULT hr = TexturePointer->LockBox( level, &lockedBox, reinterpret_cast<D3DBOX*>( &box ),
+		HRESULT hr = InternalPointer->LockBox( level, &lockedBox, reinterpret_cast<D3DBOX*>( &box ),
 			static_cast<DWORD>( flags ) );
 		
 		if( RECORD_D3D9(hr).IsFailure )
@@ -1191,7 +1260,7 @@ namespace Direct3D9
 	DataBox^ VolumeTexture::LockBox( int level, LockFlags flags )
 	{
 		D3DLOCKED_BOX lockedBox;
-		HRESULT hr = TexturePointer->LockBox( level, &lockedBox, NULL, static_cast<DWORD>( flags ) );
+		HRESULT hr = InternalPointer->LockBox( level, &lockedBox, NULL, static_cast<DWORD>( flags ) );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
@@ -1205,20 +1274,20 @@ namespace Direct3D9
 
 	Result VolumeTexture::UnlockBox( int level )
 	{
-		HRESULT hr = TexturePointer->UnlockBox( level );
+		HRESULT hr = InternalPointer->UnlockBox( level );
 		return RECORD_D3D9( hr );
 	}
 
 	Result VolumeTexture::AddDirtyBox( Box box )
 	{
-		HRESULT hr = TexturePointer->AddDirtyBox( reinterpret_cast<D3DBOX*>( &box ) );
+		HRESULT hr = InternalPointer->AddDirtyBox( reinterpret_cast<D3DBOX*>( &box ) );
 		return RECORD_D3D9( hr );
 	}
 	
 	VolumeDescription VolumeTexture::GetLevelDescription( int level )
 	{
 		D3DVOLUME_DESC description;
-		HRESULT hr = TexturePointer->GetLevelDesc( level, &description );
+		HRESULT hr = InternalPointer->GetLevelDesc( level, &description );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			return VolumeDescription();
@@ -1239,7 +1308,7 @@ namespace Direct3D9
 	{
 		IDirect3DVolume9 *result;
 
-		HRESULT hr = TexturePointer->GetVolumeLevel( level, &result );
+		HRESULT hr = InternalPointer->GetVolumeLevel( level, &result );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
@@ -1252,14 +1321,14 @@ namespace Direct3D9
 		HRESULT hr;		// Error code.
 
 		// Call the function.
-		hr = D3DXFillVolumeTexture(TexturePointer, NativeD3DXFill3D, Marshal::GetFunctionPointerForDelegate(callback).ToPointer());
+		hr = D3DXFillVolumeTexture(InternalPointer, NativeD3DXFill3D, Marshal::GetFunctionPointerForDelegate(callback).ToPointer());
 
 		return RECORD_D3D9(hr);
 	}
 
 	Result VolumeTexture::Fill( TextureShader^ shader )
 	{
-		HRESULT hr = D3DXFillVolumeTextureTX( TexturePointer, shader->InternalPointer );
+		HRESULT hr = D3DXFillVolumeTextureTX( InternalPointer, shader->InternalPointer );
 		return RECORD_D3D9( hr );
 	}
 }

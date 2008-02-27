@@ -238,11 +238,6 @@ namespace SlimDX
 				 && value1.Flags == value2.Flags && value1.Bytes == value2.Bytes );
 		}
 
-		BaseEffect::BaseEffect( IntPtr pointer )
-		{
-			Construct( pointer, NativeInterface );
-		}
-
 		EffectHandle^ BaseEffect::GetAnnotation( EffectHandle^ handle, int index )
 		{
 			D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;
@@ -460,7 +455,7 @@ namespace SlimDX
 			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
-			return gcnew PixelShader( pixelShader );
+			return PixelShader::FromPointer( pixelShader );
 		}
 
 		VertexShader^ BaseEffect::GetVertexShader( EffectHandle^ parameter )
@@ -473,7 +468,7 @@ namespace SlimDX
 			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
-			return gcnew VertexShader( vertexShader );
+			return VertexShader::FromPointer( vertexShader );
 		}
 
 		EffectDescription BaseEffect::Description::get()
@@ -592,7 +587,7 @@ namespace SlimDX
 		{
 			IDirect3DBaseTexture9* texture = NULL;
 			if( value != nullptr )
-				texture = value->BaseTexturePointer;
+				texture = value->InternalPointer;
 
 			D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 			HRESULT hr = InternalPointer->SetTexture( handle, texture );
@@ -783,11 +778,11 @@ namespace SlimDX
 			switch( texture->GetType() )
 			{
 			case D3DRTYPE_TEXTURE:
-				return gcnew Texture( static_cast<IDirect3DTexture9*>( texture ) );
+				return Texture::FromPointer( static_cast<IDirect3DTexture9*>( texture ) );
 			case D3DRTYPE_VOLUMETEXTURE:
-				return gcnew VolumeTexture( static_cast<IDirect3DVolumeTexture9*>( texture ) );
+				return VolumeTexture::FromPointer( static_cast<IDirect3DVolumeTexture9*>( texture ) );
 			case D3DRTYPE_CUBETEXTURE:
-				return gcnew CubeTexture( static_cast<IDirect3DCubeTexture9*>( texture ) );
+				return CubeTexture::FromPointer( static_cast<IDirect3DCubeTexture9*>( texture ) );
 
 			default:
 				return nullptr;

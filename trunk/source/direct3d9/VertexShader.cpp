@@ -29,7 +29,6 @@
 #include "../Utilities.h"
 #include "../StackAlloc.h"
 
-//#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
 
 #include "Device.h"
@@ -42,16 +41,16 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	VertexShader::VertexShader( IDirect3DVertexShader9* vertexShader )
+	VertexShader::VertexShader( IDirect3DVertexShader9* pointer )
 	{
-		Construct(vertexShader);
-
+		Construct( pointer );
 		m_ConstantTable = nullptr;
 	}
 
-	VertexShader::VertexShader( IntPtr vertexShader )
+	VertexShader::VertexShader( IntPtr pointer )
 	{
-		Construct( vertexShader, NativeInterface );
+		Construct( pointer, NativeInterface );
+		m_ConstantTable = nullptr;
 	}
 
 	VertexShader::VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable )
@@ -67,8 +66,42 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 		
-		m_ConstantTable = gcnew ConstantTable( device, constantTable );
+		m_ConstantTable = ConstantTable::FromPointer( device, constantTable );
 		device->Release();
+	}
+
+	VertexShader^ VertexShader::FromPointer( IDirect3DVertexShader9* pointer )
+	{
+		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew VertexShader( pointer );
+	}
+
+	VertexShader^ VertexShader::FromPointer( IntPtr pointer )
+	{
+		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew VertexShader( pointer );
+	}
+
+
+	VertexShader^ VertexShader::FromPointer( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable )
+	{
+		IntPtr vertexShaderPtr = static_cast<IntPtr>( vertexShader );
+		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Construct( vertexShaderPtr ) );
+		if( tableEntry != nullptr )
+			return tableEntry;
+
+		return gcnew VertexShader( vertexShader, constantTable );
 	}
 
 	VertexShader^ VertexShader::FromString( Device^ device, String^ sourceCode, String^ entryPoint, String^ profile, ShaderFlags flags, [Out] String^ %compilationErrors )
@@ -111,7 +144,7 @@ namespace Direct3D9
 		device->InternalPointer->CreateVertexShader( reinterpret_cast<const DWORD*>( shaderBuffer->GetBufferPointer() ), &vertexShader );
 		if( vertexShader == NULL)
 			return nullptr;
-		return gcnew VertexShader( vertexShader, constantTable );
+		return VertexShader::FromPointer( vertexShader, constantTable );
 	}
 
 	Result VertexShader::RetrieveConstantTable()
@@ -138,7 +171,7 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return Result::Last;
 
-		m_ConstantTable = gcnew ConstantTable( constantTable );
+		m_ConstantTable = ConstantTable::FromPointer( constantTable );
 
 		return Result::Last;
 	}

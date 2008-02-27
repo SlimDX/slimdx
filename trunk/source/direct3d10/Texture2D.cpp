@@ -57,7 +57,30 @@ namespace Direct3D10
 		
 		Construct( texture );	
 	}
-	
+
+	Texture2D^ Texture2D::FromPointer( ID3D10Texture2D* pointer )
+	{
+		Texture2D^ tableEntry = safe_cast<Texture2D^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Texture2D( pointer );
+	}
+
+	Texture2D^ Texture2D::FromPointer( IntPtr pointer )
+	{
+		Texture2D^ tableEntry = safe_cast<Texture2D^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Texture2D( pointer );
+	}
+
 	Texture2DDescription Texture2D::Description::get()
 	{
 		D3D10_TEXTURE2D_DESC nativeDescription;

@@ -75,16 +75,12 @@ namespace SlimDX
 
 		public ref class PatchMesh : ComObject
 		{
-			COMOBJECT(ID3DXPatchMesh);
-
-		internal:
-			PatchMesh( ID3DXPatchMesh *mesh ) { Construct(mesh); }
+			COMOBJECT(ID3DXPatchMesh, PatchMesh);
 
 		public:
-			PatchMesh( System::IntPtr pointer );
 			PatchMesh( Device^ device, PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration );
 			PatchMesh( Mesh^ mesh );
-			virtual ~PatchMesh() { Destruct(); }
+			static PatchMesh^ FromPointer( System::IntPtr pointer );
 
 			static PatchMesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
 			static PatchMesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );

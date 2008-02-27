@@ -35,10 +35,7 @@ namespace SlimDX
 		
 		public ref class BlendState : public DeviceChild
 		{
-			COMOBJECT(ID3D10BlendState);
-		
-		internal:
-			BlendState( ID3D10BlendState* pointer );
+			COMOBJECT(ID3D10BlendState, BlendState);
 		
 		public:
 			property BlendStateDescription Description
@@ -46,7 +43,7 @@ namespace SlimDX
 				BlendStateDescription get();
 			}
 			
-			BlendState( System::IntPtr pointer );
+			static BlendState^ FromPointer( System::IntPtr state );
 			BlendState( Device^ device, BlendStateDescription description );
 		};
 	}

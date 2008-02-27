@@ -33,20 +33,17 @@ namespace SlimDX
 		
 		public ref class RenderTargetView : public ResourceView
 		{
-			COMOBJECT(ID3D10RenderTargetView);
+			COMOBJECT(ID3D10RenderTargetView, RenderTargetView);
 		
-		internal:
-			RenderTargetView( ID3D10RenderTargetView* pointer );
-			
 		public:
 			property RenderTargetViewDescription Description
 			{
 				RenderTargetViewDescription get();
 			}
 			
-			RenderTargetView( System::IntPtr pointer );
 			RenderTargetView( Device^ device, Resource^ resource );
 			RenderTargetView( Device^ device, Resource^ resource, RenderTargetViewDescription description );
+			static RenderTargetView^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

@@ -34,10 +34,7 @@ namespace SlimDX
 		
 		public ref class Counter : public Asynchronous
 		{
-			COMOBJECT(ID3D10Counter);
-		
-		internal:
-			Counter( ID3D10Counter* pointer );
+			COMOBJECT(ID3D10Counter, Counter);
 		
 		public:
 			property CounterDescription Description
@@ -45,8 +42,8 @@ namespace SlimDX
 				CounterDescription get();
 			}
 			
-			Counter( System::IntPtr pointer );
 			Counter( Device^ device, CounterDescription description );
+			static Counter^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

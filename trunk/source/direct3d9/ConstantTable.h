@@ -83,22 +83,24 @@ namespace SlimDX
 		};
 
 		ref class EffectHandle;
+		ref class Device;
 		
 		public ref class ConstantTable : public ComObject
 		{
-			COMOBJECT(ID3DXConstantTable);
+			COMOBJECT(ID3DXConstantTable, ConstantTable);
 
 		private:
-			IDirect3DDevice9* m_Device;
+			Device^ m_Device;
 
-		internal:
-			ConstantTable( ID3DXConstantTable* table );
 			ConstantTable( IDirect3DDevice9* device, ID3DXConstantTable* constantTable );
 
+		internal:
+			static ConstantTable^ FromPointer( IDirect3DDevice9* device, ID3DXConstantTable* constantTable );
+
 		public:
-			ConstantTable( System::IntPtr table );
 			~ConstantTable();
-			
+			static ConstantTable^ FromPointer( System::IntPtr table );
+
 			EffectHandle^ GetConstant( EffectHandle^ handle, int index );
 			EffectHandle^ GetConstant( EffectHandle^ handle, System::String^ name );
 			EffectHandle^ GetConstantElement( EffectHandle^ handle, int index );

@@ -35,11 +35,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	Resource::Resource( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	Device^ Resource::GetDevice()
 	{
 		IDirect3DDevice9* device;
@@ -48,7 +43,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Device( device );
+		return Device::FromPointer( device );
 	}
 	
 	void Resource::Preload()

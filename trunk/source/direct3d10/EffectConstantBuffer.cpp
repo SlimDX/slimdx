@@ -53,7 +53,7 @@ namespace Direct3D10
 		if( RECORD_D3D10( m_Pointer->GetConstantBuffer( &buffer ) ).IsFailure )
 			return nullptr;
 		
-		return gcnew Buffer( buffer );
+		return Buffer::FromPointer( buffer );
 	}
 
 	Result EffectConstantBuffer::SetConstantBuffer( Buffer^ buffer )
@@ -67,7 +67,7 @@ namespace Direct3D10
 		if( RECORD_D3D10( m_Pointer->GetTextureBuffer( &buffer ) ).IsFailure )
 			return nullptr;
 			
-		return gcnew ShaderResourceView( buffer );
+		return ShaderResourceView::FromPointer( buffer );
 	}
 
 	Result EffectConstantBuffer::SetTextureBuffer( ShaderResourceView^ buffer )

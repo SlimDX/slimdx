@@ -176,15 +176,11 @@ namespace SlimDX
 
 		public ref class Device : public ComObject
 		{
-			COMOBJECT(IDirect3DDevice9);
-
-		internal:
-			Device( IDirect3DDevice9* device );
+			COMOBJECT(IDirect3DDevice9, Device);
 
 		public:
-			Device( System::IntPtr device );
 			Device( int adapter, DeviceType deviceType, System::IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParameters );
-			virtual ~Device() { Destruct(); }
+			static Device^ FromPointer( System::IntPtr pointer );
 
 			bool IsQuerySupported( QueryType type );
 			Result EvictManagedResources();

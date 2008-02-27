@@ -57,7 +57,30 @@ namespace Direct3D10
 		
 		Construct( texture );	
 	}
-	
+
+	Texture1D^ Texture1D::FromPointer( ID3D10Texture1D* pointer )
+	{
+		Texture1D^ tableEntry = safe_cast<Texture1D^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Texture1D( pointer );
+	}
+
+	Texture1D^ Texture1D::FromPointer( IntPtr pointer )
+	{
+		Texture1D^ tableEntry = safe_cast<Texture1D^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Texture1D( pointer );
+	}
+
 	Texture1DDescription Texture1D::Description::get()
 	{
 		D3D10_TEXTURE1D_DESC nativeDescription;

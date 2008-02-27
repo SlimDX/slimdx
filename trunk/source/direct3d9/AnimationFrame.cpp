@@ -279,9 +279,9 @@ namespace Direct3D9
 		Pointer->MeshData.Type = static_cast<D3DXMESHDATATYPE>( value->Type );
 		
 		if( Pointer->MeshData.Type == D3DXMESHTYPE_MESH )
-			Pointer->MeshData.pMesh = value->Mesh->MeshPointer;
+			Pointer->MeshData.pMesh = value->Mesh->InternalPointer;
 		else if( Pointer->MeshData.Type == D3DXMESHTYPE_PMESH )
-			Pointer->MeshData.pPMesh = value->ProgressiveMesh->MeshPointer;
+			Pointer->MeshData.pPMesh = value->ProgressiveMesh->InternalPointer;
 		else if( Pointer->MeshData.Type == D3DXMESHTYPE_PATCHMESH )
 			Pointer->MeshData.pPatchMesh = value->PatchMesh->InternalPointer;
 	}
@@ -355,19 +355,19 @@ namespace Direct3D9
 
 		if( pMeshData->Type == D3DXMESHTYPE_MESH )
 		{
-			meshData = gcnew MeshData( gcnew Mesh( pMeshData->pMesh ) );
-			meshData->Mesh->MeshPointer->AddRef();
+			meshData = gcnew MeshData( Mesh::FromPointer( pMeshData->pMesh ) );
+			meshData->Mesh->InternalPointer->AddRef();
 			count = meshData->Mesh->FaceCount;
 		}
 		else if( pMeshData->Type == D3DXMESHTYPE_PMESH )
 		{
-			meshData = gcnew MeshData( gcnew ProgressiveMesh( pMeshData->pPMesh ) );
-			meshData->ProgressiveMesh->MeshPointer->AddRef();
+			meshData = gcnew MeshData( ProgressiveMesh::FromPointer( pMeshData->pPMesh ) );
+			meshData->ProgressiveMesh->InternalPointer->AddRef();
 			count = meshData->ProgressiveMesh->FaceCount;
 		}
 		else if( pMeshData->Type == D3DXMESHTYPE_PATCHMESH )
 		{
-			meshData = gcnew MeshData( gcnew PatchMesh( pMeshData->pPatchMesh ) );
+			meshData = gcnew MeshData( PatchMesh::FromPointer( pMeshData->pPatchMesh ) );
 			meshData->PatchMesh->InternalPointer->AddRef();
 			count = meshData->PatchMesh->PatchCount;
 		}
@@ -390,7 +390,7 @@ namespace Direct3D9
 		SkinInfo^ skinInfo = nullptr;
 		if(pSkinInfo != NULL)
 		{
-			skinInfo = gcnew SkinInfo( pSkinInfo );
+			skinInfo = SkinInfo::FromPointer( pSkinInfo );
 			pSkinInfo->AddRef();
 		}
 
@@ -446,7 +446,7 @@ namespace Direct3D9
 	{
 		try
 		{
-			XFileData^ data = gcnew XFileData( pXofChildData );
+			XFileData^ data = XFileData::FromPointer( pXofChildData );
 			m_WrappedInterface->LoadFrameData( ((FrameShim*)pFrame)->GetFrame(), data );
 			data->~XFileData();
 		}
@@ -462,7 +462,7 @@ namespace Direct3D9
 	{
 		try
 		{
-			XFileData^ data = gcnew XFileData( pXofChildData );
+			XFileData^ data = XFileData::FromPointer( pXofChildData );
 			m_WrappedInterface->LoadMeshData( ((MeshContainerShim*)pMeshContainer)->GetMeshContainer(), data );
 			data->~XFileData();
 		}
@@ -478,7 +478,7 @@ namespace Direct3D9
 	{
 		try
 		{
-			XFileData^ data = gcnew XFileData( pXofChildData );
+			XFileData^ data = XFileData::FromPointer( pXofChildData );
 			m_WrappedInterface->LoadTopLevelData( data );
 			data->~XFileData();
 		}
@@ -499,8 +499,8 @@ namespace Direct3D9
 	{
 		try
 		{
-			XFileSaveObject^ saveObject = gcnew XFileSaveObject( pXofSave );
-			XFileSaveData^ saveData = gcnew XFileSaveData( pXofFrameData );
+			XFileSaveObject^ saveObject = XFileSaveObject::FromPointer( pXofSave );
+			XFileSaveData^ saveData = XFileSaveData::FromPointer( pXofFrameData );
 			m_WrappedInterface->AddFrameChildData( ((FrameShim*)pFrame)->GetFrame(), saveObject, saveData );
 			saveObject->~XFileSaveObject();
 			saveData->~XFileSaveData();
@@ -517,8 +517,8 @@ namespace Direct3D9
 	{
 		try
 		{
-			XFileSaveObject^ saveObject = gcnew XFileSaveObject( pXofSave );
-			XFileSaveData^ saveData = gcnew XFileSaveData( pXofMeshData );
+			XFileSaveObject^ saveObject = XFileSaveObject::FromPointer( pXofSave );
+			XFileSaveData^ saveData = XFileSaveData::FromPointer( pXofMeshData );
 			m_WrappedInterface->AddMeshChildData( ((MeshContainerShim*)pMeshContainer)->GetMeshContainer(), saveObject, saveData );
 			saveObject->~XFileSaveObject();
 			saveData->~XFileSaveData();
@@ -535,7 +535,7 @@ namespace Direct3D9
 	{
 		try
 		{
-			XFileSaveObject^ saveObject = gcnew XFileSaveObject( pXofSave );
+			XFileSaveObject^ saveObject = XFileSaveObject::FromPointer( pXofSave );
 			m_WrappedInterface->AddTopLevelDataPost( saveObject );
 			saveObject->~XFileSaveObject();
 		}
@@ -551,7 +551,7 @@ namespace Direct3D9
 	{
 		try
 		{
-			XFileSaveObject^ saveObject = gcnew XFileSaveObject( pXofSave );
+			XFileSaveObject^ saveObject = XFileSaveObject::FromPointer( pXofSave );
 			m_WrappedInterface->AddTopLevelDataPre( saveObject );
 			saveObject->~XFileSaveObject();
 		}
@@ -567,7 +567,7 @@ namespace Direct3D9
 	{
 		try
 		{
-			XFile^ xFile = gcnew XFile( pXFileApi );
+			XFile^ xFile = XFile::FromPointer( pXFileApi );
 			m_WrappedInterface->RegisterTemplates( xFile );
 			xFile->~XFile();
 		}
@@ -583,7 +583,7 @@ namespace Direct3D9
 	{
 		try
 		{
-			XFileSaveObject^ saveObject = gcnew XFileSaveObject( pXofSave );
+			XFileSaveObject^ saveObject = XFileSaveObject::FromPointer( pXofSave );
 			m_WrappedInterface->SaveTemplates( saveObject );
 			saveObject->~XFileSaveObject();
 		}
@@ -822,7 +822,7 @@ namespace Direct3D9
 			return nullptr;
 
 		if( animationResult != NULL )
-			animationController = gcnew AnimationController( animationResult );
+			animationController = AnimationController::FromPointer( animationResult );
 
 		Frame^ frame = Frame::BuildHierarchyFromUnmanaged( ((FrameShim*)result) );
 
@@ -858,7 +858,7 @@ namespace Direct3D9
 		// If there is no animation, return a nullptr.
 		if( animationResult != NULL )
 		{
-			animationController = gcnew AnimationController( animationResult );
+			animationController = AnimationController::FromPointer( animationResult );
 		}
 
 		// Build frame hierarchy.

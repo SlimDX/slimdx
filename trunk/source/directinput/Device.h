@@ -43,13 +43,10 @@ namespace SlimDX
 		generic<typename DataFormat>
 		public ref class Device : public ComObject
 		{
-			COMOBJECT(IDirectInputDevice8W);
+			COMOBJECT(IDirectInputDevice8W, Device);
 
 		private:
 			DeviceProperties^ properties;
-
-		internal:
-			Device( IDirectInputDevice8W* device );
 
 		public:
 			/// <summary>
@@ -62,13 +59,8 @@ namespace SlimDX
 			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::Device"/> class.
 			/// </summary>
 			/// <param name="device">A pointer to a previously created DirectInput device.</param>
-			Device( System::IntPtr device );
+			static Device^ FromPointer( System::IntPtr device );
 
-			/// <summary>
-			/// Disposes of managed and unmanaged resources contained by this class.
-			/// </summary>
-			virtual ~Device() { Destruct(); }
-			
 			/// <summary>
 			/// Obtains access to the input device.
 			/// </summary>

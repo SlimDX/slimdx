@@ -37,7 +37,7 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	bool BandwidthTimings::operator == ( BandwidthTimings left, BandwidthTimings right )
+		bool BandwidthTimings::operator == ( BandwidthTimings left, BandwidthTimings right )
 	{
 		return BandwidthTimings::Equals( left, right );
 	}
@@ -388,19 +388,14 @@ namespace Direct3D9
 		return ( value1.MemoryProcessingPercent == value2.MemoryProcessingPercent && value1.ComputationProcessingPercent == value2.ComputationProcessingPercent );
 	}
 
-	/* Unused for now.
-	Query::Query( IDirect3DQuery9* query )
+	Query::Query( IDirect3DQuery9* pointer )
 	{
-		if( query == NULL )
-			throw gcnew ArgumentNullException( "surface" );
-
-		Construct(query);
+		Construct( pointer );
 	}
-	*/
 
-	Query::Query( IntPtr query )
+	Query::Query( IntPtr pointer )
 	{
-		Construct( query, NativeInterface );
+		Construct( pointer, NativeInterface );
 	}
 
 	Query::Query( Device^ device, QueryType type )
@@ -413,6 +408,30 @@ namespace Direct3D9
 
 		Construct(query);
 	}
+
+	Query^ Query::FromPointer( IDirect3DQuery9* pointer )
+	{
+		Query^ tableEntry = safe_cast<Query^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Query( pointer );
+	}
+
+	Query^ Query::FromPointer( IntPtr pointer )
+	{
+		Query^ tableEntry = safe_cast<Query^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Query( pointer );
+	}
+
 
 	int Query::DataSize::get()
 	{
@@ -432,7 +451,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Device( device );
+		return Device::FromPointer( device );
 	}
 
 	Result Query::Issue( SlimDX::Direct3D9::Issue flags )

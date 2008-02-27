@@ -25,7 +25,6 @@
 #include "../DataRectangle.h"
 
 #include "BaseTexture.h"
-#include "Resource.h"
 #include "Surface.h"
 #include "Volume.h"
 #include "Effect.h"
@@ -138,18 +137,12 @@ namespace SlimDX
 
 		public ref class Texture : public BaseTexture
 		{
-		internal:
-			property IDirect3DTexture9* TexturePointer
-			{
-				IDirect3DTexture9* get() { return static_cast<IDirect3DTexture9*>( InternalPointer ); }
-			}
-
-			Texture( IDirect3DTexture9* texture );
+			COMOBJECT(IDirect3DTexture9, Texture);
 
 		public:
-			Texture( System::IntPtr texture );
 			Texture( Device^ device, int width, int height, int levelCount, Usage usage, Format format, Pool pool );
 			virtual ~Texture() { }
+			static Texture^ FromPointer( System::IntPtr texture );
 
 			/// <summary>
 			/// Checks texture-creation parameters.
@@ -205,18 +198,12 @@ namespace SlimDX
 
 		public ref class CubeTexture : public BaseTexture
 		{
-		internal:
-			property IDirect3DCubeTexture9* TexturePointer
-			{
-				IDirect3DCubeTexture9* get() { return static_cast<IDirect3DCubeTexture9*>( InternalPointer ); }
-			}
-
-			CubeTexture( IDirect3DCubeTexture9* texture );
+			COMOBJECT(IDirect3DCubeTexture9, CubeTexture);
 
 		public:
-			CubeTexture( System::IntPtr cubeTexture );
 			CubeTexture( Device^ device, int edgeLength, int levelCount, Usage usage, Format format, Pool pool );
 			virtual ~CubeTexture() { }
+			static CubeTexture^ FromPointer( System::IntPtr cubeTexture );
 
 			static CubeTextureRequirements CheckRequirements(Device^ device, int size, int mipLevelCount, Usage usage, Format format, Pool pool);
 
@@ -253,18 +240,12 @@ namespace SlimDX
 
 		public ref class VolumeTexture : public BaseTexture
 		{
-		internal:
-			property IDirect3DVolumeTexture9* TexturePointer
-			{
-				IDirect3DVolumeTexture9* get() { return static_cast<IDirect3DVolumeTexture9*>( InternalPointer ); }
-			}
-
-			VolumeTexture( IDirect3DVolumeTexture9* texture );
+			COMOBJECT(IDirect3DVolumeTexture9, VolumeTexture);
 
 		public:
-			VolumeTexture( System::IntPtr volumeTexture );
 			VolumeTexture( Device^ device, int width, int height, int depth, int levelCount, Usage usage, Format format, Pool pool );
 			virtual ~VolumeTexture() { }
+			static VolumeTexture^ FromPointer( System::IntPtr volumeTexture );
 
 			static VolumeTextureRequirements CheckRequirements(Device^ device, int width, int height, int depth, int mipLevelCount, Usage usage, Format format, Pool pool);
 

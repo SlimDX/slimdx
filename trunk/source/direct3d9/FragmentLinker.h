@@ -48,15 +48,11 @@ namespace SlimDX
 
 		public ref class FragmentLinker : public ComObject
 		{
-			COMOBJECT(ID3DXFragmentLinker);
-
-		internal:
-			FragmentLinker( ID3DXFragmentLinker* linker );
+			COMOBJECT(ID3DXFragmentLinker, FragmentLinker);
 
 		public:
-			FragmentLinker( System::IntPtr pointer );
 			FragmentLinker( Device^ device, int cacheSize );
-			~FragmentLinker() { Destruct(); }
+			static FragmentLinker^ FromPointer( System::IntPtr linker );
 
 			static DataStream^ Gather( array<System::Byte>^ sourceData, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 			static DataStream^ Gather( System::String^ sourceData, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );

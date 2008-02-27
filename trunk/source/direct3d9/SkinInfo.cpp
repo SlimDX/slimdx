@@ -127,6 +127,29 @@ namespace Direct3D9
 		Construct( result );
 	}
 
+	SkinInfo^ SkinInfo::FromPointer( ID3DXSkinInfo* pointer )
+	{
+		SkinInfo^ tableEntry = safe_cast<SkinInfo^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew SkinInfo( pointer );
+	}
+
+	SkinInfo^ SkinInfo::FromPointer( IntPtr pointer )
+	{
+		SkinInfo^ tableEntry = safe_cast<SkinInfo^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew SkinInfo( pointer );
+	}
+
 	SkinInfo^ SkinInfo::Clone()
 	{
 		ID3DXSkinInfo *result;
@@ -164,7 +187,7 @@ namespace Direct3D9
 			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
 		}
 
-		HRESULT hr = InternalPointer->ConvertToBlendedMesh( mesh->MeshPointer, 0, adjacencyIn,
+		HRESULT hr = InternalPointer->ConvertToBlendedMesh( mesh->InternalPointer, 0, adjacencyIn,
 			reinterpret_cast<DWORD*>( pinnedAdjOut ), reinterpret_cast<DWORD*>( pinnedFR ), &vr, &mvi, &bcc, &bct, &result );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -187,7 +210,7 @@ namespace Direct3D9
 				boneCombinationTable[i]->BoneIds[j] = pointer[i].BoneId[j];			
 		}
 
-		Mesh^ out = gcnew Mesh( result );
+		Mesh^ out = Mesh::FromPointer( result );
 		if( adjacency != nullptr )
 			out->SetAdjacency( adjacencyOut );
 		else
@@ -218,7 +241,7 @@ namespace Direct3D9
 			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
 		}
 
-		HRESULT hr = InternalPointer->ConvertToBlendedMesh( mesh->MeshPointer, 0, adjacencyIn,
+		HRESULT hr = InternalPointer->ConvertToBlendedMesh( mesh->InternalPointer, 0, adjacencyIn,
 			reinterpret_cast<DWORD*>( pinnedAdjOut ), NULL, NULL, &mvi, &bcc, &bct, &result );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -239,7 +262,7 @@ namespace Direct3D9
 				boneCombinationTable[i]->BoneIds[j] = pointer[i].BoneId[j];			
 		}
 
-		Mesh^ out = gcnew Mesh( result );
+		Mesh^ out = Mesh::FromPointer( result );
 		if( adjacency != nullptr )
 			out->SetAdjacency( adjacencyOut );
 		else
@@ -275,7 +298,7 @@ namespace Direct3D9
 
 		pin_ptr<int> pinnedFR = &faceRemap[0];
 
-		HRESULT hr = InternalPointer->ConvertToIndexedBlendedMesh( mesh->MeshPointer, 0, paletteSize, adjacencyIn,
+		HRESULT hr = InternalPointer->ConvertToIndexedBlendedMesh( mesh->InternalPointer, 0, paletteSize, adjacencyIn,
 			reinterpret_cast<DWORD*>( pinnedAdjOut ), reinterpret_cast<DWORD*>( pinnedFR ), &vr, &mvi, &bcc, &bct, &result );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -298,7 +321,7 @@ namespace Direct3D9
 				boneCombinationTable[i]->BoneIds[j] = pointer[i].BoneId[j];			
 		}
 
-		Mesh^ out = gcnew Mesh( result );
+		Mesh^ out = Mesh::FromPointer( result );
 		if( adjacency != nullptr )
 			out->SetAdjacency( adjacencyOut );
 		else
@@ -329,7 +352,7 @@ namespace Direct3D9
 			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
 		}
 
-		HRESULT hr = InternalPointer->ConvertToIndexedBlendedMesh( mesh->MeshPointer, 0, paletteSize, adjacencyIn,
+		HRESULT hr = InternalPointer->ConvertToIndexedBlendedMesh( mesh->InternalPointer, 0, paletteSize, adjacencyIn,
 			reinterpret_cast<DWORD*>( pinnedAdjOut ), NULL, NULL, &mvi, &bcc, &bct, &result );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -350,7 +373,7 @@ namespace Direct3D9
 				boneCombinationTable[i]->BoneIds[j] = pointer[i].BoneId[j];			
 		}
 
-		Mesh^ out = gcnew Mesh( result );
+		Mesh^ out = Mesh::FromPointer( result );
 		if( adjacency != nullptr )
 			out->SetAdjacency( adjacencyOut );
 		else
@@ -487,7 +510,7 @@ namespace Direct3D9
 	{
 		DWORD ret;
 
-		HRESULT hr = InternalPointer->GetMaxFaceInfluences( indexBuffer->IbPointer, faceCount, &ret );
+		HRESULT hr = InternalPointer->GetMaxFaceInfluences( indexBuffer->InternalPointer, faceCount, &ret );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
 			return 0;

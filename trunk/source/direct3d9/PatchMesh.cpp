@@ -116,6 +116,11 @@ namespace Direct3D9
 			 && value1.MipFilter == value2.MipFilter && value1.Wrap == value2.Wrap && value1.LevelOfDetailBias == value2.LevelOfDetailBias );
 	}
 
+	PatchMesh::PatchMesh( ID3DXPatchMesh* pointer )
+	{
+		Construct( pointer );
+	}
+
 	PatchMesh::PatchMesh( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
@@ -139,12 +144,35 @@ namespace Direct3D9
 	{
 		ID3DXPatchMesh *result;
 
-		HRESULT hr = D3DXCreateNPatchMesh( mesh->MeshPointer, &result );
+		HRESULT hr = D3DXCreateNPatchMesh( mesh->InternalPointer, &result );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
+	}
+
+	PatchMesh^ PatchMesh::FromPointer( ID3DXPatchMesh* pointer )
+	{
+		PatchMesh^ tableEntry = safe_cast<PatchMesh^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew PatchMesh( pointer );
+	}
+
+	PatchMesh^ PatchMesh::FromPointer( IntPtr pointer )
+	{
+		PatchMesh^ tableEntry = safe_cast<PatchMesh^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew PatchMesh( pointer );
 	}
 
 	PatchMesh^ PatchMesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
@@ -258,7 +286,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Device( device );
+		return Device::FromPointer( device );
 	}
 
 	IndexBuffer^ PatchMesh::GetIndexBuffer()
@@ -270,7 +298,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew IndexBuffer( ib );
+		return IndexBuffer::FromPointer( ib );
 	}
 
 	VertexBuffer^ PatchMesh::GetVertexBuffer()
@@ -282,7 +310,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew VertexBuffer( vb );
+		return VertexBuffer::FromPointer( vb );
 	}
 
 	PatchInfo PatchMesh::GetPatchInfo()
@@ -316,7 +344,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return result;
 
-		result.Texture = gcnew Texture( reinterpret_cast<IDirect3DTexture9*>( texture ) );
+		result.Texture = Texture::FromPointer( reinterpret_cast<IDirect3DTexture9*>( texture ) );
 		result.MinFilter = static_cast<TextureFilter>( minFilter );
 		result.MagFilter = static_cast<TextureFilter>( magFilter );
 		result.MipFilter = static_cast<TextureFilter>( mipFilter );

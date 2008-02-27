@@ -35,10 +35,7 @@ namespace SlimDX
 		/// </remarks>
 		public ref class Resource : public DeviceChild
 		{
-			COMOBJECT(IDXGIResource);
-
-		internal:
-			Resource( IDXGIResource* pointer );
+			COMOBJECT(IDXGIResource, Resource);
 
 		public:
 			/// <summary>
@@ -62,7 +59,7 @@ namespace SlimDX
 			/// Constructs a Resource from an unmanaged pointer.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGIResource pointer.</param>
-			Resource( System::IntPtr pointer );
+			static Resource^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

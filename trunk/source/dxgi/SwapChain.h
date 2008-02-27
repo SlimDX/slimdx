@@ -46,11 +46,8 @@ namespace SlimDX
 		/// </remarks>
 		public ref class SwapChain : public DeviceChild
 		{
-			COMOBJECT(IDXGISwapChain);
+			COMOBJECT(IDXGISwapChain, SwapChain);
 		
-		internal:
-			SwapChain( IDXGISwapChain* pointer );
-			
 		public:
 			/// <summary>
 			/// Gets the swap chain's description.
@@ -80,7 +77,7 @@ namespace SlimDX
 			/// Constructs a SwapChain from an unmanaged pointer.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGISwapChain pointer.</param>
-			SwapChain( System::IntPtr pointer );
+			static SwapChain^ FromPointer( System::IntPtr pointer );
 			
 			/// <summary>
 			/// Constructs a SwapChain.

@@ -76,9 +76,9 @@ namespace Direct3D9
 	//grab this function from Device.cpp
 	void ConvertPresentParams( PresentParameters^ presentParameters, D3DPRESENT_PARAMETERS& d3dpp );
 
-	SwapChain::SwapChain( IDirect3DSwapChain9* swapChain )
+	SwapChain::SwapChain( IDirect3DSwapChain9* pointer )
 	{
-		Construct(swapChain);
+		Construct( pointer );
 	}
 
 	SwapChain::SwapChain( IntPtr pointer )
@@ -106,6 +106,30 @@ namespace Direct3D9
 		Construct(swapChain);
 	}
 
+	SwapChain^ SwapChain::FromPointer( IDirect3DSwapChain9* pointer )
+	{
+		SwapChain^ tableEntry = safe_cast<SwapChain^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew SwapChain( pointer );
+	}
+
+	SwapChain^ SwapChain::FromPointer( IntPtr pointer )
+	{
+		SwapChain^ tableEntry = safe_cast<SwapChain^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew SwapChain( pointer );
+	}
+
+
 	Surface^ SwapChain::GetBackBuffer( int index )
 	{
 		IDirect3DSurface9* surface;
@@ -114,7 +138,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Surface( surface );
+		return Surface::FromPointer( surface );
 	}
 
 	Result SwapChain::GetFrontBufferData( Surface^ destinationSurface )
@@ -122,7 +146,7 @@ namespace Direct3D9
 		if( destinationSurface == nullptr )
 			throw gcnew ArgumentNullException( "destinationSurface" );
 
-		HRESULT hr = InternalPointer->GetFrontBufferData( destinationSurface->SurfacePointer );
+		HRESULT hr = InternalPointer->GetFrontBufferData( destinationSurface->InternalPointer );
 		return RECORD_D3D9( hr );
 	}
 
@@ -134,7 +158,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Device( device );
+		return Device::FromPointer( device );
 	}
 
 	SlimDX::Direct3D9::DisplayMode SwapChain::DisplayMode::get()

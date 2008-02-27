@@ -43,15 +43,11 @@ namespace SlimDX
 
 		public ref class Sprite : public ComObject
 		{
-			COMOBJECT(ID3DXSprite);
-
-		internal:
-			Sprite( ID3DXSprite* sprite );
+			COMOBJECT(ID3DXSprite, Sprite);
 
 		public:
-			Sprite( System::IntPtr pointer );
 			Sprite( Device^ device );
-			~Sprite() { Destruct(); }
+			static Sprite^ FromPointer( System::IntPtr pointer );
 
 			Result Begin( SpriteFlags flags );
 			Result End();

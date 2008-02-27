@@ -40,10 +40,7 @@ namespace SlimDX
 		
 		public ref class Effect : public ComObject
 		{
-			COMOBJECT(ID3D10Effect);
-		
-		internal:
-			Effect( ID3D10Effect* effect );
+			COMOBJECT(ID3D10Effect, Effect);
 		
 		public:
 			property EffectDescription Description
@@ -66,7 +63,7 @@ namespace SlimDX
 				bool get();
 			}
 			
-			Effect( System::IntPtr effect );
+			static Effect^ FromPointer( System::IntPtr effect );
 			
 			Device^ GetDevice();
 			

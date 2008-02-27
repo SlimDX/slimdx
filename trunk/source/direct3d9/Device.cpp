@@ -299,16 +299,14 @@ namespace Direct3D9
 		PresentationInterval = PresentInterval::Immediate;
 	}
 
-	Device::Device( IDirect3DDevice9* device )
+	Device::Device( IDirect3DDevice9* pointer )
 	{
-		Construct(device);
-		
-		device->AddRef();
+		Construct( pointer );
 	}
 
-	Device::Device( IntPtr device )
+	Device::Device( IntPtr pointer )
 	{
-		Construct( device, NativeInterface );
+		Construct( pointer, NativeInterface );
 	}
 
 	Device::Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParameters )
@@ -331,6 +329,29 @@ namespace Direct3D9
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(device);
+	}
+
+	Device^ Device::FromPointer( IDirect3DDevice9* pointer )
+	{
+		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Device( pointer );
+	}
+
+	Device^ Device::FromPointer( IntPtr pointer )
+	{
+		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Device( pointer );
 	}
 
 	void Device::VertexFormat::set( SlimDX::Direct3D9::VertexFormat value )
@@ -367,7 +388,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew SlimDX::Direct3D9::VertexDeclaration( decl );
+		return SlimDX::Direct3D9::VertexDeclaration::FromPointer( decl );
 	}
 
 	Result Device::DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount )
@@ -556,7 +577,7 @@ namespace Direct3D9
 
 	Result Device::SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride )
 	{
-		IDirect3DVertexBuffer9* vbPointer = streamData != nullptr ? streamData->VbPointer : NULL;
+		IDirect3DVertexBuffer9* vbPointer = streamData != nullptr ? streamData->InternalPointer : NULL;
 		HRESULT hr = InternalPointer->SetStreamSource( stream, vbPointer, offsetInBytes, stride );
 		return RECORD_D3D9( hr );
 	}
@@ -607,14 +628,14 @@ namespace Direct3D9
 
 	Result Device::SetTexture( int sampler, BaseTexture^ texture )
 	{
-		IDirect3DBaseTexture9* texturePointer = texture != nullptr ? texture->BaseTexturePointer : NULL;
+		IDirect3DBaseTexture9* texturePointer = texture != nullptr ? texture->InternalPointer : NULL;
 		HRESULT hr = InternalPointer->SetTexture( sampler, texturePointer );
 		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetRenderTarget( int rtIndex, Surface^ target )
 	{
-		IDirect3DSurface9* surfacePointer = target != nullptr ? target->SurfacePointer : NULL;
+		IDirect3DSurface9* surfacePointer = target != nullptr ? target->InternalPointer : NULL;
 		HRESULT hr = InternalPointer->SetRenderTarget( rtIndex, surfacePointer );
 		return RECORD_D3D9( hr );
 	}
@@ -635,7 +656,7 @@ namespace Direct3D9
 	
 	Result Device::SetDepthStencilSurface( Surface^ target )
 	{	
-		IDirect3DSurface9* surface = target != nullptr ? target->SurfacePointer : NULL;
+		IDirect3DSurface9* surface = target != nullptr ? target->InternalPointer : NULL;
 		HRESULT hr = InternalPointer->SetDepthStencilSurface( surface );
 		return RECORD_D3D9( hr );
 	}
@@ -649,7 +670,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Surface( buffer );
+		return Surface::FromPointer( buffer );
 	}
 
 	bool Device::IsQuerySupported( QueryType type )
@@ -721,7 +742,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Surface( surface );
+		return Surface::FromPointer( surface );
 	}
 
 	SlimDX::Viewport Device::Viewport::get()
@@ -765,7 +786,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Surface( surface );
+		return Surface::FromPointer( surface );
 	}
 
 	generic<typename T>
@@ -798,7 +819,7 @@ namespace Direct3D9
 			return Result::Last;
 		}
 
-		streamData = gcnew VertexBuffer( localVb );
+		streamData = VertexBuffer::FromPointer( localVb );
 		offsetBytes = localOffset;
 		stride = localStride;
 
@@ -824,7 +845,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew SwapChain( swapChain );
+		return SwapChain::FromPointer( swapChain );
 	}
 
 	IndexBuffer^ Device::GetIndices()
@@ -836,14 +857,14 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew IndexBuffer( indices );
+		return IndexBuffer::FromPointer( indices );
 	}
 
 	Result Device::SetIndices( IndexBuffer^ indices )
 	{
 		HRESULT hr;
 		if( indices != nullptr )
-			hr = InternalPointer->SetIndices( indices->IbPointer );
+			hr = InternalPointer->SetIndices( indices->InternalPointer );
 		else
 			hr = InternalPointer->SetIndices( NULL );
 
@@ -853,7 +874,7 @@ namespace Direct3D9
 	Result Device::ProcessVertices( int sourceStartIndex, int destinationIndex, int vertexCount, VertexBuffer^ destinationBuffer,
 		SlimDX::Direct3D9::VertexDeclaration^ vertexDeclaration, LockFlags flags )
 	{
-		IDirect3DVertexBuffer9* vb = destinationBuffer->VbPointer;
+		IDirect3DVertexBuffer9* vb = destinationBuffer->InternalPointer;
 		IDirect3DVertexDeclaration9* decl = vertexDeclaration != nullptr ? vertexDeclaration->InternalPointer : NULL;
 
 		HRESULT hr = InternalPointer->ProcessVertices( sourceStartIndex, destinationIndex, vertexCount, vb, decl, static_cast<DWORD>( flags ) );
@@ -924,7 +945,7 @@ namespace Direct3D9
 		RECT nativeSourceRect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
 		RECT nativeDestRect = { destRect.Left, destRect.Top, destRect.Right, destRect.Bottom };
 
-		HRESULT hr = InternalPointer->StretchRect( source->SurfacePointer, &nativeSourceRect, destination->SurfacePointer,
+		HRESULT hr = InternalPointer->StretchRect( source->InternalPointer, &nativeSourceRect, destination->InternalPointer,
 			&nativeDestRect, static_cast<D3DTEXTUREFILTERTYPE>( filter ) );
 		return RECORD_D3D9( hr );
 	}
@@ -935,14 +956,14 @@ namespace Direct3D9
 		RECT nativeSourceRect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
 		POINT nativeDestPoint = { destinationPoint.X, destinationPoint.Y };
 
-		HRESULT hr = InternalPointer->UpdateSurface( source->SurfacePointer, &nativeSourceRect,
-			destination->SurfacePointer, &nativeDestPoint );
+		HRESULT hr = InternalPointer->UpdateSurface( source->InternalPointer, &nativeSourceRect,
+			destination->InternalPointer, &nativeDestPoint );
 		return RECORD_D3D9( hr );
 	}
 
 	Result Device::UpdateTexture( BaseTexture^ sourceTexture, BaseTexture^ destinationTexture )
 	{
-		HRESULT hr = InternalPointer->UpdateTexture( sourceTexture->BaseTexturePointer, destinationTexture->BaseTexturePointer );
+		HRESULT hr = InternalPointer->UpdateTexture( sourceTexture->InternalPointer, destinationTexture->InternalPointer );
 		return RECORD_D3D9( hr );
 	}
 
@@ -950,7 +971,7 @@ namespace Direct3D9
 	{
 		RECT nativeDestRect = { destRect.Left, destRect.Top, destRect.Right, destRect.Bottom };
 
-		HRESULT hr = InternalPointer->ColorFill( destSurface->SurfacePointer, &nativeDestRect, static_cast<D3DCOLOR>( color.ToArgb() ) );
+		HRESULT hr = InternalPointer->ColorFill( destSurface->InternalPointer, &nativeDestRect, static_cast<D3DCOLOR>( color.ToArgb() ) );
 		return RECORD_D3D9( hr );
 	}
 
@@ -968,7 +989,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew StateBlock( stateBlock );
+		return StateBlock::FromPointer( stateBlock );
 	}
 
 	int Device::SwapChainCount::get()
@@ -1247,7 +1268,7 @@ namespace Direct3D9
 
 	Result Device::SetCursorProperties( int hotspotX, int hotspotY, Surface^ cursorBitmap )
 	{
-		IDirect3DSurface9* surface = cursorBitmap != nullptr ? cursorBitmap->SurfacePointer : NULL;
+		IDirect3DSurface9* surface = cursorBitmap != nullptr ? cursorBitmap->InternalPointer : NULL;
 		HRESULT hr = InternalPointer->SetCursorProperties( hotspotX, hotspotY, surface );
 		return RECORD_D3D9( hr );
 	}
@@ -1275,7 +1296,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew VertexShader( vs );
+		return VertexShader::FromPointer( vs );
 	}
 
 	PixelShader^ Device::GetPixelShader()
@@ -1286,7 +1307,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew PixelShader( ps );
+		return PixelShader::FromPointer( ps );
 	}
 
 	DriverLevel Device::DriverLevel::get()
@@ -1350,15 +1371,15 @@ namespace Direct3D9
 
 	Result Device::GetFrontBufferData( int swapChain, Surface^ destinationSurface )
 	{
-		IDirect3DSurface9* surface = destinationSurface != nullptr ? destinationSurface->SurfacePointer : NULL;
+		IDirect3DSurface9* surface = destinationSurface != nullptr ? destinationSurface->InternalPointer : NULL;
 		HRESULT hr = InternalPointer->GetFrontBufferData( swapChain, surface );
 		return RECORD_D3D9( hr );
 	}
 
 	Result Device::GetRenderTargetData( Surface^ renderTarget, Surface^ destinationSurface )
 	{
-		IDirect3DSurface9* target = renderTarget != nullptr	? renderTarget->SurfacePointer : NULL;
-		IDirect3DSurface9* destination = destinationSurface != nullptr ? destinationSurface->SurfacePointer : NULL;
+		IDirect3DSurface9* target = renderTarget != nullptr	? renderTarget->InternalPointer : NULL;
+		IDirect3DSurface9* destination = destinationSurface != nullptr ? destinationSurface->InternalPointer : NULL;
 		HRESULT hr = InternalPointer->GetRenderTargetData( target, destination );
 		return RECORD_D3D9( hr );
 	}

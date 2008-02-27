@@ -45,16 +45,12 @@ namespace SlimDX
 
 		public ref class RenderToEnvironmentMap : ComObject
 		{
-			COMOBJECT(ID3DXRenderToEnvMap);
-
-		internal:
-			RenderToEnvironmentMap( ID3DXRenderToEnvMap* pointer );
+			COMOBJECT(ID3DXRenderToEnvMap, RenderToEnvironmentMap);
 
 		public:
-			RenderToEnvironmentMap( System::IntPtr pointer );
 			RenderToEnvironmentMap( Device^ device, int size, int mipLevels, Format format );
 			RenderToEnvironmentMap( Device^ device, int size, int mipLevels, Format format, Format depthStencilFormat );
-			virtual ~RenderToEnvironmentMap() { Destruct(); }
+			static RenderToEnvironmentMap^ FromPointer( System::IntPtr pointer );
 
 			Result BeginCube( CubeTexture^ texture );
 			Result BeginHemisphere( Texture^ positiveZTexture, Texture^ negativeZTexture );

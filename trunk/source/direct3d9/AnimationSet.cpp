@@ -43,14 +43,37 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	AnimationSet::AnimationSet(ID3DXAnimationSet *set)
+	AnimationSet::AnimationSet( ID3DXAnimationSet* pointer )
 	{
-		Construct(set);
+		Construct( pointer );
 	}
 
 	AnimationSet::AnimationSet( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
+	}
+
+	AnimationSet^ AnimationSet::FromPointer( ID3DXAnimationSet* pointer )
+	{
+		AnimationSet^ tableEntry = safe_cast<AnimationSet^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew AnimationSet( pointer );
+	}
+
+	AnimationSet^ AnimationSet::FromPointer( IntPtr pointer )
+	{
+		AnimationSet^ tableEntry = safe_cast<AnimationSet^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew AnimationSet( pointer );
 	}
 
 	int AnimationSet::GetAnimationIndex( String^ name )

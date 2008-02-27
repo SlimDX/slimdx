@@ -34,7 +34,7 @@ namespace SlimDX
 	{
 		public ref class Resource : public DeviceChild
 		{
-			COMOBJECT(ID3D10Resource);
+			COMOBJECT_BASE(ID3D10Resource);
 		
 		protected:
 			Resource();

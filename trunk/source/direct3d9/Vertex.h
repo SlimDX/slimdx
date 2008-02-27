@@ -69,15 +69,11 @@ namespace SlimDX
 
 		public ref class VertexDeclaration : public ComObject
 		{
-			COMOBJECT(IDirect3DVertexDeclaration9);
-
-		internal:
-			VertexDeclaration( IDirect3DVertexDeclaration9* declaration );
+			COMOBJECT(IDirect3DVertexDeclaration9, VertexDeclaration);
 
 		public:
-			VertexDeclaration( System::IntPtr declaration );
 			VertexDeclaration( Device^ device, array<VertexElement>^ elements );
-			~VertexDeclaration() { Destruct(); }
+			static VertexDeclaration^ FromPointer( System::IntPtr pointer );
 
 			property array<VertexElement>^ Elements
 			{

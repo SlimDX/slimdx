@@ -29,21 +29,21 @@ namespace SlimDX
 	{	
 		public ref class VertexShader : public ComObject
 		{
-			COMOBJECT(IDirect3DVertexShader9);
+			COMOBJECT(IDirect3DVertexShader9, VertexShader);
 
 		private:
 			ConstantTable^ m_ConstantTable;
 
-		internal:
-			VertexShader( IDirect3DVertexShader9* vertexShader );
 			VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable );
 
+		internal:
+			static VertexShader^ FromPointer( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable );
+
 		public:
-			VertexShader( System::IntPtr vertexShader );
+			static VertexShader^ FromPointer( System::IntPtr vertexShader );
 			
 			~VertexShader()
 			{
-				Destruct();
 				delete m_ConstantTable;
 			}
 			

@@ -24,16 +24,25 @@
 #include <unknwn.h>
 
 #include "Configuration.h"
-#include "ObjectTracker.h"
+#include "ObjectTable.h"
 #include "Result.h"
 #include "Utilities.h"
 #include "InternalHelpers.h"
 
-#define COMOBJECT(type) \
+#define COMOBJECT_BASE(nativeType) \
 	internal: \
-	static property System::Guid NativeInterface { System::Guid get() { return Utilities::ConvertNativeGuid( IID_ ## type ); } } \
-	property type* InternalPointer { type* get() new { return static_cast<type*>( UnknownPointer ); } } \
+	static property System::Guid NativeInterface { System::Guid get() { return Utilities::ConvertNativeGuid( IID_ ## nativeType ); } } \
+	property nativeType* InternalPointer { nativeType* get() new { return static_cast<nativeType*>( UnknownPointer ); } } \
 	private:
+
+#define COMOBJECT(nativeType, managedType) \
+	private: \
+	managedType( nativeType* pointer ); \
+	managedType( System::IntPtr pointer ); \
+	internal: \
+	static managedType^ FromPointer( nativeType* pointer ); \
+	COMOBJECT_BASE(nativeType)
+
 
 namespace SlimDX
 {

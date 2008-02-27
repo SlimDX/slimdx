@@ -42,13 +42,10 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	/* Unused for now.
-	Line::Line( ID3DXLine* line ) : ComObject( line )
+	Line::Line( ID3DXLine* line )
 	{
-		if( line == NULL )
-			throw gcnew ArgumentNullException( "line" );
+		Construct( line );
 	}
-	*/
 
 	Line::Line( IntPtr line )
 	{
@@ -65,6 +62,30 @@ namespace Direct3D9
 
 		Construct(line);
 	}
+
+	Line^ Line::FromPointer( ID3DXLine* pointer )
+	{
+		Line^ tableEntry = safe_cast<Line^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Line( pointer );
+	}
+
+	Line^ Line::FromPointer( IntPtr pointer )
+	{
+		Line^ tableEntry = safe_cast<Line^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Line( pointer );
+	}
+
 
 	Result Line::Begin()
 	{
@@ -113,7 +134,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Device( device );
+		return Device::FromPointer( device );
 	}
 
 	bool Line::Antialias::get()

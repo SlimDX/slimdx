@@ -47,12 +47,35 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 
+	EffectPool^ EffectPool::FromPointer( ID3D10EffectPool* pointer )
+	{
+		EffectPool^ tableEntry = safe_cast<EffectPool^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew EffectPool( pointer );
+	}
+
+	EffectPool^ EffectPool::FromPointer( IntPtr pointer )
+	{
+		EffectPool^ tableEntry = safe_cast<EffectPool^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew EffectPool( pointer );
+	}
+
 	Effect^ EffectPool::AsEffect()
 	{
 		ID3D10Effect* effect = InternalPointer->AsEffect();
 		if( effect == 0 )
 			return nullptr;
-	  return gcnew Effect( effect );
+	  return Effect::FromPointer( effect );
 	}
 
 	EffectPool^ EffectPool::FromFile( Device^ device, String^ fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags )

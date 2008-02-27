@@ -43,11 +43,8 @@ namespace SlimDX
 		/// </remarks>
 		public ref class Output : public ComObject
 		{
-			COMOBJECT(IDXGIOutput);
+			COMOBJECT(IDXGIOutput, Output);
 		
-		internal:
-			Output( IDXGIOutput* pointer );
-
 		public:
 			/// <summary>
 			/// Gets the output's description.
@@ -77,7 +74,7 @@ namespace SlimDX
 			/// Constructs an Output from an unmanaged pointer.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGIOutput pointer.</param>
-			Output( System::IntPtr pointer );
+			static Output^ FromPointer( System::IntPtr pointer );
 			
 			/// <summary>
 			/// Gets a list of display modes matching certain specifications.

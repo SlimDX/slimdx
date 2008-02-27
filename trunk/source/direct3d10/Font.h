@@ -35,13 +35,10 @@ namespace SlimDX
 		
 		public ref class Font : public ComObject
 		{
-			COMOBJECT(ID3DX10Font);
+			COMOBJECT(ID3DX10Font, Font);
 		
 		private:
 			static ID3DX10Font* Build( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic, FontCharacterSet characterSet, FontPrecision precision, FontQuality quality, FontPitchAndFamily pitchAndFamily, System::String^ faceName );
-
-		internal:
-			Font( ID3DX10Font* font );
 
 		public:
 			property FontDescription Description
@@ -49,9 +46,9 @@ namespace SlimDX
 				FontDescription get();
 			}
 			
-			Font( System::IntPtr pointer );
 			Font( Device^ device, FontDescription description );
 			Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic, FontCharacterSet characterSet, FontPrecision precision, FontQuality quality, FontPitchAndFamily pitchAndFamily, System::String^ faceName );
+			static Font^ FromPointer( System::IntPtr pointer );
 
 			int Draw( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rect, FontDrawFlags flags, int color );
 

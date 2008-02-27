@@ -55,16 +55,11 @@ namespace SlimDX
 
 		public ref class Surface : public Resource
 		{
-		internal:
-			Surface( IDirect3DSurface9* surface );
-			property IDirect3DSurface9* SurfacePointer
-			{
-				IDirect3DSurface9* get() { return static_cast<IDirect3DSurface9*>( InternalPointer ); }
-			}
+			COMOBJECT(IDirect3DSurface9, Surface);
 
 		public:
-			Surface( System::IntPtr surface );
 			virtual ~Surface() { }
+			static Surface^ FromPointer( System::IntPtr surface );
 
 			static Surface^ CreateRenderTarget( Device^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool lockable );
 			static Surface^ CreateOffscreenPlain( Device^ device, int width, int height, Format format, Pool pool );

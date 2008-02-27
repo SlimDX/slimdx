@@ -50,18 +50,12 @@ namespace SlimDX
 
 		public ref class RenderToSurface : public ComObject
 		{
-			COMOBJECT(ID3DXRenderToSurface);
-
-		internal:
-			/* Unused for now.
-			RenderToSurface( ID3DXRenderToSurface* pointer );
-			*/
+			COMOBJECT(ID3DXRenderToSurface, RenderToSurface);
 
 		public:
-			RenderToSurface( System::IntPtr rts );
 			RenderToSurface( Device^ device, int width, int height, Format format );
 			RenderToSurface( Device^ device, int width, int height, Format format, Format depthStencilFormat );
-			~RenderToSurface() { Destruct(); }
+			static RenderToSurface^ FromPointer( System::IntPtr pointer );
 
 			Result BeginScene( Surface^ renderSurface, SlimDX::Viewport viewport );
 			Result EndScene( Filter mipFilter );

@@ -56,7 +56,30 @@ namespace Direct3D10
 		
 		Construct( state );
 	}
-	
+
+	RasterizerState^ RasterizerState::FromPointer( ID3D10RasterizerState* pointer )
+	{
+		RasterizerState^ tableEntry = safe_cast<RasterizerState^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew RasterizerState( pointer );
+	}
+
+	RasterizerState^ RasterizerState::FromPointer( IntPtr pointer )
+	{
+		RasterizerState^ tableEntry = safe_cast<RasterizerState^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew RasterizerState( pointer );
+	}
+
 	RasterizerStateDescription RasterizerState::Description::get()
 	{
 		D3D10_RASTERIZER_DESC description;

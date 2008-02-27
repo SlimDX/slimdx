@@ -37,10 +37,7 @@ namespace SlimDX
 		/// </remarks>
 		public ref class Adapter : public ComObject
 		{
-			COMOBJECT(IDXGIAdapter);
-
-		internal:
-			Adapter( IDXGIAdapter* pointer );
+			COMOBJECT(IDXGIAdapter, Adapter);
 
 		public:
 			/// <summary>
@@ -55,7 +52,7 @@ namespace SlimDX
 			/// Constructs an Adapter from an unmanaged pointer.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGIAdapter pointer.</param>
-			Adapter( System::IntPtr pointer );
+			static Adapter^ FromPointer( System::IntPtr pointer );
 			
 			/// <summary>
 			/// Gets the number of outputs on the adapter.

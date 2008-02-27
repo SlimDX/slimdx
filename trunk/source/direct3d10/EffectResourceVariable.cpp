@@ -56,7 +56,7 @@ namespace Direct3D10
 		if( RECORD_D3D10( m_Pointer->GetResource( &view ) ).IsFailure )
 			return nullptr;
 			
-		return gcnew ShaderResourceView( view );
+		return ShaderResourceView::FromPointer( view );
 	}
 }
 }
