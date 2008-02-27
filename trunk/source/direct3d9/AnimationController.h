@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "Delegates.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
@@ -28,71 +30,8 @@ namespace SlimDX
 		ref class AnimationSet;
 		ref class AnimationOutput;
 
-		public delegate void AnimationCallback( int track, System::Object^ data );
-
-		public enum class TransitionType : System::Int32
-		{
-			Linear = D3DXTRANSITION_LINEAR,
-			EaseInEaseOut = D3DXTRANSITION_EASEINEASEOUT
-		};
-
-		public enum class TrackPriority : System::Int32
-		{
-			Low = D3DXPRIORITY_LOW,
-			High = D3DXPRIORITY_HIGH
-		};
-
-		public enum class EventType : System::Int32
-		{
-			TrackSpeed = D3DXEVENT_TRACKSPEED,
-			TrackWeight = D3DXEVENT_TRACKWEIGHT,
-			TrackPosition = D3DXEVENT_TRACKPOSITION,
-			TrackEnable = D3DXEVENT_TRACKENABLE,
-			PriorityBlend = D3DXEVENT_PRIORITYBLEND
-		};
-
-		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
-		public value class EventDescription : System::IEquatable<EventDescription>
-		{
-		public:
-			property EventType Type;
-			property int Track;
-			property double StartTime;
-			property double Duration;
-			property TransitionType Transition;
-			property float Weight;
-			property float Speed;
-			property double Position;
-			property bool Enabled;
-
-			static bool operator == ( EventDescription left, EventDescription right );
-			static bool operator != ( EventDescription left, EventDescription right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( EventDescription other );
-			static bool Equals( EventDescription% value1, EventDescription% value2 );
-		};
-
-		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
-		public value class TrackDescription : System::IEquatable<TrackDescription>
-		{
-		public:
-			property TrackPriority Priority;
-			property float Weight;
-			property float Speed;
-			property double Position;
-			property bool Enabled;
-
-			static bool operator == ( TrackDescription left, TrackDescription right );
-			static bool operator != ( TrackDescription left, TrackDescription right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( TrackDescription other );
-			static bool Equals( TrackDescription% value1, TrackDescription% value2 );
-
-		};		
+		value class TrackDescription;
+		value class EventDescription;
 
 		public ref class AnimationController : public ComObject
 		{

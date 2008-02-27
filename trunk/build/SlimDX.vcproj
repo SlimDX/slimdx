@@ -1333,6 +1333,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\direct3d9\Delegates.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d9\Enums.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\direct3d9\Error.cpp"
 				>
 				<FileConfiguration
@@ -1392,6 +1400,22 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\AnimationSet.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\EventDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\EventDescription.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\TrackDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\TrackDescription.h"
 					>
 				</File>
 			</Filter>
@@ -1547,10 +1571,6 @@
 				Name="Device"
 				>
 				<File
-					RelativePath="..\source\direct3d9\CapsEnums.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\direct3d9\Device.cpp"
 					>
 				</File>
@@ -1564,10 +1584,6 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Direct3D.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d9\Enums.h"
 					>
 				</File>
 			</Filter>

@@ -25,13 +25,6 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		[System::Flags]
-		public enum class Issue
-		{
-			Begin = D3DISSUE_BEGIN,
-			End = D3DISSUE_END
-		};
-
 		public value class BandwidthTimings : System::IEquatable<BandwidthTimings>
 		{
 		public:

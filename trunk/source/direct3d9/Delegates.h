@@ -25,40 +25,16 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		
+		public delegate void AnimationCallback( int track, System::Object^ data );
 
-		ref class Texture;
+		/// <summary>
+		/// Callback function used by FillTexture.
+		/// </summary>
+		/// <param name="coordinate">Texture coordinate being sampled.</param>
+		/// <param name="texelSize">Dimensions of the texel.</param>
+		/// <returns>A 4 dimensional vector, representing a color value.  X maps to R, G to Y, etc...</returns>
+		public delegate Vector4 Fill2DCallback(Vector2 coordinate, Vector2 texelSize);
 
-		public ref class Sprite : public ComObject
-		{
-			COMOBJECT(ID3DXSprite, Sprite);
-
-		public:
-			Sprite( Device^ device );
-			static Sprite^ FromPointer( System::IntPtr pointer );
-
-			Result Begin( SpriteFlags flags );
-			Result End();
-			Result Flush();
-
-			Result OnLostDevice();
-			Result OnResetDevice();
-
-			Device^ GetDevice();
-
-			property Matrix Transform
-			{
-				Matrix get();
-				void set( Matrix value );
-			}
-
-			Result SetWorldViewLH( Matrix world, Matrix view );
-			Result SetWorldViewRH( Matrix world, Matrix view );
-
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color4 color );
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color4 color );
-			Result Draw( Texture^ texture, Vector3 center, Vector3 position, Color4 color );
-			Result Draw( Texture^ texture, Color4 color );
-		};
+		public delegate Vector4 Fill3DCallback(Vector3 coordinate, Vector3 texelSize);
 	}
 }

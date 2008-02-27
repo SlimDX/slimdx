@@ -29,12 +29,7 @@ namespace SlimDX
 	{
 		ref class Device;
 
-		public enum class StateBlockType : System::Int32
-		{
-			All = D3DSBT_ALL,
-			PixelState = D3DSBT_PIXELSTATE,
-			VertexState = D3DSBT_VERTEXSTATE,
-		};
+		
 
 		public ref class StateBlock : ComObject
 		{
