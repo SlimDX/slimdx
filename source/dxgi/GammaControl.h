@@ -37,7 +37,7 @@ namespace SlimDX
 			System::Collections::Generic::List<Color3>^ m_GammaCurve;
 
 		internal:
-			GammaControl( const DXGI_GAMMA_CONTROL& native );
+			//GammaControl( const DXGI_GAMMA_CONTROL& native );
 			
 			DXGI_GAMMA_CONTROL CreateNativeVersion();
 			

@@ -1404,6 +1404,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d9\EffectHandle.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\EffectHandle.h"
 					>
 				</File>

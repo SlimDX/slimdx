@@ -449,6 +449,21 @@ namespace SlimDX
 		return PlaneIntersectionType::Front;
 	}
 
+	Plane Plane::Multiply( Plane plane, float scale )
+	{
+		Plane result;
+		D3DXPlaneScale( reinterpret_cast<D3DXPLANE*>( &result ), reinterpret_cast<D3DXPLANE*>( &plane ), scale );
+		return result;
+	}
+
+	void Plane::Multiply( Plane% plane, float scale, [Out] Plane% result )
+	{
+		Plane r;
+		pin_ptr<Plane> pinnedPlane = &plane;
+		D3DXPlaneScale( reinterpret_cast<D3DXPLANE*>( &r ), reinterpret_cast<D3DXPLANE*>( pinnedPlane ), scale );
+		result = r;
+	}
+
 	/// <summary>
 	/// Scales the plane by the given scaling factor.
 	/// </summary>

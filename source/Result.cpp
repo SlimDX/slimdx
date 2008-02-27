@@ -99,13 +99,44 @@ namespace SlimDX
 		return m_Last;
 	}
 	
-	bool Result::operator==( Result left, Result right )
+	bool Result::operator == ( Result left, Result right )
 	{
-		return left.Code == right.Code;
+		return Result::Equals( left, right );
 	}
 	
-	bool Result::operator!=( Result left, Result right )
+	bool Result::operator != ( Result left, Result right )
 	{
-		return !(left == right);
+		return !Result::Equals( left, right );
+	}
+
+	String^ Result::ToString()
+	{
+		return m_Description;
+	}
+
+	int Result::GetHashCode()
+	{
+		return m_Code.GetHashCode();
+	}
+
+	bool Result::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<Result>( value ) );
+	}
+
+	bool Result::Equals( Result value )
+	{
+		return ( Code == value.Code );
+	}
+
+	bool Result::Equals( Result% value1, Result% value2 )
+	{
+		return ( value1.Code == value2.Code );
 	}
 }

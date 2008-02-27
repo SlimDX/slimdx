@@ -82,6 +82,9 @@ namespace SlimDX
 		static PlaneIntersectionType Intersects( Plane plane, BoundingSphere sphere );
 		static PlaneIntersectionType Intersects( Plane plane, BoundingFrustum frustum );
 
+		static Plane Multiply( Plane plane, float scale );
+		static void  Multiply( Plane% plane, float scale, [Out] Plane% result );
+
 		static Plane operator * ( Plane plane, float scale );
 		static Plane operator * ( float scale, Plane plane );
 

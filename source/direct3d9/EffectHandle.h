@@ -25,80 +25,39 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public ref class EffectHandle
+		public ref class EffectHandle : System::IEquatable<EffectHandle^>
 		{
 		private:
 			D3DXHANDLE m_Handle;
-
-			//for when we were forced to allocate data for a string
 			System::IntPtr m_StringData;
 			bool m_HasString;
 
 		internal:
+			EffectHandle( D3DXHANDLE handle );
+
 			property D3DXHANDLE InternalHandle
 			{
 				D3DXHANDLE get() { return m_Handle; }
 			}
 
-			EffectHandle( D3DXHANDLE handle )
-			{
-				m_Handle = handle;
-				m_StringData = System::IntPtr::Zero;
-			}
+			void Destruct();
 
 		public:
-			EffectHandle( System::String^ name )
-			{
-				m_StringData = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi( name );
-				m_HasString = true;
+			EffectHandle( System::String^ name );
+			virtual	~EffectHandle() { Destruct(); }
+			!EffectHandle() { Destruct(); }
 
-				m_Handle = (D3DXHANDLE) m_StringData.ToPointer();
-			}
+			static EffectHandle^ FromString( System::String^ name );
+			static operator EffectHandle^ ( System::String^ name );
 
-			~EffectHandle()
-			{
-				//MSDN says this is ok to do: http://msdn2.microsoft.com/en-us/library/ms235250(VS.80).aspx
-				EffectHandle::!EffectHandle();
-			}
+			static bool operator == ( EffectHandle^ left, EffectHandle^ right );
+			static bool operator != ( EffectHandle^ left, EffectHandle^ right );
 
-			!EffectHandle()
-			{
-				if( m_HasString )
-					System::Runtime::InteropServices::Marshal::FreeHGlobal( m_StringData );
-			}
-
-			static bool operator == ( EffectHandle^ lhs, EffectHandle^ rhs )
-			{
-				System::Object^ lhsObj = lhs;
-				System::Object^ rhsObj = rhs;
-				if( lhsObj == nullptr )
-					return rhsObj == nullptr;
-				if( rhsObj == nullptr )
-					return lhsObj == nullptr;
-
-				return lhs->m_Handle == rhs->m_Handle;
-			}
-
-			static bool operator != ( EffectHandle^ lhs, EffectHandle^ rhs )
-			{
-				return !(lhs == rhs);
-			}
-
-			virtual bool Equals( System::Object^ obj ) override
-			{
-				if( obj == nullptr )
-					return false;
-				if( obj->GetType() != EffectHandle::typeid )
-					return false;
-
-				EffectHandle^ eh = (EffectHandle^) obj;
-				return m_Handle == eh->m_Handle;
-			}
-
-			static operator EffectHandle^ ( System::String^ name )
-			{
-				return gcnew EffectHandle( name );
-			}
+			virtual System::String^ ToString() override;
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( EffectHandle^ other );
+			static bool Equals( EffectHandle^ value1, EffectHandle^ value2 );
 		};
 	}
 }

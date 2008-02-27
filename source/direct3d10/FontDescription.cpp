@@ -44,7 +44,7 @@ namespace Direct3D10
 		m_FaceName = gcnew String( native.FaceName );
 	}
 	
-	D3DX10_FONT_DESC FontDescription::CreateNativeVersion()
+	/*D3DX10_FONT_DESC FontDescription::CreateNativeVersion()
 	{
 		D3DX10_FONT_DESC native;
 		native.Height = m_Height;
@@ -66,7 +66,7 @@ namespace Direct3D10
 		}
 		
 		return native;
-	}
+	}*/
 
 	int FontDescription::Width::get()
 	{

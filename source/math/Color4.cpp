@@ -182,12 +182,12 @@ namespace SlimDX
 		result = Color4( a, r, g, b );
 	}
 
-	Color4 Color4::Negative( Color4 color )
+	Color4 Color4::Negate( Color4 color )
 	{
 		return Color4( 1.0f - color.Alpha, 1.0f - color.Red, 1.0f - color.Green, 1.0f - color.Blue );
 	}
 
-	void Color4::Negative( Color4% color, [Out] Color4% result )
+	void Color4::Negate( Color4% color, [Out] Color4% result )
 	{
 		result = Color4( 1.0f - color.Alpha, 1.0f - color.Red, 1.0f - color.Green, 1.0f - color.Blue );
 	}

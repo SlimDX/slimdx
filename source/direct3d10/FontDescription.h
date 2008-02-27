@@ -44,7 +44,7 @@ namespace SlimDX
 		internal:
 			FontDescription( const D3DX10_FONT_DESC& native );
 			
-			D3DX10_FONT_DESC CreateNativeVersion();
+			//D3DX10_FONT_DESC CreateNativeVersion();
 			
 		public:
 			property int Height
