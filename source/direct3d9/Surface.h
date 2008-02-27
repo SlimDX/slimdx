@@ -32,7 +32,7 @@ namespace SlimDX
 	{
 		value class ImageInformation;
 
-		public value class SurfaceDescription
+		public value class SurfaceDescription : System::IEquatable<SurfaceDescription>
 		{
 		public:
 			property Format Format;
@@ -43,6 +43,14 @@ namespace SlimDX
             property int MultisampleQuality;
             property int Width;
             property int Height;
+
+			static bool operator == ( SurfaceDescription left, SurfaceDescription right );
+			static bool operator != ( SurfaceDescription left, SurfaceDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( SurfaceDescription other );
+			static bool Equals( SurfaceDescription% value1, SurfaceDescription% value2 );
 		};
 
 		public ref class Surface : public Resource

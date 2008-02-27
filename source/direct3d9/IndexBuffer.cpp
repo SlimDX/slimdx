@@ -33,6 +33,45 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	bool IndexBufferDescription::operator == ( IndexBufferDescription left, IndexBufferDescription right )
+	{
+		return IndexBufferDescription::Equals( left, right );
+	}
+
+	bool IndexBufferDescription::operator != ( IndexBufferDescription left, IndexBufferDescription right )
+	{
+		return !IndexBufferDescription::Equals( left, right );
+	}
+
+	int IndexBufferDescription::GetHashCode()
+	{
+		return Format.GetHashCode() + Type.GetHashCode() + Usage.GetHashCode()
+			 + Pool.GetHashCode() + SizeInBytes.GetHashCode();
+	}
+
+	bool IndexBufferDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<IndexBufferDescription>( value ) );
+	}
+
+	bool IndexBufferDescription::Equals( IndexBufferDescription value )
+	{
+		return ( Format == value.Format && Type == value.Type && Usage == value.Usage
+			 && Pool == value.Pool && SizeInBytes == value.SizeInBytes );
+	}
+
+	bool IndexBufferDescription::Equals( IndexBufferDescription% value1, IndexBufferDescription% value2 )
+	{
+		return ( value1.Format == value2.Format && value1.Type == value2.Type && value1.Usage == value2.Usage
+			 && value1.Pool == value2.Pool && value1.SizeInBytes == value2.SizeInBytes );
+	}
+
 	IndexBuffer::IndexBuffer( IDirect3DIndexBuffer9* buffer )
 	{
 		if( buffer == NULL )

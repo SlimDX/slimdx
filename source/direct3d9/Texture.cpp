@@ -43,6 +43,48 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	bool ImageInformation::operator == ( ImageInformation left, ImageInformation right )
+	{
+		return ImageInformation::Equals( left, right );
+	}
+
+	bool ImageInformation::operator != ( ImageInformation left, ImageInformation right )
+	{
+		return !ImageInformation::Equals( left, right );
+	}
+
+	int ImageInformation::GetHashCode()
+	{
+		return Width.GetHashCode() + Height.GetHashCode() + Depth.GetHashCode()
+			 + MipLevels.GetHashCode() + Format.GetHashCode() + ResourceType.GetHashCode()
+			 + ImageFileFormat.GetHashCode();
+	}
+
+	bool ImageInformation::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<ImageInformation>( value ) );
+	}
+
+	bool ImageInformation::Equals( ImageInformation value )
+	{
+		return ( Width == value.Width && Height == value.Height && Depth == value.Depth
+			 && MipLevels == value.MipLevels && Format == value.Format && ResourceType == value.ResourceType
+			 && ImageFileFormat == value.ImageFileFormat );
+	}
+
+	bool ImageInformation::Equals( ImageInformation% value1, ImageInformation% value2 )
+	{
+		return ( value1.Width == value2.Width && value1.Height == value2.Height && value1.Depth == value2.Depth
+			 && value1.MipLevels == value2.MipLevels && value1.Format == value2.Format && value1.ResourceType == value2.ResourceType
+			 && value1.ImageFileFormat == value2.ImageFileFormat );
+	}
+
 	/// <summary>
 	/// Function to extract image information from a stream.
 	/// </summary>
@@ -100,6 +142,120 @@ namespace Direct3D9
 		RECORD_D3D9( hr );
 
 		return info;
+	}
+
+	bool TextureRequirements::operator == ( TextureRequirements left, TextureRequirements right )
+	{
+		return TextureRequirements::Equals( left, right );
+	}
+
+	bool TextureRequirements::operator != ( TextureRequirements left, TextureRequirements right )
+	{
+		return !TextureRequirements::Equals( left, right );
+	}
+
+	int TextureRequirements::GetHashCode()
+	{
+		return Width.GetHashCode() + Height.GetHashCode() + Format.GetHashCode()
+			 + MipLevelCount.GetHashCode();
+	}
+
+	bool TextureRequirements::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<TextureRequirements>( value ) );
+	}
+
+	bool TextureRequirements::Equals( TextureRequirements value )
+	{
+		return ( Width == value.Width && Height == value.Height && Format == value.Format
+			 && MipLevelCount == value.MipLevelCount );
+	}
+
+	bool TextureRequirements::Equals( TextureRequirements% value1, TextureRequirements% value2 )
+	{
+		return ( value1.Width == value2.Width && value1.Height == value2.Height && value1.Format == value2.Format
+			 && value1.MipLevelCount == value2.MipLevelCount );
+	}
+
+	bool CubeTextureRequirements::operator == ( CubeTextureRequirements left, CubeTextureRequirements right )
+	{
+		return CubeTextureRequirements::Equals( left, right );
+	}
+
+	bool CubeTextureRequirements::operator != ( CubeTextureRequirements left, CubeTextureRequirements right )
+	{
+		return !CubeTextureRequirements::Equals( left, right );
+	}
+
+	int CubeTextureRequirements::GetHashCode()
+	{
+		return Size.GetHashCode() + Format.GetHashCode() + MipLevelCount.GetHashCode();
+	}
+
+	bool CubeTextureRequirements::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<CubeTextureRequirements>( value ) );
+	}
+
+	bool CubeTextureRequirements::Equals( CubeTextureRequirements value )
+	{
+		return ( Size == value.Size && Format == value.Format && MipLevelCount == value.MipLevelCount );
+	}
+
+	bool CubeTextureRequirements::Equals( CubeTextureRequirements% value1, CubeTextureRequirements% value2 )
+	{
+		return ( value1.Size == value2.Size && value1.Format == value2.Format && value1.MipLevelCount == value2.MipLevelCount );
+	}
+
+	bool VolumeTextureRequirements::operator == ( VolumeTextureRequirements left, VolumeTextureRequirements right )
+	{
+		return VolumeTextureRequirements::Equals( left, right );
+	}
+
+	bool VolumeTextureRequirements::operator != ( VolumeTextureRequirements left, VolumeTextureRequirements right )
+	{
+		return !VolumeTextureRequirements::Equals( left, right );
+	}
+
+	int VolumeTextureRequirements::GetHashCode()
+	{
+		return Width.GetHashCode() + Height.GetHashCode() + Depth.GetHashCode()
+			 + Format.GetHashCode() + MipLevelCount.GetHashCode();
+	}
+
+	bool VolumeTextureRequirements::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<VolumeTextureRequirements>( value ) );
+	}
+
+	bool VolumeTextureRequirements::Equals( VolumeTextureRequirements value )
+	{
+		return ( Width == value.Width && Height == value.Height && Depth == value.Depth
+			 && Format == value.Format && MipLevelCount == value.MipLevelCount );
+	}
+
+	bool VolumeTextureRequirements::Equals( VolumeTextureRequirements% value1, VolumeTextureRequirements% value2 )
+	{
+		return ( value1.Width == value2.Width && value1.Height == value2.Height && value1.Depth == value2.Depth
+			 && value1.Format == value2.Format && value1.MipLevelCount == value2.MipLevelCount );
 	}
 
 	Texture::Texture( IDirect3DTexture9* texture )

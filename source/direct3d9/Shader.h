@@ -61,7 +61,7 @@ namespace SlimDX
 			HRESULT WINAPI Close( LPCVOID pData );
 		};
 
-		public value class Macro
+		public value class Macro : System::IEquatable<Macro>
 		{
 		internal:
 			static D3DXMACRO* Marshal( array<Macro>^ macros, [Out] array<System::Runtime::InteropServices::GCHandle>^% handles );
@@ -70,13 +70,29 @@ namespace SlimDX
 		public:
 			property System::String^ Name;
 			property System::String^ Definition;
+
+			static bool operator == ( Macro left, Macro right );
+			static bool operator != ( Macro left, Macro right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( Macro other );
+			static bool Equals( Macro% value1, Macro% value2 );
 		};
 
-		public value class ShaderSemantic
+		public value class ShaderSemantic : System::IEquatable<ShaderSemantic>
 		{
 		public:
 			property DeclarationUsage Usage;
 			property int UsageIndex;
+
+			static bool operator == ( ShaderSemantic left, ShaderSemantic right );
+			static bool operator != ( ShaderSemantic left, ShaderSemantic right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( ShaderSemantic other );
+			static bool Equals( ShaderSemantic% value1, ShaderSemantic% value2 );
 		};
 
 		public ref class ShaderBytecode : ComObject

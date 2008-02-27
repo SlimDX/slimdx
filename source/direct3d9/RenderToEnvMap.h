@@ -25,7 +25,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public value class RenderToEnvironmentMapDescription
+		public value class RenderToEnvironmentMapDescription : System::IEquatable<RenderToEnvironmentMapDescription>
 		{
 		public:
 			property int Size;
@@ -33,6 +33,14 @@ namespace SlimDX
 			property SlimDX::Direct3D9::Format Format;
 			property bool DepthStencil;
 			property SlimDX::Direct3D9::Format DepthStencilFormat;
+
+			static bool operator == ( RenderToEnvironmentMapDescription left, RenderToEnvironmentMapDescription right );
+			static bool operator != ( RenderToEnvironmentMapDescription left, RenderToEnvironmentMapDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( RenderToEnvironmentMapDescription other );
+			static bool Equals( RenderToEnvironmentMapDescription% value1, RenderToEnvironmentMapDescription% value2 );
 		};
 
 		public ref class RenderToEnvironmentMap : ComObject

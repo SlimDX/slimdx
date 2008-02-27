@@ -33,7 +33,7 @@ namespace SlimDX
 		value class ImageInformation;
 
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
-		public value class Box
+		public value class Box : System::IEquatable<Box>
 		{
 		public:
 			property int Left;
@@ -42,10 +42,18 @@ namespace SlimDX
             property int Bottom;
             property int Front;
             property int Back;
+
+			static bool operator == ( Box left, Box right );
+			static bool operator != ( Box left, Box right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( Box other );
+			static bool Equals( Box% value1, Box% value2 );
 		};
 
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
-		public value class VolumeDescription
+		public value class VolumeDescription : System::IEquatable<VolumeDescription>
 		{
 		public:
 			property Format Format;
@@ -55,6 +63,14 @@ namespace SlimDX
 			property int Width;
 			property int Height;
 			property int Depth;
+
+			static bool operator == ( VolumeDescription left, VolumeDescription right );
+			static bool operator != ( VolumeDescription left, VolumeDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( VolumeDescription other );
+			static bool Equals( VolumeDescription% value1, VolumeDescription% value2 );
 		};
 
 		public ref class Volume : public Resource

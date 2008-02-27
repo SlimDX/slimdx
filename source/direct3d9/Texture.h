@@ -37,7 +37,7 @@ namespace SlimDX
 	namespace Direct3D9
 	{
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
-		public value class ImageInformation
+		public value class ImageInformation : System::IEquatable<ImageInformation>
 		{
 		public:
 			property int Width;
@@ -65,6 +65,14 @@ namespace SlimDX
 			/// <param name="stream">Stream containing the image.</param>
 			/// <returns>Information about the image.</returns>
 			static ImageInformation FromStream(System::IO::Stream^ stream);
+
+			static bool operator == ( ImageInformation left, ImageInformation right );
+			static bool operator != ( ImageInformation left, ImageInformation right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( ImageInformation other );
+			static bool Equals( ImageInformation% value1, ImageInformation% value2 );
 		};
 
 		/// <summary>
@@ -77,24 +85,40 @@ namespace SlimDX
 
 		public delegate Vector4 Fill3DCallback(Vector3 coordinate, Vector3 texelSize);
 
-		public value class TextureRequirements
+		public value class TextureRequirements : System::IEquatable<TextureRequirements>
 		{
 		public:
 			property int Width;
             property int Height;
             property SlimDX::Direct3D9::Format Format;
             property int MipLevelCount;
+
+			static bool operator == ( TextureRequirements left, TextureRequirements right );
+			static bool operator != ( TextureRequirements left, TextureRequirements right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( TextureRequirements other );
+			static bool Equals( TextureRequirements% value1, TextureRequirements% value2 );
 		};
 
-		public value class CubeTextureRequirements
+		public value class CubeTextureRequirements : System::IEquatable<CubeTextureRequirements>
 		{
 		public:
 			property int Size;
             property Format Format;
             property int MipLevelCount;
+
+			static bool operator == ( CubeTextureRequirements left, CubeTextureRequirements right );
+			static bool operator != ( CubeTextureRequirements left, CubeTextureRequirements right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( CubeTextureRequirements other );
+			static bool Equals( CubeTextureRequirements% value1, CubeTextureRequirements% value2 );
 		};
 
-		public value class VolumeTextureRequirements
+		public value class VolumeTextureRequirements : System::IEquatable<VolumeTextureRequirements>
 		{
 		public:
 			property int Width;
@@ -102,6 +126,14 @@ namespace SlimDX
             property int Depth;
             property SlimDX::Direct3D9::Format Format;
             property int MipLevelCount;
+
+			static bool operator == ( VolumeTextureRequirements left, VolumeTextureRequirements right );
+			static bool operator != ( VolumeTextureRequirements left, VolumeTextureRequirements right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( VolumeTextureRequirements other );
+			static bool Equals( VolumeTextureRequirements% value1, VolumeTextureRequirements% value2 );
 		};
 
 		public ref class Texture : public BaseTexture

@@ -40,6 +40,42 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	bool FragmentDescription::operator == ( FragmentDescription left, FragmentDescription right )
+	{
+		return FragmentDescription::Equals( left, right );
+	}
+
+	bool FragmentDescription::operator != ( FragmentDescription left, FragmentDescription right )
+	{
+		return !FragmentDescription::Equals( left, right );
+	}
+
+	int FragmentDescription::GetHashCode()
+	{
+		return Name->GetHashCode() + Target.GetHashCode();
+	}
+
+	bool FragmentDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<FragmentDescription>( value ) );
+	}
+
+	bool FragmentDescription::Equals( FragmentDescription value )
+	{
+		return ( Name == value.Name && Target == value.Target );
+	}
+
+	bool FragmentDescription::Equals( FragmentDescription% value1, FragmentDescription% value2 )
+	{
+		return ( value1.Name == value2.Name && value1.Target == value2.Target );
+	}
+
 	FragmentLinker::FragmentLinker( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
