@@ -75,5 +75,41 @@ namespace Direct3D10
 	{
 		return m_ReadWriteMask;
 	}
+
+	bool ShaderParameterDescription::operator == ( ShaderParameterDescription left, ShaderParameterDescription right )
+	{
+		return ShaderParameterDescription::Equals( left, right );
+	}
+
+	bool ShaderParameterDescription::operator != ( ShaderParameterDescription left, ShaderParameterDescription right )
+	{
+		return !ShaderParameterDescription::Equals( left, right );
+	}
+
+	int ShaderParameterDescription::GetHashCode()
+	{
+		return m_SemanticName->GetHashCode() + m_SemanticIndex.GetHashCode() + m_Register.GetHashCode() + m_SystemValueType.GetHashCode() + m_ComponentType.GetHashCode() + m_Mask.GetHashCode() + m_ReadWriteMask.GetHashCode();
+	}
+
+	bool ShaderParameterDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<ShaderParameterDescription>( value ) );
+	}
+
+	bool ShaderParameterDescription::Equals( ShaderParameterDescription value )
+	{
+		return ( m_SemanticName == value.m_SemanticName && m_SemanticIndex == value.m_SemanticIndex && m_Register == value.m_Register && m_SystemValueType == value.m_SystemValueType && m_ComponentType == value.m_ComponentType && m_Mask == value.m_Mask && m_ReadWriteMask == value.m_ReadWriteMask );
+	}
+
+	bool ShaderParameterDescription::Equals( ShaderParameterDescription% value1, ShaderParameterDescription% value2 )
+	{
+		return ( value1.m_SemanticName == value2.m_SemanticName && value1.m_SemanticIndex == value2.m_SemanticIndex && value1.m_Register == value2.m_Register && value1.m_SystemValueType == value2.m_SystemValueType && value1.m_ComponentType == value2.m_ComponentType && value1.m_Mask == value2.m_Mask && value1.m_ReadWriteMask == value2.m_ReadWriteMask );
+	}
 }
 }

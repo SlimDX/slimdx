@@ -29,7 +29,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public value class ShaderDescription
+		public value class ShaderDescription : System::IEquatable<ShaderDescription>
 		{
 		private:
 			ShaderSignature^ m_InputSignature;
@@ -70,8 +70,16 @@ namespace SlimDX
 			
 			property int OutputParameterCount
 			{
-			  int get();
+				int get();
 			}
+
+			static bool operator == ( ShaderDescription left, ShaderDescription right );
+			static bool operator != ( ShaderDescription left, ShaderDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( ShaderDescription other );
+			static bool Equals( ShaderDescription% value1, ShaderDescription% value2 );
 		};
 	}
 };

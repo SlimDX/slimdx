@@ -27,7 +27,7 @@ namespace SlimDX
 	{
 		ref class Buffer;
 		
-		public value class StreamOutputBufferBinding
+		public value class StreamOutputBufferBinding : System::IEquatable<StreamOutputBufferBinding>
 		{
 		private:
 			Buffer^ m_Buffer;
@@ -47,6 +47,14 @@ namespace SlimDX
 			}
 
 			StreamOutputBufferBinding( Direct3D10::Buffer^ buffer, int offset );
+
+			static bool operator == ( StreamOutputBufferBinding left, StreamOutputBufferBinding right );
+			static bool operator != ( StreamOutputBufferBinding left, StreamOutputBufferBinding right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( StreamOutputBufferBinding other );
+			static bool Equals( StreamOutputBufferBinding% value1, StreamOutputBufferBinding% value2 );
 		};
 	}
 };

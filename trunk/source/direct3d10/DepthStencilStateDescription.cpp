@@ -137,5 +137,47 @@ namespace Direct3D10
 	{
 		m_BackFace = value;
 	}
+
+	bool DepthStencilStateDescription::operator == ( DepthStencilStateDescription left, DepthStencilStateDescription right )
+	{
+		return DepthStencilStateDescription::Equals( left, right );
+	}
+
+	bool DepthStencilStateDescription::operator != ( DepthStencilStateDescription left, DepthStencilStateDescription right )
+	{
+		return !DepthStencilStateDescription::Equals( left, right );
+	}
+
+	int DepthStencilStateDescription::GetHashCode()
+	{
+		return m_DepthEnable.GetHashCode() + m_DepthWriteMask.GetHashCode() + m_DepthFunc.GetHashCode()
+			 + m_StencilEnable.GetHashCode() + m_StencilReadMask.GetHashCode() + m_StencilWriteMask.GetHashCode()
+			 + m_FrontFace.GetHashCode() + m_BackFace.GetHashCode();
+	}
+
+	bool DepthStencilStateDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<DepthStencilStateDescription>( value ) );
+	}
+
+	bool DepthStencilStateDescription::Equals( DepthStencilStateDescription value )
+	{
+		return ( m_DepthEnable == value.m_DepthEnable && m_DepthWriteMask == value.m_DepthWriteMask && m_DepthFunc == value.m_DepthFunc
+			 && m_StencilEnable == value.m_StencilEnable && m_StencilReadMask == value.m_StencilReadMask && m_StencilWriteMask == value.m_StencilWriteMask
+			 && m_FrontFace == value.m_FrontFace && m_BackFace == value.m_BackFace );
+	}
+
+	bool DepthStencilStateDescription::Equals( DepthStencilStateDescription% value1, DepthStencilStateDescription% value2 )
+	{
+		return ( value1.m_DepthEnable == value2.m_DepthEnable && value1.m_DepthWriteMask == value2.m_DepthWriteMask && value1.m_DepthFunc == value2.m_DepthFunc
+			 && value1.m_StencilEnable == value2.m_StencilEnable && value1.m_StencilReadMask == value2.m_StencilReadMask && value1.m_StencilWriteMask == value2.m_StencilWriteMask
+			 && value1.m_FrontFace == value2.m_FrontFace && value1.m_BackFace == value2.m_BackFace );
+	}
 }
 }

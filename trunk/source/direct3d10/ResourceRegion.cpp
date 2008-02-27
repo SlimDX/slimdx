@@ -110,5 +110,44 @@ namespace Direct3D10
 	{
 		m_Back = value;
 	}
+
+	bool ResourceRegion::operator == ( ResourceRegion left, ResourceRegion right )
+	{
+		return ResourceRegion::Equals( left, right );
+	}
+
+	bool ResourceRegion::operator != ( ResourceRegion left, ResourceRegion right )
+	{
+		return !ResourceRegion::Equals( left, right );
+	}
+
+	int ResourceRegion::GetHashCode()
+	{
+		return m_Left.GetHashCode() + m_Top.GetHashCode() + m_Front.GetHashCode()
+			 + m_Right.GetHashCode() + m_Bottom.GetHashCode() + m_Back.GetHashCode();
+	}
+
+	bool ResourceRegion::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<ResourceRegion>( value ) );
+	}
+
+	bool ResourceRegion::Equals( ResourceRegion value )
+	{
+		return ( m_Left == value.m_Left && m_Top == value.m_Top && m_Front == value.m_Front
+			 && m_Right == value.m_Right && m_Bottom == value.m_Bottom && m_Back == value.m_Back );
+	}
+
+	bool ResourceRegion::Equals( ResourceRegion% value1, ResourceRegion% value2 )
+	{
+		return ( value1.m_Left == value2.m_Left && value1.m_Top == value2.m_Top && value1.m_Front == value2.m_Front
+			 && value1.m_Right == value2.m_Right && value1.m_Bottom == value2.m_Bottom && value1.m_Back == value2.m_Back );
+	}
 }
 }

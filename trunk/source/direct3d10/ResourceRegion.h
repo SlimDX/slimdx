@@ -25,7 +25,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public value class ResourceRegion
+		public value class ResourceRegion : System::IEquatable<ResourceRegion>
 		{
 		private:
 			UINT m_Left;
@@ -76,6 +76,14 @@ namespace SlimDX
 				int get();
 				void set( int value );
 			}
+
+			static bool operator == ( ResourceRegion left, ResourceRegion right );
+			static bool operator != ( ResourceRegion left, ResourceRegion right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( ResourceRegion other );
+			static bool Equals( ResourceRegion% value1, ResourceRegion% value2 );
 		};
 	}
 };

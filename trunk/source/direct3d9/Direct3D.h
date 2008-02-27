@@ -32,13 +32,21 @@ namespace SlimDX
 	namespace Direct3D9
 	{
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
-		public value class DisplayMode
+		public value class DisplayMode : System::IEquatable<DisplayMode>
 		{
 		public:
 			property int Width;
             property int Height;
             property int RefreshRate;
             property Format Format;
+
+			static bool operator == ( DisplayMode left, DisplayMode right );
+			static bool operator != ( DisplayMode left, DisplayMode right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( DisplayMode other );
+			static bool Equals( DisplayMode% value1, DisplayMode% value2 );
 		};
 
 		public ref class AdapterDetails
@@ -60,25 +68,41 @@ namespace SlimDX
 			AdapterDetails( unsigned int adapter );
 		};
 
-		public value class VertexShader20Caps
+		public value class VertexShader20Caps : System::IEquatable<VertexShader20Caps>
 		{
 		public:
 			property int Caps;
             property int DynamicFlowControlDepth;
             property int TempCount;
             property int StaticFlowControlDepth;
+
+			static bool operator == ( VertexShader20Caps left, VertexShader20Caps right );
+			static bool operator != ( VertexShader20Caps left, VertexShader20Caps right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( VertexShader20Caps other );
+			static bool Equals( VertexShader20Caps% value1, VertexShader20Caps% value2 );
 		};
 
-		public value class PixelShader20Caps
+		public value class PixelShader20Caps : System::IEquatable<PixelShader20Caps>
 		{
 		public:
 			property int Caps;
             property int DynamicFlowControlDepth;
             property int TempCount;
             property int StaticFlowControlDepth;
+
+			static bool operator == ( PixelShader20Caps left, PixelShader20Caps right );
+			static bool operator != ( PixelShader20Caps left, PixelShader20Caps right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( PixelShader20Caps other );
+			static bool Equals( PixelShader20Caps% value1, PixelShader20Caps% value2 );
 		};
 
-		public value class Capabilities
+		public value class Capabilities : System::IEquatable<Capabilities>
 		{
 		public:
 			property DeviceType DeviceType;
@@ -149,6 +173,14 @@ namespace SlimDX
 			property int MaxPShaderInstructionsExecuted;
 			property int MaxVertexShader30InstructionSlots;
 			property int MaxPixelShader30InstructionSlots;
+
+			static bool operator == ( Capabilities left, Capabilities right );
+			static bool operator != ( Capabilities left, Capabilities right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( Capabilities other );
+			static bool Equals( Capabilities% value1, Capabilities% value2 );
 
 		internal:
 			Capabilities( D3DCAPS9& caps );

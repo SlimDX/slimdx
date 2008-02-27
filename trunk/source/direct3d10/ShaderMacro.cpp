@@ -37,5 +37,41 @@ namespace Direct3D10
 	{
 		return m_Value;
 	}
+
+	bool ShaderMacro::operator == ( ShaderMacro left, ShaderMacro right )
+	{
+		return ShaderMacro::Equals( left, right );
+	}
+
+	bool ShaderMacro::operator != ( ShaderMacro left, ShaderMacro right )
+	{
+		return !ShaderMacro::Equals( left, right );
+	}
+
+	int ShaderMacro::GetHashCode()
+	{
+		return m_Name->GetHashCode() + m_Value->GetHashCode();
+	}
+
+	bool ShaderMacro::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<ShaderMacro>( value ) );
+	}
+
+	bool ShaderMacro::Equals( ShaderMacro value )
+	{
+		return ( m_Name == value.m_Name && m_Value == value.m_Value );
+	}
+
+	bool ShaderMacro::Equals( ShaderMacro% value1, ShaderMacro% value2 )
+	{
+		return ( value1.m_Name == value2.m_Name && value1.m_Value == value2.m_Value );
+	}
 }
 }

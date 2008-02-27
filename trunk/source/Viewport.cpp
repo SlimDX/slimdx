@@ -83,4 +83,43 @@ namespace SlimDX
 	{
 		m_MaxZ = value;
 	}
+
+	bool Viewport::operator == ( Viewport left, Viewport right )
+	{
+		return Viewport::Equals( left, right );
+	}
+
+	bool Viewport::operator != ( Viewport left, Viewport right )
+	{
+		return !Viewport::Equals( left, right );
+	}
+
+	int Viewport::GetHashCode()
+	{
+		return m_X.GetHashCode() + m_Y.GetHashCode() + m_Width.GetHashCode()
+			 + m_Height.GetHashCode() + m_MinZ.GetHashCode() + m_MaxZ.GetHashCode();
+	}
+
+	bool Viewport::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<Viewport>( value ) );
+	}
+
+	bool Viewport::Equals( Viewport value )
+	{
+		return ( m_X == value.m_X && m_Y == value.m_Y && m_Width == value.m_Width
+			 && m_Height == value.m_Height && m_MinZ == value.m_MinZ && m_MaxZ == value.m_MaxZ );
+	}
+
+	bool Viewport::Equals( Viewport% value1, Viewport% value2 )
+	{
+		return ( value1.m_X == value2.m_X && value1.m_Y == value2.m_Y && value1.m_Width == value2.m_Width
+			 && value1.m_Height == value2.m_Height && value1.m_MinZ == value2.m_MinZ && value1.m_MaxZ == value2.m_MaxZ );
+	}
 }

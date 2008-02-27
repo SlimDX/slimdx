@@ -29,7 +29,7 @@ namespace SlimDX
 	{	
 		ref class ShaderSignature;
 		
-		public value class EffectPassDescription
+		public value class EffectPassDescription : System::IEquatable<EffectPassDescription>
 		{
 		private:
 			System::String^ m_Name;
@@ -72,6 +72,14 @@ namespace SlimDX
 			{
 				Color4 get();
 			}
+
+			static bool operator == ( EffectPassDescription left, EffectPassDescription right );
+			static bool operator != ( EffectPassDescription left, EffectPassDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( EffectPassDescription other );
+			static bool Equals( EffectPassDescription% value1, EffectPassDescription% value2 );
 		};
 	}
 };

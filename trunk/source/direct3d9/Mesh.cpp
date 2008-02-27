@@ -118,6 +118,42 @@ namespace Direct3D9
 		return destination;
 	}
 
+	bool ExtendedMaterial::operator == ( ExtendedMaterial left, ExtendedMaterial right )
+	{
+		return ExtendedMaterial::Equals( left, right );
+	}
+
+	bool ExtendedMaterial::operator != ( ExtendedMaterial left, ExtendedMaterial right )
+	{
+		return !ExtendedMaterial::Equals( left, right );
+	}
+
+	int ExtendedMaterial::GetHashCode()
+	{
+		return MaterialD3D.GetHashCode() + TextureFileName->GetHashCode();
+	}
+
+	bool ExtendedMaterial::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<ExtendedMaterial>( value ) );
+	}
+
+	bool ExtendedMaterial::Equals( ExtendedMaterial value )
+	{
+		return ( MaterialD3D == value.MaterialD3D && TextureFileName == value.TextureFileName );
+	}
+
+	bool ExtendedMaterial::Equals( ExtendedMaterial% value1, ExtendedMaterial% value2 )
+	{
+		return ( value1.MaterialD3D == value2.MaterialD3D && value1.TextureFileName == value2.TextureFileName );
+	}
+
 	EffectInstance EffectInstance::FromUnmanaged( const D3DXEFFECTINSTANCE &effect )
 	{
 		EffectInstance result;
@@ -173,6 +209,243 @@ namespace Direct3D9
 		}
 
 		return destination;
+	}
+
+	bool EffectInstance::operator == ( EffectInstance left, EffectInstance right )
+	{
+		return EffectInstance::Equals( left, right );
+	}
+
+	bool EffectInstance::operator != ( EffectInstance left, EffectInstance right )
+	{
+		return !EffectInstance::Equals( left, right );
+	}
+
+	int EffectInstance::GetHashCode()
+	{
+		return EffectFileName->GetHashCode() + Defaults->GetHashCode();
+	}
+
+	bool EffectInstance::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<EffectInstance>( value ) );
+	}
+
+	bool EffectInstance::Equals( EffectInstance value )
+	{
+		return ( EffectFileName == value.EffectFileName && Defaults == value.Defaults );
+	}
+
+	bool EffectInstance::Equals( EffectInstance% value1, EffectInstance% value2 )
+	{
+		return ( value1.EffectFileName == value2.EffectFileName && value1.Defaults == value2.Defaults );
+	}
+	
+	bool EffectDefault::operator == ( EffectDefault left, EffectDefault right )
+	{
+		return EffectDefault::Equals( left, right );
+	}
+
+	bool EffectDefault::operator != ( EffectDefault left, EffectDefault right )
+	{
+		return !EffectDefault::Equals( left, right );
+	}
+
+	int EffectDefault::GetHashCode()
+	{
+		return ParameterName->GetHashCode() + Type.GetHashCode() + Value->GetHashCode();
+	}
+
+	bool EffectDefault::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<EffectDefault>( value ) );
+	}
+
+	bool EffectDefault::Equals( EffectDefault value )
+	{
+		return ( ParameterName == value.ParameterName && Type == value.Type && Value == value.Value );
+	}
+
+	bool EffectDefault::Equals( EffectDefault% value1, EffectDefault% value2 )
+	{
+		return ( value1.ParameterName == value2.ParameterName && value1.Type == value2.Type && value1.Value == value2.Value );
+	}
+
+	bool AttributeRange::operator == ( AttributeRange left, AttributeRange right )
+	{
+		return AttributeRange::Equals( left, right );
+	}
+
+	bool AttributeRange::operator != ( AttributeRange left, AttributeRange right )
+	{
+		return !AttributeRange::Equals( left, right );
+	}
+
+	int AttributeRange::GetHashCode()
+	{
+		return AttribId.GetHashCode() + FaceStart.GetHashCode() + FaceCount.GetHashCode()
+			 + VertexStart.GetHashCode() + VertexCount.GetHashCode();
+	}
+
+	bool AttributeRange::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<AttributeRange>( value ) );
+	}
+
+	bool AttributeRange::Equals( AttributeRange value )
+	{
+		return ( AttribId == value.AttribId && FaceStart == value.FaceStart && FaceCount == value.FaceCount
+			 && VertexStart == value.VertexStart && VertexCount == value.VertexCount );
+	}
+
+	bool AttributeRange::Equals( AttributeRange% value1, AttributeRange% value2 )
+	{
+		return ( value1.AttribId == value2.AttribId && value1.FaceStart == value2.FaceStart && value1.FaceCount == value2.FaceCount
+			 && value1.VertexStart == value2.VertexStart && value1.VertexCount == value2.VertexCount );
+	}
+
+	bool GlyphMetricsFloat::operator == ( GlyphMetricsFloat left, GlyphMetricsFloat right )
+	{
+		return GlyphMetricsFloat::Equals( left, right );
+	}
+
+	bool GlyphMetricsFloat::operator != ( GlyphMetricsFloat left, GlyphMetricsFloat right )
+	{
+		return !GlyphMetricsFloat::Equals( left, right );
+	}
+
+	int GlyphMetricsFloat::GetHashCode()
+	{
+		return BlackBoxX.GetHashCode() + BlackBoxY.GetHashCode() + GlyphOrigin.GetHashCode()
+			 + CellIncX.GetHashCode() + CellIncY.GetHashCode();
+	}
+
+	bool GlyphMetricsFloat::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<GlyphMetricsFloat>( value ) );
+	}
+
+	bool GlyphMetricsFloat::Equals( GlyphMetricsFloat value )
+	{
+		return ( BlackBoxX == value.BlackBoxX && BlackBoxY == value.BlackBoxY && GlyphOrigin == value.GlyphOrigin
+			 && CellIncX == value.CellIncX && CellIncY == value.CellIncY );
+	}
+
+	bool GlyphMetricsFloat::Equals( GlyphMetricsFloat% value1, GlyphMetricsFloat% value2 )
+	{
+		return ( value1.BlackBoxX == value2.BlackBoxX && value1.BlackBoxY == value2.BlackBoxY && value1.GlyphOrigin == value2.GlyphOrigin
+			 && value1.CellIncX == value2.CellIncX && value1.CellIncY == value2.CellIncY );
+	}
+
+	bool AttributeWeights::operator == ( AttributeWeights left, AttributeWeights right )
+	{
+		return AttributeWeights::Equals( left, right );
+	}
+
+	bool AttributeWeights::operator != ( AttributeWeights left, AttributeWeights right )
+	{
+		return !AttributeWeights::Equals( left, right );
+	}
+
+	int AttributeWeights::GetHashCode()
+	{
+		return Position.GetHashCode() + Boundary.GetHashCode() + Normal.GetHashCode()
+			 + Diffuse.GetHashCode() + Specular.GetHashCode() + TextureCoordinate1.GetHashCode()
+			 + TextureCoordinate2.GetHashCode() + TextureCoordinate3.GetHashCode() + TextureCoordinate4.GetHashCode()
+			 + TextureCoordinate5.GetHashCode() + TextureCoordinate6.GetHashCode() + TextureCoordinate7.GetHashCode()
+			 + TextureCoordinate8.GetHashCode() + Tangent.GetHashCode() + Binormal.GetHashCode();
+	}
+
+	bool AttributeWeights::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<AttributeWeights>( value ) );
+	}
+
+	bool AttributeWeights::Equals( AttributeWeights value )
+	{
+		return ( Position == value.Position && Boundary == value.Boundary && Normal == value.Normal
+			 && Diffuse == value.Diffuse && Specular == value.Specular && TextureCoordinate1 == value.TextureCoordinate1
+			 && TextureCoordinate2 == value.TextureCoordinate2 && TextureCoordinate3 == value.TextureCoordinate3 && TextureCoordinate4 == value.TextureCoordinate4
+			 && TextureCoordinate5 == value.TextureCoordinate5 && TextureCoordinate6 == value.TextureCoordinate6 && TextureCoordinate7 == value.TextureCoordinate7
+			 && TextureCoordinate8 == value.TextureCoordinate8 && Tangent == value.Tangent && Binormal == value.Binormal );
+	}
+
+	bool AttributeWeights::Equals( AttributeWeights% value1, AttributeWeights% value2 )
+	{
+		return ( value1.Position == value2.Position && value1.Boundary == value2.Boundary && value1.Normal == value2.Normal
+			 && value1.Diffuse == value2.Diffuse && value1.Specular == value2.Specular && value1.TextureCoordinate1 == value2.TextureCoordinate1
+			 && value1.TextureCoordinate2 == value2.TextureCoordinate2 && value1.TextureCoordinate3 == value2.TextureCoordinate3 && value1.TextureCoordinate4 == value2.TextureCoordinate4
+			 && value1.TextureCoordinate5 == value2.TextureCoordinate5 && value1.TextureCoordinate6 == value2.TextureCoordinate6 && value1.TextureCoordinate7 == value2.TextureCoordinate7
+			 && value1.TextureCoordinate8 == value2.TextureCoordinate8 && value1.Tangent == value2.Tangent && value1.Binormal == value2.Binormal );
+	}
+
+	bool IntersectInformation::operator == ( IntersectInformation left, IntersectInformation right )
+	{
+		return IntersectInformation::Equals( left, right );
+	}
+
+	bool IntersectInformation::operator != ( IntersectInformation left, IntersectInformation right )
+	{
+		return !IntersectInformation::Equals( left, right );
+	}
+
+	int IntersectInformation::GetHashCode()
+	{
+		return FaceIndex.GetHashCode() + U.GetHashCode() + V.GetHashCode()
+			 + Distance.GetHashCode();
+	}
+
+	bool IntersectInformation::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<IntersectInformation>( value ) );
+	}
+
+	bool IntersectInformation::Equals( IntersectInformation value )
+	{
+		return ( FaceIndex == value.FaceIndex && U == value.U && V == value.V
+			 && Distance == value.Distance );
+	}
+
+	bool IntersectInformation::Equals( IntersectInformation% value1, IntersectInformation% value2 )
+	{
+		return ( value1.FaceIndex == value2.FaceIndex && value1.U == value2.U && value1.V == value2.V
+			 && value1.Distance == value2.Distance );
 	}
 
 	BaseMesh::BaseMesh( IntPtr pointer )

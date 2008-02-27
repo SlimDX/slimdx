@@ -25,7 +25,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public value class CounterCapabilities
+		public value class CounterCapabilities : System::IEquatable<CounterCapabilities>
 		{
 		private:
 			int m_LastDeviceDependentCounter;
@@ -50,6 +50,14 @@ namespace SlimDX
 			{
 				int get();
 			}
+
+			static bool operator == ( CounterCapabilities left, CounterCapabilities right );
+			static bool operator != ( CounterCapabilities left, CounterCapabilities right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( CounterCapabilities other );
+			static bool Equals( CounterCapabilities% value1, CounterCapabilities% value2 );
 		};
 	}
 };

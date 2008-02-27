@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public value class EffectDescription
+		public value class EffectDescription : System::IEquatable<EffectDescription>
 		{
 		private:
 			bool m_IsChildEffect;
@@ -70,6 +70,14 @@ namespace SlimDX
 			{
 				int get();
 			}
+
+			static bool operator == ( EffectDescription left, EffectDescription right );
+			static bool operator != ( EffectDescription left, EffectDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( EffectDescription other );
+			static bool Equals( EffectDescription% value1, EffectDescription% value2 );
 		};
 	}
 };

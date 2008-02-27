@@ -207,5 +207,47 @@ namespace Direct3D10
 	{
 		m_DepthSliceCount = value;
 	}
+
+	bool RenderTargetViewDescription::operator == ( RenderTargetViewDescription left, RenderTargetViewDescription right )
+	{
+		return RenderTargetViewDescription::Equals( left, right );
+	}
+
+	bool RenderTargetViewDescription::operator != ( RenderTargetViewDescription left, RenderTargetViewDescription right )
+	{
+		return !RenderTargetViewDescription::Equals( left, right );
+	}
+
+	int RenderTargetViewDescription::GetHashCode()
+	{
+		return m_Format.GetHashCode() + m_ViewDimension.GetHashCode() + m_ElementOffset.GetHashCode()
+			 + m_ElementWidth.GetHashCode() + m_MipSlice.GetHashCode() + m_FirstArraySlice.GetHashCode()
+			 + m_ArraySize.GetHashCode() + m_FirstDepthSlice.GetHashCode() + m_DepthSliceCount.GetHashCode();
+	}
+
+	bool RenderTargetViewDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<RenderTargetViewDescription>( value ) );
+	}
+
+	bool RenderTargetViewDescription::Equals( RenderTargetViewDescription value )
+	{
+		return ( m_Format == value.m_Format && m_ViewDimension == value.m_ViewDimension && m_ElementOffset == value.m_ElementOffset
+			 && m_ElementWidth == value.m_ElementWidth && m_MipSlice == value.m_MipSlice && m_FirstArraySlice == value.m_FirstArraySlice
+			 && m_ArraySize == value.m_ArraySize && m_FirstDepthSlice == value.m_FirstDepthSlice && m_DepthSliceCount == value.m_DepthSliceCount );
+	}
+
+	bool RenderTargetViewDescription::Equals( RenderTargetViewDescription% value1, RenderTargetViewDescription% value2 )
+	{
+		return ( value1.m_Format == value2.m_Format && value1.m_ViewDimension == value2.m_ViewDimension && value1.m_ElementOffset == value2.m_ElementOffset
+			 && value1.m_ElementWidth == value2.m_ElementWidth && value1.m_MipSlice == value2.m_MipSlice && value1.m_FirstArraySlice == value2.m_FirstArraySlice
+			 && value1.m_ArraySize == value2.m_ArraySize && value1.m_FirstDepthSlice == value2.m_FirstDepthSlice && value1.m_DepthSliceCount == value2.m_DepthSliceCount );
+	}
 }
 }

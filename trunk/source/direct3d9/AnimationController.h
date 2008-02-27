@@ -52,7 +52,7 @@ namespace SlimDX
 		};
 
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
-		public value class EventDescription
+		public value class EventDescription : System::IEquatable<EventDescription>
 		{
 		public:
 			property EventType Type;
@@ -64,10 +64,18 @@ namespace SlimDX
 			property float Speed;
 			property double Position;
 			property bool Enabled;
+
+			static bool operator == ( EventDescription left, EventDescription right );
+			static bool operator != ( EventDescription left, EventDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( EventDescription other );
+			static bool Equals( EventDescription% value1, EventDescription% value2 );
 		};
 
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
-		public value class TrackDescription
+		public value class TrackDescription : System::IEquatable<TrackDescription>
 		{
 		public:
 			property TrackPriority Priority;
@@ -75,6 +83,15 @@ namespace SlimDX
 			property float Speed;
 			property double Position;
 			property bool Enabled;
+
+			static bool operator == ( TrackDescription left, TrackDescription right );
+			static bool operator != ( TrackDescription left, TrackDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( TrackDescription other );
+			static bool Equals( TrackDescription% value1, TrackDescription% value2 );
+
 		};		
 
 		public ref class AnimationController : public ComObject

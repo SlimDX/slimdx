@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public value class VertexElement
+		public value class VertexElement : System::IEquatable<VertexElement>
 		{
 		private:
 			static VertexElement()
@@ -55,6 +55,14 @@ namespace SlimDX
 				Usage = declarationUsage;
 				UsageIndex = usageIndex;
 			}
+
+			static bool operator == ( VertexElement left, VertexElement right );
+			static bool operator != ( VertexElement left, VertexElement right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( VertexElement other );
+			static bool Equals( VertexElement% value1, VertexElement% value2 );
 		};
 
 		ref class Device;

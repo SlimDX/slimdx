@@ -27,7 +27,7 @@ namespace SlimDX
 	/// Defines a rectangular region of a render-target surface onto which 
 	/// a 3D rendering is projected.
 	/// </remarks>
-	public value class Viewport
+	public value class Viewport : System::IEquatable<Viewport>
 	{
 		int m_X;
 		int m_Y;
@@ -90,5 +90,13 @@ namespace SlimDX
 			float get();
 			void set( float value );
 		}
+
+		static bool operator == ( Viewport left, Viewport right );
+		static bool operator != ( Viewport left, Viewport right );
+
+		virtual int GetHashCode() override;
+		virtual bool Equals( System::Object^ obj ) override;
+		virtual bool Equals( Viewport other );
+		static bool Equals( Viewport% value1, Viewport% value2 );
 	};
 }

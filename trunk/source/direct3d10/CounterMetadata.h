@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public value class CounterMetadata
+		public value class CounterMetadata : System::IEquatable<CounterMetadata>
 		{
 		private:
 			CounterType m_Type;
@@ -64,6 +64,14 @@ namespace SlimDX
 			{
 				System::String^ get();
 			}
+
+			static bool operator == ( CounterMetadata left, CounterMetadata right );
+			static bool operator != ( CounterMetadata left, CounterMetadata right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( CounterMetadata other );
+			static bool Equals( CounterMetadata% value1, CounterMetadata% value2 );
 		};
 	}
 };

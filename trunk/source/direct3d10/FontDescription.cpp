@@ -167,5 +167,51 @@ namespace Direct3D10
 	{
 		m_FaceName = value;
 	}
+
+	
+	bool FontDescription::operator == ( FontDescription left, FontDescription right )
+	{
+		return FontDescription::Equals( left, right );
+	}
+
+	bool FontDescription::operator != ( FontDescription left, FontDescription right )
+	{
+		return !FontDescription::Equals( left, right );
+	}
+
+	int FontDescription::GetHashCode()
+	{
+		return m_Height.GetHashCode() + m_Width.GetHashCode() + m_Weight.GetHashCode()
+			 + m_MipLevels.GetHashCode() + m_Italic.GetHashCode() + m_CharSet.GetHashCode()
+			 + m_OutputPrecision.GetHashCode() + m_Quality.GetHashCode() + m_PitchAndFamily.GetHashCode()
+			 + m_FaceName->GetHashCode();
+	}
+
+	bool FontDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<FontDescription>( value ) );
+	}
+
+	bool FontDescription::Equals( FontDescription value )
+	{
+		return ( m_Height == value.m_Height && m_Width == value.m_Width && m_Weight == value.m_Weight
+			 && m_MipLevels == value.m_MipLevels && m_Italic == value.m_Italic && m_CharSet == value.m_CharSet
+			 && m_OutputPrecision == value.m_OutputPrecision && m_Quality == value.m_Quality && m_PitchAndFamily == value.m_PitchAndFamily
+			 && m_FaceName == value.m_FaceName );
+	}
+
+	bool FontDescription::Equals( FontDescription% value1, FontDescription% value2 )
+	{
+		return ( value1.m_Height == value2.m_Height && value1.m_Width == value2.m_Width && value1.m_Weight == value2.m_Weight
+			 && value1.m_MipLevels == value2.m_MipLevels && value1.m_Italic == value2.m_Italic && value1.m_CharSet == value2.m_CharSet
+			 && value1.m_OutputPrecision == value2.m_OutputPrecision && value1.m_Quality == value2.m_Quality && value1.m_PitchAndFamily == value2.m_PitchAndFamily
+			 && value1.m_FaceName == value2.m_FaceName );
+	}
 }
 }

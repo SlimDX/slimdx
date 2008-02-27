@@ -134,5 +134,47 @@ namespace Direct3D10
 	{
 		m_MiscFlags = value;
 	}
+
+	bool Texture1DDescription::operator == ( Texture1DDescription left, Texture1DDescription right )
+	{
+		return Texture1DDescription::Equals( left, right );
+	}
+
+	bool Texture1DDescription::operator != ( Texture1DDescription left, Texture1DDescription right )
+	{
+		return !Texture1DDescription::Equals( left, right );
+	}
+
+	int Texture1DDescription::GetHashCode()
+	{
+		return m_Width.GetHashCode() + m_MipLevels.GetHashCode() + m_ArraySize.GetHashCode()
+			 + m_Format.GetHashCode() + m_Usage.GetHashCode() + m_BindFlags.GetHashCode()
+			 + m_CPUAccessFlags.GetHashCode() + m_MiscFlags.GetHashCode();
+	}
+
+	bool Texture1DDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<Texture1DDescription>( value ) );
+	}
+
+	bool Texture1DDescription::Equals( Texture1DDescription value )
+	{
+		return ( m_Width == value.m_Width && m_MipLevels == value.m_MipLevels && m_ArraySize == value.m_ArraySize
+			 && m_Format == value.m_Format && m_Usage == value.m_Usage && m_BindFlags == value.m_BindFlags
+			 && m_CPUAccessFlags == value.m_CPUAccessFlags && m_MiscFlags == value.m_MiscFlags );
+	}
+
+	bool Texture1DDescription::Equals( Texture1DDescription% value1, Texture1DDescription% value2 )
+	{
+		return ( value1.m_Width == value2.m_Width && value1.m_MipLevels == value2.m_MipLevels && value1.m_ArraySize == value2.m_ArraySize
+			 && value1.m_Format == value2.m_Format && value1.m_Usage == value2.m_Usage && value1.m_BindFlags == value2.m_BindFlags
+			 && value1.m_CPUAccessFlags == value2.m_CPUAccessFlags && value1.m_MiscFlags == value2.m_MiscFlags );
+	}
 }
 }

@@ -52,5 +52,41 @@ namespace Direct3D10
 	{
 		return m_Annotations;
 	}
+
+	bool EffectTechniqueDescription::operator == ( EffectTechniqueDescription left, EffectTechniqueDescription right )
+	{
+		return EffectTechniqueDescription::Equals( left, right );
+	}
+
+	bool EffectTechniqueDescription::operator != ( EffectTechniqueDescription left, EffectTechniqueDescription right )
+	{
+		return !EffectTechniqueDescription::Equals( left, right );
+	}
+
+	int EffectTechniqueDescription::GetHashCode()
+	{
+		return m_Name->GetHashCode() + m_Passes.GetHashCode() + m_Annotations.GetHashCode();
+	}
+
+	bool EffectTechniqueDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<EffectTechniqueDescription>( value ) );
+	}
+
+	bool EffectTechniqueDescription::Equals( EffectTechniqueDescription value )
+	{
+		return ( m_Name == value.m_Name && m_Passes == value.m_Passes && m_Annotations == value.m_Annotations );
+	}
+
+	bool EffectTechniqueDescription::Equals( EffectTechniqueDescription% value1, EffectTechniqueDescription% value2 )
+	{
+		return ( value1.m_Name == value2.m_Name && value1.m_Passes == value2.m_Passes && value1.m_Annotations == value2.m_Annotations );
+	}
 }
 }

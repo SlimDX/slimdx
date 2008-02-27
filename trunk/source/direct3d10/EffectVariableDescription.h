@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public value class EffectVariableDescription
+		public value class EffectVariableDescription : System::IEquatable<EffectVariableDescription>
 		{
 		private:
 			System::String^ m_Name;
@@ -70,6 +70,14 @@ namespace SlimDX
 			{
 				int get();
 			}
+
+			static bool operator == ( EffectVariableDescription left, EffectVariableDescription right );
+			static bool operator != ( EffectVariableDescription left, EffectVariableDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( EffectVariableDescription other );
+			static bool Equals( EffectVariableDescription% value1, EffectVariableDescription% value2 );
 		};
 	}
 };

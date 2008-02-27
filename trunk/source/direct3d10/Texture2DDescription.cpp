@@ -158,5 +158,50 @@ namespace Direct3D10
 	{
 		m_MiscFlags = value;
 	}
+
+	bool Texture2DDescription::operator == ( Texture2DDescription left, Texture2DDescription right )
+	{
+		return Texture2DDescription::Equals( left, right );
+	}
+
+	bool Texture2DDescription::operator != ( Texture2DDescription left, Texture2DDescription right )
+	{
+		return !Texture2DDescription::Equals( left, right );
+	}
+
+	int Texture2DDescription::GetHashCode()
+	{
+		return m_Width.GetHashCode() + m_Height.GetHashCode() + m_MipLevels.GetHashCode()
+			 + m_ArraySize.GetHashCode() + m_Format.GetHashCode() + m_SampleDesc.GetHashCode()
+			 + m_Usage.GetHashCode() + m_BindFlags.GetHashCode() + m_CPUAccessFlags.GetHashCode()
+			 + m_MiscFlags.GetHashCode();
+	}
+
+	bool Texture2DDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<Texture2DDescription>( value ) );
+	}
+
+	bool Texture2DDescription::Equals( Texture2DDescription value )
+	{
+		return ( m_Width == value.m_Width && m_Height == value.m_Height && m_MipLevels == value.m_MipLevels
+			 && m_ArraySize == value.m_ArraySize && m_Format == value.m_Format && m_SampleDesc == value.m_SampleDesc
+			 && m_Usage == value.m_Usage && m_BindFlags == value.m_BindFlags && m_CPUAccessFlags == value.m_CPUAccessFlags
+			 && m_MiscFlags == value.m_MiscFlags );
+	}
+
+	bool Texture2DDescription::Equals( Texture2DDescription% value1, Texture2DDescription% value2 )
+	{
+		return ( value1.m_Width == value2.m_Width && value1.m_Height == value2.m_Height && value1.m_MipLevels == value2.m_MipLevels
+			 && value1.m_ArraySize == value2.m_ArraySize && value1.m_Format == value2.m_Format && value1.m_SampleDesc == value2.m_SampleDesc
+			 && value1.m_Usage == value2.m_Usage && value1.m_BindFlags == value2.m_BindFlags && value1.m_CPUAccessFlags == value2.m_CPUAccessFlags
+			 && value1.m_MiscFlags == value2.m_MiscFlags );
+	}
 }
 }

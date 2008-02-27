@@ -116,7 +116,7 @@ namespace SlimDX
 			Face = D3DXMESHSIMP_FACE
 		};
 
-		public value class ExtendedMaterial
+		public value class ExtendedMaterial : System::IEquatable<ExtendedMaterial>
 		{
 		internal:
 			static D3DXMATERIAL ToUnmanaged( ExtendedMaterial material );
@@ -126,17 +126,33 @@ namespace SlimDX
 		public:
 			property Material MaterialD3D;
 			property System::String^ TextureFileName;
+
+			static bool operator == ( ExtendedMaterial left, ExtendedMaterial right );
+			static bool operator != ( ExtendedMaterial left, ExtendedMaterial right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( ExtendedMaterial other );
+			static bool Equals( ExtendedMaterial% value1, ExtendedMaterial% value2 );
 		};
 
-		public value class EffectDefault
+		public value class EffectDefault : System::IEquatable<EffectDefault>
 		{
 		public:
 			property System::String^ ParameterName;
 			property EffectDefaultType Type;
 			property DataStream^ Value;
+
+			static bool operator == ( EffectDefault left, EffectDefault right );
+			static bool operator != ( EffectDefault left, EffectDefault right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( EffectDefault other );
+			static bool Equals( EffectDefault% value1, EffectDefault% value2 );
 		};
 
-		public value class EffectInstance
+		public value class EffectInstance : System::IEquatable<EffectInstance>
 		{
 		internal:
 			static EffectInstance FromUnmanaged( const D3DXEFFECTINSTANCE &effect );
@@ -146,10 +162,18 @@ namespace SlimDX
 		public:
 			property System::String^ EffectFileName;
 			property array<EffectDefault>^ Defaults;
+
+			static bool operator == ( EffectInstance left, EffectInstance right );
+			static bool operator != ( EffectInstance left, EffectInstance right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( EffectInstance other );
+			static bool Equals( EffectInstance% value1, EffectInstance% value2 );
 		};
 
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
-		public value class AttributeRange
+		public value class AttributeRange : System::IEquatable<AttributeRange>
 		{
 		public:
 			property int AttribId;
@@ -157,10 +181,18 @@ namespace SlimDX
 			property int FaceCount;
 			property int VertexStart;
 			property int VertexCount;
+
+			static bool operator == ( AttributeRange left, AttributeRange right );
+			static bool operator != ( AttributeRange left, AttributeRange right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( AttributeRange other );
+			static bool Equals( AttributeRange% value1, AttributeRange% value2 );
 		};
 
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
-		public value class GlyphMetricsFloat
+		public value class GlyphMetricsFloat : System::IEquatable<GlyphMetricsFloat>
 		{
 		public:
 			property float BlackBoxX;
@@ -168,10 +200,18 @@ namespace SlimDX
 			property System::Drawing::PointF GlyphOrigin;
 			property float CellIncX;
 			property float CellIncY;
+
+			static bool operator == ( GlyphMetricsFloat left, GlyphMetricsFloat right );
+			static bool operator != ( GlyphMetricsFloat left, GlyphMetricsFloat right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( GlyphMetricsFloat other );
+			static bool Equals( GlyphMetricsFloat% value1, GlyphMetricsFloat% value2 );
 		};
 
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
-		public value class AttributeWeights
+		public value class AttributeWeights : System::IEquatable<AttributeWeights>
 		{
 		public:
 			property float Position;
@@ -189,16 +229,32 @@ namespace SlimDX
 			property float TextureCoordinate8;
 			property float Tangent;
 			property float Binormal;
+
+			static bool operator == ( AttributeWeights left, AttributeWeights right );
+			static bool operator != ( AttributeWeights left, AttributeWeights right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( AttributeWeights other );
+			static bool Equals( AttributeWeights% value1, AttributeWeights% value2 );
 		};
 
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
-		public value class IntersectInformation
+		public value class IntersectInformation : System::IEquatable<IntersectInformation>
 		{
 		public:
 			property int FaceIndex;
 			property float U;
 			property float V;
 			property float Distance;
+
+			static bool operator == ( IntersectInformation left, IntersectInformation right );
+			static bool operator != ( IntersectInformation left, IntersectInformation right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( IntersectInformation other );
+			static bool Equals( IntersectInformation% value1, IntersectInformation% value2 );
 		};
 
 		ref class Mesh;

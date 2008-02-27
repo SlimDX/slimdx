@@ -158,5 +158,50 @@ namespace Direct3D10
 	{
 		m_AntialiasedLineEnable = value;	
 	}
+
+	bool RasterizerStateDescription::operator == ( RasterizerStateDescription left, RasterizerStateDescription right )
+	{
+		return RasterizerStateDescription::Equals( left, right );
+	}
+
+	bool RasterizerStateDescription::operator != ( RasterizerStateDescription left, RasterizerStateDescription right )
+	{
+		return !RasterizerStateDescription::Equals( left, right );
+	}
+
+	int RasterizerStateDescription::GetHashCode()
+	{
+		return m_FillMode.GetHashCode() + m_CullMode.GetHashCode() + m_FrontCounterClockwise.GetHashCode()
+			 + m_DepthBias.GetHashCode() + m_DepthBiasClamp.GetHashCode() + m_SlopeScaledDepthBias.GetHashCode()
+			 + m_DepthClipEnable.GetHashCode() + m_ScissorEnable.GetHashCode() + m_MultisampleEnable.GetHashCode()
+			 + m_AntialiasedLineEnable.GetHashCode();
+	}
+
+	bool RasterizerStateDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<RasterizerStateDescription>( value ) );
+	}
+
+	bool RasterizerStateDescription::Equals( RasterizerStateDescription value )
+	{
+		return ( m_FillMode == value.m_FillMode && m_CullMode == value.m_CullMode && m_FrontCounterClockwise == value.m_FrontCounterClockwise
+			 && m_DepthBias == value.m_DepthBias && m_DepthBiasClamp == value.m_DepthBiasClamp && m_SlopeScaledDepthBias == value.m_SlopeScaledDepthBias
+			 && m_DepthClipEnable == value.m_DepthClipEnable && m_ScissorEnable == value.m_ScissorEnable && m_MultisampleEnable == value.m_MultisampleEnable
+			 && m_AntialiasedLineEnable == value.m_AntialiasedLineEnable );
+	}
+
+	bool RasterizerStateDescription::Equals( RasterizerStateDescription% value1, RasterizerStateDescription% value2 )
+	{
+		return ( value1.m_FillMode == value2.m_FillMode && value1.m_CullMode == value2.m_CullMode && value1.m_FrontCounterClockwise == value2.m_FrontCounterClockwise
+			 && value1.m_DepthBias == value2.m_DepthBias && value1.m_DepthBiasClamp == value2.m_DepthBiasClamp && value1.m_SlopeScaledDepthBias == value2.m_SlopeScaledDepthBias
+			 && value1.m_DepthClipEnable == value2.m_DepthClipEnable && value1.m_ScissorEnable == value2.m_ScissorEnable && value1.m_MultisampleEnable == value2.m_MultisampleEnable
+			 && value1.m_AntialiasedLineEnable == value2.m_AntialiasedLineEnable );
+	}
 }
 }

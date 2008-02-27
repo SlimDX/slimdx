@@ -25,7 +25,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public value class ShaderMacro
+		public value class ShaderMacro : System::IEquatable<ShaderMacro>
 		{
 		private:
 			System::String^ m_Name;
@@ -41,6 +41,14 @@ namespace SlimDX
 			{
 				System::String^ get();
 			}
+
+			static bool operator == ( ShaderMacro left, ShaderMacro right );
+			static bool operator != ( ShaderMacro left, ShaderMacro right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( ShaderMacro other );
+			static bool Equals( ShaderMacro% value1, ShaderMacro% value2 );
 		};
 	}
 };

@@ -29,7 +29,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public value class RenderTargetViewDescription
+		public value class RenderTargetViewDescription : System::IEquatable<RenderTargetViewDescription>
 		{
 		private:
 			DXGI::Format m_Format;
@@ -101,6 +101,14 @@ namespace SlimDX
 				int get();
 				void set( int value );
 			}
+
+			static bool operator == ( RenderTargetViewDescription left, RenderTargetViewDescription right );
+			static bool operator != ( RenderTargetViewDescription left, RenderTargetViewDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( RenderTargetViewDescription other );
+			static bool Equals( RenderTargetViewDescription% value1, RenderTargetViewDescription% value2 );
 		};
 	}
 };

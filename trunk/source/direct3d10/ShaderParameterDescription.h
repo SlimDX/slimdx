@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public value class ShaderParameterDescription
+		public value class ShaderParameterDescription : System::IEquatable<ShaderParameterDescription>
 		{
 		private:
 			System::String^ m_SemanticName;
@@ -76,6 +76,14 @@ namespace SlimDX
 			{
 				System::Byte get();
 			}
+
+			static bool operator == ( ShaderParameterDescription left, ShaderParameterDescription right );
+			static bool operator != ( ShaderParameterDescription left, ShaderParameterDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( ShaderParameterDescription other );
+			static bool Equals( ShaderParameterDescription% value1, ShaderParameterDescription% value2 );
 		};
 	}
 };

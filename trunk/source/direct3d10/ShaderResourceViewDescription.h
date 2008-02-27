@@ -29,7 +29,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public value class ShaderResourceViewDescription
+		public value class ShaderResourceViewDescription : System::IEquatable<ShaderResourceViewDescription>
 		{
 		private:
 			DXGI::Format m_Format;
@@ -94,6 +94,14 @@ namespace SlimDX
 				int get();
 				void set( int value );
 			}
+
+			static bool operator == ( ShaderResourceViewDescription left, ShaderResourceViewDescription right );
+			static bool operator != ( ShaderResourceViewDescription left, ShaderResourceViewDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( ShaderResourceViewDescription other );
+			static bool Equals( ShaderResourceViewDescription% value1, ShaderResourceViewDescription% value2 );
 		};
 	}
 };

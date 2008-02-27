@@ -150,5 +150,47 @@ namespace Direct3D10
 	{
 		return gcnew ReadOnlyCollection<ColorWriteMaskFlags>( m_RenderTargetWriteMask );
 	}
+
+	bool BlendStateDescription::operator == ( BlendStateDescription left, BlendStateDescription right )
+	{
+		return BlendStateDescription::Equals( left, right );
+	}
+
+	bool BlendStateDescription::operator != ( BlendStateDescription left, BlendStateDescription right )
+	{
+		return !BlendStateDescription::Equals( left, right );
+	}
+
+	int BlendStateDescription::GetHashCode()
+	{
+		return m_AlphaToCoverageEnable.GetHashCode() + m_BlendEnable->GetHashCode() + m_SrcBlend.GetHashCode()
+			 + m_DestBlend.GetHashCode() + m_BlendOp.GetHashCode() + m_SrcBlendAlpha.GetHashCode()
+			 + m_DestBlendAlpha.GetHashCode() + m_BlendOpAlpha.GetHashCode() + m_RenderTargetWriteMask->GetHashCode();
+	}
+
+	bool BlendStateDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<BlendStateDescription>( value ) );
+	}
+
+	bool BlendStateDescription::Equals( BlendStateDescription value )
+	{
+		return ( m_AlphaToCoverageEnable == value.m_AlphaToCoverageEnable && m_BlendEnable == value.m_BlendEnable && m_SrcBlend == value.m_SrcBlend
+			 && m_DestBlend == value.m_DestBlend && m_BlendOp == value.m_BlendOp && m_SrcBlendAlpha == value.m_SrcBlendAlpha
+			 && m_DestBlendAlpha == value.m_DestBlendAlpha && m_BlendOpAlpha == value.m_BlendOpAlpha && m_RenderTargetWriteMask == value.m_RenderTargetWriteMask );
+	}
+
+	bool BlendStateDescription::Equals( BlendStateDescription% value1, BlendStateDescription% value2 )
+	{
+		return ( value1.m_AlphaToCoverageEnable == value2.m_AlphaToCoverageEnable && value1.m_BlendEnable == value2.m_BlendEnable && value1.m_SrcBlend == value2.m_SrcBlend
+			 && value1.m_DestBlend == value2.m_DestBlend && value1.m_BlendOp == value2.m_BlendOp && value1.m_SrcBlendAlpha == value2.m_SrcBlendAlpha
+			 && value1.m_DestBlendAlpha == value2.m_DestBlendAlpha && value1.m_BlendOpAlpha == value2.m_BlendOpAlpha && value1.m_RenderTargetWriteMask == value2.m_RenderTargetWriteMask );
+	}
 }
 }

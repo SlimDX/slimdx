@@ -29,7 +29,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public value class DepthStencilViewDescription
+		public value class DepthStencilViewDescription : System::IEquatable<DepthStencilViewDescription>
 		{
 		private:
 			DXGI::Format m_Format;
@@ -73,6 +73,14 @@ namespace SlimDX
 				int get();
 				void set( int value );
 			}
+
+			static bool operator == ( DepthStencilViewDescription left, DepthStencilViewDescription right );
+			static bool operator != ( DepthStencilViewDescription left, DepthStencilViewDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( DepthStencilViewDescription other );
+			static bool Equals( DepthStencilViewDescription% value1, DepthStencilViewDescription% value2 );
 		};
 	}
 };

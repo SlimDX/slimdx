@@ -125,6 +125,49 @@ namespace Direct3D9
 		return result;
 	}
 
+	
+	bool EventDescription::operator == ( EventDescription left, EventDescription right )
+	{
+		return EventDescription::Equals( left, right );
+	}
+
+	bool EventDescription::operator != ( EventDescription left, EventDescription right )
+	{
+		return !EventDescription::Equals( left, right );
+	}
+
+	int EventDescription::GetHashCode()
+	{
+		return Type.GetHashCode() + Track.GetHashCode() + StartTime.GetHashCode()
+			 + Duration.GetHashCode() + Transition.GetHashCode() + Weight.GetHashCode()
+			 + Speed.GetHashCode() + Position.GetHashCode() + Enabled.GetHashCode();
+	}
+
+	bool EventDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<EventDescription>( value ) );
+	}
+
+	bool EventDescription::Equals( EventDescription value )
+	{
+		return ( Type == value.Type && Track == value.Track && StartTime == value.StartTime
+			 && Duration == value.Duration && Transition == value.Transition && Weight == value.Weight
+			 && Speed == value.Speed && Position == value.Position && Enabled == value.Enabled );
+	}
+
+	bool EventDescription::Equals( EventDescription% value1, EventDescription% value2 )
+	{
+		return ( value1.Type == value2.Type && value1.Track == value2.Track && value1.StartTime == value2.StartTime
+			 && value1.Duration == value2.Duration && value1.Transition == value2.Transition && value1.Weight == value2.Weight
+			 && value1.Speed == value2.Speed && value1.Position == value2.Position && value1.Enabled == value2.Enabled );
+	}
+
 	AnimationSet^ AnimationController::GetTrackAnimationSet( int track )
 	{
 		LPD3DXANIMATIONSET set;
@@ -145,6 +188,45 @@ namespace Direct3D9
 		RECORD_D3D9( hr );
 
 		return result;
+	}
+
+	bool TrackDescription::operator == ( TrackDescription left, TrackDescription right )
+	{
+		return TrackDescription::Equals( left, right );
+	}
+
+	bool TrackDescription::operator != ( TrackDescription left, TrackDescription right )
+	{
+		return !TrackDescription::Equals( left, right );
+	}
+
+	int TrackDescription::GetHashCode()
+	{
+		return Priority.GetHashCode() + Weight.GetHashCode() + Speed.GetHashCode()
+			 + Position.GetHashCode() + Enabled.GetHashCode();
+	}
+
+	bool TrackDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<TrackDescription>( value ) );
+	}
+
+	bool TrackDescription::Equals( TrackDescription value )
+	{
+		return ( Priority == value.Priority && Weight == value.Weight && Speed == value.Speed
+			 && Position == value.Position && Enabled == value.Enabled );
+	}
+
+	bool TrackDescription::Equals( TrackDescription% value1, TrackDescription% value2 )
+	{
+		return ( value1.Priority == value2.Priority && value1.Weight == value2.Weight && value1.Speed == value2.Speed
+			 && value1.Position == value2.Position && value1.Enabled == value2.Enabled );
 	}
 
 	int AnimationController::GetUpcomingPriorityBlend( int handle )

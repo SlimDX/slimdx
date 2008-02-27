@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		public value class FontDescription
+		public value class FontDescription : System::IEquatable<FontDescription>
 		{
 		private:
 			int m_Height;
@@ -106,6 +106,14 @@ namespace SlimDX
 				System::String^ get();
 				void set( System::String^ value );
 			}
+
+			static bool operator == ( FontDescription left, FontDescription right );
+			static bool operator != ( FontDescription left, FontDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( FontDescription other );
+			static bool Equals( FontDescription% value1, FontDescription% value2 );
 		};
 	}
 };
