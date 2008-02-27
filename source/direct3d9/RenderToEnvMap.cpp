@@ -22,7 +22,6 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-//#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
 
 #include "Device.h"
@@ -110,27 +109,50 @@ namespace SlimDX
 			Construct(result);
 		}
 
+		RenderToEnvironmentMap^ RenderToEnvironmentMap::FromPointer( ID3DXRenderToEnvMap* pointer )
+		{
+			RenderToEnvironmentMap^ tableEntry = safe_cast<RenderToEnvironmentMap^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				pointer->Release();
+				return tableEntry;
+			}
+
+			return gcnew RenderToEnvironmentMap( pointer );
+		}
+
+		RenderToEnvironmentMap^ RenderToEnvironmentMap::FromPointer( IntPtr pointer )
+		{
+			RenderToEnvironmentMap^ tableEntry = safe_cast<RenderToEnvironmentMap^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				return tableEntry;
+			}
+
+			return gcnew RenderToEnvironmentMap( pointer );
+		}
+
 		Result RenderToEnvironmentMap::BeginCube( CubeTexture^ texture )
 		{
-			HRESULT hr = InternalPointer->BeginCube( texture->TexturePointer );
+			HRESULT hr = InternalPointer->BeginCube( texture->InternalPointer );
 			return RECORD_D3D9( hr );
 		}
 
 		Result RenderToEnvironmentMap::BeginHemisphere( Texture^ positiveZTexture, Texture^ negativeZTexture )
 		{
-			HRESULT hr = InternalPointer->BeginHemisphere( positiveZTexture->TexturePointer, negativeZTexture->TexturePointer );
+			HRESULT hr = InternalPointer->BeginHemisphere( positiveZTexture->InternalPointer, negativeZTexture->InternalPointer );
 			return RECORD_D3D9( hr );
 		}
 
 		Result RenderToEnvironmentMap::BeginParabolic( Texture^ positiveZTexture, Texture^ negativeZTexture )
 		{
-			HRESULT hr = InternalPointer->BeginParabolic( positiveZTexture->TexturePointer, negativeZTexture->TexturePointer );
+			HRESULT hr = InternalPointer->BeginParabolic( positiveZTexture->InternalPointer, negativeZTexture->InternalPointer );
 			return RECORD_D3D9( hr );
 		}
 
 		Result RenderToEnvironmentMap::BeginSphere( Texture^ texture )
 		{
-			HRESULT hr = InternalPointer->BeginSphere( texture->TexturePointer );
+			HRESULT hr = InternalPointer->BeginSphere( texture->InternalPointer );
 			return RECORD_D3D9( hr );
 		}
 
@@ -155,7 +177,7 @@ namespace SlimDX
 			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
-			return gcnew Device( device );
+			return Device::FromPointer( device );
 		}
 
 		Result RenderToEnvironmentMap::OnLostDevice()

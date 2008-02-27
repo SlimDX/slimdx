@@ -54,6 +54,29 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 	
+	Effect^ Effect::FromPointer( ID3D10Effect* pointer )
+	{
+		Effect^ tableEntry = safe_cast<Effect^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Effect( pointer );
+	}
+
+	Effect^ Effect::FromPointer( IntPtr pointer )
+	{
+		Effect^ tableEntry = safe_cast<Effect^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Effect( pointer );
+	}
+
 	EffectDescription Effect::Description::get()
 	{
 		D3D10_EFFECT_DESC nativeDescription;
@@ -85,7 +108,7 @@ namespace Direct3D10
 		if( RECORD_D3D10( InternalPointer->GetDevice( &device ) ).IsFailure )
 			return nullptr;
 		
-		return gcnew Device( device );
+		return Device::FromPointer( device );
 	}
 	
 	EffectConstantBuffer^ Effect::GetConstantBufferByIndex( int index )

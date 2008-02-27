@@ -34,7 +34,7 @@ namespace SlimDX
 		/// </remarks>
 		public ref class DeviceChild : public ComObject 
 		{
-			COMOBJECT(IDXGIDeviceSubObject);
+			COMOBJECT_BASE(IDXGIDeviceSubObject);
 		
 		protected:
 			DeviceChild();
@@ -44,7 +44,7 @@ namespace SlimDX
 			/// Constructs a DeviceChild from an unmanaged pointer.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGIDeviceSubObject pointer.</param>
-			DeviceChild( System::IntPtr pointer );
+			//static DeviceChild^ FromPointer( System::IntPtr pointer );
 			
 			/// <summary>
 			/// Gets the device the object is bound to.

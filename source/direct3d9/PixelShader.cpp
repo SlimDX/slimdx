@@ -29,7 +29,6 @@
 #include "../Utilities.h"
 #include "../StackAlloc.h"
 
-//#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
 
 #include "Device.h"
@@ -42,19 +41,16 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		PixelShader::PixelShader( IDirect3DPixelShader9* pixelShader )
+		PixelShader::PixelShader( IDirect3DPixelShader9* pointer )
 		{
-			if( pixelShader == NULL )
-				throw gcnew ArgumentNullException( "pixelShader" );
-
-			Construct(pixelShader);
-
+			Construct( pointer );
 			m_ConstantTable = nullptr;
 		}
 
-		PixelShader::PixelShader( IntPtr pixelShader )
+		PixelShader::PixelShader( IntPtr pointer )
 		{
-			Construct( pixelShader, NativeInterface );
+			Construct( pointer, NativeInterface );
+			m_ConstantTable = nullptr;
 		}
 
 		PixelShader::PixelShader( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable )
@@ -72,8 +68,45 @@ namespace SlimDX
 			if( RECORD_D3D9( hr ).IsFailure )
 				throw gcnew Direct3D9Exception( Result::Last );
 			
-			m_ConstantTable = gcnew ConstantTable( device, constantTable );
+			m_ConstantTable = ConstantTable::FromPointer( device, constantTable );
 			device->Release();
+		}
+
+		PixelShader^ PixelShader::FromPointer( IDirect3DPixelShader9* pointer )
+		{
+			PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				pointer->Release();
+				return tableEntry;
+			}
+
+			return gcnew PixelShader( pointer );
+		}
+
+		PixelShader^ PixelShader::FromPointer( IntPtr pointer )
+		{
+			PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				return tableEntry;
+			}
+
+			return gcnew PixelShader( pointer );
+		}
+
+
+		PixelShader^ PixelShader::FromPointer( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable )
+		{
+			IntPtr pixelShaderPtr = static_cast<IntPtr>( pixelShader );
+			PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Construct( pixelShaderPtr ) );
+			if( tableEntry != nullptr )
+			{
+				pixelShader->Release();
+				return tableEntry;
+			}
+
+			return gcnew PixelShader( pixelShader, constantTable );
 		}
 
 		PixelShader^ PixelShader::FromString( Device^ device, String^ sourceCode, String^ entryPoint, String^ profile, ShaderFlags flags, [Out] String^ %compilationErrors )
@@ -142,7 +175,7 @@ namespace SlimDX
 			if( RECORD_D3D9( hr ).IsFailure )
 				return Result::Last;
 
-			m_ConstantTable = gcnew ConstantTable( constantTable );
+			m_ConstantTable = ConstantTable::FromPointer( constantTable );
 
 			return Result::Last;
 		}

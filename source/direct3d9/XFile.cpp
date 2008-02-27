@@ -37,14 +37,37 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	XFileSaveData::XFileSaveData( ID3DXFileSaveData *object )
+	XFileSaveData::XFileSaveData( ID3DXFileSaveData* pointer )
 	{
-		Construct(object);
+		Construct( pointer );
 	}
 
 	XFileSaveData::XFileSaveData( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
+	}
+
+	XFileSaveData^ XFileSaveData::FromPointer( ID3DXFileSaveData* pointer )
+	{
+		XFileSaveData^ tableEntry = safe_cast<XFileSaveData^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew XFileSaveData( pointer );
+	}
+
+	XFileSaveData^ XFileSaveData::FromPointer( IntPtr pointer )
+	{
+		XFileSaveData^ tableEntry = safe_cast<XFileSaveData^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew XFileSaveData( pointer );
 	}
 
 	XFileSaveData^ XFileSaveData::AddDataObject( Guid dataTemplate, String^ name, Guid id, array<Byte>^ data )
@@ -129,7 +152,7 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew XFileSaveObject( result );
+		return XFileSaveObject::FromPointer( result );
 	}
 
 	Guid XFileSaveData::Type::get()
@@ -144,14 +167,37 @@ namespace Direct3D9
 		return Utilities::ConvertNativeGuid( result );
 	}
 
-	XFileSaveObject::XFileSaveObject( ID3DXFileSaveObject *object )
+	XFileSaveObject::XFileSaveObject( ID3DXFileSaveObject* pointer )
 	{
-		Construct(object);
+		Construct( pointer );
 	}
 
 	XFileSaveObject::XFileSaveObject( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
+	}
+
+	XFileSaveObject^ XFileSaveObject::FromPointer( ID3DXFileSaveObject* pointer )
+	{
+		XFileSaveObject^ tableEntry = safe_cast<XFileSaveObject^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew XFileSaveObject( pointer );
+	}
+
+	XFileSaveObject^ XFileSaveObject::FromPointer( IntPtr pointer )
+	{
+		XFileSaveObject^ tableEntry = safe_cast<XFileSaveObject^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew XFileSaveObject( pointer );
 	}
 
 	XFileSaveData^ XFileSaveObject::AddDataObject( Guid dataTemplate, String^ name, Guid id, array<Byte>^ data )
@@ -172,7 +218,7 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew XFileSaveData( result );
+		return XFileSaveData::FromPointer( result );
 	}
 
 	XFileSaveData^ XFileSaveObject::AddDataObject( Guid dataTemplate, String^ name, Guid id, Stream^ data )
@@ -190,23 +236,13 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew XFile( result );
+		return XFile::FromPointer( result );
 	}
 
 	Result XFileSaveObject::Save()
 	{
 		HRESULT hr = InternalPointer->Save();
 		return RECORD_D3D9( hr );
-	}
-
-	XFile::XFile( ID3DXFile *object )
-	{
-		Construct(object);
-	}
-
-	XFile::XFile( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
 	}
 
 	XFile::XFile()
@@ -219,6 +255,39 @@ namespace Direct3D9
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(result);
+	}
+
+	XFile::XFile( ID3DXFile* pointer )
+	{
+		Construct( pointer );
+	}
+
+	XFile::XFile( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+
+	XFile^ XFile::FromPointer( ID3DXFile* pointer )
+	{
+		XFile^ tableEntry = safe_cast<XFile^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return XFile::FromPointer( pointer );
+	}
+
+	XFile^ XFile::FromPointer( IntPtr pointer )
+	{
+		XFile^ tableEntry = safe_cast<XFile^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew XFile( pointer );
 	}
 
 	XFileEnumerationObject^ XFile::CreateEnumerationObject( String^ fileName, CharSet charSet )
@@ -238,7 +307,7 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew XFileEnumerationObject( result );
+		return XFileEnumerationObject::FromPointer( result );
 	}
 
 	XFileEnumerationObject^ XFile::CreateEnumerationObject( array<Byte>^ memory )
@@ -255,7 +324,7 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew XFileEnumerationObject( result );
+		return XFileEnumerationObject::FromPointer( result );
 	}
 
 	XFileEnumerationObject^ XFile::CreateEnumerationObject( Stream^ memory )
@@ -281,7 +350,7 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew XFileSaveObject( result );
+		return XFileSaveObject::FromPointer( result );
 	}
 
 	Result XFile::RegisterEnumerationTemplates( XFileEnumerationObject^ enumerationObject )
@@ -310,14 +379,37 @@ namespace Direct3D9
 		return RegisterTemplates( nameBytes );
 	}
 
-	XFileEnumerationObject::XFileEnumerationObject( ID3DXFileEnumObject *object )
+	XFileEnumerationObject::XFileEnumerationObject( ID3DXFileEnumObject* pointer )
 	{
-		Construct(object);
+		Construct( pointer );
 	}
 
 	XFileEnumerationObject::XFileEnumerationObject( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
+	}
+
+	XFileEnumerationObject^ XFileEnumerationObject::FromPointer( ID3DXFileEnumObject* pointer )
+	{
+		XFileEnumerationObject^ tableEntry = safe_cast<XFileEnumerationObject^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return XFileEnumerationObject::FromPointer( pointer );
+	}
+
+	XFileEnumerationObject^ XFileEnumerationObject::FromPointer( IntPtr pointer )
+	{
+		XFileEnumerationObject^ tableEntry = safe_cast<XFileEnumerationObject^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return XFileEnumerationObject::FromPointer( pointer );
 	}
 
 	XFileData^ XFileEnumerationObject::GetChild( int id )
@@ -329,7 +421,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew XFileData( result );
+		return XFileData::FromPointer( result );
 	}
 
 	XFileData^ XFileEnumerationObject::GetDataObject( Guid id )
@@ -341,7 +433,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew XFileData( result );
+		return XFileData::FromPointer( result );
 	}
 
 	XFileData^ XFileEnumerationObject::GetDataObject( String^ name )
@@ -355,7 +447,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew XFileData( result );
+		return XFileData::FromPointer( result );
 	}
 
 	XFile^ XFileEnumerationObject::GetFile()
@@ -367,7 +459,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew XFile( result );
+		return XFile::FromPointer( result );
 	}
 
 	int XFileEnumerationObject::ChildCount::get()
@@ -382,14 +474,37 @@ namespace Direct3D9
 		return result;
 	}
 
-	XFileData::XFileData( ID3DXFileData *object )
+	XFileData::XFileData( ID3DXFileData* pointer )
 	{
-		Construct(object);
+		Construct( pointer );
 	}
 
 	XFileData::XFileData( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
+	}
+
+	XFileData^ XFileData::FromPointer( ID3DXFileData* pointer )
+	{
+		XFileData^ tableEntry = safe_cast<XFileData^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return XFileData::FromPointer( pointer );
+	}
+
+	XFileData^ XFileData::FromPointer( IntPtr pointer )
+	{
+		XFileData^ tableEntry = safe_cast<XFileData^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return XFileData::FromPointer( pointer );
 	}
 
 	XFileData^ XFileData::GetChild( int id )
@@ -401,7 +516,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew XFileData( result );
+		return XFileData::FromPointer( result );
 	}
 
 	XFileEnumerationObject^ XFileData::GetEnumerationObject()
@@ -413,7 +528,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew XFileEnumerationObject( result );
+		return XFileEnumerationObject::FromPointer( result );
 	}
 
 	DataStream^ XFileData::Lock()

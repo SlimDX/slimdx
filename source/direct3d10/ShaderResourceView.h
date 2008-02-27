@@ -33,10 +33,7 @@ namespace SlimDX
 
 		public ref class ShaderResourceView : public ResourceView
 		{
-			COMOBJECT(ID3D10ShaderResourceView);
-			
-		internal:
-			ShaderResourceView( ID3D10ShaderResourceView* view );
+			COMOBJECT(ID3D10ShaderResourceView, ShaderResourceView);
 			
 		public:
 			property ShaderResourceViewDescription Description
@@ -44,9 +41,9 @@ namespace SlimDX
 				ShaderResourceViewDescription get();
 			}
 			
-			ShaderResourceView( System::IntPtr pointer );
 			ShaderResourceView( Device^ device, Resource^ resource );
 			ShaderResourceView( Device^ device, Resource^ resource, ShaderResourceViewDescription description );
+			static ShaderResourceView^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

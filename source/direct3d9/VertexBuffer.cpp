@@ -78,6 +78,29 @@ namespace Direct3D9
 		Construct(vbPtr);
 	}
 
+	VertexBuffer^ VertexBuffer::FromPointer( IDirect3DVertexBuffer9* pointer )
+	{
+		VertexBuffer^ tableEntry = safe_cast<VertexBuffer^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew VertexBuffer( pointer );
+	}
+
+	VertexBuffer^ VertexBuffer::FromPointer( IntPtr pointer )
+	{
+		VertexBuffer^ tableEntry = safe_cast<VertexBuffer^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew VertexBuffer( pointer );
+	}
+
 	VertexBuffer::VertexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool )
 	{
 		IDirect3DVertexBuffer9* vb;
@@ -105,7 +128,7 @@ namespace Direct3D9
 	DataStream^ VertexBuffer::Lock( int offset, int size, LockFlags flags )
 	{
 		void* lockedPtr;
-		HRESULT hr = VbPointer->Lock( offset, size, &lockedPtr, static_cast<DWORD>( flags ) );
+		HRESULT hr = InternalPointer->Lock( offset, size, &lockedPtr, static_cast<DWORD>( flags ) );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
@@ -119,7 +142,7 @@ namespace Direct3D9
 
 	Result VertexBuffer::Unlock()
 	{
-		return RECORD_D3D9( VbPointer->Unlock() );
+		return RECORD_D3D9( InternalPointer->Unlock() );
 	}
 }
 }

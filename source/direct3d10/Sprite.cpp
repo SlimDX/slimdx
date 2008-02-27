@@ -54,7 +54,30 @@ namespace Direct3D10
 			
 		Construct( sprite );
 	}
-	
+
+	Sprite^ Sprite::FromPointer( ID3DX10Sprite* pointer )
+	{
+		Sprite^ tableEntry = safe_cast<Sprite^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Sprite( pointer );
+	}
+
+	Sprite^ Sprite::FromPointer( IntPtr pointer )
+	{
+		Sprite^ tableEntry = safe_cast<Sprite^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Sprite( pointer );
+	}
+
 	Matrix Sprite::ViewTransform::get()
 	{
 		D3DXMATRIX matrix;
@@ -90,7 +113,7 @@ namespace Direct3D10
 		ID3D10Device* device = 0;
 		if( RECORD_D3D10( InternalPointer->GetDevice( &device ) ).IsFailure )
 			return nullptr;
-		return gcnew Device( device );
+		return Device::FromPointer( device );
 	}
 
 	Result Sprite::Begin( SpriteFlags flags )

@@ -42,9 +42,9 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	TextureShader::TextureShader( ID3DXTextureShader *pointer )
+	TextureShader::TextureShader( ID3DXTextureShader* pointer )
 	{
-		Construct(pointer);
+		Construct( pointer );
 	}
 
 	TextureShader::TextureShader( IntPtr pointer )
@@ -63,6 +63,30 @@ namespace Direct3D9
 
 		Construct(result);
 	}
+
+	TextureShader^ TextureShader::FromPointer( ID3DXTextureShader* pointer )
+	{
+		TextureShader^ tableEntry = safe_cast<TextureShader^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew TextureShader( pointer );
+	}
+
+	TextureShader^ TextureShader::FromPointer( IntPtr pointer )
+	{
+		TextureShader^ tableEntry = safe_cast<TextureShader^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew TextureShader( pointer );
+	}
+
 
 	EffectHandle^ TextureShader::GetConstant(SlimDX::Direct3D9::EffectHandle ^handle, int index)
 	{

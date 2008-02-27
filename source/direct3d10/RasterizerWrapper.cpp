@@ -51,7 +51,7 @@ namespace Direct3D10
 	{
 		ID3D10RasterizerState* state = 0;
 		m_Device->RSGetState( &state );
-		return gcnew RasterizerState( state );
+		return RasterizerState::FromPointer( state );
 	}
 	
 	void RasterizerWrapper::SetViewports( SlimDX::Viewport viewport )

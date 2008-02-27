@@ -39,5 +39,28 @@ namespace Direct3D10
 	{
 		Construct( pointer, NativeInterface );
 	}
+
+	GeometryShader^ GeometryShader::FromPointer( ID3D10GeometryShader* pointer )
+	{
+		GeometryShader^ tableEntry = safe_cast<GeometryShader^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew GeometryShader( pointer );
+	}
+
+	GeometryShader^ GeometryShader::FromPointer( IntPtr pointer )
+	{
+		GeometryShader^ tableEntry = safe_cast<GeometryShader^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew GeometryShader( pointer );
+	}
 }
 }

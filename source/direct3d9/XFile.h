@@ -40,14 +40,10 @@ namespace SlimDX
 
 		public ref class XFileSaveData : public ComObject
 		{
-			COMOBJECT(ID3DXFileSaveData);
-
-		internal:
-			XFileSaveData( ID3DXFileSaveData *object );
+			COMOBJECT(ID3DXFileSaveData, XFileSaveData);
 
 		public:
-			XFileSaveData( System::IntPtr pointer );
-			virtual ~XFileSaveData() { Destruct(); }
+			static XFileSaveData^ FromPointer( System::IntPtr pointer );
 
 			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, array<System::Byte>^ data );
 			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, System::IO::Stream^ data );
@@ -62,14 +58,10 @@ namespace SlimDX
 
 		public ref class XFileSaveObject : public ComObject
 		{
-			COMOBJECT(ID3DXFileSaveObject);
-
-		internal:
-			XFileSaveObject( ID3DXFileSaveObject *object );
+			COMOBJECT(ID3DXFileSaveObject, XFileSaveObject);
 
 		public:
-			XFileSaveObject( System::IntPtr pointer );
-			virtual ~XFileSaveObject() { Destruct(); }
+			static XFileSaveObject^ FromPointer( System::IntPtr pointer );
 
 			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, array<System::Byte>^ data );
 			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, System::IO::Stream^ data );
@@ -79,15 +71,11 @@ namespace SlimDX
 
 		public ref class XFile : public ComObject
 		{
-			COMOBJECT(ID3DXFile);
-
-		internal:
-			XFile( ID3DXFile *object );
+			COMOBJECT(ID3DXFile, XFile);
 
 		public:
-			XFile( System::IntPtr pointer );
 			XFile();
-			virtual ~XFile() { Destruct(); }
+			static XFile^ FromPointer( System::IntPtr pointer );
 
 			XFileEnumerationObject^ CreateEnumerationObject( System::String^ fileName, System::Runtime::InteropServices::CharSet charSet );
 			XFileEnumerationObject^ CreateEnumerationObject( array<System::Byte>^ memory );
@@ -102,14 +90,10 @@ namespace SlimDX
 
 		public ref class XFileEnumerationObject : public ComObject
 		{
-			COMOBJECT(ID3DXFileEnumObject);
-
-		internal:
-			XFileEnumerationObject( ID3DXFileEnumObject *object );
+			COMOBJECT(ID3DXFileEnumObject, XFileEnumerationObject);
 
 		public:
-			XFileEnumerationObject( System::IntPtr pointer );
-			virtual ~XFileEnumerationObject() { Destruct(); }
+			static XFileEnumerationObject^ FromPointer( System::IntPtr pointer );
 
 			XFileData^ GetChild( int id );
 			XFileData^ GetDataObject( System::Guid id );
@@ -121,14 +105,10 @@ namespace SlimDX
 
 		public ref class XFileData : public ComObject
 		{
-			COMOBJECT(ID3DXFileData);
-
-		internal:
-			XFileData( ID3DXFileData *data );
+			COMOBJECT(ID3DXFileData, XFileData);
 
 		public:
-			XFileData( System::IntPtr pointer );
-			virtual ~XFileData() { Destruct(); }
+			static XFileData^ FromPointer( System::IntPtr pointer );
 
 			XFileData^ GetChild( int id );
 			XFileEnumerationObject^ GetEnumerationObject();

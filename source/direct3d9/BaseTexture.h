@@ -31,15 +31,11 @@ namespace SlimDX
 	{
 		public ref class BaseTexture abstract : public Resource
 		{
+			COMOBJECT_BASE(IDirect3DBaseTexture9);
+
 		protected:
 			BaseTexture() { }
 
-		internal:
-			property IDirect3DBaseTexture9* BaseTexturePointer
-			{
-				IDirect3DBaseTexture9* get() { return static_cast<IDirect3DBaseTexture9*>( InternalPointer ); }
-			}
-		
 		public:
 			virtual ~BaseTexture() { }
 
@@ -56,19 +52,19 @@ namespace SlimDX
 		
 			property TextureFilter AutoMipGenerationFilter
 			{
-				TextureFilter get() { return ( TextureFilter ) BaseTexturePointer->GetAutoGenFilterType(); }
-				void set(TextureFilter value) { BaseTexturePointer->SetAutoGenFilterType( (D3DTEXTUREFILTERTYPE) value ); }
+				TextureFilter get() { return ( TextureFilter ) InternalPointer->GetAutoGenFilterType(); }
+				void set(TextureFilter value) { InternalPointer->SetAutoGenFilterType( (D3DTEXTUREFILTERTYPE) value ); }
 			}
 			
 			property int LevelCount
 			{
-				int get() { return BaseTexturePointer->GetLevelCount(); }
+				int get() { return InternalPointer->GetLevelCount(); }
 			}
 			
 			property int LevelOfDetail
 			{
-				int get() { return BaseTexturePointer->GetLOD(); }
-				void set(int value) { BaseTexturePointer->SetLOD( value ); }
+				int get() { return InternalPointer->GetLOD(); }
+				void set(int value) { InternalPointer->SetLOD( value ); }
 			}
 		};
 	}

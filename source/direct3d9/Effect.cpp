@@ -35,6 +35,11 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		EffectPool::EffectPool( ID3DXEffectPool* pointer )
+		{
+			Construct( pointer );
+		}
+
 		EffectPool::EffectPool( IntPtr pointer )
 		{
 			Construct( pointer, NativeInterface );
@@ -50,6 +55,29 @@ namespace SlimDX
 			Construct( pointer );
 		}
 
+		EffectPool^ EffectPool::FromPointer( ID3DXEffectPool* pointer )
+		{
+			EffectPool^ tableEntry = safe_cast<EffectPool^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				pointer->Release();
+				return tableEntry;
+			}
+
+			return gcnew EffectPool( pointer );
+		}
+
+		EffectPool^ EffectPool::FromPointer( IntPtr pointer )
+		{
+			EffectPool^ tableEntry = safe_cast<EffectPool^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				return tableEntry;
+			}
+
+			return gcnew EffectPool( pointer );
+		}
+
 		Effect::Effect( ID3DXEffect* pointer )
 		{
 			shim = NULL;
@@ -60,6 +88,29 @@ namespace SlimDX
 		{
 			shim = NULL;
 			Construct( pointer, NativeInterface );
+		}
+
+		Effect^ Effect::FromPointer( ID3DXEffect* pointer )
+		{
+			Effect^ tableEntry = safe_cast<Effect^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				pointer->Release();
+				return tableEntry;
+			}
+
+			return gcnew Effect( pointer );
+		}
+
+		Effect^ Effect::FromPointer( IntPtr pointer )
+		{
+			Effect^ tableEntry = safe_cast<Effect^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				return tableEntry;
+			}
+
+			return gcnew Effect( pointer );
 		}
 
 		Effect^ Effect::FromMemory( Device^ device, array<Byte>^ memory, array<Macro>^ preprocessorDefines,

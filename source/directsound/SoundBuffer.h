@@ -60,7 +60,7 @@ namespace SlimDX
 
 		public ref class SoundBuffer : ComObject
 		{
-			COMOBJECT(IDirectSoundBuffer);
+			COMOBJECT(IDirectSoundBuffer, SoundBuffer);
 
 		private:
 			//While I believe the IDirectSoundBuffer can be safely cast to one of these, it's not
@@ -70,12 +70,10 @@ namespace SlimDX
 
 			void SetDS8Pointer();
 
-		internal:
-			SoundBuffer( IDirectSoundBuffer* buffer );
-
 		public:
 			SoundBuffer( DirectSound^ dsound, BufferDescription description );
 			~SoundBuffer();
+			static SoundBuffer^ FromPointer( System::IntPtr pointer );
 
 			void Initialize( DirectSound^ dsound, BufferDescription description );
 			//void AcquireResources( 

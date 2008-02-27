@@ -27,15 +27,11 @@ namespace SlimDX
 	{
 		public ref class TextureShader : public ComObject
 		{
-			COMOBJECT(ID3DXTextureShader);
-
-		internal:
-			TextureShader( ID3DXTextureShader* pointer );
+			COMOBJECT(ID3DXTextureShader, TextureShader);
 
 		public:
-			TextureShader( System::IntPtr pointer );
 			TextureShader( DataStream^ stream );
-			virtual ~TextureShader() { Destruct(); }
+			static TextureShader^ FromPointer( System::IntPtr pointer );
 
 			EffectHandle^ GetConstant( EffectHandle^ parent, int index );
 			EffectHandle^ GetConstant( EffectHandle^ parent, System::String^ name );

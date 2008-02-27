@@ -29,21 +29,21 @@ namespace SlimDX
 	{	
 		public ref class PixelShader : public ComObject
 		{
-			COMOBJECT(IDirect3DPixelShader9);
+			COMOBJECT(IDirect3DPixelShader9, PixelShader);
 
 		private:
 			ConstantTable^ m_ConstantTable;
 
-		internal:
-			PixelShader( IDirect3DPixelShader9* pixelShader );
 			PixelShader( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable );
 
+		internal:
+			static PixelShader^ FromPointer( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable );
+
 		public:
-			PixelShader( System::IntPtr pixelShader );
-			
+			static PixelShader^ FromPointer( System::IntPtr pixelShader );
+
 			~PixelShader()
 			{
-				Destruct();
 				delete m_ConstantTable;
 			}
 			

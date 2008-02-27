@@ -35,14 +35,14 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	StateBlock::StateBlock( IDirect3DStateBlock9* pointer )
+	{
+		Construct( pointer );
+	}
+
 	StateBlock::StateBlock( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
-	}
-
-	StateBlock::StateBlock( IDirect3DStateBlock9* stateBlock )
-	{
-		Construct(stateBlock);
 	}
 
 	StateBlock::StateBlock( Device^ device, StateBlockType type )
@@ -56,6 +56,30 @@ namespace Direct3D9
 
 		Construct(stateBlock);
 	}
+
+	StateBlock^ StateBlock::FromPointer( IDirect3DStateBlock9* pointer )
+	{
+		StateBlock^ tableEntry = safe_cast<StateBlock^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew StateBlock( pointer );
+	}
+
+	StateBlock^ StateBlock::FromPointer( IntPtr pointer )
+	{
+		StateBlock^ tableEntry = safe_cast<StateBlock^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew StateBlock( pointer );
+	}
+
 
 	Result StateBlock::Apply()
 	{
@@ -77,7 +101,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Device( device );
+		return Device::FromPointer( device );
 	}
 }
 }

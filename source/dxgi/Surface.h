@@ -39,10 +39,7 @@ namespace SlimDX
 		/// </remarks>
 		public ref class Surface : public DeviceChild
 		{
-			COMOBJECT(IDXGISurface);
-
-		internal:
-			Surface( IDXGISurface* pointer );
+			COMOBJECT(IDXGISurface, Surface);
 
 		public:
 			/// <summary>
@@ -56,7 +53,7 @@ namespace SlimDX
 			/// Constructs a Surface from an unmanaged pointer.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGISurface pointer.</param>
-			Surface( System::IntPtr pointer );
+			static Surface^ FromPointer( System::IntPtr pointer );
 			
 			/// <summary>
 			/// Acquires access to the surface data.

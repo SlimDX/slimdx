@@ -35,14 +35,11 @@ namespace SlimDX
 		
 		public ref class InputLayout : public DeviceChild
 		{
-			COMOBJECT(ID3D10InputLayout);
+			COMOBJECT(ID3D10InputLayout, InputLayout);
 		
-		internal:
-			InputLayout( ID3D10InputLayout* pointer );
-			
 		public:
-			InputLayout( System::IntPtr pointer );
 			InputLayout( Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature );
+			static InputLayout^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

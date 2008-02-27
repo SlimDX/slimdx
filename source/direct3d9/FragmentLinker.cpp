@@ -102,6 +102,29 @@ namespace Direct3D9
 		Construct(linker);
 	}
 
+	FragmentLinker^ FragmentLinker::FromPointer( ID3DXFragmentLinker* pointer )
+	{
+		FragmentLinker^ tableEntry = safe_cast<FragmentLinker^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew FragmentLinker( pointer );
+	}
+
+	FragmentLinker^ FragmentLinker::FromPointer( IntPtr pointer )
+	{
+		FragmentLinker^ tableEntry = safe_cast<FragmentLinker^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew FragmentLinker( pointer );
+	}
+
 	DataStream^ FragmentLinker::Gather( array<Byte>^ sourceData, array<Macro>^ defines,
 		Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
 	{
@@ -211,7 +234,7 @@ namespace Direct3D9
 		//This method always returns the value S_OK.
 		InternalPointer->GetDevice( &device );
 
-		return gcnew Device( device );
+		return Device::FromPointer( device );
 	}
 
 	FragmentDescription FragmentLinker::GetFragmentDescription( EffectHandle^ name )
@@ -278,7 +301,7 @@ namespace Direct3D9
 		if( Result::Last.IsFailure )
 			return nullptr;
 
-		return gcnew ShaderBytecode( bytecode );
+		return ShaderBytecode::FromPointer( bytecode );
 	}
 
 	VertexShader^ FragmentLinker::LinkVertexShader( String^ profile, ShaderFlags flags, array<EffectHandle^>^ fragmentHandles, [Out] String^% errors )
@@ -302,7 +325,7 @@ namespace Direct3D9
 		if( Result::Last.IsFailure )
 			return nullptr;
 
-		return gcnew VertexShader( shader );
+		return VertexShader::FromPointer( shader );
 	}
 
 	PixelShader^ FragmentLinker::LinkPixelShader( String^ profile, ShaderFlags flags, array<EffectHandle^>^ fragmentHandles, [Out] String^% errors )
@@ -326,7 +349,7 @@ namespace Direct3D9
 		if( Result::Last.IsFailure )
 			return nullptr;
 
-		return gcnew PixelShader( shader );
+		return PixelShader::FromPointer( shader );
 	}
 
 	int FragmentLinker::FragmentCount::get()

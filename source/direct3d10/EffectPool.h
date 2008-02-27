@@ -36,13 +36,10 @@ namespace SlimDX
 		
 		public ref class EffectPool : public ComObject
 		{
-			COMOBJECT(ID3D10EffectPool);
+			COMOBJECT(ID3D10EffectPool, EffectPool);
 
-		internal:
-			EffectPool( ID3D10EffectPool* pointer );
-		
 		public:
-			EffectPool( System::IntPtr pointer );
+			static EffectPool^ FromPointer( System::IntPtr pointer );
 			
 			Effect^ AsEffect();
 			

@@ -65,6 +65,12 @@ namespace DirectSound
 		SetDS8Pointer();
 	}
 
+	SoundBuffer::SoundBuffer( IntPtr buffer )
+	{
+		Construct( buffer, NativeInterface );
+		SetDS8Pointer();
+	}
+
 	SoundBuffer::SoundBuffer( DirectSound^ dsound, BufferDescription description )
 	{
 		DSBUFFERDESC nativeDesc;
@@ -87,8 +93,29 @@ namespace DirectSound
 			m_DS8Pointer->Release();
 			m_DS8Pointer = NULL;
 		}
+	}
 
-		Destruct();
+	SoundBuffer^ SoundBuffer::FromPointer( IDirectSoundBuffer* pointer )
+	{
+		SoundBuffer^ tableEntry = safe_cast<SoundBuffer^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew SoundBuffer( pointer );
+	}
+
+	SoundBuffer^ SoundBuffer::FromPointer( IntPtr pointer )
+	{
+		SoundBuffer^ tableEntry = safe_cast<SoundBuffer^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew SoundBuffer( pointer );
 	}
 
 	void SoundBuffer::SetDS8Pointer()

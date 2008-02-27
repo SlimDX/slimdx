@@ -47,6 +47,29 @@ namespace DXGI
 		Construct( pointer, NativeInterface );
 	}
 
+	Device^ Device::FromPointer( IDXGIDevice* pointer )
+	{
+		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Device( pointer );
+	}
+
+	Device^ Device::FromPointer( IntPtr pointer )
+	{
+		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Device( pointer );
+	}
+
 	int Device::GpuThreadPriority::get()
 	{
 		int result = 0;
@@ -69,7 +92,7 @@ namespace DXGI
 		RECORD_DXGI( InternalPointer->GetAdapter( &adapter ) );
 		if( Result::Last.IsFailure )
 			return nullptr;
-		return gcnew Adapter( adapter );
+		return Adapter::FromPointer( adapter );
 	}
 
 	ReadOnlyCollection<Residency>^ Device::QueryResourceResidency( IList<ComObject^>^ resources )

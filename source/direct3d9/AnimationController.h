@@ -96,15 +96,11 @@ namespace SlimDX
 
 		public ref class AnimationController : public ComObject
 		{
-			COMOBJECT(ID3DXAnimationController);
-
-		internal:
-			AnimationController( ID3DXAnimationController *controller );
+			COMOBJECT(ID3DXAnimationController, AnimationController);
 
 		public:
-			AnimationController( System::IntPtr pointer );
 			AnimationController( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents );
-			virtual ~AnimationController() { Destruct(); }
+			static AnimationController^ FromPointer( System::IntPtr pointer );
 
 			Result AdvanceTime( double time, AnimationCallback^ handler );
 			AnimationController^ Clone( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents );

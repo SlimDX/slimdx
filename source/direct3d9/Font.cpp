@@ -86,13 +86,10 @@ namespace Direct3D9
 			 && value1.FaceName == value2.FaceName );
 	}
 
-	/* Unused for now.
-	Font::Font( ID3DXFont* font ) : ComObject( font )
+	Font::Font( ID3DXFont* font )
 	{
-		if( font == NULL )
-			throw gcnew ArgumentNullException( "font" );
+		Construct( font );
 	}
-	*/
 
 	Font::Font( IntPtr font )
 	{
@@ -111,6 +108,29 @@ namespace Direct3D9
 	{
 		Build( device, font->Height, 0, (font->Bold) ? FontWeight::Bold : FontWeight::Normal, 0, font->Italic, 
 			CharacterSet::Default, Precision::Default, FontQuality::Default, PitchAndFamily::Default, font->Name );
+	}
+
+	Font^ Font::FromPointer( ID3DXFont* pointer )
+	{
+		Font^ tableEntry = safe_cast<Font^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Font( pointer );
+	}
+
+	Font^ Font::FromPointer( IntPtr pointer )
+	{
+		Font^ tableEntry = safe_cast<Font^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Font( pointer );
 	}
 
 	void Font::Build( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,

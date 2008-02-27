@@ -41,7 +41,30 @@ namespace DXGI
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
+
+	Resource^ Resource::FromPointer( IDirect3DResource9* pointer )
+	{
+		Resource^ tableEntry = safe_cast<Resource^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Resource( pointer );
+	}
+
+	Resource^ Resource::FromPointer( IntPtr pointer )
+	{
+		Resource^ tableEntry = safe_cast<Resource^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Resource( pointer );
+	}
+
 	ResourcePriority Resource::EvictionPriority::get()
 	{
 		UINT priority = 0;

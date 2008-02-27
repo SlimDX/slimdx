@@ -97,14 +97,10 @@ namespace SlimDX
 
 		public ref class ShaderBytecode : ComObject
 		{
-			COMOBJECT(ID3DXBuffer);
-
-		internal:
-			ShaderBytecode( ID3DXBuffer* buffer ) { Construct(buffer); }
+			COMOBJECT(ID3DXBuffer, ShaderBytecode);
 
 		public:
-			ShaderBytecode( System::IntPtr pointer );
-			~ShaderBytecode() { Destruct(); }
+			static ShaderBytecode^ FromPointer( System::IntPtr pointer );
 
 			DataStream^ GetData();
 

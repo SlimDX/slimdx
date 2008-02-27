@@ -30,12 +30,11 @@ namespace SlimDX
 	{
 		public ref class MatrixStack : ComObject
 		{
-			COMOBJECT(ID3DXMatrixStack);
+			COMOBJECT(ID3DXMatrixStack, MatrixStack);
 
 		public:
-			MatrixStack( System::IntPtr pointer );
 			MatrixStack();
-			~MatrixStack() { Destruct(); }
+			static MatrixStack^ FromPointer( System::IntPtr pointer );
 
 			Result Push();
 			Result Pop();

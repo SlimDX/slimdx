@@ -45,15 +45,11 @@ namespace SlimDX
 
 		public ref class SwapChain : public ComObject
 		{
-			COMOBJECT(IDirect3DSwapChain9);
-
-		internal:
-			SwapChain( IDirect3DSwapChain9* swapChain );
+			COMOBJECT(IDirect3DSwapChain9, SwapChain);
 
 		public:
-			SwapChain( System::IntPtr pointer );
 			SwapChain( Device^ device, PresentParameters^ presentParameters );
-			~SwapChain() { Destruct(); }
+			static SwapChain^ FromPointer( System::IntPtr pointer );
 
 			Device^ GetDevice();
 			Surface^ GetBackBuffer( int index );

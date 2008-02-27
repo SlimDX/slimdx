@@ -60,7 +60,7 @@ namespace Direct3D10
 		int oldReference = 0;
 		m_Device->OMGetDepthStencilState( &oldState, reinterpret_cast<UINT*>( &oldReference ) );
 		
-		return gcnew SlimDX::Direct3D10::DepthStencilState( oldState );
+		return SlimDX::Direct3D10::DepthStencilState::FromPointer( oldState );
 	}
 	
 	void OutputMergerWrapper::DepthStencilReference::set( int value )
@@ -98,7 +98,7 @@ namespace Direct3D10
 		int oldMask = 0;
 		m_Device->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
 		
-		return gcnew SlimDX::Direct3D10::BlendState( oldState );
+		return SlimDX::Direct3D10::BlendState::FromPointer( oldState );
 	}
 	
 	void OutputMergerWrapper::BlendFactor::set( Color4 value )

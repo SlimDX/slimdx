@@ -44,12 +44,40 @@ namespace DXGI
 
 		Construct( factory );
 	}
-	
+
+	Factory::Factory( IDXGIFactory* pointer )
+	{
+		Construct( pointer );
+	}
+
 	Factory::Factory( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
+
+	Factory^ Factory::FromPointer( IDXGIFactory* pointer )
+	{
+		Factory^ tableEntry = safe_cast<Factory^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Factory( pointer );
+	}
+
+	Factory^ Factory::FromPointer( IntPtr pointer )
+	{
+		Factory^ tableEntry = safe_cast<Factory^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Factory( pointer );
+	}
+
 	int Factory::GetAdapterCount()
 	{
 		int count = 0;
@@ -69,7 +97,7 @@ namespace DXGI
 		RECORD_DXGI( InternalPointer->EnumAdapters( index, &adapter) );
 		if( Result::Last.IsFailure )
 			return nullptr;
-		return gcnew Adapter( adapter );
+		return Adapter::FromPointer( adapter );
 	}
 	
 	Adapter^ Factory::CreateSoftwareAdapter( IntPtr module )
@@ -83,7 +111,7 @@ namespace DXGI
 		
 		if( adapter == 0 )
 			return nullptr;
-		return gcnew Adapter( adapter );
+		return Adapter::FromPointer( adapter );
 	}
 	
 	Adapter^ Factory::CreateSoftwareAdapter( Module^ module )

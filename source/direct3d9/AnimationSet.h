@@ -140,17 +140,13 @@ namespace SlimDX
 
 		public ref class AnimationSet : public ComObject
 		{
-			COMOBJECT(ID3DXAnimationSet);
+			COMOBJECT(ID3DXAnimationSet, AnimationSet);
 
 		protected:
 			AnimationSet() { }
 
-		internal:
-			AnimationSet( ID3DXAnimationSet* set );
-
 		public:
-			AnimationSet( System::IntPtr pointer );
-			virtual ~AnimationSet() { Destruct(); }
+			static AnimationSet^ FromPointer( System::IntPtr pointer );
 
 			int GetAnimationIndex( System::String^ name );
 			System::String^ GetAnimationName( int index );

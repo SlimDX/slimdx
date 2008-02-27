@@ -33,13 +33,10 @@ namespace SlimDX
 	{
 		public ref class Asynchronous : public DeviceChild
 		{
-			COMOBJECT(ID3D10Asynchronous);
+			COMOBJECT(ID3D10Asynchronous, Asynchronous);
 		
 		protected:
 			Asynchronous();
-		
-		internal:
-			Asynchronous( ID3D10Asynchronous* pointer );
 		
 		public:
 			property bool IsDataAvailable
@@ -47,7 +44,7 @@ namespace SlimDX
 				bool get();
 			}
 			
-			Asynchronous( System::IntPtr pointer );
+			static Asynchronous^ FromPointer( System::IntPtr pointer );
 			
 			void Begin();
 			void End();

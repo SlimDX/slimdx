@@ -31,16 +31,13 @@ namespace SlimDX
 	{
 		public ref class ResourceView : public DeviceChild
 		{
-			COMOBJECT(ID3D10View);
+			COMOBJECT(ID3D10View, ResourceView);
 
 		protected:
 			ResourceView();
 			
-		internal:
-			ResourceView( ID3D10View* pointer );
-		
 		public:
-			ResourceView( System::IntPtr pointer );
+			static ResourceView^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

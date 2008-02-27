@@ -194,17 +194,11 @@ namespace SlimDX
 
 		public ref class Query : public ComObject
 		{
-			COMOBJECT(IDirect3DQuery9);
-
-		internal:
-			/* Unused for now.
-			Query( IDirect3DQuery9* query );
-			*/
+			COMOBJECT(IDirect3DQuery9, Query);
 
 		public:
-			Query( System::IntPtr query );
 			Query( Device^ device, QueryType type );
-			~Query() { Destruct(); }
+			static Query^ FromPointer( System::IntPtr query );
 
 			Device^ GetDevice();
 			Result Issue( SlimDX::Direct3D9::Issue flags );

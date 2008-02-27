@@ -27,14 +27,13 @@ using namespace System;
 
 namespace SlimDX
 {
-	ComObject::ComObject()
+	ComObject::ComObject() : m_Unknown( NULL )
 	{
-		if( Configuration::EnableObjectTracking )
-			ObjectTracker::Add( this );
 	}
 
 	ComObject::~ComObject()
 	{
+		Destruct();
 	}
 
 	bool ComObject::Disposed::get()
@@ -63,6 +62,7 @@ namespace SlimDX
 			throw gcnew ArgumentNullException( "pointer" );
 
 		m_Unknown = pointer;
+		ObjectTable::Add( this );
 	}
 
 	void ComObject::Construct( IntPtr pointer, Guid guid )
@@ -81,10 +81,15 @@ namespace SlimDX
 
 	void ComObject::Destruct()
 	{
-		if( m_Unknown != 0 )
-			m_Unknown->Release();
+		if( m_Unknown == 0 )
+		{
+			Type^ myType = GetType();
+			throw gcnew ObjectDisposedException( myType->FullName );
+		}
 
-		if( Configuration::EnableObjectTracking )
-			ObjectTracker::Remove( this );
+		ObjectTable::Remove( this );
+
+		m_Unknown->Release();
+		m_Unknown = NULL;
 	}
 }

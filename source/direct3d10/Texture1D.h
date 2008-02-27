@@ -37,10 +37,7 @@ namespace SlimDX
 		
 		public ref class Texture1D : public Texture
 		{
-			COMOBJECT(ID3D10Texture1D);
-			
-		internal:
-			Texture1D( ID3D10Texture1D* pointer );
+			COMOBJECT(ID3D10Texture1D, Texture1D);
 			
 		public:
 			property Texture1DDescription Description
@@ -48,10 +45,10 @@ namespace SlimDX
 				Texture1DDescription get();
 			}
 			
-			Texture1D( System::IntPtr nativeObject );
 			Texture1D( Device^ device, Texture1DDescription description );
-		
-		  DataStream^ Map( int subResource, MapMode mode, MapFlags flags );
+			static Texture1D^ FromPointer( System::IntPtr nativeObject );
+
+			DataStream^ Map( int subResource, MapMode mode, MapFlags flags );
 			void Unmap( int subResource );
 			
 			static Texture1D^ FromFile( Device^ device, System::String^ fileName );

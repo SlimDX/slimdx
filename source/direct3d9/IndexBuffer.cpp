@@ -74,9 +74,6 @@ namespace Direct3D9
 
 	IndexBuffer::IndexBuffer( IDirect3DIndexBuffer9* buffer )
 	{
-		if( buffer == NULL )
-			throw gcnew ArgumentNullException( "buffer" );
-
 		Construct(buffer);
 		InitDescription();
 	}
@@ -95,6 +92,29 @@ namespace Direct3D9
 		IDirect3DIndexBuffer9* ibPtr = static_cast<IDirect3DIndexBuffer9*>( pointer );
 		Construct(ibPtr);
 		InitDescription();
+	}
+
+	IndexBuffer^ IndexBuffer::FromPointer( IDirect3DIndexBuffer9* pointer )
+	{
+		IndexBuffer^ tableEntry = safe_cast<IndexBuffer^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew IndexBuffer( pointer );
+	}
+
+	IndexBuffer^ IndexBuffer::FromPointer( IntPtr pointer )
+	{
+		IndexBuffer^ tableEntry = safe_cast<IndexBuffer^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew IndexBuffer( pointer );
 	}
 
 	IndexBuffer::IndexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, SlimDX::Direct3D9::Pool pool, bool sixteenBit )
@@ -125,7 +145,7 @@ namespace Direct3D9
 	DataStream^ IndexBuffer::Lock( int offset, int size, LockFlags flags )
 	{
 		void* lockedPtr;
-		HRESULT hr = IbPointer->Lock( offset, size, &lockedPtr, static_cast<DWORD>( flags ) );
+		HRESULT hr = InternalPointer->Lock( offset, size, &lockedPtr, static_cast<DWORD>( flags ) );
 		RECORD_D3D9( hr );
 		
 		int lockedSize = size == 0 ? description.SizeInBytes : size;
@@ -137,7 +157,7 @@ namespace Direct3D9
 
 	Result IndexBuffer::Unlock()
 	{
-		return RECORD_D3D9( IbPointer->Unlock() );
+		return RECORD_D3D9( InternalPointer->Unlock() );
 	}
 }
 }

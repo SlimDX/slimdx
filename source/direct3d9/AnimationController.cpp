@@ -42,9 +42,9 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	AnimationController::AnimationController( ID3DXAnimationController *controller )
+	AnimationController::AnimationController( ID3DXAnimationController* pointer )
 	{
-		Construct(controller);
+		Construct( pointer );
 	}
 
 	AnimationController::AnimationController( IntPtr pointer )
@@ -60,6 +60,29 @@ namespace Direct3D9
 
 		if( FAILED( hr ) )
 			throw gcnew Direct3D9Exception( Result::Last );
+	}
+
+	AnimationController^ AnimationController::FromPointer( ID3DXAnimationController* pointer )
+	{
+		AnimationController^ tableEntry = safe_cast<AnimationController^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew AnimationController( pointer );
+	}
+
+	AnimationController^ AnimationController::FromPointer( IntPtr pointer )
+	{
+		AnimationController^ tableEntry = safe_cast<AnimationController^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew AnimationController( pointer );
 	}
 
 	Result AnimationController::AdvanceTime( double time, AnimationCallback^ handler )
@@ -93,7 +116,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew AnimationSet( set );
+		return AnimationSet::FromPointer( set );
 	}
 
 	AnimationSet^ AnimationController::GetAnimationSet( String^ name )
@@ -107,7 +130,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew AnimationSet( set );
+		return AnimationSet::FromPointer( set );
 	}
 
 	int AnimationController::GetCurrentTrackEvent( int track, EventType eventType )
@@ -177,7 +200,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew AnimationSet( set );
+		return AnimationSet::FromPointer( set );
 	}
 
 	TrackDescription AnimationController::GetTrackDescription( int track )

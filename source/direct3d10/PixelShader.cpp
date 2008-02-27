@@ -39,5 +39,28 @@ namespace Direct3D10
 	{
 		Construct( pointer, NativeInterface );
 	}
+
+	PixelShader^ PixelShader::FromPointer( ID3D10PixelShader* pointer )
+	{
+		PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew PixelShader( pointer );
+	}
+
+	PixelShader^ PixelShader::FromPointer( IntPtr pointer )
+	{
+		PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew PixelShader( pointer );
+	}
 }
 }

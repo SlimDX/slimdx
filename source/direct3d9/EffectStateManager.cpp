@@ -181,7 +181,7 @@ namespace Direct3D9
 	{
 		try
 		{
-			m_WrappedInterface->SetPixelShader( gcnew PixelShader( pShader ) );
+			m_WrappedInterface->SetPixelShader( PixelShader::FromPointer( pShader ) );
 		}
 		catch( Exception^ )
 		{
@@ -249,7 +249,7 @@ namespace Direct3D9
 	{
 		try
 		{
-			m_WrappedInterface->SetVertexShader( gcnew VertexShader( pShader ) );
+			m_WrappedInterface->SetVertexShader( VertexShader::FromPointer( pShader ) );
 		}
 		catch( Exception^ )
 		{
@@ -350,11 +350,11 @@ namespace Direct3D9
 			switch( pTexture->GetType() )
 			{
 			case D3DRTYPE_TEXTURE:
-				texture = gcnew Texture( static_cast<IDirect3DTexture9*>( pTexture ) );
+				texture = Texture::FromPointer( static_cast<IDirect3DTexture9*>( pTexture ) );
 			case D3DRTYPE_VOLUMETEXTURE:
-				texture = gcnew VolumeTexture( static_cast<IDirect3DVolumeTexture9*>( pTexture ) );
+				texture = VolumeTexture::FromPointer( static_cast<IDirect3DVolumeTexture9*>( pTexture ) );
 			case D3DRTYPE_CUBETEXTURE:
-				texture = gcnew CubeTexture( static_cast<IDirect3DCubeTexture9*>( pTexture ) );
+				texture = CubeTexture::FromPointer( static_cast<IDirect3DCubeTexture9*>( pTexture ) );
 
 			default:
 				texture = nullptr;

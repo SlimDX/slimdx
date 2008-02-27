@@ -52,7 +52,7 @@ namespace SlimDX
 
 		public ref class Device : ComObject
 		{
-			COMOBJECT(ID3D10Device);
+			COMOBJECT(ID3D10Device, Device);
 		
 		private:
 			InputAssemblerWrapper^ m_InputAssembler;
@@ -60,9 +60,6 @@ namespace SlimDX
 			StreamOutputWrapper^ m_StreamOutput;
 			RasterizerWrapper^ m_Rasterizer;
 
-		internal:
-			Device( ID3D10Device* pointer );
-		
 		public:
 			property InputAssemblerWrapper^ InputAssembler
 			{
@@ -89,9 +86,9 @@ namespace SlimDX
 				DeviceCreationFlags get();
 			}
 			
-			Device( System::IntPtr pointer );
 			Device( DeviceCreationFlags flags );
-		
+			static Device^ FromPointer( System::IntPtr pointer );
+
 			CounterCapabilities GetCounterCapabilities();
 			CounterMetadata GetCounterMetadata( CounterDescription description );
 			

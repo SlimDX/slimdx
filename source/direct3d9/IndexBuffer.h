@@ -51,22 +51,15 @@ namespace SlimDX
 
 		public ref class IndexBuffer : public Resource
 		{
+			COMOBJECT(IDirect3DIndexBuffer9, IndexBuffer);
+
 			IndexBufferDescription description;
-			
 			void InitDescription();
 			
-		internal:
-			property IDirect3DIndexBuffer9* IbPointer
-			{
-				IDirect3DIndexBuffer9* get() { return static_cast<IDirect3DIndexBuffer9*>( InternalPointer ); }
-			}
-
-			IndexBuffer( IDirect3DIndexBuffer9* buffer );
-
 		public:
-			IndexBuffer( System::IntPtr buffer );
 			IndexBuffer( Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit );
 			virtual ~IndexBuffer() { }
+			static IndexBuffer^ FromPointer( System::IntPtr buffer );
 
 			DataStream^ Lock( int offset, int size, LockFlags flags );
 			Result Unlock();

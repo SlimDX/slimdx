@@ -34,14 +34,14 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	VertexDeclaration::VertexDeclaration( IDirect3DVertexDeclaration9* declaration )
+	VertexDeclaration::VertexDeclaration( IDirect3DVertexDeclaration9* pointer )
 	{
-		Construct(declaration);
+		Construct( pointer );
 	}
 
-	VertexDeclaration::VertexDeclaration( IntPtr declaration )
+	VertexDeclaration::VertexDeclaration( IntPtr pointer )
 	{
-		Construct( declaration, NativeInterface );
+		Construct( pointer, NativeInterface );
 	}
 
 	VertexDeclaration::VertexDeclaration( Device^ device, array<VertexElement>^ elements )
@@ -58,6 +58,29 @@ namespace Direct3D9
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(decl);
+	}
+
+	VertexDeclaration^ VertexDeclaration::FromPointer( IDirect3DVertexDeclaration9* pointer )
+	{
+		VertexDeclaration^ tableEntry = safe_cast<VertexDeclaration^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew VertexDeclaration( pointer );
+	}
+
+	VertexDeclaration^ VertexDeclaration::FromPointer( IntPtr pointer )
+	{
+		VertexDeclaration^ tableEntry = safe_cast<VertexDeclaration^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew VertexDeclaration( pointer );
 	}
 
 	array<VertexElement>^ VertexDeclaration::Elements::get()

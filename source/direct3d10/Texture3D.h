@@ -38,20 +38,17 @@ namespace SlimDX
 			
 		public ref class Texture3D : public Texture
 		{
-			COMOBJECT(ID3D10Texture3D);
+			COMOBJECT(ID3D10Texture3D, Texture3D);
 	
-		internal:
-			Texture3D( ID3D10Texture3D* pointer );
-			
 		public:
 			property Texture3DDescription Description
 			{
 				Texture3DDescription get();
 			}
 
-			Texture3D( System::IntPtr nativeObject );
 			Texture3D( Device^ device, Texture3DDescription description );
-			
+			static Texture3D^ FromPointer( System::IntPtr nativeObject );
+
 			DataBox^ Map( int subResource, MapMode mode, MapFlags flags );
 			void Unmap( int subResource );
 			

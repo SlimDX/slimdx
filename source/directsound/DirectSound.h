@@ -62,20 +62,16 @@ namespace SlimDX
 
 		public ref class DirectSound : ComObject
 		{
-			COMOBJECT(IDirectSound8);
+			COMOBJECT(IDirectSound8, DirectSound);
 
 		private:
 			Capabilities caps;
 			Capabilities GetCapabilities();
 
-		internal:
-			DirectSound( IDirectSound8* dsound );
-
 		public:
-			DirectSound( System::IntPtr pointer );
 			DirectSound();
 			DirectSound( System::Guid device );
-			~DirectSound() { Destruct(); }
+			static DirectSound^ FromPointer( System::IntPtr pointer );
 
 			void Initialize();
 			void Initialize( System::Guid device );

@@ -35,10 +35,7 @@ namespace SlimDX
 		
 		public ref class DepthStencilState : public DeviceChild
 		{
-			COMOBJECT(ID3D10DepthStencilState);
-		
-		internal:
-			DepthStencilState( ID3D10DepthStencilState* pointer );
+			COMOBJECT(ID3D10DepthStencilState, DepthStencilState);
 		
 		public:
 			property DepthStencilStateDescription Description
@@ -46,8 +43,8 @@ namespace SlimDX
 				DepthStencilStateDescription get();
 			}
 			
-			DepthStencilState( System::IntPtr pointer );
 			DepthStencilState( Device^ device, DepthStencilStateDescription description );
+			static DepthStencilState^ FromPointer( System::IntPtr state );
 		};
 	}
 };

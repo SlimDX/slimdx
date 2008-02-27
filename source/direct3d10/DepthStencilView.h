@@ -34,20 +34,17 @@ namespace SlimDX
 		
 		public ref class DepthStencilView : public ResourceView
 		{
-			COMOBJECT(ID3D10DepthStencilView);
+			COMOBJECT(ID3D10DepthStencilView, DepthStencilView);
 		
-		internal:
-			DepthStencilView( ID3D10DepthStencilView* pointer );
-			
 		public:
 			property DepthStencilViewDescription Description
 			{
 				DepthStencilViewDescription get();
 			}
 			
-			DepthStencilView( System::IntPtr pointer );
 			DepthStencilView( Device^ device, Resource^ resource );
 			DepthStencilView( Device^ device, Resource^ resource, DepthStencilViewDescription description );
+			static DepthStencilView^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };
