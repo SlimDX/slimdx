@@ -31,13 +31,6 @@ namespace SlimDX
 		ref class Frame;
 		ref class AnimationController;
 
-		public enum class MeshDataType : System::Int32
-		{
-			Mesh = D3DXMESHTYPE_MESH,
-			ProgressiveMesh = D3DXMESHTYPE_PMESH,
-			PatchMesh = D3DXMESHTYPE_PATCHMESH
-		};
-
 		public ref class MeshData
 		{
 		private:

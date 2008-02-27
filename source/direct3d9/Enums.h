@@ -32,6 +32,16 @@ namespace SlimDX
 		// NOTE: The enumerations defined in this file are in alphabetical order. When
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
+
+		[System::Flags]
+		public enum class AnimationOutputFlags : System::Int32
+		{
+			None,
+			Transformation,
+			Translation,
+			Scale,
+			Rotation
+		};
 		
 		public enum class Basis : System::Int32
 		{
@@ -58,6 +68,25 @@ namespace SlimDX
 			BlendFactor = D3DBLEND_BLENDFACTOR,
 			InvBlendFactor = D3DBLEND_INVBLENDFACTOR,
 		};
+
+		[System::Flags]
+		public enum class BlendCaps : System::Int32
+		{
+			Zero = D3DPBLENDCAPS_ZERO,
+			One = D3DPBLENDCAPS_ONE,
+			SourceColor = D3DPBLENDCAPS_SRCCOLOR,
+			InvSourceColor = D3DPBLENDCAPS_INVSRCCOLOR,
+			SourceAlpha = D3DPBLENDCAPS_SRCALPHA,
+			InvSourceAlpha = D3DPBLENDCAPS_INVSRCALPHA,
+			DestinationAlpha = D3DPBLENDCAPS_DESTALPHA,
+			InvDestinationAlpha = D3DPBLENDCAPS_INVDESTALPHA,
+			DestinationColor = D3DPBLENDCAPS_DESTCOLOR,
+			InvDestinationColor = D3DPBLENDCAPS_INVDESTCOLOR,
+			SourceAlphaSaturated = D3DPBLENDCAPS_SRCALPHASAT,
+			BothSourceAlpha = D3DPBLENDCAPS_BOTHSRCALPHA,
+			BothInvSourceAlpha = D3DPBLENDCAPS_BOTHINVSRCALPHA,
+			BlendFactor = D3DPBLENDCAPS_BLENDFACTOR,
+		};
 		
 		public enum class BlendOperation : System::Int32
 		{
@@ -66,6 +95,37 @@ namespace SlimDX
 			ReverseSubtract = D3DBLENDOP_REVSUBTRACT,
 			Minimum = D3DBLENDOP_MIN,
 			Maximum = D3DBLENDOP_MAX,
+		};
+
+		public enum class CallbackSearchFlags : System::Int32
+		{
+			SearchExcludingInitialPosition = D3DXCALLBACK_SEARCH_EXCLUDING_INITIAL_POSITION,
+			SearchBehindInitialPosition = D3DXCALLBACK_SEARCH_BEHIND_INITIAL_POSITION
+		};
+
+		[System::Flags]
+		public enum class Caps : System::Int32
+		{
+			ReadScanline = D3DCAPS_READ_SCANLINE,
+		};
+
+		[System::Flags]
+		public enum class Caps2 : System::Int32
+		{
+			FullScreenGamma = D3DCAPS2_FULLSCREENGAMMA,
+			CanCalibrateGamma = D3DCAPS2_CANCALIBRATEGAMMA,
+			CanManageResource = D3DCAPS2_CANMANAGERESOURCE,
+			DynamicTextures = D3DCAPS2_DYNAMICTEXTURES,
+			CanAutoGenMipMap = D3DCAPS2_CANAUTOGENMIPMAP
+		};
+
+		[System::Flags]
+		public enum class Caps3 : System::Int32
+		{
+			AlphaFullScreenFlipOrDiscard = D3DCAPS3_ALPHA_FULLSCREEN_FLIP_OR_DISCARD,
+			LinearToSrgbPresentation = D3DCAPS3_LINEAR_TO_SRGB_PRESENTATION,
+			CopyToVideoMemory = D3DCAPS3_COPY_TO_VIDMEM,
+			CopyToSystemMemory = D3DCAPS3_COPY_TO_SYSTEMMEM,
 		};
 		
 		[System::Flags]
@@ -76,6 +136,41 @@ namespace SlimDX
 			Green = D3DX_CHANNEL_GREEN,
 			Alpha = D3DX_CHANNEL_ALPHA,
 			Luminance = D3DX_CHANNEL_LUMINANCE
+		};
+
+		public enum class CharacterSet : System::Int32
+		{
+			Ansi = ANSI_CHARSET,
+			Default = DEFAULT_CHARSET,
+			Symbol = SYMBOL_CHARSET,
+			ShiftJIS = SHIFTJIS_CHARSET,
+			Hangul = HANGUL_CHARSET,
+			GB2312 = GB2312_CHARSET,
+			ChineseBig5 = CHINESEBIG5_CHARSET,
+			Oem = OEM_CHARSET,
+
+			Johab = JOHAB_CHARSET,
+			Hebrew = HEBREW_CHARSET,
+			Arabic = ARABIC_CHARSET,
+			Greek = GREEK_CHARSET,
+			Turkish = TURKISH_CHARSET,
+			Vietnamese = VIETNAMESE_CHARSET,
+			Thai = THAI_CHARSET,
+			EastEurope = EASTEUROPE_CHARSET,
+			Russian = RUSSIAN_CHARSET,
+
+			Baltic = BALTIC_CHARSET,
+			Mac = MAC_CHARSET,
+		};
+
+		[System::Flags]
+		public enum class CleanType : System::Int32
+		{
+			BackFacing = D3DXCLEAN_BACKFACING,
+			Bowties = D3DXCLEAN_BOWTIES,
+			Skinning = D3DXCLEAN_SKINNING,
+			Optimization = D3DXCLEAN_OPTIMIZATION,
+			Simplification = D3DXCLEAN_SIMPLIFICATION
 		};
 
 		[System::Flags]
@@ -109,22 +204,74 @@ namespace SlimDX
 		/// </summary>
 		public enum class Compare
 		{
-			/// <summary>Never accept</summary>
+			/// <summary>
+			/// Never accept
+			/// </summary>
 			Never = D3DCMP_NEVER,
-			/// <summary>Accept if less than.</summary>
+
+			/// <summary>
+			/// Accept if less than.
+			/// </summary>
 			Less = D3DCMP_LESS,
-			/// <summary>Accept if equal.</summary>
+
+			/// <summary>
+			/// Accept if equal.
+			/// </summary>
 			Equal = D3DCMP_EQUAL,
-			/// <summary>Accept if equal or less than.</summary>
+
+			/// <summary>
+			/// Accept if equal or less than.
+			/// </summary>
 			LessEqual = D3DCMP_LESSEQUAL,
-			/// <summary>Accept if greater than.</summary>
+
+			/// <summary>
+			/// Accept if greater than.
+			/// </summary>
 			Greater = D3DCMP_GREATER,
-			/// <summary>Accept if not equal.</summary>
+
+			/// <summary>
+			/// Accept if not equal.
+			/// </summary>
 			NotEqual = D3DCMP_NOTEQUAL,
-			/// <summary>Accept if greater than or equal</summary>
+
+			/// <summary>
+			/// Accept if greater than or equal
+			/// </summary>
 			GreaterEqual = D3DCMP_GREATEREQUAL,
-			/// <summary>Always accept.</summary>
+
+			/// <summary>
+			/// Always accept.
+			/// </summary>
 			Always = D3DCMP_ALWAYS
+		};
+
+		[System::Flags]
+		public enum class CompareCaps : System::Int32
+		{
+			Never = D3DPCMPCAPS_NEVER,
+			Less = D3DPCMPCAPS_LESS,
+			Equal = D3DPCMPCAPS_EQUAL,
+			LessEqual = D3DPCMPCAPS_LESSEQUAL,
+			Greater = D3DPCMPCAPS_GREATER,
+			NotEqual = D3DPCMPCAPS_NOTEQUAL,
+			GreaterEqual = D3DPCMPCAPS_GREATEREQUAL,
+			Always = D3DPCMPCAPS_ALWAYS,
+		};
+
+		[System::Flags]
+		public enum class CreateFlags : System::Int32
+		{
+			None = 0,
+			AdapterGroupDevice = D3DCREATE_ADAPTERGROUP_DEVICE,
+			DisableDriverManagement = D3DCREATE_DISABLE_DRIVER_MANAGEMENT,
+			DisableExtendedDriverManagement = D3DCREATE_DISABLE_DRIVER_MANAGEMENT_EX,
+			FpuPreserve = D3DCREATE_FPU_PRESERVE,
+			HardwareVertexProcessing = D3DCREATE_HARDWARE_VERTEXPROCESSING,
+			MixedVertexProcessing = D3DCREATE_MIXED_VERTEXPROCESSING,
+			Multithreaded = D3DCREATE_MULTITHREADED,
+			NoWindowChanges = D3DCREATE_NOWINDOWCHANGES,
+			PureDevice = D3DCREATE_PUREDEVICE,
+			SoftwareVertexProcessing = D3DCREATE_SOFTWARE_VERTEXPROCESSING,
 		};
 		
 		public enum class CubeMapFace : System::Int32
@@ -143,46 +290,12 @@ namespace SlimDX
 			Counterclockwise = D3DCULL_CCW,
 			None = D3DCULL_NONE
 		};
-		
-		public enum class CharacterSet : System::Int32
-		{
-			Ansi = ANSI_CHARSET,
-			Default = DEFAULT_CHARSET,
-			Symbol = SYMBOL_CHARSET,
-			ShiftJIS = SHIFTJIS_CHARSET,
-			Hangul = HANGUL_CHARSET,
-			GB2312 = GB2312_CHARSET,
-			ChineseBig5 = CHINESEBIG5_CHARSET,
-			Oem = OEM_CHARSET,
-
-			Johab = JOHAB_CHARSET,
-			Hebrew = HEBREW_CHARSET,
-			Arabic = ARABIC_CHARSET,
-			Greek = GREEK_CHARSET,
-			Turkish = TURKISH_CHARSET,
-			Vietnamese = VIETNAMESE_CHARSET,
-			Thai = THAI_CHARSET,
-			EastEurope = EASTEUROPE_CHARSET,
-			Russian = RUSSIAN_CHARSET,
-
-			Baltic = BALTIC_CHARSET,
-			Mac = MAC_CHARSET,
-		};
 
 		[System::Flags]
-		public enum class CreateFlags : System::Int32
+		public enum class CursorCaps : System::Int32
 		{
-			None = 0,
-			AdapterGroupDevice = D3DCREATE_ADAPTERGROUP_DEVICE,
-			DisableDriverManagement = D3DCREATE_DISABLE_DRIVER_MANAGEMENT,
-			DisableExtendedDriverManagement = D3DCREATE_DISABLE_DRIVER_MANAGEMENT_EX,
-			FpuPreserve = D3DCREATE_FPU_PRESERVE,
-			HardwareVertexProcessing = D3DCREATE_HARDWARE_VERTEXPROCESSING,
-			MixedVertexProcessing = D3DCREATE_MIXED_VERTEXPROCESSING,
-			Multithreaded = D3DCREATE_MULTITHREADED,
-			NoWindowChanges = D3DCREATE_NOWINDOWCHANGES,
-			PureDevice = D3DCREATE_PUREDEVICE,
-			SoftwareVertexProcessing = D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+			Color = D3DCURSORCAPS_COLOR,
+			LowRes = D3DCURSORCAPS_LOWRES,
 		};
 		
 		public enum class DeclarationMethod : System::Byte
@@ -221,6 +334,21 @@ namespace SlimDX
 			Unused = D3DDECLTYPE_UNUSED
 		};
 
+		[System::Flags]
+		public enum class DeclarationTypeCaps
+		{
+			UByte4 = D3DDTCAPS_UBYTE4,
+			UByte4N = D3DDTCAPS_UBYTE4N,
+			Short2N = D3DDTCAPS_SHORT2N,
+			Short4N = D3DDTCAPS_SHORT4N,
+			UShort2N = D3DDTCAPS_USHORT2N,
+			UShort4N = D3DDTCAPS_USHORT4N,
+			UDec3 = D3DDTCAPS_UDEC3,
+			Dec3N = D3DDTCAPS_DEC3N,
+			Float16_2 = D3DDTCAPS_FLOAT16_2,
+			Float16_4 = D3DDTCAPS_FLOAT16_4,
+		};
+
 		public enum class DeclarationUsage : System::Byte
 		{
 			Position = D3DDECLUSAGE_POSITION,
@@ -245,6 +373,43 @@ namespace SlimDX
 			Quadratic = D3DDEGREE_QUADRATIC,
 			Cubic = D3DDEGREE_CUBIC,
 			Quintic = D3DDEGREE_QUINTIC,
+		};
+
+		[System::Flags]
+		public enum class DevCaps2
+		{
+			StreamOffset = D3DDEVCAPS2_STREAMOFFSET,
+			DMapNPatch = D3DDEVCAPS2_DMAPNPATCH,
+			AdaptiveTessRTPatch = D3DDEVCAPS2_ADAPTIVETESSRTPATCH,
+			AdaptiveTessNPatch = D3DDEVCAPS2_ADAPTIVETESSNPATCH,
+			CanStretchRectFromTextures = D3DDEVCAPS2_CAN_STRETCHRECT_FROM_TEXTURES,
+			PresampledMapNPatch = D3DDEVCAPS2_PRESAMPLEDDMAPNPATCH,
+			VertexElementsCanShareStreamOffset = D3DDEVCAPS2_VERTEXELEMENTSCANSHARESTREAMOFFSET,
+		};
+
+		[System::Flags]
+		public enum class DeviceCaps : System::Int32
+		{
+			ExecuteSystemMemory = D3DDEVCAPS_EXECUTESYSTEMMEMORY,
+			ExecuteVideoMemory = D3DDEVCAPS_EXECUTEVIDEOMEMORY,
+			TLVertexSystemMemory = D3DDEVCAPS_TLVERTEXSYSTEMMEMORY,
+			TLVertexVideoMemory = D3DDEVCAPS_TLVERTEXVIDEOMEMORY,
+			TextureSystemMemory = D3DDEVCAPS_TEXTURESYSTEMMEMORY,
+			TextureVideoMemory = D3DDEVCAPS_TEXTUREVIDEOMEMORY,
+			DrawPrimTLVertex = D3DDEVCAPS_DRAWPRIMTLVERTEX,
+			CanRenderAfterFlip = D3DDEVCAPS_CANRENDERAFTERFLIP,
+			TextureNonLocalVideoMemory = D3DDEVCAPS_TEXTURENONLOCALVIDMEM,
+			DrawPrimitives2 = D3DDEVCAPS_DRAWPRIMITIVES2,
+			SeparateTextureMemory = D3DDEVCAPS_SEPARATETEXTUREMEMORIES,
+			DrawPrimitives2Extended = D3DDEVCAPS_DRAWPRIMITIVES2EX,
+			HWTransformAndLight = D3DDEVCAPS_HWTRANSFORMANDLIGHT,
+			CanBlitSysToNonLocal = D3DDEVCAPS_CANBLTSYSTONONLOCAL,
+			HWRasterization = D3DDEVCAPS_HWRASTERIZATION,
+			PureDevice = D3DDEVCAPS_PUREDEVICE,
+			QuinticRTPatches = D3DDEVCAPS_QUINTICRTPATCHES,
+			RTPatches = D3DDEVCAPS_RTPATCHES,
+			RTPatchHandleZero = D3DDEVCAPS_RTPATCHHANDLEZERO,
+			NPatches = D3DDEVCAPS_NPATCHES,
 		};
 		
 		public enum class DeviceType : System::Int32
@@ -278,6 +443,22 @@ namespace SlimDX
 			Direct3D8 = 800,
 			Direct3D9 = 900,
 		};
+
+		public enum class EffectDefaultType : System::Int32
+		{
+			String = D3DXEDT_STRING,
+			Floats = D3DXEDT_FLOATS,
+			Dword = D3DXEDT_DWORD,
+		};
+
+		public enum class EventType : System::Int32
+		{
+			TrackSpeed = D3DXEVENT_TRACKSPEED,
+			TrackWeight = D3DXEVENT_TRACKWEIGHT,
+			TrackPosition = D3DXEVENT_TRACKPOSITION,
+			TrackEnable = D3DXEVENT_TRACKENABLE,
+			PriorityBlend = D3DXEVENT_PRIORITYBLEND
+		};
 		
 		public enum class FillMode : System::Int32
 		{
@@ -303,6 +484,23 @@ namespace SlimDX
 			Srgb = D3DX_FILTER_SRGB,
 			SrgbIn = D3DX_FILTER_SRGB_IN,
 			SrgbOut = D3DX_FILTER_SRGB_OUT
+		};
+
+		[System::Flags]
+		public enum class FilterCaps : System::Int32
+		{
+			MinPoint = D3DPTFILTERCAPS_MINFPOINT,
+			MinLinear = D3DPTFILTERCAPS_MINFLINEAR,
+			MinAnisotropic = D3DPTFILTERCAPS_MINFANISOTROPIC,
+			MinPyramidalQuad = D3DPTFILTERCAPS_MINFPYRAMIDALQUAD,
+			MinGaussianQuad = D3DPTFILTERCAPS_MINFGAUSSIANQUAD,
+			MipPoint = D3DPTFILTERCAPS_MIPFPOINT,
+			MipLinear = D3DPTFILTERCAPS_MIPFLINEAR,
+			MagPoint = D3DPTFILTERCAPS_MAGFPOINT,
+			MagLinear = D3DPTFILTERCAPS_MAGFLINEAR,
+			MagAnisotropic = D3DPTFILTERCAPS_MAGFANISOTROPIC,
+			MagPyramidalQuad = D3DPTFILTERCAPS_MAGFPYRAMIDALQUAD,
+			MagGaussianQuad = D3DPTFILTERCAPS_MAGFGAUSSIANQUAD,
 		};
 		
 		public enum class FontQuality : System::Int32
@@ -408,7 +606,7 @@ namespace SlimDX
 			Index16 = D3DFMT_INDEX16,
 			Index32 = D3DFMT_INDEX32,
 
-			//extensions
+			// extensions
 			ATI_R2VB = R2VB_FOURCC_R2VB,
 
 			Unknown = D3DFMT_UNKNOWN,
@@ -435,12 +633,36 @@ namespace SlimDX
 			Hdr = D3DXIFF_HDR,
 			Pfm = D3DXIFF_PFM,
 		};
+
+		public enum class IncludeType : System::Int32
+		{
+			Local = D3DXINC_LOCAL,
+			System = D3DXINC_SYSTEM,
+		};
+
+		[System::Flags]
+		public enum class Issue
+		{
+			Begin = D3DISSUE_BEGIN,
+			End = D3DISSUE_END
+		};
 		
 		public enum class LightType : System::Int32
 		{
 			Point = D3DLIGHT_POINT,
 			Spot = D3DLIGHT_SPOT,
 			Directional = D3DLIGHT_DIRECTIONAL,
+		};
+
+		[System::Flags]
+		public enum class LineCaps : System::Int32
+		{
+			Texture = D3DLINECAPS_TEXTURE,
+			DepthTest = D3DLINECAPS_ZTEST,
+			Blend = D3DLINECAPS_BLEND,
+			AlphaCompare = D3DLINECAPS_ALPHACMP,
+			Fog = D3DLINECAPS_FOG,
+			Antialias = D3DLINECAPS_ANTIALIAS,
 		};
 		
 		[System::Flags]
@@ -454,8 +676,64 @@ namespace SlimDX
 			NoSystemLock = D3DLOCK_NOSYSLOCK,
 			ReadOnly = D3DLOCK_READONLY,
 
-			//this just exists for ProcessVertices
+			// this just exists for ProcessVertices
 			DoNotCopyData = D3DPV_DONOTCOPYDATA,
+		};
+
+		public enum class MeshDataType : System::Int32
+		{
+			Mesh = D3DXMESHTYPE_MESH,
+			ProgressiveMesh = D3DXMESHTYPE_PMESH,
+			PatchMesh = D3DXMESHTYPE_PATCHMESH
+		};
+
+		[System::Flags]
+		public enum class MeshFlags : System::Int32
+		{
+			Use32Bit = D3DXMESH_32BIT,
+			DoNotClip = D3DXMESH_DONOTCLIP,
+			Points = D3DXMESH_POINTS,
+			RTPatches = D3DXMESH_RTPATCHES,
+			NPatches = D3DXMESH_NPATCHES,
+			VertexBufferSystemMemory = D3DXMESH_VB_SYSTEMMEM,
+			VertexBufferManaged = D3DXMESH_VB_MANAGED,
+			VertexBufferWriteOnly = D3DXMESH_VB_WRITEONLY,
+			VertexBufferDynamic = D3DXMESH_VB_DYNAMIC,
+			VertexBufferSoftware = D3DXMESH_VB_SOFTWAREPROCESSING,
+			IndexBufferSystemMemory = D3DXMESH_IB_SYSTEMMEM,
+			IndexBufferManaged = D3DXMESH_IB_MANAGED,
+			IndexBufferWriteOnly = D3DXMESH_IB_WRITEONLY,
+			IndexBufferDynamic = D3DXMESH_IB_DYNAMIC,
+			IndexBufferSoftware = D3DXMESH_IB_SOFTWAREPROCESSING,
+
+			VertexBufferShare = D3DXMESH_VB_SHARE,
+
+			UseHardwareOnly = D3DXMESH_USEHWONLY,
+
+			// Helper options
+			SystemMemory = D3DXMESH_SYSTEMMEM,
+			Managed = D3DXMESH_MANAGED,
+			WriteOnly = D3DXMESH_WRITEONLY,
+			Dynamic = D3DXMESH_DYNAMIC,
+			Software = D3DXMESH_SOFTWAREPROCESSING,
+		};
+
+		[System::Flags]
+		public enum class MeshOptimizeFlags : System::Int32
+		{
+			Compact = D3DXMESHOPT_COMPACT,
+			AttributeSort = D3DXMESHOPT_ATTRSORT,
+			VertexCache = D3DXMESHOPT_VERTEXCACHE,
+			StripReorder = D3DXMESHOPT_STRIPREORDER,
+			IgnoreVertices = D3DXMESHOPT_IGNOREVERTS,
+			DoNotSplit = D3DXMESHOPT_DONOTSPLIT,
+			DeviceIndependent = D3DXMESHOPT_DEVICEINDEPENDENT,
+		};
+
+		public enum class MeshSimplification : System::Int32
+		{
+			Vertex = D3DXMESHSIMP_VERTEX,
+			Face = D3DXMESHSIMP_FACE
 		};
 		
 		public enum class MultisampleType : System::Int32
@@ -531,6 +809,13 @@ namespace SlimDX
 			VertexFragment = D3DXPT_VERTEXFRAGMENT,
 			X = D3DX_PARAMETER_ANNOTATION
 		};
+
+		public enum class PatchMeshType : System::Int32
+		{
+			Rectangle = D3DXPATCHMESH_RECT,
+			Triangle = D3DXPATCHMESH_TRI,
+			NPatch = D3DXPATCHMESH_NPATCH
+		};
 		
 		[System::Flags]
 		public enum class PitchAndFamily : System::Int32
@@ -546,6 +831,13 @@ namespace SlimDX
 			Modern = FF_MODERN,
 			Script = FF_SCRIPT,
 			Decorative = FF_DECORATIVE,
+		};
+
+		public enum class PlaybackType : System::Int32
+		{
+			Loop = D3DXPLAY_LOOP,
+			Once = D3DXPLAY_ONCE,
+			PingPong = D3DXPLAY_PINGPONG
 		};
 		
 		public enum class Pool : System::Int32
@@ -599,6 +891,28 @@ namespace SlimDX
 			Three = D3DPRESENT_INTERVAL_THREE,
 			Four = D3DPRESENT_INTERVAL_FOUR,
 		};
+
+		[System::Flags]
+		public enum class PrimitiveMiscCaps : System::Int32
+		{
+			MaskZ = D3DPMISCCAPS_MASKZ,
+			CullNone = D3DPMISCCAPS_CULLNONE,
+			CullCW = D3DPMISCCAPS_CULLCW,
+			CullCCW = D3DPMISCCAPS_CULLCCW,
+			ColorWriteEnable = D3DPMISCCAPS_COLORWRITEENABLE,
+			ClipPlanesScaledPoints = D3DPMISCCAPS_CLIPPLANESCALEDPOINTS,
+			ClipTLVertices = D3DPMISCCAPS_CLIPTLVERTS,
+			TssArgTemp = D3DPMISCCAPS_TSSARGTEMP,
+			BlendOperation = D3DPMISCCAPS_BLENDOP,
+			NullReference = D3DPMISCCAPS_NULLREFERENCE,
+			IndependentWriteMasks = D3DPMISCCAPS_INDEPENDENTWRITEMASKS,
+			PerStateConstant = D3DPMISCCAPS_PERSTAGECONSTANT,
+			FogAndSpecularAlpha = D3DPMISCCAPS_FOGANDSPECULARALPHA,
+			SeparateAlphaBlend = D3DPMISCCAPS_SEPARATEALPHABLEND,
+			MrtIndependentBitDepths = D3DPMISCCAPS_MRTINDEPENDENTBITDEPTHS,
+			MrtPostPixelShaderBlending = D3DPMISCCAPS_MRTPOSTPIXELSHADERBLENDING,
+			FogVertexClamped = D3DPMISCCAPS_FOGVERTEXCLAMPED,
+		};
 		
 		public enum class PrimitiveType : System::Int32
 		{
@@ -637,6 +951,35 @@ namespace SlimDX
 			OverrideVtx3 = R2VB_VSMP_OVR_VTX3,
 
 			Count = R2VB_VSMP_NUM,
+		};
+
+		[System::Flags]
+		public enum class RasterCaps : System::Int32
+		{
+			Dither = D3DPRASTERCAPS_DITHER,
+			DepthTest = D3DPRASTERCAPS_ZTEST,
+			FogVertex = D3DPRASTERCAPS_FOGVERTEX,
+			FogTable = D3DPRASTERCAPS_FOGTABLE,
+			MipMapLodBias = D3DPRASTERCAPS_MIPMAPLODBIAS,
+			ZBufferLessHsr = D3DPRASTERCAPS_ZBUFFERLESSHSR,
+			FogRange = D3DPRASTERCAPS_FOGRANGE,
+			Anisotropy = D3DPRASTERCAPS_ANISOTROPY,
+			WBuffer = D3DPRASTERCAPS_WBUFFER,
+			WFog = D3DPRASTERCAPS_WFOG,
+			ZFog = D3DPRASTERCAPS_ZFOG,
+			ColorPerspective = D3DPRASTERCAPS_COLORPERSPECTIVE,
+			ScissorTest = D3DPRASTERCAPS_SCISSORTEST,
+			SlopeScaleDepthBias = D3DPRASTERCAPS_SLOPESCALEDEPTHBIAS,
+			DepthBias = D3DPRASTERCAPS_DEPTHBIAS,
+			MultisampleToggle = D3DPRASTERCAPS_MULTISAMPLE_TOGGLE,
+		};
+
+		public enum class RegisterSet : System::Int32
+		{
+			Bool = D3DXRS_BOOL,
+			Int4 = D3DXRS_INT4,
+			Float4 = D3DXRS_FLOAT4,
+			Sampler = D3DXRS_SAMPLER,
 		};
 		
 		public enum class RenderState : System::Int32
@@ -773,15 +1116,29 @@ namespace SlimDX
 			ElementIndex = D3DSAMP_ELEMENTINDEX,
 			DMapOffset = D3DSAMP_DMAPOFFSET,
 		};
+
+		[System::Flags]
+		public enum class ShadeCaps : System::Int32
+		{
+			ColorGouraudRgb = D3DPSHADECAPS_COLORGOURAUDRGB,
+			SpecularGouraudRgb = D3DPSHADECAPS_SPECULARGOURAUDRGB,
+			AlphaGouraudBlend = D3DPSHADECAPS_ALPHAGOURAUDBLEND,
+			FogGouraud = D3DPSHADECAPS_FOGGOURAUD,
+		};
 		
 		/// <summary>
 		/// Shading modes.
 		/// </summary>
 		public enum class ShadeMode : System::Int32
 		{
-			/// <summary>Flat shading.</summary>
+			/// <summary>
+			/// Flat shading.
+			/// </summary>
 			Flat = D3DSHADE_FLAT,
-			/// <summary>Gouraud shading.</summary>
+
+			/// <summary>
+			/// Gouraud shading.
+			/// </summary>
 			Gouraud = D3DSHADE_GOURAUD
 		};
 		
@@ -809,27 +1166,85 @@ namespace SlimDX
 			SkipValidation = D3DXSHADER_SKIPVALIDATION,
 			SkipOptimization = D3DXSHADER_SKIPOPTIMIZATION,
 		};
+
+		[System::Flags]
+		public enum class SpriteFlags : System::Int32
+		{
+			None = 0,
+			DoNotSaveState = D3DXSPRITE_DONOTSAVESTATE,
+			DoNotModifyRenderState = D3DXSPRITE_DONOTMODIFY_RENDERSTATE,
+			ObjectSpace = D3DXSPRITE_OBJECTSPACE,
+			Billboard = D3DXSPRITE_BILLBOARD,
+			AlphaBlend = D3DXSPRITE_ALPHABLEND,
+			Texture = D3DXSPRITE_SORT_TEXTURE,
+			SortDepthFrontToBack = D3DXSPRITE_SORT_DEPTH_FRONTTOBACK,
+			SortDepthBackToFront = D3DXSPRITE_SORT_DEPTH_BACKTOFRONT,
+		};
+
+		public enum class StateBlockType : System::Int32
+		{
+			All = D3DSBT_ALL,
+			PixelState = D3DSBT_PIXELSTATE,
+			VertexState = D3DSBT_VERTEXSTATE,
+		};
+
+		[System::Flags]
+		public enum class StencilCaps : System::Int32
+		{
+			Keep = D3DSTENCILCAPS_KEEP,
+			Zero = D3DSTENCILCAPS_ZERO,
+			Replace = D3DSTENCILCAPS_REPLACE,
+			IncrementClamp = D3DSTENCILCAPS_INCRSAT,
+			DecrementClamp = D3DSTENCILCAPS_DECRSAT,
+			Invert = D3DSTENCILCAPS_INVERT,
+			Increment = D3DSTENCILCAPS_INCR,
+			Decrement = D3DSTENCILCAPS_DECR,
+			TwoSided = D3DSTENCILCAPS_TWOSIDED,
+		};
 		
 		/// <summary>
 		/// Stencil operations.
 		/// </summary>
 		public enum class StencilOperation
 		{
-			/// <summary>Keep the stencil value.</summary>
+			/// <summary>
+			/// Keep the stencil value.
+			/// </summary>
 			Keep = D3DSTENCILOP_KEEP,
-			/// <summary>Zero the stencil value.</summary>
+
+			/// <summary>
+			/// Zero the stencil value.
+			/// </summary>
 			Zero = D3DSTENCILOP_ZERO,
-			/// <summary>Replace the stencil value.</summary>
+
+			/// <summary>
+			/// Replace the stencil value.
+			/// </summary>
 			Replace = D3DSTENCILOP_REPLACE,
-			/// <summary>Increment and clamp stencil value.</summary>
+
+			/// <summary>
+			/// Increment and clamp stencil value.
+			/// </summary>
 			IncrementSaturate = D3DSTENCILOP_INCRSAT,
-			/// <summary>Decrement and clamp stencil value.</summary>
+
+			/// <summary>
+			/// Decrement and clamp stencil value.
+			/// </summary>
 			DecrementSaturate = D3DSTENCILOP_DECRSAT,
-			/// <summary>Invert the stencil value.</summary>
+
+			/// <summary>
+			/// Invert the stencil value.
+			/// </summary>
 			Invert = D3DSTENCILOP_INVERT,
-			/// <summary>Increment the stencil value.</summary>
+
+			/// <summary>
+			/// Increment the stencil value.
+			/// </summary>
 			Increment = D3DSTENCILOP_INCR,
-			/// <summary>Decrement the stencil value.</summary>
+
+			/// <summary>
+			/// Decrement the stencil value.
+			/// </summary>
 			Decrement = D3DSTENCILOP_DECR
 		};
 		
@@ -839,6 +1254,24 @@ namespace SlimDX
 			Flip = D3DSWAPEFFECT_FLIP,
 			Copy = D3DSWAPEFFECT_COPY,
 		};
+
+		[System::Flags]
+		public enum class TangentOptions : System::Int32
+		{
+			None = 0,
+			WrapU = D3DXTANGENT_WRAP_U,
+			WrapV = D3DXTANGENT_WRAP_V,
+			WrapUV = D3DXTANGENT_WRAP_UV,
+			DontNormalizePartials = D3DXTANGENT_DONT_NORMALIZE_PARTIALS,
+			DontOrthogonalize = D3DXTANGENT_DONT_ORTHOGONALIZE,
+			OrthogonalizeFromV = D3DXTANGENT_ORTHOGONALIZE_FROM_V,
+			OrthogonalizeFromU = D3DXTANGENT_ORTHOGONALIZE_FROM_U,
+			WeightByArea = D3DXTANGENT_WEIGHT_BY_AREA,
+			WeightEqual = D3DXTANGENT_WEIGHT_EQUAL,
+			WindCW = D3DXTANGENT_WIND_CW,
+			CalculateNormals = D3DXTANGENT_CALCULATE_NORMALS,
+			GenerateInPlace = D3DXTANGENT_GENERATE_IN_PLACE,
+		};
 		
 		public enum class TextureAddress : System::Int32
 		{
@@ -847,6 +1280,17 @@ namespace SlimDX
 			Clamp = D3DTADDRESS_CLAMP,
 			Border = D3DTADDRESS_BORDER,
 			MirrorOnce = D3DTADDRESS_MIRRORONCE,
+		};
+
+		[System::Flags]
+		public enum class TextureAddressCaps : System::Int32
+		{
+			Wrap = D3DPTADDRESSCAPS_WRAP,
+			Mirror = D3DPTADDRESSCAPS_MIRROR,
+			Clamp = D3DPTADDRESSCAPS_CLAMP,
+			Border = D3DPTADDRESSCAPS_BORDER,
+			IndependentUV = D3DPTADDRESSCAPS_INDEPENDENTUV,
+			MirrorOnce = D3DPTADDRESSCAPS_MIRRORONCE,
 		};
 		
 		public enum class TextureArgument : System::Int32
@@ -861,6 +1305,27 @@ namespace SlimDX
 			Constant = D3DTA_CONSTANT,
 			Complement = D3DTA_COMPLEMENT,
 			AlphaReplicate = D3DTA_ALPHAREPLICATE,
+		};
+
+		[System::Flags]
+		public enum class TextureCaps : System::Int32
+		{
+			Perspective = D3DPTEXTURECAPS_PERSPECTIVE,
+			Pow2 = D3DPTEXTURECAPS_POW2,
+			Alpha = D3DPTEXTURECAPS_ALPHA,
+			SquareOnly = D3DPTEXTURECAPS_SQUAREONLY,
+			TextureRepeatNotScaledBySize = D3DPTEXTURECAPS_TEXREPEATNOTSCALEDBYSIZE,
+			AlphaPalette = D3DPTEXTURECAPS_ALPHAPALETTE,
+			NonPow2Conditional = D3DPTEXTURECAPS_NONPOW2CONDITIONAL,
+			Projected = D3DPTEXTURECAPS_PROJECTED,
+			CubeMap = D3DPTEXTURECAPS_CUBEMAP,
+			VolumeMap = D3DPTEXTURECAPS_VOLUMEMAP,
+			MipMap = D3DPTEXTURECAPS_MIPMAP,
+			MipVolumeMap = D3DPTEXTURECAPS_MIPVOLUMEMAP,
+			MipCubeMap = D3DPTEXTURECAPS_MIPCUBEMAP,
+			CubeMapPow2 = D3DPTEXTURECAPS_CUBEMAP_POW2,
+			VolumeMapPow2 = D3DPTEXTURECAPS_VOLUMEMAP_POW2,
+			NoProjectedBumpEnvironment = D3DPTEXTURECAPS_NOPROJECTEDBUMPENV,
 		};
 		
 		[System::Flags]
@@ -920,6 +1385,37 @@ namespace SlimDX
 			MultiplyAdd = D3DTOP_MULTIPLYADD,
 			Lerp = D3DTOP_LERP,
 		};
+
+		[System::Flags]
+		public enum class TextureOperationCaps : System::Int32
+		{
+			Disable = D3DTEXOPCAPS_DISABLE,
+			SelectArg1 = D3DTEXOPCAPS_SELECTARG1,
+			SelectArg2 = D3DTEXOPCAPS_SELECTARG2,
+			Modulate = D3DTEXOPCAPS_MODULATE,
+			Modulate2X = D3DTEXOPCAPS_MODULATE2X,
+			Modulate4X = D3DTEXOPCAPS_MODULATE4X,
+			Add = D3DTEXOPCAPS_ADD,
+			AddSigned = D3DTEXOPCAPS_ADDSIGNED,
+			AddSigned2X = D3DTEXOPCAPS_ADDSIGNED2X,
+			Subtract = D3DTEXOPCAPS_SUBTRACT,
+			AddSmooth = D3DTEXOPCAPS_ADDSMOOTH,
+			BlendDiffuseAlpha = D3DTEXOPCAPS_BLENDDIFFUSEALPHA,
+			BlendTextureAlpha = D3DTEXOPCAPS_BLENDTEXTUREALPHA,
+			BlendFactorAlpha = D3DTEXOPCAPS_BLENDFACTORALPHA,
+			BlendTextureAlphaPM = D3DTEXOPCAPS_BLENDTEXTUREALPHAPM,
+			BlendCurrentAlpha = D3DTEXOPCAPS_BLENDCURRENTALPHA,
+			Premodulate = D3DTEXOPCAPS_PREMODULATE,
+			ModulateAlphaAddColor = D3DTEXOPCAPS_MODULATEALPHA_ADDCOLOR,
+			ModulateColorAddAlpha = D3DTEXOPCAPS_MODULATECOLOR_ADDALPHA,
+			ModulateInvAlphaAddColor = D3DTEXOPCAPS_MODULATEINVALPHA_ADDCOLOR,
+			ModulateInvColorAddAlpha = D3DTEXOPCAPS_MODULATEINVCOLOR_ADDALPHA,
+			BumpEnvironmentMap = D3DTEXOPCAPS_BUMPENVMAP,
+			BumpEnvironmentMapLuminance = D3DTEXOPCAPS_BUMPENVMAPLUMINANCE,
+			DotProduct3 = D3DTEXOPCAPS_DOTPRODUCT3,
+			MultiplyAdd = D3DTEXOPCAPS_MULTIPLYADD,
+			Lerp = D3DTEXOPCAPS_LERP,
+		};
 		
 		public enum class TextureStage : System::Int32
 		{
@@ -952,6 +1448,12 @@ namespace SlimDX
 			Count4 = D3DTTFF_COUNT4,
 			Projected = D3DTTFF_PROJECTED,
 		};
+
+		public enum class TrackPriority : System::Int32
+		{
+			Low = D3DXPRIORITY_LOW,
+			High = D3DXPRIORITY_HIGH
+		};
 		
 		public enum class TransformState : System::Int32
 		{
@@ -970,6 +1472,12 @@ namespace SlimDX
 			Texture6 = D3DTS_TEXTURE6,
 			Texture7 = D3DTS_TEXTURE7,
 		};
+
+		public enum class TransitionType : System::Int32
+		{
+			Linear = D3DXTRANSITION_LINEAR,
+			EaseInEaseOut = D3DXTRANSITION_EASEINEASEOUT
+		};
 		
 		[System::Flags]
 		public enum class Usage : System::Int32
@@ -985,7 +1493,7 @@ namespace SlimDX
 			WriteOnly = D3DUSAGE_WRITEONLY,
 			SoftwareProcessing = D3DUSAGE_SOFTWAREPROCESSING,
 
-			//Query usage
+			// Query usage
 			QueryLegacyBumpMap = D3DUSAGE_QUERY_LEGACYBUMPMAP,
 			QuerySrgbRead = D3DUSAGE_QUERY_SRGBREAD,
 			QueryFilter = D3DUSAGE_QUERY_FILTER,
@@ -995,7 +1503,7 @@ namespace SlimDX
 			QueryWrapAndMip = D3DUSAGE_QUERY_WRAPANDMIP,
 			QueryDisplacementMap = D3DUSAGE_DMAP,
 
-			//Extensions
+			// Extensions
 			R2VBTarget = RenderTarget | QueryDisplacementMap,
 		};
 		
@@ -1036,17 +1544,54 @@ namespace SlimDX
 
 			PositionNormal = Position | Normal
 		};
+
+		[System::Flags]
+		public enum class VertexFormatCaps : System::Int32
+		{
+			TextureCoordCountMask = D3DFVFCAPS_TEXCOORDCOUNTMASK,
+			DoNotStripElements = D3DFVFCAPS_DONOTSTRIPELEMENTS,
+			PointSize = D3DFVFCAPS_PSIZE,
+		};
+
+		[System::Flags]
+		public enum class VertexProcessingCaps
+		{
+			TextureGen = D3DVTXPCAPS_TEXGEN,
+			MaterialSource7 = D3DVTXPCAPS_MATERIALSOURCE7,
+			DirectionalLights = D3DVTXPCAPS_DIRECTIONALLIGHTS,
+			PositionAllLights = D3DVTXPCAPS_POSITIONALLIGHTS,
+			LocalViewer = D3DVTXPCAPS_LOCALVIEWER,
+			Tweening = D3DVTXPCAPS_TWEENING,
+			TexGenSphereMap = D3DVTXPCAPS_TEXGEN_SPHEREMAP,
+			NoTexGenNonLocalViewer = D3DVTXPCAPS_NO_TEXGEN_NONLOCALVIEWER,
+		};
+
+		[System::Flags]
+		public enum class XFileFormat : System::Int32
+		{
+			Binary = D3DXF_FILEFORMAT_BINARY,
+			Text = D3DXF_FILEFORMAT_TEXT,
+			Compressed = D3DXF_FILEFORMAT_COMPRESSED
+		};
 		
 		/// <remarks>
 		/// Z-buffer usage types.
 		/// </remarks>
 		public enum class ZBufferType
 		{
-			/// <summary>Used to enable the depth buffer.</summary>
+			/// <summary>
+			/// Used to enable the depth buffer.
+			/// </summary>
 			UseZBuffer = D3DZB_TRUE,
-			/// <summary>Used to disable the depth buffer.</summary>
+
+			/// <summary>
+			/// Used to disable the depth buffer.
+			/// </summary>
 			DontUseZBuffer = D3DZB_FALSE,
-			/// <summary>Used to enable a W-buffer.</summary>
+
+			/// <summary>
+			/// Used to enable a W-buffer.
+			/// </summary>
 			UseWBuffer = D3DZB_USEW
 		};
 	}

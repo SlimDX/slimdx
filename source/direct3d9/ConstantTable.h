@@ -31,14 +31,6 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
-		public enum class RegisterSet : System::Int32
-		{
-			Bool = D3DXRS_BOOL,
-			Int4 = D3DXRS_INT4,
-			Float4 = D3DXRS_FLOAT4,
-			Sampler = D3DXRS_SAMPLER,
-		};
-
 		public value class ConstantTableDescription : System::IEquatable<ConstantTableDescription>
 		{
 		public:

@@ -30,12 +30,7 @@ namespace SlimDX
 		ref class VertexBuffer;
 		ref class IndexBuffer;
 
-		public enum class PatchMeshType : System::Int32
-		{
-			Rectangle = D3DXPATCHMESH_RECT,
-			Triangle = D3DXPATCHMESH_TRI,
-			NPatch = D3DXPATCHMESH_NPATCH
-		};
+		
 
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class PatchInfo : System::IEquatable<PatchInfo>

@@ -30,6 +30,7 @@
 #include "Effect.h"
 #include "ConstantTable.h"
 #include "TextureShader.h"
+#include "Delegates.h"
 
 namespace SlimDX
 {
@@ -73,16 +74,6 @@ namespace SlimDX
 			virtual bool Equals( ImageInformation other );
 			static bool Equals( ImageInformation% value1, ImageInformation% value2 );
 		};
-
-		/// <summary>
-		/// Callback function used by FillTexture.
-		/// </summary>
-		/// <param name="coordinate">Texture coordinate being sampled.</param>
-		/// <param name="texelSize">Dimensions of the texel.</param>
-		/// <returns>A 4 dimensional vector, representing a color value.  X maps to R, G to Y, etc...</returns>
-		public delegate Vector4 Fill2DCallback(Vector2 coordinate, Vector2 texelSize);
-
-		public delegate Vector4 Fill3DCallback(Vector3 coordinate, Vector3 texelSize);
 
 		public value class TextureRequirements : System::IEquatable<TextureRequirements>
 		{

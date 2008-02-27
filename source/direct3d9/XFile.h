@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "Enums.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
@@ -29,14 +31,6 @@ namespace SlimDX
 		ref class XFile;
 		ref class XFileEnumerationObject;
 		ref class XFileData;
-
-		[System::Flags]
-		public enum class XFileFormat : System::Int32
-		{
-			Binary = D3DXF_FILEFORMAT_BINARY,
-			Text = D3DXF_FILEFORMAT_TEXT,
-			Compressed = D3DXF_FILEFORMAT_COMPRESSED
-		};
 
 		public ref class XFileSaveData : public ComObject
 		{

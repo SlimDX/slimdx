@@ -21,44 +21,29 @@
 */
 #pragma once
 
+#include "Enums.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		
-
-		ref class Texture;
-
-		public ref class Sprite : public ComObject
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
+		public value class TrackDescription : System::IEquatable<TrackDescription>
 		{
-			COMOBJECT(ID3DXSprite, Sprite);
-
 		public:
-			Sprite( Device^ device );
-			static Sprite^ FromPointer( System::IntPtr pointer );
+			property TrackPriority Priority;
+			property float Weight;
+			property float Speed;
+			property double Position;
+			property bool Enabled;
 
-			Result Begin( SpriteFlags flags );
-			Result End();
-			Result Flush();
+			static bool operator == ( TrackDescription left, TrackDescription right );
+			static bool operator != ( TrackDescription left, TrackDescription right );
 
-			Result OnLostDevice();
-			Result OnResetDevice();
-
-			Device^ GetDevice();
-
-			property Matrix Transform
-			{
-				Matrix get();
-				void set( Matrix value );
-			}
-
-			Result SetWorldViewLH( Matrix world, Matrix view );
-			Result SetWorldViewRH( Matrix world, Matrix view );
-
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color4 color );
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color4 color );
-			Result Draw( Texture^ texture, Vector3 center, Vector3 position, Color4 color );
-			Result Draw( Texture^ texture, Color4 color );
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( TrackDescription other );
+			static bool Equals( TrackDescription% value1, TrackDescription% value2 );
 		};
 	}
 }

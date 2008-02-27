@@ -35,11 +35,7 @@ namespace SlimDX
 	{
 		class IncludeShim;
 
-		public enum class IncludeType : System::Int32
-		{
-			Local = D3DXINC_LOCAL,
-			System = D3DXINC_SYSTEM,
-		};
+		
 
 		public interface struct Include
 		{

@@ -23,7 +23,6 @@
 
 #include "../InternalHelpers.h"
 #include "Enums.h"
-#include "CapsEnums.h"
 
 using System::Runtime::InteropServices::OutAttribute;
 

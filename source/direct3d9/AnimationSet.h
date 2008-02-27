@@ -25,34 +25,13 @@
 #include "../math/Matrix.h"
 #include "../math/Vector4.h"
 
+#include "Enums.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
 		ref class Frame;
-
-		[System::Flags]
-		public enum class AnimationOutputFlags : System::Int32
-		{
-			None,
-			Transformation,
-			Translation,
-			Scale,
-			Rotation
-		};
-
-		public enum class CallbackSearchFlags : System::Int32
-		{
-			SearchExcludingInitialPosition = D3DXCALLBACK_SEARCH_EXCLUDING_INITIAL_POSITION,
-			SearchBehindInitialPosition = D3DXCALLBACK_SEARCH_BEHIND_INITIAL_POSITION
-		};
-
-		public enum class PlaybackType : System::Int32
-		{
-			Loop = D3DXPLAY_LOOP,
-			Once = D3DXPLAY_ONCE,
-			PingPong = D3DXPLAY_PINGPONG
-		};
 
 		public ref class AnimationOutput
 		{
