@@ -25,97 +25,15 @@
 #include "../math/Matrix.h"
 #include "../math/Vector4.h"
 
+#include "CallbackKey.h"
 #include "Enums.h"
+#include "AnimationOutput.h"
 
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
 		ref class Frame;
-
-		public ref class AnimationOutput
-		{
-		public:
-			AnimationOutput() { }
-
-			property AnimationOutputFlags Flags;
-			property Matrix Transformation;
-			property Vector3 Scaling;
-			property Vector3 Translation;
-			property Quaternion Rotation;
-		};
-
-		public value class CallbackKey : System::IEquatable<CallbackKey>
-		{
-		internal:
-			CallbackKey( const D3DXKEY_CALLBACK &key );
-
-		public:
-			property float Time;
-			property System::IntPtr Data;
-
-			static bool operator == ( CallbackKey left, CallbackKey right );
-			static bool operator != ( CallbackKey left, CallbackKey right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( CallbackKey other );
-			static bool Equals( CallbackKey% value1, CallbackKey% value2 );
-		};
-
-		public value class RotationKey : System::IEquatable<RotationKey>
-		{
-		internal:
-			RotationKey( const D3DXKEY_QUATERNION &key );
-
-		public:
-			property float Time;
-			property Quaternion Value;
-
-			static bool operator == ( RotationKey left, RotationKey right );
-			static bool operator != ( RotationKey left, RotationKey right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( RotationKey other );
-			static bool Equals( RotationKey% value1, RotationKey% value2 );
-		};
-
-		public value class ScaleKey : System::IEquatable<ScaleKey>
-		{
-		internal:
-			ScaleKey( const D3DXKEY_VECTOR3 &key );
-
-		public:
-			property float Time;
-			property Vector3 Value;
-
-			static bool operator == ( ScaleKey left, ScaleKey right );
-			static bool operator != ( ScaleKey left, ScaleKey right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( ScaleKey other );
-			static bool Equals( ScaleKey% value1, ScaleKey% value2 );
-		};
-
-		public value class TranslationKey : System::IEquatable<TranslationKey>
-		{
-		internal:
-			TranslationKey( const D3DXKEY_VECTOR3 &key );
-
-		public:
-			property float Time;
-			property Vector3 Value;
-
-			static bool operator == ( TranslationKey left, TranslationKey right );
-			static bool operator != ( TranslationKey left, TranslationKey right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( TranslationKey other );
-			static bool Equals( TranslationKey% value1, TranslationKey% value2 );
-		};
 
 		public ref class AnimationSet : public ComObject
 		{
@@ -136,73 +54,6 @@ namespace SlimDX
 			property System::String^ Name { System::String^ get(); }
 			property int AnimationCount { int get(); }
 			property double Period { double get(); }
-		};
-
-		public ref class CompressedAnimationSet : public AnimationSet
-		{
-		internal:
-			property ID3DXCompressedAnimationSet* CASPointer
-			{
-				ID3DXCompressedAnimationSet* get() { return static_cast<ID3DXCompressedAnimationSet*>( InternalPointer ); }
-			}
-
-		public:
-			CompressedAnimationSet( System::IntPtr pointer );
-			CompressedAnimationSet( System::String^ name, double ticksPerSecond, PlaybackType playbackType, DataStream^ compressedData, array<CallbackKey>^ callbackKeys );
-			virtual ~CompressedAnimationSet() { }
-
-			array<CallbackKey>^ GetCallbackKeys();
-			DataStream^ GetCompressedData();
-
-			property int CallbackKeyCount { int get(); }
-			property PlaybackType PlaybackType { SlimDX::Direct3D9::PlaybackType get(); }
-			property double SourceTicksPerSecond { double get(); }
-		};
-
-		public ref class KeyframedAnimationSet : public AnimationSet
-		{
-		internal:
-			property ID3DXKeyframedAnimationSet* KASPointer
-			{
-				ID3DXKeyframedAnimationSet* get() { return static_cast<ID3DXKeyframedAnimationSet*>( InternalPointer ); }
-			}
-
-		public:
-			KeyframedAnimationSet( System::IntPtr pointer );
-			KeyframedAnimationSet( System::String^ name, double ticksPerSecond, PlaybackType playbackType, int animationCount, array<CallbackKey>^ callbackKeys );
-			virtual ~KeyframedAnimationSet() { }
-
-			DataStream^ Compress( float lossiness );
-			DataStream^ Compress( float lossiness, Frame^ frameHierarchy );
-
-			CallbackKey GetCallbackKey( int animation );
-			array<CallbackKey>^ GetCallbackKeys();
-			Result SetCallbackKey( int animation, CallbackKey callbackKey );
-
-			RotationKey GetRotationKey( int animation, int key );
-			array<RotationKey>^ GetRotationKeys( int animation );
-			Result SetRotationKey( int animation, int key, RotationKey rotationKey );
-			Result UnregisterRotationKey( int animation, int key );
-			int GetRotationKeyCount( int animation );
-
-			ScaleKey GetScaleKey( int animation, int key );
-			array<ScaleKey>^ GetScaleKeys( int animation );
-			Result SetScaleKey( int animation, int key, ScaleKey scaleKey );
-			Result UnregisterScaleKey( int animation, int key );
-			int GetScaleKeyCount( int animation );
-
-			TranslationKey GetTranslationKey( int animation, int key );
-			array<TranslationKey>^ GetTranslationKeys( int animation );
-			Result SetTranslationKey( int animation, int key, TranslationKey translationKey );
-			Result UnregisterTranslationKey( int animation, int key );
-			int GetTranslationKeyCount( int animation );
-
-			int RegisterAnimationKeys( System::String^ name, array<ScaleKey>^ scaleKeys, array<RotationKey>^ rotationKeys, array<TranslationKey>^ translationKeys );
-			Result UnregisterAnimation( int animation );
-
-			property int CallbackKeyCount { int get(); }
-			property PlaybackType PlaybackType { SlimDX::Direct3D9::PlaybackType get(); }
-			property double SourceTicksPerSecond { double get(); }
 		};
 	}
 }

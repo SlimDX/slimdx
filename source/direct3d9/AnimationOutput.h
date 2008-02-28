@@ -21,44 +21,26 @@
 */
 #pragma once
 
-#include "IResettable.h"
+#include "../math/Quaternion.h"
+#include "../math/Matrix.h"
+#include "../math/Vector3.h"
+
+#include "Enums.h"
 
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		ref class Texture;
-
-		public ref class Sprite : public ComObject, IResettable
+		public ref class AnimationOutput
 		{
-			COMOBJECT(ID3DXSprite, Sprite);
-
 		public:
-			Sprite( Device^ device );
-			static Sprite^ FromPointer( System::IntPtr pointer );
+			AnimationOutput() { }
 
-			Result Begin( SpriteFlags flags );
-			Result End();
-			Result Flush();
-
-			virtual Result OnLostDevice();
-			virtual Result OnResetDevice();
-
-			Device^ GetDevice();
-
-			property Matrix Transform
-			{
-				Matrix get();
-				void set( Matrix value );
-			}
-
-			Result SetWorldViewLH( Matrix world, Matrix view );
-			Result SetWorldViewRH( Matrix world, Matrix view );
-
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color4 color );
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color4 color );
-			Result Draw( Texture^ texture, Vector3 center, Vector3 position, Color4 color );
-			Result Draw( Texture^ texture, Color4 color );
+			property AnimationOutputFlags Flags;
+			property Matrix Transformation;
+			property Vector3 Scaling;
+			property Vector3 Translation;
+			property Quaternion Rotation;
 		};
 	}
 }

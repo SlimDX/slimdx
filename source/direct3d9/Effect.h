@@ -25,6 +25,7 @@
 #include "BaseEffect.h"
 #include "Shader.h"
 #include "EffectStateManager.h"
+#include "IResettable.h"
 
 namespace SlimDX
 {
@@ -41,7 +42,7 @@ namespace SlimDX
 			static EffectPool^ FromPointer( System::IntPtr pointer );
 		};
 
-		public ref class Effect : public BaseEffect
+		public ref class Effect : public BaseEffect, IResettable
 		{
 			COMOBJECT(ID3DXEffect, Effect);
 
@@ -85,8 +86,8 @@ namespace SlimDX
 			Result SetStateManager( IEffectStateManager^ manager );
 			IEffectStateManager^ GetStateManager();
 
-			Result OnLostDevice();
-			Result OnResetDevice();
+			virtual Result OnLostDevice();
+			virtual Result OnResetDevice();
 
 			property EffectHandle^ Technique
 			{

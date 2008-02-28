@@ -21,44 +21,34 @@
 */
 #pragma once
 
-#include "IResettable.h"
-
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		ref class Texture;
+		ref class MeshContainer;
+		ref class Frame;
+		ref class MeshData;
 
-		public ref class Sprite : public ComObject, IResettable
+		public interface struct IAllocateHierarchy
 		{
-			COMOBJECT(ID3DXSprite, Sprite);
+			virtual MeshContainer^ CreateMeshContainer( System::String^ name, MeshData^ meshData, array<ExtendedMaterial>^ materials, array<EffectInstance>^ effectInstances, array<int>^ adjacency, SkinInfo^ skinInfo ) = 0;
+			virtual Frame^ CreateFrame( System::String^ name ) = 0;
+			virtual void DestroyFrame( Frame^ frame ) = 0;
+			virtual void DestroyMeshContainer( MeshContainer^ container ) = 0;
+		};
+
+		class IAllocateHierarchyShim : public ID3DXAllocateHierarchy
+		{
+		private:
+			gcroot<IAllocateHierarchy^> m_WrappedInterface;
 
 		public:
-			Sprite( Device^ device );
-			static Sprite^ FromPointer( System::IntPtr pointer );
+			IAllocateHierarchyShim( IAllocateHierarchy^ wrappedInterface );
 
-			Result Begin( SpriteFlags flags );
-			Result End();
-			Result Flush();
-
-			virtual Result OnLostDevice();
-			virtual Result OnResetDevice();
-
-			Device^ GetDevice();
-
-			property Matrix Transform
-			{
-				Matrix get();
-				void set( Matrix value );
-			}
-
-			Result SetWorldViewLH( Matrix world, Matrix view );
-			Result SetWorldViewRH( Matrix world, Matrix view );
-
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color4 color );
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color4 color );
-			Result Draw( Texture^ texture, Vector3 center, Vector3 position, Color4 color );
-			Result Draw( Texture^ texture, Color4 color );
+			HRESULT WINAPI CreateFrame( LPCSTR Name, LPD3DXFRAME *ppNewFrame );
+			HRESULT WINAPI CreateMeshContainer( LPCSTR Name, const D3DXMESHDATA *pMeshData, const D3DXMATERIAL *pMaterials, const D3DXEFFECTINSTANCE *pEffectInstances, DWORD NumMaterials, const DWORD *pAdjacency, LPD3DXSKININFO pSkinInfo, LPD3DXMESHCONTAINER *ppNewMeshContainer );
+			HRESULT WINAPI DestroyFrame( LPD3DXFRAME pFrameToFree );
+			HRESULT WINAPI DestroyMeshContainer( LPD3DXMESHCONTAINER pMeshContainerToFree );
 		};
 	}
 }

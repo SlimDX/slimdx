@@ -22,6 +22,7 @@
 #pragma once
 
 #include "Enums.h"
+#include "IResettable.h"
 
 namespace SlimDX
 {
@@ -50,7 +51,7 @@ namespace SlimDX
 			static bool Equals( FontDescription% value1, FontDescription% value2 );
 		};
 
-		public ref class Font : public ComObject
+		public ref class Font : public ComObject, IResettable
 		{
 			COMOBJECT(ID3DXFont, Font);
 
@@ -71,8 +72,8 @@ namespace SlimDX
 			Result PreloadGlyphs( int first, int last );
 			Result PreloadText( System::String^ text );
 
-			Result OnLostDevice();
-			Result OnResetDevice();
+			virtual Result OnLostDevice();
+			virtual Result OnResetDevice();
 
 			property FontDescription Description
 			{

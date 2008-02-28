@@ -1375,8 +1375,12 @@
 				RelativePath="..\source\direct3d9\Error.h"
 				>
 			</File>
+			<File
+				RelativePath="..\source\direct3d9\IResettable.h"
+				>
+			</File>
 			<Filter
-				Name="Animation"
+				Name="Animation Controller"
 				>
 				<File
 					RelativePath="..\source\direct3d9\AnimationController.cpp"
@@ -1384,22 +1388,6 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\AnimationController.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d9\AnimationFrame.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d9\AnimationFrame.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d9\AnimationSet.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d9\AnimationSet.h"
 					>
 				</File>
 				<File
@@ -1536,6 +1524,22 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Mesh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\MeshContainer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\MeshContainer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\MeshData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\MeshData.h"
 					>
 				</File>
 				<File
@@ -1832,6 +1836,86 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\XFile.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Animation Frame"
+				>
+				<File
+					RelativePath="..\source\direct3d9\AnimationFrame.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\AnimationFrame.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\IAllocateHierarchy.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\IAllocateHierarchy.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ILoadUserData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ILoadUserData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ISaveUserData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ISaveUserData.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Animation Set"
+				>
+				<File
+					RelativePath="..\source\direct3d9\AnimationOutput.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\AnimationOutput.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\AnimationSet.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\AnimationSet.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\CallbackKey.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\CallbackKey.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\CompressedAnimationSet.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\CompressedAnimationSet.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\KeyframedAnimationSet.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\KeyframedAnimationSet.h"
 					>
 				</File>
 			</Filter>

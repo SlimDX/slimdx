@@ -21,11 +21,13 @@
 */
 #pragma once
 
+#include "IResettable.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public ref class Line : ComObject
+		public ref class Line : ComObject, IResettable
 		{
 			COMOBJECT(ID3DXLine, Line);
 
@@ -39,8 +41,8 @@ namespace SlimDX
 			Result Draw( array<Vector2>^ vertexList, Color4 color );
 			Result DrawTransformed( array<Vector3>^ vertexList, Matrix matrix, Color4 color );
 			
-			Result OnLostDevice();
-			Result OnResetDevice();
+			virtual Result OnLostDevice();
+			virtual Result OnResetDevice();
 
 			Device^ GetDevice();
 
