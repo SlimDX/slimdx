@@ -60,7 +60,7 @@ namespace Direct3D10
 
 	Texture3D^ Texture3D::FromPointer( ID3D10Texture3D* pointer )
 	{
-		Texture3D^ tableEntry = safe_cast<Texture3D^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Texture3D^ tableEntry = safe_cast<Texture3D^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -72,7 +72,7 @@ namespace Direct3D10
 
 	Texture3D^ Texture3D::FromPointer( IntPtr pointer )
 	{
-		Texture3D^ tableEntry = safe_cast<Texture3D^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Texture3D^ tableEntry = safe_cast<Texture3D^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

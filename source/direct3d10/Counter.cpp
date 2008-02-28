@@ -56,7 +56,7 @@ namespace Direct3D10
 
 	Counter^ Counter::FromPointer( ID3D10Counter* pointer )
 	{
-		Counter^ tableEntry = safe_cast<Counter^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Counter^ tableEntry = safe_cast<Counter^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -68,7 +68,7 @@ namespace Direct3D10
 
 	Counter^ Counter::FromPointer( IntPtr pointer )
 	{
-		Counter^ tableEntry = safe_cast<Counter^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Counter^ tableEntry = safe_cast<Counter^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

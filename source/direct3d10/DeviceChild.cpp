@@ -49,7 +49,7 @@ namespace Direct3D10
 
 	DeviceChild^ DeviceChild::FromPointer( ID3D10DeviceChild* pointer )
 	{
-		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -61,7 +61,7 @@ namespace Direct3D10
 
 	DeviceChild^ DeviceChild::FromPointer( IntPtr pointer )
 	{
-		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

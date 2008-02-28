@@ -136,7 +136,7 @@ namespace DirectInput
 	generic<typename DataFormat>
 	Device<DataFormat>^ Device<DataFormat>::FromPointer( IDirectInputDevice8W* pointer )
 	{
-		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -149,7 +149,7 @@ namespace DirectInput
 	generic<typename DataFormat>
 	Device<DataFormat>^ Device<DataFormat>::FromPointer( IntPtr pointer )
 	{
-		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

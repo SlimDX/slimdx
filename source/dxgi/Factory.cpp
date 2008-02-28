@@ -57,7 +57,7 @@ namespace DXGI
 
 	Factory^ Factory::FromPointer( IDXGIFactory* pointer )
 	{
-		Factory^ tableEntry = safe_cast<Factory^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Factory^ tableEntry = safe_cast<Factory^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -69,7 +69,7 @@ namespace DXGI
 
 	Factory^ Factory::FromPointer( IntPtr pointer )
 	{
-		Factory^ tableEntry = safe_cast<Factory^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Factory^ tableEntry = safe_cast<Factory^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

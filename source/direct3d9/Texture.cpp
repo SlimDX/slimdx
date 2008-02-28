@@ -278,11 +278,13 @@ namespace Direct3D9
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(texture);
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( this );
 	}
 
 	Texture^ Texture::FromPointer( IDirect3DTexture9* pointer )
 	{
-		Texture^ tableEntry = safe_cast<Texture^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Texture^ tableEntry = safe_cast<Texture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -294,7 +296,7 @@ namespace Direct3D9
 
 	Texture^ Texture::FromPointer( IntPtr pointer )
 	{
-		Texture^ tableEntry = safe_cast<Texture^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Texture^ tableEntry = safe_cast<Texture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
@@ -349,7 +351,10 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		return gcnew Texture( texture );
+		Texture^ result = gcnew Texture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	Texture^ Texture::FromMemory( Device^ device, array<Byte>^ memory, int width, int height, int numLevels,
@@ -369,7 +374,10 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew Texture( texture );
+		Texture^ result = gcnew Texture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	Texture^ Texture::FromMemory( Device^ device, array<Byte>^ memory, int width, int height, int numLevels,
@@ -385,7 +393,10 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew Texture( texture );
+		Texture^ result = gcnew Texture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	Texture^ Texture::FromMemory( Device^ device, array<Byte>^ memory, Usage usage, Pool pool )
@@ -462,7 +473,10 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		return gcnew Texture( texture );
+		Texture^ result = gcnew Texture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	Texture^ Texture::FromFile( Device^ device, String^ fileName, int width, int height, int numLevels,
@@ -480,7 +494,10 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew Texture( texture );
+		Texture^ result = gcnew Texture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	Texture^ Texture::FromFile( Device^ device, String^ fileName, int width, int height, int numLevels,
@@ -496,7 +513,10 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew Texture( texture );
+		Texture^ result = gcnew Texture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	Texture^ Texture::FromFile( Device^ device, String^ fileName, Usage usage, Pool pool )
@@ -672,11 +692,13 @@ namespace Direct3D9
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(texture);
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( this );
 	}
 
 	CubeTexture^ CubeTexture::FromPointer( IDirect3DCubeTexture9* pointer )
 	{
-		CubeTexture^ tableEntry = safe_cast<CubeTexture^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		CubeTexture^ tableEntry = safe_cast<CubeTexture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -688,7 +710,7 @@ namespace Direct3D9
 
 	CubeTexture^ CubeTexture::FromPointer( IntPtr pointer )
 	{
-		CubeTexture^ tableEntry = safe_cast<CubeTexture^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		CubeTexture^ tableEntry = safe_cast<CubeTexture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
@@ -742,7 +764,10 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		return gcnew CubeTexture( texture );
+		CubeTexture^ result = gcnew CubeTexture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	CubeTexture^ CubeTexture::FromMemory( Device^ device, array<Byte>^ memory, int size, int numLevels,
@@ -761,7 +786,10 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew CubeTexture( texture );
+		CubeTexture^ result = gcnew CubeTexture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	CubeTexture^ CubeTexture::FromMemory( Device^ device, array<Byte>^ memory, int size, int numLevels,
@@ -777,7 +805,10 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew CubeTexture( texture );
+		CubeTexture^ result = gcnew CubeTexture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	CubeTexture^ CubeTexture::FromMemory( Device^ device, array<Byte>^ memory, Usage usage, Pool pool )
@@ -854,7 +885,10 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		return gcnew CubeTexture( texture );
+		CubeTexture^ result = gcnew CubeTexture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	CubeTexture^ CubeTexture::FromFile( Device^ device, String^ fileName, int size, int numLevels,
@@ -872,7 +906,10 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew CubeTexture( texture );
+		CubeTexture^ result = gcnew CubeTexture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	CubeTexture^ CubeTexture::FromFile( Device^ device, String^ fileName, int size, int numLevels,
@@ -888,7 +925,10 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew CubeTexture( texture );
+		CubeTexture^ result = gcnew CubeTexture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	CubeTexture^ CubeTexture::FromFile( Device^ device, String^ fileName, Usage usage, Pool pool )
@@ -1000,11 +1040,13 @@ namespace Direct3D9
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(texture);
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( this );
 	}
 
 	VolumeTexture^ VolumeTexture::FromPointer( IDirect3DVolumeTexture9* pointer )
 	{
-		VolumeTexture^ tableEntry = safe_cast<VolumeTexture^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		VolumeTexture^ tableEntry = safe_cast<VolumeTexture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -1016,7 +1058,7 @@ namespace Direct3D9
 
 	VolumeTexture^ VolumeTexture::FromPointer( IntPtr pointer )
 	{
-		VolumeTexture^ tableEntry = safe_cast<VolumeTexture^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		VolumeTexture^ tableEntry = safe_cast<VolumeTexture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
@@ -1077,7 +1119,10 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		return gcnew VolumeTexture( texture );
+		VolumeTexture^ result = gcnew VolumeTexture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	VolumeTexture^ VolumeTexture::FromMemory( Device^ device, array<Byte>^ memory, int width, int height, int depth,
@@ -1096,7 +1141,10 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew VolumeTexture( texture );
+		VolumeTexture^ result = gcnew VolumeTexture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	VolumeTexture^ VolumeTexture::FromMemory( Device^ device, array<Byte>^ memory, int width, int height, int depth,
@@ -1112,7 +1160,10 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew VolumeTexture( texture );
+		VolumeTexture^ result = gcnew VolumeTexture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	VolumeTexture^ VolumeTexture::FromMemory( Device^ device, array<Byte>^ memory, Usage usage, Pool pool )
@@ -1192,7 +1243,10 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		return gcnew VolumeTexture( texture );
+		VolumeTexture^ result = gcnew VolumeTexture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	VolumeTexture^ VolumeTexture::FromFile( Device^ device, String^ fileName, int width, int height, int depth,
@@ -1211,7 +1265,10 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew VolumeTexture( texture );
+		VolumeTexture^ result = gcnew VolumeTexture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	VolumeTexture^ VolumeTexture::FromFile( Device^ device, String^ fileName, int width, int height, int depth,
@@ -1227,7 +1284,10 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew VolumeTexture( texture );
+		VolumeTexture^ result = gcnew VolumeTexture( texture );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	VolumeTexture^ VolumeTexture::FromFile( Device^ device, String^ fileName, Usage usage, Pool pool )
@@ -1306,14 +1366,14 @@ namespace Direct3D9
 
 	Volume^ VolumeTexture::GetVolumeLevel( int level )
 	{
-		IDirect3DVolume9 *result;
+		IDirect3DVolume9* result;
 
 		HRESULT hr = InternalPointer->GetVolumeLevel( level, &result );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew Volume( result );
+		return Volume::FromPointer( result );
 	}
 
 	Result VolumeTexture::Fill(Fill3DCallback^ callback)

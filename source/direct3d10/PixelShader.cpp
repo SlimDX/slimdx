@@ -42,7 +42,7 @@ namespace Direct3D10
 
 	PixelShader^ PixelShader::FromPointer( ID3D10PixelShader* pointer )
 	{
-		PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -54,7 +54,7 @@ namespace Direct3D10
 
 	PixelShader^ PixelShader::FromPointer( IntPtr pointer )
 	{
-		PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

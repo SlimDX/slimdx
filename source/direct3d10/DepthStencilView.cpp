@@ -47,7 +47,7 @@ namespace Direct3D10
 	
 	DepthStencilView^ DepthStencilView::FromPointer( ID3D10DepthStencilView* pointer )
 	{
-		DepthStencilView^ tableEntry = safe_cast<DepthStencilView^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		DepthStencilView^ tableEntry = safe_cast<DepthStencilView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -59,7 +59,7 @@ namespace Direct3D10
 
 	DepthStencilView^ DepthStencilView::FromPointer( IntPtr pointer )
 	{
-		DepthStencilView^ tableEntry = safe_cast<DepthStencilView^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		DepthStencilView^ tableEntry = safe_cast<DepthStencilView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

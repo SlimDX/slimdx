@@ -59,7 +59,7 @@ namespace Direct3D10
 
 	RasterizerState^ RasterizerState::FromPointer( ID3D10RasterizerState* pointer )
 	{
-		RasterizerState^ tableEntry = safe_cast<RasterizerState^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		RasterizerState^ tableEntry = safe_cast<RasterizerState^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -71,7 +71,7 @@ namespace Direct3D10
 
 	RasterizerState^ RasterizerState::FromPointer( IntPtr pointer )
 	{
-		RasterizerState^ tableEntry = safe_cast<RasterizerState^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		RasterizerState^ tableEntry = safe_cast<RasterizerState^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

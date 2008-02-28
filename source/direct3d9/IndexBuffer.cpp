@@ -96,7 +96,7 @@ namespace Direct3D9
 
 	IndexBuffer^ IndexBuffer::FromPointer( IDirect3DIndexBuffer9* pointer )
 	{
-		IndexBuffer^ tableEntry = safe_cast<IndexBuffer^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		IndexBuffer^ tableEntry = safe_cast<IndexBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -108,7 +108,7 @@ namespace Direct3D9
 
 	IndexBuffer^ IndexBuffer::FromPointer( IntPtr pointer )
 	{
-		IndexBuffer^ tableEntry = safe_cast<IndexBuffer^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		IndexBuffer^ tableEntry = safe_cast<IndexBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
@@ -140,6 +140,9 @@ namespace Direct3D9
 		description.Usage = static_cast<SlimDX::Direct3D9::Usage>( desc.Usage );
 		description.Pool = static_cast<SlimDX::Direct3D9::Pool>( desc.Pool );
 		description.SizeInBytes = desc.Size;
+
+		if( description.Pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( this );
 	}
 	
 	DataStream^ IndexBuffer::Lock( int offset, int size, LockFlags flags )

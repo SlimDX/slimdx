@@ -154,7 +154,7 @@ namespace Direct3D9
 
 	PatchMesh^ PatchMesh::FromPointer( ID3DXPatchMesh* pointer )
 	{
-		PatchMesh^ tableEntry = safe_cast<PatchMesh^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		PatchMesh^ tableEntry = safe_cast<PatchMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -166,7 +166,7 @@ namespace Direct3D9
 
 	PatchMesh^ PatchMesh::FromPointer( IntPtr pointer )
 	{
-		PatchMesh^ tableEntry = safe_cast<PatchMesh^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		PatchMesh^ tableEntry = safe_cast<PatchMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

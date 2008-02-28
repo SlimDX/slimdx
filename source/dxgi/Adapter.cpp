@@ -46,7 +46,7 @@ namespace DXGI
 
 	Adapter^ Adapter::FromPointer( IDXGIAdapter* pointer )
 	{
-		Adapter^ tableEntry = safe_cast<Adapter^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Adapter^ tableEntry = safe_cast<Adapter^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -58,7 +58,7 @@ namespace DXGI
 
 	Adapter^ Adapter::FromPointer( IntPtr pointer )
 	{
-		Adapter^ tableEntry = safe_cast<Adapter^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Adapter^ tableEntry = safe_cast<Adapter^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

@@ -108,7 +108,7 @@ namespace SlimDX
 
 		RenderToSurface^ RenderToSurface::FromPointer( ID3DXRenderToSurface* pointer )
 		{
-			RenderToSurface^ tableEntry = safe_cast<RenderToSurface^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			RenderToSurface^ tableEntry = safe_cast<RenderToSurface^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
 				pointer->Release();
@@ -120,7 +120,7 @@ namespace SlimDX
 
 		RenderToSurface^ RenderToSurface::FromPointer( IntPtr pointer )
 		{
-			RenderToSurface^ tableEntry = safe_cast<RenderToSurface^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			RenderToSurface^ tableEntry = safe_cast<RenderToSurface^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
 				return tableEntry;

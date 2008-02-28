@@ -104,7 +104,7 @@ namespace Direct3D9
 
 	FragmentLinker^ FragmentLinker::FromPointer( ID3DXFragmentLinker* pointer )
 	{
-		FragmentLinker^ tableEntry = safe_cast<FragmentLinker^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		FragmentLinker^ tableEntry = safe_cast<FragmentLinker^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -116,7 +116,7 @@ namespace Direct3D9
 
 	FragmentLinker^ FragmentLinker::FromPointer( IntPtr pointer )
 	{
-		FragmentLinker^ tableEntry = safe_cast<FragmentLinker^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		FragmentLinker^ tableEntry = safe_cast<FragmentLinker^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

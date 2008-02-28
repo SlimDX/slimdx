@@ -97,7 +97,7 @@ namespace DirectSound
 
 	SoundBuffer^ SoundBuffer::FromPointer( IDirectSoundBuffer* pointer )
 	{
-		SoundBuffer^ tableEntry = safe_cast<SoundBuffer^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		SoundBuffer^ tableEntry = safe_cast<SoundBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -109,7 +109,7 @@ namespace DirectSound
 
 	SoundBuffer^ SoundBuffer::FromPointer( IntPtr pointer )
 	{
-		SoundBuffer^ tableEntry = safe_cast<SoundBuffer^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		SoundBuffer^ tableEntry = safe_cast<SoundBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

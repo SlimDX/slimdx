@@ -65,7 +65,7 @@ namespace Direct3D9
 
 	Line^ Line::FromPointer( ID3DXLine* pointer )
 	{
-		Line^ tableEntry = safe_cast<Line^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Line^ tableEntry = safe_cast<Line^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -77,7 +77,7 @@ namespace Direct3D9
 
 	Line^ Line::FromPointer( IntPtr pointer )
 	{
-		Line^ tableEntry = safe_cast<Line^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Line^ tableEntry = safe_cast<Line^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

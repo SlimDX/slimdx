@@ -44,13 +44,8 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 		
-		Format = static_cast<SlimDX::Direct3D9::Format>( description.Format );
-		Usage = static_cast<SlimDX::Direct3D9::Usage>( description.Usage );
-		Pool = static_cast<SlimDX::Direct3D9::Pool>( description.Pool );
-		SizeInBytes = description.Size;
-		FVF = static_cast<VertexFormat>( description.FVF );
-
 		Construct(buffer);
+		InitDescription();
 	}
 
 	VertexBuffer::VertexBuffer( IntPtr buffer )
@@ -63,24 +58,13 @@ namespace Direct3D9
 
 		IDirect3DVertexBuffer9* vbPtr = static_cast<IDirect3DVertexBuffer9*>( pointer );
 
-		D3DVERTEXBUFFER_DESC description;
-		hr = vbPtr->GetDesc( &description );
-		
-		if( RECORD_D3D9(hr).IsFailure )
-			throw gcnew Direct3D9Exception( Result::Last );
-		
-		Format = static_cast<SlimDX::Direct3D9::Format>( description.Format );
-		Usage = static_cast<SlimDX::Direct3D9::Usage>( description.Usage );
-		Pool = static_cast<SlimDX::Direct3D9::Pool>( description.Pool );
-		SizeInBytes = description.Size;
-		FVF = static_cast<VertexFormat>( description.FVF );
-
 		Construct(vbPtr);
+		InitDescription();
 	}
 
 	VertexBuffer^ VertexBuffer::FromPointer( IDirect3DVertexBuffer9* pointer )
 	{
-		VertexBuffer^ tableEntry = safe_cast<VertexBuffer^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		VertexBuffer^ tableEntry = safe_cast<VertexBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -92,7 +76,7 @@ namespace Direct3D9
 
 	VertexBuffer^ VertexBuffer::FromPointer( IntPtr pointer )
 	{
-		VertexBuffer^ tableEntry = safe_cast<VertexBuffer^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		VertexBuffer^ tableEntry = safe_cast<VertexBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
@@ -116,13 +100,23 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 		
-		Format = static_cast<SlimDX::Direct3D9::Format>( description.Format );
-		Usage = static_cast<SlimDX::Direct3D9::Usage>( description.Usage );
-		Pool = static_cast<SlimDX::Direct3D9::Pool>( description.Pool );
-		SizeInBytes = description.Size;
-		FVF = static_cast<VertexFormat>( description.FVF );
-		
 		Construct(vb);
+		InitDescription();
+	}
+
+	void VertexBuffer::InitDescription()
+	{
+		VertexBufferDescription desc;
+		HRESULT hr = InternalPointer->GetDesc( reinterpret_cast<D3DVERTEXBUFFER_DESC*>( &desc ) );
+		if( FAILED( hr ) )
+		{
+			//fail this silently
+			return;
+		}
+
+		m_Description = desc;
+		if( m_Description.Pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( this );
 	}
 
 	DataStream^ VertexBuffer::Lock( int offset, int size, LockFlags flags )
@@ -133,7 +127,7 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 		
-		int lockedSize = size == 0 ? SizeInBytes : size;
+		int lockedSize = size == 0 ? m_Description.SizeInBytes : size;
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		DataStream^ stream = gcnew DataStream( lockedPtr, lockedSize, true, !readOnly, false );

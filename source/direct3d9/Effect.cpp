@@ -57,7 +57,7 @@ namespace SlimDX
 
 		EffectPool^ EffectPool::FromPointer( ID3DXEffectPool* pointer )
 		{
-			EffectPool^ tableEntry = safe_cast<EffectPool^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			EffectPool^ tableEntry = safe_cast<EffectPool^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
 				pointer->Release();
@@ -69,7 +69,7 @@ namespace SlimDX
 
 		EffectPool^ EffectPool::FromPointer( IntPtr pointer )
 		{
-			EffectPool^ tableEntry = safe_cast<EffectPool^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			EffectPool^ tableEntry = safe_cast<EffectPool^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
 				return tableEntry;
@@ -92,7 +92,7 @@ namespace SlimDX
 
 		Effect^ Effect::FromPointer( ID3DXEffect* pointer )
 		{
-			Effect^ tableEntry = safe_cast<Effect^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			Effect^ tableEntry = safe_cast<Effect^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
 				pointer->Release();
@@ -104,7 +104,7 @@ namespace SlimDX
 
 		Effect^ Effect::FromPointer( IntPtr pointer )
 		{
-			Effect^ tableEntry = safe_cast<Effect^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			Effect^ tableEntry = safe_cast<Effect^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
 				return tableEntry;

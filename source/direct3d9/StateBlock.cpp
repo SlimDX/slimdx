@@ -59,7 +59,7 @@ namespace Direct3D9
 
 	StateBlock^ StateBlock::FromPointer( IDirect3DStateBlock9* pointer )
 	{
-		StateBlock^ tableEntry = safe_cast<StateBlock^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		StateBlock^ tableEntry = safe_cast<StateBlock^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -71,7 +71,7 @@ namespace Direct3D9
 
 	StateBlock^ StateBlock::FromPointer( IntPtr pointer )
 	{
-		StateBlock^ tableEntry = safe_cast<StateBlock^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		StateBlock^ tableEntry = safe_cast<StateBlock^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

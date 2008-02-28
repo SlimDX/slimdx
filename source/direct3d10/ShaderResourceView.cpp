@@ -77,7 +77,7 @@ namespace Direct3D10
 
 	ShaderResourceView^ ShaderResourceView::FromPointer( ID3D10ShaderResourceView* pointer )
 	{
-		ShaderResourceView^ tableEntry = safe_cast<ShaderResourceView^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		ShaderResourceView^ tableEntry = safe_cast<ShaderResourceView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -89,7 +89,7 @@ namespace Direct3D10
 
 	ShaderResourceView^ ShaderResourceView::FromPointer( IntPtr pointer )
 	{
-		ShaderResourceView^ tableEntry = safe_cast<ShaderResourceView^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		ShaderResourceView^ tableEntry = safe_cast<ShaderResourceView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

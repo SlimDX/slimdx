@@ -49,7 +49,7 @@ namespace DXGI
 
 	Device^ Device::FromPointer( IDXGIDevice* pointer )
 	{
-		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -61,7 +61,7 @@ namespace DXGI
 
 	Device^ Device::FromPointer( IntPtr pointer )
 	{
-		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

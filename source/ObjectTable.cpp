@@ -33,7 +33,7 @@ namespace SlimDX
 {
 	static ObjectTable::ObjectTable()
 	{
-		m_Table = gcnew System::Collections::Generic::Dictionary<IntPtr, ObjectRecord>();
+		m_Table = gcnew System::Collections::Generic::Dictionary<IntPtr, ObjectInfo>();
 
 		AppDomain::CurrentDomain->DomainUnload += gcnew System::EventHandler( OnExit );
 		AppDomain::CurrentDomain->ProcessExit += gcnew System::EventHandler( OnExit );
@@ -52,7 +52,7 @@ namespace SlimDX
 		Debug::Write( leakString );
 	}
 
-	ComObject^ ObjectTable::Construct( IntPtr nativeObject )
+	ComObject^ ObjectTable::Find( IntPtr nativeObject )
 	{
 		if( nativeObject == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "nativeObject" );
@@ -67,13 +67,14 @@ namespace SlimDX
 
 	void ObjectTable::Add( ComObject^ obj )
 	{
-		ObjectRecord record;
-		record.Handle = obj;
+		ObjectInfo info;
+		info.Handle = obj;
+		info.IsDefaultPool = false;
 
 		if( Configuration::EnableObjectTracking )
-			record.Source = gcnew StackTrace( 2, true );
+			info.Source = gcnew StackTrace( 2, true );
 
-		m_Table->Add( obj->ComPointer, record );
+		m_Table->Add( obj->ComPointer, info );
 	}
 
 	void ObjectTable::Remove( ComObject^ obj )
@@ -81,11 +82,16 @@ namespace SlimDX
 		m_Table->Remove( obj->ComPointer );
 	}
 
+	void ObjectTable::FlagAsDefaultPool( ComObject^ object )
+	{
+		m_Table[object->ComPointer].IsDefaultPool = true;
+	}
+
 	String^ ObjectTable::ReportLeaks()
 	{
 		String^ output = "";
 
-		for each( KeyValuePair<IntPtr, ObjectRecord> pair in m_Table )
+		for each( KeyValuePair<IntPtr, ObjectInfo> pair in m_Table )
 		{
 			if( pair.Value.Source == nullptr )
 				continue;
@@ -111,5 +117,10 @@ namespace SlimDX
 
 		output += String::Format( CultureInfo::InvariantCulture, "Total of {0} objects still alive.\n", m_Table->Count );
 		return output;
+	}
+
+	Dictionary<IntPtr, ObjectInfo>::ValueCollection^ ObjectTable::Objects::get()
+	{
+		return m_Table->Values;
 	}
 }

@@ -27,29 +27,36 @@ namespace SlimDX
 {
 	ref class ComObject;
 
+	value struct ObjectInfo
+	{
+		ComObject^ Handle;
+		System::Diagnostics::StackTrace^ Source;
+		bool IsDefaultPool;
+	};
+
 	ref class ObjectTable
 	{
 	private:
-		value struct ObjectRecord
-		{
-			ComObject^ Handle;
-			System::Diagnostics::StackTrace^ Source;
-		};
-
 		static ObjectTable();
 		ObjectTable();
 
-		static System::Collections::Generic::Dictionary<System::IntPtr, ObjectRecord>^ m_Table;
+		static System::Collections::Generic::Dictionary<System::IntPtr, ObjectInfo>^ m_Table;
 
 		static void OnExit( System::Object^ sender, System::EventArgs^ e );
 
 	internal:
-		static ComObject^ Construct( System::IntPtr nativeObject );
+		static ComObject^ Find( System::IntPtr nativeObject );
 
 	public:
 		static void Add( ComObject^ obj );
 		static void Remove( ComObject^ obj );
+		static void FlagAsDefaultPool( ComObject^ object );
 
 		static System::String^ ReportLeaks();
+
+		static property System::Collections::Generic::Dictionary<System::IntPtr, ObjectInfo>::ValueCollection^ Objects
+		{
+			System::Collections::Generic::Dictionary<System::IntPtr, ObjectInfo>::ValueCollection^ get();
+		}
 	};
 }

@@ -61,7 +61,7 @@ namespace Direct3D10
 
 	BlendState^ BlendState::FromPointer( ID3D10BlendState* pointer )
 	{
-		BlendState^ tableEntry = safe_cast<BlendState^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		BlendState^ tableEntry = safe_cast<BlendState^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -73,7 +73,7 @@ namespace Direct3D10
 
 	BlendState^ BlendState::FromPointer( IntPtr pointer )
 	{
-		BlendState^ tableEntry = safe_cast<BlendState^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		BlendState^ tableEntry = safe_cast<BlendState^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
