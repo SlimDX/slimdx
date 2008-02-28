@@ -75,16 +75,11 @@ namespace SlimDX
 
 		public ref class Volume : public Resource
 		{
-		internal:
-			Volume( IDirect3DVolume9* volume );
-			property IDirect3DVolume9* VolumePointer
-			{
-				IDirect3DVolume9* get() { return reinterpret_cast<IDirect3DVolume9*>( InternalPointer ); }
-			}
+			COMOBJECT(IDirect3DVolume9, Volume);
 
 		public:
-			Volume( System::IntPtr volume );
 			virtual ~Volume() { }
+			static Volume^ FromPointer( System::IntPtr volume );
 
 			static Result FromMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
 			static Result FromMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox, [Out] ImageInformation% imageInformation );

@@ -66,7 +66,7 @@ namespace Direct3D9
 
 	AnimationController^ AnimationController::FromPointer( ID3DXAnimationController* pointer )
 	{
-		AnimationController^ tableEntry = safe_cast<AnimationController^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		AnimationController^ tableEntry = safe_cast<AnimationController^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -78,7 +78,7 @@ namespace Direct3D9
 
 	AnimationController^ AnimationController::FromPointer( IntPtr pointer )
 	{
-		AnimationController^ tableEntry = safe_cast<AnimationController^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		AnimationController^ tableEntry = safe_cast<AnimationController^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

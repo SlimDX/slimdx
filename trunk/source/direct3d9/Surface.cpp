@@ -93,7 +93,7 @@ namespace Direct3D9
 
 	Surface^ Surface::FromPointer( IDirect3DSurface9* pointer )
 	{
-		Surface^ tableEntry = safe_cast<Surface^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Surface^ tableEntry = safe_cast<Surface^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -105,7 +105,7 @@ namespace Direct3D9
 
 	Surface^ Surface::FromPointer( IntPtr pointer )
 	{
-		Surface^ tableEntry = safe_cast<Surface^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Surface^ tableEntry = safe_cast<Surface^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
@@ -125,7 +125,9 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Surface( surface );
+		Surface^ result = gcnew Surface( surface );
+		ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	Surface^ Surface::CreateOffscreenPlain( Device^ device, int width, int height, Format format, Pool pool )
@@ -138,7 +140,11 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Surface( surface );
+		Surface^ result = gcnew Surface( surface );
+		if( pool == Pool::Default )
+			ObjectTable::FlagAsDefaultPool( result );
+
+		return result;
 	}
 
 	Surface^ Surface::CreateDepthStencil( Device^ device, int width, int height, Format format,
@@ -152,7 +158,9 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Surface( surface );
+		Surface^ result = gcnew Surface( surface );
+		ObjectTable::FlagAsDefaultPool( result );
+		return result;
 	}
 
 	Result Surface::FromMemory( Surface^ surface, array<Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle,

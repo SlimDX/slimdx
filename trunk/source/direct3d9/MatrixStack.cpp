@@ -59,7 +59,7 @@ namespace SlimDX
 
 		MatrixStack^ MatrixStack::FromPointer( ID3DXMatrixStack* pointer )
 		{
-			MatrixStack^ tableEntry = safe_cast<MatrixStack^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			MatrixStack^ tableEntry = safe_cast<MatrixStack^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
 				pointer->Release();
@@ -71,7 +71,7 @@ namespace SlimDX
 
 		MatrixStack^ MatrixStack::FromPointer( IntPtr pointer )
 		{
-			MatrixStack^ tableEntry = safe_cast<MatrixStack^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			MatrixStack^ tableEntry = safe_cast<MatrixStack^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
 				return tableEntry;

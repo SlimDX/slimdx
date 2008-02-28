@@ -44,7 +44,7 @@ namespace DXGI
 
 	Resource^ Resource::FromPointer( IDirect3DResource9* pointer )
 	{
-		Resource^ tableEntry = safe_cast<Resource^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Resource^ tableEntry = safe_cast<Resource^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -56,7 +56,7 @@ namespace DXGI
 
 	Resource^ Resource::FromPointer( IntPtr pointer )
 	{
-		Resource^ tableEntry = safe_cast<Resource^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Resource^ tableEntry = safe_cast<Resource^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

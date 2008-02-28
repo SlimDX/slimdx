@@ -227,7 +227,7 @@ namespace Direct3D9
 
 	ProgressiveMesh^ ProgressiveMesh::FromPointer( ID3DXPMesh* pointer )
 	{
-		ProgressiveMesh^ tableEntry = safe_cast<ProgressiveMesh^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		ProgressiveMesh^ tableEntry = safe_cast<ProgressiveMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -239,7 +239,7 @@ namespace Direct3D9
 
 	ProgressiveMesh^ ProgressiveMesh::FromPointer( IntPtr pointer )
 	{
-		ProgressiveMesh^ tableEntry = safe_cast<ProgressiveMesh^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		ProgressiveMesh^ tableEntry = safe_cast<ProgressiveMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
@@ -676,7 +676,7 @@ namespace Direct3D9
 
 	SimplificationMesh^ SimplificationMesh::FromPointer( ID3DXSPMesh* pointer )
 	{
-		SimplificationMesh^ tableEntry = safe_cast<SimplificationMesh^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		SimplificationMesh^ tableEntry = safe_cast<SimplificationMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -688,7 +688,7 @@ namespace Direct3D9
 
 	SimplificationMesh^ SimplificationMesh::FromPointer( IntPtr pointer )
 	{
-		SimplificationMesh^ tableEntry = safe_cast<SimplificationMesh^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		SimplificationMesh^ tableEntry = safe_cast<SimplificationMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

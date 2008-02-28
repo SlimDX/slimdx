@@ -57,7 +57,7 @@ namespace Direct3D10
 
 	Sprite^ Sprite::FromPointer( ID3DX10Sprite* pointer )
 	{
-		Sprite^ tableEntry = safe_cast<Sprite^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Sprite^ tableEntry = safe_cast<Sprite^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -69,7 +69,7 @@ namespace Direct3D10
 
 	Sprite^ Sprite::FromPointer( IntPtr pointer )
 	{
-		Sprite^ tableEntry = safe_cast<Sprite^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Sprite^ tableEntry = safe_cast<Sprite^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

@@ -240,7 +240,7 @@ namespace SlimDX
 
 		ShaderBytecode^ ShaderBytecode::FromPointer( ID3DXBuffer* pointer )
 		{
-			ShaderBytecode^ tableEntry = safe_cast<ShaderBytecode^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			ShaderBytecode^ tableEntry = safe_cast<ShaderBytecode^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
 				pointer->Release();
@@ -252,7 +252,7 @@ namespace SlimDX
 
 		ShaderBytecode^ ShaderBytecode::FromPointer( IntPtr pointer )
 		{
-			ShaderBytecode^ tableEntry = safe_cast<ShaderBytecode^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			ShaderBytecode^ tableEntry = safe_cast<ShaderBytecode^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
 				return tableEntry;

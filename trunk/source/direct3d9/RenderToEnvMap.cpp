@@ -111,7 +111,7 @@ namespace SlimDX
 
 		RenderToEnvironmentMap^ RenderToEnvironmentMap::FromPointer( ID3DXRenderToEnvMap* pointer )
 		{
-			RenderToEnvironmentMap^ tableEntry = safe_cast<RenderToEnvironmentMap^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			RenderToEnvironmentMap^ tableEntry = safe_cast<RenderToEnvironmentMap^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
 				pointer->Release();
@@ -123,7 +123,7 @@ namespace SlimDX
 
 		RenderToEnvironmentMap^ RenderToEnvironmentMap::FromPointer( IntPtr pointer )
 		{
-			RenderToEnvironmentMap^ tableEntry = safe_cast<RenderToEnvironmentMap^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+			RenderToEnvironmentMap^ tableEntry = safe_cast<RenderToEnvironmentMap^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
 				return tableEntry;

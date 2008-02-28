@@ -72,7 +72,7 @@ namespace Direct3D9
 
 	VertexShader^ VertexShader::FromPointer( IDirect3DVertexShader9* pointer )
 	{
-		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -84,7 +84,7 @@ namespace Direct3D9
 
 	VertexShader^ VertexShader::FromPointer( IntPtr pointer )
 	{
-		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
@@ -97,7 +97,7 @@ namespace Direct3D9
 	VertexShader^ VertexShader::FromPointer( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable )
 	{
 		IntPtr vertexShaderPtr = static_cast<IntPtr>( vertexShader );
-		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Construct( vertexShaderPtr ) );
+		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Find( vertexShaderPtr ) );
 		if( tableEntry != nullptr )
 			return tableEntry;
 

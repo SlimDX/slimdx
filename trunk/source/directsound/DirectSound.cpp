@@ -47,7 +47,7 @@ namespace DirectSound
 
 	DirectSound^ DirectSound::FromPointer( IDirectSound8* pointer )
 	{
-		DirectSound^ tableEntry = safe_cast<DirectSound^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		DirectSound^ tableEntry = safe_cast<DirectSound^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -59,7 +59,7 @@ namespace DirectSound
 
 	DirectSound^ DirectSound::FromPointer( IntPtr pointer )
 	{
-		DirectSound^ tableEntry = safe_cast<DirectSound^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		DirectSound^ tableEntry = safe_cast<DirectSound^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

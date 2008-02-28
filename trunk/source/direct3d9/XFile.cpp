@@ -49,7 +49,7 @@ namespace Direct3D9
 
 	XFileSaveData^ XFileSaveData::FromPointer( ID3DXFileSaveData* pointer )
 	{
-		XFileSaveData^ tableEntry = safe_cast<XFileSaveData^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		XFileSaveData^ tableEntry = safe_cast<XFileSaveData^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -61,7 +61,7 @@ namespace Direct3D9
 
 	XFileSaveData^ XFileSaveData::FromPointer( IntPtr pointer )
 	{
-		XFileSaveData^ tableEntry = safe_cast<XFileSaveData^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		XFileSaveData^ tableEntry = safe_cast<XFileSaveData^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
@@ -179,7 +179,7 @@ namespace Direct3D9
 
 	XFileSaveObject^ XFileSaveObject::FromPointer( ID3DXFileSaveObject* pointer )
 	{
-		XFileSaveObject^ tableEntry = safe_cast<XFileSaveObject^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		XFileSaveObject^ tableEntry = safe_cast<XFileSaveObject^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -191,7 +191,7 @@ namespace Direct3D9
 
 	XFileSaveObject^ XFileSaveObject::FromPointer( IntPtr pointer )
 	{
-		XFileSaveObject^ tableEntry = safe_cast<XFileSaveObject^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		XFileSaveObject^ tableEntry = safe_cast<XFileSaveObject^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
@@ -269,7 +269,7 @@ namespace Direct3D9
 
 	XFile^ XFile::FromPointer( ID3DXFile* pointer )
 	{
-		XFile^ tableEntry = safe_cast<XFile^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		XFile^ tableEntry = safe_cast<XFile^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -281,7 +281,7 @@ namespace Direct3D9
 
 	XFile^ XFile::FromPointer( IntPtr pointer )
 	{
-		XFile^ tableEntry = safe_cast<XFile^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		XFile^ tableEntry = safe_cast<XFile^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
@@ -391,7 +391,7 @@ namespace Direct3D9
 
 	XFileEnumerationObject^ XFileEnumerationObject::FromPointer( ID3DXFileEnumObject* pointer )
 	{
-		XFileEnumerationObject^ tableEntry = safe_cast<XFileEnumerationObject^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		XFileEnumerationObject^ tableEntry = safe_cast<XFileEnumerationObject^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -403,7 +403,7 @@ namespace Direct3D9
 
 	XFileEnumerationObject^ XFileEnumerationObject::FromPointer( IntPtr pointer )
 	{
-		XFileEnumerationObject^ tableEntry = safe_cast<XFileEnumerationObject^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		XFileEnumerationObject^ tableEntry = safe_cast<XFileEnumerationObject^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
@@ -486,7 +486,7 @@ namespace Direct3D9
 
 	XFileData^ XFileData::FromPointer( ID3DXFileData* pointer )
 	{
-		XFileData^ tableEntry = safe_cast<XFileData^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		XFileData^ tableEntry = safe_cast<XFileData^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -498,7 +498,7 @@ namespace Direct3D9
 
 	XFileData^ XFileData::FromPointer( IntPtr pointer )
 	{
-		XFileData^ tableEntry = safe_cast<XFileData^>( ObjectTable::Construct( static_cast<System::IntPtr>( pointer ) ) );
+		XFileData^ tableEntry = safe_cast<XFileData^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

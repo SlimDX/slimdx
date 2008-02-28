@@ -411,7 +411,7 @@ namespace Direct3D9
 
 	Query^ Query::FromPointer( IDirect3DQuery9* pointer )
 	{
-		Query^ tableEntry = safe_cast<Query^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Query^ tableEntry = safe_cast<Query^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -423,7 +423,7 @@ namespace Direct3D9
 
 	Query^ Query::FromPointer( IntPtr pointer )
 	{
-		Query^ tableEntry = safe_cast<Query^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Query^ tableEntry = safe_cast<Query^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

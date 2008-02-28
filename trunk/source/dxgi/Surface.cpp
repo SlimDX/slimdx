@@ -48,7 +48,7 @@ namespace DXGI
 
 	Surface^ Surface::FromPointer( IDXGISurface* pointer )
 	{
-		Surface^ tableEntry = safe_cast<Surface^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Surface^ tableEntry = safe_cast<Surface^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -60,7 +60,7 @@ namespace DXGI
 
 	Surface^ Surface::FromPointer( IntPtr pointer )
 	{
-		Surface^ tableEntry = safe_cast<Surface^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		Surface^ tableEntry = safe_cast<Surface^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

@@ -129,7 +129,7 @@ namespace Direct3D9
 
 	SkinInfo^ SkinInfo::FromPointer( ID3DXSkinInfo* pointer )
 	{
-		SkinInfo^ tableEntry = safe_cast<SkinInfo^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		SkinInfo^ tableEntry = safe_cast<SkinInfo^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -141,7 +141,7 @@ namespace Direct3D9
 
 	SkinInfo^ SkinInfo::FromPointer( IntPtr pointer )
 	{
-		SkinInfo^ tableEntry = safe_cast<SkinInfo^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		SkinInfo^ tableEntry = safe_cast<SkinInfo^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;

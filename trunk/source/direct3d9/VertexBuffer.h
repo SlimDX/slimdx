@@ -30,15 +30,25 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+		public value class VertexBufferDescription
+		{
+		public:
+			Format Format;
+			ResourceType Type;
+			Usage Usage;
+			Pool Pool;
+			int SizeInBytes;
+			VertexFormat FVF;
+		};
+
 		public ref class VertexBuffer : public Resource
 		{
 			COMOBJECT( IDirect3DVertexBuffer9, VertexBuffer );
-
-			Format format;
-			Usage usage;
-			Pool pool;
-			int sizeInBytes;
-			VertexFormat fVF;
+		
+			VertexBufferDescription m_Description;
+			
+			void InitDescription();
 
 		public:
 			VertexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool );
@@ -48,39 +58,11 @@ namespace SlimDX
 			DataStream^ Lock( int offset, int size, LockFlags flags );
 			Result Unlock();
 
-			property SlimDX::Direct3D9::Format Format
+			property VertexBufferDescription Description
 			{
-				SlimDX::Direct3D9::Format get() { return format; }
+				VertexBufferDescription get() { return m_Description; }
 			private:
-				void set( SlimDX::Direct3D9::Format value ) { format = value; }
-			}
-
-			property SlimDX::Direct3D9::Usage Usage
-			{
-				SlimDX::Direct3D9::Usage get() { return usage; }
-			private:
-				void set( SlimDX::Direct3D9::Usage value ) { usage = value; }
-			}
-
-			property SlimDX::Direct3D9::Pool Pool
-			{
-				SlimDX::Direct3D9::Pool get() { return pool; }
-			private:
-				void set( SlimDX::Direct3D9::Pool value ) { pool = value; }
-			}
-
-			property int SizeInBytes
-			{
-				int get() { return sizeInBytes; }
-			private:
-				void set( int value ) { sizeInBytes = value; }
-			}
-
-			property VertexFormat FVF
-			{
-				VertexFormat get() { return fVF; }
-			private:
-				void set( VertexFormat value ) { fVF = value; }
+				void set( VertexBufferDescription value ) { m_Description = value; }
 			}
 		};
 	}

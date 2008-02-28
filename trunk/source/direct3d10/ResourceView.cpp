@@ -46,7 +46,7 @@ namespace Direct3D10
 
 	ResourceView^ ResourceView::FromPointer( ID3D10View* pointer )
 	{
-		ResourceView^ tableEntry = safe_cast<ResourceView^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		ResourceView^ tableEntry = safe_cast<ResourceView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -58,7 +58,7 @@ namespace Direct3D10
 
 	ResourceView^ ResourceView::FromPointer( IntPtr pointer )
 	{
-		ResourceView^ tableEntry = safe_cast<ResourceView^>( ObjectTable::Construct( static_cast<IntPtr>( pointer ) ) );
+		ResourceView^ tableEntry = safe_cast<ResourceView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
