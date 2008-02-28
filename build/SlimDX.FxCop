@@ -22,6 +22,9 @@
  </ProjectOptions>
  <Targets>
   <Target Name="$(ProjectDir)/Debug/SlimDX.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/Direct3D9/MiniTri/bin/Debug/MiniTri.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/Direct3D9/SampleFramework/bin/Debug/SampleFramework.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/Direct3D9/SimpleTriangle/bin/Debug/SimpleTriangle.exe" Analyze="True" AnalyzeAllChildren="True" />
  </Targets>
  <Rules>
   <RuleFiles>
@@ -100,6 +103,24 @@
  </Rules>
  <FxCopReport Version="1.36">
   <Namespaces>
+   <Namespace Name="SampleFramework">
+    <Messages>
+     <Message TypeName="IdentifiersShouldDifferByMoreThanCase" Category="Microsoft.Naming" CheckId="CA1708" Created="2008-02-28 11:36:27Z">
+      <Issue Name="Type">
+       <Item>'FILTERKEYS'</Item>
+       <Item>FilterKeys</Item>
+      </Issue>
+      <Issue Name="Type">
+       <Item>'STICKYKEYS'</Item>
+       <Item>StickyKeys</Item>
+      </Issue>
+      <Issue Name="Type">
+       <Item>'TOGGLEKEYS'</Item>
+       <Item>ToggleKeys</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
    <Namespace Name="SlimDX.DXGI">
     <Messages>
      <Message Id="DXGI" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-27 22:23:52Z">
@@ -857,6 +878,23 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="ObjectTable">
+          <Members>
+           <Member Name="#Objects">
+            <Accessors>
+             <Accessor Name="#get_Objects()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-28 11:35:04Z">
+                <Issue>
+                 <Item>'ObjectTable::Objects::get(void)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="Performance">
           <Members>
            <Member Name="#GetStatus()">
@@ -985,77 +1023,77 @@
              <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'Utilities::AllocateNativeString(String^)'</Item>
-               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAnsi(String^)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'EffectInstance::ToUnmanaged(EffectInstance)'&#xD;&#xA;   -&gt;'Mesh::ToXFile(Mesh^, String^, XFileFormat, CharSet)'</Item>
               </Issue>
               <Issue>
                <Item>'Utilities::AllocateNativeString(String^)'</Item>
-               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAnsi(String^)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'EffectInstance::ToUnmanaged(EffectInstance)'&#xD;&#xA;   -&gt;'MeshContainer::SetEffects(array&lt;EffectInstance&gt;^)'</Item>
               </Issue>
               <Issue>
                <Item>'Utilities::AllocateNativeString(String^)'</Item>
-               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAnsi(String^)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'EffectInstance::ToUnmanaged(EffectInstance)'&#xD;&#xA;   -&gt;'ProgressiveMesh::ToStream(ProgressiveMesh^, Stream^)'</Item>
               </Issue>
               <Issue>
                <Item>'Utilities::AllocateNativeString(String^)'</Item>
-               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAnsi(String^)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'ExtendedMaterial::ToUnmanaged(ExtendedMaterial)'&#xD;&#xA;   -&gt;'Mesh::ToXFile(Mesh^, String^, XFileFormat, CharSet)'</Item>
               </Issue>
               <Issue>
                <Item>'Utilities::AllocateNativeString(String^)'</Item>
-               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAnsi(String^)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'ExtendedMaterial::ToUnmanaged(ExtendedMaterial)'&#xD;&#xA;   -&gt;'MeshContainer::SetMaterials(array&lt;ExtendedMaterial&gt;^)'</Item>
               </Issue>
               <Issue>
                <Item>'Utilities::AllocateNativeString(String^)'</Item>
-               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAnsi(String^)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'ExtendedMaterial::ToUnmanaged(ExtendedMaterial)'&#xD;&#xA;   -&gt;'ProgressiveMesh::ToStream(ProgressiveMesh^, Stream^)'</Item>
               </Issue>
               <Issue>
                <Item>'Utilities::AllocateNativeString(String^)'</Item>
-               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAnsi(String^)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Frame::BuildUnmanagedFrames(FrameShim*%, Frame^)'&#xD;&#xA;   -&gt;'Frame::BuildHierarchyFromManaged(Frame^)'&#xD;&#xA;   -&gt;'Frame::CalculateBoundingSphere(Frame^)'</Item>
               </Issue>
               <Issue>
                <Item>'Utilities::AllocateNativeString(String^)'</Item>
-               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAnsi(String^)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Frame::BuildUnmanagedFrames(FrameShim*%, Frame^)'&#xD;&#xA;   -&gt;'Frame::BuildHierarchyFromManaged(Frame^)'&#xD;&#xA;   -&gt;'Frame::CountNamedFrames(Frame^)'</Item>
               </Issue>
               <Issue>
                <Item>'Utilities::AllocateNativeString(String^)'</Item>
-               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAnsi(String^)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Frame::BuildUnmanagedFrames(FrameShim*%, Frame^)'&#xD;&#xA;   -&gt;'Frame::BuildHierarchyFromManaged(Frame^)'&#xD;&#xA;   -&gt;'Frame::DestroyHierarchy(Frame^, IAllocateHierarchy^)'</Item>
               </Issue>
               <Issue>
                <Item>'Utilities::AllocateNativeString(String^)'</Item>
-               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAnsi(String^)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Frame::BuildUnmanagedFrames(FrameShim*%, Frame^)'&#xD;&#xA;   -&gt;'Frame::BuildHierarchyFromManaged(Frame^)'&#xD;&#xA;   -&gt;'Frame::FindChild(String^)'</Item>
               </Issue>
               <Issue>
                <Item>'Utilities::AllocateNativeString(String^)'</Item>
-               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAnsi(String^)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Frame::BuildUnmanagedFrames(FrameShim*%, Frame^)'&#xD;&#xA;   -&gt;'Frame::BuildHierarchyFromManaged(Frame^)'&#xD;&#xA;   -&gt;'Frame::SaveHierarchyToFile(String^, XFileFormat, Frame^, AnimationController^)'</Item>
               </Issue>
               <Issue>
                <Item>'Utilities::AllocateNativeString(String^)'</Item>
-               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAnsi(String^)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Frame::BuildUnmanagedFrames(FrameShim*%, Frame^)'&#xD;&#xA;   -&gt;'Frame::BuildHierarchyFromManaged(Frame^)'&#xD;&#xA;   -&gt;'Frame::SaveHierarchyToFile(String^, XFileFormat, Frame^, AnimationController^, ISaveUserData^)'</Item>
               </Issue>
               <Issue>
                <Item>'Utilities::AllocateNativeString(String^)'</Item>
-               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAnsi(String^)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Frame::Name::set(String^)'</Item>
               </Issue>
               <Issue>
                <Item>'Utilities::AllocateNativeString(String^)'</Item>
-               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAnsi(String^)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'InputElement::CreateNativeVersion(D3D10_INPUT_ELEMENT_DESC*)'&#xD;&#xA;   -&gt;'InputLayout::InputLayout(Device^, array&lt;InputElement&gt;^, ShaderSignature^)'</Item>
               </Issue>
               <Issue>
                <Item>'Utilities::AllocateNativeString(String^)'</Item>
-               <Item>'Marshal::StringToHGlobalAuto(String^)'</Item>
+               <Item>'Marshal::StringToHGlobalAnsi(String^)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'Utilities::AllocateNativeString(String^)'&#xD;&#xA;   -&gt;'MeshContainer::Name::set(String^)'</Item>
               </Issue>
              </Message>
@@ -7805,6 +7843,19 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#NativeInterface">
+            <Accessors>
+             <Accessor Name="#get_NativeInterface()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-28 11:35:04Z">
+                <Issue>
+                 <Item>'Resource::NativeInterface::get(void)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
           </Members>
          </Type>
          <Type Name="ResourceType">
@@ -8923,21 +8974,18 @@
          </Type>
          <Type Name="VertexBuffer">
           <Members>
-           <Member Name="#FVF">
-            <Messages>
-             <Message Id="FVF" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="Member">
-               <Item>FVF</Item>
-               <Item>'VertexBuffer::FVF'</Item>
-               <Item>Fvf</Item>
-              </Issue>
-             </Message>
-             <Message Id="Member" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue Name="Member">
-               <Item>VertexBuffer.FVF:VertexFormat</Item>
-              </Issue>
-             </Message>
-            </Messages>
+           <Member Name="#Description">
+            <Accessors>
+             <Accessor Name="#set_Description(SlimDX.Direct3D9.VertexBufferDescription)">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-28 11:35:04Z">
+                <Issue>
+                 <Item>'VertexBuffer::Description::set(VertexBufferDescription)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
            </Member>
            <Member Name="#Lock(System.Int32,System.Int32,SlimDX.Direct3D9.LockFlags)">
             <Messages>
@@ -8962,6 +9010,74 @@
               </Messages>
              </Accessor>
             </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="VertexBufferDescription">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-28 11:35:04Z">
+            <Issue Name="Equals">
+             <Item>'VertexBufferDescription'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'VertexBufferDescription'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Format">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-02-28 11:35:04Z">
+              <Issue>
+               <Item>'VertexBufferDescription::Format'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FVF">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-02-28 11:35:04Z">
+              <Issue>
+               <Item>'VertexBufferDescription::FVF'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Pool">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-02-28 11:35:04Z">
+              <Issue>
+               <Item>'VertexBufferDescription::Pool'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SizeInBytes">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-02-28 11:35:04Z">
+              <Issue>
+               <Item>'VertexBufferDescription::SizeInBytes'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Type">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-02-28 11:35:04Z">
+              <Issue>
+               <Item>'VertexBufferDescription::Type'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Usage">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-02-28 11:35:04Z">
+              <Issue>
+               <Item>'VertexBufferDescription::Usage'</Item>
+              </Issue>
+             </Message>
+            </Messages>
            </Member>
           </Members>
          </Type>
@@ -12294,6 +12410,763 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/../samples/Direct3D9/MiniTri/bin/Debug/MiniTri.exe">
+    <Modules>
+     <Module Name="minitri.exe">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2008-02-28 11:36:27Z">
+        <Issue Name="NoStrongName">
+         <Item>'MiniTri.exe'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Created="2008-02-28 11:36:27Z">
+        <Issue>
+         <Item>'MiniTri.exe'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="MiniTri">
+        <Types>
+         <Type Name="Program">
+          <Members>
+           <Member Name="#PeekMessage(MiniTri.Message&amp;,System.IntPtr,System.UInt32,System.UInt32,System.UInt32)">
+            <Messages>
+             <Message TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414" Created="2008-02-28 11:36:27Z">
+              <Issue Name="Return">
+               <Item>'Program::PeekMessage(Message%, IntPtr, unsigned int, unsigned int, unsigned int)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'Program::PeekMessage(Message%, IntPtr, unsigned int, unsigned int, unsigned int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/../samples/Direct3D9/SampleFramework/bin/Debug/SampleFramework.dll">
+    <Modules>
+     <Module Name="sampleframework.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2008-02-28 11:36:27Z">
+        <Issue Name="NoStrongName">
+         <Item>'SampleFramework.dll'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2008-02-28 11:36:27Z">
+        <Issue>
+         <Item>'SampleFramework.dll'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="SampleFramework">
+        <Types>
+         <Type Name="AdapterInfo">
+          <Members>
+           <Member Name="#Devices">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'List&lt;DeviceInfo^&gt;'</Item>
+               <Item>'AdapterInfo::Devices'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#DisplayModes">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'List&lt;DisplayMode&gt;'</Item>
+               <Item>'AdapterInfo::DisplayModes'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="BitExtractor">
+          <Members>
+           <Member Name="#GetAlphaBits(SlimDX.Direct3D9.Format)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'BitExtractor::GetAlphaBits(Format)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="DeviceInfo">
+          <Members>
+           <Member Name="#DeviceSettings">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'List&lt;SettingsCombo^&gt;'</Item>
+               <Item>'DeviceInfo::DeviceSettings'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="DeviceSettings">
+          <Members>
+           <Member Name="#BehaviorFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2008-02-28 11:36:27Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'DeviceSettings::BehaviorFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Enumeration">
+          <Members>
+           <Member Name="#.cctor()">
+            <Messages>
+             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'Enumeration'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Adapters">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'List&lt;AdapterInfo^&gt;'</Item>
+               <Item>'Enumeration::Adapters'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Enumerate()">
+            <Messages>
+             <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'int::ToString(void)'</Item>
+               <Item>'Enumeration::Enumerate(void)'</Item>
+               <Item>'int::ToString(IFormatProvider^)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#PossibleDepthStencilFormats">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'List&lt;Format&gt;'</Item>
+               <Item>'Enumeration::PossibleDepthStencilFormats'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#PossibleMultisampleType">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'List&lt;MultisampleType&gt;'</Item>
+               <Item>'Enumeration::PossibleMultisampleType'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#PossiblePresentIntervals">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'List&lt;PresentInterval&gt;'</Item>
+               <Item>'Enumeration::PossiblePresentIntervals'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FilterKeys">
+          <Members>
+           <Member Name="#.cctor()">
+            <Messages>
+             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'FilterKeys'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Disable()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'FilterKeys::Disable(void)'</Item>
+               <Item>'Marshal::AllocCoTaskMem(int)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'FilterKeys::Disable(void)'&#xD;&#xA;   -&gt;'FilterKeys::Disable(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'FilterKeys::Disable(void)'</Item>
+               <Item>'Marshal::FreeCoTaskMem(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'FilterKeys::Disable(void)'&#xD;&#xA;   -&gt;'FilterKeys::Disable(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'FilterKeys::Disable(void)'</Item>
+               <Item>'Marshal::SizeOf(Object^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'FilterKeys::Disable(void)'&#xD;&#xA;   -&gt;'FilterKeys::Disable(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'FilterKeys::Disable(void)'</Item>
+               <Item>'Marshal::StructureToPtr(Object^, IntPtr, bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'FilterKeys::Disable(void)'&#xD;&#xA;   -&gt;'FilterKeys::Disable(void)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Restore()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'FilterKeys::Restore(void)'</Item>
+               <Item>'Marshal::AllocCoTaskMem(int)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'FilterKeys::Restore(void)'&#xD;&#xA;   -&gt;'FilterKeys::Restore(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'FilterKeys::Restore(void)'</Item>
+               <Item>'Marshal::FreeCoTaskMem(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'FilterKeys::Restore(void)'&#xD;&#xA;   -&gt;'FilterKeys::Restore(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'FilterKeys::Restore(void)'</Item>
+               <Item>'Marshal::SizeOf(Object^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'FilterKeys::Restore(void)'&#xD;&#xA;   -&gt;'FilterKeys::Restore(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'FilterKeys::Restore(void)'</Item>
+               <Item>'Marshal::StructureToPtr(Object^, IntPtr, bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'FilterKeys::Restore(void)'&#xD;&#xA;   -&gt;'FilterKeys::Restore(void)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="KBDLLHOOKSTRUCT">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-02-28 11:36:27Z">
+            <Issue>
+             <Item>'KBDLLHOOKSTRUCT'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="NativeMethods">
+          <Members>
+           <Member Name="#CallNextHookEx(System.IntPtr,System.Int32,System.Int32,SampleFramework.KBDLLHOOKSTRUCT)">
+            <Messages>
+             <Message Id="2" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Created="2008-02-28 11:36:27Z" FixCategory="NonBreaking">
+              <Issue Name="Parameter">
+               <Item>'wParam'</Item>
+               <Item>'NativeMethods::CallNextHookEx(IntPtr, int, int, KBDLLHOOKSTRUCT^)'</Item>
+               <Item>4</Item>
+               <Item>64-bit</Item>
+               <Item>8</Item>
+               <Item>'int'</Item>
+              </Issue>
+             </Message>
+             <Message Id="return" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Created="2008-02-28 11:36:27Z" FixCategory="NonBreaking">
+              <Issue Name="Return">
+               <Item>'NativeMethods::CallNextHookEx(IntPtr, int, int, KBDLLHOOKSTRUCT^)'</Item>
+               <Item>4</Item>
+               <Item>64-bit</Item>
+               <Item>8</Item>
+               <Item>'int'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#QueryPerformanceCounter(System.Int64&amp;)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'NativeMethods::QueryPerformanceCounter(long long%)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#QueryPerformanceFrequency(System.Int64&amp;)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'NativeMethods::QueryPerformanceFrequency(long long%)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Sample">
+          <Messages>
+           <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-02-28 11:36:27Z">
+            <Issue Name="ProvideDisposeBool">
+             <Item>'Sample'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#.cctor()">
+            <Messages>
+             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'Sample'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'Sample::Sample(void)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#BuildOptimalSettings(SampleFramework.DeviceSettings)">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-02-28 11:36:27Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'Sample::BuildOptimalSettings(DeviceSettings^)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#BuildValidDeviceSettings(SampleFramework.SettingsCombo,SampleFramework.DeviceSettings)">
+            <Messages>
+             <Message Id="bestQuality" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'Sample::BuildValidDeviceSettings(SettingsCombo^, DeviceSettings^)'</Item>
+               <Item>'bestQuality'</Item>
+               <Item>'int'</Item>
+              </Issue>
+             </Message>
+             <Message Id="desktopMode" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'Sample::BuildValidDeviceSettings(SettingsCombo^, DeviceSettings^)'</Item>
+               <Item>'desktopMode'</Item>
+               <Item>'DisplayMode'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreateDevice(SampleFramework.DeviceSettings)">
+            <Messages>
+             <Message Id="SampleFramework.NativeMethods.SetThreadExecutionState(System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-02-28 11:36:27Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'Sample::CreateDevice(DeviceSettings^)'</Item>
+               <Item>'NativeMethods::SetThreadExecutionState(unsigned int)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'Sample::CreateDevice(DeviceSettings^)'</Item>
+               <Item>'NativeMethods::SetThreadExecutionState(unsigned int)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="SampleFramework.NativeMethods.SetWindowLong(System.IntPtr,System.Int32,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-02-28 11:36:27Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'Sample::CreateDevice(DeviceSettings^)'</Item>
+               <Item>'NativeMethods::SetWindowLong(IntPtr, int, unsigned int)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'Sample::CreateDevice(DeviceSettings^)'</Item>
+               <Item>'NativeMethods::SetWindowLong(IntPtr, int, unsigned int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#DisableShortcutKeys(System.Boolean)">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-02-28 11:36:27Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Sample::DisableShortcutKeys(bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Dispose()">
+            <Messages>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-02-28 11:36:27Z">
+              <Issue Name="NotCalled">
+               <Item>'Sample::Dispose(void)'</Item>
+               <Item>'GC::SuppressFinalize(Object^)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="window" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'Sample'</Item>
+               <Item>'Sample::window'</Item>
+               <Item>'Window'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-02-28 11:36:27Z">
+              <Issue Name="DisposeImplementation">
+               <Item>'Sample::Dispose(void)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FindValidResolution(SampleFramework.SettingsCombo,SampleFramework.DeviceSettings)">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-02-28 11:36:27Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'Sample::FindValidResolution(SettingsCombo^, DeviceSettings^)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetAdapterOrdinalFromMonitor(System.IntPtr)">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-02-28 11:36:27Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'Sample::GetAdapterOrdinalFromMonitor(IntPtr)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#InitializeDevice()">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'Sample::InitializeDevice(void)'</Item>
+               <Item>'Object'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#RankSettingsCombo(SampleFramework.SettingsCombo,SampleFramework.DeviceSettings,SlimDX.Direct3D9.DisplayMode)">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-02-28 11:36:27Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'Sample::RankSettingsCombo(SettingsCombo^, DeviceSettings^, DisplayMode)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#RestoreShortcutKeys()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-02-28 11:36:27Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Sample::RestoreShortcutKeys(void)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ToggleFullscreen()">
+            <Messages>
+             <Message Id="Fullscreen" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-02-28 11:36:27Z">
+              <Issue Name="Member">
+               <Item>Fullscreen</Item>
+               <Item>'Sample::ToggleFullscreen(void)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SettingsCombo">
+          <Members>
+           <Member Name="#DepthStencilConflicts">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'List&lt;DepthStencilConflict^&gt;'</Item>
+               <Item>'SettingsCombo::DepthStencilConflicts'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#DepthStencilFormats">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'List&lt;Format&gt;'</Item>
+               <Item>'SettingsCombo::DepthStencilFormats'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#MultisampleQualities">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'List&lt;int&gt;'</Item>
+               <Item>'SettingsCombo::MultisampleQualities'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#MultisampleTypes">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'List&lt;MultisampleType&gt;'</Item>
+               <Item>'SettingsCombo::MultisampleTypes'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#PresentIntervals">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'List&lt;PresentInterval&gt;'</Item>
+               <Item>'SettingsCombo::PresentIntervals'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="StickyKeys">
+          <Members>
+           <Member Name="#.cctor()">
+            <Messages>
+             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'StickyKeys'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Disable()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'StickyKeys::Disable(void)'</Item>
+               <Item>'Marshal::AllocCoTaskMem(int)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'StickyKeys::Disable(void)'&#xD;&#xA;   -&gt;'StickyKeys::Disable(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'StickyKeys::Disable(void)'</Item>
+               <Item>'Marshal::FreeCoTaskMem(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'StickyKeys::Disable(void)'&#xD;&#xA;   -&gt;'StickyKeys::Disable(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'StickyKeys::Disable(void)'</Item>
+               <Item>'Marshal::SizeOf(Object^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'StickyKeys::Disable(void)'&#xD;&#xA;   -&gt;'StickyKeys::Disable(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'StickyKeys::Disable(void)'</Item>
+               <Item>'Marshal::StructureToPtr(Object^, IntPtr, bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'StickyKeys::Disable(void)'&#xD;&#xA;   -&gt;'StickyKeys::Disable(void)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Restore()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'StickyKeys::Restore(void)'</Item>
+               <Item>'Marshal::AllocCoTaskMem(int)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'StickyKeys::Restore(void)'&#xD;&#xA;   -&gt;'StickyKeys::Restore(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'StickyKeys::Restore(void)'</Item>
+               <Item>'Marshal::FreeCoTaskMem(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'StickyKeys::Restore(void)'&#xD;&#xA;   -&gt;'StickyKeys::Restore(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'StickyKeys::Restore(void)'</Item>
+               <Item>'Marshal::SizeOf(Object^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'StickyKeys::Restore(void)'&#xD;&#xA;   -&gt;'StickyKeys::Restore(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'StickyKeys::Restore(void)'</Item>
+               <Item>'Marshal::StructureToPtr(Object^, IntPtr, bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'StickyKeys::Restore(void)'&#xD;&#xA;   -&gt;'StickyKeys::Restore(void)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ToggleKeys">
+          <Members>
+           <Member Name="#.cctor()">
+            <Messages>
+             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'ToggleKeys'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Disable()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'ToggleKeys::Disable(void)'</Item>
+               <Item>'Marshal::AllocCoTaskMem(int)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'ToggleKeys::Disable(void)'&#xD;&#xA;   -&gt;'ToggleKeys::Disable(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ToggleKeys::Disable(void)'</Item>
+               <Item>'Marshal::FreeCoTaskMem(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'ToggleKeys::Disable(void)'&#xD;&#xA;   -&gt;'ToggleKeys::Disable(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ToggleKeys::Disable(void)'</Item>
+               <Item>'Marshal::SizeOf(Object^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'ToggleKeys::Disable(void)'&#xD;&#xA;   -&gt;'ToggleKeys::Disable(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ToggleKeys::Disable(void)'</Item>
+               <Item>'Marshal::StructureToPtr(Object^, IntPtr, bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'ToggleKeys::Disable(void)'&#xD;&#xA;   -&gt;'ToggleKeys::Disable(void)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Restore()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'ToggleKeys::Restore(void)'</Item>
+               <Item>'Marshal::AllocCoTaskMem(int)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'ToggleKeys::Restore(void)'&#xD;&#xA;   -&gt;'ToggleKeys::Restore(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ToggleKeys::Restore(void)'</Item>
+               <Item>'Marshal::FreeCoTaskMem(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'ToggleKeys::Restore(void)'&#xD;&#xA;   -&gt;'ToggleKeys::Restore(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ToggleKeys::Restore(void)'</Item>
+               <Item>'Marshal::SizeOf(Object^)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'ToggleKeys::Restore(void)'&#xD;&#xA;   -&gt;'ToggleKeys::Restore(void)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ToggleKeys::Restore(void)'</Item>
+               <Item>'Marshal::StructureToPtr(Object^, IntPtr, bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'ToggleKeys::Restore(void)'&#xD;&#xA;   -&gt;'ToggleKeys::Restore(void)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Window">
+          <Members>
+           <Member Name="#WndProc(System.Windows.Forms.Message&amp;)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'Window::WndProc(Message%)'</Item>
+               <Item>'Form::WndProc(Message%)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Window::WndProc(Message%)'&#xD;&#xA;   -&gt;'Window::WndProc(Message%)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Window::WndProc(Message%)'</Item>
+               <Item>'Message::HWnd::get(void)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Window::WndProc(Message%)'&#xD;&#xA;   -&gt;'Window::WndProc(Message%)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Window::WndProc(Message%)'</Item>
+               <Item>'Message::Msg::get(void)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Window::WndProc(Message%)'&#xD;&#xA;   -&gt;'Window::WndProc(Message%)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Window::WndProc(Message%)'</Item>
+               <Item>'Message::WParam::get(void)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Window::WndProc(Message%)'&#xD;&#xA;   -&gt;'Window::WndProc(Message%)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="OverrideLinkDemandsShouldBeIdenticalToBase" Category="Microsoft.Security" CheckId="CA2123" Created="2008-02-28 11:36:27Z">
+              <Issue Name="BaseOnly">
+               <Item>'Window::WndProc(Message%)'</Item>
+               <Item>'Form::WndProc(Message%)'</Item>
+               <Item>[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="WindowConstants">
+          <Members>
+           <Member Name="#HWND_BOTTOM">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'WindowConstants::HWND_BOTTOM'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#HWND_TOP">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-02-28 11:36:27Z">
+              <Issue>
+               <Item>'WindowConstants::HWND_TOP'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="WINDOWPLACEMENT">
+          <Members>
+           <Member Name="#Length">
+            <Accessors>
+             <Accessor Name="#get_Length()">
+              <Messages>
+               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-28 11:36:27Z">
+                <Issue>
+                 <Item>'WINDOWPLACEMENT::Length::get(void)'</Item>
+                 <Item>'Marshal::SizeOf(Type^)'</Item>
+                 <Item>&#xD;&#xA;   -&gt;'WINDOWPLACEMENT::Length::get(void)'&#xD;&#xA;   -&gt;'WINDOWPLACEMENT::Length::get(void)'&#xD;&#xA;   -&gt;'Sample::CreateDevice(DeviceSettings^)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/../samples/Direct3D9/SimpleTriangle/bin/Debug/SimpleTriangle.exe">
+    <Modules>
+     <Module Name="simpletriangle.exe">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2008-02-28 11:36:27Z">
+        <Issue Name="NoStrongName">
+         <Item>'SimpleTriangle.exe'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Created="2008-02-28 11:36:27Z">
+        <Issue>
+         <Item>'SimpleTriangle.exe'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+     </Module>
+    </Modules>
+   </Target>
   </Targets>
   <Rules>
    <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
@@ -12302,17 +13175,35 @@
    <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
     <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
    </Rule>
+   <Rule TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812">
+    <Resolution Name="Default">{0} is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static methods, consider adding a private constructor to prevent the compiler from generating a default constructor.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
+    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+   </Rule>
+   <Rule TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816">
+    <Resolution Name="NotCalled">Change {0} to call {1}. This will prevent unnecessary finalization of the object once it has been disposed and it has fallen out of scope.</Resolution>
+   </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
    </Rule>
    <Rule TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011">
     <Resolution Name="Default">Consider changing the type of parameter {0} in {1} from {2} to its base type {3}. This method appears to only require base class members in its implementation. Suppress this violation if there is a compelling reason to require the more derived type in the method signature.</Resolution>
    </Rule>
+   <Rule TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213">
+    <Resolution Name="Default">{0} contains field {1} that is of IDisposable type: {2}. Change the Dispose method on {0} to call Dispose or Close on this field.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
+    <Resolution Name="Default">Modify {0} to catch a more specific exception than {1} or rethrow the exception.</Resolution>
+   </Rule>
    <Rule TypeName="DoNotDeclareStaticMembersOnGenericTypes" Category="Microsoft.Design" CheckId="CA1000">
     <Resolution Name="Default">Remove {0} from {1} or make it an instance member.</Resolution>
    </Rule>
    <Rule TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051">
     <Resolution Name="Default">Because field {0} is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
+    <Resolution Name="Default">Change {0} in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
    </Rule>
    <Rule TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806">
     <Resolution Name="HResultOrErrorCode">{0} calls {1} but does not use the HRESULT or error code that the method returns. This could lead to unexpected behavior in error conditions or low-resource situations. Use the result in a conditional statement, assign the result to a variable, or pass it as an argument to another method.</Resolution>
@@ -12357,6 +13248,9 @@
     <Resolution Name="Member">Correct the spelling of '{0}' in member name {1} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
     <Resolution Name="MemberParameter">In method {0}, correct the spelling of '{1}' in parameter name {2} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
    </Rule>
+   <Rule TypeName="IdentifiersShouldDifferByMoreThanCase" Category="Microsoft.Naming" CheckId="CA1708">
+    <Resolution Name="Type">Change type names {0} and '{1}' so that they differ by more than case.</Resolution>
+   </Rule>
    <Rule TypeName="IdentifiersShouldHaveCorrectPrefix" Category="Microsoft.Naming" CheckId="CA1715">
     <Resolution Name="Interface">Prefix interface name {0} with 'I'.</Resolution>
     <Resolution Name="MethodTypeParameter">On method {0}, prefix generic type parameter name {1} with 'T'.</Resolution>
@@ -12377,14 +13271,36 @@
    <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
     <Resolution Name="Type">Rename type {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a type makes it harder for consumers in other languages to use the type.</Resolution>
    </Rule>
+   <Rule TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063">
+    <Resolution Name="DisposeImplementation">Modify {0} so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Resolution>
+    <Resolution Name="ProvideDisposeBool">Provide an overridable implementation of Dispose(bool) on {0} or mark the type as sealed. A call to Dispose(false) should only clean up native resources. A call to Dispose(true) should clean up both managed and native resources.</Resolution>
+   </Rule>
+   <Rule TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810">
+    <Resolution Name="Default">Initialize all static fields in {0} when those fields are declared and remove the explicit static constructor.</Resolution>
+   </Rule>
    <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
     <Resolution Name="IncorrectParameterName">Method {0} passes '{1}' as the {2} argument to a {3} constructor. Replace this argument with one of the method's parameter names. Note that the provided parameter name should have the exact casing as declared on the method.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014">
+    <Resolution Name="Default">Mark {0} with CLSCompliant(true) because it exposes externally visible types.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
+    <Resolution Name="Default">Because assembly {0} contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414">
+    <Resolution Name="Return">Add the MarshalAsAttribute to the return type of P/Invoke {0}. If the corresponding unmanaged return type is a 4-byte Win32 'BOOL', use MarshalAs(UnmanagedType.Bool). For a 1-byte C++ 'bool', use MarshalAs(UnmanagedType.U1).</Resolution>
    </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
    </Rule>
+   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
+    <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
+   </Rule>
    <Rule TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223">
     <Resolution Name="Default">'{0}' should differ from other members by more than its return type.</Resolution>
+   </Rule>
+   <Rule TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060">
+    <Resolution Name="Default">Because it is a P/Invoke method, {0} should be defined in a class named NativeMethods, SafeNativeMethods, or UnsafeNativeMethods.</Resolution>
    </Rule>
    <Rule TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717">
     <Resolution Name="Default">If the name {0} is plural, change it to its singular form.</Resolution>
@@ -12399,6 +13315,13 @@
     <Resolution Name="Equals">{0} should override Equals.</Resolution>
     <Resolution Name="op_Equality">{0} should override the equality (==) and inequality (!=) operators.</Resolution>
    </Rule>
+   <Rule TypeName="OverrideLinkDemandsShouldBeIdenticalToBase" Category="Microsoft.Security" CheckId="CA2123">
+    <Resolution Name="BaseOnly">Add the following security attribute to {0} in order to match a LinkDemand on base method {1}:  {2}.</Resolution>
+   </Rule>
+   <Rule TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901">
+    <Resolution Name="Parameter">As it is declared in your code, parameter {0} of P/Invoke {1} will be {2} bytes wide on {3} platforms. This is not correct, as the actual native declaration of this API indicates it should be {4} bytes wide on {3} platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of {5}.</Resolution>
+    <Resolution Name="Return">As it is declared in your code, the return type of P/Invoke {0} will be {1} bytes wide on {2} platforms. This is not correct, as the actual native declaration of this API indicates it should be {3} bytes wide on {2} platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of {4}.</Resolution>
+   </Rule>
    <Rule TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725">
     <Resolution Name="Default">Change parameter name '{0}' of method {1} to '{2}' in order to match the identifier as it has been declared in {3}.</Resolution>
    </Rule>
@@ -12411,8 +13334,17 @@
    <Rule TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721">
     <Resolution Name="BaseType">The property name {0} is confusing given the existence of inherited method {1}. Rename or remove this property.</Resolution>
    </Rule>
+   <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
+    <Resolution Name="Default">{0} declares a variable, {1}, of type {2}, which is never used or is only assigned to. Use this variable or remove it.</Resolution>
+   </Rule>
    <Rule TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025">
     <Resolution Name="Default">Consider implementing a version of {0} that accepts a parameter array argument.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+    <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
+    <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>
    </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
