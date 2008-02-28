@@ -23,6 +23,7 @@
 
 #include "Enums.h"
 #include "../Viewport.h"
+#include "IResettable.h"
 
 namespace SlimDX
 {
@@ -48,7 +49,7 @@ namespace SlimDX
 			static bool Equals( RenderToSurfaceDescription% value1, RenderToSurfaceDescription% value2 );
 		};
 
-		public ref class RenderToSurface : public ComObject
+		public ref class RenderToSurface : public ComObject, IResettable
 		{
 			COMOBJECT(ID3DXRenderToSurface, RenderToSurface);
 
@@ -61,8 +62,8 @@ namespace SlimDX
 			Result EndScene( Filter mipFilter );
 
 			Device^ GetDevice();
-			Result OnLostDevice();
-			Result OnResetDevice();
+			virtual Result OnLostDevice();
+			virtual Result OnResetDevice();
 
 			property RenderToSurfaceDescription Description
 			{

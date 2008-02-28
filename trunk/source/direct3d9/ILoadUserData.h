@@ -21,44 +21,33 @@
 */
 #pragma once
 
-#include "IResettable.h"
+#include "XFile.h"
 
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		ref class Texture;
+		ref class Frame;
+		ref class MeshContainer;
 
-		public ref class Sprite : public ComObject, IResettable
+		public interface struct ILoadUserData
 		{
-			COMOBJECT(ID3DXSprite, Sprite);
+			virtual void LoadFrameData( Frame^ frame, XFileData^ data ) = 0;
+			virtual void LoadMeshData( MeshContainer^ meshContainer, XFileData^ data ) = 0;
+			virtual void LoadTopLevelData( XFileData^ data ) = 0;
+		};
+
+		class ILoadUserDataShim : public ID3DXLoadUserData
+		{
+		private:
+			gcroot<ILoadUserData^> m_WrappedInterface;
 
 		public:
-			Sprite( Device^ device );
-			static Sprite^ FromPointer( System::IntPtr pointer );
+			ILoadUserDataShim( ILoadUserData^ wrappedInterface );
 
-			Result Begin( SpriteFlags flags );
-			Result End();
-			Result Flush();
-
-			virtual Result OnLostDevice();
-			virtual Result OnResetDevice();
-
-			Device^ GetDevice();
-
-			property Matrix Transform
-			{
-				Matrix get();
-				void set( Matrix value );
-			}
-
-			Result SetWorldViewLH( Matrix world, Matrix view );
-			Result SetWorldViewRH( Matrix world, Matrix view );
-
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color4 color );
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color4 color );
-			Result Draw( Texture^ texture, Vector3 center, Vector3 position, Color4 color );
-			Result Draw( Texture^ texture, Color4 color );
+			HRESULT WINAPI LoadFrameChildData( LPD3DXFRAME pFrame, LPD3DXFILEDATA pXofChildData );
+			HRESULT WINAPI LoadMeshChildData( LPD3DXMESHCONTAINER pMeshContainer, LPD3DXFILEDATA pXofChildData );
+			HRESULT WINAPI LoadTopLevelData( LPD3DXFILEDATA pXofChildData );
 		};
 	}
 }

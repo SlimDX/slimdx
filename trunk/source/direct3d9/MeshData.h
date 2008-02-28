@@ -21,44 +21,48 @@
 */
 #pragma once
 
-#include "IResettable.h"
-
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		ref class Texture;
+		ref class ProgressiveMesh;
+		ref class PatchMesh;
 
-		public ref class Sprite : public ComObject, IResettable
+		public ref class MeshData
 		{
-			COMOBJECT(ID3DXSprite, Sprite);
+		private:
+			MeshDataType type;
+			Mesh^ mesh;
+			ProgressiveMesh^ progressiveMesh;
+			PatchMesh^ patchMesh;
 
 		public:
-			Sprite( Device^ device );
-			static Sprite^ FromPointer( System::IntPtr pointer );
+			MeshData( Mesh^ mesh );
+			MeshData( ProgressiveMesh^ mesh );
+			MeshData( PatchMesh^ mesh );
 
-			Result Begin( SpriteFlags flags );
-			Result End();
-			Result Flush();
-
-			virtual Result OnLostDevice();
-			virtual Result OnResetDevice();
-
-			Device^ GetDevice();
-
-			property Matrix Transform
+			property MeshDataType Type
 			{
-				Matrix get();
-				void set( Matrix value );
+				MeshDataType get() { return type; }
 			}
 
-			Result SetWorldViewLH( Matrix world, Matrix view );
-			Result SetWorldViewRH( Matrix world, Matrix view );
+			property Mesh^ Mesh
+			{
+				SlimDX::Direct3D9::Mesh^ get() { return mesh; }
+				void set( SlimDX::Direct3D9::Mesh^ value );
+			}
 
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color4 color );
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color4 color );
-			Result Draw( Texture^ texture, Vector3 center, Vector3 position, Color4 color );
-			Result Draw( Texture^ texture, Color4 color );
+			property ProgressiveMesh^ ProgressiveMesh
+			{
+				SlimDX::Direct3D9::ProgressiveMesh^ get() { return progressiveMesh; }
+				void set( SlimDX::Direct3D9::ProgressiveMesh^ value );
+			}
+
+			property PatchMesh^ PatchMesh
+			{
+				SlimDX::Direct3D9::PatchMesh^ get() { return patchMesh; }
+				void set( SlimDX::Direct3D9::PatchMesh^ value );
+			}
 		};
 	}
 }

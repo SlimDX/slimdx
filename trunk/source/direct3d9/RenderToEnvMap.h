@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "IResettable.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
@@ -43,7 +45,7 @@ namespace SlimDX
 			static bool Equals( RenderToEnvironmentMapDescription% value1, RenderToEnvironmentMapDescription% value2 );
 		};
 
-		public ref class RenderToEnvironmentMap : ComObject
+		public ref class RenderToEnvironmentMap : ComObject, IResettable
 		{
 			COMOBJECT(ID3DXRenderToEnvMap, RenderToEnvironmentMap);
 
@@ -60,8 +62,8 @@ namespace SlimDX
 			Result Face( CubeMapFace face, Filter mipFilter );
 
 			Device^ GetDevice();
-			Result OnLostDevice();
-			Result OnResetDevice();
+			virtual Result OnLostDevice();
+			virtual Result OnResetDevice();
 
 			property RenderToEnvironmentMapDescription Description { RenderToEnvironmentMapDescription get(); }
 		};
