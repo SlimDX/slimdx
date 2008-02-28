@@ -268,6 +268,6 @@ namespace SlimDX
 		if( value == nullptr || String::IsNullOrEmpty( value ) )
 			return NULL;
 		else
-			return reinterpret_cast<LPSTR>( System::Runtime::InteropServices::Marshal::StringToHGlobalAuto( value ).ToPointer() );
+			return reinterpret_cast<LPSTR>( System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi( value ).ToPointer() );
 	}
 }

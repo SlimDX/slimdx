@@ -41,7 +41,7 @@ namespace SimpleTriangle
             DataStream stream = Vertices.Lock(0, 0, LockFlags.None);
             stream.WriteRange(BuildVertexData());
             Vertices.Unlock();
-
+            
             Sample.Run();
 
             Vertices.Dispose();

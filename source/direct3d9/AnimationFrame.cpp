@@ -612,6 +612,11 @@ namespace Direct3D9
 	Frame::Frame()
 	{
 		Pointer = new D3DXFRAME();
+		Pointer->Name = NULL;
+		Pointer->pFrameFirstChild = NULL;
+		Pointer->pFrameSibling = NULL;
+		Pointer->pMeshContainer = NULL;
+
 		m_Name = String::Empty;
 		m_FirstChild = nullptr;
 		m_Sibling = nullptr;
