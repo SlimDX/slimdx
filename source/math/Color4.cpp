@@ -34,6 +34,11 @@ using namespace System::Drawing;
 
 namespace SlimDX
 {
+	Color4 Color4::FromUnmanaged( const D3DXCOLOR &color )
+	{
+		return Color4( color.a, color.r, color.g, color.b );
+	}
+
 	Color4::Color4( float alpha, float red, float green, float blue )
 	{
 		Alpha = alpha;
