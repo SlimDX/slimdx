@@ -21,6 +21,8 @@
 */
 #pragma once
 
+struct D3DXMATRIX;
+
 using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
@@ -35,6 +37,10 @@ namespace SlimDX
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 	public value class Matrix : System::IEquatable<Matrix>
 	{
+	internal:
+		static D3DXMATRIX ToD3DXMATRIX( Matrix matrix );
+		static Matrix FromD3DXMATRIX( const D3DXMATRIX &matrix );
+
 	public:
 		property float M11; property float M12; property float M13; property float M14;
 		property float M21; property float M22; property float M23; property float M24;

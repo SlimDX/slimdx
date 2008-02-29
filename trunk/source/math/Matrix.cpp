@@ -33,6 +33,52 @@ using namespace System::Globalization;
 
 namespace SlimDX
 {
+	D3DXMATRIX Matrix::ToD3DXMATRIX( Matrix matrix )
+	{
+		D3DXMATRIX result;
+		result._11 = matrix.M11;
+		result._12 = matrix.M12;
+		result._13 = matrix.M13;
+		result._14 = matrix.M14;
+		result._21 = matrix.M21;
+		result._22 = matrix.M22;
+		result._23 = matrix.M23;
+		result._24 = matrix.M24;
+		result._31 = matrix.M31;
+		result._32 = matrix.M32;
+		result._33 = matrix.M33;
+		result._34 = matrix.M34;
+		result._41 = matrix.M41;
+		result._42 = matrix.M42;
+		result._43 = matrix.M43;
+		result._44 = matrix.M44;
+
+		return result;
+	}
+
+	Matrix Matrix::FromD3DXMATRIX( const D3DXMATRIX &matrix )
+	{
+		Matrix result;
+		result.M11 = matrix._11;
+		result.M12 = matrix._12;
+		result.M13 = matrix._13;
+		result.M14 = matrix._14;
+		result.M21 = matrix._21;
+		result.M22 = matrix._22;
+		result.M23 = matrix._23;
+		result.M24 = matrix._24;
+		result.M31 = matrix._31;
+		result.M32 = matrix._32;
+		result.M33 = matrix._33;
+		result.M34 = matrix._34;
+		result.M41 = matrix._41;
+		result.M42 = matrix._42;
+		result.M43 = matrix._43;
+		result.M44 = matrix._44;
+
+		return result;
+	}
+
 	Matrix Matrix::Identity::get()
 	{
 		Matrix result;
