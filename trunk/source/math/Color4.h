@@ -21,8 +21,6 @@
 */
 #pragma once
 
-struct D3DXCOLOR;
-
 using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
@@ -34,9 +32,6 @@ namespace SlimDX
 	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 	public value class Color4
 	{
-	internal:
-		static Color4 FromUnmanaged( const D3DXCOLOR &color );
-
 	public:
 		property float Red;
 		property float Green;
