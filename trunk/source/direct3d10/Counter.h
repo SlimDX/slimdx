@@ -42,7 +42,7 @@ namespace SlimDX
 				CounterDescription get();
 			}
 			
-			Counter( Device^ device, CounterDescription description );
+			Counter( SlimDX::Direct3D10::Device^ device, CounterDescription description );
 			static Counter^ FromPointer( System::IntPtr pointer );
 		};
 	}

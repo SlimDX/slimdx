@@ -44,7 +44,10 @@ namespace SlimDX
 			virtual Result OnLostDevice();
 			virtual Result OnResetDevice();
 
-			Device^ GetDevice();
+			property SlimDX::Direct3D9::Device^ Device
+			{
+				SlimDX::Direct3D9::Device^ get();
+			}
 
 			property Matrix Transform
 			{

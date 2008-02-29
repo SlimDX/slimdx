@@ -68,7 +68,7 @@ namespace Direct3D10
 		return gcnew DepthStencilView( pointer );
 	}
 
-	DepthStencilView::DepthStencilView( Device^ device, Resource^ resource )
+	DepthStencilView::DepthStencilView( SlimDX::Direct3D10::Device^ device, Resource^ resource )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
@@ -82,7 +82,7 @@ namespace Direct3D10
 		Construct( view );
 	}
 	
-	DepthStencilView::DepthStencilView( Device^ device, Resource^ resource, DepthStencilViewDescription description )
+	DepthStencilView::DepthStencilView( SlimDX::Direct3D10::Device^ device, Resource^ resource, DepthStencilViewDescription description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );

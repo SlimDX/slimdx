@@ -117,7 +117,7 @@ namespace Direct3D9
 		return gcnew IndexBuffer( pointer );
 	}
 
-	IndexBuffer::IndexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, SlimDX::Direct3D9::Pool pool, bool sixteenBit )
+	IndexBuffer::IndexBuffer( SlimDX::Direct3D9::Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, SlimDX::Direct3D9::Pool pool, bool sixteenBit )
 	{
 		IDirect3DIndexBuffer9* ib;
 		D3DFORMAT format = sixteenBit ? D3DFMT_INDEX16 : D3DFMT_INDEX32;

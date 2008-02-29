@@ -48,7 +48,7 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 	
-	Texture1D::Texture1D( Device^ device, Texture1DDescription description )
+	Texture1D::Texture1D( SlimDX::Direct3D10::Device^ device, Texture1DDescription description )
 	{
 		ID3D10Texture1D* texture = 0;
 		D3D10_TEXTURE1D_DESC nativeDescription = description.CreateNativeVersion();
@@ -106,7 +106,7 @@ namespace Direct3D10
 		InternalPointer->Unmap( subResource );
 	}
 	
-	Texture1D^ Texture1D::FromFile( Device^ device, String^ fileName )
+	Texture1D^ Texture1D::FromFile( SlimDX::Direct3D10::Device^ device, String^ fileName )
 	{
 		Texture^ baseTexture = Texture::FromFile( device, fileName );
 		if( baseTexture->Dimension != ResourceDimension::Texture1D )
@@ -114,7 +114,7 @@ namespace Direct3D10
 		return static_cast< Texture1D^ >( baseTexture );
 	}
 	
-	Texture1D^ Texture1D::FromMemory( Device^ device, array<Byte>^ memory )
+	Texture1D^ Texture1D::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory )
 	{
 		Texture^ baseTexture = Texture::FromMemory( device, memory );
 		if( baseTexture->Dimension != ResourceDimension::Texture1D )
@@ -122,7 +122,7 @@ namespace Direct3D10
 		return static_cast<Texture1D^>( baseTexture );
 	}
 	
-	Texture1D^ Texture1D::FromStream( Device^ device, Stream^ stream, int sizeInBytes )
+	Texture1D^ Texture1D::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, int sizeInBytes )
 	{
 		Texture^ baseTexture = Texture::FromStream( device, stream, sizeInBytes );
 		if( baseTexture->Dimension != ResourceDimension::Texture1D )

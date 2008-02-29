@@ -43,8 +43,8 @@ namespace SlimDX
 				BlendStateDescription get();
 			}
 			
+			BlendState( SlimDX::Direct3D10::Device^ device, BlendStateDescription description );
 			static BlendState^ FromPointer( System::IntPtr state );
-			BlendState( Device^ device, BlendStateDescription description );
 		};
 	}
 };

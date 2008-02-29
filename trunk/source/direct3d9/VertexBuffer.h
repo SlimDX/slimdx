@@ -51,7 +51,7 @@ namespace SlimDX
 			void InitDescription();
 
 		public:
-			VertexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool );
+			VertexBuffer( SlimDX::Direct3D9::Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool );
 			virtual ~VertexBuffer() { }
 			static VertexBuffer^ FromPointer( System::IntPtr buffer );
 

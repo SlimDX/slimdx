@@ -43,7 +43,7 @@ namespace SlimDX
 				RasterizerStateDescription get();
 			}
 
-			RasterizerState( Device^ device, RasterizerStateDescription description );
+			RasterizerState( SlimDX::Direct3D10::Device^ device, RasterizerStateDescription description );
 			static RasterizerState^ FromPointer( System::IntPtr state );
 		};
 	}

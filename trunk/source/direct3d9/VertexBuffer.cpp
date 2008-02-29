@@ -85,7 +85,7 @@ namespace Direct3D9
 		return gcnew VertexBuffer( pointer );
 	}
 
-	VertexBuffer::VertexBuffer( Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool )
+	VertexBuffer::VertexBuffer( SlimDX::Direct3D9::Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool )
 	{
 		IDirect3DVertexBuffer9* vb;
 		HRESULT hr = device->InternalPointer->CreateVertexBuffer( sizeBytes, static_cast<DWORD>( usage ), 

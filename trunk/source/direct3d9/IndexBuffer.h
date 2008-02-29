@@ -57,7 +57,7 @@ namespace SlimDX
 			void InitDescription();
 			
 		public:
-			IndexBuffer( Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit );
+			IndexBuffer( SlimDX::Direct3D9::Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit );
 			virtual ~IndexBuffer() { }
 			static IndexBuffer^ FromPointer( System::IntPtr buffer );
 

@@ -86,7 +86,7 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
-	SwapChain::SwapChain( Device^ device, PresentParameters^ presentParameters )
+	SwapChain::SwapChain( SlimDX::Direct3D9::Device^ device, PresentParameters^ presentParameters )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
@@ -150,7 +150,7 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	Device^ SwapChain::GetDevice()
+	SlimDX::Direct3D9::Device^ SwapChain::Device::get()
 	{
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
@@ -158,7 +158,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return Device::FromPointer( device );
+		return SlimDX::Direct3D9::Device::FromPointer( device );
 	}
 
 	SlimDX::Direct3D9::DisplayMode SwapChain::DisplayMode::get()

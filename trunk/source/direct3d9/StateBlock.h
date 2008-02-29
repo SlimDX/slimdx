@@ -36,13 +36,16 @@ namespace SlimDX
 			COMOBJECT(IDirect3DStateBlock9, StateBlock);
 
 		public:
-			StateBlock( Device^ device, StateBlockType type );
+			StateBlock( SlimDX::Direct3D9::Device^ device, StateBlockType type );
 			static StateBlock^ FromPointer( System::IntPtr pointer );
 
 			Result Apply();
 			Result Capture();
 
-			Device^ GetDevice();
+			property SlimDX::Direct3D9::Device^ Device
+			{
+				SlimDX::Direct3D9::Device^ get();
+			}
 		};
 	}
 }

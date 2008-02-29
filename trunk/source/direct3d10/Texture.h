@@ -42,9 +42,9 @@ namespace SlimDX
 		public:
 			Texture();
 
-			static Texture^ FromFile( Device^ device, System::String^ fileName );
-			static Texture^ FromMemory( Device^ device, array<System::Byte>^ memory );
-			static Texture^ FromStream( Device^ device, System::IO::Stream^ stream, int sizeInBytes );
+			static Texture^ FromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName );
+			static Texture^ FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory );
+			static Texture^ FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes );
 
 			static bool ToFile( Texture^ texture, ImageFileFormat format, System::String^ fileName );
 		};

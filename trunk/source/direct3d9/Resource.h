@@ -39,8 +39,12 @@ namespace SlimDX
 			Resource() { }
 
 		public:
-			Device^ GetDevice();
 			void Preload();
+
+			property SlimDX::Direct3D9::Device^ Device
+			{
+				SlimDX::Direct3D9::Device^ get();
+			}
 
 			property int Priority
 			{

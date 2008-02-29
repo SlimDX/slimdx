@@ -48,10 +48,14 @@ namespace SlimDX
 			COMOBJECT(IDirect3DSwapChain9, SwapChain);
 
 		public:
-			SwapChain( Device^ device, PresentParameters^ presentParameters );
+			SwapChain( SlimDX::Direct3D9::Device^ device, PresentParameters^ presentParameters );
 			static SwapChain^ FromPointer( System::IntPtr pointer );
 
-			Device^ GetDevice();
+			property SlimDX::Direct3D9::Device^ Device
+			{
+				SlimDX::Direct3D9::Device^ get();
+			}
+
 			Surface^ GetBackBuffer( int index );
 			Result GetFrontBufferData( Surface^ destinationSurface );
 

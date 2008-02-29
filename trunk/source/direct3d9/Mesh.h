@@ -189,7 +189,11 @@ namespace SlimDX
 			Mesh^ Clone( Device^ device, MeshFlags flags, array<VertexElement>^ elements );
 			Mesh^ Clone( Device^ device, MeshFlags flags, VertexFormat fvf );
 
-			Device^ GetDevice();
+			property Device^ Device
+			{
+				SlimDX::Direct3D9::Device^ get();
+			}
+
 			IndexBuffer^ GetIndexBuffer();
 			VertexBuffer^ GetVertexBuffer();
 			array<VertexElement>^ GetDeclaration();
@@ -240,31 +244,31 @@ namespace SlimDX
 			void SetAdjacency( DWORD *adjacency );
 
 		public:
-			Mesh( Device^ device, int faceCount, int vertexCount, MeshFlags options, array<VertexElement>^ vertexDeclaration );
-			Mesh( Device^ device, int faceCount, int vertexCount, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf );
+			Mesh( SlimDX::Direct3D9::Device^ device, int faceCount, int vertexCount, MeshFlags options, array<VertexElement>^ vertexDeclaration );
+			Mesh( SlimDX::Direct3D9::Device^ device, int faceCount, int vertexCount, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf );
 			virtual ~Mesh() { }
 			static Mesh^ FromPointer( System::IntPtr pointer );
 
-			static Mesh^ FromMemory( Device^ device, array<System::Byte>^ memory, MeshFlags flags );
-			static Mesh^ FromStream( Device^ device, System::IO::Stream^ stream, MeshFlags flags );
-			static Mesh^ FromFile( Device^ device, System::String^ fileName, MeshFlags flags );
-			static Mesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags );
+			static Mesh^ FromMemory( SlimDX::Direct3D9::Device^ device, array<System::Byte>^ memory, MeshFlags flags );
+			static Mesh^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, MeshFlags flags );
+			static Mesh^ FromFile( SlimDX::Direct3D9::Device^ device, System::String^ fileName, MeshFlags flags );
+			static Mesh^ FromXFile( SlimDX::Direct3D9::Device^ device, XFileData^ xfile, MeshFlags flags );
 
 			static Result ToXFile( Mesh^ mesh, System::String^ fileName, XFileFormat format, System::Runtime::InteropServices::CharSet charSet );
 			static Result ToXFile( Mesh^ mesh, System::String^ fileName, XFileFormat format );
 
-			static Mesh^ CreateBox( Device^ device, float width, float height, float depth );
-			static Mesh^ CreateCylinder( Device^ device, float radius1, float radius2, float length, int slices, int stacks );
-			static Mesh^ CreateSphere( Device^ device, float radius, int slices, int stacks );
-			static Mesh^ CreateTeapot( Device^ device );
-			static Mesh^ CreateTorus( Device^ device, float innerRadius, float outerRadius, int sides, int rings );
+			static Mesh^ CreateBox( SlimDX::Direct3D9::Device^ device, float width, float height, float depth );
+			static Mesh^ CreateCylinder( SlimDX::Direct3D9::Device^ device, float radius1, float radius2, float length, int slices, int stacks );
+			static Mesh^ CreateSphere( SlimDX::Direct3D9::Device^ device, float radius, int slices, int stacks );
+			static Mesh^ CreateTeapot( SlimDX::Direct3D9::Device^ device );
+			static Mesh^ CreateTorus( SlimDX::Direct3D9::Device^ device, float innerRadius, float outerRadius, int sides, int rings );
 
-			static Mesh^ CreateText( Device^ device, System::Drawing::Font^ font, System::String^ text, float deviation, float extrusion, [Out] array<GlyphMetricsFloat>^% glyphMetrics );
-			static Mesh^ CreateText( Device^ device, System::Drawing::Font^ font, System::String^ text, float deviation, float extrusion );
+			static Mesh^ CreateText( SlimDX::Direct3D9::Device^ device, System::Drawing::Font^ font, System::String^ text, float deviation, float extrusion, [Out] array<GlyphMetricsFloat>^% glyphMetrics );
+			static Mesh^ CreateText( SlimDX::Direct3D9::Device^ device, System::Drawing::Font^ font, System::String^ text, float deviation, float extrusion );
 
-			static Mesh^ Concatenate( Device^ device, array<Mesh^>^ meshes, MeshFlags options, array<Matrix>^ geometryTransforms, array<Matrix>^ textureTransforms, array<VertexElement>^ vertexDeclaration );
-			static Mesh^ Concatenate( Device^ device, array<Mesh^>^ meshes, MeshFlags options, array<Matrix>^ geometryTransforms, array<Matrix>^ textureTransforms );
-			static Mesh^ Concatenate( Device^ device, array<Mesh^>^ meshes, MeshFlags options );
+			static Mesh^ Concatenate( SlimDX::Direct3D9::Device^ device, array<Mesh^>^ meshes, MeshFlags options, array<Matrix>^ geometryTransforms, array<Matrix>^ textureTransforms, array<VertexElement>^ vertexDeclaration );
+			static Mesh^ Concatenate( SlimDX::Direct3D9::Device^ device, array<Mesh^>^ meshes, MeshFlags options, array<Matrix>^ geometryTransforms, array<Matrix>^ textureTransforms );
+			static Mesh^ Concatenate( SlimDX::Direct3D9::Device^ device, array<Mesh^>^ meshes, MeshFlags options );
 
 			static Mesh^ Simplify( Mesh^ mesh, array<AttributeWeights>^ attributeWeights, array<float>^ vertexWeights, int minimumValue, MeshSimplification options );
 			static Mesh^ Simplify( Mesh^ mesh, array<AttributeWeights>^ attributeWeights, int minimumValue, MeshSimplification options );

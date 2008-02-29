@@ -46,7 +46,7 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 
-	Sprite::Sprite( Device^ device, int bufferSize )
+	Sprite::Sprite( SlimDX::Direct3D10::Device^ device, int bufferSize )
 	{
 		ID3DX10Sprite* sprite = 0;
 		if( RECORD_D3D10( D3DX10CreateSprite( device->InternalPointer, bufferSize, &sprite ) ).IsFailure )
@@ -108,12 +108,12 @@ namespace Direct3D10
 			throw gcnew Direct3D10Exception( Result::Last );
 	}
 
-	Device^ Sprite::GetDevice()
+	SlimDX::Direct3D10::Device^ Sprite::Device::get()
 	{
 		ID3D10Device* device = 0;
 		if( RECORD_D3D10( InternalPointer->GetDevice( &device ) ).IsFailure )
 			return nullptr;
-		return Device::FromPointer( device );
+		return SlimDX::Direct3D10::Device::FromPointer( device );
 	}
 
 	Result Sprite::Begin( SpriteFlags flags )

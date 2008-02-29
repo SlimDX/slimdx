@@ -45,7 +45,7 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
-	StateBlock::StateBlock( Device^ device, StateBlockType type )
+	StateBlock::StateBlock( SlimDX::Direct3D9::Device^ device, StateBlockType type )
 	{
 		IDirect3DStateBlock9* stateBlock;
 
@@ -93,7 +93,7 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	Device^ StateBlock::GetDevice()
+	SlimDX::Direct3D9::Device^ StateBlock::Device::get()
 	{
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
@@ -101,7 +101,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return Device::FromPointer( device );
+		return SlimDX::Direct3D9::Device::FromPointer( device );
 	}
 }
 }

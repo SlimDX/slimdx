@@ -83,7 +83,7 @@ namespace SlimDX
 			Construct( pointer, NativeInterface );
 		}
 
-		RenderToEnvironmentMap::RenderToEnvironmentMap( Device^ device, int size, int mipLevels, Format format, Format depthStencilFormat )
+		RenderToEnvironmentMap::RenderToEnvironmentMap( SlimDX::Direct3D9::Device^ device, int size, int mipLevels, Format format, Format depthStencilFormat )
 		{
 			ID3DXRenderToEnvMap *result;
 
@@ -96,7 +96,7 @@ namespace SlimDX
 			Construct(result);
 		}
 
-		RenderToEnvironmentMap::RenderToEnvironmentMap( Device^ device, int size, int mipLevels, Format format )
+		RenderToEnvironmentMap::RenderToEnvironmentMap( SlimDX::Direct3D9::Device^ device, int size, int mipLevels, Format format )
 		{
 			ID3DXRenderToEnvMap *result;
 
@@ -168,7 +168,7 @@ namespace SlimDX
 			return RECORD_D3D9( hr );
 		}
 
-		Device^ RenderToEnvironmentMap::GetDevice()
+		SlimDX::Direct3D9::Device^ RenderToEnvironmentMap::Device::get()
 		{
 			IDirect3DDevice9* device;
 
@@ -177,7 +177,7 @@ namespace SlimDX
 			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
-			return Device::FromPointer( device );
+			return SlimDX::Direct3D9::Device::FromPointer( device );
 		}
 
 		Result RenderToEnvironmentMap::OnLostDevice()

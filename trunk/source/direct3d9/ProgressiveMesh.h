@@ -71,11 +71,11 @@ namespace SlimDX
 			virtual ~ProgressiveMesh() { }
 			static ProgressiveMesh^ FromPointer( System::IntPtr pointer );
 
-			static ProgressiveMesh^ FromStream( Device^ device, System::IO::Stream^ stream, MeshFlags flags );
+			static ProgressiveMesh^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, MeshFlags flags );
 			static Result ToStream( ProgressiveMesh^ mesh, System::IO::Stream^ stream );
 
-			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags flags, array<VertexElement>^ vertexDeclaration );
-			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags flags, SlimDX::Direct3D9::VertexFormat format );
+			ProgressiveMesh^ CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags flags, array<VertexElement>^ vertexDeclaration );
+			ProgressiveMesh^ CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags flags, SlimDX::Direct3D9::VertexFormat format );
 
 			Result GenerateVertexHistory( array<int>^ vertexHistory );
 			array<int>^ GetAdjacency();
@@ -117,22 +117,26 @@ namespace SlimDX
 			SimplificationMesh( Mesh^ mesh );
 			static SimplificationMesh^ FromPointer( System::IntPtr pointer );
 
-			Mesh^ Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap );
-			Mesh^ Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration );
+			property SlimDX::Direct3D9::Device^ Device
+			{
+				SlimDX::Direct3D9::Device^ get();
+			}
 
-			Mesh^ Clone( Device^ device, MeshFlags options, VertexFormat fvf, [Out] array<int>^% vertexRemap );
-			Mesh^ Clone( Device^ device, MeshFlags options, VertexFormat fvf );
+			Mesh^ Clone( SlimDX::Direct3D9::Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap );
+			Mesh^ Clone( SlimDX::Direct3D9::Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration );
 
-			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap, [Out] array<float>^% errorsByFace );
-			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap );
-			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration );
+			Mesh^ Clone( SlimDX::Direct3D9::Device^ device, MeshFlags options, VertexFormat fvf, [Out] array<int>^% vertexRemap );
+			Mesh^ Clone( SlimDX::Direct3D9::Device^ device, MeshFlags options, VertexFormat fvf );
 
-			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags options, VertexFormat fvf, [Out] array<int>^% vertexRemap, [Out] array<float>^% errorsByFace );
-			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags options, VertexFormat fvf, [Out] array<int>^% vertexRemap );
-			ProgressiveMesh^ CloneProgressive( Device^ device, MeshFlags options, VertexFormat fvf );
+			ProgressiveMesh^ CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap, [Out] array<float>^% errorsByFace );
+			ProgressiveMesh^ CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap );
+			ProgressiveMesh^ CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration );
+
+			ProgressiveMesh^ CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags options, VertexFormat fvf, [Out] array<int>^% vertexRemap, [Out] array<float>^% errorsByFace );
+			ProgressiveMesh^ CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags options, VertexFormat fvf, [Out] array<int>^% vertexRemap );
+			ProgressiveMesh^ CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags options, VertexFormat fvf );
 
 			array<VertexElement>^ GetDeclaration();
-			Device^ GetDevice();
 
 			array<AttributeWeights>^ GetVertexAttributeWeights();
 			array<float>^ GetVertexWeights();
