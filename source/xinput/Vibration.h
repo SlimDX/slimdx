@@ -32,7 +32,7 @@ namespace SlimDX
 		/// The left motor is the low-frequency rumble motor. The right motor is the high-frequency rumble motor. 
 		/// The two motors are not the same, and they create different vibration effects.
 		/// </remarks>
-		public value class Vibration
+		public value class Vibration : System::IEquatable<Vibration>
 		{
 		private:
 			System::UInt16 m_LeftMotorSpeed;
@@ -67,6 +67,14 @@ namespace SlimDX
 				System::UInt16 get();
 				void set( System::UInt16 value );
 			}
+
+			static bool operator == ( Vibration left, Vibration right );
+			static bool operator != ( Vibration left, Vibration right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( Vibration other );
+			static bool Equals( Vibration% value1, Vibration% value2 );
 		};
 	}
 }

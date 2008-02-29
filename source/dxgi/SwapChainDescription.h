@@ -32,7 +32,7 @@ namespace SlimDX
 		/// <remarks>
 		/// Describes properties of a swap chain.
 		/// </summary>
-		public value class SwapChainDescription
+		public value class SwapChainDescription : System::IEquatable<SwapChainDescription>
 		{
 		private:
 			ModeDescription m_BufferDesc;
@@ -121,6 +121,14 @@ namespace SlimDX
 				SwapChainFlags get();
 				void set( SwapChainFlags value );
 			}
+
+			static bool operator == ( SwapChainDescription left, SwapChainDescription right );
+			static bool operator != ( SwapChainDescription left, SwapChainDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( SwapChainDescription other );
+			static bool Equals( SwapChainDescription% value1, SwapChainDescription% value2 );
 		};
 	}
 };

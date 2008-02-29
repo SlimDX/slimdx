@@ -64,5 +64,44 @@ namespace DXGI
 	{
 		return m_Monitor;
 	}
+
+	bool OutputDescription::operator == ( OutputDescription left, OutputDescription right )
+	{
+		return OutputDescription::Equals( left, right );
+	}
+
+	bool OutputDescription::operator != ( OutputDescription left, OutputDescription right )
+	{
+		return !OutputDescription::Equals( left, right );
+	}
+
+	int OutputDescription::GetHashCode()
+	{
+		return m_DeviceName->GetHashCode() + m_DesktopCoordinates->GetHashCode() + m_AttachedToDesktop.GetHashCode()
+			 + m_Rotation.GetHashCode() + m_Monitor.GetHashCode();
+	}
+
+	bool OutputDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<OutputDescription>( value ) );
+	}
+
+	bool OutputDescription::Equals( OutputDescription value )
+	{
+		return ( m_DeviceName == value.m_DeviceName && m_DesktopCoordinates == value.m_DesktopCoordinates && m_AttachedToDesktop == value.m_AttachedToDesktop
+			 && m_Rotation == value.m_Rotation && m_Monitor == value.m_Monitor );
+	}
+
+	bool OutputDescription::Equals( OutputDescription% value1, OutputDescription% value2 )
+	{
+		return ( value1.m_DeviceName == value2.m_DeviceName && value1.m_DesktopCoordinates == value2.m_DesktopCoordinates && value1.m_AttachedToDesktop == value2.m_AttachedToDesktop
+			 && value1.m_Rotation == value2.m_Rotation && value1.m_Monitor == value2.m_Monitor );
+	}
 }
 }

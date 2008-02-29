@@ -35,49 +35,6 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		EffectPool::EffectPool( ID3DXEffectPool* pointer )
-		{
-			Construct( pointer );
-		}
-
-		EffectPool::EffectPool( IntPtr pointer )
-		{
-			Construct( pointer, NativeInterface );
-		}
-
-		EffectPool::EffectPool()
-		{
-			ID3DXEffectPool* pointer;
-			HRESULT hr = D3DXCreateEffectPool( &pointer );
-			if( FAILED( hr ) )
-				throw gcnew Direct3D9Exception( Result::Last );
-
-			Construct( pointer );
-		}
-
-		EffectPool^ EffectPool::FromPointer( ID3DXEffectPool* pointer )
-		{
-			EffectPool^ tableEntry = safe_cast<EffectPool^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-			if( tableEntry != nullptr )
-			{
-				pointer->Release();
-				return tableEntry;
-			}
-
-			return gcnew EffectPool( pointer );
-		}
-
-		EffectPool^ EffectPool::FromPointer( IntPtr pointer )
-		{
-			EffectPool^ tableEntry = safe_cast<EffectPool^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-			if( tableEntry != nullptr )
-			{
-				return tableEntry;
-			}
-
-			return gcnew EffectPool( pointer );
-		}
-
 		Effect::Effect( ID3DXEffect* pointer )
 		{
 			shim = NULL;

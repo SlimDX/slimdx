@@ -87,5 +87,47 @@ namespace DXGI
 	{
 		return m_Luid;
 	}
+
+	bool AdapterDescription::operator == ( AdapterDescription left, AdapterDescription right )
+	{
+		return AdapterDescription::Equals( left, right );
+	}
+
+	bool AdapterDescription::operator != ( AdapterDescription left, AdapterDescription right )
+	{
+		return !AdapterDescription::Equals( left, right );
+	}
+
+	int AdapterDescription::GetHashCode()
+	{
+		return m_Description->GetHashCode() + m_VendorId.GetHashCode() + m_DeviceId.GetHashCode()
+			 + m_SubSysId.GetHashCode() + m_Revision.GetHashCode() + m_DedicatedVideoMemory.GetHashCode()
+			 + m_DedicatedSystemMemory.GetHashCode() + m_SharedSystemMemory.GetHashCode() + m_Luid.GetHashCode();
+	}
+
+	bool AdapterDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<AdapterDescription>( value ) );
+	}
+
+	bool AdapterDescription::Equals( AdapterDescription value )
+	{
+		return ( m_Description == value.m_Description && m_VendorId == value.m_VendorId && m_DeviceId == value.m_DeviceId
+			 && m_SubSysId == value.m_SubSysId && m_Revision == value.m_Revision && m_DedicatedVideoMemory == value.m_DedicatedVideoMemory
+			 && m_DedicatedSystemMemory == value.m_DedicatedSystemMemory && m_SharedSystemMemory == value.m_SharedSystemMemory && m_Luid == value.m_Luid );
+	}
+
+	bool AdapterDescription::Equals( AdapterDescription% value1, AdapterDescription% value2 )
+	{
+		return ( value1.m_Description == value2.m_Description && value1.m_VendorId == value2.m_VendorId && value1.m_DeviceId == value2.m_DeviceId
+			 && value1.m_SubSysId == value2.m_SubSysId && value1.m_Revision == value2.m_Revision && value1.m_DedicatedVideoMemory == value2.m_DedicatedVideoMemory
+			 && value1.m_DedicatedSystemMemory == value2.m_DedicatedSystemMemory && value1.m_SharedSystemMemory == value2.m_SharedSystemMemory && value1.m_Luid == value2.m_Luid );
+	}
 }
 }

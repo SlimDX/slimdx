@@ -1435,6 +1435,41 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d9\EffectDescription.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\EffectDescription.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\EffectHandle.cpp"
 					>
 				</File>
@@ -1443,11 +1478,78 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d9\EffectPool.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\EffectPool.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\EffectStateManager.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\EffectStateManager.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\FunctionDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\FunctionDescription.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ParameterDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ParameterDescription.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\PassDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\PassDescription.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\TechniqueDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\TechniqueDescription.h"
 					>
 				</File>
 			</Filter>
@@ -1519,6 +1621,14 @@
 				Name="Mesh"
 				>
 				<File
+					RelativePath="..\source\direct3d9\DisplacementParameters.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\DisplacementParameters.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\Mesh.cpp"
 					>
 				</File>
@@ -1558,6 +1668,14 @@
 					RelativePath="..\source\direct3d9\ProgressiveMesh.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d9\SimplificationMesh.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\SimplificationMesh.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="D3DX"
@@ -1583,11 +1701,43 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d9\Direct3D.cpp"
+					RelativePath="..\source\direct3d9\Light.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d9\Direct3D.h"
+					RelativePath="..\source\direct3d9\Light.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Material.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Material.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\PaletteEntry.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\PaletteEntry.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\PatchInfo.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\PatchInfo.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\PresentParameters.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\PresentParameters.h"
 					>
 				</File>
 			</Filter>
@@ -1600,6 +1750,41 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Font.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\FontDescription.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\FontDescription.h"
 					>
 				</File>
 			</Filter>
@@ -1648,6 +1833,14 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\IndexBuffer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\IndexBufferDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\IndexBufferDescription.h"
 					>
 				</File>
 			</Filter>
@@ -1710,6 +1903,14 @@
 			<Filter
 				Name="FragmentLinker"
 				>
+				<File
+					RelativePath="..\source\direct3d9\FragmentDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\FragmentDescription.h"
+					>
+				</File>
 				<File
 					RelativePath="..\source\direct3d9\FragmentLinker.cpp"
 					>
@@ -1916,6 +2117,77 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\KeyframedAnimationSet.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Direct3D"
+				>
+				<File
+					RelativePath="..\source\direct3d9\AdapterDetails.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\AdapterDetails.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\AdapterInformation.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\AdapterInformation.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Capabilities.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Capabilities.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Direct3D.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Direct3D.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\DisplayMode.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\DisplayMode.h"
 					>
 				</File>
 			</Filter>

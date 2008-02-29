@@ -85,5 +85,41 @@ namespace DXGI
 	{
 		return gcnew ReadOnlyCollection<Color3>( m_GammaCurve );
 	}
+
+	bool GammaControl::operator == ( GammaControl left, GammaControl right )
+	{
+		return GammaControl::Equals( left, right );
+	}
+
+	bool GammaControl::operator != ( GammaControl left, GammaControl right )
+	{
+		return !GammaControl::Equals( left, right );
+	}
+
+	int GammaControl::GetHashCode()
+	{
+		return m_Scale.GetHashCode() + m_Offset.GetHashCode() + m_GammaCurve->GetHashCode();
+	}
+
+	bool GammaControl::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<GammaControl>( value ) );
+	}
+
+	bool GammaControl::Equals( GammaControl value )
+	{
+		return ( m_Scale == value.m_Scale && m_Offset == value.m_Offset && m_GammaCurve == value.m_GammaCurve );
+	}
+
+	bool GammaControl::Equals( GammaControl% value1, GammaControl% value2 )
+	{
+		return ( value1.m_Scale == value2.m_Scale && value1.m_Offset == value2.m_Offset && value1.m_GammaCurve == value2.m_GammaCurve );
+	}
 }
 }

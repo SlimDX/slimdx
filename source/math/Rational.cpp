@@ -54,4 +54,40 @@ namespace SlimDX
 	{
 		denominator = value;
 	}
+
+	bool Rational::operator == ( Rational left, Rational right )
+	{
+		return Rational::Equals( left, right );
+	}
+
+	bool Rational::operator != ( Rational left, Rational right )
+	{
+		return !Rational::Equals( left, right );
+	}
+
+	int Rational::GetHashCode()
+	{
+		return numerator.GetHashCode() + denominator.GetHashCode();
+	}
+
+	bool Rational::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<Rational>( value ) );
+	}
+
+	bool Rational::Equals( Rational value )
+	{
+		return ( numerator == value.numerator && denominator == value.denominator );
+	}
+
+	bool Rational::Equals( Rational% value1, Rational% value2 )
+	{
+		return ( value1.numerator == value2.numerator && value1.denominator == value2.denominator );
+	}
 }

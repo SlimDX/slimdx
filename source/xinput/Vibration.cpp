@@ -65,5 +65,41 @@ namespace SlimDX
 		{
 			m_RightMotorSpeed = value;
 		}
+		
+		bool Vibration::operator == ( Vibration left, Vibration right )
+		{
+			return Vibration::Equals( left, right );
+		}
+
+		bool Vibration::operator != ( Vibration left, Vibration right )
+		{
+			return !Vibration::Equals( left, right );
+		}
+
+		int Vibration::GetHashCode()
+		{
+			return m_LeftMotorSpeed.GetHashCode() + m_RightMotorSpeed.GetHashCode();
+		}
+
+		bool Vibration::Equals( Object^ value )
+		{
+			if( value == nullptr )
+				return false;
+
+			if( value->GetType() != GetType() )
+				return false;
+
+			return Equals( static_cast<Vibration>( value ) );
+		}
+
+		bool Vibration::Equals( Vibration value )
+		{
+			return ( m_LeftMotorSpeed == value.m_LeftMotorSpeed && m_RightMotorSpeed == value.m_RightMotorSpeed );
+		}
+
+		bool Vibration::Equals( Vibration% value1, Vibration% value2 )
+		{
+			return ( value1.m_LeftMotorSpeed == value2.m_LeftMotorSpeed && value1.m_RightMotorSpeed == value2.m_RightMotorSpeed );
+		}
 	}
 }

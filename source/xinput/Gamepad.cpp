@@ -44,5 +44,47 @@ namespace SlimDX
 		{
 			return m_Buttons;
 		}
+
+		bool Gamepad::operator == ( Gamepad left, Gamepad right )
+		{
+			return Gamepad::Equals( left, right );
+		}
+
+		bool Gamepad::operator != ( Gamepad left, Gamepad right )
+		{
+			return !Gamepad::Equals( left, right );
+		}
+
+		int Gamepad::GetHashCode()
+		{
+			return m_Buttons.GetHashCode() + leftTrigger.GetHashCode() + rightTrigger.GetHashCode()
+				 + leftThumbX.GetHashCode() + leftThumbY.GetHashCode() + rightThumbX.GetHashCode()
+				 + rightThumbY.GetHashCode();
+		}
+
+		bool Gamepad::Equals( Object^ value )
+		{
+			if( value == nullptr )
+				return false;
+
+			if( value->GetType() != GetType() )
+				return false;
+
+			return Equals( static_cast<Gamepad>( value ) );
+		}
+
+		bool Gamepad::Equals( Gamepad value )
+		{
+			return ( m_Buttons == value.m_Buttons && leftTrigger == value.leftTrigger && rightTrigger == value.rightTrigger
+				 && leftThumbX == value.leftThumbX && leftThumbY == value.leftThumbY && rightThumbX == value.rightThumbX
+				 && rightThumbY == value.rightThumbY );
+		}
+
+		bool Gamepad::Equals( Gamepad% value1, Gamepad% value2 )
+		{
+			return ( value1.m_Buttons == value2.m_Buttons && value1.leftTrigger == value2.leftTrigger && value1.rightTrigger == value2.rightTrigger
+				 && value1.leftThumbX == value2.leftThumbX && value1.leftThumbY == value2.leftThumbY && value1.rightThumbX == value2.rightThumbX
+				 && value1.rightThumbY == value2.rightThumbY );
+		}
 	}
 }

@@ -23,6 +23,7 @@
 
 #include "Shader.h"
 #include "EffectHandle.h"
+#include "FragmentDescription.h"
 
 namespace SlimDX
 {
@@ -30,21 +31,6 @@ namespace SlimDX
 	{
 		ref class VertexShader;
 		ref class PixelShader;
-
-		public value class FragmentDescription : System::IEquatable<FragmentDescription>
-		{
-		public:
-			property System::String^ Name;
-            property int Target;
-
-			static bool operator == ( FragmentDescription left, FragmentDescription right );
-			static bool operator != ( FragmentDescription left, FragmentDescription right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( FragmentDescription other );
-			static bool Equals( FragmentDescription% value1, FragmentDescription% value2 );
-		};
 
 		public ref class FragmentLinker : public ComObject
 		{

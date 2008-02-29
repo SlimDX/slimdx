@@ -21,15 +21,12 @@
 */
 #pragma once
 
-//using namespace System::Drawing;
-//using namespace System::Runtime::InteropServices;
-
 namespace SlimDX
 {
 	/// <remarks>
 	/// A three-component (RGB) color value; each component is a float in the range [0,1].
 	/// </remarks>
-	public value class Color3
+	public value class Color3 : System::IEquatable<Color3>
 	{
 	private:
 		float m_Red;
@@ -65,5 +62,13 @@ namespace SlimDX
 		}
 		
 		Color3( float red, float green, float blue );
+
+		static bool operator == ( Color3 left, Color3 right );
+		static bool operator != ( Color3 left, Color3 right );
+
+		virtual int GetHashCode() override;
+		virtual bool Equals( System::Object^ obj ) override;
+		virtual bool Equals( Color3 other );
+		static bool Equals( Color3% value1, Color3% value2 );
 	};
 }

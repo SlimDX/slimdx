@@ -36,7 +36,7 @@ namespace SlimDX
 		/// The constants GamepadLeftThumbDeadZone or GamepadRightThumbDeadZone can be used as a positive and negative value to filter a
 		/// thumbstick input.
 		/// </remarks>
-		public value class Gamepad
+		public value class Gamepad : System::IEquatable<Gamepad>
 		{
 		private:
 			GamepadButtonFlags m_Buttons;
@@ -118,6 +118,14 @@ namespace SlimDX
 			/// This constantmay be used as the value which LeftTrigger and RightTrigger must be greater than to register as pressed.
 			/// </summary>
 			literal System::Byte GamepadTriggerThreshold = XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
+
+			static bool operator == ( Gamepad left, Gamepad right );
+			static bool operator != ( Gamepad left, Gamepad right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( Gamepad other );
+			static bool Equals( Gamepad% value1, Gamepad% value2 );
 		};
 	}
 }

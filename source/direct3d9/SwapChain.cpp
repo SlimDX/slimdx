@@ -73,9 +73,6 @@ namespace Direct3D9
 		return ( value1.InVBlank == value2.InVBlank && value1.Scanline == value2.Scanline );
 	}
 
-	//grab this function from Device.cpp
-	void ConvertPresentParams( PresentParameters^ presentParameters, D3DPRESENT_PARAMETERS& d3dpp );
-
 	SwapChain::SwapChain( IDirect3DSwapChain9* pointer )
 	{
 		Construct( pointer );
@@ -95,7 +92,7 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "presentParameters" );
 
 		D3DPRESENT_PARAMETERS d3dpp;
-		ConvertPresentParams( presentParameters, d3dpp );
+		d3dpp = presentParameters->ToUnmanaged();
 
 		IDirect3DSwapChain9* swapChain;
 		HRESULT hr = device->InternalPointer->CreateAdditionalSwapChain( &d3dpp, &swapChain );

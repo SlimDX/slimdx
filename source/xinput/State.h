@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace XInput
 	{
-		public value class State
+		public value class State : System::IEquatable<State>
 		{
 		private:
 			System::UInt32 m_PacketNumber;
@@ -49,10 +49,18 @@ namespace SlimDX
 				System::UInt32 get();
 			}
       
-      property XInput::Gamepad Gamepad
-      {
+			property XInput::Gamepad Gamepad
+			{
 				XInput::Gamepad get();
-      }
+			}
+
+			static bool operator == ( State left, State right );
+			static bool operator != ( State left, State right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( State other );
+			static bool Equals( State% value1, State% value2 );
 		};
 	}
 }

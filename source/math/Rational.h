@@ -21,9 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Runtime::InteropServices;
-
 namespace SlimDX
 {
 	/// <remarks>
@@ -31,7 +28,7 @@ namespace SlimDX
 	/// </remarks>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
-	public value class Rational
+	public value class Rational : System::IEquatable<Rational>
 	{
 		int numerator;
 		int denominator;
@@ -50,5 +47,13 @@ namespace SlimDX
 		}
 		
 		Rational( int numerator, int denominator );
+
+		static bool operator == ( Rational left, Rational right );
+		static bool operator != ( Rational left, Rational right );
+
+		virtual int GetHashCode() override;
+		virtual bool Equals( System::Object^ obj ) override;
+		virtual bool Equals( Rational other );
+		static bool Equals( Rational% value1, Rational% value2 );
 	};
 };

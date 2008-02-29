@@ -44,5 +44,41 @@ namespace SlimDX
 		{
 			return m_Level;
 		}
+
+		bool BatteryInformation::operator == ( BatteryInformation left, BatteryInformation right )
+		{
+			return BatteryInformation::Equals( left, right );
+		}
+
+		bool BatteryInformation::operator != ( BatteryInformation left, BatteryInformation right )
+		{
+			return !BatteryInformation::Equals( left, right );
+		}
+
+		int BatteryInformation::GetHashCode()
+		{
+			return m_Type.GetHashCode() + m_Level.GetHashCode();
+		}
+
+		bool BatteryInformation::Equals( Object^ value )
+		{
+			if( value == nullptr )
+				return false;
+
+			if( value->GetType() != GetType() )
+				return false;
+
+			return Equals( static_cast<BatteryInformation>( value ) );
+		}
+
+		bool BatteryInformation::Equals( BatteryInformation value )
+		{
+			return ( m_Type == value.m_Type && m_Level == value.m_Level );
+		}
+
+		bool BatteryInformation::Equals( BatteryInformation% value1, BatteryInformation% value2 )
+		{
+			return ( value1.m_Type == value2.m_Type && value1.m_Level == value2.m_Level );
+		}
 	}
 }
