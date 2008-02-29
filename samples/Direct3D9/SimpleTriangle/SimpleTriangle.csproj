@@ -28,6 +28,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SlimDX, Version=1.0.2980.31168, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\build\Debug\SlimDX.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -58,10 +62,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\build\SlimDX.vcproj">
-      <Project>{8ECCE443-0440-40F4-A94C-F02E027282C3}</Project>
-      <Name>SlimDX</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SampleFramework\SampleFramework.csproj">
       <Project>{8FB4D979-047E-4260-81FC-3279D2F29414}</Project>
       <Name>SampleFramework</Name>

@@ -33,6 +33,7 @@ namespace MiniTri
         static VertexBuffer Vertices;
 
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool PeekMessage(out Message msg, IntPtr hWnd, uint messageFilterMin, uint messageFilterMax, uint flags);
 
         static bool AppStillIdle
@@ -59,7 +60,6 @@ namespace MiniTri
             presentParams.DeviceWindowHandle = RenderForm.Handle;
 
             Device = new Device(0, DeviceType.Hardware, RenderForm.Handle, CreateFlags.HardwareVertexProcessing, presentParams);
-
             Vertices = new VertexBuffer(Device, 3 * 20, Usage.WriteOnly, VertexFormat.None, Pool.Managed);
             DataStream stream = Vertices.Lock(0, 0, LockFlags.None);
             Vertex[] vertexData = new Vertex[3];

@@ -1,13 +1,38 @@
+/*
+* Copyright (c) 2007-2008 SlimDX Group
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
 using System;
 using System.Collections.Generic;
 using System.Text;
 using SlimDX.Direct3D9;
 using System.Drawing;
+using System.Globalization;
 
 namespace SampleFramework
 {
     #region AdapterInfo
 
+    /// <summary>
+    /// Contains information about a single graphics adapter.
+    /// </summary>
     public class AdapterInfo
     {
         #region Variables
@@ -22,29 +47,49 @@ namespace SampleFramework
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the adapter ordinal.
+        /// </summary>
+        /// <value>The adapter ordinal.</value>
         public int AdapterOrdinal
         {
             get { return adapterOrdinal; }
             set { adapterOrdinal = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the adapter details.
+        /// </summary>
+        /// <value>The adapter details.</value>
         public AdapterDetails Details
         {
             get { return details; }
             set { details = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the description.
+        /// </summary>
+        /// <value>The description.</value>
         public string Description
         {
             get { return description; }
             set { description = value; }
         }
 
+        /// <summary>
+        /// Gets the display modes.
+        /// </summary>
+        /// <value>The display modes.</value>
         public List<DisplayMode> DisplayModes
         {
             get { return displayModes; }
         }
 
+        /// <summary>
+        /// Gets the devices.
+        /// </summary>
+        /// <value>The devices.</value>
         public List<DeviceInfo> Devices
         {
             get { return devices; }
@@ -54,6 +99,9 @@ namespace SampleFramework
 
         #region Constructor
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AdapterInfo"/> class.
+        /// </summary>
         public AdapterInfo()
         {
         }
@@ -65,6 +113,9 @@ namespace SampleFramework
 
     #region DeviceInfo
 
+    /// <summary>
+    /// Contains information about a single graphics device.
+    /// </summary>
     public class DeviceInfo
     {
         #region Variables
@@ -78,24 +129,40 @@ namespace SampleFramework
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the adapter ordinal.
+        /// </summary>
+        /// <value>The adapter ordinal.</value>
         public int AdapterOrdinal
         {
             get { return adapterOrdinal; }
             set { adapterOrdinal = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the type of the device.
+        /// </summary>
+        /// <value>The type of the device.</value>
         public DeviceType DeviceType
         {
             get { return deviceType; }
             set { deviceType = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the capabilities.
+        /// </summary>
+        /// <value>The capabilities.</value>
         public Capabilities Capabilities
         {
             get { return capabilities; }
             set { capabilities = value; }
         }
 
+        /// <summary>
+        /// Gets the device settings.
+        /// </summary>
+        /// <value>The device settings.</value>
         public List<SettingsCombo> DeviceSettings
         {
             get { return deviceSettings; }
@@ -105,6 +172,9 @@ namespace SampleFramework
 
         #region Constructor
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeviceInfo"/> class.
+        /// </summary>
         public DeviceInfo()
         {
         }
@@ -116,6 +186,9 @@ namespace SampleFramework
 
     #region SettingsCombo
 
+    /// <summary>
+    /// Contains information about a combination of device settings.
+    /// </summary>
     public class SettingsCombo
     {
         #region Variables
@@ -126,10 +199,10 @@ namespace SampleFramework
         Format backBufferFormat;
         bool windowed;
         List<Format> depthStencilFormats = new List<Format>();
-        List<DepthStencilConflict> depthStencilConflicts = new List<DepthStencilConflict>();
         List<MultisampleType> multisampleTypes = new List<MultisampleType>();
         List<int> multisampleQualities = new List<int>();
         List<PresentInterval> presentIntervals = new List<PresentInterval>();
+        List<DepthStencilConflict> depthStencilConflicts = new List<DepthStencilConflict>();
         AdapterInfo adapterInfo;
         DeviceInfo deviceInfo;
 
@@ -137,67 +210,115 @@ namespace SampleFramework
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the adapter ordinal.
+        /// </summary>
+        /// <value>The adapter ordinal.</value>
         public int AdapterOrdinal
         {
             get { return adapterOrdinal; }
             set { adapterOrdinal = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the type of the device.
+        /// </summary>
+        /// <value>The type of the device.</value>
         public DeviceType DeviceType
         {
             get { return deviceType; }
             set { deviceType = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the adapter format.
+        /// </summary>
+        /// <value>The adapter format.</value>
         public Format AdapterFormat
         {
             get { return adapterFormat; }
             set { adapterFormat = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the back buffer format.
+        /// </summary>
+        /// <value>The back buffer format.</value>
         public Format BackBufferFormat
         {
             get { return backBufferFormat; }
             set { backBufferFormat = value; }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="SettingsCombo"/> is windowed.
+        /// </summary>
+        /// <value><c>true</c> if windowed; otherwise, <c>false</c>.</value>
         public bool Windowed
         {
             get { return windowed; }
             set { windowed = value; }
         }
 
+        /// <summary>
+        /// Gets the depth stencil formats.
+        /// </summary>
+        /// <value>The depth stencil formats.</value>
         public List<Format> DepthStencilFormats
         {
             get { return depthStencilFormats; }
         }
 
+        /// <summary>
+        /// Gets the multisample types.
+        /// </summary>
+        /// <value>The multisample types.</value>
         public List<MultisampleType> MultisampleTypes
         {
             get { return multisampleTypes; }
         }
 
+        /// <summary>
+        /// Gets the multisample qualities.
+        /// </summary>
+        /// <value>The multisample qualities.</value>
         public List<int> MultisampleQualities
         {
             get { return multisampleQualities; }
         }
 
+        /// <summary>
+        /// Gets the present intervals.
+        /// </summary>
+        /// <value>The present intervals.</value>
         public List<PresentInterval> PresentIntervals
         {
             get { return presentIntervals; }
         }
 
+        /// <summary>
+        /// Gets the depth stencil conflicts.
+        /// </summary>
+        /// <value>The depth stencil conflicts.</value>
         public List<DepthStencilConflict> DepthStencilConflicts
         {
             get { return depthStencilConflicts; }
         }
 
+        /// <summary>
+        /// Gets or sets the adapter info.
+        /// </summary>
+        /// <value>The adapter info.</value>
         public AdapterInfo AdapterInfo
         {
             get { return adapterInfo; }
             set { adapterInfo = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the device info.
+        /// </summary>
+        /// <value>The device info.</value>
         public DeviceInfo DeviceInfo
         {
             get { return deviceInfo; }
@@ -208,6 +329,9 @@ namespace SampleFramework
 
         #region Constructor
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SettingsCombo"/> class.
+        /// </summary>
         public SettingsCombo()
         {
         }
@@ -219,6 +343,9 @@ namespace SampleFramework
 
     #region DepthStencilConflict
 
+    /// <summary>
+    /// Contains information about a depth stencil conflict.
+    /// </summary>
     public class DepthStencilConflict
     {
         #region Variables
@@ -230,12 +357,20 @@ namespace SampleFramework
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the depth stencil format.
+        /// </summary>
+        /// <value>The depth stencil format.</value>
         public Format DepthStencilFormat
         {
             get { return depthStencilFormat; }
             set { depthStencilFormat = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the multisample type.
+        /// </summary>
+        /// <value>The multisample type.</value>
         public MultisampleType MultisampleType
         {
             get { return multisampleType; }
@@ -246,6 +381,9 @@ namespace SampleFramework
 
         #region Constructor
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DepthStencilConflict"/> class.
+        /// </summary>
         public DepthStencilConflict()
         {
         }
@@ -257,6 +395,9 @@ namespace SampleFramework
 
     #region DisplayModeComparer
 
+    /// <summary>
+    /// Handles the comparison between two display modes.
+    /// </summary>
     public class DisplayModeComparer : IComparer<DisplayMode>
     {
         #region Variables
@@ -267,6 +408,10 @@ namespace SampleFramework
 
         #region Properties
 
+        /// <summary>
+        /// Gets the global comparer.
+        /// </summary>
+        /// <value>The global comparer.</value>
         public static DisplayModeComparer Comparer
         {
             get { return comparer; }
@@ -276,6 +421,9 @@ namespace SampleFramework
 
         #region Constructor
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DisplayModeComparer"/> class.
+        /// </summary>
         public DisplayModeComparer()
         {
         }
@@ -284,6 +432,14 @@ namespace SampleFramework
 
         #region Methods
 
+        /// <summary>
+        /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
+        /// </summary>
+        /// <param name="x">The first object to compare.</param>
+        /// <param name="y">The second object to compare.</param>
+        /// <returns>
+        /// Value Condition Less than zerox is less than y.Zerox equals y.Greater than zerox is greater than y.
+        /// </returns>
         public int Compare(DisplayMode x, DisplayMode y)
         {
             if (x.Width > y.Width)
@@ -313,6 +469,9 @@ namespace SampleFramework
 
     #region Enumeration
 
+    /// <summary>
+    /// Handles device type enumeration.
+    /// </summary>
     public static class Enumeration
     {
         #region Variables
@@ -337,85 +496,157 @@ namespace SampleFramework
 
         #region Properties
 
+        /// <summary>
+        /// Gets the adapters that were enumerated.
+        /// </summary>
+        /// <value>The adapters that were enumerated.</value>
         public static List<AdapterInfo> Adapters
         {
             get { return adapters; }
         }
 
+        /// <summary>
+        /// Gets the possible depth stencil formats.
+        /// </summary>
+        /// <value>The possible depth stencil formats.</value>
         public static List<Format> PossibleDepthStencilFormats
         {
             get { return possibleDepthStencilFormats; }
         }
 
+        /// <summary>
+        /// Gets the possible multisample types.
+        /// </summary>
+        /// <value>The possible multisample types.</value>
         public static List<MultisampleType> PossibleMultisampleType
         {
             get { return possibleMultisampleTypes; }
         }
 
+        /// <summary>
+        /// Gets the possible present intervals.
+        /// </summary>
+        /// <value>The possible present intervals.</value>
         public static List<PresentInterval> PossiblePresentIntervals
         {
             get { return possiblePresentIntervals; }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the devices have been enumerated.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the devices have been enumerated; otherwise, <c>false</c>.
+        /// </value>
         public static bool HasEnumerated
         {
             get { return hasEnumerated; }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether software vertex processing is required.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if software vertex processing is required; otherwise, <c>false</c>.
+        /// </value>
         public static bool RequireSoftwareVertexProcessing
         {
             get { return softwareVP; }
             set { softwareVP = value; }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether hardware vertex processing is required.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if hardware vertex processing is required; otherwise, <c>false</c>.
+        /// </value>
         public static bool RequireHardwareVertexProcessing
         {
             get { return hardwareVP; }
             set { hardwareVP = value; }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether pure hardware vertex processing is required.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if pure hardware vertex processing is required; otherwise, <c>false</c>.
+        /// </value>
         public static bool RequirePureHardwareVertexProcessing
         {
             get { return pureHardwareVP; }
             set { pureHardwareVP = value; }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether mixed vertex processing is required.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if mixed vertex processing is required; otherwise, <c>false</c>.
+        /// </value>
         public static bool RequireMixedVertexProcessing
         {
             get { return mixedVP; }
             set { mixedVP = value; }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether post pixel shader blending is required.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if post pixel shader blending is required; otherwise, <c>false</c>.
+        /// </value>
         public static bool RequirePostPixelShaderBlending
         {
             get { return requirePostPixelShaderBlending; }
             set { requirePostPixelShaderBlending = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the minimum resolution.
+        /// </summary>
+        /// <value>The minimum resolution.</value>
         public static Size MinimumResolution
         {
             get { return minResolution; }
             set { minResolution = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the maximum resolution.
+        /// </summary>
+        /// <value>The maximum resolution.</value>
         public static Size MaximumResolution
         {
             get { return maxResolution; }
             set { maxResolution = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the minimum refresh rate.
+        /// </summary>
+        /// <value>The minimum refresh rate.</value>
         public static int MinimumRefreshRate
         {
             get { return minRefresh; }
             set { minRefresh = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the maximum refresh rate.
+        /// </summary>
+        /// <value>The maximum refresh rate.</value>
         public static int MaximumRefreshRate
         {
             get { return maxRefresh; }
             set { maxRefresh = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the maximum multisample quality.
+        /// </summary>
+        /// <value>The maximum multisample quality.</value>
         public static int MaximumMultisampleQuality
         {
             get { return maxMultisampleQuality; }
@@ -431,6 +662,9 @@ namespace SampleFramework
 
         #region Constructor
 
+        /// <summary>
+        /// Initializes the <see cref="Enumeration"/> class.
+        /// </summary>
         static Enumeration()
         {
             ResetPossibleDepthStencilFormats();
@@ -442,6 +676,14 @@ namespace SampleFramework
 
         #region Methods
 
+        /// <summary>
+        /// Gets the adapter information descriptor for the given adapter.
+        /// </summary>
+        /// <param name="adapterOrdinal">The adapter ordinal.</param>
+        /// <returns>
+        /// The adapter information descriptor for the given adapter, or <c>null</c>
+        /// if a valid combination cannot be found.
+        /// </returns>
         public static AdapterInfo GetAdapterInfo(int adapterOrdinal)
         {
             foreach (AdapterInfo info in adapters)
@@ -451,6 +693,15 @@ namespace SampleFramework
             return null;
         }
 
+        /// <summary>
+        /// Gets the device information descriptor for the given settings.
+        /// </summary>
+        /// <param name="adapterOrdinal">The adapter ordinal.</param>
+        /// <param name="deviceType">Type of the device.</param>
+        /// <returns>
+        /// The device information descriptor for the given settings, or <c>null</c>
+        /// if a valid combination cannot be found.
+        /// </returns>
         public static DeviceInfo GetDeviceInfo(int adapterOrdinal, DeviceType deviceType)
         {
             AdapterInfo info = GetAdapterInfo(adapterOrdinal);
@@ -464,6 +715,18 @@ namespace SampleFramework
             return null;
         }
 
+        /// <summary>
+        /// Gets the settings combination for the given settings.
+        /// </summary>
+        /// <param name="adapterOrdinal">The adapter ordinal.</param>
+        /// <param name="deviceType">Type of the device.</param>
+        /// <param name="adapterFormat">The adapter format.</param>
+        /// <param name="backBufferFormat">The back buffer format.</param>
+        /// <param name="windowed">if set to <c>true</c>, searches for windowed settings.</param>
+        /// <returns>
+        /// The settings combination for the given settings, or <c>null</c> if a valid combination
+        /// cannot be found.
+        /// </returns>
         public static SettingsCombo GetSettingsCombo(int adapterOrdinal, DeviceType deviceType,
             Format adapterFormat, Format backBufferFormat, bool windowed)
         {
@@ -479,6 +742,9 @@ namespace SampleFramework
             return null;
         }
 
+        /// <summary>
+        /// Resets the possible depth stencil formats.
+        /// </summary>
         public static void ResetPossibleDepthStencilFormats()
         {
             possibleDepthStencilFormats = new List<Format>();
@@ -490,6 +756,9 @@ namespace SampleFramework
             possibleDepthStencilFormats.Add(Format.D32);
         }
 
+        /// <summary>
+        /// Resets the possible multisample types.
+        /// </summary>
         public static void ResetPossibleMultisampleTypes()
         {
             possibleMultisampleTypes = new List<MultisampleType>();
@@ -512,6 +781,9 @@ namespace SampleFramework
             possibleMultisampleTypes.Add(MultisampleType.SixteenSamples);
         }
 
+        /// <summary>
+        /// Resets the possible present intervals.
+        /// </summary>
         public static void ResetPossiblePresentIntervals()
         {
             possiblePresentIntervals = new List<PresentInterval>();
@@ -523,6 +795,9 @@ namespace SampleFramework
             possiblePresentIntervals.Add(PresentInterval.Four);
         }
 
+        /// <summary>
+        /// Enumerates through all possible Direct3D devices.
+        /// </summary>
         public static void Enumerate()
         {
             hasEnumerated = true;
@@ -548,12 +823,12 @@ namespace SampleFramework
                     {
                         displayMode = Direct3D.EnumerateAdapterModes(adapterOrdinal, allowedAdapterFormat, mode);
 
-                        if (displayMode.Width < MinimumResolution.Width ||
-                            displayMode.Width > MaximumResolution.Width ||
-                            displayMode.Height < MinimumResolution.Height ||
-                            displayMode.Height > MaximumResolution.Height ||
-                            displayMode.RefreshRate < MinimumRefreshRate ||
-                            displayMode.RefreshRate > MaximumRefreshRate)
+                        if (displayMode.Width < minResolution.Width ||
+                            displayMode.Width > maxResolution.Width ||
+                            displayMode.Height < minResolution.Height ||
+                            displayMode.Height > maxResolution.Height ||
+                            displayMode.RefreshRate < minRefresh ||
+                            displayMode.RefreshRate > maxRefresh)
                             continue;
 
                         adapterInfo.DisplayModes.Add(displayMode);
@@ -595,7 +870,7 @@ namespace SampleFramework
             {
                 info.Description = info.Details.Description;
                 if (!unique)
-                    info.Description += " " + info.AdapterOrdinal.ToString();
+                    info.Description += " " + info.AdapterOrdinal.ToString(CultureInfo.CurrentCulture);
             }
         }
 
@@ -635,11 +910,13 @@ namespace SampleFramework
                         if (windowed == 0 && adapterInfo.DisplayModes.Count == 0)
                             continue;
 
+                        // make sure we have a valid device type
                         if (!Direct3D.CheckDeviceType(adapterInfo.AdapterOrdinal, deviceInfo.DeviceType,
                             adapterFormat, backBufferFormat, (windowed == 1)))
                             continue;
 
-                        if (RequirePostPixelShaderBlending && !Direct3D.CheckDeviceFormat(adapterInfo.AdapterOrdinal,
+                        // check if post pixel shader blending is required
+                        if (requirePostPixelShaderBlending && !Direct3D.CheckDeviceFormat(adapterInfo.AdapterOrdinal,
                             deviceInfo.DeviceType, adapterFormat, Usage.QueryPostPixelShaderBlending,
                             ResourceType.Texture, backBufferFormat))
                             continue;
@@ -689,8 +966,8 @@ namespace SampleFramework
                     combo.AdapterFormat, combo.Windowed, type, out quality))
                 {
                     combo.MultisampleTypes.Add(type);
-                    if (quality > MaximumMultisampleQuality + 1)
-                        quality = MaximumMultisampleQuality + 1;
+                    if (quality > maxMultisampleQuality + 1)
+                        quality = maxMultisampleQuality + 1;
                     combo.MultisampleQualities.Add(quality);
                 }
             }

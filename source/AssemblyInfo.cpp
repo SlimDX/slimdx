@@ -33,7 +33,7 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyTitleAttribute("SlimDX")];
 [assembly:AssemblyDescriptionAttribute("Provides a managed wrapper around Microsoft DirectX.")];
 [assembly:AssemblyConfigurationAttribute("")];
-[assembly:AssemblyCompanyAttribute("SlimDX")];
+[assembly:AssemblyCompanyAttribute("SlimDX Group")];
 [assembly:AssemblyProductAttribute("SlimDX")];
 [assembly:AssemblyCopyrightAttribute("Copyright © 2007-2008 SlimDX Group")];
 [assembly:AssemblyTrademarkAttribute("")];
