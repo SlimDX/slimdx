@@ -114,7 +114,7 @@ namespace Direct3D9
 		return gcnew Surface( pointer );
 	}
 
-	Surface^ Surface::CreateRenderTarget( Device^ device, int width, int height, Format format,
+	Surface^ Surface::CreateRenderTarget( SlimDX::Direct3D9::Device^ device, int width, int height, Format format,
 		MultisampleType multiSampleType, int multiSampleQuality, bool lockable )
 	{
 		IDirect3DSurface9* surface;
@@ -130,7 +130,7 @@ namespace Direct3D9
 		return result;
 	}
 
-	Surface^ Surface::CreateOffscreenPlain( Device^ device, int width, int height, Format format, Pool pool )
+	Surface^ Surface::CreateOffscreenPlain( SlimDX::Direct3D9::Device^ device, int width, int height, Format format, Pool pool )
 	{
 		IDirect3DSurface9* surface;
 
@@ -147,7 +147,7 @@ namespace Direct3D9
 		return result;
 	}
 
-	Surface^ Surface::CreateDepthStencil( Device^ device, int width, int height, Format format,
+	Surface^ Surface::CreateDepthStencil( SlimDX::Direct3D9::Device^ device, int width, int height, Format format,
 		MultisampleType multiSampleType, int multiSampleQuality, bool discard )
 	{
 		IDirect3DSurface9* surface;

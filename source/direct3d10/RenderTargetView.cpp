@@ -68,7 +68,7 @@ namespace Direct3D10
 		return gcnew RenderTargetView( pointer );
 	}
 
-	RenderTargetView::RenderTargetView( Device^ device, Resource^ resource )
+	RenderTargetView::RenderTargetView( SlimDX::Direct3D10::Device^ device, Resource^ resource )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
@@ -82,7 +82,7 @@ namespace Direct3D10
 		Construct( view );
 	}
 	
-	RenderTargetView::RenderTargetView( Device^ device, Resource^ resource, RenderTargetViewDescription description )
+	RenderTargetView::RenderTargetView( SlimDX::Direct3D10::Device^ device, Resource^ resource, RenderTargetViewDescription description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );

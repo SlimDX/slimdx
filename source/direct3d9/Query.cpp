@@ -398,7 +398,7 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
-	Query::Query( Device^ device, QueryType type )
+	Query::Query( SlimDX::Direct3D9::Device^ device, QueryType type )
 	{
 		IDirect3DQuery9* query;
 		HRESULT hr = device->InternalPointer->CreateQuery( static_cast<D3DQUERYTYPE>( type ), &query );
@@ -443,7 +443,7 @@ namespace Direct3D9
 		return static_cast<QueryType>( InternalPointer->GetType() );
 	}
 
-	Device^ Query::GetDevice()
+	SlimDX::Direct3D9::Device^ Query::Device::get()
 	{
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
@@ -451,7 +451,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return Device::FromPointer( device );
+		return SlimDX::Direct3D9::Device::FromPointer( device );
 	}
 
 	Result Query::Issue( SlimDX::Direct3D9::Issue flags )

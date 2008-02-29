@@ -89,7 +89,7 @@ namespace Direct3D9
 		Construct(linker);
 	}
 
-	FragmentLinker::FragmentLinker( Device^ device, int cacheSize )
+	FragmentLinker::FragmentLinker( SlimDX::Direct3D9::Device^ device, int cacheSize )
 	{
 		IDirect3DDevice9* devicePointer = device->InternalPointer;
 		ID3DXFragmentLinker* linker;
@@ -228,13 +228,13 @@ namespace Direct3D9
 		return gcnew DataStream( fragments );
 	}
 
-	Device^ FragmentLinker::GetDevice()
+	SlimDX::Direct3D9::Device^ FragmentLinker::Device::get()
 	{
 		IDirect3DDevice9* device;
 		//This method always returns the value S_OK.
 		InternalPointer->GetDevice( &device );
 
-		return Device::FromPointer( device );
+		return SlimDX::Direct3D9::Device::FromPointer( device );
 	}
 
 	FragmentDescription FragmentLinker::GetFragmentDescription( EffectHandle^ name )

@@ -38,7 +38,7 @@ namespace SlimDX
 			COMOBJECT(ID3D10InputLayout, InputLayout);
 		
 		public:
-			InputLayout( Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature );
+			InputLayout( SlimDX::Direct3D10::Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature );
 			static InputLayout^ FromPointer( System::IntPtr pointer );
 		};
 	}

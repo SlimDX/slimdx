@@ -49,7 +49,7 @@ namespace Direct3D10
 	{
 	}
 
-	Texture^ Texture::FromFile( Device^ device, String^ fileName )
+	Texture^ Texture::FromFile( SlimDX::Direct3D10::Device^ device, String^ fileName )
 	{	
 		ID3D10Resource* resource = 0;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
@@ -61,7 +61,7 @@ namespace Direct3D10
 		return gcnew Texture( resource );
 	}
 
-	Texture^ Texture::FromMemory( Device^ device, array<Byte>^ memory )
+	Texture^ Texture::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory )
 	{
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 		
@@ -74,7 +74,7 @@ namespace Direct3D10
 		return gcnew Texture( static_cast<ID3D10Resource*>( resource ) );
 	}
 
-	Texture^ Texture::FromStream( Device^ device, Stream^ stream, int sizeInBytes )
+	Texture^ Texture::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, int sizeInBytes )
 	{
 		array<Byte>^ memory = SlimDX::Utilities::ReadStream( stream, sizeInBytes );
 		return FromMemory( device, memory );

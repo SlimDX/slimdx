@@ -50,7 +50,10 @@ namespace SlimDX
 			/// Gets the device the object is bound to.
 			/// </summary>
 			/// <returns>The device, or null on failure.</returns>
-			Device^ GetDevice();
+			property SlimDX::Direct3D10::Device^ Device
+			{
+				SlimDX::Direct3D10::Device^ get();
+			}
 		};
 	}
 };

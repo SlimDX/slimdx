@@ -44,7 +44,7 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 
-	InputLayout::InputLayout( Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature )
+	InputLayout::InputLayout( SlimDX::Direct3D10::Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );

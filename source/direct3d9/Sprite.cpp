@@ -51,7 +51,7 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface	);
 	}
 
-	Sprite::Sprite( Device^ device )
+	Sprite::Sprite( SlimDX::Direct3D9::Device^ device )
 	{
 		ID3DXSprite* sprite;
 		
@@ -116,7 +116,7 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	Device^ Sprite::GetDevice()
+	SlimDX::Direct3D9::Device^ Sprite::Device::get()
 	{
 		IDirect3DDevice9* device;
 
@@ -125,7 +125,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return Device::FromPointer( device );
+		return SlimDX::Direct3D9::Device::FromPointer( device );
 	}
 
 	Matrix Sprite::Transform::get()

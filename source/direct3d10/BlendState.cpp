@@ -45,7 +45,7 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 
-	BlendState::BlendState( Device^ device, BlendStateDescription description )
+	BlendState::BlendState( SlimDX::Direct3D10::Device^ device, BlendStateDescription description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );

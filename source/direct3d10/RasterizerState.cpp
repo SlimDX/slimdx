@@ -44,7 +44,7 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 
-	RasterizerState::RasterizerState( Device^ device, RasterizerStateDescription description )
+	RasterizerState::RasterizerState( SlimDX::Direct3D10::Device^ device, RasterizerStateDescription description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );

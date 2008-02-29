@@ -70,11 +70,11 @@ namespace Direct3D10
 		return gcnew DeviceChild( pointer );
 	}
 
-	Device^ DeviceChild::GetDevice()
+	SlimDX::Direct3D10::Device^ DeviceChild::Device::get()
 	{
 		ID3D10Device* device = 0;
 		InternalPointer->GetDevice( &device );
-		return Device::FromPointer( device );
+		return SlimDX::Direct3D10::Device::FromPointer( device );
 	}
 }
 }

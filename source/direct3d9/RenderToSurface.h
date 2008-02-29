@@ -61,9 +61,13 @@ namespace SlimDX
 			Result BeginScene( Surface^ renderSurface, SlimDX::Viewport viewport );
 			Result EndScene( Filter mipFilter );
 
-			Device^ GetDevice();
 			virtual Result OnLostDevice();
 			virtual Result OnResetDevice();
+
+			property SlimDX::Direct3D9::Device^ Device
+			{
+				SlimDX::Direct3D9::Device^ get();
+			}
 
 			property RenderToSurfaceDescription Description
 			{

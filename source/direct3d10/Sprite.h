@@ -49,11 +49,14 @@ namespace SlimDX
 				void set( Matrix value );
 			}
 
-			Sprite( Device^ device, int bufferSize );
+			property Device^ Device
+			{
+				SlimDX::Direct3D10::Device^ get();
+			}
+
+			Sprite( SlimDX::Direct3D10::Device^ device, int bufferSize );
 			static Sprite^ FromPointer( System::IntPtr pointer );
 
-			Device^ GetDevice();
-			
 			Result Begin( SpriteFlags flags );
 			Result End();
 			Result Flush();

@@ -45,22 +45,22 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 	
-	Buffer::Buffer( Device^ device, BufferDescription description )
+	Buffer::Buffer( SlimDX::Direct3D10::Device^ device, BufferDescription description )
 	{
 		Construct( Build( device, nullptr, description.SizeInBytes, description.Usage, description.BindFlags, description.CpuAccessFlags, description.OptionFlags ) );
 	}
 
-	Buffer::Buffer( Device^ device, DataStream^ data, BufferDescription description )
+	Buffer::Buffer( SlimDX::Direct3D10::Device^ device, DataStream^ data, BufferDescription description )
 	{
 		Construct( Build( device, data, description.SizeInBytes, description.Usage, description.BindFlags, description.CpuAccessFlags, description.OptionFlags ) );
 	}
 	
-	Buffer::Buffer( Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
+	Buffer::Buffer( SlimDX::Direct3D10::Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
 	{
 		Construct( Build( device, nullptr, sizeInBytes, usage, bindFlags, accessFlags, optionFlags ) );
 	}
 	
-	Buffer::Buffer( Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
+	Buffer::Buffer( SlimDX::Direct3D10::Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
 	{		
 		Construct( Build( device, data, sizeInBytes, usage, bindFlags, accessFlags, optionFlags ) );
 	}
@@ -88,7 +88,7 @@ namespace Direct3D10
 		return gcnew Buffer( pointer );
 	}
 
-	ID3D10Buffer* Buffer::Build( Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
+	ID3D10Buffer* Buffer::Build( SlimDX::Direct3D10::Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
 	{
 		D3D10_BUFFER_DESC description;
 		ZeroMemory( &description, sizeof( description ) );

@@ -83,7 +83,7 @@ namespace SlimDX
 			Construct( pointer, NativeInterface );
 		}
 
-		RenderToSurface::RenderToSurface( Device^ device, int width, int height, Format format )
+		RenderToSurface::RenderToSurface( SlimDX::Direct3D9::Device^ device, int width, int height, Format format )
 		{
 			ID3DXRenderToSurface* rtsPointer;
 			HRESULT hr = D3DXCreateRenderToSurface( device->InternalPointer, width, height, static_cast<D3DFORMAT>( format ), FALSE, D3DFMT_UNKNOWN, &rtsPointer );
@@ -94,7 +94,7 @@ namespace SlimDX
 			Construct(rtsPointer);
 		}
 
-		RenderToSurface::RenderToSurface( Device^ device, int width, int height, Format format, Format depthStencilFormat )
+		RenderToSurface::RenderToSurface( SlimDX::Direct3D9::Device^ device, int width, int height, Format format, Format depthStencilFormat )
 		{
 			ID3DXRenderToSurface* rtsPointer;
 			HRESULT hr = D3DXCreateRenderToSurface( device->InternalPointer, width, height,
@@ -142,7 +142,7 @@ namespace SlimDX
 			return RECORD_D3D9( hr );
 		}
 
-		Device^ RenderToSurface::GetDevice()
+		SlimDX::Direct3D9::Device^ RenderToSurface::Device::get()
 		{
 			IDirect3DDevice9* device;
 			HRESULT hr = InternalPointer->GetDevice( &device );
@@ -150,7 +150,7 @@ namespace SlimDX
 			if( RECORD_D3D9( hr ).IsFailure )
 				return nullptr;
 
-			return Device::FromPointer( device );
+			return SlimDX::Direct3D9::Device::FromPointer( device );
 		}
 
 		Result RenderToSurface::OnLostDevice()

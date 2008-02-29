@@ -448,7 +448,7 @@ namespace Direct3D9
 			 && value1.Distance == value2.Distance );
 	}
 
-	Mesh^ BaseMesh::Clone( Device^ device, MeshFlags flags, array<VertexElement>^ elements )
+	Mesh^ BaseMesh::Clone( SlimDX::Direct3D9::Device^ device, MeshFlags flags, array<VertexElement>^ elements )
 	{
 		ID3DXMesh* mesh;
 		pin_ptr<VertexElement> pinned_elements = &elements[0];
@@ -462,7 +462,7 @@ namespace Direct3D9
 		return Mesh::FromPointer( mesh );
 	}
 
-	Mesh^ BaseMesh::Clone( Device^ device, MeshFlags flags, SlimDX::Direct3D9::VertexFormat fvf )
+	Mesh^ BaseMesh::Clone( SlimDX::Direct3D9::Device^ device, MeshFlags flags, SlimDX::Direct3D9::VertexFormat fvf )
 	{
 		ID3DXMesh* mesh;
 
@@ -481,7 +481,7 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	Device^ BaseMesh::GetDevice()
+	SlimDX::Direct3D9::Device^ BaseMesh::Device::get()
 	{
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
@@ -489,7 +489,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return Device::FromPointer( device );
+		return SlimDX::Direct3D9::Device::FromPointer( device );
 	}
 
 	IndexBuffer^ BaseMesh::GetIndexBuffer()
@@ -850,7 +850,7 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
-	Mesh::Mesh( Device^ device, int numFaces, int numVertices, MeshFlags options, array<VertexElement>^ vertexDeclaration )
+	Mesh::Mesh( SlimDX::Direct3D9::Device^ device, int numFaces, int numVertices, MeshFlags options, array<VertexElement>^ vertexDeclaration )
 	{
 		ID3DXMesh* mesh;
 		pin_ptr<VertexElement> pinnedDecl = &vertexDeclaration[0];
@@ -864,7 +864,7 @@ namespace Direct3D9
 		Construct(mesh);
 	}
 
-	Mesh::Mesh( Device^ device, int numFaces, int numVertices, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf )
+	Mesh::Mesh( SlimDX::Direct3D9::Device^ device, int numFaces, int numVertices, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf )
 	{
 		ID3DXMesh* mesh;
 
@@ -900,7 +900,7 @@ namespace Direct3D9
 		return gcnew Mesh( pointer );
 	}
 
-	Mesh^ Mesh::FromMemory( Device^ device, array<Byte>^ memory, MeshFlags flags )
+	Mesh^ Mesh::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, MeshFlags flags )
 	{
 		ID3DXMesh* mesh;
 		ID3DXBuffer* adjacencyBuffer;
@@ -931,13 +931,13 @@ namespace Direct3D9
 		return result;
 	}
 
-	Mesh^ Mesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags )
+	Mesh^ Mesh::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, MeshFlags flags )
 	{
 		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
 		return Mesh::FromMemory( device, data, flags );
 	}
 
-	Mesh^ Mesh::FromFile( Device^ device, String^ fileName, MeshFlags flags )
+	Mesh^ Mesh::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, MeshFlags flags )
 	{
 		ID3DXMesh* mesh;
 		ID3DXBuffer* adjacencyBuffer;
@@ -967,7 +967,7 @@ namespace Direct3D9
 		return result;
 	}
 
-	Mesh^ Mesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags )
+	Mesh^ Mesh::FromXFile( SlimDX::Direct3D9::Device^ device, XFileData^ xfile, MeshFlags flags )
 	{
 		ID3DXMesh* mesh;
 		ID3DXSkinInfo* skin;
@@ -1005,7 +1005,7 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	Mesh^ Mesh::CreateBox( Device^ device, float width, float height, float depth )
+	Mesh^ Mesh::CreateBox( SlimDX::Direct3D9::Device^ device, float width, float height, float depth )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1021,7 +1021,7 @@ namespace Direct3D9
 		return mesh;
 	}
 
-	Mesh^ Mesh::CreateCylinder( Device^ device, float radius1, float radius2, float length, int slices, int stacks )
+	Mesh^ Mesh::CreateCylinder( SlimDX::Direct3D9::Device^ device, float radius1, float radius2, float length, int slices, int stacks )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1037,7 +1037,7 @@ namespace Direct3D9
 		return mesh;
 	}
 
-	Mesh^ Mesh::CreateSphere( Device^ device, float radius, int slices, int stacks )
+	Mesh^ Mesh::CreateSphere( SlimDX::Direct3D9::Device^ device, float radius, int slices, int stacks )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1053,7 +1053,7 @@ namespace Direct3D9
 		return mesh;
 	}
 
-	Mesh^ Mesh::CreateTeapot( Device^ device )
+	Mesh^ Mesh::CreateTeapot( SlimDX::Direct3D9::Device^ device )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1069,7 +1069,7 @@ namespace Direct3D9
 		return mesh;
 	}
 
-	Mesh^ Mesh::CreateTorus( Device^ device, float innerRadius, float outerRadius, int sides, int rings )
+	Mesh^ Mesh::CreateTorus( SlimDX::Direct3D9::Device^ device, float innerRadius, float outerRadius, int sides, int rings )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1085,7 +1085,7 @@ namespace Direct3D9
 		return mesh;
 	}
 
-	Mesh^ Mesh::CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion, [Out] array<GlyphMetricsFloat>^% glyphMetrics )
+	Mesh^ Mesh::CreateText( SlimDX::Direct3D9::Device^ device, Font^ font, String^ text, float deviation, float extrusion, [Out] array<GlyphMetricsFloat>^% glyphMetrics )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1123,7 +1123,7 @@ namespace Direct3D9
 		return mesh;
 	}
 
-	Mesh^ Mesh::CreateText( Device^ device, Font^ font, String^ text, float deviation, float extrusion )
+	Mesh^ Mesh::CreateText( SlimDX::Direct3D9::Device^ device, Font^ font, String^ text, float deviation, float extrusion )
 	{
 		ID3DXMesh *result;
 		ID3DXBuffer *adj;
@@ -1503,7 +1503,7 @@ namespace Direct3D9
 		return gcnew Mesh( result );
 	}
 
-	Mesh^ Mesh::Concatenate( Device^ device, array<Mesh^>^ meshes, MeshFlags options, array<Matrix>^ geometryTransforms,
+	Mesh^ Mesh::Concatenate( SlimDX::Direct3D9::Device^ device, array<Mesh^>^ meshes, MeshFlags options, array<Matrix>^ geometryTransforms,
 		array<Matrix>^ textureTransforms, array<VertexElement>^ vertexDeclaration )
 	{
 		ID3DXMesh *result;
@@ -1547,7 +1547,7 @@ namespace Direct3D9
 		return gcnew Mesh( result );
 	}
 
-	Mesh^ Mesh::Concatenate( Device^ device, array<Mesh^>^ meshes, MeshFlags options, array<Matrix>^ geometryTransforms,
+	Mesh^ Mesh::Concatenate( SlimDX::Direct3D9::Device^ device, array<Mesh^>^ meshes, MeshFlags options, array<Matrix>^ geometryTransforms,
 		array<Matrix>^ textureTransforms )
 	{
 		ID3DXMesh *result;
@@ -1583,7 +1583,7 @@ namespace Direct3D9
 		return gcnew Mesh( result );
 	}
 
-	Mesh^ Mesh::Concatenate( Device^ device, array<Mesh^>^ meshes, MeshFlags options )
+	Mesh^ Mesh::Concatenate( SlimDX::Direct3D9::Device^ device, array<Mesh^>^ meshes, MeshFlags options )
 	{
 		ID3DXMesh *result;
 		stack_vector<ID3DXMesh*> input;

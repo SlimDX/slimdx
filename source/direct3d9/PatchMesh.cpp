@@ -126,7 +126,7 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
-	PatchMesh::PatchMesh( Device^ device, PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration )
+	PatchMesh::PatchMesh( SlimDX::Direct3D9::Device^ device, PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration )
 	{
 		ID3DXPatchMesh *result;
 		pin_ptr<VertexElement> pinnedElements = &vertexDeclaration[0];
@@ -175,7 +175,7 @@ namespace Direct3D9
 		return gcnew PatchMesh( pointer );
 	}
 
-	PatchMesh^ PatchMesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
+	PatchMesh^ PatchMesh::FromXFile( SlimDX::Direct3D9::Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
 		[Out] array<EffectInstance>^% effectInstances )
 	{
 		ID3DXPatchMesh* mesh;
@@ -204,7 +204,7 @@ namespace Direct3D9
 		return gcnew PatchMesh( mesh );
 	}
 
-	PatchMesh^ PatchMesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials )
+	PatchMesh^ PatchMesh::FromXFile( SlimDX::Direct3D9::Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials )
 	{
 		ID3DXPatchMesh* mesh;
 		ID3DXBuffer* materialBuffer;
@@ -225,7 +225,7 @@ namespace Direct3D9
 		return gcnew PatchMesh( mesh );
 	}
 
-	PatchMesh^ PatchMesh::FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags )
+	PatchMesh^ PatchMesh::FromXFile( SlimDX::Direct3D9::Device^ device, XFileData^ xfile, MeshFlags flags )
 	{
 		ID3DXPatchMesh* mesh;
 
@@ -277,7 +277,7 @@ namespace Direct3D9
 		return elements;
 	}
 
-	Device^ PatchMesh::GetDevice()
+	SlimDX::Direct3D9::Device^ PatchMesh::Device::get()
 	{
 		IDirect3DDevice9* device;
 
@@ -286,7 +286,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return Device::FromPointer( device );
+		return SlimDX::Direct3D9::Device::FromPointer( device );
 	}
 
 	IndexBuffer^ PatchMesh::GetIndexBuffer()

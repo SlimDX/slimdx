@@ -52,7 +52,7 @@ namespace Direct3D9
 		Construct( line, NativeInterface );
 	}
 
-	Line::Line( Device^ device )
+	Line::Line( SlimDX::Direct3D9::Device^ device )
 	{
 		ID3DXLine* line;
 
@@ -127,14 +127,14 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	Device^ Line::GetDevice()
+	SlimDX::Direct3D9::Device^ Line::Device::get()
 	{
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return Device::FromPointer( device );
+		return SlimDX::Direct3D9::Device::FromPointer( device );
 	}
 
 	bool Line::Antialias::get()

@@ -190,10 +190,14 @@ namespace SlimDX
 			COMOBJECT(IDirect3DQuery9, Query);
 
 		public:
-			Query( Device^ device, QueryType type );
+			Query( SlimDX::Direct3D9::Device^ device, QueryType type );
 			static Query^ FromPointer( System::IntPtr query );
 
-			Device^ GetDevice();
+			property SlimDX::Direct3D9::Device^ Device
+			{
+				SlimDX::Direct3D9::Device^ get();
+			}
+
 			Result Issue( SlimDX::Direct3D9::Issue flags );
 			bool CheckStatus( bool flush );
 

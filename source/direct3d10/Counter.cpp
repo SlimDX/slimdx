@@ -44,7 +44,7 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 	
-	Counter::Counter( Device^ device, CounterDescription description )
+	Counter::Counter( SlimDX::Direct3D10::Device^ device, CounterDescription description )
 	{
 		ID3D10Counter* counter = 0;
 		D3D10_COUNTER_DESC nativeDescription = description.CreateNativeVersion();

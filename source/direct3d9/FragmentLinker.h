@@ -51,8 +51,13 @@ namespace SlimDX
 			COMOBJECT(ID3DXFragmentLinker, FragmentLinker);
 
 		public:
-			FragmentLinker( Device^ device, int cacheSize );
+			FragmentLinker( SlimDX::Direct3D9::Device^ device, int cacheSize );
 			static FragmentLinker^ FromPointer( System::IntPtr linker );
+
+			property Device^ Device
+			{
+				SlimDX::Direct3D9::Device^ get();
+			}
 
 			static DataStream^ Gather( array<System::Byte>^ sourceData, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 			static DataStream^ Gather( System::String^ sourceData, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
@@ -63,7 +68,6 @@ namespace SlimDX
 			Result AddFragments( DataStream^ fragments );
 			DataStream^ GetFragment( EffectHandle^ name );
 			DataStream^ GetAllFragments();
-			Device^ GetDevice();
 
 			FragmentDescription GetFragmentDescription( EffectHandle^ name );
 			EffectHandle^ GetFragmentHandle( int index );

@@ -28,9 +28,7 @@ namespace SlimDX
 		ref class BaseMesh;
 		ref class Mesh;
 		ref class VertexBuffer;
-		ref class IndexBuffer;
-
-		
+		ref class IndexBuffer;		
 
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class PatchInfo : System::IEquatable<PatchInfo>
@@ -73,19 +71,23 @@ namespace SlimDX
 			COMOBJECT(ID3DXPatchMesh, PatchMesh);
 
 		public:
-			PatchMesh( Device^ device, PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration );
+			PatchMesh( SlimDX::Direct3D9::Device^ device, PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration );
 			PatchMesh( Mesh^ mesh );
 			static PatchMesh^ FromPointer( System::IntPtr pointer );
 
-			static PatchMesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
-			static PatchMesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );
-			static PatchMesh^ FromXFile( Device^ device, XFileData^ xfile, MeshFlags flags );
+			property SlimDX::Direct3D9::Device^ Device
+			{
+				SlimDX::Direct3D9::Device^ get();
+			}
+
+			static PatchMesh^ FromXFile( SlimDX::Direct3D9::Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
+			static PatchMesh^ FromXFile( SlimDX::Direct3D9::Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );
+			static PatchMesh^ FromXFile( SlimDX::Direct3D9::Device^ device, XFileData^ xfile, MeshFlags flags );
 
 			PatchMesh^ Clone( MeshFlags flags, array<VertexElement>^ vertexDeclaration );
 			Result GenerateAdjacency( float tolerance );
 
 			array<VertexElement>^ GetDeclaration();
-			Device^ GetDevice();
 			IndexBuffer^ GetIndexBuffer();
 			VertexBuffer^ GetVertexBuffer();
 			PatchInfo GetPatchInfo();

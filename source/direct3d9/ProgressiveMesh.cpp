@@ -326,7 +326,7 @@ namespace Direct3D9
 		Construct(result);
 	}
 
-	ProgressiveMesh^ ProgressiveMesh::FromStream( Device^ device, Stream^ stream, MeshFlags flags )
+	ProgressiveMesh^ ProgressiveMesh::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, MeshFlags flags )
 	{
 		ID3DXPMesh *result;
 		ID3DXBuffer *om;
@@ -350,7 +350,7 @@ namespace Direct3D9
 		return mesh;
 	}
 
-	ProgressiveMesh^ ProgressiveMesh::CloneProgressive( Device^ device, MeshFlags flags, array<VertexElement>^ vertexDeclaration )
+	ProgressiveMesh^ ProgressiveMesh::CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags flags, array<VertexElement>^ vertexDeclaration )
 	{
 		ID3DXPMesh* mesh;
 		pin_ptr<VertexElement> pinned_elements = &vertexDeclaration[0];
@@ -364,7 +364,7 @@ namespace Direct3D9
 		return gcnew ProgressiveMesh( mesh );
 	}
 
-	ProgressiveMesh^ ProgressiveMesh::CloneProgressive( Device^ device, MeshFlags flags, SlimDX::Direct3D9::VertexFormat format )
+	ProgressiveMesh^ ProgressiveMesh::CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags flags, SlimDX::Direct3D9::VertexFormat format )
 	{
 		ID3DXPMesh* mesh;
 
@@ -697,7 +697,7 @@ namespace Direct3D9
 		return gcnew SimplificationMesh( pointer );
 	}
 
-	Mesh^ SimplificationMesh::Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap )
+	Mesh^ SimplificationMesh::Clone( SlimDX::Direct3D9::Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap )
 	{
 		ID3DXMesh *result;
 
@@ -722,7 +722,7 @@ namespace Direct3D9
 		return mesh;
 	}
 
-	Mesh^ SimplificationMesh::Clone( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration )
+	Mesh^ SimplificationMesh::Clone( SlimDX::Direct3D9::Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration )
 	{
 		ID3DXMesh *result;
 
@@ -742,7 +742,7 @@ namespace Direct3D9
 		return mesh;
 	}
 
-	Mesh^ SimplificationMesh::Clone( Device^ device, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf, [Out] array<int>^% vertexRemap )
+	Mesh^ SimplificationMesh::Clone( SlimDX::Direct3D9::Device^ device, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf, [Out] array<int>^% vertexRemap )
 	{
 		ID3DXMesh *result;
 
@@ -766,7 +766,7 @@ namespace Direct3D9
 		return mesh;
 	}
 
-	Mesh^ SimplificationMesh::Clone( Device^ device, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf )
+	Mesh^ SimplificationMesh::Clone( SlimDX::Direct3D9::Device^ device, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf )
 	{
 		ID3DXMesh *result;
 
@@ -785,7 +785,7 @@ namespace Direct3D9
 		return mesh;
 	}
 
-	ProgressiveMesh^ SimplificationMesh::CloneProgressive( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap, [Out] array<float>^% errorsByFace )
+	ProgressiveMesh^ SimplificationMesh::CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap, [Out] array<float>^% errorsByFace )
 	{
 		ID3DXPMesh *result;
 
@@ -808,7 +808,7 @@ namespace Direct3D9
 		return ProgressiveMesh::FromPointer( result );
 	}
 
-	ProgressiveMesh^ SimplificationMesh::CloneProgressive( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap )
+	ProgressiveMesh^ SimplificationMesh::CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap )
 	{
 		ID3DXPMesh *result;
 
@@ -828,7 +828,7 @@ namespace Direct3D9
 		return ProgressiveMesh::FromPointer( result );
 	}
 
-	ProgressiveMesh^ SimplificationMesh::CloneProgressive( Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration )
+	ProgressiveMesh^ SimplificationMesh::CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration )
 	{
 		ID3DXPMesh *result;
 
@@ -843,7 +843,7 @@ namespace Direct3D9
 		return ProgressiveMesh::FromPointer( result );
 	}
 
-	ProgressiveMesh^ SimplificationMesh::CloneProgressive( Device^ device, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf, [Out] array<int>^% vertexRemap, [Out] array<float>^% errorsByFace )
+	ProgressiveMesh^ SimplificationMesh::CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf, [Out] array<int>^% vertexRemap, [Out] array<float>^% errorsByFace )
 	{
 		ID3DXPMesh *result;
 
@@ -866,7 +866,7 @@ namespace Direct3D9
 		return ProgressiveMesh::FromPointer( result );
 	}
 
-	ProgressiveMesh^ SimplificationMesh::CloneProgressive( Device^ device, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf, [Out] array<int>^% vertexRemap )
+	ProgressiveMesh^ SimplificationMesh::CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf, [Out] array<int>^% vertexRemap )
 	{
 		ID3DXPMesh *result;
 
@@ -885,7 +885,7 @@ namespace Direct3D9
 		return ProgressiveMesh::FromPointer( result );
 	}
 
-	ProgressiveMesh^ SimplificationMesh::CloneProgressive( Device^ device, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf )
+	ProgressiveMesh^ SimplificationMesh::CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf )
 	{
 		ID3DXPMesh *result;
 
@@ -915,7 +915,7 @@ namespace Direct3D9
 		return elements;
 	}
 
-	Device^ SimplificationMesh::GetDevice()
+	SlimDX::Direct3D9::Device^ SimplificationMesh::Device::get()
 	{
 		IDirect3DDevice9* device;
 		HRESULT hr = InternalPointer->GetDevice( &device );
@@ -923,7 +923,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return Device::FromPointer( device );
+		return SlimDX::Direct3D9::Device::FromPointer( device );
 	}
 
 	array<AttributeWeights>^ SimplificationMesh::GetVertexAttributeWeights()

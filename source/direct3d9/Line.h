@@ -32,7 +32,7 @@ namespace SlimDX
 			COMOBJECT(ID3DXLine, Line);
 
 		public:
-			Line( Device^ device );
+			Line( SlimDX::Direct3D9::Device^ device );
 			static Line^ FromPointer( System::IntPtr line );
 
 			Result Begin();
@@ -44,7 +44,10 @@ namespace SlimDX
 			virtual Result OnLostDevice();
 			virtual Result OnResetDevice();
 
-			Device^ GetDevice();
+			property Device^ Device
+			{
+				SlimDX::Direct3D9::Device^ get();
+			}
 
 			property bool Antialias
 			{

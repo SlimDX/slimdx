@@ -61,9 +61,9 @@ namespace SlimDX
 			virtual ~Surface() { }
 			static Surface^ FromPointer( System::IntPtr surface );
 
-			static Surface^ CreateRenderTarget( Device^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool lockable );
-			static Surface^ CreateOffscreenPlain( Device^ device, int width, int height, Format format, Pool pool );
-			static Surface^ CreateDepthStencil( Device^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool discard );
+			static Surface^ CreateRenderTarget( SlimDX::Direct3D9::Device^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool lockable );
+			static Surface^ CreateOffscreenPlain( SlimDX::Direct3D9::Device^ device, int width, int height, Format format, Pool pool );
+			static Surface^ CreateDepthStencil( SlimDX::Direct3D9::Device^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool discard );
 
 			static Result FromMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
 			static Result FromMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, [Out] ImageInformation% imageInformation );

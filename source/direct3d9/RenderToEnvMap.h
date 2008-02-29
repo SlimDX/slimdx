@@ -50,9 +50,14 @@ namespace SlimDX
 			COMOBJECT(ID3DXRenderToEnvMap, RenderToEnvironmentMap);
 
 		public:
-			RenderToEnvironmentMap( Device^ device, int size, int mipLevels, Format format );
-			RenderToEnvironmentMap( Device^ device, int size, int mipLevels, Format format, Format depthStencilFormat );
+			RenderToEnvironmentMap( SlimDX::Direct3D9::Device^ device, int size, int mipLevels, Format format );
+			RenderToEnvironmentMap( SlimDX::Direct3D9::Device^ device, int size, int mipLevels, Format format, Format depthStencilFormat );
 			static RenderToEnvironmentMap^ FromPointer( System::IntPtr pointer );
+
+			property SlimDX::Direct3D9::Device^ Device
+			{
+				SlimDX::Direct3D9::Device^ get();
+			}
 
 			Result BeginCube( CubeTexture^ texture );
 			Result BeginHemisphere( Texture^ positiveZTexture, Texture^ negativeZTexture );
@@ -61,7 +66,6 @@ namespace SlimDX
 			Result End( Filter mipFilter );
 			Result Face( CubeMapFace face, Filter mipFilter );
 
-			Device^ GetDevice();
 			virtual Result OnLostDevice();
 			virtual Result OnResetDevice();
 

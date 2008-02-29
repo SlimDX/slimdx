@@ -44,7 +44,7 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 
-	DepthStencilState::DepthStencilState( Device^ device, DepthStencilStateDescription description )
+	DepthStencilState::DepthStencilState( SlimDX::Direct3D10::Device^ device, DepthStencilStateDescription description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );

@@ -45,15 +45,15 @@ namespace SlimDX
 				Texture1DDescription get();
 			}
 			
-			Texture1D( Device^ device, Texture1DDescription description );
+			Texture1D( SlimDX::Direct3D10::Device^ device, Texture1DDescription description );
 			static Texture1D^ FromPointer( System::IntPtr nativeObject );
 
 			DataStream^ Map( int subResource, MapMode mode, MapFlags flags );
 			void Unmap( int subResource );
 			
-			static Texture1D^ FromFile( Device^ device, System::String^ fileName );
-			static Texture1D^ FromMemory( Device^ device, array<System::Byte>^ memory );
-			static Texture1D^ FromStream( Device^ device, System::IO::Stream^ stream, int sizeInBytes );
+			static Texture1D^ FromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName );
+			static Texture1D^ FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory );
+			static Texture1D^ FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes );
 		};
 	}
 };

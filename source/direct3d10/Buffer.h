@@ -39,7 +39,7 @@ namespace SlimDX
 			COMOBJECT(ID3D10Buffer, Buffer);
 			
 		private:
-			static ID3D10Buffer* Build( Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
+			static ID3D10Buffer* Build( SlimDX::Direct3D10::Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
 		
 		public:
 			property BufferDescription Description
@@ -47,10 +47,10 @@ namespace SlimDX
 				BufferDescription get();
 			}
 			
-			Buffer( Device^ device, BufferDescription description );
-			Buffer( Device^ device, DataStream^ data, BufferDescription description );
-			Buffer( Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
-			Buffer( Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
+			Buffer( SlimDX::Direct3D10::Device^ device, BufferDescription description );
+			Buffer( SlimDX::Direct3D10::Device^ device, DataStream^ data, BufferDescription description );
+			Buffer( SlimDX::Direct3D10::Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
+			Buffer( SlimDX::Direct3D10::Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
 			static Buffer^ FromPointer( System::IntPtr pointer );
 
 			DataStream^ Map( MapMode mode, MapFlags flags );
