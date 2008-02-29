@@ -33,6 +33,7 @@
 #include "SwapChainDescription.h"
 
 using namespace System;
+using namespace System::Reflection;
 
 namespace SlimDX
 {
@@ -124,8 +125,11 @@ namespace DXGI
 		RECORD_DXGI( InternalPointer->GetBuffer( index, guid, reinterpret_cast<void**>( &unknown ) ) );
 		if( Result::Last.IsFailure )
 			return T();
-			
-		return safe_cast<T>( Activator::CreateInstance( T::typeid, IntPtr( unknown ) ) );
+		
+		BindingFlags flags = BindingFlags::Public | BindingFlags::Static | BindingFlags::InvokeMethod;
+		array<Object^>^ args = gcnew array<Object^>( 1 );
+		args[ 0 ] = IntPtr( unknown );
+		return safe_cast<T>( T::typeid->InvokeMember( "FromPointer", flags, nullptr, nullptr, args ) );
 	}
 
 	Output^ SwapChain::GetContainingOutput()

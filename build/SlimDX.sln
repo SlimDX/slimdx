@@ -8,12 +8,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SlimDX", "SlimDX.vcproj", "
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{A2525864-A1CD-4EF2-A548-D44B524E4CDD}"
+	ProjectSection(SolutionItems) = preProject
+		SlimDX.proj = SlimDX.proj
+	EndProjectSection
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		SlimDX.proj = SlimDX.proj
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{244939F5-A4C6-4EB4-AC83-BBFF05962869}"
@@ -47,30 +47,30 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DirectSound", "DirectSound"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTri", "..\samples\Direct3D9\MiniTri\MiniTri.csproj", "{05C0E1FD-697C-47E2-AC1B-3A42601FB121}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8ECCE443-0440-40F4-A94C-F02E027282C3} = {8ECCE443-0440-40F4-A94C-F02E027282C3}
+	EndProjectSection
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(ProjectDependencies) = postProject
-		{8ECCE443-0440-40F4-A94C-F02E027282C3} = {8ECCE443-0440-40F4-A94C-F02E027282C3}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleFramework", "..\samples\Direct3D9\SampleFramework\SampleFramework.csproj", "{8FB4D979-047E-4260-81FC-3279D2F29414}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8ECCE443-0440-40F4-A94C-F02E027282C3} = {8ECCE443-0440-40F4-A94C-F02E027282C3}
+	EndProjectSection
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(ProjectDependencies) = postProject
-		{8ECCE443-0440-40F4-A94C-F02E027282C3} = {8ECCE443-0440-40F4-A94C-F02E027282C3}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTriangle", "..\samples\Direct3D9\SimpleTriangle\SimpleTriangle.csproj", "{76ED10F9-39BE-4F35-B51C-D21DA2C21223}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8ECCE443-0440-40F4-A94C-F02E027282C3} = {8ECCE443-0440-40F4-A94C-F02E027282C3}
+	EndProjectSection
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(ProjectDependencies) = postProject
-		{8ECCE443-0440-40F4-A94C-F02E027282C3} = {8ECCE443-0440-40F4-A94C-F02E027282C3}
 	EndProjectSection
 EndProject
 Global
