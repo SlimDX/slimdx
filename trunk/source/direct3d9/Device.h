@@ -27,9 +27,13 @@
 
 #include "../Viewport.h"
 
-#include "../math/Color4.h"
 #include "../math/Plane.h"
-#include "../math/Vector3.h"
+
+#include "PaletteEntry.h"
+#include "Light.h"
+#include "PatchInfo.h"
+#include "Material.h"
+#include "PresentParameters.h"
 
 namespace SlimDX
 {
@@ -37,133 +41,6 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
-		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
-		public value class Material : System::IEquatable<Material>
-		{
-		public:
-			property Color4 Diffuse;
-			property Color4 Ambient;
-			property Color4 Specular;
-			property Color4 Emissive;
-			property float Power;
-
-			static bool operator == ( Material left, Material right );
-			static bool operator != ( Material left, Material right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( Material other );
-			static bool Equals( Material% value1, Material% value2 );
-		};
-
-		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
-		public value class TrianglePatchInfo : System::IEquatable<TrianglePatchInfo>
-		{
-		public:
-			property int StartVertexOffset;
-			property int VertexCount;
-			property Basis Basis;
-			property Degree Degree;
-
-			static bool operator == ( TrianglePatchInfo left, TrianglePatchInfo right );
-			static bool operator != ( TrianglePatchInfo left, TrianglePatchInfo right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( TrianglePatchInfo other );
-			static bool Equals( TrianglePatchInfo% value1, TrianglePatchInfo% value2 );
-		};
-
-		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
-		public value class RectanglePatchInfo : System::IEquatable<RectanglePatchInfo>
-		{
-		public:
-			property int StartVertexOffsetWidth;
-			property int StartVertexOffsetHeight;
-			property int Width;
-			property int Height;
-			property int Stride;
-			property Basis Basis;
-			property Degree Degree;
-
-			static bool operator == ( RectanglePatchInfo left, RectanglePatchInfo right );
-			static bool operator != ( RectanglePatchInfo left, RectanglePatchInfo right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( RectanglePatchInfo other );
-			static bool Equals( RectanglePatchInfo% value1, RectanglePatchInfo% value2 );
-		};
-
-		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
-		public value class Light : System::IEquatable<Light>
-		{
-		public:
-			property LightType Type;
-			property Color4 Diffuse;
-			property Color4 Specular;
-			property Color4 Ambient;
-			property Vector3 Position;
-			property Vector3 Direction;
-			property float Range;
-			property float Falloff;
-			property float Attenuation0;
-			property float Attenuation1;
-			property float Attenuation2;
-			property float Theta;
-			property float Phi;
-
-			static bool operator == ( Light left, Light right );
-			static bool operator != ( Light left, Light right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( Light other );
-			static bool Equals( Light% value1, Light% value2 );
-		};
-
-		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
-		public value class PaletteEntry : System::IEquatable<PaletteEntry>
-		{
-		public:
-			property System::Byte Red;
-			property System::Byte Green;
-			property System::Byte Blue;
-			property System::Byte Flags;
-
-			static bool operator == ( PaletteEntry left, PaletteEntry right );
-			static bool operator != ( PaletteEntry left, PaletteEntry right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( PaletteEntry other );
-			static bool Equals( PaletteEntry% value1, PaletteEntry% value2 );
-		};
-
-		public ref class PresentParameters
-		{
-		public:
-			PresentParameters();
-
-			property int BackBufferWidth;
-			property int BackBufferHeight;
-			property Format BackBufferFormat;
-			property int BackBufferCount;
-
-			property MultisampleType Multisample;
-			property int MultisampleQuality;
-
-			property SwapEffect SwapEffect;
-			property System::IntPtr DeviceWindowHandle;
-			property bool Windowed;
-			property bool EnableAutoDepthStencil;
-			property Format AutoDepthStencilFormat;
-			property PresentFlags PresentFlags;
-
-			property int FullScreenRefreshRateInHertz;
-			property PresentInterval PresentationInterval;
-		};
-
 		ref class IndexBuffer;
 		ref class VertexBuffer;
 		ref class BaseTexture;

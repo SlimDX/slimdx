@@ -30,7 +30,7 @@ namespace SlimDX
 		/// <remarks>
 		/// Describes gamma control settings.
 		/// </remarks>
-		public value class GammaControl
+		public value class GammaControl : System::IEquatable<GammaControl>
 		{
 			Color3 m_Scale;
 			Color3 m_Offset;
@@ -67,6 +67,14 @@ namespace SlimDX
 			{
 				System::Collections::ObjectModel::ReadOnlyCollection<Color3>^ get();
 			}
+
+			static bool operator == ( GammaControl left, GammaControl right );
+			static bool operator != ( GammaControl left, GammaControl right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( GammaControl other );
+			static bool Equals( GammaControl% value1, GammaControl% value2 );
 		};
 	}
 };

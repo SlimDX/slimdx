@@ -21,6 +21,9 @@
 */
 #pragma once
 
+#include "PatchInfo.h"
+#include "DisplacementParameters.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
@@ -28,43 +31,7 @@ namespace SlimDX
 		ref class BaseMesh;
 		ref class Mesh;
 		ref class VertexBuffer;
-		ref class IndexBuffer;		
-
-		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
-		public value class PatchInfo : System::IEquatable<PatchInfo>
-		{
-		public:
-			property PatchMeshType PatchType;
-			property Degree Degree;
-			property Basis Basis;
-
-			static bool operator == ( PatchInfo left, PatchInfo right );
-			static bool operator != ( PatchInfo left, PatchInfo right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( PatchInfo other );
-			static bool Equals( PatchInfo% value1, PatchInfo% value2 );
-		};
-
-		public value class DisplacementParameters : System::IEquatable<DisplacementParameters>
-		{
-		public:
-			property Texture^ Texture;
-			property TextureFilter MinFilter;
-			property TextureFilter MagFilter;
-			property TextureFilter MipFilter;
-			property TextureAddress Wrap;
-			property int LevelOfDetailBias;
-
-			static bool operator == ( DisplacementParameters left, DisplacementParameters right );
-			static bool operator != ( DisplacementParameters left, DisplacementParameters right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( DisplacementParameters other );
-			static bool Equals( DisplacementParameters% value1, DisplacementParameters% value2 );
-		};
+		ref class IndexBuffer;
 
 		public ref class PatchMesh : ComObject
 		{

@@ -63,5 +63,44 @@ namespace DXGI
 	{
 		return m_SyncGPUTime;
 	}
+
+	bool FrameStatistics::operator == ( FrameStatistics left, FrameStatistics right )
+	{
+		return FrameStatistics::Equals( left, right );
+	}
+
+	bool FrameStatistics::operator != ( FrameStatistics left, FrameStatistics right )
+	{
+		return !FrameStatistics::Equals( left, right );
+	}
+
+	int FrameStatistics::GetHashCode()
+	{
+		return m_PresentCount.GetHashCode() + m_PresentRefreshCount.GetHashCode() + m_SyncRefreshCount.GetHashCode()
+			 + m_SyncQPCTime.GetHashCode() + m_SyncGPUTime.GetHashCode();
+	}
+
+	bool FrameStatistics::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<FrameStatistics>( value ) );
+	}
+
+	bool FrameStatistics::Equals( FrameStatistics value )
+	{
+		return ( m_PresentCount == value.m_PresentCount && m_PresentRefreshCount == value.m_PresentRefreshCount && m_SyncRefreshCount == value.m_SyncRefreshCount
+			 && m_SyncQPCTime == value.m_SyncQPCTime && m_SyncGPUTime == value.m_SyncGPUTime );
+	}
+
+	bool FrameStatistics::Equals( FrameStatistics% value1, FrameStatistics% value2 )
+	{
+		return ( value1.m_PresentCount == value2.m_PresentCount && value1.m_PresentRefreshCount == value2.m_PresentRefreshCount && value1.m_SyncRefreshCount == value2.m_SyncRefreshCount
+			 && value1.m_SyncQPCTime == value2.m_SyncQPCTime && value1.m_SyncGPUTime == value2.m_SyncGPUTime );
+	}
 }
 }

@@ -32,7 +32,7 @@ namespace SlimDX
 		/// <remarks>
 		/// Describes various properties of an Output.
 		/// </remarks>
-		public value class OutputDescription
+		public value class OutputDescription : System::IEquatable<OutputDescription>
 		{
 			System::String^ m_DeviceName;
 			System::Drawing::Rectangle^ m_DesktopCoordinates;
@@ -83,6 +83,14 @@ namespace SlimDX
 			{
 				System::IntPtr get();
 			}
+
+			static bool operator == ( OutputDescription left, OutputDescription right );
+			static bool operator != ( OutputDescription left, OutputDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( OutputDescription other );
+			static bool Equals( OutputDescription% value1, OutputDescription% value2 );
 		};
 	}
 };

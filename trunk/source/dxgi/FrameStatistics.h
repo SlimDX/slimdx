@@ -30,7 +30,7 @@ namespace SlimDX
 		/// <remarks>
 		/// Provides basic rendering statistics. All counts are relative to machine boot. 
 		/// </remarks>
-		public value class FrameStatistics
+		public value class FrameStatistics : System::IEquatable<FrameStatistics>
 		{
 			int m_PresentCount;
 			int m_PresentRefreshCount;
@@ -81,6 +81,14 @@ namespace SlimDX
 			{
 				System::Int64 get();
 			}
+
+			static bool operator == ( FrameStatistics left, FrameStatistics right );
+			static bool operator != ( FrameStatistics left, FrameStatistics right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( FrameStatistics other );
+			static bool Equals( FrameStatistics% value1, FrameStatistics% value2 );
 		};
 	}
 };

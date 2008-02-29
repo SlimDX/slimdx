@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace XInput
 	{
-		public value class BatteryInformation
+		public value class BatteryInformation : System::IEquatable<BatteryInformation>
 		{
 		private:
 			BatteryType m_Type;
@@ -46,6 +46,14 @@ namespace SlimDX
 			{
 				BatteryLevel get();
 			}
+
+			static bool operator == ( BatteryInformation left, BatteryInformation right );
+			static bool operator != ( BatteryInformation left, BatteryInformation right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( BatteryInformation other );
+			static bool Equals( BatteryInformation% value1, BatteryInformation% value2 );
 		};
 	}
 }

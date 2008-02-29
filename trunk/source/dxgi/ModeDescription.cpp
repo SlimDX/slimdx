@@ -118,5 +118,44 @@ namespace DXGI
 	{
 		m_Scaling = value;
 	}
+
+	bool ModeDescription::operator == ( ModeDescription left, ModeDescription right )
+	{
+		return ModeDescription::Equals( left, right );
+	}
+
+	bool ModeDescription::operator != ( ModeDescription left, ModeDescription right )
+	{
+		return !ModeDescription::Equals( left, right );
+	}
+
+	int ModeDescription::GetHashCode()
+	{
+		return m_Width.GetHashCode() + m_Height.GetHashCode() + m_RefreshRate.GetHashCode()
+			 + m_Format.GetHashCode() + m_ScanlineOrdering.GetHashCode() + m_Scaling.GetHashCode();
+	}
+
+	bool ModeDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<ModeDescription>( value ) );
+	}
+
+	bool ModeDescription::Equals( ModeDescription value )
+	{
+		return ( m_Width == value.m_Width && m_Height == value.m_Height && m_RefreshRate == value.m_RefreshRate
+			 && m_Format == value.m_Format && m_ScanlineOrdering == value.m_ScanlineOrdering && m_Scaling == value.m_Scaling );
+	}
+
+	bool ModeDescription::Equals( ModeDescription% value1, ModeDescription% value2 )
+	{
+		return ( value1.m_Width == value2.m_Width && value1.m_Height == value2.m_Height && value1.m_RefreshRate == value2.m_RefreshRate
+			 && value1.m_Format == value2.m_Format && value1.m_ScanlineOrdering == value2.m_ScanlineOrdering && value1.m_Scaling == value2.m_Scaling );
+	}
 }
 }

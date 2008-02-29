@@ -24,33 +24,12 @@
 #include "Enums.h"
 #include "IResettable.h"
 
+#include "FontDescription.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public value class FontDescription : System::IEquatable<FontDescription>
-		{
-		public:
-			property int Height;
-            property int Width;
-            property FontWeight Weight;
-            property int MipLevels;
-            property bool Italic;
-            property CharacterSet CharSet;
-            property Precision OutputPrecision;
-            property FontQuality Quality;
-            property PitchAndFamily PitchAndFamily;
-            property System::String^ FaceName;
-
-			static bool operator == ( FontDescription left, FontDescription right );
-			static bool operator != ( FontDescription left, FontDescription right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( FontDescription other );
-			static bool Equals( FontDescription% value1, FontDescription% value2 );
-		};
-
 		public ref class Font : public ComObject, IResettable
 		{
 			COMOBJECT(ID3DXFont, Font);

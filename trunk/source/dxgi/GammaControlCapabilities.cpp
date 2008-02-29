@@ -59,5 +59,44 @@ namespace DXGI
 	{
 		return gcnew ReadOnlyCollection<float>( m_ControlPointPositions );
 	}
+
+	bool GammaControlCapabilities::operator == ( GammaControlCapabilities left, GammaControlCapabilities right )
+	{
+		return GammaControlCapabilities::Equals( left, right );
+	}
+
+	bool GammaControlCapabilities::operator != ( GammaControlCapabilities left, GammaControlCapabilities right )
+	{
+		return !GammaControlCapabilities::Equals( left, right );
+	}
+
+	int GammaControlCapabilities::GetHashCode()
+	{
+		return m_ScaleAndOffsetSupported.GetHashCode() + m_MaxConvertedValue.GetHashCode() + m_MinConvertedValue.GetHashCode()
+			 + m_ControlPointPositions->GetHashCode();
+	}
+
+	bool GammaControlCapabilities::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<GammaControlCapabilities>( value ) );
+	}
+
+	bool GammaControlCapabilities::Equals( GammaControlCapabilities value )
+	{
+		return ( m_ScaleAndOffsetSupported == value.m_ScaleAndOffsetSupported && m_MaxConvertedValue == value.m_MaxConvertedValue && m_MinConvertedValue == value.m_MinConvertedValue
+			 && m_ControlPointPositions == value.m_ControlPointPositions );
+	}
+
+	bool GammaControlCapabilities::Equals( GammaControlCapabilities% value1, GammaControlCapabilities% value2 )
+	{
+		return ( value1.m_ScaleAndOffsetSupported == value2.m_ScaleAndOffsetSupported && value1.m_MaxConvertedValue == value2.m_MaxConvertedValue && value1.m_MinConvertedValue == value2.m_MinConvertedValue
+			 && value1.m_ControlPointPositions == value2.m_ControlPointPositions );
+	}
 }
 }

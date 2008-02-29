@@ -137,5 +137,47 @@ namespace DXGI
 	{
 		m_Flags = value;
 	}
+
+	bool SwapChainDescription::operator == ( SwapChainDescription left, SwapChainDescription right )
+	{
+		return SwapChainDescription::Equals( left, right );
+	}
+
+	bool SwapChainDescription::operator != ( SwapChainDescription left, SwapChainDescription right )
+	{
+		return !SwapChainDescription::Equals( left, right );
+	}
+
+	int SwapChainDescription::GetHashCode()
+	{
+		return m_BufferDesc.GetHashCode() + m_SampleDesc.GetHashCode() + m_BufferUsage.GetHashCode()
+			 + m_BufferCount.GetHashCode() + m_OutputWindow.GetHashCode() + m_Windowed.GetHashCode()
+			 + m_SwapEffect.GetHashCode() + m_Flags.GetHashCode();
+	}
+
+	bool SwapChainDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<SwapChainDescription>( value ) );
+	}
+
+	bool SwapChainDescription::Equals( SwapChainDescription value )
+	{
+		return ( m_BufferDesc == value.m_BufferDesc && m_SampleDesc == value.m_SampleDesc && m_BufferUsage == value.m_BufferUsage
+			 && m_BufferCount == value.m_BufferCount && m_OutputWindow == value.m_OutputWindow && m_Windowed == value.m_Windowed
+			 && m_SwapEffect == value.m_SwapEffect && m_Flags == value.m_Flags );
+	}
+
+	bool SwapChainDescription::Equals( SwapChainDescription% value1, SwapChainDescription% value2 )
+	{
+		return ( value1.m_BufferDesc == value2.m_BufferDesc && value1.m_SampleDesc == value2.m_SampleDesc && value1.m_BufferUsage == value2.m_BufferUsage
+			 && value1.m_BufferCount == value2.m_BufferCount && value1.m_OutputWindow == value2.m_OutputWindow && value1.m_Windowed == value2.m_Windowed
+			 && value1.m_SwapEffect == value2.m_SwapEffect && value1.m_Flags == value2.m_Flags );
+	}
 }
 }

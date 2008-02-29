@@ -60,4 +60,40 @@ namespace SlimDX
 	{
 		m_Blue = value;
 	}
+
+		bool Color3::operator == ( Color3 left, Color3 right )
+	{
+		return Color3::Equals( left, right );
+	}
+
+	bool Color3::operator != ( Color3 left, Color3 right )
+	{
+		return !Color3::Equals( left, right );
+	}
+
+	int Color3::GetHashCode()
+	{
+		return m_Red.GetHashCode() + m_Green.GetHashCode() + m_Blue.GetHashCode();
+	}
+
+	bool Color3::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<Color3>( value ) );
+	}
+
+	bool Color3::Equals( Color3 value )
+	{
+		return ( m_Red == value.m_Red && m_Green == value.m_Green && m_Blue == value.m_Blue );
+	}
+
+	bool Color3::Equals( Color3% value1, Color3% value2 )
+	{
+		return ( value1.m_Red == value2.m_Red && value1.m_Green == value2.m_Green && value1.m_Blue == value2.m_Blue );
+	}
 }

@@ -31,7 +31,7 @@ namespace SlimDX
 		/// <remarks>
 		/// Describes properties of a surface.
 		/// </remarks>
-		public value class SurfaceDescription
+		public value class SurfaceDescription : System::IEquatable<SurfaceDescription>
 		{
 			int m_Width;
 			int m_Height;
@@ -73,6 +73,14 @@ namespace SlimDX
 			{
 				DXGI::SampleDescription get();
 			}
+
+			static bool operator == ( SurfaceDescription left, SurfaceDescription right );
+			static bool operator != ( SurfaceDescription left, SurfaceDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( SurfaceDescription other );
+			static bool Equals( SurfaceDescription% value1, SurfaceDescription% value2 );
 		};
 	}
 };

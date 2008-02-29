@@ -55,5 +55,44 @@ namespace DXGI
 	{
 		return m_SampleDesc;
 	}
+
+	bool SurfaceDescription::operator == ( SurfaceDescription left, SurfaceDescription right )
+	{
+		return SurfaceDescription::Equals( left, right );
+	}
+
+	bool SurfaceDescription::operator != ( SurfaceDescription left, SurfaceDescription right )
+	{
+		return !SurfaceDescription::Equals( left, right );
+	}
+
+	int SurfaceDescription::GetHashCode()
+	{
+		return m_Width.GetHashCode() + m_Height.GetHashCode() + m_Format.GetHashCode()
+			 + m_SampleDesc.GetHashCode();
+	}
+
+	bool SurfaceDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<SurfaceDescription>( value ) );
+	}
+
+	bool SurfaceDescription::Equals( SurfaceDescription value )
+	{
+		return ( m_Width == value.m_Width && m_Height == value.m_Height && m_Format == value.m_Format
+			 && m_SampleDesc == value.m_SampleDesc );
+	}
+
+	bool SurfaceDescription::Equals( SurfaceDescription% value1, SurfaceDescription% value2 )
+	{
+		return ( value1.m_Width == value2.m_Width && value1.m_Height == value2.m_Height && value1.m_Format == value2.m_Format
+			 && value1.m_SampleDesc == value2.m_SampleDesc );
+	}
 }
 }

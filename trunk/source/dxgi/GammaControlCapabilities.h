@@ -28,7 +28,7 @@ namespace SlimDX
 		/// <remarks>
 		/// Describes gamma control capabilities.
 		/// </remarks>
-		public value class GammaControlCapabilities
+		public value class GammaControlCapabilities : System::IEquatable<GammaControlCapabilities>
 		{
 			bool m_ScaleAndOffsetSupported;
 			float m_MaxConvertedValue;
@@ -70,6 +70,14 @@ namespace SlimDX
 			{
 				System::Collections::ObjectModel::ReadOnlyCollection<float>^ get();
 			}
+
+			static bool operator == ( GammaControlCapabilities left, GammaControlCapabilities right );
+			static bool operator != ( GammaControlCapabilities left, GammaControlCapabilities right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( GammaControlCapabilities other );
+			static bool Equals( GammaControlCapabilities% value1, GammaControlCapabilities% value2 );
 		};
 	}
 };

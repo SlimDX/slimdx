@@ -56,5 +56,44 @@ namespace SlimDX
 		{
 			return m_HidCode;
 		}
+
+		bool Keystroke::operator == ( Keystroke left, Keystroke right )
+		{
+			return Keystroke::Equals( left, right );
+		}
+
+		bool Keystroke::operator != ( Keystroke left, Keystroke right )
+		{
+			return !Keystroke::Equals( left, right );
+		}
+
+		int Keystroke::GetHashCode()
+		{
+			return m_VirtualKey.GetHashCode() + m_Flags.GetHashCode() + m_UserIndex.GetHashCode()
+				 + m_HidCode.GetHashCode();
+		}
+
+		bool Keystroke::Equals( Object^ value )
+		{
+			if( value == nullptr )
+				return false;
+
+			if( value->GetType() != GetType() )
+				return false;
+
+			return Equals( static_cast<Keystroke>( value ) );
+		}
+
+		bool Keystroke::Equals( Keystroke value )
+		{
+			return ( m_VirtualKey == value.m_VirtualKey && m_Flags == value.m_Flags && m_UserIndex == value.m_UserIndex
+				 && m_HidCode == value.m_HidCode );
+		}
+
+		bool Keystroke::Equals( Keystroke% value1, Keystroke% value2 )
+		{
+			return ( value1.m_VirtualKey == value2.m_VirtualKey && value1.m_Flags == value2.m_Flags && value1.m_UserIndex == value2.m_UserIndex
+				 && value1.m_HidCode == value2.m_HidCode );
+		}
 	}
 }

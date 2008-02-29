@@ -27,28 +27,12 @@
 #include "Resource.h"
 #include "../DataStream.h"
 
+#include "IndexBufferDescription.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public value class IndexBufferDescription : System::IEquatable<IndexBufferDescription>
-		{
-		public:
-			property Format Format;
-			property ResourceType Type;
-			property Usage Usage;
-			property Pool Pool;
-			property int SizeInBytes;
-
-			static bool operator == ( IndexBufferDescription left, IndexBufferDescription right );
-			static bool operator != ( IndexBufferDescription left, IndexBufferDescription right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( IndexBufferDescription other );
-			static bool Equals( IndexBufferDescription% value1, IndexBufferDescription% value2 );
-		};
-
 		public ref class IndexBuffer : public Resource
 		{
 			COMOBJECT(IDirect3DIndexBuffer9, IndexBuffer);

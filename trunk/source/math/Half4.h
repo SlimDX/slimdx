@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
-	public value class Half4
+	public value class Half4 : System::IEquatable<Half4>
 	{
 	public:
 		property Half X;
@@ -37,5 +37,13 @@ namespace SlimDX
 
 		Half4( Half value );
 		Half4( Half x, Half y, Half z, Half w );
+
+		static bool operator == ( Half4 left, Half4 right );
+		static bool operator != ( Half4 left, Half4 right );
+
+		virtual int GetHashCode() override;
+		virtual bool Equals( System::Object^ obj ) override;
+		virtual bool Equals( Half4 other );
+		static bool Equals( Half4% value1, Half4% value2 );
 	};
 }

@@ -25,7 +25,7 @@ namespace SlimDX
 {
 	namespace XInput
 	{
-		public value class Keystroke
+		public value class Keystroke : System::IEquatable<Keystroke>
 		{
 		private:
 			GamepadKeyCode m_VirtualKey;
@@ -68,6 +68,14 @@ namespace SlimDX
 			{
 				int get();
 			}
+
+			static bool operator == ( Keystroke left, Keystroke right );
+			static bool operator != ( Keystroke left, Keystroke right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( Keystroke other );
+			static bool Equals( Keystroke% value1, Keystroke% value2 );
 		};
 	}
 }

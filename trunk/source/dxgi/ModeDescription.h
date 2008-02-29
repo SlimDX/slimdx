@@ -32,7 +32,7 @@ namespace SlimDX
 		/// <remarks>
 		/// Describes a display mode.
 		/// </remarks>
-		public value class ModeDescription
+		public value class ModeDescription : System::IEquatable<ModeDescription>
 		{
 			int m_Width;
 			int m_Height;
@@ -65,7 +65,7 @@ namespace SlimDX
 				void set( int value );
 			}
 
-      /// <summary>
+			/// <summary>
 			/// Gets or sets the display mode refresh rate.
 			/// </summary>
 			property Rational RefreshRate
@@ -92,7 +92,7 @@ namespace SlimDX
 				void set( DisplayModeScanlineOrdering value );
 			}
 
-      /// <summary>
+			/// <summary>
 			/// Gets or sets the display mode scaling.
 			/// </summary>
 			property DisplayModeScaling Scaling
@@ -109,6 +109,14 @@ namespace SlimDX
 			/// <param name="refreshRate">The refresh rate.</param>
 			/// <param name="format">The format.</param>
 			ModeDescription( int width, int height, Rational refreshRate, DXGI::Format format );
+
+			static bool operator == ( ModeDescription left, ModeDescription right );
+			static bool operator != ( ModeDescription left, ModeDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( ModeDescription other );
+			static bool Equals( ModeDescription% value1, ModeDescription% value2 );
 		};
 	}
 };

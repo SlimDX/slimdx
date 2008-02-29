@@ -62,5 +62,44 @@ namespace SlimDX
 		{
 			return m_Vibration;
 		}
+
+		bool Capabilities::operator == ( Capabilities left, Capabilities right )
+		{
+			return Capabilities::Equals( left, right );
+		}
+
+		bool Capabilities::operator != ( Capabilities left, Capabilities right )
+		{
+			return !Capabilities::Equals( left, right );
+		}
+
+		int Capabilities::GetHashCode()
+		{
+			return m_Type.GetHashCode() + m_SubType.GetHashCode() + m_Flags.GetHashCode()
+				 + m_Gamepad.GetHashCode() + m_Vibration.GetHashCode();
+		}
+
+		bool Capabilities::Equals( Object^ value )
+		{
+			if( value == nullptr )
+				return false;
+
+			if( value->GetType() != GetType() )
+				return false;
+
+			return Equals( static_cast<Capabilities>( value ) );
+		}
+
+		bool Capabilities::Equals( Capabilities value )
+		{
+			return ( m_Type == value.m_Type && m_SubType == value.m_SubType && m_Flags == value.m_Flags
+				 && m_Gamepad == value.m_Gamepad && m_Vibration == value.m_Vibration );
+		}
+
+		bool Capabilities::Equals( Capabilities% value1, Capabilities% value2 )
+		{
+			return ( value1.m_Type == value2.m_Type && value1.m_SubType == value2.m_SubType && value1.m_Flags == value2.m_Flags
+				 && value1.m_Gamepad == value2.m_Gamepad && value1.m_Vibration == value2.m_Vibration );
+		}
 	}
 }

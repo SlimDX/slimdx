@@ -32,7 +32,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes the capabilities of a controller.
 		/// </summary>
-		public value class Capabilities
+		public value class Capabilities : System::IEquatable<Capabilities>
 		{
 		private:
 			DeviceType m_Type;
@@ -78,6 +78,14 @@ namespace SlimDX
 			{
 				XInput::Vibration get();
 			}
+
+			static bool operator == ( Capabilities left, Capabilities right );
+			static bool operator != ( Capabilities left, Capabilities right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( Capabilities other );
+			static bool Equals( Capabilities% value1, Capabilities% value2 );
 		};
 	}
 }

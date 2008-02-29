@@ -27,21 +27,14 @@
 #include "EffectStateManager.h"
 #include "IResettable.h"
 
+#include "EffectPool.h"
+
 namespace SlimDX
 {
 	ref class DataStream;
 
 	namespace Direct3D9
 	{
-		public ref class EffectPool : public ComObject
-		{
-			COMOBJECT(ID3DXEffectPool, EffectPool);
-
-		public:
-			EffectPool();
-			static EffectPool^ FromPointer( System::IntPtr pointer );
-		};
-
 		public ref class Effect : public BaseEffect, IResettable
 		{
 			COMOBJECT(ID3DXEffect, Effect);

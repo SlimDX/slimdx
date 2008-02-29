@@ -28,7 +28,7 @@ namespace SlimDX
 		/// <remarks>
 		/// Describes various properties of an Adapter.
 		/// </remarks>
-		public value class AdapterDescription
+		public value class AdapterDescription : System::IEquatable<AdapterDescription>
 		{
 			System::String^ m_Description;
 			int m_VendorId;
@@ -115,6 +115,14 @@ namespace SlimDX
 			{
 				System::Int64 get();
 			}
+
+			static bool operator == ( AdapterDescription left, AdapterDescription right );
+			static bool operator != ( AdapterDescription left, AdapterDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( AdapterDescription other );
+			static bool Equals( AdapterDescription% value1, AdapterDescription% value2 );
 		};
 	}
 };
