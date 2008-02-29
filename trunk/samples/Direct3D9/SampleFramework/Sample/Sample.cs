@@ -1,3 +1,24 @@
+/*
+* Copyright (c) 2007-2008 SlimDX Group
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,9 +27,13 @@ using System.Windows.Forms;
 using SlimDX.Direct3D9;
 using SlimDX;
 using System.Threading;
+using System.Runtime.InteropServices;
 
 namespace SampleFramework
 {
+    /// <summary>
+    /// Presents an easy to use wrapper around Direct3D for use with SlimDX samples.
+    /// </summary>
     public class Sample : IDisposable
     {
         #region Variables
@@ -41,32 +66,59 @@ namespace SampleFramework
 
         #region Events
 
+        /// <summary>
+        /// Occurs once per iteration of the main loop.
+        /// </summary>
         public event EventHandler MainLoop;
 
         #endregion
 
         #region Properties
 
+        /// <summary>
+        /// Gets the render window.
+        /// </summary>
+        /// <value>The render window.</value>
         public Window Window
         {
             get { return window; }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the application is windowed.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if the application is windowed; otherwise, <c>false</c>.
+        /// </value>
         public bool IsWindowed
         {
             get { return currentSettings.PresentParameters.Windowed; }
         }
 
+        /// <summary>
+        /// Gets the Direct3D device.
+        /// </summary>
+        /// <value>The Direct3D device.</value>
         public Device Device
         {
             get { return device; }
         }
 
+        /// <summary>
+        /// Gets the current device settings.
+        /// </summary>
+        /// <value>The current device settings.</value>
         public DeviceSettings CurrentSettings
         {
             get { return currentSettings; }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the device is lost.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if the device is lost; otherwise, <c>false</c>.
+        /// </value>
         public bool IsDeviceLost
         {
             get { return deviceLost; }
@@ -95,6 +147,13 @@ namespace SampleFramework
             Application.SetCompatibleTextRenderingDefault(false);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Sample"/> class.
+        /// </summary>
+        /// <param name="window">The render window.</param>
+        /// <param name="windowed">if set to <c>true</c>, the application will run in windowed mode.</param>
+        /// <param name="desiredWidth">Desired width of the window.</param>
+        /// <param name="desiredHeight">Desired height of the window.</param>
         public Sample(Window window, bool windowed, int desiredWidth, int desiredHeight)
         {
             DeviceSettings settings = new DeviceSettings();
@@ -105,11 +164,23 @@ namespace SampleFramework
             Construct(window, settings);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Sample"/> class.
+        /// </summary>
+        /// <param name="window">The render window.</param>
+        /// <param name="settings">The desired device settings.</param>
         public Sample(Window window, DeviceSettings settings)
         {
             Construct(window, settings);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Sample"/> class.
+        /// </summary>
+        /// <param name="name">The name of the window.</param>
+        /// <param name="windowed">if set to <c>true</c>, the application will run in windowed mode.</param>
+        /// <param name="desiredWidth">Desired width of the window.</param>
+        /// <param name="desiredHeight">Desired height of the window.</param>
         public Sample(string name, bool windowed, int desiredWidth, int desiredHeight)
         {
             window = new Window();
@@ -124,6 +195,11 @@ namespace SampleFramework
             Construct(window, settings);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Sample"/> class.
+        /// </summary>
+        /// <param name="name">The name of the window.</param>
+        /// <param name="settings">The desired device settings.</param>
         public Sample(string name, DeviceSettings settings)
         {
             window = new Window();
@@ -136,11 +212,17 @@ namespace SampleFramework
 
         #region Methods
 
+        /// <summary>
+        /// Runs the sample.
+        /// </summary>
         public void Run()
         {
             Application.Run(Window);
         }
 
+        /// <summary>
+        /// Toggles the reference driver.
+        /// </summary>
         public void ToggleReference()
         {
             DeviceSettings newSettings = CurrentSettings.Clone();
@@ -153,7 +235,10 @@ namespace SampleFramework
             CreateDevice(newSettings);
         }
 
-        public void ToggleFullscreen()
+        /// <summary>
+        /// Toggles between fullscreen and windowed mode.
+        /// </summary>
+        public void ToggleFullScreen()
         {
             DeviceSettings newSettings = CurrentSettings.Clone();
             newSettings.PresentParameters.Windowed = !newSettings.PresentParameters.Windowed;
@@ -177,12 +262,20 @@ namespace SampleFramework
             CreateDevice(newSettings);
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
-            ReleaseDevice();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        public void DisableShortcutKeys(bool disableWindowKey)
+        /// <summary>
+        /// Disables shortcut keys.
+        /// </summary>
+        /// <param name="disableWindowKey">if set to <c>true</c>, disable the window key as well.</param>
+        public static void DisableShortcutKeys(bool disableWindowKey)
         {
             Sample.disableWindowKey = disableWindowKey;
 
@@ -195,7 +288,10 @@ namespace SampleFramework
                     NativeMethods.GetModuleHandle(null), 0);
         }
 
-        public void RestoreShortcutKeys()
+        /// <summary>
+        /// Restores the shortcut keys settings.
+        /// </summary>
+        public static void RestoreShortcutKeys()
         {
             StickyKeys.Restore();
             ToggleKeys.Restore();
@@ -212,6 +308,29 @@ namespace SampleFramework
 
         #region Event Handlers
 
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                ReleaseDevice();
+                
+                if( window != null )
+                    window.Dispose();
+
+                RestoreShortcutKeys();
+
+                window = null;
+            }
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:MainLoop"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected virtual void OnMainLoop(EventArgs e)
         {
             if (MainLoop != null)
@@ -276,7 +395,7 @@ namespace SampleFramework
 
         #region Device Settings
 
-        public void CreateDevice(DeviceSettings settings)
+        void CreateDevice(DeviceSettings settings)
         {
             DeviceSettings oldSettings = currentSettings;
             currentSettings = settings;
@@ -450,7 +569,7 @@ namespace SampleFramework
             ignoreSizeChanges = false;
         }
 
-        int GetAdapterOrdinalFromMonitor(IntPtr monitor)
+        static int GetAdapterOrdinalFromMonitor(IntPtr monitor)
         {
             foreach (AdapterInfo adapterInfo in Enumeration.Adapters)
             {
@@ -502,7 +621,6 @@ namespace SampleFramework
         DeviceSettings BuildValidDeviceSettings(SettingsCombo combo, DeviceSettings input)
         {
             DeviceSettings settings = new DeviceSettings();
-            DisplayMode desktopMode = Direct3D.GetAdapterDisplayMode(combo.AdapterOrdinal);
 
             settings.AdapterOrdinal = combo.AdapterOrdinal;
             settings.DeviceType = combo.DeviceType;
@@ -566,6 +684,9 @@ namespace SampleFramework
                         bestQuality = Math.Min(quality - 1, input.PresentParameters.MultisampleQuality);
                     }
                 }
+
+                settings.PresentParameters.Multisample = bestType;
+                settings.PresentParameters.MultisampleQuality = bestQuality;
             }
 
             List<int> rankings = new List<int>();
@@ -643,7 +764,7 @@ namespace SampleFramework
             return settings;
         }
 
-        DisplayMode FindValidResolution(SettingsCombo combo, DeviceSettings input)
+        static DisplayMode FindValidResolution(SettingsCombo combo, DeviceSettings input)
         {
             DisplayMode bestMode = new DisplayMode();
 
@@ -683,7 +804,7 @@ namespace SampleFramework
             return bestMode;
         }
 
-        float RankSettingsCombo(SettingsCombo combo, DeviceSettings optimal, DisplayMode desktopMode)
+        static float RankSettingsCombo(SettingsCombo combo, DeviceSettings optimal, DisplayMode desktopMode)
         {
             float ranking = 0.0f;
 
@@ -786,7 +907,7 @@ namespace SampleFramework
             return ranking;
         }
 
-        DeviceSettings BuildOptimalSettings(DeviceSettings settings)
+        static DeviceSettings BuildOptimalSettings(DeviceSettings settings)
         {
             DisplayMode desktopMode = Direct3D.GetAdapterDisplayMode(settings.AdapterOrdinal);
             DeviceSettings optimal = new DeviceSettings();
@@ -884,17 +1005,20 @@ namespace SampleFramework
             }
         }
 
-        static int LowLevelKeyboardProc(int code, int wparam, KBDLLHOOKSTRUCT lparam)
+        static IntPtr LowLevelKeyboardProc(int code, IntPtr wparam, IntPtr lparam)
         {
+            KBDLLHOOKSTRUCT hookInfo = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lparam, typeof(KBDLLHOOKSTRUCT));
+
             if (code != 0)
                 return NativeMethods.CallNextHookEx(keyboardHook, code, wparam, lparam);
 
             bool eat = false;
-            if (wparam == WindowConstants.WM_KEYDOWN || wparam == WindowConstants.WM_KEYUP)
-                eat = disableWindowKey && (lparam.vkCode == WindowConstants.VK_LWIN || lparam.vkCode == WindowConstants.VK_RWIN);
+            int value = wparam.ToInt32();
+            if (value == WindowConstants.WM_KEYDOWN || value== WindowConstants.WM_KEYUP)
+                eat = disableWindowKey && (hookInfo.vkCode == WindowConstants.VK_LWIN || hookInfo.vkCode == WindowConstants.VK_RWIN);
 
             if (eat)
-                return 1;
+                return new IntPtr(1);
             else
                 return NativeMethods.CallNextHookEx(keyboardHook, code, wparam, lparam);
         }
@@ -906,7 +1030,7 @@ namespace SampleFramework
                 device = new Device(currentSettings.AdapterOrdinal, currentSettings.DeviceType,
                     Window.Handle, currentSettings.BehaviorFlags, currentSettings.PresentParameters);
             }
-            catch
+            catch(Direct3D9Exception)
             {
                 deviceLost = true;
             }
