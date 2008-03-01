@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "DeviceConstants.h"
 #include "Enums.h"
 
@@ -311,127 +309,9 @@ namespace SlimDX
 			{
 				int get() { return frz; }
 			}
-		};
 
-		public ref class KeyCollection : System::Collections::Generic::IEnumerable<Key>
-		{
-		private:
-			System::Collections::Generic::List<Key>^ list;
-
-		internal:
-			KeyCollection() { list = gcnew System::Collections::Generic::List<Key>(); }
-
-			virtual System::Collections::IEnumerator^ GetEnumerator2() = System::Collections::IEnumerable::GetEnumerator
-			{
-				return ((System::Collections::IEnumerable^)list)->GetEnumerator();
-			}
-
-			void Add( Key key ) { list->Add( key ); }
-
-			void Clear() { list->Clear(); }
-
-			void Remove( Key key ) { list->Remove( key ); }
-
-		public:
-			property int Count
-			{
-				int get() { return list->Count; }
-			}
-
-			bool Contains( Key key ) { return list->Contains( key ); }
-
-			virtual System::Collections::Generic::IEnumerator<Key>^ GetEnumerator() { return list->GetEnumerator(); }
-		};
-
-		/// <summary>
-		/// Describes the state of a keyboard device.
-		/// </summary>
-		public ref class KeyboardState
-		{
-		private:
-			KeyCollection^ keys;
-			KeyCollection^ pressed;
-			KeyCollection^ released;
-
-		internal:
-			void UpdateKeys( array<bool>^ states );
-			void UpdateKeys( BYTE *keys, int length );
-			void UpdateKey( int index, bool pressed );
-
-		public:
-			KeyboardState();
-
-			bool IsPressed( Key key );
-			bool IsReleased( Key key );
-
-			property KeyCollection^ AllKeys
-			{
-				KeyCollection^ get() { return keys; }
-			}
-
-			property KeyCollection^ PressedKeys
-			{
-				KeyCollection^ get() { return pressed; }
-			}
-
-			property KeyCollection^ ReleasedKeys
-			{
-				KeyCollection^ get() { return released; }
-			}
-		};
-
-		/// <summary>
-		/// Describes the state of a mouse device.
-		/// </summary>
-		public ref class MouseState
-		{
-		internal:
-			array<bool>^ buttons;
-			int x;
-			int y;
-			int z;
-
-		public:
-			MouseState( int x, int y, int z ) : x(x), y(y), z(z)
-			{
-				buttons = gcnew array<bool>( 8 );
-			}
-
-			/// <summary>
-			/// Gets the X axis of the mouse.
-			/// </summary>
-			property int X
-			{
-				int get() { return x; }
-			}
-
-			/// <summary>
-			/// Gets the Y axis of the mouse.
-			/// </summary>
-			property int Y
-			{
-				int get() { return y; }
-			}
-
-			/// <summary>
-			/// Gets the Z axis of the mouse.
-			/// </summary>
-			property int Z
-			{
-				int get() { return z; }
-			}
-
-			/// <summary>
-			/// Gets the state of the mouse buttons.
-			/// </summary>
-			array<bool>^ GetButtons()
-			{
-				return buttons;
-			}
-
-			bool IsPressed(int button) { return GetButtons()[button]; }
-
-			bool IsReleased(int button) { return !GetButtons()[button]; }
+			bool IsPressed( int button ) { return buttons[button]; }
+			bool IsReleased( int button ) { return !buttons[button]; }
 		};
 	}
 }

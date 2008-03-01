@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "../Utilities.h"
 
 namespace SlimDX

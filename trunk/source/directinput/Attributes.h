@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 namespace SlimDX
 {
 	namespace DirectInput

@@ -35,9 +35,6 @@ namespace SlimDX
 		generic< typename T >
 		static void Throw();
 
-		generic< typename T >
-		static Result Record( int hr, bool failed );
-
 	internal:
 		Result( int hr );
 		
@@ -46,6 +43,9 @@ namespace SlimDX
 
 		generic< typename T >
 		static Result Record( int hr );
+
+		generic< typename T >
+		static Result Record( int hr, bool failed );
 
 	public:
 		property int Code

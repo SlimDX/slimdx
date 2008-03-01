@@ -26,9 +26,11 @@
 #include "../Utilities.h"
 
 #include "DirectInput.h"
-//#include "DirectInputErrorHandler.h"
 
 #include "Device.h"
+#include "KeyboardState.h"
+#include "JoystickState.h"
+#include "MouseState.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -183,16 +185,6 @@ namespace DirectInput
 
 		timeStamp = objectData.dwTimeStamp;
 		sequence = objectData.dwSequence;
-		if( objectData.uAppData == NULL )
-			appData = nullptr;
-		else
-		{
-			
-			//IntPtr pointer( (void*)objectData.uAppData );
-			//GCHandle handle = (GCHandle)pointer;
-			//appData = handle.Target;
-			//handle.Free();
-		}
 	}
 
 	generic<typename DataFormat>

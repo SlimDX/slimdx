@@ -21,9 +21,7 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Runtime::InteropServices;
-//using namespace System::Collections::Generic;
+#include "Enums.h"
 
 namespace SlimDX
 {

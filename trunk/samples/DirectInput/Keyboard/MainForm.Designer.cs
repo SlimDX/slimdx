@@ -17,6 +17,13 @@ namespace Keyboard
             {
                 components.Dispose();
             }
+
+            if (disposing)
+            {
+                if (keyboard != null)
+                    keyboard.Dispose();
+                keyboard = null;
+            }
             base.Dispose(disposing);
         }
 

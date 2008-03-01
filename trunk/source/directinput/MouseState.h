@@ -21,11 +21,65 @@
 */
 #pragma once
 
+#include "DeviceConstants.h"
 #include "Enums.h"
-#include "Gamepad.h"
-#include "Keystroke.h"
-#include "State.h"
-#include "Vibration.h"
-#include "BatteryInformation.h"
-#include "Capabilities.h"
-#include "Controller.h"
+
+namespace SlimDX
+{
+	namespace DirectInput
+	{
+		/// <summary>
+		/// Describes the state of a mouse device.
+		/// </summary>
+		public ref class MouseState
+		{
+		internal:
+			array<bool>^ buttons;
+			int x;
+			int y;
+			int z;
+
+		public:
+			MouseState( int x, int y, int z ) : x(x), y(y), z(z)
+			{
+				buttons = gcnew array<bool>( 8 );
+			}
+
+			/// <summary>
+			/// Gets the X axis of the mouse.
+			/// </summary>
+			property int X
+			{
+				int get() { return x; }
+			}
+
+			/// <summary>
+			/// Gets the Y axis of the mouse.
+			/// </summary>
+			property int Y
+			{
+				int get() { return y; }
+			}
+
+			/// <summary>
+			/// Gets the Z axis of the mouse.
+			/// </summary>
+			property int Z
+			{
+				int get() { return z; }
+			}
+
+			/// <summary>
+			/// Gets the state of the mouse buttons.
+			/// </summary>
+			array<bool>^ GetButtons()
+			{
+				return buttons;
+			}
+
+			bool IsPressed(int button) { return buttons[button]; }
+
+			bool IsReleased(int button) { return !buttons[button]; }
+		};
+	}
+}

@@ -87,18 +87,18 @@ namespace Keyboard
 
         void ReadImmediateData()
         {
-            KeyboardState state;
-            
-            try
-            {
-                keyboard.Acquire();
-                keyboard.Poll();
-                state = keyboard.GetCurrentState();
-            }
-            catch(DirectInputException)
-            {
+            // be sure that the device is still acquired
+            if (keyboard.Acquire().IsFailure)
                 return;
-            }
+
+            // poll for more input
+            if (keyboard.Poll().IsFailure)
+                return;
+
+            // get the current state of the keyboard
+            KeyboardState state = keyboard.GetCurrentState();
+            if (Result.Last.IsFailure)
+                return;
 
             StringBuilder data = new StringBuilder();
             foreach( Key key in state.PressedKeys )
@@ -109,18 +109,18 @@ namespace Keyboard
 
         void ReadBufferedData()
         {
-            BufferedDataCollection<KeyboardState> bufferedData;
-            
-            try
-            {
-                keyboard.Acquire();
-                keyboard.Poll();
-                bufferedData = keyboard.GetBufferedData();
-            }
-            catch(DirectInputException)
-            {
+            // be sure that the device is still acquired
+            if (keyboard.Acquire().IsFailure)
                 return;
-            }
+
+            // poll for more input
+            if (keyboard.Poll().IsFailure)
+                return;
+
+            // get the list of buffered data events
+            BufferedDataCollection<KeyboardState> bufferedData = keyboard.GetBufferedData();
+            if (Result.Last.IsFailure)
+                return;
 
             StringBuilder data = new StringBuilder();
             foreach (BufferedData<KeyboardState> packet in bufferedData)
@@ -136,6 +136,7 @@ namespace Keyboard
         {
             timer.Stop();
 
+            // dispose of the device
             if (keyboard != null)
                 keyboard.Dispose();
             keyboard = null;            
