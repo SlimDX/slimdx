@@ -324,12 +324,14 @@ namespace SlimDX
 		public:
 			KeyboardState() { keys = gcnew array<bool>( 256 ); }
 
+			bool IsPressed( Key key ) { return keys[DeviceConstantConverter::KeyToDIK( key )]; }
+
 			/// <summary>
 			/// Gets the state of the specified key.
 			/// </summary>
-			property bool default [Key]
+			property bool default [int]
 			{
-				bool get( Key index ) { return keys[DeviceConstantConverter::KeyToDIK( index )]; }
+				bool get( int index ) { return keys[index]; }
 			}
 		};
 

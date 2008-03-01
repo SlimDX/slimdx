@@ -211,8 +211,8 @@ namespace DirectInput
 	{
 		BufferedDataCollection<DataFormat>^ list = gcnew BufferedDataCollection<DataFormat>();
 
-		int size = INFINITE;
-		HRESULT hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), NULL, reinterpret_cast<LPDWORD>( &size ), DIGDD_PEEK );
+		/*DWORD size = INFINITE;
+		HRESULT hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), NULL, &size, DIGDD_PEEK );
 		RECORD_DINPUT( hr );
 
 		if( hr == DI_BUFFEROVERFLOW && &Device::BufferOverflow != nullptr )
@@ -222,10 +222,14 @@ namespace DirectInput
 			DeviceLost( this, EventArgs::Empty );
 
 		if( FAILED( hr ) )
-			return nullptr;
+			return nullptr;*/
 
-		stack_vector<DIDEVICEOBJECTDATA> data( size );
-		hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), &data[0], reinterpret_cast<LPDWORD>( &size ), 0 );
+		DWORD size = Properties->BufferSize;
+
+		//stack_vector<DIDEVICEOBJECTDATA> data( size );
+		//std::vector<DIDEVICEOBJECTDATA> data( size );
+		DIDEVICEOBJECTDATA *data = new DIDEVICEOBJECTDATA[size];
+		HRESULT hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), data, &size, 0 );
 		RECORD_DINPUT( hr );
 
 		if( hr == DI_BUFFEROVERFLOW && &Device::BufferOverflow != nullptr )
@@ -236,6 +240,7 @@ namespace DirectInput
 
 		if( FAILED( hr ) )
 		{
+			delete[] data;
 			return nullptr;
 		}
 
@@ -244,6 +249,8 @@ namespace DirectInput
 			BufferedData<DataFormat>^ bufferedData = gcnew BufferedData<DataFormat>( data[i] );
 			list->Add( bufferedData );
 		}
+
+		delete[] data;
 
 		return list;
 	}

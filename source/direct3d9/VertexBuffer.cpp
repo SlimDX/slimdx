@@ -24,7 +24,6 @@
 
 #include "../Utilities.h"
 
-//#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
 
 #include "Device.h"

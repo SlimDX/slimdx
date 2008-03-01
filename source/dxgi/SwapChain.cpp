@@ -34,6 +34,7 @@
 
 using namespace System;
 using namespace System::Reflection;
+using namespace System::Globalization;
 
 namespace SlimDX
 {
@@ -129,7 +130,7 @@ namespace DXGI
 		BindingFlags flags = BindingFlags::Public | BindingFlags::Static | BindingFlags::InvokeMethod;
 		array<Object^>^ args = gcnew array<Object^>( 1 );
 		args[ 0 ] = IntPtr( unknown );
-		return safe_cast<T>( T::typeid->InvokeMember( "FromPointer", flags, nullptr, nullptr, args ) );
+		return safe_cast<T>( T::typeid->InvokeMember( "FromPointer", flags, nullptr, nullptr, args, CultureInfo::InvariantCulture ) );
 	}
 
 	Output^ SwapChain::GetContainingOutput()
