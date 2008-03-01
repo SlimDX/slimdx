@@ -124,7 +124,7 @@ namespace SlimDX
 		{
 			SLIMDX_UNREFERENCED_PARAMETER(hint);
 
-			pointer p = static_cast<pointer>( _malloca(size) );
+			pointer p = static_cast<pointer>( _malloca(size * sizeof(value_type)) );
 			if(!p)
 				throw std::bad_alloc();
 			return p;

@@ -77,9 +77,13 @@ namespace SlimDX
 		m_Table->Add( obj->ComPointer, info );
 	}
 
-	void ObjectTable::Remove( ComObject^ obj )
+	bool ObjectTable::Remove( ComObject^ obj )
 	{
+		if( !m_Table->ContainsKey( obj->ComPointer ) )
+			return false;
+
 		m_Table->Remove( obj->ComPointer );
+		return true;
 	}
 
 	void ObjectTable::FlagAsDefaultPool( ComObject^ object )

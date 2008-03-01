@@ -50,7 +50,7 @@ namespace SlimDX
 
 	public:
 		static void Add( ComObject^ obj );
-		static void Remove( ComObject^ obj );
+		static bool Remove( ComObject^ obj );
 		static void FlagAsDefaultPool( ComObject^ object );
 
 		static System::String^ ReportLeaks();
