@@ -48,7 +48,7 @@ namespace Direct3D9
 	FragmentLinker::FragmentLinker( ID3DXFragmentLinker* linker )
 	{
 		if( linker == NULL )
-			throw gcnew ArgumentNullException( "linker" );
+			throw gcnew ArgumentNullException( "pointer" );
 
 		Construct(linker);
 	}

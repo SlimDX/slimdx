@@ -19,45 +19,23 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
-#include <unknwn.h>
-
-namespace SlimDX
+namespace Keyboard
 {
-	ref class ComObject;
-
-	public value struct ObjectInfo
-	{
-	public:
-		property ComObject^ Handle;
-		property System::Diagnostics::StackTrace^ Source;
-		property bool IsDefaultPool;
-	};
-
-	public ref class ObjectTable sealed
-	{
-	private:
-		static ObjectTable();
-		ObjectTable();
-
-		static System::Collections::Generic::Dictionary<System::IntPtr, ObjectInfo>^ m_Table;
-
-		static void OnExit( System::Object^ sender, System::EventArgs^ e );
-
-	internal:
-		static ComObject^ Find( System::IntPtr nativeObject );
-
-	public:
-		static void Add( ComObject^ obj );
-		static void Remove( ComObject^ obj );
-		static void FlagAsDefaultPool( ComObject^ object );
-
-		static System::String^ ReportLeaks();
-
-		static property System::Collections::Generic::Dictionary<System::IntPtr, ObjectInfo>::ValueCollection^ Objects
-		{
-			System::Collections::Generic::Dictionary<System::IntPtr, ObjectInfo>::ValueCollection^ get();
-		}
-	};
+    static class Program
+    {
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainForm());
+        }
+    }
 }

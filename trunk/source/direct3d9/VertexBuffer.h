@@ -34,12 +34,12 @@ namespace SlimDX
 		public value class VertexBufferDescription
 		{
 		public:
-			Format Format;
-			ResourceType Type;
-			Usage Usage;
-			Pool Pool;
-			int SizeInBytes;
-			VertexFormat FVF;
+			property Format Format;
+			property ResourceType Type;
+			property Usage Usage;
+			property Pool Pool;
+			property int SizeInBytes;
+			property VertexFormat FVF;
 		};
 
 		public ref class VertexBuffer : public Resource
@@ -61,8 +61,6 @@ namespace SlimDX
 			property VertexBufferDescription Description
 			{
 				VertexBufferDescription get() { return m_Description; }
-			private:
-				void set( VertexBufferDescription value ) { m_Description = value; }
 			}
 		};
 	}

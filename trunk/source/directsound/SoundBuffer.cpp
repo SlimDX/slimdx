@@ -58,7 +58,7 @@ namespace DirectSound
 	SoundBuffer::SoundBuffer( IDirectSoundBuffer* buffer )
 	{
 		if( buffer == NULL )
-			throw gcnew ArgumentNullException( "buffer" );
+			throw gcnew ArgumentNullException( "pointer" );
 
 		Construct(buffer);
 

@@ -42,7 +42,7 @@ namespace Direct3D9
 	IndexBuffer::IndexBuffer( IntPtr buffer )
 	{
 		if( buffer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "buffer" );
+			throw gcnew ArgumentNullException( "pointer" );
 
 		void* pointer;
 		IUnknown* unknown = static_cast<IUnknown*>( buffer.ToPointer() );
