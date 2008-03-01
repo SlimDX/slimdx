@@ -211,7 +211,7 @@ namespace DirectInput
 	{
 		BufferedDataCollection<DataFormat>^ list = gcnew BufferedDataCollection<DataFormat>();
 
-		/*DWORD size = INFINITE;
+		DWORD size = INFINITE;
 		HRESULT hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), NULL, &size, DIGDD_PEEK );
 		RECORD_DINPUT( hr );
 
@@ -222,14 +222,14 @@ namespace DirectInput
 			DeviceLost( this, EventArgs::Empty );
 
 		if( FAILED( hr ) )
-			return nullptr;*/
+			return nullptr;
 
-		DWORD size = Properties->BufferSize;
+		if( size == 0 )
+			return list;
 
 		//stack_vector<DIDEVICEOBJECTDATA> data( size );
-		//std::vector<DIDEVICEOBJECTDATA> data( size );
-		DIDEVICEOBJECTDATA *data = new DIDEVICEOBJECTDATA[size];
-		HRESULT hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), data, &size, 0 );
+		std::vector<DIDEVICEOBJECTDATA> data( size );
+		hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), &data[0], &size, 0 );
 		RECORD_DINPUT( hr );
 
 		if( hr == DI_BUFFEROVERFLOW && &Device::BufferOverflow != nullptr )
@@ -239,18 +239,16 @@ namespace DirectInput
 			DeviceLost( this, EventArgs::Empty );
 
 		if( FAILED( hr ) )
-		{
-			delete[] data;
 			return nullptr;
-		}
+
+		if( size == 0 )
+			return list;
 
 		for( int i = 0; i < size; i++ )
 		{
 			BufferedData<DataFormat>^ bufferedData = gcnew BufferedData<DataFormat>( data[i] );
 			list->Add( bufferedData );
 		}
-
-		delete[] data;
 
 		return list;
 	}
@@ -274,13 +272,7 @@ namespace DirectInput
 			}
 
 			KeyboardState^ state = safe_cast<KeyboardState^>( data );
-			for( int i = 0; i < 256; i++ )
-			{
-				if( keys[i] )
-					state->keys[i] = true;
-				else
-					state->keys[i] = false;
-			}
+			state->UpdateKeys( keys, 256 );
 		}
 		else if( type == MouseState::typeid )
 		{
@@ -405,13 +397,7 @@ namespace DirectInput
 				return reinterpret_cast<DataFormat>( state );
 			}
 
-			for( int i = 0; i < 256; i++ )
-			{
-				if( keys[i] )
-					state->keys[i] = true;
-				else
-					state->keys[i] = false;
-			}
+			state->UpdateKeys( keys, 256 );
 
 			return ( DataFormat )state;
 		}
@@ -489,6 +475,7 @@ namespace DirectInput
 	Capabilities^ Device<DataFormat>::Caps::get()
 	{
 		DIDEVCAPS caps;
+		caps.dwSize = sizeof(DIDEVCAPS);
 		HRESULT hr = InternalPointer->GetCapabilities( &caps );
 		
 		if( RECORD_DINPUT( hr ).IsFailure )
@@ -501,6 +488,7 @@ namespace DirectInput
 	DeviceInstance^ Device<DataFormat>::DeviceInformation::get()
 	{
 		DIDEVICEINSTANCE deviceInstance;
+		deviceInstance.dwSize = sizeof(DIDEVICEINSTANCE);
 		HRESULT hr = InternalPointer->GetDeviceInfo( &deviceInstance );
 		
 		if( RECORD_DINPUT( hr ).IsFailure )

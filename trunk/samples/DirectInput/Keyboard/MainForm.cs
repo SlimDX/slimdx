@@ -27,6 +27,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using SlimDX.DirectInput;
+using SlimDX;
 
 namespace Keyboard
 {
@@ -86,38 +87,46 @@ namespace Keyboard
 
         void ReadImmediateData()
         {
-            KeyboardState state = keyboard.GetCurrentState();
+            KeyboardState state;
+            
+            try
+            {
+                keyboard.Acquire();
+                keyboard.Poll();
+                state = keyboard.GetCurrentState();
+            }
+            catch(DirectInputException)
+            {
+                return;
+            }
 
             StringBuilder data = new StringBuilder();
-            for (int i = 0; i < 256; i++)
-            {
-                if (state[i])
-                    data.Append(Enum.GetName(typeof(Key), i) + " ");
-            }
+            foreach( Key key in state.PressedKeys )
+                data.Append(Enum.GetName(typeof(Key), key) + " ");
 
             dataBox.Text = data.ToString();
         }
 
         void ReadBufferedData()
         {
-            BufferedDataCollection<KeyboardState> bufferedData = null;
+            BufferedDataCollection<KeyboardState> bufferedData;
             
             try
             {
+                keyboard.Acquire();
+                keyboard.Poll();
                 bufferedData = keyboard.GetBufferedData();
             }
-            catch
+            catch(DirectInputException)
             {
+                return;
             }
 
             StringBuilder data = new StringBuilder();
             foreach (BufferedData<KeyboardState> packet in bufferedData)
             {
-                for (int i = 0; i < 256; i++)
-                {
-                    if (packet.Data[i])
-                        data.Append(Enum.GetName(typeof(Key), i) + " ");
-                }
+                foreach (Key key in packet.Data.PressedKeys)
+                    data.Append(Enum.GetName(typeof(Key), key) + " ");
             }
 
             dataBox.Text = data.ToString();
@@ -130,17 +139,6 @@ namespace Keyboard
             if (keyboard != null)
                 keyboard.Dispose();
             keyboard = null;            
-        }
-
-        protected override void OnActivated(EventArgs e)
-        {
-            base.OnActivated(e);
-
-            // if we have a device, make sure that it gets acquired
-            // since it may have become unacquired when the application
-            // was deactivated
-            if (keyboard != null)
-                keyboard.Acquire();
         }
 
         #region Boilerplate

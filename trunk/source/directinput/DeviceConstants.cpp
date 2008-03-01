@@ -26,7 +26,6 @@
 #include "../Utilities.h"
 
 #include "DirectInput.h"
-//#include "DirectInputErrorHandler.h"
 
 #include "Device.h"
 #include "DeviceConstants.h"
@@ -57,8 +56,593 @@ namespace DirectInput
 		return DIJOFS_POV( pov );
 	}
 
+	Key DeviceConstantConverter::DIKToKey( int index )
+	{
+		switch( index )
+		{
+		case DIK_0:
+			return Key::D0;
+			break;
+
+		case DIK_1:
+			return Key::D1;
+			break;
+
+		case DIK_2:
+			return Key::D2;
+			break;
+
+		case DIK_3:
+			return Key::D3;
+			break;
+
+		case DIK_4:
+			return Key::D4;
+			break;
+
+		case DIK_5:
+			return Key::D5;
+			break;
+
+		case DIK_6:
+			return Key::D6;
+			break;
+
+		case DIK_7:
+			return Key::D7;
+			break;
+
+		case DIK_8:
+			return Key::D8;
+			break;
+
+		case DIK_9:
+			return Key::D9;
+			break;
+
+		case DIK_A:
+			return Key::A;
+			break;
+
+		case DIK_B:
+			return Key::B;
+			break;
+
+		case DIK_C:
+			return Key::C;
+			break;
+
+		case DIK_D:
+			return Key::D;
+			break;
+
+		case DIK_E:
+			return Key::E;
+			break;
+
+		case DIK_F:
+			return Key::F;
+			break;
+
+		case DIK_G:
+			return Key::G;
+			break;
+
+		case DIK_H:
+			return Key::H;
+			break;
+
+		case DIK_I:
+			return Key::I;
+			break;
+
+		case DIK_J:
+			return Key::J;
+			break;
+
+		case DIK_K:
+			return Key::K;
+			break;
+
+		case DIK_L:
+			return Key::L;
+			break;
+
+		case DIK_M:
+			return Key::M;
+			break;
+
+		case DIK_N:
+			return Key::N;
+			break;
+
+		case DIK_O:
+			return Key::O;
+			break;
+
+		case DIK_P:
+			return Key::P;
+			break;
+
+		case DIK_Q:
+			return Key::Q;
+			break;
+
+		case DIK_R:
+			return Key::R;
+			break;
+
+		case DIK_S:
+			return Key::S;
+			break;
+
+		case DIK_T:
+			return Key::T;
+			break;
+
+		case DIK_U:
+			return Key::U;
+			break;
+
+		case DIK_V:
+			return Key::V;
+			break;
+
+		case DIK_W:
+			return Key::W;
+			break;
+
+		case DIK_X:
+			return Key::X;
+			break;
+
+		case DIK_Y:
+			return Key::Y;
+			break;
+
+		case DIK_Z:
+			return Key::Z;
+			break;
+
+		case DIK_ABNT_C1:
+			return Key::AbntC1;
+			break;
+
+		case DIK_ABNT_C2:
+			return Key::AbntC2;
+			break;
+
+		case DIK_APOSTROPHE:
+			return Key::Apostrophe;
+			break;
+
+		case DIK_APPS:
+			return Key::Applications;
+			break;
+
+		case DIK_AT:
+			return Key::AT;
+			break;
+
+		case DIK_AX:
+			return Key::AX;
+			break;
+
+		case DIK_BACKSPACE:
+			return Key::Backspace;
+			break;
+
+		case DIK_BACKSLASH:
+			return Key::Backslash;
+			break;
+
+		case DIK_CALCULATOR:
+			return Key::Calculator;
+			break;
+
+		case DIK_CAPSLOCK:
+			return Key::CapsLock;
+			break;
+
+		case DIK_COLON:
+			return Key::Colon;
+			break;
+
+		case DIK_COMMA:
+			return Key::Comma;
+			break;
+
+		case DIK_CONVERT:
+			return Key::Convert;
+			break;
+
+		case DIK_DELETE:
+			return Key::Delete;
+			break;
+
+		case DIK_DOWNARROW:
+			return Key::DownArrow;
+			break;
+
+		case DIK_END:
+			return Key::End;
+			break;
+
+		case DIK_EQUALS:
+			return Key::Equals;
+			break;
+
+		case DIK_ESCAPE:
+			return Key::Escape;
+			break;
+
+		case DIK_F1:
+			return Key::F1;
+			break;
+
+		case DIK_F2:
+			return Key::F2;
+			break;
+
+		case DIK_F3:
+			return Key::F3;
+			break;
+
+		case DIK_F4:
+			return Key::F4;
+			break;
+
+		case DIK_F5:
+			return Key::F5;
+			break;
+
+		case DIK_F6:
+			return Key::F6;
+			break;
+
+		case DIK_F7:
+			return Key::F7;
+			break;
+
+		case DIK_F8:
+			return Key::F8;
+			break;
+
+		case DIK_F9:
+			return Key::F9;
+			break;
+
+		case DIK_F10:
+			return Key::F10;
+			break;
+
+		case DIK_F11:
+			return Key::F11;
+			break;
+
+		case DIK_F12:
+			return Key::F12;
+			break;
+
+		case DIK_F13:
+			return Key::F13;
+			break;
+
+		case DIK_F14:
+			return Key::F14;
+			break;
+
+		case DIK_F15:
+			return Key::F15;
+			break;
+
+		case DIK_GRAVE:
+			return Key::Grave;
+			break;
+
+		case DIK_HOME:
+			return Key::Home;
+			break;
+
+		case DIK_INSERT:
+			return Key::Insert;
+			break;
+
+		case DIK_KANA:
+			return Key::Kana;
+			break;
+
+		case DIK_KANJI:
+			return Key::Kanji;
+			break;
+
+		case DIK_LBRACKET:
+			return Key::LeftBracket;
+			break;
+
+		case DIK_LCONTROL:
+			return Key::LeftControl;
+			break;
+
+		case DIK_LEFTARROW:
+			return Key::LeftArrow;
+			break;
+
+		case DIK_LMENU:
+			return Key::LeftAlt;
+			break;
+
+		case DIK_LSHIFT:
+			return Key::LeftShift;
+			break;
+
+		case DIK_LWIN:
+			return Key::LeftWindowsKey;
+			break;
+
+		case DIK_MAIL:
+			return Key::Mail;
+			break;
+
+		case DIK_MEDIASELECT:
+			return Key::MediaSelect;
+			break;
+
+		case DIK_MEDIASTOP:
+			return Key::MediaStop;
+			break;
+
+		case DIK_MINUS:
+			return Key::Minus;
+			break;
+
+		case DIK_MUTE:
+			return Key::Mute;
+			break;
+
+		case DIK_MYCOMPUTER:
+			return Key::MyComputer;
+			break;
+
+		case DIK_NEXTTRACK:
+			return Key::NextTrack;
+			break;
+
+		case DIK_NOCONVERT:
+			return Key::NoConvert;
+			break;
+
+		case DIK_NUMLOCK:
+			return Key::NumberLock;
+			break;
+
+		case DIK_NUMPAD0:
+			return Key::NumberPad0;
+			break;
+
+		case DIK_NUMPAD1:
+			return Key::NumberPad1;
+			break;
+
+		case DIK_NUMPAD2:
+			return Key::NumberPad2;
+			break;
+
+		case DIK_NUMPAD3:
+			return Key::NumberPad3;
+			break;
+
+		case DIK_NUMPAD4:
+			return Key::NumberPad4;
+			break;
+
+		case DIK_NUMPAD5:
+			return Key::NumberPad5;
+			break;
+
+		case DIK_NUMPAD6:
+			return Key::NumberPad6;
+			break;
+
+		case DIK_NUMPAD7:
+			return Key::NumberPad7;
+			break;
+
+		case DIK_NUMPAD8:
+			return Key::NumberPad8;
+			break;
+
+		case DIK_NUMPAD9:
+			return Key::NumberPad9;
+			break;
+
+		case DIK_NUMPADEQUALS:
+			return Key::NumberPadEquals;
+
+		case DIK_WEBREFRESH:
+			return Key::WebRefresh;
+
+		case DIK_NUMPADCOMMA:
+			return Key::NumberPadComma;
+			break;
+
+		case DIK_NUMPADENTER:
+			return Key::NumberPadEnter;
+			break;
+
+		case DIK_NUMPADMINUS:
+			return Key::NumberPadMinus;
+			break;
+
+		case DIK_NUMPADPERIOD:
+			return Key::NumberPadPeriod;
+			break;
+
+		case DIK_NUMPADPLUS:
+			return Key::NumberPadPlus;
+			break;
+
+		case DIK_NUMPADSLASH:
+			return Key::NumberPadSlash;
+			break;
+
+		case DIK_NUMPADSTAR:
+			return Key::NumberPadStar;
+			break;
+
+		case DIK_OEM_102:
+			return Key::Oem102;
+			break;
+
+		case DIK_NEXT:
+			return Key::PageDown;
+			break;
+
+		case DIK_PRIOR:
+			return Key::PageUp;
+			break;
+
+		case DIK_PAUSE:
+			return Key::Pause;
+			break;
+
+		case DIK_PERIOD:
+			return Key::Period;
+			break;
+
+		case DIK_PLAYPAUSE:
+			return Key::PlayPause;
+			break;
+
+		case DIK_POWER:
+			return Key::Power;
+			break;
+
+		case DIK_PREVTRACK:
+			return Key::PreviousTrack;
+			break;
+
+		case DIK_RBRACKET:
+			return Key::RightBracket;
+			break;
+
+		case DIK_RCONTROL:
+			return Key::RightControl;
+			break;
+
+		case DIK_RETURN:
+			return Key::Return;
+			break;
+
+		case DIK_RIGHTARROW:
+			return Key::RightArrow;
+			break;
+
+		case DIK_RMENU:
+			return Key::RightAlt;
+			break;
+
+		case DIK_RSHIFT:
+			return Key::RightShift;
+			break;
+
+		case DIK_RWIN:
+			return Key::RightWindowsKey;
+			break;
+
+		case DIK_SCROLL:
+			return Key::ScrollLock;
+			break;
+
+		case DIK_SEMICOLON:
+			return Key::Semicolon;
+			break;
+
+		case DIK_SLASH:
+			return Key::Slash;
+			break;
+
+		case DIK_SLEEP:
+			return Key::Sleep;
+			break;
+
+		case DIK_SPACE:
+			return Key::Space;
+			break;
+
+		case DIK_STOP:
+			return Key::Stop;
+			break;
+
+		case DIK_SYSRQ:
+			return Key::PrintScreen;
+			break;
+
+		case DIK_TAB:
+			return Key::Tab;
+			break;
+
+		case DIK_UNDERLINE:
+			return Key::Underline;
+			break;
+
+		case DIK_UNLABELED:
+			return Key::Unlabeled;
+			break;
+
+		case DIK_UPARROW:
+			return Key::UpArrow;
+			break;
+
+		case DIK_VOLUMEDOWN:
+			return Key::VolumeDown;
+			break;
+
+		case DIK_VOLUMEUP:
+			return Key::VolumeUp;
+			break;
+
+		case DIK_WAKE:
+			return Key::Wake;
+			break;
+
+		case DIK_WEBBACK:
+			return Key::WebBack;
+			break;
+
+		case DIK_WEBFAVORITES:
+			return Key::WebFavorites;
+			break;
+
+		case DIK_WEBFORWARD:
+			return Key::WebForward;
+			break;
+
+		case DIK_WEBHOME:
+			return Key::WebHome;
+			break;
+
+		case DIK_WEBSEARCH:
+			return Key::WebSearch;
+			break;
+			
+		case DIK_WEBSTOP:
+			return Key::WebStop;
+			break;
+
+		case DIK_YEN:
+			return Key::Yen;
+			break;
+		}
+
+		return Key::Unknown;
+	}
+
 	int DeviceConstantConverter::KeyToDIK( Key key )
 	{
+		if( key == Key::Unknown )
+			return 0;
+
 		switch( key )
 		{
 		case Key::D0:

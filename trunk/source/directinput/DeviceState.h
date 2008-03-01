@@ -313,25 +313,70 @@ namespace SlimDX
 			}
 		};
 
+		public ref class KeyCollection : System::Collections::Generic::IEnumerable<Key>
+		{
+		private:
+			System::Collections::Generic::List<Key>^ list;
+
+		internal:
+			KeyCollection() { list = gcnew System::Collections::Generic::List<Key>(); }
+
+			virtual System::Collections::IEnumerator^ GetEnumerator2() = System::Collections::IEnumerable::GetEnumerator
+			{
+				return ((System::Collections::IEnumerable^)list)->GetEnumerator();
+			}
+
+			void Add( Key key ) { list->Add( key ); }
+
+			void Clear() { list->Clear(); }
+
+			void Remove( Key key ) { list->Remove( key ); }
+
+		public:
+			property int Count
+			{
+				int get() { return list->Count; }
+			}
+
+			bool Contains( Key key ) { return list->Contains( key ); }
+
+			virtual System::Collections::Generic::IEnumerator<Key>^ GetEnumerator() { return list->GetEnumerator(); }
+		};
+
 		/// <summary>
 		/// Describes the state of a keyboard device.
 		/// </summary>
 		public ref class KeyboardState
 		{
+		private:
+			KeyCollection^ keys;
+			KeyCollection^ pressed;
+			KeyCollection^ released;
+
 		internal:
-			array<bool>^ keys;
+			void UpdateKeys( array<bool>^ states );
+			void UpdateKeys( BYTE *keys, int length );
+			void UpdateKey( int index, bool pressed );
 
 		public:
-			KeyboardState() { keys = gcnew array<bool>( 256 ); }
+			KeyboardState();
 
-			bool IsPressed( Key key ) { return keys[DeviceConstantConverter::KeyToDIK( key )]; }
+			bool IsPressed( Key key );
+			bool IsReleased( Key key );
 
-			/// <summary>
-			/// Gets the state of the specified key.
-			/// </summary>
-			property bool default [int]
+			property KeyCollection^ AllKeys
 			{
-				bool get( int index ) { return keys[index]; }
+				KeyCollection^ get() { return keys; }
+			}
+
+			property KeyCollection^ PressedKeys
+			{
+				KeyCollection^ get() { return pressed; }
+			}
+
+			property KeyCollection^ ReleasedKeys
+			{
+				KeyCollection^ get() { return released; }
 			}
 		};
 

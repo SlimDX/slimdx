@@ -47,10 +47,7 @@ namespace DirectInput
 		if( type == KeyboardState::typeid )
 		{
 			KeyboardState^ result = gcnew KeyboardState();
-			if( objectData.dwData )
-				result->keys[objectData.dwOfs] = true;
-			else
-				result->keys[objectData.dwOfs] = false;
+			result->UpdateKey( objectData.dwOfs, objectData.dwData > 0 );
 			data = safe_cast<DataFormat>( result );
 		}
 		else if( type == MouseState::typeid )
@@ -190,9 +187,11 @@ namespace DirectInput
 			appData = nullptr;
 		else
 		{
-			GCHandle handle = GCHandle::FromIntPtr( static_cast<IntPtr>( static_cast<UIntPtr>( objectData.uAppData ).ToPointer() ) );
-			appData = handle.Target;
-			handle.Free();
+			
+			//IntPtr pointer( (void*)objectData.uAppData );
+			//GCHandle handle = (GCHandle)pointer;
+			//appData = handle.Target;
+			//handle.Free();
 		}
 	}
 
