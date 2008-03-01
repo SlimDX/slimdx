@@ -220,18 +220,17 @@ namespace DirectInput
 	generic<typename DataFormat>
 	BufferedDataCollection<DataFormat>^ Device<DataFormat>::GetBufferedData()
 	{
-		BufferedDataCollection<DataFormat>^ list = gcnew BufferedDataCollection<DataFormat>();
-
 		DWORD size = INFINITE;
 		HRESULT hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), NULL, &size, DIGDD_PEEK );
 		if( RecordError( hr ).IsFailure )
 			return nullptr;
 
+		BufferedDataCollection<DataFormat>^ list = gcnew BufferedDataCollection<DataFormat>( size );
+
 		if( size == 0 )
 			return list;
 
-		//stack_vector<DIDEVICEOBJECTDATA> data( size );
-		std::vector<DIDEVICEOBJECTDATA> data( size );
+		stack_vector<DIDEVICEOBJECTDATA> data( size );
 		hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), &data[0], &size, 0 );
 		if( RecordError( hr ).IsFailure )
 			return nullptr;

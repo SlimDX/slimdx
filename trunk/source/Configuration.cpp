@@ -27,12 +27,13 @@ namespace SlimDX
 	static Configuration::Configuration()
 	{
 #ifdef _DEBUG
-		m_EnableObjectTracking = true;
+		EnableObjectTracking = true;
 #else
-		m_EnableObjectTracking = false;
+		EnableObjectTracking = false;
 #endif	
 
-		m_AlwaysThrowOnError = true;
+		AlwaysThrowOnError = true;
+		DetectDoubleDispose = false;
 		m_Watches = gcnew System::Collections::Generic::Dictionary<Result,ResultWatchFlags>();
 	}
 	
@@ -40,26 +41,6 @@ namespace SlimDX
 	{
 	}
 	
-	bool Configuration::EnableObjectTracking::get()
-	{
-		return m_EnableObjectTracking;
-	}
-	
-	void Configuration::EnableObjectTracking::set( bool value )
-	{
-		m_EnableObjectTracking = value;
-	}
-	
-	bool Configuration::AlwaysThrowOnError::get()
-	{
-		return m_AlwaysThrowOnError;
-	}
-
-	void Configuration::AlwaysThrowOnError::set( bool value )
-	{
-		m_AlwaysThrowOnError = value;
-	}
-
 	bool Configuration::TryGetResultWatch( Result result, ResultWatchFlags% flags )
 	{
 		return m_Watches->TryGetValue( result, flags );

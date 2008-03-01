@@ -81,13 +81,18 @@ namespace SlimDX
 
 	void ComObject::Destruct()
 	{
-		if( m_Unknown == 0 )
+		if( m_Unknown == 0 || !ObjectTable::Remove( this ) )
 		{
-			Type^ myType = GetType();
-			throw gcnew ObjectDisposedException( myType->FullName );
+			if( Configuration::DetectDoubleDispose )
+			{
+				Type^ myType = GetType();
+				throw gcnew ObjectDisposedException( myType->FullName );
+			}
+			else
+			{
+				return;
+			}
 		}
-
-		ObjectTable::Remove( this );
 
 		m_Unknown->Release();
 		m_Unknown = NULL;

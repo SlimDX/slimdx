@@ -86,7 +86,7 @@ namespace SlimDX
 			System::Collections::Generic::List<BufferedData<DataFormat>^>^ list;
 
 		internal:
-			BufferedDataCollection();
+			BufferedDataCollection( int initialCapacity );
 
 			void Add( BufferedData<DataFormat>^ data );
 

@@ -31,8 +31,6 @@ namespace SlimDX
 	public ref class Configuration sealed
 	{
 	private:
-		static bool m_EnableObjectTracking;
-		static bool m_AlwaysThrowOnError;
 		static System::Collections::Generic::Dictionary<Result,ResultWatchFlags>^ m_Watches;
 	
 		static Configuration();
@@ -43,17 +41,9 @@ namespace SlimDX
 		static bool TryGetResultWatch( Result result, [Out] ResultWatchFlags% flags );
 
 	public:
-		property static bool EnableObjectTracking
-		{
-			bool get();
-			void set( bool value );
-		}
-		
-		property static bool AlwaysThrowOnError
-		{
-			bool get();
-			void set( bool value );
-		}
+		static property bool EnableObjectTracking;
+		static property bool AlwaysThrowOnError;
+		static property bool DetectDoubleDispose;
 
 		static void AddResultWatch( Result result, ResultWatchFlags flags );
 		static void ClearResultWatch( Result result );

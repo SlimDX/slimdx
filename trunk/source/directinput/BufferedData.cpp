@@ -198,9 +198,9 @@ namespace DirectInput
 	}
 
 	generic<typename DataFormat>
-	BufferedDataCollection<DataFormat>::BufferedDataCollection()
+	BufferedDataCollection<DataFormat>::BufferedDataCollection( int initialCapacity )
 	{
-		list = gcnew List<BufferedData<DataFormat>^>();
+		list = gcnew List<BufferedData<DataFormat>^>( initialCapacity );
 	}
 
 	generic<typename DataFormat>
