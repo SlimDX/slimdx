@@ -21,9 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Reflection;
-
 namespace SlimDX
 {
 	namespace DirectInput
@@ -38,7 +35,6 @@ namespace SlimDX
 			DataFormat data;
 			int timeStamp;
 			int sequence;
-			System::Object^ appData;
 
 		internal:
 			BufferedData( const DIDEVICEOBJECTDATA &data );
@@ -80,14 +76,6 @@ namespace SlimDX
 			property int Sequence
 			{
 				int get() { return sequence; }
-			}
-
-			/// <summary>
-			/// Gets the application-defined action value assigned to this object using action mapping.
-			/// </summary>
-			property System::Object^ ApplicationData
-			{
-				System::Object^ get() { return appData; }
 			}
 		};
 

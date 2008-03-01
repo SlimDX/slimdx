@@ -23,7 +23,6 @@
 
 #include "../ComObject.h"
 
-#include "DeviceState.h"
 #include "Enums.h"
 #include "Attributes.h"
 #include "DeviceInfo.h"
@@ -47,6 +46,8 @@ namespace SlimDX
 
 		private:
 			DeviceProperties^ properties;
+			Capabilities^ caps;
+			DeviceInstance^ information;
 
 		public:
 			/// <summary>
@@ -134,16 +135,6 @@ namespace SlimDX
 			/// Obtains information about the device's identity.
 			/// </summary>
 			property DeviceInstance^ DeviceInformation { DeviceInstance^ get(); }
-
-			/// <summary>
-			/// Occurs when the device's data buffer overflows.
-			/// </summary>
-			event System::EventHandler^ BufferOverflow;
-
-			/// <summary>
-			/// Occurs when the device is lost.
-			/// </summary>
-			event System::EventHandler^ DeviceLost;
 		};
 	}
 }

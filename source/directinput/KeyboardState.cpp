@@ -28,8 +28,7 @@
 #include "DirectInput.h"
 
 #include "Device.h"
-#include "DeviceState.h"
-#include "DeviceConstants.h"
+#include "KeyboardState.h"
 
 using namespace System;
 
@@ -37,70 +36,6 @@ namespace SlimDX
 {
 namespace DirectInput
 {
-	JoystickState::JoystickState()
-	{
-		sliders = gcnew array<int>( 2 );
-		povs = gcnew array<int>( 4 );
-		buttons = gcnew array<bool>( 128 );
-		vsliders = gcnew array<int>( 2 );
-		fsliders = gcnew array<int>( 2 );
-		asliders = gcnew array<int>( 2 );
-	}
-
-	JoystickState::JoystickState( const DIJOYSTATE2 &joystate )
-	{
-		x = joystate.lX;
-		y = joystate.lY;
-		z = joystate.lZ;
-		rx = joystate.lRx;
-		ry = joystate.lRy;
-		rz = joystate.lRz;
-		vx = joystate.lVX;
-		vy = joystate.lVY;
-		vz = joystate.lVZ;
-		vrx = joystate.lVRx;
-		vry = joystate.lVRy;
-		vrz = joystate.lVRz;
-		ax = joystate.lAX;
-		ay = joystate.lAY;
-		az = joystate.lAZ;
-		arx = joystate.lARx;
-		ary = joystate.lARy;
-		arz = joystate.lARz;
-		fx = joystate.lFX;
-		fy = joystate.lFY;
-		fz = joystate.lFZ;
-		frx = joystate.lFRx;
-		fry = joystate.lFRy;
-		frz = joystate.lFRz;
-
-		sliders = gcnew array<int>( 2 );
-		povs = gcnew array<int>( 4 );
-		buttons = gcnew array<bool>( 128 );
-		vsliders = gcnew array<int>( 2 );
-		fsliders = gcnew array<int>( 2 );
-		asliders = gcnew array<int>( 2 );
-
-		for( int i = 0; i < 2; i++ )
-		{
-			sliders[i] = joystate.rglSlider[i];
-			asliders[i] = joystate.rglASlider[i];
-			vsliders[i] = joystate.rglVSlider[i];
-			fsliders[i] = joystate.rglVSlider[i];
-		}
-
-		for( int i = 0; i < 4; i++ )
-			povs[i] = joystate.rgdwPOV[i];
-
-		for( int i = 0; i < 128; i++ )
-		{
-			if( joystate.rgbButtons[i] )
-				buttons[i] = true;
-			else
-				buttons[i] = false;
-		}
-	}
-
 	KeyboardState::KeyboardState()
 	{
 		keys = gcnew KeyCollection();

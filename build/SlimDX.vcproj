@@ -2196,14 +2196,6 @@
 			Name="DirectInput"
 			>
 			<File
-				RelativePath="..\source\directinput\DirectInputException.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directinput\DirectInputException.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\directinput\Enums.h"
 				>
 			</File>
@@ -2281,14 +2273,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\directinput\DeviceConstants.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directinput\DeviceConstants.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\directinput\DeviceInfo.cpp"
 					>
 				</File>
@@ -2308,6 +2292,14 @@
 			<Filter
 				Name="Exceptions"
 				>
+				<File
+					RelativePath="..\source\directinput\DirectInputException.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DirectInputException.h"
+					>
+				</File>
 				<File
 					RelativePath="..\source\directinput\DirectInputNotFoundException.cpp"
 					>
@@ -2353,11 +2345,35 @@
 				Name="State"
 				>
 				<File
-					RelativePath="..\source\directinput\DeviceState.cpp"
+					RelativePath="..\source\directinput\JoystickState.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\directinput\DeviceState.h"
+					RelativePath="..\source\directinput\JoystickState.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\KeyboardState.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\KeyboardState.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\MouseState.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="DeviceConstants"
+				>
+				<File
+					RelativePath="..\source\directinput\DeviceConstants.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DeviceConstants.h"
 					>
 				</File>
 			</Filter>
