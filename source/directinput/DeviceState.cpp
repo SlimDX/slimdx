@@ -26,10 +26,12 @@
 #include "../Utilities.h"
 
 #include "DirectInput.h"
-//#include "DirectInputErrorHandler.h"
 
 #include "Device.h"
 #include "DeviceState.h"
+#include "DeviceConstants.h"
+
+using namespace System;
 
 namespace SlimDX
 {
@@ -97,6 +99,78 @@ namespace DirectInput
 			else
 				buttons[i] = false;
 		}
+	}
+
+	KeyboardState::KeyboardState()
+	{
+		keys = gcnew KeyCollection();
+		pressed = gcnew KeyCollection();
+		released = gcnew KeyCollection();
+
+		Array^ values = Enum::GetValues( Key::typeid );
+		for each( Key key in values )
+			keys->Add( key );
+	}
+
+	bool KeyboardState::IsPressed( Key key )
+	{
+		return pressed->Contains( key );
+	}
+
+	bool KeyboardState::IsReleased( Key key )
+	{
+		return released->Contains( key );
+	}
+
+	void KeyboardState::UpdateKeys( array<bool>^ states )
+	{
+		pressed->Clear();
+		released->Clear();
+
+		for( int i = 0; i < states->Length; i++ )
+		{
+			Key key = DeviceConstantConverter::DIKToKey( i );
+			if( key == Key::Unknown )
+				continue;
+
+			if( states[i] )
+				pressed->Add( key );
+			else
+				released->Add( key );
+		}
+	}
+
+	void KeyboardState::UpdateKeys( BYTE *keys, int length )
+	{
+		pressed->Clear();
+		released->Clear();
+
+		for( int i = 0; i < length; i++ )
+		{
+			Key key = DeviceConstantConverter::DIKToKey( i );
+			if( key == Key::Unknown )
+				continue;
+
+			if( keys[i] )
+				pressed->Add( key );
+			else
+				released->Add( key );
+		}
+	}
+
+	void KeyboardState::UpdateKey( int index, bool down )
+	{
+		Key key = DeviceConstantConverter::DIKToKey( index );
+		if( key == Key::Unknown )
+			return;
+
+		pressed->Remove( key );
+		released->Remove( key );
+
+		if( down )
+			pressed->Add( key );
+		else
+			released->Add( key );
 	}
 }
 }

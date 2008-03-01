@@ -1016,7 +1016,9 @@ namespace SlimDX
 			/// <summary>
 			/// The Japanese Yen key.
 			/// </summary>
-			Yen
+			Yen,
+
+			Unknown
 		};
 
 		private ref class DeviceConstantConverter sealed
@@ -1026,6 +1028,7 @@ namespace SlimDX
 
 		public:
 			static int KeyToDIK( Key key );
+			static Key DIKToKey( int dik );
 			
 			/* Unused.
 			static int MouseToDIMOFS( MouseObject mouse );
