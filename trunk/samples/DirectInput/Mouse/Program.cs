@@ -19,63 +19,23 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
-#include "DeviceConstants.h"
-#include "Enums.h"
-
-namespace SlimDX
+namespace Mouse
 {
-	namespace DirectInput
-	{
-		/// <summary>
-		/// Describes the state of a mouse device.
-		/// </summary>
-		public ref class MouseState
-		{
-		internal:
-			array<bool>^ buttons;
-
-		public:
-			MouseState()
-			{
-				buttons = gcnew array<bool>( 8 );
-			}
-
-			MouseState( int x, int y, int z )
-			{
-				X = x;
-				Y = y;
-				Z = z;
-				buttons = gcnew array<bool>( 8 );
-			}
-
-			/// <summary>
-			/// Gets the X axis of the mouse.
-			/// </summary>
-			property int X;
-
-			/// <summary>
-			/// Gets the Y axis of the mouse.
-			/// </summary>
-			property int Y;
-
-			/// <summary>
-			/// Gets the Z axis of the mouse.
-			/// </summary>
-			property int Z;
-
-			/// <summary>
-			/// Gets the state of the mouse buttons.
-			/// </summary>
-			array<bool>^ GetButtons()
-			{
-				return buttons;
-			}
-
-			bool IsPressed(int button) { return buttons[button]; }
-
-			bool IsReleased(int button) { return !buttons[button]; }
-		};
-	}
+    static class Program
+    {
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainForm());
+        }
+    }
 }

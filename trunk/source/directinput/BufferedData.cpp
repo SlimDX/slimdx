@@ -112,11 +112,11 @@ namespace DirectInput
 					result->buttons[7] = false;
 			}
 			else if( objectData.dwOfs == DIMOFS_X )
-				result->x = objectData.dwData;
+				result->X = objectData.dwData;
 			else if( objectData.dwOfs == DIMOFS_Y )
-				result->y = objectData.dwData;
+				result->Y = objectData.dwData;
 			else if( objectData.dwOfs == DIMOFS_Z )
-				result->z = objectData.dwData;
+				result->Z = objectData.dwData;
 
 			data = safe_cast<DataFormat>( result );
 		}
