@@ -33,6 +33,7 @@ namespace SlimDX
 		property ComObject^ Handle;
 		property System::Diagnostics::StackTrace^ Source;
 		property bool IsDefaultPool;
+		property System::String^ Name;
 	};
 
 	public ref class ObjectTable sealed
@@ -52,6 +53,7 @@ namespace SlimDX
 		static void Add( ComObject^ obj );
 		static bool Remove( ComObject^ obj );
 		static void FlagAsDefaultPool( ComObject^ object );
+		static void SetName( ComObject^ object, System::String^ name );
 
 		static System::String^ ReportLeaks();
 
