@@ -91,6 +91,11 @@ namespace SlimDX
 		m_Table[object->ComPointer].IsDefaultPool = true;
 	}
 
+	void ObjectTable::SetName( ComObject^ object, String^ name )
+	{
+		m_Table[object->ComPointer].Name = name;
+	}
+
 	String^ ObjectTable::ReportLeaks()
 	{
 		String^ output = "";
