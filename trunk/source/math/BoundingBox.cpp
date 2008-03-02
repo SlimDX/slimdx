@@ -185,7 +185,7 @@ namespace SlimDX
 
 	bool BoundingBox::Intersects( BoundingBox box, BoundingFrustum frustum )
 	{
-		return BoundingBox::Contains( box, frustum ) == ContainmentType::Intersects;
+		return BoundingFrustum::Intersects( frustum, box );
 	}
 
 	bool BoundingBox::Intersects( BoundingBox box, Ray ray, [Out] float% distance )
