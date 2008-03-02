@@ -28,7 +28,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SlimDX, Version=1.0.2982.25875, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="SlimDX, Version=1.0.2983.13707, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\build\Debug\SlimDX.dll</HintPath>
     </Reference>

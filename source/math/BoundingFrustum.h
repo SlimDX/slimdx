@@ -29,6 +29,68 @@
 namespace SlimDX
 {
 	value class Ray;
+
+	ref class SupportPointHelper
+	{
+	private:
+		static array<int>^ bitsToIndices;
+		
+		Vector3 closestPoint;
+		array<array<float>^>^ det;
+		array<array<float>^>^ edgeLengthSquared;
+		array<array<Vector3>^>^ edges;
+		float maxLengthSquared;
+		int simplexBits;
+		array<Vector3>^ y;
+		array<float>^ yLengthSquared;
+
+		static SupportPointHelper()
+		{
+			bitsToIndices = gcnew array<int>( 16 );
+			bitsToIndices[0] = 0;
+			bitsToIndices[1] = 1;
+			bitsToIndices[2] = 2;
+			bitsToIndices[3] = 0x11;
+			bitsToIndices[4] = 3;
+			bitsToIndices[5] = 0x19;
+			bitsToIndices[6] = 0x1a;
+			bitsToIndices[7] = 0xd1;
+			bitsToIndices[8] = 4;
+			bitsToIndices[9] = 0x21;
+			bitsToIndices[10] = 0x22;
+			bitsToIndices[11] = 0x111;
+			bitsToIndices[12] = 0x23;
+			bitsToIndices[13] = 0x119;
+			bitsToIndices[14] = 0x11a;
+			bitsToIndices[15] = 0x8d1;
+		}
+
+		void UpdateDeterminant( int index );
+		void UpdateSimplex( int index );
+
+		bool SatisfiesRule( int xBits, int yBits );
+		Vector3 ComputeClosestPoint();
+
+	public:
+		SupportPointHelper();
+
+		void AddSupportPoint( Vector3 point );
+
+		property Vector3 ClosestPoint
+		{
+			Vector3 get() { return closestPoint; }
+		}
+
+		property bool FullSimplex
+		{
+			bool get() { return ( simplexBits == 15 ); }
+		}
+
+		property float MaxLengthSquared
+		{
+			float get() { return maxLengthSquared; }
+		}
+	};
 	
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
@@ -38,6 +100,8 @@ namespace SlimDX
 		array<Vector3>^ corners;
 		array<Plane>^ planes;
 		Matrix frustumMatrix;
+
+		Vector3 SupportMapping( Vector3 value );
 
 		static Ray ComputeIntersectionLine( Plane% plane1, Plane% plane2 );
 		static Vector3 ComputeIntersection( Plane% plane, Ray% ray );
@@ -59,10 +123,12 @@ namespace SlimDX
 		static ContainmentType Contains( BoundingFrustum frustum, BoundingBox box );
 		static ContainmentType Contains( BoundingFrustum frustum, BoundingSphere sphere );
 		static ContainmentType Contains( BoundingFrustum frustum, Vector3 vector );
+		static ContainmentType Contains( BoundingFrustum frustum1, BoundingFrustum frustum2 );
 
 		static bool Intersects( BoundingFrustum frustum, BoundingBox box );
 		static bool Intersects( BoundingFrustum frustum, BoundingSphere sphere );
 		static bool Intersects( BoundingFrustum frustum, Ray ray, [Out] float% distance );
+		static bool Intersects( BoundingFrustum frustum1, BoundingFrustum frustum2 );
 
 		static PlaneIntersectionType Intersects( BoundingFrustum frustum, Plane plane );
 
