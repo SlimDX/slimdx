@@ -35,6 +35,7 @@ namespace Direct3D9
 	}
 
 	Direct3D9NotInitializedException::Direct3D9NotInitializedException()
+	: Direct3D9Exception( "Direct3D 9 not initialized. Please call SlimDX.Direct3D9.Direct3D.Initialize() before trying to create a device." )
 	{
 	}
 
