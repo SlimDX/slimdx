@@ -60,6 +60,9 @@ namespace Direct3D10
 
 	Texture1D^ Texture1D::FromPointer( ID3D10Texture1D* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		Texture1D^ tableEntry = safe_cast<Texture1D^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -72,6 +75,9 @@ namespace Direct3D10
 
 	Texture1D^ Texture1D::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		Texture1D^ tableEntry = safe_cast<Texture1D^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

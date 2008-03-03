@@ -43,14 +43,14 @@
 	static managedType^ FromPointer( nativeType* pointer ); \
 	COMOBJECT_BASE(nativeType)
 
-
 namespace SlimDX
 {
 	public ref class ComObject abstract
 	{
 	private:
-		IUnknown* m_Unknown;
-		
+		IUnknown* m_Unknown;		
+		System::Diagnostics::StackTrace^ source;
+
 	protected:
 		ComObject();
 		
@@ -69,6 +69,8 @@ namespace SlimDX
 			IUnknown* get();
 		}
 
+		void SetSource( System::Diagnostics::StackTrace^ stack );
+
 	public:
 		property bool Disposed
 		{
@@ -79,6 +81,14 @@ namespace SlimDX
 		{
 			System::IntPtr get();
 		}
+
+		property System::Diagnostics::StackTrace^ CreationSource
+		{
+			System::Diagnostics::StackTrace^ get();
+		}
+
+		property bool IsDefaultPool;
+		property System::String^ DebugName;
 
 		virtual ~ComObject();
 	};

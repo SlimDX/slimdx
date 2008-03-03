@@ -879,6 +879,9 @@ namespace Direct3D9
 
 	Mesh^ Mesh::FromPointer( ID3DXMesh* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		Mesh^ tableEntry = safe_cast<Mesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -891,6 +894,9 @@ namespace Direct3D9
 
 	Mesh^ Mesh::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		Mesh^ tableEntry = safe_cast<Mesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

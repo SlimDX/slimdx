@@ -57,6 +57,9 @@ namespace Direct3D9
 
 	IndexBuffer^ IndexBuffer::FromPointer( IDirect3DIndexBuffer9* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		IndexBuffer^ tableEntry = safe_cast<IndexBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -69,6 +72,9 @@ namespace Direct3D9
 
 	IndexBuffer^ IndexBuffer::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		IndexBuffer^ tableEntry = safe_cast<IndexBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -103,7 +109,7 @@ namespace Direct3D9
 		description.SizeInBytes = desc.Size;
 
 		if( description.Pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( this );
+			this->IsDefaultPool = true;
 	}
 	
 	DataStream^ IndexBuffer::Lock( int offset, int size, LockFlags flags )

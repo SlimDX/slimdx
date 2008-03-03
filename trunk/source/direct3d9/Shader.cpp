@@ -240,6 +240,9 @@ namespace SlimDX
 
 		ShaderBytecode^ ShaderBytecode::FromPointer( ID3DXBuffer* pointer )
 		{
+			if( pointer == 0 )
+				return nullptr;
+
 			ShaderBytecode^ tableEntry = safe_cast<ShaderBytecode^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
@@ -252,6 +255,9 @@ namespace SlimDX
 
 		ShaderBytecode^ ShaderBytecode::FromPointer( IntPtr pointer )
 		{
+			if( pointer == IntPtr::Zero )
+				throw gcnew ArgumentNullException( "pointer" );
+
 			ShaderBytecode^ tableEntry = safe_cast<ShaderBytecode^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{

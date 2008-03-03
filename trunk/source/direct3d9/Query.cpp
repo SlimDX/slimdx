@@ -411,6 +411,9 @@ namespace Direct3D9
 
 	Query^ Query::FromPointer( IDirect3DQuery9* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		Query^ tableEntry = safe_cast<Query^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -423,6 +426,9 @@ namespace Direct3D9
 
 	Query^ Query::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		Query^ tableEntry = safe_cast<Query^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

@@ -49,6 +49,9 @@ namespace Direct3D10
 
 	EffectPool^ EffectPool::FromPointer( ID3D10EffectPool* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		EffectPool^ tableEntry = safe_cast<EffectPool^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -61,6 +64,9 @@ namespace Direct3D10
 
 	EffectPool^ EffectPool::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		EffectPool^ tableEntry = safe_cast<EffectPool^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

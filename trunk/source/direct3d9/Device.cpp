@@ -87,6 +87,9 @@ namespace Direct3D9
 
 	Device^ Device::FromPointer( IDirect3DDevice9* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -99,6 +102,9 @@ namespace Direct3D9
 
 	Device^ Device::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

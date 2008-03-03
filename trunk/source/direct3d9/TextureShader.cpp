@@ -66,6 +66,9 @@ namespace Direct3D9
 
 	TextureShader^ TextureShader::FromPointer( ID3DXTextureShader* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		TextureShader^ tableEntry = safe_cast<TextureShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -78,6 +81,9 @@ namespace Direct3D9
 
 	TextureShader^ TextureShader::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		TextureShader^ tableEntry = safe_cast<TextureShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

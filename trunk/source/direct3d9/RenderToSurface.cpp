@@ -108,6 +108,9 @@ namespace SlimDX
 
 		RenderToSurface^ RenderToSurface::FromPointer( ID3DXRenderToSurface* pointer )
 		{
+			if( pointer == 0 )
+				return nullptr;
+
 			RenderToSurface^ tableEntry = safe_cast<RenderToSurface^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
@@ -120,6 +123,9 @@ namespace SlimDX
 
 		RenderToSurface^ RenderToSurface::FromPointer( IntPtr pointer )
 		{
+			if( pointer == IntPtr::Zero )
+				throw gcnew ArgumentNullException( "pointer" );
+
 			RenderToSurface^ tableEntry = safe_cast<RenderToSurface^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{

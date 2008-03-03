@@ -66,6 +66,9 @@ namespace Direct3D9
 
 	AnimationController^ AnimationController::FromPointer( ID3DXAnimationController* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		AnimationController^ tableEntry = safe_cast<AnimationController^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -78,6 +81,9 @@ namespace Direct3D9
 
 	AnimationController^ AnimationController::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		AnimationController^ tableEntry = safe_cast<AnimationController^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

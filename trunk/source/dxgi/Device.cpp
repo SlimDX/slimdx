@@ -49,6 +49,9 @@ namespace DXGI
 
 	Device^ Device::FromPointer( IDXGIDevice* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -61,6 +64,9 @@ namespace DXGI
 
 	Device^ Device::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

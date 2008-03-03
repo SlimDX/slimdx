@@ -156,6 +156,9 @@ namespace Direct3D9
 
 	SimplificationMesh^ SimplificationMesh::FromPointer( ID3DXSPMesh* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		SimplificationMesh^ tableEntry = safe_cast<SimplificationMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -168,6 +171,9 @@ namespace Direct3D9
 
 	SimplificationMesh^ SimplificationMesh::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		SimplificationMesh^ tableEntry = safe_cast<SimplificationMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

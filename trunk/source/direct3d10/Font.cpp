@@ -58,6 +58,9 @@ namespace Direct3D10
 
 	Font^ Font::FromPointer( ID3DX10Font* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		Font^ tableEntry = safe_cast<Font^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -70,6 +73,9 @@ namespace Direct3D10
 
 	Font^ Font::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		Font^ tableEntry = safe_cast<Font^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

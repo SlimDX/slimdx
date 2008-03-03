@@ -49,6 +49,9 @@ namespace Direct3D10
 
 	DeviceChild^ DeviceChild::FromPointer( ID3D10DeviceChild* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -61,6 +64,9 @@ namespace Direct3D10
 
 	DeviceChild^ DeviceChild::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

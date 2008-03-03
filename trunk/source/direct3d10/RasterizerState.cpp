@@ -59,6 +59,9 @@ namespace Direct3D10
 
 	RasterizerState^ RasterizerState::FromPointer( ID3D10RasterizerState* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		RasterizerState^ tableEntry = safe_cast<RasterizerState^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -71,6 +74,9 @@ namespace Direct3D10
 
 	RasterizerState^ RasterizerState::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		RasterizerState^ tableEntry = safe_cast<RasterizerState^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

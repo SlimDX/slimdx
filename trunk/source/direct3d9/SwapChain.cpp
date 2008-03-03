@@ -105,6 +105,9 @@ namespace Direct3D9
 
 	SwapChain^ SwapChain::FromPointer( IDirect3DSwapChain9* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		SwapChain^ tableEntry = safe_cast<SwapChain^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -117,6 +120,9 @@ namespace Direct3D9
 
 	SwapChain^ SwapChain::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		SwapChain^ tableEntry = safe_cast<SwapChain^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

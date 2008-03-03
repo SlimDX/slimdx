@@ -72,6 +72,9 @@ namespace Direct3D9
 
 	VertexShader^ VertexShader::FromPointer( IDirect3DVertexShader9* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -84,6 +87,9 @@ namespace Direct3D9
 
 	VertexShader^ VertexShader::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -96,6 +102,9 @@ namespace Direct3D9
 
 	VertexShader^ VertexShader::FromPointer( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable )
 	{
+		if( vertexShader == 0 )
+			return nullptr;
+
 		IntPtr vertexShaderPtr = static_cast<IntPtr>( vertexShader );
 		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Find( vertexShaderPtr ) );
 		if( tableEntry != nullptr )

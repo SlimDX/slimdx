@@ -29,6 +29,7 @@ namespace SlimDX
 {
 	ComObject::ComObject() : m_Unknown( NULL )
 	{
+		IsDefaultPool = false;
 	}
 
 	ComObject::~ComObject()
@@ -38,7 +39,13 @@ namespace SlimDX
 
 	bool ComObject::Disposed::get()
 	{
-		return m_Unknown == 0;
+		if( m_Unknown == 0 )
+			return true;
+
+		if( !ObjectTable::Contains( this ) )
+			return true;
+
+		return false;
 	}
 
 	IntPtr ComObject::ComPointer::get()
@@ -54,6 +61,16 @@ namespace SlimDX
 	IUnknown* ComObject::InternalPointer::get()
 	{
 		return m_Unknown;
+	}
+
+	void ComObject::SetSource( System::Diagnostics::StackTrace^ stack )
+	{
+		source = stack;
+	}
+
+	System::Diagnostics::StackTrace^ ComObject::CreationSource::get()
+	{
+		return source;
 	}
 
 	void ComObject::Construct( IUnknown* pointer )

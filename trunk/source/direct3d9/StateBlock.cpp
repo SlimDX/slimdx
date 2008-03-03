@@ -59,6 +59,9 @@ namespace Direct3D9
 
 	StateBlock^ StateBlock::FromPointer( IDirect3DStateBlock9* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		StateBlock^ tableEntry = safe_cast<StateBlock^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -71,6 +74,9 @@ namespace Direct3D9
 
 	StateBlock^ StateBlock::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		StateBlock^ tableEntry = safe_cast<StateBlock^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
