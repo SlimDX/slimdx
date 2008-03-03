@@ -62,6 +62,9 @@ namespace Direct3D9
 
 	VertexDeclaration^ VertexDeclaration::FromPointer( IDirect3DVertexDeclaration9* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		VertexDeclaration^ tableEntry = safe_cast<VertexDeclaration^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -74,6 +77,9 @@ namespace Direct3D9
 
 	VertexDeclaration^ VertexDeclaration::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		VertexDeclaration^ tableEntry = safe_cast<VertexDeclaration^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

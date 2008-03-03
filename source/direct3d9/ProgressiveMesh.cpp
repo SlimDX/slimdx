@@ -227,6 +227,9 @@ namespace Direct3D9
 
 	ProgressiveMesh^ ProgressiveMesh::FromPointer( ID3DXPMesh* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		ProgressiveMesh^ tableEntry = safe_cast<ProgressiveMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -239,6 +242,9 @@ namespace Direct3D9
 
 	ProgressiveMesh^ ProgressiveMesh::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		ProgressiveMesh^ tableEntry = safe_cast<ProgressiveMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

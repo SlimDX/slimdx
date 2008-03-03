@@ -68,6 +68,9 @@ namespace Direct3D9
 
 	FragmentLinker^ FragmentLinker::FromPointer( ID3DXFragmentLinker* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		FragmentLinker^ tableEntry = safe_cast<FragmentLinker^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -80,6 +83,9 @@ namespace Direct3D9
 
 	FragmentLinker^ FragmentLinker::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		FragmentLinker^ tableEntry = safe_cast<FragmentLinker^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

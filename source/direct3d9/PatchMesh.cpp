@@ -79,6 +79,9 @@ namespace Direct3D9
 
 	PatchMesh^ PatchMesh::FromPointer( ID3DXPatchMesh* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		PatchMesh^ tableEntry = safe_cast<PatchMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -91,6 +94,9 @@ namespace Direct3D9
 
 	PatchMesh^ PatchMesh::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		PatchMesh^ tableEntry = safe_cast<PatchMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

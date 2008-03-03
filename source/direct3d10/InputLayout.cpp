@@ -71,6 +71,9 @@ namespace Direct3D10
 
 	InputLayout^ InputLayout::FromPointer( ID3D10InputLayout* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		InputLayout^ tableEntry = safe_cast<InputLayout^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -83,6 +86,9 @@ namespace Direct3D10
 
 	InputLayout^ InputLayout::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		InputLayout^ tableEntry = safe_cast<InputLayout^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

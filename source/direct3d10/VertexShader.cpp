@@ -42,6 +42,9 @@ namespace Direct3D10
 
 	VertexShader^ VertexShader::FromPointer( ID3D10VertexShader* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -54,6 +57,9 @@ namespace Direct3D10
 
 	VertexShader^ VertexShader::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

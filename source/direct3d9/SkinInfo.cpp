@@ -129,6 +129,9 @@ namespace Direct3D9
 
 	SkinInfo^ SkinInfo::FromPointer( ID3DXSkinInfo* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		SkinInfo^ tableEntry = safe_cast<SkinInfo^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -141,6 +144,9 @@ namespace Direct3D9
 
 	SkinInfo^ SkinInfo::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		SkinInfo^ tableEntry = safe_cast<SkinInfo^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

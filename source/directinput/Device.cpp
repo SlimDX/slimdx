@@ -147,6 +147,9 @@ namespace DirectInput
 	generic<typename DataFormat>
 	Device<DataFormat>^ Device<DataFormat>::FromPointer( IDirectInputDevice8W* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -160,6 +163,9 @@ namespace DirectInput
 	generic<typename DataFormat>
 	Device<DataFormat>^ Device<DataFormat>::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

@@ -49,6 +49,9 @@ namespace Direct3D9
 
 	XFileSaveData^ XFileSaveData::FromPointer( ID3DXFileSaveData* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		XFileSaveData^ tableEntry = safe_cast<XFileSaveData^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -61,6 +64,9 @@ namespace Direct3D9
 
 	XFileSaveData^ XFileSaveData::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		XFileSaveData^ tableEntry = safe_cast<XFileSaveData^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -179,6 +185,9 @@ namespace Direct3D9
 
 	XFileSaveObject^ XFileSaveObject::FromPointer( ID3DXFileSaveObject* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		XFileSaveObject^ tableEntry = safe_cast<XFileSaveObject^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -191,6 +200,9 @@ namespace Direct3D9
 
 	XFileSaveObject^ XFileSaveObject::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		XFileSaveObject^ tableEntry = safe_cast<XFileSaveObject^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -269,6 +281,9 @@ namespace Direct3D9
 
 	XFile^ XFile::FromPointer( ID3DXFile* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		XFile^ tableEntry = safe_cast<XFile^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -281,6 +296,9 @@ namespace Direct3D9
 
 	XFile^ XFile::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		XFile^ tableEntry = safe_cast<XFile^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -391,6 +409,9 @@ namespace Direct3D9
 
 	XFileEnumerationObject^ XFileEnumerationObject::FromPointer( ID3DXFileEnumObject* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		XFileEnumerationObject^ tableEntry = safe_cast<XFileEnumerationObject^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -403,6 +424,9 @@ namespace Direct3D9
 
 	XFileEnumerationObject^ XFileEnumerationObject::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		XFileEnumerationObject^ tableEntry = safe_cast<XFileEnumerationObject^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -486,6 +510,9 @@ namespace Direct3D9
 
 	XFileData^ XFileData::FromPointer( ID3DXFileData* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		XFileData^ tableEntry = safe_cast<XFileData^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -498,6 +525,9 @@ namespace Direct3D9
 
 	XFileData^ XFileData::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		XFileData^ tableEntry = safe_cast<XFileData^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

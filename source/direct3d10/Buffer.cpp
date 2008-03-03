@@ -67,6 +67,9 @@ namespace Direct3D10
 
 	Buffer^ Buffer::FromPointer( ID3D10Buffer* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		Buffer^ tableEntry = safe_cast<Buffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -79,6 +82,9 @@ namespace Direct3D10
 
 	Buffer^ Buffer::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		Buffer^ tableEntry = safe_cast<Buffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

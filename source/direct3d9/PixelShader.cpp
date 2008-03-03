@@ -74,6 +74,9 @@ namespace SlimDX
 
 		PixelShader^ PixelShader::FromPointer( IDirect3DPixelShader9* pointer )
 		{
+			if( pointer == 0 )
+				return nullptr;
+
 			PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
@@ -86,6 +89,9 @@ namespace SlimDX
 
 		PixelShader^ PixelShader::FromPointer( IntPtr pointer )
 		{
+			if( pointer == IntPtr::Zero )
+				throw gcnew ArgumentNullException( "pointer" );
+
 			PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
@@ -98,6 +104,9 @@ namespace SlimDX
 
 		PixelShader^ PixelShader::FromPointer( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable )
 		{
+			if( pixelShader == 0 )
+				return nullptr;
+
 			IntPtr pixelShaderPtr = static_cast<IntPtr>( pixelShader );
 			PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Find( pixelShaderPtr ) );
 			if( tableEntry != nullptr )

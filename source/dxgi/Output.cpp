@@ -54,6 +54,9 @@ namespace DXGI
 
 	Output^ Output::FromPointer( IDXGIOutput* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		Output^ tableEntry = safe_cast<Output^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -66,6 +69,9 @@ namespace DXGI
 
 	Output^ Output::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		Output^ tableEntry = safe_cast<Output^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

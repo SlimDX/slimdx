@@ -279,11 +279,14 @@ namespace Direct3D9
 
 		Construct(texture);
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( this );
+			this->IsDefaultPool = true;
 	}
 
 	Texture^ Texture::FromPointer( IDirect3DTexture9* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		Texture^ tableEntry = safe_cast<Texture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -296,6 +299,9 @@ namespace Direct3D9
 
 	Texture^ Texture::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		Texture^ tableEntry = safe_cast<Texture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -353,7 +359,7 @@ namespace Direct3D9
 
 		Texture^ result = gcnew Texture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -376,7 +382,7 @@ namespace Direct3D9
 
 		Texture^ result = gcnew Texture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -395,7 +401,7 @@ namespace Direct3D9
 
 		Texture^ result = gcnew Texture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -475,7 +481,7 @@ namespace Direct3D9
 
 		Texture^ result = gcnew Texture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -496,7 +502,7 @@ namespace Direct3D9
 
 		Texture^ result = gcnew Texture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -515,7 +521,7 @@ namespace Direct3D9
 
 		Texture^ result = gcnew Texture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -693,11 +699,14 @@ namespace Direct3D9
 
 		Construct(texture);
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( this );
+			this->IsDefaultPool = true;
 	}
 
 	CubeTexture^ CubeTexture::FromPointer( IDirect3DCubeTexture9* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		CubeTexture^ tableEntry = safe_cast<CubeTexture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -710,6 +719,9 @@ namespace Direct3D9
 
 	CubeTexture^ CubeTexture::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		CubeTexture^ tableEntry = safe_cast<CubeTexture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -766,7 +778,7 @@ namespace Direct3D9
 
 		CubeTexture^ result = gcnew CubeTexture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -788,7 +800,7 @@ namespace Direct3D9
 
 		CubeTexture^ result = gcnew CubeTexture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -807,7 +819,7 @@ namespace Direct3D9
 
 		CubeTexture^ result = gcnew CubeTexture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -887,7 +899,7 @@ namespace Direct3D9
 
 		CubeTexture^ result = gcnew CubeTexture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -908,7 +920,7 @@ namespace Direct3D9
 
 		CubeTexture^ result = gcnew CubeTexture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -927,7 +939,7 @@ namespace Direct3D9
 
 		CubeTexture^ result = gcnew CubeTexture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -1041,11 +1053,14 @@ namespace Direct3D9
 
 		Construct(texture);
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( this );
+			this->IsDefaultPool = true;
 	}
 
 	VolumeTexture^ VolumeTexture::FromPointer( IDirect3DVolumeTexture9* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		VolumeTexture^ tableEntry = safe_cast<VolumeTexture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -1058,6 +1073,9 @@ namespace Direct3D9
 
 	VolumeTexture^ VolumeTexture::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		VolumeTexture^ tableEntry = safe_cast<VolumeTexture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -1121,7 +1139,7 @@ namespace Direct3D9
 
 		VolumeTexture^ result = gcnew VolumeTexture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -1143,7 +1161,7 @@ namespace Direct3D9
 
 		VolumeTexture^ result = gcnew VolumeTexture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -1162,7 +1180,7 @@ namespace Direct3D9
 
 		VolumeTexture^ result = gcnew VolumeTexture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -1245,7 +1263,7 @@ namespace Direct3D9
 
 		VolumeTexture^ result = gcnew VolumeTexture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -1267,7 +1285,7 @@ namespace Direct3D9
 
 		VolumeTexture^ result = gcnew VolumeTexture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -1286,7 +1304,7 @@ namespace Direct3D9
 
 		VolumeTexture^ result = gcnew VolumeTexture( texture );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 		return result;
 	}
 

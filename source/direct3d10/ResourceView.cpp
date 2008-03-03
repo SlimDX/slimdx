@@ -46,6 +46,9 @@ namespace Direct3D10
 
 	ResourceView^ ResourceView::FromPointer( ID3D10View* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		ResourceView^ tableEntry = safe_cast<ResourceView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -58,6 +61,9 @@ namespace Direct3D10
 
 	ResourceView^ ResourceView::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		ResourceView^ tableEntry = safe_cast<ResourceView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

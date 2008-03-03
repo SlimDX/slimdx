@@ -157,6 +157,9 @@ namespace Direct3D9
 
 	ConstantTable^ ConstantTable::FromPointer( ID3DXConstantTable* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		ConstantTable^ tableEntry = safe_cast<ConstantTable^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -169,6 +172,9 @@ namespace Direct3D9
 
 	ConstantTable^ ConstantTable::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		ConstantTable^ tableEntry = safe_cast<ConstantTable^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -180,6 +186,9 @@ namespace Direct3D9
 
 	ConstantTable^ ConstantTable::FromPointer( IDirect3DDevice9* device, ID3DXConstantTable* constantTable )
 	{
+		if( constantTable == 0 )
+			return nullptr;
+
 		ConstantTable^ tableEntry = safe_cast<ConstantTable^>( ObjectTable::Find( static_cast<IntPtr>( constantTable ) ) );
 		if( tableEntry != nullptr )
 		{

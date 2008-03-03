@@ -33,7 +33,7 @@ namespace SlimDX
 {
 	static ObjectTable::ObjectTable()
 	{
-		m_Table = gcnew System::Collections::Generic::Dictionary<IntPtr, ObjectInfo>();
+		m_Table = gcnew System::Collections::Generic::Dictionary<IntPtr, ComObject^>();
 
 		AppDomain::CurrentDomain->DomainUnload += gcnew System::EventHandler( OnExit );
 		AppDomain::CurrentDomain->ProcessExit += gcnew System::EventHandler( OnExit );
@@ -54,59 +54,55 @@ namespace SlimDX
 
 	ComObject^ ObjectTable::Find( IntPtr nativeObject )
 	{
-		if( nativeObject == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "nativeObject" );
-
 		if( m_Table->ContainsKey( nativeObject ) )
 		{
-			return m_Table[nativeObject].Handle;
+			return m_Table[nativeObject];
 		}
 
 		return nullptr;
 	}
 
-	void ObjectTable::Add( ComObject^ obj )
+	bool ObjectTable::Contains( ComObject^ object )
 	{
-		ObjectInfo info;
-		info.Handle = obj;
-		info.IsDefaultPool = false;
+		return m_Table->ContainsKey( object->ComPointer );
+	}
+
+	void ObjectTable::Add( ComObject^ object )
+	{
+		if( object == nullptr )
+			throw gcnew ArgumentNullException( "object" );
+
+		object->IsDefaultPool = false;
 
 		if( Configuration::EnableObjectTracking )
-			info.Source = gcnew StackTrace( 2, true );
+			object->SetSource( gcnew StackTrace( 2, true ) );
 
-		m_Table->Add( obj->ComPointer, info );
+		m_Table->Add( object->ComPointer, object );
 	}
 
-	bool ObjectTable::Remove( ComObject^ obj )
+	bool ObjectTable::Remove( ComObject^ object )
 	{
-		if( !m_Table->ContainsKey( obj->ComPointer ) )
+		if( object == nullptr )
+			throw gcnew ArgumentNullException( "object" );
+
+		if( !m_Table->ContainsKey( object->ComPointer ) )
 			return false;
 
-		m_Table->Remove( obj->ComPointer );
+		m_Table->Remove( object->ComPointer );
 		return true;
-	}
-
-	void ObjectTable::FlagAsDefaultPool( ComObject^ object )
-	{
-		m_Table[object->ComPointer].IsDefaultPool = true;
-	}
-
-	void ObjectTable::SetName( ComObject^ object, String^ name )
-	{
-		m_Table[object->ComPointer].Name = name;
 	}
 
 	String^ ObjectTable::ReportLeaks()
 	{
 		String^ output = "";
 
-		for each( KeyValuePair<IntPtr, ObjectInfo> pair in m_Table )
+		for each( KeyValuePair<IntPtr, ComObject^> pair in m_Table )
 		{
-			if( pair.Value.Source == nullptr )
+			if( pair.Value->CreationSource == nullptr )
 				continue;
 
-			output += String::Format( CultureInfo::InvariantCulture, "Object of type {0} was not disposed. Stack trace of object creation:\n", pair.Value.Handle->GetType() );
-			for each( StackFrame^ frame in pair.Value.Source->GetFrames() )
+			output += String::Format( CultureInfo::InvariantCulture, "Object of type {0} was not disposed. Stack trace of object creation:\n", pair.Value->GetType() );
+			for each( StackFrame^ frame in pair.Value->CreationSource->GetFrames() )
 			{
 				if( frame->GetFileLineNumber() == 0 )
 				{
@@ -128,7 +124,7 @@ namespace SlimDX
 		return output;
 	}
 
-	Dictionary<IntPtr, ObjectInfo>::ValueCollection^ ObjectTable::Objects::get()
+	Dictionary<IntPtr, ComObject^>::ValueCollection^ ObjectTable::Objects::get()
 	{
 		return m_Table->Values;
 	}

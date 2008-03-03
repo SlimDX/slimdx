@@ -138,6 +138,9 @@ namespace Direct3D9
 
 	Volume^ Volume::FromPointer( IDirect3DVolume9* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		Volume^ tableEntry = safe_cast<Volume^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -150,6 +153,9 @@ namespace Direct3D9
 
 	Volume^ Volume::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		Volume^ tableEntry = safe_cast<Volume^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

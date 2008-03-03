@@ -97,6 +97,9 @@ namespace DirectSound
 
 	SoundBuffer^ SoundBuffer::FromPointer( IDirectSoundBuffer* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		SoundBuffer^ tableEntry = safe_cast<SoundBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -109,6 +112,9 @@ namespace DirectSound
 
 	SoundBuffer^ SoundBuffer::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		SoundBuffer^ tableEntry = safe_cast<SoundBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

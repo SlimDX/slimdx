@@ -56,6 +56,9 @@ namespace Direct3D10
 	
 	Effect^ Effect::FromPointer( ID3D10Effect* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		Effect^ tableEntry = safe_cast<Effect^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -68,6 +71,9 @@ namespace Direct3D10
 
 	Effect^ Effect::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		Effect^ tableEntry = safe_cast<Effect^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

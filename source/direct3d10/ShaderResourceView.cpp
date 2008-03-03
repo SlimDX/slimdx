@@ -77,6 +77,9 @@ namespace Direct3D10
 
 	ShaderResourceView^ ShaderResourceView::FromPointer( ID3D10ShaderResourceView* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		ShaderResourceView^ tableEntry = safe_cast<ShaderResourceView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -89,6 +92,9 @@ namespace Direct3D10
 
 	ShaderResourceView^ ShaderResourceView::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		ShaderResourceView^ tableEntry = safe_cast<ShaderResourceView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

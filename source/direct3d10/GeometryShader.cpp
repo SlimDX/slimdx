@@ -42,6 +42,9 @@ namespace Direct3D10
 
 	GeometryShader^ GeometryShader::FromPointer( ID3D10GeometryShader* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		GeometryShader^ tableEntry = safe_cast<GeometryShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -54,6 +57,9 @@ namespace Direct3D10
 
 	GeometryShader^ GeometryShader::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		GeometryShader^ tableEntry = safe_cast<GeometryShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

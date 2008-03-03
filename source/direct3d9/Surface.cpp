@@ -93,6 +93,9 @@ namespace Direct3D9
 
 	Surface^ Surface::FromPointer( IDirect3DSurface9* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		Surface^ tableEntry = safe_cast<Surface^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -105,6 +108,9 @@ namespace Direct3D9
 
 	Surface^ Surface::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		Surface^ tableEntry = safe_cast<Surface^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -126,7 +132,7 @@ namespace Direct3D9
 			return nullptr;
 
 		Surface^ result = gcnew Surface( surface );
-		ObjectTable::FlagAsDefaultPool( result );
+		result->IsDefaultPool = true;
 		return result;
 	}
 
@@ -142,7 +148,7 @@ namespace Direct3D9
 
 		Surface^ result = gcnew Surface( surface );
 		if( pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( result );
+			result->IsDefaultPool = true;
 
 		return result;
 	}
@@ -159,7 +165,7 @@ namespace Direct3D9
 			return nullptr;
 
 		Surface^ result = gcnew Surface( surface );
-		ObjectTable::FlagAsDefaultPool( result );
+		result->IsDefaultPool = true;
 		return result;
 	}
 

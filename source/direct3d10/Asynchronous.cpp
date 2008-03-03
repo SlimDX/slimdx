@@ -48,6 +48,9 @@ namespace Direct3D10
 
 	Asynchronous^ Asynchronous::FromPointer( ID3D10Asynchronous* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		Asynchronous^ tableEntry = safe_cast<Asynchronous^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -60,6 +63,9 @@ namespace Direct3D10
 
 	Asynchronous^ Asynchronous::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		Asynchronous^ tableEntry = safe_cast<Asynchronous^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

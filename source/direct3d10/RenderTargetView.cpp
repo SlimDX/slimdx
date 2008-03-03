@@ -47,6 +47,9 @@ namespace Direct3D10
 	
 	RenderTargetView^ RenderTargetView::FromPointer( ID3D10RenderTargetView* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		RenderTargetView^ tableEntry = safe_cast<RenderTargetView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -59,6 +62,9 @@ namespace Direct3D10
 
 	RenderTargetView^ RenderTargetView::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		RenderTargetView^ tableEntry = safe_cast<RenderTargetView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

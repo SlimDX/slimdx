@@ -27,39 +27,29 @@ namespace SlimDX
 {
 	ref class ComObject;
 
-	public value struct ObjectInfo
-	{
-	public:
-		property ComObject^ Handle;
-		property System::Diagnostics::StackTrace^ Source;
-		property bool IsDefaultPool;
-		property System::String^ Name;
-	};
-
 	public ref class ObjectTable sealed
 	{
 	private:
 		static ObjectTable();
 		ObjectTable();
 
-		static System::Collections::Generic::Dictionary<System::IntPtr, ObjectInfo>^ m_Table;
+		static System::Collections::Generic::Dictionary<System::IntPtr, ComObject^>^ m_Table;
 
 		static void OnExit( System::Object^ sender, System::EventArgs^ e );
 
 	internal:
 		static ComObject^ Find( System::IntPtr nativeObject );
+		static bool Contains( ComObject^ object );
 
 	public:
-		static void Add( ComObject^ obj );
-		static bool Remove( ComObject^ obj );
-		static void FlagAsDefaultPool( ComObject^ object );
-		static void SetName( ComObject^ object, System::String^ name );
+		static void Add( ComObject^ object );
+		static bool Remove( ComObject^ object );
 
 		static System::String^ ReportLeaks();
 
-		static property System::Collections::Generic::Dictionary<System::IntPtr, ObjectInfo>::ValueCollection^ Objects
+		static property System::Collections::Generic::Dictionary<System::IntPtr, ComObject^>::ValueCollection^ Objects
 		{
-			System::Collections::Generic::Dictionary<System::IntPtr, ObjectInfo>::ValueCollection^ get();
+			System::Collections::Generic::Dictionary<System::IntPtr, ComObject^>::ValueCollection^ get();
 		}
 	};
 }

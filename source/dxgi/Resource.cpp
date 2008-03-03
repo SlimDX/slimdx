@@ -44,6 +44,9 @@ namespace DXGI
 
 	Resource^ Resource::FromPointer( IDirect3DResource9* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		Resource^ tableEntry = safe_cast<Resource^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -56,6 +59,9 @@ namespace DXGI
 
 	Resource^ Resource::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		Resource^ tableEntry = safe_cast<Resource^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

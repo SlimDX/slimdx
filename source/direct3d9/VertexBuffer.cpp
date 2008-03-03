@@ -63,6 +63,9 @@ namespace Direct3D9
 
 	VertexBuffer^ VertexBuffer::FromPointer( IDirect3DVertexBuffer9* pointer )
 	{
+		if( pointer == 0 )
+			return nullptr;
+
 		VertexBuffer^ tableEntry = safe_cast<VertexBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -75,6 +78,9 @@ namespace Direct3D9
 
 	VertexBuffer^ VertexBuffer::FromPointer( IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		VertexBuffer^ tableEntry = safe_cast<VertexBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -115,7 +121,7 @@ namespace Direct3D9
 
 		m_Description = desc;
 		if( m_Description.Pool == Pool::Default )
-			ObjectTable::FlagAsDefaultPool( this );
+			this->IsDefaultPool = true;
 	}
 
 	DataStream^ VertexBuffer::Lock( int offset, int size, LockFlags flags )
