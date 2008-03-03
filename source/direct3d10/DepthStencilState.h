@@ -44,7 +44,7 @@ namespace SlimDX
 			}
 			
 			DepthStencilState( SlimDX::Direct3D10::Device^ device, DepthStencilStateDescription description );
-			static DepthStencilState^ FromPointer( System::IntPtr state );
+			static DepthStencilState^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

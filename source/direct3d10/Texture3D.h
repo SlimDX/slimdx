@@ -47,7 +47,7 @@ namespace SlimDX
 			}
 
 			Texture3D( SlimDX::Direct3D10::Device^ device, Texture3DDescription description );
-			static Texture3D^ FromPointer( System::IntPtr nativeObject );
+			static Texture3D^ FromPointer( System::IntPtr pointer );
 
 			DataBox^ Map( int subResource, MapMode mode, MapFlags flags );
 			void Unmap( int subResource );

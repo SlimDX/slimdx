@@ -120,7 +120,7 @@ namespace Direct3D9
 		return IntPtr( data );
 	}
 
-	AnimationOutput^ AnimationSet::GetTransformation( double periodicPosition, int animation )
+	AnimationOutput AnimationSet::GetTransformation( double periodicPosition, int animation )
 	{
 		Vector3 scale;
 		Vector3 translation;
@@ -130,13 +130,13 @@ namespace Direct3D9
 			reinterpret_cast<D3DXQUATERNION*>( &rotation ), reinterpret_cast<D3DXVECTOR3*>( &translation ) );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
+			return AnimationOutput();
 
-		AnimationOutput^ output = gcnew AnimationOutput();
-		output->Flags = AnimationOutputFlags::Rotation | AnimationOutputFlags::Scale | AnimationOutputFlags::Translation;
-		output->Scaling = scale;
-		output->Translation = translation;
-		output->Rotation = rotation;
+		AnimationOutput output;
+		output.Flags = AnimationOutputFlags::Rotation | AnimationOutputFlags::Scale | AnimationOutputFlags::Translation;
+		output.Scaling = scale;
+		output.Translation = translation;
+		output.Rotation = rotation;
 
 		return output;
 	}

@@ -21,15 +21,10 @@
 */
 #pragma once
 
+#include "Enums.h"
+
 namespace SlimDX
 {
-	[System::Flags]
-	public enum class PerformanceOptions : System::Int32
-	{
-		None = 0,
-		DoNotAllowProfiling = 1,
-	};
-
 	public ref class Performance sealed
 	{
 	private:

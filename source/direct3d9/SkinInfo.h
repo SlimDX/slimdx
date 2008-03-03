@@ -54,7 +54,7 @@ namespace SlimDX
 			SkinInfo( int vertexCount, array<VertexElement>^ vertexDeclaration, int boneCount );
 			SkinInfo( BaseMesh^ mesh, int boneCount, array<BoneCombination^>^ boneCombinationTable );
 			SkinInfo( int vertexCount, VertexFormat fvf, int boneCount );
-			static SkinInfo^ FromPointer( System::IntPtr skinInfo );
+			static SkinInfo^ FromPointer( System::IntPtr pointer );
 
 			SkinInfo^ Clone();
 

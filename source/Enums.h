@@ -27,6 +27,13 @@ namespace SlimDX
 	//       adding new enumerations or renaming existing ones, please make sure
 	//       the ordering is maintained.
 	
+	[System::Flags]
+	public enum class PerformanceOptions : System::Int32
+	{
+		None = 0,
+		DoNotAllowProfiling = 1,
+	};
+
 	/// <remarks>
 	/// Values which control the behavior of a result watch.
 	/// </remarks>
@@ -36,5 +43,4 @@ namespace SlimDX
 		Assert = 1,
 		Throw = 2,
 	};
-
 }

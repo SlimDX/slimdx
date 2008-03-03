@@ -213,7 +213,7 @@ namespace Direct3D9
 		return InternalPointer->KeyTrackWeight( track, newWeight, startTime, duration, static_cast<D3DXTRANSITION_TYPE>( transition ) );
 	}
 
-	Result AnimationController::RegisterAnimationOutput( String^ name, AnimationOutput^ output )
+	Result AnimationController::RegisterAnimationOutput( String^ name, AnimationOutput output )
 	{
 		D3DXMATRIX *matrix = NULL;
 		D3DXVECTOR3 *scale = NULL;
@@ -226,30 +226,30 @@ namespace Direct3D9
 		pin_ptr<Vector3> pinTranslation;
 		pin_ptr<Quaternion> pinQuaternion;
 
-		if( (output->Flags & AnimationOutputFlags::Transformation) == AnimationOutputFlags::Transformation )
+		if( (output.Flags & AnimationOutputFlags::Transformation) == AnimationOutputFlags::Transformation )
 		{
-			Matrix temp = output->Transformation;
+			Matrix temp = output.Transformation;
 			pinMatrix = &temp;
 			matrix = reinterpret_cast<D3DXMATRIX*>( pinMatrix );
 		}
 
-		if( (output->Flags & AnimationOutputFlags::Scale) == AnimationOutputFlags::Scale )
+		if( (output.Flags & AnimationOutputFlags::Scale) == AnimationOutputFlags::Scale )
 		{
-			Vector3 temp = output->Scaling;
+			Vector3 temp = output.Scaling;
 			pinScale = &temp;
 			scale = reinterpret_cast<D3DXVECTOR3*>( pinScale );
 		}
 
-		if( (output->Flags & AnimationOutputFlags::Translation) == AnimationOutputFlags::Translation )
+		if( (output.Flags & AnimationOutputFlags::Translation) == AnimationOutputFlags::Translation )
 		{
-			Vector3 temp = output->Translation;
+			Vector3 temp = output.Translation;
 			pinTranslation = &temp;
 			translation = reinterpret_cast<D3DXVECTOR3*>( pinTranslation );
 		}
 
-		if( (output->Flags & AnimationOutputFlags::Rotation) == AnimationOutputFlags::Rotation )
+		if( (output.Flags & AnimationOutputFlags::Rotation) == AnimationOutputFlags::Rotation )
 		{
-			Quaternion temp = output->Rotation;
+			Quaternion temp = output.Rotation;
 			pinQuaternion = &temp;
 			rotation = reinterpret_cast<D3DXQUATERNION*>( pinQuaternion );
 		}

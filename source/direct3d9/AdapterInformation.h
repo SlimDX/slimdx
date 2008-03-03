@@ -29,7 +29,7 @@ namespace SlimDX
 	{
 		ref class AdapterDetails;
 		value class DisplayMode;
-		value class Capabilities;
+		ref class Capabilities;
 		ref class DisplayModeCollection;
 
 		public ref class AdapterInformation
@@ -51,7 +51,7 @@ namespace SlimDX
 			property System::IntPtr Monitor { System::IntPtr get(); }
 			property DisplayMode CurrentDisplayMode { DisplayMode get(); }
             DisplayModeCollection^ GetDisplayModes( Format format );
-            Capabilities GetCaps( DeviceType type );
+            Capabilities^ GetCaps( DeviceType type );
 			bool SupportsR2VB( DeviceType type );
 
 			property AdapterDetails^ Details

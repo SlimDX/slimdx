@@ -19,26 +19,51 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include <d3d9.h>
+#include <d3dx9.h>
 
-#include "../math/Quaternion.h"
-#include "../math/Matrix.h"
-#include "../math/Vector3.h"
+#include "GammaRamp.h"
 
-#include "Enums.h"
+using namespace System;
+using namespace System::Collections::ObjectModel;
 
 namespace SlimDX
 {
-	namespace Direct3D9
+namespace Direct3D9
+{
+	GammaRamp::GammaRamp()
 	{
-		public value class AnimationOutput
-		{
-		public:
-			property AnimationOutputFlags Flags;
-			property Matrix Transformation;
-			property Vector3 Scaling;
-			property Vector3 Translation;
-			property Quaternion Rotation;
-		};
+		red = gcnew Collection<Int16>();
+		green = gcnew Collection<Int16>();
+		blue = gcnew Collection<Int16>();
 	}
+
+	GammaRamp::GammaRamp( const D3DGAMMARAMP &ramp )
+	{
+		red = gcnew Collection<Int16>();
+		green = gcnew Collection<Int16>();
+		blue = gcnew Collection<Int16>();
+
+		for( int i = 0; i < 256; i++ )
+		{
+			red->Add( ramp.red[i] );
+			green->Add( ramp.green[i] );
+			blue->Add( ramp.blue[i] );
+		}
+	}
+
+	D3DGAMMARAMP GammaRamp::ToUnmanaged()
+	{
+		D3DGAMMARAMP result = D3DGAMMARAMP();
+
+		for( int i = 0; i < 256; i++ )
+		{
+			result.red[i] = red[i];
+			result.green[i] = green[i];
+			result.blue[i] = blue[i];
+		}
+
+		return result;
+	}
+}
 }

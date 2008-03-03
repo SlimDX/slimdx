@@ -50,7 +50,7 @@ namespace SlimDX
 			}
 		};
 
-		public ref class Frame abstract
+		public ref class Frame abstract : System::IEquatable<Frame^>
 		{
 		internal:
 			property D3DXFRAME *Pointer;
@@ -122,6 +122,15 @@ namespace SlimDX
 				Frame^ get();
 				void set( Frame^ value );
 			}
+
+			static bool operator == ( Frame^ left, Frame^ right );
+			static bool operator != ( Frame^ left, Frame^ right );
+
+			virtual System::String^ ToString() override;
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( Frame^ other );
+			static bool Equals( Frame^ value1, Frame^ value2 );
 		};
 	}
 }

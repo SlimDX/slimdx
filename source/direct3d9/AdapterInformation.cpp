@@ -49,7 +49,7 @@ namespace Direct3D9
         return Direct3D::GetAdapterDisplayMode( m_Adapter );
 	}
 
-    Capabilities AdapterInformation::GetCaps( DeviceType type )
+    Capabilities^ AdapterInformation::GetCaps( DeviceType type )
     {
         return Direct3D::GetDeviceCaps( m_Adapter, type );
     }

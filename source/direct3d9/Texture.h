@@ -133,7 +133,7 @@ namespace SlimDX
 		public:
 			Texture( SlimDX::Direct3D9::Device^ device, int width, int height, int levelCount, Usage usage, Format format, Pool pool );
 			virtual ~Texture() { }
-			static Texture^ FromPointer( System::IntPtr texture );
+			static Texture^ FromPointer( System::IntPtr pointer );
 
 			/// <summary>
 			/// Checks texture-creation parameters.
@@ -194,7 +194,7 @@ namespace SlimDX
 		public:
 			CubeTexture( SlimDX::Direct3D9::Device^ device, int edgeLength, int levelCount, Usage usage, Format format, Pool pool );
 			virtual ~CubeTexture() { }
-			static CubeTexture^ FromPointer( System::IntPtr cubeTexture );
+			static CubeTexture^ FromPointer( System::IntPtr pointer );
 
 			static CubeTextureRequirements CheckRequirements( SlimDX::Direct3D9::Device^ device, int size, int mipLevelCount, Usage usage, Format format, Pool pool );
 
@@ -236,7 +236,7 @@ namespace SlimDX
 		public:
 			VolumeTexture( SlimDX::Direct3D9::Device^ device, int width, int height, int depth, int levelCount, Usage usage, Format format, Pool pool );
 			virtual ~VolumeTexture() { }
-			static VolumeTexture^ FromPointer( System::IntPtr volumeTexture );
+			static VolumeTexture^ FromPointer( System::IntPtr pointer );
 
 			static VolumeTextureRequirements CheckRequirements( SlimDX::Direct3D9::Device^ device, int width, int height, int depth, int mipLevelCount, Usage usage, Format format, Pool pool );
 

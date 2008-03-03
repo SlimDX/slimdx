@@ -94,6 +94,7 @@ namespace SlimDX
 		static bool operator == ( Viewport left, Viewport right );
 		static bool operator != ( Viewport left, Viewport right );
 
+		virtual System::String^ ToString() override;
 		virtual int GetHashCode() override;
 		virtual bool Equals( System::Object^ obj ) override;
 		virtual bool Equals( Viewport other );

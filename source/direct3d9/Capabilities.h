@@ -61,7 +61,7 @@ namespace SlimDX
 			static bool Equals( PixelShader20Caps% value1, PixelShader20Caps% value2 );
 		};
 
-		public value class Capabilities : System::IEquatable<Capabilities>
+		public ref class Capabilities : System::IEquatable<Capabilities^>
 		{
 		public:
 			property DeviceType DeviceType;
@@ -133,13 +133,13 @@ namespace SlimDX
 			property int MaxVertexShader30InstructionSlots;
 			property int MaxPixelShader30InstructionSlots;
 
-			static bool operator == ( Capabilities left, Capabilities right );
-			static bool operator != ( Capabilities left, Capabilities right );
+			static bool operator == ( Capabilities^ left, Capabilities^ right );
+			static bool operator != ( Capabilities^ left, Capabilities^ right );
 
 			virtual int GetHashCode() override;
 			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( Capabilities other );
-			static bool Equals( Capabilities% value1, Capabilities% value2 );
+			virtual bool Equals( Capabilities^ other );
+			static bool Equals( Capabilities^ value1, Capabilities^ value2 );
 
 		internal:
 			Capabilities( D3DCAPS9& caps );

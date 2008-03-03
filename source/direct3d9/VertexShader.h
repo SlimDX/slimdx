@@ -40,7 +40,7 @@ namespace SlimDX
 			static VertexShader^ FromPointer( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable );
 
 		public:
-			static VertexShader^ FromPointer( System::IntPtr vertexShader );
+			static VertexShader^ FromPointer( System::IntPtr pointer );
 			
 			~VertexShader()
 			{

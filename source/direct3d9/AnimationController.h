@@ -28,7 +28,7 @@ namespace SlimDX
 	namespace Direct3D9
 	{
 		ref class AnimationSet;
-		ref class AnimationOutput;
+		value class AnimationOutput;
 
 		value class TrackDescription;
 		value class EventDescription;
@@ -61,7 +61,7 @@ namespace SlimDX
 			int KeyTrackSpeed( int track, float newSpeed, double startTime, double duration, TransitionType transition );
 			int KeyTrackWeight( int track, float newWeight, double startTime, double duration, TransitionType transition );
 
-			Result RegisterAnimationOutput( System::String^ name, AnimationOutput^ output );
+			Result RegisterAnimationOutput( System::String^ name, AnimationOutput output );
 			Result RegisterAnimationSet( AnimationSet^ set );
 			Result ResetTime();
 

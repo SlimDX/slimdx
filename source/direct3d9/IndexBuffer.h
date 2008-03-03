@@ -43,7 +43,7 @@ namespace SlimDX
 		public:
 			IndexBuffer( SlimDX::Direct3D9::Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit );
 			virtual ~IndexBuffer() { }
-			static IndexBuffer^ FromPointer( System::IntPtr buffer );
+			static IndexBuffer^ FromPointer( System::IntPtr pointer );
 
 			DataStream^ Lock( int offset, int size, LockFlags flags );
 			Result Unlock();

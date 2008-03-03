@@ -46,7 +46,7 @@ namespace SlimDX
 			}
 			
 			Texture1D( SlimDX::Direct3D10::Device^ device, Texture1DDescription description );
-			static Texture1D^ FromPointer( System::IntPtr nativeObject );
+			static Texture1D^ FromPointer( System::IntPtr pointer );
 
 			DataStream^ Map( int subResource, MapMode mode, MapFlags flags );
 			void Unmap( int subResource );

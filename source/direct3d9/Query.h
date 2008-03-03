@@ -191,7 +191,7 @@ namespace SlimDX
 
 		public:
 			Query( SlimDX::Direct3D9::Device^ device, QueryType type );
-			static Query^ FromPointer( System::IntPtr query );
+			static Query^ FromPointer( System::IntPtr pointer );
 
 			property SlimDX::Direct3D9::Device^ Device
 			{

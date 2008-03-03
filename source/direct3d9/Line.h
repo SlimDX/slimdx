@@ -33,7 +33,7 @@ namespace SlimDX
 
 		public:
 			Line( SlimDX::Direct3D9::Device^ device );
-			static Line^ FromPointer( System::IntPtr line );
+			static Line^ FromPointer( System::IntPtr pointer );
 
 			Result Begin();
 			Result End();

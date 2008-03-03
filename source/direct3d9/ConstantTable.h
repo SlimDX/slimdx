@@ -91,7 +91,7 @@ namespace SlimDX
 
 		public:
 			~ConstantTable();
-			static ConstantTable^ FromPointer( System::IntPtr table );
+			static ConstantTable^ FromPointer( System::IntPtr pointer );
 
 			EffectHandle^ GetConstant( EffectHandle^ handle, int index );
 			EffectHandle^ GetConstant( EffectHandle^ handle, System::String^ name );
