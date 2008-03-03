@@ -40,7 +40,7 @@ namespace SlimDX
 			static PixelShader^ FromPointer( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable );
 
 		public:
-			static PixelShader^ FromPointer( System::IntPtr pixelShader );
+			static PixelShader^ FromPointer( System::IntPtr pointer );
 
 			~PixelShader()
 			{

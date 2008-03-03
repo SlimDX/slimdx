@@ -187,6 +187,24 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
+	Result Device::Clear( ClearFlags clearFlags, Color4 color, float zdepth, int stencil, array<System::Drawing::Rectangle>^ rectangles )
+	{
+		stack_vector<D3DRECT> rects( rectangles->Length );
+		for( int i = 0; i < rectangles->Length; i++ )
+		{
+			D3DRECT rect;
+			rect.x1 = rectangles[i].Left;
+			rect.y1 = rectangles[i].Top;
+			rect.x2 = rectangles[i].Right;
+			rect.y2 = rectangles[i].Bottom;
+
+			rects[i] = rect;
+		}
+
+		HRESULT hr = InternalPointer->Clear( rectangles->Length, &rects[0], static_cast<DWORD>( clearFlags ), static_cast<D3DCOLOR>( color.ToArgb() ), zdepth, stencil );
+		return RECORD_D3D9( hr );
+	}
+
 	Result Device::Clear( ClearFlags clearFlags, Color4 color, float zdepth, int stencil )
 	{
 		HRESULT hr = InternalPointer->Clear( 0, 0, static_cast<DWORD>( clearFlags ), static_cast<D3DCOLOR>( color.ToArgb() ), zdepth, stencil );
@@ -400,25 +418,25 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 	
-	Result Device::SetPixelShader( PixelShader^ shader )
+	void Device::PixelShader::set( SlimDX::Direct3D9::PixelShader^ shader )
 	{
 		IDirect3DPixelShader9 *ptr = shader != nullptr ? shader->InternalPointer : NULL; 
 		HRESULT hr = InternalPointer->SetPixelShader( ptr );
-		return RECORD_D3D9( hr );
+		RECORD_D3D9( hr );
 	}
 	
-	Result Device::SetVertexShader( VertexShader^ shader )
+	void Device::VertexShader::set( SlimDX::Direct3D9::VertexShader^ shader )
 	{
 		IDirect3DVertexShader9 *ptr = shader != nullptr ? shader->InternalPointer : NULL; 
 		HRESULT hr = InternalPointer->SetVertexShader( ptr );
-		return RECORD_D3D9( hr );
+		RECORD_D3D9( hr );
 	}
 	
-	Result Device::SetDepthStencilSurface( Surface^ target )
+	void Device::DepthStencilSurface::set( Surface^ target )
 	{	
 		IDirect3DSurface9* surface = target != nullptr ? target->InternalPointer : NULL;
 		HRESULT hr = InternalPointer->SetDepthStencilSurface( surface );
-		return RECORD_D3D9( hr );
+		RECORD_D3D9( hr );
 	}
 
 	Surface^ Device::GetBackBuffer( int swapChain, int backBuffer )
@@ -445,13 +463,13 @@ namespace Direct3D9
 		return true;
 	}
 
-	Capabilities Device::GetDeviceCaps()
+	Capabilities^ Device::Capabilities::get()
 	{
 		D3DCAPS9 caps;
 		HRESULT hr = InternalPointer->GetDeviceCaps( &caps );
 		RECORD_D3D9( hr );
 
-		return Capabilities( caps );
+		return gcnew SlimDX::Direct3D9::Capabilities( caps );
 	}
 
 	int Device::AvailableTextureMemory::get()
@@ -493,7 +511,7 @@ namespace Direct3D9
 		RECORD_D3D9( hr );
 	}
 
-	Surface^ Device::GetDepthStencilSurface()
+	Surface^ Device::DepthStencilSurface::get()
 	{
 		IDirect3DSurface9* surface;
 
@@ -564,6 +582,77 @@ namespace Direct3D9
 		return GetRenderState<int>( state );
 	}
 
+	generic<typename T>
+	T Device::GetSamplerState( int sampler, SamplerState type )
+	{
+		DWORD value = 0;
+		HRESULT hr = InternalPointer->GetSamplerState( sampler, static_cast<D3DSAMPLERSTATETYPE>( type ), &value );
+		RECORD_D3D9( hr );
+
+		return (T) value;
+	}
+
+	int Device::GetSamplerState( int sampler, SamplerState type )
+	{
+		return GetSamplerState<int>( sampler, type );
+	}
+
+	generic<typename T>
+	T Device::GetTextureStageState( int stage, TextureStage type )
+	{
+		DWORD value = 0;
+		HRESULT hr = InternalPointer->GetTextureStageState( stage, static_cast<D3DTEXTURESTAGESTATETYPE>( type ), &value );
+		RECORD_D3D9( hr );
+
+		return (T) value;
+	}
+
+	int Device::GetTextureStageState( int stage, TextureStage type )
+	{
+		return GetTextureStageState<int>( stage, type );
+	}
+
+	array<PaletteEntry>^ Device::GetPaletteEntries( int paletteNumber )
+	{
+		array<PaletteEntry>^ result = gcnew array<PaletteEntry>( 256 );
+		pin_ptr<PaletteEntry> pinnedResult = &result[0];
+
+		HRESULT hr = InternalPointer->GetPaletteEntries( paletteNumber, reinterpret_cast<PALETTEENTRY*>( pinnedResult ) );
+		
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		return result;
+	}
+
+	Result Device::SetPaletteEntries( int paletteNumber, array<PaletteEntry>^ entries )
+	{
+		pin_ptr<PaletteEntry> pinnedEntries = &entries[0];
+
+		HRESULT hr = InternalPointer->SetPaletteEntries( paletteNumber, reinterpret_cast<PALETTEENTRY*>( pinnedEntries ) );
+		return RECORD_D3D9( hr );
+	}
+
+	GammaRamp^ Device::GetGammaRamp( int swapChain )
+	{
+		D3DGAMMARAMP ramp;
+		InternalPointer->GetGammaRamp( swapChain, &ramp );
+
+		return gcnew GammaRamp( ramp );
+	}
+
+	void Device::SetGammaRamp( int swapChain, GammaRamp^ ramp, bool calibrate )
+	{
+		DWORD flags;
+		if( calibrate )
+			flags = D3DSGR_CALIBRATE;
+		else
+			flags = D3DSGR_NO_CALIBRATION;
+
+		D3DGAMMARAMP result = ramp->ToUnmanaged();
+		InternalPointer->SetGammaRamp( swapChain, flags, &result );
+	}
+
 	Result Device::GetStreamSource( int stream, [Out] VertexBuffer^% streamData, [Out] int% offsetBytes, [Out] int% stride )
 	{
 		IDirect3DVertexBuffer9* localVb;
@@ -608,7 +697,7 @@ namespace Direct3D9
 		return SwapChain::FromPointer( swapChain );
 	}
 
-	IndexBuffer^ Device::GetIndices()
+	IndexBuffer^ Device::Indices::get()
 	{
 		IDirect3DIndexBuffer9* indices;
 
@@ -620,7 +709,7 @@ namespace Direct3D9
 		return IndexBuffer::FromPointer( indices );
 	}
 
-	Result Device::SetIndices( IndexBuffer^ indices )
+	void Device::Indices::set( IndexBuffer^ indices )
 	{
 		HRESULT hr;
 		if( indices != nullptr )
@@ -628,7 +717,7 @@ namespace Direct3D9
 		else
 			hr = InternalPointer->SetIndices( NULL );
 
-		return RECORD_D3D9( hr );
+		RECORD_D3D9( hr );
 	}
 
 	Result Device::ProcessVertices( int sourceStartIndex, int destinationIndex, int vertexCount, VertexBuffer^ destinationBuffer,
@@ -710,6 +799,13 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
+	Result Device::StretchRectangle( Surface^ source, Surface^ destination, TextureFilter filter )
+	{
+		HRESULT hr = InternalPointer->StretchRect( source->InternalPointer, NULL, destination->InternalPointer,
+			NULL, static_cast<D3DTEXTUREFILTERTYPE>( filter ) );
+		return RECORD_D3D9( hr );
+	}
+
 	Result Device::UpdateSurface( Surface^ source, System::Drawing::Rectangle sourceRect,
 		Surface^ destination, System::Drawing::Point destinationPoint )
 	{
@@ -718,6 +814,12 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->UpdateSurface( source->InternalPointer, &nativeSourceRect,
 			destination->InternalPointer, &nativeDestPoint );
+		return RECORD_D3D9( hr );
+	}
+
+	Result Device::UpdateSurface( Surface^ source, Surface^ destination )
+	{
+		HRESULT hr = InternalPointer->UpdateSurface( source->InternalPointer, NULL, destination->InternalPointer, NULL );
 		return RECORD_D3D9( hr );
 	}
 
@@ -732,6 +834,12 @@ namespace Direct3D9
 		RECT nativeDestRect = { destRect.Left, destRect.Top, destRect.Right, destRect.Bottom };
 
 		HRESULT hr = InternalPointer->ColorFill( destSurface->InternalPointer, &nativeDestRect, static_cast<D3DCOLOR>( color.ToArgb() ) );
+		return RECORD_D3D9( hr );
+	}
+
+	Result Device::ColorFill( Surface^ destSurface, Color4 color )
+	{
+		HRESULT hr = InternalPointer->ColorFill( destSurface->InternalPointer, NULL, static_cast<D3DCOLOR>( color.ToArgb() ) );
 		return RECORD_D3D9( hr );
 	}
 
@@ -750,6 +858,44 @@ namespace Direct3D9
 			return nullptr;
 
 		return StateBlock::FromPointer( stateBlock );
+	}
+
+	SlimDX::Direct3D9::CreationParameters Device::CreationParameters::get()
+	{
+		SlimDX::Direct3D9::CreationParameters parameters;
+		D3DDEVICE_CREATION_PARAMETERS dcp;
+
+		HRESULT hr = InternalPointer->GetCreationParameters( &dcp );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return SlimDX::Direct3D9::CreationParameters();
+
+		parameters.AdapterOrdinal = dcp.AdapterOrdinal;
+		parameters.DeviceType = static_cast<DeviceType>( dcp.DeviceType );
+		parameters.Window = IntPtr( dcp.hFocusWindow );
+		parameters.BehaviorFlags = static_cast<CreateFlags>( dcp.BehaviorFlags );
+
+		return parameters;
+	}
+
+	SlimDX::Direct3D9::ClipStatus Device::ClipStatus::get()
+	{
+		D3DCLIPSTATUS9 status;
+
+		HRESULT hr = InternalPointer->GetClipStatus( &status );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return SlimDX::Direct3D9::ClipStatus();
+
+		SlimDX::Direct3D9::ClipStatus result;
+		result.ClipUnion = static_cast<ClipFlags>( status.ClipUnion );
+		result.ClipIntersection = static_cast<ClipFlags>( status.ClipIntersection );
+
+		return result;
+	}
+
+	void Device::ClipStatus::set( SlimDX::Direct3D9::ClipStatus value )
+	{
+		HRESULT hr = InternalPointer->SetClipStatus( reinterpret_cast<const D3DCLIPSTATUS9*>( &value ) );
+		RECORD_D3D9( hr );
 	}
 
 	int Device::SwapChainCount::get()
@@ -1048,7 +1194,7 @@ namespace Direct3D9
 		return (int) palette;
 	}
 
-	VertexShader^ Device::GetVertexShader()
+	VertexShader^ Device::VertexShader::get()
 	{
 		IDirect3DVertexShader9* vs;
 		HRESULT hr = InternalPointer->GetVertexShader( &vs );
@@ -1056,10 +1202,10 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return VertexShader::FromPointer( vs );
+		return SlimDX::Direct3D9::VertexShader::FromPointer( vs );
 	}
 
-	PixelShader^ Device::GetPixelShader()
+	PixelShader^ Device::PixelShader::get()
 	{
 		IDirect3DPixelShader9* ps;
 		HRESULT hr = InternalPointer->GetPixelShader( &ps );
@@ -1067,7 +1213,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return PixelShader::FromPointer( ps );
+		return SlimDX::Direct3D9::PixelShader::FromPointer( ps );
 	}
 
 	DriverLevel Device::DriverLevel::get()

@@ -822,32 +822,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="ObjectInfo">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-29 21:23:19Z">
-            <Issue Name="Equals">
-             <Item>'ObjectInfo'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'ObjectInfo'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="ObjectTable">
-          <Members>
-           <Member Name="#FlagAsDefaultPool(SlimDX.ComObject)">
-            <Messages>
-             <Message Id="Flag" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-02-29 21:23:19Z">
-              <Issue Name="MemberNoAlternate">
-               <Item>Flag</Item>
-               <Item>'ObjectTable.FlagAsDefaultPool(ComObject)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Performance">
           <Members>
            <Member Name="#GetStatus()">
@@ -1235,6 +1209,17 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'BlendState.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
           </Members>
          </Type>
          <Type Name="Buffer">
@@ -1512,6 +1497,17 @@
              <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-02-26 23:46:35Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'DepthStencilState::DepthStencilState(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'DepthStencilState.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
                <Item>'pointer'</Item>
               </Issue>
@@ -1823,6 +1819,17 @@
                <Item>'Effect.FromMemory(Device, byte[], string, ShaderFlags, EffectFlags, EffectPool, out string)'</Item>
                <Item>Flags</Item>
                <Item>'shaderFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Effect.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -2780,6 +2787,17 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'RasterizerState.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
           </Members>
          </Type>
          <Type Name="RenderTargetView">
@@ -3164,6 +3182,17 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Texture1D.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#Map(System.Int32,SlimDX.Direct3D10.MapMode,SlimDX.Direct3D10.MapFlags)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
@@ -3316,6 +3345,17 @@
              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-02-27 22:14:29Z">
               <Issue>
                <Item>'Texture3D.FromPointer(ID3D10Texture3D*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Texture3D.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3498,6 +3538,16 @@
           </Members>
          </Type>
          <Type Name="AnimationOutput">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-03-03 21:06:33Z">
+            <Issue Name="Equals">
+             <Item>'AnimationOutput'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'AnimationOutput'</Item>
+            </Issue>
+           </Message>
+          </Messages>
           <Members>
            <Member Name="#Flags">
             <Messages>
@@ -3904,6 +3954,28 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="ClipFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-03-03 21:06:33Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'ClipFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ClipStatus">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-03-03 21:06:33Z">
+            <Issue Name="Equals">
+             <Item>'ClipStatus'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'ClipStatus'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="ColorWriteEnable">
           <Messages>
            <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -3962,6 +4034,17 @@
          </Type>
          <Type Name="ConstantTable">
           <Members>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'ConstantTable.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#GetBuffer()">
             <Messages>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -3995,6 +4078,30 @@
               <Issue Name="Member">
                <Item>Fpu</Item>
                <Item>'CreateFlags.FpuPreserve'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="CreationParameters">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-03-03 21:06:33Z">
+            <Issue Name="Equals">
+             <Item>'CreationParameters'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'CreationParameters'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#BehaviorFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-03-03 21:06:33Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'CreationParameters.BehaviorFlags'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4046,6 +4153,17 @@
                <Item>CubeTexture.FromMemory(Device, Byte[], Int32, Int32, Usage, Format, Pool, Filter, Filter, Int32):CubeTexture</Item>
                <Item>SlimDX.Direct3D9.Device</Item>
                <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'CubeTexture.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4433,6 +4551,24 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#Clear(SlimDX.Direct3D9.ClearFlags,SlimDX.Color4,System.Single,System.Int32,System.Drawing.Rectangle[])">
+            <Messages>
+             <Message Id="zdepth" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-03-03 21:06:33Z">
+              <Issue Name="MemberParameter">
+               <Item>'Device.Clear(ClearFlags, Color4, float, int, Rectangle[])'</Item>
+               <Item>zdepth</Item>
+               <Item>'zdepth'</Item>
+              </Issue>
+             </Message>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-03-03 21:06:33Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Device.Clear(ClearFlags, Color4, float, int, Rectangle[])'</Item>
+               <Item>Flags</Item>
+               <Item>'clearFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#DrawIndexedUserPrimitives`2(SlimDX.Direct3D9.PrimitiveType,System.Int32,System.Int32,System.Int32,!!0[],SlimDX.Direct3D9.Format,!!1[],System.Int32)">
             <Messages>
              <Message Id="T" TypeName="IdentifiersShouldHaveCorrectPrefix" Category="Microsoft.Naming" CheckId="CA1715" Status="Excluded" Created="2008-01-06 19:04:15Z" FixCategory="NonBreaking">
@@ -4465,49 +4601,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#GetDepthStencilSurface()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue Certainty="50">
-               <Item>'Device.GetDepthStencilSurface()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetDeviceCaps()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue Certainty="50">
-               <Item>'Device.GetDeviceCaps()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetIndices()">
-            <Messages>
-             <Message Id="Indices" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue Name="Member">
-               <Item>Indices</Item>
-               <Item>'Device.GetIndices()'</Item>
-               <Item>Indexes</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue Certainty="50">
-               <Item>'Device.GetIndices()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetPixelShader()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue Certainty="50">
-               <Item>'Device.GetPixelShader()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#GetRenderState(SlimDX.Direct3D9.RenderState)">
             <Messages>
              <Message TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -4532,6 +4625,26 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#GetSamplerState`1(System.Int32,SlimDX.Direct3D9.SamplerState)">
+            <Messages>
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2008-03-03 21:06:33Z">
+              <Issue>
+               <Item>'Device.GetSamplerState&lt;T&gt;(int, SamplerState)'</Item>
+               <Item>'T'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetTextureStageState`1(System.Int32,SlimDX.Direct3D9.TextureStage)">
+            <Messages>
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2008-03-03 21:06:33Z">
+              <Issue>
+               <Item>'Device.GetTextureStageState&lt;T&gt;(int, TextureStage)'</Item>
+               <Item>'T'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#GetTransform(System.Int32)">
             <Messages>
              <Message Id="index+256" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2008-01-27 22:23:52Z">
@@ -4542,11 +4655,13 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#GetVertexShader()">
+           <Member Name="#Indices">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue Certainty="50">
-               <Item>'Device.GetVertexShader()'</Item>
+             <Message Id="Indices" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-03-03 21:06:33Z">
+              <Issue Name="Member">
+               <Item>Indices</Item>
+               <Item>'Device.Indices'</Item>
+               <Item>Indexes</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4669,45 +4784,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#SetIndices(SlimDX.Direct3D9.IndexBuffer)">
-            <Messages>
-             <Message Id="0#indices" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue Name="Parameter">
-               <Item>Device.SetIndices(IndexBuffer):Void</Item>
-               <Item>indices</Item>
-               <Item>indices</Item>
-               <Item>indexes</Item>
-              </Issue>
-             </Message>
-             <Message Id="Indices" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue Name="Member">
-               <Item>Indices</Item>
-               <Item>'Device.SetIndices(IndexBuffer)'</Item>
-               <Item>Indexes</Item>
-              </Issue>
-             </Message>
-             <Message Id="indices" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="MemberParameter">
-               <Item>'Device.SetIndices(IndexBuffer)'</Item>
-               <Item>indices</Item>
-               <Item>'indices'</Item>
-               <Item>indexes</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#SetPixelShader(SlimDX.Direct3D9.PixelShader)">
-            <Messages>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-10-09 21:11:47Z">
-              <Issue>
-               <Item>pixelShader</Item>
-               <Item>Device.SetPixelShader(PixelShader):Void</Item>
-               <Item>SlimDX.Direct3D9.PixelShader</Item>
-               <Item>SlimDX.DirectXObject&lt;IDirect3DPixelShader9&gt;</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#SetPixelShaderConstant(System.Int32,System.Boolean[],System.Int32,System.Int32)">
             <Messages>
              <Message Id="offset*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -4755,18 +4831,6 @@
               <Issue>
                <Item>index+256</Item>
                <Item>'Device.SetTransform(int, Matrix)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#SetVertexShader(SlimDX.Direct3D9.VertexShader)">
-            <Messages>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-10-09 21:11:47Z">
-              <Issue>
-               <Item>vertexShader</Item>
-               <Item>Device.SetVertexShader(VertexShader):Void</Item>
-               <Item>SlimDX.Direct3D9.VertexShader</Item>
-               <Item>SlimDX.DirectXObject&lt;IDirect3DVertexShader9&gt;</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5011,6 +5075,17 @@
              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-02-27 22:14:29Z">
               <Issue>
                <Item>'Effect.FromPointer(ID3DXEffect*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Effect.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5443,6 +5518,17 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Font.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#MeasureString(SlimDX.Direct3D9.Sprite,System.String,SlimDX.Direct3D9.DrawTextFormat)">
             <Messages>
              <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-10-09 21:11:47Z">
@@ -5643,6 +5729,17 @@
              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-02-27 22:14:29Z">
               <Issue>
                <Item>'FragmentLinker.FromPointer(ID3DXFragmentLinker*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'FragmentLinker.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5874,6 +5971,17 @@
          </Type>
          <Type Name="IndexBuffer">
           <Members>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'IndexBuffer.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#Lock(System.Int32,System.Int32,SlimDX.Direct3D9.LockFlags)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
@@ -6051,6 +6159,17 @@
              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-02-27 22:14:29Z">
               <Issue>
                <Item>'Line.FromPointer(ID3DXLine*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Line.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -7094,6 +7213,17 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'PixelShader.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#FromString(SlimDX.Direct3D9.Device,System.String,System.String,System.String,SlimDX.Direct3D9.ShaderFlags,System.String&amp;)">
             <Messages>
              <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-10-09 21:11:47Z">
@@ -7384,6 +7514,17 @@
              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-02-27 22:14:29Z">
               <Issue>
                <Item>'Query.FromPointer(IDirect3DQuery9*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Query.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -8144,6 +8285,17 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'SkinInfo.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
           </Members>
          </Type>
          <Type Name="Sprite">
@@ -8379,6 +8531,17 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Surface.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#GetDC()">
             <Messages>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -8565,6 +8728,17 @@
                <Item>Texture.FromMemory(Device, Byte[], Int32, Int32, Int32, Usage, Format, Pool, Filter, Filter, Int32):Texture</Item>
                <Item>SlimDX.Direct3D9.Device</Item>
                <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Texture.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -8760,6 +8934,17 @@
          </Type>
          <Type Name="VertexBuffer">
           <Members>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'VertexBuffer.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#Lock(System.Int32,System.Int32,SlimDX.Direct3D9.LockFlags)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
@@ -8903,6 +9088,17 @@
          </Type>
          <Type Name="VertexShader">
           <Members>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'VertexShader.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#FromString(SlimDX.Direct3D9.Device,System.String,System.String,System.String,SlimDX.Direct3D9.ShaderFlags,System.String&amp;)">
             <Messages>
              <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-10-09 21:11:47Z">
@@ -8926,6 +9122,17 @@
          </Type>
          <Type Name="Volume">
           <Members>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Volume.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#LockBox(SlimDX.Direct3D9.Box,SlimDX.Direct3D9.LockFlags)">
             <Messages>
              <Message Id="LockBox" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-01-06 19:04:15Z">
@@ -9023,6 +9230,17 @@
                <Item>VolumeTexture.FromMemory(Device, Byte[], Int32, Int32, Int32, Int32, Usage, Format, Pool, Filter, Filter, Int32):VolumeTexture</Item>
                <Item>SlimDX.Direct3D9.Device</Item>
                <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'VolumeTexture.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -9552,6 +9770,13 @@
               <Issue>
                <Item>'Device&lt;DataFormat&gt;.FromPointer(IntPtr)'</Item>
                <Item>'Device&lt;DataFormat&gt;'</Item>
+              </Issue>
+             </Message>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-03 21:20:21Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Device&lt;DataFormat&gt;.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
               </Issue>
              </Message>
             </Messages>

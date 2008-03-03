@@ -22,6 +22,9 @@
 
 #include "Viewport.h"
 
+using namespace System;
+using namespace System::Globalization;
+
 namespace SlimDX
 {
 	int Viewport::X::get()
@@ -92,6 +95,12 @@ namespace SlimDX
 	bool Viewport::operator != ( Viewport left, Viewport right )
 	{
 		return !Viewport::Equals( left, right );
+	}
+
+	String^ Viewport::ToString()
+	{
+		return String::Format( CultureInfo::CurrentCulture, "X:{0} Y:{1} Width:{2} Height:{3} MinZ:{4} MaxZ:{5}",
+			X, Y, Width, Height, MinZ, MaxZ );
 	}
 
 	int Viewport::GetHashCode()

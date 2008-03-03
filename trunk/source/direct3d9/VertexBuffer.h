@@ -53,7 +53,7 @@ namespace SlimDX
 		public:
 			VertexBuffer( SlimDX::Direct3D9::Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool );
 			virtual ~VertexBuffer() { }
-			static VertexBuffer^ FromPointer( System::IntPtr buffer );
+			static VertexBuffer^ FromPointer( System::IntPtr pointer );
 
 			DataStream^ Lock( int offset, int size, LockFlags flags );
 			Result Unlock();

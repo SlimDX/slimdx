@@ -235,13 +235,13 @@ namespace Direct3D9
         return IntPtr( m_Direct3D->GetAdapterMonitor( adapter ) );
     }
 
-	Capabilities Direct3D::GetDeviceCaps( int adapter, DeviceType deviceType )
+	Capabilities^ Direct3D::GetDeviceCaps( int adapter, DeviceType deviceType )
 	{
 		D3DCAPS9 caps;
 		HRESULT hr = Direct3D::InternalPointer->GetDeviceCaps( adapter, static_cast<D3DDEVTYPE>( deviceType ), &caps );
 		RECORD_D3D9( hr );
 
-		return Capabilities( caps );
+		return gcnew Capabilities( caps );
 	}
 
 	bool Direct3D::SupportsR2VB( int adapter, DeviceType deviceType )

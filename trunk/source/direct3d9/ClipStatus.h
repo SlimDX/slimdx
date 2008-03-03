@@ -21,24 +21,17 @@
 */
 #pragma once
 
-#include "../math/Quaternion.h"
-#include "../math/Matrix.h"
-#include "../math/Vector3.h"
-
 #include "Enums.h"
 
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public value class AnimationOutput
+		public value class ClipStatus
 		{
 		public:
-			property AnimationOutputFlags Flags;
-			property Matrix Transformation;
-			property Vector3 Scaling;
-			property Vector3 Translation;
-			property Quaternion Rotation;
+			property ClipFlags ClipUnion;
+			property ClipFlags ClipIntersection;
 		};
 	}
 }

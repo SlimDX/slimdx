@@ -26,7 +26,6 @@
 #include "SlimDXException.h"
 
 using namespace System;
-using namespace System::Globalization;
 using namespace System::Runtime::Serialization;
 
 namespace SlimDX
@@ -56,7 +55,7 @@ namespace SlimDX
 	}
 	
 	SlimDXException::SlimDXException( Result result )
-	: Exception( String::Format( CultureInfo::CurrentCulture, "{0}: {1} ({2})", result.Name, result.Description, result.Code ) )
+	: Exception( result.ToString() )
 	{
 		m_Result = result;
 	}

@@ -1693,11 +1693,35 @@
 				Name="Device"
 				>
 				<File
+					RelativePath="..\source\direct3d9\ClipStatus.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ClipStatus.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\CreationParameters.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\CreationParameters.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\Device.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Device.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\GammaRamp.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\GammaRamp.h"
 					>
 				</File>
 				<File

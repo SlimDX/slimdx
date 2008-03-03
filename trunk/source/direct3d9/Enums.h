@@ -181,6 +181,24 @@ namespace SlimDX
 			Target = D3DCLEAR_TARGET,
 			ZBuffer = D3DCLEAR_ZBUFFER
 		};
+
+		[System::Flags]
+		public enum class ClipFlags : System::Int32
+		{
+			All = D3DCS_ALL,
+			Left = D3DCS_LEFT,
+			Right = D3DCS_RIGHT,
+			Top = D3DCS_TOP,
+			Bottom = D3DCS_BOTTOM,
+			Front = D3DCS_FRONT,
+			Back = D3DCS_BACK,
+			Plane0 = D3DCS_PLANE0,
+			Plane1 = D3DCS_PLANE1,
+			Plane2 = D3DCS_PLANE2,
+			Plane3 = D3DCS_PLANE3,
+			Plane4 = D3DCS_PLANE4,
+			Plane5 = D3DCS_PLANE5
+		};
 		
 		public enum class ColorSource : System::Int32
 		{

@@ -38,7 +38,7 @@ namespace SlimDX
 
 		public:
 			FragmentLinker( SlimDX::Direct3D9::Device^ device, int cacheSize );
-			static FragmentLinker^ FromPointer( System::IntPtr linker );
+			static FragmentLinker^ FromPointer( System::IntPtr pointer );
 
 			property Device^ Device
 			{

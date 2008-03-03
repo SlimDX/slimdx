@@ -34,6 +34,9 @@
 #include "PatchInfo.h"
 #include "Material.h"
 #include "PresentParameters.h"
+#include "GammaRamp.h"
+#include "ClipStatus.h"
+#include "CreationParameters.h"
 
 namespace SlimDX
 {
@@ -66,6 +69,7 @@ namespace SlimDX
 			Result TestCooperativeLevel();
 			Result Reset( PresentParameters^ presentParameters );
 
+			Result Clear( ClearFlags clearFlags, Color4 color, float zdepth, int stencil, array<System::Drawing::Rectangle>^ rectangles );
 			Result Clear( ClearFlags clearFlags, Color4 color, float zdepth, int stencil );
 			Result BeginScene();
 			Result EndScene();
@@ -73,12 +77,8 @@ namespace SlimDX
 			Result Present( SlimDX::Direct3D9::Present flags );
 
 			Surface^ GetBackBuffer( int swapChain, int backBuffer );
-			Surface^ GetDepthStencilSurface();
 			Surface^ GetRenderTarget( int index );
 			SwapChain^ GetSwapChain( int swapChainIndex );
-			IndexBuffer^ GetIndices();
-			VertexShader^ GetVertexShader();
-			PixelShader^ GetPixelShader();
 			DisplayMode GetDisplayMode( int swapChain );
 			Plane GetClipPlane( int index );
 
@@ -86,7 +86,14 @@ namespace SlimDX
 				T GetRenderState( RenderState state );
 			int GetRenderState( RenderState state );
 
-			Capabilities GetDeviceCaps();
+			generic<typename T> where T : value class
+				T GetSamplerState( int sampler, SamplerState type );
+			int GetSamplerState( int sampler, SamplerState type );
+
+			generic<typename T> where T : value class
+				T GetTextureStageState( int stage, TextureStage type );
+			int GetTextureStageState( int stage, TextureStage type );
+
 			Result GetStreamSource( int stream, [Out] VertexBuffer^% streamData, [Out] int% offsetBytes, [Out] int% stride );
 			int GetStreamSourceFrequency( int stream );
 
@@ -98,6 +105,12 @@ namespace SlimDX
 			Result SetRenderState( RenderState state, float value );
 			generic<typename T> where T : System::Enum
 				Result SetRenderState( RenderState state, T value );
+
+			array<PaletteEntry>^ GetPaletteEntries( int paletteNumber );
+			Result SetPaletteEntries( int paletteNumber, array<PaletteEntry>^ entries );
+
+			GammaRamp^ GetGammaRamp( int swapChain );
+			void SetGammaRamp( int swapChain, GammaRamp^ ramp, bool calibrate );
 
 			Result SetTextureStageState( int stage, TextureStage type, int value );
 			Result SetTextureStageState( int stage, TextureStage type, TextureOperation textureOperation );
@@ -132,11 +145,7 @@ namespace SlimDX
 			Result SetStreamSourceFrequency( int stream, int frequency );
 			Result SetTexture( int sampler, BaseTexture^ texture );
 			Result SetRenderTarget( int targetIndex, Surface^ target );
-			Result SetPixelShader( PixelShader^ pixelShader );
-			Result SetVertexShader( VertexShader^ vertexShader );			
-			Result SetDepthStencilSurface( Surface^ target );
 			Result SetDialogBoxMode( bool enableDialogs );
-			Result SetIndices( IndexBuffer^ indices );
 			Result SetClipPlane( int index, Plane clipPlane );
 
 			Result SetVertexShaderConstant( int startRegister, array<bool>^ data, int offset, int count );
@@ -174,13 +183,35 @@ namespace SlimDX
 			Result DeletePatch( int handle );
 
 			Result StretchRectangle( Surface^ source, System::Drawing::Rectangle sourceRectangle, Surface^ destination, System::Drawing::Rectangle destinationRectangle, TextureFilter filter );
+			Result StretchRectangle( Surface^ source, Surface^ destination, TextureFilter filter );
+
 			Result UpdateSurface( Surface^ source, System::Drawing::Rectangle sourceRectangle, Surface^ destination, System::Drawing::Point destinationPoint );
+			Result UpdateSurface( Surface^ source, Surface^ destination );
+
 			Result UpdateTexture( BaseTexture^ sourceTexture, BaseTexture^ destinationTexture );
+			
 			Result ColorFill( Surface^ destinationSurface, System::Drawing::Rectangle destinationRectangle, Color4 color );
+			Result ColorFill( Surface^ destinationSurface, Color4 color );
 
 			Result SetR2VBMode( bool enableR2VB );
 			Result BindRenderTargetToVertexStream( R2VBSampler sampler, Texture^ r2vbTarget, int stream, int stride, VertexBuffer^ dummyVertexBuffer );
 			Result RestoreVertexStream( int stream );
+
+			property Capabilities^ Capabilities
+			{
+				SlimDX::Direct3D9::Capabilities^ get();
+			}
+
+			property CreationParameters CreationParameters
+			{
+				SlimDX::Direct3D9::CreationParameters get();
+			}
+
+			property ClipStatus ClipStatus
+			{
+				SlimDX::Direct3D9::ClipStatus get();
+				void set( SlimDX::Direct3D9::ClipStatus value );
+			}
 
 			property VertexFormat VertexFormat
 			{
@@ -259,6 +290,30 @@ namespace SlimDX
 			property System::String^ PixelShaderProfile
 			{
 				System::String^ get();
+			}
+
+			property Surface^ DepthStencilSurface
+			{
+				Surface^ get();
+				void set( Surface^ value );
+			}
+
+			property IndexBuffer^ Indices
+			{
+				IndexBuffer^ get();
+				void set( IndexBuffer^ value );
+			}
+
+			property VertexShader^ VertexShader
+			{
+				SlimDX::Direct3D9::VertexShader^ get();
+				void set( SlimDX::Direct3D9::VertexShader^ value );
+			}
+
+			property PixelShader^ PixelShader
+			{
+				SlimDX::Direct3D9::PixelShader^ get();
+				void set( SlimDX::Direct3D9::PixelShader^ value );
 			}
 		};
 	}

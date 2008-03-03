@@ -506,5 +506,56 @@ namespace Direct3D9
 			}
 		}
 	}
+
+	String^ Frame::ToString()
+	{
+		return m_Name;
+	}
+
+	bool Frame::operator == ( Frame^ left, Frame^ right )
+	{
+		if( ReferenceEquals( left, nullptr ) )
+			return ReferenceEquals( right, nullptr );
+
+		return Frame::Equals( left, right );
+	}
+
+	bool Frame::operator != ( Frame^ left, Frame^ right )
+	{
+		return !( left == right );
+	}
+
+	int Frame::GetHashCode()
+	{
+		IntPtr pointer( Pointer );
+		return pointer.GetHashCode();
+	}
+
+	bool Frame::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<Frame^>( value ) );
+	}
+
+	bool Frame::Equals( Frame^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( ReferenceEquals( this, value ) )
+			return true;
+
+		return ( Pointer == value->Pointer );
+	}
+
+	bool Frame::Equals( Frame^ value1, Frame^ value2 )
+	{
+		return value1->Equals( value2 );
+	}
   }
 }

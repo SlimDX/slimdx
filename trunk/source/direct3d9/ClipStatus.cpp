@@ -19,26 +19,16 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include <d3d9.h>
+#include <d3dx9.h>
 
-#include "../math/Quaternion.h"
-#include "../math/Matrix.h"
-#include "../math/Vector3.h"
+#include "ClipStatus.h"
 
-#include "Enums.h"
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct3D9
-	{
-		public value class AnimationOutput
-		{
-		public:
-			property AnimationOutputFlags Flags;
-			property Matrix Transformation;
-			property Vector3 Scaling;
-			property Vector3 Translation;
-			property Quaternion Rotation;
-		};
-	}
+namespace Direct3D9
+{
+}
 }

@@ -21,24 +21,39 @@
 */
 #pragma once
 
-#include "../math/Quaternion.h"
-#include "../math/Matrix.h"
-#include "../math/Vector3.h"
-
-#include "Enums.h"
-
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public value class AnimationOutput
+		public ref class GammaRamp
 		{
+		private:
+			System::Collections::ObjectModel::Collection<System::Int16>^ red;
+			System::Collections::ObjectModel::Collection<System::Int16>^ green;
+			System::Collections::ObjectModel::Collection<System::Int16>^ blue;
+
+		internal:
+			GammaRamp( const D3DGAMMARAMP &ramp );
+
+			D3DGAMMARAMP ToUnmanaged();
+
 		public:
-			property AnimationOutputFlags Flags;
-			property Matrix Transformation;
-			property Vector3 Scaling;
-			property Vector3 Translation;
-			property Quaternion Rotation;
+			GammaRamp();
+
+			property System::Collections::ObjectModel::Collection<System::Int16>^ Red
+			{
+				System::Collections::ObjectModel::Collection<System::Int16>^ get() { return red; }
+			}
+
+			property System::Collections::ObjectModel::Collection<System::Int16>^ Green
+			{
+				System::Collections::ObjectModel::Collection<System::Int16>^ get() { return green; }
+			}
+
+			property System::Collections::ObjectModel::Collection<System::Int16>^ Blue
+			{
+				System::Collections::ObjectModel::Collection<System::Int16>^ get() { return blue; }
+			}
 		};
 	}
 }

@@ -106,7 +106,7 @@ namespace SlimDX
             static int GetAdapterModeCount( int adapter, Format format );
             static DisplayMode EnumerateAdapterModes( int adapter, Format format, int modeIndex );
             static System::IntPtr GetAdapterMonitor( int adapter );
-			static Capabilities GetDeviceCaps( int adapter, DeviceType deviceType );
+			static Capabilities^ GetDeviceCaps( int adapter, DeviceType deviceType );
 
 			static bool SupportsR2VB( int adapter, DeviceType deviceType );
 		};

@@ -44,7 +44,7 @@ namespace SlimDX
 			
 		public:
 			virtual ~Effect() { if( shim != NULL ) delete shim; }
-			static Effect^ FromPointer( System::IntPtr effect );
+			static Effect^ FromPointer( System::IntPtr pointer );
 
 			static Effect^ FromMemory( Device^ device, array<System::Byte>^ memory, array<Macro>^ preprocessorDefines, Include^ includeFile, System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] System::String^ %compilationErrors );
 

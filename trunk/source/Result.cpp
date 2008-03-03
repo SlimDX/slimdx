@@ -28,6 +28,7 @@
 #include "SlimDXException.h"
 
 using namespace System;
+using namespace System::Globalization;
 
 namespace SlimDX
 {
@@ -129,7 +130,7 @@ namespace SlimDX
 
 	String^ Result::ToString()
 	{
-		return m_Description;
+		return String::Format( CultureInfo::CurrentCulture, "{0}: {1} ({2})", Name, Description, Code );
 	}
 
 	int Result::GetHashCode()
