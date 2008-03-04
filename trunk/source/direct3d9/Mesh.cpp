@@ -921,7 +921,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		Mesh^ result = gcnew Mesh( mesh );
+		Mesh^ result = Mesh::FromPointer( mesh );
 
 		result->SetAdjacency( ( gcnew DataStream( adjacencyBuffer ) )->ReadRange<int>( mesh->GetNumFaces() * 3 ) );
 		result->SetMaterials( ExtendedMaterial::FromBuffer( materialBuffer, materialCount ) );
@@ -958,7 +958,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		Mesh^ result = gcnew Mesh( mesh );
+		Mesh^ result = Mesh::FromPointer( mesh );
 
 		result->SetAdjacency( ( gcnew DataStream( adjacencyBuffer ) )->ReadRange<int>( mesh->GetNumFaces() * 3 ) );
 		result->SetMaterials( ExtendedMaterial::FromBuffer( materialBuffer, materialCount ) );
@@ -988,7 +988,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		Mesh^ result = gcnew Mesh( mesh );
+		Mesh^ result = Mesh::FromPointer( mesh );
 
 		result->SetAdjacency( ( gcnew DataStream( adjacencyBuffer ) )->ReadRange<int>( mesh->GetNumFaces() * 3 ) );
 		result->SetMaterials( ExtendedMaterial::FromBuffer( materialBuffer, materialCount ) );
@@ -1021,7 +1021,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		Mesh^ mesh = gcnew Mesh( result );
+		Mesh^ mesh = Mesh::FromPointer( result );
 
 		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
 		return mesh;
@@ -1037,7 +1037,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		Mesh^ mesh = gcnew Mesh( result );
+		Mesh^ mesh = Mesh::FromPointer( result );
 
 		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
 		return mesh;
@@ -1053,7 +1053,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		Mesh^ mesh = gcnew Mesh( result );
+		Mesh^ mesh = Mesh::FromPointer( result );
 
 		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
 		return mesh;
@@ -1069,7 +1069,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		Mesh^ mesh = gcnew Mesh( result );
+		Mesh^ mesh = Mesh::FromPointer( result );
 
 		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
 		return mesh;
@@ -1085,7 +1085,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		Mesh^ mesh = gcnew Mesh( result );
+		Mesh^ mesh = Mesh::FromPointer( result );
 
 		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
 		return mesh;
@@ -1123,7 +1123,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		Mesh^ mesh = gcnew Mesh( result );
+		Mesh^ mesh = Mesh::FromPointer( result );
 
 		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
 		return mesh;
@@ -1155,7 +1155,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		Mesh^ mesh = gcnew Mesh( result );
+		Mesh^ mesh = Mesh::FromPointer( result );
 
 		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
 		return mesh;
@@ -1291,7 +1291,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		Mesh^ mesh = gcnew Mesh( result );
+		Mesh^ mesh = Mesh::FromPointer( result );
 
 		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
 
@@ -1323,7 +1323,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		Mesh^ mesh = gcnew Mesh( result );
+		Mesh^ mesh = Mesh::FromPointer( result );
 
 		if( adjacencyOut.size() > 0 )
 			mesh->SetAdjacency( &adjacencyOut[0] );
@@ -1359,7 +1359,7 @@ namespace Direct3D9
 
 		errorsAndWarnings = Utilities::BufferToString( errors );
 
-		Mesh^ mesh = gcnew Mesh( result );
+		Mesh^ mesh = Mesh::FromPointer( result );
 
 		if( adjacencyOut.size() > 0 )
 			mesh->SetAdjacency( &adjacencyOut[0] );
@@ -1389,7 +1389,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		Mesh^ mesh = gcnew Mesh( result );
+		Mesh^ mesh = Mesh::FromPointer( result );
 
 		if( adjacencyOut.size() > 0 )
 			mesh->SetAdjacency( &adjacencyOut[0] );
@@ -1475,7 +1475,7 @@ namespace Direct3D9
 		if( (options & TangentOptions::GenerateInPlace) == TangentOptions::GenerateInPlace )
 			return this;
 
-		return gcnew Mesh( result );
+		return Mesh::FromPointer( result );
 	}
 
 	Mesh^ Mesh::ComputeTangentFrame( int textureInSemantic, int textureInIndex, int partialOutSemanticU, 
@@ -1506,7 +1506,7 @@ namespace Direct3D9
 		if( (options & TangentOptions::GenerateInPlace) == TangentOptions::GenerateInPlace )
 			return this;
 
-		return gcnew Mesh( result );
+		return Mesh::FromPointer( result );
 	}
 
 	Mesh^ Mesh::Concatenate( SlimDX::Direct3D9::Device^ device, array<Mesh^>^ meshes, MeshFlags options, array<Matrix>^ geometryTransforms,
@@ -1550,7 +1550,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Mesh( result );
+		return Mesh::FromPointer( result );
 	}
 
 	Mesh^ Mesh::Concatenate( SlimDX::Direct3D9::Device^ device, array<Mesh^>^ meshes, MeshFlags options, array<Matrix>^ geometryTransforms,
@@ -1586,7 +1586,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Mesh( result );
+		return Mesh::FromPointer( result );
 	}
 
 	Mesh^ Mesh::Concatenate( SlimDX::Direct3D9::Device^ device, array<Mesh^>^ meshes, MeshFlags options )
@@ -1604,7 +1604,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Mesh( result );
+		return Mesh::FromPointer( result );
 	}
 
 	Result Mesh::ToXFile( Mesh^ mesh, String^ fileName, XFileFormat format, CharSet charSet )
@@ -1695,7 +1695,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Mesh( result );
+		return Mesh::FromPointer( result );
 	}
 
 	Mesh^ Mesh::Simplify( Mesh^ mesh, array<AttributeWeights>^ attributeWeights,
@@ -1722,7 +1722,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Mesh( result );
+		return Mesh::FromPointer( result );
 	}
 
 	Mesh^ Mesh::Simplify( Mesh^ mesh, int minimumValue, MeshSimplification options )
@@ -1745,7 +1745,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Mesh( result );
+		return Mesh::FromPointer( result );
 	}
 }
 }
