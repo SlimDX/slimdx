@@ -574,7 +574,8 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetRenderState( static_cast<D3DRENDERSTATETYPE>( state ), &value );
 		RECORD_D3D9( hr );
 
-		return (T) value;
+		int intValue = static_cast<int>( value );
+		return (T) intValue;
 	}
 	
 	int Device::GetRenderState( RenderState state )
@@ -589,7 +590,8 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetSamplerState( sampler, static_cast<D3DSAMPLERSTATETYPE>( type ), &value );
 		RECORD_D3D9( hr );
 
-		return (T) value;
+		int intValue = static_cast<int>( value );
+		return (T) intValue;
 	}
 
 	int Device::GetSamplerState( int sampler, SamplerState type )
@@ -604,7 +606,8 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetTextureStageState( stage, static_cast<D3DTEXTURESTAGESTATETYPE>( type ), &value );
 		RECORD_D3D9( hr );
 
-		return (T) value;
+		int intValue = static_cast<int>( value );
+		return (T) intValue;
 	}
 
 	int Device::GetTextureStageState( int stage, TextureStage type )
