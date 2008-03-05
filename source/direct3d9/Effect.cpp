@@ -331,7 +331,7 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	Result Effect::SetStateManager( IEffectStateManager^ manager )
+	void Effect::StateManager::set( IEffectStateManager^ manager )
 	{
 		if( shim != NULL )
 			delete shim;
@@ -339,10 +339,10 @@ namespace Direct3D9
 		shim = new IEffectStateManagerShim( manager );
 
 		HRESULT hr = InternalPointer->SetStateManager( shim );
-		return RECORD_D3D9( hr );
+		RECORD_D3D9( hr );
 	}
 
-	IEffectStateManager^ Effect::GetStateManager()
+	IEffectStateManager^ Effect::StateManager::get()
 	{
 		if( shim != NULL )
 			return shim->GetManager();

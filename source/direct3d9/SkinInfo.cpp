@@ -40,35 +40,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	D3DXBONECOMBINATION BoneCombination::ToUnmanaged()
-	{
-		D3DXBONECOMBINATION result;
-
-		result.AttribId = AttributeId;
-		result.FaceCount = FaceCount;
-		result.FaceStart = FaceStart;
-		result.VertexCount = VertexCount;
-		result.VertexStart = VertexStart;
-
-		result.BoneId = new DWORD[BoneIds->Length];
-		for( int i = 0; i < BoneIds->Length; i++ )
-			result.BoneId[i] = BoneIds[i];
-
-		return result;
-	}
-
-	BoneCombination^ BoneCombination::FromUnmanaged( const D3DXBONECOMBINATION &bone )
-	{
-		BoneCombination^ bc = gcnew BoneCombination();
-		bc->AttributeId = bone.AttribId;
-		bc->FaceCount = bone.FaceCount;
-		bc->FaceStart = bone.FaceStart;
-		bc->VertexCount = bone.VertexCount;
-		bc->VertexStart = bone.VertexStart;
-
-		return bc;
-	}
-
 	SkinInfo::SkinInfo( ID3DXSkinInfo* skinInfo )
 	{
 		Construct( skinInfo );

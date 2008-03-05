@@ -31,7 +31,7 @@
 #include "BufferedData.h"
 #include "BufferedDataCollection.h"
 #include "Guids.h"
-#include "Properties.h"
+#include "DeviceProperties.h"
 
 namespace SlimDX
 {

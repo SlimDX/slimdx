@@ -27,8 +27,8 @@
 
 #include "Direct3D9Exception.h"
 
+#include "VertexDeclaration.h"
 #include "Enums.h"
-#include "Vertex.h"
 #include "D3DX.h"
 
 using namespace System;

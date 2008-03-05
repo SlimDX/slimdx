@@ -1621,11 +1621,35 @@
 				Name="Mesh"
 				>
 				<File
-					RelativePath="..\source\direct3d9\DisplacementParameters.cpp"
+					RelativePath="..\source\direct3d9\AttributeWeights.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d9\DisplacementParameters.h"
+					RelativePath="..\source\direct3d9\AttributeWeights.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\EffectDefault.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\EffectDefault.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\EffectInstance.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\EffectInstance.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ExtendedMaterial.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ExtendedMaterial.h"
 					>
 				</File>
 				<File
@@ -1652,30 +1676,78 @@
 					RelativePath="..\source\direct3d9\MeshData.h"
 					>
 				</File>
-				<File
-					RelativePath="..\source\direct3d9\PatchMesh.cpp"
+				<Filter
+					Name="BaseMesh"
 					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d9\PatchMesh.h"
+					<File
+						RelativePath="..\source\direct3d9\AttributeRange.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\AttributeRange.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\BaseMesh.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\BaseMesh.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\IntersectInformation.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\IntersectInformation.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ProgressiveMesh"
 					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d9\ProgressiveMesh.cpp"
+					<File
+						RelativePath="..\source\direct3d9\ProgressiveMesh.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\ProgressiveMesh.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="PatchMesh"
 					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d9\ProgressiveMesh.h"
+					<File
+						RelativePath="..\source\direct3d9\DisplacementParameters.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\DisplacementParameters.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\PatchMesh.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\PatchMesh.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="SimplificationMesh"
 					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d9\SimplificationMesh.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d9\SimplificationMesh.h"
-					>
-				</File>
+					<File
+						RelativePath="..\source\direct3d9\SimplificationMesh.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\SimplificationMesh.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="D3DX"
@@ -1811,16 +1883,32 @@
 					RelativePath="..\source\direct3d9\FontDescription.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d9\GlyphMetricsFloat.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\GlyphMetricsFloat.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Shader"
 				>
 				<File
-					RelativePath="..\source\direct3d9\ConstantTable.cpp"
+					RelativePath="..\source\direct3d9\Include.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d9\ConstantTable.h"
+					RelativePath="..\source\direct3d9\Include.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Macro.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Macro.h"
 					>
 				</File>
 				<File
@@ -1837,6 +1925,49 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Shader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ShaderBytecode.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ShaderBytecode.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ShaderSemantic.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ShaderSemantic.h"
 					>
 				</File>
 				<File
@@ -1880,6 +2011,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d9\RenderToEnvMapDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\RenderToEnvMapDescription.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\RenderToSurface.cpp"
 					>
 				</File>
@@ -1887,16 +2026,96 @@
 					RelativePath="..\source\direct3d9\RenderToSurface.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d9\RenderToSurfaceDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\RenderToSurfaceDescription.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Query"
 				>
+				<File
+					RelativePath="..\source\direct3d9\BandwidthTimings.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\BandwidthTimings.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\CacheUtilization.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\CacheUtilization.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\InterfaceTimings.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\InterfaceTimings.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\PipelineTimings.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\PipelineTimings.h"
+					>
+				</File>
 				<File
 					RelativePath="..\source\direct3d9\Query.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Query.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ResourceManager.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ResourceManager.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ResourceStats.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ResourceStats.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\StageTimings.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\StageTimings.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\VCache.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\VCache.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\VertexStats.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\VertexStats.h"
 					>
 				</File>
 			</Filter>
@@ -1967,6 +2186,41 @@
 					RelativePath="..\source\direct3d9\Surface.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d9\SurfaceDescription.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\SurfaceDescription.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="VertexBuffer"
@@ -1979,10 +2233,26 @@
 					RelativePath="..\source\direct3d9\VertexBuffer.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d9\VertexBufferDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\VertexBufferDescription.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Volume"
 				>
+				<File
+					RelativePath="..\source\direct3d9\Box.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Box.h"
+					>
+				</File>
 				<File
 					RelativePath="..\source\direct3d9\Volume.cpp"
 					>
@@ -1991,10 +2261,26 @@
 					RelativePath="..\source\direct3d9\Volume.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d9\VolumeDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\VolumeDescription.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="SkinInfo"
 				>
+				<File
+					RelativePath="..\source\direct3d9\BoneCombination.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\BoneCombination.h"
+					>
+				</File>
 				<File
 					RelativePath="..\source\direct3d9\SkinInfo.cpp"
 					>
@@ -2020,17 +2306,33 @@
 				Name="Vertex"
 				>
 				<File
-					RelativePath="..\source\direct3d9\Vertex.cpp"
+					RelativePath="..\source\direct3d9\VertexDeclaration.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d9\Vertex.h"
+					RelativePath="..\source\direct3d9\VertexDeclaration.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\VertexElement.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\VertexElement.h"
 					>
 				</File>
 			</Filter>
 			<Filter
 				Name="SwapChain"
 				>
+				<File
+					RelativePath="..\source\direct3d9\RasterStatus.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\RasterStatus.h"
+					>
+				</File>
 				<File
 					RelativePath="..\source\direct3d9\SwapChain.cpp"
 					>
@@ -2061,6 +2363,38 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\XFile.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\XFileData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\XFileData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\XFileEnumerationObject.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\XFileEnumerationObject.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\XFileSaveData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\XFileSaveData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\XFileSaveObject.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\XFileSaveObject.h"
 					>
 				</File>
 			</Filter>
@@ -2223,6 +2557,34 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="ConstantTable"
+				>
+				<File
+					RelativePath="..\source\direct3d9\ConstantDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ConstantDescription.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ConstantTable.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ConstantTable.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ConstantTableDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\ConstantTableDescription.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="DirectInput"
@@ -2353,11 +2715,19 @@
 				Name="Properties"
 				>
 				<File
-					RelativePath="..\source\directinput\Properties.cpp"
+					RelativePath="..\source\directinput\DeviceProperties.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\directinput\Properties.h"
+					RelativePath="..\source\directinput\DeviceProperties.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\ObjectProperties.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\ObjectProperties.h"
 					>
 				</File>
 			</Filter>

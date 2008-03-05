@@ -23,46 +23,15 @@
 
 #include "Enums.h"
 
+#include "XFileSaveObject.h"
+#include "XFileEnumerationObject.h"
+#include "XFileData.h"
+#include "XFileSaveData.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		ref class XFileSaveObject;
-		ref class XFile;
-		ref class XFileEnumerationObject;
-		ref class XFileData;
-
-		public ref class XFileSaveData : public ComObject
-		{
-			COMOBJECT(ID3DXFileSaveData, XFileSaveData);
-
-		public:
-			static XFileSaveData^ FromPointer( System::IntPtr pointer );
-
-			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, array<System::Byte>^ data );
-			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, System::IO::Stream^ data );
-
-			Result AddDataReference( System::String^ name, System::Guid id );
-
-			property System::Guid Id { System::Guid get(); }
-			property System::String^ Name { System::String^ get(); }
-			property XFileSaveObject^ SaveObject { XFileSaveObject^ get(); }
-			property System::Guid Type { System::Guid get(); }
-		};
-
-		public ref class XFileSaveObject : public ComObject
-		{
-			COMOBJECT(ID3DXFileSaveObject, XFileSaveObject);
-
-		public:
-			static XFileSaveObject^ FromPointer( System::IntPtr pointer );
-
-			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, array<System::Byte>^ data );
-			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, System::IO::Stream^ data );
-			XFile^ GetFile();
-			Result Save();
-		};
-
 		public ref class XFile : public ComObject
 		{
 			COMOBJECT(ID3DXFile, XFile);
@@ -80,41 +49,6 @@ namespace SlimDX
 			Result RegisterTemplates( array<System::Byte>^ memory );
 			Result RegisterTemplates( System::IO::Stream^ memory );
 			Result RegisterTemplates( System::String^ name );
-		};
-
-		public ref class XFileEnumerationObject : public ComObject
-		{
-			COMOBJECT(ID3DXFileEnumObject, XFileEnumerationObject);
-
-		public:
-			static XFileEnumerationObject^ FromPointer( System::IntPtr pointer );
-
-			XFileData^ GetChild( int id );
-			XFileData^ GetDataObject( System::Guid id );
-			XFileData^ GetDataObject( System::String^ name );
-			XFile^ GetFile();
-
-			property int ChildCount { int get(); }
-		};
-
-		public ref class XFileData : public ComObject
-		{
-			COMOBJECT(ID3DXFileData, XFileData);
-
-		public:
-			static XFileData^ FromPointer( System::IntPtr pointer );
-
-			XFileData^ GetChild( int id );
-			XFileEnumerationObject^ GetEnumerationObject();
-
-			DataStream^ Lock();
-			Result Unlock();
-
-			property int ChildCount { int get(); }
-			property System::Guid Id { System::Guid get(); }
-			property System::Guid Type { System::Guid get(); }
-			property System::String^ Name { System::String^ get(); }
-			property bool IsReference { bool get(); }
 		};
 	}
 }

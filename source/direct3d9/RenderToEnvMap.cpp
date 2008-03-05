@@ -34,45 +34,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	bool RenderToEnvironmentMapDescription::operator == ( RenderToEnvironmentMapDescription left, RenderToEnvironmentMapDescription right )
-	{
-		return RenderToEnvironmentMapDescription::Equals( left, right );
-	}
-
-	bool RenderToEnvironmentMapDescription::operator != ( RenderToEnvironmentMapDescription left, RenderToEnvironmentMapDescription right )
-	{
-		return !RenderToEnvironmentMapDescription::Equals( left, right );
-	}
-
-	int RenderToEnvironmentMapDescription::GetHashCode()
-	{
-		return Size.GetHashCode() + MipLevels.GetHashCode() + Format.GetHashCode()
-			 + DepthStencil.GetHashCode() + DepthStencilFormat.GetHashCode();
-	}
-
-	bool RenderToEnvironmentMapDescription::Equals( Object^ value )
-	{
-		if( value == nullptr )
-			return false;
-
-		if( value->GetType() != GetType() )
-			return false;
-
-		return Equals( static_cast<RenderToEnvironmentMapDescription>( value ) );
-	}
-
-	bool RenderToEnvironmentMapDescription::Equals( RenderToEnvironmentMapDescription value )
-	{
-		return ( Size == value.Size && MipLevels == value.MipLevels && Format == value.Format
-			 && DepthStencil == value.DepthStencil && DepthStencilFormat == value.DepthStencilFormat );
-	}
-
-	bool RenderToEnvironmentMapDescription::Equals( RenderToEnvironmentMapDescription% value1, RenderToEnvironmentMapDescription% value2 )
-	{
-		return ( value1.Size == value2.Size && value1.MipLevels == value2.MipLevels && value1.Format == value2.Format
-			 && value1.DepthStencil == value2.DepthStencil && value1.DepthStencilFormat == value2.DepthStencilFormat );
-	}
-
 	RenderToEnvironmentMap::RenderToEnvironmentMap( ID3DXRenderToEnvMap *pointer )
 	{
 		Construct(pointer);

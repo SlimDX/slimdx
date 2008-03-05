@@ -37,42 +37,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	bool RasterStatus::operator == ( RasterStatus left, RasterStatus right )
-	{
-		return RasterStatus::Equals( left, right );
-	}
-
-	bool RasterStatus::operator != ( RasterStatus left, RasterStatus right )
-	{
-		return !RasterStatus::Equals( left, right );
-	}
-
-	int RasterStatus::GetHashCode()
-	{
-		return InVBlank.GetHashCode() + Scanline.GetHashCode();
-	}
-
-	bool RasterStatus::Equals( Object^ value )
-	{
-		if( value == nullptr )
-			return false;
-
-		if( value->GetType() != GetType() )
-			return false;
-
-		return Equals( static_cast<RasterStatus>( value ) );
-	}
-
-	bool RasterStatus::Equals( RasterStatus value )
-	{
-		return ( InVBlank == value.InVBlank && Scanline == value.Scanline );
-	}
-
-	bool RasterStatus::Equals( RasterStatus% value1, RasterStatus% value2 )
-	{
-		return ( value1.InVBlank == value2.InVBlank && value1.Scanline == value2.Scanline );
-	}
-
 	SwapChain::SwapChain( IDirect3DSwapChain9* pointer )
 	{
 		Construct( pointer );

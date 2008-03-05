@@ -42,10 +42,7 @@ namespace SlimDX
 		public:
 			static PixelShader^ FromPointer( System::IntPtr pointer );
 
-			~PixelShader()
-			{
-				delete m_ConstantTable;
-			}
+			virtual ~PixelShader() { delete m_ConstantTable; }
 			
 			Result RetrieveConstantTable();
 			property ConstantTable^ Constants

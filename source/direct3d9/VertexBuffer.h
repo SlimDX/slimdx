@@ -26,22 +26,12 @@
 #include "Resource.h"
 #include "../DataStream.h"
 
+#include "VertexBufferDescription.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
-		public value class VertexBufferDescription
-		{
-		public:
-			property Format Format;
-			property ResourceType Type;
-			property Usage Usage;
-			property Pool Pool;
-			property int SizeInBytes;
-			property VertexFormat FVF;
-		};
-
 		public ref class VertexBuffer : public Resource
 		{
 			COMOBJECT( IDirect3DVertexBuffer9, VertexBuffer );

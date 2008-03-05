@@ -29,8 +29,6 @@ namespace SlimDX
 	{
 		ref class Device;
 
-		
-
 		public ref class StateBlock : ComObject
 		{
 			COMOBJECT(IDirect3DStateBlock9, StateBlock);
