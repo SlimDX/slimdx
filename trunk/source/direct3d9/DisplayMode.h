@@ -45,36 +45,44 @@ namespace SlimDX
 			static bool Equals( DisplayMode% value1, DisplayMode% value2 );
 		};
 
-		public ref class DisplayModeCollection : public System::Collections::Generic::IEnumerable<DisplayMode>
+		public ref class DisplayModeCollection : public System::Collections::Generic::ICollection<DisplayMode>
 		{
 		private:
-			System::Collections::Generic::List<DisplayMode>^ m_Modes;
+			System::Collections::Generic::List<DisplayMode>^ list;
 
 		internal:
 			DisplayModeCollection( unsigned int adapter, Format format );
 
-			virtual System::Collections::IEnumerator^ GetEnumerator2() = System::Collections::IEnumerable::GetEnumerator
-			{
-                return ((System::Collections::IEnumerable^)m_Modes)->GetEnumerator();
-			}
+			virtual System::Collections::IEnumerator^ GetEnumerator2() = System::Collections::IEnumerable::GetEnumerator;
 
 		public:
-            property int Count
+			virtual void Add( DisplayMode item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
+			virtual void Clear() { throw gcnew System::NotSupportedException(); }
+			virtual bool Contains( DisplayMode item ) { return list->Contains( item ); }
+			virtual void CopyTo( array<DisplayMode>^ destination, int arrayIndex );
+			virtual bool Remove( DisplayMode item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
+
+            property virtual int Count
             {
-                int get() { return m_Modes->Count; }
+                int get() { return list->Count; }
             }
+
+			virtual property bool IsReadOnly
+			{
+				bool get() { return true; }
+			}
 
             property DisplayMode default[int]
 			{
 				DisplayMode get( int index )
 				{
-					return m_Modes[index];
+					return list[index];
 				}
 			}
 
 			virtual System::Collections::Generic::IEnumerator<DisplayMode>^ GetEnumerator()
 			{
-                return m_Modes->GetEnumerator();
+                return list->GetEnumerator();
 			}
 		};
 	}

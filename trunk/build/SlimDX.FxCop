@@ -3450,6 +3450,22 @@
        </Namespace>
        <Namespace Name="SlimDX.Direct3D9">
         <Types>
+         <Type Name="AdapterCollection">
+          <Members>
+           <Member Name="#CopyTo(SlimDX.Direct3D9.AdapterInformation[],System.Int32)">
+            <Messages>
+             <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Status="Excluded" Created="2008-03-05 03:35:07Z">
+              <Issue>
+               <Item>'AdapterCollection.CopyTo(AdapterInformation[], int)'</Item>
+               <Item>'destination'</Item>
+               <Item>'array'</Item>
+               <Item>'ICollection&lt;AdapterInformation&gt;.CopyTo(AdapterInformation[], int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="AdapterDetails">
           <Members>
            <Member Name="#WhqlLevel">
@@ -4944,6 +4960,22 @@
               <Issue Name="Member">
                <Item>Mag</Item>
                <Item>'DisplacementParameters::MagFilter'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="DisplayModeCollection">
+          <Members>
+           <Member Name="#CopyTo(SlimDX.Direct3D9.DisplayMode[],System.Int32)">
+            <Messages>
+             <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Status="Excluded" Created="2008-03-05 13:52:05Z">
+              <Issue>
+               <Item>'DisplayModeCollection.CopyTo(DisplayMode[], int)'</Item>
+               <Item>'destination'</Item>
+               <Item>'array'</Item>
+               <Item>'ICollection&lt;DisplayMode&gt;.CopyTo(DisplayMode[], int)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -9630,6 +9662,30 @@
             </Issue>
            </Message>
           </Messages>
+          <Members>
+           <Member Name="#CopyTo(SlimDX.DirectInput.BufferedData`1&lt;!0&gt;[],System.Int32)">
+            <Messages>
+             <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Status="Excluded" Created="2008-03-05 13:52:05Z">
+              <Issue>
+               <Item>'BufferedDataCollection&lt;DataFormat&gt;.CopyTo(BufferedData&lt;DataFormat&gt;[], int)'</Item>
+               <Item>'destination'</Item>
+               <Item>'array'</Item>
+               <Item>'ICollection&lt;BufferedData&lt;DataFormat&gt;&gt;.CopyTo(BufferedData&lt;DataFormat&gt;[], int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetEnumerator()">
+            <Messages>
+             <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Status="Excluded" Created="2008-03-05 13:52:05Z">
+              <Issue>
+               <Item>'BufferedDataCollection&lt;DataFormat&gt;.GetEnumerator()'</Item>
+               <Item>'IEnumerator&lt;BufferedData&lt;DataFormat&gt;&gt;'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
          <Type Name="Capabilities">
           <Members>
@@ -9871,6 +9927,22 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="DeviceEnumerationFlags">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2008-03-05 03:35:07Z" FixCategory="Breaking">
+            <Issue Name="FlagsRename">
+             <Item>'DeviceEnumerationFlags'</Item>
+             <Item>'DeviceEnumerationFlags.AllDevices'</Item>
+            </Issue>
+           </Message>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-03-05 03:35:07Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'DeviceEnumerationFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="DeviceFlags">
           <Messages>
            <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -9946,32 +10018,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="DeviceSubtype">
-          <Members>
-           <Member Name="#PCATKeyboard">
-            <Messages>
-             <Message Id="PCAT" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-27 22:48:37Z">
-              <Issue Name="Member">
-               <Item>PCAT</Item>
-               <Item>'DeviceSubtype.PCATKeyboard'</Item>
-               <Item>Pcat</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#PCXTKeyboard">
-            <Messages>
-             <Message Id="PCXT" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-27 22:48:37Z">
-              <Issue Name="Member">
-               <Item>PCXT</Item>
-               <Item>'DeviceSubtype.PCXTKeyboard'</Item>
-               <Item>Pcxt</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="DeviceType">
           <Messages>
            <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
@@ -9991,6 +10037,28 @@
            </Message>
           </Messages>
           <Members>
+           <Member Name="#GetDevices(SlimDX.DirectInput.DeviceClass,SlimDX.DirectInput.DeviceEnumerationFlags)">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-03-05 03:35:07Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'DirectInput.GetDevices(DeviceClass, DeviceEnumerationFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'enumerationFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetDevices(SlimDX.DirectInput.DeviceType,SlimDX.DirectInput.DeviceEnumerationFlags)">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-03-05 03:35:07Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'DirectInput.GetDevices(DeviceType, DeviceEnumerationFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'enumerationFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#Initialize()">
             <Messages>
              <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
@@ -10040,41 +10108,16 @@
            </Message>
           </Messages>
          </Type>
-         <Type Name="JoystickObjects">
+         <Type Name="InputDeviceCollection">
           <Members>
-           <Member Name="#Button(System.Int32)">
+           <Member Name="#CopyTo(SlimDX.DirectInput.DeviceInstance[],System.Int32)">
             <Messages>
-             <Message Id="buttonId+48" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2007-10-02 23:09:18Z">
+             <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Status="Excluded" Created="2008-03-05 03:35:07Z">
               <Issue>
-               <Item>buttonId+48</Item>
-               <Item>'JoystickObjects.Button(int)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#PointOfView(System.Int32)">
-            <Messages>
-             <Message Id="pov" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="MemberParameter">
-               <Item>'JoystickObjects.PointOfView(int)'</Item>
-               <Item>pov</Item>
-               <Item>'povId'</Item>
-              </Issue>
-             </Message>
-             <Message Id="povId*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2007-10-02 23:09:18Z">
-              <Issue>
-               <Item>povId*4</Item>
-               <Item>'JoystickObjects.PointOfView(int)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Slider(System.Int32)">
-            <Messages>
-             <Message Id="sliderId*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2007-10-02 23:09:18Z">
-              <Issue>
-               <Item>sliderId*4</Item>
-               <Item>'JoystickObjects.Slider(int)'</Item>
+               <Item>'InputDeviceCollection.CopyTo(DeviceInstance[], int)'</Item>
+               <Item>'destination'</Item>
+               <Item>'array'</Item>
+               <Item>'ICollection&lt;DeviceInstance&gt;.CopyTo(DeviceInstance[], int)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -10099,6 +10142,22 @@
               <Issue Name="Member">
                <Item>Abnt</Item>
                <Item>'Key.AbntC2'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="KeyCollection">
+          <Members>
+           <Member Name="#CopyTo(SlimDX.DirectInput.Key[],System.Int32)">
+            <Messages>
+             <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Status="Excluded" Created="2008-03-05 13:52:05Z">
+              <Issue>
+               <Item>'KeyCollection.CopyTo(Key[], int)'</Item>
+               <Item>'destination'</Item>
+               <Item>'array'</Item>
+               <Item>'ICollection&lt;Key&gt;.CopyTo(Key[], int)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -12632,6 +12691,9 @@
    <Rule TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700">
     <Resolution Name="Default">If {0} is not used in the current implementation, remove it. Otherwise give it a meaningful name.</Resolution>
    </Rule>
+   <Rule TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006">
+    <Resolution Name="Default">Consider a design where {0} doesn't nest generic type {1}.</Resolution>
+   </Rule>
    <Rule TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065">
     <Resolution Name="PropertyGetter">{0} creates an exception of type {1}, an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Resolution>
    </Rule>
@@ -12715,7 +12777,7 @@
     <Resolution Name="op_Equality">{0} should override the equality (==) and inequality (!=) operators.</Resolution>
    </Rule>
    <Rule TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725">
-    <Resolution Name="Default">Change parameter name '{0}' of method {1} to '{2}' in order to match the identifier as it has been declared in {3}.</Resolution>
+    <Resolution Name="Default">In member {0}, change parameter name {1} to {2} in order to match the identifier as it has been declared in {3}.</Resolution>
    </Rule>
    <Rule TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719">
     <Resolution Name="Default">Change either member or parameter name {0} so that one differs from the other.</Resolution>

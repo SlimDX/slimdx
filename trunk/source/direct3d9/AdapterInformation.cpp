@@ -63,13 +63,5 @@ namespace Direct3D9
     {
         return gcnew DisplayModeCollection( m_Adapter, format );
     }
-
-    AdapterCollection::AdapterCollection( unsigned int adapterCount )
-    {
-		m_Adapters = gcnew List<AdapterInformation^>();
-
-        for( unsigned int i = 0; i < adapterCount; ++i )
-            m_Adapters->Add( gcnew AdapterInformation( i ) );
-    }
 }
 }

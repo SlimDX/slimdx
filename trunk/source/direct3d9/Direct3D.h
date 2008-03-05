@@ -41,6 +41,8 @@ namespace SlimDX
 			Direct3D() { }
 			static IDirect3D9* m_Direct3D;
 
+			static AdapterCollection^ adapters;
+
 			static void OnExit(System::Object^ sender, System::EventArgs^ e)
 			{
 				SLIMDX_UNREFERENCED_PARAMETER(sender);
@@ -57,7 +59,11 @@ namespace SlimDX
 
 		public:
 			static property bool CheckWhql;
-			static property AdapterCollection^ Adapters;
+
+			static property AdapterCollection^ Adapters
+			{
+				AdapterCollection^ get() { return adapters; }
+			}
 
 			static property int AdapterCount
 			{

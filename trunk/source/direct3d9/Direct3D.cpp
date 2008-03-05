@@ -61,7 +61,7 @@ namespace Direct3D9
 			throw gcnew Direct3D9Exception( "Could not create Direct3D instance." );
 
 		CheckWhql = false;
-		Adapters = gcnew AdapterCollection( m_Direct3D->GetAdapterCount() );
+		adapters = gcnew AdapterCollection( m_Direct3D->GetAdapterCount() );
 		
 		System::AppDomain::CurrentDomain->DomainUnload += gcnew System::EventHandler( OnExit );
 		System::AppDomain::CurrentDomain->ProcessExit += gcnew System::EventHandler( OnExit );

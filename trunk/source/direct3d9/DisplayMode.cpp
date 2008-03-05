@@ -74,10 +74,20 @@ namespace Direct3D9
 	DisplayModeCollection::DisplayModeCollection( unsigned int adapter, Format format )
 	{
 		int count = Direct3D::GetAdapterModeCount( adapter, format );
-		m_Modes = gcnew List<DisplayMode>();
+		list = gcnew List<DisplayMode>( count );
 
 		for( int i = 0; i < count; ++i )
-			m_Modes->Add( Direct3D::EnumerateAdapterModes( adapter, format, i ) );
+			list->Add( Direct3D::EnumerateAdapterModes( adapter, format, i ) );
+	}
+
+	System::Collections::IEnumerator^ DisplayModeCollection::GetEnumerator2()
+	{
+		return ((System::Collections::IEnumerable^)list)->GetEnumerator();
+	}
+
+	void DisplayModeCollection::CopyTo( array<DisplayMode>^ destination, int arrayIndex )
+	{
+		list->CopyTo( destination, arrayIndex );
 	}
 }
 }
