@@ -19,29 +19,26 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <windows.h>
-#include <dinput.h>
+#include <d3d9.h>
+#include <d3dx9.h>
 
-#include "BufferedData.h"
-#include "BufferedDataCollection.h"
+#include "Direct3D.h"
+#include "AdapterDetails.h"
+#include "AdapterCollection.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
 
 namespace SlimDX
 {
-namespace DirectInput
+namespace Direct3D9
 {
-	generic<typename DataFormat>
-	BufferedDataCollection<DataFormat>::BufferedDataCollection( int initialCapacity )
+	AdapterCollection::AdapterCollection( unsigned int adapterCount )
 	{
-		list = gcnew List<BufferedData<DataFormat>^>( initialCapacity );
-	}
+		list = gcnew System::Collections::Generic::List<AdapterInformation^>( adapterCount );
 
-	generic<typename DataFormat>
-	void BufferedDataCollection<DataFormat>::Add( BufferedData<DataFormat>^ data )
-	{
-		list->Add( data );
+		for( unsigned int i = 0; i < adapterCount; ++i )
+			list->Add( gcnew AdapterInformation( i ) );
 	}
 }
 }

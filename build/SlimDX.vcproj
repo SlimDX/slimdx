@@ -2148,6 +2148,14 @@
 				Name="Direct3D"
 				>
 				<File
+					RelativePath="..\source\direct3d9\AdapterCollection.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\AdapterCollection.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\AdapterDetails.cpp"
 					>
 				</File>
@@ -2362,10 +2370,6 @@
 				</File>
 				<File
 					RelativePath="..\source\directinput\BufferedData.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directinput\BufferedDataCollection.cpp"
 					>
 				</File>
 				<File

@@ -22,6 +22,7 @@
 #pragma once
 
 #include "Enums.h"
+#include "AdapterCollection.h"
 
 namespace SlimDX
 {
@@ -59,39 +60,6 @@ namespace SlimDX
 				AdapterDetails^ get() { return details; }
 			protected:
 				void set( AdapterDetails^ value ) { details = value; }
-			}
-		};
-
-		public ref class AdapterCollection : public System::Collections::Generic::IEnumerable<AdapterInformation^>
-		{
-		private:
-			System::Collections::Generic::List<AdapterInformation^>^ m_Adapters;
-
-		internal:
-			AdapterCollection( unsigned int adapterCount );
-
-			virtual System::Collections::IEnumerator^ GetEnumerator2() = System::Collections::IEnumerable::GetEnumerator
-			{
-				return ((System::Collections::IEnumerable^)m_Adapters)->GetEnumerator();
-			}
-
-		public:
-            property int Count
-            {
-                int get() { return m_Adapters->Count; }
-            }
-
-            property AdapterInformation^ default[int]
-			{
-				AdapterInformation^ get( int index )
-				{
-					return m_Adapters[index];
-				}
-			}
-
-			virtual System::Collections::Generic::IEnumerator<AdapterInformation^>^ GetEnumerator()
-			{
-                return m_Adapters->GetEnumerator();
 			}
 		};
 	}

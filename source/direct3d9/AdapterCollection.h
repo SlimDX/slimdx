@@ -21,21 +21,19 @@
 */
 #pragma once
 
-#include "Enums.h"
-
 namespace SlimDX
 {
-	namespace DirectInput
+	namespace Direct3D9
 	{
-		enum class Key;
+		ref class AdapterInformation;
 
-		public ref class KeyCollection : public System::Collections::Generic::ICollection<Key>
+		public ref class AdapterCollection : public System::Collections::Generic::ICollection<AdapterInformation^>
 		{
 		private:
-			System::Collections::Generic::List<Key>^ list;
+			System::Collections::Generic::List<AdapterInformation^>^ list;
 
 		internal:
-			KeyCollection() { list = gcnew System::Collections::Generic::List<Key>(); }
+			AdapterCollection( unsigned int adapterCount );
 
 			virtual System::Collections::IEnumerator^ GetEnumerator2() = System::Collections::IEnumerable::GetEnumerator
 			{
@@ -43,17 +41,25 @@ namespace SlimDX
 			}
 
 		public:
-			virtual void Add( Key item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
+			virtual void Add( AdapterInformation^ item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
 			virtual void Clear() { throw gcnew System::NotSupportedException(); }
-			virtual bool Contains( Key item ) { return list->Contains( item ); }
-			virtual void CopyTo( array<Key>^ destination, int arrayIndex ) { list->CopyTo( destination, arrayIndex ); }
-			virtual bool Remove( Key item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
+			virtual bool Contains( AdapterInformation^ item ) { return list->Contains( item ); }
+			virtual void CopyTo( array<AdapterInformation^>^ destination, int arrayIndex ) { list->CopyTo( destination, arrayIndex ); }
+			virtual bool Remove( AdapterInformation^ item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
 
-			virtual System::Collections::Generic::IEnumerator<Key>^ GetEnumerator() { return list->GetEnumerator(); }
+			virtual System::Collections::Generic::IEnumerator<AdapterInformation^>^ GetEnumerator() { return list->GetEnumerator(); }
 
 			virtual property int Count
 			{
 				int get() { return list->Count; }
+			}
+
+			property AdapterInformation^ default[int]
+			{
+				AdapterInformation^ get( int index )
+				{
+					return list[index];
+				}
 			}
 
 			virtual property bool IsReadOnly
