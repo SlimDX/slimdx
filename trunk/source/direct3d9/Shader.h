@@ -25,6 +25,11 @@
 #include "ConstantTable.h"
 #include <vcclr.h>
 
+#include "Include.h"
+#include "Macro.h"
+#include "ShaderSemantic.h"
+#include "ShaderBytecode.h"
+
 using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
@@ -33,84 +38,6 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
-		class IncludeShim;
-
-		
-
-		public interface struct Include
-		{
-			virtual void Open( IncludeType includeType, System::String^ fileName, [Out] System::IO::Stream^ stream ) = 0;
-			virtual void Close( System::IO::Stream^stream ) = 0;
-		};
-
-		class IncludeShim : public ID3DXInclude
-		{
-		private:
-			gcroot<Include^> m_WrappedInterface;
-			gcroot<System::IO::Stream^> m_stream;
-			System::Runtime::InteropServices::GCHandle m_handle;
-
-		public:
-			IncludeShim( Include^ wrappedInterface );
-
-			HRESULT WINAPI Open( D3DXINCLUDE_TYPE includeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID* ppData, UINT* pBytes );
-			HRESULT WINAPI Close( LPCVOID pData );
-		};
-
-		public value class Macro : System::IEquatable<Macro>
-		{
-		internal:
-			static D3DXMACRO* Marshal( array<Macro>^ macros, [Out] array<System::Runtime::InteropServices::GCHandle>^% handles );
-			static void Unmarshal( D3DXMACRO* macros, array<System::Runtime::InteropServices::GCHandle>^ handles );
-
-		public:
-			property System::String^ Name;
-			property System::String^ Definition;
-
-			static bool operator == ( Macro left, Macro right );
-			static bool operator != ( Macro left, Macro right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( Macro other );
-			static bool Equals( Macro% value1, Macro% value2 );
-		};
-
-		public value class ShaderSemantic : System::IEquatable<ShaderSemantic>
-		{
-		public:
-			property DeclarationUsage Usage;
-			property int UsageIndex;
-
-			static bool operator == ( ShaderSemantic left, ShaderSemantic right );
-			static bool operator != ( ShaderSemantic left, ShaderSemantic right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( ShaderSemantic other );
-			static bool Equals( ShaderSemantic% value1, ShaderSemantic% value2 );
-		};
-
-		public ref class ShaderBytecode : ComObject
-		{
-			COMOBJECT(ID3DXBuffer, ShaderBytecode);
-
-		public:
-			static ShaderBytecode^ FromPointer( System::IntPtr pointer );
-
-			DataStream^ GetData();
-
-			ConstantTable^ GetConstantTable();
-			array<ShaderSemantic>^ GetInputSemantics();
-			array<ShaderSemantic>^ GetOutputSemantics();
-			array<System::String^>^ GetSamplers();
-
-			property int Version
-			{
-				int get();
-			}
-		};
-
 		public ref class Shader sealed
 		{
 		private:

@@ -23,7 +23,7 @@
 
 #include "Enums.h"
 #include "Direct3D.h"
-#include "Vertex.h"
+#include "VertexDeclaration.h"
 
 #include "../Viewport.h"
 

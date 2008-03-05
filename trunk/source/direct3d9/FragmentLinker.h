@@ -53,7 +53,6 @@ namespace SlimDX
 			Result AddFragments( array<int>^ fragments );
 			Result AddFragments( DataStream^ fragments );
 			DataStream^ GetFragment( EffectHandle^ name );
-			DataStream^ GetAllFragments();
 
 			FragmentDescription GetFragmentDescription( EffectHandle^ name );
 			EffectHandle^ GetFragmentHandle( int index );
@@ -68,6 +67,11 @@ namespace SlimDX
 			property int FragmentCount
 			{
 				int get();
+			}
+
+			property DataStream^ Fragments
+			{
+				DataStream^ get();
 			}
 		};
 	}

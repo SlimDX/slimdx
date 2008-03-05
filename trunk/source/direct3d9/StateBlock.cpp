@@ -23,7 +23,6 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-//#include "Direct3D9ErrorHandler.h"
 #include "Direct3D9Exception.h"
 
 #include "Device.h"

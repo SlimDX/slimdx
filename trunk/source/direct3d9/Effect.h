@@ -76,9 +76,6 @@ namespace SlimDX
 			EffectHandle^ FindNextValidTechnique( EffectHandle^ technique );
 			bool ValidateTechnique( EffectHandle^ technique );
 
-			Result SetStateManager( IEffectStateManager^ manager );
-			IEffectStateManager^ GetStateManager();
-
 			virtual Result OnLostDevice();
 			virtual Result OnResetDevice();
 
@@ -86,6 +83,12 @@ namespace SlimDX
 			{
 				EffectHandle^ get();
 				void set( EffectHandle^ value );
+			}
+
+			property IEffectStateManager^ StateManager
+			{
+				IEffectStateManager^ get();
+				void set( IEffectStateManager^ value );
 			}
 		};
 	}

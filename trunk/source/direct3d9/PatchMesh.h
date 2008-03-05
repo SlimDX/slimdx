@@ -42,11 +42,6 @@ namespace SlimDX
 			PatchMesh( Mesh^ mesh );
 			static PatchMesh^ FromPointer( System::IntPtr pointer );
 
-			property SlimDX::Direct3D9::Device^ Device
-			{
-				SlimDX::Direct3D9::Device^ get();
-			}
-
 			static PatchMesh^ FromXFile( SlimDX::Direct3D9::Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
 			static PatchMesh^ FromXFile( SlimDX::Direct3D9::Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );
 			static PatchMesh^ FromXFile( SlimDX::Direct3D9::Device^ device, XFileData^ xfile, MeshFlags flags );
@@ -55,13 +50,7 @@ namespace SlimDX
 			Result GenerateAdjacency( float tolerance );
 
 			array<VertexElement>^ GetDeclaration();
-			IndexBuffer^ GetIndexBuffer();
-			VertexBuffer^ GetVertexBuffer();
-			PatchInfo GetPatchInfo();
 			Result Optimize();
-
-			DisplacementParameters GetDisplacementParameters();
-			Result SetDisplacementParameters( DisplacementParameters parameters );
 
 			DataStream^ LockAttributeBuffer( LockFlags flags );
 			Result UnlockAttributeBuffer();
@@ -80,6 +69,32 @@ namespace SlimDX
 			property int PatchCount { int get(); }
 			property int VertexCount { int get(); }
 			property PatchMeshType Type { PatchMeshType get(); }
+
+			property SlimDX::Direct3D9::Device^ Device
+			{
+				SlimDX::Direct3D9::Device^ get();
+			}
+
+			property IndexBuffer^ IndexBuffer
+			{
+				SlimDX::Direct3D9::IndexBuffer^ get();
+			}
+
+			property VertexBuffer^ VertexBuffer
+			{
+				SlimDX::Direct3D9::VertexBuffer^ get();
+			}
+
+			property PatchInfo PatchInfo
+			{
+				SlimDX::Direct3D9::PatchInfo get();
+			}
+
+			property DisplacementParameters DisplacementParameters
+			{
+				SlimDX::Direct3D9::DisplacementParameters get();
+				void set( SlimDX::Direct3D9::DisplacementParameters value );
+			}
 		};
 	}
 }

@@ -39,48 +39,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	bool SurfaceDescription::operator == ( SurfaceDescription left, SurfaceDescription right )
-	{
-		return SurfaceDescription::Equals( left, right );
-	}
-
-	bool SurfaceDescription::operator != ( SurfaceDescription left, SurfaceDescription right )
-	{
-		return !SurfaceDescription::Equals( left, right );
-	}
-
-	int SurfaceDescription::GetHashCode()
-	{
-		return Format.GetHashCode() + Type.GetHashCode() + Usage.GetHashCode()
-			 + Pool.GetHashCode() + MultisampleType.GetHashCode() + MultisampleQuality.GetHashCode()
-			 + Width.GetHashCode() + Height.GetHashCode();
-	}
-
-	bool SurfaceDescription::Equals( Object^ value )
-	{
-		if( value == nullptr )
-			return false;
-
-		if( value->GetType() != GetType() )
-			return false;
-
-		return Equals( static_cast<SurfaceDescription>( value ) );
-	}
-
-	bool SurfaceDescription::Equals( SurfaceDescription value )
-	{
-		return ( Format == value.Format && Type == value.Type && Usage == value.Usage
-			 && Pool == value.Pool && MultisampleType == value.MultisampleType && MultisampleQuality == value.MultisampleQuality
-			 && Width == value.Width && Height == value.Height );
-	}
-
-	bool SurfaceDescription::Equals( SurfaceDescription% value1, SurfaceDescription% value2 )
-	{
-		return ( value1.Format == value2.Format && value1.Type == value2.Type && value1.Usage == value2.Usage
-			 && value1.Pool == value2.Pool && value1.MultisampleType == value2.MultisampleType && value1.MultisampleQuality == value2.MultisampleQuality
-			 && value1.Width == value2.Width && value1.Height == value2.Height );
-	}
-
 	Surface::Surface( IDirect3DSurface9* surface )
 	{
 		Construct(surface);

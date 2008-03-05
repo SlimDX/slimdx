@@ -42,10 +42,7 @@ namespace SlimDX
 		public:
 			static VertexShader^ FromPointer( System::IntPtr pointer );
 			
-			~VertexShader()
-			{
-				delete m_ConstantTable;
-			}
+			virtual ~VertexShader() { delete m_ConstantTable; }
 			
 			Result RetrieveConstantTable();
 			property ConstantTable^ Constants

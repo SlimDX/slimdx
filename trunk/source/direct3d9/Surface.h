@@ -24,6 +24,8 @@
 #include "Resource.h"
 #include "../DataRectangle.h"
 
+#include "SurfaceDescription.h"
+
 namespace SlimDX
 {
 	ref class DataStream;
@@ -31,27 +33,6 @@ namespace SlimDX
 	namespace Direct3D9
 	{
 		value class ImageInformation;
-
-		public value class SurfaceDescription : System::IEquatable<SurfaceDescription>
-		{
-		public:
-			property Format Format;
-            property ResourceType Type;
-            property Usage Usage;
-            property Pool Pool;
-            property MultisampleType MultisampleType;
-            property int MultisampleQuality;
-            property int Width;
-            property int Height;
-
-			static bool operator == ( SurfaceDescription left, SurfaceDescription right );
-			static bool operator != ( SurfaceDescription left, SurfaceDescription right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( SurfaceDescription other );
-			static bool Equals( SurfaceDescription% value1, SurfaceDescription% value2 );
-		};
 
 		public ref class Surface : public Resource
 		{

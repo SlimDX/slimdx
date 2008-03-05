@@ -23,48 +23,12 @@
 
 #include "../ComObject.h"
 
+#include "VertexElement.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public value class VertexElement : System::IEquatable<VertexElement>
-		{
-		private:
-			static VertexElement()
-			{
-				VertexDeclarationEnd = VertexElement( 255, 0, DeclarationType::Unused, 
-					DeclarationMethod::Default, DeclarationUsage::Position, 0 );
-			}
-
-		public:
-			property short Stream;
-            property short Offset;
-            property DeclarationType Type;
-            property DeclarationMethod Method;
-            property DeclarationUsage Usage;
-            property System::Byte UsageIndex;
-
-			static initonly VertexElement VertexDeclarationEnd;
-
-			VertexElement( short stream, short offset, DeclarationType declarationType, DeclarationMethod declarationMethod, DeclarationUsage declarationUsage, System::Byte usageIndex )
-			{
-				Stream = stream;
-				Offset = offset;
-				Type = declarationType;
-				Method = declarationMethod;
-				Usage = declarationUsage;
-				UsageIndex = usageIndex;
-			}
-
-			static bool operator == ( VertexElement left, VertexElement right );
-			static bool operator != ( VertexElement left, VertexElement right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( VertexElement other );
-			static bool Equals( VertexElement% value1, VertexElement% value2 );
-		};
-
 		ref class Device;
 
 		public ref class VertexDeclaration : public ComObject

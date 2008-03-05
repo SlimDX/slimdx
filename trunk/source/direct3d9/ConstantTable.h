@@ -25,55 +25,15 @@
 #include "../math/Matrix.h"
 #include "../math/Vector4.h"
 
+#include "ConstantTableDescription.h"
+#include "ConstantDescription.h"
+
 namespace SlimDX
 {
 	ref class DataStream;
 
 	namespace Direct3D9
 	{
-		public value class ConstantTableDescription : System::IEquatable<ConstantTableDescription>
-		{
-		public:
-			property System::String^ Creator;
-			property System::Version^ Version;
-			property int Constants;
-
-			static bool operator == ( ConstantTableDescription left, ConstantTableDescription right );
-			static bool operator != ( ConstantTableDescription left, ConstantTableDescription right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( ConstantTableDescription other );
-			static bool Equals( ConstantTableDescription% value1, ConstantTableDescription% value2 );
-		};
-
-		public value class ConstantDescription : System::IEquatable<ConstantDescription>
-		{
-		internal:
-			void Initialize( const D3DXCONSTANT_DESC& description );
-
-		public:
-			property System::String^ Name;
-			property RegisterSet RegisterSet;
-			property int RegisterIndex;
-			property int RegisterCount;
-			property ParameterClass Class;
-			property ParameterType Type;
-			property int Rows;
-			property int Columns;
-			property int Elements;
-			property int StructMembers;
-			property int Bytes;
-
-			static bool operator == ( ConstantDescription left, ConstantDescription right );
-			static bool operator != ( ConstantDescription left, ConstantDescription right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( ConstantDescription other );
-			static bool Equals( ConstantDescription% value1, ConstantDescription% value2 );
-		};
-
 		ref class EffectHandle;
 		ref class Device;
 		

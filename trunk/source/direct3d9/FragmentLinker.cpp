@@ -186,7 +186,7 @@ namespace Direct3D9
 		return gcnew DataStream( fragment );
 	}
 
-	DataStream^ FragmentLinker::GetAllFragments()
+	DataStream^ FragmentLinker::Fragments::get()
 	{
 		ID3DXBuffer* fragments;
 

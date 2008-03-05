@@ -51,7 +51,7 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
-	PatchMesh::PatchMesh( SlimDX::Direct3D9::Device^ device, PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration )
+	PatchMesh::PatchMesh( SlimDX::Direct3D9::Device^ device, SlimDX::Direct3D9::PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration )
 	{
 		ID3DXPatchMesh *result;
 		pin_ptr<VertexElement> pinnedElements = &vertexDeclaration[0];
@@ -220,7 +220,7 @@ namespace Direct3D9
 		return SlimDX::Direct3D9::Device::FromPointer( device );
 	}
 
-	IndexBuffer^ PatchMesh::GetIndexBuffer()
+	IndexBuffer^ PatchMesh::IndexBuffer::get()
 	{
 		IDirect3DIndexBuffer9* ib;
 
@@ -229,10 +229,10 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return IndexBuffer::FromPointer( ib );
+		return SlimDX::Direct3D9::IndexBuffer::FromPointer( ib );
 	}
 
-	VertexBuffer^ PatchMesh::GetVertexBuffer()
+	VertexBuffer^ PatchMesh::VertexBuffer::get()
 	{
 		IDirect3DVertexBuffer9* vb;
 
@@ -241,12 +241,12 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return VertexBuffer::FromPointer( vb );
+		return SlimDX::Direct3D9::VertexBuffer::FromPointer( vb );
 	}
 
-	PatchInfo PatchMesh::GetPatchInfo()
+	PatchInfo PatchMesh::PatchInfo::get()
 	{
-		PatchInfo result;
+		SlimDX::Direct3D9::PatchInfo result;
 
 		HRESULT hr = InternalPointer->GetPatchInfo( reinterpret_cast<D3DXPATCHINFO*>( &result ) );
 		RECORD_D3D9( hr );
@@ -260,9 +260,9 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	DisplacementParameters PatchMesh::GetDisplacementParameters()
+	DisplacementParameters PatchMesh::DisplacementParameters::get()
 	{
-		DisplacementParameters result;
+		SlimDX::Direct3D9::DisplacementParameters result;
 		IDirect3DBaseTexture9 *texture;
 		D3DTEXTUREFILTERTYPE minFilter;
 		D3DTEXTUREFILTERTYPE magFilter;
@@ -285,12 +285,12 @@ namespace Direct3D9
 		return result;
 	}
 
-	Result PatchMesh::SetDisplacementParameters( DisplacementParameters parameters )
+	void PatchMesh::DisplacementParameters::set( SlimDX::Direct3D9::DisplacementParameters parameters )
 	{
 		HRESULT hr = InternalPointer->SetDisplaceParam( reinterpret_cast<IDirect3DTexture9*>( parameters.Texture->InternalPointer ), 
 			static_cast<D3DTEXTUREFILTERTYPE>( parameters.MinFilter ), static_cast<D3DTEXTUREFILTERTYPE>( parameters.MagFilter ),
 			static_cast<D3DTEXTUREFILTERTYPE>( parameters.MipFilter ), static_cast<D3DTEXTUREADDRESS>( parameters.Wrap ), parameters.LevelOfDetailBias );
-		return RECORD_D3D9( hr );
+		RECORD_D3D9( hr );
 	}
 
 	DataStream^ PatchMesh::LockAttributeBuffer( LockFlags flags )

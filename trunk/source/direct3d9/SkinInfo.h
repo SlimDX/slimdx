@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "BoneCombination.h"
+
 namespace SlimDX
 {
 	value class Matrix;
@@ -29,22 +31,6 @@ namespace SlimDX
 	{
 		value class VertexElement;
 		enum class VertexFormat;
-
-		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
-		public ref class BoneCombination
-		{
-		internal:
-			D3DXBONECOMBINATION ToUnmanaged();
-			static BoneCombination^ FromUnmanaged( const D3DXBONECOMBINATION &bone );
-
-		public:
-			property int AttributeId;
-			property int FaceStart;
-			property int FaceCount;
-			property int VertexStart;
-			property int VertexCount;
-			property array<int>^ BoneIds;
-		};
 
 		public ref class SkinInfo : public ComObject
 		{

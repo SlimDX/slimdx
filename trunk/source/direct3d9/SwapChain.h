@@ -21,27 +21,14 @@
 */
 #pragma once
 
+#include "RasterStatus.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
 		value class DisplayMode;
 		ref class Surface;
-
-		public value class RasterStatus : System::IEquatable<RasterStatus>
-		{
-		public:
-			property bool InVBlank;
-            property int Scanline;
-
-			static bool operator == ( RasterStatus left, RasterStatus right );
-			static bool operator != ( RasterStatus left, RasterStatus right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( RasterStatus other );
-			static bool Equals( RasterStatus% value1, RasterStatus% value2 );
-		};
 
 		public ref class SwapChain : public ComObject
 		{
