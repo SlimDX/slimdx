@@ -2258,9 +2258,21 @@
 				RelativePath="..\source\directinput\Error.h"
 				>
 			</File>
+			<File
+				RelativePath="..\source\directinput\Guids.h"
+				>
+			</File>
 			<Filter
 				Name="Device"
 				>
+				<File
+					RelativePath="..\source\directinput\Callbacks.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\Callbacks.h"
+					>
+				</File>
 				<File
 					RelativePath="..\source\directinput\Device.cpp"
 					>
@@ -2297,19 +2309,15 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\directinput\DeviceInfo.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directinput\DeviceInfo.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\directinput\DirectInput.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\directinput\DirectInput.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\InputDeviceCollection.h"
 					>
 				</File>
 			</Filter>
@@ -2337,10 +2345,6 @@
 				Name="Properties"
 				>
 				<File
-					RelativePath="..\source\directinput\Guids.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\directinput\Properties.cpp"
 					>
 				</File>
@@ -2353,15 +2357,27 @@
 				Name="BufferedData"
 				>
 				<File
-					RelativePath="..\source\directinput\Attributes.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\directinput\BufferedData.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\directinput\BufferedData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\BufferedDataCollection.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\BufferedDataCollection.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DataFormatAttribute.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DataObjectAttribute.h"
 					>
 				</File>
 			</Filter>
@@ -2385,6 +2401,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\directinput\KeyCollection.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\MouseState.h"
 					>
 				</File>
@@ -2393,11 +2413,70 @@
 				Name="DeviceConstants"
 				>
 				<File
-					RelativePath="..\source\directinput\DeviceConstants.cpp"
+					RelativePath="..\source\directinput\AnyControl.h"
 					>
 				</File>
 				<File
-					RelativePath="..\source\directinput\DeviceConstants.h"
+					RelativePath="..\source\directinput\DeviceConstantConverter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DeviceConstantConverter.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\JoystickObjects.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="DeviceInfo"
+				>
+				<File
+					RelativePath="..\source\directinput\Capabilities.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)2.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)2.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)2.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\directinput\Capabilities.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DeviceInstance.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DeviceInstance.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DeviceSubType.h"
 					>
 				</File>
 			</Filter>

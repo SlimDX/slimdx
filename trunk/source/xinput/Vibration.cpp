@@ -29,77 +29,77 @@ using namespace System;
 
 namespace SlimDX
 {
-	namespace XInput
+namespace XInput
+{
+	Vibration::Vibration( const XINPUT_VIBRATION& native )
 	{
-		Vibration::Vibration( const XINPUT_VIBRATION& native )
-		{
-			m_LeftMotorSpeed = native.wLeftMotorSpeed;
-			m_RightMotorSpeed = native.wRightMotorSpeed;
-		}
-		
-		XINPUT_VIBRATION Vibration::CreateNativeVersion()
-		{
-			XINPUT_VIBRATION native;
-			native.wLeftMotorSpeed = m_LeftMotorSpeed;
-			native.wRightMotorSpeed = m_RightMotorSpeed;
-			
-			return native;
-		}
-		
-		UInt16 Vibration::LeftMotorSpeed::get()
-		{
-			return m_LeftMotorSpeed;
-		}
-		
-		void Vibration::LeftMotorSpeed::set( UInt16 value )
-		{
-			m_LeftMotorSpeed = value;
-		}
-		
-		UInt16 Vibration::RightMotorSpeed::get()
-		{
-			return m_RightMotorSpeed;
-		}
-		
-		void Vibration::RightMotorSpeed::set( UInt16 value )
-		{
-			m_RightMotorSpeed = value;
-		}
-		
-		bool Vibration::operator == ( Vibration left, Vibration right )
-		{
-			return Vibration::Equals( left, right );
-		}
-
-		bool Vibration::operator != ( Vibration left, Vibration right )
-		{
-			return !Vibration::Equals( left, right );
-		}
-
-		int Vibration::GetHashCode()
-		{
-			return m_LeftMotorSpeed.GetHashCode() + m_RightMotorSpeed.GetHashCode();
-		}
-
-		bool Vibration::Equals( Object^ value )
-		{
-			if( value == nullptr )
-				return false;
-
-			if( value->GetType() != GetType() )
-				return false;
-
-			return Equals( static_cast<Vibration>( value ) );
-		}
-
-		bool Vibration::Equals( Vibration value )
-		{
-			return ( m_LeftMotorSpeed == value.m_LeftMotorSpeed && m_RightMotorSpeed == value.m_RightMotorSpeed );
-		}
-
-		bool Vibration::Equals( Vibration% value1, Vibration% value2 )
-		{
-			return ( value1.m_LeftMotorSpeed == value2.m_LeftMotorSpeed && value1.m_RightMotorSpeed == value2.m_RightMotorSpeed );
-		}
+		m_LeftMotorSpeed = native.wLeftMotorSpeed;
+		m_RightMotorSpeed = native.wRightMotorSpeed;
 	}
+	
+	XINPUT_VIBRATION Vibration::CreateNativeVersion()
+	{
+		XINPUT_VIBRATION native;
+		native.wLeftMotorSpeed = m_LeftMotorSpeed;
+		native.wRightMotorSpeed = m_RightMotorSpeed;
+		
+		return native;
+	}
+	
+	UInt16 Vibration::LeftMotorSpeed::get()
+	{
+		return m_LeftMotorSpeed;
+	}
+	
+	void Vibration::LeftMotorSpeed::set( UInt16 value )
+	{
+		m_LeftMotorSpeed = value;
+	}
+	
+	UInt16 Vibration::RightMotorSpeed::get()
+	{
+		return m_RightMotorSpeed;
+	}
+	
+	void Vibration::RightMotorSpeed::set( UInt16 value )
+	{
+		m_RightMotorSpeed = value;
+	}
+	
+	bool Vibration::operator == ( Vibration left, Vibration right )
+	{
+		return Vibration::Equals( left, right );
+	}
+
+	bool Vibration::operator != ( Vibration left, Vibration right )
+	{
+		return !Vibration::Equals( left, right );
+	}
+
+	int Vibration::GetHashCode()
+	{
+		return m_LeftMotorSpeed.GetHashCode() + m_RightMotorSpeed.GetHashCode();
+	}
+
+	bool Vibration::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<Vibration>( value ) );
+	}
+
+	bool Vibration::Equals( Vibration value )
+	{
+		return ( m_LeftMotorSpeed == value.m_LeftMotorSpeed && m_RightMotorSpeed == value.m_RightMotorSpeed );
+	}
+
+	bool Vibration::Equals( Vibration% value1, Vibration% value2 )
+	{
+		return ( value1.m_LeftMotorSpeed == value2.m_LeftMotorSpeed && value1.m_RightMotorSpeed == value2.m_RightMotorSpeed );
+	}
+}
 }

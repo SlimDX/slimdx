@@ -21,43 +21,13 @@
 */
 #pragma once
 
-#include "DeviceConstants.h"
 #include "Enums.h"
+#include "KeyCollection.h"
 
 namespace SlimDX
 {
 	namespace DirectInput
 	{
-		public ref class KeyCollection : System::Collections::Generic::IEnumerable<Key>
-		{
-		private:
-			System::Collections::Generic::List<Key>^ list;
-
-		internal:
-			KeyCollection() { list = gcnew System::Collections::Generic::List<Key>(); }
-
-			virtual System::Collections::IEnumerator^ GetEnumerator2() = System::Collections::IEnumerable::GetEnumerator
-			{
-				return ((System::Collections::IEnumerable^)list)->GetEnumerator();
-			}
-
-			void Add( Key key ) { list->Add( key ); }
-
-			void Clear() { list->Clear(); }
-
-			void Remove( Key key ) { list->Remove( key ); }
-
-		public:
-			property int Count
-			{
-				int get() { return list->Count; }
-			}
-
-			bool Contains( Key key ) { return list->Contains( key ); }
-
-			virtual System::Collections::Generic::IEnumerator<Key>^ GetEnumerator() { return list->GetEnumerator(); }
-		};
-
 		/// <summary>
 		/// Describes the state of a keyboard device.
 		/// </summary>

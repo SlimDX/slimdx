@@ -21,60 +21,32 @@
 */
 #pragma once
 
-#include "Enums.h"
-
 namespace SlimDX
 {
 	namespace DirectInput
 	{
 		/// <summary>
-		/// Describes the state of a mouse device.
+		/// Indicates that a type is a data format specification for DirectInput.
 		/// </summary>
-		public ref class MouseState
+		[System::AttributeUsage(System::AttributeTargets::Class | System::AttributeTargets::Struct)]
+		public ref class DataFormatAttribute sealed : public System::Attribute
 		{
-		internal:
-			array<bool>^ buttons;
+		private:
+			DataFormatFlag flags;
 
 		public:
-			MouseState()
+			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::DataFormatAttribute"/> class.
+			/// </summary>
+			DataFormatAttribute( DataFormatFlag flags ) : flags( flags ) { }
+
+			/// <summary>
+			/// Gets or sets the flags describing other attributes of the data format.
+			/// </summary>
+			property DataFormatFlag Flags
 			{
-				buttons = gcnew array<bool>( 8 );
+				DataFormatFlag get() { return flags; }
 			}
-
-			MouseState( int x, int y, int z )
-			{
-				X = x;
-				Y = y;
-				Z = z;
-				buttons = gcnew array<bool>( 8 );
-			}
-
-			/// <summary>
-			/// Gets the X axis of the mouse.
-			/// </summary>
-			property int X;
-
-			/// <summary>
-			/// Gets the Y axis of the mouse.
-			/// </summary>
-			property int Y;
-
-			/// <summary>
-			/// Gets the Z axis of the mouse.
-			/// </summary>
-			property int Z;
-
-			/// <summary>
-			/// Gets the state of the mouse buttons.
-			/// </summary>
-			array<bool>^ GetButtons()
-			{
-				return buttons;
-			}
-
-			bool IsPressed(int button) { return buttons[button]; }
-
-			bool IsReleased(int button) { return !buttons[button]; }
 		};
 	}
 }

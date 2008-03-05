@@ -21,12 +21,10 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Windows::Forms;
-//using namespace System::Runtime::InteropServices;
-
 #include "../SlimDXException.h"
 #include "../InternalHelpers.h"
+
+#include "InputDeviceCollection.h"
 
 namespace SlimDX
 {
@@ -91,6 +89,10 @@ namespace SlimDX
 			/// has been newly attached to the system.
 			/// </summary>
 			static System::Guid FindDevice( System::Guid deviceClass, System::String^ name );
+
+			static InputDeviceCollection^ GetDevices();
+			static InputDeviceCollection^ GetDevices( DeviceClass deviceClass, DeviceEnumerationFlags enumerationFlags );
+			static InputDeviceCollection^ GetDevices( DeviceType deviceType, DeviceEnumerationFlags enumerationFlags );
 		};
 	}
 }

@@ -78,35 +78,5 @@ namespace SlimDX
 				int get() { return sequence; }
 			}
 		};
-
-		generic<typename DataFormat>
-		public ref class BufferedDataCollection : System::Collections::Generic::IEnumerable<BufferedData<DataFormat>^>
-		{
-		private:
-			System::Collections::Generic::List<BufferedData<DataFormat>^>^ list;
-
-		internal:
-			BufferedDataCollection( int initialCapacity );
-
-			void Add( BufferedData<DataFormat>^ data );
-
-			virtual System::Collections::IEnumerator^ GetEnumerator2() = System::Collections::IEnumerable::GetEnumerator
-			{
-				return ((System::Collections::IEnumerable^)list)->GetEnumerator();
-			}
-
-		public:
-			property int Count
-			{
-				int get() { return list->Count; }
-			}
-
-			property BufferedData<DataFormat>^ default[int]
-			{
-				BufferedData<DataFormat>^ get( int index ) { return list[index]; }
-			}
-
-			virtual System::Collections::Generic::IEnumerator<BufferedData<DataFormat>^>^ GetEnumerator() { return list->GetEnumerator(); }
-		};
 	}
 }
