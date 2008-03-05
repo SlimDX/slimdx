@@ -196,17 +196,5 @@ namespace DirectInput
 	BufferedData<DataFormat>::BufferedData( DataFormat data ) : data( data )
 	{
 	}
-
-	generic<typename DataFormat>
-	BufferedDataCollection<DataFormat>::BufferedDataCollection( int initialCapacity )
-	{
-		list = gcnew List<BufferedData<DataFormat>^>( initialCapacity );
-	}
-
-	generic<typename DataFormat>
-	void BufferedDataCollection<DataFormat>::Add( BufferedData<DataFormat>^ data )
-	{
-		list->Add( data );
-	}
 }
 }

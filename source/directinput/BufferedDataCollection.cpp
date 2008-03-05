@@ -19,62 +19,29 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include <windows.h>
+#include <dinput.h>
 
-#include "Enums.h"
+#include "BufferedData.h"
+#include "BufferedDataCollection.h"
+
+using namespace System;
+using namespace System::Collections::Generic;
 
 namespace SlimDX
 {
-	namespace DirectInput
+namespace DirectInput
+{
+	generic<typename DataFormat>
+	BufferedDataCollection<DataFormat>::BufferedDataCollection( int initialCapacity )
 	{
-		/// <summary>
-		/// Describes the state of a mouse device.
-		/// </summary>
-		public ref class MouseState
-		{
-		internal:
-			array<bool>^ buttons;
-
-		public:
-			MouseState()
-			{
-				buttons = gcnew array<bool>( 8 );
-			}
-
-			MouseState( int x, int y, int z )
-			{
-				X = x;
-				Y = y;
-				Z = z;
-				buttons = gcnew array<bool>( 8 );
-			}
-
-			/// <summary>
-			/// Gets the X axis of the mouse.
-			/// </summary>
-			property int X;
-
-			/// <summary>
-			/// Gets the Y axis of the mouse.
-			/// </summary>
-			property int Y;
-
-			/// <summary>
-			/// Gets the Z axis of the mouse.
-			/// </summary>
-			property int Z;
-
-			/// <summary>
-			/// Gets the state of the mouse buttons.
-			/// </summary>
-			array<bool>^ GetButtons()
-			{
-				return buttons;
-			}
-
-			bool IsPressed(int button) { return buttons[button]; }
-
-			bool IsReleased(int button) { return !buttons[button]; }
-		};
+		list = gcnew List<BufferedData<DataFormat>^>( initialCapacity );
 	}
+
+	generic<typename DataFormat>
+	void BufferedDataCollection<DataFormat>::Add( BufferedData<DataFormat>^ data )
+	{
+		list->Add( data );
+	}
+}
 }

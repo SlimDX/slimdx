@@ -21,67 +21,10 @@
 */
 #pragma once
 
-//using namespace System;
-
 namespace SlimDX
 {
 	namespace DirectInput
 	{
-		/// <summary>
-		/// Defines possible joystick object codes.
-		/// </summary>
-		public ref class JoystickObjects sealed
-		{
-		private:
-			JoystickObjects() { }
-
-		public:
-			/// <summary>
-			/// The rotational X axis.
-			/// </summary>
-			literal int XAxisRotation = DIJOFS_RX;
-
-			/// <summary>
-			/// The rotational X axis.
-			/// </summary>
-			literal int YAxisRotation = DIJOFS_RY;
-
-			/// <summary>
-			/// The rotational X axis.
-			/// </summary>
-			literal int ZAxisRotation = DIJOFS_RZ;
-
-			/// <summary>
-			/// The rotational X axis.
-			/// </summary>
-			literal int XAxis = DIJOFS_X;
-
-			/// <summary>
-			/// The rotational X axis.
-			/// </summary>
-			literal int YAxis = DIJOFS_Y;
-
-			/// <summary>
-			/// The rotational X axis.
-			/// </summary>
-			literal int ZAxis = DIJOFS_Z;
-
-			/// <summary>
-			/// Provides scan codes for the specified button.
-			/// </summary>
-			static int Button( int buttonId );
-
-			/// <summary>
-			/// Provides scan codes for the specified slider.
-			/// </summary>
-			static int Slider( int sliderId );
-
-			/// <summary>
-			/// Provides scan codes for the specified Point-Of-View controller.
-			/// </summary>
-			static int PointOfView( int povId );
-		};
-
 		/// <summary>
 		/// Defines object codes that refer to any control type on a device.
 		/// </summary>
@@ -229,84 +172,7 @@ namespace SlimDX
 			/// <summary>
 			/// Refers to any button.
 			/// </summary>
-			static int Button( int buttonId );
-		};
-
-		/// <summary>
-		/// Defines possible mouse object codes.
-		/// </summary>
-		public enum class MouseObject : System::Int32
-		{
-			/// <summary>
-			/// The first button.
-			/// </summary>
-			Button1,
-
-			/// <summary>
-			/// The second button.
-			/// </summary>
-			Button2,
-
-			/// <summary>
-			/// The third button.
-			/// </summary>
-			Button3,
-
-			/// <summary>
-			/// The fourth button.
-			/// </summary>
-			Button4,
-
-			/// <summary>
-			/// The fifth button.
-			/// </summary>
-			Button5,
-
-			/// <summary>
-			/// The sixth button.
-			/// </summary>
-			Button6,
-
-			/// <summary>
-			/// The seventh button.
-			/// </summary>
-			Button7,
-
-			/// <summary>
-			/// The eighth button.
-			/// </summary>
-			Button8,
-
-			/// <summary>
-			/// The X axis.
-			/// </summary>
-			XAxis,
-
-			/// <summary>
-			/// The Y axis.
-			/// </summary>
-			YAxis,
-
-			/// <summary>
-			/// The Z axis.
-			/// </summary>
-			ZAxis
-		};
-
-		private ref class DeviceConstantConverter sealed
-		{
-		private:
-			DeviceConstantConverter() { }
-
-		public:
-			static int KeyToDIK( Key key );
-			static Key DIKToKey( int dik );
-			
-			/* Unused.
-			static int MouseToDIMOFS( MouseObject mouse );
-			static int MouseToDIMOUSE( MouseObject mouse );
-			static int KeyToDIKEYBOARD( Key key );
-			*/
+			static int Button( int buttonId ) { return DIBUTTON_ANY( buttonId ); }
 		};
 	}
 }

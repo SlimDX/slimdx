@@ -24,7 +24,7 @@
 
 #include "DirectInput.h"
 
-#include "DeviceInfo.h"
+#include "DeviceInstance.h"
 #include "Guids.h"
 
 using namespace System;
@@ -46,26 +46,6 @@ namespace DirectInput
 		productName = gcnew String( deviceInstance.tszProductName );
 
 		if( ( deviceInstance.dwDevType & DIDEVTYPE_HID ) != 0 )
-			hid = true;
-		else
-			hid = false;
-	}
-
-	Capabilities::Capabilities( const DIDEVCAPS &caps )
-	{
-		axesCount = caps.dwAxes;
-		buttonCount = caps.dwButtons;
-		povCount = caps.dwPOVs;
-		ffSamplePeriod = caps.dwFFSamplePeriod;
-		ffMinTimeResolution = caps.dwFFMinTimeResolution;
-		ffDriverVersion = caps.dwFFDriverVersion;
-		firmwareRevision = caps.dwFirmwareRevision;
-		hardwareRevision = caps.dwHardwareRevision;
-		flags = static_cast<DeviceFlags>( caps.dwFlags );
-		type = static_cast<DeviceType>( caps.dwDevType );
-		subType = caps.dwDevType >> 8;
-
-		if( ( caps.dwDevType & DIDEVTYPE_HID ) != 0 )
 			hid = true;
 		else
 			hid = false;

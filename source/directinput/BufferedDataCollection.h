@@ -21,60 +21,38 @@
 */
 #pragma once
 
-#include "Enums.h"
-
 namespace SlimDX
 {
 	namespace DirectInput
 	{
-		/// <summary>
-		/// Describes the state of a mouse device.
-		/// </summary>
-		public ref class MouseState
+		generic<typename DataFormat>
+		public ref class BufferedDataCollection : System::Collections::Generic::IEnumerable<BufferedData<DataFormat>^>
 		{
+		private:
+			System::Collections::Generic::List<BufferedData<DataFormat>^>^ list;
+
 		internal:
-			array<bool>^ buttons;
+			BufferedDataCollection( int initialCapacity );
+
+			void Add( BufferedData<DataFormat>^ data );
+
+			virtual System::Collections::IEnumerator^ GetEnumerator2() = System::Collections::IEnumerable::GetEnumerator
+			{
+				return ((System::Collections::IEnumerable^)list)->GetEnumerator();
+			}
 
 		public:
-			MouseState()
+			property int Count
 			{
-				buttons = gcnew array<bool>( 8 );
+				int get() { return list->Count; }
 			}
 
-			MouseState( int x, int y, int z )
+			property BufferedData<DataFormat>^ default[int]
 			{
-				X = x;
-				Y = y;
-				Z = z;
-				buttons = gcnew array<bool>( 8 );
+				BufferedData<DataFormat>^ get( int index ) { return list[index]; }
 			}
 
-			/// <summary>
-			/// Gets the X axis of the mouse.
-			/// </summary>
-			property int X;
-
-			/// <summary>
-			/// Gets the Y axis of the mouse.
-			/// </summary>
-			property int Y;
-
-			/// <summary>
-			/// Gets the Z axis of the mouse.
-			/// </summary>
-			property int Z;
-
-			/// <summary>
-			/// Gets the state of the mouse buttons.
-			/// </summary>
-			array<bool>^ GetButtons()
-			{
-				return buttons;
-			}
-
-			bool IsPressed(int button) { return buttons[button]; }
-
-			bool IsReleased(int button) { return !buttons[button]; }
+			virtual System::Collections::Generic::IEnumerator<BufferedData<DataFormat>^>^ GetEnumerator() { return list->GetEnumerator(); }
 		};
 	}
 }

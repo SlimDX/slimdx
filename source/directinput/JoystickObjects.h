@@ -21,60 +21,63 @@
 */
 #pragma once
 
-#include "Enums.h"
-
 namespace SlimDX
 {
 	namespace DirectInput
 	{
 		/// <summary>
-		/// Describes the state of a mouse device.
+		/// Defines possible joystick object codes.
 		/// </summary>
-		public ref class MouseState
+		public ref class JoystickObjects sealed
 		{
-		internal:
-			array<bool>^ buttons;
+		private:
+			JoystickObjects() { }
 
 		public:
-			MouseState()
-			{
-				buttons = gcnew array<bool>( 8 );
-			}
-
-			MouseState( int x, int y, int z )
-			{
-				X = x;
-				Y = y;
-				Z = z;
-				buttons = gcnew array<bool>( 8 );
-			}
+			/// <summary>
+			/// The rotational X axis.
+			/// </summary>
+			literal int XAxisRotation = DIJOFS_RX;
 
 			/// <summary>
-			/// Gets the X axis of the mouse.
+			/// The rotational X axis.
 			/// </summary>
-			property int X;
+			literal int YAxisRotation = DIJOFS_RY;
 
 			/// <summary>
-			/// Gets the Y axis of the mouse.
+			/// The rotational X axis.
 			/// </summary>
-			property int Y;
+			literal int ZAxisRotation = DIJOFS_RZ;
 
 			/// <summary>
-			/// Gets the Z axis of the mouse.
+			/// The rotational X axis.
 			/// </summary>
-			property int Z;
+			literal int XAxis = DIJOFS_X;
 
 			/// <summary>
-			/// Gets the state of the mouse buttons.
+			/// The rotational X axis.
 			/// </summary>
-			array<bool>^ GetButtons()
-			{
-				return buttons;
-			}
+			literal int YAxis = DIJOFS_Y;
 
-			bool IsPressed(int button) { return buttons[button]; }
+			/// <summary>
+			/// The rotational X axis.
+			/// </summary>
+			literal int ZAxis = DIJOFS_Z;
 
-			bool IsReleased(int button) { return !buttons[button]; }
+			/// <summary>
+			/// Provides scan codes for the specified button.
+			/// </summary>
+			static int Button( int buttonId ) { return DIJOFS_BUTTON( buttonId ); }
+
+			/// <summary>
+			/// Provides scan codes for the specified slider.
+			/// </summary>
+			static int Slider( int sliderId ) { return DIJOFS_SLIDER( sliderId ); }
+
+			/// <summary>
+			/// Provides scan codes for the specified Point-Of-View controller.
+			/// </summary>
+			static int PointOfView( int povId ) { return DIJOFS_POV( povId ); }
 		};
 	}
 }

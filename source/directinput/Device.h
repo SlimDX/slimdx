@@ -24,9 +24,12 @@
 #include "../ComObject.h"
 
 #include "Enums.h"
-#include "Attributes.h"
-#include "DeviceInfo.h"
+#include "DataFormatAttribute.h"
+#include "DataObjectAttribute.h"
+#include "DeviceInstance.h"
+#include "Capabilities.h"
 #include "BufferedData.h"
+#include "BufferedDataCollection.h"
 #include "Guids.h"
 #include "Properties.h"
 

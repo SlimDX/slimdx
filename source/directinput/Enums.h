@@ -93,6 +93,15 @@ namespace SlimDX
 			Relative = DIPROPAXISMODE_REL
 		};
 
+		public enum class DeviceClass : System::Int32
+		{
+			All = DI8DEVCLASS_ALL,
+			Device = DI8DEVCLASS_DEVICE,
+			GameController = DI8DEVCLASS_GAMECTRL,
+			Keyboard = DI8DEVCLASS_KEYBOARD,
+			Pointer = DI8DEVCLASS_POINTER
+		};
+
 		/// <summary>
 		/// The data format for a DirectInput device.
 		/// </summary>
@@ -112,6 +121,17 @@ namespace SlimDX
 			/// Joystick data.
 			/// </summary>
 			Joystick
+		};
+
+		[System::Flags]
+		public enum class DeviceEnumerationFlags : System::Int32
+		{
+			AllDevices = DIEDFL_ALLDEVICES,
+			AttachedOnly = DIEDFL_ATTACHEDONLY,
+			ForceFeedback = DIEDFL_FORCEFEEDBACK,
+			IncludeAliases = DIEDFL_INCLUDEALIASES,
+			IncludeHidden = DIEDFL_INCLUDEHIDDEN,
+			IncludePhantoms = DIEDFL_INCLUDEPHANTOMS
 		};
 
 		/// <summary>
@@ -993,6 +1013,67 @@ namespace SlimDX
 			Yen,
 
 			Unknown
+		};
+
+		/// <summary>
+		/// Defines possible mouse object codes.
+		/// </summary>
+		public enum class MouseObject : System::Int32
+		{
+			/// <summary>
+			/// The first button.
+			/// </summary>
+			Button1,
+
+			/// <summary>
+			/// The second button.
+			/// </summary>
+			Button2,
+
+			/// <summary>
+			/// The third button.
+			/// </summary>
+			Button3,
+
+			/// <summary>
+			/// The fourth button.
+			/// </summary>
+			Button4,
+
+			/// <summary>
+			/// The fifth button.
+			/// </summary>
+			Button5,
+
+			/// <summary>
+			/// The sixth button.
+			/// </summary>
+			Button6,
+
+			/// <summary>
+			/// The seventh button.
+			/// </summary>
+			Button7,
+
+			/// <summary>
+			/// The eighth button.
+			/// </summary>
+			Button8,
+
+			/// <summary>
+			/// The X axis.
+			/// </summary>
+			XAxis,
+
+			/// <summary>
+			/// The Y axis.
+			/// </summary>
+			YAxis,
+
+			/// <summary>
+			/// The Z axis.
+			/// </summary>
+			ZAxis
 		};
 
 		/// <summary>

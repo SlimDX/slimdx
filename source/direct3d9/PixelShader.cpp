@@ -39,154 +39,154 @@ using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct3D9
+namespace Direct3D9
+{
+	PixelShader::PixelShader( IDirect3DPixelShader9* pointer )
 	{
-		PixelShader::PixelShader( IDirect3DPixelShader9* pointer )
-		{
-			Construct( pointer );
-			m_ConstantTable = nullptr;
-		}
-
-		PixelShader::PixelShader( IntPtr pointer )
-		{
-			Construct( pointer, NativeInterface );
-			m_ConstantTable = nullptr;
-		}
-
-		PixelShader::PixelShader( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable )
-		{
-			if( pixelShader == NULL )
-				throw gcnew ArgumentNullException( "pixelShader" );
-			if( constantTable == NULL )
-				throw gcnew ArgumentNullException( "constantTable" );
-
-			Construct(pixelShader);
-
-			IDirect3DDevice9* device;
-			HRESULT hr = pixelShader->GetDevice(&device);
-			
-			if( RECORD_D3D9( hr ).IsFailure )
-				throw gcnew Direct3D9Exception( Result::Last );
-			
-			m_ConstantTable = ConstantTable::FromPointer( device, constantTable );
-			device->Release();
-		}
-
-		PixelShader^ PixelShader::FromPointer( IDirect3DPixelShader9* pointer )
-		{
-			if( pointer == 0 )
-				return nullptr;
-
-			PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-			if( tableEntry != nullptr )
-			{
-				pointer->Release();
-				return tableEntry;
-			}
-
-			return gcnew PixelShader( pointer );
-		}
-
-		PixelShader^ PixelShader::FromPointer( IntPtr pointer )
-		{
-			if( pointer == IntPtr::Zero )
-				throw gcnew ArgumentNullException( "pointer" );
-
-			PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-			if( tableEntry != nullptr )
-			{
-				return tableEntry;
-			}
-
-			return gcnew PixelShader( pointer );
-		}
-
-
-		PixelShader^ PixelShader::FromPointer( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable )
-		{
-			if( pixelShader == 0 )
-				return nullptr;
-
-			IntPtr pixelShaderPtr = static_cast<IntPtr>( pixelShader );
-			PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Find( pixelShaderPtr ) );
-			if( tableEntry != nullptr )
-			{
-				pixelShader->Release();
-				return tableEntry;
-			}
-
-			return gcnew PixelShader( pixelShader, constantTable );
-		}
-
-		PixelShader^ PixelShader::FromString( Device^ device, String^ sourceCode, String^ entryPoint, String^ profile, ShaderFlags flags, [Out] String^ %compilationErrors )
-		{
-			array<unsigned char>^ rawCode = System::Text::ASCIIEncoding::ASCII->GetBytes( sourceCode );
-			pin_ptr<unsigned char> pinnedCode = &rawCode[0];
-			array<Byte>^ rawFunction = System::Text::ASCIIEncoding::ASCII->GetBytes( entryPoint );
-			pin_ptr<unsigned char> pinnedFunction = &rawFunction[0];
-			array<Byte>^ rawProfile = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
-			pin_ptr<unsigned char> pinnedProfile = &rawProfile[0];
-			
-			ID3DXBuffer *shaderBuffer;
-			ID3DXBuffer *errorBuffer;
-			ID3DXConstantTable* constantTable;
-			
-			HRESULT hr = D3DXCompileShader( reinterpret_cast<const char*>( pinnedCode ), rawCode->Length, NULL, NULL,
-				reinterpret_cast<const char*>( pinnedFunction ), reinterpret_cast<const char*>( pinnedProfile ),
-				static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, &constantTable );
-			
-			if( errorBuffer != NULL )
-			{
-				compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBuffer->GetBufferPointer() ) );
-			}
-			else
-			{
-				compilationErrors = String::Empty;
-			}
-			
-			// CheckHResult() is not used because we need to include the compiler errors.
-			if( FAILED(hr) )
-			{
-				Direct3D9Exception^ ex = gcnew Direct3D9Exception( Result::Last );
-				ex->Data->Add( "CompilationErrors", compilationErrors );
-				throw ex;
-			}
-
-			SetLastError( hr );
-			
-			IDirect3DPixelShader9 *pixelShader;
-			device->InternalPointer->CreatePixelShader( reinterpret_cast<const DWORD*>( shaderBuffer->GetBufferPointer() ), &pixelShader );
-			if( pixelShader == NULL)
-				return nullptr;
-			return gcnew PixelShader( pixelShader, constantTable );
-		}
-
-		Result PixelShader::RetrieveConstantTable()
-		{
-			if( m_ConstantTable != nullptr )
-				return RECORD_D3D9( E_FAIL );
-
-			//Retrieve the binary data
-			UINT size = 0;
-			HRESULT hr = InternalPointer->GetFunction( NULL, &size );
-			if( RECORD_D3D9( hr ).IsFailure )
-				return Result::Last;
-
-			stack_ptr<char> data( new (stackalloc) char[size] );
-			hr = InternalPointer->GetFunction( data.get(), &size );
-			if( RECORD_D3D9( hr ).IsFailure )
-				return Result::Last;
-
-			//Ask D3DX to give us the actual table
-			ID3DXConstantTable* constantTable = NULL;
-			hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( data.get() ), &constantTable );
-			
-			if( RECORD_D3D9( hr ).IsFailure )
-				return Result::Last;
-
-			m_ConstantTable = ConstantTable::FromPointer( constantTable );
-
-			return Result::Last;
-		}
+		Construct( pointer );
+		m_ConstantTable = nullptr;
 	}
+
+	PixelShader::PixelShader( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+		m_ConstantTable = nullptr;
+	}
+
+	PixelShader::PixelShader( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable )
+	{
+		if( pixelShader == NULL )
+			throw gcnew ArgumentNullException( "pixelShader" );
+		if( constantTable == NULL )
+			throw gcnew ArgumentNullException( "constantTable" );
+
+		Construct(pixelShader);
+
+		IDirect3DDevice9* device;
+		HRESULT hr = pixelShader->GetDevice(&device);
+		
+		if( RECORD_D3D9( hr ).IsFailure )
+			throw gcnew Direct3D9Exception( Result::Last );
+		
+		m_ConstantTable = ConstantTable::FromPointer( device, constantTable );
+		device->Release();
+	}
+
+	PixelShader^ PixelShader::FromPointer( IDirect3DPixelShader9* pointer )
+	{
+		if( pointer == 0 )
+			return nullptr;
+
+		PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew PixelShader( pointer );
+	}
+
+	PixelShader^ PixelShader::FromPointer( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew PixelShader( pointer );
+	}
+
+
+	PixelShader^ PixelShader::FromPointer( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable )
+	{
+		if( pixelShader == 0 )
+			return nullptr;
+
+		IntPtr pixelShaderPtr = static_cast<IntPtr>( pixelShader );
+		PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Find( pixelShaderPtr ) );
+		if( tableEntry != nullptr )
+		{
+			pixelShader->Release();
+			return tableEntry;
+		}
+
+		return gcnew PixelShader( pixelShader, constantTable );
+	}
+
+	PixelShader^ PixelShader::FromString( Device^ device, String^ sourceCode, String^ entryPoint, String^ profile, ShaderFlags flags, [Out] String^ %compilationErrors )
+	{
+		array<unsigned char>^ rawCode = System::Text::ASCIIEncoding::ASCII->GetBytes( sourceCode );
+		pin_ptr<unsigned char> pinnedCode = &rawCode[0];
+		array<Byte>^ rawFunction = System::Text::ASCIIEncoding::ASCII->GetBytes( entryPoint );
+		pin_ptr<unsigned char> pinnedFunction = &rawFunction[0];
+		array<Byte>^ rawProfile = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
+		pin_ptr<unsigned char> pinnedProfile = &rawProfile[0];
+		
+		ID3DXBuffer *shaderBuffer;
+		ID3DXBuffer *errorBuffer;
+		ID3DXConstantTable* constantTable;
+		
+		HRESULT hr = D3DXCompileShader( reinterpret_cast<const char*>( pinnedCode ), rawCode->Length, NULL, NULL,
+			reinterpret_cast<const char*>( pinnedFunction ), reinterpret_cast<const char*>( pinnedProfile ),
+			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, &constantTable );
+		
+		if( errorBuffer != NULL )
+		{
+			compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBuffer->GetBufferPointer() ) );
+		}
+		else
+		{
+			compilationErrors = String::Empty;
+		}
+		
+		// CheckHResult() is not used because we need to include the compiler errors.
+		if( FAILED(hr) )
+		{
+			Direct3D9Exception^ ex = gcnew Direct3D9Exception( Result::Last );
+			ex->Data->Add( "CompilationErrors", compilationErrors );
+			throw ex;
+		}
+
+		SetLastError( hr );
+		
+		IDirect3DPixelShader9 *pixelShader;
+		device->InternalPointer->CreatePixelShader( reinterpret_cast<const DWORD*>( shaderBuffer->GetBufferPointer() ), &pixelShader );
+		if( pixelShader == NULL)
+			return nullptr;
+		return gcnew PixelShader( pixelShader, constantTable );
+	}
+
+	Result PixelShader::RetrieveConstantTable()
+	{
+		if( m_ConstantTable != nullptr )
+			return RECORD_D3D9( E_FAIL );
+
+		//Retrieve the binary data
+		UINT size = 0;
+		HRESULT hr = InternalPointer->GetFunction( NULL, &size );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return Result::Last;
+
+		stack_ptr<char> data( new (stackalloc) char[size] );
+		hr = InternalPointer->GetFunction( data.get(), &size );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return Result::Last;
+
+		//Ask D3DX to give us the actual table
+		ID3DXConstantTable* constantTable = NULL;
+		hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( data.get() ), &constantTable );
+		
+		if( RECORD_D3D9( hr ).IsFailure )
+			return Result::Last;
+
+		m_ConstantTable = ConstantTable::FromPointer( constantTable );
+
+		return Result::Last;
+	}
+}
 }

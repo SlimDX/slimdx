@@ -22,12 +22,13 @@
 #include <windows.h>
 #include <dinput.h>
 #include <vcclr.h>
+#include <memory>
 
 #include "DirectInput.h"
-//#include "DirectInputErrorHandler.h"
 #include "DirectInputException.h"
 #include "DirectInputNotFoundException.h"
 
+#include "Callbacks.h"
 #include "Device.h"
 
 using namespace System;
@@ -112,6 +113,35 @@ namespace DirectInput
 			return Guid::Empty;
 
 		return Utilities::ConvertNativeGuid( result );
+	}
+
+	InputDeviceCollection^ DirectInput::GetDevices()
+	{
+		return GetDevices( DeviceClass::All, DeviceEnumerationFlags::AllDevices );
+	}
+
+	InputDeviceCollection^ DirectInput::GetDevices( DeviceClass deviceClass, DeviceEnumerationFlags enumerationFlags )
+	{
+		InputDeviceCollection^ results = gcnew InputDeviceCollection();
+		std::auto_ptr<InputDeviceCollectionShim> shim( new InputDeviceCollectionShim( results ) );
+
+		HRESULT hr = m_DirectInput->EnumDevices( static_cast<DWORD>( deviceClass ), static_cast<LPDIENUMDEVICESCALLBACK>( EnumerateDevices ), shim.get(), static_cast<DWORD>( enumerationFlags ) );
+		if( RECORD_DINPUT( hr ).IsFailure )
+			return nullptr;
+
+		return results;
+	}
+
+	InputDeviceCollection^ DirectInput::GetDevices( DeviceType deviceType, DeviceEnumerationFlags enumerationFlags )
+	{
+		InputDeviceCollection^ results = gcnew InputDeviceCollection();
+		std::auto_ptr<InputDeviceCollectionShim> shim( new InputDeviceCollectionShim( results ) );
+
+		HRESULT hr = m_DirectInput->EnumDevices( static_cast<DWORD>( deviceType ), static_cast<LPDIENUMDEVICESCALLBACK>( EnumerateDevices ), shim.get(), static_cast<DWORD>( enumerationFlags ) );
+		if( RECORD_DINPUT( hr ).IsFailure )
+			return nullptr;
+
+		return results;
 	}
 }
 }

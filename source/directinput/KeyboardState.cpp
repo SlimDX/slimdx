@@ -29,6 +29,7 @@
 
 #include "Device.h"
 #include "KeyboardState.h"
+#include "DeviceConstantConverter.h"
 
 using namespace System;
 

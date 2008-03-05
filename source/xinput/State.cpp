@@ -29,58 +29,58 @@ using namespace System;
 
 namespace SlimDX
 {
-	namespace XInput
+namespace XInput
+{
+	State::State( const XINPUT_STATE& native )
 	{
-		State::State( const XINPUT_STATE& native )
-		{
-			m_PacketNumber = native.dwPacketNumber;
-			m_Gamepad = XInput::Gamepad( native.Gamepad );
-		}
-		
-		UInt32 State::PacketNumber::get()
-		{
-			return m_PacketNumber;
-		}
-		
-		XInput::Gamepad State::Gamepad::get()
-		{
-			return m_Gamepad;
-		}
-		
-		bool State::operator == ( State left, State right )
-		{
-			return State::Equals( left, right );
-		}
-
-		bool State::operator != ( State left, State right )
-		{
-			return !State::Equals( left, right );
-		}
-
-		int State::GetHashCode()
-		{
-			return m_PacketNumber.GetHashCode() + m_Gamepad.GetHashCode();
-		}
-
-		bool State::Equals( Object^ value )
-		{
-			if( value == nullptr )
-				return false;
-
-			if( value->GetType() != GetType() )
-				return false;
-
-			return Equals( static_cast<State>( value ) );
-		}
-
-		bool State::Equals( State value )
-		{
-			return ( m_PacketNumber == value.m_PacketNumber && m_Gamepad == value.m_Gamepad );
-		}
-
-		bool State::Equals( State% value1, State% value2 )
-		{
-			return ( value1.m_PacketNumber == value2.m_PacketNumber && value1.m_Gamepad == value2.m_Gamepad );
-		}
+		m_PacketNumber = native.dwPacketNumber;
+		m_Gamepad = XInput::Gamepad( native.Gamepad );
 	}
+	
+	UInt32 State::PacketNumber::get()
+	{
+		return m_PacketNumber;
+	}
+	
+	XInput::Gamepad State::Gamepad::get()
+	{
+		return m_Gamepad;
+	}
+	
+	bool State::operator == ( State left, State right )
+	{
+		return State::Equals( left, right );
+	}
+
+	bool State::operator != ( State left, State right )
+	{
+		return !State::Equals( left, right );
+	}
+
+	int State::GetHashCode()
+	{
+		return m_PacketNumber.GetHashCode() + m_Gamepad.GetHashCode();
+	}
+
+	bool State::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<State>( value ) );
+	}
+
+	bool State::Equals( State value )
+	{
+		return ( m_PacketNumber == value.m_PacketNumber && m_Gamepad == value.m_Gamepad );
+	}
+
+	bool State::Equals( State% value1, State% value2 )
+	{
+		return ( value1.m_PacketNumber == value2.m_PacketNumber && value1.m_Gamepad == value2.m_Gamepad );
+	}
+}
 }

@@ -34,91 +34,91 @@ using namespace System;
 
 namespace SlimDX
 {
-	namespace XInput
+namespace XInput
+{
+	Controller::Controller( UserIndex userIndex )
 	{
-		Controller::Controller( UserIndex userIndex )
-		{
-			m_UserIndex = static_cast<System::UInt32>( userIndex );
-		}
-		
-		bool Controller::IsConnected::get()
-		{
-			XINPUT_STATE state;
-			UInt32 result = XInputGetState( m_UserIndex, &state );
-
-			if( result == ERROR_DEVICE_NOT_CONNECTED )
-				return false;
-			return true;
-		}
-		
-		Guid Controller::SoundRenderGuid::get()
-		{
-			GUID renderGuid;
-			GUID captureGuid;
-			RECORD_XINPUT( XInputGetDSoundAudioDeviceGuids( m_UserIndex, &renderGuid, &captureGuid ) );
-			
-			return Utilities::ConvertNativeGuid( renderGuid );
-		}
-
-		Guid Controller::SoundCaptureGuid::get()
-		{
-			GUID renderGuid;
-			GUID captureGuid;
-			RECORD_XINPUT( XInputGetDSoundAudioDeviceGuids( m_UserIndex, &renderGuid, &captureGuid ) );
-
-			return Utilities::ConvertNativeGuid( captureGuid );
-		}
-		
-		BatteryInformation Controller::GetBatteryInformation( BatteryDeviceType battery )
-		{
-			XINPUT_BATTERY_INFORMATION information;
-			if( RECORD_XINPUT( ConvertError( XInputGetBatteryInformation( m_UserIndex, static_cast<BYTE>( battery ), &information) ) ).IsFailure )
-				return BatteryInformation();
-			
-			return BatteryInformation( information );
-		}
-		
-		Capabilities Controller::GetCapabilities( DeviceQueryType device )
-		{
-			XINPUT_CAPABILITIES capabilities;
-			if( RECORD_XINPUT( ConvertError( XInputGetCapabilities( m_UserIndex, static_cast<DWORD>( device ), &capabilities) ) ).IsFailure )
-				return Capabilities();
-			
-			return Capabilities( capabilities );
-		}
-		
-		State Controller::GetState()
-		{
-			XINPUT_STATE state;
-			if( RECORD_XINPUT( ConvertError( XInputGetState( m_UserIndex, &state ) ) ).IsFailure )
-				return State();
-		
-			return State( state ); 
-		}
-		
-		Result Controller::GetKeystroke( DeviceQueryType device, Keystroke% result )
-		{
-			XINPUT_KEYSTROKE keystroke;
-			if( RECORD_XINPUT( ConvertError( XInputGetKeystroke( m_UserIndex, static_cast<DWORD>( device ), &keystroke ) ) ).IsSuccess )
-				result = Keystroke( keystroke );
-			
-			return Result::Last;
-		}
-		
-		Result Controller::SetVibration( Vibration vibration )
-		{
-			XINPUT_VIBRATION nativeVibration = vibration.CreateNativeVersion();
-			return RECORD_XINPUT( ConvertError( XInputSetState( m_UserIndex, &nativeVibration ) ) );
-		}
-		
-		void Controller::SetReporting( bool value )
-		{
-			XInputEnable( value );
-		}
-
-		int Controller::ConvertError( int errorCode )
-		{
-			return HRESULT_FROM_WIN32( errorCode );
-		}
+		m_UserIndex = static_cast<System::UInt32>( userIndex );
 	}
+	
+	bool Controller::IsConnected::get()
+	{
+		XINPUT_STATE state;
+		UInt32 result = XInputGetState( m_UserIndex, &state );
+
+		if( result == ERROR_DEVICE_NOT_CONNECTED )
+			return false;
+		return true;
+	}
+	
+	Guid Controller::SoundRenderGuid::get()
+	{
+		GUID renderGuid;
+		GUID captureGuid;
+		RECORD_XINPUT( XInputGetDSoundAudioDeviceGuids( m_UserIndex, &renderGuid, &captureGuid ) );
+		
+		return Utilities::ConvertNativeGuid( renderGuid );
+	}
+
+	Guid Controller::SoundCaptureGuid::get()
+	{
+		GUID renderGuid;
+		GUID captureGuid;
+		RECORD_XINPUT( XInputGetDSoundAudioDeviceGuids( m_UserIndex, &renderGuid, &captureGuid ) );
+
+		return Utilities::ConvertNativeGuid( captureGuid );
+	}
+	
+	BatteryInformation Controller::GetBatteryInformation( BatteryDeviceType battery )
+	{
+		XINPUT_BATTERY_INFORMATION information;
+		if( RECORD_XINPUT( ConvertError( XInputGetBatteryInformation( m_UserIndex, static_cast<BYTE>( battery ), &information) ) ).IsFailure )
+			return BatteryInformation();
+		
+		return BatteryInformation( information );
+	}
+	
+	Capabilities Controller::GetCapabilities( DeviceQueryType device )
+	{
+		XINPUT_CAPABILITIES capabilities;
+		if( RECORD_XINPUT( ConvertError( XInputGetCapabilities( m_UserIndex, static_cast<DWORD>( device ), &capabilities) ) ).IsFailure )
+			return Capabilities();
+		
+		return Capabilities( capabilities );
+	}
+	
+	State Controller::GetState()
+	{
+		XINPUT_STATE state;
+		if( RECORD_XINPUT( ConvertError( XInputGetState( m_UserIndex, &state ) ) ).IsFailure )
+			return State();
+	
+		return State( state ); 
+	}
+	
+	Result Controller::GetKeystroke( DeviceQueryType device, Keystroke% result )
+	{
+		XINPUT_KEYSTROKE keystroke;
+		if( RECORD_XINPUT( ConvertError( XInputGetKeystroke( m_UserIndex, static_cast<DWORD>( device ), &keystroke ) ) ).IsSuccess )
+			result = Keystroke( keystroke );
+		
+		return Result::Last;
+	}
+	
+	Result Controller::SetVibration( Vibration vibration )
+	{
+		XINPUT_VIBRATION nativeVibration = vibration.CreateNativeVersion();
+		return RECORD_XINPUT( ConvertError( XInputSetState( m_UserIndex, &nativeVibration ) ) );
+	}
+	
+	void Controller::SetReporting( bool value )
+	{
+		XInputEnable( value );
+	}
+
+	int Controller::ConvertError( int errorCode )
+	{
+		return HRESULT_FROM_WIN32( errorCode );
+	}
+}
 }

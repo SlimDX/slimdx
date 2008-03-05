@@ -28,7 +28,7 @@
 #include "DirectInput.h"
 
 #include "Device.h"
-#include "DeviceConstants.h"
+#include "DeviceConstantConverter.h"
 
 using namespace System;
 
@@ -36,26 +36,6 @@ namespace SlimDX
 {
 namespace DirectInput
 {
-	int AnyControl::Button( int button )
-	{
-		return DIBUTTON_ANY( button );
-	}
-
-	int JoystickObjects::Button( int button )
-	{
-		return DIJOFS_BUTTON( button );
-	}
-
-	int JoystickObjects::Slider( int slider )
-	{
-		return DIJOFS_SLIDER( slider );
-	}
-
-	int JoystickObjects::PointOfView( int pov )
-	{
-		return DIJOFS_POV( pov );
-	}
-
 	Key DeviceConstantConverter::DIKToKey( int index )
 	{
 		switch( index )
