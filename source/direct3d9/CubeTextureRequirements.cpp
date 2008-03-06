@@ -21,9 +21,8 @@
 */
 #include <d3d9.h>
 #include <d3dx9.h>
-#include <vcclr.h>
 
-#include "AnimationOutput.h"
+#include "CubeTextureRequirements.h"
 
 using namespace System;
 
@@ -31,23 +30,22 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	bool AnimationOutput::operator == ( AnimationOutput left, AnimationOutput right )
+	bool CubeTextureRequirements::operator == ( CubeTextureRequirements left, CubeTextureRequirements right )
 	{
-		return AnimationOutput::Equals( left, right );
+		return CubeTextureRequirements::Equals( left, right );
 	}
 
-	bool AnimationOutput::operator != ( AnimationOutput left, AnimationOutput right )
+	bool CubeTextureRequirements::operator != ( CubeTextureRequirements left, CubeTextureRequirements right )
 	{
-		return !AnimationOutput::Equals( left, right );
+		return !CubeTextureRequirements::Equals( left, right );
 	}
 
-	int AnimationOutput::GetHashCode()
+	int CubeTextureRequirements::GetHashCode()
 	{
-		return Flags.GetHashCode() + Transformation.GetHashCode() + Scaling.GetHashCode()
-			 + Translation.GetHashCode() + Rotation.GetHashCode();
+		return Size.GetHashCode() + Format.GetHashCode() + MipLevelCount.GetHashCode();
 	}
 
-	bool AnimationOutput::Equals( Object^ value )
+	bool CubeTextureRequirements::Equals( Object^ value )
 	{
 		if( value == nullptr )
 			return false;
@@ -55,19 +53,17 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<AnimationOutput>( value ) );
+		return Equals( static_cast<CubeTextureRequirements>( value ) );
 	}
 
-	bool AnimationOutput::Equals( AnimationOutput value )
+	bool CubeTextureRequirements::Equals( CubeTextureRequirements value )
 	{
-		return ( Flags == value.Flags && Transformation == value.Transformation && Scaling == value.Scaling
-			 && Translation == value.Translation && Rotation == value.Rotation );
+		return ( Size == value.Size && Format == value.Format && MipLevelCount == value.MipLevelCount );
 	}
 
-	bool AnimationOutput::Equals( AnimationOutput% value1, AnimationOutput% value2 )
+	bool CubeTextureRequirements::Equals( CubeTextureRequirements% value1, CubeTextureRequirements% value2 )
 	{
-		return ( value1.Flags == value2.Flags && value1.Transformation == value2.Transformation && value1.Scaling == value2.Scaling
-			 && value1.Translation == value2.Translation && value1.Rotation == value2.Rotation );
+		return ( value1.Size == value2.Size && value1.Format == value2.Format && value1.MipLevelCount == value2.MipLevelCount );
 	}
 }
 }

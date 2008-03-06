@@ -88,7 +88,7 @@ namespace Direct3D9
 		return XFileData::FromPointer( result );
 	}
 
-	XFileEnumerationObject^ XFileData::GetEnumerationObject()
+	XFileEnumerationObject^ XFileData::EnumerationObject::get()
 	{
 		ID3DXFileEnumObject *result;
 

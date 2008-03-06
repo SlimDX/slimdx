@@ -21,9 +21,8 @@
 */
 #include <d3d9.h>
 #include <d3dx9.h>
-#include <vcclr.h>
 
-#include "AnimationOutput.h"
+#include "TextureRequirements.h"
 
 using namespace System;
 
@@ -31,23 +30,23 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	bool AnimationOutput::operator == ( AnimationOutput left, AnimationOutput right )
+	bool TextureRequirements::operator == ( TextureRequirements left, TextureRequirements right )
 	{
-		return AnimationOutput::Equals( left, right );
+		return TextureRequirements::Equals( left, right );
 	}
 
-	bool AnimationOutput::operator != ( AnimationOutput left, AnimationOutput right )
+	bool TextureRequirements::operator != ( TextureRequirements left, TextureRequirements right )
 	{
-		return !AnimationOutput::Equals( left, right );
+		return !TextureRequirements::Equals( left, right );
 	}
 
-	int AnimationOutput::GetHashCode()
+	int TextureRequirements::GetHashCode()
 	{
-		return Flags.GetHashCode() + Transformation.GetHashCode() + Scaling.GetHashCode()
-			 + Translation.GetHashCode() + Rotation.GetHashCode();
+		return Width.GetHashCode() + Height.GetHashCode() + Format.GetHashCode()
+			 + MipLevelCount.GetHashCode();
 	}
 
-	bool AnimationOutput::Equals( Object^ value )
+	bool TextureRequirements::Equals( Object^ value )
 	{
 		if( value == nullptr )
 			return false;
@@ -55,19 +54,19 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<AnimationOutput>( value ) );
+		return Equals( static_cast<TextureRequirements>( value ) );
 	}
 
-	bool AnimationOutput::Equals( AnimationOutput value )
+	bool TextureRequirements::Equals( TextureRequirements value )
 	{
-		return ( Flags == value.Flags && Transformation == value.Transformation && Scaling == value.Scaling
-			 && Translation == value.Translation && Rotation == value.Rotation );
+		return ( Width == value.Width && Height == value.Height && Format == value.Format
+			 && MipLevelCount == value.MipLevelCount );
 	}
 
-	bool AnimationOutput::Equals( AnimationOutput% value1, AnimationOutput% value2 )
+	bool TextureRequirements::Equals( TextureRequirements% value1, TextureRequirements% value2 )
 	{
-		return ( value1.Flags == value2.Flags && value1.Transformation == value2.Transformation && value1.Scaling == value2.Scaling
-			 && value1.Translation == value2.Translation && value1.Rotation == value2.Rotation );
+		return ( value1.Width == value2.Width && value1.Height == value2.Height && value1.Format == value2.Format
+			 && value1.MipLevelCount == value2.MipLevelCount );
 	}
 }
 }

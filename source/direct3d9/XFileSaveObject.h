@@ -41,8 +41,12 @@ namespace SlimDX
 
 			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, array<System::Byte>^ data );
 			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, System::IO::Stream^ data );
-			XFile^ GetFile();
 			Result Save();
+
+			property XFile^ File
+			{
+				XFile^ get();
+			}
 		};
 	}
 }

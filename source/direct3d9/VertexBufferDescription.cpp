@@ -30,5 +30,43 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	bool VertexBufferDescription::operator == ( VertexBufferDescription left, VertexBufferDescription right )
+	{
+		return VertexBufferDescription::Equals( left, right );
+	}
+
+	bool VertexBufferDescription::operator != ( VertexBufferDescription left, VertexBufferDescription right )
+	{
+		return !VertexBufferDescription::Equals( left, right );
+	}
+
+	int VertexBufferDescription::GetHashCode()
+	{
+		return Format.GetHashCode() + Type.GetHashCode() + Usage.GetHashCode()
+			 + Pool.GetHashCode() + SizeInBytes.GetHashCode() + FVF.GetHashCode();
+	}
+
+	bool VertexBufferDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<VertexBufferDescription>( value ) );
+	}
+
+	bool VertexBufferDescription::Equals( VertexBufferDescription value )
+	{
+		return ( Format == value.Format && Type == value.Type && Usage == value.Usage
+			 && Pool == value.Pool && SizeInBytes == value.SizeInBytes && FVF == value.FVF );
+	}
+
+	bool VertexBufferDescription::Equals( VertexBufferDescription% value1, VertexBufferDescription% value2 )
+	{
+		return ( value1.Format == value2.Format && value1.Type == value2.Type && value1.Usage == value2.Usage
+			 && value1.Pool == value2.Pool && value1.SizeInBytes == value2.SizeInBytes && value1.FVF == value2.FVF );
+	}
 }
 }

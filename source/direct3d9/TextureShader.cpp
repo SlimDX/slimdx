@@ -169,7 +169,7 @@ namespace Direct3D9
 		return descArray;
 	}
 
-	DataStream^ TextureShader::GetConstantBuffer()
+	DataStream^ TextureShader::ConstantBuffer::get()
 	{
 		ID3DXBuffer *result = NULL;
 
@@ -185,7 +185,7 @@ namespace Direct3D9
 		return gcnew DataStream( result );
 	}
 
-	DataStream^ TextureShader::GetFunctionStream()
+	DataStream^ TextureShader::FunctionStream::get()
 	{
 		ID3DXBuffer *result = NULL;
 

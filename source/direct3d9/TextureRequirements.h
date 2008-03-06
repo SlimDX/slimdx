@@ -27,21 +27,21 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public value class CreationParameters : System::IEquatable<CreationParameters>
+		public value class TextureRequirements : System::IEquatable<TextureRequirements>
 		{
 		public:
-			property int AdapterOrdinal;
-			property DeviceType DeviceType;
-			property System::IntPtr Window;
-			property CreateFlags BehaviorFlags;
+			property int Width;
+            property int Height;
+            property SlimDX::Direct3D9::Format Format;
+            property int MipLevelCount;
 
-			static bool operator == ( CreationParameters left, CreationParameters right );
-			static bool operator != ( CreationParameters left, CreationParameters right );
+			static bool operator == ( TextureRequirements left, TextureRequirements right );
+			static bool operator != ( TextureRequirements left, TextureRequirements right );
 
 			virtual int GetHashCode() override;
 			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( CreationParameters other );
-			static bool Equals( CreationParameters% value1, CreationParameters% value2 );
+			virtual bool Equals( TextureRequirements other );
+			static bool Equals( TextureRequirements% value1, TextureRequirements% value2 );
 		};
 	}
 }

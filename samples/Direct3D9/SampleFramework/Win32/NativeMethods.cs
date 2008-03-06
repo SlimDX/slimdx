@@ -50,10 +50,6 @@ namespace SampleFramework
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GetClientRect(IntPtr hWnd, out NativeRectangle lpRect);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool SetProcessDPIAware();
-
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern uint SetWindowLong(IntPtr hWnd, int nIndex, uint dwNewLong);
 

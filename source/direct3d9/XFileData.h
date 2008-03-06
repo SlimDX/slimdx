@@ -39,10 +39,14 @@ namespace SlimDX
 			static XFileData^ FromPointer( System::IntPtr pointer );
 
 			XFileData^ GetChild( int id );
-			XFileEnumerationObject^ GetEnumerationObject();
 
 			DataStream^ Lock();
 			Result Unlock();
+
+			property XFileEnumerationObject^ EnumerationObject
+			{
+				XFileEnumerationObject^ get();
+			}
 
 			property int ChildCount { int get(); }
 			property System::Guid Id { System::Guid get(); }

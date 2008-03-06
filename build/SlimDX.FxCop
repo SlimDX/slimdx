@@ -3554,16 +3554,6 @@
           </Members>
          </Type>
          <Type Name="AnimationOutput">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-03-03 21:06:33Z">
-            <Issue Name="Equals">
-             <Item>'AnimationOutput'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'AnimationOutput'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Flags">
             <Messages>
@@ -3717,24 +3707,6 @@
                <Item>'BaseMesh.Clone(Device, MeshFlags, VertexFormat)'</Item>
                <Item>flags</Item>
                <Item>'flags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetIndexBuffer()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue Certainty="50">
-               <Item>'BaseMesh.GetIndexBuffer()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetVertexBuffer()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue Certainty="50">
-               <Item>'BaseMesh.GetVertexBuffer()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3980,18 +3952,6 @@
            </Message>
           </Messages>
          </Type>
-         <Type Name="ClipStatus">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-03-03 21:06:33Z">
-            <Issue Name="Equals">
-             <Item>'ClipStatus'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'ClipStatus'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="ColorWriteEnable">
           <Messages>
            <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -4101,16 +4061,6 @@
           </Members>
          </Type>
          <Type Name="CreationParameters">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-03-03 21:06:33Z">
-            <Issue Name="Equals">
-             <Item>'CreationParameters'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'CreationParameters'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#BehaviorFlags">
             <Messages>
@@ -5188,15 +5138,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#GetStateManager()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-02-21 21:35:22Z">
-              <Issue Certainty="50">
-               <Item>'Effect.GetStateManager()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Technique">
             <Messages>
              <Message TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721" Status="Excluded" Created="2008-01-06 19:04:15Z" FixCategory="NonBreaking">
@@ -5805,15 +5746,6 @@
                <Item>'FragmentLinker.GatherFromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
                <Item>flags</Item>
                <Item>'flags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetAllFragments()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-12-02 22:23:38Z">
-              <Issue Certainty="50">
-               <Item>'FragmentLinker.GetAllFragments()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -7067,42 +6999,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#GetDisplacementParameters()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-11-12 22:40:40Z">
-              <Issue Certainty="50">
-               <Item>'PatchMesh.GetDisplacementParameters()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetIndexBuffer()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-11-12 22:40:40Z">
-              <Issue Certainty="50">
-               <Item>'PatchMesh.GetIndexBuffer()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetPatchInfo()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-11-12 22:40:40Z">
-              <Issue Certainty="50">
-               <Item>'PatchMesh.GetPatchInfo()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetVertexBuffer()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-11-12 22:40:40Z">
-              <Issue Certainty="50">
-               <Item>'PatchMesh.GetVertexBuffer()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#LockAttributeBuffer(SlimDX.Direct3D9.LockFlags)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
@@ -8053,24 +7949,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#GetConstantTable()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
-              <Issue Certainty="50">
-               <Item>'ShaderBytecode.GetConstantTable()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetData()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Certainty="50">
-               <Item>'ShaderBytecode.GetData()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="ShaderFlags">
@@ -8874,24 +8752,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#GetConstantBuffer()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Certainty="50">
-               <Item>'TextureShader.GetConstantBuffer()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetFunctionStream()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Certainty="50">
-               <Item>'TextureShader.GetFunctionStream()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="TextureStage">
@@ -9004,16 +8864,6 @@
           </Members>
          </Type>
          <Type Name="VertexBufferDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-02-28 11:35:04Z">
-            <Issue Name="Equals">
-             <Item>'VertexBufferDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'VertexBufferDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#FVF">
             <Messages>
@@ -9418,15 +9268,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#GetEnumerationObject()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-11-02 21:35:27Z">
-              <Issue Certainty="50">
-               <Item>'XFileData.GetEnumerationObject()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#NativeInterface">
             <Accessors>
              <Accessor Name="#get_NativeInterface()">
@@ -9486,15 +9327,6 @@
                <Item>'XFileEnumerationObject.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
                <Item>'pointer'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetFile()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-11-02 21:35:27Z">
-              <Issue Certainty="50">
-               <Item>'XFileEnumerationObject.GetFile()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -9585,15 +9417,6 @@
                <Item>'XFileSaveObject.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
                <Item>'pointer'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetFile()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-11-02 21:35:27Z">
-              <Issue Certainty="50">
-               <Item>'XFileSaveObject.GetFile()'</Item>
               </Issue>
              </Message>
             </Messages>

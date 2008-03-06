@@ -141,8 +141,6 @@ namespace SampleFramework
                 return;
             }
 
-            NativeMethods.SetProcessDPIAware();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
         }

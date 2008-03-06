@@ -30,5 +30,40 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	bool ClipStatus::operator == ( ClipStatus left, ClipStatus right )
+	{
+		return ClipStatus::Equals( left, right );
+	}
+
+	bool ClipStatus::operator != ( ClipStatus left, ClipStatus right )
+	{
+		return !ClipStatus::Equals( left, right );
+	}
+
+	int ClipStatus::GetHashCode()
+	{
+		return ClipUnion.GetHashCode() + ClipIntersection.GetHashCode();
+	}
+
+	bool ClipStatus::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<ClipStatus>( value ) );
+	}
+
+	bool ClipStatus::Equals( ClipStatus value )
+	{
+		return ( ClipUnion == value.ClipUnion && ClipIntersection == value.ClipIntersection );
+	}
+
+	bool ClipStatus::Equals( ClipStatus% value1, ClipStatus% value2 )
+	{
+		return ( value1.ClipUnion == value2.ClipUnion && value1.ClipIntersection == value2.ClipIntersection );
+	}
 }
 }

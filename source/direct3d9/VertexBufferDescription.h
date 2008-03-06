@@ -28,7 +28,7 @@ namespace SlimDX
 	namespace Direct3D9
 	{
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
-		public value class VertexBufferDescription
+		public value class VertexBufferDescription : System::IEquatable<VertexBufferDescription>
 		{
 		public:
 			property Format Format;
@@ -37,6 +37,14 @@ namespace SlimDX
 			property Pool Pool;
 			property int SizeInBytes;
 			property VertexFormat FVF;
+
+			static bool operator == ( VertexBufferDescription left, VertexBufferDescription right );
+			static bool operator != ( VertexBufferDescription left, VertexBufferDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( VertexBufferDescription other );
+			static bool Equals( VertexBufferDescription% value1, VertexBufferDescription% value2 );
 		};
 	}
 }
