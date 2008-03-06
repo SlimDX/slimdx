@@ -89,7 +89,7 @@ namespace DXGI
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<OutputDescription>( value ) );
+		return Equals( safe_cast<OutputDescription>( value ) );
 	}
 
 	bool OutputDescription::Equals( OutputDescription value )

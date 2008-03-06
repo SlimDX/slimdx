@@ -350,7 +350,7 @@ namespace SlimDX
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Color4>( value ) );
+		return Equals( safe_cast<Color4>( value ) );
 	}
 
 	bool Color4::Equals( Color4 value )

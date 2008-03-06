@@ -54,7 +54,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<TrianglePatchInfo>( value ) );
+		return Equals( safe_cast<TrianglePatchInfo>( value ) );
 	}
 
 	bool TrianglePatchInfo::Equals( TrianglePatchInfo value )
@@ -94,7 +94,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<RectanglePatchInfo>( value ) );
+		return Equals( safe_cast<RectanglePatchInfo>( value ) );
 	}
 
 	bool RectanglePatchInfo::Equals( RectanglePatchInfo value )
@@ -134,7 +134,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<PatchInfo>( value ) );
+		return Equals( safe_cast<PatchInfo>( value ) );
 	}
 
 	bool PatchInfo::Equals( PatchInfo value )

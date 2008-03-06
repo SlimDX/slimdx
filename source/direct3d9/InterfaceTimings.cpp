@@ -54,7 +54,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<InterfaceTimings>( value ) );
+		return Equals( safe_cast<InterfaceTimings>( value ) );
 	}
 
 	bool InterfaceTimings::Equals( InterfaceTimings value )

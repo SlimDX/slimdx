@@ -128,7 +128,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<PresentParameters^>( value ) );
+		return Equals( safe_cast<PresentParameters^>( value ) );
 	}
 
 	bool PresentParameters::Equals( PresentParameters^ value )

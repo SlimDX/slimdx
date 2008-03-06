@@ -2978,14 +2978,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\math\BoundingFrustum.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\math\BoundingFrustum.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\math\BoundingSphere.cpp"
 					>
 				</File>

@@ -176,7 +176,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<BlendStateDescription>( value ) );
+		return Equals( safe_cast<BlendStateDescription>( value ) );
 	}
 
 	bool BlendStateDescription::Equals( BlendStateDescription value )

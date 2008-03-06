@@ -55,7 +55,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<SurfaceDescription>( value ) );
+		return Equals( safe_cast<SurfaceDescription>( value ) );
 	}
 
 	bool SurfaceDescription::Equals( SurfaceDescription value )

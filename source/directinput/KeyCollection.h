@@ -42,11 +42,15 @@ namespace SlimDX
 				return ((System::Collections::IEnumerable^)list)->GetEnumerator();
 			}
 
+			void AddItem( Key item ) { list->Add( item ); }
+			void ClearItems() { list->Clear(); }
+			void RemoveItem( Key item ) { list->Remove( item ); }
+
 		public:
 			virtual void Add( Key item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
 			virtual void Clear() { throw gcnew System::NotSupportedException(); }
 			virtual bool Contains( Key item ) { return list->Contains( item ); }
-			virtual void CopyTo( array<Key>^ destination, int arrayIndex ) { list->CopyTo( destination, arrayIndex ); }
+			virtual void CopyTo( array<Key>^ array, int arrayIndex ) { list->CopyTo( array, arrayIndex ); }
 			virtual bool Remove( Key item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
 
 			virtual System::Collections::Generic::IEnumerator<Key>^ GetEnumerator() { return list->GetEnumerator(); }

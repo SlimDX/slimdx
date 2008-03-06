@@ -146,7 +146,7 @@ namespace SlimDX
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Result>( value ) );
+		return Equals( safe_cast<Result>( value ) );
 	}
 
 	bool Result::Equals( Result value )

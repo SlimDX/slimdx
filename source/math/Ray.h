@@ -28,7 +28,6 @@ using System::Runtime::InteropServices::OutAttribute;
 namespace SlimDX
 {
 	value class BoundingBox;
-	value class BoundingFrustum;
 	value class BoundingSphere;
 	value class Plane;
 
@@ -46,7 +45,6 @@ namespace SlimDX
 		static bool Intersects( Ray ray, Vector3 vertex1, Vector3 vertex2, Vector3 vector3, [Out] float% distance );
 		static bool Intersects( Ray ray, BoundingBox box, [Out] float% distance );
 		static bool Intersects( Ray ray, BoundingSphere sphere, [Out] float% distance );
-		static bool Intersects( Ray ray, BoundingFrustum frustum, [Out] float% distance );
 
 		static bool operator == ( Ray left, Ray right );
 		static bool operator != ( Ray left, Ray right );

@@ -84,7 +84,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<CounterMetadata>( value ) );
+		return Equals( safe_cast<CounterMetadata>( value ) );
 	}
 
 	bool CounterMetadata::Equals( CounterMetadata value )

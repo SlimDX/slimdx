@@ -46,7 +46,7 @@ namespace SlimDX
 			virtual void Add( DeviceInstance^ item ) { list->Add( item ); }
 			virtual void Clear() { list->Clear(); }
 			virtual bool Contains( DeviceInstance^ item ) { return list->Contains( item ); }
-			virtual void CopyTo( array<DeviceInstance^>^ destination, int arrayIndex ) { list->CopyTo( destination, arrayIndex ); }
+			virtual void CopyTo( array<DeviceInstance^>^ array, int arrayIndex ) { list->CopyTo( array, arrayIndex ); }
 			virtual bool Remove( DeviceInstance^ item ) { return list->Remove( item ); }
 
 			virtual System::Collections::Generic::IEnumerator<DeviceInstance^>^ GetEnumerator() { return list->GetEnumerator(); }

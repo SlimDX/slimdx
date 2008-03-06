@@ -64,7 +64,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<VertexElement>( value ) );
+		return Equals( safe_cast<VertexElement>( value ) );
 	}
 
 	bool VertexElement::Equals( VertexElement value )

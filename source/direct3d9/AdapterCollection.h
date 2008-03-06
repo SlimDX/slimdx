@@ -44,7 +44,7 @@ namespace SlimDX
 			virtual void Add( AdapterInformation^ item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
 			virtual void Clear() { throw gcnew System::NotSupportedException(); }
 			virtual bool Contains( AdapterInformation^ item ) { return list->Contains( item ); }
-			virtual void CopyTo( array<AdapterInformation^>^ destination, int arrayIndex ) { list->CopyTo( destination, arrayIndex ); }
+			virtual void CopyTo( array<AdapterInformation^>^ array, int arrayIndex ) { list->CopyTo( array, arrayIndex ); }
 			virtual bool Remove( AdapterInformation^ item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
 
 			virtual System::Collections::Generic::IEnumerator<AdapterInformation^>^ GetEnumerator() { return list->GetEnumerator(); }

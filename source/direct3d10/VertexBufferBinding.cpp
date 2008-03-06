@@ -87,7 +87,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<VertexBufferBinding>( value ) );
+		return Equals( safe_cast<VertexBufferBinding>( value ) );
 	}
 
 	bool VertexBufferBinding::Equals( VertexBufferBinding value )

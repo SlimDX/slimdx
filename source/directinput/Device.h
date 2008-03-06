@@ -32,6 +32,7 @@
 #include "BufferedDataCollection.h"
 #include "Guids.h"
 #include "DeviceProperties.h"
+#include "ObjectProperties.h"
 
 namespace SlimDX
 {
@@ -123,6 +124,10 @@ namespace SlimDX
 			/// Retrieves data from polled objects on a DirectInput device.
 			/// </summary>
 			Result Poll();
+
+			ObjectProperties^ GetObjectPropertiesByName( System::String^ name );
+			ObjectProperties^ GetObjectPropertiesByUsage( int usageCode );
+			ObjectProperties^ GetObjectPropertiesById( int objectId );
 
 			/// <summary>
 			/// Gets a set of properties that control the behavior of the device.

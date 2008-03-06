@@ -113,7 +113,7 @@ namespace DXGI
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<AdapterDescription>( value ) );
+		return Equals( safe_cast<AdapterDescription>( value ) );
 	}
 
 	bool AdapterDescription::Equals( AdapterDescription value )

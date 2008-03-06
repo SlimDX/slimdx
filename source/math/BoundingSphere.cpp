@@ -23,10 +23,9 @@
 #include <d3dx9.h>
 
 #include "BoundingSphere.h"
-
 #include "BoundingBox.h"
-#include "BoundingFrustum.h"
 #include "Ray.h"
+#include "Plane.h"
 
 using namespace System;
 using namespace System::Globalization;
@@ -126,29 +125,6 @@ namespace SlimDX
 		return ContainmentType::Contains;
 	}
 
-	ContainmentType BoundingSphere::Contains( BoundingSphere sphere, BoundingFrustum frustum )
-	{
-		if( !BoundingFrustum::Intersects( frustum, sphere ) )
-			return ContainmentType::Disjoint;
-
-		float radius = sphere.Radius * sphere.Radius;
-
-		array<Vector3>^ corners = frustum.GetCorners();
-
-		for each( Vector3 vector2 in corners )
-		{
-			Vector3 vector;
-			vector.X = vector2.X - sphere.Center.X;
-			vector.Y = vector2.Y - sphere.Center.Y;
-			vector.Z = vector2.Z - sphere.Center.Z;
-
-			if( vector.LengthSquared() > radius )
-				return ContainmentType::Intersects;
-		}
-
-		return ContainmentType::Contains;
-	}
-
 	ContainmentType BoundingSphere::Contains( BoundingSphere sphere, Vector3 vector )
 	{
 		float x = vector.X - sphere.Center.X;
@@ -177,11 +153,6 @@ namespace SlimDX
 		sphere.Radius = distance * 0.5f;
 
 		return sphere;
-	}
-
-	BoundingSphere BoundingSphere::FromFrustum( BoundingFrustum frustum )
-	{
-		return FromPoints( frustum.GetCorners() );
 	}
 
 	BoundingSphere BoundingSphere::FromPoints( array<Vector3>^ points )
@@ -229,11 +200,6 @@ namespace SlimDX
 	bool BoundingSphere::Intersects( BoundingSphere sphere, BoundingBox box )
 	{
 		return BoundingBox::Intersects( box, sphere );
-	}
-
-	bool BoundingSphere::Intersects( BoundingSphere sphere, BoundingFrustum frustum )
-	{
-		return BoundingFrustum::Intersects( frustum, sphere );
 	}
 
 	bool BoundingSphere::Intersects( BoundingSphere sphere1, BoundingSphere sphere2 )
@@ -287,7 +253,7 @@ namespace SlimDX
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<BoundingSphere>( value ) );
+		return Equals( safe_cast<BoundingSphere>( value ) );
 	}
 
 	bool BoundingSphere::Equals( BoundingSphere value )

@@ -1180,7 +1180,7 @@ namespace SlimDX
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Vector3>( value ) );
+		return Equals( safe_cast<Vector3>( value ) );
 	}
 
 	/// <summary>

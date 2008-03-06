@@ -54,7 +54,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<VertexBufferDescription>( value ) );
+		return Equals( safe_cast<VertexBufferDescription>( value ) );
 	}
 
 	bool VertexBufferDescription::Equals( VertexBufferDescription value )

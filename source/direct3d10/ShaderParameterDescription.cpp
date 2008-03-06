@@ -99,7 +99,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<ShaderParameterDescription>( value ) );
+		return Equals( safe_cast<ShaderParameterDescription>( value ) );
 	}
 
 	bool ShaderParameterDescription::Equals( ShaderParameterDescription value )

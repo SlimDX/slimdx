@@ -56,7 +56,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<ResourceStats>( value ) );
+		return Equals( safe_cast<ResourceStats>( value ) );
 	}
 
 	bool ResourceStats::Equals( ResourceStats value )

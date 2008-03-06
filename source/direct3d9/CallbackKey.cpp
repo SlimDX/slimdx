@@ -65,7 +65,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<CallbackKey>( value ) );
+		return Equals( safe_cast<CallbackKey>( value ) );
 	}
 
 	bool CallbackKey::Equals( CallbackKey value )
@@ -107,7 +107,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<RotationKey>( value ) );
+		return Equals( safe_cast<RotationKey>( value ) );
 	}
 
 	bool RotationKey::Equals( RotationKey value )
@@ -149,7 +149,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<ScaleKey>( value ) );
+		return Equals( safe_cast<ScaleKey>( value ) );
 	}
 
 	bool ScaleKey::Equals( ScaleKey value )
@@ -191,7 +191,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<TranslationKey>( value ) );
+		return Equals( safe_cast<TranslationKey>( value ) );
 	}
 
 	bool TranslationKey::Equals( TranslationKey value )

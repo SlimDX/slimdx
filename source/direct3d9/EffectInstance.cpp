@@ -113,7 +113,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<EffectInstance>( value ) );
+		return Equals( safe_cast<EffectInstance>( value ) );
 	}
 
 	bool EffectInstance::Equals( EffectInstance value )

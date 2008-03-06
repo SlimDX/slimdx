@@ -80,7 +80,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<CounterDescription>( value ) );
+		return Equals( safe_cast<CounterDescription>( value ) );
 	}
 
 	bool CounterDescription::Equals( CounterDescription value )

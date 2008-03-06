@@ -87,7 +87,7 @@ namespace XInput
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Capabilities>( value ) );
+		return Equals( safe_cast<Capabilities>( value ) );
 	}
 
 	bool Capabilities::Equals( Capabilities value )

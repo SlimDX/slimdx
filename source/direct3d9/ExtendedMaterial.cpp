@@ -127,7 +127,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<ExtendedMaterial>( value ) );
+		return Equals( safe_cast<ExtendedMaterial>( value ) );
 	}
 
 	bool ExtendedMaterial::Equals( ExtendedMaterial value )

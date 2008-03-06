@@ -88,7 +88,7 @@ namespace DXGI
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<FrameStatistics>( value ) );
+		return Equals( safe_cast<FrameStatistics>( value ) );
 	}
 
 	bool FrameStatistics::Equals( FrameStatistics value )

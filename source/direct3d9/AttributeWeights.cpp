@@ -57,7 +57,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<AttributeWeights>( value ) );
+		return Equals( safe_cast<AttributeWeights>( value ) );
 	}
 
 	bool AttributeWeights::Equals( AttributeWeights value )

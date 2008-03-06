@@ -61,7 +61,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<ShaderMacro>( value ) );
+		return Equals( safe_cast<ShaderMacro>( value ) );
 	}
 
 	bool ShaderMacro::Equals( ShaderMacro value )

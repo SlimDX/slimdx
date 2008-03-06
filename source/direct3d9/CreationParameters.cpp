@@ -54,7 +54,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<CreationParameters>( value ) );
+		return Equals( safe_cast<CreationParameters>( value ) );
 	}
 
 	bool CreationParameters::Equals( CreationParameters value )

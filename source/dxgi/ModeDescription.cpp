@@ -143,7 +143,7 @@ namespace DXGI
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<ModeDescription>( value ) );
+		return Equals( safe_cast<ModeDescription>( value ) );
 	}
 
 	bool ModeDescription::Equals( ModeDescription value )

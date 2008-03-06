@@ -22,6 +22,7 @@
  </ProjectOptions>
  <Targets>
   <Target Name="$(ProjectDir)/Debug/SlimDX.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/Direct3D10/MiniTri/bin/Debug/MiniTri.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/MiniTri/bin/Debug/MiniTri.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/SampleFramework/bin/Debug/SampleFramework.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/SimpleTriangle/bin/Debug/SimpleTriangle.exe" Analyze="True" AnalyzeAllChildren="True" />
@@ -10028,6 +10029,17 @@
          </Type>
          <Type Name="ObjectProperties">
           <Members>
+           <Member Name="#.ctor(IDirectInputDevice8W*,System.String,System.Type)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-03-06 02:37:29Z">
+              <Issue>
+               <Item>'ObjectProperties.ObjectProperties(IDirectInputDevice8W*, string, Type)'</Item>
+               <Item>'Marshal.OffsetOf(Type, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'ObjectProperties.ObjectProperties(IDirectInputDevice8W*, string, Type)'&#xD;&#xA;   -&gt;'ObjectProperties.ObjectProperties(IDirectInputDevice8W*, string, Type)'&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetObjectPropertiesByName(string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#ApplicationData">
             <Accessors>
              <Accessor Name="#get_ApplicationData()">
@@ -12078,6 +12090,36 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/../samples/Direct3D10/MiniTri/bin/Debug/MiniTri.exe">
+    <Modules>
+     <Module Name="minitri.exe">
+      <Namespaces>
+       <Namespace Name="MiniTri">
+        <Types>
+         <Type Name="Program">
+          <Members>
+           <Member Name="#PeekMessage(MiniTri.Message&amp;,System.IntPtr,System.UInt32,System.UInt32,System.UInt32)">
+            <Messages>
+             <Message TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414" Created="2008-03-06 02:37:29Z">
+              <Issue Name="Return">
+               <Item>'Program.PeekMessage(out Message, IntPtr, uint, uint, uint)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Status="Excluded" Created="2008-03-06 02:37:29Z">
+              <Issue>
+               <Item>'Program.PeekMessage(out Message, IntPtr, uint, uint, uint)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
    <Target Name="$(ProjectDir)/../samples/Direct3D9/MiniTri/bin/Debug/MiniTri.exe">
     <Modules>
      <Module Name="minitri.exe">
@@ -12576,6 +12618,9 @@
    </Rule>
    <Rule TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810">
     <Resolution Name="Default">Initialize all static fields in {0} when those fields are declared and remove the explicit static constructor.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414">
+    <Resolution Name="Return">Add the MarshalAsAttribute to the return type of P/Invoke {0}. If the corresponding unmanaged return type is a 4-byte Win32 'BOOL', use MarshalAs(UnmanagedType.Bool). For a 1-byte C++ 'bool', use MarshalAs(UnmanagedType.U1).</Resolution>
    </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>

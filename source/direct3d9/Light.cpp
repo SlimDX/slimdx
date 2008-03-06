@@ -57,7 +57,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Light>( value ) );
+		return Equals( safe_cast<Light>( value ) );
 	}
 
 	bool Light::Equals( Light value )

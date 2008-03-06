@@ -28,7 +28,6 @@ using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
-	value class BoundingFrustum;
 	value class BoundingSphere;
 	value class Plane;
 	value class Ray;
@@ -47,7 +46,6 @@ namespace SlimDX
 
 		static ContainmentType Contains( BoundingBox box1, BoundingBox box2 );
 		static ContainmentType Contains( BoundingBox box, BoundingSphere sphere );
-		static ContainmentType Contains( BoundingBox box, BoundingFrustum frustum );
 		static ContainmentType Contains( BoundingBox box, Vector3 vector );
 
 		static BoundingBox FromPoints( array<Vector3>^ points );
@@ -57,7 +55,6 @@ namespace SlimDX
 
 		static bool Intersects( BoundingBox box1, BoundingBox box2 );
 		static bool Intersects( BoundingBox box, BoundingSphere sphere );
-		static bool Intersects( BoundingBox box, BoundingFrustum frustum );
 		static bool Intersects( BoundingBox box, Ray ray, [Out] float% distance );
 
 		static PlaneIntersectionType Intersects( BoundingBox box, Plane plane );

@@ -54,7 +54,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<PassDescription>( value ) );
+		return Equals( safe_cast<PassDescription>( value ) );
 	}
 
 	bool PassDescription::Equals( PassDescription value )

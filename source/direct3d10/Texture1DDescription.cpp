@@ -160,7 +160,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Texture1DDescription>( value ) );
+		return Equals( safe_cast<Texture1DDescription>( value ) );
 	}
 
 	bool Texture1DDescription::Equals( Texture1DDescription value )

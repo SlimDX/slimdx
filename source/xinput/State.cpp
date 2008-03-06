@@ -70,7 +70,7 @@ namespace XInput
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<State>( value ) );
+		return Equals( safe_cast<State>( value ) );
 	}
 
 	bool State::Equals( State value )

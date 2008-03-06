@@ -55,7 +55,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<VolumeDescription>( value ) );
+		return Equals( safe_cast<VolumeDescription>( value ) );
 	}
 
 	bool VolumeDescription::Equals( VolumeDescription value )

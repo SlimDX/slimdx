@@ -185,7 +185,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<RasterizerStateDescription>( value ) );
+		return Equals( safe_cast<RasterizerStateDescription>( value ) );
 	}
 
 	bool RasterizerStateDescription::Equals( RasterizerStateDescription value )

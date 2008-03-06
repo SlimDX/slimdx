@@ -53,7 +53,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<ConstantTableDescription>( value ) );
+		return Equals( safe_cast<ConstantTableDescription>( value ) );
 	}
 
 	bool ConstantTableDescription::Equals( ConstantTableDescription value )

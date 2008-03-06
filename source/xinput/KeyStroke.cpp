@@ -81,7 +81,7 @@ namespace XInput
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Keystroke>( value ) );
+		return Equals( safe_cast<Keystroke>( value ) );
 	}
 
 	bool Keystroke::Equals( Keystroke value )

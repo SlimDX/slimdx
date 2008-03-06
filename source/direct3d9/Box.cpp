@@ -54,7 +54,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Box>( value ) );
+		return Equals( safe_cast<Box>( value ) );
 	}
 
 	bool Box::Equals( Box value )

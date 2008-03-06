@@ -113,7 +113,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<DepthStencilOperationDescription>( value ) );
+		return Equals( safe_cast<DepthStencilOperationDescription>( value ) );
 	}
 
 	bool DepthStencilOperationDescription::Equals( DepthStencilOperationDescription value )

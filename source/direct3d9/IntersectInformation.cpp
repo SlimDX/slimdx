@@ -52,7 +52,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<IntersectInformation>( value ) );
+		return Equals( safe_cast<IntersectInformation>( value ) );
 	}
 
 	bool IntersectInformation::Equals( IntersectInformation value )

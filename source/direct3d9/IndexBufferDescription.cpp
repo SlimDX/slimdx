@@ -54,7 +54,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<IndexBufferDescription>( value ) );
+		return Equals( safe_cast<IndexBufferDescription>( value ) );
 	}
 
 	bool IndexBufferDescription::Equals( IndexBufferDescription value )

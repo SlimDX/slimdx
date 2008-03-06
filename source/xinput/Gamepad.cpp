@@ -70,7 +70,7 @@ namespace XInput
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Gamepad>( value ) );
+		return Equals( safe_cast<Gamepad>( value ) );
 	}
 
 	bool Gamepad::Equals( Gamepad value )

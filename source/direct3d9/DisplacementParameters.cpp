@@ -59,7 +59,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<DisplacementParameters>( value ) );
+		return Equals( safe_cast<DisplacementParameters>( value ) );
 	}
 
 	bool DisplacementParameters::Equals( DisplacementParameters value )

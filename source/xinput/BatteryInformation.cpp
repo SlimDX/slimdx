@@ -68,7 +68,7 @@ namespace XInput
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<BatteryInformation>( value ) );
+		return Equals( safe_cast<BatteryInformation>( value ) );
 	}
 
 	bool BatteryInformation::Equals( BatteryInformation value )

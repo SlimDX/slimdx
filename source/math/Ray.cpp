@@ -23,7 +23,6 @@
 #include <d3dx9.h>
 
 #include "BoundingBox.h"
-#include "BoundingFrustum.h"
 #include "BoundingSphere.h"
 #include "Plane.h"
 #include "Ray.h"
@@ -214,61 +213,6 @@ namespace SlimDX
 		return true;
 	}
 
-	bool Ray::Intersects( Ray ray, BoundingFrustum frustum, [Out] float% distance )
-	{
-		if( BoundingFrustum::Contains( frustum, ray.Position ) == ContainmentType::Contains )
-		{
-			distance = 0.0f;
-			return true;
-		}
-
-		float minValue = float::MinValue;
-		float maxValue = float::MaxValue;
-        distance = 0.0;
-		array<Plane>^ planes = frustum.GetPlanes();
-
-        for each( Plane plane in planes )
-        {
-            float dotPosition = (ray.Position.X * plane.Normal.X) + (ray.Position.Y * plane.Normal.Y) + (ray.Position.Z * plane.Normal.Z);
-            float dotDirection = (ray.Direction.X * plane.Normal.X) + (ray.Direction.Y * plane.Normal.Y) + (ray.Direction.Z * plane.Normal.Z) + plane.D;
-
-			if( Math::Abs( dotDirection ) < 0.000001 )
-            {
-                if( dotPosition > 0.0f )
-					return false;
-            }
-            else
-            {
-                float temp = -dotPosition / dotDirection;
-                if( dotDirection < 0.0f )
-                {
-                    if( temp > maxValue )
-                        return false;
-
-                    if( temp > minValue )
-                        minValue = temp;
-                }
-                else
-                {
-                    if( temp < minValue )
-                        return false;
-
-                    if( temp < maxValue )
-                        maxValue = temp;
-                }
-            }
-        }
-
-        float d = ( minValue >= 0.0f ) ? minValue : maxValue;
-        if( d >= 0.0f )
-		{
-            distance = d;
-			return true;
-        }
-
-		return false;
-	}
-
 	bool Ray::operator == ( Ray left, Ray right )
 	{
 		return Ray::Equals( left, right );
@@ -297,7 +241,7 @@ namespace SlimDX
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Ray>( value ) );
+		return Equals( safe_cast<Ray>( value ) );
 	}
 
 	bool Ray::Equals( Ray value )

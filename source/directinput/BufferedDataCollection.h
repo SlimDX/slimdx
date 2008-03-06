@@ -44,7 +44,7 @@ namespace SlimDX
 			virtual void Add( BufferedData<DataFormat>^ item ) { list->Add( item ); }
 			virtual void Clear() { list->Clear(); }
 			virtual bool Contains( BufferedData<DataFormat>^ item ) { return list->Contains( item ); }
-			virtual void CopyTo( array<BufferedData<DataFormat>^>^ destination, int arrayIndex ) { list->CopyTo( destination, arrayIndex ); }
+			virtual void CopyTo( array<BufferedData<DataFormat>^>^ array, int arrayIndex ) { list->CopyTo( array, arrayIndex ); }
 			virtual bool Remove( BufferedData<DataFormat>^ item ) { return list->Remove( item ); }
 
 			virtual System::Collections::Generic::IEnumerator<BufferedData<DataFormat>^>^ GetEnumerator() { return list->GetEnumerator(); }

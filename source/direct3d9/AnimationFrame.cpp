@@ -539,7 +539,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Frame^>( value ) );
+		return Equals( safe_cast<Frame^>( value ) );
 	}
 
 	bool Frame::Equals( Frame^ value )

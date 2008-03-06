@@ -894,7 +894,7 @@ namespace SlimDX
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Quaternion>( value ) );
+		return Equals( safe_cast<Quaternion>( value ) );
 	}
 
 	bool Quaternion::Equals( Quaternion value )

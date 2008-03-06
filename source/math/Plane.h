@@ -29,7 +29,6 @@ using System::Runtime::InteropServices::OutAttribute;
 namespace SlimDX
 {
 	value class BoundingBox;
-	value class BoundingFrustum;
 	value class BoundingSphere;
 	value class Quaternion;
 
@@ -80,7 +79,6 @@ namespace SlimDX
 
 		static PlaneIntersectionType Intersects( Plane plane, BoundingBox box );
 		static PlaneIntersectionType Intersects( Plane plane, BoundingSphere sphere );
-		static PlaneIntersectionType Intersects( Plane plane, BoundingFrustum frustum );
 
 		static Plane Multiply( Plane plane, float scale );
 		static void  Multiply( Plane% plane, float scale, [Out] Plane% result );

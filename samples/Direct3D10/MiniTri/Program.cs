@@ -43,7 +43,8 @@ namespace MiniTri
 		static D3D10.RenderTargetView RenderTarget;
 
 		[DllImport("User32.dll", CharSet = CharSet.Auto)]
-		static extern bool PeekMessage(out Message msg, IntPtr hWnd, uint messageFilterMin, uint messageFilterMax, uint flags);
+		[return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool PeekMessage(out Message msg, IntPtr hWnd, uint messageFilterMin, uint messageFilterMax, uint flags);
 
 		static bool AppStillIdle
 		{

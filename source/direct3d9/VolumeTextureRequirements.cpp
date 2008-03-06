@@ -54,7 +54,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<VolumeTextureRequirements>( value ) );
+		return Equals( safe_cast<VolumeTextureRequirements>( value ) );
 	}
 
 	bool VolumeTextureRequirements::Equals( VolumeTextureRequirements value )

@@ -117,7 +117,7 @@ namespace SlimDX
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Viewport>( value ) );
+		return Equals( safe_cast<Viewport>( value ) );
 	}
 
 	bool Viewport::Equals( Viewport value )

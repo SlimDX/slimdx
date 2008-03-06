@@ -56,7 +56,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<FontDescription>( value ) );
+		return Equals( safe_cast<FontDescription>( value ) );
 	}
 
 	bool FontDescription::Equals( FontDescription value )

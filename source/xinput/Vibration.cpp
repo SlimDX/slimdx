@@ -89,7 +89,7 @@ namespace XInput
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Vibration>( value ) );
+		return Equals( safe_cast<Vibration>( value ) );
 	}
 
 	bool Vibration::Equals( Vibration value )

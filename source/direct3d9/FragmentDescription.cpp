@@ -53,7 +53,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<FragmentDescription>( value ) );
+		return Equals( safe_cast<FragmentDescription>( value ) );
 	}
 
 	bool FragmentDescription::Equals( FragmentDescription value )

@@ -84,7 +84,7 @@ namespace DXGI
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<GammaControlCapabilities>( value ) );
+		return Equals( safe_cast<GammaControlCapabilities>( value ) );
 	}
 
 	bool GammaControlCapabilities::Equals( GammaControlCapabilities value )
