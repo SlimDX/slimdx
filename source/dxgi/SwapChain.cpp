@@ -124,6 +124,15 @@ namespace DXGI
 		return result;
 	}
 	
+	Output^ SwapChain::ContainingOutput::get()
+	{
+		IDXGIOutput* output = 0;
+		if( RECORD_DXGI( InternalPointer->GetContainingOutput( &output ) ).IsFailure )
+			return nullptr;
+			
+		return Output::FromPointer( output );
+	}
+	
 	generic< class T > where T : ComObject, ref class
 	T SwapChain::GetBuffer( int index )
 	{
@@ -139,14 +148,7 @@ namespace DXGI
 		return safe_cast<T>( T::typeid->InvokeMember( "FromPointer", flags, nullptr, nullptr, args, CultureInfo::InvariantCulture ) );
 	}
 
-	Output^ SwapChain::GetContainingOutput()
-	{
-		IDXGIOutput* output = 0;
-		if( RECORD_DXGI( InternalPointer->GetContainingOutput( &output ) ).IsFailure )
-			return nullptr;
-			
-		return Output::FromPointer( output );
-	}
+	
 	
 	Result SwapChain::GetFullScreenState( bool% isFullScreen, Output^% target )
 	{

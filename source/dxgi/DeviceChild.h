@@ -41,16 +41,12 @@ namespace SlimDX
 			
 		public:
 			/// <summary>
-			/// Constructs a DeviceChild from an unmanaged pointer.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDXGIDeviceSubObject pointer.</param>
-			//static DeviceChild^ FromPointer( System::IntPtr pointer );
-			
-			/// <summary>
 			/// Gets the device the object is bound to.
 			/// </summary>
-			/// <returns>The device, or null on failure.</returns>
-			Device^ GetDevice();
+			property DXGI::Device^ Device
+			{
+				DXGI::Device^ get();
+			}
 		};
 	}
 };

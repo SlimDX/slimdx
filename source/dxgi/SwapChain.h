@@ -74,6 +74,14 @@ namespace SlimDX
 			}
 			
 			/// <summary>
+			/// Gets the output containing the swap chain target.
+			/// </summary>
+			property Output^ ContainingOutput
+			{
+				Output^ get();
+			}
+			
+			/// <summary>
 			/// Constructs a SwapChain from an unmanaged pointer.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGISwapChain pointer.</param>
@@ -94,13 +102,7 @@ namespace SlimDX
 			/// <returns>The buffer interface, or null on failure.</return>
 			generic< typename T > where T : ComObject, ref class
 			T GetBuffer( int buffer );
-			
-			/// <summary>
-			/// Gets the output containing the swap chain target.
-			/// </summary>
-			/// <returns>The output, or null on failure.</return>
-			Output^ GetContainingOutput();
-			
+
 			/// <summary>
 			/// Gets the full screen state.
 			/// </summary>
