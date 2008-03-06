@@ -47,18 +47,20 @@ namespace SlimDX
 				int get();
 				void set( int value );
 			}
-		
+			
+			/// <summary>
+			/// Gets the adapter associated with the device.
+			/// </summary>
+			property DXGI::Adapter^ Adapter
+			{
+				DXGI::Adapter^ get();
+			}
+			
 			/// <summary>
 			/// Constructs a Device from an unmanaged pointer.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGIDevice pointer.</param>
 			static Device^ FromPointer( System::IntPtr pointer );
-			
-			/// <summary>
-			/// Gets the adapter associated with the device.
-			/// </summary>
-			/// <returns>The adapter, or null on failure.</returns>
-			Adapter^ GetAdapter();
 			
 			/// <summary>
 			/// Gets the residency status of a list of resources.

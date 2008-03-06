@@ -65,7 +65,6 @@ namespace SlimDX
 						
 			Result SetVibration( Vibration vibration );
 
-			
 			static void SetReporting( bool value );
 		};
 	}

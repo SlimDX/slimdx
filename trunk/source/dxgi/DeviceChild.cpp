@@ -37,13 +37,13 @@ namespace DXGI
 	{
 	}
 
-	Device^ DeviceChild::GetDevice()
+	DXGI::Device^ DeviceChild::Device::get()
 	{
 		IDXGIDevice* device = 0;
 		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
 		if( Result::Last.IsFailure )
 			return nullptr;
-		return Device::FromPointer( device );
+		return DXGI::Device::FromPointer( device );
 	}
 }
 }

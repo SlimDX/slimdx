@@ -92,13 +92,13 @@ namespace DXGI
 			throw gcnew DXGIException( Result::Last );
 	}
 
-	Adapter^ Device::GetAdapter()
+	DXGI::Adapter^ Device::Adapter::get()
 	{
 		IDXGIAdapter* adapter = 0;
 		RECORD_DXGI( InternalPointer->GetAdapter( &adapter ) );
 		if( Result::Last.IsFailure )
 			return nullptr;
-		return Adapter::FromPointer( adapter );
+		return DXGI::Adapter::FromPointer( adapter );
 	}
 
 	ReadOnlyCollection<Residency>^ Device::QueryResourceResidency( IList<ComObject^>^ resources )

@@ -3492,53 +3492,6 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Surface"
-				>
-				<File
-					RelativePath="..\source\dxgi\Surface.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Public|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\source\dxgi\Surface.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\dxgi\SurfaceDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\dxgi\SurfaceDescription.h"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="Factory"
 				>
 				<File
@@ -3599,6 +3552,53 @@
 				</File>
 				<File
 					RelativePath="..\source\dxgi\SampleDescription.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Surface"
+				>
+				<File
+					RelativePath="..\source\dxgi\Surface.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\Surface.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\SurfaceDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\SurfaceDescription.h"
 					>
 				</File>
 			</Filter>
