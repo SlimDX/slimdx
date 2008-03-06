@@ -1557,11 +1557,11 @@
 				Name="Texture"
 				>
 				<File
-					RelativePath="..\source\direct3d9\BaseTexture.cpp"
+					RelativePath="..\source\direct3d9\ImageInformation.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d9\BaseTexture.h"
+					RelativePath="..\source\direct3d9\ImageInformation.h"
 					>
 				</File>
 				<File
@@ -1573,13 +1573,77 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d9\TextureShader.cpp"
+					RelativePath="..\source\direct3d9\TextureRequirements.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d9\TextureShader.h"
+					RelativePath="..\source\direct3d9\TextureRequirements.h"
 					>
 				</File>
+				<Filter
+					Name="BaseTexture"
+					>
+					<File
+						RelativePath="..\source\direct3d9\BaseTexture.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\BaseTexture.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="VolumeTexture"
+					>
+					<File
+						RelativePath="..\source\direct3d9\VolumeTexture.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\VolumeTexture.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\VolumeTextureRequirements.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\VolumeTextureRequirements.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="CubeTexture"
+					>
+					<File
+						RelativePath="..\source\direct3d9\CubeTexture.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\CubeTexture.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\CubeTextureRequirements.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\CubeTextureRequirements.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="TextureShader"
+					>
+					<File
+						RelativePath="..\source\direct3d9\TextureShader.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\TextureShader.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Exceptions"

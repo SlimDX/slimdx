@@ -103,7 +103,7 @@ namespace Direct3D9
 		return AddDataObject( dataTemplate, name, id, memory );
 	}
 
-	XFile^ XFileSaveObject::GetFile()
+	XFile^ XFileSaveObject::File::get()
 	{
 		ID3DXFile* result;
 

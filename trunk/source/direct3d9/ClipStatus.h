@@ -27,11 +27,19 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public value class ClipStatus
+		public value class ClipStatus : System::IEquatable<ClipStatus>
 		{
 		public:
 			property ClipFlags ClipUnion;
 			property ClipFlags ClipIntersection;
+
+			static bool operator == ( ClipStatus left, ClipStatus right );
+			static bool operator != ( ClipStatus left, ClipStatus right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( ClipStatus other );
+			static bool Equals( ClipStatus% value1, ClipStatus% value2 );
 		};
 	}
 }

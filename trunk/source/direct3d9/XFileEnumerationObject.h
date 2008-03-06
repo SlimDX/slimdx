@@ -41,7 +41,11 @@ namespace SlimDX
 			XFileData^ GetChild( int id );
 			XFileData^ GetDataObject( System::Guid id );
 			XFileData^ GetDataObject( System::String^ name );
-			XFile^ GetFile();
+			
+			property XFile^ File
+			{
+				XFile^ get();
+			}
 
 			property int ChildCount { int get(); }
 		};

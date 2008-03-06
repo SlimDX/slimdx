@@ -21,9 +21,8 @@
 */
 #include <d3d9.h>
 #include <d3dx9.h>
-#include <vcclr.h>
 
-#include "AnimationOutput.h"
+#include "VolumeTextureRequirements.h"
 
 using namespace System;
 
@@ -31,23 +30,23 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	bool AnimationOutput::operator == ( AnimationOutput left, AnimationOutput right )
+	bool VolumeTextureRequirements::operator == ( VolumeTextureRequirements left, VolumeTextureRequirements right )
 	{
-		return AnimationOutput::Equals( left, right );
+		return VolumeTextureRequirements::Equals( left, right );
 	}
 
-	bool AnimationOutput::operator != ( AnimationOutput left, AnimationOutput right )
+	bool VolumeTextureRequirements::operator != ( VolumeTextureRequirements left, VolumeTextureRequirements right )
 	{
-		return !AnimationOutput::Equals( left, right );
+		return !VolumeTextureRequirements::Equals( left, right );
 	}
 
-	int AnimationOutput::GetHashCode()
+	int VolumeTextureRequirements::GetHashCode()
 	{
-		return Flags.GetHashCode() + Transformation.GetHashCode() + Scaling.GetHashCode()
-			 + Translation.GetHashCode() + Rotation.GetHashCode();
+		return Width.GetHashCode() + Height.GetHashCode() + Depth.GetHashCode()
+			 + Format.GetHashCode() + MipLevelCount.GetHashCode();
 	}
 
-	bool AnimationOutput::Equals( Object^ value )
+	bool VolumeTextureRequirements::Equals( Object^ value )
 	{
 		if( value == nullptr )
 			return false;
@@ -55,19 +54,19 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<AnimationOutput>( value ) );
+		return Equals( static_cast<VolumeTextureRequirements>( value ) );
 	}
 
-	bool AnimationOutput::Equals( AnimationOutput value )
+	bool VolumeTextureRequirements::Equals( VolumeTextureRequirements value )
 	{
-		return ( Flags == value.Flags && Transformation == value.Transformation && Scaling == value.Scaling
-			 && Translation == value.Translation && Rotation == value.Rotation );
+		return ( Width == value.Width && Height == value.Height && Depth == value.Depth
+			 && Format == value.Format && MipLevelCount == value.MipLevelCount );
 	}
 
-	bool AnimationOutput::Equals( AnimationOutput% value1, AnimationOutput% value2 )
+	bool VolumeTextureRequirements::Equals( VolumeTextureRequirements% value1, VolumeTextureRequirements% value2 )
 	{
-		return ( value1.Flags == value2.Flags && value1.Transformation == value2.Transformation && value1.Scaling == value2.Scaling
-			 && value1.Translation == value2.Translation && value1.Rotation == value2.Rotation );
+		return ( value1.Width == value2.Width && value1.Height == value2.Height && value1.Depth == value2.Depth
+			 && value1.Format == value2.Format && value1.MipLevelCount == value2.MipLevelCount );
 	}
 }
 }

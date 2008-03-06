@@ -32,100 +32,16 @@
 #include "TextureShader.h"
 #include "Delegates.h"
 
+#include "ImageInformation.h"
+#include "TextureRequirements.h"
+
+#include "CubeTexture.h"
+#include "VolumeTexture.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
-		public value class ImageInformation : System::IEquatable<ImageInformation>
-		{
-		public:
-			property int Width;
-            property int Height;
-            property int Depth;
-            property int MipLevels;
-            property Format Format;
-            property ResourceType ResourceType;
-            property ImageFileFormat ImageFileFormat;
-
-			static ImageInformation FromFile( System::String^ fileName );
-			static ImageInformation FromMemory( array<System::Byte>^ memory );
-
-			/// <summary>
-			/// Function to extract image information from a stream.
-			/// </summary>
-			/// <param name="stream">Stream containing the image.</param>
-			/// <param name="peek">TRUE to preserve the stream position, FALSE will move the stream pointer.</param>
-			/// <returns>Information about the image.</returns>
-			static ImageInformation FromStream(System::IO::Stream^ stream, bool peek);
-
-			/// <summary>
-			/// Function to extract image information from a stream.
-			/// </summary>
-			/// <param name="stream">Stream containing the image.</param>
-			/// <returns>Information about the image.</returns>
-			static ImageInformation FromStream(System::IO::Stream^ stream);
-
-			static bool operator == ( ImageInformation left, ImageInformation right );
-			static bool operator != ( ImageInformation left, ImageInformation right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( ImageInformation other );
-			static bool Equals( ImageInformation% value1, ImageInformation% value2 );
-		};
-
-		public value class TextureRequirements : System::IEquatable<TextureRequirements>
-		{
-		public:
-			property int Width;
-            property int Height;
-            property SlimDX::Direct3D9::Format Format;
-            property int MipLevelCount;
-
-			static bool operator == ( TextureRequirements left, TextureRequirements right );
-			static bool operator != ( TextureRequirements left, TextureRequirements right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( TextureRequirements other );
-			static bool Equals( TextureRequirements% value1, TextureRequirements% value2 );
-		};
-
-		public value class CubeTextureRequirements : System::IEquatable<CubeTextureRequirements>
-		{
-		public:
-			property int Size;
-            property Format Format;
-            property int MipLevelCount;
-
-			static bool operator == ( CubeTextureRequirements left, CubeTextureRequirements right );
-			static bool operator != ( CubeTextureRequirements left, CubeTextureRequirements right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( CubeTextureRequirements other );
-			static bool Equals( CubeTextureRequirements% value1, CubeTextureRequirements% value2 );
-		};
-
-		public value class VolumeTextureRequirements : System::IEquatable<VolumeTextureRequirements>
-		{
-		public:
-			property int Width;
-            property int Height;
-            property int Depth;
-            property SlimDX::Direct3D9::Format Format;
-            property int MipLevelCount;
-
-			static bool operator == ( VolumeTextureRequirements left, VolumeTextureRequirements right );
-			static bool operator != ( VolumeTextureRequirements left, VolumeTextureRequirements right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( VolumeTextureRequirements other );
-			static bool Equals( VolumeTextureRequirements% value1, VolumeTextureRequirements% value2 );
-		};
-
 		public ref class Texture : public BaseTexture
 		{
 			COMOBJECT(IDirect3DTexture9, Texture);
@@ -185,91 +101,6 @@ namespace SlimDX
 			Result AddDirtyRect( System::Drawing::Rectangle rect );
 			SurfaceDescription GetLevelDescription( int level );
 			Surface^ GetSurfaceLevel( int level );
-		};
-
-		public ref class CubeTexture : public BaseTexture
-		{
-			COMOBJECT(IDirect3DCubeTexture9, CubeTexture);
-
-		public:
-			CubeTexture( SlimDX::Direct3D9::Device^ device, int edgeLength, int levelCount, Usage usage, Format format, Pool pool );
-			virtual ~CubeTexture() { }
-			static CubeTexture^ FromPointer( System::IntPtr pointer );
-
-			static CubeTextureRequirements CheckRequirements( SlimDX::Direct3D9::Device^ device, int size, int mipLevelCount, Usage usage, Format format, Pool pool );
-
-			static CubeTexture^ FromMemory( SlimDX::Direct3D9::Device^ device, array<System::Byte>^ memory, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette );
-			static CubeTexture^ FromMemory( SlimDX::Direct3D9::Device^ device, array<System::Byte>^ memory, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation );
-			static CubeTexture^ FromMemory( SlimDX::Direct3D9::Device^ device, array<System::Byte>^ memory, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
-			static CubeTexture^ FromMemory( SlimDX::Direct3D9::Device^ device, array<System::Byte>^ memory, Usage usage, Pool pool );
-			static CubeTexture^ FromMemory( SlimDX::Direct3D9::Device^ device, array<System::Byte>^ memory );
-
-			static CubeTexture^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, int sizeBytes, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette );
-			static CubeTexture^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, int sizeBytes, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation );
-			static CubeTexture^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, int sizeBytes, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
-			static CubeTexture^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
-			static CubeTexture^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, Usage usage, Pool pool );
-			static CubeTexture^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream );
-
-			static CubeTexture^ FromFile( SlimDX::Direct3D9::Device^ device, System::String^ fileName, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette );
-			static CubeTexture^ FromFile( SlimDX::Direct3D9::Device^ device, System::String^ fileName, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation );
-			static CubeTexture^ FromFile( SlimDX::Direct3D9::Device^ device, System::String^ fileName, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
-			static CubeTexture^ FromFile( SlimDX::Direct3D9::Device^ device, System::String^ fileName, Usage usage, Pool pool );
-			static CubeTexture^ FromFile( SlimDX::Direct3D9::Device^ device, System::String^ fileName );
-
-			Result Fill( Fill3DCallback^ callback );
-			Result Fill( TextureShader^ shader );
-
-			DataRectangle^ LockRectangle( CubeMapFace face, int level, LockFlags flags );
-			DataRectangle^ LockRectangle( CubeMapFace face, int level, System::Drawing::Rectangle rect, LockFlags flags );
-			Result UnlockRectangle( CubeMapFace face, int level );
-
-			Result AddDirtyRect( CubeMapFace face, System::Drawing::Rectangle rect );
-			SurfaceDescription GetLevelDescription( int level );
-			Surface^ GetCubeMapSurface( CubeMapFace face, int level );
-		};
-
-		public ref class VolumeTexture : public BaseTexture
-		{
-			COMOBJECT(IDirect3DVolumeTexture9, VolumeTexture);
-
-		public:
-			VolumeTexture( SlimDX::Direct3D9::Device^ device, int width, int height, int depth, int levelCount, Usage usage, Format format, Pool pool );
-			virtual ~VolumeTexture() { }
-			static VolumeTexture^ FromPointer( System::IntPtr pointer );
-
-			static VolumeTextureRequirements CheckRequirements( SlimDX::Direct3D9::Device^ device, int width, int height, int depth, int mipLevelCount, Usage usage, Format format, Pool pool );
-
-			static VolumeTexture^ FromMemory( SlimDX::Direct3D9::Device^ device, array<System::Byte>^ memory, int width, int height, int depth, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette );
-			static VolumeTexture^ FromMemory( SlimDX::Direct3D9::Device^ device, array<System::Byte>^ memory, int width, int height, int depth, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation );
-			static VolumeTexture^ FromMemory( SlimDX::Direct3D9::Device^ device, array<System::Byte>^ memory, int width, int height, int depth, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
-			static VolumeTexture^ FromMemory( SlimDX::Direct3D9::Device^ device, array<System::Byte>^ memory, Usage usage, Pool pool );
-			static VolumeTexture^ FromMemory( SlimDX::Direct3D9::Device^ device, array<System::Byte>^ memory );
-
-			static VolumeTexture^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, int sizeBytes, int width, int height, int depth, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette );
-			static VolumeTexture^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, int sizeBytes, int width, int height, int depth, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation );
-			static VolumeTexture^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, int sizeBytes, int width, int height, int depth, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
-			static VolumeTexture^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, int width, int height, int depth, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
-			static VolumeTexture^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, Usage usage, Pool pool );
-			static VolumeTexture^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream );
-
-			static VolumeTexture^ FromFile( SlimDX::Direct3D9::Device^ device, System::String^ fileName, int width, int height, int depth, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette );
-			static VolumeTexture^ FromFile( SlimDX::Direct3D9::Device^ device, System::String^ fileName, int width, int height, int depth, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation );
-			static VolumeTexture^ FromFile( SlimDX::Direct3D9::Device^ device, System::String^ fileName, int width, int height, int depth, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
-			static VolumeTexture^ FromFile( SlimDX::Direct3D9::Device^ device, System::String^ fileName, Usage usage, Pool pool );
-			static VolumeTexture^ FromFile( SlimDX::Direct3D9::Device^ device, System::String^ fileName );
-
-			Result Fill( Fill3DCallback^ callback );
-			Result Fill( TextureShader^ shader );
-
-			SlimDX::DataBox^ LockBox( int level, LockFlags flags );
-			SlimDX::DataBox^ LockBox( int level, Box box, LockFlags flags );
-			Result UnlockBox( int level );
-
-			Result AddDirtyBox( Box box );
-			
-			VolumeDescription GetLevelDescription( int level );
-			Volume^ GetVolumeLevel( int level );
 		};
 	}
 }

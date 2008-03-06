@@ -40,9 +40,6 @@ namespace SlimDX
 			ConstantDescription GetConstantDescription( EffectHandle^ handle );
 			array<ConstantDescription>^ GetConstantDescriptionArray( EffectHandle^ handle );
 
-			DataStream^ GetConstantBuffer();
-			DataStream^ GetFunctionStream();
-
 			Result SetValue( EffectHandle^ parameter, bool value );
 			Result SetValue( EffectHandle^ parameter, array<bool>^ values );
 			Result SetValue( EffectHandle^ parameter, int value );
@@ -63,6 +60,16 @@ namespace SlimDX
 			property ConstantTableDescription Description
 			{
 				ConstantTableDescription get();
+			}
+
+			property DataStream^ ConstantBuffer
+			{
+				DataStream^ get();
+			}
+
+			property DataStream^ FunctionStream
+			{
+				DataStream^ get();
 			}
 		};
 	}

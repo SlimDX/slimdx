@@ -30,5 +30,43 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	bool CreationParameters::operator == ( CreationParameters left, CreationParameters right )
+	{
+		return CreationParameters::Equals( left, right );
+	}
+
+	bool CreationParameters::operator != ( CreationParameters left, CreationParameters right )
+	{
+		return !CreationParameters::Equals( left, right );
+	}
+
+	int CreationParameters::GetHashCode()
+	{
+		return AdapterOrdinal.GetHashCode() + DeviceType.GetHashCode() + Window.GetHashCode()
+			 + BehaviorFlags.GetHashCode();
+	}
+
+	bool CreationParameters::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( static_cast<CreationParameters>( value ) );
+	}
+
+	bool CreationParameters::Equals( CreationParameters value )
+	{
+		return ( AdapterOrdinal == value.AdapterOrdinal && DeviceType == value.DeviceType && Window == value.Window
+			 && BehaviorFlags == value.BehaviorFlags );
+	}
+
+	bool CreationParameters::Equals( CreationParameters% value1, CreationParameters% value2 )
+	{
+		return ( value1.AdapterOrdinal == value2.AdapterOrdinal && value1.DeviceType == value2.DeviceType && value1.Window == value2.Window
+			 && value1.BehaviorFlags == value2.BehaviorFlags );
+	}
 }
 }
