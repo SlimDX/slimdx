@@ -29,7 +29,7 @@
 #include "../StackAlloc.h"
 #include "../Viewport.h"
 
-#include "Direct3D9NotInitializedException.h"
+#include "Direct3D9Exception.h"
 
 #include "Device.h"
 #include "Direct3D.h"
@@ -65,11 +65,10 @@ namespace Direct3D9
 
 	Device::Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParameters )
 	{
+		Direct3D::Initialize();
+
 		IDirect3DDevice9* device;
 		D3DPRESENT_PARAMETERS d3dpp;
-
-		if( Direct3D::InternalPointer == NULL )
-			throw gcnew Direct3D9NotInitializedException();
 
 		d3dpp = presentParameters->ToUnmanaged();
 		HRESULT hr = Direct3D::InternalPointer->CreateDevice( adapter,

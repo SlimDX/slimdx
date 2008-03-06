@@ -1665,14 +1665,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d9\Direct3D9NotInitializedException.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d9\Direct3D9NotInitializedException.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\direct3d9\Direct3DX9NotFoundException.cpp"
 					>
 				</File>

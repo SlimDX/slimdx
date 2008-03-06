@@ -70,8 +70,8 @@ namespace SlimDX
 				int get() { return m_Direct3D->GetAdapterCount(); }
 			}
 
-            static void Initialize();
-            static void Terminate();
+			static void Initialize();
+			static void Terminate();
 
 			/// <summary>
 			/// Tests the device to see if it supports conversion from one display format to another.
