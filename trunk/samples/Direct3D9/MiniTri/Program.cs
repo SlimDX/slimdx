@@ -50,7 +50,7 @@ namespace MiniTri
         {
             RenderForm = new Form();
             RenderForm.ClientSize = new Size(800, 600);
-            RenderForm.Text = "SlimDX - MiniTri Sample";
+            RenderForm.Text = "SlimDX - MiniTri Direct3D9 Sample";
 
             Direct3D.Initialize();
 
