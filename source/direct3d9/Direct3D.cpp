@@ -101,6 +101,8 @@ namespace Direct3D9
 	/// <returns>TRUE if successful, FALSE if not.</returns>
 	bool Direct3D::CheckDeviceFormatConversion(int adapter, DeviceType deviceType, Format sourceFormat, Format targetFormat, [Out] int% result)
 	{
+		Initialize();
+
 		HRESULT hr;		// Error code.
 
 		hr = m_Direct3D->CheckDeviceFormatConversion(adapter, static_cast<D3DDEVTYPE>( deviceType ), 
@@ -121,14 +123,17 @@ namespace Direct3D9
 	/// <returns>TRUE if successful, FALSE if not.</returns>
 	bool Direct3D::CheckDeviceFormatConversion(int adapter, DeviceType deviceType, Format sourceFormat, Format targetFormat)
 	{
-		int result = 0;		// Error result.
+		Initialize();
 
+		int result = 0;
 		return CheckDeviceFormatConversion(adapter, deviceType, sourceFormat, targetFormat, result);
 	}
 
 	bool Direct3D::CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat,
 		Usage usage, ResourceType resourceType, Format checkFormat, [Out] int% result )
 	{
+		Initialize();
+
 		HRESULT hr = m_Direct3D->CheckDeviceFormat( adapter, static_cast<D3DDEVTYPE>( deviceType ), static_cast<D3DFORMAT>( adapterFormat ),
 			static_cast<DWORD>( usage ), static_cast<D3DRESOURCETYPE>( resourceType ), static_cast<D3DFORMAT>( checkFormat ) );
 		result = hr;
@@ -138,6 +143,8 @@ namespace Direct3D9
 	bool Direct3D::CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat,
 		Usage usage, ResourceType resourceType, Format checkFormat )
 	{
+		Initialize();
+
 		int result;
 		return CheckDeviceFormat( adapter, deviceType, adapterFormat, usage, resourceType, checkFormat, result );
 	}
@@ -145,6 +152,8 @@ namespace Direct3D9
 	bool Direct3D::CheckDeviceType( int adapter, DeviceType deviceType, Format adapterFormat, 
 		Format backBufferFormat, bool windowed, [Out] int% result )
 	{
+		Initialize();
+
 		HRESULT hr = m_Direct3D->CheckDeviceType( adapter, static_cast<D3DDEVTYPE>( deviceType ), 
 			static_cast<D3DFORMAT>( adapterFormat ), static_cast<D3DFORMAT>( backBufferFormat ), windowed );
 		result = hr;
@@ -154,6 +163,8 @@ namespace Direct3D9
 	bool Direct3D::CheckDeviceType( int adapter, DeviceType deviceType, Format adapterFormat, 
 		Format backBufferFormat, bool windowed )
 	{
+		Initialize();
+
 		int result;
 		return CheckDeviceType( adapter, deviceType, adapterFormat, backBufferFormat, windowed, result );
 	}
@@ -161,6 +172,8 @@ namespace Direct3D9
 	bool Direct3D::CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, 
 		Format renderTargetFormat, Format depthStencilFormat, [Out] int% result )
 	{
+		Initialize();
+
 		HRESULT hr = m_Direct3D->CheckDepthStencilMatch( adapter, static_cast<D3DDEVTYPE>( deviceType ),
 			static_cast<D3DFORMAT>( adapterFormat ), static_cast<D3DFORMAT>( renderTargetFormat ), static_cast<D3DFORMAT>( depthStencilFormat ) );
 		result = hr;
@@ -170,6 +183,8 @@ namespace Direct3D9
 	bool Direct3D::CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, 
 		Format renderTargetFormat, Format depthStencilFormat )
 	{
+		Initialize();
+
 		int result;
 		return CheckDepthStencilMatch( adapter, deviceType, adapterFormat,
 			renderTargetFormat, depthStencilFormat, result );
@@ -178,8 +193,9 @@ namespace Direct3D9
 	bool Direct3D::CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
 		bool windowed, MultisampleType multiSampleType, [Out] int% qualityLevels, [Out] int% result )
 	{
-		DWORD levels;
+		Initialize();
 
+		DWORD levels;
 		HRESULT hr = m_Direct3D->CheckDeviceMultiSampleType( adapter, static_cast<D3DDEVTYPE>( deviceType ), static_cast<D3DFORMAT>( surfaceFormat ),
 			windowed, static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ),  static_cast<DWORD*>( &levels ) );
 
@@ -191,6 +207,8 @@ namespace Direct3D9
 	bool Direct3D::CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
 		bool windowed, MultisampleType multiSampleType, [Out] int% qualityLevels )
 	{
+		Initialize();
+
 		int result;
 		return CheckDeviceMultisampleType( adapter, deviceType, surfaceFormat,
 			windowed, multiSampleType, qualityLevels, result );
@@ -199,6 +217,8 @@ namespace Direct3D9
 	bool Direct3D::CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
 		bool windowed, MultisampleType multiSampleType )
 	{
+		Initialize();
+
 		int levels, result;
 		return CheckDeviceMultisampleType( adapter, deviceType, surfaceFormat, windowed,
 			multiSampleType, levels, result );
@@ -206,6 +226,8 @@ namespace Direct3D9
 
     DisplayMode Direct3D::GetAdapterDisplayMode( int adapter )
     {
+		Initialize();
+
         DisplayMode displayMode;
         m_Direct3D->GetAdapterDisplayMode( adapter, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
         return displayMode;
@@ -218,11 +240,15 @@ namespace Direct3D9
 
     int Direct3D::GetAdapterModeCount( int adapter, Format format )
     {
+		Initialize();
+
         return m_Direct3D->GetAdapterModeCount( adapter, static_cast<D3DFORMAT>( format ) );
     }
 
     DisplayMode Direct3D::EnumerateAdapterModes( int adapter, Format format, int modeIndex )
     {
+		Initialize();
+
         DisplayMode displayMode;
         HRESULT hr = m_Direct3D->EnumAdapterModes( adapter, static_cast<D3DFORMAT>( format ),
 			modeIndex, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
@@ -232,11 +258,15 @@ namespace Direct3D9
 
     IntPtr Direct3D::GetAdapterMonitor( int adapter )
     {
+		Initialize();
+
         return IntPtr( m_Direct3D->GetAdapterMonitor( adapter ) );
     }
 
 	Capabilities^ Direct3D::GetDeviceCaps( int adapter, DeviceType deviceType )
 	{
+		Initialize();
+
 		D3DCAPS9 caps;
 		HRESULT hr = Direct3D::InternalPointer->GetDeviceCaps( adapter, static_cast<D3DDEVTYPE>( deviceType ), &caps );
 		RECORD_D3D9( hr );
@@ -247,98 +277,6 @@ namespace Direct3D9
 	bool Direct3D::SupportsR2VB( int adapter, DeviceType deviceType )
 	{
 		return CheckDeviceFormat( adapter, deviceType, Format::X8R8G8B8, Usage::None, ResourceType::Surface, Format::ATI_R2VB );
-	}
-
-	Capabilities::Capabilities( D3DCAPS9& caps )
-	{
-		DeviceType = static_cast<SlimDX::Direct3D9::DeviceType>( caps.DeviceType );
-		AdapterOrdinal = caps.AdapterOrdinal;
-
-		Caps = static_cast<SlimDX::Direct3D9::Caps>( caps.Caps );
-		Caps2 = static_cast<SlimDX::Direct3D9::Caps2>( caps.Caps2 );
-		Caps3 = static_cast<SlimDX::Direct3D9::Caps3>( caps.Caps3 );
-		PresentationIntervals = static_cast<SlimDX::Direct3D9::PresentInterval>( caps.PresentationIntervals );
-
-		CursorCaps = static_cast<SlimDX::Direct3D9::CursorCaps>( caps.CursorCaps );
-
-		DeviceCaps = static_cast<SlimDX::Direct3D9::DeviceCaps>( caps.DevCaps );
-
-		PrimitiveMiscCaps = static_cast<SlimDX::Direct3D9::PrimitiveMiscCaps>( caps.PrimitiveMiscCaps );
-		RasterCaps = static_cast<SlimDX::Direct3D9::RasterCaps>( caps.RasterCaps );
-		DepthCompareCaps = static_cast<CompareCaps>( caps.ZCmpCaps );
-		SourceBlendCaps = static_cast<BlendCaps>( caps.SrcBlendCaps );
-		DestinationBlendCaps = static_cast<BlendCaps>( caps.DestBlendCaps );
-		AlphaCompareCaps = static_cast<CompareCaps>( caps.AlphaCmpCaps );
-		ShadeCaps = static_cast<SlimDX::Direct3D9::ShadeCaps>( caps.ShadeCaps );
-		TextureCaps = static_cast<SlimDX::Direct3D9::TextureCaps>( caps.TextureCaps );
-		TextureFilterCaps = static_cast<FilterCaps>( caps.TextureFilterCaps );
-		CubeTextureFilterCaps = static_cast<FilterCaps>( caps.CubeTextureFilterCaps );
-		VolumeTextureFilterCaps = static_cast<FilterCaps>( caps.VertexTextureFilterCaps );
-		TextureAddressCaps = static_cast<SlimDX::Direct3D9::TextureAddressCaps>( caps.TextureAddressCaps );
-		VolumeTextureAddressCaps = static_cast<SlimDX::Direct3D9::TextureAddressCaps>( caps.VolumeTextureAddressCaps );
-
-		LineCaps = static_cast<SlimDX::Direct3D9::LineCaps>( caps.LineCaps );
-
-		MaxTextureWidth = caps.MaxTextureWidth;
-		MaxTextureHeight = caps.MaxTextureHeight;
-		MaxVolumeExtent = caps.MaxVolumeExtent;
-
-		MaxTextureRepeat = caps.MaxTextureRepeat;
-		MaxTextureAspectRatio = caps.MaxTextureAspectRatio;
-		MaxAnisotropy = caps.MaxAnisotropy;
-		MaxVertexW = caps.MaxVertexW;
-
-		GuardBandLeft = caps.GuardBandLeft;
-		GuardBandTop = caps.GuardBandTop;
-		GuardBandRight = caps.GuardBandRight;
-		GuardBandBottom = caps.GuardBandBottom;
-
-		ExtentsAdjust = caps.ExtentsAdjust;
-		StencilCaps = static_cast<SlimDX::Direct3D9::StencilCaps>( caps.StencilCaps );
-
-		FVFCaps = static_cast<VertexFormatCaps>( caps.FVFCaps );
-		TextureOperationCaps = static_cast<SlimDX::Direct3D9::TextureOperationCaps>( caps.TextureOpCaps );
-		MaxTextureBlendStages = caps.MaxTextureBlendStages;
-		MaxSimultaneousTextures = caps.MaxSimultaneousTextures;
-
-		VertexProcessingCaps = static_cast<SlimDX::Direct3D9::VertexProcessingCaps>( caps.VertexProcessingCaps );
-		MaxActiveLights = caps.MaxActiveLights;
-		MaxUserClipPlanes = caps.MaxUserClipPlanes;
-		MaxVertexBlendMatrices = caps.MaxVertexBlendMatrices;
-		MaxVertexBlendMatrixIndex = caps.MaxVertexBlendMatrixIndex;
-
-		MaxPointSize = caps.MaxPointSize;
-
-		MaxPrimitiveCount = caps.MaxPrimitiveCount;
-		MaxVertexIndex = caps.MaxVertexIndex;
-		MaxStreams = caps.MaxStreams;
-		MaxStreamStride = caps.MaxStreamStride;
-
-		VertexShaderVersion = gcnew Version( D3DSHADER_VERSION_MAJOR( caps.VertexShaderVersion ), 
-			D3DSHADER_VERSION_MINOR( caps.VertexShaderVersion ) );
-		MaxVertexShaderConstants = caps.MaxVertexShaderConst;
-
-		PixelShaderVersion = gcnew Version( D3DSHADER_VERSION_MAJOR( caps.PixelShaderVersion ), 
-			D3DSHADER_VERSION_MINOR( caps.PixelShaderVersion ) );
-		PixelShader1xMaxValue = caps.PixelShader1xMaxValue;
-
-		DeviceCaps2 = static_cast<DevCaps2>( caps.DevCaps2 );
-
-		MaxNPatchTessellationLevel = caps.MaxNpatchTessellationLevel;
-
-		MasterAdapterOrdinal = caps.MasterAdapterOrdinal;
-		AdapterOrdinalInGroup = caps.AdapterOrdinalInGroup;
-		NumberOfAdaptersInGroup = caps.NumberOfAdaptersInGroup;
-		DeclarationTypes = static_cast<DeclarationTypeCaps>( caps.DeclTypes );
-		SimultaneousRTCount = caps.NumSimultaneousRTs;
-		StretchRectFilterCaps = static_cast<FilterCaps>( caps.StretchRectFilterCaps );
-		VS20Caps = *reinterpret_cast<VertexShader20Caps*>( &caps.VS20Caps );
-		PS20Caps = *reinterpret_cast<PixelShader20Caps*>( &caps.PS20Caps );
-		VertexTextureFilterCaps = static_cast<FilterCaps>( caps.VertexTextureFilterCaps );
-		MaxVShaderInstructionsExecuted = caps.MaxVShaderInstructionsExecuted;
-		MaxPShaderInstructionsExecuted = caps.MaxPShaderInstructionsExecuted;
-		MaxVertexShader30InstructionSlots = caps.MaxVertexShader30InstructionSlots;
-		MaxPixelShader30InstructionSlots = caps.MaxPixelShader30InstructionSlots;
 	}
 }
 }

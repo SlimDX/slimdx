@@ -62,7 +62,10 @@ namespace SimpleTriangle
             DataStream stream = Vertices.Lock(0, 0, LockFlags.None);
             stream.WriteRange(BuildVertexData());
             Vertices.Unlock();
-            
+
+			Sample.Device.GetSamplerState(0, SamplerState.MinFilter);
+			Sample.Device.GetTextureStageState(0, TextureStage.AlphaArg0);
+
             Sample.Run();
 
             Vertices.Dispose();

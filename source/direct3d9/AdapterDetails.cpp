@@ -37,6 +37,8 @@ namespace Direct3D9
 {
 	AdapterDetails::AdapterDetails( unsigned int adapter )
 	{
+		Direct3D::Initialize();
+
 		D3DADAPTER_IDENTIFIER9 ident;
 		DWORD flags = Direct3D::CheckWhql ? D3DENUM_WHQL_LEVEL : 0;
 
