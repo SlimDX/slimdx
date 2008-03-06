@@ -52,7 +52,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<AttributeRange>( value ) );
+		return Equals( safe_cast<AttributeRange>( value ) );
 	}
 
 	bool AttributeRange::Equals( AttributeRange value )

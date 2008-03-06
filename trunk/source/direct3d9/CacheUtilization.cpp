@@ -53,7 +53,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<CacheUtilization>( value ) );
+		return Equals( safe_cast<CacheUtilization>( value ) );
 	}
 
 	bool CacheUtilization::Equals( CacheUtilization value )

@@ -55,7 +55,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<TrackDescription>( value ) );
+		return Equals( safe_cast<TrackDescription>( value ) );
 	}
 
 	bool TrackDescription::Equals( TrackDescription value )

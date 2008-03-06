@@ -55,7 +55,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<EffectDefault>( value ) );
+		return Equals( safe_cast<EffectDefault>( value ) );
 	}
 
 	bool EffectDefault::Equals( EffectDefault value )

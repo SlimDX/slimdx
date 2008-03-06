@@ -55,7 +55,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<ResourceManager>( value ) );
+		return Equals( safe_cast<ResourceManager>( value ) );
 	}
 
 	bool ResourceManager::Equals( ResourceManager value )

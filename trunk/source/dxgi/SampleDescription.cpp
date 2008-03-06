@@ -91,7 +91,7 @@ namespace DXGI
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<SampleDescription>( value ) );
+		return Equals( safe_cast<SampleDescription>( value ) );
 	}
 
 	bool SampleDescription::Equals( SampleDescription value )

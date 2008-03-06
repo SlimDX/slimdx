@@ -233,7 +233,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<RenderTargetViewDescription>( value ) );
+		return Equals( safe_cast<RenderTargetViewDescription>( value ) );
 	}
 
 	bool RenderTargetViewDescription::Equals( RenderTargetViewDescription value )

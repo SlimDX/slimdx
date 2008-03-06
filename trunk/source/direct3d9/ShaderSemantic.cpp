@@ -53,7 +53,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<ShaderSemantic>( value ) );
+		return Equals( safe_cast<ShaderSemantic>( value ) );
 	}
 
 	bool ShaderSemantic::Equals( ShaderSemantic value )

@@ -55,7 +55,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Macro>( value ) );
+		return Equals( safe_cast<Macro>( value ) );
 	}
 
 	bool Macro::Equals( Macro value )

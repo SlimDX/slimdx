@@ -163,7 +163,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<DepthStencilStateDescription>( value ) );
+		return Equals( safe_cast<DepthStencilStateDescription>( value ) );
 	}
 
 	bool DepthStencilStateDescription::Equals( DepthStencilStateDescription value )

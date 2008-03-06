@@ -54,7 +54,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<PaletteEntry>( value ) );
+		return Equals( safe_cast<PaletteEntry>( value ) );
 	}
 
 	bool PaletteEntry::Equals( PaletteEntry value )

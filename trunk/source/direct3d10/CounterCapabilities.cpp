@@ -73,7 +73,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<CounterCapabilities>( value ) );
+		return Equals( safe_cast<CounterCapabilities>( value ) );
 	}
 
 	bool CounterCapabilities::Equals( CounterCapabilities value )

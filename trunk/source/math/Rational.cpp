@@ -78,7 +78,7 @@ namespace SlimDX
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Rational>( value ) );
+		return Equals( safe_cast<Rational>( value ) );
 	}
 
 	bool Rational::Equals( Rational value )

@@ -27,7 +27,6 @@
 namespace SlimDX
 {
 	value class BoundingBox;
-	value class BoundingFrustum;
 	value class Plane;
 	value class Ray;
 	
@@ -43,17 +42,14 @@ namespace SlimDX
 
 		static ContainmentType Contains( BoundingSphere sphere, BoundingBox box );
 		static ContainmentType Contains( BoundingSphere sphere1, BoundingSphere sphere2 );
-		static ContainmentType Contains( BoundingSphere sphere, BoundingFrustum frustum );
 		static ContainmentType Contains( BoundingSphere sphere, Vector3 vector );
 
 		static BoundingSphere FromBox( BoundingBox box );
-		static BoundingSphere FromFrustum( BoundingFrustum frustum );
 		static BoundingSphere FromPoints( array<Vector3>^ points );
 
 		static BoundingSphere Merge( BoundingSphere sphere1, BoundingSphere sphere2 );
 
 		static bool Intersects( BoundingSphere sphere, BoundingBox box );
-		static bool Intersects( BoundingSphere sphere, BoundingFrustum frustum );
 		static bool Intersects( BoundingSphere sphere1, BoundingSphere sphere2 );
 		static bool Intersects( BoundingSphere sphere, Ray ray, [Out] float% distance );
 

@@ -56,7 +56,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<EventDescription>( value ) );
+		return Equals( safe_cast<EventDescription>( value ) );
 	}
 
 	bool EventDescription::Equals( EventDescription value )

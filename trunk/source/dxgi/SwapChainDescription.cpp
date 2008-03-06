@@ -163,7 +163,7 @@ namespace DXGI
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<SwapChainDescription>( value ) );
+		return Equals( safe_cast<SwapChainDescription>( value ) );
 	}
 
 	bool SwapChainDescription::Equals( SwapChainDescription value )

@@ -23,10 +23,9 @@
 #include <d3dx9.h>
 
 #include "BoundingBox.h"
-
 #include "BoundingSphere.h"
-#include "BoundingFrustum.h"
 #include "Ray.h"
+#include "Plane.h"
 
 using namespace System;
 using namespace System::Globalization;
@@ -98,22 +97,6 @@ namespace SlimDX
 		return ContainmentType::Intersects;
 	}
 
-	ContainmentType BoundingBox::Contains( BoundingBox box, BoundingFrustum frustum )
-	{
-		if( !BoundingFrustum::Intersects( frustum, box ) )
-			return ContainmentType::Disjoint;
-
-		array<Vector3>^ corners = frustum.GetCorners();
-
-		for each( Vector3 vector in corners )
-		{
-			if( BoundingBox::Contains( box, vector ) == ContainmentType::Disjoint )
-				return ContainmentType::Intersects;
-		}
-
-		return ContainmentType::Contains;
-	}
-
 	ContainmentType BoundingBox::Contains( BoundingBox box, Vector3 vector )
 	{
 		if( box.Minimum.X <= vector.X && vector.X <= box.Maximum.X && box.Minimum.Y <= vector.Y && 
@@ -183,11 +166,6 @@ namespace SlimDX
 		return ( dist <= (sphere.Radius * sphere.Radius) );
 	}
 
-	bool BoundingBox::Intersects( BoundingBox box, BoundingFrustum frustum )
-	{
-		return BoundingFrustum::Intersects( frustum, box );
-	}
-
 	bool BoundingBox::Intersects( BoundingBox box, Ray ray, [Out] float% distance )
 	{
 		return Ray::Intersects( ray, box, distance );
@@ -226,7 +204,7 @@ namespace SlimDX
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<BoundingBox>( value ) );
+		return Equals( safe_cast<BoundingBox>( value ) );
 	}
 
 	bool BoundingBox::Equals( BoundingBox value )

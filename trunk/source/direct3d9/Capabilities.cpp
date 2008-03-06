@@ -54,7 +54,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<VertexShader20Caps>( value ) );
+		return Equals( safe_cast<VertexShader20Caps>( value ) );
 	}
 
 	bool VertexShader20Caps::Equals( VertexShader20Caps value )
@@ -93,7 +93,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<PixelShader20Caps>( value ) );
+		return Equals( safe_cast<PixelShader20Caps>( value ) );
 	}
 
 	bool PixelShader20Caps::Equals( PixelShader20Caps value )
@@ -156,7 +156,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Capabilities^>( value ) );
+		return Equals( safe_cast<Capabilities^>( value ) );
 	}
 
 	bool Capabilities::Equals( Capabilities^ value )

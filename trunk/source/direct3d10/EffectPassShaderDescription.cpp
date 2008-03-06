@@ -69,7 +69,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<EffectPassShaderDescription>( value ) );
+		return Equals( safe_cast<EffectPassShaderDescription>( value ) );
 	}
 
 	bool EffectPassShaderDescription::Equals( EffectPassShaderDescription value )

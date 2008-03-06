@@ -54,7 +54,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Material>( value ) );
+		return Equals( safe_cast<Material>( value ) );
 	}
 
 	bool Material::Equals( Material value )

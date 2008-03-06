@@ -53,7 +53,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<CubeTextureRequirements>( value ) );
+		return Equals( safe_cast<CubeTextureRequirements>( value ) );
 	}
 
 	bool CubeTextureRequirements::Equals( CubeTextureRequirements value )

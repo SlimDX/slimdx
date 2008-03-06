@@ -93,7 +93,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<EffectHandle^>( value ) );
+		return Equals( safe_cast<EffectHandle^>( value ) );
 	}
 
 	bool EffectHandle::Equals( EffectHandle^ value )

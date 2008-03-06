@@ -93,7 +93,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<EffectVariableDescription>( value ) );
+		return Equals( safe_cast<EffectVariableDescription>( value ) );
 	}
 
 	bool EffectVariableDescription::Equals( EffectVariableDescription value )

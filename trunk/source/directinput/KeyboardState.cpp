@@ -45,7 +45,7 @@ namespace DirectInput
 
 		Array^ values = Enum::GetValues( Key::typeid );
 		for each( Key key in values )
-			keys->Add( key );
+			keys->AddItem( key );
 	}
 
 	bool KeyboardState::IsPressed( Key key )
@@ -60,8 +60,8 @@ namespace DirectInput
 
 	void KeyboardState::UpdateKeys( array<bool>^ states )
 	{
-		pressed->Clear();
-		released->Clear();
+		pressed->ClearItems();
+		released->ClearItems();
 
 		for( int i = 0; i < states->Length; i++ )
 		{
@@ -70,16 +70,16 @@ namespace DirectInput
 				continue;
 
 			if( states[i] )
-				pressed->Add( key );
+				pressed->AddItem( key );
 			else
-				released->Add( key );
+				released->AddItem( key );
 		}
 	}
 
 	void KeyboardState::UpdateKeys( BYTE *keys, int length )
 	{
-		pressed->Clear();
-		released->Clear();
+		pressed->ClearItems();
+		released->ClearItems();
 
 		for( int i = 0; i < length; i++ )
 		{
@@ -88,9 +88,9 @@ namespace DirectInput
 				continue;
 
 			if( keys[i] )
-				pressed->Add( key );
+				pressed->AddItem( key );
 			else
-				released->Add( key );
+				released->AddItem( key );
 		}
 	}
 
@@ -100,13 +100,13 @@ namespace DirectInput
 		if( key == Key::Unknown )
 			return;
 
-		pressed->Remove( key );
-		released->Remove( key );
+		pressed->RemoveItem( key );
+		released->RemoveItem( key );
 
 		if( down )
-			pressed->Add( key );
+			pressed->AddItem( key );
 		else
-			released->Add( key );
+			released->AddItem( key );
 	}
 }
 }

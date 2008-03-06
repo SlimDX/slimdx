@@ -65,7 +65,7 @@ namespace SlimDX
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Half2>( value ) );
+		return Equals( safe_cast<Half2>( value ) );
 	}
 
 	bool Half2::Equals( Half2 value )

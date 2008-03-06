@@ -59,7 +59,7 @@ namespace SlimDX
 			virtual void Add( DisplayMode item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
 			virtual void Clear() { throw gcnew System::NotSupportedException(); }
 			virtual bool Contains( DisplayMode item ) { return list->Contains( item ); }
-			virtual void CopyTo( array<DisplayMode>^ destination, int arrayIndex );
+			virtual void CopyTo( array<DisplayMode>^ array, int arrayIndex );
 			virtual bool Remove( DisplayMode item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
 
             property virtual int Count

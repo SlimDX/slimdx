@@ -56,7 +56,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<ParameterDescription>( value ) );
+		return Equals( safe_cast<ParameterDescription>( value ) );
 	}
 
 	bool ParameterDescription::Equals( ParameterDescription value )

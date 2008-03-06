@@ -109,7 +109,7 @@ namespace DXGI
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<GammaControl>( value ) );
+		return Equals( safe_cast<GammaControl>( value ) );
 	}
 
 	bool GammaControl::Equals( GammaControl value )

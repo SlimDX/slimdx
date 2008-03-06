@@ -54,7 +54,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<GlyphMetricsFloat>( value ) );
+		return Equals( safe_cast<GlyphMetricsFloat>( value ) );
 	}
 
 	bool GlyphMetricsFloat::Equals( GlyphMetricsFloat value )

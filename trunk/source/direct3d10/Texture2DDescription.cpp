@@ -185,7 +185,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Texture2DDescription>( value ) );
+		return Equals( safe_cast<Texture2DDescription>( value ) );
 	}
 
 	bool Texture2DDescription::Equals( Texture2DDescription value )

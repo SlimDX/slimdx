@@ -55,7 +55,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<AnimationOutput>( value ) );
+		return Equals( safe_cast<AnimationOutput>( value ) );
 	}
 
 	bool AnimationOutput::Equals( AnimationOutput value )

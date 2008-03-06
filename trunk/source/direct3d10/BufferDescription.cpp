@@ -128,7 +128,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<BufferDescription>( value ) );
+		return Equals( safe_cast<BufferDescription>( value ) );
 	}
 
 	bool BufferDescription::Equals( BufferDescription value )

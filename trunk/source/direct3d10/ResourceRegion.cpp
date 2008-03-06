@@ -135,7 +135,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<ResourceRegion>( value ) );
+		return Equals( safe_cast<ResourceRegion>( value ) );
 	}
 
 	bool ResourceRegion::Equals( ResourceRegion value )

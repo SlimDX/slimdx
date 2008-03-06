@@ -77,7 +77,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<StreamOutputBufferBinding>( value ) );
+		return Equals( safe_cast<StreamOutputBufferBinding>( value ) );
 	}
 
 	bool StreamOutputBufferBinding::Equals( StreamOutputBufferBinding value )

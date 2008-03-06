@@ -53,7 +53,7 @@ namespace Direct3D9
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<RasterStatus>( value ) );
+		return Equals( safe_cast<RasterStatus>( value ) );
 	}
 
 	bool RasterStatus::Equals( RasterStatus value )

@@ -422,6 +422,24 @@ namespace DirectInput
 	}
 
 	generic<typename DataFormat>
+	ObjectProperties^ Device<DataFormat>::GetObjectPropertiesById( int objectId )
+	{
+		return gcnew ObjectProperties( InternalPointer, objectId, false );
+	}
+
+	generic<typename DataFormat>
+	ObjectProperties^ Device<DataFormat>::GetObjectPropertiesByUsage( int usageCode )
+	{
+		return gcnew ObjectProperties( InternalPointer, usageCode, true );
+	}
+
+	generic<typename DataFormat>
+	ObjectProperties^ Device<DataFormat>::GetObjectPropertiesByName( String^ name )
+	{
+		return gcnew ObjectProperties( InternalPointer, name, DataFormat::typeid );
+	}
+
+	generic<typename DataFormat>
 	DeviceProperties^ Device<DataFormat>::Properties::get()
 	{
 		return properties;

@@ -1635,7 +1635,7 @@ namespace SlimDX
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Matrix>( value ) );
+		return Equals( safe_cast<Matrix>( value ) );
 	}
 
 	bool Matrix::Equals( Matrix value )

@@ -38,7 +38,6 @@ namespace SlimDX
 {
 namespace DirectInput
 {
-	/* Unused.
 	ObjectProperties::ObjectProperties( IDirectInputDevice8W* pointer, String^ name, Type^ dataFormat )
 	{
 		this->pointer = pointer;
@@ -46,9 +45,7 @@ namespace DirectInput
 
 		obj = Marshal::OffsetOf( dataFormat, name ).ToInt32();
 	}
-	*/
 
-	/* Unused.
 	ObjectProperties::ObjectProperties( IDirectInputDevice8W* pointer, int value, bool isUsageCode )
 	{
 		this->pointer = pointer;
@@ -60,7 +57,6 @@ namespace DirectInput
 
 		obj = value;
 	}
-	*/
 
 	int ObjectProperties::LowerRange::get()
 	{

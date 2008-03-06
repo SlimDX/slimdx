@@ -23,7 +23,6 @@
 #include <d3dx9.h>
 
 #include "BoundingBox.h"
-#include "BoundingFrustum.h"
 #include "BoundingSphere.h"
 #include "Matrix.h"
 #include "Plane.h"
@@ -425,30 +424,6 @@ namespace SlimDX
 		return PlaneIntersectionType::Intersecting;
 	}
 
-	PlaneIntersectionType Plane::Intersects( Plane plane, BoundingFrustum frustum )
-	{
-		int location = 0;
-		array<Vector3>^ corners = frustum.GetCorners();
-
-		for (int i = 0; i < 8; i++)
-		{
-			float dot = (corners[i].X * plane.Normal.X) + (corners[i].Y * plane.Normal.Y) + (corners[i].Z * plane.Normal.Z);
-
-			if( ( dot + plane.D ) > 0.0f )
-				location |= 1;
-			else
-				location |= 2;
-
-			if( location == 3 )
-				return PlaneIntersectionType::Intersecting;
-		}
-
-		if( location != 1 )
-			return PlaneIntersectionType::Back;
-
-		return PlaneIntersectionType::Front;
-	}
-
 	Plane Plane::Multiply( Plane plane, float scale )
 	{
 		Plane result;
@@ -541,7 +516,7 @@ namespace SlimDX
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<Plane>( value ) );
+		return Equals( safe_cast<Plane>( value ) );
 	}
 
 	/// <summary>

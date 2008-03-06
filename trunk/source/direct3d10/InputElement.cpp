@@ -167,7 +167,7 @@ namespace Direct3D10
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( static_cast<InputElement>( value ) );
+		return Equals( safe_cast<InputElement>( value ) );
 	}
 
 	bool InputElement::Equals( InputElement value )
