@@ -48,7 +48,7 @@ namespace SlimDX
 		};
 
 		[System::Flags]
-		public enum class ScanCodeFlags : unsigned short
+		public enum class ScanCodeFlags : System::Int32
 		{
 			Break = RI_KEY_BREAK,
 			E0 = RI_KEY_E0,
@@ -59,7 +59,7 @@ namespace SlimDX
 		};
 
 		[System::Flags]
-		public enum class MouseFlags : unsigned short
+		public enum class MouseFlags : System::Int32
 		{
 			AbsoluteMovement = MOUSE_MOVE_ABSOLUTE,
 			AttributesChanged = MOUSE_ATTRIBUTES_CHANGED,
@@ -68,7 +68,7 @@ namespace SlimDX
 		};
 
 		[System::Flags]
-		public enum class MouseButtonFlags : unsigned short
+		public enum class MouseButtonFlags : System::Int32
 		{
 			None = 0,
 			LeftDown = 0x0001,
@@ -93,7 +93,7 @@ namespace SlimDX
 			HotKey = WM_HOTKEY,
 		};
 
-		public enum class HIDUsagePage : unsigned short
+		public enum class HidUsagePage : System::Int32
 		{
 			Undefined = 0x00,
 			/// <summary>Generic desktop controls.</summary>
@@ -152,7 +152,7 @@ namespace SlimDX
 			MSR = 0x8E
 		};
 
-		public enum class HIDUsage : unsigned short
+		public enum class HidUsage : System::Int32
 		{
 			/// <summary></summary>
 			Pointer = 0x01,
@@ -454,7 +454,7 @@ namespace SlimDX
 			SimulationThrottle = 0xBB
 		};
 
-		public enum class Keys : unsigned short
+		public enum class Keys : System::Int32
 		{
 			/// <summary></summary>
 			LeftButton = 0x01,

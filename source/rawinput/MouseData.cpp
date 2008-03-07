@@ -25,19 +25,21 @@
 
 #include <windows.h>
 
+using namespace System::Drawing;
+
 namespace SlimDX
 {
 namespace RawInput
 {
-	MouseData::MouseData(RAWMOUSE mouse)
+	MouseData::MouseData( RAWMOUSE mouse )
 	{
-		this->mouseDelta = System::Drawing::Size(mouse.lLastX, mouse.lLastY);
-		flags = static_cast<MouseFlags>(mouse.usFlags);
-		mbFlags = static_cast<RawInput::MouseButtonFlags>(mouse.usButtonFlags);
+		this->mouseDelta = Size( mouse.lLastX, mouse.lLastY );
+		flags = static_cast<MouseFlags>( mouse.usFlags );
+		mbFlags = static_cast<RawInput::MouseButtonFlags>( mouse.usButtonFlags );
 		scrollData = mouse.usButtonData;
 	}
 
-	System::Drawing::Size MouseData::MouseDelta::get()
+	Size MouseData::MouseDelta::get()
 	{
 		return mouseDelta;
 	}
@@ -52,7 +54,7 @@ namespace RawInput
 		return mbFlags;
 	}
 
-	unsigned short MouseData::ScrollWheelDelta::get()
+	int MouseData::ScrollWheelDelta::get()
 	{
 		return scrollData;
 	}

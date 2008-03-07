@@ -21,40 +21,47 @@
 */
 
 #include "DeviceInfo.h"
+#include "../StackAlloc.h"
+
+using namespace System;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
 namespace RawInput
 {
-	DeviceInfo::DeviceInfo(RAWINPUTDEVICELIST deviceInfo) {
-		handle = System::IntPtr(deviceInfo.hDevice);
-		type = static_cast<InputType>(deviceInfo.dwType);
+	DeviceInfo::DeviceInfo( RAWINPUTDEVICELIST deviceInfo )
+	{
+		handle = static_cast<IntPtr>( deviceInfo.hDevice );
+		type = static_cast<InputType>( deviceInfo.dwType );
 
 		UINT size;
-		if(::GetRawInputDeviceInfo(deviceInfo.hDevice, RIDI_DEVICENAME, NULL, &size) != 0)
-			throw gcnew System::InvalidOperationException("Unable to get length of device name");
+		if( ::GetRawInputDeviceInfo( deviceInfo.hDevice, RIDI_DEVICENAME, NULL, &size ) != 0 )
+			throw gcnew InvalidOperationException( "Unable to get length of device name" );
 
-		WCHAR* str = (WCHAR*)malloc(sizeof(WCHAR) * size);
+		stack_vector<WCHAR> str(size);
 		
-		UINT result = ::GetRawInputDeviceInfo(deviceInfo.hDevice, RIDI_DEVICENAME, str, &size);
-		if(result == -1)
-			throw gcnew System::InvalidOperationException("Not enough memory");
-		else if (result != size)
-			throw gcnew System::InvalidOperationException("Sizes do not match");
+		UINT result = ::GetRawInputDeviceInfo( deviceInfo.hDevice, RIDI_DEVICENAME, &str[0], &size );
+		if( result == -1 )
+			throw gcnew InvalidOperationException( "Not enough memory" );
+		else if ( result != size )
+			throw gcnew InvalidOperationException( "Sizes do not match" );
 		
-		name = System::Runtime::InteropServices::Marshal::PtrToStringAuto(System::IntPtr(str));
-		free(str);
+		name = Marshal::PtrToStringAuto( static_cast<IntPtr>( &str[0] ) );
 	}
 
-	System::IntPtr DeviceInfo::Handle::get() {
+	System::IntPtr DeviceInfo::Handle::get()
+	{
 		return handle;
 	}
 	
-	InputType DeviceInfo::Type::get() {
+	InputType DeviceInfo::Type::get()
+	{
 		return type;
 	}
 
-	System::String^ DeviceInfo::Name::get() {
+	System::String^ DeviceInfo::Name::get()
+	{
 		return name;
 	}
 }

@@ -36,22 +36,24 @@ namespace SlimDX
 			InputType type;
 			System::String^ name;
 
-		public:
-			DeviceInfo(RAWINPUTDEVICELIST deviceInfo);
+		internal:
+			DeviceInfo( RAWINPUTDEVICELIST deviceInfo );
 
-			property System::IntPtr Handle {
+		public:
+			property System::IntPtr Handle
+			{
 				System::IntPtr get();
 			}
 
-			property InputType Type {
+			property InputType Type
+			{
 				InputType get();
 			}
 
-			property System::String^ Name {
+			property System::String^ Name
+			{
 				System::String^ get();
 			}
-
-
 		};
 	}
 }

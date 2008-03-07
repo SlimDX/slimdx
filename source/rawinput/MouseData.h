@@ -37,23 +37,28 @@ namespace SlimDX
 			unsigned short scrollData;
 
 
-		public:
-			MouseData(RAWMOUSE mouse);
+		internal:
+			MouseData( RAWMOUSE mouse );
 
-			property System::Drawing::Size MouseDelta {
+		public:
+			property System::Drawing::Size MouseDelta
+			{
 				System::Drawing::Size get();
 			}
 
-			property MouseFlags Flags {
+			property MouseFlags Flags
+			{
 				MouseFlags get(); 
 			}
 
-			property MouseButtonFlags MouseButtonFlags {
+			property MouseButtonFlags MouseButtonFlags
+			{
 				SlimDX::RawInput::MouseButtonFlags get(); 
 			}
 
-			property unsigned short ScrollWheelDelta {
-				unsigned short get();
+			property int ScrollWheelDelta
+			{
+				int get();
 			}
 		};
 	}

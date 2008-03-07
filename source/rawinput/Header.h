@@ -36,22 +36,27 @@ namespace SlimDX
 			System::IntPtr device;
 			System::IntPtr wParam;
 
-		public:
-			Header(RAWINPUTHEADER header);
+		internal:
+			Header( RAWINPUTHEADER header );
 
-			property InputType Type {
+		public:
+			property InputType Type
+			{
 				InputType get();
 			}
 
-			property int Size {
+			property int Size
+			{
 				int get();
 			}
 
-			property System::IntPtr Device {
+			property System::IntPtr Device
+			{
 				System::IntPtr get();
 			}
 
-			property System::IntPtr Param {
+			property System::IntPtr Param
+			{
 				System::IntPtr get();
 			}
 		};

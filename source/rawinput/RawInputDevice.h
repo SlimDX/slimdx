@@ -35,31 +35,35 @@ namespace SlimDX
 			RAWINPUTDEVICE* Internal;
 
 		public:
-			RawInputDevice() : Internal(new RAWINPUTDEVICE) { }
+			RawInputDevice() : Internal( new RAWINPUTDEVICE ) { }
 			~RawInputDevice() { delete Internal; }
 
 			/// <summary>Top level collection Usage page for the raw input device.</summary>
-			property HIDUsagePage UsagePage {
-				HIDUsagePage get();
-				void set(HIDUsagePage usagePage);
+			property HidUsagePage UsagePage
+			{
+				HidUsagePage get();
+				void set( HidUsagePage usagePage );
 			}
 
 			/// <summary>Top level collection Usage for the raw input device.</summary>
-			property HIDUsage Usage {
-				HIDUsage get();
-				void set(HIDUsage usage);
+			property HidUsage Usage
+			{
+				HidUsage get();
+				void set( HidUsage usage );
 			}
 
 			/// <sumarry>Mode flag that specifies how to interpret the information provided by UsagePage and Usage</summary>
-			property SlimDX::RawInput::DeviceFlags Flags {
+			property SlimDX::RawInput::DeviceFlags Flags
+			{
 				SlimDX::RawInput::DeviceFlags get();
-				void set(SlimDX::RawInput::DeviceFlags flags);
+				void set( SlimDX::RawInput::DeviceFlags flags );
 			}
 
 			/// <summary>Handle to the target window. Can be IntPtr.Zero to follow keyboard focus</summary>
-			property System::IntPtr Target {
+			property System::IntPtr Target
+			{
 				System::IntPtr get();
-				void set(System::IntPtr usagePage);
+				void set( System::IntPtr usagePage );
 			}
 		};
 	}
