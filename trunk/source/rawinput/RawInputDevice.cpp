@@ -28,36 +28,44 @@ namespace SlimDX
 {
 namespace RawInput
 {
-	HIDUsagePage RawInputDevice::UsagePage::get() {
-		return static_cast<HIDUsagePage>(this->Internal->usUsagePage);
+	HidUsagePage RawInputDevice::UsagePage::get()
+	{
+		return static_cast<HidUsagePage>( this->Internal->usUsagePage );
 	}
 
-	void RawInputDevice::UsagePage::set(HIDUsagePage usagePage) {
-		this->Internal->usUsagePage = static_cast<unsigned short>(usagePage);
+	void RawInputDevice::UsagePage::set( HidUsagePage usagePage )
+	{
+		this->Internal->usUsagePage = static_cast<unsigned short>( usagePage );
 	}
 
-	HIDUsage RawInputDevice::Usage::get() {
-		return static_cast<HIDUsage>(this->Internal->usUsage);
+	HidUsage RawInputDevice::Usage::get()
+	{
+		return static_cast<HidUsage>( this->Internal->usUsage );
 	}
 
-	void RawInputDevice::Usage::set(HIDUsage usage) {
-		this->Internal->usUsage = static_cast<unsigned short>(usage);
+	void RawInputDevice::Usage::set( HidUsage usage )
+	{
+		this->Internal->usUsage = static_cast<unsigned short>( usage );
 	}
 
-	DeviceFlags RawInputDevice::Flags::get() {
-		return static_cast<DeviceFlags>(this->Internal->dwFlags);
+	DeviceFlags RawInputDevice::Flags::get()
+	{
+		return static_cast<DeviceFlags>( this->Internal->dwFlags );
 	}
 
-	void RawInputDevice::Flags::set(DeviceFlags flags) {
-		this->Internal->dwFlags = static_cast<DWORD>(flags);
+	void RawInputDevice::Flags::set( DeviceFlags flags )
+	{
+		this->Internal->dwFlags = static_cast<DWORD>( flags );
 	}
 
-	System::IntPtr RawInputDevice::Target::get() {
-		return System::IntPtr(this->Internal->hwndTarget);
+	System::IntPtr RawInputDevice::Target::get()
+	{
+		return System::IntPtr( this->Internal->hwndTarget );
 	}
 
-	void RawInputDevice::Target::set(System::IntPtr target) {
-		this->Internal->hwndTarget = (HWND)target.ToPointer();
+	void RawInputDevice::Target::set( System::IntPtr target )
+	{
+		this->Internal->hwndTarget = reinterpret_cast<HWND>( target.ToPointer() );
 	}
 }
 }

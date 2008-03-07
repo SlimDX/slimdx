@@ -29,16 +29,16 @@ namespace SlimDX
 {
 namespace RawInput
 {
-	KeyboardData::KeyboardData(RAWKEYBOARD keyboard)
+	KeyboardData::KeyboardData( RAWKEYBOARD keyboard )
 	{
 		makeCode = keyboard.MakeCode;
-		keyState = static_cast<RawInput::KeyState>(keyboard.Message);
+		keyState = static_cast<RawInput::KeyState>( keyboard.Message );
 		extraInformation = keyboard.ExtraInformation;
-		key = static_cast<Keys>(keyboard.VKey);
-		flags = static_cast<ScanCodeFlags>(keyboard.Flags);
+		key = static_cast<Keys>( keyboard.VKey );
+		flags = static_cast<ScanCodeFlags>( keyboard.Flags );
 	}
 
-	unsigned short KeyboardData::MakeCode::get()
+	int KeyboardData::MakeCode::get()
 	{
 		return makeCode;
 	}
@@ -48,7 +48,7 @@ namespace RawInput
 		return keyState;
 	}
 
-	unsigned long KeyboardData::ExtraInformation::get()
+	long KeyboardData::ExtraInformation::get()
 	{
 		return extraInformation;
 	}

@@ -23,15 +23,18 @@
 #include <windows.h>
 #include "Header.h"
 
+using namespace System;
+
 namespace SlimDX
 {
-namespace RawInput {
-	Header::Header(RAWINPUTHEADER header)
+namespace RawInput
+{
+	Header::Header( RAWINPUTHEADER header )
 	{
-		this->type = static_cast<InputType>(header.dwType);
+		this->type = static_cast<InputType>( header.dwType );
 		size = header.dwSize;
-		device = System::IntPtr(header.hDevice);
-		wParam = System::IntPtr((void*)header.wParam);
+		device = static_cast<IntPtr>( header.hDevice );
+		wParam = IntPtr( reinterpret_cast<void*>( header.wParam ) );
 	}
 
 	InputType Header::Type::get()

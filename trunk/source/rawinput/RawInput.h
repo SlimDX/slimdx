@@ -36,8 +36,8 @@ namespace SlimDX
 		public ref class RawInput
 		{
 		public:
-			static void RegisterRawInputDevices(array<RawInput::RawInputDevice^>^ devices);
-			static SlimDX::RawInput::Data^ GetRawInputData(System::IntPtr lParam, Command command);
+			static void RegisterRawInputDevices( array<RawInput::RawInputDevice^>^ devices );
+			static SlimDX::RawInput::Data^ GetRawInputData( System::IntPtr lParam, Command command );
 			static array<SlimDX::RawInput::Data^>^ GetRawInputBuffer();
 			static array<SlimDX::RawInput::DeviceInfo^>^ GetRawInputDevices();
 		};

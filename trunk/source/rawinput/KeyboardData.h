@@ -31,32 +31,38 @@ namespace SlimDX
 		public ref class KeyboardData
 		{
 		private:
-			unsigned short makeCode;
+			int makeCode;
 			KeyState keyState;
-			unsigned long extraInformation;
+			long extraInformation;
 			Keys key;
 			ScanCodeFlags flags;
 
-		public:
-			KeyboardData(RAWKEYBOARD keyboard);
+		internal:
+			KeyboardData( RAWKEYBOARD keyboard );
 
-			property unsigned short MakeCode {
-				unsigned short get();
+		public:
+			property int MakeCode
+			{
+				int get();
 			}
 
-			property KeyState KeyState {
+			property KeyState KeyState
+			{
 				SlimDX::RawInput::KeyState get();
 			}
 
-			property unsigned long ExtraInformation {
-				unsigned long get();
+			property long ExtraInformation
+			{
+				long get();
 			}
 
-			property Keys Key {
+			property Keys Key
+			{
 				Keys get();
 			}
 
-			property ScanCodeFlags Flags {
+			property ScanCodeFlags Flags
+			{
 				ScanCodeFlags get();
 			}
 		};

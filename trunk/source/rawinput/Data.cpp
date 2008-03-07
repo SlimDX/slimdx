@@ -32,11 +32,11 @@ namespace SlimDX
 {
 namespace RawInput
 {
-	Data::Data(RAWINPUT* rawInput)
+	Data::Data( RAWINPUT* rawInput )
 	{
-		mouseData = gcnew MouseData(rawInput->data.mouse);
-		keyboardData = gcnew KeyboardData(rawInput->data.keyboard);
-		header = gcnew RawInput::Header(rawInput->header);
+		mouseData = gcnew MouseData( rawInput->data.mouse );
+		keyboardData = gcnew KeyboardData( rawInput->data.keyboard );
+		header = gcnew RawInput::Header( rawInput->header );
 	}
 
 	MouseData^ Data::Mouse::get()

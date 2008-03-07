@@ -29,7 +29,7 @@ namespace SlimDX
 	namespace RawInput
 	{
 		ref class Header;
-		ref class HIDData;
+		ref class HidData;
 		ref class MouseData;
 		ref class KeyboardData;
 
@@ -38,21 +38,25 @@ namespace SlimDX
 		private:
 			MouseData^ mouseData;
 			KeyboardData^ keyboardData;
-			HIDData^ hidData;
+			HidData^ hidData;
 			Header^ header;
 
-		public:
-			Data(RAWINPUT* rawInput);
+		internal:
+			Data( RAWINPUT* rawInput );
 
-			property MouseData^ Mouse {
+		public:
+			property MouseData^ Mouse
+			{
 				MouseData^ get();
 			}
 
-			property KeyboardData^ Keyboard {
+			property KeyboardData^ Keyboard
+			{
 				KeyboardData^ get();
 			}
 
-			property Header^ Header {
+			property Header^ Header
+			{
 				SlimDX::RawInput::Header^ get();
 			}
 		};
