@@ -21,60 +21,31 @@
 */
 #pragma once
 
-#include "Enums.h"
-
 #include <windows.h>
+#include "Enums.h"
 
 namespace SlimDX
 {
 	namespace RawInput
 	{
-		ref class MouseInfo;
-		ref class KeyboardInfo;
-		ref class HidInfo;
-
-		public ref class DeviceInfo
+		public ref class HidData
 		{
 		private:
-			System::IntPtr handle;
-			InputType type;
-			System::String^ name;
-			MouseInfo^ mouseInfo;
-			KeyboardInfo^ keyboardInfo;
-			HidInfo^ hidInfo;
+			array<System::Byte>^ bytes;
+			int dataSize;
 
 		internal:
-			DeviceInfo( RAWINPUTDEVICELIST deviceInfo );
+			HidData( RAWHID hid );
 
 		public:
-			property System::IntPtr Handle
+			property int DataSize
 			{
-				System::IntPtr get();
+				int get();
 			}
 
-			property InputType Type
+			property array<System::Byte>^ Data
 			{
-				InputType get();
-			}
-
-			property System::String^ Name
-			{
-				System::String^ get();
-			}
-
-			property MouseInfo^ Mouse
-			{
-				MouseInfo^ get();
-			}
-
-			property KeyboardInfo^ Keyboard
-			{
-				KeyboardInfo^ get();
-			}
-
-			property HidInfo^ Hid
-			{
-				HidInfo^ get();
+				array<System::Byte>^ get();
 			}
 		};
 	}

@@ -21,7 +21,12 @@
 */
 
 #include "DeviceInfo.h"
+#include "MouseInfo.h"
+#include "HidInfo.h"
+#include "KeyboardInfo.h"
 #include "../StackAlloc.h"
+
+#include <windows.h>
 
 using namespace System;
 using namespace System::Runtime::InteropServices;
@@ -35,6 +40,7 @@ namespace RawInput
 		handle = static_cast<IntPtr>( deviceInfo.hDevice );
 		type = static_cast<InputType>( deviceInfo.dwType );
 
+		// Get device name
 		UINT size;
 		if( ::GetRawInputDeviceInfo( deviceInfo.hDevice, RIDI_DEVICENAME, NULL, &size ) != 0 )
 			throw gcnew InvalidOperationException( "Unable to get length of device name" );
@@ -48,6 +54,30 @@ namespace RawInput
 			throw gcnew InvalidOperationException( "Sizes do not match" );
 		
 		name = Marshal::PtrToStringAuto( static_cast<IntPtr>( &str[0] ) );
+
+		// Get device info
+		if( ::GetRawInputDeviceInfo( deviceInfo.hDevice, RIDI_DEVICEINFO, NULL, &size ) != 0 )
+			throw gcnew InvalidOperationException( "Unable to get size of general device info" );
+
+		std::auto_ptr<RID_DEVICE_INFO> rawDeviceInfo(new RID_DEVICE_INFO);
+		rawDeviceInfo->cbSize = sizeof(RID_DEVICE_INFO);
+		if( ::GetRawInputDeviceInfo( deviceInfo.hDevice, RIDI_DEVICEINFO, rawDeviceInfo.get(), &size ) != size )
+			throw gcnew InvalidOperationException( "Unable to get general device info" );
+
+		switch( deviceInfo.dwType )
+		{
+		case RIM_TYPEMOUSE:
+			mouseInfo = gcnew MouseInfo( rawDeviceInfo->mouse );
+			break;
+
+		case RIM_TYPEKEYBOARD:
+			keyboardInfo = gcnew KeyboardInfo( rawDeviceInfo->keyboard );
+			break;
+
+		case RIM_TYPEHID:
+			hidInfo = gcnew HidInfo( rawDeviceInfo->hid );
+			break;
+		}
 	}
 
 	System::IntPtr DeviceInfo::Handle::get()
@@ -63,6 +93,21 @@ namespace RawInput
 	System::String^ DeviceInfo::Name::get()
 	{
 		return name;
+	}
+
+	MouseInfo^ DeviceInfo::Mouse::get()
+	{
+		return mouseInfo;
+	}
+
+	KeyboardInfo^ DeviceInfo::Keyboard::get()
+	{
+		return keyboardInfo;
+	}
+
+	HidInfo^ DeviceInfo::Hid::get()
+	{
+		return hidInfo;
 	}
 }
 }

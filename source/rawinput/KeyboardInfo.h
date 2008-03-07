@@ -19,9 +19,6 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
-
-#include "Enums.h"
 
 #include <windows.h>
 
@@ -29,52 +26,33 @@ namespace SlimDX
 {
 	namespace RawInput
 	{
-		ref class MouseInfo;
-		ref class KeyboardInfo;
-		ref class HidInfo;
-
-		public ref class DeviceInfo
+		public ref class KeyboardInfo
 		{
 		private:
-			System::IntPtr handle;
-			InputType type;
-			System::String^ name;
-			MouseInfo^ mouseInfo;
-			KeyboardInfo^ keyboardInfo;
-			HidInfo^ hidInfo;
+			// These can presumably be enums, but I can't find a list of values they can take.
+			int type;
+			int subType;
+			int keyboardMode;
+
+			int numberOfFunctionKeys, numberOfIndicators, numberOfKeysTotal;
 
 		internal:
-			DeviceInfo( RAWINPUTDEVICELIST deviceInfo );
+			KeyboardInfo( RID_DEVICE_INFO_KEYBOARD keyboardInfo );
 
 		public:
-			property System::IntPtr Handle
+			property int NumberOfFunctionKeys
 			{
-				System::IntPtr get();
+				int get();
 			}
 
-			property InputType Type
+			property int NumberOfIndicators
 			{
-				InputType get();
+				int get();
 			}
 
-			property System::String^ Name
+			property int NumberOfKeys
 			{
-				System::String^ get();
-			}
-
-			property MouseInfo^ Mouse
-			{
-				MouseInfo^ get();
-			}
-
-			property KeyboardInfo^ Keyboard
-			{
-				KeyboardInfo^ get();
-			}
-
-			property HidInfo^ Hid
-			{
-				HidInfo^ get();
+				int get();
 			}
 		};
 	}
