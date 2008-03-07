@@ -23,7 +23,7 @@
 #include <windows.h>
 
 #include "RawInput.h"
-#include "Device.h"
+#include "RawInputDevice.h"
 #include "Data.h"
 #include "DeviceInfo.h"
 #include "Enums.h"
