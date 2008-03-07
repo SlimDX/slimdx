@@ -1076,6 +1076,19 @@ namespace SlimDX
 			ZAxis
 		};
 
+		public enum class ObjectAspect : System::Int32
+		{
+			Acceleration = DIDOI_ASPECTACCEL,
+			Force = DIDOI_ASPECTFORCE,
+			Mask = DIDOI_ASPECTMASK,
+			Position = DIDOI_ASPECTPOSITION,
+			Velocity = DIDOI_ASPECTVELOCITY,
+			ForceFeedbackActuator = DIDOI_FFACTUATOR,
+			ForceFeedbackEffectTrigger = DIDOI_FFEFFECTTRIGGER,
+			Polled = DIDOI_POLLED,
+			GuidIsUsage = DIDOI_GUIDISUSAGE
+		};
+
 		/// <summary>
 		/// Specifies other attributes of an object data format.
 		/// </summary>
@@ -1119,6 +1132,10 @@ namespace SlimDX
 		    /// </summary>
 			AbsoluteAxis = DIDFT_ABSAXIS,
 
+			Alias = DIDFT_ALIAS,
+
+			All = DIDFT_ALL,
+
 			/// <summary>
 		    /// The object must be an absolute or relative axis.
 		    /// </summary>
@@ -1134,6 +1151,8 @@ namespace SlimDX
 		    /// </summary>
 			Button = DIDFT_BUTTON,
 
+			Collection = DIDFT_COLLECTION,
+
 			/// <summary>
 		    /// The object must contain a force-feedback actuator.
 		    /// </summary>
@@ -1143,6 +1162,12 @@ namespace SlimDX
 		    /// The object must be a valid force-feedback effect trigger.
 		    /// </summary>
 			ForceFeedbackEffectTrigger = DIDFT_FFEFFECTTRIGGER,
+
+			NoCollection = DIDFT_NOCOLLECTION,
+
+			NoData = DIDFT_NODATA,
+
+			Output = DIDFT_OUTPUT,
 
 			/// <summary>
 		    /// The object must be a Point-Of-View controller.

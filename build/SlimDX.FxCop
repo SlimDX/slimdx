@@ -9988,6 +9988,15 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="ObjectAspect">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2008-03-07 20:13:38Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
+             <Item>'ObjectAspect'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="ObjectDataFormatFlags">
           <Messages>
            <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -10006,6 +10015,18 @@
          </Type>
          <Type Name="ObjectDeviceType">
           <Messages>
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2008-03-07 20:13:38Z">
+            <Issue>
+             <Item>'ObjectDeviceType'</Item>
+             <Item>0x100, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000, 0x10000, 0x20000, 0x40000, 0x80000, 0x100000, 0x200000, 0x400000, 0x800000</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2008-03-07 20:13:38Z" FixCategory="Breaking">
+            <Issue Name="FlagsRename">
+             <Item>'ObjectDeviceType'</Item>
+             <Item>'ObjectDeviceType.All'</Item>
+            </Issue>
+           </Message>
            <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>'ObjectDeviceType'</Item>
@@ -10483,15 +10504,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#GetAdapter()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-02-21 21:35:22Z">
-              <Issue Certainty="50">
-               <Item>'Device.GetAdapter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#GpuThreadPriority">
             <Messages>
              <Message Id="Gpu" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-02-21 21:35:22Z">
@@ -10518,15 +10530,6 @@
          </Type>
          <Type Name="DeviceChild">
           <Members>
-           <Member Name="#GetDevice()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-02-21 21:35:22Z">
-              <Issue Certainty="50">
-               <Item>'DeviceChild.GetDevice()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#NativeInterface">
             <Accessors>
              <Accessor Name="#get_NativeInterface()">
@@ -11779,15 +11782,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#GetContainingOutput()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-02-21 21:35:22Z">
-              <Issue Certainty="50">
-               <Item>'SwapChain.GetContainingOutput()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Present(System.Int32,SlimDX.DXGI.PresentFlags)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-27 22:23:52Z">
@@ -12100,11 +12094,6 @@
           <Members>
            <Member Name="#PeekMessage(MiniTri.Message&amp;,System.IntPtr,System.UInt32,System.UInt32,System.UInt32)">
             <Messages>
-             <Message TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414" Created="2008-03-06 02:37:29Z">
-              <Issue Name="Return">
-               <Item>'Program.PeekMessage(out Message, IntPtr, uint, uint, uint)'</Item>
-              </Issue>
-             </Message>
              <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Status="Excluded" Created="2008-03-06 02:37:29Z">
               <Issue>
                <Item>'Program.PeekMessage(out Message, IntPtr, uint, uint, uint)'</Item>
@@ -12618,9 +12607,6 @@
    </Rule>
    <Rule TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810">
     <Resolution Name="Default">Initialize all static fields in {0} when those fields are declared and remove the explicit static constructor.</Resolution>
-   </Rule>
-   <Rule TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414">
-    <Resolution Name="Return">Add the MarshalAsAttribute to the return type of P/Invoke {0}. If the corresponding unmanaged return type is a 4-byte Win32 'BOOL', use MarshalAs(UnmanagedType.Bool). For a 1-byte C++ 'bool', use MarshalAs(UnmanagedType.U1).</Resolution>
    </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>

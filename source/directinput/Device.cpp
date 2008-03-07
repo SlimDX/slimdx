@@ -33,6 +33,7 @@
 #include "KeyboardState.h"
 #include "JoystickState.h"
 #include "MouseState.h"
+#include "Callbacks.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -479,6 +480,25 @@ namespace DirectInput
 		information = gcnew DeviceInstance( deviceInstance );
 
 		return information;
+	}
+
+	generic<typename DataFormat>
+	DeviceObjectCollection^ Device<DataFormat>::GetDeviceObjects()
+	{
+		return GetDeviceObjects( ObjectDeviceType::All );
+	}
+
+	generic<typename DataFormat>
+	DeviceObjectCollection^ Device<DataFormat>::GetDeviceObjects( ObjectDeviceType objectType )
+	{
+		DeviceObjectCollection^ results = gcnew DeviceObjectCollection();
+		std::auto_ptr<DeviceObjectCollectionShim> shim( new DeviceObjectCollectionShim( results ) );
+
+		HRESULT hr = InternalPointer->EnumObjects( static_cast<LPDIENUMDEVICEOBJECTSCALLBACK>( EnumerateObjects ), shim.get(), static_cast<DWORD>( objectType ) );
+		if( RECORD_DINPUT( hr ).IsFailure )
+			return nullptr;
+
+		return results;
 	}
 }
 }

@@ -30,6 +30,7 @@
 #include "Capabilities.h"
 #include "BufferedData.h"
 #include "BufferedDataCollection.h"
+#include "DeviceObjectCollection.h"
 #include "Guids.h"
 #include "DeviceProperties.h"
 #include "ObjectProperties.h"
@@ -128,6 +129,9 @@ namespace SlimDX
 			ObjectProperties^ GetObjectPropertiesByName( System::String^ name );
 			ObjectProperties^ GetObjectPropertiesByUsage( int usageCode );
 			ObjectProperties^ GetObjectPropertiesById( int objectId );
+
+			DeviceObjectCollection^ GetDeviceObjects( ObjectDeviceType objectType );
+			DeviceObjectCollection^ GetDeviceObjects();
 
 			/// <summary>
 			/// Gets a set of properties that control the behavior of the device.
