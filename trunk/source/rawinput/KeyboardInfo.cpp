@@ -19,63 +19,35 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Enums.h"
+#include "KeyboardInfo.h"
 
 #include <windows.h>
 
 namespace SlimDX
 {
-	namespace RawInput
+namespace RawInput
+{
+	KeyboardInfo::KeyboardInfo( RID_DEVICE_INFO_KEYBOARD keyboardInfo )
 	{
-		ref class MouseInfo;
-		ref class KeyboardInfo;
-		ref class HidInfo;
-
-		public ref class DeviceInfo
-		{
-		private:
-			System::IntPtr handle;
-			InputType type;
-			System::String^ name;
-			MouseInfo^ mouseInfo;
-			KeyboardInfo^ keyboardInfo;
-			HidInfo^ hidInfo;
-
-		internal:
-			DeviceInfo( RAWINPUTDEVICELIST deviceInfo );
-
-		public:
-			property System::IntPtr Handle
-			{
-				System::IntPtr get();
-			}
-
-			property InputType Type
-			{
-				InputType get();
-			}
-
-			property System::String^ Name
-			{
-				System::String^ get();
-			}
-
-			property MouseInfo^ Mouse
-			{
-				MouseInfo^ get();
-			}
-
-			property KeyboardInfo^ Keyboard
-			{
-				KeyboardInfo^ get();
-			}
-
-			property HidInfo^ Hid
-			{
-				HidInfo^ get();
-			}
-		};
+		numberOfKeysTotal = keyboardInfo.dwNumberOfKeysTotal;
+		numberOfFunctionKeys = keyboardInfo.dwNumberOfFunctionKeys;
+		numberOfIndicators = keyboardInfo.dwNumberOfIndicators;
 	}
+
+	int KeyboardInfo::NumberOfKeys::get()
+	{
+		return numberOfKeysTotal;
+	}
+
+	int KeyboardInfo::NumberOfFunctionKeys::get()
+	{
+		return numberOfFunctionKeys;
+	}
+
+	int KeyboardInfo::NumberOfIndicators::get()
+	{
+		return numberOfIndicators;
+	}
+}
 }

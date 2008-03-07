@@ -19,63 +19,47 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Enums.h"
+#include "HidInfo.h"
 
 #include <windows.h>
 
 namespace SlimDX
 {
-	namespace RawInput
+namespace RawInput
+{
+	HidInfo::HidInfo( RID_DEVICE_INFO_HID info )
 	{
-		ref class MouseInfo;
-		ref class KeyboardInfo;
-		ref class HidInfo;
-
-		public ref class DeviceInfo
-		{
-		private:
-			System::IntPtr handle;
-			InputType type;
-			System::String^ name;
-			MouseInfo^ mouseInfo;
-			KeyboardInfo^ keyboardInfo;
-			HidInfo^ hidInfo;
-
-		internal:
-			DeviceInfo( RAWINPUTDEVICELIST deviceInfo );
-
-		public:
-			property System::IntPtr Handle
-			{
-				System::IntPtr get();
-			}
-
-			property InputType Type
-			{
-				InputType get();
-			}
-
-			property System::String^ Name
-			{
-				System::String^ get();
-			}
-
-			property MouseInfo^ Mouse
-			{
-				MouseInfo^ get();
-			}
-
-			property KeyboardInfo^ Keyboard
-			{
-				KeyboardInfo^ get();
-			}
-
-			property HidInfo^ Hid
-			{
-				HidInfo^ get();
-			}
-		};
+		vendorID = info.dwVendorId;
+		productID = info.dwProductId;
+		versionNumber = info.dwVersionNumber;
+		usage = static_cast<HidUsage>( info.usUsage );
+		usagePage = static_cast<HidUsagePage>( info.usUsagePage );
 	}
+
+	int HidInfo::VendorID::get()
+	{
+		return vendorID;
+	}
+
+	int HidInfo::ProductID::get()
+	{
+		return productID;
+	}
+
+	int HidInfo::VersionNumber::get()
+	{
+		return versionNumber;
+	}
+
+	HidUsage HidInfo::Usage::get()
+	{
+		return usage;
+	}
+
+	HidUsagePage HidInfo::UsagePage::get()
+	{
+		return usagePage;
+	}
+}
 }

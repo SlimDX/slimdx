@@ -19,63 +19,34 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Enums.h"
+#include "HidData.h"
 
 #include <windows.h>
 
+using namespace System;
+
 namespace SlimDX
 {
-	namespace RawInput
+namespace RawInput
+{
+	HidData::HidData( RAWHID hid )
 	{
-		ref class MouseInfo;
-		ref class KeyboardInfo;
-		ref class HidInfo;
+		bytes = gcnew array<Byte>( hid.dwCount * hid.dwSizeHid );
+		for(int i = 0; i < bytes->Length; i++)
+			bytes[i] = hid.bRawData[i];
 
-		public ref class DeviceInfo
-		{
-		private:
-			System::IntPtr handle;
-			InputType type;
-			System::String^ name;
-			MouseInfo^ mouseInfo;
-			KeyboardInfo^ keyboardInfo;
-			HidInfo^ hidInfo;
-
-		internal:
-			DeviceInfo( RAWINPUTDEVICELIST deviceInfo );
-
-		public:
-			property System::IntPtr Handle
-			{
-				System::IntPtr get();
-			}
-
-			property InputType Type
-			{
-				InputType get();
-			}
-
-			property System::String^ Name
-			{
-				System::String^ get();
-			}
-
-			property MouseInfo^ Mouse
-			{
-				MouseInfo^ get();
-			}
-
-			property KeyboardInfo^ Keyboard
-			{
-				KeyboardInfo^ get();
-			}
-
-			property HidInfo^ Hid
-			{
-				HidInfo^ get();
-			}
-		};
+		dataSize = hid.dwSizeHid;
 	}
+
+	int HidData::DataSize::get()
+	{
+		return dataSize;
+	}
+	
+	array<Byte>^ HidData::Data::get()
+	{
+		return bytes;
+	}
+}
 }

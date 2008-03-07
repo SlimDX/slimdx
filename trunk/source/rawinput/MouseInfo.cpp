@@ -19,63 +19,43 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Enums.h"
+#include "MouseInfo.h"
+#include "../StackAlloc.h"
 
-#include <windows.h>
+using namespace System;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	namespace RawInput
+namespace RawInput
+{
+	MouseInfo::MouseInfo( RID_DEVICE_INFO_MOUSE mouseInfo )
 	{
-		ref class MouseInfo;
-		ref class KeyboardInfo;
-		ref class HidInfo;
-
-		public ref class DeviceInfo
-		{
-		private:
-			System::IntPtr handle;
-			InputType type;
-			System::String^ name;
-			MouseInfo^ mouseInfo;
-			KeyboardInfo^ keyboardInfo;
-			HidInfo^ hidInfo;
-
-		internal:
-			DeviceInfo( RAWINPUTDEVICELIST deviceInfo );
-
-		public:
-			property System::IntPtr Handle
-			{
-				System::IntPtr get();
-			}
-
-			property InputType Type
-			{
-				InputType get();
-			}
-
-			property System::String^ Name
-			{
-				System::String^ get();
-			}
-
-			property MouseInfo^ Mouse
-			{
-				MouseInfo^ get();
-			}
-
-			property KeyboardInfo^ Keyboard
-			{
-				KeyboardInfo^ get();
-			}
-
-			property HidInfo^ Hid
-			{
-				HidInfo^ get();
-			}
-		};
+		id = mouseInfo.dwId;
+		numberOfButtons = mouseInfo.dwNumberOfButtons;
+		sampleRate = mouseInfo.dwSampleRate;
+		hasHorizontalScrollWheel = mouseInfo.fHasHorizontalWheel;
 	}
+
+	int MouseInfo::ID::get() 
+	{
+		return id;
+	}
+
+	int MouseInfo::NumberOfButtons::get()
+	{
+		return numberOfButtons;
+	}
+
+	int MouseInfo::SampleRate::get()
+	{
+		return sampleRate;
+	}
+
+	bool MouseInfo::HasHorizontalScrollWheel::get()
+	{
+		return hasHorizontalScrollWheel;
+	}
+}
 }

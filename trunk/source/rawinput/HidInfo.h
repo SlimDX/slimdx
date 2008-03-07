@@ -19,7 +19,6 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
 #include "Enums.h"
 
@@ -29,52 +28,40 @@ namespace SlimDX
 {
 	namespace RawInput
 	{
-		ref class MouseInfo;
-		ref class KeyboardInfo;
-		ref class HidInfo;
-
-		public ref class DeviceInfo
+		public ref class HidInfo
 		{
 		private:
-			System::IntPtr handle;
-			InputType type;
-			System::String^ name;
-			MouseInfo^ mouseInfo;
-			KeyboardInfo^ keyboardInfo;
-			HidInfo^ hidInfo;
+			int vendorID, productID, versionNumber;
+			HidUsage usage;
+			HidUsagePage usagePage;
 
 		internal:
-			DeviceInfo( RAWINPUTDEVICELIST deviceInfo );
+			HidInfo( RID_DEVICE_INFO_HID info );
 
 		public:
-			property System::IntPtr Handle
+			property int VendorID
 			{
-				System::IntPtr get();
+				int get();
 			}
 
-			property InputType Type
+			property int ProductID
 			{
-				InputType get();
+				int get();
 			}
 
-			property System::String^ Name
+			property int VersionNumber
 			{
-				System::String^ get();
+				int get();
 			}
 
-			property MouseInfo^ Mouse
+			property HidUsage Usage
 			{
-				MouseInfo^ get();
+				HidUsage get();
 			}
 
-			property KeyboardInfo^ Keyboard
+			property HidUsagePage UsagePage
 			{
-				KeyboardInfo^ get();
-			}
-
-			property HidInfo^ Hid
-			{
-				HidInfo^ get();
+				HidUsagePage get();
 			}
 		};
 	}

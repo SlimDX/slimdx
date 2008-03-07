@@ -29,52 +29,34 @@ namespace SlimDX
 {
 	namespace RawInput
 	{
-		ref class MouseInfo;
-		ref class KeyboardInfo;
-		ref class HidInfo;
-
-		public ref class DeviceInfo
+		public ref class MouseInfo
 		{
 		private:
-			System::IntPtr handle;
-			InputType type;
-			System::String^ name;
-			MouseInfo^ mouseInfo;
-			KeyboardInfo^ keyboardInfo;
-			HidInfo^ hidInfo;
+			int id, numberOfButtons, sampleRate;
+			bool hasHorizontalScrollWheel;
 
 		internal:
-			DeviceInfo( RAWINPUTDEVICELIST deviceInfo );
+			MouseInfo( RID_DEVICE_INFO_MOUSE mouseInfo );
 
 		public:
-			property System::IntPtr Handle
+			property int ID
 			{
-				System::IntPtr get();
+				int get();
 			}
 
-			property InputType Type
+			property int NumberOfButtons
 			{
-				InputType get();
+				int get();
 			}
 
-			property System::String^ Name
+			property int SampleRate
 			{
-				System::String^ get();
+				int get();
 			}
 
-			property MouseInfo^ Mouse
+			property bool HasHorizontalScrollWheel
 			{
-				MouseInfo^ get();
-			}
-
-			property KeyboardInfo^ Keyboard
-			{
-				KeyboardInfo^ get();
-			}
-
-			property HidInfo^ Hid
-			{
-				HidInfo^ get();
+				bool get();
 			}
 		};
 	}
