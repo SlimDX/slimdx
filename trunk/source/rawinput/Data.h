@@ -19,39 +19,42 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include "RawInputData.h"
-#include "MouseData.h"
-#include "KeyboardData.h"
-#include "Enums.h"
-#include "Header.h"
+#pragma once
 
 #include <windows.h>
+#include "Enums.h"
 
 namespace SlimDX
 {
-namespace RawInput
-{
-	RawInputData::RawInputData(RAWINPUT* rawInput)
+	namespace RawInput
 	{
-		mouseData = gcnew MouseData(rawInput->data.mouse);
-		keyboardData = gcnew KeyboardData(rawInput->data.keyboard);
-		header = gcnew RawInput::Header(rawInput->header);
-	}
+		ref class Header;
+		ref class HIDData;
+		ref class MouseData;
+		ref class KeyboardData;
 
-	MouseData^ RawInputData::Mouse::get()
-	{
-		return mouseData;
-	}
+		public ref class Data
+		{
+		private:
+			MouseData^ mouseData;
+			KeyboardData^ keyboardData;
+			HIDData^ hidData;
+			Header^ header;
 
-	KeyboardData^ RawInputData::Keyboard::get()
-	{
-		return keyboardData;
-	}
+		public:
+			Data(RAWINPUT* rawInput);
 
-	Header^ RawInputData::Header::get()
-	{
-		return header;
+			property MouseData^ Mouse {
+				MouseData^ get();
+			}
+
+			property KeyboardData^ Keyboard {
+				KeyboardData^ get();
+			}
+
+			property Header^ Header {
+				SlimDX::RawInput::Header^ get();
+			}
+		};
 	}
-}
 }

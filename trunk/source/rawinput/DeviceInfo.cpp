@@ -19,42 +19,43 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include <windows.h>
-#include "Enums.h"
+#include "DeviceInfo.h"
 
 namespace SlimDX
 {
-	namespace RawInput
-	{
-		ref class Header;
-		ref class HIDData;
-		ref class MouseData;
-		ref class KeyboardData;
+namespace RawInput
+{
+	DeviceInfo::DeviceInfo(RAWINPUTDEVICELIST deviceInfo) {
+		handle = System::IntPtr(deviceInfo.hDevice);
+		type = static_cast<InputType>(deviceInfo.dwType);
 
-		public ref class RawInputData
-		{
-		private:
-			MouseData^ mouseData;
-			KeyboardData^ keyboardData;
-			HIDData^ hidData;
-			Header^ header;
+		UINT size;
+		if(::GetRawInputDeviceInfo(deviceInfo.hDevice, RIDI_DEVICENAME, NULL, &size) != 0)
+			throw gcnew System::InvalidOperationException("Unable to get length of device name");
 
-		public:
-			RawInputData(RAWINPUT* rawInput);
-
-			property MouseData^ Mouse {
-				MouseData^ get();
-			}
-
-			property KeyboardData^ Keyboard {
-				KeyboardData^ get();
-			}
-
-			property Header^ Header {
-				SlimDX::RawInput::Header^ get();
-			}
-		};
+		WCHAR* str = (WCHAR*)malloc(sizeof(WCHAR) * size);
+		
+		UINT result = ::GetRawInputDeviceInfo(deviceInfo.hDevice, RIDI_DEVICENAME, str, &size);
+		if(result == -1)
+			throw gcnew System::InvalidOperationException("Not enough memory");
+		else if (result != size)
+			throw gcnew System::InvalidOperationException("Sizes do not match");
+		
+		name = System::Runtime::InteropServices::Marshal::PtrToStringAuto(System::IntPtr(str));
+		free(str);
 	}
+
+	System::IntPtr DeviceInfo::Handle::get() {
+		return handle;
+	}
+	
+	InputType DeviceInfo::Type::get() {
+		return type;
+	}
+
+	System::String^ DeviceInfo::Name::get() {
+		return name;
+	}
+}
 }

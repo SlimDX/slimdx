@@ -30,8 +30,8 @@ namespace RawInput {
 	{
 		this->type = static_cast<InputType>(header.dwType);
 		size = header.dwSize;
-		device = gcnew System::IntPtr(header.hDevice);
-		wParam = gcnew System::IntPtr((void*)header.wParam);
+		device = System::IntPtr(header.hDevice);
+		wParam = System::IntPtr((void*)header.wParam);
 	}
 
 	InputType Header::Type::get()
@@ -44,12 +44,12 @@ namespace RawInput {
 		return size;
 	}
 
-	System::IntPtr^ Header::Device::get()
+	System::IntPtr Header::Device::get()
 	{
 		return device;
 	}
 
-	System::IntPtr^ Header::Param::get()
+	System::IntPtr Header::Param::get()
 	{
 		return wParam;
 	}
