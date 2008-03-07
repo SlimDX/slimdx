@@ -2735,6 +2735,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\directinput\DeviceObjectCollection.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\DirectInput.cpp"
 					>
 				</File>
@@ -2903,6 +2907,14 @@
 				</File>
 				<File
 					RelativePath="..\source\directinput\DeviceInstance.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DeviceObjectInstance.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DeviceObjectInstance.h"
 					>
 				</File>
 				<File

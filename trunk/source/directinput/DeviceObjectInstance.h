@@ -18,33 +18,35 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
-*/ 
-#include <windows.h>
-#include <dinput.h>
+*/
+#pragma once
 
-#include "Device.h"
-#include "DeviceInstance.h"
-#include "InputDeviceCollection.h"
-#include "Callbacks.h"
+#include "Enums.h"
 
 namespace SlimDX
 {
-namespace DirectInput
-{
-	BOOL CALLBACK EnumerateDevices( LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef )
+	namespace DirectInput
 	{
-		InputDeviceCollectionShim* shim = static_cast<InputDeviceCollectionShim*>( pvRef );
-		shim->GetDevices()->Add( gcnew DeviceInstance( *lpddi ) );
+		public ref class DeviceObjectInstance
+		{
+		internal:
+			DeviceObjectInstance( const DIDEVICEOBJECTINSTANCE &deviceObjectInstance );
 
-		return DIENUM_CONTINUE;
+		public:
+			property System::Guid ObjectTypeGuid;
+			property System::String^ Name;
+			property ObjectDeviceType ObjectType;
+			property ObjectAspect Aspect;
+			property int Offset;
+			property int MaximumForceFeedback;
+			property int ForceFeedbackResolution;
+			property int CollectionNumber;
+			property int DesignatorIndex;
+			property int UsagePage;
+			property int Usage;
+			property int Dimension;
+			property int Exponent;
+			property int ReportId;
+		};
 	}
-
-	BOOL CALLBACK EnumerateObjects( LPCDIDEVICEOBJECTINSTANCE lpddoi, LPVOID pvRef )
-	{
-		DeviceObjectCollectionShim* shim = static_cast<DeviceObjectCollectionShim*>( pvRef );
-		shim->GetObjects()->Add( gcnew DeviceObjectInstance( *lpddoi ) );
-
-		return DIENUM_CONTINUE;
-	}
-}
 }

@@ -18,33 +18,36 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
-*/ 
-#include <windows.h>
+*/
+
 #include <dinput.h>
 
-#include "Device.h"
-#include "DeviceInstance.h"
-#include "InputDeviceCollection.h"
-#include "Callbacks.h"
+#include "DirectInput.h"
+
+#include "DeviceObjectInstance.h"
+#include "Guids.h"
+
+using namespace System;
 
 namespace SlimDX
 {
 namespace DirectInput
 {
-	BOOL CALLBACK EnumerateDevices( LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef )
+	DeviceObjectInstance::DeviceObjectInstance( const DIDEVICEOBJECTINSTANCE &value )
 	{
-		InputDeviceCollectionShim* shim = static_cast<InputDeviceCollectionShim*>( pvRef );
-		shim->GetDevices()->Add( gcnew DeviceInstance( *lpddi ) );
-
-		return DIENUM_CONTINUE;
-	}
-
-	BOOL CALLBACK EnumerateObjects( LPCDIDEVICEOBJECTINSTANCE lpddoi, LPVOID pvRef )
-	{
-		DeviceObjectCollectionShim* shim = static_cast<DeviceObjectCollectionShim*>( pvRef );
-		shim->GetObjects()->Add( gcnew DeviceObjectInstance( *lpddoi ) );
-
-		return DIENUM_CONTINUE;
+		Name = gcnew System::String( value.tszName );
+		ObjectTypeGuid = Utilities::ConvertNativeGuid( value.guidType );
+		ObjectType = static_cast<ObjectDeviceType>( value.dwType );
+		Offset = value.dwOfs;
+		Aspect = static_cast<ObjectAspect>( value.dwFlags );
+		MaximumForceFeedback = value.dwFFMaxForce;
+		ForceFeedbackResolution = value.dwFFForceResolution;
+		CollectionNumber = value.wCollectionNumber;
+		DesignatorIndex = value.wDesignatorIndex;
+		Dimension = value.dwDimension;
+		Exponent = value.wExponent;
+		Usage = value.wUsage;
+		UsagePage = value.wUsagePage;
 	}
 }
 }

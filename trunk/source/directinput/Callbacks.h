@@ -25,6 +25,8 @@ namespace SlimDX
 {
 	namespace DirectInput
 	{
-		INT_PTR CALLBACK EnumerateDevices( LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef );
+		BOOL CALLBACK EnumerateDevices( LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef );
+
+		BOOL CALLBACK EnumerateObjects( LPCDIDEVICEOBJECTINSTANCE lpddoi, LPVOID pvRef );
 	}
 }
