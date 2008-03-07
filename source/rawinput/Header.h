@@ -33,8 +33,8 @@ namespace SlimDX
 		private:
 			InputType type;
 			int size;
-			System::IntPtr^ device;
-			System::IntPtr^ wParam;
+			System::IntPtr device;
+			System::IntPtr wParam;
 
 		public:
 			Header(RAWINPUTHEADER header);
@@ -47,12 +47,12 @@ namespace SlimDX
 				int get();
 			}
 
-			property System::IntPtr^ Device {
-				System::IntPtr^ get();
+			property System::IntPtr Device {
+				System::IntPtr get();
 			}
 
-			property System::IntPtr^ Param {
-				System::IntPtr^ get();
+			property System::IntPtr Param {
+				System::IntPtr get();
 			}
 		};
 	}

@@ -86,8 +86,11 @@ namespace SlimDX
 
 		public enum class KeyState
 		{
-			Pressed = 256,
-			Released = 257
+			Pressed = WM_KEYDOWN,
+			Released = WM_KEYUP,
+			SystemKeyReleased = WM_SYSKEYUP,
+			SystemKeyPressed = WM_SYSKEYDOWN,
+			HotKey = WM_HOTKEY,
 		};
 
 		public enum class HIDUsagePage : unsigned short

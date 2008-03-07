@@ -30,13 +30,16 @@ namespace SlimDX
 	namespace RawInput
 	{
 		ref class RawInputDevice;
-		ref class RawInputData;
+		ref class Data;
+		ref class DeviceInfo;
 
 		public ref class RawInput
 		{
 		public:
 			static void RegisterRawInputDevices(array<RawInput::RawInputDevice^>^ devices);
-			static SlimDX::RawInput::RawInputData^ GetRawInputData(System::IntPtr^ lParam, Command command);
+			static SlimDX::RawInput::Data^ GetRawInputData(System::IntPtr lParam, Command command);
+			static array<SlimDX::RawInput::Data^>^ GetRawInputBuffer();
+			static array<SlimDX::RawInput::DeviceInfo^>^ GetRawInputDevices();
 		};
 	}
 }

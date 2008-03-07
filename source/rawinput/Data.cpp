@@ -19,48 +19,39 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
+#include "Data.h"
+#include "MouseData.h"
+#include "KeyboardData.h"
 #include "Enums.h"
+#include "Header.h"
 
 #include <windows.h>
 
 namespace SlimDX
 {
-	namespace RawInput
+namespace RawInput
+{
+	Data::Data(RAWINPUT* rawInput)
 	{
-		public ref class RawInputDevice
-		{
-		internal:
-			RAWINPUTDEVICE* Internal;
-
-		public:
-			RawInputDevice() : Internal(new RAWINPUTDEVICE) { }
-			~RawInputDevice() { delete Internal; }
-
-			/// <summary>Top level collection Usage page for the raw input device.</summary>
-			property HIDUsagePage UsagePage {
-				HIDUsagePage get();
-				void set(HIDUsagePage usagePage);
-			}
-
-			/// <summary>Top level collection Usage for the raw input device.</summary>
-			property HIDUsage Usage {
-				HIDUsage get();
-				void set(HIDUsage usage);
-			}
-
-			/// <sumarry>Mode flag that specifies how to interpret the information provided by UsagePage and Usage</summary>
-			property SlimDX::RawInput::DeviceFlags Flags {
-				SlimDX::RawInput::DeviceFlags get();
-				void set(SlimDX::RawInput::DeviceFlags flags);
-			}
-
-			/// <summary>Handle to the target window. Can be IntPtr.Zero to follow keyboard focus</summary>
-			property System::IntPtr Target {
-				System::IntPtr get();
-				void set(System::IntPtr usagePage);
-			}
-		};
+		mouseData = gcnew MouseData(rawInput->data.mouse);
+		keyboardData = gcnew KeyboardData(rawInput->data.keyboard);
+		header = gcnew RawInput::Header(rawInput->header);
 	}
+
+	MouseData^ Data::Mouse::get()
+	{
+		return mouseData;
+	}
+
+	KeyboardData^ Data::Keyboard::get()
+	{
+		return keyboardData;
+	}
+
+	Header^ Data::Header::get()
+	{
+		return header;
+	}
+}
 }

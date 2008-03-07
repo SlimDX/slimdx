@@ -52,12 +52,12 @@ namespace RawInput
 		this->Internal->dwFlags = static_cast<DWORD>(flags);
 	}
 
-	System::IntPtr^ RawInputDevice::Target::get() {
-		return gcnew System::IntPtr(this->Internal->hwndTarget);
+	System::IntPtr RawInputDevice::Target::get() {
+		return System::IntPtr(this->Internal->hwndTarget);
 	}
 
-	void RawInputDevice::Target::set(System::IntPtr^ target) {
-		this->Internal->hwndTarget = (HWND)target->ToPointer();
+	void RawInputDevice::Target::set(System::IntPtr target) {
+		this->Internal->hwndTarget = (HWND)target.ToPointer();
 	}
 }
 }

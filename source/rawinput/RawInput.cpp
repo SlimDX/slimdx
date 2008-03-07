@@ -23,8 +23,9 @@
 #include <windows.h>
 
 #include "RawInput.h"
-#include "RawInputDevice.h"
-#include "RawInputData.h"
+#include "Device.h"
+#include "Data.h"
+#include "DeviceInfo.h"
 #include "Enums.h"
 
 namespace SlimDX
@@ -44,23 +45,48 @@ namespace RawInput
 		delete[] Rid;
 	}
 
-	SlimDX::RawInput::RawInputData^ RawInput::GetRawInputData(System::IntPtr^ lParam, Command command)
+	SlimDX::RawInput::Data^ RawInput::GetRawInputData(System::IntPtr lParam, Command command)
 	{
 		UINT size;
-		if(::GetRawInputData((HRAWINPUT)lParam->ToPointer(), RID_INPUT, NULL, &size, sizeof(RAWINPUTHEADER)) != 0)
+		if(::GetRawInputData((HRAWINPUT)lParam.ToPointer(), RID_INPUT, NULL, &size, sizeof(RAWINPUTHEADER)) != 0)
 			throw gcnew System::InvalidOperationException("Unable to get size of raw input data. Error code " + GetLastError());
 
 		LPBYTE* lpb = new LPBYTE[size];
-		if(::GetRawInputData((HRAWINPUT)lParam->ToPointer(), static_cast<UINT>(command), lpb, &size, sizeof(RAWINPUTHEADER)) != size)
+		if(::GetRawInputData((HRAWINPUT)lParam.ToPointer(), static_cast<UINT>(command), lpb, &size, sizeof(RAWINPUTHEADER)) != size)
 		{
 			delete[] lpb;
 			throw gcnew System::InvalidOperationException("Raw input data does not make expected size. Error code " + GetLastError());
 		}
 
-		RawInputData^ data = gcnew RawInputData((RAWINPUT*)lpb);
+		Data^ data = gcnew Data((RAWINPUT*)lpb);
 
 		delete[] lpb;
 		return data;
+	}
+
+	array<SlimDX::RawInput::Data^>^ RawInput::GetRawInputBuffer() {
+		throw gcnew System::NotImplementedException();
+	}
+
+	array<SlimDX::RawInput::DeviceInfo^>^ RawInput::GetRawInputDevices() {
+		UINT numberDevices;
+		PRAWINPUTDEVICELIST rawInputDeviceList;
+
+		if (GetRawInputDeviceList(NULL, &numberDevices, sizeof(RAWINPUTDEVICELIST)) != 0)
+			throw gcnew System::InvalidOperationException("Could not count device count");
+
+		rawInputDeviceList = (PRAWINPUTDEVICELIST)malloc(sizeof(RAWINPUTDEVICELIST) * numberDevices);
+		if (GetRawInputDeviceList(rawInputDeviceList, &numberDevices, sizeof(RAWINPUTDEVICELIST)) == (UINT)-1) {
+			free(rawInputDeviceList);
+			throw gcnew System::InvalidOperationException("Could not get a list of devices");
+		}
+
+		array<SlimDX::RawInput::DeviceInfo^>^ devices = gcnew array<SlimDX::RawInput::DeviceInfo^>(numberDevices);
+		for(int i = 0; i < numberDevices; i++)
+			devices[i] = gcnew SlimDX::RawInput::DeviceInfo(rawInputDeviceList[i]);
+
+		free(rawInputDeviceList);
+		return devices;
 	}
 }
 }
