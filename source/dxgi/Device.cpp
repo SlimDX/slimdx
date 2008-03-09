@@ -112,8 +112,8 @@ namespace DXGI
 		if( Result::Last.IsFailure )
 			return nullptr;
 		
-		List< Residency >^ result = gcnew List<Residency>( nativeResidency.size() );
-		for( unsigned int resourceIndex = 0; resourceIndex < nativeResidency.size(); ++resourceIndex )
+		List< Residency >^ result = gcnew List<Residency>( static_cast<int>( nativeResidency.size() ) );
+		for( unsigned long resourceIndex = 0; resourceIndex < nativeResidency.size(); ++resourceIndex )
 			result->Add( static_cast<Residency>( nativeResidency[ resourceIndex ] ) );
 		return gcnew ReadOnlyCollection<Residency>( result );
 	}

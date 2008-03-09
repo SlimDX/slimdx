@@ -119,7 +119,7 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	int XFileData::ChildCount::get()
+	System::Int64 XFileData::ChildCount::get()
 	{
 		SIZE_T result;
 

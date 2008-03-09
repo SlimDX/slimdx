@@ -582,6 +582,9 @@ namespace Direct3D9
 		return GetRenderState<int>( state );
 	}
 
+//Turn off bogus warning:
+//warning C4717: 'SlimDX::Direct3D9::Device::GetSamplerState<T>' : recursive on all control paths, function will cause runtime stack overflow
+#pragma warning(disable:4717)
 	generic<typename T>
 	T Device::GetSamplerState( int sampler, SamplerState type )
 	{
@@ -592,6 +595,7 @@ namespace Direct3D9
 		int intValue = static_cast<int>( value );
 		return (T) intValue;
 	}
+#pragma warning(default:4717)
 
 	int Device::GetSamplerState( int sampler, SamplerState type )
 	{

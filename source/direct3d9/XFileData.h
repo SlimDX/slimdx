@@ -48,7 +48,7 @@ namespace SlimDX
 				XFileEnumerationObject^ get();
 			}
 
-			property int ChildCount { int get(); }
+			property System::Int64 ChildCount { System::Int64 get(); }
 			property System::Guid Id { System::Guid get(); }
 			property System::Guid Type { System::Guid get(); }
 			property System::String^ Name { System::String^ get(); }

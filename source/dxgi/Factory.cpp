@@ -111,7 +111,7 @@ namespace DXGI
 		if( module == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "module" );
 			
-		HINSTANCE instance = reinterpret_cast<HINSTANCE>( module.ToInt32() );
+		HINSTANCE instance = reinterpret_cast<HINSTANCE>( module.ToPointer() );
 		IDXGIAdapter* adapter = 0;
 		RECORD_DXGI( InternalPointer->CreateSoftwareAdapter( instance, &adapter ) );
 		
@@ -134,7 +134,7 @@ namespace DXGI
 	
 	Result Factory::SetWindowAssociation( IntPtr handle, WindowAssociationFlags flags )
 	{
-		return RECORD_DXGI( InternalPointer->MakeWindowAssociation( reinterpret_cast<HWND>( handle.ToInt32() ), static_cast<UINT>( flags ) ) );
+		return RECORD_DXGI( InternalPointer->MakeWindowAssociation( reinterpret_cast<HWND>( handle.ToPointer() ), static_cast<UINT>( flags ) ) );
 	}
 }
 }

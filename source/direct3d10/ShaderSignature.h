@@ -33,7 +33,7 @@ namespace SlimDX
 		public ref class ShaderSignature
 		{
 			const void* m_Buffer;
-			int m_Length;
+			System::Int64 m_Length;
 		
 		internal:
 			property const void* Buffer
@@ -41,12 +41,12 @@ namespace SlimDX
 				const void* get();
 			}
 			
-			property int Length
+			property System::Int64 Length
 			{
-				int get();
+				System::Int64 get();
 			}
 			
-			ShaderSignature( const void* buffer, int length );
+			ShaderSignature( const void* buffer, System::Int64 length );
 		};
 	}
 };

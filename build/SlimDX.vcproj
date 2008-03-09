@@ -128,6 +128,7 @@
 				GenerateXMLDocumentationFiles="false"
 				XMLDocumentationFileName="$(IntDir)\"
 				WarningLevel="4"
+				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
