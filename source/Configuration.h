@@ -37,6 +37,9 @@ namespace SlimDX
 		
 		Configuration();
 	
+		[System::Diagnostics::Conditional( "DEBUG" )]
+		static void SetDebugValues();
+
 	internal:
 		static bool TryGetResultWatch( Result result, [Out] ResultWatchFlags% flags );
 
