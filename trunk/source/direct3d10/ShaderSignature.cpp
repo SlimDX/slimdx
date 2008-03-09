@@ -26,7 +26,7 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	ShaderSignature::ShaderSignature( const void* buffer, int length )
+	ShaderSignature::ShaderSignature( const void* buffer, System::Int64 length )
 	: m_Buffer( buffer ), m_Length( length )
 	{
 	}
@@ -36,7 +36,7 @@ namespace Direct3D10
 		return m_Buffer;
 	}
 	
-	int ShaderSignature::Length::get()
+	System::Int64 ShaderSignature::Length::get()
 	{
 		return m_Length;
 	}

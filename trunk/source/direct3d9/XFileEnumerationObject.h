@@ -47,7 +47,7 @@ namespace SlimDX
 				XFile^ get();
 			}
 
-			property int ChildCount { int get(); }
+			property System::Int64 ChildCount { System::Int64 get(); }
 		};
 	}
 }

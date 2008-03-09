@@ -35,9 +35,9 @@ namespace SlimDX
 			int m_DeviceId;
 			int m_SubSysId;
 			int m_Revision;
-			int m_DedicatedVideoMemory;
-			int m_DedicatedSystemMemory;
-			int m_SharedSystemMemory;
+			SIZE_T m_DedicatedVideoMemory;
+			SIZE_T m_DedicatedSystemMemory;
+			SIZE_T m_SharedSystemMemory;
 			System::Int64 m_Luid;
 
 		internal:
@@ -87,25 +87,25 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the number of bytes of video memory not shared with the CPU.
 			/// </summary>
-			property int DedicatedVideoMemory
+			property System::Int64 DedicatedVideoMemory
 			{
-				int get();
+				System::Int64 get();
 			}
 
 			/// <summary>
 			/// Gets the number of bytes of system memory not shared with the CPU.
 			/// </summary>
-			property int DedicatedSystemMemory
+			property System::Int64 DedicatedSystemMemory
 			{
-				int get();
+				System::Int64 get();
 			}
 
 			/// <summary>
 			/// Gets the number of bytes of system memory shared with the CPU.
 			/// </summary>
-			property int SharedSystemMemory
+			property System::Int64 SharedSystemMemory
 			{
-				int get();
+				System::Int64 get();
 			}
 
 			/// <summary>

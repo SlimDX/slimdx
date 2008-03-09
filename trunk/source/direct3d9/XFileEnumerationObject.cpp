@@ -126,7 +126,7 @@ namespace Direct3D9
 		return XFile::FromPointer( result );
 	}
 
-	int XFileEnumerationObject::ChildCount::get()
+	System::Int64 XFileEnumerationObject::ChildCount::get()
 	{
 		SIZE_T result;
 

@@ -58,7 +58,8 @@ namespace Direct3D10
 			nativeElements[i] = elements[i].CreateNativeVersion();
 			
 		ID3D10InputLayout* layout = 0;
-		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->Buffer, shaderSignature->Length, &layout );
+		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->Buffer,
+			static_cast<SIZE_T>( shaderSignature->Length ), &layout );
 
 		for( int i = 0; i < elements->Length; i++ )
 			Utilities::FreeNativeString( nativeElements[i].SemanticName );

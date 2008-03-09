@@ -68,17 +68,17 @@ namespace DXGI
 		return m_Revision;
 	}
 
-	int AdapterDescription::DedicatedVideoMemory::get()
+	System::Int64 AdapterDescription::DedicatedVideoMemory::get()
 	{
 		return m_DedicatedVideoMemory;
 	}
 
-	int AdapterDescription::DedicatedSystemMemory::get()
+	System::Int64 AdapterDescription::DedicatedSystemMemory::get()
 	{
 		return m_DedicatedSystemMemory;
 	}
 
-	int AdapterDescription::SharedSystemMemory::get()
+	System::Int64 AdapterDescription::SharedSystemMemory::get()
 	{
 		return m_SharedSystemMemory;
 	}
