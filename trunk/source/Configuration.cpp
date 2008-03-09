@@ -32,7 +32,7 @@ namespace SlimDX
 		EnableObjectTracking = false;
 #endif	
 
-		AlwaysThrowOnError = true;
+		ThrowOnError = true;
 		DetectDoubleDispose = false;
 		m_Watches = gcnew System::Collections::Generic::Dictionary<Result,ResultWatchFlags>();
 	}
@@ -54,7 +54,7 @@ namespace SlimDX
 			m_Watches->Add( result, flags );
 	}
 	
-	void Configuration::ClearResultWatch( Result result )
+	void Configuration::RemoveResultWatch( Result result )
 	{
 		if( m_Watches->ContainsKey( result ) )
 			m_Watches->Remove( result );

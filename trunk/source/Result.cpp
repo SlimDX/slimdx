@@ -86,6 +86,8 @@ namespace SlimDX
 		ResultWatchFlags flags;
 		if( Configuration::TryGetResultWatch( m_Last, flags ) )
 		{
+			if( flags == ResultWatchFlags::AlwaysIgnore )
+				return Result( hr );
 #ifdef _DEBUG
 			if( static_cast<int>( flags & ResultWatchFlags::Assert ) != 0 )
 				System::Diagnostics::Debugger::Break();
@@ -95,7 +97,7 @@ namespace SlimDX
 				Throw<T>();
 		}
 
-		if( failed && Configuration::AlwaysThrowOnError )
+		if( failed && Configuration::ThrowOnError )
 			Throw<T>();
 
 		return Result( hr );

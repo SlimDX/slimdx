@@ -40,6 +40,7 @@ namespace SlimDX
 	[System::Flags]
 	public enum class ResultWatchFlags : System::Int32
 	{
+		AlwaysIgnore = 0,
 		Assert = 1,
 		Throw = 2,
 	};
