@@ -42,11 +42,11 @@ namespace SlimDX
 
 	public:
 		static property bool EnableObjectTracking;
-		static property bool AlwaysThrowOnError;
+		static property bool ThrowOnError;
 		static property bool DetectDoubleDispose;
 
 		static void AddResultWatch( Result result, ResultWatchFlags flags );
-		static void ClearResultWatch( Result result );
+		static void RemoveResultWatch( Result result );
 		static void ClearResultWatches();
 	};
 }
