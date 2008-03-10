@@ -27,6 +27,9 @@ namespace SlimDX
 {
 	ref class ComObject;
 
+	/// <remarks>
+	/// Maintains a list of all the <see cref="ComObject">COM objects</see> managed by SlimDX.
+	/// </remarks>
 	public ref class ObjectTable sealed
 	{
 	private:
@@ -42,14 +45,33 @@ namespace SlimDX
 		static bool Contains( ComObject^ object );
 
 	public:
-		static void Add( ComObject^ object );
-		static bool Remove( ComObject^ object );
-
-		static System::String^ ReportLeaks();
-
+		/// <summary>
+		/// Gets a list of all the COM objects tracked by SlimDX.
+		/// </summary>
 		static property System::Collections::Generic::Dictionary<System::IntPtr, ComObject^>::ValueCollection^ Objects
 		{
 			System::Collections::Generic::Dictionary<System::IntPtr, ComObject^>::ValueCollection^ get();
 		}
+		
+		/// <summary>
+		/// Adds a COM object to the table. This will set the object's CreationSource parameter if
+		/// object tracking (Configuration.EnableObjectTracking) is on.
+		/// </summary>
+		/// <param name="object">The object to add.</param>
+		static void Add( ComObject^ object );
+		
+		/// <summary>
+		/// Removes a COM object from the table.
+		/// </summary>
+		/// <param name="object">The object to remove.</param>
+		/// <returns>True if the object was in the table and was removed, false otherwise.
+		static bool Remove( ComObject^ object );
+		
+		/// <summary>
+		/// Generates a report of all outstanding COM objects (objects that have not been disposed)
+		/// tracked by SlimDX. The report includes the object's type and a stack trace to its creation point.
+		/// </summary>
+		/// <returns>A string containing the leak report.</returns>
+		static System::String^ ReportLeaks();
 	};
 }
