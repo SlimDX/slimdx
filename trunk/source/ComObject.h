@@ -45,6 +45,9 @@
 
 namespace SlimDX
 {
+	/// <remarks>
+	/// The base class for all SlimDX types which represent COM interfaces.
+	/// </remarks>
 	public ref class ComObject abstract
 	{
 	private:
@@ -72,24 +75,44 @@ namespace SlimDX
 		void SetSource( System::Diagnostics::StackTrace^ stack );
 
 	public:
+		/// <summary>
+		/// Gets a value that indicates whether the object has been disposed.
+		/// </summary>
 		property bool Disposed
 		{
 			bool get();
 		}
-
+		
+		/// <summary>
+		/// Gets an <see cref="System.IntPtr">IntPtr</see> to the underlying native COM interface.
+		/// </summary>
 		property System::IntPtr ComPointer
 		{
 			System::IntPtr get();
 		}
-
+		
+		/// <summary>
+		/// Gets a <see cref="System::Diagnostics::StackTrace">stack trace</see> to the location
+		/// that the object was created.
+		/// </summary>
 		property System::Diagnostics::StackTrace^ CreationSource
 		{
 			System::Diagnostics::StackTrace^ get();
 		}
-
+		
+		/// <summary>
+		/// Gets a value indicating whether or not the object is in the default allocation pool.
+		/// </summary>
 		property bool IsDefaultPool;
+		
+		/// <summary>
+		/// Gets a string identifying the object for debug purposes.
+		/// </summary>
 		property System::String^ DebugName;
-
+		
+		/// <summary>
+		/// Performs object cleanup.
+		/// </summary>
 		virtual ~ComObject();
 	};
 }
