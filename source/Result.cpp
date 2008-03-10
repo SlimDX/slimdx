@@ -72,6 +72,11 @@ namespace SlimDX
 		return FAILED( m_Code );
 	}
 	
+	void Result::BreakIfDebugging()
+	{
+		System::Diagnostics::Debugger::Break();
+	}
+
 	generic< typename T >
 	void Result::Throw()
 	{
@@ -88,10 +93,9 @@ namespace SlimDX
 		{
 			if( flags == ResultWatchFlags::AlwaysIgnore )
 				return Result( hr );
-#ifdef _DEBUG
-			if( static_cast<int>( flags & ResultWatchFlags::Assert ) != 0 )
-				System::Diagnostics::Debugger::Break();
-#endif
+
+			if( static_cast<int>( flags & ResultWatchFlags::Break ) != 0 )
+				BreakIfDebugging();
 
 			if( static_cast<int>( flags & ResultWatchFlags::Throw ) != 0 )
 				Throw<T>();

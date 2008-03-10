@@ -38,6 +38,9 @@ namespace SlimDX
 	internal:
 		Result( int hr );
 		
+		[System::Diagnostics::Conditional( "DEBUG" )]
+		static void BreakIfDebugging();
+
 		generic< typename T >
 		static Result Fail( int hr );
 
