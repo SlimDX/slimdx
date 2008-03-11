@@ -29,6 +29,9 @@ namespace SlimDX
 {
 	namespace DirectInput
 	{
+		/// <summary>
+		/// Represents errors that occur in the XInput subsystem.
+		/// </summary>
 		[System::Serializable]
 		public ref class DirectInputException : public SlimDXException
 		{

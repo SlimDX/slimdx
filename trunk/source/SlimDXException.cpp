@@ -64,4 +64,13 @@ namespace SlimDX
 	{
 		return m_Result;
 	}
+	
+	void SlimDXException::GetObjectData(System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context)
+	{
+		if( info == nullptr )
+			throw gcnew System::ArgumentNullException( "info" );
+
+		info->AddValue("Result", m_Result);
+		System::Exception::GetObjectData( info, context );
+	}
 }

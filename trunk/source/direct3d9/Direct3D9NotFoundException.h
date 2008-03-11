@@ -27,6 +27,9 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>
+		/// An exception indicating that the appropriate Direct3D 9 runtime could not be found or initialized.
+		/// </summary>
 		[System::Serializable]
 		public ref class Direct3D9NotFoundException : public Direct3D9Exception
 		{
@@ -34,8 +37,22 @@ namespace SlimDX
 			Direct3D9NotFoundException( System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context );
 			
 		public:
+			/// <summary>
+			/// Constructs a new exception object.
+			/// </summary>
 			Direct3D9NotFoundException();
+			
+			/// <summary>
+			/// Constructs a new exception object.
+			/// </summary>
+			/// <param name="message">The message describing the exception.</param>
 			Direct3D9NotFoundException( System::String^ message );
+			
+			/// <summary>
+			/// Constructs a new exception object.
+			/// </summary>
+			/// <param name="message">The message describing the exception.</param>
+			/// <param name="innerException">The exception that caused this exception.</param>
 			Direct3D9NotFoundException( System::String^ message, System::Exception^ innerException );
 		};
 	}

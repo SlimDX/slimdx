@@ -29,6 +29,9 @@ namespace SlimDX
 {
 	namespace DirectSound
 	{
+		/// <summary>
+		/// Represents errors that occur in the DirectSound subsystem.
+		/// </summary>
 		[System::Serializable]
 		public ref class DirectSoundException : public SlimDXException
 		{

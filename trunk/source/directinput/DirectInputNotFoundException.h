@@ -27,6 +27,9 @@ namespace SlimDX
 {
 	namespace DirectInput
 	{
+		/// <summary>
+		/// An exception indicating that the appropriate DirectInput runtime could not be found or initialized.
+		/// </summary>
 		[System::Serializable]
 		public ref class DirectInputNotFoundException : public DirectInputException
 		{
