@@ -29,6 +29,9 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
+		/// <summary>
+		/// Represents errors that occur in the DXGI subsystem.
+		/// </summary>
 		[System::Serializable]
 		public ref class DXGIException : public SlimDXException
 		{
@@ -36,9 +39,28 @@ namespace SlimDX
 			DXGIException( System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context );
 			
 		public:
+			/// <summary>
+			/// Constructs a new exception object.
+			/// </summary>
 			DXGIException();
+			
+			/// <summary>
+			/// Constructs a new exception object.
+			/// </summary>
+			/// <param name="message">The message describing the exception.</param>
 			DXGIException( System::String^ message );
+			
+			/// <summary>
+			/// Constructs a new exception object.
+			/// </summary>
+			/// <param name="message">The message describing the exception.</param>
+			/// <param name="innerException">The exception that caused this exception.</param>
 			DXGIException( System::String^ message, System::Exception^ innerException );
+			
+			/// <summary>
+			/// Constructs a new exception object.
+			/// </summary>
+			/// <param name="result">The result code that caused this exception.</param>
 			DXGIException( Result result );
 		};
 	}

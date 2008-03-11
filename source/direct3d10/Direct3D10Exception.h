@@ -29,6 +29,9 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
+		/// <summary>
+		/// Represents errors that occur in the Direct3D 10 subsystem.
+		/// </summary>
 		[System::Serializable]
 		public ref class Direct3D10Exception : public SlimDXException
 		{
@@ -36,9 +39,28 @@ namespace SlimDX
 			Direct3D10Exception( System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context );
 			
 		public:
+			/// <summary>
+			/// Constructs a new exception object.
+			/// </summary>
 			Direct3D10Exception();
+			
+			/// <summary>
+			/// Constructs a new exception object.
+			/// </summary>
+			/// <param name="message">The message describing the exception.</param>
 			Direct3D10Exception( System::String^ message );
+			
+			/// <summary>
+			/// Constructs a new exception object.
+			/// </summary>
+			/// <param name="message">The message describing the exception.</param>
+			/// <param name="innerException">The exception that caused this exception.</param>
 			Direct3D10Exception( System::String^ message, System::Exception^ innerException );
+			
+			/// <summary>
+			/// Constructs a new exception object.
+			/// </summary>
+			/// <param name="result">The result code that caused this exception.</param>
 			Direct3D10Exception( Result result );
 		};
 	}
