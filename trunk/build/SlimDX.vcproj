@@ -1177,6 +1177,14 @@
 					RelativePath="..\source\direct3d10\CounterMetadata.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d10\Debug.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Debug.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
