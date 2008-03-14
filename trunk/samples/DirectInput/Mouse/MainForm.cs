@@ -159,7 +159,10 @@ namespace Mouse
             timer.Stop();
 
             if (mouse != null)
+            {
+                mouse.Unacquire();
                 mouse.Dispose();
+            }
             mouse = null;
         }
 
@@ -344,6 +347,11 @@ namespace Mouse
             }
 
             behaviorLabel.Text = text.ToString();
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ReleaseDevice();
         }
 
         #endregion

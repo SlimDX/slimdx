@@ -99,7 +99,6 @@ namespace Direct3D9
 		return gcnew VertexShader( pointer );
 	}
 
-
 	VertexShader^ VertexShader::FromPointer( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable )
 	{
 		if( vertexShader == 0 )
@@ -113,7 +112,7 @@ namespace Direct3D9
 		return gcnew VertexShader( vertexShader, constantTable );
 	}
 
-	VertexShader^ VertexShader::FromString( Device^ device, String^ sourceCode, String^ entryPoint, String^ profile, ShaderFlags flags, [Out] String^ %compilationErrors )
+	VertexShader^ VertexShader::FromString( SlimDX::Direct3D9::Device^ device, String^ sourceCode, String^ entryPoint, String^ profile, ShaderFlags flags, [Out] String^ %compilationErrors )
 	{
 		array<unsigned char>^ rawCode = System::Text::ASCIIEncoding::ASCII->GetBytes( sourceCode );
 		pin_ptr<unsigned char> pinnedCode = &rawCode[0];
@@ -180,9 +179,21 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return Result::Last;
 
-		m_ConstantTable = ConstantTable::FromPointer( constantTable );
+		m_ConstantTable = ConstantTable::FromPointer( Device->InternalPointer, constantTable );
 
 		return Result::Last;
+	}
+
+	SlimDX::Direct3D9::Device^ VertexShader::Device::get()
+	{
+		IDirect3DDevice9* device;
+
+		HRESULT hr = InternalPointer->GetDevice( &device );
+		
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		return SlimDX::Direct3D9::Device::FromPointer( device );
 	}
 }
 }

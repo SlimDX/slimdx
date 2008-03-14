@@ -43,6 +43,11 @@ namespace SlimDX
 			static PixelShader^ FromPointer( System::IntPtr pointer );
 
 			virtual ~PixelShader() { delete m_ConstantTable; }
+
+			property SlimDX::Direct3D9::Device^ Device
+			{
+				SlimDX::Direct3D9::Device^ get();
+			}
 			
 			Result RetrieveConstantTable();
 			property ConstantTable^ Constants
@@ -50,7 +55,7 @@ namespace SlimDX
 				ConstantTable^ get() { return m_ConstantTable; }
 			}
 			
-			static PixelShader^ FromString( Device^ device, System::String^ sourceCode, System::String^ entryPoint, System::String^ profile, ShaderFlags flags, [Out] System::String^ %compilationErrors );
+			static PixelShader^ FromString( SlimDX::Direct3D9::Device^ device, System::String^ sourceCode, System::String^ entryPoint, System::String^ profile, ShaderFlags flags, [Out] System::String^ %compilationErrors );
 		};
 	}
 }

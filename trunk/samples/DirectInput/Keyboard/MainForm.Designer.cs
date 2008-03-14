@@ -244,6 +244,7 @@ namespace Keyboard
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "SlimDX - Keyboard Sample";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

@@ -27,9 +27,9 @@ namespace SlimDX
 {
 	ref class ComObject;
 
-	/// <remarks>
+	/// <summary>
 	/// Maintains a list of all the <see cref="ComObject">COM objects</see> managed by SlimDX.
-	/// </remarks>
+	/// </summary>
 	public ref class ObjectTable sealed
 	{
 	private:
@@ -55,7 +55,7 @@ namespace SlimDX
 		
 		/// <summary>
 		/// Adds a COM object to the table. This will set the object's CreationSource parameter if
-		/// object tracking (Configuration.EnableObjectTracking) is on.
+		/// object tracking (<see cref="Configuration.EnableObjectTracking"/>) is on.
 		/// </summary>
 		/// <param name="object">The object to add.</param>
 		static void Add( ComObject^ object );
@@ -64,7 +64,7 @@ namespace SlimDX
 		/// Removes a COM object from the table.
 		/// </summary>
 		/// <param name="object">The object to remove.</param>
-		/// <returns>True if the object was in the table and was removed, false otherwise.
+		/// <returns><c>true</c> if the object was in the table and was removed; otherwise, <c>false</c>.</returns>
 		static bool Remove( ComObject^ object );
 		
 		/// <summary>

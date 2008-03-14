@@ -197,6 +197,7 @@ namespace Mouse
             this.immediateRadio.Name = "immediateRadio";
             this.immediateRadio.Size = new System.Drawing.Size(73, 17);
             this.immediateRadio.TabIndex = 0;
+            this.immediateRadio.TabStop = true;
             this.immediateRadio.Text = "Immediate";
             this.immediateRadio.UseVisualStyleBackColor = true;
             this.immediateRadio.CheckedChanged += new System.EventHandler(this.immediateRadio_CheckedChanged);
@@ -242,6 +243,7 @@ namespace Mouse
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "SlimDX - Mouse Sample";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.groupBox3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
