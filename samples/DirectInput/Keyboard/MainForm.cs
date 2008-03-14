@@ -138,7 +138,10 @@ namespace Keyboard
 
             // dispose of the device
             if (keyboard != null)
+            {
+                keyboard.Unacquire();
                 keyboard.Dispose();
+            }
             keyboard = null;            
         }
 
@@ -332,6 +335,11 @@ namespace Keyboard
             }
 
             behaviorLabel.Text = text.ToString();
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ReleaseDevice();
         }
 
         #endregion

@@ -41,8 +41,13 @@ namespace SlimDX
 
 		public:
 			static VertexShader^ FromPointer( System::IntPtr pointer );
-			
+
 			virtual ~VertexShader() { delete m_ConstantTable; }
+
+			property SlimDX::Direct3D9::Device^ Device
+			{
+				SlimDX::Direct3D9::Device^ get();
+			}
 			
 			Result RetrieveConstantTable();
 			property ConstantTable^ Constants
@@ -50,7 +55,7 @@ namespace SlimDX
 				ConstantTable^ get() { return m_ConstantTable; }
 			}
 			
-			static VertexShader^ FromString( Device^ device, System::String^ sourceCode, System::String^ entryPoint, System::String^ profile, ShaderFlags flags, [Out] System::String^ %compilationErrors );
+			static VertexShader^ FromString( SlimDX::Direct3D9::Device^ device, System::String^ sourceCode, System::String^ entryPoint, System::String^ profile, ShaderFlags flags, [Out] System::String^ %compilationErrors );
 		};
 	}
 }

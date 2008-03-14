@@ -26,7 +26,9 @@
   <Target Name="$(ProjectDir)/../samples/Direct3D9/MiniTri/bin/Debug/MiniTri.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/SampleFramework/bin/Debug/SampleFramework.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/SimpleTriangle/bin/Debug/SimpleTriangle.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/DirectInput/Joystick/bin/Debug/Joystick.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/DirectInput/Keyboard/bin/Debug/Keyboard.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/DirectInput/Mouse/bin/Debug/Mouse.exe" Analyze="True" AnalyzeAllChildren="True" />
  </Targets>
  <Rules>
   <RuleFiles>
@@ -924,6 +926,12 @@
          </Type>
          <Type Name="ResultWatchFlags">
           <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2008-03-13 23:20:47Z" FixCategory="Breaking">
+            <Issue Name="FlagsRename">
+             <Item>'ResultWatchFlags'</Item>
+             <Item>'ResultWatchFlags.AlwaysIgnore'</Item>
+            </Issue>
+           </Message>
            <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-02-26 17:46:03Z">
             <Issue Name="TypeNoAlternate">
              <Item>Flags</Item>
@@ -1464,6 +1472,63 @@
             </Issue>
            </Message>
           </Messages>
+         </Type>
+         <Type Name="Debug">
+          <Members>
+           <Member Name="#.ctor(ID3D10Debug*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-03-13 23:20:47Z">
+              <Issue>
+               <Item>'Debug.Debug(ID3D10Debug*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FeatureFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-03-13 23:20:47Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'Debug.FeatureFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(ID3D10Debug*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-03-13 23:20:47Z">
+              <Issue>
+               <Item>'Debug.FromPointer(ID3D10Debug*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-03-13 23:20:47Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Debug.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SwapChain">
+            <Accessors>
+             <Accessor Name="#get_SwapChain()">
+              <Messages>
+               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Excluded" Created="2008-03-13 23:20:47Z" FixCategory="Breaking">
+                <Issue Name="PropertyGetter" Level="Warning">
+                 <Item>'Debug.SwapChain.get()'</Item>
+                 <Item>'Direct3D10Exception'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
          </Type>
          <Type Name="DebugFeatureFlags">
           <Messages>
@@ -12485,6 +12550,45 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/../samples/DirectInput/Joystick/bin/Debug/Joystick.exe">
+    <Modules>
+     <Module Name="joystick.exe">
+      <Namespaces>
+       <Namespace Name="Joystick">
+        <Types>
+         <Type Name="MainForm">
+          <Members>
+           <Member Name="#CreateDevice()">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-03-13 23:20:47Z">
+              <Issue>
+               <Item>'MainForm.CreateDevice()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.CreateDevice()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Dispose(System.Boolean)">
+            <Messages>
+             <Message Id="joystick" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Status="Excluded" Created="2008-03-13 23:20:47Z">
+              <Issue>
+               <Item>'MainForm'</Item>
+               <Item>'MainForm.joystick'</Item>
+               <Item>'Device&lt;JoystickState&gt;'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
    <Target Name="$(ProjectDir)/../samples/DirectInput/Keyboard/bin/Debug/Keyboard.exe">
     <Modules>
      <Module Name="keyboard.exe">
@@ -12516,6 +12620,37 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/../samples/DirectInput/Mouse/bin/Debug/Mouse.exe">
+    <Modules>
+     <Module Name="mouse.exe">
+      <Namespaces>
+       <Namespace Name="Mouse">
+        <Types>
+         <Type Name="MainForm">
+          <Members>
+           <Member Name="#CreateDevice()">
+            <Messages>
+             <Message TypeName="DoNotUseTimersThatPreventPowerStateChanges" Category="Microsoft.Mobility" CheckId="CA1601" Status="Excluded" Created="2008-03-13 23:20:47Z">
+              <Issue>
+               <Item>'Timer.Interval.set(int)'</Item>
+               <Item>'MainForm.CreateDevice()'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-03-13 23:20:47Z">
+              <Issue>
+               <Item>'MainForm.CreateDevice()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
   </Targets>
   <Rules>
    <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
@@ -12526,6 +12661,9 @@
    </Rule>
    <Rule TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011">
     <Resolution Name="Default">Consider changing the type of parameter {0} in {1} from {2} to its base type {3}. This method appears to only require base class members in its implementation. Suppress this violation if there is a compelling reason to require the more derived type in the method signature.</Resolution>
+   </Rule>
+   <Rule TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213">
+    <Resolution Name="Default">{0} contains field {1} that is of IDisposable type: {2}. Change the Dispose method on {0} to call Dispose or Close on this field.</Resolution>
    </Rule>
    <Rule TypeName="DoNotDeclareStaticMembersOnGenericTypes" Category="Microsoft.Design" CheckId="CA1000">
     <Resolution Name="Default">Remove {0} from {1} or make it an instance member.</Resolution>

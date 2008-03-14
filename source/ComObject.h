@@ -45,9 +45,9 @@
 
 namespace SlimDX
 {
-	/// <remarks>
+	/// <summary>
 	/// The base class for all SlimDX types which represent COM interfaces.
-	/// </remarks>
+	/// </summary>
 	public ref class ComObject abstract
 	{
 	private:
@@ -92,7 +92,7 @@ namespace SlimDX
 		}
 		
 		/// <summary>
-		/// Gets a <see cref="System::Diagnostics::StackTrace">stack trace</see> to the location
+		/// Gets a <see cref="System.Diagnostics.StackTrace">stack trace</see> to the location
 		/// that the object was created.
 		/// </summary>
 		property System::Diagnostics::StackTrace^ CreationSource
@@ -101,12 +101,12 @@ namespace SlimDX
 		}
 		
 		/// <summary>
-		/// Gets a value indicating whether or not the object is in the default allocation pool.
+		/// Gets or sets a value indicating whether or not the object is in the default allocation pool.
 		/// </summary>
 		property bool IsDefaultPool;
 		
 		/// <summary>
-		/// Gets a string identifying the object for debug purposes.
+		/// Gets or sets a string identifying the object for debug purposes.
 		/// </summary>
 		property System::String^ DebugName;
 		

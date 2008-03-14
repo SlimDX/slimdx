@@ -56,6 +56,11 @@ namespace SlimDX
 				int get() { return list->Count; }
 			}
 
+			property DeviceInstance^ default[int]
+			{
+				DeviceInstance^ get( int index ) { return list[index]; }
+			}
+
 			virtual property bool IsReadOnly
 			{
 				bool get() { return false; }
