@@ -71,6 +71,31 @@ namespace SampleFramework
         /// </summary>
         public event EventHandler MainLoop;
 
+        /// <summary>
+        /// Occurs when the device is created.
+        /// </summary>
+        public event EventHandler DeviceCreated;
+
+        /// <summary>
+        /// Occurs when the device is destroyed.
+        /// </summary>
+        public event EventHandler DeviceDestroyed;
+
+        /// <summary>
+        /// Occurs when the device is lost.
+        /// </summary>
+        public event EventHandler DeviceLost;
+
+        /// <summary>
+        /// Occurs when the device is reset.
+        /// </summary>
+        public event EventHandler DeviceReset;
+
+        /// <summary>
+        /// Occurs when the window is created.
+        /// </summary>
+        public event EventHandler WindowCreated;
+
         #endregion
 
         #region Properties
@@ -335,58 +360,54 @@ namespace SampleFramework
                 MainLoop(this, e);
         }
 
-        void window_CursorChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Raises the <see cref="E:DeviceCreated"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnDeviceCreated(EventArgs e)
         {
-            if (device != null && !IsWindowed)
-                device.SetCursor(window.Cursor, false);
+            if (DeviceCreated != null)
+                DeviceCreated(this, e);
         }
 
-        void window_MouseMove(object sender, MouseEventArgs e)
+        /// <summary>
+        /// Raises the <see cref="E:DeviceDestroyed"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnDeviceDestroyed(EventArgs e)
         {
-            if (device != null && !IsWindowed)
-                device.SetCursorPosition(Cursor.Position, true);
+            if (DeviceDestroyed != null)
+                DeviceDestroyed(this, e);
         }
 
-        void window_ResizeEnd(object sender, EventArgs e)
+        /// <summary>
+        /// Raises the <see cref="E:DeviceLost"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnDeviceLost(EventArgs e)
         {
-            inSizeMove = false;
+            if (DeviceLost != null)
+                DeviceLost(this, e);
         }
 
-        void window_ResizeBegin(object sender, EventArgs e)
+        /// <summary>
+        /// Raises the <see cref="E:DeviceReset"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnDeviceReset(EventArgs e)
         {
-            inSizeMove = true;
+            if (DeviceReset != null)
+                DeviceReset(this, e);
         }
 
-        void window_SizeRestored(object sender, EventArgs e)
+        /// <summary>
+        /// Raises the <see cref="E:WindowCreated"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnWindowCreated(EventArgs e)
         {
-            if (minimized || maximized)
-            {
-                minimized = false;
-                maximized = false;
-
-                CheckForWindowSizeChange();
-                CheckForWindowChangingMonitors();
-            }
-            else if (!inSizeMove)
-            {
-                CheckForWindowSizeChange();
-                CheckForWindowChangingMonitors();
-            }
-        }
-
-        void window_SizeMaximized(object sender, EventArgs e)
-        {
-            minimized = false;
-            maximized = true;
-
-            CheckForWindowSizeChange();
-            CheckForWindowChangingMonitors();
-        }
-
-        void window_SizeMinimized(object sender, EventArgs e)
-        {
-            minimized = true;
-            maximized = false;
+            if (WindowCreated != null)
+                WindowCreated(this, e);
         }
 
         #endregion
@@ -459,7 +480,7 @@ namespace SampleFramework
                 oldSettings.DeviceType == settings.DeviceType &&
                 oldSettings.BehaviorFlags == settings.BehaviorFlags)
             {
-                Result result = device.Reset(currentSettings.PresentParameters);
+                Result result = ResetDevice();
                 if (result == Error.DeviceLost)
                     deviceLost = true;
                 else if (result == Error.DriverInternalError)
@@ -977,6 +998,62 @@ namespace SampleFramework
 
         #region Helpers
 
+        void window_CursorChanged(object sender, EventArgs e)
+        {
+            if (device != null && !IsWindowed)
+                device.SetCursor(window.Cursor, false);
+        }
+
+        void window_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (device != null && !IsWindowed)
+                device.SetCursorPosition(Cursor.Position, true);
+        }
+
+        void window_ResizeEnd(object sender, EventArgs e)
+        {
+            CheckForWindowSizeChange();
+            CheckForWindowChangingMonitors();
+            inSizeMove = false;
+        }
+
+        void window_ResizeBegin(object sender, EventArgs e)
+        {
+            inSizeMove = true;
+        }
+
+        void window_SizeRestored(object sender, EventArgs e)
+        {
+            if (minimized || maximized)
+            {
+                minimized = false;
+                maximized = false;
+
+                CheckForWindowSizeChange();
+                CheckForWindowChangingMonitors();
+            }
+            else if (!inSizeMove)
+            {
+                CheckForWindowSizeChange();
+                CheckForWindowChangingMonitors();
+            }
+        }
+
+        void window_SizeMaximized(object sender, EventArgs e)
+        {
+            minimized = false;
+            maximized = true;
+
+            CheckForWindowSizeChange();
+            CheckForWindowChangingMonitors();
+        }
+
+        void window_SizeMinimized(object sender, EventArgs e)
+        {
+            minimized = true;
+            maximized = false;
+        }
+
         void Construct(Window window, DeviceSettings deviceSettings)
         {
             this.window = window;
@@ -989,6 +1066,8 @@ namespace SampleFramework
             window.MouseMove += new MouseEventHandler(window_MouseMove);
             window.CursorChanged += new EventHandler(window_CursorChanged);
 
+            OnWindowCreated(EventArgs.Empty);
+
             deviceSettings = FindValidDeviceSettings(deviceSettings);
             CreateDevice(deviceSettings);
 
@@ -999,6 +1078,37 @@ namespace SampleFramework
         {
             while (NativeMethods.IsAppIdle)
             {
+                if (IsDeviceLost || !Window.Active)
+                    Thread.Sleep(50);
+
+                if (IsDeviceLost)
+                {
+                    Result result = Device.TestCooperativeLevel();
+                    if (result.IsFailure)
+                    {
+                        if (result == Error.DeviceLost)
+                            continue;
+
+                        if (IsWindowed)
+                        {
+                            DisplayMode desktopMode = Direct3D.GetAdapterDisplayMode(CurrentSettings.AdapterOrdinal);
+                            if (CurrentSettings.AdapterFormat != desktopMode.Format)
+                            {
+                                DeviceSettings settings = CurrentSettings.Clone();
+                                settings.AdapterFormat = desktopMode.Format;
+                                settings = FindValidDeviceSettings(settings);
+                                CreateDevice(settings);
+                                continue;
+                            }
+                        }
+                    }
+
+                    if (ResetDevice().IsFailure)
+                        continue;
+                }
+
+                IsDeviceLost = false;
+
                 OnMainLoop(EventArgs.Empty);
             }
         }
@@ -1031,13 +1141,33 @@ namespace SampleFramework
             catch(Direct3D9Exception)
             {
                 deviceLost = true;
+                return;
             }
+
+            OnDeviceCreated(EventArgs.Empty);
+            OnDeviceReset(EventArgs.Empty);
+        }
+
+        Result ResetDevice()
+        {
+            OnDeviceLost(EventArgs.Empty);
+
+            Result result = device.Reset(CurrentSettings.PresentParameters);
+            if (result.IsFailure)
+                return result;
+
+            OnDeviceReset(EventArgs.Empty);
+
+            return result;
         }
 
         void ReleaseDevice()
         {
             if (device == null)
                 return;
+
+            OnDeviceLost(EventArgs.Empty);
+            OnDeviceDestroyed(EventArgs.Empty);
 
             device.Dispose();
             device = null;

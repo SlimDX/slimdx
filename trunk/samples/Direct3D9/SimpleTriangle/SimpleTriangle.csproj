@@ -56,6 +56,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SimpleTriangleSample.cs" />
+    <Compile Include="Vertex.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\build\SlimDX.vcproj">
