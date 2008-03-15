@@ -26,6 +26,7 @@
   <Target Name="$(ProjectDir)/../samples/Direct3D9/MiniTri/bin/Debug/MiniTri.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/SampleFramework/bin/Debug/SampleFramework.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/SimpleTriangle/bin/Debug/SimpleTriangle.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/Direct3D9/Water/bin/Debug/Water.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/DirectInput/Joystick/bin/Debug/Joystick.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/DirectInput/Keyboard/bin/Debug/Keyboard.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/DirectInput/Mouse/bin/Debug/Mouse.exe" Analyze="True" AnalyzeAllChildren="True" />
@@ -12510,22 +12511,22 @@
                 <Issue>
                  <Item>'WINDOWPLACEMENT.Length.get()'</Item>
                  <Item>'Marshal.SizeOf(Type)'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'Sample.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Construct(Window, DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Sample(Window, DeviceSettings)'</Item>
+                 <Item>&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'Sample.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Construct(Window, DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Initialize(Window, DeviceSettings)'</Item>
                 </Issue>
                 <Issue>
                  <Item>'WINDOWPLACEMENT.Length.get()'</Item>
                  <Item>'Marshal.SizeOf(Type)'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'Sample.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Construct(Window, DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Sample(Window, bool, int, int)'</Item>
+                 <Item>&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'Sample.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Construct(Window, DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Initialize(Window, bool, int, int)'</Item>
                 </Issue>
                 <Issue>
                  <Item>'WINDOWPLACEMENT.Length.get()'</Item>
                  <Item>'Marshal.SizeOf(Type)'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'Sample.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Construct(Window, DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Sample(string, DeviceSettings)'</Item>
+                 <Item>&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'Sample.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Construct(Window, DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Initialize(string, DeviceSettings)'</Item>
                 </Issue>
                 <Issue>
                  <Item>'WINDOWPLACEMENT.Length.get()'</Item>
                  <Item>'Marshal.SizeOf(Type)'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'Sample.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Construct(Window, DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Sample(string, bool, int, int)'</Item>
+                 <Item>&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'Sample.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Construct(Window, DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Initialize(string, bool, int, int)'</Item>
                 </Issue>
                 <Issue>
                  <Item>'WINDOWPLACEMENT.Length.get()'</Item>

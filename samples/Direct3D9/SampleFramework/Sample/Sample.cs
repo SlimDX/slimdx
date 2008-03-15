@@ -34,7 +34,7 @@ namespace SampleFramework
     /// <summary>
     /// Presents an easy to use wrapper around Direct3D for use with SlimDX samples.
     /// </summary>
-    public class Sample : IDisposable
+    public abstract class Sample : IDisposable
     {
         #region Variables
 
@@ -177,7 +177,7 @@ namespace SampleFramework
         /// <param name="windowed">if set to <c>true</c>, the application will run in windowed mode.</param>
         /// <param name="desiredWidth">Desired width of the window.</param>
         /// <param name="desiredHeight">Desired height of the window.</param>
-        public Sample(Window window, bool windowed, int desiredWidth, int desiredHeight)
+        protected void Initialize(Window window, bool windowed, int desiredWidth, int desiredHeight)
         {
             DeviceSettings settings = new DeviceSettings();
             settings.PresentParameters.BackBufferWidth = desiredWidth;
@@ -192,7 +192,7 @@ namespace SampleFramework
         /// </summary>
         /// <param name="window">The render window.</param>
         /// <param name="settings">The desired device settings.</param>
-        public Sample(Window window, DeviceSettings settings)
+        protected void Initialize(Window window, DeviceSettings settings)
         {
             Construct(window, settings);
         }
@@ -204,7 +204,7 @@ namespace SampleFramework
         /// <param name="windowed">if set to <c>true</c>, the application will run in windowed mode.</param>
         /// <param name="desiredWidth">Desired width of the window.</param>
         /// <param name="desiredHeight">Desired height of the window.</param>
-        public Sample(string name, bool windowed, int desiredWidth, int desiredHeight)
+        protected void Initialize(string name, bool windowed, int desiredWidth, int desiredHeight)
         {
             window = new Window();
             window.Text = name;
@@ -223,7 +223,7 @@ namespace SampleFramework
         /// </summary>
         /// <param name="name">The name of the window.</param>
         /// <param name="settings">The desired device settings.</param>
-        public Sample(string name, DeviceSettings settings)
+        protected void Initialize(string name, DeviceSettings settings)
         {
             window = new Window();
             window.Text = name;
