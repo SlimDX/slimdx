@@ -40,6 +40,7 @@ namespace SlimDX
 			static SlimDX::RawInput::Data^ GetRawInputData( System::IntPtr lParam, Command command );
 			static array<SlimDX::RawInput::Data^>^ GetRawInputBuffer();
 			static array<SlimDX::RawInput::DeviceInfo^>^ GetRawInputDevices();
+			static array<SlimDX::RawInput::RawInputDevice^>^ GetRegisteredRawInputDevices();
 		};
 	}
 }

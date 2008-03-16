@@ -36,6 +36,7 @@ namespace SlimDX
 
 		public:
 			RawInputDevice() : Internal( new RAWINPUTDEVICE ) { }
+			RawInputDevice( RAWINPUTDEVICE copy );
 			~RawInputDevice() { delete Internal; }
 
 			/// <summary>Top level collection Usage page for the raw input device.</summary>

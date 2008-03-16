@@ -82,5 +82,22 @@ namespace RawInput
 
 		return devices;
 	}
+
+	array<SlimDX::RawInput::RawInputDevice^>^ RawInput::GetRegisteredRawInputDevices()
+	{
+		UINT numberDevices;
+		if ( ::GetRegisteredRawInputDevices( NULL, &numberDevices, sizeof( RAWINPUTDEVICE ) ) != 0 )
+			throw gcnew System::InvalidOperationException( "Could not count device count" );
+
+		stack_vector<RAWINPUTDEVICE> rawInputDeviceList( numberDevices );
+		if ( ::GetRegisteredRawInputDevices( &rawInputDeviceList[0], &numberDevices, sizeof( RAWINPUTDEVICE ) ) == -1 )
+			throw gcnew InvalidOperationException( "Could not get a list of devices" );
+
+		array<SlimDX::RawInput::RawInputDevice^>^ devices = gcnew array<SlimDX::RawInput::RawInputDevice^>( numberDevices );
+		for( UINT i = 0; i < numberDevices; i++ )
+			devices[i] = gcnew SlimDX::RawInput::RawInputDevice( rawInputDeviceList[i] );
+
+		return devices;
+	}
 }
 }
