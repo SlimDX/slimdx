@@ -28,6 +28,11 @@ namespace SlimDX
 {
 namespace RawInput
 {
+	RawInputDevice::RawInputDevice( RAWINPUTDEVICE copy ) : Internal( new RAWINPUTDEVICE )
+	{
+		*Internal = copy;
+	}
+
 	HidUsagePage RawInputDevice::UsagePage::get()
 	{
 		return static_cast<HidUsagePage>( this->Internal->usUsagePage );
