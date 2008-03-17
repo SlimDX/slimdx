@@ -54,9 +54,9 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		D3DXMACRO* macros = Macro::Marshal( defines, handles );
+		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 
-		HRESULT hr = D3DXAssembleShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macros, includePtr,
+		HRESULT hr = D3DXAssembleShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, &macros[0], includePtr,
 			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer );
 
 		//clean up after marshaling macros
@@ -91,9 +91,9 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		D3DXMACRO* macros = Macro::Marshal( defines, handles );
+		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 
-		HRESULT hr = D3DXAssembleShaderFromFile( pinnedFileName, macros, includePtr,
+		HRESULT hr = D3DXAssembleShaderFromFile( pinnedFileName, &macros[0], includePtr,
 			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer );
 
 		//clean up after marshaling macros
@@ -128,9 +128,9 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		D3DXMACRO* macros = Macro::Marshal( defines, handles );
+		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 
-		HRESULT hr = D3DXCompileShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macros, includePtr,
+		HRESULT hr = D3DXCompileShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, &macros[0], includePtr,
 			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
 			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, &constants );
 
@@ -175,9 +175,9 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		D3DXMACRO* macros = Macro::Marshal( defines, handles );
+		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 
-		HRESULT hr = D3DXCompileShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macros, includePtr,
+		HRESULT hr = D3DXCompileShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, &macros[0], includePtr,
 			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
 			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, NULL );
 
@@ -223,9 +223,9 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		D3DXMACRO* macros = Macro::Marshal( defines, handles );
+		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 
-		HRESULT hr = D3DXCompileShaderFromFile( pinnedFileName, macros, includePtr,
+		HRESULT hr = D3DXCompileShaderFromFile( pinnedFileName, &macros[0], includePtr,
 			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
 			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, &constants );
 
@@ -262,9 +262,9 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		D3DXMACRO* macros = Macro::Marshal( defines, handles );
+		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 
-		HRESULT hr = D3DXCompileShaderFromFile( pinnedFileName, macros, includePtr,
+		HRESULT hr = D3DXCompileShaderFromFile( pinnedFileName, &macros[0], includePtr,
 			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
 			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, NULL );
 

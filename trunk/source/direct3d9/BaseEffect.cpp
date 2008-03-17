@@ -22,6 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <vcclr.h>
+#include <memory>
 
 #include "../DataStream.h"
 
@@ -634,14 +635,16 @@ namespace Direct3D9
 	DataStream^ BaseEffect::GetValue( EffectHandle^ parameter, int bytes )
 	{
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		void* data = new char[bytes];
+		std::auto_ptr<char> data = new char[bytes];
 
-		HRESULT hr = InternalPointer->GetValue( handle, data, bytes );
+		HRESULT hr = InternalPointer->GetValue( handle, data.get(), bytes );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
+		{
 			return nullptr;
+		}
 
-		DataStream^ ds = gcnew DataStream( data, bytes, true, true, false );
+		DataStream^ ds = gcnew DataStream( data.release(), bytes, true, true, false );
 		ds->TakeOwnership();
 		return ds;
 	}

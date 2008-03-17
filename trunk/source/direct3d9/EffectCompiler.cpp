@@ -71,9 +71,9 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		D3DXMACRO* macros = Macro::Marshal( defines, handles );
+		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 
-		HRESULT hr = D3DXCreateEffectCompiler( reinterpret_cast<LPCSTR>( pinnedData ), data->Length, macros, includePtr,
+		HRESULT hr = D3DXCreateEffectCompiler( reinterpret_cast<LPCSTR>( pinnedData ), data->Length, &macros[0], includePtr,
 			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
 		
 		//clean up after marshaling macros
@@ -101,9 +101,9 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		D3DXMACRO* macros = Macro::Marshal( defines, handles );
+		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 
-		HRESULT hr = D3DXCreateEffectCompilerFromFile( reinterpret_cast<LPCTSTR>( pinnedFile ), macros, includePtr,
+		HRESULT hr = D3DXCreateEffectCompilerFromFile( reinterpret_cast<LPCTSTR>( pinnedFile ), &macros[0], includePtr,
 			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
 		
 		//clean up after marshaling macros
