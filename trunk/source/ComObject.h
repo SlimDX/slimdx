@@ -48,7 +48,7 @@ namespace SlimDX
 	/// <summary>
 	/// The base class for all SlimDX types which represent COM interfaces.
 	/// </summary>
-	public ref class ComObject abstract
+	public ref class ComObject abstract : System::IDisposable
 	{
 	private:
 		IUnknown* m_Unknown;		

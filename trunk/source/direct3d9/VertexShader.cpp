@@ -67,7 +67,6 @@ namespace Direct3D9
 			throw gcnew Direct3D9Exception( Result::Last );
 		
 		m_ConstantTable = ConstantTable::FromPointer( device, constantTable );
-		device->Release();
 	}
 
 	VertexShader^ VertexShader::FromPointer( IDirect3DVertexShader9* pointer )
