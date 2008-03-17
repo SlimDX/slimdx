@@ -23,6 +23,8 @@
 
 using System::Runtime::InteropServices::OutAttribute;
 
+#include <vector>
+
 namespace SlimDX
 {
 	namespace Direct3D9
@@ -30,8 +32,8 @@ namespace SlimDX
 		public value class Macro : System::IEquatable<Macro>
 		{
 		internal:
-			static D3DXMACRO* Marshal( array<Macro>^ macros, [Out] array<System::Runtime::InteropServices::GCHandle>^% handles );
-			static void Unmarshal( D3DXMACRO* macros, array<System::Runtime::InteropServices::GCHandle>^ handles );
+			static std::vector<D3DXMACRO> Marshal( array<Macro>^ macros, [Out] array<System::Runtime::InteropServices::GCHandle>^% handles );
+			static void Unmarshal( std::vector<D3DXMACRO>& macros, array<System::Runtime::InteropServices::GCHandle>^ handles );
 
 		public:
 			property System::String^ Name;
