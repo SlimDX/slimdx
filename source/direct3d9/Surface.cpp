@@ -302,11 +302,7 @@ namespace Direct3D9
 			surface->InternalPointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ), reinterpret_cast<const RECT*>( &rectangle ) );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
-		{
-			if( result != NULL )
-				result->Release();
 			return nullptr;
-		}
 
 		return gcnew DataStream( result );
 	}
@@ -319,11 +315,7 @@ namespace Direct3D9
 			surface->InternalPointer, NULL, reinterpret_cast<const RECT*>( &rectangle ) );
 	
 		if( RECORD_D3D9( hr ).IsFailure )
-		{
-			if( result != NULL )
-				result->Release();
 			return nullptr;
-		}
 
 		return gcnew DataStream( result );
 	}
@@ -336,11 +328,7 @@ namespace Direct3D9
 			surface->InternalPointer, NULL, NULL );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
-		{
-			if( result != NULL )
-				result->Release();
 			return nullptr;
-		}
 
 		return gcnew DataStream( result );
 	}

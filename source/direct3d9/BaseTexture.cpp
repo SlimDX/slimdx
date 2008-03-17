@@ -48,11 +48,7 @@ namespace Direct3D9
 			texture->InternalPointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ) );
 
 		if( RECORD_D3D9( hr ).IsFailure )
-		{
-			if( buffer != NULL )
-				buffer->Release();
 			return nullptr;
-		}
 
 		return gcnew DataStream( buffer );
 	}
@@ -65,11 +61,7 @@ namespace Direct3D9
 			texture->InternalPointer, NULL );
 
 		if( RECORD_D3D9( hr ).IsFailure )
-		{
-			if( buffer != NULL )
-				buffer->Release();
 			return nullptr;
-		}
 
 		return gcnew DataStream( buffer );
 	}

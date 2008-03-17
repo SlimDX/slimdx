@@ -322,8 +322,8 @@ namespace Direct3D9
 		RECORD_D3D9( hr );
 		D3DINDEXBUFFER_DESC description;
 		hr = indexBuffer->GetDesc( &description );
-		RECORD_D3D9( hr );
 		indexBuffer->Release();
+		RECORD_D3D9( hr );
 		
 		hr = InternalPointer->LockIndexBuffer( static_cast<DWORD>( flags ), &data );
 		
@@ -349,8 +349,8 @@ namespace Direct3D9
 		RECORD_D3D9( hr );
 		D3DVERTEXBUFFER_DESC description;
 		hr = vertexBuffer->GetDesc( &description );
-		RECORD_D3D9( hr );
 		vertexBuffer->Release();
+		RECORD_D3D9( hr );
 		
 		hr = InternalPointer->LockVertexBuffer( static_cast<DWORD>( flags ), &data );
 		

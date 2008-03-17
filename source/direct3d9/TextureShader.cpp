@@ -172,15 +172,10 @@ namespace Direct3D9
 	DataStream^ TextureShader::ConstantBuffer::get()
 	{
 		ID3DXBuffer *result = NULL;
-
 		HRESULT hr = InternalPointer->GetConstantBuffer( &result );
 		
 		if( RECORD_D3D9(hr).IsFailure )
-		{
-			if( result != NULL )
-				result->Release();
 			return nullptr;
-		}
 
 		return gcnew DataStream( result );
 	}
@@ -188,15 +183,10 @@ namespace Direct3D9
 	DataStream^ TextureShader::FunctionStream::get()
 	{
 		ID3DXBuffer *result = NULL;
-
 		HRESULT hr = InternalPointer->GetFunction( &result );
 		
 		if( RECORD_D3D9(hr).IsFailure )
-		{
-			if( result != NULL )
-				result->Release();
 			return nullptr;
-		}
 
 		return gcnew DataStream( result );
 	}
