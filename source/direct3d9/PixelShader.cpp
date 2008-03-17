@@ -69,7 +69,6 @@ namespace Direct3D9
 			throw gcnew Direct3D9Exception( Result::Last );
 		
 		m_ConstantTable = ConstantTable::FromPointer( device, constantTable );
-		device->Release();
 	}
 
 	PixelShader^ PixelShader::FromPointer( IDirect3DPixelShader9* pointer )

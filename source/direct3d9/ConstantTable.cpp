@@ -101,12 +101,6 @@ namespace Direct3D9
 
 		return gcnew ConstantTable( device, constantTable );
 	}
-
-	ConstantTable::~ConstantTable()
-	{
-		delete m_Device;
-		m_Device = nullptr;
-	}
 	
 	EffectHandle^ ConstantTable::GetConstant(SlimDX::Direct3D9::EffectHandle ^handle, int index)
 	{

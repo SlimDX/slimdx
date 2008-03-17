@@ -50,7 +50,6 @@ namespace SlimDX
 			static ConstantTable^ FromPointer( IDirect3DDevice9* device, ID3DXConstantTable* constantTable );
 
 		public:
-			~ConstantTable();
 			static ConstantTable^ FromPointer( System::IntPtr pointer );
 
 			EffectHandle^ GetConstant( EffectHandle^ handle, int index );
