@@ -635,7 +635,7 @@ namespace Direct3D9
 	DataStream^ BaseEffect::GetValue( EffectHandle^ parameter, int bytes )
 	{
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		std::auto_ptr<char> data = new char[bytes];
+		std::auto_ptr<char> data( new char[bytes] );
 
 		HRESULT hr = InternalPointer->GetValue( handle, data.get(), bytes );
 		
