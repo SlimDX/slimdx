@@ -25,6 +25,9 @@
 
 namespace SlimDX
 {
+	/// <summary>
+	/// Provides a stream interface to a buffer located in unmanaged memory.
+	/// </summary>
 	public ref class DataStream : public System::IO::Stream
 	{
 		private:
