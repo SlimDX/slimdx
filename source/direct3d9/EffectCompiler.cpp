@@ -72,8 +72,9 @@ namespace Direct3D9
 
 		array<GCHandle>^ handles;
 		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
-		HRESULT hr = D3DXCreateEffectCompiler( reinterpret_cast<LPCSTR>( pinnedData ), data->Length, &macros[0], includePtr,
+		HRESULT hr = D3DXCreateEffectCompiler( reinterpret_cast<LPCSTR>( pinnedData ), data->Length, macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
 		
 		//clean up after marshaling macros
@@ -102,8 +103,9 @@ namespace Direct3D9
 
 		array<GCHandle>^ handles;
 		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
-		HRESULT hr = D3DXCreateEffectCompilerFromFile( reinterpret_cast<LPCTSTR>( pinnedFile ), &macros[0], includePtr,
+		HRESULT hr = D3DXCreateEffectCompilerFromFile( reinterpret_cast<LPCTSTR>( pinnedFile ), macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
 		
 		//clean up after marshaling macros
