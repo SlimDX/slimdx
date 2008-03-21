@@ -109,8 +109,9 @@ namespace Direct3D9
 
 		array<GCHandle>^ handles;
 		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
-		HRESULT hr = D3DXGatherFragments( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, &macros[0], includePtr,
+		HRESULT hr = D3DXGatherFragments( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &fragmentBuffer, &errorBuffer );
 		
 		//clean up after marshaling macros
@@ -145,8 +146,9 @@ namespace Direct3D9
 
 		array<GCHandle>^ handles;
 		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
-		HRESULT hr = D3DXGatherFragmentsFromFile( reinterpret_cast<LPCTSTR>( pinnedFile ), &macros[0], includePtr,
+		HRESULT hr = D3DXGatherFragmentsFromFile( reinterpret_cast<LPCTSTR>( pinnedFile ), macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &fragmentBuffer, &errorBuffer );
 		
 		//clean up after marshaling macros

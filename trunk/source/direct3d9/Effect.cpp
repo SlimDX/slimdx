@@ -101,8 +101,9 @@ namespace Direct3D9
 		ID3DXEffectPool* effectPool = pool != nullptr ? pool->InternalPointer : NULL;
 		array<GCHandle>^ handles;
 		std::vector<D3DXMACRO> macros = Macro::Marshal( preprocessorDefines, handles );
+		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
-		HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinnedData, memory->Length, &macros[0], includePtr,
+		HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinnedData, memory->Length, macrosPtr, includePtr,
 			skipString, static_cast<DWORD>( flags ), effectPool, &effect, &errorBuffer );
 		
 		//clean up after marshaling macros
@@ -184,8 +185,9 @@ namespace Direct3D9
 		ID3DXEffectPool* effectPool = pool != nullptr ? pool->InternalPointer : NULL;
 		array<GCHandle>^ handles;
 		std::vector<D3DXMACRO> macros = Macro::Marshal( preprocessorDefines, handles );
+		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
-		HRESULT hr = D3DXCreateEffectFromFileEx( device->InternalPointer, pinnedName, &macros[0], includePtr,
+		HRESULT hr = D3DXCreateEffectFromFileEx( device->InternalPointer, pinnedName, macrosPtr, includePtr,
 			skipString, static_cast<DWORD>( flags ), effectPool, &effect, &errorBuffer );
 		
 		//clean up after marshaling macros
