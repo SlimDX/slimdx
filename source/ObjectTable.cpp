@@ -72,8 +72,6 @@ namespace SlimDX
 		if( object == nullptr )
 			throw gcnew ArgumentNullException( "object" );
 
-		object->IsDefaultPool = false;
-
 		if( Configuration::EnableObjectTracking )
 			object->SetSource( gcnew StackTrace( 2, true ) );
 

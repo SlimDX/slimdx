@@ -37,7 +37,7 @@ namespace SlimDX
 		{
 			COMOBJECT(IDirect3DIndexBuffer9, IndexBuffer);
 
-			IndexBufferDescription description;
+			IndexBufferDescription m_Description;
 			void InitDescription();
 			
 		public:
@@ -50,7 +50,7 @@ namespace SlimDX
 			
 			property IndexBufferDescription Description
 			{
-				IndexBufferDescription get() { return description; }
+				IndexBufferDescription get() { return m_Description; }
 			}
 		};
 	}

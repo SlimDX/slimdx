@@ -90,23 +90,30 @@ namespace Direct3D9
 		return gcnew VertexBuffer( pointer );
 	}
 
-	VertexBuffer::VertexBuffer( SlimDX::Direct3D9::Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool )
+	VertexBuffer::VertexBuffer( SlimDX::Direct3D9::Device^ device, int sizeInBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool )
 	{
 		IDirect3DVertexBuffer9* vb;
-		HRESULT hr = device->InternalPointer->CreateVertexBuffer( sizeBytes, static_cast<DWORD>( usage ), 
+		HRESULT hr = device->InternalPointer->CreateVertexBuffer( sizeInBytes, static_cast<DWORD>( usage ), 
 			static_cast<DWORD>( format ), static_cast<D3DPOOL>( pool ), &vb, NULL );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 		
-		D3DVERTEXBUFFER_DESC description;
-		hr = vb->GetDesc( &description );
-		
 		if( RECORD_D3D9(hr).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 		
 		Construct(vb);
-		InitDescription();
+
+		//set description from local info instead of getting the desc
+		m_Description.Format = Format::VertexData;
+		m_Description.Type = SlimDX::Direct3D9::ResourceType::VertexBuffer;
+		m_Description.Usage = usage;
+		m_Description.Pool = pool;
+		m_Description.SizeInBytes = sizeInBytes;
+		m_Description.FVF = format;
+
+		if( m_Description.Pool == Pool::Default )
+			this->IsDefaultPool = true;
 	}
 
 	void VertexBuffer::InitDescription()

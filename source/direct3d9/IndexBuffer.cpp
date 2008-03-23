@@ -84,31 +84,34 @@ namespace Direct3D9
 		return gcnew IndexBuffer( pointer );
 	}
 
-	IndexBuffer::IndexBuffer( SlimDX::Direct3D9::Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, SlimDX::Direct3D9::Pool pool, bool sixteenBit )
+	IndexBuffer::IndexBuffer( SlimDX::Direct3D9::Device^ device, int sizeInBytes, SlimDX::Direct3D9::Usage usage, SlimDX::Direct3D9::Pool pool, bool sixteenBit )
 	{
 		IDirect3DIndexBuffer9* ib;
 		D3DFORMAT format = sixteenBit ? D3DFMT_INDEX16 : D3DFMT_INDEX32;
-		HRESULT hr = device->InternalPointer->CreateIndexBuffer( sizeBytes, static_cast<DWORD>( usage ), format, static_cast<D3DPOOL>( pool ), &ib, NULL );
+		HRESULT hr = device->InternalPointer->CreateIndexBuffer( sizeInBytes, static_cast<DWORD>( usage ), format, static_cast<D3DPOOL>( pool ), &ib, NULL );
 		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(ib);
-		InitDescription();
+
+		//set description from local info instead of getting the desc
+		m_Description.Format = static_cast<SlimDX::Direct3D9::Format>( format );
+		m_Description.Type = SlimDX::Direct3D9::ResourceType::IndexBuffer;
+		m_Description.Usage = usage;
+		m_Description.Pool = pool;
+		m_Description.SizeInBytes = sizeInBytes;
+
+		if( m_Description.Pool == Pool::Default )
+			this->IsDefaultPool = true;
 	}
 	
 	void IndexBuffer::InitDescription()
 	{
-		D3DINDEXBUFFER_DESC desc;
-		HRESULT hr = static_cast<IDirect3DIndexBuffer9*>( InternalPointer )->GetDesc( &desc );
+		IndexBufferDescription desc;
+		HRESULT hr = InternalPointer->GetDesc( reinterpret_cast<D3DINDEXBUFFER_DESC*>( &desc ) );
 		RECORD_D3D9( hr );
 		
-		description.Format = static_cast<SlimDX::Direct3D9::Format>( desc.Format );
-		description.Type = static_cast<SlimDX::Direct3D9::ResourceType>( desc.Type );
-		description.Usage = static_cast<SlimDX::Direct3D9::Usage>( desc.Usage );
-		description.Pool = static_cast<SlimDX::Direct3D9::Pool>( desc.Pool );
-		description.SizeInBytes = desc.Size;
-
-		if( description.Pool == Pool::Default )
+		if( m_Description.Pool == Pool::Default )
 			this->IsDefaultPool = true;
 	}
 	
@@ -118,7 +121,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->Lock( offset, size, &lockedPtr, static_cast<DWORD>( flags ) );
 		RECORD_D3D9( hr );
 		
-		int lockedSize = size == 0 ? description.SizeInBytes : size;
+		int lockedSize = size == 0 ? m_Description.SizeInBytes : size;
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		DataStream^ stream = gcnew DataStream( lockedPtr, lockedSize, true, !readOnly, false );
