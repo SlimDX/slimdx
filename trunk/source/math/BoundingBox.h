@@ -32,6 +32,9 @@ namespace SlimDX
 	value class Plane;
 	value class Ray;
 
+	/// <summary>
+	/// An axis aligned bounding box, specified by minimum and maximum vectors.
+	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 	public value class BoundingBox : System::IEquatable<BoundingBox>

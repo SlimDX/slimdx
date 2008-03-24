@@ -22,6 +22,7 @@
 
 #include <d3d9.h>
 #include <d3dx9.h>
+#include <stdexcept>
 
 #include "DataStream.h"
 #include "Utilities.h"
@@ -33,7 +34,6 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	///
 	DataStream::DataStream( ID3DXBuffer* buffer )
 	{
 		if( buffer->GetBufferSize() < 1 )
@@ -48,7 +48,6 @@ namespace SlimDX
 		m_ID3DXBuffer = buffer;
 	}
 	
-	///
 	DataStream::DataStream( void* buffer, Int64 sizeInBytes, bool canRead, bool canWrite, bool makeCopy )
 	{
 		if( sizeInBytes < 1 )
@@ -78,7 +77,15 @@ namespace SlimDX
 		if( sizeInBytes < 1 )
 			throw gcnew ArgumentOutOfRangeException( "sizeInBytes" );
 	
-		m_Buffer = new char[ static_cast<int>( sizeInBytes ) ];
+		try
+		{
+			m_Buffer = new char[ static_cast<int>( sizeInBytes ) ];
+		}
+		catch (std::bad_alloc&)
+		{
+			throw gcnew OutOfMemoryException();
+		}
+
 		m_Size = sizeInBytes;
 		
 		m_OwnsBuffer = true;
@@ -107,7 +114,7 @@ namespace SlimDX
 
 	DataStream::~DataStream()
 	{
-		DataStream::!DataStream();
+		this->!DataStream();
 	}
 	
 	DataStream::!DataStream()
@@ -129,7 +136,7 @@ namespace SlimDX
 
 	char* DataStream::RawPointer::get()
 	{
-		return (m_Buffer);
+		return m_Buffer;
 	}
 
 	ID3DXBuffer* DataStream::GetD3DBuffer()
@@ -183,6 +190,10 @@ namespace SlimDX
 			throw gcnew NotSupportedException();
 
 		int size = Marshal::SizeOf( T::typeid );
+
+		if( m_Position + size > m_Size )
+			throw gcnew InvalidOperationException();
+
 		memcpy( m_Buffer + m_Position, &value, size );
 		m_Position += size;
 	}
@@ -205,22 +216,24 @@ namespace SlimDX
 	}
 
 	generic<typename T> where T : value class
-	void DataStream::WriteRange( array<T>^ data, int startIndex, int count )
+	void DataStream::WriteRange( array<T>^ data, int offset, int count )
 	{
 		if( !m_CanWrite )
 			throw gcnew NotSupportedException();
-			
-		if( startIndex < 0 || startIndex > data->Length - 1 )
-			throw gcnew ArgumentOutOfRangeException( "startIndex" );
+		
+		if( data == nullptr )
+			throw gcnew ArgumentNullException( "data" );
+		if( offset < 0 || offset > data->Length - 1 )
+			throw gcnew ArgumentOutOfRangeException( "offset" );
 		if( count < 0 )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 		if( count == 0 )
 			count = data->Length;
-		if( startIndex + count > data->Length )
-			throw gcnew InvalidOperationException();
+		if( offset + count > data->Length )
+			throw gcnew ArgumentOutOfRangeException();
 
 		int size = count * Marshal::SizeOf( T::typeid );
-		pin_ptr<T> pinnedData = &data[startIndex];
+		pin_ptr<T> pinnedData = &data[offset];
 		memcpy( m_Buffer + m_Position, pinnedData, size );
 		m_Position += size;
 	}
@@ -229,12 +242,17 @@ namespace SlimDX
 	{
 		if( !m_CanWrite )
 			throw gcnew NotSupportedException();
-			
+		
+		if( source == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "source" );
+		if( byteCount < 0 )
+			throw gcnew ArgumentOutOfRangeException( "byteCount" );
+
 		memcpy( m_Buffer + m_Position, source.ToPointer(), static_cast<size_t>( byteCount ) );
 		m_Position += byteCount;
 	}
 	
-  generic<typename T> where T : value class
+	generic<typename T> where T : value class
 	T DataStream::Read()
 	{
 		if( !m_CanRead )
@@ -243,7 +261,7 @@ namespace SlimDX
 		T result;
 		int size = Marshal::SizeOf( T::typeid );
 
-		if( Length > 0 && Length - m_Position < size )
+		if( Length - m_Position < size )
 			throw gcnew InvalidOperationException();
 
 		memcpy( &result, m_Buffer + m_Position, size );
@@ -262,9 +280,7 @@ namespace SlimDX
 		if( count < 0 || offset + count > buffer->Length )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 
-		int actualCount = count;
-		if( Length > 0 )
-			actualCount = min( static_cast<int>(Length - m_Position), count );
+		int actualCount = min( static_cast<int>(Length - m_Position), count );
 
 		pin_ptr<Byte> pinnedBuffer = &buffer[offset];
 		memcpy( pinnedBuffer, m_Buffer + m_Position, actualCount );
@@ -272,17 +288,17 @@ namespace SlimDX
 		m_Position += actualCount;
 		return actualCount;
 	}
-		
+
 	generic<typename T> where T : value class
 	array<T>^ DataStream::ReadRange( int count )
 	{
 		if( !m_CanRead )
 			throw gcnew NotSupportedException();
+		if( count < 0 )
+			throw gcnew ArgumentOutOfRangeException( "count" );
 			
 		int elementSize = Marshal::SizeOf( T::typeid );
-		int actualCount = count;
-		if( Length > 0 )
-			actualCount = min( static_cast<int>(Length - m_Position) / elementSize, count );
+		int actualCount = min( static_cast<int>(Length - m_Position) / elementSize, count );
 		array<T>^ result = gcnew array<T>( actualCount );
 
 		pin_ptr<T> pinnedBuffer = &result[0];
@@ -300,6 +316,16 @@ namespace SlimDX
 	{
 		SLIMDX_UNREFERENCED_PARAMETER(value);
 		throw gcnew NotSupportedException("DataStream objects cannot be resized.");
+	}
+
+	Int64 DataStream::Position::get()
+	{
+		return m_Position;
+	}
+
+	void DataStream::Position::set( System::Int64 value )
+	{
+		Seek( value, System::IO::SeekOrigin::Begin );
 	}
 	
 	Int64 DataStream::Length::get()

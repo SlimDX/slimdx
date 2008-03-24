@@ -28,14 +28,36 @@ namespace SlimDX
 	value class Matrix;
 	value class Vector3;
 	
+	/// <summary>
+	/// Defines a quaternion.
+	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 	public value class Quaternion : System::IEquatable<Quaternion>
 	{
 	public:
+		/// <summary>
+		/// Gets or sets the X component of the quaternion.
+		/// </summary>
+		/// <value>The X component of the quaternion.</value>
 		property float X;
+
+		/// <summary>
+		/// Gets or sets the Y component of the quaternion.
+		/// </summary>
+		/// <value>The Y component of the quaternion.</value>
 		property float Y;
+
+		/// <summary>
+		/// Gets or sets the Z component of the quaternion.
+		/// </summary>
+		/// <value>The Z component of the quaternion.</value>
 		property float Z;
+
+		/// <summary>
+		/// Gets or sets the W component of the quaternion.
+		/// </summary>
+		/// <value>The W component of the quaternion.</value>
 		property float W;
 
 		Quaternion( float x, float y, float z, float w );

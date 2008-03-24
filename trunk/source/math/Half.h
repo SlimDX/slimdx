@@ -23,6 +23,9 @@
 
 namespace SlimDX
 {
+	/// <summary>
+	/// A half precision (16 bit) floating point value.
+	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 	public value class Half

@@ -25,13 +25,30 @@ using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
+	/// <summary>
+	/// Defines a three component vector, using half precision floating point coordinates.
+	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 	public value class Half3 : System::IEquatable<Half3>
 	{
 	public:
+		/// <summary>
+		/// Gets or sets the X component of the vector.
+		/// </summary>
+		/// <value>The X component of the vector.</value>
 		property Half X;
+
+		/// <summary>
+		/// Gets or sets the Y component of the vector.
+		/// </summary>
+		/// <value>The Y component of the vector.</value>
 		property Half Y;
+
+		/// <summary>
+		/// Gets or sets the Z component of the vector.
+		/// </summary>
+		/// <value>The Z component of the vector.</value>
 		property Half Z;
 
 		Half3( Half value );

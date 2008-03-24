@@ -27,6 +27,9 @@ namespace SlimDX
 	//       adding new enumerations or renaming existing ones, please make sure
 	//       the ordering is maintained.
 	
+	/// <summary>
+	/// Describes how one bounding volume contains another.
+	/// </summary>
 	public enum class ContainmentType : System::Int32
 	{
 		Disjoint,
@@ -34,6 +37,9 @@ namespace SlimDX
 		Intersects
 	};
 	
+	/// <summary>
+	/// Describes the result of an intersection with a plane in three dimensions.
+	/// </summary>
 	public enum class PlaneIntersectionType : System::Int32
 	{
 		Back,

@@ -25,6 +25,10 @@
 
 namespace SlimDX
 {
+	/// <summary>
+	/// Provides access to the Direct3D performance API, which allows applications to gather performance
+	/// data and integrate with PIX for Windows in order to perform detailed analysis.
+	/// </summary>
 	public ref class Performance sealed
 	{
 	private:

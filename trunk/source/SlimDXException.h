@@ -28,7 +28,7 @@
 namespace SlimDX
 {
 	/// <summary>
-	/// Represents errors that occur in SlimDX.
+	/// The base class for errors that occur in SlimDX.
 	/// </summary>
 	[System::Serializable]
 	public ref class SlimDXException : public System::Exception

@@ -29,6 +29,11 @@
 #include "Utilities.h"
 #include "InternalHelpers.h"
 
+#ifdef XMLDOCS
+using System::IntPtr;
+using System::Diagnostics::StackTrace;
+#endif
+
 #define COMOBJECT_BASE(nativeType) \
 	internal: \
 	static property System::Guid NativeInterface { System::Guid get() { return Utilities::ConvertNativeGuid( IID_ ## nativeType ); } } \
@@ -84,7 +89,7 @@ namespace SlimDX
 		}
 		
 		/// <summary>
-		/// Gets an <see cref="System.IntPtr">IntPtr</see> to the underlying native COM interface.
+		/// Gets an <see cref="IntPtr">IntPtr</see> to the underlying native COM interface.
 		/// </summary>
 		property System::IntPtr ComPointer
 		{
@@ -92,7 +97,7 @@ namespace SlimDX
 		}
 		
 		/// <summary>
-		/// Gets a <see cref="System.Diagnostics.StackTrace">stack trace</see> to the location
+		/// Gets a <see cref="StackTrace">stack trace</see> to the location
 		/// that the object was created.
 		/// </summary>
 		property System::Diagnostics::StackTrace^ CreationSource

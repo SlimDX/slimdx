@@ -35,7 +35,7 @@ namespace SlimDX
 	value class Vector3;
 	
 	/// <summary>
-	/// Defines a vector with four components.
+	/// Defines a four component vector.
 	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]

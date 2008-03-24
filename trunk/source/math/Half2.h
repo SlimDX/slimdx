@@ -25,12 +25,24 @@ using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
+	/// <summary>
+	/// Defines a two component vector, using half precision floating point coordinates.
+	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 	public value class Half2 : System::IEquatable<Half2>
 	{
 	public:
+		/// <summary>
+		/// Gets or sets the X component of the vector.
+		/// </summary>
+		/// <value>The X component of the vector.</value>
 		property Half X;
+
+		/// <summary>
+		/// Gets or sets the Y component of the vector.
+		/// </summary>
+		/// <value>The Y component of the vector.</value>
 		property Half Y;
 
 		Half2( Half value );

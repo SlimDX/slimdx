@@ -25,10 +25,10 @@ namespace SlimDX
 {
 	ref class DataStream;
 
-	/// <remarks>
+	/// <summary>
 	/// A DataRectangle provides supporting information for a DataStream whose
 	/// data is organized within two dimensions (a rectangle).
-	/// </remarks>
+	/// </summary>
 	public ref class DataRectangle
 	{
 	private:
