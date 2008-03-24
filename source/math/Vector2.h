@@ -33,7 +33,7 @@ namespace SlimDX
     value class Viewport;
 
 	/// <summary>
-	/// Defines a vector with two components.
+	/// Defines a two component vector.
 	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]

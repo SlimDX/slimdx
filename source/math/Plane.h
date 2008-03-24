@@ -33,7 +33,7 @@ namespace SlimDX
 	value class Quaternion;
 
 	/// <summary>
-	/// Defines a 3D mathematical plane.
+	/// Defines a plane in three dimensions.
 	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]

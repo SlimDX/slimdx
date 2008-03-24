@@ -33,6 +33,9 @@ namespace SlimDX
 	value class Vector3;
 	value class Vector4;
 	
+	/// <summary>
+	/// Defines a 4x4 matrix.
+	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 	public value class Matrix : System::IEquatable<Matrix>

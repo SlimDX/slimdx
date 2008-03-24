@@ -25,10 +25,10 @@ namespace SlimDX
 {
 	ref class DataStream;
 	
-	/// <remarks>
+	/// <summary>
 	/// A DataBox provides supporting information for a DataStream whose
 	/// data is organized within three dimensions (a box).
-	/// </remarks>
+	/// </summary>
 	public ref class DataBox
 	{
 	private:

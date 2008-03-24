@@ -23,9 +23,10 @@
 
 namespace SlimDX
 {
-	/// <remarks>
+	/// <summary>
 	/// A three-component (RGB) color value; each component is a float in the range [0,1].
-	/// </remarks>
+	/// </summary>
+	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 	public value class Color3 : System::IEquatable<Color3>
 	{
 	private:

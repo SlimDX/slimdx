@@ -31,6 +31,9 @@ namespace SlimDX
 	value class Vector3;
 	value class Vector4;
 		
+	/// <summary>
+	/// A four-component (RGBA) color value; each component is a float in the range [0,1].
+	/// </summary>
 	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 	public value class Color4
 	{
@@ -38,9 +41,24 @@ namespace SlimDX
 		static Color4 FromUnmanaged( const D3DXCOLOR &color );
 
 	public:
+		/// <summary>
+		/// Gets or sets the color's red component.
+		/// </summary>
 		property float Red;
+
+		/// <summary>
+		/// Gets or sets the color's green component.
+		/// </summary>
 		property float Green;
+
+		/// <summary>
+		/// Gets or sets the color's blue component.
+		/// </summary>
 		property float Blue;
+
+		/// <summary>
+		/// Gets or sets the color's alpha component.
+		/// </summary>
 		property float Alpha;
 
 		Color4( float alpha, float red, float green, float blue );

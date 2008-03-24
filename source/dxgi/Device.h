@@ -41,7 +41,7 @@ namespace SlimDX
 		public:
 			/// <summary>
 			/// Gets or sets the device's GPU thread priority.
-			/// <summary>
+			/// </summary>
 			property int GpuThreadPriority
 			{
 				int get();
@@ -64,7 +64,7 @@ namespace SlimDX
 			
 			/// <summary>
 			/// Gets the residency status of a list of resources.
-			/// <summary>
+			/// </summary>
 			/// <param name="resources">The resources to query.</param>
 			/// <returns>A list of residency status values, one for each entry in the input resources list. The result will be
 			/// null on failure.</returns>

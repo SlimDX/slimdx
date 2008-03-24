@@ -44,6 +44,7 @@ namespace SlimDX
 		public:
 			/// <summary>
 			/// Gets the surface's description.
+			/// </summary>
 			property SurfaceDescription Description
 			{
 				SurfaceDescription get();

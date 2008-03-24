@@ -30,6 +30,9 @@ namespace SlimDX
 	value class Plane;
 	value class Ray;
 	
+	/// <summary>
+	/// A bounding sphere, specified by a center vector and a radius.
+	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 	public value class BoundingSphere : System::IEquatable<BoundingSphere>

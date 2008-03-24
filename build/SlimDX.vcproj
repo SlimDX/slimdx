@@ -123,10 +123,10 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;NDEBUG;D3D_DEBUG_INFO;WINVER=0x501;_WIN32_WINNT=0x501;DIRECTINPUT_VERSION=0x0800"
+				PreprocessorDefinitions="WIN32;NDEBUG;D3D_DEBUG_INFO;WINVER=0x501;_WIN32_WINNT=0x501;DIRECTINPUT_VERSION=0x0800;XMLDOCS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
-				GenerateXMLDocumentationFiles="false"
+				GenerateXMLDocumentationFiles="true"
 				XMLDocumentationFileName="$(IntDir)\"
 				WarningLevel="4"
 				Detect64BitPortabilityProblems="true"

@@ -25,14 +25,36 @@ using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
+	/// <summary>
+	/// Defines a four component vector, using half precision floating point coordinates.
+	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 	public value class Half4 : System::IEquatable<Half4>
 	{
 	public:
+		/// <summary>
+		/// Gets or sets the X component of the vector.
+		/// </summary>
+		/// <value>The X component of the vector.</value>
 		property Half X;
+
+		/// <summary>
+		/// Gets or sets the Y component of the vector.
+		/// </summary>
+		/// <value>The Y component of the vector.</value>
 		property Half Y;
+
+		/// <summary>
+		/// Gets or sets the Z component of the vector.
+		/// </summary>
+		/// <value>The Z component of the vector.</value>
 		property Half Z;
+
+		/// <summary>
+		/// Gets or sets the W component of the vector.
+		/// </summary>
+		/// <value>The W component of the vector.</value>
 		property Half W;
 
 		Half4( Half value );

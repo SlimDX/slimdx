@@ -68,7 +68,7 @@ namespace SlimDX
 			
 			/// <summary>
 			/// Determines if a device interface for a graphics component is supported by the adapter.
-			/// </v>
+			/// </summary>
 			/// <param name="type">The device interface type.</param>
 			/// <returns>True if the device interface is supported, false otherwise.</returns>
 			bool IsInterfaceSupported( System::Type^ type );

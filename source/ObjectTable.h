@@ -27,6 +27,10 @@ namespace SlimDX
 {
 	ref class ComObject;
 
+#ifdef XMLDOCS
+	ref class Configuration;
+#endif
+
 	/// <summary>
 	/// Maintains a list of all the <see cref="ComObject">COM objects</see> managed by SlimDX.
 	/// </summary>
@@ -55,7 +59,7 @@ namespace SlimDX
 		
 		/// <summary>
 		/// Adds a COM object to the table. This will set the object's CreationSource parameter if
-		/// object tracking (<see cref="Configuration.EnableObjectTracking"/>) is on.
+		/// <see cref="Configuration">object tracking</see> is on.
 		/// </summary>
 		/// <param name="object">The object to add.</param>
 		static void Add( ComObject^ object );

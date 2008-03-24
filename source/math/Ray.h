@@ -31,6 +31,9 @@ namespace SlimDX
 	value class BoundingSphere;
 	value class Plane;
 
+	/// <summary>
+	/// Defines a ray in three dimensions, specified by a starting position and a direction.
+	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 	public value class Ray : System::IEquatable<Ray>

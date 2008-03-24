@@ -32,7 +32,7 @@ namespace SlimDX
 	value class Vector2;
 	
 	/// <summary>
-	/// Defines a vector with three components.
+	/// Defines a three component vector.
 	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]

@@ -39,7 +39,7 @@ namespace SlimDX
 		public:
 			/// <summary>
 			/// Gets the state packet number.
-			/// <summar>
+			/// </summary>
 			/// <remarks>
 			/// The packet number indicates whether there have been any changes in the state of the controller. If the value
 			/// does not change in sequentially returned State structures, the controller state has not changed. 

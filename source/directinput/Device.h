@@ -64,7 +64,7 @@ namespace SlimDX
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectInput::Device"/> class.
 			/// </summary>
-			/// <param name="device">A pointer to a previously created DirectInput device.</param>
+			/// <param name="pointer">A pointer to a previously created DirectInput device.</param>
 			static Device^ FromPointer( System::IntPtr pointer );
 
 			/// <summary>

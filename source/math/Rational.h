@@ -23,9 +23,9 @@
 
 namespace SlimDX
 {
-	/// <remarks>
+	/// <summary>
 	/// Defines a rational number as a numerator / denominator pair.
-	/// </remarks>
+	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 	public value class Rational : System::IEquatable<Rational>
