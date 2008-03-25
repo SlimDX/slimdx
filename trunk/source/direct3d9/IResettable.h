@@ -25,9 +25,13 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Interface for classes which can respond to device lost and reset events.</summary>
 		public interface struct IResettable
 		{
+			/// <summary>Should be called when the Direct3D device has been lost.</summary>
 			virtual Result OnLostDevice() = 0;
+
+			/// <summary>Should be called when the Direct3D device has been reset.</summary>
 			virtual Result OnResetDevice() = 0;
 		};
 	}

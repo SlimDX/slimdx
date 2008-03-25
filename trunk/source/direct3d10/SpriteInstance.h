@@ -31,12 +31,15 @@ namespace SlimDX
 	namespace Direct3D10
 	{
 		ref class ShaderResourceView;
+#ifdef XMLDOCS
+		ref class Sprite;
+#endif
 
 		/// <remarks>
 		/// Describes instance data for a single sprite rendered by the
-		/// <see cref="SlimDX.Direct3D10.Sprite"/> interface.
+		/// <see cref="Sprite"/> interface.
 		/// </remarks>
-		/// <unmanaged counterpart="D3DX10_SPRITE" complete="yes"/>
+		/// <unmanaged>D3DX10_SPRITE</unmanaged>
 		public ref class SpriteInstance
 		{
 			Matrix transform;
