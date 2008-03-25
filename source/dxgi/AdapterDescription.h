@@ -25,9 +25,9 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		/// <remarks>
+		/// <summary>
 		/// Describes various properties of an Adapter.
-		/// </remarks>
+		/// </summary>
 		public value class AdapterDescription : System::IEquatable<AdapterDescription>
 		{
 			System::String^ m_Description;

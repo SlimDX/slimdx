@@ -505,9 +505,9 @@ namespace SlimDX
 		ref class Sprite;
 #endif
 
-		/// <remarks>
+		/// <summary>
 		/// Flags that control the behavior of <see cref="Sprite"/> rendering.
-		/// </remarks>
+		/// </summary>
 		/// <unmanaged>D3DX10_SPRITE_FLAG</unmanaged>
 		[System::Flags]
 		public enum class SpriteFlags : System::Int32

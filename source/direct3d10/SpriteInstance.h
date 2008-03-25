@@ -35,10 +35,10 @@ namespace SlimDX
 		ref class Sprite;
 #endif
 
-		/// <remarks>
+		/// <summary>
 		/// Describes instance data for a single sprite rendered by the
 		/// <see cref="Sprite"/> interface.
-		/// </remarks>
+		/// </summary>
 		/// <unmanaged>D3DX10_SPRITE</unmanaged>
 		public ref class SpriteInstance
 		{

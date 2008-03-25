@@ -31,9 +31,9 @@ namespace SlimDX
 	{
 		ref class Adapter;
 		
-		/// <remarks>
+		/// <summary>
 		/// An object that produces image data.
-		/// </remarks>
+		/// </summary>
 		public ref class Device : public ComObject
 		{
 			COMOBJECT(IDXGIDevice, Device);

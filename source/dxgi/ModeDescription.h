@@ -29,9 +29,9 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		/// <remarks>
+		/// <summary>
 		/// Describes a display mode.
-		/// </remarks>
+		/// </summary>
 		public value class ModeDescription : System::IEquatable<ModeDescription>
 		{
 			int m_Width;

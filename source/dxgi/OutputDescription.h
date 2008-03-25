@@ -29,9 +29,9 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		/// <remarks>
+		/// <summary>
 		/// Describes various properties of an Output.
-		/// </remarks>
+		/// </summary>
 		public value class OutputDescription : System::IEquatable<OutputDescription>
 		{
 			System::String^ m_DeviceName;

@@ -38,9 +38,9 @@ namespace SlimDX
 		value class ModeDescription;
 		value class OutputDescription;
 		
-		/// <remarks>
+		/// <summary>
 		/// Represents the output of an adapter (such as a monitor).
-		/// </remarks>
+		/// </summary>
 		public ref class Output : public ComObject
 		{
 			COMOBJECT(IDXGIOutput, Output);

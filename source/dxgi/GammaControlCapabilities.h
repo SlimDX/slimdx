@@ -25,9 +25,9 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		/// <remarks>
+		/// <summary>
 		/// Describes gamma control capabilities.
-		/// </remarks>
+		/// </summary>
 		public value class GammaControlCapabilities : System::IEquatable<GammaControlCapabilities>
 		{
 			bool m_ScaleAndOffsetSupported;

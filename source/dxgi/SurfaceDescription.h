@@ -28,9 +28,9 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		/// <remarks>
+		/// <summary>
 		/// Describes properties of a surface.
-		/// </remarks>
+		/// </summary>
 		public value class SurfaceDescription : System::IEquatable<SurfaceDescription>
 		{
 			int m_Width;

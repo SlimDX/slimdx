@@ -1592,9 +1592,9 @@ namespace SlimDX
 			Compressed = D3DXF_FILEFORMAT_COMPRESSED
 		};
 		
-		/// <remarks>
+		/// <summary>
 		/// Z-buffer usage types.
-		/// </remarks>
+		/// </summary>
 		public enum class ZBufferType
 		{
 			/// <summary>
