@@ -27,6 +27,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Implements line drawing using textured triangles.</summary>
+		/// <unmanaged>ID3DXLine</unmanaged>
 		public ref class Line : ComObject, IResettable
 		{
 			COMOBJECT(ID3DXLine, Line);

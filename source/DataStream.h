@@ -69,7 +69,7 @@ namespace SlimDX
 		/// <param name="sizeInBytes">The size of the buffer to be allocated, in bytes.</param>
 		/// <param name="canRead"><c>true</c> if reading from the buffer should be allowed, <c>false</c> otherwise.</param>
 		/// <param name="canWrite"><c>true</c> if writing to the buffer should be allowed, <c>false</c> otherwise.</param>
-		/// <exception cref="ArgumentOutOfRangeException"><i>sizeInBytes</i> is less than 1.</exception>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="sizeInBytes" /> is less than 1.</exception>
 		DataStream( System::Int64 sizeInBytes, bool canRead, bool canWrite );
 
 		/// <summary>
@@ -79,8 +79,8 @@ namespace SlimDX
 		/// <param name="sizeInBytes">The size of the buffer provided, in bytes.</param>
 		/// <param name="canRead"><c>true</c> if reading from the buffer should be allowed, <c>false</c> otherwise.</param>
 		/// <param name="canWrite"><c>true</c> if writing to the buffer should be allowed, <c>false</c> otherwise.</param>
-		/// <exception cref="ArgumentNullException"><i>userBuffer</i> is a zero pointer.</exception>
-		/// <exception cref="ArgumentOutOfRangeException"><i>sizeInBytes</i> is less than 1.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="userBuffer" /> is a zero pointer.</exception>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="sizeInBytes" /> is less than 1.</exception>
 		DataStream( System::IntPtr userBuffer, System::Int64 sizeInBytes, bool canRead, bool canWrite );
 		
 		~DataStream();
@@ -94,6 +94,7 @@ namespace SlimDX
 		/// Writes a single value to the stream, and advances the current position
 		/// within this stream by the number of bytes written.
 		/// </summary>
+		/// <typeparam name="T">The type of the value to be written to the stream.</typeparam>
 		/// <param name="value">The value to write to the stream.</param>
 		/// <exception cref="NotSupportedException">This stream does not support writing.</exception>
 		/// <exception cref="InvalidOperationException">There is not enough space
@@ -109,20 +110,22 @@ namespace SlimDX
 		/// <param name="offset">The zero-based byte offset in buffer at which to begin copying bytes to the current stream.</param>
 		/// <param name="count">The number of bytes to be written to the current stream.</param>
 		/// <exception cref="NotSupportedException">This stream does not support writing.</exception>
-		/// <exception cref="ArgumentNullException"><i>buffer</i> is a null reference.</exception>
-		/// <exception cref="ArgumentOutOfRangeException"><i>offset</i> or <i>count</i> leads outside the bounds of <i>buffer</i>.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="buffer" /> is a null reference.</exception>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="offset" /> or <paramref name="count" /> leads outside the bounds of <paramref name="buffer" />.</exception>
 		virtual void Write( array<System::Byte>^ buffer, int offset, int count ) override;
 
 		/// <summary>
 		/// Writes an array of values to the current stream, and advances the current position
 		/// within this stream by the number of bytes written.
 		/// </summary>
+		/// <typeparam name="T">The type of the values to be written to the stream.</typeparam>
 		/// <param name="data">An array of values to be written to the stream.</param>
 		/// <param name="offset">The zero-based offset in data at which to begin copying values to the current stream.</param>
-		/// <param name="count">The number of values to be written to the current stream. If this is zero, all of <i>data</i> will be written.</param>
+		/// <param name="count">The number of values to be written to the current stream. If this is zero,
+		/// all of the contents <paramref name="data" /> will be written.</param>
 		/// <exception cref="NotSupportedException">This stream does not support writing.</exception>
-		/// <exception cref="ArgumentNullException"><i>data</i> is a null reference.</exception>
-		/// <exception cref="ArgumentOutOfRangeException"><i>offset</i> or <i>count</i> leads outside the bounds of <i>data</i>.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="data" /> is a null reference.</exception>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="offset" /> or <paramref name="count" /> leads outside the bounds of <paramref name="data" />.</exception>
 		generic<typename T> where T : value class
 		void WriteRange( array<T>^ data, int offset, int count );
 
@@ -132,7 +135,7 @@ namespace SlimDX
 		/// </summary>
 		/// <param name="data">An array of values to be written to the current stream.</param>
 		/// <exception cref="NotSupportedException">This stream does not support writing.</exception>
-		/// <exception cref="ArgumentNullException"><i>data</i> is a null reference.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="data" /> is a null reference.</exception>
 		generic<typename T> where T : value class
 		void WriteRange( array<T>^ data ) { WriteRange( data, 0, 0 ); }
 		
@@ -143,14 +146,15 @@ namespace SlimDX
 		/// <param name="source">A pointer to the location to start copying from.</param>
 		/// <param name="count">The number of bytes to copy from source to the current stream.</param>
 		/// <exception cref="NotSupportedException">This stream does not support writing.</exception>
-		/// <exception cref="ArgumentNullException"><i>source</i> is a zero pointer.</exception>
-		/// <exception cref="ArgumentOutOfRangeException"><i>count</i> is less than zero.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="source" /> is a zero pointer.</exception>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="count" /> is less than zero.</exception>
 		void WriteRange( System::IntPtr source, System::Int64 count );
 
 		/// <summary>
 		/// Reads a single value from the current stream and advances the current
 		/// position within this stream by the number of bytes read.
 		/// </summary>
+		/// <typeparam name="T">The type of the value to be read from the stream.</typeparam>
 		/// <returns>The value that was read.</returns>
 		/// <exception cref="NotSupportedException">This stream does not support reading.</exception>
 		/// <exception cref="InvalidOperationException">There is not enough space in the current
@@ -167,17 +171,18 @@ namespace SlimDX
 		/// the data read from the current stream.</param>
 		/// <param name="count">The maximum number of bytes to be read from the current stream.</param>
 		/// <exception cref="NotSupportedException">This stream does not support reading.</exception>
-		/// <exception cref="ArgumentNullException"><i>buffer</i> is a null reference.</exception>
-		/// <exception cref="ArgumentOutOfRangeException"><i>offset</i> or <i>count</i> leads outside the bounds of <i>buffer</i>.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="buffer" /> is a null reference.</exception>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="offset" /> or <paramref name="count" /> leads outside the bounds of <paramref name="buffer" />.</exception>
 		virtual int Read( array<System::Byte>^ buffer, int offset, int count ) override;
 
 		/// <summary>
 		/// Reads an array of values from the current stream, and advances the current position
 		/// within this stream by the number of bytes written.
 		/// </summary>
+		/// <typeparam name="T">The type of the values to be read from the stream.</typeparam>
 		/// <returns>An array of values that was read from the current stream.</returns> 
 		/// <exception cref="NotSupportedException">This stream does not support reading.</exception>
-		/// <exception cref="ArgumentOutOfRangeException"><i>count</i> is less than zero.</exception>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="count" /> is less than zero.</exception>
 		generic<typename T> where T : value class
 		array<T>^ ReadRange( int count );
 

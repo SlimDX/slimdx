@@ -27,6 +27,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Defines error result codes that are returned by Direct3D 9 functions.</summary>
 		public ref class Error sealed
 		{
 		private:

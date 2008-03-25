@@ -19,7 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#ifdef WRAP_DSOUND
 
 #include <windows.h>
 #include <mmreg.h>
@@ -148,3 +148,5 @@ namespace DirectSound
 	}
 }
 }
+
+#endif //WRAP_DSOUND

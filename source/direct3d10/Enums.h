@@ -501,10 +501,14 @@ namespace SlimDX
 			TextureCube = D3D10_SRV_DIMENSION_TEXTURECUBE
 		};
 		
+#ifdef XMLDOCS
+		ref class Sprite;
+#endif
+
 		/// <remarks>
-		/// Flags that control the behavior of <see cref="SlimDX.Direct3D10.Sprite"/> rendering.
+		/// Flags that control the behavior of <see cref="Sprite"/> rendering.
 		/// </remarks>
-		/// <unmanaged counterpart="D3DX10_SPRITE_FLAG" complete="yes"/>
+		/// <unmanaged>D3DX10_SPRITE_FLAG</unmanaged>
 		[System::Flags]
 		public enum class SpriteFlags : System::Int32
 		{
