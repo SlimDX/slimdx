@@ -219,9 +219,9 @@ namespace SlimDX
 			ReadOnly = DXGI_USAGE_READ_ONLY 
 		};
 		
-		/// <remarks>
+		/// <summary>
 		/// Values which control a swap chain's window association behavior.
-		/// </remarks>
+		/// </summary>
 		[System::Flags]
 		public enum class WindowAssociationFlags : System::Int32
 		{

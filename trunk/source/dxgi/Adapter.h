@@ -32,9 +32,9 @@ namespace SlimDX
 		ref class Output;
 		value class AdapterDescription;
 
-		/// <remarks>
+		/// <summary>
 		/// A display subsystem (one or more GPUs, DACs, and video memory).
-		/// </remarks>
+		/// </summary>
 		public ref class Adapter : public ComObject
 		{
 			COMOBJECT(IDXGIAdapter, Adapter);

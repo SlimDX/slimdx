@@ -34,9 +34,9 @@ namespace SlimDX
 	{
 		value class SurfaceDescription;
 		
-		/// <remarks>
+		/// <summary>
 		/// A Surface represents container for image data.
-		/// </remarks>
+		/// </summary>
 		public ref class Surface : public DeviceChild
 		{
 			COMOBJECT(IDXGISurface, Surface);

@@ -29,9 +29,9 @@ namespace SlimDX
 	{
 		ref class Device;
 		
-		/// <remarks>
+		/// <summary>
 		/// An object that is bound to a Device.
-		/// </remarks>
+		/// </summary>
 		public ref class DeviceChild : public ComObject 
 		{
 			COMOBJECT(ID3D10DeviceChild, DeviceChild);

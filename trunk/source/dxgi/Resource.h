@@ -30,9 +30,9 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		/// <remarks>
+		/// <summary>
 		/// A sharable resource.
-		/// </remarks>
+		/// </summary>
 		public ref class Resource : public DeviceChild
 		{
 			COMOBJECT(IDXGIResource, Resource);

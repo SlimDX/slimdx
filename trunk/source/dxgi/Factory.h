@@ -34,10 +34,10 @@ namespace SlimDX
 	{
 		ref class Adapter;
 		
-		/// <remarks>
+		/// <summary>
 		/// Provides access to connected adapters and window associations. A Factory
 		/// is also required to create most DXGI objects.
-		/// </remarks>
+		/// </summary>
 		public ref class Factory : public ComObject
 		{
 			COMOBJECT(IDXGIFactory, Factory);
