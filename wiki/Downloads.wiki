@@ -3,6 +3,8 @@
 
 The March 2008 release of SlimDX is now out. If you're new to this whole thing, read the [http://slimdx.mdxinfo.com/wiki/index.php?title=Getting_Started Getting Started] document on our wiki. It should help get you moving. Other pages of interest include:
 
+[http://slimdx.mdxinfo.com/wiki/index.php?title=Main_Page SlimDX Main Page] -- The front page of our wiki. This page makes it fairly straightforward to get to all of the other pages related to this project, both in the wiki and outside of it.
+
 [http://slimdx.mdxinfo.com/wiki/index.php?title=Conventions Conventions] -- Describes the basic conventions used in SlimDX. Invaluable for understanding many of the basic decisions driving development.
 
 [http://slimdx.mdxinfo.com/wiki/index.php?title=Debugging_Tips Debugging Tips] -- Tips on how to work on and debug applications using SlimDX. It's a really good idea to be familiar with the contents of this page, and check on it every so often, because it is updated periodically.
@@ -41,3 +43,12 @@ We've added a prototype Sample Framework in this release, similar in basic spiri
 The Configuration class is supposed to change its values dynamically at runtime based on whether the DEBUG symbol has been defined. This does not work. It's suggested that you explicitly set the values of these options.
 == 64 Bit Support ==
 64 bit support is still not available in this version. We do expect to have it for the next release. Please contact us if you are willing to help develop the 64 bit version.
+
+= Communication =
+There are several different ways to get in touch with the SlimDX team:
+  * We suggest that questions be posted to the [http://www.gamedev.net/community/forums/forum.asp?forum_id=10 DirectX forum] on GameDev.Net, as all of the SlimDX developers are regulars there. You may at your discretion prefix your thread title with [SlimDX].
+  * If you believe you have found a bug, or you have a feature request, please enter it on this site under the [http://code.google.com/p/slimdx/issues/list Issues tab].
+  * The developers are also typically available in the #gamedev and #graphicsdev IRC channels on AfterNET (irc.afternet.org).
+  * You can email the developer list, slimdx-devel@googlegroups.com. This is *not* a recommended method of communicating with us, but may be used as a last ditch effort.
+
+If you're interested in working on SlimDX itself, we would be glad to have the help. Send a private message to [http://www.gamedev.net/community/forums/viewprofile.asp?ID=19810 Promit] on the GameDev.Net forums or email slimdx-devel@googlegroups.com if you want to contribute.
