@@ -11,10 +11,13 @@ The March 2008 release of SlimDX is now out. The following packages are availabl
 
 [http://slimdx.googlecode.com/files/SlimDX%20Symbols%20%28Mar%2008%29.zip Debugging Symbols] -- Download if you know why you need them.
 
+[http://code.google.com/p/slimdx/downloads/list?can=1 Older files] are still available, in case you have some need for them.
 
 = Remarks =
 
-This release of SlimDX has been quite significantly refactored and redesigned. It's much nicer and smoother to use, and overall a vast improvement. There are tons of new features too; check the [http://slimdx.mdxinfo.com/wiki/index.php?title=Release_Notes Release Notes] for details.
+This release of SlimDX has been quite significantly refactored and redesigned. It's much nicer and smoother to use, and overall a vast improvement. There are tons of new features too; check the [http://slimdx.mdxinfo.com/wiki/index.php?title=Release_Notes Release Notes] for details. Note that the March 2008 version of DirectX is necessary for this release. You can get it in one of two ways:
+[http://www.microsoft.com/downloads/details.aspx?familyid=572BE8A6-263A-4424-A7FE-69CFF1A5B180&displaylang=en DirectX SDK for March 2008] -- The full SDK, which is strongly recommended for anyone doing any DirectX work at all. A little under 450 MB in size.
+[http://www.microsoft.com/downloads/details.aspx?FamilyId=740AC79A-5B72-447D-84F9-EE6407ED1A91&displaylang=en DirectX End User Redistributable] -- This is all that's actually necessary for people to either develop using SlimDX or run SlimDX based applications. Just under 70 MB.
 
 *There are major breaking changes in this version.* The object management model has been changed. This was not done lightly, and it was an unfortunate change, but it was better than the alternatives. Previously, SlimDX continuously spawned new instances of objects from functions like GetDevice, and it was necessary to manually dispose _every last one_. We felt that this was inconsistent with typical .NET programming style, and extremely error prone besides. Instead, starting from this March release, each distinct SlimDX object must only be disposed once. Functions like GetDevice will _not_ create a new instance, but will instead return a reference to the already existing reference. All of these references are kept in the ObjectTable class, which can be used to track leaked SlimDX objects. They are removed from the table when the object is disposed. It's also suggested that you enable Configuration.DetectDoubleDispose, as this will help catch bugs related to these changes.
 
