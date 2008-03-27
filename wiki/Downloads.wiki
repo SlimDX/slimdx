@@ -1,0 +1,27 @@
+#summary SlimDX -- March 2008 Release
+= Files to Download =
+
+The March 2008 release of SlimDX is now out. The following packages are available to download:
+
+[http://slimdx.googlecode.com/files/SlimDX%20Samples%20%28Mar%2008%29.zip Samples] -- *Recommended!* Includes the SlimDX binaries, and all of the currently available samples.
+
+[http://slimdx.googlecode.com/files/SlimDX%20%28Mar%2008%29.zip Binaries] -- Contains just the SlimDX binaries.
+
+[http://slimdx.googlecode.com/files/SlimDX.chm Documentation] -- In CHM format. Still in the preliminary stages, but useful nonetheless.
+
+[http://slimdx.googlecode.com/files/SlimDX%20Symbols%20%28Mar%2008%29.zip Debugging Symbols] -- Download if you know why you need them.
+
+
+= Remarks =
+
+This release of SlimDX has been quite significantly refactored and redesigned. It's much nicer and smoother to use, and overall a vast improvement. There are tons of new features too; check the [http://slimdx.mdxinfo.com/wiki/index.php?title=Release_Notes Release Notes] for details.
+
+*There are major breaking changes in this version.* The object management model has been changed. This was not done lightly, and it was an unfortunate change, but it was better than the alternatives. Previously, SlimDX continuously spawned new instances of objects from functions like GetDevice, and it was necessary to manually dispose _every last one_. We felt that this was inconsistent with typical .NET programming style, and extremely error prone besides. Instead, starting from this March release, each distinct SlimDX object must only be disposed once. Functions like GetDevice will _not_ create a new instance, but will instead return a reference to the already existing reference. All of these references are kept in the ObjectTable class, which can be used to track leaked SlimDX objects. They are removed from the table when the object is disposed. It's also suggested that you enable Configuration.DetectDoubleDispose, as this will help catch bugs related to these changes.
+
+We've added a prototype Sample Framework in this release, similar in basic spirit to the DXUT library. It's still in an early phase, and will be refined as we continue development. This library, like the rest of SlimDX, is under the MIT license and we encourage all of you to use as little or as much of it as you like.
+
+= Known Issues =
+== Debug Configuration ==
+The Configuration class is supposed to change its values dynamically at runtime based on whether the DEBUG symbol has been defined. This does not work. It's suggested that you explicitly set the values of these options.
+== 64 Bit Support ==
+64 bit support is still not available in this version. We do expect to have it for the next release. Please contact us if you are willing to help develop the 64 bit version.
