@@ -50,5 +50,4 @@ There are several different ways to get in touch with the SlimDX team:
   * If you believe you have found a bug, or you have a feature request, please enter it on this site under the [http://code.google.com/p/slimdx/issues/list Issues tab].
   * The developers are also typically available in the #gamedev and #graphicsdev IRC channels on AfterNET (irc.afternet.org).
   * You can email the developer list, slimdx-devel@googlegroups.com. This is *not* a recommended method of communicating with us, but may be used as a last ditch effort.
-
 If you're interested in working on SlimDX itself, we would be glad to have the help. Send a private message to [http://www.gamedev.net/community/forums/viewprofile.asp?ID=19810 Promit] on the GameDev.Net forums or email slimdx-devel@googlegroups.com if you want to contribute.
