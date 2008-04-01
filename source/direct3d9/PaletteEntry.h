@@ -25,6 +25,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Specifies the color and usage of an entry in a logical palette.</summary>
+		/// <unmanaged>PALETTEENTRY</unmanaged>
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class PaletteEntry : System::IEquatable<PaletteEntry>
 		{

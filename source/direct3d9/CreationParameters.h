@@ -27,6 +27,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Describes the creation parameters for a device.</summary>
+		/// <unmanaged>D3DDEVICE_CREATION_PARAMETERS</unmanaged>
 		public value class CreationParameters : System::IEquatable<CreationParameters>
 		{
 		public:

@@ -27,6 +27,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Describes a triangular high-order patch.</summary>
+		/// <unmanaged>D3DTRIPATCH_INFO</unmanaged>
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class TrianglePatchInfo : System::IEquatable<TrianglePatchInfo>
 		{
@@ -45,6 +47,8 @@ namespace SlimDX
 			static bool Equals( TrianglePatchInfo% value1, TrianglePatchInfo% value2 );
 		};
 
+		/// <summary>Describes a rectangular high-order patch.</summary>
+		/// <unmanaged>D3DRECTPATCH_INFO</unmanaged>
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class RectanglePatchInfo : System::IEquatable<RectanglePatchInfo>
 		{
@@ -66,6 +70,9 @@ namespace SlimDX
 			static bool Equals( RectanglePatchInfo% value1, RectanglePatchInfo% value2 );
 		};
 
+		//TODO: This is D3DX, and really needs to move alongside PatchMesh.
+		/// <summary>Structure that contains the attributes of a patch mesh.</summary>
+		/// <unmanaged>D3DXPATCHINFO</unmanaged>
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class PatchInfo : System::IEquatable<PatchInfo>
 		{

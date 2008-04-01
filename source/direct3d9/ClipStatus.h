@@ -27,6 +27,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Describes the current clip status.</summary>
+		/// <unmanaged>D3DCLIPSTATUS9</unmanaged>
 		public value class ClipStatus : System::IEquatable<ClipStatus>
 		{
 		public:
