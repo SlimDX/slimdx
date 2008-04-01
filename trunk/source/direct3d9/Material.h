@@ -27,6 +27,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Specifies material properties.</summary>
+		/// <unmanaged>D3DMATERIAL9</unmanaged>
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class Material : System::IEquatable<Material>
 		{

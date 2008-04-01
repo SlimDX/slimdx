@@ -30,6 +30,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Defines a set of lighting properties.</summary>
+		/// <unmanaged>D3DLIGHT9</unmanaged>
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class Light : System::IEquatable<Light>
 		{

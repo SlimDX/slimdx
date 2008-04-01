@@ -25,6 +25,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Contains red, green, and blue ramp data.</summary>
+		/// <unmanaged>D3DGAMMARAMP</unmanaged>
 		public ref class GammaRamp
 		{
 		private:

@@ -27,6 +27,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Describes the presentation parameters.</summary>
+		/// <unmanaged>D3DPRESENT_PARAMETERS</unmanaged>
 		public ref class PresentParameters : System::ICloneable, System::IEquatable<PresentParameters^>
 		{
 		internal:
