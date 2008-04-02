@@ -50,6 +50,8 @@ namespace SlimDX
 			CatmullRom = D3DBASIS_CATMULL_ROM,
 		};
 		
+		/// <summary>Defines the supported blend mode.</summary>
+		/// <unmanaged>D3DBLEND</unmanaged>
 		public enum class Blend : System::Int32
 		{
 			Zero = D3DBLEND_ZERO,
@@ -88,6 +90,8 @@ namespace SlimDX
 			BlendFactor = D3DPBLENDCAPS_BLENDFACTOR,
 		};
 		
+		/// <summary>Defines the supported blend operations.</summary>
+		/// <unmanaged>D3DBLENDOP</unmanaged>
 		public enum class BlendOperation : System::Int32
 		{
 			Add = D3DBLENDOP_ADD,
@@ -109,6 +113,8 @@ namespace SlimDX
 			ReadScanline = D3DCAPS_READ_SCANLINE,
 		};
 
+		/// <summary>Driver capability flags.</summary>
+		/// <unmanaged>D3DCAPS2</unmanaged>
 		[System::Flags]
 		public enum class Caps2 : System::Int32
 		{
@@ -119,6 +125,8 @@ namespace SlimDX
 			CanAutoGenMipMap = D3DCAPS2_CANAUTOGENMIPMAP
 		};
 
+		/// <summary>Driver capability flags.</summary>
+		/// <unmanaged>D3DCAPS3</unmanaged>
 		[System::Flags]
 		public enum class Caps3 : System::Int32
 		{
@@ -173,6 +181,8 @@ namespace SlimDX
 			Simplification = D3DXCLEAN_SIMPLIFICATION
 		};
 
+		/// <summary>These flags identify a surface to reset when calling Device.Clear.</summary>
+		/// <unmanaged>D3DCLEAR</unmanaged>
 		[System::Flags]
 		public enum class ClearFlags : System::Int32
 		{
@@ -217,9 +227,8 @@ namespace SlimDX
 			All = Alpha | Blue | Green | Red
 		};
 
-		/// <summary>
-		/// Comparison operations.
-		/// </summary>
+		/// <summary>Comparison operations.</summary>
+		/// <unmanaged>D3DCMPFUNC</unmanaged>
 		public enum class Compare
 		{
 			/// <summary>
@@ -276,6 +285,8 @@ namespace SlimDX
 			Always = D3DPCMPCAPS_ALWAYS,
 		};
 
+		/// <summary>A combination of one or more flags that control the device creation behavior.</summary>
+		/// <unmanaged>D3DCREATE</unmanaged>
 		[System::Flags]
 		public enum class CreateFlags : System::Int32
 		{
@@ -292,6 +303,8 @@ namespace SlimDX
 			SoftwareVertexProcessing = D3DCREATE_SOFTWARE_VERTEXPROCESSING,
 		};
 		
+		/// <summary>Defines the faces of a cubemap.</summary>
+		/// <unmanaged>D3DCUBEMAP_FACES</unmanaged>
 		public enum class CubeMapFace : System::Int32
 		{
 			PositiveX = D3DCUBEMAP_FACE_POSITIVE_X,
@@ -302,6 +315,8 @@ namespace SlimDX
 			NegativeZ = D3DCUBEMAP_FACE_NEGATIVE_Z
 		};
 		
+		/// <summary>Defines the supported culling modes.</summary>
+		/// <unmanaged>D3DCULL</unmanaged>
 		public enum class Cull : System::Int32
 		{
 			Clockwise = D3DCULL_CW,
@@ -309,6 +324,8 @@ namespace SlimDX
 			None = D3DCULL_NONE
 		};
 
+		/// <summary>Driver cursor capability flags.</summary>
+		/// <unmanaged>D3DCURSORCAPS</unmanaged>
 		[System::Flags]
 		public enum class CursorCaps : System::Int32
 		{
@@ -316,6 +333,11 @@ namespace SlimDX
 			LowRes = D3DCURSORCAPS_LOWRES,
 		};
 		
+		/// <summary>
+		/// Defines the vertex declaration method which is a predefined operation performed by the
+		/// tessellator (or any procedural geometry routine on the vertex data during tessellation).
+		/// </summary>
+		/// <unmanaged>D3DDECLMETHOD</unmanaged>
 		public enum class DeclarationMethod : System::Byte
 		{
 			Default = D3DDECLMETHOD_DEFAULT,
@@ -327,6 +349,8 @@ namespace SlimDX
 			LookupPresampled = D3DDECLMETHOD_LOOKUPPRESAMPLED
 		};
 
+		/// <summary>Defines a vertex declaration data type.</summary>
+		/// <unmanaged>D3DDECLTYPE</unmanaged>
 		public enum class DeclarationType : System::Byte
 		{
 			Float1 = D3DDECLTYPE_FLOAT1,
@@ -367,6 +391,8 @@ namespace SlimDX
 			Float16_4 = D3DDTCAPS_FLOAT16_4,
 		};
 
+		/// <summary>Identifies the intended use of vertex data.</summary>
+		/// <unmanaged>D3DDECLUSAGE</unmanaged>
 		public enum class DeclarationUsage : System::Byte
 		{
 			Position = D3DDECLUSAGE_POSITION,
@@ -385,6 +411,8 @@ namespace SlimDX
 			Sample = D3DDECLUSAGE_SAMPLE
 		};
 		
+		/// <summary>Defines the degree of the variables in the equation that describes a curve.</summary>
+		/// <unmanaged>D3DDEGREETYPE</unmanaged>
 		public enum class Degree : System::Int32
 		{
 			Linear = D3DDEGREE_LINEAR,
@@ -393,6 +421,8 @@ namespace SlimDX
 			Quintic = D3DDEGREE_QUINTIC,
 		};
 
+		/// <summary>Driver capability flags.</summary>
+		/// <unmanaged>D3DDEVCAPS2</unmanaged>
 		[System::Flags]
 		public enum class DevCaps2
 		{
@@ -430,6 +460,8 @@ namespace SlimDX
 			NPatches = D3DDEVCAPS_NPATCHES,
 		};
 		
+		/// <summary>Defines device types.</summary>
+		/// <unmanaged>D3DDEVTYPE</unmanaged>
 		public enum class DeviceType : System::Int32
 		{
 			Hardware = D3DDEVTYPE_HAL,

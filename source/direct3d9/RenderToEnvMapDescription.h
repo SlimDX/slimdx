@@ -27,6 +27,12 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+#ifdef XMLDOCS
+		ref class RenderToEnvironmentMap;
+#endif
+
+		/// <summary>Describes an off-screen render target used by <see cref="RenderToEnvironmentMap" /></summary>.
+		/// <unmanaged>D3DXRTE_DESC</unmanaged>
 		public value class RenderToEnvironmentMapDescription : System::IEquatable<RenderToEnvironmentMapDescription>
 		{
 		public:

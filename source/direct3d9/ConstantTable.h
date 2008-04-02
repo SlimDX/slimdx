@@ -37,6 +37,10 @@ namespace SlimDX
 		ref class EffectHandle;
 		ref class Device;
 		
+		/// <summary>
+		/// Used to access the constant table. This table contains the variables that are used by high-level language shaders and effects.
+		/// </summary>
+		/// <unmanaged>ID3DXConstantTable</unmanaged>
 		public ref class ConstantTable : public ComObject
 		{
 			COMOBJECT(ID3DXConstantTable, ConstantTable);

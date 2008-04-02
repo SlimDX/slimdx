@@ -27,6 +27,12 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+#ifdef XMLDOCS
+		ref class RenderToSurface;
+#endif
+
+		/// <summary>Describes an off-screen render target used by <see cref="RenderToSurface" /></summary>.
+		/// <unmanaged>D3DXRTS_DESC</unmanaged>
 		public value class RenderToSurfaceDescription : System::IEquatable<RenderToSurfaceDescription>
 		{
 		public:

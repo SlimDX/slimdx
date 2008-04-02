@@ -25,6 +25,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Contains information about the placement and orientation of a glyph in a character cell.</summary>
+		/// <unmanaged>GLYPHMETRICSFLOAT</unmanaged>
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class GlyphMetricsFloat : System::IEquatable<GlyphMetricsFloat>
 		{

@@ -31,6 +31,8 @@ namespace SlimDX
 	{
 		ref class Device;
 		
+		/// <summary>Applications use the methods of the Resource class to query and prepare resources.</summary>
+		/// <unmanaged>IDirect3DResource9</unmanaged>
 		public ref class Resource abstract : public ComObject
 		{
 			COMOBJECT_BASE(IDirect3DResource9);

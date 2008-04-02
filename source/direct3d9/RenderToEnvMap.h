@@ -28,6 +28,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Used to generalize the process of rendering to environment maps.</summary>
+		/// <unmanaged>ID3DXRenderToEnvMap</unmanaged>
 		public ref class RenderToEnvironmentMap : ComObject, IResettable
 		{
 			COMOBJECT(ID3DXRenderToEnvMap, RenderToEnvironmentMap);

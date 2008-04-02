@@ -27,6 +27,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Defines the attributes of a font.</summary>
+		/// <unmanaged>D3DXFONT_DESC</unmanaged>
 		public value class FontDescription : System::IEquatable<FontDescription>
 		{
 		public:

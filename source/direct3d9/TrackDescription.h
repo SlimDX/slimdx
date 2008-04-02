@@ -27,6 +27,10 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>
+		/// Describes an animation track and specifies blending weight, speed, and position for the track at a given time.
+		/// </summary>
+		/// <unmanaged>D3DXTRACK_DESC</unmanaged>
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class TrackDescription : System::IEquatable<TrackDescription>
 		{

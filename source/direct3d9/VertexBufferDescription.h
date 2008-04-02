@@ -27,6 +27,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Describes a vertex buffer.</summary>
+		/// <unmanaged>D3DVERTEXBUFFER_DESC</unmanaged>
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class VertexBufferDescription : System::IEquatable<VertexBufferDescription>
 		{

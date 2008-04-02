@@ -27,6 +27,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Describes an index buffer.</summary>
+		/// <unmanaged>D3DINDEXBUFFER_DESC</unmanaged>
 		public value class IndexBufferDescription : System::IEquatable<IndexBufferDescription>
 		{
 		public:

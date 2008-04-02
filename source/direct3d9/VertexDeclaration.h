@@ -31,6 +31,8 @@ namespace SlimDX
 	{
 		ref class Device;
 
+		/// <summary>Applications use the methods of the VertexDeclaration class to encapsulate the vertex shader declaration.</summary>
+		/// <unmanaged>IDirect3DVertexDeclaration9</unmanaged>
 		public ref class VertexDeclaration : public ComObject
 		{
 			COMOBJECT(IDirect3DVertexDeclaration9, VertexDeclaration);
