@@ -34,6 +34,8 @@ namespace SlimDX
 	{
 		value class ImageInformation;
 
+		/// <summary>Applications use the methods of the Surface class to query and prepare surfaces.</summary>
+		/// <unmanaged>IDirect3DSurface9</unmanaged>
 		public ref class Surface : public Resource
 		{
 			COMOBJECT(IDirect3DSurface9, Surface);

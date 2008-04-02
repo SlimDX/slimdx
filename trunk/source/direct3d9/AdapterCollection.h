@@ -27,6 +27,7 @@ namespace SlimDX
 	{
 		ref class AdapterInformation;
 
+		/// <summary>Implements a read-only collection of AdapterInformation instances.</summary>
 		public ref class AdapterCollection : public System::Collections::Generic::ICollection<AdapterInformation^>
 		{
 		private:

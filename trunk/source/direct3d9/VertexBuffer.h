@@ -32,6 +32,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Applications use the methods of the VertexBuffer class to manipulate vertex buffer resources.</summary>
+		/// <unmanaged>IDirect3DVertexBuffer9</unmanaged>
 		public ref class VertexBuffer : public Resource
 		{
 			COMOBJECT( IDirect3DVertexBuffer9, VertexBuffer );

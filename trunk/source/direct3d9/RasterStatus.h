@@ -25,6 +25,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Describes the raster status.</summary>
+		/// <unmanaged>D3DRASTER_STATUS</unmanaged>
 		public value class RasterStatus : System::IEquatable<RasterStatus>
 		{
 		public:

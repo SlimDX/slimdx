@@ -33,6 +33,8 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
+		/// <summary>Used to generalize the process of rendering to surfaces.</summary>
+		/// <unmanaged>ID3DXRenderToSurface</unmanaged>
 		public ref class RenderToSurface : public ComObject, IResettable
 		{
 			COMOBJECT(ID3DXRenderToSurface, RenderToSurface);

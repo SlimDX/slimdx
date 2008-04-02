@@ -25,6 +25,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Contains information identifying the adapter.</summary>
+		/// <unmanaged>D3DADAPTER_IDENTIFIER9</unmanaged>
 		public ref class AdapterDetails
 		{
 		public:

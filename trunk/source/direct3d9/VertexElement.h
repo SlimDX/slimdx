@@ -27,6 +27,9 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Defines the vertex data layout. Each vertex can contain one or more data types,
+		/// and each data type is described by a vertex element.</summary>
+		/// <unmanaged>D3DVERTEXELEMENT9</unmanaged>
 		public value class VertexElement : System::IEquatable<VertexElement>
 		{
 		private:

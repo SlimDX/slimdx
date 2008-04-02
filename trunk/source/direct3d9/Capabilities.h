@@ -27,6 +27,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Describes the vertex shader capabilities of a device.</summary>
+		/// <unmanaged>D3DVSHADERCAPS2_0</unmanaged>
 		public value class VertexShader20Caps : System::IEquatable<VertexShader20Caps>
 		{
 		public:
@@ -44,6 +46,8 @@ namespace SlimDX
 			static bool Equals( VertexShader20Caps% value1, VertexShader20Caps% value2 );
 		};
 
+		/// <summary>Describes the pixel shader capabilities of a device.</summary>
+		/// <unmanaged>D3DPSHADERCAPS2_0</unmanaged>
 		public value class PixelShader20Caps : System::IEquatable<PixelShader20Caps>
 		{
 		public:
@@ -61,6 +65,8 @@ namespace SlimDX
 			static bool Equals( PixelShader20Caps% value1, PixelShader20Caps% value2 );
 		};
 
+		/// <summary>Represents the capabilities of the hardware exposed through the Direct3D object.</summary>
+		/// <unmanaged>D3DCAPS9</unmanaged>
 		public ref class Capabilities : System::IEquatable<Capabilities^>
 		{
 		public:

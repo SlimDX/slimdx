@@ -33,6 +33,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Applications use the methods of the IndexBuffer class to manipulate an index buffer resource.</summary>
+		/// <unmanaged>IDirect3DIndexBuffer9</unmanaged>
 		public ref class IndexBuffer : public Resource
 		{
 			COMOBJECT(IDirect3DIndexBuffer9, IndexBuffer);

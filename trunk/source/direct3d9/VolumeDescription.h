@@ -27,6 +27,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Describes a volume.</summary>
+		/// <unmanaged>D3DVOLUME_DESC</unmanaged>
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class VolumeDescription : System::IEquatable<VolumeDescription>
 		{

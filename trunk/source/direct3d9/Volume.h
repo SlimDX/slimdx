@@ -35,6 +35,8 @@ namespace SlimDX
 	{
 		value class ImageInformation;
 
+		/// <summary>Applications use the methods of the Volume class to manipulate volume resources.</summary>
+		/// <unmanaged>IDirect3DVolume9</unmanaged>
 		public ref class Volume : public Resource
 		{
 			COMOBJECT(IDirect3DVolume9, Volume);

@@ -54,6 +54,11 @@ namespace SlimDX
 		ref class SwapChain;
 		ref class StateBlock;
 
+		/// <summary>
+		/// Applications use the methods of the Device to perform DrawPrimitive-based rendering, create resources,
+		/// work with system-level variables, adjust gamma ramp levels, work with palettes, and create shaders.
+		/// </summary>
+		/// <unmanaged>IDirect3DDevice9</unmanaged>
 		public ref class Device : public ComObject
 		{
 			COMOBJECT(IDirect3DDevice9, Device);

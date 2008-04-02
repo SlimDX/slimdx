@@ -30,6 +30,8 @@ namespace SlimDX
 		value class DisplayMode;
 		ref class Surface;
 
+		/// <summary>Applications use the methods of the SwapChain9 class to manipulate a swap chain.</summary>
+		/// <unmanaged>IDirect3DSwapChain9</unmanaged>
 		public ref class SwapChain : public ComObject
 		{
 			COMOBJECT(IDirect3DSwapChain9, SwapChain);

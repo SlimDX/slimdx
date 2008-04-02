@@ -28,6 +28,8 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
+		/// <summary>Applications use the methods of the MatrixStack class to manipulate a matrix stack.</summary>
+		/// <unmanaged>ID3DXMatrixStack</unmanaged>
 		public ref class MatrixStack : ComObject
 		{
 			COMOBJECT(ID3DXMatrixStack, MatrixStack);

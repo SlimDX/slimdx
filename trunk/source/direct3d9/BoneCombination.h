@@ -25,6 +25,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Describes a subset of the mesh that has the same attribute and bone combination.</summary>
+		/// <unmanaged>D3DXBONECOMBINATION</unmanaged>
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public ref class BoneCombination
 		{

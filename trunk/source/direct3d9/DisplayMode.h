@@ -27,6 +27,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Describes the display mode.</summary>
+		/// <unmanaged>D3DDISPLAYMODE</unmanaged>
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class DisplayMode : System::IEquatable<DisplayMode>
 		{

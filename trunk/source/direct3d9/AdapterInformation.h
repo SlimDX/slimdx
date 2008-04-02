@@ -33,6 +33,7 @@ namespace SlimDX
 		ref class Capabilities;
 		ref class DisplayModeCollection;
 
+		/// <summary>Dscribes the capabilities and properties of an available adapter.</summary>
 		public ref class AdapterInformation
 		{
 		private:

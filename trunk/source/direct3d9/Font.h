@@ -30,6 +30,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Encapsulates the textures and resources needed to render a specific font on a specific device.</summary>
+		/// <unmanaged>ID3DXFont</unmanaged>
 		public ref class Font : public ComObject, IResettable
 		{
 			COMOBJECT(ID3DXFont, Font);

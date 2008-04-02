@@ -32,6 +32,8 @@ namespace SlimDX
 		ref class VertexShader;
 		ref class PixelShader;
 
+		/// <summary>Used to link shader fragments at runtime.</summary>
+		/// <unmanaged>ID3DXFragmentLinker</unmanaged>
 		public ref class FragmentLinker : public ComObject
 		{
 			COMOBJECT(ID3DXFragmentLinker, FragmentLinker);

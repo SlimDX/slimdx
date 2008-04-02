@@ -33,6 +33,10 @@ namespace SlimDX
 		value class TrackDescription;
 		value class EventDescription;
 
+		/// <summary>
+		/// Used to control animation functionality, connecting animation sets with the transformation frames that are being animated.
+		/// </summary>
+		/// <unmanaged>ID3DXAnimationController</unmanaged>
 		public ref class AnimationController : public ComObject
 		{
 			COMOBJECT(ID3DXAnimationController, AnimationController);

@@ -29,6 +29,8 @@ namespace SlimDX
 	{
 		ref class Device;
 
+		/// <summary>Applications use the methods of the StateBlock class to encapsulate render states.</summary>
+		/// <unmanaged>IDirect3DStateBlock9</unmanaged>
 		public ref class StateBlock : ComObject
 		{
 			COMOBJECT(IDirect3DStateBlock9, StateBlock);

@@ -40,6 +40,10 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
+		/// <summary>
+		/// Provides methods for getting and setting effect parameters such as constants, functions, shaders, and techniques.
+		/// </summary>
+		/// <unmanaged>ID3DXBaseEffect</unmanaged>
 		public ref class BaseEffect abstract : public ComObject
 		{
 			COMOBJECT_BASE(ID3DXBaseEffect);

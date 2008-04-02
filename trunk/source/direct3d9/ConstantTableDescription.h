@@ -25,6 +25,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>A description of the constant table.</summary>
+		/// <unmanaged>D3DXCONSTANTTABLE_DESC</unmanaged>
 		public value class ConstantTableDescription : System::IEquatable<ConstantTableDescription>
 		{
 		public:

@@ -25,6 +25,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Describes an annotation used by an effect object.</summary>
+		/// <unmanaged>D3DXFRAGMENT_DESC</unmanaged>
 		public value class FragmentDescription : System::IEquatable<FragmentDescription>
 		{
 		public:

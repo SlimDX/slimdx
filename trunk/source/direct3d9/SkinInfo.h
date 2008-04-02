@@ -32,6 +32,9 @@ namespace SlimDX
 		value class VertexElement;
 		enum class VertexFormat;
 
+		/// <summary>Applications use the methods of the SkinInfo class to manipulate bone matrices,
+		/// which are used to skin vertex data for animation.</summary>
+		/// <unmanaged>ID3DXSkinInfo</unmanaged>
 		public ref class SkinInfo : public ComObject
 		{
 			COMOBJECT(ID3DXSkinInfo, SkinInfo);

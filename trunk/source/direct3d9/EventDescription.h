@@ -27,6 +27,10 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>
+		/// Describes an animation event.
+		/// </summary>
+		/// <unmanaged>D3DXEVENT_DESC</unmanaged>
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class EventDescription : System::IEquatable<EventDescription>
 		{

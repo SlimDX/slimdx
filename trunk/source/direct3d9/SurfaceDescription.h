@@ -27,6 +27,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Describes a surface.</summary>
+		/// <unmanaged>D3DSURFACE_DESC</unmanaged>
 		public value class SurfaceDescription : System::IEquatable<SurfaceDescription>
 		{
 		public:

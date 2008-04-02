@@ -35,6 +35,11 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>
+		/// Used to create Microsoft Direct3D objects and set up the environment. This class 
+		/// includes methods for enumerating and retrieving capabilities of the device.
+		/// </summary>
+		/// <unmanaged>IDirect3D9</unmanaged>
 		public ref class Direct3D sealed
 		{
 		private:
