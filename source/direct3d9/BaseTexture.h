@@ -36,6 +36,9 @@ namespace SlimDX
 		protected:
 			BaseTexture() { }
 
+		internal:
+			static BaseTexture^ FromUnmanaged( IDirect3DBaseTexture9 *texture );
+
 		public:
 			virtual ~BaseTexture() { }
 

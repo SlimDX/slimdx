@@ -27,6 +27,9 @@
 
 #include "Device.h"
 #include "BaseTexture.h"
+#include "Texture.h"
+#include "VolumeTexture.h"
+#include "CubeTexture.h"
 
 using namespace System;
 
@@ -34,6 +37,22 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	BaseTexture^ BaseTexture::FromUnmanaged( IDirect3DBaseTexture9 *texture )
+	{
+		switch( texture->GetType() )
+		{
+		case D3DRTYPE_TEXTURE:
+			return Texture::FromPointer( static_cast<IDirect3DTexture9*>( texture ) );
+		case D3DRTYPE_VOLUMETEXTURE:
+			return VolumeTexture::FromPointer( static_cast<IDirect3DVolumeTexture9*>( texture ) );
+		case D3DRTYPE_CUBETEXTURE:
+			return CubeTexture::FromPointer( static_cast<IDirect3DCubeTexture9*>( texture ) );
+
+		default:
+			return nullptr;
+		}
+	}
+
 	void BaseTexture::GenerateMipSublevels()
 	{
 		InternalPointer->GenerateMipSubLevels();

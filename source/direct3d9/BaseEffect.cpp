@@ -581,18 +581,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		switch( texture->GetType() )
-		{
-		case D3DRTYPE_TEXTURE:
-			return Texture::FromPointer( static_cast<IDirect3DTexture9*>( texture ) );
-		case D3DRTYPE_VOLUMETEXTURE:
-			return VolumeTexture::FromPointer( static_cast<IDirect3DVolumeTexture9*>( texture ) );
-		case D3DRTYPE_CUBETEXTURE:
-			return CubeTexture::FromPointer( static_cast<IDirect3DCubeTexture9*>( texture ) );
-
-		default:
-			return nullptr;
-		}
+		return BaseTexture::FromUnmanaged( texture );
 	}
 
 	Matrix BaseEffect::GetMatrixTranspose( EffectHandle^ parameter )
