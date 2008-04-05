@@ -78,8 +78,12 @@ namespace SlimDX
 			Result Clear( ClearFlags clearFlags, Color4 color, float zdepth, int stencil );
 			Result BeginScene();
 			Result EndScene();
+
 			Result Present();
 			Result Present( SlimDX::Direct3D9::Present flags );
+			Result Present( System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle );
+			Result Present( System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, System::IntPtr windowOverride );
+			Result Present( System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, System::IntPtr windowOverride, System::Drawing::Region^ region );
 
 			Surface^ GetBackBuffer( int swapChain, int backBuffer );
 			Surface^ GetRenderTarget( int index );
@@ -254,9 +258,9 @@ namespace SlimDX
 				void set( System::Drawing::Rectangle value );
 			}
 
-			property int AvailableTextureMemory
+			property long AvailableTextureMemory
 			{
-				int get();
+				long get();
 			}
 
 			property bool ShowCursor

@@ -953,5 +953,58 @@ namespace Direct3D9
 
 		return Mesh::FromPointer( result );
 	}
+
+	Mesh^ Mesh::TessellateNPatches( Mesh^ mesh, float segmentCount, bool quadraticInterpolation )
+	{
+		ID3DXMesh *result;
+		ID3DXBuffer *adjacencyOut;
+
+		DWORD *adjacencyIn = NULL;
+		array<int>^ adjacency = mesh->GetAdjacency();
+		pin_ptr<int> pinnedAdj;
+
+		if( adjacency != nullptr )
+		{
+			pinnedAdj = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
+		}
+
+		HRESULT hr = D3DXTessellateNPatches( mesh->InternalPointer, adjacencyIn, segmentCount,
+			quadraticInterpolation, &result, &adjacencyOut );
+
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		Mesh^ newMesh = Mesh::FromPointer( result );
+		newMesh->SetAdjacency( ( gcnew DataStream( adjacencyOut ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
+
+		return newMesh;
+	}
+
+	Result Mesh::TessellateRectanglePatch( SlimDX::Direct3D9::VertexBuffer^ vertexBuffer, array<float>^ segmentCounts,
+		array<VertexElement>^ vertexDeclaration, RectanglePatchInfo rectanglePatchInfo )
+	{
+		pin_ptr<float> pinnedSegments = &segmentCounts[0];
+		pin_ptr<VertexElement> pinnedDeclaration = &vertexDeclaration[0];
+
+		HRESULT hr = D3DXTessellateRectPatch( vertexBuffer->InternalPointer, reinterpret_cast<const FLOAT*>( pinnedSegments ),
+			reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDeclaration ), reinterpret_cast<const D3DRECTPATCH_INFO*>( &rectanglePatchInfo ),
+			InternalPointer );
+
+		return RECORD_D3D9( hr );
+	}
+
+	Result Mesh::TessellateTrianglePatch( SlimDX::Direct3D9::VertexBuffer^ vertexBuffer, array<float>^ segmentCounts,
+		array<VertexElement>^ vertexDeclaration, TrianglePatchInfo trianglePatchInfo )
+	{
+		pin_ptr<float> pinnedSegments = &segmentCounts[0];
+		pin_ptr<VertexElement> pinnedDeclaration = &vertexDeclaration[0];
+
+		HRESULT hr = D3DXTessellateTriPatch( vertexBuffer->InternalPointer, reinterpret_cast<const FLOAT*>( pinnedSegments ),
+			reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedDeclaration ), reinterpret_cast<const D3DTRIPATCH_INFO*>( &trianglePatchInfo ),
+			InternalPointer );
+
+		return RECORD_D3D9( hr );
+	}
 }
 }
