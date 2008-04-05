@@ -330,6 +330,23 @@
          </Type>
          <Type Name="DataStream">
           <Members>
+           <Member Name="#.ctor(System.Int64,System.Boolean,System.Boolean)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-04-05 14:53:36Z">
+              <Issue>
+               <Item>'DataStream.DataStream(long, bool, bool)'</Item>
+               <Item>'Marshal.GetExceptionPointers()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'DataStream.DataStream(long, bool, bool)'&#xD;&#xA;   -&gt;'DataStream.DataStream(long, bool, bool)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Status="Excluded" Created="2008-04-05 14:53:36Z">
+              <Issue Name="Reserved">
+               <Item>'DataStream.DataStream(long, bool, bool)'</Item>
+               <Item>'OutOfMemoryException'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#Dispose(System.Boolean)">
             <Messages>
              <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -4710,6 +4727,16 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#Present(System.Drawing.Rectangle,System.Drawing.Rectangle,System.IntPtr,System.Drawing.Region)">
+            <Messages>
+             <Message Id="&lt;Module&gt;.GetRegionData(HRGN__*,optional(System.Runtime.CompilerServices.IsLong) System.UInt32,_RGNDATA*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-04-05 14:53:36Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'Device.Present(Rectangle, Rectangle, IntPtr, Region)'</Item>
+               <Item>'&lt;Module&gt;.GetRegionData(HRGN__*, uint, _RGNDATA*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#ProcessVertices(System.Int32,System.Int32,System.Int32,SlimDX.Direct3D9.VertexBuffer,SlimDX.Direct3D9.VertexDeclaration,SlimDX.Direct3D9.LockFlags)">
             <Messages>
              <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-10-09 21:11:47Z">
@@ -6225,209 +6252,209 @@
          </Type>
          <Type Name="Macro">
           <Members>
-           <Member Name="#Marshal(SlimDX.Direct3D9.Macro[],System.Runtime.InteropServices.GCHandle[]&amp;)">
+           <Member Name="#Marshal(std.vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*,SlimDX.Direct3D9.Macro[],System.Runtime.InteropServices.GCHandle[]&amp;)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-04-05 14:53:36Z">
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromFile(Device, string, Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromFile(Device, string, Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.InitThis(byte[], Macro[], Include, ShaderFlags, out string)'&#xD;&#xA;   -&gt;'EffectCompiler.EffectCompiler(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.InitThis(byte[], Macro[], Include, ShaderFlags, out string)'&#xD;&#xA;   -&gt;'EffectCompiler.EffectCompiler(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.InitThis(byte[], Macro[], Include, ShaderFlags, out string)'&#xD;&#xA;   -&gt;'EffectCompiler.EffectCompiler(string, Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.InitThis(byte[], Macro[], Include, ShaderFlags, out string)'&#xD;&#xA;   -&gt;'EffectCompiler.EffectCompiler(string, Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'FragmentLinker.Gather(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'FragmentLinker.Gather(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'FragmentLinker.GatherFromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'FragmentLinker.GatherFromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Assemble(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Assemble(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.AssembleFromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.AssembleFromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Compile(byte[], Macro[], Include, string, string, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Compile(byte[], Macro[], Include, string, string, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Compile(byte[], Macro[], Include, string, string, ShaderFlags, out string, out ConstantTable)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Compile(byte[], Macro[], Include, string, string, ShaderFlags, out string, out ConstantTable)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.CompileFromFile(string, Macro[], Include, string, string, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.CompileFromFile(string, Macro[], Include, string, string, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.CompileFromFile(string, Macro[], Include, string, string, ShaderFlags, out string, out ConstantTable)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.CompileFromFile(string, Macro[], Include, string, string, ShaderFlags, out string, out ConstantTable)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromFile(Device, string, Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromFile(Device, string, Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.InitThis(byte[], Macro[], Include, ShaderFlags, out string)'&#xD;&#xA;   -&gt;'EffectCompiler.EffectCompiler(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.InitThis(byte[], Macro[], Include, ShaderFlags, out string)'&#xD;&#xA;   -&gt;'EffectCompiler.EffectCompiler(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.InitThis(byte[], Macro[], Include, ShaderFlags, out string)'&#xD;&#xA;   -&gt;'EffectCompiler.EffectCompiler(string, Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.InitThis(byte[], Macro[], Include, ShaderFlags, out string)'&#xD;&#xA;   -&gt;'EffectCompiler.EffectCompiler(string, Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'FragmentLinker.Gather(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'FragmentLinker.Gather(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'FragmentLinker.GatherFromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'FragmentLinker.GatherFromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Assemble(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Assemble(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.AssembleFromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.AssembleFromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Compile(byte[], Macro[], Include, string, string, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Compile(byte[], Macro[], Include, string, string, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Compile(byte[], Macro[], Include, string, string, ShaderFlags, out string, out ConstantTable)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Compile(byte[], Macro[], Include, string, string, ShaderFlags, out string, out ConstantTable)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.CompileFromFile(string, Macro[], Include, string, string, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.CompileFromFile(string, Macro[], Include, string, string, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Marshal(Macro[], out GCHandle[])'</Item>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.CompileFromFile(string, Macro[], Include, string, string, ShaderFlags, out string, out ConstantTable)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Shader.CompileFromFile(string, Macro[], Include, string, string, ShaderFlags, out string, out ConstantTable)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#Unmarshal(_D3DXMACRO*,System.Runtime.InteropServices.GCHandle[])">
+           <Member Name="#Unmarshal(std.vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;{modopt(System.Runtime.CompilerServices.IsImplicitlyDereferenced)}*,System.Runtime.InteropServices.GCHandle[])">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-04-05 14:53:36Z">
               <Issue>
-               <Item>'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'</Item>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromFile(Device, string, Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromFile(Device, string, Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'</Item>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'</Item>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'</Item>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.InitThis(byte[], Macro[], Include, ShaderFlags, out string)'&#xD;&#xA;   -&gt;'EffectCompiler.EffectCompiler(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.InitThis(byte[], Macro[], Include, ShaderFlags, out string)'&#xD;&#xA;   -&gt;'EffectCompiler.EffectCompiler(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'</Item>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.InitThis(byte[], Macro[], Include, ShaderFlags, out string)'&#xD;&#xA;   -&gt;'EffectCompiler.EffectCompiler(string, Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.InitThis(byte[], Macro[], Include, ShaderFlags, out string)'&#xD;&#xA;   -&gt;'EffectCompiler.EffectCompiler(string, Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'</Item>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'FragmentLinker.Gather(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'FragmentLinker.Gather(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'</Item>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'FragmentLinker.GatherFromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'FragmentLinker.GatherFromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'</Item>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Assemble(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Assemble(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'</Item>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Shader.AssembleFromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Shader.AssembleFromFile(string, Macro[], Include, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'</Item>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Compile(byte[], Macro[], Include, string, string, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Compile(byte[], Macro[], Include, string, string, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'</Item>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Compile(byte[], Macro[], Include, string, string, ShaderFlags, out string, out ConstantTable)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Shader.Compile(byte[], Macro[], Include, string, string, ShaderFlags, out string, out ConstantTable)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'</Item>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Shader.CompileFromFile(string, Macro[], Include, string, string, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Shader.CompileFromFile(string, Macro[], Include, string, string, ShaderFlags, out string)'</Item>
               </Issue>
               <Issue>
-               <Item>'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'</Item>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(_D3DXMACRO*, GCHandle[])'&#xD;&#xA;   -&gt;'Shader.CompileFromFile(string, Macro[], Include, string, string, ShaderFlags, out string, out ConstantTable)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Shader.CompileFromFile(string, Macro[], Include, string, string, ShaderFlags, out string, out ConstantTable)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -8601,6 +8628,45 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#Present(SlimDX.Direct3D9.Present,System.Drawing.Rectangle,System.Drawing.Rectangle)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-04-05 14:53:36Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'SwapChain.Present(Present, Rectangle, Rectangle)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Present(SlimDX.Direct3D9.Present,System.Drawing.Rectangle,System.Drawing.Rectangle,System.IntPtr)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-04-05 14:53:36Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'SwapChain.Present(Present, Rectangle, Rectangle, IntPtr)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Present(SlimDX.Direct3D9.Present,System.Drawing.Rectangle,System.Drawing.Rectangle,System.IntPtr,System.Drawing.Region)">
+            <Messages>
+             <Message Id="&lt;Module&gt;.GetRegionData(HRGN__*,optional(System.Runtime.CompilerServices.IsLong) System.UInt32,_RGNDATA*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-04-05 14:53:36Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'SwapChain.Present(Present, Rectangle, Rectangle, IntPtr, Region)'</Item>
+               <Item>'&lt;Module&gt;.GetRegionData(HRGN__*, uint, _RGNDATA*)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-04-05 14:53:36Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'SwapChain.Present(Present, Rectangle, Rectangle, IntPtr, Region)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
           </Members>
          </Type>
          <Type Name="SwapEffect">
@@ -10167,315 +10233,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-       <Namespace Name="SlimDX.DirectSound">
-        <Types>
-         <Type Name="BufferCaps">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'BufferCaps'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'BufferCaps'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="BufferDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'BufferDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'BufferDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#Flags">
-            <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="MemberNoAlternate">
-               <Item>Flags</Item>
-               <Item>'BufferDescription.Flags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="BufferFlags">
-          <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
-            <Issue>
-             <Item>SlimDX.DirectSound.BufferFlags</Item>
-             <Item>Flags</Item>
-            </Issue>
-           </Message>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
-            <Issue Name="TypeNoAlternate">
-             <Item>Flags</Item>
-             <Item>'BufferFlags'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="Capabilities">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2007-10-01 21:38:08Z">
-            <Issue Name="Equals">
-             <Item>'Capabilities'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'Capabilities'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="CooperativeLevel">
-          <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
-            <Issue Name="NotFlagsNoZeroValue">
-             <Item>'CooperativeLevel'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="DirectSound">
-          <Messages>
-           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Status="Excluded" Created="2007-10-01 21:38:08Z">
-            <Issue>
-             <Item>'DirectSound'</Item>
-             <Item>SlimDX.DirectSound</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#.ctor(IDirectSound8*)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2007-10-31 21:36:36Z">
-              <Issue>
-               <Item>'DirectSound.DirectSound(IDirectSound8*)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#.ctor(System.IntPtr)">
-            <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="LanguageIndependentMemberParameter">
-               <Item>'DirectSound::DirectSound(IntPtr)'</Item>
-               <Item>pointer</Item>
-               <Item>'pointer'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FromPointer(IDirectSound8*)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-02-27 22:14:29Z">
-              <Issue>
-               <Item>'DirectSound.FromPointer(IDirectSound8*)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FromPointer(System.IntPtr)">
-            <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-02-27 22:14:29Z">
-              <Issue Name="LanguageIndependentMemberParameter">
-               <Item>'DirectSound.FromPointer(IntPtr)'</Item>
-               <Item>pointer</Item>
-               <Item>'pointer'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="LockFlags">
-          <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
-            <Issue>
-             <Item>SlimDX.DirectSound.LockFlags</Item>
-             <Item>Flags</Item>
-            </Issue>
-           </Message>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
-            <Issue Name="TypeNoAlternate">
-             <Item>Flags</Item>
-             <Item>'LockFlags'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="PlayFlags">
-          <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2007-10-01 21:38:08Z">
-            <Issue>
-             <Item>SlimDX.DirectSound.PlayFlags</Item>
-             <Item>Flags</Item>
-            </Issue>
-           </Message>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
-            <Issue Name="TypeNoAlternate">
-             <Item>Flags</Item>
-             <Item>'PlayFlags'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="SoundBuffer">
-          <Members>
-           <Member Name="#.ctor(IDirectSoundBuffer*)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2007-10-31 21:36:36Z">
-              <Issue>
-               <Item>'SoundBuffer.SoundBuffer(IDirectSoundBuffer*)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#.ctor(SlimDX.DirectSound.DirectSound,SlimDX.DirectSound.BufferDescription)">
-            <Messages>
-             <Message Id="dsound" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="MemberParameter">
-               <Item>'SoundBuffer.SoundBuffer(DirectSound, BufferDescription)'</Item>
-               <Item>dsound</Item>
-               <Item>'dsound'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FromPointer(IDirectSoundBuffer*)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-02-27 22:14:29Z">
-              <Issue>
-               <Item>'SoundBuffer.FromPointer(IDirectSoundBuffer*)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FromPointer(System.IntPtr)">
-            <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-02-27 22:14:29Z">
-              <Issue Name="LanguageIndependentMemberParameter">
-               <Item>'SoundBuffer.FromPointer(IntPtr)'</Item>
-               <Item>pointer</Item>
-               <Item>'pointer'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetFormat()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:56:56Z">
-              <Issue Certainty="50">
-               <Item>'SoundBuffer.GetFormat()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Initialize(SlimDX.DirectSound.DirectSound,SlimDX.DirectSound.BufferDescription)">
-            <Messages>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-10-09 21:11:47Z">
-              <Issue>
-               <Item>dsound</Item>
-               <Item>SoundBuffer.Initialize(DirectSound, BufferDescription):Void</Item>
-               <Item>SlimDX.DirectSound.DirectSound</Item>
-               <Item>SlimDX.DirectXObject&lt;IDirectSound8&gt;</Item>
-              </Issue>
-             </Message>
-             <Message Id="dsound" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="MemberParameter">
-               <Item>'SoundBuffer.Initialize(DirectSound, BufferDescription)'</Item>
-               <Item>dsound</Item>
-               <Item>'dsound'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Lock(System.Int32,System.Int32,SlimDX.DirectSound.LockFlags,SlimDX.DataStream&amp;)">
-            <Messages>
-             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="MemberParameterNoAlternate">
-               <Item>'SoundBuffer.Lock(int, int, LockFlags, out DataStream)'</Item>
-               <Item>flags</Item>
-               <Item>'flags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#NativeInterface">
-            <Accessors>
-             <Accessor Name="#get_NativeInterface()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-01-27 22:23:52Z">
-                <Issue>
-                 <Item>'SoundBuffer::NativeInterface::get(void)'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#Play(System.Int32,SlimDX.DirectSound.PlayFlags)">
-            <Messages>
-             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="MemberParameterNoAlternate">
-               <Item>'SoundBuffer.Play(int, PlayFlags)'</Item>
-               <Item>flags</Item>
-               <Item>'flags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="WaveFormat">
-          <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
-            <Issue Name="NotFlagsNoZeroValue">
-             <Item>'WaveFormat'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#AdPcm">
-            <Messages>
-             <Message Id="Pcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="Member">
-               <Item>Pcm</Item>
-               <Item>'WaveFormat.AdPcm'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#DolbyAC3Spdif">
-            <Messages>
-             <Message Id="Spdif" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="Member">
-               <Item>Spdif</Item>
-               <Item>'WaveFormat.DolbyAC3Spdif'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Pcm">
-            <Messages>
-             <Message Id="Pcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="Member">
-               <Item>Pcm</Item>
-               <Item>'WaveFormat.Pcm'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -12561,6 +12318,12 @@
           <Members>
            <Member Name="#CreateDevice()">
             <Messages>
+             <Message TypeName="DoNotUseTimersThatPreventPowerStateChanges" Category="Microsoft.Mobility" CheckId="CA1601" Status="Excluded" Created="2008-04-05 14:53:36Z">
+              <Issue>
+               <Item>'Timer.Interval.set(int)'</Item>
+               <Item>'MainForm.CreateDevice()'</Item>
+              </Issue>
+             </Message>
              <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-03-13 23:20:47Z">
               <Issue>
                <Item>'MainForm.CreateDevice()'</Item>
@@ -12764,10 +12527,6 @@
    </Rule>
    <Rule TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225">
     <Resolution Name="Default">Provide a method named '{0}' as a friendly alternate for operator {1}.</Resolution>
-   </Rule>
-   <Rule TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815">
-    <Resolution Name="Equals">{0} should override Equals.</Resolution>
-    <Resolution Name="op_Equality">{0} should override the equality (==) and inequality (!=) operators.</Resolution>
    </Rule>
    <Rule TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725">
     <Resolution Name="Default">In member {0}, change parameter name {1} to {2} in order to match the identifier as it has been declared in {3}.</Resolution>

@@ -97,7 +97,7 @@ namespace SlimDX
 		}
 		
 		/// <summary>
-		/// Gets a <see cref="StackTrace">stack trace</see> to the location
+		/// Gets a <see cref="StackTrace"/> to the location
 		/// that the object was created.
 		/// </summary>
 		property System::Diagnostics::StackTrace^ CreationSource
@@ -116,7 +116,7 @@ namespace SlimDX
 		property System::String^ DebugName;
 		
 		/// <summary>
-		/// Performs object cleanup.
+		/// Releases all resources used by the <see cref="SlimDX.ComObject"/>.
 		/// </summary>
 		virtual ~ComObject();
 	};

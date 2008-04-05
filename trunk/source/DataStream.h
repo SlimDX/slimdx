@@ -32,7 +32,6 @@ using System::NotSupportedException;
 
 namespace SlimDX
 {
-
 	/// <summary>
 	/// Provides a stream interface to a buffer located in unmanaged memory.
 	/// </summary>
@@ -64,26 +63,33 @@ namespace SlimDX
 
 	public:
 		/// <summary>
-		/// Initializes a new instance of the DataStream class, and allocates a new buffer to use as a backing store.
+		/// Initializes a new instance of the <see cref="SlimDX.DataStream"/> class, and allocates a new buffer to use as a backing store.
 		/// </summary>
 		/// <param name="sizeInBytes">The size of the buffer to be allocated, in bytes.</param>
-		/// <param name="canRead"><c>true</c> if reading from the buffer should be allowed, <c>false</c> otherwise.</param>
-		/// <param name="canWrite"><c>true</c> if writing to the buffer should be allowed, <c>false</c> otherwise.</param>
+		/// <param name="canRead"><c>true</c> if reading from the buffer should be allowed; otherwise, <c>false</c>.</param>
+		/// <param name="canWrite"><c>true</c> if writing to the buffer should be allowed; otherwise, <c>false</c>.</param>
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="sizeInBytes" /> is less than 1.</exception>
 		DataStream( System::Int64 sizeInBytes, bool canRead, bool canWrite );
 
 		/// <summary>
-		/// Initializes a new instance of the DataStream class, using a user provided buffer as a backing store.
+		/// Initializes a new instance of the <see cref="SlimDX.DataStream"/> class, using a user provided buffer as a backing store.
 		/// </summary>
 		/// <param name="userBuffer">A pointer to the buffer to be used as a backing store.</param>
 		/// <param name="sizeInBytes">The size of the buffer provided, in bytes.</param>
-		/// <param name="canRead"><c>true</c> if reading from the buffer should be allowed, <c>false</c> otherwise.</param>
-		/// <param name="canWrite"><c>true</c> if writing to the buffer should be allowed, <c>false</c> otherwise.</param>
+		/// <param name="canRead"><c>true</c> if reading from the buffer should be allowed; otherwise, <c>false</c>.</param>
+		/// <param name="canWrite"><c>true</c> if writing to the buffer should be allowed; otherwise, <c>false</c>.</param>
 		/// <exception cref="ArgumentNullException"><paramref name="userBuffer" /> is a zero pointer.</exception>
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="sizeInBytes" /> is less than 1.</exception>
 		DataStream( System::IntPtr userBuffer, System::Int64 sizeInBytes, bool canRead, bool canWrite );
 		
+		/// <summary>
+		/// Releases all resources used by the <see cref="SlimDX.DataStream"/>.
+		/// </summary>
 		~DataStream();
+
+		/// <summary>
+		/// Releases unmanaged resources and performs other cleanup operations before the <see cref="SlimDX.DataStream"/> is reclaimed by garbage collection.
+		/// </summary>
 		!DataStream();
 		
 		/// <summary>Sets the position within the current stream.</summary>
@@ -170,6 +176,7 @@ namespace SlimDX
 		/// <param name="offset">The zero-based byte offset in buffer at which to begin storing
 		/// the data read from the current stream.</param>
 		/// <param name="count">The maximum number of bytes to be read from the current stream.</param>
+		/// <returns>The number of bytes read from the stream.</returns>
 		/// <exception cref="NotSupportedException">This stream does not support reading.</exception>
 		/// <exception cref="ArgumentNullException"><paramref name="buffer" /> is a null reference.</exception>
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="offset" /> or <paramref name="count" /> leads outside the bounds of <paramref name="buffer" />.</exception>
@@ -200,7 +207,7 @@ namespace SlimDX
 		virtual void SetLength( System::Int64 value ) override;
 
 		/// <summary>Gets a value indicating whether the current stream supports reading.</summary>
-		/// <value><c>true</c> if the stream supports reading; <c>false</c> otherwise.</value>
+		/// <value><c>true</c> if the stream supports reading; otherwise, <c>false</c>.</value>
 		property bool CanRead
 		{
 			virtual bool get() override { return m_CanRead; }
@@ -214,7 +221,7 @@ namespace SlimDX
 		}
 
 		/// <summary>Gets a value indicating whether the current stream supports writing.</summary>
-		/// <value><c>true</c> if the stream supports writing; <c>false</c> otherwise.</value>
+		/// <value><c>true</c> if the stream supports writing; otherwise, <c>false</c>.</value>
 		property bool CanWrite
 		{
 			virtual bool get() override { return m_CanWrite; }
