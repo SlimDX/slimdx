@@ -50,7 +50,7 @@ namespace SlimDX
 
 	public:
 		/// <summary>
-		/// Gets a list of all the COM objects tracked by SlimDX.
+		/// Gets a list of all the <see cref="ComObject">COM objects</see> tracked by SlimDX.
 		/// </summary>
 		static property System::Collections::Generic::Dictionary<System::IntPtr, ComObject^>::ValueCollection^ Objects
 		{
@@ -58,14 +58,14 @@ namespace SlimDX
 		}
 		
 		/// <summary>
-		/// Adds a COM object to the table. This will set the object's CreationSource parameter if
-		/// <see cref="Configuration">object tracking</see> is on.
+		/// Adds a <see cref="ComObject">COM object</see> to the table. This will set the object's <see cref="SlimDX.ComObject.CreationSource"/> property if
+		/// <see cref="Configuration.EnableObjectTracking">object tracking</see> is on.
 		/// </summary>
 		/// <param name="object">The object to add.</param>
 		static void Add( ComObject^ object );
 		
 		/// <summary>
-		/// Removes a COM object from the table.
+		/// Removes a <see cref="ComObject">COM object</see> from the table.
 		/// </summary>
 		/// <param name="object">The object to remove.</param>
 		/// <returns><c>true</c> if the object was in the table and was removed; otherwise, <c>false</c>.</returns>

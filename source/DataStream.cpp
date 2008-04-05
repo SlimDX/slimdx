@@ -230,7 +230,7 @@ namespace SlimDX
 		if( count == 0 )
 			count = data->Length;
 		if( offset + count > data->Length )
-			throw gcnew ArgumentOutOfRangeException();
+			throw gcnew ArgumentOutOfRangeException( "data" );
 
 		int size = count * Marshal::SizeOf( T::typeid );
 		pin_ptr<T> pinnedData = &data[offset];
@@ -238,18 +238,18 @@ namespace SlimDX
 		m_Position += size;
 	}
 	
-	void DataStream::WriteRange( IntPtr source, Int64 byteCount )
+	void DataStream::WriteRange( IntPtr source, Int64 count )
 	{
 		if( !m_CanWrite )
 			throw gcnew NotSupportedException();
 		
 		if( source == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "source" );
-		if( byteCount < 0 )
-			throw gcnew ArgumentOutOfRangeException( "byteCount" );
+		if( count < 0 )
+			throw gcnew ArgumentOutOfRangeException( "count" );
 
-		memcpy( m_Buffer + m_Position, source.ToPointer(), static_cast<size_t>( byteCount ) );
-		m_Position += byteCount;
+		memcpy( m_Buffer + m_Position, source.ToPointer(), static_cast<size_t>( count ) );
+		m_Position += count;
 	}
 	
 	generic<typename T> where T : value class

@@ -26,7 +26,7 @@ namespace SlimDX
 	ref class DataStream;
 	
 	/// <summary>
-	/// A DataBox provides supporting information for a DataStream whose
+	/// A DataBox provides supporting information for a <see cref="SlimDX.DataStream"/> whose
 	/// data is organized within three dimensions (a box).
 	/// </summary>
 	public ref class DataBox
@@ -57,7 +57,7 @@ namespace SlimDX
 		}
 		
 		/// <summary>
-		/// Gets the DataStream containing the actual data bytes.
+		/// Gets the <see cref="SlimDX.DataStream"/> containing the actual data bytes.
 		/// </summary>
 		property DataStream^ Data
 		{

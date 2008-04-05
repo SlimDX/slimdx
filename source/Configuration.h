@@ -48,8 +48,8 @@ namespace SlimDX
 
 	public:
 		/// <summary>
-		/// Gets or sets whether SlimDX is currently tracking call stacks from object creation. If set to false,
-		/// objects will not carry a call stack from when they were created. The default value is false.
+		/// Gets or sets whether SlimDX is currently tracking call stacks from object creation. If set to <c>false</c>,
+		/// objects will not carry a call stack from when they were created. The default value is <c>false</c>.
 		/// </summary>
 		/// <remarks>Object tracking is a useful debugging facility, but may have a significant negative
 		/// impact on performance. It will default to enabled when the DEBUG symbol is defined.</remarks>
@@ -57,34 +57,34 @@ namespace SlimDX
 
 		/// <summary>
 		/// Gets or sets whether SlimDX defaults to throwing exceptions on <see cref="Result">result codes</see>
-		/// that indicate errors. The default value is true.
+		/// that indicate errors. The default value is <c>true</c>.
 		/// </summary>
 		static property bool ThrowOnError;
 
 		/// <summary>
-		/// Gets or sets whether SlimDX detects double disposal of objects. If set to true, SlimDX will throw
-		/// an ObjectDisposedException when an already disposed object is disposed. If set to false, double
-		/// disposals will be silently ignored. The default value is false.
+		/// Gets or sets whether SlimDX detects double disposal of objects. If set to <c>true</c>, SlimDX will throw
+		/// an <see cref="System.ObjectDisposedException"/> when an already disposed object is disposed. If set to <c>false</c>, double
+		/// disposals will be silently ignored. The default value is <c>false</c>.
 		/// </summary>
 		static property bool DetectDoubleDispose;
 
 		/// <summary>
-		/// Add a watch indicating the action to be taken when a method returns the
-		/// specified <see cref="Result">result code</see> is returned.
+		/// Adds a watch indicating the action to be taken when a method returns the
+		/// specified <see cref="Result">result code</see>.
 		/// </summary>
 		/// <param name="result">The result code to watch for.</param>
 		/// <param name="flags">The action to take when the specified result code occurs.</param>
 		static void AddResultWatch( Result result, ResultWatchFlags flags );
 
 		/// <summary>
-		/// Remove a watch on the specified <see cref="Result">result code</see>.
+		/// Removes a watch on the specified <see cref="Result">result code</see>.
 		/// If no watch was set, this call is ignored.
 		/// </summary>
 		/// <param>The result code to stop watching.</param>
 		static void RemoveResultWatch( Result result );
 
 		/// <summary>
-		/// Clear out all watches on all <see cref="Result">result codes</see>.
+		/// Clears out all watches on all <see cref="Result">result codes</see>.
 		/// </summary>
 		static void ClearResultWatches();
 	};

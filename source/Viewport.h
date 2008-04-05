@@ -91,13 +91,54 @@ namespace SlimDX
 			void set( float value );
 		}
 
+		/// <summary>
+		/// Tests for equality between two viewports.
+		/// </summary>
+		/// <param name="left">The first value to compare.</param>
+		/// <param name="right">The second value to compare.</param>
+		/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 		static bool operator == ( Viewport left, Viewport right );
+		
+		/// <summary>
+		/// Tests for inequality between two viewports.
+		/// </summary>
+		/// <param name="left">The first value to compare.</param>
+		/// <param name="right">The second value to compare.</param>
+		/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 		static bool operator != ( Viewport left, Viewport right );
 
+		/// <summary>
+		/// Converts the value of the viewport to its equivalent string representation.
+		/// </summary>
+		/// <returns>The string representation of the value of this instance.</returns>
 		virtual System::String^ ToString() override;
+
+		/// <summary>
+		/// Returns the hash code for this instance.
+		/// </summary>
+		/// <returns>A 32-bit signed integer hash code.</returns>
 		virtual int GetHashCode() override;
+
+		/// <summary>
+		/// Returns a value indicating whether this instance is equal to the specified object.
+		/// </summary>
+		/// <param name="obj">An object to compare with this instance.</param>
+		/// <returns><c>true</c> if <paramref name="obj"/> has the same value as this instance; otherwise, <c>false</c>.</returns>
 		virtual bool Equals( System::Object^ obj ) override;
+
+		/// <summary>
+		/// Returns a value indicating whether this instance is equal to the specified object.
+		/// </summary>
+		/// <param name="obj">A <see cref="SlimDX.Viewport"/> to compare with this instance.</param>
+		/// <returns><c>true</c> if <paramref name="other"/> has the same value as this instance; otherwise, <c>false</c>.</returns>
 		virtual bool Equals( Viewport other );
+
+		/// <summary>
+		/// Returns a value indicating whether the two viewports are equivalent.
+		/// </summary>
+		/// <param name="value1">The first value to compare.</param>
+		/// <param name="value2">The second value to compare.</param>
+		/// <returns><c>true</c> if <paramref name="value1"/> has the same value as <paramref name="value2"/>; otherwise, <c>false</c>.</returns>
 		static bool Equals( Viewport% value1, Viewport% value2 );
 	};
 }

@@ -26,7 +26,7 @@ namespace SlimDX
 	ref class DataStream;
 
 	/// <summary>
-	/// A DataRectangle provides supporting information for a DataStream whose
+	/// A DataRectangle provides supporting information for a <see cref="SlimDX.DataStream"/> whose
 	/// data is organized within two dimensions (a rectangle).
 	/// </summary>
 	public ref class DataRectangle
@@ -48,7 +48,7 @@ namespace SlimDX
 		}
 
 		/// <summary>
-		/// Gets the DataStream containing the actual data bytes.
+		/// Gets the <see cref="SlimDX.DataStream"/> containing the actual data bytes.
 		/// </summary>
 		property DataStream^ Data
 		{
