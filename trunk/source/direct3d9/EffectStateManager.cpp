@@ -345,20 +345,7 @@ namespace Direct3D9
 	{
 		try
 		{
-			BaseTexture^ texture;
-
-			switch( pTexture->GetType() )
-			{
-			case D3DRTYPE_TEXTURE:
-				texture = Texture::FromPointer( static_cast<IDirect3DTexture9*>( pTexture ) );
-			case D3DRTYPE_VOLUMETEXTURE:
-				texture = VolumeTexture::FromPointer( static_cast<IDirect3DVolumeTexture9*>( pTexture ) );
-			case D3DRTYPE_CUBETEXTURE:
-				texture = CubeTexture::FromPointer( static_cast<IDirect3DCubeTexture9*>( pTexture ) );
-
-			default:
-				texture = nullptr;
-			}
+			BaseTexture^ texture = BaseTexture::FromUnmanaged( pTexture );
 
 			m_WrappedInterface->SetTexture( Stage, texture );
 		}

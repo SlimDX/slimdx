@@ -275,7 +275,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return result;
 
-		result.Texture = Texture::FromPointer( reinterpret_cast<IDirect3DTexture9*>( texture ) );
+		result.Texture = safe_cast<Texture^>( BaseTexture::FromUnmanaged( texture ) );
 		result.MinFilter = static_cast<TextureFilter>( minFilter );
 		result.MagFilter = static_cast<TextureFilter>( magFilter );
 		result.MipFilter = static_cast<TextureFilter>( mipFilter );

@@ -23,6 +23,11 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+
 #include "../DataStream.h"
 #include "../ComObject.h"
 #include "../Utilities.h"
@@ -282,6 +287,20 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
+	RasterStatus Device::GetRasterStatus( int swapChain )
+	{
+		D3DRASTER_STATUS status;
+		HRESULT hr = InternalPointer->GetRasterStatus( swapChain, &status );
+		
+		if( RECORD_D3D9( hr ).IsFailure )
+			return SlimDX::Direct3D9::RasterStatus();
+
+		SlimDX::Direct3D9::RasterStatus result;
+		result.InVBlank = status.InVBlank > 0;
+		result.Scanline = status.ScanLine;
+		return result;
+	}
+
 	Result Device::SetRenderState( RenderState state, int value )
 	{
 		HRESULT hr = InternalPointer->SetRenderState( static_cast<D3DRENDERSTATETYPE>( state ), value );
@@ -444,6 +463,16 @@ namespace Direct3D9
 		IDirect3DBaseTexture9* texturePointer = texture != nullptr ? texture->InternalPointer : NULL;
 		HRESULT hr = InternalPointer->SetTexture( sampler, texturePointer );
 		return RECORD_D3D9( hr );
+	}
+
+	BaseTexture^ Device::GetTexture( int stage )
+	{
+		IDirect3DBaseTexture9 *texture;
+		HRESULT hr = InternalPointer->GetTexture( stage, &texture );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		return BaseTexture::FromUnmanaged( texture );
 	}
 
 	Result Device::SetRenderTarget( int rtIndex, Surface^ target )
@@ -770,6 +799,96 @@ namespace Direct3D9
 
 		HRESULT hr = InternalPointer->ProcessVertices( sourceStartIndex, destinationIndex, vertexCount, vb, decl, static_cast<DWORD>( flags ) );
 		return RECORD_D3D9( hr );
+	}
+
+	array<bool>^ Device::GetVertexShaderBooleanConstant( int startRegister, int count )
+	{
+		stack_vector<BOOL> booleans( count );
+
+		HRESULT hr = InternalPointer->GetVertexShaderConstantB( startRegister, &booleans[0], count );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		array<bool>^ results = gcnew array<bool>( count );
+		for( int i = 0; i < count; i++ )
+			results[i] = (booleans[i] != 0);
+
+		return results;
+	}
+
+	array<float>^ Device::GetVertexShaderFloatConstant( int startRegister, int count )
+	{
+		stack_vector<FLOAT> floats( count );
+
+		HRESULT hr = InternalPointer->GetVertexShaderConstantF( startRegister, &floats[0], count );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		array<float>^ results = gcnew array<float>( count );
+		for( int i = 0; i < count; i++ )
+			results[i] = floats[i];
+
+		return results;
+	}
+
+	array<int>^ Device::GetVertexShaderIntegerConstant( int startRegister, int count )
+	{
+		stack_vector<INT> integers( count );
+
+		HRESULT hr = InternalPointer->GetVertexShaderConstantI( startRegister, &integers[0], count );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		array<int>^ results = gcnew array<int>( count );
+		for( int i = 0; i < count; i++ )
+			results[i] = integers[i];
+
+		return results;
+	}
+
+	array<bool>^ Device::GetPixelShaderBooleanConstant( int startRegister, int count )
+	{
+		stack_vector<BOOL> booleans( count );
+
+		HRESULT hr = InternalPointer->GetPixelShaderConstantB( startRegister, &booleans[0], count );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		array<bool>^ results = gcnew array<bool>( count );
+		for( int i = 0; i < count; i++ )
+			results[i] = (booleans[i] != 0);
+
+		return results;
+	}
+
+	array<float>^ Device::GetPixelShaderFloatConstant( int startRegister, int count )
+	{
+		stack_vector<FLOAT> floats( count );
+
+		HRESULT hr = InternalPointer->GetPixelShaderConstantF( startRegister, &floats[0], count );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		array<float>^ results = gcnew array<float>( count );
+		for( int i = 0; i < count; i++ )
+			results[i] = floats[i];
+
+		return results;
+	}
+
+	array<int>^ Device::GetPixelShaderIntegerConstant( int startRegister, int count )
+	{
+		stack_vector<INT> integers( count );
+
+		HRESULT hr = InternalPointer->GetPixelShaderConstantI( startRegister, &integers[0], count );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		array<int>^ results = gcnew array<int>( count );
+		for( int i = 0; i < count; i++ )
+			results[i] = integers[i];
+
+		return results;
 	}
 
 	Result Device::SetVertexShaderConstant( int startRegister, array<bool>^ data, int offset, int count )
