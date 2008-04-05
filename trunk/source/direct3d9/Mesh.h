@@ -83,6 +83,8 @@ namespace SlimDX
 			static Mesh^ Simplify( Mesh^ mesh, array<AttributeWeights>^ attributeWeights, int minimumValue, MeshSimplification options );
 			static Mesh^ Simplify( Mesh^ mesh, int minimumValue, MeshSimplification options );
 
+			static Mesh^ TessellateNPatches( Mesh^ mesh, float segmentCount, bool quadraticInterpolation );
+
 			DataStream^ LockAttributeBuffer( LockFlags flags );
 			Result UnlockAttributeBuffer();
 			Result SetAttributeTable( array<AttributeRange>^ table );
@@ -109,6 +111,12 @@ namespace SlimDX
 				int partialOutIndexU, int partialOutSemanticV, int partialOutIndexV, int normalOutSemantic,
 				int normalOutIndex, TangentOptions options, float partialEdgeThreshold,
 				float singularPointThreshold, float normalEdgeThreshold );
+
+			Result TessellateRectanglePatch( SlimDX::Direct3D9::VertexBuffer^ vertexBuffer, array<float>^ segmentCounts, 
+				array<VertexElement>^ vertexDeclaration, RectanglePatchInfo rectanglePatchInfo );
+
+			Result TessellateTrianglePatch( SlimDX::Direct3D9::VertexBuffer^ vertexBuffer, array<float>^ segmentCounts,
+				array<VertexElement>^ vertexDeclaration, TrianglePatchInfo trianglePatchInfo );
 
 			array<ExtendedMaterial>^ GetMaterials() { return materials; }
 			void SetMaterials( array<ExtendedMaterial>^ value ) { materials = value; }

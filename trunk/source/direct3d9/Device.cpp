@@ -246,6 +246,42 @@ namespace Direct3D9
 		return Result::Last;
 	}
 
+	Result Device::Present( System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle )
+	{
+		RECT nativeSourceRect = { sourceRectangle.Left, sourceRectangle.Top, sourceRectangle.Right, sourceRectangle.Bottom };
+		RECT nativeDestRect = { destinationRectangle.Left, destinationRectangle.Top, destinationRectangle.Right, destinationRectangle.Bottom };
+	
+		HRESULT hr = InternalPointer->Present( &nativeSourceRect, &nativeDestRect, NULL, NULL );
+
+		return RECORD_D3D9( hr );
+	}
+
+	Result Device::Present( System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, System::IntPtr windowOverride )
+	{
+		RECT nativeSourceRect = { sourceRectangle.Left, sourceRectangle.Top, sourceRectangle.Right, sourceRectangle.Bottom };
+		RECT nativeDestRect = { destinationRectangle.Left, destinationRectangle.Top, destinationRectangle.Right, destinationRectangle.Bottom };
+	
+		HRESULT hr = InternalPointer->Present( &nativeSourceRect, &nativeDestRect, static_cast<HWND>( windowOverride.ToPointer() ), NULL );
+
+		return RECORD_D3D9( hr );
+	}
+
+	Result Device::Present( System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, System::IntPtr windowOverride, System::Drawing::Region^ region )
+	{
+		RECT nativeSourceRect = { sourceRectangle.Left, sourceRectangle.Top, sourceRectangle.Right, sourceRectangle.Bottom };
+		RECT nativeDestRect = { destinationRectangle.Left, destinationRectangle.Top, destinationRectangle.Right, destinationRectangle.Bottom };
+
+		RGNDATA nativeRegion;
+		Graphics^ graphics = Graphics::FromHwnd( windowOverride );
+		int count = GetRegionData( static_cast<HRGN>( region->GetHrgn(graphics).ToPointer() ), 0, NULL );
+		GetRegionData( static_cast<HRGN>( region->GetHrgn(graphics).ToPointer() ), count, &nativeRegion );
+		delete graphics;
+	
+		HRESULT hr = InternalPointer->Present( &nativeSourceRect, &nativeDestRect, static_cast<HWND>( windowOverride.ToPointer() ), &nativeRegion );
+
+		return RECORD_D3D9( hr );
+	}
+
 	Result Device::SetRenderState( RenderState state, int value )
 	{
 		HRESULT hr = InternalPointer->SetRenderState( static_cast<D3DRENDERSTATETYPE>( state ), value );
@@ -471,7 +507,7 @@ namespace Direct3D9
 		return gcnew SlimDX::Direct3D9::Capabilities( caps );
 	}
 
-	int Device::AvailableTextureMemory::get()
+	long Device::AvailableTextureMemory::get()
 	{
 		return InternalPointer->GetAvailableTextureMem();
 	}

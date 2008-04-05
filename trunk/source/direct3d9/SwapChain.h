@@ -49,6 +49,9 @@ namespace SlimDX
 			Result GetFrontBufferData( Surface^ destinationSurface );
 
 			Result Present( SlimDX::Direct3D9::Present flags );
+			Result Present( SlimDX::Direct3D9::Present flags, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle );
+			Result Present( SlimDX::Direct3D9::Present flags, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, System::IntPtr windowOverride );
+			Result Present( SlimDX::Direct3D9::Present flags, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, System::IntPtr windowOverride, System::Drawing::Region^ region );
 
 			property SlimDX::Direct3D9::DisplayMode DisplayMode
 			{
