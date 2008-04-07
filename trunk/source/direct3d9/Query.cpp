@@ -231,7 +231,7 @@ namespace Direct3D9
 		else
 		{
 			T data;
-			hr = InternalPointer->GetData( &data, sizeof( T::typeid ), flags );
+			hr = InternalPointer->GetData( &data, sizeof(T), flags );
 			RECORD_D3D9( hr );
 			return data;
 		}

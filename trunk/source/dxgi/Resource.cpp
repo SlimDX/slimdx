@@ -42,7 +42,7 @@ namespace DXGI
 		Construct( pointer, NativeInterface );
 	}
 
-	Resource^ Resource::FromPointer( IDirect3DResource9* pointer )
+	Resource^ Resource::FromPointer( IDXGIResource* pointer )
 	{
 		if( pointer == 0 )
 			return nullptr;
