@@ -99,9 +99,6 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 		
-		if( RECORD_D3D9(hr).IsFailure )
-			throw gcnew Direct3D9Exception( Result::Last );
-		
 		Construct(vb);
 
 		//set description from local info instead of getting the desc
