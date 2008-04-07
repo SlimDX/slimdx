@@ -92,7 +92,7 @@ namespace SlimDX
 		if( Configuration::TryGetResultWatch( m_Last, flags ) )
 		{
 			if( flags == ResultWatchFlags::AlwaysIgnore )
-				return Result( hr );
+				return m_Last;
 
 			if( static_cast<int>( flags & ResultWatchFlags::Break ) != 0 )
 				BreakIfDebugging();
@@ -104,7 +104,7 @@ namespace SlimDX
 		if( failed && Configuration::ThrowOnError )
 			Throw<T>();
 
-		return Result( hr );
+		return m_Last;
 	}
 
 	generic< typename T >

@@ -29,7 +29,6 @@ namespace SlimDX
 		EnableObjectTracking = false;
 		ThrowOnError = true;
 		DetectDoubleDispose = false;
-		SetDebugValues();
 
 		m_Watches = gcnew System::Collections::Generic::Dictionary<Result,ResultWatchFlags>();
 	}
@@ -38,11 +37,6 @@ namespace SlimDX
 	{
 	}
 	
-	void Configuration::SetDebugValues()
-	{
-		EnableObjectTracking = true;
-	}
-
 	bool Configuration::TryGetResultWatch( Result result, ResultWatchFlags% flags )
 	{
 		return m_Watches->TryGetValue( result, flags );

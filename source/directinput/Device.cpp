@@ -115,7 +115,7 @@ namespace DirectInput
 			format.dwSize = sizeof( DIDATAFORMAT );
 			format.dwObjSize = sizeof( DIOBJECTDATAFORMAT );
 			format.dwFlags = static_cast<DWORD>( formatAttribute->Flags );
-			format.dwDataSize = Marshal::SizeOf( type );
+			format.dwDataSize = sizeof( type );
 			format.dwNumObjs = objectAttributes->Count;
 
 			stack_vector<DIOBJECTDATAFORMAT> objectFormats( objectAttributes->Count );
@@ -339,9 +339,9 @@ namespace DirectInput
 		}
 		else
 		{
-			int typeSize = Marshal::SizeOf( type );
+			size_t typeSize = sizeof(type);
 			stack_vector<BYTE> bytes(typeSize);
-			HRESULT hr = InternalPointer->GetDeviceState( sizeof( BYTE ) * typeSize, &bytes[0] );
+			HRESULT hr = InternalPointer->GetDeviceState( static_cast<DWORD>(sizeof(BYTE) * typeSize), &bytes[0] );
 			if( RecordError( hr ).IsFailure )
 				return Result::Last;
 
@@ -404,9 +404,9 @@ namespace DirectInput
 		}
 		else
 		{
-			int typeSize = Marshal::SizeOf( type );
+			size_t typeSize = sizeof(type);
 			stack_vector<BYTE> bytes(typeSize);
-			HRESULT hr = InternalPointer->GetDeviceState( sizeof( BYTE ) * typeSize, &bytes[0] );
+			HRESULT hr = InternalPointer->GetDeviceState( static_cast<DWORD>(sizeof(BYTE) * typeSize), &bytes[0] );
 
 			DataFormat result = Activator::CreateInstance<DataFormat>();
 

@@ -30,7 +30,6 @@
 
 using namespace System;
 using namespace System::IO;
-using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
@@ -189,7 +188,7 @@ namespace SlimDX
 		if( !m_CanWrite )
 			throw gcnew NotSupportedException();
 
-		int size = Marshal::SizeOf( T::typeid );
+		size_t size = sizeof( T::typeid );
 
 		if( m_Position + size > m_Size )
 			throw gcnew InvalidOperationException();
@@ -208,6 +207,8 @@ namespace SlimDX
 			throw gcnew ArgumentOutOfRangeException( "offset" );
 		if( count < 0 || offset + count > buffer->Length )
 			throw gcnew ArgumentOutOfRangeException( "count" );
+		if( m_Position + count > m_Size )
+			throw gcnew InvalidOperationException();
 
 		pin_ptr<Byte> pinnedBuffer = &buffer[offset];
 		memcpy( m_Buffer + m_Position, pinnedBuffer, count );
@@ -221,6 +222,8 @@ namespace SlimDX
 		if( !m_CanWrite )
 			throw gcnew NotSupportedException();
 		
+		size_t size = sizeof(T);
+
 		if( data == nullptr )
 			throw gcnew ArgumentNullException( "data" );
 		if( offset < 0 || offset > data->Length - 1 )
@@ -231,10 +234,11 @@ namespace SlimDX
 			count = data->Length;
 		if( offset + count > data->Length )
 			throw gcnew ArgumentOutOfRangeException( "data" );
+		if( (m_Position + count * size) > m_Size )
+			throw gcnew InvalidOperationException();
 
-		int size = count * Marshal::SizeOf( T::typeid );
 		pin_ptr<T> pinnedData = &data[offset];
-		memcpy( m_Buffer + m_Position, pinnedData, size );
+		memcpy( m_Buffer + m_Position, pinnedData, size * count );
 		m_Position += size;
 	}
 	
@@ -247,6 +251,8 @@ namespace SlimDX
 			throw gcnew ArgumentNullException( "source" );
 		if( count < 0 )
 			throw gcnew ArgumentOutOfRangeException( "count" );
+		if( m_Position + count > m_Size )
+			throw gcnew InvalidOperationException();
 
 		memcpy( m_Buffer + m_Position, source.ToPointer(), static_cast<size_t>( count ) );
 		m_Position += count;
@@ -259,7 +265,7 @@ namespace SlimDX
 			throw gcnew NotSupportedException();
 
 		T result;
-		int size = Marshal::SizeOf( T::typeid );
+		size_t size = sizeof( T::typeid );
 
 		if( Length - m_Position < size )
 			throw gcnew InvalidOperationException();
@@ -297,8 +303,8 @@ namespace SlimDX
 		if( count < 0 )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 			
-		int elementSize = Marshal::SizeOf( T::typeid );
-		int actualCount = min( static_cast<int>(Length - m_Position) / elementSize, count );
+		size_t elementSize = sizeof( T::typeid );
+		unsigned int actualCount = min( static_cast<unsigned int>(Length - m_Position) / elementSize, static_cast<unsigned int>( count ) );
 		array<T>^ result = gcnew array<T>( actualCount );
 
 		pin_ptr<T> pinnedBuffer = &result[0];
