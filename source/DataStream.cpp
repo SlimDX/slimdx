@@ -188,7 +188,7 @@ namespace SlimDX
 		if( !m_CanWrite )
 			throw gcnew NotSupportedException();
 
-		size_t size = sizeof( T::typeid );
+		size_t size = sizeof(T);
 
 		if( m_Position + size > m_Size )
 			throw gcnew InvalidOperationException();
@@ -265,7 +265,7 @@ namespace SlimDX
 			throw gcnew NotSupportedException();
 
 		T result;
-		size_t size = sizeof( T::typeid );
+		size_t size = sizeof(T);
 
 		if( Length - m_Position < size )
 			throw gcnew InvalidOperationException();
@@ -303,7 +303,7 @@ namespace SlimDX
 		if( count < 0 )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 			
-		size_t elementSize = sizeof( T::typeid );
+		size_t elementSize = sizeof(T);
 		unsigned int actualCount = min( static_cast<unsigned int>(Length - m_Position) / elementSize, static_cast<unsigned int>( count ) );
 		array<T>^ result = gcnew array<T>( actualCount );
 
