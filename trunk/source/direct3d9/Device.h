@@ -963,6 +963,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="enableR2VB"><c>true</c> to enable render-to-vertex-buffer mode, <c>false</c> to disable it.</param>
 			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <remarks>This functionality is only available on ATI cards which support render to vertex buffer.</remarks>
 			Result SetR2VBMode( bool enableR2VB );
 
 			/// <summary>
@@ -974,6 +975,7 @@ namespace SlimDX
 			/// <param name="stride">The stride of the vertex data.</param>
 			/// <param name="dummyVertexBuffer">A vertex buffer that is used to fill a required parameter in <see cref="Device.SetStreamSource"/>.</param>
 			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <remarks>This functionality is only available on ATI cards which support render to vertex buffer.</remarks>
 			Result BindRenderTargetToVertexStream( R2VBSampler sampler, Texture^ r2vbTarget, int stream, int stride, VertexBuffer^ dummyVertexBuffer );
 			
 			/// <summary>
@@ -981,6 +983,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="stream">The vertex stream that should be unbound.
 			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <remarks>This functionality is only available on ATI cards which support render to vertex buffer.</remarks>
 			Result RestoreVertexStream( int stream );
 
 			/// <summary>

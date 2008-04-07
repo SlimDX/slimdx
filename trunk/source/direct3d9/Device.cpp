@@ -167,7 +167,7 @@ namespace Direct3D9
 		pin_ptr<T> pinned_data = &data[startIndex];
 
 		HRESULT hr = InternalPointer->DrawPrimitiveUP( static_cast<D3DPRIMITIVETYPE>( primitiveType ), primitiveCount,
-			pinned_data, Marshal::SizeOf( T::typeid ) );
+			pinned_data, sizeof( T::typeid ) );
 		return RECORD_D3D9( hr );
 	}
 
