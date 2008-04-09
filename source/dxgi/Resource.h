@@ -56,9 +56,11 @@ namespace SlimDX
 			}
 			
 			/// <summary>
-			/// Constructs a Resource from an unmanaged pointer.
+			/// Constructs a new instance of the <see cref="Resource"/> class using the specified pointer to a
+			/// previously constructed unmanaged object.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGIResource pointer.</param>
+			/// <returns>The newly constructed object.</returns>
 			static Resource^ FromPointer( System::IntPtr pointer );
 		};
 	}

@@ -23,11 +23,6 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-			/// <summary>
-			/// 
-			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
-
 #include "../DataStream.h"
 #include "../ComObject.h"
 #include "../Utilities.h"

@@ -57,9 +57,11 @@ namespace SlimDX
 			}
 			
 			/// <summary>
-			/// Constructs a Device from an unmanaged pointer.
+			/// Constructs a new instance of the <see cref="Device"/> class using the specified pointer to a
+			/// previously constructed unmanaged object.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGIDevice pointer.</param>
+			/// <returns>The newly constructed object.</returns>
 			static Device^ FromPointer( System::IntPtr pointer );
 			
 			/// <summary>
@@ -67,7 +69,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="resources">The resources to query.</param>
 			/// <returns>A list of residency status values, one for each entry in the input resources list. The result will be
-			/// null on failure.</returns>
+			/// <c>null</c> on failure.</returns>
 			System::Collections::ObjectModel::ReadOnlyCollection<Residency>^ QueryResourceResidency( System::Collections::Generic::IList<ComObject^>^ resources ); 
 		};
 	}

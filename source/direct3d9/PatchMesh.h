@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "PatchInfo.h"
+#include "PatchMeshInfo.h"
 #include "DisplacementParameters.h"
 
 namespace SlimDX

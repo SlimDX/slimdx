@@ -79,6 +79,7 @@ namespace SlimDX
 			/// Constructs a new instance of the <see cref="Device"/> class using the specified pointer to a
 			/// previously constructed unmanaged object.
 			/// </summary>
+			/// <param name="pointer">The unmanaged IDirect3DDevice9 pointer.</param>
 			/// <returns>The newly constructed object.</returns>
 			static Device^ FromPointer( System::IntPtr pointer );
 

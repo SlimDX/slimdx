@@ -49,9 +49,11 @@ namespace SlimDX
 			}
 			
 			/// <summary>
-			/// Constructs an Adapter from an unmanaged pointer.
+			/// Constructs a new instance of the <see cref="Adapter"/> class using the specified pointer to a
+			/// previously constructed unmanaged object.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGIAdapter pointer.</param>
+			/// <returns>The newly constructed object.</returns>
 			static Adapter^ FromPointer( System::IntPtr pointer );
 			
 			/// <summary>
@@ -63,14 +65,14 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the specified output.
 			/// </summary>
-			/// <returns>The desired output, or null on failure.</returns>
+			/// <returns>The desired output, or <c>null</c> on failure.</returns>
 			Output^ GetOutput( int index );
 			
 			/// <summary>
 			/// Determines if a device interface for a graphics component is supported by the adapter.
 			/// </summary>
 			/// <param name="type">The device interface type.</param>
-			/// <returns>True if the device interface is supported, false otherwise.</returns>
+			/// <returns><c>true</c> if the device interface is supported; otherwise, <c>false</c>.</returns>
 			bool IsInterfaceSupported( System::Type^ type );
 			
 			/// <summary>
@@ -78,7 +80,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="type">The device interface type.</param>
 			/// <param name="userModeVersion">Receives the user-mode driver version of the interface.</param>
-			/// <returns>True if the device interface is supported, false otherwise.</returns>
+			/// <returns><c>true</c> if the device interface is supported; otherwise, <c>false</c>.</returns>
 			bool IsInterfaceSupported( System::Type^ type, [Out] System::Int64% userModeVersion );	
 		};
 	}
