@@ -110,41 +110,5 @@ namespace Direct3D9
 			 && value1.Height == value2.Height && value1.Stride == value2.Stride && value1.Basis == value2.Basis
 			 && value1.Degree == value2.Degree );
 	}
-
-	bool PatchInfo::operator == ( PatchInfo left, PatchInfo right )
-	{
-		return PatchInfo::Equals( left, right );
-	}
-
-	bool PatchInfo::operator != ( PatchInfo left, PatchInfo right )
-	{
-		return !PatchInfo::Equals( left, right );
-	}
-
-	int PatchInfo::GetHashCode()
-	{
-		return PatchType.GetHashCode() + Degree.GetHashCode() + Basis.GetHashCode();
-	}
-
-	bool PatchInfo::Equals( Object^ value )
-	{
-		if( value == nullptr )
-			return false;
-
-		if( value->GetType() != GetType() )
-			return false;
-
-		return Equals( safe_cast<PatchInfo>( value ) );
-	}
-
-	bool PatchInfo::Equals( PatchInfo value )
-	{
-		return ( PatchType == value.PatchType && Degree == value.Degree && Basis == value.Basis );
-	}
-
-	bool PatchInfo::Equals( PatchInfo% value1, PatchInfo% value2 )
-	{
-		return ( value1.PatchType == value2.PatchType && value1.Degree == value2.Degree && value1.Basis == value2.Basis );
-	}
 }
 }

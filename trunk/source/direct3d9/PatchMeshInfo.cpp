@@ -19,28 +19,51 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include <d3d9.h>
+#include <d3dx9.h>
+
+#include "PatchMeshInfo.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct3D9
+namespace Direct3D9
+{
+	bool PatchInfo::operator == ( PatchInfo left, PatchInfo right )
 	{
-		public delegate void AnimationCallback( int track, System::Object^ data );
-
-		/// <summary>
-		/// Callback function used by 2D texture fill functions.
-		/// </summary>
-		/// <param name="coordinate">Texture coordinate being sampled.</param>
-		/// <param name="texelSize">Dimensions of the texel.</param>
-		/// <returns>A 4 dimensional vector, representing a color value. X, Y, Z, and W map to R, G, B, and A, respectively.</returns>
-		public delegate Vector4 Fill2DCallback(Vector2 coordinate, Vector2 texelSize);
-
-		/// <summary>
-		/// Callback function used by 3D texture fill functions.
-		/// </summary>
-		/// <param name="coordinate">Texture coordinate being sampled.</param>
-		/// <param name="texelSize">Dimensions of the texel.</param>
-		/// <returns>A 4 dimensional vector, representing a color value. X maps to R, G to Y, etc...</returns>
-		public delegate Vector4 Fill3DCallback(Vector3 coordinate, Vector3 texelSize);
+		return PatchInfo::Equals( left, right );
 	}
+
+	bool PatchInfo::operator != ( PatchInfo left, PatchInfo right )
+	{
+		return !PatchInfo::Equals( left, right );
+	}
+
+	int PatchInfo::GetHashCode()
+	{
+		return PatchType.GetHashCode() + Degree.GetHashCode() + Basis.GetHashCode();
+	}
+
+	bool PatchInfo::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( safe_cast<PatchInfo>( value ) );
+	}
+
+	bool PatchInfo::Equals( PatchInfo value )
+	{
+		return ( PatchType == value.PatchType && Degree == value.Degree && Basis == value.Basis );
+	}
+
+	bool PatchInfo::Equals( PatchInfo% value1, PatchInfo% value2 )
+	{
+		return ( value1.PatchType == value2.PatchType && value1.Degree == value2.Degree && value1.Basis == value2.Basis );
+	}
+}
 }

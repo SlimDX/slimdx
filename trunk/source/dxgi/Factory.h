@@ -21,9 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-//using namespace System::Runtime::InteropServices;
-
 #include "../ComObject.h"
 
 #include "Enums.h"
@@ -35,7 +32,7 @@ namespace SlimDX
 		ref class Adapter;
 		
 		/// <summary>
-		/// Provides access to connected adapters and window associations. A Factory
+		/// Provides access to connected adapters and window associations. A <see cref="Factory"/>
 		/// is also required to create most DXGI objects.
 		/// </summary>
 		public ref class Factory : public ComObject
@@ -44,14 +41,16 @@ namespace SlimDX
 			
 		public:
 			/// <summary>
-			/// Constructs a new Factory.
+			/// Initializes a new instance of the <see cref="Factory"/> class.
 			/// </summary>
 			Factory();
 			
 			/// <summary>
-			/// Constructs a Factory from an unmanaged pointer.
+			/// Constructs a new instance of the <see cref="Factory"/> class using the specified pointer to a
+			/// previously constructed unmanaged object.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGIFactory pointer.</param>
+			/// <returns>The newly constructed object.</returns>
 			static Factory^ FromPointer( System::IntPtr pointer );
 			
 			/// <summary>
@@ -64,21 +63,21 @@ namespace SlimDX
 			/// Gets the specified adapter.
 			/// </summary>
 			/// <param name="index">The index of the desired adapter.</param>
-			/// <returns>The specified adapter, or null on failure.</returns>
+			/// <returns>The specified adapter, or <c>null</c> on failure.</returns>
 			Adapter^ GetAdapter( int index );
 		
 			/// <summary>
 			/// Creates a software adapater interface.
 			/// </summary>
 			/// <param name="module">The unmanaged HMODULE for the software adapter DLL.</param>
-			/// <returns>The specified adapter, or null on failure.</returns>
+			/// <returns>The specified adapter, or <c>null</c> on failure.</returns>
 			Adapter^ CreateSoftwareAdapter( System::IntPtr module );
 			
 			/// <summary>
 			/// Creates a software adapater interface.
 			/// </summary>
 			/// <param name="module">The module for the software adapter DLL.</param>
-			/// <returns>The specified adapter, or null on failure.</returns>
+			/// <returns>The specified adapter, or <c>null</c> on failure.</returns>
 			Adapter^ CreateSoftwareAdapter( System::Reflection::Module^ module );
 			
 			/// <summary>
@@ -94,7 +93,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="handle">The window handle.</param>
 			/// <param name="flags">Flags controlling window association behavior.</param>
-			/// <returns>A Result code.</returns>
+			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
 			Result SetWindowAssociation( System::IntPtr handle, WindowAssociationFlags flags );
 		};
 	}

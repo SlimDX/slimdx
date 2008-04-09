@@ -1802,6 +1802,14 @@
 						RelativePath="..\source\direct3d9\PatchMesh.h"
 						>
 					</File>
+					<File
+						RelativePath="..\source\direct3d9\PatchMeshInfo.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d9\PatchMeshInfo.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="SimplificationMesh"

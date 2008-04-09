@@ -102,7 +102,7 @@ namespace SlimDX
 			}
 			
 			/// <summary>
-			/// Constructs a new ModeDescription.
+			/// Initializes a new instance of the <see cref="ModelDescription"/> structure.
 			/// </summary>
 			/// <param name="width">The width.</param>
 			/// <param name="height">The height.</param>

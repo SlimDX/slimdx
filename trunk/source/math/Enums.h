@@ -32,8 +32,19 @@ namespace SlimDX
 	/// </summary>
 	public enum class ContainmentType : System::Int32
 	{
+		/// <summary>
+		/// The two bounding volumes don't intersect at all.
+		/// </summary>
 		Disjoint,
+
+		/// <summary>
+		/// One bounding volume completely contains another.
+		/// </summary>
 		Contains,
+
+		/// <summary>
+		/// The two bounding volumes overlap.
+		/// </summary>
 		Intersects
 	};
 	
@@ -42,8 +53,19 @@ namespace SlimDX
 	/// </summary>
 	public enum class PlaneIntersectionType : System::Int32
 	{
+		/// <summary>
+		/// The object is behind the plane.
+		/// </summary>
 		Back,
+
+		/// <summary>
+		/// The object is in front of the plane.
+		/// </summary>
 		Front,
+
+		/// <summary>
+		/// The object is intersecting the plane.
+		/// </summary>
 		Intersecting
 	};
 		

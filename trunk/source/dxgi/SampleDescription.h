@@ -58,7 +58,7 @@ namespace SlimDX
 			}
 			
 			/// <summary>
-			/// Constructs a new SampleDescription.
+			/// Initializes a new instance of the <see cref="SampleDescription"/> structure.
 			/// </summary>
 			/// <param name="count">The sample count.</param>
 			/// <param name="quality">The sample quality.</param>

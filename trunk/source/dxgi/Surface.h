@@ -51,21 +51,24 @@ namespace SlimDX
 			}
 			
 			/// <summary>
-			/// Constructs a Surface from an unmanaged pointer.
+			/// Constructs a new instance of the <see cref="Surface"/> class using the specified pointer to a
+			/// previously constructed unmanaged object.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDXGISurface pointer.</param>
+			/// <returns>The newly constructed object.</returns>
 			static Surface^ FromPointer( System::IntPtr pointer );
 			
 			/// <summary>
 			/// Acquires access to the surface data.
 			/// </summary>
 			/// <param name="flags">Flags specifying CPU access permissions.</param>
-			/// <returns>A DataRectangle for accessing the mapped data, or null on failure.</returns>.
+			/// <returns>A <see cref="SlimDX.DataRectangle"/> for accessing the mapped data, or <c>null</c> on failure.</returns>.
 			DataRectangle^ Map( MapFlags flags );
 			
 			/// <summary>
 			/// Relinquishes access to the surface data.
 			/// </summary>
+			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
 			Result Unmap();
 		};
 	}

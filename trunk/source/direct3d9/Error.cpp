@@ -67,11 +67,6 @@ namespace Direct3D9
 		return Result( D3DERR_DRIVERINTERNALERROR );
 	}
 	
-	Result Error::DriverInvalidCall::get()
-	{
-		return Result( D3DERR_DRIVERINVALIDCALL );
-	}
-	
 	Result Error::InvalidCall::get()
 	{
 		return Result( D3DERR_INVALIDCALL );

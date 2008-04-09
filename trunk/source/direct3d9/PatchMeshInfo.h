@@ -27,20 +27,26 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		/// <summary>Describes the current clip status.</summary>
-		/// <unmanaged>D3DCLIPSTATUS9</unmanaged>
-		public value class ClipStatus : System::IEquatable<ClipStatus>
+		/// <summary>Structure that contains the attributes of a patch mesh.</summary>
+		/// <unmanaged>D3DXPATCHINFO</unmanaged>
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
+		public value class PatchInfo : System::IEquatable<PatchInfo>
 		{
 		public:
 			/// <summary>
-			/// Gets or sets flags describing the current clipping union.
+			/// Gets or sets the patch type.
 			/// </summary>
-			property ClipFlags ClipUnion;
+			property PatchMeshType PatchType;
 
 			/// <summary>
-			/// Gets or sets flags describing the current clipping intersection.
+			/// Gets or sets the degree of the patch.
 			/// </summary>
-			property ClipFlags ClipIntersection;
+			property Degree Degree;
+
+			/// <summary>
+			/// Gets or sets the basis of the patch.
+			/// </summary>
+			property Basis Basis;
 
 			/// <summary>
 			/// Tests for equality between two objects.
@@ -48,7 +54,7 @@ namespace SlimDX
 			/// <param name="left">The first value to compare.</param>
 			/// <param name="right">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-			static bool operator == ( ClipStatus left, ClipStatus right );
+			static bool operator == ( PatchInfo left, PatchInfo right );
 
 			/// <summary>
 			/// Tests for inequality between two objects.
@@ -56,7 +62,7 @@ namespace SlimDX
 			/// <param name="left">The first value to compare.</param>
 			/// <param name="right">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-			static bool operator != ( ClipStatus left, ClipStatus right );
+			static bool operator != ( PatchInfo left, PatchInfo right );
 
 			/// <summary>
 			/// Returns the hash code for this instance.
@@ -76,7 +82,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="other">Object to make the comparison with.</param>
 			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
-			virtual bool Equals( ClipStatus other );
+			virtual bool Equals( PatchInfo other );
 
 			/// <summary>
 			/// Determines whether the specified object instances are considered equal. 
@@ -85,7 +91,7 @@ namespace SlimDX
 			/// <param name="value2">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="value1"/> is the same instance as <paramref name="value2"/> or 
 			/// if both are <c>null</c> references or if <c>value1.Equals(value2)</c> returns <c>true</c>; otherwise, <c>false</c>.</returns>
-			static bool Equals( ClipStatus% value1, ClipStatus% value2 );
+			static bool Equals( PatchInfo% value1, PatchInfo% value2 );
 		};
 	}
 }
