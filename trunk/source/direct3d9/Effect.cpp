@@ -217,6 +217,17 @@ namespace Direct3D9
 		return Effect::FromFile( device, fileName, includeFile, skipConstants, flags, pool, compilationErrors );
 	}
 
+	Effect^ Effect::Clone( Device^ device )
+	{
+		ID3DXEffect *result;
+
+		HRESULT hr = InternalPointer->CloneEffect( device->InternalPointer, &result );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		return gcnew Effect( result );
+	}
+
 	int Effect::Begin( FX flags )
 	{
 		unsigned int passCount;
