@@ -34,6 +34,7 @@ namespace SlimDX
 	/// <summary>
 	/// A four-component (RGBA) color value; each component is a float in the range [0,1].
 	/// </summary>
+	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 	public value class Color4
 	{

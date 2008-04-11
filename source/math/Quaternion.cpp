@@ -741,27 +741,6 @@ namespace SlimDX
 		return results;
 	}
 
-	array<Quaternion>^ Quaternion::SquadSetup( Quaternion% source1, Quaternion% source2, Quaternion% source3, Quaternion% source4 )
-	{
-		Quaternion result1;
-		Quaternion result2;
-		Quaternion result3;
-		array<Quaternion>^ results = gcnew array<Quaternion>( 3 );
-
-		pin_ptr<Quaternion> pin1 = &source1;
-		pin_ptr<Quaternion> pin2 = &source2;
-		pin_ptr<Quaternion> pin3 = &source3;
-		pin_ptr<Quaternion> pin4 = &source4;
-
-		D3DXQuaternionSquadSetup( (D3DXQUATERNION*) &result1, (D3DXQUATERNION*) &result2, (D3DXQUATERNION*) &result3,
-			(D3DXQUATERNION*) pin1, (D3DXQUATERNION*) pin2, (D3DXQUATERNION*) pin3, (D3DXQUATERNION*) pin4 );
-
-		results[0] = result1;
-		results[1] = result2;
-		results[2] = result3;
-		return results;
-	}
-
 	Quaternion Quaternion::Subtract( Quaternion left, Quaternion right )
 	{
 		Quaternion result;

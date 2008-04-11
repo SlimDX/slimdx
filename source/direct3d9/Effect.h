@@ -60,6 +60,8 @@ namespace SlimDX
 			static Effect^ FromFile( Device^ device, System::String^ sourceData, Include^ includeFile, System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] System::String^ %compilationErrors);
 			static Effect^ FromFile( Device^ device, System::String^ sourceData, Include^ includeFile, System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool);
 
+			Effect^ Clone( Device^ device );
+
 			int Begin( FX flags );
 			Result End();
 			Result BeginPass( int pass );
