@@ -34,24 +34,12 @@ using namespace System::Globalization;
 
 namespace SlimDX
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="SlimDX::Plane"/> class.
-	/// </summary>
-	/// <param name="a">X component of the normal defining the plane.</param>
-	/// <param name="b">Y component of the normal defining the plane.</param>
-	/// <param name="c">Z component of the normal defining the plane.</param>
-	/// <param name="d">Distance of the plane along its normal from the origin.</param>
 	Plane::Plane( float a, float b, float c, float d )
 	{
 		Normal = Vector3( a, b, c );
 		D = d;
 	}
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="SlimDX::Plane"/> class.
-	/// </summary>
-	/// <param name="normal">The normal vector to the plane.</param>
-	/// <param name="d">Distance of the plane along its normal from the origin.</param>
+	
 	Plane::Plane( Vector3 normal, float d )
 	{
 		Normal = normal;
@@ -63,13 +51,7 @@ namespace SlimDX
 		Normal = normal;
 		D = -Vector3::Dot( normal, point );
 	}
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="SlimDX::Plane"/> class.
-	/// </summary>
-	/// <param name="point1">First point of a triangle defining the plane.</param>
-	/// <param name="point2">Second point of a triangle defining the plane.</param>
-	/// <param name="point3">Third point of a triangle defining the plane.</param>
+	
 	Plane::Plane( Vector3 point1, Vector3 point2, Vector3 point3 )
 	{
 		float x1 = point2.X - point1.X;
@@ -88,56 +70,28 @@ namespace SlimDX
 		Normal.Z = xy * invPyth;
 		D = -((Normal.X * point1.X) + (Normal.Y * point1.Y) + (Normal.Z * point1.Z));
 	}
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="SlimDX::Plane"/> class.
-	/// </summary>
-	/// <param name="value">
-	/// A vector with the X, Y, and Z components defining the normal to the plane.
-	/// The W component defines the distance of the plane along its normal from the origin.
-	/// </param>
+	
 	Plane::Plane( Vector4 value )
 	{
 		Normal = Vector3( value.X, value.Y, value.Z );
 		D = value.W;
 	}
-
-	/// <summary>
-	/// Calculates the dot product of the specified vector and plane.
-	/// </summary>
-	/// <param name="plane">The source plane.</param>
-	/// <param name="point">The source vector.</param>
-	/// <returns>The dot product of the specified vector and plane.</returns>
+	
 	float Plane::Dot( Plane plane, Vector4 point )
 	{
 		return (plane.Normal.X * point.X) + (plane.Normal.Y * point.Y) + (plane.Normal.Z * point.Z) + (plane.D * point.W);
 	}
-
-	/// <summary>
-	/// Calculates the dot product of a specified vector and the normal of the plane plus the distance value of the plane.
-	/// </summary>
-	/// <param name="plane">The source plane.</param>
-	/// <param name="point">The source vector.</param>
-	/// <returns>The dot product of a specified vector and the normal of the Plane plus the distance value of the plane.</returns>
+	
 	float Plane::DotCoordinate( Plane plane, Vector3 point )
 	{
 		return (plane.Normal.X * point.X) + (plane.Normal.Y * point.Y) + (plane.Normal.Z * point.Z) + plane.D;
 	}
-
-	/// <summary>
-	/// Calculates the dot product of the specified vector and the normal of the plane.
-	/// </summary>
-	/// <param name="plane">The source plane.</param>
-	/// <param name="point">The source vector.</param>
-	/// <returns>The dot product of the specified vector and the normal of the plane.</returns>
+	
 	float Plane::DotNormal( Plane plane, Vector3 point )
 	{
 		return (plane.Normal.X * point.X) + (plane.Normal.Y * point.Y) + (plane.Normal.Z * point.Z);
 	}
-
-	/// <summary>
-	/// Changes the coefficients of the normal vector of the plane to make it of unit length.
-	/// </summary>
+	
 	void Plane::Normalize()
 	{
 		float magnitude = 1.0f / static_cast<float>( Math::Sqrt( (Normal.X * Normal.X) + (Normal.Y * Normal.Y) + (Normal.Z * Normal.Z) ) );
@@ -148,11 +102,6 @@ namespace SlimDX
 		D *= magnitude;
 	}
 
-	/// <summary>
-	/// Changes the coefficients of the normal vector of the plane to make it of unit length.
-	/// </summary>
-	/// <param name="plane">The source plane.</param>
-	/// <returns>The normalized plane.</returns>
 	Plane Plane::Normalize( Plane plane )
 	{
 		float magnitude = 1.0f / static_cast<float>( Math::Sqrt( (plane.Normal.X * plane.Normal.X) + (plane.Normal.Y * plane.Normal.Y) + (plane.Normal.Z * plane.Normal.Z) ) );
@@ -160,24 +109,13 @@ namespace SlimDX
 		return Plane( plane.Normal.X * magnitude, plane.Normal.Y * magnitude, plane.Normal.Z * magnitude, plane.D * magnitude );
 	}
 
-	/// <summary>
-	/// Changes the coefficients of the normal vector of the plane to make it of unit length.
-	/// </summary>
-	/// <param name="plane">The source plane.</param>
-	/// <param name="result">When the method completes, contains the normalized plane.</param>
 	void Plane::Normalize( Plane% plane, [Out] Plane% result )
 	{
 		float magnitude = 1.0f / static_cast<float>( Math::Sqrt( (plane.Normal.X * plane.Normal.X) + (plane.Normal.Y * plane.Normal.Y) + (plane.Normal.Z * plane.Normal.Z) ) );
 
 		result = Plane( plane.Normal.X * magnitude, plane.Normal.Y * magnitude, plane.Normal.Z * magnitude, plane.D * magnitude );
 	}
-
-	/// <summary>
-	/// Transforms a normalized plane by a matrix.
-	/// </summary>
-	/// <param name="plane">The normalized source plane.</param>
-	/// <param name="transformation">The transformation matrix.</param>
-	/// <returns>The transformed plane.</returns>
+	
 	Plane Plane::Transform( Plane plane, Matrix transformation )
 	{
 		Plane result;
@@ -195,12 +133,6 @@ namespace SlimDX
 		return result;
 	}
 
-	/// <summary>
-	/// Transforms a normalized plane by a matrix.
-	/// </summary>
-	/// <param name="plane">The normalized source plane.</param>
-	/// <param name="transformation">The transformation matrix.</param>
-	/// <param name="result">When the method completes, contains the transformed plane.</param>
 	void Plane::Transform( Plane% plane, Matrix% temp, [Out] Plane% result )
 	{
 		float x = plane.Normal.X;
@@ -219,12 +151,6 @@ namespace SlimDX
 		result = r;
 	}
 
-	/// <summary>
-	/// Transforms an array of normalized planes by a matrix.
-	/// </summary>
-	/// <param name="planes">The normalized source planes.</param>
-	/// <param name="transformation">The transformation matrix.</param>
-	/// <returns>The transformed planes.</returns>
 	array<Plane>^ Plane::Transform( array<Plane>^ planes, Matrix% temp )
 	{
 		if( planes == nullptr )
@@ -253,12 +179,6 @@ namespace SlimDX
 		return results;
 	}
 
-	/// <summary>
-	/// Transforms a normalized plane by a quaternion rotation.
-	/// </summary>
-	/// <param name="plane">The normalized source plane.</param>
-	/// <param name="rotation">The quaternion rotation.</param>
-	/// <returns>The transformed plane.</returns>
 	Plane Plane::Transform( Plane plane, Quaternion rotation )
 	{
 		Plane result;
@@ -285,13 +205,7 @@ namespace SlimDX
 		result.D = plane.D;
 		return result;
 	}
-
-	/// <summary>
-	/// Transforms a normalized plane by a quaternion rotation.
-	/// </summary>
-	/// <param name="plane">The normalized source plane.</param>
-	/// <param name="rotation">The quaternion rotation.</param>
-	/// <param name="result">When the method completes, contains the transformed plane.</param>
+	
 	void Plane::Transform( Plane% plane, Quaternion% rotation, [Out] Plane% result )
 	{
 		float x2 = rotation.X + rotation.X;
@@ -320,12 +234,6 @@ namespace SlimDX
 		result = r;
 	}
 
-	/// <summary>
-	/// Transforms an array of normalized planes by a quaternion rotation.
-	/// </summary>
-	/// <param name="planes">The normalized source planes.</param>
-	/// <param name="rotation">The quaternion rotation.</param>
-	/// <returns>The transformed planes.</returns>
 	array<Plane>^ Plane::Transform( array<Plane>^ planes, Quaternion% rotation )
 	{
 		if( planes == nullptr )
@@ -364,15 +272,7 @@ namespace SlimDX
 
 		return results;
 	}
-
-	/// <summary>
-	/// Finds the intersection between a plane and a line.
-	/// </summary>
-	/// <param name="plane">The source plane.</param>
-	/// <param name="start">The start point of the line.</param>
-	/// <param name="end">The end point of the line.</param>
-	/// <param name="intersectPoint">If an intersection is found, contains the intersection point between the line and the plane.</param>
-	/// <returns><c>true</c> if an intersection is found; <c>false</c> otherwise.</returns>
+	
 	bool Plane::Intersects( Plane plane, Vector3 start, Vector3 end, [Out] Vector3% intersectPoint )
 	{
 		D3DXVECTOR3 nativePoint;
@@ -439,12 +339,7 @@ namespace SlimDX
 		result = r;
 	}
 
-	/// <summary>
-	/// Scales the plane by the given scaling factor.
-	/// </summary>
-	/// <param name="plane">The source plane.</param>
-	/// <param name="scale">The scaling factor.</param>
-	/// <returns>The scaled plane.</returns>
+	
 	Plane Plane::operator * ( Plane plane, float scale )
 	{
 		Plane result;
@@ -452,62 +347,31 @@ namespace SlimDX
 		return result;
 	}
 
-	/// <summary>
-	/// Scales the plane by the given scaling factor.
-	/// </summary>
-	/// <param name="plane">The source plane.</param>
-	/// <param name="scale">The scaling factor.</param>
-	/// <returns>The scaled plane.</returns>
 	Plane Plane::operator * ( float scale, Plane plane )
 	{
 		return plane * scale;
 	}
 
-	/// <summary>
-	/// Tests planes for equality. 
-	/// </summary>
-	/// <param name="left">The first source plane.</param>
-	/// <param name="right">The second source plane.</param>
-	/// <returns><c>true</c> if the planes are equal; <c>false</c> otherwise.</returns>
 	bool Plane::operator == ( Plane left, Plane right )
 	{
 		return Plane::Equals( left, right );
 	}
 
-	/// <summary>
-	/// Tests planes for inequality. 
-	/// </summary>
-	/// <param name="left">The first source plane.</param>
-	/// <param name="right">The second source plane.</param>
-	/// <returns><c>true</c> if the planes are not equal; <c>false</c> otherwise.</returns>
 	bool Plane::operator != ( Plane left, Plane right )
 	{
 		return !Plane::Equals( left, right );
 	}
 
-	/// <summary>
-	/// Retrieves a string representation of the current object. 
-	/// </summary>
-	/// <returns>A string that represents the object.</returns>
 	String^ Plane::ToString()
 	{
 		return String::Format( CultureInfo::CurrentCulture, "Normal:{0} D:{1}", Normal.ToString(), D.ToString(CultureInfo::CurrentCulture) );
 	}
 
-	/// <summary>
-	/// Gets the hash code of the plane object. 
-	/// </summary>
-	/// <returns>Hash code of the plane object.</returns>
 	int Plane::GetHashCode()
 	{
 		return Normal.GetHashCode() + D.GetHashCode();
 	}
 
-	/// <summary>
-	/// Returns a value that indicates whether the current instance is equal to a specified object. 
-	/// </summary>
-	/// <param name="obj">Object to make the comparison with.</param>
-	/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 	bool Plane::Equals( Object^ value )
 	{
 		if( value == nullptr )
@@ -519,23 +383,11 @@ namespace SlimDX
 		return Equals( safe_cast<Plane>( value ) );
 	}
 
-	/// <summary>
-	/// Returns a value that indicates whether the current instance is equal to the specified object. 
-	/// </summary>
-	/// <param name="other">Object to make the comparison with.</param>
-	/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 	bool Plane::Equals( Plane value )
 	{
 		return ( Normal == value.Normal && D == value.D );
 	}
 
-	/// <summary>
-	/// Determines whether the specified Object instances are considered equal. 
-	/// </summary>
-	/// <param name="value1"></param>
-	/// <param name="value2"></param>
-	/// <returns><c>true</c> if <paramref name="value1"/> is the same instance as <paramref name="value2"/> or 
-	/// if both are <c>null</c> references or if <c>objA.Equals(objB)</c> returns <c>true</c>; otherwise, <c>false</c>.</returns>
 	bool Plane::Equals( Plane% value1, Plane% value2 )
 	{
 		return ( value1.Normal == value2.Normal && value1.D == value2.D );

@@ -371,13 +371,6 @@
            </Member>
            <Member Name="#Read`1()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>'DataStream.Read&lt;T&gt;()'</Item>
-               <Item>'Marshal.SizeOf(Type)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'DataStream.Read&lt;T&gt;()'&#xD;&#xA;   -&gt;'DataStream.Read&lt;T&gt;()'</Item>
-              </Issue>
-             </Message>
              <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>'DataStream.Read&lt;T&gt;()'</Item>
@@ -388,39 +381,10 @@
            </Member>
            <Member Name="#ReadRange`1(System.Int32)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-20 01:01:41Z">
-              <Issue>
-               <Item>'DataStream.ReadRange&lt;T&gt;(int)'</Item>
-               <Item>'Marshal.SizeOf(Type)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'DataStream.ReadRange&lt;T&gt;(int)'&#xD;&#xA;   -&gt;'DataStream.ReadRange&lt;T&gt;(int)'</Item>
-              </Issue>
-             </Message>
              <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2007-10-20 01:01:41Z">
               <Issue>
                <Item>'DataStream.ReadRange&lt;T&gt;(int)'</Item>
                <Item>'T'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Write`1(!!0)">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>'DataStream.Write&lt;T&gt;(T)'</Item>
-               <Item>'Marshal.SizeOf(Type)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'DataStream.Write&lt;T&gt;(T)'&#xD;&#xA;   -&gt;'DataStream.Write&lt;T&gt;(T)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#WriteRange`1(!!0[],System.Int32,System.Int32)">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-20 01:01:41Z">
-              <Issue>
-               <Item>'DataStream.WriteRange&lt;T&gt;(T[], int, int)'</Item>
-               <Item>'Marshal.SizeOf(Type)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'DataStream.WriteRange&lt;T&gt;(T[], int, int)'&#xD;&#xA;   -&gt;'DataStream.WriteRange&lt;T&gt;(T[], int, int)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -896,15 +860,6 @@
               <Issue Name="Member">
                <Item>Slerp</Item>
                <Item>'Quaternion.Slerp(Quaternion, Quaternion, float)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#SquadSetup(SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;,SlimDX.Quaternion&amp;)">
-            <Messages>
-             <Message TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025" Status="Excluded" Created="2007-10-31 02:06:30Z">
-              <Issue>
-               <Item>'Quaternion.SquadSetup(ref Quaternion, ref Quaternion, ref Quaternion, ref Quaternion)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4629,17 +4584,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#DrawUserPrimitives`1(SlimDX.Direct3D9.PrimitiveType,System.Int32,System.Int32,!!0[])">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>'Device.DrawUserPrimitives&lt;T&gt;(PrimitiveType, int, int, T[])'</Item>
-               <Item>'Marshal.SizeOf(Type)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Device.DrawUserPrimitives&lt;T&gt;(PrimitiveType, int, int, T[])'&#xD;&#xA;   -&gt;'Device.DrawUserPrimitives&lt;T&gt;(PrimitiveType, int, int, T[])'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
              <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-02-27 22:14:29Z">
@@ -5046,6 +4990,17 @@
               <Issue Name="Member">
                <Item>Rtl</Item>
                <Item>'DrawTextFormat.RtlReading'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#WordBreak">
+            <Messages>
+             <Message Id="WordBreak" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-04-11 21:54:14Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>WordBreak</Item>
+               <Item>'DrawTextFormat.WordBreak'</Item>
+               <Item>Wordbreak</Item>
               </Issue>
              </Message>
             </Messages>
@@ -7553,13 +7508,6 @@
            </Member>
            <Member Name="#GetData`1(System.Boolean)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>'Query.GetData&lt;T&gt;(bool)'</Item>
-               <Item>'Marshal.SizeOf(Type)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Query.GetData&lt;T&gt;(bool)'&#xD;&#xA;   -&gt;'Query.GetData&lt;T&gt;(bool)'</Item>
-              </Issue>
-             </Message>
              <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>'Query.GetData&lt;T&gt;(bool)'</Item>
@@ -9768,11 +9716,6 @@
                <Item>'Marshal.OffsetOf(Type, string)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.Device(Guid)'&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.Device(Guid)'</Item>
               </Issue>
-              <Issue>
-               <Item>'Device&lt;DataFormat&gt;.Device(Guid)'</Item>
-               <Item>'Marshal.SizeOf(Type)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.Device(Guid)'&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.Device(Guid)'</Item>
-              </Issue>
              </Message>
             </Messages>
            </Member>
@@ -9820,11 +9763,6 @@
                <Item>'GCHandle.Free()'</Item>
                <Item>&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState(ref DataFormat)'&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState(ref DataFormat)'</Item>
               </Issue>
-              <Issue>
-               <Item>'Device&lt;DataFormat&gt;.GetCurrentState(ref DataFormat)'</Item>
-               <Item>'Marshal.SizeOf(Type)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState(ref DataFormat)'&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState(ref DataFormat)'</Item>
-              </Issue>
              </Message>
             </Messages>
            </Member>
@@ -9844,11 +9782,6 @@
               <Issue>
                <Item>'Device&lt;DataFormat&gt;.GetCurrentState()'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState()'&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'Device&lt;DataFormat&gt;.GetCurrentState()'</Item>
-               <Item>'Marshal.SizeOf(Type)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState()'&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState()'</Item>
               </Issue>
              </Message>
