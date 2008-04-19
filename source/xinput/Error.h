@@ -27,17 +27,24 @@ namespace SlimDX
 {
 	namespace XInput
 	{
+		/// <summary>Defines error result codes that are returned by XInput functions.</summary>
 		public ref class Error sealed
 		{
 			private:
 				Error();
 				
 			public:
+				/// <summary>
+				/// Occurs when the desired controller is not connected to the system.
+				/// </summary>
 				property static Result NotConnected
 				{
 					Result get();
 				}
 				
+				/// <summary>
+				/// Occurs when the result of an operation is an empty set.
+				/// </summary>
 				property static Result Empty
 				{
 					Result get();

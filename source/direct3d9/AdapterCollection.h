@@ -27,7 +27,7 @@ namespace SlimDX
 	{
 		ref class AdapterInformation;
 
-		/// <summary>Implements a read-only collection of AdapterInformation instances.</summary>
+		/// <summary>Implements a read-only collection of <see cref="AdapterInformation"/> instances.</summary>
 		public ref class AdapterCollection : public System::Collections::Generic::ICollection<AdapterInformation^>
 		{
 		private:
@@ -66,6 +66,11 @@ namespace SlimDX
 			virtual property bool IsReadOnly
 			{
 				bool get() { return true; }
+			}
+
+			property AdapterInformation^ DefaultAdapter
+			{
+				AdapterInformation^ get() { return list[0]; }
 			}
 		};
 	}

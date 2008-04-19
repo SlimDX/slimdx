@@ -40,25 +40,25 @@ namespace SlimDX
 			
 		public:
 			/// <summary>
-			/// Constructs a new exception object.
+			/// Initializes a new instance of the <see cref="XInputException"/> class.
 			/// </summary>
 			XInputException();
 			
 			/// <summary>
-			/// Constructs a new exception object.
+			/// Initializes a new instance of the <see cref="XInputException"/> class.
 			/// </summary>
 			/// <param name="message">The message describing the exception.</param>
 			XInputException( System::String^ message );
 			
 			/// <summary>
-			/// Constructs a new exception object.
+			/// Initializes a new instance of the <see cref="XInputException"/> class.
 			/// </summary>
 			/// <param name="message">The message describing the exception.</param>
 			/// <param name="innerException">The exception that caused this exception.</param>
 			XInputException( System::String^ message, System::Exception^ innerException );
 			
 			/// <summary>
-			/// Constructs a new exception object.
+			/// Initializes a new instance of the <see cref="XInputException"/> class.
 			/// </summary>
 			/// <param name="result">The result code that caused this exception.</param>
 			XInputException( Result result );

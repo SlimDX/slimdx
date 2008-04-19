@@ -25,6 +25,9 @@ namespace SlimDX
 {
 	namespace XInput
 	{
+		/// <summary>
+		/// Describes keystroke data from a device.
+		/// </summary>
 		public value class Keystroke : System::IEquatable<Keystroke>
 		{
 		private:
@@ -38,7 +41,7 @@ namespace SlimDX
 			
 		public:
 			/// <summary>
-			/// Virtual-key code of the key, button, or stick movement.
+			/// Gets the virtual-key code of the key, button, or stick movement.
 			/// </summary>
 			property GamepadKeyCode VirtualKey
 			{
@@ -46,7 +49,7 @@ namespace SlimDX
 			}
 
 			/// <summary>
-			/// Combination of flags that indicate the keyboard state at the time of the input event.
+			/// Gets a combination of flags that indicate the keyboard state at the time of the input event.
 			/// </summary>
 			property KeystrokeFlags Flags
 			{
@@ -54,7 +57,7 @@ namespace SlimDX
 			}
 
 			/// <summary>
-			/// Index of the signed-in gamer associated with the device. Can be a value in the range 0–3.
+			/// Gets the index of the signed-in gamer associated with the device. Can be a value in the range 0–3.
 			/// </summary>
 			property XInput::UserIndex UserIndex
 			{
@@ -62,19 +65,56 @@ namespace SlimDX
 			}
 
 			/// <summary>
-			/// HID code corresponding to the input. If there is no corresponding HID code, this value is zero.
+			/// Gets the HID code corresponding to the input. If there is no corresponding HID code, this value is zero.
 			/// </summary>
 			property int HidCode
 			{
 				int get();
 			}
 
+			/// <summary>
+			/// Tests for equality between two objects.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator == ( Keystroke left, Keystroke right );
+
+			/// <summary>
+			/// Tests for inequality between two objects.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator != ( Keystroke left, Keystroke right );
 
+			/// <summary>
+			/// Returns the hash code for this instance.
+			/// </summary>
+			/// <returns>A 32-bit signed integer hash code.</returns>
 			virtual int GetHashCode() override;
+
+			/// <summary>
+			/// Returns a value that indicates whether the current instance is equal to a specified object. 
+			/// </summary>
+			/// <param name="obj">Object to make the comparison with.</param>
+			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 			virtual bool Equals( System::Object^ obj ) override;
+
+			/// <summary>
+			/// Returns a value that indicates whether the current instance is equal to the specified object. 
+			/// </summary>
+			/// <param name="other">Object to make the comparison with.</param>
+			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 			virtual bool Equals( Keystroke other );
+
+			/// <summary>
+			/// Determines whether the specified object instances are considered equal. 
+			/// </summary>
+			/// <param name="value1">The first value to compare.</param>
+			/// <param name="value2">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="value1"/> is the same instance as <paramref name="value2"/> or 
+			/// if both are <c>null</c> references or if <c>value1.Equals(value2)</c> returns <c>true</c>; otherwise, <c>false</c>.</returns>
 			static bool Equals( Keystroke% value1, Keystroke% value2 );
 		};
 	}

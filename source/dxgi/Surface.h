@@ -35,7 +35,7 @@ namespace SlimDX
 		value class SurfaceDescription;
 		
 		/// <summary>
-		/// A Surface represents container for image data.
+		/// A <see cref="Surface"/> implements methods for image-data objects.
 		/// </summary>
 		public ref class Surface : public DeviceChild
 		{

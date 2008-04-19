@@ -40,25 +40,25 @@ namespace SlimDX
 			
 		public:
 			/// <summary>
-			/// Constructs a new exception object.
+			/// Initializes a new instance of the <see cref="Direct3D9Exception"/> class.
 			/// </summary>
 			Direct3D9Exception();
 			
 			/// <summary>
-			/// Constructs a new exception object.
+			/// Initializes a new instance of the <see cref="Direct3D9Exception"/> class.
 			/// </summary>
 			/// <param name="message">The message describing the exception.</param>
 			Direct3D9Exception( System::String^ message );
 			
 			/// <summary>
-			/// Constructs a new exception object.
+			/// Initializes a new instance of the <see cref="Direct3D9Exception"/> class.
 			/// </summary>
 			/// <param name="message">The message describing the exception.</param>
 			/// <param name="innerException">The exception that caused this exception.</param>
 			Direct3D9Exception( System::String^ message, Exception^ innerException );
 			
 			/// <summary>
-			/// Constructs a new exception object.
+			/// Initializes a new instance of the <see cref="Direct3D9Exception"/> class.
 			/// </summary>
 			/// <param name="result">The result code that caused this exception.</param>
 			Direct3D9Exception( Result result );

@@ -33,16 +33,16 @@ namespace Direct3D9
 {
 	GammaRamp::GammaRamp()
 	{
-		red = gcnew Collection<Int16>();
-		green = gcnew Collection<Int16>();
-		blue = gcnew Collection<Int16>();
+		red = gcnew Collection<UInt16>();
+		green = gcnew Collection<UInt16>();
+		blue = gcnew Collection<UInt16>();
 	}
 
 	GammaRamp::GammaRamp( const D3DGAMMARAMP &ramp )
 	{
-		red = gcnew Collection<Int16>();
-		green = gcnew Collection<Int16>();
-		blue = gcnew Collection<Int16>();
+		red = gcnew Collection<UInt16>();
+		green = gcnew Collection<UInt16>();
+		blue = gcnew Collection<UInt16>();
 
 		for( int i = 0; i < 256; i++ )
 		{

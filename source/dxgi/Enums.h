@@ -220,7 +220,7 @@ namespace SlimDX
 		};
 		
 		/// <summary>
-		/// Values which control a swap chain's window association behavior.
+		/// Specifies values which control a swap chain's window association behavior.
 		/// </summary>
 		[System::Flags]
 		public enum class WindowAssociationFlags : System::Int32

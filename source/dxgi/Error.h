@@ -29,59 +29,59 @@ namespace SlimDX
 	{
 		public ref class Error sealed
 		{
-			private:
-				Error();
-				
-			public:
-				property static Result InvalidCall
-				{
-					Result get();
-				}
-				
-				property static Result NotFound
-				{
-					Result get();
-				}
-				
-				property static Result MoreData
-				{
-					Result get();
-				}
-				
-				property static Result Unsupported
-				{
-					Result get();
-				}
-				
-				property static Result DeviceRemoved
-				{
-					Result get();
-				}
-				
-				property static Result DeviceHung
-				{
-					Result get();
-				}
-				
-				property static Result DeviceReset
-				{
-					Result get();
-				}
-				
-				property static Result WasStillDrawing
-				{
-					Result get();
-				}
-				
-				property static Result DriverInternalError
-				{
-					Result get();
-				}
-				
-				property static Result Nonexclusive
-				{
-					Result get();
-				}
+		private:
+			Error();
+			
+		public:
+			property static Result InvalidCall
+			{
+				Result get();
+			}
+			
+			property static Result NotFound
+			{
+				Result get();
+			}
+			
+			property static Result MoreData
+			{
+				Result get();
+			}
+			
+			property static Result Unsupported
+			{
+				Result get();
+			}
+			
+			property static Result DeviceRemoved
+			{
+				Result get();
+			}
+			
+			property static Result DeviceHung
+			{
+				Result get();
+			}
+			
+			property static Result DeviceReset
+			{
+				Result get();
+			}
+			
+			property static Result WasStillDrawing
+			{
+				Result get();
+			}
+			
+			property static Result DriverInternalError
+			{
+				Result get();
+			}
+			
+			property static Result Nonexclusive
+			{
+				Result get();
+			}
 		};
 	}
 }
