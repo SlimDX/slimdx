@@ -68,7 +68,7 @@ namespace SlimDX
 		property System::String^ Name
 		{
 			System::String^ get();
-		}
+		};
 
 		/// <summary>
 		/// Gets the friendly description of the result.

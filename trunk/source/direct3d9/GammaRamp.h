@@ -30,9 +30,9 @@ namespace SlimDX
 		public ref class GammaRamp
 		{
 		private:
-			System::Collections::ObjectModel::Collection<System::Int16>^ red;
-			System::Collections::ObjectModel::Collection<System::Int16>^ green;
-			System::Collections::ObjectModel::Collection<System::Int16>^ blue;
+			System::Collections::ObjectModel::Collection<System::UInt16>^ red;
+			System::Collections::ObjectModel::Collection<System::UInt16>^ green;
+			System::Collections::ObjectModel::Collection<System::UInt16>^ blue;
 
 		internal:
 			GammaRamp( const D3DGAMMARAMP &ramp );
@@ -48,25 +48,25 @@ namespace SlimDX
 			/// <summary>
 			/// Gets a collection of the red components of the gamma ramp.
 			/// </summary>
-			property System::Collections::ObjectModel::Collection<System::Int16>^ Red
+			property System::Collections::ObjectModel::Collection<System::UInt16>^ Red
 			{
-				System::Collections::ObjectModel::Collection<System::Int16>^ get() { return red; }
+				System::Collections::ObjectModel::Collection<System::UInt16>^ get() { return red; }
 			}
 
 			/// <summary>
 			/// Gets a collection of the green components of the gamma ramp.
 			/// </summary>
-			property System::Collections::ObjectModel::Collection<System::Int16>^ Green
+			property System::Collections::ObjectModel::Collection<System::UInt16>^ Green
 			{
-				System::Collections::ObjectModel::Collection<System::Int16>^ get() { return green; }
+				System::Collections::ObjectModel::Collection<System::UInt16>^ get() { return green; }
 			}
 
 			/// <summary>
 			/// Gets a collection of the blue components of the gamma ramp.
 			/// </summary>
-			property System::Collections::ObjectModel::Collection<System::Int16>^ Blue
+			property System::Collections::ObjectModel::Collection<System::UInt16>^ Blue
 			{
-				System::Collections::ObjectModel::Collection<System::Int16>^ get() { return blue; }
+				System::Collections::ObjectModel::Collection<System::UInt16>^ get() { return blue; }
 			}
 		};
 	}

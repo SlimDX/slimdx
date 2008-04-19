@@ -38,18 +38,18 @@ namespace SlimDX
 			
 		public:
 			/// <summary>
-			/// Constructs a new exception object.
+			/// Initializes a new instance of the <see cref="Direct3D9NotFoundException"/> class.
 			/// </summary>
 			Direct3D9NotFoundException();
 			
 			/// <summary>
-			/// Constructs a new exception object.
+			/// Initializes a new instance of the <see cref="Direct3D9NotFoundException"/> class.
 			/// </summary>
 			/// <param name="message">The message describing the exception.</param>
 			Direct3D9NotFoundException( System::String^ message );
 			
 			/// <summary>
-			/// Constructs a new exception object.
+			/// Initializes a new instance of the <see cref="Direct3D9NotFoundException"/> class.
 			/// </summary>
 			/// <param name="message">The message describing the exception.</param>
 			/// <param name="innerException">The exception that caused this exception.</param>

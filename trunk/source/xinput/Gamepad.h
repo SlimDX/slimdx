@@ -33,7 +33,7 @@ namespace SlimDX
 		/// <remarks>
 		/// Each of the thumbstick axis members is a signed value between -32768 and 32767 describing the position of the thumbstick.
 		/// A value of 0 is centered. Negative values signify down or to the left. Positive values signify up or to the right.
-		/// The constants GamepadLeftThumbDeadZone or GamepadRightThumbDeadZone can be used as a positive and negative value to filter a
+		/// The constants GamepadLeftThumbDeadZone or GamepadRightThumbDeadZone can be used as a positive and negative value to filter
 		/// thumbstick input.
 		/// </remarks>
 		public value class Gamepad : System::IEquatable<Gamepad>
@@ -51,13 +51,16 @@ namespace SlimDX
 			Gamepad( const XINPUT_GAMEPAD &native );
 
 		public:
+			/// <summary>
+			/// Gets a set of flags describing the pressed buttons on the gamepad.
+			/// </summary>
 			property GamepadButtonFlags Buttons
 			{
 				GamepadButtonFlags get();
 			}
 
 			/// <summary>
-			/// The current value of the left trigger analog control. The value is between 0 and 255.
+			/// Gets the current value of the left trigger analog control. The value is between 0 and 255.
 			/// </summary>
             property System::Byte LeftTrigger
             {
@@ -65,7 +68,7 @@ namespace SlimDX
             }
 
 			/// <summary>
-			/// The current value of the right trigger analog control. The value is between 0 and 255.
+			/// Gets the current value of the right trigger analog control. The value is between 0 and 255.
 			/// </summary>
             property System::Byte RightTrigger
             {
@@ -73,7 +76,7 @@ namespace SlimDX
             }
 
 			/// <summary>
-			/// Right thumbstick y-axis value. The value is between -32768 and 32767.
+			/// Gets the right thumbstick y-axis value. The value is between -32768 and 32767.
 			/// </summary>
             property System::Int16 LeftThumbX
             {
@@ -81,7 +84,7 @@ namespace SlimDX
             }
 
 			/// <summary>
-			/// Left thumbstick y-axis value. The value is between -32768 and 32767.
+			/// Gets the left thumbstick y-axis value. The value is between -32768 and 32767.
 			/// </summary>
             property System::Int16 LeftThumbY
             {
@@ -89,7 +92,7 @@ namespace SlimDX
             }
 
 			/// <summary>
-			/// Right thumbstick x-axis value. The value is between -32768 and 32767.
+			/// Gets the right thumbstick x-axis value. The value is between -32768 and 32767.
 			/// </summary>
             property System::Int16 RightThumbX
             {
@@ -97,7 +100,7 @@ namespace SlimDX
             }
 
 			/// <summary>
-			/// Right thumbstick y-axis value. The value is between -32768 and 32767.
+			/// Gets the right thumbstick y-axis value. The value is between -32768 and 32767.
 			/// </summary>
             property System::Int16 RightThumbY
             {
@@ -115,16 +118,53 @@ namespace SlimDX
 			literal System::Int16 GamepadRightThumbDeadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
 
 			/// <summary>
-			/// This constantmay be used as the value which LeftTrigger and RightTrigger must be greater than to register as pressed.
+			/// This constant may be used as the value which <see cref="Gamepad.LeftTrigger"/> and <see cref="Gamepad.RightTrigger"/> must be greater than to register as pressed.
 			/// </summary>
 			literal System::Byte GamepadTriggerThreshold = XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
 
+			/// <summary>
+			/// Tests for equality between two objects.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator == ( Gamepad left, Gamepad right );
+
+			/// <summary>
+			/// Tests for inequality between two objects.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator != ( Gamepad left, Gamepad right );
 
+			/// <summary>
+			/// Returns the hash code for this instance.
+			/// </summary>
+			/// <returns>A 32-bit signed integer hash code.</returns>
 			virtual int GetHashCode() override;
+
+			/// <summary>
+			/// Returns a value that indicates whether the current instance is equal to a specified object. 
+			/// </summary>
+			/// <param name="obj">Object to make the comparison with.</param>
+			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 			virtual bool Equals( System::Object^ obj ) override;
+
+			/// <summary>
+			/// Returns a value that indicates whether the current instance is equal to the specified object. 
+			/// </summary>
+			/// <param name="other">Object to make the comparison with.</param>
+			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 			virtual bool Equals( Gamepad other );
+
+			/// <summary>
+			/// Determines whether the specified object instances are considered equal. 
+			/// </summary>
+			/// <param name="value1">The first value to compare.</param>
+			/// <param name="value2">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="value1"/> is the same instance as <paramref name="value2"/> or 
+			/// if both are <c>null</c> references or if <c>value1.Equals(value2)</c> returns <c>true</c>; otherwise, <c>false</c>.</returns>
 			static bool Equals( Gamepad% value1, Gamepad% value2 );
 		};
 	}
