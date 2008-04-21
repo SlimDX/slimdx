@@ -29,6 +29,8 @@
 
 #include "Device.h"
 #include "DeviceConstantConverter.h"
+#include "AnyControl.h"
+#include "JoystickObjects.h"
 
 using namespace System;
 
@@ -1784,60 +1786,6 @@ namespace DirectInput
 		}
 
 		throw gcnew ArgumentException( "The specified key does not exist." );
-	}
-	*/
-
-	/* Unused.
-	int DeviceConstantConverter::MouseToDIMOFS( MouseObject mouse )
-	{
-		switch( mouse )
-		{
-		case MouseObject::Button1:
-			return DIMOFS_BUTTON0;
-			break;
-
-		case MouseObject::Button2:
-			return DIMOFS_BUTTON1;
-			break;
-
-		case MouseObject::Button3:
-			return DIMOFS_BUTTON2;
-			break;
-
-		case MouseObject::Button4:
-			return DIMOFS_BUTTON3;
-			break;
-
-		case MouseObject::Button5:
-			return DIMOFS_BUTTON4;
-			break;
-
-		case MouseObject::Button6:
-			return DIMOFS_BUTTON5;
-			break;
-
-		case MouseObject::Button7:
-			return DIMOFS_BUTTON6;
-			break;
-
-		case MouseObject::Button8:
-			return DIMOFS_BUTTON7;
-			break;
-
-		case MouseObject::XAxis:
-			return DIMOFS_X;
-			break;
-
-		case MouseObject::YAxis:
-			return DIMOFS_Y;
-			break;
-
-		case MouseObject::ZAxis:
-			return DIMOFS_Z;
-			break;
-		}
-
-		throw gcnew ArgumentException( "The specified mouse object does not exist." );
 	}
 	*/
 

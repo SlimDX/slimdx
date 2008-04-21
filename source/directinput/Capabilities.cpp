@@ -26,6 +26,7 @@
 
 #include "Capabilities.h"
 #include "Guids.h"
+#include "DeviceSubType.h"
 
 using namespace System;
 
