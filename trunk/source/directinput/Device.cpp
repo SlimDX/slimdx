@@ -500,5 +500,28 @@ namespace DirectInput
 
 		return results;
 	}
+
+	generic<typename DataFormat>
+	array<Byte>^ Device<DataFormat>::Escape( int command, array<Byte>^ data, int outputSize )
+	{
+		array<Byte>^ output = gcnew array<Byte>( outputSize );
+
+		pin_ptr<Byte> pinnedData = &data[0];
+		pin_ptr<Byte> pinnedOutput = &output[0];
+
+		DIEFFESCAPE input;
+		input.dwSize = sizeof(DIEFFESCAPE);
+		input.dwCommand = command;
+		input.cbInBuffer = data->Length;
+		input.cbOutBuffer = output->Length;
+		input.lpvInBuffer = pinnedData;
+		input.lpvOutBuffer = pinnedOutput;
+
+		HRESULT hr = InternalPointer->Escape( &input );
+		if( RECORD_DINPUT( hr ).IsFailure )
+			return nullptr;
+
+		return output;
+	}
 }
 }

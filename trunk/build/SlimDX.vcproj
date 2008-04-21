@@ -2941,6 +2941,46 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="ActionMapping"
+				>
+				<File
+					RelativePath="..\source\directinput\ActionGenres.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\ActionMappingConstants.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\ArcadeGenres.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\CADGenres.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\ControlGenres.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DrivingGenres.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\FlightGenres.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\SportsGenres.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\StrategyGenres.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="DirectSound"

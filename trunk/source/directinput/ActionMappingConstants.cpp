@@ -19,25 +19,13 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-namespace SlimDX
-{
-	namespace DirectInput
-	{
-		private ref class DeviceConstantConverter sealed
-		{
-		private:
-			DeviceConstantConverter() { }
-
-		public:
-			static int KeyToDIK( Key key );
-			static Key DIKToKey( int dik );
-			
-			/* Unused.
-			static int MouseToDIMOUSE( MouseObject mouse );
-			static int KeyToDIKEYBOARD( Key key );
-			*/
-		};
-	}
-}
+#include <dinput.h>
+#include "ActionGenres.h"
+#include "ArcadeGenres.h"
+#include "CADGenres.h"
+#include "ControlGenres.h"
+#include "DrivingGenres.h"
+#include "FlightGenres.h"
+#include "StrategyGenres.h"
+#include "SportsGenres.h"
