@@ -27,21 +27,37 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		/// <summary>Defines error result codes that are returned by Direct3D 9 functions.</summary>
-		public ref class Error sealed
+		/// <summary>Defines result codes that are returned by Direct3D 9 functions.</summary>
+		public ref class ResultCode sealed
 		{
 		private:
-			Error();
+			ResultCode();
 			
 		public:
 			/// <summary>
-			/// Occurs when a method succeeds but mipmaps could not be automatically generated.
+			/// Occurs when attribute sorting is not supported as an optimization technique.
 			/// </summary>
-			property static Result NoneButNoAutomaticGeneration
+			property static Result CannotAttributeSort
 			{
 				Result get();
 			};
-			
+
+			/// <summary>
+			/// Occurs when a user tries to modify an immutable index buffer.
+			/// </summary>
+			property static Result CannotModifyIndexBuffer
+			{
+				Result get();
+			};
+
+			/// <summary>
+			/// Occurs when a user tries to remove the last item in a collection.
+			/// </summary>
+			property static Result CannotRemoveLastItem
+			{
+				Result get();
+			};
+
 			/// <summary>
 			/// Occurs when two set render states conflict with each other.
 			/// </summary>
@@ -89,11 +105,35 @@ namespace SlimDX
 			{
 				Result get();
 			};
+
+			/// <summary>
+			/// Occurs when a fragment with the specified name already exists.
+			/// </summary>
+			property static Result DuplicateNamedFragment
+			{
+				Result get();
+			};
+
+			/// <summary>
+			/// Represents a generic failure result.
+			/// </summary>
+			property static Result Failure
+			{
+				Result get();
+			};
 			
 			/// <summary>
 			/// Occurs when an invalid method call is made. This is usually do to an invalid parameter.
 			/// </summary>
 			property static Result InvalidCall
+			{
+				Result get();
+			};
+
+			/// <summary>
+			/// Occurs when passed data is invalid.
+			/// </summary>
+			property static Result InvalidData
 			{
 				Result get();
 			};
@@ -105,11 +145,35 @@ namespace SlimDX
 			{
 				Result get();
 			};
+
+			/// <summary>
+			/// Occurs when an invalid mesh is passed.
+			/// </summary>
+			property static Result InvalidMesh
+			{
+				Result get();
+			};
+
+			/// <summary>
+			/// Occurs when a loaded mesh has no data.
+			/// </summary>
+			property static Result LoadedMeshHasNoData
+			{
+				Result get();
+			};
 			
 			/// <summary>
-			/// Occurs when there is more data availabe than the specified buffer can hold.
+			/// Occurs when there is more data available than the specified buffer can hold.
 			/// </summary>
 			property static Result MoreData
+			{
+				Result get();
+			};
+
+			/// <summary>
+			/// Occurs when a method succeeds but mipmaps could not be automatically generated.
+			/// </summary>
+			property static Result NoneButNoAutomaticGeneration
 			{
 				Result get();
 			};
@@ -134,6 +198,46 @@ namespace SlimDX
 			/// Occurs when the driver runs out of video memory.
 			/// </summary>
 			property static Result OutOfVideoMemory
+			{
+				Result get();
+			};
+
+			/// <summary>
+			/// Occurs when the desktop display mode changes.
+			/// </summary>
+			property static Result PresentModeChanged
+			{
+				Result get();
+			};
+
+			/// <summary>
+			/// Occurs when the presentation area is occluded.
+			/// </summary>
+			property static Result PresentOccluded
+			{
+				Result get();
+			};
+
+			/// <summary>
+			/// Occurs when skinning is not supported.
+			/// </summary>
+			property static Result SkinningNotSupported
+			{
+				Result get();
+			};
+
+			/// <summary>
+			/// Represents a generic success result.
+			/// </summary>
+			property static Result Success
+			{
+				Result get();
+			};
+
+			/// <summary>
+			/// Occurs when too many vertex influences are specified.
+			/// </summary>
+			property static Result TooManyInfluences
 			{
 				Result get();
 			};

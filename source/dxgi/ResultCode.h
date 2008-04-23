@@ -19,27 +19,79 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include <windows.h>
-
-#include "Error.h"
+#include "../Result.h"
 
 namespace SlimDX
 {
-namespace XInput
-{
-	Error::Error()
+	namespace DXGI
 	{
+		public ref class ResultCode sealed
+		{
+		private:
+			ResultCode();
+			
+		public:
+			property static Result InvalidCall
+			{
+				Result get();
+			}
+			
+			property static Result NotFound
+			{
+				Result get();
+			}
+			
+			property static Result MoreData
+			{
+				Result get();
+			}
+			
+			property static Result Unsupported
+			{
+				Result get();
+			}
+			
+			property static Result DeviceRemoved
+			{
+				Result get();
+			}
+			
+			property static Result DeviceHung
+			{
+				Result get();
+			}
+			
+			property static Result DeviceReset
+			{
+				Result get();
+			}
+			
+			property static Result WasStillDrawing
+			{
+				Result get();
+			}
+			
+			property static Result DriverInternalError
+			{
+				Result get();
+			}
+			
+			property static Result Nonexclusive
+			{
+				Result get();
+			}
+
+			property static Result Success
+			{
+				Result get();
+			}
+
+			property static Result Failure
+			{
+				Result get();
+			}
+		};
 	}
-	
-	Result Error::NotConnected::get()
-	{
-		return Result( HRESULT_FROM_WIN32( ERROR_NOT_CONNECTED ) );
-	}
-	
-	Result Error::Empty::get()
-	{
-		return Result( HRESULT_FROM_WIN32( ERROR_EMPTY ) );
-	}
-}
 }

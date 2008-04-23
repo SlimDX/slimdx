@@ -28,7 +28,7 @@
 #include "XInput.h"
 #include "XInputException.h"
 
-#include "Error.h"
+#include "ResultCode.h"
 
 using namespace System;
 

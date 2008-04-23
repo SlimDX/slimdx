@@ -22,222 +22,232 @@
 
 #include <dinput.h>
 
-#include "Error.h"
+#include "ResultCode.h"
 
 namespace SlimDX
 {
 namespace DirectInput
 {
-	Error::Error()
+	ResultCode::ResultCode()
 	{
 	}
 
-	Result Error::Acquired::get()
+	Result ResultCode::Acquired::get()
 	{
 		return Result( DIERR_ACQUIRED );
 	}
 
-	Result Error::AlreadyInitialized::get()
+	Result ResultCode::AlreadyInitialized::get()
 	{
 		return Result( DIERR_ALREADYINITIALIZED );
 	}
 
-	Result Error::BadDriverVersion::get()
+	Result ResultCode::BadDriverVersion::get()
 	{
 		return Result( DIERR_BADDRIVERVER );
 	}
 
-	Result Error::BetaDirectInputVersion::get()
+	Result ResultCode::BetaDirectInputVersion::get()
 	{
 		return Result( DIERR_BETADIRECTINPUTVERSION );
 	}
 
-	Result Error::BufferOverflow::get()
+	Result ResultCode::BufferOverflow::get()
 	{
 		return Result( DI_BUFFEROVERFLOW );
 	}
 
-	Result Error::DeviceFull::get()
+	Result ResultCode::DeviceFull::get()
 	{
 		return Result( DIERR_DEVICEFULL );
 	}
 
-	Result Error::DeviceNotRegistered::get()
+	Result ResultCode::DeviceNotRegistered::get()
 	{
 		return Result( DIERR_DEVICENOTREG );
 	}
 
-	Result Error::DownloadSkipped::get()
+	Result ResultCode::DownloadSkipped::get()
 	{
 		return Result( DI_DOWNLOADSKIPPED );
 	}
 
-	Result Error::EffectPlaying::get()
+	Result ResultCode::EffectPlaying::get()
 	{
 		return Result( DIERR_EFFECTPLAYING );
 	}
 
-	Result Error::EffectRestarted::get()
+	Result ResultCode::EffectRestarted::get()
 	{
 		return Result( DI_EFFECTRESTARTED );
 	}
 
-	Result Error::Generic::get()
+	Result ResultCode::Failure::get()
+	{
+		return Result( E_FAIL );
+	}
+
+	Result ResultCode::Generic::get()
 	{
 		return Result( DIERR_GENERIC );
 	}
 
-	Result Error::HandleExists::get()
+	Result ResultCode::HandleExists::get()
 	{
 		return Result( DIERR_HANDLEEXISTS );
 	}
 
-	Result Error::HasEffects::get()
+	Result ResultCode::HasEffects::get()
 	{
 		return Result( DIERR_HASEFFECTS );
 	}
 
-	Result Error::IncompleteEffect::get()
+	Result ResultCode::IncompleteEffect::get()
 	{
 		return Result( DIERR_INCOMPLETEEFFECT );
 	}
 
-	Result Error::InputLost::get()
+	Result ResultCode::InputLost::get()
 	{
 		return Result( DIERR_INPUTLOST );
 	}
 
-	Result Error::InvalidParameter::get()
+	Result ResultCode::InvalidParameter::get()
 	{
 		return Result( DIERR_INVALIDPARAM );
 	}
 
-	Result Error::MapFileFail::get()
+	Result ResultCode::MapFileFail::get()
 	{
 		return Result( DIERR_MAPFILEFAIL );
 	}
 
-	Result Error::MoreData::get()
+	Result ResultCode::MoreData::get()
 	{
 		return Result( DIERR_MOREDATA );
 	}
 
-	Result Error::NoAggregation::get()
+	Result ResultCode::NoAggregation::get()
 	{
 		return Result( DIERR_NOAGGREGATION );
 	}
 
-	Result Error::NoEffect::get()
+	Result ResultCode::NoEffect::get()
 	{
 		return Result( DI_NOEFFECT );
 	}
 
-	Result Error::NoInterface::get()
+	Result ResultCode::NoInterface::get()
 	{
 		return Result( DIERR_NOINTERFACE );
 	}
 
-	Result Error::NotAcquired::get()
+	Result ResultCode::NotAcquired::get()
 	{
 		return Result( DIERR_NOTACQUIRED );
 	}
 
-	Result Error::NotAttached::get()
+	Result ResultCode::NotAttached::get()
 	{
 		return Result( DI_NOTATTACHED );
 	}
 
-	Result Error::NotBuffered::get()
+	Result ResultCode::NotBuffered::get()
 	{
 		return Result( DIERR_NOTBUFFERED );
 	}
 
-	Result Error::NotDownloaded::get()
+	Result ResultCode::NotDownloaded::get()
 	{
 		return Result( DIERR_NOTDOWNLOADED );
 	}
 
-	Result Error::NotExclusivelyAcquired::get()
+	Result ResultCode::NotExclusivelyAcquired::get()
 	{
 		return Result( DIERR_NOTEXCLUSIVEACQUIRED );
 	}
 
-	Result Error::NotFound::get()
+	Result ResultCode::NotFound::get()
 	{
 		return Result( DIERR_NOTFOUND );
 	}
 
-	Result Error::NotInitialized::get()
+	Result ResultCode::NotInitialized::get()
 	{
 		return Result( DIERR_NOTINITIALIZED );
 	}
 
-	Result Error::ObjectNotFound::get()
+	Result ResultCode::ObjectNotFound::get()
 	{
 		return Result( DIERR_OBJECTNOTFOUND );
 	}
 
-	Result Error::OldDirectInputVersion::get()
+	Result ResultCode::OldDirectInputVersion::get()
 	{
 		return Result( DIERR_OLDDIRECTINPUTVERSION );
 	}
 
-	Result Error::OtherApplicationHasPriority::get()
+	Result ResultCode::OtherApplicationHasPriority::get()
 	{
 		return Result( DIERR_OTHERAPPHASPRIO );
 	}
 
-	Result Error::OutOfMemory::get()
+	Result ResultCode::OutOfMemory::get()
 	{
 		return Result( DIERR_OUTOFMEMORY );
 	}
 
-	Result Error::PolledDevice::get()
+	Result ResultCode::PolledDevice::get()
 	{
 		return Result( DI_POLLEDDEVICE );
 	}
 
-	Result Error::PropertyHasNoEffect::get()
+	Result ResultCode::PropertyHasNoEffect::get()
 	{
 		return Result( DI_PROPNOEFFECT );
 	}
 
-	Result Error::ReadOnly::get()
+	Result ResultCode::ReadOnly::get()
 	{
 		return Result( DIERR_READONLY );
 	}
 
-	Result Error::ReportFull::get()
+	Result ResultCode::ReportFull::get()
 	{
 		return Result( DIERR_REPORTFULL );
 	}
 
-	Result Error::SettingsNotSaved::get()
+	Result ResultCode::SettingsNotSaved::get()
 	{
 		return Result( DI_SETTINGSNOTSAVED );
 	}
 
-	Result Error::Truncated::get()
+	Result ResultCode::Success::get()
+	{
+		return Result( DI_OK );
+	}
+
+	Result ResultCode::Truncated::get()
 	{
 		return Result( DI_TRUNCATED );
 	}
 
-	Result Error::TruncatedAndRestarted::get()
+	Result ResultCode::TruncatedAndRestarted::get()
 	{
 		return Result( DI_TRUNCATEDANDRESTARTED );
 	}
 
-	Result Error::Unplugged::get()
+	Result ResultCode::Unplugged::get()
 	{
 		return Result( DIERR_UNPLUGGED );
 	}
 
-	Result Error::Unsupported::get()
+	Result ResultCode::Unsupported::get()
 	{
 		return Result( DIERR_UNSUPPORTED );
 	}
 
-	Result Error::WriteProtect::get()
+	Result ResultCode::WriteProtect::get()
 	{
 		return Result( DI_WRITEPROTECT );
 	}

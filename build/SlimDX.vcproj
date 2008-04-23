@@ -295,38 +295,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\direct3d10\Error.cpp"
+				RelativePath="..\source\direct3d10\ResultCode.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Public|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\source\direct3d10\Error.h"
+				RelativePath="..\source\direct3d10\ResultCode.h"
 				>
 			</File>
 			<Filter
@@ -1352,15 +1325,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\direct3d9\Error.cpp"
+				RelativePath="..\source\direct3d9\IResettable.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\direct3d9\ResultCode.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -1368,8 +1345,8 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -1377,17 +1354,13 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\source\direct3d9\Error.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\direct3d9\IResettable.h"
+				RelativePath="..\source\direct3d9\ResultCode.h"
 				>
 			</File>
 			<Filter
@@ -2669,15 +2642,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\directinput\Error.cpp"
+				RelativePath="..\source\directinput\Guids.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directinput\ResultCode.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)4.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)4.xdc"
+						ObjectFile="$(IntDir)\$(InputName)2.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -2685,8 +2662,8 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)4.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)4.xdc"
+						ObjectFile="$(IntDir)\$(InputName)2.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -2694,17 +2671,13 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)4.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)4.xdc"
+						ObjectFile="$(IntDir)\$(InputName)2.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\source\directinput\Error.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directinput\Guids.h"
+				RelativePath="..\source\directinput\ResultCode.h"
 				>
 			</File>
 			<Filter
@@ -3270,11 +3243,38 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\xinput\Error.cpp"
+				RelativePath="..\source\xinput\ResultCode.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)4.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)4.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)4.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)4.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Public|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)4.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)4.xdc"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\source\xinput\Error.h"
+				RelativePath="..\source\xinput\ResultCode.h"
 				>
 			</File>
 			<File
@@ -3374,15 +3374,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\dxgi\Error.cpp"
+				RelativePath="..\source\dxgi\ResultCode.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						ObjectFile="$(IntDir)\$(InputName)3.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -3390,8 +3390,8 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						ObjectFile="$(IntDir)\$(InputName)3.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -3399,13 +3399,13 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						ObjectFile="$(IntDir)\$(InputName)3.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\source\dxgi\Error.h"
+				RelativePath="..\source\dxgi\ResultCode.h"
 				>
 			</File>
 			<Filter

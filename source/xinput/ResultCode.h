@@ -19,67 +19,46 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include <dxgi.h>
-
-#include "Error.h"
+#include "../Result.h"
 
 namespace SlimDX
 {
-namespace DXGI
-{
-	Error::Error()
+	namespace XInput
 	{
+		/// <summary>Defines error result codes that are returned by XInput functions.</summary>
+		public ref class ResultCode sealed
+		{
+		private:
+			ResultCode();
+			
+		public:
+			/// <summary>
+			/// Occurs when the desired controller is not connected to the system.
+			/// </summary>
+			property static Result NotConnected
+			{
+				Result get();
+			}
+			
+			/// <summary>
+			/// Occurs when the result of an operation is an empty set.
+			/// </summary>
+			property static Result Empty
+			{
+				Result get();
+			}
+
+			property static Result Success
+			{
+				Result get();
+			}
+
+			property static Result Failure
+			{
+				Result get();
+			}
+		};
 	}
-	
-	Result Error::InvalidCall::get()
-	{
-		return Result( DXGI_ERROR_INVALID_CALL );
-	}
-	
-	Result Error::NotFound::get()
-	{
-		return Result( DXGI_ERROR_NOT_FOUND );
-	}
-	
-	Result Error::MoreData::get()
-	{
-		return Result( DXGI_ERROR_MORE_DATA );
-	}
-	
-	Result Error::Unsupported::get()
-	{
-		return Result( DXGI_ERROR_UNSUPPORTED );
-	}
-	
-	Result Error::DeviceRemoved::get()
-	{
-		return Result( DXGI_ERROR_DEVICE_REMOVED );
-	}
-	
-	Result Error::DeviceHung::get()
-	{
-		return Result( DXGI_ERROR_DEVICE_HUNG );
-	}
-	
-	Result Error::DeviceReset::get()
-	{
-		return Result( DXGI_ERROR_DEVICE_RESET );
-	}
-	
-	Result Error::WasStillDrawing::get()
-	{
-		return Result( DXGI_ERROR_DRIVER_INTERNAL_ERROR );
-	}
-	
-	Result Error::DriverInternalError::get()
-	{
-		return Result( DXGI_ERROR_NONEXCLUSIVE );
-	}
-	
-	Result Error::Nonexclusive::get()
-	{
-		return Result( DXGI_ERROR_NONEXCLUSIVE );
-	}
-}
 }
