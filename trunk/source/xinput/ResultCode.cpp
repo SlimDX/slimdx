@@ -19,71 +19,37 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-//using namespace System;
+#include <windows.h>
 
-#include "../Result.h"
+#include "ResultCode.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+namespace XInput
+{
+	ResultCode::ResultCode()
 	{
-		public ref class Error sealed
-		{
-			private:
-				Error();
-				
-			public:
-				property static Result InvalidCall
-				{
-					Result get();
-				};
-				
-				property static Result CannotModifyIndexBuffer
-				{
-					Result get();
-				};
-				
-				property static Result InvalidMesh
-				{
-					Result get();
-				};
-				
-				property static Result CannotSortByAttribute
-				{
-					Result get();
-				};
-				
-				property static Result SkinningNotSupported
-				{
-					Result get();
-				};
-				
-				property static Result TooManyInfluences
-				{
-					Result get();
-				};
-				
-				property static Result InvalidData
-				{
-					Result get();
-				};
-				
-				property static Result LoadedMeshHasNoData
-				{
-					Result get();
-				};
-				
-				property static Result DuplicateNamedFragment
-				{
-					Result get();
-				};
-				
-				property static Result CannotRemoveLastItem
-				{
-					Result get();
-				};
-		};
 	}
+	
+	Result ResultCode::NotConnected::get()
+	{
+		return Result( HRESULT_FROM_WIN32( ERROR_NOT_CONNECTED ) );
+	}
+	
+	Result ResultCode::Empty::get()
+	{
+		return Result( HRESULT_FROM_WIN32( ERROR_EMPTY ) );
+	}
+
+	Result ResultCode::Success::get()
+	{
+		return Result( HRESULT_FROM_WIN32( ERROR_SUCCESS ) );
+	}
+
+	Result ResultCode::Failure::get()
+	{
+		return Result( E_FAIL );
+	}
+}
 }

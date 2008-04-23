@@ -25,30 +25,73 @@
 
 namespace SlimDX
 {
-	namespace XInput
+	namespace Direct3D10
 	{
-		/// <summary>Defines error result codes that are returned by XInput functions.</summary>
-		public ref class Error sealed
+		public ref class ResultCode sealed
 		{
-			private:
-				Error();
-				
-			public:
-				/// <summary>
-				/// Occurs when the desired controller is not connected to the system.
-				/// </summary>
-				property static Result NotConnected
-				{
-					Result get();
-				}
-				
-				/// <summary>
-				/// Occurs when the result of an operation is an empty set.
-				/// </summary>
-				property static Result Empty
-				{
-					Result get();
-				}
+		private:
+			ResultCode();
+			
+		public:
+			property static Result InvalidCall
+			{
+				Result get();
+			};
+			
+			property static Result CannotModifyIndexBuffer
+			{
+				Result get();
+			};
+			
+			property static Result InvalidMesh
+			{
+				Result get();
+			};
+			
+			property static Result CannotSortByAttribute
+			{
+				Result get();
+			};
+			
+			property static Result SkinningNotSupported
+			{
+				Result get();
+			};
+			
+			property static Result TooManyInfluences
+			{
+				Result get();
+			};
+			
+			property static Result InvalidData
+			{
+				Result get();
+			};
+			
+			property static Result LoadedMeshHasNoData
+			{
+				Result get();
+			};
+			
+			property static Result DuplicateNamedFragment
+			{
+				Result get();
+			};
+			
+			property static Result CannotRemoveLastItem
+			{
+				Result get();
+			};
+
+			property static Result Success
+			{
+				Result get();
+			};
+
+			property static Result Failure
+			{
+				Result get();
+			};
 		};
 	}
 }

@@ -23,64 +23,74 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "Error.h"
+#include "ResultCode.h"
 
 namespace SlimDX
 {
 namespace Direct3D10
 {
-	Error::Error()
+	ResultCode::ResultCode()
 	{
 	}
 
-	Result Error::InvalidCall::get()
+	Result ResultCode::InvalidCall::get()
 	{
 		return Result( D3DERR_INVALIDCALL );
 	}
 	
-	Result Error::CannotModifyIndexBuffer::get()
+	Result ResultCode::CannotModifyIndexBuffer::get()
 	{
 		return Result( D3DX10_ERR_CANNOT_MODIFY_INDEX_BUFFER );
 	}
 	
-	Result Error::InvalidMesh::get()
+	Result ResultCode::InvalidMesh::get()
 	{
 		return Result( D3DX10_ERR_INVALID_MESH );
 	}
 	
-	Result Error::CannotSortByAttribute::get()
+	Result ResultCode::CannotSortByAttribute::get()
 	{
 		return Result( D3DX10_ERR_CANNOT_ATTR_SORT );
 	}
 	
-	Result Error::SkinningNotSupported::get()
+	Result ResultCode::SkinningNotSupported::get()
 	{
 		return Result( D3DX10_ERR_SKINNING_NOT_SUPPORTED );
 	}
 	
-	Result Error::TooManyInfluences::get()
+	Result ResultCode::TooManyInfluences::get()
 	{
 		return Result( D3DX10_ERR_TOO_MANY_INFLUENCES );
 	}
 	
-	Result Error::InvalidData::get()
+	Result ResultCode::InvalidData::get()
 	{
 		return Result( D3DX10_ERR_INVALID_DATA );
 	}
 	
-	Result Error::LoadedMeshHasNoData::get()
+	Result ResultCode::LoadedMeshHasNoData::get()
 	{
 		return Result( D3DX10_ERR_LOADED_MESH_HAS_NO_DATA );
 	}
 	
-	Result Error::DuplicateNamedFragment::get()
+	Result ResultCode::DuplicateNamedFragment::get()
 	{
 		return Result( D3DX10_ERR_DUPLICATE_NAMED_FRAGMENT );
 	}
 	
-	Result Error::CannotRemoveLastItem::get()
+	Result ResultCode::CannotRemoveLastItem::get()
 	{
 		return Result( D3DX10_ERR_CANNOT_REMOVE_LAST_ITEM );
+	}
+
+	Result ResultCode::Success::get()
+	{
+		return Result( S_OK );
+	}
+
+	Result ResultCode::Failure::get()
+	{
+		return Result( E_FAIL );
 	}
 }
 }

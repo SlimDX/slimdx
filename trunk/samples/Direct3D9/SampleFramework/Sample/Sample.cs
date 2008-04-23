@@ -481,9 +481,9 @@ namespace SampleFramework
                 oldSettings.BehaviorFlags == settings.BehaviorFlags)
             {
                 Result result = ResetDevice();
-                if (result == Error.DeviceLost)
+                if (result == ResultCode.DeviceLost)
                     deviceLost = true;
-                else if (result == Error.DriverInternalError)
+                else if (result == ResultCode.DriverInternalError)
                 {
                     currentSettings = oldSettings;
                     CreateDevice(currentSettings);
@@ -1086,7 +1086,7 @@ namespace SampleFramework
                     Result result = Device.TestCooperativeLevel();
                     if (result.IsFailure)
                     {
-                        if (result == Error.DeviceLost)
+                        if (result == ResultCode.DeviceLost)
                             continue;
 
                         if (IsWindowed)

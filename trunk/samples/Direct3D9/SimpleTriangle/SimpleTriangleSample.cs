@@ -75,7 +75,7 @@ namespace SimpleTriangle
 
             Device.EndScene();
 
-            if (Device.Present() == Error.DeviceLost)
+            if (Device.Present() == ResultCode.DeviceLost)
                 IsDeviceLost = true;
         }
 

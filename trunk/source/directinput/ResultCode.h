@@ -27,10 +27,10 @@ namespace SlimDX
 {
 	namespace DirectInput
 	{
-		public ref class Error sealed
+		public ref class ResultCode sealed
 		{
 		private:
-			Error();
+			ResultCode();
 				
 		public:
 			property static Result Acquired
@@ -79,6 +79,11 @@ namespace SlimDX
 			};
 
 			property static Result EffectRestarted
+			{
+				Result get();
+			};
+
+			property static Result Failure
 			{
 				Result get();
 			};
@@ -214,6 +219,11 @@ namespace SlimDX
 			};
 
 			property static Result SettingsNotSaved
+			{
+				Result get();
+			};
+
+			property static Result Success
 			{
 				Result get();
 			};
