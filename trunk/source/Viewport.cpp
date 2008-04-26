@@ -27,6 +27,18 @@ using namespace System::Globalization;
 
 namespace SlimDX
 {
+	Viewport::Viewport( int x, int y, int width, int height )
+	: m_X( x ), m_Y( y ), m_Width( width ), m_Height( height ),
+	  m_MinZ( 0.0f ), m_MaxZ( 1.0f )
+	{
+	}
+	
+	Viewport::Viewport( int x, int y, int width, int height, float minZ, float maxZ )
+	: m_X( x ), m_Y( y ), m_Width( width ), m_Height( height ),
+	  m_MinZ( minZ ), m_MaxZ( maxZ )
+	{
+	}
+
 	int Viewport::X::get()
 	{
 		return m_X;

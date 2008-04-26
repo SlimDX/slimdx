@@ -90,7 +90,10 @@ namespace SlimDX
 			float get();
 			void set( float value );
 		}
-
+		
+		Viewport( int x, int y, int width, int height);
+		Viewport( int x, int y, int width, int height, float minZ,float maxZ );
+		
 		/// <summary>
 		/// Tests for equality between two viewports.
 		/// </summary>
