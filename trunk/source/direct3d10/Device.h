@@ -23,6 +23,7 @@
 
 #include "../ComObject.h"
 
+#include "../dxgi/Adapter.h"
 #include "../dxgi/Enums.h"
 #include "../math/Color4.h"
 
@@ -87,6 +88,8 @@ namespace SlimDX
 			}
 			
 			Device( DeviceCreationFlags flags );
+			Device( DriverType driverType, DeviceCreationFlags flags );
+			Device( DXGI::Adapter ^adapter, DriverType driverType, DeviceCreationFlags flags );
 			static Device^ FromPointer( System::IntPtr pointer );
 
 			CounterCapabilities GetCounterCapabilities();
