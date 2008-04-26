@@ -24,6 +24,8 @@
 
 #include "../StackAlloc.h"
 
+#include "../dxgi/Adapter.h"
+
 #include "Direct3D10Exception.h"
 
 #include "Buffer.h"
@@ -72,6 +74,37 @@ namespace Direct3D10
 	{
 		ID3D10Device* device = 0;
 		RECORD_D3D10( D3D10CreateDevice( 0, D3D10_DRIVER_TYPE_HARDWARE, 0, static_cast<UINT>( flags ), D3D10_SDK_VERSION, &device ) );
+		if( Result::Last.IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+		
+		Construct( device );
+		
+		m_InputAssembler = gcnew InputAssemblerWrapper( InternalPointer );
+		m_OutputMerger = gcnew OutputMergerWrapper( InternalPointer );
+		m_StreamOutput = gcnew StreamOutputWrapper( InternalPointer );
+		m_Rasterizer = gcnew RasterizerWrapper( InternalPointer );
+	}
+	
+	Device::Device( DriverType driverType, DeviceCreationFlags flags )
+	{
+		ID3D10Device* device = 0;
+		RECORD_D3D10( D3D10CreateDevice( 0, static_cast<D3D10_DRIVER_TYPE>( driverType ), 0, static_cast<UINT>( flags ), D3D10_SDK_VERSION, &device ) );
+		if( Result::Last.IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+		
+		Construct( device );
+		
+		m_InputAssembler = gcnew InputAssemblerWrapper( InternalPointer );
+		m_OutputMerger = gcnew OutputMergerWrapper( InternalPointer );
+		m_StreamOutput = gcnew StreamOutputWrapper( InternalPointer );
+		m_Rasterizer = gcnew RasterizerWrapper( InternalPointer );
+	}
+	
+	Device::Device( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags )
+	{
+		IDXGIAdapter* nativeAdapter = adapter == nullptr ? 0 : adapter->InternalPointer;
+		ID3D10Device* device = 0;
+		RECORD_D3D10( D3D10CreateDevice( nativeAdapter, static_cast<D3D10_DRIVER_TYPE>( driverType ), 0, static_cast<UINT>( flags ), D3D10_SDK_VERSION, &device ) );
 		if( Result::Last.IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 		
