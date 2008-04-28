@@ -88,7 +88,7 @@ namespace Direct3D10
 	ID3DX10Font* Font::Build( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic, FontCharacterSet characterSet, FontPrecision precision, FontQuality quality, FontPitchAndFamily pitchAndFamily, String^ faceName )
 	{
 		ID3DX10Font* font = 0;
-		pin_ptr<const wchar_t> pinned_name = PtrToStringChars( faceName );
+		pin_ptr<const wchar_t> pinned_name = PtrToStringChars( faceName ); 
 		if( RECORD_D3D10( D3DX10CreateFont( device->InternalPointer, height, width, static_cast<UINT>( weight ), mipLevels, isItalic, static_cast<UINT>( characterSet ), static_cast<UINT>( precision ), static_cast< UINT>( quality ), static_cast<UINT>( pitchAndFamily ), pinned_name, &font ) ).IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 
@@ -106,9 +106,10 @@ namespace Direct3D10
 
 	int Font::Draw( Sprite^ sprite, String^ text, Drawing::Rectangle rect, FontDrawFlags flags, int color )
 	{
+		ID3DX10Sprite* nativeSprite = sprite == nullptr ? 0 : sprite->InternalPointer;
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
-		int result = InternalPointer->DrawText( sprite->InternalPointer, pinned_text, text->Length, &nativeRect,
+		int result = InternalPointer->DrawTextW( nativeSprite, pinned_text, text->Length, &nativeRect,
 			static_cast<DWORD>( flags ), color );
 		
 		return result;
