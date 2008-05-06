@@ -28,7 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for air combat games.
 		/// </summary>
-		public ref class AirCombatControls
+		public ref class AirCombatControls sealed
 		{
 		private:
 			AirCombatControls() { }
@@ -178,7 +178,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for civilian flight games.
 		/// </summary>
-		public ref class CivilianFlightControls
+		public ref class CivilianFlightControls sealed
 		{
 		private:
 			CivilianFlightControls() { }
@@ -303,7 +303,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for helicopter combat games.
 		/// </summary>
-		public ref class HelicopterCombatControls
+		public ref class HelicopterCombatControls sealed
 		{
 		private:
 			HelicopterCombatControls() { }
@@ -428,7 +428,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for space combat games.
 		/// </summary>
-		public ref class SpaceCombatControls
+		public ref class SpaceCombatControls sealed
 		{
 		private:
 			SpaceCombatControls() { }

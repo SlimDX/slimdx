@@ -28,7 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for 2D objects in CAD.
 		/// </summary>
-		public ref class Objects2DControls
+		public ref class Objects2DControls sealed
 		{
 		private:
 			Objects2DControls() { }
@@ -108,7 +108,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for 3D models in CAD.
 		/// </summary>
-		public ref class Models3DControls
+		public ref class Models3DControls sealed
 		{
 		private:
 			Models3DControls() { }
@@ -198,7 +198,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for 3D navigation in CAD.
 		/// </summary>
-		public ref class Navigation3DControls
+		public ref class Navigation3DControls sealed
 		{
 		private:
 			Navigation3DControls() { }
@@ -288,7 +288,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for 3D objects in CAD.
 		/// </summary>
-		public ref class Objects3DControls
+		public ref class Objects3DControls sealed
 		{
 		private:
 			Objects3DControls() { }

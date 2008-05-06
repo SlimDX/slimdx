@@ -28,7 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for browser controls.
 		/// </summary>
-		public ref class BrowserControls
+		public ref class BrowserControls sealed
 		{
 		private:
 			BrowserControls() { }
@@ -123,7 +123,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for remote controls.
 		/// </summary>
-		public ref class RemoteControls
+		public ref class RemoteControls sealed
 		{
 		private:
 			RemoteControls() { }

@@ -28,7 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for combat racing games.
 		/// </summary>
-		public ref class CombatRacingControls
+		public ref class CombatRacingControls sealed
 		{
 		private:
 			CombatRacingControls() { }
@@ -153,7 +153,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for mechanical fighting games.
 		/// </summary>
-		public ref class MechanicalFightingControls
+		public ref class MechanicalFightingControls sealed
 		{
 		private:
 			MechanicalFightingControls() { }
@@ -293,7 +293,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for racing games.
 		/// </summary>
-		public ref class RacingControls
+		public ref class RacingControls sealed
 		{
 		private:
 			RacingControls() { }
@@ -418,7 +418,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for tank driving games.
 		/// </summary>
-		public ref class TankDrivingControls
+		public ref class TankDrivingControls sealed
 		{
 		private:
 			TankDrivingControls() { }

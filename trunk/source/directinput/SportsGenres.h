@@ -28,7 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for baseball batting games.
 		/// </summary>
-		public ref class BaseballBattingControls
+		public ref class BaseballBattingControls sealed
 		{
 		private:
 			BaseballBattingControls() { }
@@ -138,7 +138,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for baseball fielding games.
 		/// </summary>
-		public ref class BaseballFieldingControls
+		public ref class BaseballFieldingControls sealed
 		{
 		private:
 			BaseballFieldingControls() { }
@@ -238,7 +238,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for baseball pitching games.
 		/// </summary>
-		public ref class BaseballPitchingControls
+		public ref class BaseballPitchingControls sealed
 		{
 		private:
 			BaseballPitchingControls() { }
@@ -333,7 +333,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for bsketball defense games.
 		/// </summary>
-		public ref class BasketballDefenseControls
+		public ref class BasketballDefenseControls sealed
 		{
 		private:
 			BasketballDefenseControls() { }
@@ -443,7 +443,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for basketball offense games.
 		/// </summary>
-		public ref class BasketballOffenseControls
+		public ref class BasketballOffenseControls sealed
 		{
 		private:
 			BasketballOffenseControls() { }
@@ -578,7 +578,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for fishing games.
 		/// </summary>
-		public ref class FishingControls
+		public ref class FishingControls sealed
 		{
 		private:
 			FishingControls() { }
@@ -698,7 +698,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for football defense games.
 		/// </summary>
-		public ref class FootballDefenseControls
+		public ref class FootballDefenseControls sealed
 		{
 		private:
 			FootballDefenseControls() { }
@@ -745,9 +745,9 @@ namespace SlimDX
 			literal int Fake = DIBUTTON_FOOTBALLD_FAKE;
 
 			/// <summary>
-			/// Represents a "Supertackle" action.
+			/// Represents a "SuperTackle" action.
 			/// </summary>
-			literal int Supertackle = DIBUTTON_FOOTBALLD_SUPERTACKLE;
+			literal int SuperTackle = DIBUTTON_FOOTBALLD_SUPERTACKLE;
 
 			/// <summary>
 			/// Represents a "Menu" action.
@@ -765,9 +765,9 @@ namespace SlimDX
 			literal int Swim = DIBUTTON_FOOTBALLD_SWIM;
 
 			/// <summary>
-			/// Represents a "Bullrush" action.
+			/// Represents a "BullRush" action.
 			/// </summary>
-			literal int Bullrush = DIBUTTON_FOOTBALLD_BULLRUSH;
+			literal int BullRush = DIBUTTON_FOOTBALLD_BULLRUSH;
 
 			/// <summary>
 			/// Represents a "Rip" action.
@@ -823,7 +823,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for football offense games.
 		/// </summary>
-		public ref class FootballOffenseControls
+		public ref class FootballOffenseControls sealed
 		{
 		private:
 			FootballOffenseControls() { }
@@ -938,7 +938,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for football games.
 		/// </summary>
-		public ref class FootballPlayControls
+		public ref class FootballPlayControls sealed
 		{
 		private:
 			FootballPlayControls() { }
@@ -983,7 +983,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for football quarterback games.
 		/// </summary>
-		public ref class FootballQuarterbackControls
+		public ref class FootballQuarterbackControls sealed
 		{
 		private:
 			FootballQuarterbackControls() { }
@@ -1040,9 +1040,9 @@ namespace SlimDX
 			literal int Menu = DIBUTTON_FOOTBALLQ_MENU;
 
 			/// <summary>
-			/// Represents a "Fakesnap" action.
+			/// Represents a "FakeSnap" action.
 			/// </summary>
-			literal int Fakesnap = DIBUTTON_FOOTBALLQ_FAKESNAP;
+			literal int FakeSnap = DIBUTTON_FOOTBALLQ_FAKESNAP;
 
 			/// <summary>
 			/// Represents a "Motion" action.
@@ -1088,7 +1088,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for golf games.
 		/// </summary>
-		public ref class GolfControls
+		public ref class GolfControls sealed
 		{
 		private:
 			GolfControls() { }
@@ -1198,7 +1198,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for hockey defense games.
 		/// </summary>
-		public ref class HockeyDefenseControls
+		public ref class HockeyDefenseControls sealed
 		{
 		private:
 			HockeyDefenseControls() { }
@@ -1308,7 +1308,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for hockey goalie games.
 		/// </summary>
-		public ref class HockeyGoalieControls
+		public ref class HockeyGoalieControls sealed
 		{
 		private:
 			HockeyGoalieControls() { }
@@ -1413,7 +1413,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for hockey offense games.
 		/// </summary>
-		public ref class HockeyOffenseControls
+		public ref class HockeyOffenseControls sealed
 		{
 		private:
 			HockeyOffenseControls() { }
@@ -1523,7 +1523,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for hunting games.
 		/// </summary>
-		public ref class HuntingControls
+		public ref class HuntingControls sealed
 		{
 		private:
 			HuntingControls() { }
@@ -1658,7 +1658,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for mountain biking games.
 		/// </summary>
-		public ref class MountainBikingControls
+		public ref class MountainBikingControls sealed
 		{
 		private:
 			MountainBikingControls() { }
@@ -1763,7 +1763,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for racquet games.
 		/// </summary>
-		public ref class RacquetControls
+		public ref class RacquetControls sealed
 		{
 		private:
 			RacquetControls() { }
@@ -1863,7 +1863,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for skiing games.
 		/// </summary>
-		public ref class SkiingControls
+		public ref class SkiingControls sealed
 		{
 		private:
 			SkiingControls() { }
@@ -1963,7 +1963,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for soccer defense games.
 		/// </summary>
-		public ref class SoccerDefenseControls
+		public ref class SoccerDefenseControls sealed
 		{
 		private:
 			SoccerDefenseControls() { }
@@ -2088,7 +2088,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for soccer offense games.
 		/// </summary>
-		public ref class SoccerOffenseControls
+		public ref class SoccerOffenseControls sealed
 		{
 		private:
 			SoccerOffenseControls() { }
