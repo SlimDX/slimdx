@@ -2388,16 +2388,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Error">
-          <Messages>
-           <Message Id="Error" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Status="Excluded" Created="2008-02-21 21:35:22Z">
-            <Issue Name="Type">
-             <Item>'Error'</Item>
-             <Item>Error</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="FillMode">
           <Messages>
            <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
@@ -5439,16 +5429,6 @@
             </Messages>
            </Member>
           </Members>
-         </Type>
-         <Type Name="Error">
-          <Messages>
-           <Message Id="Error" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Status="Excluded" Created="2008-02-23 15:03:39Z">
-            <Issue Name="Type">
-             <Item>'Error'</Item>
-             <Item>Error</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
          <Type Name="EventDescription">
           <Members>
@@ -9523,6 +9503,32 @@
        </Namespace>
        <Namespace Name="SlimDX.DirectInput">
         <Types>
+         <Type Name="AirCombatControls">
+          <Members>
+           <Member Name="#GlanceDownLink">
+            <Messages>
+             <Message Id="DownLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>DownLink</Item>
+               <Item>'AirCombatControls.GlanceDownLink'</Item>
+               <Item>Downlink</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GlanceUpLink">
+            <Messages>
+             <Message Id="UpLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>UpLink</Item>
+               <Item>'AirCombatControls.GlanceUpLink'</Item>
+               <Item>Uplink</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="BufferedData`1">
           <Messages>
            <Message Id="T" TypeName="IdentifiersShouldHaveCorrectPrefix" Category="Microsoft.Naming" CheckId="CA1715" Status="Excluded" Created="2008-01-06 19:04:15Z" FixCategory="NonBreaking">
@@ -9619,6 +9625,32 @@
               <Issue Name="BaseType">
                <Item>'Capabilities.Type'</Item>
                <Item>'object.GetType()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="CivilianFlightControls">
+          <Members>
+           <Member Name="#GlanceDownLink">
+            <Messages>
+             <Message Id="DownLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>DownLink</Item>
+               <Item>'CivilianFlightControls.GlanceDownLink'</Item>
+               <Item>Downlink</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GlanceUpLink">
+            <Messages>
+             <Message Id="UpLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>UpLink</Item>
+               <Item>'CivilianFlightControls.GlanceUpLink'</Item>
+               <Item>Uplink</Item>
               </Issue>
              </Message>
             </Messages>
@@ -9907,6 +9939,32 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="DeviceSubtype">
+          <Members>
+           <Member Name="#PCATKeyboard">
+            <Messages>
+             <Message Id="PCAT" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="Member">
+               <Item>PCAT</Item>
+               <Item>'DeviceSubtype.PCATKeyboard'</Item>
+               <Item>Pcat</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#PCXTKeyboard">
+            <Messages>
+             <Message Id="PCXT" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="Member">
+               <Item>PCXT</Item>
+               <Item>'DeviceSubtype.PCXTKeyboard'</Item>
+               <Item>Pcxt</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="DeviceType">
           <Messages>
            <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2007-10-01 21:38:08Z" FixCategory="NonBreaking">
@@ -9987,15 +10045,31 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Error">
-          <Messages>
-           <Message Id="Error" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Status="Excluded" Created="2008-02-23 19:14:50Z">
-            <Issue Name="Type">
-             <Item>'Error'</Item>
-             <Item>Error</Item>
-            </Issue>
-           </Message>
-          </Messages>
+         <Type Name="HelicopterCombatControls">
+          <Members>
+           <Member Name="#GlanceDownLink">
+            <Messages>
+             <Message Id="DownLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>DownLink</Item>
+               <Item>'HelicopterCombatControls.GlanceDownLink'</Item>
+               <Item>Downlink</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GlanceUpLink">
+            <Messages>
+             <Message Id="UpLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>UpLink</Item>
+               <Item>'HelicopterCombatControls.GlanceUpLink'</Item>
+               <Item>Uplink</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
          <Type Name="InputDeviceCollection">
           <Members>
@@ -10007,6 +10081,47 @@
                <Item>'destination'</Item>
                <Item>'array'</Item>
                <Item>'ICollection&lt;DeviceInstance&gt;.CopyTo(DeviceInstance[], int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="JoystickObjects">
+          <Members>
+           <Member Name="#Button(System.Int32)">
+            <Messages>
+             <Message Id="buttonId+48" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue>
+               <Item>buttonId+48</Item>
+               <Item>'JoystickObjects.Button(int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#PointOfView(System.Int32)">
+            <Messages>
+             <Message Id="pov" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberParameter">
+               <Item>'JoystickObjects.PointOfView(int)'</Item>
+               <Item>pov</Item>
+               <Item>'povId'</Item>
+              </Issue>
+             </Message>
+             <Message Id="povId*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue>
+               <Item>povId*4</Item>
+               <Item>'JoystickObjects.PointOfView(int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Slider(System.Int32)">
+            <Messages>
+             <Message Id="sliderId*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue>
+               <Item>sliderId*4</Item>
+               <Item>'JoystickObjects.Slider(int)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -10169,6 +10284,210 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="PlatformControls">
+          <Members>
+           <Member Name="#ViewDownLink">
+            <Messages>
+             <Message Id="DownLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>DownLink</Item>
+               <Item>'PlatformControls.ViewDownLink'</Item>
+               <Item>Downlink</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ViewUpLink">
+            <Messages>
+             <Message Id="UpLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>UpLink</Item>
+               <Item>'PlatformControls.ViewUpLink'</Item>
+               <Item>Uplink</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="RemoteControls">
+          <Members>
+           <Member Name="#DVD">
+            <Messages>
+             <Message Id="DVD" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="Member">
+               <Item>DVD</Item>
+               <Item>'RemoteControls.DVD'</Item>
+               <Item>Dvd</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#VCR">
+            <Messages>
+             <Message Id="VCR" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="Member">
+               <Item>VCR</Item>
+               <Item>'RemoteControls.VCR'</Item>
+               <Item>Vcr</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ShootingControls">
+          <Members>
+           <Member Name="#GlanceDownLink">
+            <Messages>
+             <Message Id="DownLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>DownLink</Item>
+               <Item>'ShootingControls.GlanceDownLink'</Item>
+               <Item>Downlink</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GlanceUpLink">
+            <Messages>
+             <Message Id="UpLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>UpLink</Item>
+               <Item>'ShootingControls.GlanceUpLink'</Item>
+               <Item>Uplink</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LookUpDown">
+            <Messages>
+             <Message Id="LookUp" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>LookUp</Item>
+               <Item>'ShootingControls.LookUpDown'</Item>
+               <Item>Lookup</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SideStep">
+            <Messages>
+             <Message Id="SideStep" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>SideStep</Item>
+               <Item>'ShootingControls.SideStep'</Item>
+               <Item>Sidestep</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SideToSideControls">
+          <Members>
+           <Member Name="#ViewDownLink">
+            <Messages>
+             <Message Id="DownLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>DownLink</Item>
+               <Item>'SideToSideControls.ViewDownLink'</Item>
+               <Item>Downlink</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ViewUpLink">
+            <Messages>
+             <Message Id="UpLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>UpLink</Item>
+               <Item>'SideToSideControls.ViewUpLink'</Item>
+               <Item>Uplink</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SpaceCombatControls">
+          <Members>
+           <Member Name="#GlanceDownLink">
+            <Messages>
+             <Message Id="DownLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>DownLink</Item>
+               <Item>'SpaceCombatControls.GlanceDownLink'</Item>
+               <Item>Downlink</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GlanceUpLink">
+            <Messages>
+             <Message Id="UpLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>UpLink</Item>
+               <Item>'SpaceCombatControls.GlanceUpLink'</Item>
+               <Item>Uplink</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TankDrivingControls">
+          <Members>
+           <Member Name="#BarrelDownLink">
+            <Messages>
+             <Message Id="DownLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>DownLink</Item>
+               <Item>'TankDrivingControls.BarrelDownLink'</Item>
+               <Item>Downlink</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#BarrelUpLink">
+            <Messages>
+             <Message Id="UpLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>UpLink</Item>
+               <Item>'TankDrivingControls.BarrelUpLink'</Item>
+               <Item>Uplink</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ThirdPersonControls">
+          <Members>
+           <Member Name="#GlanceDownLink">
+            <Messages>
+             <Message Id="DownLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>DownLink</Item>
+               <Item>'ThirdPersonControls.GlanceDownLink'</Item>
+               <Item>Downlink</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GlanceUpLink">
+            <Messages>
+             <Message Id="UpLink" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-05 23:04:17Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>UpLink</Item>
+               <Item>'ThirdPersonControls.GlanceUpLink'</Item>
+               <Item>Uplink</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
         </Types>
        </Namespace>
        <Namespace Name="SlimDX.DXGI">
@@ -10318,16 +10637,6 @@
              <Item>DXGI</Item>
              <Item>'DXGIException'</Item>
              <Item>Dxgi</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="Error">
-          <Messages>
-           <Message Id="Error" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Status="Excluded" Created="2008-02-23 15:03:39Z">
-            <Issue Name="Type">
-             <Item>'Error'</Item>
-             <Item>Error</Item>
             </Issue>
            </Message>
           </Messages>
@@ -11729,16 +12038,6 @@
            </Message>
           </Messages>
          </Type>
-         <Type Name="Error">
-          <Messages>
-           <Message Id="Error" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Status="Excluded" Created="2008-02-23 15:03:39Z">
-            <Issue Name="Type">
-             <Item>'Error'</Item>
-             <Item>Error</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="GamepadButtonFlags">
           <Messages>
            <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2008-02-23 15:03:39Z">
@@ -11875,7 +12174,7 @@
           <Members>
            <Member Name="#PeekMessage(MiniTri.Message&amp;,System.IntPtr,System.UInt32,System.UInt32,System.UInt32)">
             <Messages>
-             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Status="Excluded" Created="2008-02-28 11:36:27Z">
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Status="Excluded" Created="2008-05-05 23:11:04Z">
               <Issue>
                <Item>'Program.PeekMessage(out Message, IntPtr, uint, uint, uint)'</Item>
               </Issue>
@@ -12436,9 +12735,6 @@
    <Rule TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711">
     <Resolution Name="Default">Rename '{0}' so that it does not end in '{1}'.</Resolution>
     <Resolution Name="TypeNoAlternate">Rename type name {0} so that it does not end in '{1}'.</Resolution>
-   </Rule>
-   <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
-    <Resolution Name="Type">Rename type {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a type makes it harder for consumers in other languages to use the type.</Resolution>
    </Rule>
    <Rule TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810">
     <Resolution Name="Default">Initialize all static fields in {0} when those fields are declared and remove the explicit static constructor.</Resolution>

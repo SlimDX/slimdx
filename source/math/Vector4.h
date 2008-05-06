@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../design/Vector4Converter.h"
+
 using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
@@ -35,6 +37,7 @@ namespace SlimDX
 	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+	[System::ComponentModel::TypeConverter( SlimDX::Design::Vector4Converter::typeid )]
 	public value class Vector4 : System::IEquatable<Vector4>
 	{
 	public:

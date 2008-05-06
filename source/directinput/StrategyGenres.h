@@ -28,7 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for role playing games.
 		/// </summary>
-		public ref class RolePlayingControls
+		public ref class RolePlayingControls sealed
 		{
 		private:
 			RolePlayingControls() { }
@@ -153,7 +153,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for turn based games.
 		/// </summary>
-		public ref class TurnBasedControls
+		public ref class TurnBasedControls sealed
 		{
 		private:
 			TurnBasedControls() { }

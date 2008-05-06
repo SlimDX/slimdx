@@ -28,7 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for platform arcade games.
 		/// </summary>
-		public ref class PlatformControls
+		public ref class PlatformControls sealed
 		{
 		private:
 			PlatformControls() { }
@@ -87,7 +87,7 @@ namespace SlimDX
 			/// <summary>
 			/// Represents a "FireSecondary" action.
 			/// </summary>
-			literal int Firesecondary = DIBUTTON_ARCADEP_FIRESECONDARY;
+			literal int FireSecondary = DIBUTTON_ARCADEP_FIRESECONDARY;
 
 			/// <summary>
 			/// Represents a "Left" link.
@@ -143,7 +143,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for side-to-side arcade games.
 		/// </summary>
-		public ref class SideToSideControls
+		public ref class SideToSideControls sealed
 		{
 		private:
 			SideToSideControls() { }

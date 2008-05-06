@@ -3666,6 +3666,34 @@
 				</File>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="Design"
+			>
+			<File
+				RelativePath="..\source\design\Vector2Converter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\Vector2Converter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\Vector3Converter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\Vector3Converter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\Vector4Converter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\Vector4Converter.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\source\AssemblyInfo.cpp"
 			>

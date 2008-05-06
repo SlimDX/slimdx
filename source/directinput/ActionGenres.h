@@ -28,7 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for Hand-To-Hand fighting games.
 		/// </summary>
-		public ref class HandToHandControls
+		public ref class HandToHandControls sealed
 		{
 		private:
 			HandToHandControls() { }
@@ -148,7 +148,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for first person shooter games.
 		/// </summary>
-		public ref class ShootingControls
+		public ref class ShootingControls sealed
 		{
 		private:
 			ShootingControls() { }
@@ -293,7 +293,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains action mapping constants for third person fighting games.
 		/// </summary>
-		public ref class ThirdPersonControls
+		public ref class ThirdPersonControls sealed
 		{
 		private:
 			ThirdPersonControls() { }
@@ -348,6 +348,10 @@ namespace SlimDX
 			/// Represents a "Step" action.
 			/// </summary>
 			literal int Step = DIAXIS_TPS_STEP;
+
+			/// <summary>
+			/// Represents a "Backward" link.
+			/// </summary>
 			literal int BackwardLink = DIBUTTON_TPS_BACKWARD_LINK;
 
 			/// <summary>
