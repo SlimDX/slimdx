@@ -37,6 +37,7 @@ namespace SlimDX
 			int sequence;
 
 		internal:
+			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			BufferedData( const DIDEVICEOBJECTDATA &data );
 
 		public:

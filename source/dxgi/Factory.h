@@ -71,6 +71,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="module">The unmanaged HMODULE for the software adapter DLL.</param>
 			/// <returns>The specified adapter, or <c>null</c> on failure.</returns>
+			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			Adapter^ CreateSoftwareAdapter( System::IntPtr module );
 			
 			/// <summary>
@@ -78,6 +79,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="module">The module for the software adapter DLL.</param>
 			/// <returns>The specified adapter, or <c>null</c> on failure.</returns>
+			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			Adapter^ CreateSoftwareAdapter( System::Reflection::Module^ module );
 			
 			/// <summary>

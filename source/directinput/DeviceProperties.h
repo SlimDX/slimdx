@@ -60,7 +60,10 @@ namespace SlimDX
 			/// </summary>
 			property System::Object^ ApplicationData
 			{
+				[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 				System::Object^ get();
+
+				[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 				void set( System::Object^ value );
 			}
 

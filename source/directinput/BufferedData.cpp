@@ -193,7 +193,7 @@ namespace DirectInput
 	}
 
 	generic<typename DataFormat>
-	BufferedData<DataFormat>::BufferedData( DataFormat data ) : data( data )
+	BufferedData<DataFormat>::BufferedData( DataFormat _data ) : data( _data )
 	{
 	}
 }

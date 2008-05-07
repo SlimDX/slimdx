@@ -60,6 +60,7 @@ namespace SlimDX
 			/// Initializes a new instance of the <see cref="SlimDX.DirectInput.Device"/> class.
 			/// </summary>
 			/// <param name="subsystem">The subsystem identifier.</param>
+			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			Device( System::Guid subsystem );
 
 			/// <summary>
@@ -125,6 +126,7 @@ namespace SlimDX
 			/// Retrieves the current device state.
 			/// </summary>
 			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			Result GetCurrentState( DataFormat% data );
 
 			/// <summary>
