@@ -69,6 +69,7 @@ namespace SlimDX
 			static CubeTexture^ FromFile( SlimDX::Direct3D9::Device^ device, System::String^ fileName, Usage usage, Pool pool );
 			static CubeTexture^ FromFile( SlimDX::Direct3D9::Device^ device, System::String^ fileName );
 
+			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			Result Fill( Fill3DCallback^ callback );
 			Result Fill( TextureShader^ shader );
 

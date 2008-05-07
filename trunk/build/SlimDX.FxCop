@@ -332,7 +332,7 @@
           <Members>
            <Member Name="#.ctor(System.Int64,System.Boolean,System.Boolean)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-04-05 14:53:36Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-04-05 14:53:36Z">
               <Issue>
                <Item>'DataStream.DataStream(long, bool, bool)'</Item>
                <Item>'Marshal.GetExceptionPointers()'</Item>
@@ -917,7 +917,7 @@
           <Members>
            <Member Name="#AllocateNativeString(System.String)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-23 15:03:39Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'Utilities.AllocateNativeString(string)'</Item>
                <Item>'Marshal.StringToHGlobalAnsi(string)'</Item>
@@ -998,7 +998,7 @@
            </Member>
            <Member Name="#FreeNativeString({modopt(System.Runtime.CompilerServices.IsConst),modopt(System.Runtime.CompilerServices.IsSignUnspecifiedByte)}System.SByte*)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-23 15:03:39Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'Utilities.FreeNativeString(sbyte*)'</Item>
                <Item>'Marshal.FreeHGlobal(IntPtr)'</Item>
@@ -1009,7 +1009,7 @@
            </Member>
            <Member Name="#FreeNativeString({modopt(System.Runtime.CompilerServices.IsSignUnspecifiedByte)}System.SByte*)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-23 15:03:39Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-23 15:03:39Z">
               <Issue>
                <Item>'Utilities.FreeNativeString(sbyte*)'</Item>
                <Item>'Marshal.FreeHGlobal(IntPtr)'</Item>
@@ -1606,6 +1606,28 @@
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-27 22:23:52Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'Device.Device(DeviceCreationFlags)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(SlimDX.Direct3D10.DriverType,SlimDX.Direct3D10.DeviceCreationFlags)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-07 18:46:58Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Device.Device(DriverType, DeviceCreationFlags)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(SlimDX.DXGI.Adapter,SlimDX.Direct3D10.DriverType,SlimDX.Direct3D10.DeviceCreationFlags)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-07 18:46:58Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Device.Device(Adapter, DriverType, DeviceCreationFlags)'</Item>
                <Item>flags</Item>
                <Item>'flags'</Item>
               </Issue>
@@ -3522,17 +3544,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#AdvanceTime(System.Double,SlimDX.Direct3D9.AnimationCallback)">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-22 22:46:50Z">
-              <Issue>
-               <Item>'AnimationController.AdvanceTime(double, AnimationCallback)'</Item>
-               <Item>'Marshal.GetFunctionPointerForDelegate(Delegate)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'AnimationController.AdvanceTime(double, AnimationCallback)'&#xD;&#xA;   -&gt;'AnimationController.AdvanceTime(double, AnimationCallback)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
              <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-02-27 22:14:29Z">
@@ -4113,17 +4124,6 @@
                <Item>CubeTexture.CheckRequirements(Device, Int32, Int32, Usage, Format, Pool):CubeTextureRequirements</Item>
                <Item>SlimDX.Direct3D9.Device</Item>
                <Item>SlimDX.DirectXObject&lt;IDirect3DDevice9&gt;</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Fill(SlimDX.Direct3D9.Fill3DCallback)">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-01-06 19:04:15Z">
-              <Issue>
-               <Item>'CubeTexture.Fill(Fill3DCallback)'</Item>
-               <Item>'Marshal.GetFunctionPointerForDelegate(Delegate)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'CubeTexture.Fill(Fill3DCallback)'&#xD;&#xA;   -&gt;'CubeTexture.Fill(Fill3DCallback)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4892,7 +4892,13 @@
            </Member>
            <Member Name="#Initialize()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
+             <Message Id="&lt;Module&gt;.D3DXCheckVersion(System.UInt32,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-01-06 19:04:15Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'Direct3D.Initialize()'</Item>
+               <Item>'&lt;Module&gt;.D3DXCheckVersion(uint, uint)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>'Direct3D.Initialize()'</Item>
                <Item>'AppDomain.DomainUnload.add(EventHandler)'</Item>
@@ -4904,17 +4910,11 @@
                <Item>&#xD;&#xA;   -&gt;'Direct3D.Initialize()'&#xD;&#xA;   -&gt;'Direct3D.Initialize()'</Item>
               </Issue>
              </Message>
-             <Message Id="&lt;Module&gt;.D3DXCheckVersion(System.UInt32,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'Direct3D.Initialize()'</Item>
-               <Item>'&lt;Module&gt;.D3DXCheckVersion(uint, uint)'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#Terminate()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>'Direct3D.Terminate()'</Item>
                <Item>'AppDomain.DomainUnload.remove(EventHandler)'</Item>
@@ -5322,20 +5322,9 @@
          </Type>
          <Type Name="EffectHandle">
           <Members>
-           <Member Name="#.ctor(System.String)">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>'EffectHandle.EffectHandle(string)'</Item>
-               <Item>'Marshal.StringToHGlobalAnsi(string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'EffectHandle.EffectHandle(string)'&#xD;&#xA;   -&gt;'EffectHandle.EffectHandle(string)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Destruct()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-27 00:16:34Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-27 00:16:34Z">
               <Issue>
                <Item>'EffectHandle.Destruct()'</Item>
                <Item>'Marshal.FreeHGlobal(IntPtr)'</Item>
@@ -6189,7 +6178,7 @@
           <Members>
            <Member Name="#Marshal(std.vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*,SlimDX.Direct3D9.Macro[],System.Runtime.InteropServices.GCHandle[]&amp;)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-04-05 14:53:36Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-04-05 14:53:36Z">
               <Issue>
                <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
@@ -6325,7 +6314,7 @@
            </Member>
            <Member Name="#Unmarshal(std.vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;{modopt(System.Runtime.CompilerServices.IsImplicitlyDereferenced)}*,System.Runtime.InteropServices.GCHandle[])">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-04-05 14:53:36Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-04-05 14:53:36Z">
               <Issue>
                <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
@@ -8668,17 +8657,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#Fill(SlimDX.Direct3D9.Fill2DCallback)">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>'Texture.Fill(Fill2DCallback)'</Item>
-               <Item>'Marshal.GetFunctionPointerForDelegate(Delegate)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Texture.Fill(Fill2DCallback)'&#xD;&#xA;   -&gt;'Texture.Fill(Fill2DCallback)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#FromFile(SlimDX.Direct3D9.Device,System.String,System.Int32,System.Int32,System.Int32,SlimDX.Direct3D9.Usage,SlimDX.Direct3D9.Format,SlimDX.Direct3D9.Pool,SlimDX.Direct3D9.Filter,SlimDX.Direct3D9.Filter,System.Int32)">
             <Messages>
              <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-10-09 21:11:47Z">
@@ -9142,17 +9120,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#Fill(SlimDX.Direct3D9.Fill3DCallback)">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-01-06 19:04:15Z">
-              <Issue>
-               <Item>'VolumeTexture.Fill(Fill3DCallback)'</Item>
-               <Item>'Marshal.GetFunctionPointerForDelegate(Delegate)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'VolumeTexture.Fill(Fill3DCallback)'&#xD;&#xA;   -&gt;'VolumeTexture.Fill(Fill3DCallback)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#FromFile(SlimDX.Direct3D9.Device,System.String,System.Int32,System.Int32,System.Int32,System.Int32,SlimDX.Direct3D9.Usage,SlimDX.Direct3D9.Format,SlimDX.Direct3D9.Pool,SlimDX.Direct3D9.Filter,SlimDX.Direct3D9.Filter,System.Int32)">
             <Messages>
              <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-10-09 21:11:47Z">
@@ -9539,17 +9506,6 @@
            </Message>
           </Messages>
           <Members>
-           <Member Name="#.ctor({modopt(System.Runtime.CompilerServices.IsConst)}DIDEVICEOBJECTDATA{modopt(System.Runtime.CompilerServices.IsImplicitlyDereferenced)}*)">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>'BufferedData&lt;DataFormat&gt;.BufferedData(DIDEVICEOBJECTDATA*)'</Item>
-               <Item>'Marshal.OffsetOf(Type, string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'BufferedData&lt;DataFormat&gt;.BufferedData(DIDEVICEOBJECTDATA*)'&#xD;&#xA;   -&gt;'BufferedData&lt;DataFormat&gt;.BufferedData(DIDEVICEOBJECTDATA*)'&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetBufferedData()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#TimeStamp">
             <Messages>
              <Message Id="TimeStamp" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-01-06 19:04:15Z">
@@ -9740,17 +9696,6 @@
            </Message>
           </Messages>
           <Members>
-           <Member Name="#.ctor(System.Guid)">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
-              <Issue>
-               <Item>'Device&lt;DataFormat&gt;.Device(Guid)'</Item>
-               <Item>'Marshal.OffsetOf(Type, string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.Device(Guid)'&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.Device(Guid)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
              <Message TypeName="DoNotDeclareStaticMembersOnGenericTypes" Category="Microsoft.Design" CheckId="CA1000" Status="Excluded" Created="2008-02-27 22:14:29Z">
@@ -9777,30 +9722,9 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#GetCurrentState(!0&amp;)">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-20 01:01:41Z">
-              <Issue>
-               <Item>'Device&lt;DataFormat&gt;.GetCurrentState(ref DataFormat)'</Item>
-               <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState(ref DataFormat)'&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState(ref DataFormat)'</Item>
-              </Issue>
-              <Issue>
-               <Item>'Device&lt;DataFormat&gt;.GetCurrentState(ref DataFormat)'</Item>
-               <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState(ref DataFormat)'&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState(ref DataFormat)'</Item>
-              </Issue>
-              <Issue>
-               <Item>'Device&lt;DataFormat&gt;.GetCurrentState(ref DataFormat)'</Item>
-               <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState(ref DataFormat)'&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState(ref DataFormat)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#GetCurrentState()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>'Device&lt;DataFormat&gt;.GetCurrentState()'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
@@ -9894,51 +9818,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="DeviceProperties">
-          <Members>
-           <Member Name="#ApplicationData">
-            <Accessors>
-             <Accessor Name="#get_ApplicationData()">
-              <Messages>
-               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
-                <Issue>
-                 <Item>'DeviceProperties.ApplicationData.get()'</Item>
-                 <Item>'GCHandle.Free()'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'DeviceProperties.ApplicationData.get()'&#xD;&#xA;   -&gt;'DeviceProperties.ApplicationData.get()'</Item>
-                </Issue>
-                <Issue>
-                 <Item>'DeviceProperties.ApplicationData.get()'</Item>
-                 <Item>'GCHandle.FromIntPtr(IntPtr)'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'DeviceProperties.ApplicationData.get()'&#xD;&#xA;   -&gt;'DeviceProperties.ApplicationData.get()'</Item>
-                </Issue>
-                <Issue>
-                 <Item>'DeviceProperties.ApplicationData.get()'</Item>
-                 <Item>'GCHandle.Target.get()'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'DeviceProperties.ApplicationData.get()'&#xD;&#xA;   -&gt;'DeviceProperties.ApplicationData.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-             <Accessor Name="#set_ApplicationData(System.Object)">
-              <Messages>
-               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
-                <Issue>
-                 <Item>'DeviceProperties.ApplicationData.set(object)'</Item>
-                 <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'DeviceProperties.ApplicationData.set(object)'&#xD;&#xA;   -&gt;'DeviceProperties.ApplicationData.set(object)'</Item>
-                </Issue>
-                <Issue>
-                 <Item>'DeviceProperties.ApplicationData.set(object)'</Item>
-                 <Item>'GCHandle.Free()'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'DeviceProperties.ApplicationData.set(object)'&#xD;&#xA;   -&gt;'DeviceProperties.ApplicationData.set(object)'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="DeviceSubtype">
           <Members>
            <Member Name="#PCATKeyboard">
@@ -10008,7 +9887,7 @@
            </Member>
            <Member Name="#Initialize()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>'DirectInput.Initialize()'</Item>
                <Item>'AppDomain.DomainUnload.add(EventHandler)'</Item>
@@ -10029,7 +9908,7 @@
            </Member>
            <Member Name="#Terminate()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>'DirectInput.Terminate()'</Item>
                <Item>'AppDomain.DomainUnload.remove(EventHandler)'</Item>
@@ -10225,62 +10104,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="ObjectProperties">
-          <Members>
-           <Member Name="#.ctor(IDirectInputDevice8W*,System.String,System.Type)">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-03-06 02:37:29Z">
-              <Issue>
-               <Item>'ObjectProperties.ObjectProperties(IDirectInputDevice8W*, string, Type)'</Item>
-               <Item>'Marshal.OffsetOf(Type, string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'ObjectProperties.ObjectProperties(IDirectInputDevice8W*, string, Type)'&#xD;&#xA;   -&gt;'ObjectProperties.ObjectProperties(IDirectInputDevice8W*, string, Type)'&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetObjectPropertiesByName(string)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ApplicationData">
-            <Accessors>
-             <Accessor Name="#get_ApplicationData()">
-              <Messages>
-               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
-                <Issue>
-                 <Item>'ObjectProperties.ApplicationData.get()'</Item>
-                 <Item>'GCHandle.Free()'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'ObjectProperties.ApplicationData.get()'&#xD;&#xA;   -&gt;'ObjectProperties.ApplicationData.get()'</Item>
-                </Issue>
-                <Issue>
-                 <Item>'ObjectProperties.ApplicationData.get()'</Item>
-                 <Item>'GCHandle.FromIntPtr(IntPtr)'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'ObjectProperties.ApplicationData.get()'&#xD;&#xA;   -&gt;'ObjectProperties.ApplicationData.get()'</Item>
-                </Issue>
-                <Issue>
-                 <Item>'ObjectProperties.ApplicationData.get()'</Item>
-                 <Item>'GCHandle.Target.get()'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'ObjectProperties.ApplicationData.get()'&#xD;&#xA;   -&gt;'ObjectProperties.ApplicationData.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-             <Accessor Name="#set_ApplicationData(System.Object)">
-              <Messages>
-               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2007-10-01 21:38:08Z">
-                <Issue>
-                 <Item>'ObjectProperties.ApplicationData.set(object)'</Item>
-                 <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'ObjectProperties.ApplicationData.set(object)'&#xD;&#xA;   -&gt;'ObjectProperties.ApplicationData.set(object)'</Item>
-                </Issue>
-                <Issue>
-                 <Item>'ObjectProperties.ApplicationData.set(object)'</Item>
-                 <Item>'GCHandle.Free()'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'ObjectProperties.ApplicationData.set(object)'&#xD;&#xA;   -&gt;'ObjectProperties.ApplicationData.set(object)'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -10659,17 +10482,6 @@
                <Item>'Factory::Factory(IntPtr)'</Item>
                <Item>pointer</Item>
                <Item>'pointer'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#CreateSoftwareAdapter(System.Reflection.Module)">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-21 21:35:22Z">
-              <Issue>
-               <Item>'Factory.CreateSoftwareAdapter(Module)'</Item>
-               <Item>'Marshal.GetHINSTANCE(Module)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Factory.CreateSoftwareAdapter(Module)'&#xD;&#xA;   -&gt;'Factory.CreateSoftwareAdapter(Module)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -12235,7 +12047,7 @@
            </Member>
            <Member Name="#Disable()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-28 11:36:27Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-28 11:36:27Z">
               <Issue>
                <Item>'FilterKeys.Disable()'</Item>
                <Item>'Marshal.AllocCoTaskMem(int)'</Item>
@@ -12261,7 +12073,7 @@
            </Member>
            <Member Name="#Restore()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-28 11:36:27Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-28 11:36:27Z">
               <Issue>
                <Item>'FilterKeys.Restore()'</Item>
                <Item>'Marshal.AllocCoTaskMem(int)'</Item>
@@ -12342,7 +12154,7 @@
            </Member>
            <Member Name="#Disable()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-28 11:36:27Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-28 11:36:27Z">
               <Issue>
                <Item>'StickyKeys.Disable()'</Item>
                <Item>'Marshal.AllocCoTaskMem(int)'</Item>
@@ -12368,7 +12180,7 @@
            </Member>
            <Member Name="#Restore()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-28 11:36:27Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-28 11:36:27Z">
               <Issue>
                <Item>'StickyKeys.Restore()'</Item>
                <Item>'Marshal.AllocCoTaskMem(int)'</Item>
@@ -12438,7 +12250,7 @@
            </Member>
            <Member Name="#Disable()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-28 11:36:27Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-28 11:36:27Z">
               <Issue>
                <Item>'ToggleKeys.Disable()'</Item>
                <Item>'Marshal.AllocCoTaskMem(int)'</Item>
@@ -12464,7 +12276,7 @@
            </Member>
            <Member Name="#Restore()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-28 11:36:27Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-28 11:36:27Z">
               <Issue>
                <Item>'ToggleKeys.Restore()'</Item>
                <Item>'Marshal.AllocCoTaskMem(int)'</Item>
@@ -12496,7 +12308,7 @@
             <Accessors>
              <Accessor Name="#get_Length()">
               <Messages>
-               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-28 11:36:27Z">
+               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-28 11:36:27Z">
                 <Issue>
                  <Item>'WINDOWPLACEMENT.Length.get()'</Item>
                  <Item>'Marshal.SizeOf(Type)'</Item>
@@ -12626,13 +12438,13 @@
           <Members>
            <Member Name="#CreateDevice()">
             <Messages>
-             <Message TypeName="DoNotUseTimersThatPreventPowerStateChanges" Category="Microsoft.Mobility" CheckId="CA1601" Status="Excluded" Created="2008-03-13 23:20:47Z">
+             <Message TypeName="DoNotUseTimersThatPreventPowerStateChanges" Category="Microsoft.Mobility" CheckId="CA1601" Status="Excluded" Created="2008-05-07 18:56:54Z">
               <Issue>
                <Item>'Timer.Interval.set(int)'</Item>
                <Item>'MainForm.CreateDevice()'</Item>
               </Issue>
              </Message>
-             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-03-13 23:20:47Z">
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-05-07 18:56:54Z">
               <Issue>
                <Item>'MainForm.CreateDevice()'</Item>
               </Issue>

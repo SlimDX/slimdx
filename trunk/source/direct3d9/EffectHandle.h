@@ -43,6 +43,7 @@ namespace SlimDX
 			void Destruct();
 
 		public:
+			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			EffectHandle( System::String^ name );
 			virtual	~EffectHandle() { Destruct(); }
 			!EffectHandle() { Destruct(); }

@@ -90,6 +90,7 @@ namespace SlimDX
 			/// Uses a user-provided function to fill each texel of each mip level of a given texture.
 			/// </summary>
 			/// <param name="callback">A function that uses the signature of the Fill2DCallback delegate.</param>
+			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			Result Fill(Fill2DCallback^ callback);
 
 			Result Fill( TextureShader^ shader );

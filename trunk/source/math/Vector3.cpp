@@ -604,8 +604,8 @@ namespace SlimDX
 		pin_ptr<Matrix> pinWorld = &world;
 		pin_ptr<Vector3> pinResult = &result;
 
-		D3DXVec3Project( (D3DXVECTOR3*) &pinResult, (D3DXVECTOR3*) &pinVector, (D3DVIEWPORT9*) &pinViewport,
-			(D3DXMATRIX*) &pinProjection, (D3DXMATRIX*) &pinView, (D3DXMATRIX*) &pinWorld ); 
+		D3DXVec3Project( (D3DXVECTOR3*) pinResult, (D3DXVECTOR3*) pinVector, (D3DVIEWPORT9*) pinViewport,
+			(D3DXMATRIX*) pinProjection, (D3DXMATRIX*) pinView, (D3DXMATRIX*) pinWorld ); 
 	}
 	
 	Vector3 Vector3::Unproject( Vector3 vector, SlimDX::Viewport viewport, Matrix projection, Matrix view, Matrix world )
@@ -627,8 +627,8 @@ namespace SlimDX
 		pin_ptr<Matrix> pinWorld = &world;
 		pin_ptr<Vector3> pinResult = &result;
 
-		D3DXVec3Unproject( (D3DXVECTOR3*) &pinResult, (D3DXVECTOR3*) &pinVector, (D3DVIEWPORT9*) &pinViewport,
-			(D3DXMATRIX*) &pinProjection, (D3DXMATRIX*) &pinView, (D3DXMATRIX*) &pinWorld ); 
+		D3DXVec3Unproject( (D3DXVECTOR3*) pinResult, (D3DXVECTOR3*) pinVector, (D3DVIEWPORT9*) pinViewport,
+			(D3DXMATRIX*) pinProjection, (D3DXMATRIX*) pinView, (D3DXMATRIX*) pinWorld ); 
 	}
 	
 	Vector3 Vector3::Minimize( Vector3 left, Vector3 right )
