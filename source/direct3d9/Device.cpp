@@ -81,6 +81,11 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
+		presentParameters->BackBufferCount = d3dpp.BackBufferCount;
+		presentParameters->BackBufferFormat = static_cast<Format>( d3dpp.BackBufferFormat );
+		presentParameters->BackBufferWidth = d3dpp.BackBufferWidth;
+		presentParameters->BackBufferHeight = d3dpp.BackBufferHeight;
+
 		Construct(device);
 	}
 

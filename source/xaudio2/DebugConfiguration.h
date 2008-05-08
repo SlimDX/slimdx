@@ -25,23 +25,18 @@
 
 namespace SlimDX
 {
-	namespace Direct3D9
+	namespace XAudio2
 	{
-		/// <summary>Describes the current clip status.</summary>
-		/// <unmanaged>D3DCLIPSTATUS9</unmanaged>
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
-		public value class ClipStatus : System::IEquatable<ClipStatus>
+		public value class DebugConfiguration : System::IEquatable<DebugConfiguration>
 		{
 		public:
-			/// <summary>
-			/// Gets or sets flags describing the current clipping union.
-			/// </summary>
-			property ClipFlags ClipUnion;
-
-			/// <summary>
-			/// Gets or sets flags describing the current clipping intersection.
-			/// </summary>
-			property ClipFlags ClipIntersection;
+			property LogType TraceMask;
+			property LogType BreakMask;
+			property bool LogThreadId;
+			property bool LogFileLine;
+			property bool LogFunctionName;
+			property bool LogTiming;
 
 			/// <summary>
 			/// Tests for equality between two objects.
@@ -49,7 +44,7 @@ namespace SlimDX
 			/// <param name="left">The first value to compare.</param>
 			/// <param name="right">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-			static bool operator == ( ClipStatus left, ClipStatus right );
+			static bool operator == ( DebugConfiguration left, DebugConfiguration right );
 
 			/// <summary>
 			/// Tests for inequality between two objects.
@@ -57,7 +52,7 @@ namespace SlimDX
 			/// <param name="left">The first value to compare.</param>
 			/// <param name="right">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-			static bool operator != ( ClipStatus left, ClipStatus right );
+			static bool operator != ( DebugConfiguration left, DebugConfiguration right );
 
 			/// <summary>
 			/// Returns the hash code for this instance.
@@ -77,7 +72,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="other">Object to make the comparison with.</param>
 			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
-			virtual bool Equals( ClipStatus other );
+			virtual bool Equals( DebugConfiguration other );
 
 			/// <summary>
 			/// Determines whether the specified object instances are considered equal. 
@@ -86,7 +81,7 @@ namespace SlimDX
 			/// <param name="value2">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="value1"/> is the same instance as <paramref name="value2"/> or 
 			/// if both are <c>null</c> references or if <c>value1.Equals(value2)</c> returns <c>true</c>; otherwise, <c>false</c>.</returns>
-			static bool Equals( ClipStatus% value1, ClipStatus% value2 );
+			static bool Equals( DebugConfiguration% value1, DebugConfiguration% value2 );
 		};
 	}
 }
