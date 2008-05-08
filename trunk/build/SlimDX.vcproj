@@ -60,7 +60,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit) user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib dsound.lib"
+				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib $(NOINHERIT)"
 				Version="2.0.3"
 				LinkIncremental="2"
 				DelayLoadDLLs="d3d9.dll;d3dx9_37.dll;d3dx10_37.dll;d3d10.dll;dxgi.dll;dinput8.dll;dsound.dll"
@@ -143,7 +143,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit) user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib dsound.lib"
+				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib dsound.lib $(NOINHERIT)"
 				Version="2.0.3.37"
 				LinkIncremental="1"
 				DelayLoadDLLs="d3d9.dll;d3dx9_37.dll;d3dx10_37.dll;d3d10.dll;dxgi.dll;dinput8.dll;dsound.dll"
@@ -222,7 +222,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit) user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib dsound.lib"
+				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib dsound.lib $(NOINHERIT)"
 				Version="2.0.3.37"
 				LinkIncremental="1"
 				DelayLoadDLLs="d3d9.dll;d3dx9_37.dll;d3dx10_37.dll;d3d10.dll;dxgi.dll;dinput8.dll"
@@ -3171,69 +3171,124 @@
 			Name="XAudio2"
 			>
 			<File
-				RelativePath="..\source\xaudio2\AudioException.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\xaudio2\EngineCallback.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\xaudio2\EngineCallback.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\xaudio2\Enums.h"
 				>
 			</File>
 			<File
-				RelativePath="..\source\xaudio2\MasteringVoice.cpp"
+				RelativePath="..\source\xaudio2\ResultCode.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)5.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)5.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)5.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)5.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Public|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)5.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)5.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\source\xaudio2\ResultCode.h"
 				>
 			</File>
 			<File
-				RelativePath="..\source\xaudio2\MasteringVoice.h"
+				RelativePath="..\source\xaudio2\XAudio2Exception.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\source\xaudio2\SourceVoice.cpp"
+				RelativePath="..\source\xaudio2\XAudio2Exception.h"
 				>
 			</File>
-			<File
-				RelativePath="..\source\xaudio2\SourceVoice.h"
+			<Filter
+				Name="Device"
 				>
-			</File>
-			<File
-				RelativePath="..\source\xaudio2\SubmixVoice.cpp"
+				<File
+					RelativePath="..\source\xaudio2\DebugConfiguration.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\DebugConfiguration.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\DeviceDetails.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\DeviceDetails.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\PerformanceData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\PerformanceData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\XAudio2.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\XAudio2.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="WaveFormats"
 				>
-			</File>
-			<File
-				RelativePath="..\source\xaudio2\SubmixVoice.h"
+				<File
+					RelativePath="..\source\xaudio2\WaveFormatExtended.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\WaveFormatExtended.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\WaveFormatExtensible.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\WaveFormatExtensible.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Callbacks"
 				>
-			</File>
-			<File
-				RelativePath="..\source\xaudio2\Voice.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\xaudio2\Voice.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\xaudio2\VoiceCallback.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\xaudio2\VoiceCallback.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\xaudio2\XAudio2.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\xaudio2\XAudio2.h"
-				>
-			</File>
+				<File
+					RelativePath="..\source\xaudio2\EngineCallback.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\EngineCallback.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\ErrorEventArgs.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="XInput"

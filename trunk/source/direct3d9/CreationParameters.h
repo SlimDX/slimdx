@@ -29,6 +29,7 @@ namespace SlimDX
 	{
 		/// <summary>Describes the creation parameters for a device.</summary>
 		/// <unmanaged>D3DDEVICE_CREATION_PARAMETERS</unmanaged>
+		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class CreationParameters : System::IEquatable<CreationParameters>
 		{
 		public:
