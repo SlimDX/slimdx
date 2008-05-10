@@ -28,6 +28,20 @@ namespace SlimDX
 {
 namespace XAudio2
 {
+	WAVEFORMATEX WaveFormatExtended::ToUnmanaged()
+	{
+		WAVEFORMATEX result;
+		result.wFormatTag = static_cast<WORD>( FormatTag );
+		result.cbSize = Size;
+		result.nAvgBytesPerSec = AverageBytesPerSecond;
+		result.nBlockAlign = BlockAlignment;
+		result.nChannels = Channels;
+		result.nSamplesPerSec = SamplesPerSecond;
+		result.wBitsPerSample = BitsPerSample;
+
+		return result;
+	}
+
 	WaveFormatExtended WaveFormatExtended::FromUnmanaged( const WAVEFORMATEX &format )
 	{
 		WaveFormatExtended result;

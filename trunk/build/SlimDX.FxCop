@@ -11749,6 +11749,101 @@
        </Namespace>
        <Namespace Name="SlimDX.XAudio2">
         <Types>
+         <Type Name="AudioBuffer">
+          <Members>
+           <Member Name="#AudioData">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-10 20:49:32Z">
+              <Issue>
+               <Item>'AudioBuffer.AudioData'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Destruct()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-05-10 20:49:32Z">
+              <Issue>
+               <Item>'AudioBuffer.Destruct()'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'AudioBuffer.Destruct()'&#xD;&#xA;   -&gt;'AudioBuffer.Destruct()'&#xD;&#xA;   -&gt;'AudioBuffer.!AudioBuffer()'&#xD;&#xA;   -&gt;'AudioBuffer.Dispose(bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'AudioBuffer.Destruct()'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'AudioBuffer.Destruct()'&#xD;&#xA;   -&gt;'AudioBuffer.Destruct()'&#xD;&#xA;   -&gt;'AudioBuffer.ToUnmanaged(XAUDIO2_BUFFER*)'&#xD;&#xA;   -&gt;'SourceVoice.SubmitSourceBuffer(AudioBuffer)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'AudioBuffer.Destruct()'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'AudioBuffer.Destruct()'&#xD;&#xA;   -&gt;'AudioBuffer.Destruct()'&#xD;&#xA;   -&gt;'AudioBuffer.ToUnmanaged(XAUDIO2_BUFFER*)'&#xD;&#xA;   -&gt;'SourceVoice.SubmitSourceBuffer(AudioBuffer, int[])'</Item>
+              </Issue>
+              <Issue>
+               <Item>'AudioBuffer.Destruct()'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'AudioBuffer.Destruct()'&#xD;&#xA;   -&gt;'AudioBuffer.Destruct()'&#xD;&#xA;   -&gt;'AudioBuffer.~AudioBuffer()'&#xD;&#xA;   -&gt;'AudioBuffer.Dispose(bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Flags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-10 20:49:32Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'AudioBuffer.Flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ToUnmanaged(XAUDIO2_BUFFER*)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-05-10 20:49:32Z">
+              <Issue>
+               <Item>'AudioBuffer.ToUnmanaged(XAUDIO2_BUFFER*)'</Item>
+               <Item>'GCHandle.AddrOfPinnedObject()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'AudioBuffer.ToUnmanaged(XAUDIO2_BUFFER*)'&#xD;&#xA;   -&gt;'AudioBuffer.ToUnmanaged(XAUDIO2_BUFFER*)'&#xD;&#xA;   -&gt;'SourceVoice.SubmitSourceBuffer(AudioBuffer)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'AudioBuffer.ToUnmanaged(XAUDIO2_BUFFER*)'</Item>
+               <Item>'GCHandle.AddrOfPinnedObject()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'AudioBuffer.ToUnmanaged(XAUDIO2_BUFFER*)'&#xD;&#xA;   -&gt;'AudioBuffer.ToUnmanaged(XAUDIO2_BUFFER*)'&#xD;&#xA;   -&gt;'SourceVoice.SubmitSourceBuffer(AudioBuffer, int[])'</Item>
+              </Issue>
+              <Issue>
+               <Item>'AudioBuffer.ToUnmanaged(XAUDIO2_BUFFER*)'</Item>
+               <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'AudioBuffer.ToUnmanaged(XAUDIO2_BUFFER*)'&#xD;&#xA;   -&gt;'AudioBuffer.ToUnmanaged(XAUDIO2_BUFFER*)'&#xD;&#xA;   -&gt;'SourceVoice.SubmitSourceBuffer(AudioBuffer)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'AudioBuffer.ToUnmanaged(XAUDIO2_BUFFER*)'</Item>
+               <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'AudioBuffer.ToUnmanaged(XAUDIO2_BUFFER*)'&#xD;&#xA;   -&gt;'AudioBuffer.ToUnmanaged(XAUDIO2_BUFFER*)'&#xD;&#xA;   -&gt;'SourceVoice.SubmitSourceBuffer(AudioBuffer, int[])'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="BufferFlags">
+          <Messages>
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2008-05-10 20:49:32Z">
+            <Issue>
+             <Item>'BufferFlags'</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Excluded" Created="2008-05-10 20:49:32Z">
+            <Issue>
+             <Item>'BufferFlags'</Item>
+            </Issue>
+           </Message>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-10 20:49:32Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'BufferFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="FilterParameters">
           <Members>
            <Member Name="#Type">
@@ -11796,6 +11891,26 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="PlayFlags">
+          <Messages>
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2008-05-10 20:49:32Z">
+            <Issue>
+             <Item>'PlayFlags'</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Excluded" Created="2008-05-10 20:49:32Z">
+            <Issue>
+             <Item>'PlayFlags'</Item>
+            </Issue>
+           </Message>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-10 20:49:32Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'PlayFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="ProcessorSpecifier">
           <Messages>
            <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2008-05-10 14:31:08Z" FixCategory="NonBreaking">
@@ -11813,6 +11928,76 @@
               <Issue Name="Member">
                <Item>Xma</Item>
                <Item>'ResultCode.XmaDecoderError'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SourceVoice">
+          <Members>
+           <Member Name="#.ctor(SlimDX.XAudio2.XAudio2,SlimDX.XAudio2.WaveFormatExtended,SlimDX.XAudio2.VoiceFlags,System.Single)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-10 20:49:32Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'SourceVoice.SourceVoice(XAudio2, WaveFormatExtended, VoiceFlags, float)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(SlimDX.XAudio2.XAudio2,SlimDX.XAudio2.WaveFormatExtensible,SlimDX.XAudio2.VoiceFlags,System.Single)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-10 20:49:32Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'SourceVoice.SourceVoice(XAudio2, WaveFormatExtensible, VoiceFlags, float)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Start(SlimDX.XAudio2.PlayFlags)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-10 20:49:32Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'SourceVoice.Start(PlayFlags)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Start(SlimDX.XAudio2.PlayFlags,System.Int32)">
+            <Messages>
+             <Message Id="flag" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-10 20:49:32Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'SourceVoice.Start(PlayFlags, int)'</Item>
+               <Item>flag</Item>
+               <Item>'flag'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Stop(SlimDX.XAudio2.PlayFlags)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-10 20:49:32Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'SourceVoice.Stop(PlayFlags)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Stop(SlimDX.XAudio2.PlayFlags,System.Int32)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-10 20:49:32Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'SourceVoice.Stop(PlayFlags, int)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
               </Issue>
              </Message>
             </Messages>

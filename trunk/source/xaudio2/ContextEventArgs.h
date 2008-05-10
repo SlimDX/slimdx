@@ -21,19 +21,15 @@
 */
 #pragma once
 
-#include "../Result.h"
-
 namespace SlimDX
 {
 	namespace XAudio2
 	{
-		public ref class ErrorEventArgs : System::EventArgs
+		public ref class ContextEventArgs : System::EventArgs
 		{
 		public:
-			ErrorEventArgs(Result error) { Error = error; }
-			ErrorEventArgs(Result error, System::IntPtr context) { Error = error; Context = context; }
+			ContextEventArgs(System::IntPtr context) { Context = context; }
 
-			property Result Error;
 			property System::IntPtr Context;
 		};
 	}

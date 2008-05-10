@@ -19,22 +19,51 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "../Result.h"
+#include <xaudio2.h>
+
+#include "VoiceState.h"
 
 namespace SlimDX
 {
-	namespace XAudio2
+namespace XAudio2
+{
+	bool VoiceState::operator == ( VoiceState left, VoiceState right )
 	{
-		public ref class ErrorEventArgs : System::EventArgs
-		{
-		public:
-			ErrorEventArgs(Result error) { Error = error; }
-			ErrorEventArgs(Result error, System::IntPtr context) { Error = error; Context = context; }
-
-			property Result Error;
-			property System::IntPtr Context;
-		};
+		return VoiceState::Equals( left, right );
 	}
+
+	bool VoiceState::operator != ( VoiceState left, VoiceState right )
+	{
+		return !VoiceState::Equals( left, right );
+	}
+
+	int VoiceState::GetHashCode()
+	{
+		return Context.GetHashCode() + BuffersQueued.GetHashCode() + SamplesPlayed.GetHashCode();
+	}
+
+	bool VoiceState::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( safe_cast<VoiceState>( value ) );
+	}
+
+	bool VoiceState::Equals( VoiceState value )
+	{
+		return ( Context == value.Context && BuffersQueued == value.BuffersQueued && 
+			SamplesPlayed == value.SamplesPlayed );
+	}
+
+	bool VoiceState::Equals( VoiceState% value1, VoiceState% value2 )
+	{
+		return ( value1.Context == value2.Context && value1.BuffersQueued == value2.BuffersQueued && 
+			value1.SamplesPlayed == value2.SamplesPlayed );
+	}
+}
 }
