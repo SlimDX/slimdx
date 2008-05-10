@@ -30,6 +30,18 @@ namespace SlimDX
 {
 namespace XAudio2
 {
+	WAVEFORMATEXTENSIBLE WaveFormatExtensible::ToUnmanaged()
+	{
+		WAVEFORMATEXTENSIBLE result;
+
+		result.dwChannelMask = static_cast<DWORD>( ChannelMask );
+		result.Format = Format.ToUnmanaged();
+		result.Samples.wSamplesPerBlock = static_cast<WORD>( Samples );
+		result.SubFormat = Utilities::ConvertManagedGuid( SubFormat );
+
+		return result;
+	}
+
 	WaveFormatExtensible::WaveFormatExtensible( const WAVEFORMATEXTENSIBLE &format )
 	{
 		ChannelMask = static_cast<Speakers>( format.dwChannelMask );

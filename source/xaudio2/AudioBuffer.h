@@ -21,20 +21,36 @@
 */
 #pragma once
 
-#include "../Result.h"
+#include "Enums.h"
 
 namespace SlimDX
 {
 	namespace XAudio2
 	{
-		public ref class ErrorEventArgs : System::EventArgs
+		public ref class AudioBuffer
 		{
-		public:
-			ErrorEventArgs(Result error) { Error = error; }
-			ErrorEventArgs(Result error, System::IntPtr context) { Error = error; Context = context; }
+		private:
+			System::Runtime::InteropServices::GCHandle handle;
 
-			property Result Error;
+			void Destruct();
+
+		internal:
+			XAUDIO2_BUFFER ToUnmanaged();
+
+		public:
+			AudioBuffer() { }
+			~AudioBuffer() { Destruct(); }
+			!AudioBuffer() { Destruct(); }
+
+			property BufferFlags Flags;
+			property int AudioBytes;
+			property int PlayBegin;
+			property int PlayLength;
+			property int LoopBegin;
+			property int LoopLength;
+			property int LoopCount;
 			property System::IntPtr Context;
+			property array<System::Byte>^ AudioData;
 		};
 	}
 }

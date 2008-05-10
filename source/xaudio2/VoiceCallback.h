@@ -21,20 +21,27 @@
 */
 #pragma once
 
-#include "../Result.h"
-
 namespace SlimDX
 {
 	namespace XAudio2
 	{
-		public ref class ErrorEventArgs : System::EventArgs
-		{
-		public:
-			ErrorEventArgs(Result error) { Error = error; }
-			ErrorEventArgs(Result error, System::IntPtr context) { Error = error; Context = context; }
+		ref class SourceVoice;
 
-			property Result Error;
-			property System::IntPtr Context;
+		class VoiceCallbackShim : public IXAudio2VoiceCallback
+		{
+		private:
+			gcroot<SourceVoice^> m_WrappedInterface;
+
+		public:
+			VoiceCallbackShim( SourceVoice^ wrappedInterface );
+
+			void WINAPI OnBufferEnd( void *context );
+			void WINAPI OnBufferStart( void *context );
+			void WINAPI OnLoopEnd( void *context );
+			void WINAPI OnStreamEnd();
+			void WINAPI OnVoiceError( void *context, HRESULT error );
+			void WINAPI OnVoiceProcessingPassStart();
+			void WINAPI OnVoiceProcessingPassEnd();
 		};
 	}
 }

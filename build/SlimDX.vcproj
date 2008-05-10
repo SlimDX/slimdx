@@ -3277,6 +3277,10 @@
 				Name="Callbacks"
 				>
 				<File
+					RelativePath="..\source\xaudio2\ContextEventArgs.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\xaudio2\EngineCallback.cpp"
 					>
 				</File>
@@ -3286,6 +3290,14 @@
 				</File>
 				<File
 					RelativePath="..\source\xaudio2\ErrorEventArgs.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\VoiceCallback.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\VoiceCallback.h"
 					>
 				</File>
 			</Filter>
@@ -3298,22 +3310,6 @@
 				</File>
 				<File
 					RelativePath="..\source\xaudio2\FilterParameters.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\xaudio2\MasteringVoice.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\xaudio2\MasteringVoice.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\xaudio2\SubmixVoice.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\xaudio2\SubmixVoice.h"
 					>
 				</File>
 				<File
@@ -3332,6 +3328,58 @@
 					RelativePath="..\source\xaudio2\VoiceDetails.h"
 					>
 				</File>
+				<Filter
+					Name="MasteringVoice"
+					>
+					<File
+						RelativePath="..\source\xaudio2\MasteringVoice.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\xaudio2\MasteringVoice.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="SourceVoice"
+					>
+					<File
+						RelativePath="..\source\xaudio2\AudioBuffer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\xaudio2\AudioBuffer.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\xaudio2\SourceVoice.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\xaudio2\SourceVoice.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\xaudio2\VoiceState.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\xaudio2\VoiceState.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="SubmixVoice"
+					>
+					<File
+						RelativePath="..\source\xaudio2\SubmixVoice.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\xaudio2\SubmixVoice.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter

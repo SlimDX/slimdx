@@ -37,7 +37,7 @@ namespace SlimDX
 	/// </summary>
 	public ref class DataStream : public System::IO::Stream
 	{
-		private:
+	private:
 		char* m_Buffer;
 		bool m_OwnsBuffer;
 		ID3DXBuffer *m_ID3DXBuffer;

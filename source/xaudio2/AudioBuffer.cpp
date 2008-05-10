@@ -19,22 +19,40 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "../Result.h"
+#include <xaudio2.h>
+
+#include "AudioBuffer.h"
+
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	namespace XAudio2
+namespace XAudio2
+{
+	XAUDIO2_BUFFER AudioBuffer::ToUnmanaged()
 	{
-		public ref class ErrorEventArgs : System::EventArgs
-		{
-		public:
-			ErrorEventArgs(Result error) { Error = error; }
-			ErrorEventArgs(Result error, System::IntPtr context) { Error = error; Context = context; }
+		XAUDIO2_BUFFER result;
 
-			property Result Error;
-			property System::IntPtr Context;
-		};
+		Destruct();
+		handle = GCHandle::Alloc( AudioData, GCHandleType::Pinned );
+
+		result.Flags = static_cast<UINT32>( Flags );
+		result.AudioBytes = AudioBytes;
+		result.PlayBegin = PlayBegin;
+		result.PlayLength = PlayLength;
+		result.LoopBegin = LoopBegin;
+		result.LoopLength = LoopLength;
+		result.LoopCount = LoopCount;
+		result.pContext = Context.ToPointer();
+		result.pAudioData = reinterpret_cast<const BYTE*>( handle.AddrOfPinnedObject().ToPointer() );
+
+		return result;
 	}
+
+	void AudioBuffer::Destruct()
+	{
+		handle.Free();
+	}
+}
 }

@@ -29,6 +29,12 @@ namespace SlimDX
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
 
+		public enum class BufferFlags : System::Int32
+		{
+			None = 0,
+			EndOfStream = XAUDIO2_END_OF_STREAM
+		};
+
 		public enum class DeviceRole : System::Int32
 		{
 			NotDefaultDevice = NotDefaultDevice,
@@ -139,6 +145,12 @@ namespace SlimDX
 			SevenPointOne = SPEAKER_7POINT1,
 			FivePointOneSurround = SPEAKER_5POINT1_SURROUND,
 			SevenPointOneSurround = SPEAKER_7POINT1_SURROUND,
+		};
+
+		public enum class PlayFlags : System::Int32
+		{
+			None = 0,
+			PlayTails = XAUDIO2_PLAY_TAILS
 		};
 
 		[System::Flags]
