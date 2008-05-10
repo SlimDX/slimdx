@@ -3289,6 +3289,50 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Voices"
+				>
+				<File
+					RelativePath="..\source\xaudio2\FilterParameters.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\FilterParameters.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\MasteringVoice.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\MasteringVoice.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\SubmixVoice.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\SubmixVoice.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\Voice.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\Voice.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\VoiceDetails.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\VoiceDetails.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="XInput"

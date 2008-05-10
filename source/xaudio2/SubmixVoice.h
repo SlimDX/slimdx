@@ -19,40 +19,20 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include <xaudio2.h>
-#include <vcclr.h>
-
-#include "../ComObject.h"
-#include "../Result.h"
-
-#include "XAudio2.h"
-#include "EngineCallback.h"
-
-using namespace System;
+#include "Voice.h"
 
 namespace SlimDX
 {
-namespace XAudio2
-{
-	EngineCallbackShim::EngineCallbackShim( XAudio2^ wrappedInterface )
+	namespace XAudio2
 	{
-		m_WrappedInterface = wrappedInterface;
-	}
+		ref class XAudio2;
 
-	void EngineCallbackShim::OnCriticalError( HRESULT error )
-	{
-		m_WrappedInterface->InvokeCriticalError( gcnew ErrorEventArgs( Result( error ) ) );
+		public ref class SubmixVoice : Voice
+		{
+		public:
+			SubmixVoice( XAudio2^ device, int inputChannels, int inputSampleRate, int processingStage );
+		};
 	}
-
-	void EngineCallbackShim::OnProcessingPassEnd()
-	{
-		m_WrappedInterface->InvokeProcessingPassEnd();
-	}
-
-	void EngineCallbackShim::OnProcessingPassStart()
-	{
-		m_WrappedInterface->InvokeProcessingPassStart();
-	}
-}
 }

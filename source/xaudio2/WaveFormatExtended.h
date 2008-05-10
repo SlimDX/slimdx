@@ -30,14 +30,13 @@ namespace SlimDX
 		public value class WaveFormatExtended : System::IEquatable<WaveFormatExtended>
 		{
 		internal:
-			WAVEFORMATEX ToUnmanaged();
 			static WaveFormatExtended FromUnmanaged( const WAVEFORMATEX &format );
 
 		public:
 			property WaveFormatTag FormatTag;
 			property short Channels;
-			property short SamplesPerSecond;
-			property short AverageBytesPerSecond;
+			property int SamplesPerSecond;
+			property int AverageBytesPerSecond;
 			property short BlockAlignment;
 			property short BitsPerSample;
 			property short Size;

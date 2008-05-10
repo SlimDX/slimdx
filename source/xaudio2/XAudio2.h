@@ -26,6 +26,7 @@
 #include "PerformanceData.h"
 #include "DebugConfiguration.h"
 #include "ErrorEventArgs.h"
+#include "EngineCallback.h"
 
 namespace SlimDX
 {
@@ -34,6 +35,9 @@ namespace SlimDX
 		public ref class XAudio2 : public ComObject
 		{
 			COMOBJECT(IXAudio2, XAudio2);
+
+		private:
+			EngineCallbackShim *callback;
 
 		internal:
 			void InvokeCriticalError( ErrorEventArgs^ e ) { OnCriticalError( e ); }
@@ -48,6 +52,7 @@ namespace SlimDX
 		public:
 			XAudio2();
 			XAudio2( XAudio2Flags flags, ProcessorSpecifier processor );
+			virtual ~XAudio2() { if( callback != NULL ) delete callback; callback = NULL; }
 
 			/// <summary>
 			/// Constructs a new instance of the <see cref="XAudio2"/> class using the specified pointer to a
@@ -56,6 +61,13 @@ namespace SlimDX
 			/// <param name="pointer">The unmanaged IXAudio2 pointer.</param>
 			/// <returns>The newly constructed object.</returns>
 			static XAudio2^ FromPointer( System::IntPtr pointer );
+
+			static float AmplitudeRatioToDecibels( float volume );
+			static float CutoffFrequencyToRadians( double cutoffFrequency, int sampleRate );
+			static float DecibelsToAmplitudeRatio( float decibels );
+			static float FrequencyRatioToSemitones( float frequencyRatio );
+			static float RadiansToCutoffFrequency( double radians, double sampleRate );
+			static float SemitonesToFrequencyRatio( float semitones );
 
 			Result StartEngine();
 			void StopEngine();
@@ -80,6 +92,41 @@ namespace SlimDX
 			event System::EventHandler<ErrorEventArgs^>^ CriticalError;
 			event System::EventHandler^ ProcessingPassEnd;
 			event System::EventHandler^ ProcessingPassStart;
+
+			literal int MaximumBufferBytes = XAUDIO2_MAX_BUFFER_BYTES;
+			literal int MaximumQueuedBuffers = XAUDIO2_MAX_QUEUED_BUFFERS;
+			literal int MaximumAudioChannels = XAUDIO2_MAX_AUDIO_CHANNELS;
+			literal int MinimumSampleRate = XAUDIO2_MIN_SAMPLE_RATE;
+			literal int MaximumSampleRate = XAUDIO2_MAX_SAMPLE_RATE;
+			literal float MaximumVolumeLevel = XAUDIO2_MAX_VOLUME_LEVEL;
+			literal float MinimumFrequencyRatio = XAUDIO2_MIN_FREQ_RATIO;
+			literal float MaximumFrequencyRatio = XAUDIO2_MAX_FREQ_RATIO;
+			literal float DefaultFrequencyRatio = XAUDIO2_DEFAULT_FREQ_RATIO;
+			literal float MaximumFilterOneOverQ = XAUDIO2_MAX_FILTER_ONEOVERQ;
+			literal float MaximumFilterFrequency = XAUDIO2_MAX_FILTER_FREQUENCY;
+			literal int MaximumLoopCount = XAUDIO2_MAX_LOOP_COUNT;
+
+			literal int CommitNow = XAUDIO2_COMMIT_NOW;
+			literal int CommitAll = XAUDIO2_COMMIT_ALL;
+			literal int NoLoopRegion = XAUDIO2_NO_LOOP_REGION;
+			literal int LoopInfinite = XAUDIO2_LOOP_INFINITE;
+			literal int DefaultChannels = XAUDIO2_DEFAULT_CHANNELS;
+			literal int DefaultSampleRate = XAUDIO2_DEFAULT_SAMPLERATE;
+
+			static property System::Guid FormatSubtypePcm
+			{
+				System::Guid get();
+			}
+
+			static property System::Guid FormatSubtypeAdpcm
+			{
+				System::Guid get();
+			}
+
+			static property System::Guid FormatSubtypeIeee
+			{
+				System::Guid get();
+			}
 		};
 	}
 }

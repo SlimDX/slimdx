@@ -70,6 +70,7 @@
       <Word>Rasterization</Word>
       <Word>Offscreen</Word>
       <Word>Resettable</Word>
+	<Word>Submix</Word>
     </Recognized>
   </Words>
 </Dictionary>

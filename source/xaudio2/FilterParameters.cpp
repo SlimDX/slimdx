@@ -21,38 +21,47 @@
 */
 
 #include <xaudio2.h>
-#include <vcclr.h>
 
-#include "../ComObject.h"
-#include "../Result.h"
-
-#include "XAudio2.h"
-#include "EngineCallback.h"
-
-using namespace System;
+#include "FilterParameters.h"
 
 namespace SlimDX
 {
 namespace XAudio2
 {
-	EngineCallbackShim::EngineCallbackShim( XAudio2^ wrappedInterface )
+	bool FilterParameters::operator == ( FilterParameters left, FilterParameters right )
 	{
-		m_WrappedInterface = wrappedInterface;
+		return FilterParameters::Equals( left, right );
 	}
 
-	void EngineCallbackShim::OnCriticalError( HRESULT error )
+	bool FilterParameters::operator != ( FilterParameters left, FilterParameters right )
 	{
-		m_WrappedInterface->InvokeCriticalError( gcnew ErrorEventArgs( Result( error ) ) );
+		return !FilterParameters::Equals( left, right );
 	}
 
-	void EngineCallbackShim::OnProcessingPassEnd()
+	int FilterParameters::GetHashCode()
 	{
-		m_WrappedInterface->InvokeProcessingPassEnd();
+		return Type.GetHashCode() + Frequency.GetHashCode() + OneOverQ.GetHashCode();
 	}
 
-	void EngineCallbackShim::OnProcessingPassStart()
+	bool FilterParameters::Equals( Object^ value )
 	{
-		m_WrappedInterface->InvokeProcessingPassStart();
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( safe_cast<FilterParameters>( value ) );
+	}
+
+	bool FilterParameters::Equals( FilterParameters value )
+	{
+		return ( Type == value.Type && Frequency == value.Frequency && OneOverQ == value.OneOverQ );
+	}
+
+	bool FilterParameters::Equals( FilterParameters% value1, FilterParameters% value2 )
+	{
+		return ( value1.Type == value2.Type && value1.Frequency == value2.Frequency && value1.OneOverQ == value2.OneOverQ );
 	}
 }
 }

@@ -40,6 +40,13 @@ namespace SlimDX
 			InvalidDeviceRole = InvalidDeviceRole
 		};
 
+		public enum class FilterType : System::Int32
+		{
+			LowPassFilter = LowPassFilter,
+			BandPassFilter = BandPassFilter,
+			HighPassFilter = HighPassFilter
+		};
+
 		[System::Flags]
 		public enum class LogType : System::Int32
 		{
@@ -132,6 +139,16 @@ namespace SlimDX
 			SevenPointOne = SPEAKER_7POINT1,
 			FivePointOneSurround = SPEAKER_5POINT1_SURROUND,
 			SevenPointOneSurround = SPEAKER_7POINT1_SURROUND,
+		};
+
+		[System::Flags]
+		public enum class VoiceFlags : System::Int32
+		{
+			None = 0,
+			NoPitch = XAUDIO2_VOICE_NOPITCH,
+			NoSampleRateConversion = XAUDIO2_VOICE_NOSRC,
+			UseFilter = XAUDIO2_VOICE_USEFILTER,
+			Music = XAUDIO2_VOICE_MUSIC
 		};
 
 		public enum class XAudio2Flags : System::Int32

@@ -21,38 +21,47 @@
 */
 
 #include <xaudio2.h>
-#include <vcclr.h>
 
-#include "../ComObject.h"
-#include "../Result.h"
-
-#include "XAudio2.h"
-#include "EngineCallback.h"
-
-using namespace System;
+#include "VoiceDetails.h"
 
 namespace SlimDX
 {
 namespace XAudio2
 {
-	EngineCallbackShim::EngineCallbackShim( XAudio2^ wrappedInterface )
+	bool VoiceDetails::operator == ( VoiceDetails left, VoiceDetails right )
 	{
-		m_WrappedInterface = wrappedInterface;
+		return VoiceDetails::Equals( left, right );
 	}
 
-	void EngineCallbackShim::OnCriticalError( HRESULT error )
+	bool VoiceDetails::operator != ( VoiceDetails left, VoiceDetails right )
 	{
-		m_WrappedInterface->InvokeCriticalError( gcnew ErrorEventArgs( Result( error ) ) );
+		return !VoiceDetails::Equals( left, right );
 	}
 
-	void EngineCallbackShim::OnProcessingPassEnd()
+	int VoiceDetails::GetHashCode()
 	{
-		m_WrappedInterface->InvokeProcessingPassEnd();
+		return CreationFlags.GetHashCode() + InputChannels.GetHashCode() + InputSampleRate.GetHashCode();
 	}
 
-	void EngineCallbackShim::OnProcessingPassStart()
+	bool VoiceDetails::Equals( Object^ value )
 	{
-		m_WrappedInterface->InvokeProcessingPassStart();
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( safe_cast<VoiceDetails>( value ) );
+	}
+
+	bool VoiceDetails::Equals( VoiceDetails value )
+	{
+		return ( CreationFlags == value.CreationFlags && InputChannels == value.InputChannels && InputSampleRate == value.InputSampleRate );
+	}
+
+	bool VoiceDetails::Equals( VoiceDetails% value1, VoiceDetails% value2 )
+	{
+		return ( value1.CreationFlags == value2.CreationFlags && value1.InputChannels == value2.InputChannels && value1.InputSampleRate == value2.InputSampleRate );
 	}
 }
 }

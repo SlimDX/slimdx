@@ -33,7 +33,7 @@ namespace SlimDX
 			gcroot<XAudio2^> m_WrappedInterface;
 
 		public:
-			void SetXAudio( XAudio2^ wrappedInterface );
+			EngineCallbackShim( XAudio2^ wrappedInterface );
 
 			void WINAPI OnCriticalError( HRESULT error );
 			void WINAPI OnProcessingPassEnd();
