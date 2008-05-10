@@ -20,15 +20,17 @@
 * THE SOFTWARE.
 */
 
+#define XAUDIO2_HELPER_FUNCTIONS
+
 #include <xaudio2.h>
 #include <vcclr.h>
 
 #include "../ComObject.h"
 #include "../ObjectTable.h"
+#include "../Utilities.h"
 
 #include "XAudio2Exception.h"
 
-#include "EngineCallback.h"
 #include "XAudio2.h"
 
 // hack because it isn't defined anywhere that we can find
@@ -40,8 +42,6 @@ namespace SlimDX
 {
 namespace XAudio2
 {
-	EngineCallbackShim callback;
-
 	XAudio2::XAudio2( IXAudio2* pointer )
 	{
 		Construct( pointer );
@@ -83,6 +83,8 @@ namespace XAudio2
 
 	XAudio2::XAudio2()
 	{
+		CoInitializeEx( NULL, COINIT_APARTMENTTHREADED );
+
 		IXAudio2 *pointer;
 
 		HRESULT hr = XAudio2Create( &pointer, 0, XAUDIO2_DEFAULT_PROCESSOR );
@@ -92,8 +94,8 @@ namespace XAudio2
 
 		Construct( pointer );
 
-		callback.SetXAudio( this );
-		hr = InternalPointer->RegisterForCallbacks( &callback );
+		callback = new EngineCallbackShim( this );
+		hr = InternalPointer->RegisterForCallbacks( callback );
 
 		if( RECORD_XAUDIO2( hr ).IsFailure )
 			throw gcnew XAudio2Exception( Result::Last );
@@ -101,6 +103,8 @@ namespace XAudio2
 	
 	XAudio2::XAudio2( XAudio2Flags flags, ProcessorSpecifier processor )
 	{
+		CoInitializeEx( NULL, COINIT_APARTMENTTHREADED );
+
 		IXAudio2 *pointer;
 
 		HRESULT hr = XAudio2Create( &pointer, static_cast<UINT32>( flags ), static_cast<XAUDIO2_PROCESSOR>( processor ) );
@@ -110,11 +114,41 @@ namespace XAudio2
 
 		Construct( pointer );
 
-		callback.SetXAudio( this );
-		hr = InternalPointer->RegisterForCallbacks( &callback );
+		callback = new EngineCallbackShim( this );
+		hr = InternalPointer->RegisterForCallbacks( callback );
 
 		if( RECORD_XAUDIO2( hr ).IsFailure )
 			throw gcnew XAudio2Exception( Result::Last );
+	}
+
+	float XAudio2::AmplitudeRatioToDecibels( float volume )
+	{
+		return XAudio2AmplitudeRatioToDecibels( volume );
+	}
+
+	float XAudio2::CutoffFrequencyToRadians( double cutoffFrequency, int sampleRate )
+	{
+		return XAudio2CutoffFrequencyToRadians( cutoffFrequency, sampleRate );
+	}
+
+	float XAudio2::DecibelsToAmplitudeRatio( float decibels )
+	{
+		return XAudio2DecibelsToAmplitudeRatio( decibels );
+	}
+
+	float XAudio2::FrequencyRatioToSemitones( float frequencyRatio )
+	{
+		return XAudio2FrequencyRatioToSemitones( frequencyRatio );
+	}
+
+	float XAudio2::RadiansToCutoffFrequency( double radians, double sampleRate )
+	{
+		return XAudio2RadiansToCutoffFrequency( radians, sampleRate );
+	}
+
+	float XAudio2::SemitonesToFrequencyRatio( float semitones )
+	{
+		return XAudio2SemitonesToFrequencyRatio( semitones );
 	}
 
 	Result XAudio2::StartEngine()
@@ -189,6 +223,21 @@ namespace XAudio2
 	{
 		if( &XAudio2::ProcessingPassStart != nullptr )
 			ProcessingPassStart( this, e );
+	}
+
+	Guid XAudio2::FormatSubtypePcm::get()
+	{
+		return Utilities::ConvertNativeGuid( KSDATAFORMAT_SUBTYPE_PCM );
+	}
+
+	Guid XAudio2::FormatSubtypeAdpcm::get()
+	{
+		return Utilities::ConvertNativeGuid( KSDATAFORMAT_SUBTYPE_ADPCM );
+	}
+
+	Guid XAudio2::FormatSubtypeIeee::get()
+	{
+		return Utilities::ConvertNativeGuid( KSDATAFORMAT_SUBTYPE_IEEE_FLOAT );
 	}
 }
 }

@@ -24,10 +24,11 @@
 #include <vcclr.h>
 
 #include "../ComObject.h"
-#include "../Result.h"
+
+#include "XAudio2Exception.h"
 
 #include "XAudio2.h"
-#include "EngineCallback.h"
+#include "MasteringVoice.h"
 
 using namespace System;
 
@@ -35,24 +36,16 @@ namespace SlimDX
 {
 namespace XAudio2
 {
-	EngineCallbackShim::EngineCallbackShim( XAudio2^ wrappedInterface )
+	MasteringVoice::MasteringVoice( XAudio2^ device, int inputChannels, int inputSampleRate, int deviceIndex )
 	{
-		m_WrappedInterface = wrappedInterface;
-	}
+		IXAudio2MasteringVoice *pointer;
 
-	void EngineCallbackShim::OnCriticalError( HRESULT error )
-	{
-		m_WrappedInterface->InvokeCriticalError( gcnew ErrorEventArgs( Result( error ) ) );
-	}
+		HRESULT hr = device->InternalPointer->CreateMasteringVoice( &pointer, inputChannels, inputSampleRate, 0, deviceIndex );
 
-	void EngineCallbackShim::OnProcessingPassEnd()
-	{
-		m_WrappedInterface->InvokeProcessingPassEnd();
-	}
+		if( RECORD_XAUDIO2( hr ).IsFailure )
+			throw gcnew XAudio2Exception( Result::Last );
 
-	void EngineCallbackShim::OnProcessingPassStart()
-	{
-		m_WrappedInterface->InvokeProcessingPassStart();
+		InternalPointer = pointer;
 	}
 }
 }

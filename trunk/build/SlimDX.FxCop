@@ -11747,6 +11747,301 @@
          </Type>
         </Types>
        </Namespace>
+       <Namespace Name="SlimDX.XAudio2">
+        <Types>
+         <Type Name="FilterParameters">
+          <Members>
+           <Member Name="#Type">
+            <Messages>
+             <Message TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721" Status="Excluded" Created="2008-05-10 14:31:08Z" FixCategory="NonBreaking">
+              <Issue Name="BaseType">
+               <Item>'FilterParameters.Type'</Item>
+               <Item>'object.GetType()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="LogType">
+          <Messages>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2008-05-10 14:31:08Z">
+            <Issue>
+             <Item>'LogType'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="PerformanceData">
+          <Members>
+           <Member Name="#ActiveXmaSourceVoices">
+            <Messages>
+             <Message Id="Xma" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-10 14:31:08Z">
+              <Issue Name="Member">
+               <Item>Xma</Item>
+               <Item>'PerformanceData.ActiveXmaSourceVoices'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ActiveXmaStreams">
+            <Messages>
+             <Message Id="Xma" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-10 14:31:08Z">
+              <Issue Name="Member">
+               <Item>Xma</Item>
+               <Item>'PerformanceData.ActiveXmaStreams'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ProcessorSpecifier">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2008-05-10 14:31:08Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
+             <Item>'ProcessorSpecifier'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ResultCode">
+          <Members>
+           <Member Name="#XmaDecoderError">
+            <Messages>
+             <Message Id="Xma" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-10 14:31:08Z">
+              <Issue Name="Member">
+               <Item>Xma</Item>
+               <Item>'ResultCode.XmaDecoderError'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Speakers">
+          <Messages>
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2008-05-10 14:31:08Z">
+            <Issue>
+             <Item>'Speakers'</Item>
+             <Item>0x40000, 0x80000, 0x100000, 0x200000, 0x400000, 0x800000, 0x1000000, 0x2000000, 0x4000000, 0x8000000, 0x10000000, 0x20000000, 0x40000000, 0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Reserved">
+            <Messages>
+             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Status="Excluded" Created="2008-05-10 14:31:08Z">
+              <Issue>
+               <Item>'Speakers.Reserved'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="VoiceDetails">
+          <Members>
+           <Member Name="#CreationFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-10 14:31:08Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'VoiceDetails.CreationFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="VoiceFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-10 14:31:08Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'VoiceFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="WaveFormatTag">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2008-05-10 14:31:08Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
+             <Item>'WaveFormatTag'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#AdPcm">
+            <Messages>
+             <Message Id="Pcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-10 14:31:08Z">
+              <Issue Name="Member">
+               <Item>Pcm</Item>
+               <Item>'WaveFormatTag.AdPcm'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#DolbyAC3Spdif">
+            <Messages>
+             <Message Id="Spdif" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-10 14:31:08Z">
+              <Issue Name="Member">
+               <Item>Spdif</Item>
+               <Item>'WaveFormatTag.DolbyAC3Spdif'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Pcm">
+            <Messages>
+             <Message Id="Pcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-10 14:31:08Z">
+              <Issue Name="Member">
+               <Item>Pcm</Item>
+               <Item>'WaveFormatTag.Pcm'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#WmaSpdif">
+            <Messages>
+             <Message Id="Spdif" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-10 14:31:08Z">
+              <Issue Name="Member">
+               <Item>Spdif</Item>
+               <Item>'WaveFormatTag.WmaSpdif'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#WmAudio2">
+            <Messages>
+             <Message Id="Wm" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-10 14:31:08Z">
+              <Issue Name="Member">
+               <Item>Wm</Item>
+               <Item>'WaveFormatTag.WmAudio2'</Item>
+               <Item>WM</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#WmAudio3">
+            <Messages>
+             <Message Id="Wm" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-10 14:31:08Z">
+              <Issue Name="Member">
+               <Item>Wm</Item>
+               <Item>'WaveFormatTag.WmAudio3'</Item>
+               <Item>WM</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="XAudio2">
+          <Messages>
+           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Status="Excluded" Created="2008-05-10 14:31:08Z">
+            <Issue>
+             <Item>'XAudio2'</Item>
+             <Item>SlimDX.XAudio2</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#.ctor()">
+            <Messages>
+             <Message Id="&lt;Module&gt;.CoInitializeEx(System.Void*,optional(System.Runtime.CompilerServices.IsLong) System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-05-10 14:31:08Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'XAudio2.XAudio2()'</Item>
+               <Item>'&lt;Module&gt;.CoInitializeEx(void*, uint)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(IXAudio2*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-05-10 14:31:08Z">
+              <Issue>
+               <Item>'XAudio2.XAudio2(IXAudio2*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(SlimDX.XAudio2.XAudio2Flags,SlimDX.XAudio2.ProcessorSpecifier)">
+            <Messages>
+             <Message Id="&lt;Module&gt;.CoInitializeEx(System.Void*,optional(System.Runtime.CompilerServices.IsLong) System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-05-10 14:31:08Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'XAudio2.XAudio2(XAudio2Flags, ProcessorSpecifier)'</Item>
+               <Item>'&lt;Module&gt;.CoInitializeEx(void*, uint)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-10 14:31:08Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'XAudio2.XAudio2(XAudio2Flags, ProcessorSpecifier)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FormatSubtypeAdpcm">
+            <Messages>
+             <Message Id="Adpcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-10 14:38:32Z">
+              <Issue Name="Member">
+               <Item>Adpcm</Item>
+               <Item>'XAudio2.FormatSubtypeAdpcm'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FormatSubtypePcm">
+            <Messages>
+             <Message Id="Pcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-10 14:38:32Z">
+              <Issue Name="Member">
+               <Item>Pcm</Item>
+               <Item>'XAudio2.FormatSubtypePcm'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(IXAudio2*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-05-10 14:31:08Z">
+              <Issue>
+               <Item>'XAudio2.FromPointer(IXAudio2*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-05-10 14:31:08Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'XAudio2.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="XAudio2Flags">
+          <Messages>
+           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Excluded" Created="2008-05-10 14:31:08Z">
+            <Issue>
+             <Item>'XAudio2Flags'</Item>
+            </Issue>
+           </Message>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-10 14:31:08Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'XAudio2Flags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
        <Namespace Name="SlimDX.XInput">
         <Types>
          <Type Name="BatteryInformation">
