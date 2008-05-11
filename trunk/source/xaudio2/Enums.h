@@ -107,46 +107,6 @@ namespace SlimDX
 			DefaultProcessor = XAUDIO2_DEFAULT_PROCESSOR
 		};
 
-		[System::Flags]
-		public enum class Speakers : System::Int32
-		{
-			FrontLeft = SPEAKER_FRONT_LEFT,
-			FrontRight = SPEAKER_FRONT_RIGHT,
-			FrontCenter = SPEAKER_FRONT_CENTER,
-			LowFrequency = SPEAKER_LOW_FREQUENCY,
-			BackLeft = SPEAKER_BACK_LEFT,
-			BackRight = SPEAKER_BACK_RIGHT,
-			FrontLeftOfCenter = SPEAKER_FRONT_LEFT_OF_CENTER,
-			FrontRightOfCenter = SPEAKER_FRONT_RIGHT_OF_CENTER,
-			BackCenter = SPEAKER_BACK_CENTER,
-			SideLeft = SPEAKER_SIDE_LEFT,
-			SideRight = SPEAKER_SIDE_RIGHT,
-			TopCenter = SPEAKER_TOP_CENTER,
-			TopFrontLeft = SPEAKER_TOP_FRONT_LEFT,
-			TopFrontCenter = SPEAKER_TOP_FRONT_CENTER,
-			TopFrontRight = SPEAKER_TOP_FRONT_RIGHT,
-			TopBackLeft = SPEAKER_TOP_BACK_LEFT,
-			TopBackCenter = SPEAKER_TOP_BACK_CENTER,
-			TopBackRight = SPEAKER_TOP_BACK_RIGHT,
-
-			Reserved = SPEAKER_RESERVED,
-
-#pragma warning(disable: 4369)
-			All = SPEAKER_ALL,
-#pragma warning(default: 4369)
-
-			Mono = SPEAKER_MONO,
-			Stereo = SPEAKER_STEREO,
-			TwoPointOne = SPEAKER_2POINT1,
-			Surround = SPEAKER_SURROUND,
-			Quadrophonic = SPEAKER_QUAD,
-			FourPointOne = SPEAKER_4POINT1,
-			FivePointOne = SPEAKER_5POINT1,
-			SevenPointOne = SPEAKER_7POINT1,
-			FivePointOneSurround = SPEAKER_5POINT1_SURROUND,
-			SevenPointOneSurround = SPEAKER_7POINT1_SURROUND,
-		};
-
 		public enum class PlayFlags : System::Int32
 		{
 			None = 0,

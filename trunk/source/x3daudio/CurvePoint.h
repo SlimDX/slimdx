@@ -21,39 +21,16 @@
 */
 #pragma once
 
-#include "../AudioEnums.h"
-#include "Enums.h"
-#include "WaveFormatExtended.h"
-
 namespace SlimDX
 {
-	namespace XAudio2
+	namespace X3DAudio
 	{
-		public ref class WaveFormatExtensible : System::ICloneable, System::IEquatable<WaveFormatExtensible^>
+		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+		public value class CurvePoint : System::IEquatable<CurvePoint>
 		{
-		internal:
-			WAVEFORMATEXTENSIBLE ToUnmanaged();
-
-			virtual System::Object^ Clone2() = System::ICloneable::Clone
-			{
-				return Clone();
-			}
-
-			WaveFormatExtensible( const WAVEFORMATEXTENSIBLE &format );
-
 		public:
-			WaveFormatExtensible() { }
-
-			property WaveFormatExtended Format;
-			property int Samples;
-			property Speakers ChannelMask;
-			property System::Guid SubFormat;
-
-			/// <summary>
-			/// Clones the instance and returns a new object containing the same values.
-			/// </summary>
-			/// <returns>A new <see cref="WaveFormatExtensible"/> object containing the same values as the current instance.</returns>
-			WaveFormatExtensible^ Clone();
+			property float Distance;
+			property float DspSetting;
 
 			/// <summary>
 			/// Tests for equality between two objects.
@@ -61,7 +38,7 @@ namespace SlimDX
 			/// <param name="left">The first value to compare.</param>
 			/// <param name="right">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-			static bool operator == ( WaveFormatExtensible^ left, WaveFormatExtensible^ right );
+			static bool operator == ( CurvePoint left, CurvePoint right );
 
 			/// <summary>
 			/// Tests for inequality between two objects.
@@ -69,7 +46,7 @@ namespace SlimDX
 			/// <param name="left">The first value to compare.</param>
 			/// <param name="right">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-			static bool operator != ( WaveFormatExtensible^ left, WaveFormatExtensible^ right );
+			static bool operator != ( CurvePoint left, CurvePoint right );
 
 			/// <summary>
 			/// Returns the hash code for this instance.
@@ -89,7 +66,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="other">Object to make the comparison with.</param>
 			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
-			virtual bool Equals( WaveFormatExtensible^ other );
+			virtual bool Equals( CurvePoint other );
 
 			/// <summary>
 			/// Determines whether the specified object instances are considered equal. 
@@ -98,7 +75,7 @@ namespace SlimDX
 			/// <param name="value2">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="value1"/> is the same instance as <paramref name="value2"/> or 
 			/// if both are <c>null</c> references or if <c>value1.Equals(value2)</c> returns <c>true</c>; otherwise, <c>false</c>.</returns>
-			static bool Equals( WaveFormatExtensible^ value1, WaveFormatExtensible^ value2 );
+			static bool Equals( CurvePoint% value1, CurvePoint% value2 );
 		};
 	}
 }

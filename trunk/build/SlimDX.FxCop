@@ -913,6 +913,27 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="Speakers">
+          <Messages>
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2008-05-11 14:47:03Z">
+            <Issue>
+             <Item>'Speakers'</Item>
+             <Item>0x40000, 0x80000, 0x100000, 0x200000, 0x400000, 0x800000, 0x1000000, 0x2000000, 0x4000000, 0x8000000, 0x10000000, 0x20000000, 0x40000000, 0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Reserved">
+            <Messages>
+             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue>
+               <Item>'Speakers.Reserved'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="Utilities">
           <Members>
            <Member Name="#AllocateNativeString(System.String)">
@@ -11747,6 +11768,239 @@
          </Type>
         </Types>
        </Namespace>
+       <Namespace Name="SlimDX.X3DAudio">
+        <Types>
+         <Type Name="CalculateFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-11 14:47:03Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'CalculateFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#LpfDirect">
+            <Messages>
+             <Message Id="Lpf" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue Name="Member">
+               <Item>Lpf</Item>
+               <Item>'CalculateFlags.LpfDirect'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LpfReverb">
+            <Messages>
+             <Message Id="Lpf" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue Name="Member">
+               <Item>Lpf</Item>
+               <Item>'CalculateFlags.LpfReverb'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#RedirectToLfe">
+            <Messages>
+             <Message Id="Lfe" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue Name="Member">
+               <Item>Lfe</Item>
+               <Item>'CalculateFlags.RedirectToLfe'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Cone">
+          <Members>
+           <Member Name="#InnerLpf">
+            <Messages>
+             <Message Id="Lpf" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue Name="Member">
+               <Item>Lpf</Item>
+               <Item>'Cone.InnerLpf'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#OuterLpf">
+            <Messages>
+             <Message Id="Lpf" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue Name="Member">
+               <Item>Lpf</Item>
+               <Item>'Cone.OuterLpf'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="CurvePoint">
+          <Members>
+           <Member Name="#DspSetting">
+            <Messages>
+             <Message Id="Dsp" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue Name="Member">
+               <Item>Dsp</Item>
+               <Item>'CurvePoint.DspSetting'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="DspSettings">
+          <Messages>
+           <Message Id="Dsp" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-11 14:47:03Z">
+            <Issue Name="Type">
+             <Item>Dsp</Item>
+             <Item>'DspSettings'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#DelayTimes">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue>
+               <Item>'DspSettings.DelayTimes'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LpfDirectCoefficient">
+            <Messages>
+             <Message Id="Lpf" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue Name="Member">
+               <Item>Lpf</Item>
+               <Item>'DspSettings.LpfDirectCoefficient'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LpfReverbCoefficient">
+            <Messages>
+             <Message Id="Lpf" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue Name="Member">
+               <Item>Lpf</Item>
+               <Item>'DspSettings.LpfReverbCoefficient'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#MatrixCoefficients">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue>
+               <Item>'DspSettings.MatrixCoefficients'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Emitter">
+          <Members>
+           <Member Name="#ChannelAzimuths">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue>
+               <Item>'Emitter.ChannelAzimuths'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LfeCurve">
+            <Messages>
+             <Message Id="Lfe" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue Name="Member">
+               <Item>Lfe</Item>
+               <Item>'Emitter.LfeCurve'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue>
+               <Item>'Emitter.LfeCurve'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LpfDirectCurve">
+            <Messages>
+             <Message Id="Lpf" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue Name="Member">
+               <Item>Lpf</Item>
+               <Item>'Emitter.LpfDirectCurve'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue>
+               <Item>'Emitter.LpfDirectCurve'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LpfReverbCurve">
+            <Messages>
+             <Message Id="Lpf" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue Name="Member">
+               <Item>Lpf</Item>
+               <Item>'Emitter.LpfReverbCurve'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue>
+               <Item>'Emitter.LpfReverbCurve'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ReverbCurve">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue>
+               <Item>'Emitter.ReverbCurve'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#VolumeCurve">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue>
+               <Item>'Emitter.VolumeCurve'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="X3DAudio">
+          <Messages>
+           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Status="Excluded" Created="2008-05-11 14:47:03Z">
+            <Issue>
+             <Item>'X3DAudio'</Item>
+             <Item>SlimDX.X3DAudio</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Calculate(SlimDX.X3DAudio.Listener,SlimDX.X3DAudio.Emitter,SlimDX.X3DAudio.CalculateFlags,System.Int32,System.Int32)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'X3DAudio.Calculate(Listener, Emitter, CalculateFlags, int, int)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
        <Namespace Name="SlimDX.XAudio2">
         <Types>
          <Type Name="AudioBuffer">
@@ -11998,27 +12252,6 @@
                <Item>'SourceVoice.Stop(PlayFlags, int)'</Item>
                <Item>flags</Item>
                <Item>'flags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Speakers">
-          <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2008-05-10 14:31:08Z">
-            <Issue>
-             <Item>'Speakers'</Item>
-             <Item>0x40000, 0x80000, 0x100000, 0x200000, 0x400000, 0x800000, 0x1000000, 0x2000000, 0x4000000, 0x8000000, 0x10000000, 0x20000000, 0x40000000, 0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#Reserved">
-            <Messages>
-             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Status="Excluded" Created="2008-05-10 14:31:08Z">
-              <Issue>
-               <Item>'Speakers.Reserved'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -13007,6 +13240,7 @@
    <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
     <Resolution Name="Member">Correct the spelling of '{0}' in member name {1} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
     <Resolution Name="MemberParameter">In method {0}, correct the spelling of '{1}' in parameter name {2} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
+    <Resolution Name="Type">Correct the spelling of '{0}' in type name {1}.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldDifferByMoreThanCase" Category="Microsoft.Naming" CheckId="CA1708">
     <Resolution Name="Type">Change type names {0} and '{1}' so that they differ by more than case.</Resolution>
