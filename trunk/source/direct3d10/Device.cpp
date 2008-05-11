@@ -22,6 +22,9 @@
 
 #include <d3d10.h>
 
+#include "../DataStream.h"
+#include "../DataRectangle.h"
+#include "../DataBox.h"
 #include "../StackAlloc.h"
 
 #include "../dxgi/Adapter.h"
@@ -243,6 +246,12 @@ namespace Direct3D10
 		InternalPointer->ResolveSubresource( destination->InternalPointer, destinationSubresource, source->InternalPointer, sourceSubresource, static_cast<DXGI_FORMAT>( format ) );
 	}
 	
+	void Device::UpdateSubresource( Resource^ resource, int subresource, ResourceRegion region, DataBox^ source ) 
+	{
+		D3D10_BOX nativeRegion = region.CreateNativeVersion();
+		InternalPointer->UpdateSubresource( resource->InternalPointer, static_cast<UINT>( subresource), &nativeRegion, source->Data->RawPointer, source->RowPitch,source->SlicePitch);
+	}
+
 	void Device::Draw( int vertexCount, int startVertexLocation )
 	{
 		InternalPointer->Draw( vertexCount, startVertexLocation );
