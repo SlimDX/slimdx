@@ -31,6 +31,10 @@
 
 namespace SlimDX
 {
+	ref class DataStream;
+	ref class DataRectangle;
+	ref class DataBox;
+
 	namespace Direct3D10
 	{
 		ref class Buffer;
@@ -105,7 +109,8 @@ namespace SlimDX
 			void CopyResource( Resource^ source, Resource^ destination );
 			void CopySubresourceRegion( Resource^ source, int sourceSubresource, ResourceRegion region, Resource^ destination, int destinationSubresource, int x, int y, int z );
 			void ResolveSubresource( Resource^ source, int sourceSubresource, Resource^ destination, int destinationSubresource, DXGI::Format format );
-			
+			void UpdateSubresource( Resource^ resource, int subresource, ResourceRegion region, DataBox^ source );
+
 			void Draw( int vertexCount, int startVertexLocation );
 			void DrawAuto();
 			void DrawIndexed( int indexCount, int startIndexLocation, int baseVertexLocation );
