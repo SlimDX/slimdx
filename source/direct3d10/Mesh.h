@@ -25,6 +25,7 @@
 
 #include "Enums.h"
 
+#include "InputElement.h"
 #include "MeshAttributeRange.h"
 
 namespace SlimDX
@@ -100,8 +101,6 @@ namespace SlimDX
 			Result SetAttributeTable( array<MeshAttributeRange>^ data );
 			System::Collections::ObjectModel::ReadOnlyCollection<MeshAttributeRange>^ GetAttributeTable();
 			
-			System::Collections::ObjectModel::ReadOnlyCollection<InputElement>^ GetVertexDescription();
-
 			Buffer^ GetDeviceIndexBuffer();
 			Buffer^ GetDeviceVertexBuffer( int index );
 		};

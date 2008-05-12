@@ -23,6 +23,8 @@
 #include <d3dx10.h>
 #include <vcclr.h>
 
+#include "../StackAlloc.h"
+
 #include "Direct3D10Exception.h"
 
 #include "Buffer.h"
@@ -43,7 +45,7 @@ namespace Direct3D10
 		Construct( pointer );
 	}
 	
-	Mesh::v( IntPtr pointer )
+	Mesh::Mesh( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
@@ -58,7 +60,7 @@ namespace Direct3D10
 		pin_ptr<unsigned char> pinnedName = &nameBytes[ 0 ];
 
 		ID3DX10Mesh* mesh = 0;
-		if( RECORD_D3D10( D3DX10CreateMesh( device->InternalPointer, nativeElements, elements->Length, nameBytes, static_cast<UINT>( vertexCount ), static_cast<UINT>( faceCount ), static_cast<UINT>( flags ), &mesh ) ).IsFailure )
+		if( RECORD_D3D10( D3DX10CreateMesh( device->InternalPointer, nativeElements, elements->Length, reinterpret_cast<LPCSTR>( pinnedName ), static_cast<UINT>( vertexCount ), static_cast<UINT>( faceCount ), static_cast<UINT>( flags ), &mesh ) ).IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 
 		Construct( mesh );
@@ -69,7 +71,7 @@ namespace Direct3D10
 		if( pointer == 0 )
 			return nullptr;
 
-		Font^ tableEntry = safe_cast<Mesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		Mesh^ tableEntry = safe_cast<Mesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
@@ -95,7 +97,7 @@ namespace Direct3D10
 	
 	MeshFlags Mesh::Flags::get() 
 	{
-		return InternalPointer->GetFlags();
+		return static_cast<MeshFlags>( InternalPointer->GetFlags() );
 	}
 
 	int Mesh::FaceCount::get() 
@@ -123,7 +125,7 @@ namespace Direct3D10
 		pin_ptr<unsigned char> pinnedName = &nameBytes[ 0 ];
 
 		ID3DX10Mesh* mesh = 0;
-		if( RECORD_D3D10( InternalPointer->Clone( static_cast<UINT>( flags ), nameBytes, nativeElements, elements->Length, &mesh ) ).IsFailure )
+		if( RECORD_D3D10( InternalPointer->CloneMesh( static_cast<UINT>( flags ), reinterpret_cast<LPCSTR>( pinnedName ), nativeElements, elements->Length, &mesh ) ).IsFailure )
 			return nullptr;
 		
 		return gcnew Mesh( mesh );
@@ -164,20 +166,20 @@ namespace Direct3D10
 		return RECORD_D3D10( InternalPointer->DrawSubsetInstanced( id, count, startLocation ) );
 	}
 	
-	MeshBufer^ Mesh::GetIndexBuffer()
+	MeshBuffer^ Mesh::GetIndexBuffer()
 	{
 		ID3DX10MeshBuffer* buffer = 0;
 		if( RECORD_D3D10( InternalPointer->GetIndexBuffer( &buffer ) ).IsFailure )
 			return nullptr;
-		return gcnew MeshBuffer( buffer );
+		return MeshBuffer::FromPointer( buffer );
 	}
 
-	MeshBufer^ Mesh::GetVertexBuffer( int index )
+	MeshBuffer^ Mesh::GetVertexBuffer( int index )
 	{
 		ID3DX10MeshBuffer* buffer = 0;
 		if( RECORD_D3D10( InternalPointer->GetVertexBuffer( index, &buffer ) ).IsFailure )
 			return nullptr;
-		return gcnew MeshBuffer( buffer );
+		return MeshBuffer::FromPointer( buffer );
 	}
 
 	MeshBuffer^ Mesh::GetPointRepresentationBuffer()
@@ -185,7 +187,7 @@ namespace Direct3D10
 		ID3DX10MeshBuffer* buffer = 0;
 		if( RECORD_D3D10( InternalPointer->GetPointRepBuffer( &buffer ) ).IsFailure )
 			return nullptr;
-		return gcnew MeshBuffer( buffer );
+		return MeshBuffer::FromPointer( buffer );
 	}
 
 	MeshBuffer^ Mesh::GetAdjacencyBuffer()
@@ -193,7 +195,7 @@ namespace Direct3D10
 		ID3DX10MeshBuffer* buffer = 0;
 		if( RECORD_D3D10( InternalPointer->GetAdjacencyBuffer( &buffer ) ).IsFailure )
 			return nullptr;
-		return gcnew MeshBuffer( buffer );
+		return MeshBuffer::FromPointer( buffer );
 	}
 
 	MeshBuffer^ Mesh::GetAttributeBuffer()
@@ -201,7 +203,7 @@ namespace Direct3D10
 		ID3DX10MeshBuffer* buffer = 0;
 		if( RECORD_D3D10( InternalPointer->GetAttributeBuffer( &buffer ) ).IsFailure )
 			return nullptr;
-		return gcnew MeshBuffer( buffer );
+		return MeshBuffer::FromPointer( buffer );
 	}
 	
 	Result Mesh::SetIndexData( DataStream^ data, int count ) 
@@ -216,17 +218,17 @@ namespace Direct3D10
 
 	Result Mesh::SetPointRepresentationData( DataStream^ data ) 
 	{
-		return RECORD_D3D10( InternalPointer->SetPointRepData( data->RawPointer ) );
+		return RECORD_D3D10( InternalPointer->SetPointRepData( reinterpret_cast<const UINT*>( data->RawPointer ) ) );
 	}
 
 	Result Mesh::SetAdjacencyData( DataStream^ data ) 
 	{
-		return RECORD_D3D10( InternalPointer->SetAdjacencyData( data->RawPointer ) );
+		return RECORD_D3D10( InternalPointer->SetAdjacencyData( reinterpret_cast<const UINT*>( data->RawPointer ) ) );
 	}
 
 	Result Mesh::SetAttributeData( DataStream^ data ) 
 	{
-		return RECORD_D3D10( InternalPointer->SetAttributeData( data->RawPointer ) );
+		return RECORD_D3D10( InternalPointer->SetAttributeData( reinterpret_cast<const UINT*>( data->RawPointer ) ) );
 	}
 
 	Result Mesh::SetAttributeTable( array<MeshAttributeRange>^ ranges ) 
@@ -235,7 +237,7 @@ namespace Direct3D10
 		for( int rangeIndex = 0; rangeIndex < ranges->Length; ++rangeIndex )
 			nativeRanges[ rangeIndex ] = ranges[ rangeIndex].CreateNativeVersion();
 
-		return RECORD_D3D10( InternalPointer->SetAttributeData( &nativeRanges[0], ranges->Length ) );
+		return RECORD_D3D10( InternalPointer->SetAttributeTable( &nativeRanges[0], ranges->Length ) );
 	}
 
 	ReadOnlyCollection<MeshAttributeRange>^ Mesh::GetAttributeTable()
@@ -245,29 +247,13 @@ namespace Direct3D10
 			return nullptr;
 
 		stack_vector<D3DX10_ATTRIBUTE_RANGE> ranges( count );
-		if( RECORD_D3D10( InternalPointer->GetAttributeTable( &ranges[0], &count ) ).IsFailure )
+		if( RECORD_D3D10( InternalPointer->GetAttributeTable( reinterpret_cast<D3DX10_ATTRIBUTE_RANGE*>( &ranges[0] ), &count ) ).IsFailure )
 			return nullptr;
 		
 		List<MeshAttributeRange>^ list = gcnew List<MeshAttributeRange>( count );
-		for( int rangeIndex = 0; rangeIndex < count; ++rangeIndex ) 
+		for( UINT rangeIndex = 0; rangeIndex < count; ++rangeIndex ) 
 			list[rangeIndex] = MeshAttributeRange( ranges[rangeIndex] );
 		return gcnew ReadOnlyCollection<MeshAttributeRange>( list );
-	}
-
-	ReadOnlyCollection<InputElement>^ Mesh::GetVertexDescription()
-	{
-		UINT count = 0;
-		if( RECORD_D3D10( InternalPointer->GetVertexDescription( 0, &count ) ).IsFailure )
-			return nullptr;
-
-		stack_vector<D3D10_INPUT_ELEMENT_DESC> descs( count );
-		if( RECORD_D3D10( InternalPointer->GetVertexDescription( &descs[0], &count ) ).IsFailure )
-			return nullptr;
-		
-		List<InputElement>^ list = gcnew List<InputElement>( count );
-		for( int descIndex = 0; descIndex < count; ++descIndex ) 
-			list[descIndex] = InputElement( descs[descIndex] );
-		return gcnew ReadOnlyCollection<InputElement>( list );
 	}
 
 	Buffer^ Mesh::GetDeviceIndexBuffer() 
@@ -275,7 +261,7 @@ namespace Direct3D10
 		ID3D10Buffer* buffer = 0;
 		if( RECORD_D3D10( InternalPointer->GetDeviceIndexBuffer( &buffer ) ).IsFailure )
 			return nullptr;
-		return gcnew Buffer( buffer );
+		return Buffer::FromPointer( buffer );
 	}
 
 	Buffer^ Mesh::GetDeviceVertexBuffer( int index ) 
@@ -283,7 +269,7 @@ namespace Direct3D10
 		ID3D10Buffer* buffer = 0;
 		if( RECORD_D3D10( InternalPointer->GetDeviceVertexBuffer( index, &buffer ) ).IsFailure )
 			return nullptr;
-		return gcnew Buffer( buffer );
+		return Buffer::FromPointer( buffer );
 	}
 }
 }
