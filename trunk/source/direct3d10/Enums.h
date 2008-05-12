@@ -388,6 +388,24 @@ namespace SlimDX
 			None = 0,
 			DoNotWait = D3D10_MAP_FLAG_DO_NOT_WAIT
 		};
+
+		[System::Flags]
+		public enum class MeshFlags : System::Int32
+		{
+			None = 0,
+			Has32BitIndices = D3DX10_MESH_32_BIT,
+			HasAdjacency = D3DX10_MESH_GS_ADJACENCY
+		};
+
+		[System::Flags]
+		public enum class MeshDiscardFlags : System::Int32
+		{
+			DiscardAttributeBuffer = D3DX10_MESH_DISCARD_ATTRIBUTE_BUFFER,
+			DiscardAttributeTable = D3DX10_MESH_DISCARD_ATTRIBUTE_TABLE,
+			DiscardPointRepresentation = D3DX10_MESH_DISCARD_POINTREPS,
+			DiscardAdjacency = D3DX10_MESH_DISCARD_ADJACENCY,
+			DiscardDeviceBuffers = D3DX10_MESH_DISCARD_DEVICE_BUFFERS
+		};
 		
 		public enum class PrimitiveTopology : System::Int32
 		{
