@@ -581,6 +581,33 @@
 				<File
 					RelativePath="..\source\direct3d10\Mesh.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Mesh.h"
@@ -3936,6 +3963,26 @@
 				RelativePath="..\source\x3daudio\X3DAudio.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="RawInput"
+			>
+			<File
+				RelativePath="..\source\rawinput\Enums.h"
+				>
+			</File>
+			<Filter
+				Name="Device"
+				>
+				<File
+					RelativePath="..\source\rawinput\Device.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\rawinput\Device.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath="..\source\AssemblyInfo.cpp"
