@@ -576,6 +576,34 @@
 				</File>
 			</Filter>
 			<Filter
+				Name="Mesh"
+				>
+				<File
+					RelativePath="..\source\direct3d10\Mesh.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Mesh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\MeshAttributeRange.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\MeshAttributeRange.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\MeshBuffer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\MeshBuffer.h"
+					>
+				</File>
+			</Filter>
+			<Filter
 				Name="Shader"
 				>
 				<File

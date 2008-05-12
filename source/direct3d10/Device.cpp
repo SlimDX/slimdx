@@ -22,8 +22,6 @@
 
 #include <d3d10.h>
 
-#include "../DataStream.h"
-#include "../DataRectangle.h"
 #include "../DataBox.h"
 #include "../StackAlloc.h"
 

@@ -31,8 +31,6 @@
 
 namespace SlimDX
 {
-	ref class DataStream;
-	ref class DataRectangle;
 	ref class DataBox;
 
 	namespace Direct3D10
