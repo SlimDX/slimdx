@@ -22,6 +22,11 @@
 #pragma once
 
 #include "Enums.h"
+#include "WindowSubclass.h"
+#include "InputMessageFilter.h"
+#include "KeyboardInputEventArgs.h"
+#include "MouseInputEventArgs.h"
+#include "RawInputEventArgs.h"
 
 namespace SlimDX
 {
@@ -30,43 +35,52 @@ namespace SlimDX
 		public ref class Device
 		{
 		private:
-			UsagePage usagePage;
-			UsageId usageId;
-			DeviceFlags flags;
-			System::IntPtr target;
+			UsagePage m_usagePage;
+			UsageId m_usageId;
+			DeviceFlags m_flags;
+			System::IntPtr m_target;
+			WindowSubclass^ subclass;
+			InputMessageFilter^ filter;
+
+			void Construct( UsagePage usagePage, UsageId usageId, DeviceFlags flags, System::IntPtr target );
+			void Destruct();
+
+		internal:
+			void OnWmInput( HRAWINPUT handle );
+
+		protected:
+			void OnKeyboardInput( KeyboardInputEventArgs^ e );
+			void OnMouseInput( MouseInputEventArgs^ e );
+			void OnRawInput( RawInputEventArgs^ e );
 
 		public:
 			Device( UsagePage usagePage, UsageId usageId, DeviceFlags flags );
 			Device( UsagePage usagePage, UsageId usageId, DeviceFlags flags, System::IntPtr target );
-			virtual ~Device();
-
-			static array<Device^>^ FromUsagePage( UsagePage usagePage );
-			static array<Device^>^ FromUsagePage( UsagePage usagePage, array<UsageId>^ exclusions );
+			virtual ~Device() { Destruct(); }
 
 			property UsagePage UsagePage
 			{
-				SlimDX::RawInput::UsagePage get() { return usagePage; }
+				SlimDX::RawInput::UsagePage get() { return m_usagePage; }
 			}
 
 			property UsageId UsageId
 			{
-				SlimDX::RawInput::UsageId get() { return usageId; }
+				SlimDX::RawInput::UsageId get() { return m_usageId; }
 			}
 
 			property DeviceFlags Flags
 			{
-				DeviceFlags get() { return flags; }
+				DeviceFlags get() { return m_flags; }
 			}
 
 			property System::IntPtr Target
 			{
-				System::IntPtr get() { return target; }
+				System::IntPtr get() { return m_target; }
 			}
 
-			property static System::Collections::ObjectModel::ReadOnlyCollection<Device^>^ RegisteredDevices
-			{
-				System::Collections::ObjectModel::ReadOnlyCollection<Device^>^ get();
-			}
+			event System::EventHandler<KeyboardInputEventArgs^>^ KeyboardInput;
+			event System::EventHandler<MouseInputEventArgs^>^ MouseInput;
+			event System::EventHandler<RawInputEventArgs^>^ RawInput;
 		};
 	}
 }
