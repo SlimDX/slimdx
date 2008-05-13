@@ -3977,9 +3977,68 @@
 				<File
 					RelativePath="..\source\rawinput\Device.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)4.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)4.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)4.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)4.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)4.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)4.xdc"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\rawinput\Device.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\rawinput\InputMessageFilter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\rawinput\InputMessageFilter.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\rawinput\WindowSubclass.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\rawinput\WindowSubclass.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Events"
+				>
+				<File
+					RelativePath="..\source\rawinput\KeyboardInputEventArgs.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\rawinput\MouseInputEventArgs.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\rawinput\RawInputEventArgs.h"
 					>
 				</File>
 			</Filter>

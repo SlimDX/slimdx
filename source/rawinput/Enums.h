@@ -36,9 +36,54 @@ namespace SlimDX
 			ApplicationKeys = RIDEV_APPKEYS,
 			CaptureMouse = RIDEV_CAPTUREMOUSE,
 			InputSink = RIDEV_INPUTSINK,
-			InputSinkExtended = RIDEV_EXINPUTSINK,
 			NoHotKeys = RIDEV_NOHOTKEYS,
 			NoLegacy = RIDEV_NOLEGACY,
+		};
+
+		[System::Flags]
+		public enum class ScanCodeFlags : System::Int32
+		{
+			Make = RI_KEY_MAKE,
+			Break = RI_KEY_BREAK,
+			E0 = RI_KEY_E0,
+			E1 = RI_KEY_E1,
+			TerminalServerSetLed = RI_KEY_TERMSRV_SET_LED,
+			TerminalServerShadow = RI_KEY_TERMSRV_SHADOW
+		};
+
+		public enum class KeyState
+		{
+			Pressed = WM_KEYDOWN,
+			Released = WM_KEYUP,
+			SystemKeyReleased = WM_SYSKEYUP,
+			SystemKeyPressed = WM_SYSKEYDOWN,
+			HotKey = WM_HOTKEY,
+		};
+
+		[System::Flags]
+		public enum class MouseButtonFlags : System::Int32
+		{
+			None = 0,
+			LeftDown = RI_MOUSE_LEFT_BUTTON_DOWN,
+			LeftUp = RI_MOUSE_LEFT_BUTTON_UP,
+			RightDown = RI_MOUSE_RIGHT_BUTTON_DOWN,
+			RightUp = RI_MOUSE_RIGHT_BUTTON_UP,
+			MiddleDown = RI_MOUSE_MIDDLE_BUTTON_DOWN,
+			MiddleUp = RI_MOUSE_MIDDLE_BUTTON_UP,
+			Button4Down = RI_MOUSE_BUTTON_4_DOWN,
+			Button4Up = RI_MOUSE_BUTTON_4_UP,
+			Button5Down = RI_MOUSE_BUTTON_5_DOWN,
+			Button5Up = RI_MOUSE_BUTTON_5_UP,
+			MouseWheel = RI_MOUSE_WHEEL
+		};
+
+		[System::Flags]
+		public enum class MouseState : System::Int32
+		{
+			AbsoluteMovement = MOUSE_MOVE_ABSOLUTE,
+			AttributesChanged = MOUSE_ATTRIBUTES_CHANGED,
+			RelativeMovement = MOUSE_MOVE_RELATIVE,
+			VirtualDesktopMovement = MOUSE_VIRTUAL_DESKTOP
 		};
 
 		public enum class UsageId : System::Int32
