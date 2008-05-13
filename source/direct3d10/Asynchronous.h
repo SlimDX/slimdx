@@ -31,6 +31,9 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
+		/// <summary>
+		/// Base class for objects that perform asynchronous GPU data access.
+		/// </summary>
 		public ref class Asynchronous : public DeviceChild
 		{
 			COMOBJECT(ID3D10Asynchronous, Asynchronous);
@@ -39,17 +42,42 @@ namespace SlimDX
 			Asynchronous();
 		
 		public:
+			/// <summary>
+			/// Gets a value indicating whether or not data is available for consumption.
+			/// </summary>
 			property bool IsDataAvailable
 			{
 				bool get();
 			}
 			
+			/// <summary>
+			/// Constructs an Asynchronous object from a marshalled native pointer.
+			/// </summary>
+			/// <param name="pointer">The native object pointer.</param>
+			/// <returns>The Asynchronous object for the native object.</returns>
 			static Asynchronous^ FromPointer( System::IntPtr pointer );
 			
+			/// <summary>
+			/// Marks the start of a series of asynchronous commands.
+			/// </summary>
 			void Begin();
+
+			/// <summary>
+			/// Marks the end of a series of asynchronous commands.
+			/// </summary>
 			void End();
 			
+			/// <summary>
+			/// Retrieves data from the GPU asychronously.
+			/// </summary>
+			/// <returns>The data.</returns>
 			DataStream^ GetData();
+
+			/// <summary>
+			/// Retrieves data from the GPU asychronously.
+			/// </summary>
+			/// <param name="flags">Flags indicating how the data should be retrieved.</params>
+			/// <returns>The data.</returns>
 			DataStream^ GetData( AsynchronousFlags flags );
 		};
 	}
