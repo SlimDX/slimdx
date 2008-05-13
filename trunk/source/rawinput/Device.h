@@ -42,7 +42,10 @@ namespace SlimDX
 			WindowSubclass^ subclass;
 			InputMessageFilter^ filter;
 
+			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			void Construct( UsagePage usagePage, UsageId usageId, DeviceFlags flags, System::IntPtr target );
+
+			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			void Destruct();
 
 		internal:
@@ -54,8 +57,13 @@ namespace SlimDX
 			void OnRawInput( RawInputEventArgs^ e );
 
 		public:
+			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			Device( UsagePage usagePage, UsageId usageId, DeviceFlags flags );
+
+			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			Device( UsagePage usagePage, UsageId usageId, DeviceFlags flags, System::IntPtr target );
+			
+			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			virtual ~Device() { Destruct(); }
 
 			property UsagePage UsagePage

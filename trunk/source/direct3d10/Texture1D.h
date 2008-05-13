@@ -48,8 +48,8 @@ namespace SlimDX
 			Texture1D( SlimDX::Direct3D10::Device^ device, Texture1DDescription description );
 			static Texture1D^ FromPointer( System::IntPtr pointer );
 
-			DataStream^ Map( int subResource, MapMode mode, MapFlags flags );
-			void Unmap( int subResource );
+			DataStream^ Map( int subresource, MapMode mode, MapFlags flags );
+			void Unmap( int subresource );
 			
 			static Texture1D^ FromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName );
 			static Texture1D^ FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory );

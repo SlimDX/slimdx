@@ -49,8 +49,8 @@ namespace SlimDX
 			Texture2D( SlimDX::Direct3D10::Device^ device, Texture2DDescription description );
 			static Texture2D^ FromPointer( System::IntPtr pointer );
 
-			DataRectangle^ Map( int subResource, MapMode mode, MapFlags flags );
-			void Unmap( int subResource );
+			DataRectangle^ Map( int subresource, MapMode mode, MapFlags flags );
+			void Unmap( int subresource );
 			
 			static Texture2D^ FromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName );
 			static Texture2D^ FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory );
