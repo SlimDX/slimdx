@@ -309,7 +309,10 @@ namespace Direct3D9
 		faceIndex = face;
 		distance = dist;
 
-		hits = ( gcnew DataStream( allHits ) )->ReadRange<IntersectInformation>( count );
+		if( allHits == NULL )
+			hits = nullptr;
+		else
+			hits = ( gcnew DataStream( allHits ) )->ReadRange<IntersectInformation>( count );
 
 		if( result )
 			return true;
