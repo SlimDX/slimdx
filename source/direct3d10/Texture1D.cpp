@@ -96,20 +96,20 @@ namespace Direct3D10
 	
 	SlimDX::DataStream^ Texture1D::Map( int mipSlice, MapMode mode, MapFlags flags )
 	{
-		int subResource = D3D10CalcSubresource( mipSlice, 0, Description.MipLevels );
+		int subresource = D3D10CalcSubresource( mipSlice, 0, Description.MipLevels );
 		int mipWidth = GetMipSize( mipSlice, Description.Width );
 		int bufferSize = mipWidth * Utilities::SizeOfFormatElement( static_cast<DXGI_FORMAT>( Description.Format ) );
 		
 		void* mappedArray = 0;
-		if( RECORD_D3D10( InternalPointer->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedArray ) ).IsFailure )
+		if( RECORD_D3D10( InternalPointer->Map( subresource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedArray ) ).IsFailure )
 			return nullptr;
 			
 		return gcnew SlimDX::DataStream( mappedArray, bufferSize, true, true, false );
 	}
 
-	void Texture1D::Unmap( int subResource )
+	void Texture1D::Unmap( int subresource )
 	{
-		InternalPointer->Unmap( subResource );
+		InternalPointer->Unmap( subresource );
 	}
 	
 	Texture1D^ Texture1D::FromFile( SlimDX::Direct3D10::Device^ device, String^ fileName )

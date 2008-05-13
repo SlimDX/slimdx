@@ -36,7 +36,7 @@ namespace SlimDX
 			ApplicationKeys = RIDEV_APPKEYS,
 			CaptureMouse = RIDEV_CAPTUREMOUSE,
 			InputSink = RIDEV_INPUTSINK,
-			NoHotKeys = RIDEV_NOHOTKEYS,
+			NoHotkeys = RIDEV_NOHOTKEYS,
 			NoLegacy = RIDEV_NOLEGACY,
 		};
 
@@ -57,7 +57,7 @@ namespace SlimDX
 			Released = WM_KEYUP,
 			SystemKeyReleased = WM_SYSKEYUP,
 			SystemKeyPressed = WM_SYSKEYDOWN,
-			HotKey = WM_HOTKEY,
+			Hotkey = WM_HOTKEY,
 		};
 
 		[System::Flags]
@@ -135,13 +135,13 @@ namespace SlimDX
 			/// <summary></summary>
 			VZ = 0x42,
 			/// <summary></summary>
-			VBRX = 0x43,
+			VbrX = 0x43,
 			/// <summary></summary>
-			VBRY = 0x44,
+			VbrY = 0x44,
 			/// <summary></summary>
-			VBRZ = 0x45,
+			VbrZ = 0x45,
 			/// <summary></summary>
-			VNO = 0x46,
+			Vno = 0x46,
 			/// <summary></summary>
 			SystemControlPower = 0x81,
 			/// <summary></summary>
@@ -189,17 +189,17 @@ namespace SlimDX
 			/// <summary></summary>
 			KeyboardLeftShift = 0xE1,
 			/// <summary></summary>
-			KeyboardLeftALT = 0xE2,
+			KeyboardLeftAlt = 0xE2,
 			/// <summary></summary>
-			KeyboardLeftGUI = 0xE3,
+			KeyboardLeftGui = 0xE3,
 			/// <summary></summary>
 			KeyboardRightControl = 0xE4,
 			/// <summary></summary>
 			KeyboardRightShift = 0xE5,
 			/// <summary></summary>
-			KeyboardRightALT = 0xE6,
+			KeyboardRightAlt = 0xE6,
 			/// <summary></summary>
-			KeyboardRightGUI = 0xE7,
+			KeyboardRightGui = 0xE7,
 			/// <summary></summary>
 			KeyboardScrollLock = 0x47,
 			/// <summary></summary>
@@ -219,155 +219,155 @@ namespace SlimDX
 			/// <summary></summary>
 			KeyboardPrintScreen = 0x46,
 			/// <summary></summary>
-			LEDNumLock = 0x01,
+			LedNumLock = 0x01,
 			/// <summary></summary>
-			LEDCapsLock = 0x02,
+			LedCapsLock = 0x02,
 			/// <summary></summary>
-			LEDScrollLock = 0x03,
+			LedScrollLock = 0x03,
 			/// <summary></summary>
-			LEDCompose = 0x04,
+			LedCompose = 0x04,
 			/// <summary></summary>
-			LEDKana = 0x05,
+			LedKana = 0x05,
 			/// <summary></summary>
-			LEDPower = 0x06,
+			LedPower = 0x06,
 			/// <summary></summary>
-			LEDShift = 0x07,
+			LedShift = 0x07,
 			/// <summary></summary>
-			LEDDoNotDisturb = 0x08,
+			LedDoNotDisturb = 0x08,
 			/// <summary></summary>
-			LEDMute = 0x09,
+			LedMute = 0x09,
 			/// <summary></summary>
-			LEDToneEnable = 0x0A,
+			LedToneEnable = 0x0A,
 			/// <summary></summary>
-			LEDHighCutFilter = 0x0B,
+			LedHighCutFilter = 0x0B,
 			/// <summary></summary>
-			LEDLowCutFilter = 0x0C,
+			LedLowCutFilter = 0x0C,
 			/// <summary></summary>
-			LEDEqualizerEnable = 0x0D,
+			LedEqualizerEnable = 0x0D,
 			/// <summary></summary>
-			LEDSoundFieldOn = 0x0E,
+			LedSoundFieldOn = 0x0E,
 			/// <summary></summary>
-			LEDSurroundFieldOn = 0x0F,
+			LedSurroundFieldOn = 0x0F,
 			/// <summary></summary>
-			LEDRepeat = 0x10,
+			LedRepeat = 0x10,
 			/// <summary></summary>
-			LEDStereo = 0x11,
+			LedStereo = 0x11,
 			/// <summary></summary>
-			LEDSamplingRateDirect = 0x12,
+			LedSamplingRateDirect = 0x12,
 			/// <summary></summary>
-			LEDSpinning = 0x13,
+			LedSpinning = 0x13,
 			/// <summary></summary>
-			LEDCAV = 0x14,
+			LedCav = 0x14,
 			/// <summary></summary>
-			LEDCLV = 0x15,
+			LedClv = 0x15,
 			/// <summary></summary>
-			LEDRecordingFormatDet = 0x16,
+			LedRecordingFormatDet = 0x16,
 			/// <summary></summary>
-			LEDOffHook = 0x17,
+			LedOffHook = 0x17,
 			/// <summary></summary>
-			LEDRing = 0x18,
+			LedRing = 0x18,
 			/// <summary></summary>
-			LEDMessageWaiting = 0x19,
+			LedMessageWaiting = 0x19,
 			/// <summary></summary>
-			LEDDataMode = 0x1A,
+			LedDataMode = 0x1A,
 			/// <summary></summary>
-			LEDBatteryOperation = 0x1B,
+			LedBatteryOperation = 0x1B,
 			/// <summary></summary>
-			LEDBatteryOK = 0x1C,
+			LedBatteryOk = 0x1C,
 			/// <summary></summary>
-			LEDBatteryLow = 0x1D,
+			LedBatteryLow = 0x1D,
 			/// <summary></summary>
-			LEDSpeaker = 0x1E,
+			LedSpeaker = 0x1E,
 			/// <summary></summary>
-			LEDHeadset = 0x1F,
+			LedHeadset = 0x1F,
 			/// <summary></summary>
-			LEDHold = 0x20,
+			LedHold = 0x20,
 			/// <summary></summary>
-			LEDMicrophone = 0x21,
+			LedMicrophone = 0x21,
 			/// <summary></summary>
-			LEDCoverage = 0x22,
+			LedCoverage = 0x22,
 			/// <summary></summary>
-			LEDNightMode = 0x23,
+			LedNightMode = 0x23,
 			/// <summary></summary>
-			LEDSendCalls = 0x24,
+			LedSendCalls = 0x24,
 			/// <summary></summary>
-			LEDCallPickup = 0x25,
+			LedCallPickup = 0x25,
 			/// <summary></summary>
-			LEDConference = 0x26,
+			LedConference = 0x26,
 			/// <summary></summary>
-			LEDStandBy = 0x27,
+			LedStandby = 0x27,
 			/// <summary></summary>
-			LEDCameraOn = 0x28,
+			LedCameraOn = 0x28,
 			/// <summary></summary>
-			LEDCameraOff = 0x29,
+			LedCameraOff = 0x29,
 			/// <summary></summary>        
-			LEDOnLine = 0x2A,
+			LedOnline = 0x2A,
 			/// <summary></summary>
-			LEDOffLine = 0x2B,
+			LedOffline = 0x2B,
 			/// <summary></summary>
-			LEDBusy = 0x2C,
+			LedBusy = 0x2C,
 			/// <summary></summary>
-			LEDReady = 0x2D,
+			LedReady = 0x2D,
 			/// <summary></summary>
-			LEDPaperOut = 0x2E,
+			LedPaperOut = 0x2E,
 			/// <summary></summary>
-			LEDPaperJam = 0x2F,
+			LedPaperJam = 0x2F,
 			/// <summary></summary>
-			LEDRemote = 0x30,
+			LedRemote = 0x30,
 			/// <summary></summary>
-			LEDForward = 0x31,
+			LedForward = 0x31,
 			/// <summary></summary>
-			LEDReverse = 0x32,
+			LedReverse = 0x32,
 			/// <summary></summary>
-			LEDStop = 0x33,
+			LedStop = 0x33,
 			/// <summary></summary>
-			LEDRewind = 0x34,
+			LedRewind = 0x34,
 			/// <summary></summary>
-			LEDFastForward = 0x35,
+			LedFastForward = 0x35,
 			/// <summary></summary>
-			LEDPlay = 0x36,
+			LedPlay = 0x36,
 			/// <summary></summary>
-			LEDPause = 0x37,
+			LedPause = 0x37,
 			/// <summary></summary>
-			LEDRecord = 0x38,
+			LedRecord = 0x38,
 			/// <summary></summary>
-			LEDError = 0x39,
+			LedError = 0x39,
 			/// <summary></summary>
-			LEDSelectedIndicator = 0x3A,
+			LedSelectedIndicator = 0x3A,
 			/// <summary></summary>
-			LEDInUseIndicator = 0x3B,
+			LedInUseIndicator = 0x3B,
 			/// <summary></summary>
-			LEDMultiModeIndicator = 0x3C,
+			LedMultimodeIndicator = 0x3C,
 			/// <summary></summary>
-			LEDIndicatorOn = 0x3D,
+			LedIndicatorOn = 0x3D,
 			/// <summary></summary>
-			LEDIndicatorFlash = 0x3E,
+			LedIndicatorFlash = 0x3E,
 			/// <summary></summary>
-			LEDIndicatorSlowBlink = 0x3F,
+			LedIndicatorSlowBlink = 0x3F,
 			/// <summary></summary>
-			LEDIndicatorFastBlink = 0x40,
+			LedIndicatorFastBlink = 0x40,
 			/// <summary></summary>
-			LEDIndicatorOff = 0x41,
+			LedIndicatorOff = 0x41,
 			/// <summary></summary>
-			LEDFlashOnTime = 0x42,
+			LedFlashOnTime = 0x42,
 			/// <summary></summary>
-			LEDSlowBlinkOnTime = 0x43,
+			LedSlowBlinkOnTime = 0x43,
 			/// <summary></summary>
-			LEDSlowBlinkOffTime = 0x44,
+			LedSlowBlinkOffTime = 0x44,
 			/// <summary></summary>
-			LEDFastBlinkOnTime = 0x45,
+			LedFastBlinkOnTime = 0x45,
 			/// <summary></summary>
-			LEDFastBlinkOffTime = 0x46,
+			LedFastBlinkOffTime = 0x46,
 			/// <summary></summary>
-			LEDIndicatorColor = 0x47,
+			LedIndicatorColor = 0x47,
 			/// <summary></summary>
-			LEDRed = 0x48,
+			LedRed = 0x48,
 			/// <summary></summary>
-			LEDGreen = 0x49,
+			LedGreen = 0x49,
 			/// <summary></summary>
-			LEDAmber = 0x4A,
+			LedAmber = 0x4A,
 			/// <summary></summary>
-			LEDGenericIndicator = 0x3B,
+			LedGenericIndicator = 0x3B,
 			/// <summary></summary>
 			TelephonyPhone = 0x01,
 			/// <summary></summary>
@@ -403,8 +403,8 @@ namespace SlimDX
 			Game = 0x05,
 			/// <summary>Keyboard controls.</summary>
 			Keyboard = 0x07,
-			/// <summary>LED controls.</summary>
-			LED = 0x08,
+			/// <summary>Led controls.</summary>
+			Led = 0x08,
 			/// <summary>Button.</summary>
 			Button = 0x09,
 			/// <summary>Ordinal.</summary>
@@ -416,11 +416,11 @@ namespace SlimDX
 			/// <summary>Digitizer.</summary>
 			Digitizer = 0x0D,
 			/// <summary>Physical interface device.</summary>
-			PID = 0x0F,
+			Pid = 0x0F,
 			/// <summary>Unicode.</summary>
 			Unicode = 0x10,
 			/// <summary>Alphanumeric display.</summary>
-			AlphaNumeric = 0x14,
+			Alphanumeric = 0x14,
 			/// <summary>Medical instruments.</summary>
 			Medical = 0x40,
 			/// <summary>Monitor page 0.</summary>
@@ -440,11 +440,11 @@ namespace SlimDX
 			/// <summary>Power page 3.</summary>
 			PowerPage3 = 0x87,
 			/// <summary>Bar code scanner.</summary>
-			BarCode = 0x8C,
+			Barcode = 0x8C,
 			/// <summary>Scale page.</summary>
 			Scale = 0x8D,
 			/// <summary>Magnetic strip reading devices.</summary>
-			MSR = 0x8E
+			Msr = 0x8E
 		};
 	}
 }

@@ -96,20 +96,20 @@ namespace Direct3D10
 	
 	SlimDX::DataBox^ Texture3D::Map( int mipSlice, MapMode mode, MapFlags flags )
 	{
-		int subResource = D3D10CalcSubresource( mipSlice, 0, Description.MipLevels );
+		int subresource = D3D10CalcSubresource( mipSlice, 0, Description.MipLevels );
 		int mipHeight = GetMipSize( mipSlice, Description.Height );
 		
 		D3D10_MAPPED_TEXTURE3D mappedBox;
-		if( RECORD_D3D10( InternalPointer->Map( subResource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedBox ) ).IsFailure )
+		if( RECORD_D3D10( InternalPointer->Map( subresource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedBox ) ).IsFailure )
 			return nullptr;
 			
 		int lockedSize = mipHeight * mappedBox.DepthPitch;
 		return gcnew SlimDX::DataBox( mappedBox.RowPitch, mappedBox.DepthPitch, gcnew DataStream( mappedBox.pData, lockedSize, true, true, false ) );
 	}
 
-	void Texture3D::Unmap( int subResource )
+	void Texture3D::Unmap( int subresource )
 	{
-		InternalPointer->Unmap( subResource );
+		InternalPointer->Unmap( subresource );
 	}
 	
 	Texture3D^ Texture3D::FromFile( SlimDX::Direct3D10::Device^ device, String^ fileName )

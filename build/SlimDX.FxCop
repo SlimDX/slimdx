@@ -1757,23 +1757,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#UpdateSubresource(SlimDX.Direct3D10.Resource,System.Int32,SlimDX.Direct3D10.ResourceRegion,SlimDX.DataBox)">
-            <Messages>
-             <Message Id="Subresource" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>Subresource</Item>
-               <Item>'Device.UpdateSubresource(Resource, int, ResourceRegion, DataBox)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="subresource" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-05-13 21:02:20Z">
-              <Issue Name="MemberParameter">
-               <Item>'Device.UpdateSubresource(Resource, int, ResourceRegion, DataBox)'</Item>
-               <Item>subresource</Item>
-               <Item>'subresource'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="DeviceChild">
@@ -11990,35 +11973,23 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#Construct(SlimDX.RawInput.UsagePage,SlimDX.RawInput.UsageId,SlimDX.RawInput.DeviceFlags,System.IntPtr)">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-05-13 21:02:20Z">
-              <Issue>
-               <Item>'Device.Construct(UsagePage, UsageId, DeviceFlags, IntPtr)'</Item>
-               <Item>'NativeWindow.AssignHandle(IntPtr)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Device.Construct(UsagePage, UsageId, DeviceFlags, IntPtr)'&#xD;&#xA;   -&gt;'Device.Construct(UsagePage, UsageId, DeviceFlags, IntPtr)'&#xD;&#xA;   -&gt;'Device.Device(UsagePage, UsageId, DeviceFlags)'</Item>
-              </Issue>
-              <Issue>
-               <Item>'Device.Construct(UsagePage, UsageId, DeviceFlags, IntPtr)'</Item>
-               <Item>'NativeWindow.AssignHandle(IntPtr)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Device.Construct(UsagePage, UsageId, DeviceFlags, IntPtr)'&#xD;&#xA;   -&gt;'Device.Construct(UsagePage, UsageId, DeviceFlags, IntPtr)'&#xD;&#xA;   -&gt;'Device.Device(UsagePage, UsageId, DeviceFlags, IntPtr)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Destruct()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-05-13 21:02:20Z">
-              <Issue>
-               <Item>'Device.Destruct()'</Item>
-               <Item>'NativeWindow.ReleaseHandle()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Device.Destruct()'&#xD;&#xA;   -&gt;'Device.Destruct()'&#xD;&#xA;   -&gt;'Device.~Device()'&#xD;&#xA;   -&gt;'Device.Dispose(bool)'</Item>
-              </Issue>
-             </Message>
              <Message Id="&lt;Module&gt;.RegisterRawInputDevices(optional(IsConst) tagRAWINPUTDEVICE*,System.UInt32,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-05-13 21:02:20Z">
               <Issue Name="HResultOrErrorCode">
                <Item>'Device.Destruct()'</Item>
                <Item>'&lt;Module&gt;.RegisterRawInputDevices(tagRAWINPUTDEVICE*, uint, uint)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Dispose(System.Boolean)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-05-13 23:12:57Z">
+              <Issue>
+               <Item>'Device.Dispose(bool)'</Item>
+               <Item>'Device.~Device()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Device.Dispose(bool)'&#xD;&#xA;   -&gt;'Device.Dispose(bool)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -12064,19 +12035,6 @@
             </Issue>
            </Message>
           </Messages>
-          <Members>
-           <Member Name="#NoHotKeys">
-            <Messages>
-             <Message Id="HotKeys" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-05-13 21:02:20Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>HotKeys</Item>
-               <Item>'DeviceFlags.NoHotKeys'</Item>
-               <Item>Hotkeys</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
          </Type>
          <Type Name="KeyboardInputEventArgs">
           <Members>
@@ -12111,19 +12069,6 @@
             </Issue>
            </Message>
           </Messages>
-          <Members>
-           <Member Name="#HotKey">
-            <Messages>
-             <Message Id="HotKey" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-05-13 21:02:20Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>HotKey</Item>
-               <Item>'KeyState.HotKey'</Item>
-               <Item>Hotkey</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
          </Type>
          <Type Name="MouseButtonFlags">
           <Messages>
@@ -12206,7 +12151,7 @@
          </Type>
          <Type Name="UsageId">
           <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2008-05-13 21:02:20Z">
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2008-05-13 21:02:20Z">
             <Issue>
              <Item>'UsageId'</Item>
             </Issue>
@@ -12215,7 +12160,7 @@
           <Members>
            <Member Name="#KeyboardaA">
             <Messages>
-             <Message Id="Keyboarda" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-05-13 21:02:20Z">
+             <Message Id="Keyboarda" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 21:02:20Z">
               <Issue Name="Member">
                <Item>Keyboarda</Item>
                <Item>'UsageId.KeyboardaA'</Item>
@@ -12223,31 +12168,9 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#KeyboardLeftALT">
-            <Messages>
-             <Message Id="ALT" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>ALT</Item>
-               <Item>'UsageId.KeyboardLeftALT'</Item>
-               <Item>Alt</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#KeyboardLeftGUI">
-            <Messages>
-             <Message Id="GUI" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>GUI</Item>
-               <Item>'UsageId.KeyboardLeftGUI'</Item>
-               <Item>Gui</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#KeyboardNumLock">
             <Messages>
-             <Message Id="Num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-05-13 21:02:20Z">
+             <Message Id="Num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 21:02:20Z">
               <Issue Name="Member">
                <Item>Num</Item>
                <Item>'UsageId.KeyboardNumLock'</Item>
@@ -12255,31 +12178,9 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#KeyboardRightALT">
-            <Messages>
-             <Message Id="ALT" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>ALT</Item>
-               <Item>'UsageId.KeyboardRightALT'</Item>
-               <Item>Alt</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#KeyboardRightGUI">
-            <Messages>
-             <Message Id="GUI" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>GUI</Item>
-               <Item>'UsageId.KeyboardRightGUI'</Item>
-               <Item>Gui</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#KeyboardzZ">
             <Messages>
-             <Message Id="Keyboardz" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-05-13 21:02:20Z">
+             <Message Id="Keyboardz" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 21:02:20Z">
               <Issue Name="Member">
                <Item>Keyboardz</Item>
                <Item>'UsageId.KeyboardzZ'</Item>
@@ -12287,924 +12188,82 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#LEDAmber">
+           <Member Name="#LedCav">
             <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
+             <Message Id="Cav" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 23:07:35Z">
               <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDAmber'</Item>
-               <Item>Led</Item>
+               <Item>Cav</Item>
+               <Item>'UsageId.LedCav'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#LEDBatteryLow">
+           <Member Name="#LedClv">
             <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
+             <Message Id="Clv" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 23:07:35Z">
               <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDBatteryLow'</Item>
-               <Item>Led</Item>
+               <Item>Clv</Item>
+               <Item>'UsageId.LedClv'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#LEDBatteryOK">
+           <Member Name="#LedNumLock">
             <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDBatteryOK'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-             <Message Id="OK" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="MemberAbbreviation">
-               <Item>OK</Item>
-               <Item>'UsageId.LEDBatteryOK'</Item>
-               <Item>Ok</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDBatteryOperation">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDBatteryOperation'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDBusy">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDBusy'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDCallPickup">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDCallPickup'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDCameraOff">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDCameraOff'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDCameraOn">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDCameraOn'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDCapsLock">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDCapsLock'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDCAV">
-            <Messages>
-             <Message Id="LEDCAV" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LEDCAV</Item>
-               <Item>'UsageId.LEDCAV'</Item>
-               <Item>Ledcav</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDCLV">
-            <Messages>
-             <Message Id="LEDCLV" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LEDCLV</Item>
-               <Item>'UsageId.LEDCLV'</Item>
-               <Item>Ledclv</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDCompose">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDCompose'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDConference">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDConference'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDCoverage">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDCoverage'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDDataMode">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDDataMode'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDDoNotDisturb">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDDoNotDisturb'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDEqualizerEnable">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDEqualizerEnable'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDError">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDError'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDFastBlinkOffTime">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDFastBlinkOffTime'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDFastBlinkOnTime">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDFastBlinkOnTime'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDFastForward">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDFastForward'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDFlashOnTime">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDFlashOnTime'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDForward">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDForward'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDGenericIndicator">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDGenericIndicator'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDGreen">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDGreen'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDHeadset">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDHeadset'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDHighCutFilter">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDHighCutFilter'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDHold">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDHold'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDIndicatorColor">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDIndicatorColor'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDIndicatorFastBlink">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDIndicatorFastBlink'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDIndicatorFlash">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDIndicatorFlash'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDIndicatorOff">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDIndicatorOff'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDIndicatorOn">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDIndicatorOn'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDIndicatorSlowBlink">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDIndicatorSlowBlink'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDInUseIndicator">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDInUseIndicator'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDKana">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDKana'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDLowCutFilter">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDLowCutFilter'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDMessageWaiting">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDMessageWaiting'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDMicrophone">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDMicrophone'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDMultiModeIndicator">
-            <Messages>
-             <Message Id="MultiMode" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-05-13 21:02:20Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>MultiMode</Item>
-               <Item>'UsageId.LEDMultiModeIndicator'</Item>
-               <Item>Multimode</Item>
-              </Issue>
-             </Message>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDMultiModeIndicator'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-             <Message Id="Multi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>Multi</Item>
-               <Item>'UsageId.LEDMultiModeIndicator'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDMute">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDMute'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDNightMode">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDNightMode'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDNumLock">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDNumLock'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-             <Message Id="Num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-05-13 21:02:20Z">
+             <Message Id="Num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 22:58:39Z">
               <Issue Name="Member">
                <Item>Num</Item>
-               <Item>'UsageId.LEDNumLock'</Item>
+               <Item>'UsageId.LedNumLock'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#LEDOffHook">
+           <Member Name="#LedRecordingFormatDet">
             <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDOffHook'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDOffLine">
-            <Messages>
-             <Message Id="OffLine" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-05-13 21:02:20Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>OffLine</Item>
-               <Item>'UsageId.LEDOffLine'</Item>
-               <Item>Offline</Item>
-              </Issue>
-             </Message>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDOffLine'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDOnLine">
-            <Messages>
-             <Message Id="OnLine" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-05-13 21:02:20Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>OnLine</Item>
-               <Item>'UsageId.LEDOnLine'</Item>
-               <Item>Online</Item>
-              </Issue>
-             </Message>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDOnLine'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDPaperJam">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDPaperJam'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDPaperOut">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDPaperOut'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDPause">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDPause'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDPlay">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDPlay'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDPower">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDPower'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDReady">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDReady'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDRecord">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDRecord'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDRecordingFormatDet">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDRecordingFormatDet'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-             <Message Id="Det" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-05-13 21:02:20Z">
+             <Message Id="Det" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 22:58:39Z">
               <Issue Name="Member">
                <Item>Det</Item>
-               <Item>'UsageId.LEDRecordingFormatDet'</Item>
+               <Item>'UsageId.LedRecordingFormatDet'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#LEDRed">
+           <Member Name="#VbrX">
             <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
+             <Message Id="Vbr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 23:07:35Z">
               <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDRed'</Item>
-               <Item>Led</Item>
+               <Item>Vbr</Item>
+               <Item>'UsageId.VbrX'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#LEDRemote">
+           <Member Name="#VbrY">
             <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
+             <Message Id="Vbr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 23:07:35Z">
               <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDRemote'</Item>
-               <Item>Led</Item>
+               <Item>Vbr</Item>
+               <Item>'UsageId.VbrY'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#LEDRepeat">
+           <Member Name="#VbrZ">
             <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
+             <Message Id="Vbr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 23:07:35Z">
               <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDRepeat'</Item>
-               <Item>Led</Item>
+               <Item>Vbr</Item>
+               <Item>'UsageId.VbrZ'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#LEDReverse">
+           <Member Name="#Vno">
             <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
+             <Message Id="Vno" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 23:07:35Z">
               <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDReverse'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDRewind">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDRewind'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDRing">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDRing'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDSamplingRateDirect">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDSamplingRateDirect'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDScrollLock">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDScrollLock'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDSelectedIndicator">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDSelectedIndicator'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDSendCalls">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDSendCalls'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDShift">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDShift'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDSlowBlinkOffTime">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDSlowBlinkOffTime'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDSlowBlinkOnTime">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDSlowBlinkOnTime'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDSoundFieldOn">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDSoundFieldOn'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDSpeaker">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDSpeaker'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDSpinning">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDSpinning'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDStandBy">
-            <Messages>
-             <Message Id="StandBy" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-05-13 21:02:20Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>StandBy</Item>
-               <Item>'UsageId.LEDStandBy'</Item>
-               <Item>Standby</Item>
-              </Issue>
-             </Message>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDStandBy'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDStereo">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDStereo'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDStop">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDStop'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDSurroundFieldOn">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDSurroundFieldOn'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LEDToneEnable">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsageId.LEDToneEnable'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#VBRX">
-            <Messages>
-             <Message Id="VBRX" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>VBRX</Item>
-               <Item>'UsageId.VBRX'</Item>
-               <Item>Vbrx</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#VBRY">
-            <Messages>
-             <Message Id="VBRY" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>VBRY</Item>
-               <Item>'UsageId.VBRY'</Item>
-               <Item>Vbry</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#VBRZ">
-            <Messages>
-             <Message Id="VBRZ" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>VBRZ</Item>
-               <Item>'UsageId.VBRZ'</Item>
-               <Item>Vbrz</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#VNO">
-            <Messages>
-             <Message Id="VNO" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>VNO</Item>
-               <Item>'UsageId.VNO'</Item>
                <Item>Vno</Item>
+               <Item>'UsageId.Vno'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -13213,84 +12272,29 @@
          </Type>
          <Type Name="UsagePage">
           <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2008-05-13 21:02:20Z">
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2008-05-13 21:02:20Z">
             <Issue>
              <Item>'UsagePage'</Item>
             </Issue>
            </Message>
           </Messages>
           <Members>
-           <Member Name="#AlphaNumeric">
+           <Member Name="#Msr">
             <Messages>
-             <Message Id="AlphaNumeric" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-05-13 21:02:20Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>AlphaNumeric</Item>
-               <Item>'UsagePage.AlphaNumeric'</Item>
-               <Item>Alphanumeric</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#BarCode">
-            <Messages>
-             <Message Id="BarCode" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-05-13 21:02:20Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>BarCode</Item>
-               <Item>'UsagePage.BarCode'</Item>
-               <Item>Barcode</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LED">
-            <Messages>
-             <Message Id="LED" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
+             <Message Id="Msr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 22:58:39Z">
               <Issue Name="Member">
-               <Item>LED</Item>
-               <Item>'UsagePage.LED'</Item>
-               <Item>Led</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#MSR">
-            <Messages>
-             <Message Id="MSR" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>MSR</Item>
-               <Item>'UsagePage.MSR'</Item>
                <Item>Msr</Item>
+               <Item>'UsagePage.Msr'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#PID">
+           <Member Name="#Pid">
             <Messages>
-             <Message Id="PID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-13 21:02:20Z">
+             <Message Id="Pid" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 22:58:39Z">
               <Issue Name="Member">
-               <Item>PID</Item>
-               <Item>'UsagePage.PID'</Item>
                <Item>Pid</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="WindowSubclass">
-          <Members>
-           <Member Name="#.ctor(SlimDX.RawInput.Device)">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-05-13 21:02:20Z">
-              <Issue>
-               <Item>'WindowSubclass.WindowSubclass(Device)'</Item>
-               <Item>'NativeWindow.NativeWindow()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'WindowSubclass.WindowSubclass(Device)'&#xD;&#xA;   -&gt;'WindowSubclass.WindowSubclass(Device)'&#xD;&#xA;   -&gt;'Device.Construct(UsagePage, UsageId, DeviceFlags, IntPtr)'&#xD;&#xA;   -&gt;'Device.Device(UsagePage, UsageId, DeviceFlags)'</Item>
-              </Issue>
-              <Issue>
-               <Item>'WindowSubclass.WindowSubclass(Device)'</Item>
-               <Item>'NativeWindow.NativeWindow()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'WindowSubclass.WindowSubclass(Device)'&#xD;&#xA;   -&gt;'WindowSubclass.WindowSubclass(Device)'&#xD;&#xA;   -&gt;'Device.Construct(UsagePage, UsageId, DeviceFlags, IntPtr)'&#xD;&#xA;   -&gt;'Device.Device(UsagePage, UsageId, DeviceFlags, IntPtr)'</Item>
+               <Item>'UsagePage.Pid'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -14205,7 +13209,7 @@
           <Members>
            <Member Name="#PeekMessage(MiniTri.Message&amp;,System.IntPtr,System.UInt32,System.UInt32,System.UInt32)">
             <Messages>
-             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Status="Excluded" Created="2008-03-06 02:37:29Z">
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Status="Excluded" Created="2008-05-13 23:07:35Z">
               <Issue>
                <Item>'Program.PeekMessage(out Message, IntPtr, uint, uint, uint)'</Item>
               </Issue>
@@ -14606,13 +13610,13 @@
           <Members>
            <Member Name="#CreateDevice()">
             <Messages>
-             <Message TypeName="DoNotUseTimersThatPreventPowerStateChanges" Category="Microsoft.Mobility" CheckId="CA1601" Status="Excluded" Created="2008-04-05 14:53:36Z">
+             <Message TypeName="DoNotUseTimersThatPreventPowerStateChanges" Category="Microsoft.Mobility" CheckId="CA1601" Status="Excluded" Created="2008-05-13 23:07:35Z">
               <Issue>
                <Item>'Timer.Interval.set(int)'</Item>
                <Item>'MainForm.CreateDevice()'</Item>
               </Issue>
              </Message>
-             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-03-13 23:20:47Z">
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-05-13 23:07:35Z">
               <Issue>
                <Item>'MainForm.CreateDevice()'</Item>
               </Issue>
@@ -14624,7 +13628,7 @@
            </Member>
            <Member Name="#Dispose(System.Boolean)">
             <Messages>
-             <Message Id="joystick" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Status="Excluded" Created="2008-03-13 23:20:47Z">
+             <Message Id="joystick" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Status="Excluded" Created="2008-05-13 23:07:35Z">
               <Issue>
                <Item>'MainForm'</Item>
                <Item>'MainForm.joystick'</Item>

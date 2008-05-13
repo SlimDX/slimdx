@@ -36,6 +36,7 @@ namespace SlimDX
 			virtual void WndProc( System::Windows::Forms::Message% m ) override;
 
 		public:
+			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			WindowSubclass( Device^ device );
 		};
 	}
