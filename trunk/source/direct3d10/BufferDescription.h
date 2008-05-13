@@ -27,6 +27,9 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
+		/// <summary>
+		/// Describes a buffer resource.
+		/// </summary>
 		public value class BufferDescription : System::IEquatable<BufferDescription>
 		{
 		private:
@@ -39,47 +42,104 @@ namespace SlimDX
 		internal:
 			BufferDescription( const D3D10_BUFFER_DESC& native );
 			
-			//D3D10_BUFFER_DESC CreateNativeVersion();
-			
 		public:
+			/// <summary>
+			/// Gets or sets the size, in bytes, of the buffer.
+			/// </summary>
 			property int SizeInBytes
 			{
 				int get();
 				void set( int value );
 			}
 
+			/// <summary>
+			/// Gets or sets the intended usage pattern of the buffer.
+			/// </summary>
 			property ResourceUsage Usage
 			{
 				ResourceUsage get();
 				void set( ResourceUsage value );
 			}
 
+			/// <summary>
+			/// Gets or sets the flags specifying how the buffer is bound to the pipeline.
+			/// </summary>
 			property Direct3D10::BindFlags BindFlags
 			{
 				Direct3D10::BindFlags get();
 				void set( Direct3D10::BindFlags value );
 			}
 
+			/// <summary>
+			/// Gets or sets the flags specifying how the CPU will be allowed to access the buffer.
+			/// </summary>
 			property Direct3D10::CpuAccessFlags CpuAccessFlags
 			{
 				Direct3D10::CpuAccessFlags get();
 				void set( Direct3D10::CpuAccessFlags value );
 			}
 
+			/// <summary>
+			/// Gets or sets the flags specifying miscellaneous resource options.
+			/// </summary>
 			property ResourceOptionFlags OptionFlags
 			{
 				ResourceOptionFlags get();
 				void set( ResourceOptionFlags value );
 			}
 			
+			/// <summary>
+			/// Constructs a new BufferDescription object.
+			/// </summary>
+			/// <param name="sizeInBytes">The size, in bytes, of the buffer.</param>
+			/// <param name="usage">Identifies the usage pattern for the buffer.</param>
+			/// <param name="bindFlags">Specifies how the buffer will be bound to the pipeline.</param>
+			/// <param name="accessFlags">Specifies how the buffer will be accessible from the CPU.</param>
+			/// <param name="optionFlags">Specifies miscellaneous resource options.</param>
 			BufferDescription( int sizeInBytes, ResourceUsage usage, Direct3D10::BindFlags bindFlags, Direct3D10::CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
 		
+			/// <summary>
+			/// Tests for equality between two BufferDescriptions.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator == ( BufferDescription left, BufferDescription right );
+			
+			/// <summary>
+			/// Tests for inequality between two BufferDescriptions.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator != ( BufferDescription left, BufferDescription right );
-
+			
+			/// <summary>
+			/// Returns the hash code for this instance.
+			/// </summary>
+			/// <returns>A 32-bit signed integer hash code.</returns>
 			virtual int GetHashCode() override;
+			
+			/// <summary>
+			/// Returns a value indicating whether this instance is equal to the specified object.
+			/// </summary>
+			/// <param name="obj">An object to compare with this instance.</param>
+			/// <returns><c>true</c> if <paramref name="obj"/> has the same value as this instance; otherwise, <c>false</c>.</returns>
 			virtual bool Equals( System::Object^ obj ) override;
+
+			/// <summary>
+			/// Returns a value indicating whether this instance is equal to the specified object.
+			/// </summary>
+			/// <param name="obj">A <see cref="SlimDX.Viewport"/> to compare with this instance.</param>
+			/// <returns><c>true</c> if <paramref name="other"/> has the same value as this instance; otherwise, <c>false</c>.</returns>
 			virtual bool Equals( BufferDescription other );
+
+			/// <summary>
+			/// Returns a value indicating whether the two BufferDescriptions are equivalent.
+			/// </summary>
+			/// <param name="value1">The first value to compare.</param>
+			/// <param name="value2">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="value1"/> has the same value as <paramref name="value2"/>; otherwise, <c>false</c>.</returns>
 			static bool Equals( BufferDescription% value1, BufferDescription% value2 );
 		};
 	}

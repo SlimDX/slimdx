@@ -41,18 +41,6 @@ namespace Direct3D10
 		m_CPUAccessFlags = static_cast<Direct3D10::CpuAccessFlags>( native.CPUAccessFlags );
 		m_MiscFlags = static_cast<ResourceOptionFlags>( native.MiscFlags );
 	}
-	
-	/*D3D10_BUFFER_DESC BufferDescription::CreateNativeVersion()
-	{
-		D3D10_BUFFER_DESC native;
-		native.ByteWidth = m_ByteWidth;
-		native.Usage = static_cast<D3D10_USAGE>( m_Usage );
-		native.BindFlags = static_cast<UINT>( m_CPUAccessFlags );
-		native.CPUAccessFlags = static_cast<UINT>( m_CPUAccessFlags );
-		native.MiscFlags = static_cast<UINT>( m_MiscFlags );
-		
-		return native;
-	}*/
 
 	int BufferDescription::SizeInBytes::get()
 	{
