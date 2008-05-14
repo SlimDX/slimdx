@@ -244,7 +244,7 @@ namespace Direct3D10
 		InternalPointer->ResolveSubresource( destination->InternalPointer, destinationSubresource, source->InternalPointer, sourceSubresource, static_cast<DXGI_FORMAT>( format ) );
 	}
 	
-	void Device::UpdateSubresource( Resource^ resource, int subresource, ResourceRegion region, DataBox^ source ) 
+	void Device::UpdateSubresource( DataBox^ source, Resource^ resource, int subresource, ResourceRegion region ) 
 	{
 		D3D10_BOX nativeRegion = region.CreateNativeVersion();
 		InternalPointer->UpdateSubresource( resource->InternalPointer, static_cast<UINT>( subresource), &nativeRegion, source->Data->RawPointer, source->RowPitch,source->SlicePitch);
@@ -255,9 +255,9 @@ namespace Direct3D10
 		InternalPointer->Draw( vertexCount, startVertexLocation );
 	}
 	
-	void Device::DrawAuto()
+	void Device::DrawInstanced( int vertexCountPerInstance, int instanceCount, int startVertexLocation, int startInstanceLocation )
 	{
-		InternalPointer->DrawAuto();
+		InternalPointer->DrawInstanced( vertexCountPerInstance, instanceCount, startVertexLocation, startInstanceLocation );
 	}
 	
 	void Device::DrawIndexed( int indexCount, int startIndexLocation, int baseVertexLocation )
@@ -270,9 +270,9 @@ namespace Direct3D10
 		InternalPointer->DrawIndexedInstanced( indexCountPerInstance, instanceCount, startIndexLocation, baseVertexLocation, startInstanceLocation );
 	}
 	
-	void Device::DrawInstanced( int vertexCountPerInstance, int instanceCount, int startVertexLocation, int startInstanceLocation )
+	void Device::DrawAuto()
 	{
-		InternalPointer->DrawInstanced( vertexCountPerInstance, instanceCount, startVertexLocation, startInstanceLocation );
+		InternalPointer->DrawAuto();
 	}
 	
 	void Device::Flush()

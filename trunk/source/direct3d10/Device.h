@@ -53,6 +53,9 @@ namespace SlimDX
 		value class ResourceRegion;
 		value class SwapChainDescription;
 
+		/// <summary>
+		/// A virtual adapter for performing rendering.
+		/// </summary>
 		public ref class Device : ComObject
 		{
 			COMOBJECT(ID3D10Device, Device);
@@ -64,59 +67,211 @@ namespace SlimDX
 			RasterizerWrapper^ m_Rasterizer;
 
 		public:
+			/// <summary>
+			/// Gets the device's input assembler interface.
+			/// </summary>
 			property InputAssemblerWrapper^ InputAssembler
 			{
 				InputAssemblerWrapper^ get();
 			}
 
+			/// <summary>
+			/// Gets the device's output merger interface.
+			/// </summary>
 			property OutputMergerWrapper^ OutputMerger
 			{
 				OutputMergerWrapper^ get();
 			}
 
+			/// <summary>
+			/// Gets the device's stream output interface.
+			/// </summary>
 			property StreamOutputWrapper^ StreamOutput
 			{
 				StreamOutputWrapper^ get();
 			}
 
+			/// <summary>
+			/// Gets the device's rasterizer interface.
+			/// </summary>
 			property RasterizerWrapper^ Rasterizer
 			{
 				RasterizerWrapper^ get();
 			}
 			
+			/// <summary>
+			/// Gets the device's creation flags.
+			/// </summary>
 			property DeviceCreationFlags CreationFlags
 			{
 				DeviceCreationFlags get();
 			}
 			
+			/// <summary>
+			/// Constructs a new Device object.
+			/// </summary>
+			/// <param name="flags">Flags that indicate which device API layers to enable.</param>
 			Device( DeviceCreationFlags flags );
-			Device( DriverType driverType, DeviceCreationFlags flags );
-			Device( DXGI::Adapter ^adapter, DriverType driverType, DeviceCreationFlags flags );
-			static Device^ FromPointer( System::IntPtr pointer );
 
+			/// <summary>
+			/// Constructs a new Device object.
+			/// </summary>
+			/// <param name="driverType">The device driver type.</param>
+			/// <param name="flags">Flags that indicate which device API layers to enable.</param>
+			Device( DriverType driverType, DeviceCreationFlags flags );
+
+			/// <summary>
+			/// Constructs a new Device object.
+			/// </summary>
+			/// <param name="adapter">The display adapter to associate the device with when creating a hardware device.</param>
+			/// <param name="driverType">The device driver type.</param>
+			/// <param name="flags">Flags that indicate which device API layers to enable.</param>
+			Device( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags );
+
+			/// <summary>
+			/// Constructs a Device object from a marshalled native pointer.
+			/// </summary>
+			/// <param name="pointer">The native object pointer.</param>
+			/// <returns>The Device object for the native object.</returns>
+			static Device^ FromPointer( System::IntPtr pointer );
+			
+			/// <summary>
+			/// Gets information about the device's performance counters.
+			/// </summary>
+			/// <returns>Information about the device's performance counters.</returns>
 			CounterCapabilities GetCounterCapabilities();
+
+			/// <summary>
+			/// Gets metadata (name, type, measurement units, et cetera) for a specific counter.
+			/// </summary>
+			/// <param name="description">The description of the counter to retrieve information about.</param>
+			/// <returns>Metadata for the specified counter.</returns>
 			CounterMetadata GetCounterMetadata( CounterDescription description );
 			
+			/// <summary>
+			/// Gets information about the supported applications of a specified format.
+			/// </summary>
+			/// <param name="format">The format to check support for.</param>
+			/// <returns>FormatSupport flags indicating usage contexts in which the specified format is supported.</returns>
 			FormatSupport CheckFormatSupport( DXGI::Format format );
+
+			/// <summary>
+			/// Gets the number of quality levels supported during multisampling of resources using a specified format.
+			/// </summary>
+			/// <param name="format">The format to check support for.</param>
+			/// <param name="sampleCount">The multisample count to check support for.</param>
+			/// <returns>The number of quality levels supported. 0 if an error occured
+			/// or if the format/samplecount pair is not supported.</returns>
 			int CheckMultisampleQualityLevels( DXGI::Format format, int sampleCount );
 			
+			/// <summary>
+			/// Clears the specified depth-stencil resource.
+			/// </summary>
+			/// <param name="view">The view of the resource to clear.</param>
+			/// <param name="flags">Flags indicating which parts of the resource to clear.</param>
+			/// <param name="depth">The depth value to clear to, if applicable.</param>
+			/// <param name="stencil">The stencil value to clear to, if applicable.</param>
 			void ClearDepthStencilView( DepthStencilView^ view, DepthStencilClearFlags flags, float depth, System::Byte stencil );
+			
+			/// <summary>
+			/// Clears the specified render target resource.
+			/// </summary>
+			/// <param name="view">The view of the resource to clear.</param>
+			/// <param name="color">The color to clear to.</param>
 			void ClearRenderTargetView( RenderTargetView^ view, Color4 color );
+
+			/// <summary>
+			/// Restores all device state to defaults.
+			/// </summary>
 			void ClearState();
 			
+			/// <summary>
+			/// Copies resource data using the GPU.
+			/// </summary>
+			/// <param name="source">The source resource.</param>
+			/// <param name="destination">The destination resource.</param>
 			void CopyResource( Resource^ source, Resource^ destination );
-			void CopySubresourceRegion( Resource^ source, int sourceSubresource, ResourceRegion region, Resource^ destination, int destinationSubresource, int x, int y, int z );
-			void ResolveSubresource( Resource^ source, int sourceSubresource, Resource^ destination, int destinationSubresource, DXGI::Format format );
-			void UpdateSubresource( Resource^ resource, int subresource, ResourceRegion region, DataBox^ source );
 
+			/// <summary>
+			/// Copies a portion of a resource's data using the GPU.
+			/// </summary>
+			/// <param name="source">The source resource.</param>
+			/// <param name="sourceSubresource">The source subresource.</param>
+			/// <param name="region">The source region.</param>
+			/// <param name="destination">The destination resource.</param>
+			/// <param name="destinationSubresource">The destination subresource.</param>
+			/// <param name="x">The X offset between the source region origin and the destination location.</param>
+			/// <param name="y">The Y offset between the source region origin and the destination location.</param>
+			/// <param name="z">The Z offset between the source region origin and the destination location.</param>
+			void CopySubresourceRegion( Resource^ source, int sourceSubresource, ResourceRegion region, Resource^ destination, int destinationSubresource, int x, int y, int z );
+			
+			/// <summary>
+			/// Copies a multisampled resource into a non-multisampled resource.
+			/// </summary>
+			/// <param name="source">The source resource.</param>
+			/// <param name="sourceSubresource">The source subresource.</param>
+			/// <param name="destination">The destination resource.</param>
+			/// <param name="destinationSubresource">The destination subresource.</param>
+			/// <param name="format">The format that indicates how the multisampled resource will be resolved.</param>
+			void ResolveSubresource( Resource^ source, int sourceSubresource, Resource^ destination, int destinationSubresource, DXGI::Format format );
+			
+			/// <summary>
+			/// Copies data from the CPU to to a non-mappable subresource region.
+			/// </summary>
+			/// <param name="source">The source data.</param>
+			/// <param name="resource">The destination resource.</param>
+			/// <param name="subresource">The destination subresource.</param>
+			/// <param name="region">The destination region within the resource.</param>
+			void UpdateSubresource( DataBox^ source, Resource^ resource, int subresource, ResourceRegion region );
+
+			/// <summary>
+			/// Renders non-indexed, non-instanced primitive data.
+			/// </summary>
+			/// <param name="vertexCount">The number of vertices to use.</param>
+			/// <param name="startVertexLocation">The index of the first vertex.</param>
 			void Draw( int vertexCount, int startVertexLocation );
-			void DrawAuto();
-			void DrawIndexed( int indexCount, int startIndexLocation, int baseVertexLocation );
-			void DrawIndexedInstanced( int indexCountPerInstance, int instanceCount, int startIndexLocation, int baseVertexLocation, int startInstanceLocation );
+
+			/// <summary>
+			/// Renders non-indexed, instanced primitive data.
+			/// </summary>
+			/// <param name="vertexCountPerInstance">The number of vertices to use per index.</param>
+			/// <param name="instanceCount">The number of instances to render.</param>
+			/// <param name="startVertexLocation">The index of the first vertex.</param>
+			/// <param name="startInstanceLocation">The index of the first instance.</param>
 			void DrawInstanced( int vertexCountPerInstance, int instanceCount, int startVertexLocation, int startInstanceLocation );
-		
+			
+			/// <summary>
+			/// Renders indexed, non-instanced primitive data.
+			/// </summary>
+			/// <param name="indexCount">The number of indices to use.</param>
+			/// <param name="startIndexLocation">The index of the first index.</param>
+			/// <param name="baseVertexLocation">The index of the first vertex.</param>
+			void DrawIndexed( int indexCount, int startIndexLocation, int baseVertexLocation );
+
+			/// <summary>
+			/// Renders indexed, instanced primitive data.
+			/// </summary>
+			/// <param name="indexCountPerInstance">The number of indices to use per index.</param>
+			/// <param name="instanceCount">The number of instances to render.</param>
+			/// <param name="startIndexLocation">The index of the first index.</param>
+			/// <param name="baseVertexLocation">The index of the first vertex.</param>
+			/// <param name="startInstanceLocation">The index of the first instance.</param>
+			void DrawIndexedInstanced( int indexCountPerInstance, int instanceCount, int startIndexLocation, int baseVertexLocation, int startInstanceLocation );
+			
+			/// <summary>
+			/// Renders primitive data of an unknown size that was created by a geometry shader.
+			/// </summary>
+			void DrawAuto();
+
+			/// <summary>
+			/// Sends queued commands in the command buffer to the GPU.
+			/// </summary>
 			void Flush();
 			
+			/// <summary>
+			/// Generates mipmaps for the specified shader resource.
+			/// </summary>
+			/// <param name="view">A view of the resource to generate mipmaps for.</param>
 			void GenerateMips( ShaderResourceView^ view );
 		};
 	}
