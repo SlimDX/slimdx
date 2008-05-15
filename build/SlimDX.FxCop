@@ -12004,6 +12004,33 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#GetDevices()">
+            <Messages>
+             <Message Id="&lt;Module&gt;.GetRawInputDeviceInfoW(System.Void*,System.UInt32,System.Void*,System.UInt32*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-05-15 20:55:44Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'Device.GetDevices()'</Item>
+               <Item>'&lt;Module&gt;.GetRawInputDeviceInfoW(void*, uint, void*, uint*)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'Device.GetDevices()'</Item>
+               <Item>'&lt;Module&gt;.GetRawInputDeviceInfoW(void*, uint, void*, uint*)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'Device.GetDevices()'</Item>
+               <Item>'&lt;Module&gt;.GetRawInputDeviceInfoW(void*, uint, void*, uint*)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'Device.GetDevices()'</Item>
+               <Item>'&lt;Module&gt;.GetRawInputDeviceInfoW(void*, uint, void*, uint*)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-05-15 20:55:44Z">
+              <Issue Certainty="50">
+               <Item>'Device.GetDevices()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#OnWmInput(HRAWINPUT__*)">
             <Messages>
              <Message Id="&lt;Module&gt;.GetRawInputData(HRAWINPUT__*,System.UInt32,System.Void*,System.UInt32*,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-05-13 21:02:20Z">
@@ -13768,7 +13795,6 @@
    </Rule>
    <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
     <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
-    <Resolution Name="MemberAbbreviation">Correct the casing of '{0}' in member name {1} by changing it to '{2}'. '{2}' is an abbreviation and therefore is not subject to acronym casing guidelines.</Resolution>
     <Resolution Name="MemberParameter">In member {0}, correct the casing of '{1}' in parameter name {2} by changing it to '{3}'.</Resolution>
     <Resolution Name="Namespace">Correct the casing of '{0}' in namespace name '{1}' by changing it to '{2}'.</Resolution>
     <Resolution Name="Type">Correct the casing of '{0}' in type name {1} by changing it to '{2}'.</Resolution>
