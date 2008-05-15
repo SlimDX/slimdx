@@ -22,14 +22,21 @@
 
 #include <windows.h>
 
+#include "../StackAlloc.h"
+#include "../Utilities.h"
+
 #include "../SlimDXException.h"
 
 #include "Device.h"
+#include "KeyboardInfo.h"
+#include "MouseInfo.h"
+#include "HidInfo.h"
 
 using namespace System;
 using namespace System::ComponentModel;
 using namespace System::Windows::Forms;
 using namespace System::Collections::ObjectModel;
+using namespace System::Collections::Generic;
 
 namespace SlimDX
 {
@@ -63,8 +70,13 @@ namespace RawInput
 
 		if( target == IntPtr::Zero )
 		{
-			filter = gcnew InputMessageFilter( this );
-			Application::AddMessageFilter( filter );
+			if( filter == nullptr )
+			{
+				filter = gcnew InputMessageFilter();
+				Application::AddMessageFilter( filter );
+			}
+
+			filter->Add( this );
 		}
 		else
 		{
@@ -127,8 +139,13 @@ namespace RawInput
 
 		if( filter != nullptr )
 		{
-			Application::RemoveMessageFilter( filter );
-			filter = nullptr;
+			filter->Remove( this );
+
+			if( filter->Count == 0 )
+			{
+				Application::RemoveMessageFilter( filter );
+				filter = nullptr;
+			}
 		}
 
 		RAWINPUTDEVICE device;
@@ -156,6 +173,95 @@ namespace RawInput
 	{
 		if( &Device::RawInput != nullptr )
 			RawInput( this, e );
+	}
+
+	ReadOnlyCollection<DeviceInfo^>^ Device::GetDevices()
+	{
+		List<DeviceInfo^>^ devices = gcnew List<DeviceInfo^>();
+		UINT count = 0;
+
+		if( GetRawInputDeviceList( NULL, &count, sizeof(RAWINPUTDEVICELIST) ) != 0 )
+			throw gcnew Win32Exception();
+
+		if( count == 0 )
+			return nullptr;
+
+		stack_vector<RAWINPUTDEVICELIST> deviceList( count );
+		if( GetRawInputDeviceList( &deviceList[0], &count, sizeof(RAWINPUTDEVICELIST) ) == -1 )
+			throw gcnew Win32Exception();
+
+		for( unsigned int i = 0; i < count; i++ )
+		{
+			UINT size = 0;
+			BYTE *bytes;
+			String^ name;
+
+			GetRawInputDeviceInfo( deviceList[i].hDevice, RIDI_DEVICENAME, NULL, &size );
+
+			if( size != 0 )
+			{
+				bytes = new BYTE[size];
+				GetRawInputDeviceInfo( deviceList[i].hDevice, RIDI_DEVICENAME, bytes, &size );
+
+				name = gcnew String( reinterpret_cast<const char*>( bytes ) );
+				delete[] bytes;
+			}
+
+			GetRawInputDeviceInfo( deviceList[i].hDevice, RIDI_DEVICEINFO, NULL, &size );
+
+			if( size == 0 )
+				continue;
+
+			bytes = new BYTE[size];
+			RID_DEVICE_INFO *nativeInfo = reinterpret_cast<RID_DEVICE_INFO*>( bytes );
+			nativeInfo->cbSize = sizeof( RID_DEVICE_INFO );
+
+			GetRawInputDeviceInfo( deviceList[i].hDevice, RIDI_DEVICEINFO, nativeInfo, &size );			
+
+			if( nativeInfo->dwType == RIM_TYPEKEYBOARD )
+			{
+				KeyboardInfo^ info = gcnew KeyboardInfo();
+
+				info->DeviceType = static_cast<DeviceType>( nativeInfo->dwType );
+				info->DeviceName = name;
+				info->KeyboardType = nativeInfo->keyboard.dwType;
+				info->Subtype = nativeInfo->keyboard.dwSubType;
+				info->KeyboardMode = nativeInfo->keyboard.dwKeyboardMode;
+				info->FunctionKeyCount = nativeInfo->keyboard.dwNumberOfFunctionKeys;
+				info->IndicatorCount = nativeInfo->keyboard.dwNumberOfIndicators;
+				info->TotalKeyCount = nativeInfo->keyboard.dwNumberOfKeysTotal;
+
+				devices->Add( info );
+			}
+			else if( nativeInfo->dwType == RIM_TYPEMOUSE )
+			{
+				MouseInfo^ info = gcnew MouseInfo();
+
+				info->DeviceType = static_cast<DeviceType>( nativeInfo->dwType );
+				info->DeviceName = name;
+				info->Id = nativeInfo->mouse.dwId;
+				info->ButtonCount = nativeInfo->mouse.dwNumberOfButtons;
+				info->SampleRate = nativeInfo->mouse.dwSampleRate;
+
+				devices->Add( info );
+			}
+			else
+			{
+				HidInfo^ info = gcnew HidInfo();
+
+				info->DeviceType = static_cast<DeviceType>( nativeInfo->dwType );
+				info->DeviceName = name;
+				info->VendorId = nativeInfo->hid.dwVendorId;
+				info->ProductId = nativeInfo->hid.dwProductId;
+				info->VersionNumber = nativeInfo->hid.dwVersionNumber;
+
+				devices->Add( info );
+			}
+
+			delete[] bytes;
+		}
+
+		return gcnew ReadOnlyCollection<DeviceInfo^>( devices );
 	}
 }
 }

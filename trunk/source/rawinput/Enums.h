@@ -40,6 +40,13 @@ namespace SlimDX
 			NoLegacy = RIDEV_NOLEGACY,
 		};
 
+		public enum class DeviceType : System::Int32
+		{
+			Keyboard = RIM_TYPEKEYBOARD,
+			Mouse = RIM_TYPEMOUSE,
+			HumanInputDevice = RIM_TYPEHID
+		};
+
 		[System::Flags]
 		public enum class ScanCodeFlags : System::Int32
 		{

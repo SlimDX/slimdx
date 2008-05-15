@@ -4042,6 +4042,30 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Info"
+				>
+				<File
+					RelativePath="..\source\rawinput\DeviceInfo.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\rawinput\DeviceInfo.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\rawinput\HidInfo.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\rawinput\KeyboardInfo.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\rawinput\MouseInfo.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath="..\source\AssemblyInfo.cpp"

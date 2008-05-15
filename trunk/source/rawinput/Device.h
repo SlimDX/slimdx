@@ -27,6 +27,7 @@
 #include "KeyboardInputEventArgs.h"
 #include "MouseInputEventArgs.h"
 #include "RawInputEventArgs.h"
+#include "DeviceInfo.h"
 
 namespace SlimDX
 {
@@ -35,12 +36,13 @@ namespace SlimDX
 		public ref class Device
 		{
 		private:
+			static InputMessageFilter^ filter;
+
 			UsagePage m_usagePage;
 			UsageId m_usageId;
 			DeviceFlags m_flags;
 			System::IntPtr m_target;
 			WindowSubclass^ subclass;
-			InputMessageFilter^ filter;
 
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			void Construct( UsagePage usagePage, UsageId usageId, DeviceFlags flags, System::IntPtr target );
@@ -65,6 +67,8 @@ namespace SlimDX
 			
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			virtual ~Device() { Destruct(); }
+
+			static System::Collections::ObjectModel::ReadOnlyCollection<DeviceInfo^>^ GetDevices();
 
 			property UsagePage UsagePage
 			{

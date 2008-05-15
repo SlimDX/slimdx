@@ -19,28 +19,23 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include <windows.h>
-
-#include "Device.h"
-#include "InputMessageFilter.h"
-
-using namespace System;
-using namespace System::Windows::Forms;
+#include "DeviceInfo.h"
 
 namespace SlimDX
 {
-namespace RawInput
-{
-	bool InputMessageFilter::PreFilterMessage( Message% m )
+	namespace RawInput
 	{
-		if( m.Msg == WM_INPUT )
+		public ref class KeyboardInfo : DeviceInfo
 		{
-			for each( Device^ device in devices )
-				device->OnWmInput( static_cast<HRAWINPUT>( m.LParam.ToPointer() ) );
-		}
-
-		return false;
+		public:
+			property int KeyboardType;
+			property int Subtype;
+			property int KeyboardMode;
+			property int FunctionKeyCount;
+			property int IndicatorCount;
+			property int TotalKeyCount;
+		};
 	}
-}
 }

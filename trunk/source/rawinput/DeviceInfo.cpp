@@ -22,25 +22,7 @@
 
 #include <windows.h>
 
-#include "Device.h"
-#include "InputMessageFilter.h"
-
-using namespace System;
-using namespace System::Windows::Forms;
-
-namespace SlimDX
-{
-namespace RawInput
-{
-	bool InputMessageFilter::PreFilterMessage( Message% m )
-	{
-		if( m.Msg == WM_INPUT )
-		{
-			for each( Device^ device in devices )
-				device->OnWmInput( static_cast<HRAWINPUT>( m.LParam.ToPointer() ) );
-		}
-
-		return false;
-	}
-}
-}
+#include "DeviceInfo.h"
+#include "KeyboardInfo.h"
+#include "MouseInfo.h"
+#include "HidInfo.h"
