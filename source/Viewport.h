@@ -91,8 +91,25 @@ namespace SlimDX
 			void set( float value );
 		}
 		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Viewport"/> structure.
+		/// </summary>
+		/// <param name="x">The X coordinate of the viewport.</param>
+		/// <param name="y">The Y coordinate of the viewport.</param>
+		/// <param name="width">The width of the viewport.</param>
+		/// <param name="height">The height of the viewport.</param>
 		Viewport( int x, int y, int width, int height);
-		Viewport( int x, int y, int width, int height, float minZ,float maxZ );
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Viewport"/> structure.
+		/// </summary>
+		/// <param name="x">The X coordinate of the viewport.</param>
+		/// <param name="y">The Y coordinate of the viewport.</param>
+		/// <param name="width">The width of the viewport.</param>
+		/// <param name="height">The height of the viewport.</param>
+		/// <param name="minZ">The minimum Z distance of the viewport.</param>
+		/// <param name="maxZ">The maximum Z distance of the viewport.</param>
+		Viewport( int x, int y, int width, int height, float minZ, float maxZ );
 		
 		/// <summary>
 		/// Tests for equality between two viewports.

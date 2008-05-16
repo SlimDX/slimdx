@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../InputEnums.h"
+
 #include "Enums.h"
 #include "WindowSubclass.h"
 #include "InputMessageFilter.h"
@@ -72,12 +74,12 @@ namespace SlimDX
 
 			property UsagePage UsagePage
 			{
-				SlimDX::RawInput::UsagePage get() { return m_usagePage; }
+				SlimDX::UsagePage get() { return m_usagePage; }
 			}
 
 			property UsageId UsageId
 			{
-				SlimDX::RawInput::UsageId get() { return m_usageId; }
+				SlimDX::UsageId get() { return m_usageId; }
 			}
 
 			property DeviceFlags Flags

@@ -463,6 +463,8 @@ namespace SlimDX
 	{
 		Quaternion result;
 
+		Vector3::Normalize( axis, axis );
+
 		float half = angle * 0.5f;
 		float sin = static_cast<float>( Math::Sin( static_cast<double>( half ) ) );
 		float cos = static_cast<float>( Math::Cos( static_cast<double>( half ) ) );
@@ -477,6 +479,8 @@ namespace SlimDX
 
 	void Quaternion::RotationAxis( Vector3% axis, float angle, [Out] Quaternion% result )
 	{
+		Vector3::Normalize( axis, axis );
+
 		float half = angle * 0.5f;
 		float sin = static_cast<float>( Math::Sin( static_cast<double>( half ) ) );
 		float cos = static_cast<float>( Math::Cos( static_cast<double>( half ) ) );

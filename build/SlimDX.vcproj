@@ -1371,6 +1371,14 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Input"
+				>
+				<File
+					RelativePath="..\source\InputEnums.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Direct3D9"
@@ -1869,6 +1877,10 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\D3DX.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\D3DXEnums.h"
 					>
 				</File>
 			</Filter>
@@ -3017,46 +3029,6 @@
 					>
 				</File>
 			</Filter>
-		</Filter>
-		<Filter
-			Name="DirectSound"
-			>
-			<File
-				RelativePath="..\source\directsound\DirectSound.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directsound\DirectSound.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directsound\DirectSoundException.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directsound\DirectSoundException.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directsound\Enums.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directsound\SoundBuffer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directsound\SoundBuffer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directsound\WaveFormat.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directsound\WaveFormat.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Math"
