@@ -50,11 +50,17 @@ namespace SlimDX
 				Result get();
 			}
 
+			/// <summary>
+			/// Represents the result of a successful operation.
+			/// </summary>
 			property static Result Success
 			{
 				Result get();
 			}
 
+			/// <summary>
+			/// Represents a generic failure result.
+			/// </summary>
 			property static Result Failure
 			{
 				Result get();

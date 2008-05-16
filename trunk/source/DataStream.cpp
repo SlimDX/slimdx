@@ -239,7 +239,7 @@ namespace SlimDX
 
 		pin_ptr<T> pinnedData = &data[offset];
 		memcpy( m_Buffer + m_Position, pinnedData, size * count );
-		m_Position += size;
+		m_Position += size * count;
 	}
 	
 	void DataStream::WriteRange( IntPtr source, Int64 count )

@@ -42,17 +42,17 @@ namespace SlimDX
 {
 namespace RawInput
 {
-	Device::Device( SlimDX::RawInput::UsagePage usagePage, SlimDX::RawInput::UsageId usageId, DeviceFlags flags )
+	Device::Device( SlimDX::UsagePage usagePage, SlimDX::UsageId usageId, DeviceFlags flags )
 	{
 		Construct( usagePage, usageId, flags, IntPtr::Zero );
 	}
 
-	Device::Device( SlimDX::RawInput::UsagePage usagePage, SlimDX::RawInput::UsageId usageId, DeviceFlags flags, IntPtr target )
+	Device::Device( SlimDX::UsagePage usagePage, SlimDX::UsageId usageId, DeviceFlags flags, IntPtr target )
 	{
 		Construct( usagePage, usageId, flags, target );
 	}
 
-	void Device::Construct( SlimDX::RawInput::UsagePage usagePage, SlimDX::RawInput::UsageId usageId, DeviceFlags flags, IntPtr target )
+	void Device::Construct( SlimDX::UsagePage usagePage, SlimDX::UsageId usageId, DeviceFlags flags, IntPtr target )
 	{
 		m_usagePage = usagePage;
 		m_usageId = usageId;

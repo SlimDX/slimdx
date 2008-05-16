@@ -82,6 +82,9 @@ namespace SlimDX
 			System::IntPtr GetDC();
 			Result ReleaseDC( System::IntPtr hdc );
 
+			generic<typename TContainer> where TContainer : ComObject
+				TContainer GetContainer();
+
 			property SurfaceDescription Description
 			{
 				SurfaceDescription get();

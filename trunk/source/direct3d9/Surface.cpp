@@ -34,6 +34,7 @@
 
 using namespace System;
 using namespace System::IO;
+using namespace System::Reflection;
 
 namespace SlimDX
 {
@@ -430,6 +431,20 @@ namespace Direct3D9
 	{
 		HRESULT hr = InternalPointer->ReleaseDC( static_cast<HDC>( hdc.ToPointer() ) );
 		return RECORD_D3D9( hr );
+	}
+
+	generic<typename TContainer>
+	TContainer Surface::GetContainer()
+	{
+		GUID guid = Utilities::GetNativeGuidForType( TContainer::typeid );
+		void *resultPointer;
+
+		HRESULT hr = InternalPointer->GetContainer( guid, &resultPointer );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return TContainer();
+
+		MethodInfo^ method = TContainer::typeid->GetMethod( "FromPointer", BindingFlags::Public | BindingFlags::Static );
+		return safe_cast<TContainer>( method->Invoke( nullptr, gcnew array<Object^> { IntPtr( resultPointer ) } ) );
 	}
 }
 }

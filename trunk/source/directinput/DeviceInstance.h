@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../InputEnums.h"
+
 #include "Enums.h"
 
 namespace SlimDX
@@ -40,8 +42,8 @@ namespace SlimDX
 			int subType;
 			System::String^ instanceName;
 			System::String^ productName;
-			int usage;
-			int usagePage;
+			UsageId usage;
+			UsagePage usagePage;
 			bool hid;
 
 		internal:
@@ -111,18 +113,18 @@ namespace SlimDX
 			/// If the device is a Human Interface Device, this member contains
 			/// the HID usage code.
 			/// </summary>
-			property int Usage
+			property UsageId UsageId
 			{
-				int get() { return usage; }
+				SlimDX::UsageId get() { return usage; }
 			}
 
 			/// <summary>
 			/// If the device is a Human Interface Device, this member contains
 			/// the HID usage page code.
 			/// </summary>
-			property int UsagePage
+			property UsagePage UsagePage
 			{
-				int get() { return usagePage; }
+				SlimDX::UsagePage get() { return usagePage; }
 			}
 
 			/// <summary>
