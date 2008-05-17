@@ -186,6 +186,11 @@ namespace SlimDX
 			void ClearState();
 			
 			/// <summary>
+			/// Clears all resource bindings from the device.
+			/// </summary>
+			void ClearAllObjects();
+			
+			/// <summary>
 			/// Copies resource data using the GPU.
 			/// </summary>
 			/// <param name="source">The source resource.</param>

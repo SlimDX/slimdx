@@ -228,6 +228,10 @@ namespace Direct3D10
 		InternalPointer->ClearState();
 	}
 	
+	void Device::ClearAllObjects() {
+		D3DX10UnsetAllDeviceObjects( InternalPointer );
+	}
+	
 	void Device::CopyResource( Resource^ source, Resource^ destination )
 	{
 		InternalPointer->CopyResource( destination->InternalPointer, source->InternalPointer );
