@@ -34,10 +34,23 @@ namespace SlimDX
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
 		
+		/// <summary>Defines the basis type of a high-order patch surface.</summary>
+		/// <unmanaged>D3DBASISTYPE</unmanaged>
 		public enum class Basis : System::Int32
 		{
+			/// <summary>
+			/// Input vertices are treated as a series of Bezier patches.
+			/// </summary>
 			Bezier = D3DBASIS_BEZIER,
+
+			/// <summary>
+			/// Input vertices are treated as control points of a B-spline surface.
+			/// </summary>
 			BSpline = D3DBASIS_BSPLINE,
+
+			/// <summary>
+			/// An interpolation basis defines the surface so that the surface goes through all the input vertices specified.
+			/// </summary>
 			CatmullRom = D3DBASIS_CATMULL_ROM,
 		};
 		
@@ -45,209 +58,618 @@ namespace SlimDX
 		/// <unmanaged>D3DBLEND</unmanaged>
 		public enum class Blend : System::Int32
 		{
+			/// <summary>
+			/// Blend factor is (0, 0, 0, 0).
+			/// </summary>
 			Zero = D3DBLEND_ZERO,
+
+			/// <summary>
+			/// Blend factor is (1, 1, 1, 1).
+			/// </summary>
 			One = D3DBLEND_ONE,
+
+			/// <summary>
+			/// Blend factor is the source color.
+			/// </summary>
 			SourceColor = D3DBLEND_SRCCOLOR,
-			InvSourceColor = D3DBLEND_INVSRCCOLOR,
+
+			/// <summary>
+			/// Blend factor is one minus the source color.
+			/// </summary>
+			InverseSourceColor = D3DBLEND_INVSRCCOLOR,
+
+			/// <summary>
+			/// Blend factor is the source alpha.
+			/// </summary>
 			SourceAlpha = D3DBLEND_SRCALPHA,
-			InvSourceAlpha = D3DBLEND_INVSRCALPHA,
+
+			/// <summary>
+			/// Blend factor is one minus the source alpha.
+			/// </summary>
+			InverseSourceAlpha = D3DBLEND_INVSRCALPHA,
+
+			/// <summary>
+			/// Blend factor is the destination alpha.
+			/// </summary>
 			DestinationAlpha = D3DBLEND_DESTALPHA,
-			InvDestinationAlpha = D3DBLEND_INVDESTALPHA,
+
+			/// <summary>
+			/// Blend factor is one minus the destination alpha.
+			/// </summary>
+			InverseDestinationAlpha = D3DBLEND_INVDESTALPHA,
+
+			/// <summary>
+			/// Blend factor is the destination color.
+			/// </summary>
 			DestinationColor = D3DBLEND_DESTCOLOR,
-			InvDestinationColor = D3DBLEND_INVDESTCOLOR,
-			SourceAlphaSat = D3DBLEND_SRCALPHASAT,
-			BothSourceAlpha = D3DBLEND_BOTHSRCALPHA,
-			BothInvSourceAlpha = D3DBLEND_BOTHINVSRCALPHA,
+
+			/// <summary>
+			/// Blend factor is one minus the destination color.
+			/// </summary>
+			InverseDestinationColor = D3DBLEND_INVDESTCOLOR,
+
+			/// <summary>
+			/// Blend factor is (f, f, f, 1); where f = min(As, 1 - Ad).
+			/// </summary>
+			SourceAlphaSaturated = D3DBLEND_SRCALPHASAT,
+
+			/// <summary>
+			/// Source blend factor is one minus the source alpha, and destination blend factor
+			/// is one minus the destination alpha.
+			/// </summary>
+			BothInverseSourceAlpha = D3DBLEND_BOTHINVSRCALPHA,
+
+			/// <summary>
+			/// Constant color blending factor used by the frame-buffer blender.
+			/// </summary>
 			BlendFactor = D3DBLEND_BLENDFACTOR,
-			InvBlendFactor = D3DBLEND_INVBLENDFACTOR,
+
+			/// <summary>
+			/// Inverted constant color blending factor used by the frame-buffer blender.
+			/// </summary>
+			InverseBlendFactor = D3DBLEND_INVBLENDFACTOR,
+
+			/// <summary>
+			/// Blend factor is the output color of the pixel shader. Only available in Direct3D9Ex.
+			/// </summary>
+			SourceColor2 = D3DBLEND_SRCCOLOR2,
+
+			/// <summary>
+			/// Blend factor is one minus the output color of the pixel shader. Only available in Direct3D9Ex.
+			/// </summary>
+			InverseSourceColor2 = D3DBLEND_INVSRCCOLOR2
 		};
 
+		/// <summary>
+		/// Defines possible source blending capabilities.
+		/// </summary>
 		[System::Flags]
 		public enum class BlendCaps : System::Int32
 		{
+			/// <summary>
+			/// The device supports <see cref="Blend.Zero"/>.
+			/// </summary>
 			Zero = D3DPBLENDCAPS_ZERO,
+
+			/// <summary>
+			/// The device supports <see cref="Blend.One"/>.
+			/// </summary>
 			One = D3DPBLENDCAPS_ONE,
+
+			/// <summary>
+			/// The device supports <see cref="Blend.SourceColor"/>.
+			/// </summary>
 			SourceColor = D3DPBLENDCAPS_SRCCOLOR,
-			InvSourceColor = D3DPBLENDCAPS_INVSRCCOLOR,
+
+			/// <summary>
+			/// The device supports <see cref="Blend.InverseSourceColor"/>.
+			/// </summary>
+			InverseSourceColor = D3DPBLENDCAPS_INVSRCCOLOR,
+
+			/// <summary>
+			/// The device supports <see cref="Blend.SourceAlpha"/>.
+			/// </summary>
 			SourceAlpha = D3DPBLENDCAPS_SRCALPHA,
-			InvSourceAlpha = D3DPBLENDCAPS_INVSRCALPHA,
+
+			/// <summary>
+			/// The device supports <see cref="Blend.InverseSourceAlpha"/>.
+			/// </summary>
+			InverseSourceAlpha = D3DPBLENDCAPS_INVSRCALPHA,
+
+			/// <summary>
+			/// The device supports <see cref="Blend.DestinationAlpha"/>.
+			/// </summary>
 			DestinationAlpha = D3DPBLENDCAPS_DESTALPHA,
-			InvDestinationAlpha = D3DPBLENDCAPS_INVDESTALPHA,
+
+			/// <summary>
+			/// The device supports <see cref="Blend.InverseDestinationAlpha"/>.
+			/// </summary>
+			InverseDestinationAlpha = D3DPBLENDCAPS_INVDESTALPHA,
+
+			/// <summary>
+			/// The device supports <see cref="Blend.DestinationColor"/>.
+			/// </summary>
 			DestinationColor = D3DPBLENDCAPS_DESTCOLOR,
-			InvDestinationColor = D3DPBLENDCAPS_INVDESTCOLOR,
+
+			/// <summary>
+			/// The device supports <see cref="Blend.InverseDestinationColor"/>.
+			/// </summary>
+			InverseDestinationColor = D3DPBLENDCAPS_INVDESTCOLOR,
+
+			/// <summary>
+			/// The device supports <see cref="Blend.SourceAlphaSaturated"/>.
+			/// </summary>
 			SourceAlphaSaturated = D3DPBLENDCAPS_SRCALPHASAT,
-			BothSourceAlpha = D3DPBLENDCAPS_BOTHSRCALPHA,
-			BothInvSourceAlpha = D3DPBLENDCAPS_BOTHINVSRCALPHA,
-			BlendFactor = D3DPBLENDCAPS_BLENDFACTOR,
+
+			/// <summary>
+			/// The device supports <see cref="Blend.BothInverseSourceAlpha"/>.
+			/// </summary>
+			BothInverseSourceAlpha = D3DPBLENDCAPS_BOTHINVSRCALPHA,
+
+			/// <summary>
+			/// The device supports <see cref="Blend.BlendFactor"/> and <see cref="Blend.InverseBlendFactor"/>
+			/// </summary>
+			BlendFactor = D3DPBLENDCAPS_BLENDFACTOR
 		};
 		
 		/// <summary>Defines the supported blend operations.</summary>
 		/// <unmanaged>D3DBLENDOP</unmanaged>
 		public enum class BlendOperation : System::Int32
 		{
+			/// <summary>
+			/// The result is the destination added to the source.
+			/// </summary>
 			Add = D3DBLENDOP_ADD,
+
+			/// <summary>
+			/// The result is the destination subtracted from the source.
+			/// </summary>
 			Subtract = D3DBLENDOP_SUBTRACT,
+
+			/// <summary>
+			/// The result is the source subtracted from the destination.
+			/// </summary>
 			ReverseSubtract = D3DBLENDOP_REVSUBTRACT,
+
+			/// <summary>
+			/// The result is the minimum of the source and destination.
+			/// </summary>
 			Minimum = D3DBLENDOP_MIN,
+
+			/// <summary>
+			/// The result is the maximum of the source and destination.
+			/// </summary>
 			Maximum = D3DBLENDOP_MAX,
 		};
 
+		/// <summary>Driver-specific capability flags.</summary>
 		[System::Flags]
 		public enum class Caps : System::Int32
 		{
+			/// <summary>
+			/// No extra capabilities defined.
+			/// </summary>
+			None = 0,
+
+			/// <summary>
+			/// Display hardware is capable of returning the current scan line.
+			/// </summary>
 			ReadScanline = D3DCAPS_READ_SCANLINE,
 		};
 
-		/// <summary>Driver capability flags.</summary>
+		/// <summary>Driver-specific capability flags.</summary>
 		/// <unmanaged>D3DCAPS2</unmanaged>
 		[System::Flags]
 		public enum class Caps2 : System::Int32
 		{
+			/// <summary>
+			/// No extra capabilities defined.
+			/// </summary>
+			None = 0,
+
+			/// <summary>
+			/// The driver supports dynamic gamma ramp adjustment in fullscreen mode.
+			/// </summary>
 			FullScreenGamma = D3DCAPS2_FULLSCREENGAMMA,
+
+			/// <summary>
+			/// The system has a calibrator installed that can automatically adjust the gamma ramp so that
+			/// the result is identical on all systems that have a calibrator.
+			/// </summary>
 			CanCalibrateGamma = D3DCAPS2_CANCALIBRATEGAMMA,
+
+			/// <summary>
+			/// The driver is capable of managing resources.
+			/// </summary>
 			CanManageResource = D3DCAPS2_CANMANAGERESOURCE,
+
+			/// <summary>
+			/// The driver supports dynamic textures.
+			/// </summary>
 			DynamicTextures = D3DCAPS2_DYNAMICTEXTURES,
-			CanAutoGenMipMap = D3DCAPS2_CANAUTOGENMIPMAP
+
+			/// <summary>
+			/// The driver is capable of automatically generating mipmaps.
+			/// </summary>
+			CanAutoGenerateMipMap = D3DCAPS2_CANAUTOGENMIPMAP
 		};
 
-		/// <summary>Driver capability flags.</summary>
+		/// <summary>Driver-specific capability flags.</summary>
 		/// <unmanaged>D3DCAPS3</unmanaged>
 		[System::Flags]
 		public enum class Caps3 : System::Int32
 		{
+			/// <summary>
+			/// No extra capabilities defined.
+			/// </summary>
+			None = 0,
+
+			/// <summary>
+			/// Indicates that the device can respect the AlphaBlendEnable render state in fullscreen mode
+			/// while using the Flip or Discard swap effect.
+			/// </summary>
 			AlphaFullScreenFlipOrDiscard = D3DCAPS3_ALPHA_FULLSCREEN_FLIP_OR_DISCARD,
+
+			/// <summary>
+			/// Indicates that the device can perform gamma correction from a windowed back buffer to
+			/// an sRGB desktop.
+			/// </summary>
 			LinearToSrgbPresentation = D3DCAPS3_LINEAR_TO_SRGB_PRESENTATION,
+
+			/// <summary>
+			/// Device can accelerate a memory copy from system memory to local video memory.
+			/// </summary>
 			CopyToVideoMemory = D3DCAPS3_COPY_TO_VIDMEM,
+
+			/// <summary>
+			/// Device can accelerate a memory copy from local video memory to system memory.
+			/// </summary>
 			CopyToSystemMemory = D3DCAPS3_COPY_TO_SYSTEMMEM,
 		};
 
+		/// <summary>
+		/// Defines possible character sets for fonts.
+		/// </summary>
 		public enum class CharacterSet : System::Int32
 		{
+			/// <summary>
+			/// The ANSI character set.
+			/// </summary>
 			Ansi = ANSI_CHARSET,
+
+			/// <summary>
+			/// The default system character set.
+			/// </summary>
 			Default = DEFAULT_CHARSET,
+
+			/// <summary>
+			/// The symbol character set.
+			/// </summary>
 			Symbol = SYMBOL_CHARSET,
+
+			/// <summary>
+			/// The ShiftJIS character set.
+			/// </summary>
 			ShiftJIS = SHIFTJIS_CHARSET,
+
+			/// <summary>
+			/// The Hangul character set.
+			/// </summary>
 			Hangul = HANGUL_CHARSET,
+
+			/// <summary>
+			/// The GB2312 character set.
+			/// </summary>
 			GB2312 = GB2312_CHARSET,
+
+			/// <summary>
+			/// The Chinese character set.
+			/// </summary>
 			ChineseBig5 = CHINESEBIG5_CHARSET,
+
+			/// <summary>
+			/// The OEM character set.
+			/// </summary>
 			Oem = OEM_CHARSET,
 
+			/// <summary>
+			/// The Johab character set.
+			/// </summary>
 			Johab = JOHAB_CHARSET,
+
+			/// <summary>
+			/// The Hebrew character set.
+			/// </summary>
 			Hebrew = HEBREW_CHARSET,
+
+			/// <summary>
+			/// The Arabic character set.
+			/// </summary>
 			Arabic = ARABIC_CHARSET,
+
+			/// <summary>
+			/// The Greek character set.
+			/// </summary>
 			Greek = GREEK_CHARSET,
+
+			/// <summary>
+			/// The Turkish character set.
+			/// </summary>
 			Turkish = TURKISH_CHARSET,
+
+			/// <summary>
+			/// The Vietnamese character set.
+			/// </summary>
 			Vietnamese = VIETNAMESE_CHARSET,
+
+			/// <summary>
+			/// The Thai character set.
+			/// </summary>
 			Thai = THAI_CHARSET,
+
+			/// <summary>
+			/// The East Europe character set.
+			/// </summary>
 			EastEurope = EASTEUROPE_CHARSET,
+
+			/// <summary>
+			/// The Russian character set.
+			/// </summary>
 			Russian = RUSSIAN_CHARSET,
 
+			/// <summary>
+			/// The Baltic character set.
+			/// </summary>
 			Baltic = BALTIC_CHARSET,
-			Mac = MAC_CHARSET,
+
+			/// <summary>
+			/// The Mac character set.
+			/// </summary>
+			Mac = MAC_CHARSET
 		};
 
-		/// <summary>These flags identify a surface to reset when calling Device.Clear.</summary>
+		/// <summary>These flags identify a surface to reset when calling <see cref="Device.Clear"/>.</summary>
 		/// <unmanaged>D3DCLEAR</unmanaged>
 		[System::Flags]
 		public enum class ClearFlags : System::Int32
 		{
+			/// <summary>
+			/// Don't clear any surfaces.
+			/// </summary>
 			None = 0,
+
+			/// <summary>
+			/// Clear the stencil surface.
+			/// </summary>
 			Stencil = D3DCLEAR_STENCIL,
+
+			/// <summary>
+			/// Clear the render target.
+			/// </summary>
 			Target = D3DCLEAR_TARGET,
+
+			/// <summary>
+			/// Clear the depth buffer.
+			/// </summary>
 			ZBuffer = D3DCLEAR_ZBUFFER
 		};
 
+		/// <summary>
+		/// Specifies a set of values that describe the current clip status.
+		/// </summary>
 		[System::Flags]
 		public enum class ClipFlags : System::Int32
 		{
+			/// <summary>
+			/// Combination of all clip flags.
+			/// </summary>
 			All = D3DCS_ALL,
+
+			/// <summary>
+			/// All vertices are clipped by the left plane of the viewing frustum.
+			/// </summary>
 			Left = D3DCS_LEFT,
+
+			/// <summary>
+			/// All vertices are clipped by the right plane of the viewing frustum.
+			/// </summary>
 			Right = D3DCS_RIGHT,
+
+			/// <summary>
+			/// All vertices are clipped by the top plane of the viewing frustum.
+			/// </summary>
 			Top = D3DCS_TOP,
+
+			/// <summary>
+			/// All vertices are clipped by the bottom plane of the viewing frustum.
+			/// </summary>
 			Bottom = D3DCS_BOTTOM,
+
+			/// <summary>
+			/// All vertices are clipped by the front plane of the viewing frustum.
+			/// </summary>
 			Front = D3DCS_FRONT,
+
+			/// <summary>
+			/// All vertices are clipped by the back plane of the viewing frustum.
+			/// </summary>
 			Back = D3DCS_BACK,
+
+			/// <summary>
+			/// Application defined clipping plane.
+			/// </summary>
 			Plane0 = D3DCS_PLANE0,
+
+			/// <summary>
+			/// Application defined clipping plane.
+			/// </summary>
 			Plane1 = D3DCS_PLANE1,
+
+			/// <summary>
+			/// Application defined clipping plane.
+			/// </summary>
 			Plane2 = D3DCS_PLANE2,
+
+			/// <summary>
+			/// Application defined clipping plane.
+			/// </summary>
 			Plane3 = D3DCS_PLANE3,
+
+			/// <summary>
+			/// Application defined clipping plane.
+			/// </summary>
 			Plane4 = D3DCS_PLANE4,
+
+			/// <summary>
+			/// Application defined clipping plane.
+			/// </summary>
 			Plane5 = D3DCS_PLANE5
 		};
 		
+		/// <summary>
+		/// Defines the location at which a color or color component must be accessed for lighting calculations.
+		/// </summary>
+		/// <unmanaged>D3DMATERIALCOLORSOURCE</unmanaged>
 		public enum class ColorSource : System::Int32
 		{
+			/// <summary>
+			/// Use the color from the current material.
+			/// </summary>
 			Material = D3DMCS_MATERIAL,
+
+			/// <summary>
+			/// Use the diffuse vertex color.
+			/// </summary>
 			Color1 = D3DMCS_COLOR1,
+
+			/// <summary>
+			/// Use the specular vertex color.
+			/// </summary>
 			Color2 = D3DMCS_COLOR2,
 		};
 		
+		/// <summary>
+		/// Flags that enable a per-channel write for the render target color buffer.
+		/// </summary>
 		[System::Flags]
 		public enum class ColorWriteEnable : System::Int32
 		{
+			/// <summary>
+			/// Allow writes to the alpha channel.
+			/// </summary>
 			Alpha = D3DCOLORWRITEENABLE_ALPHA,
+
+			/// <summary>
+			/// Allow writes to the blue channel.
+			/// </summary>
 			Blue = D3DCOLORWRITEENABLE_BLUE,
+
+			/// <summary>
+			/// Allow writes to the green channel.
+			/// </summary>
 			Green = D3DCOLORWRITEENABLE_GREEN,
+
+			/// <summary>
+			/// Allow writes to the red channel.
+			/// </summary>
 			Red = D3DCOLORWRITEENABLE_RED,
+
+			/// <summary>
+			/// Allow writes to all channels.
+			/// </summary>
 			All = Alpha | Blue | Green | Red
 		};
 
-		/// <summary>Comparison operations.</summary>
+		/// <summary>Specifies possible compare functions.</summary>
 		/// <unmanaged>D3DCMPFUNC</unmanaged>
 		public enum class Compare
 		{
 			/// <summary>
-			/// Never accept
+			/// Always fail the test.
 			/// </summary>
 			Never = D3DCMP_NEVER,
 
 			/// <summary>
-			/// Accept if less than.
+			/// Accept the new pixel if its value is less than the value of the current pixel.
 			/// </summary>
 			Less = D3DCMP_LESS,
 
 			/// <summary>
-			/// Accept if equal.
+			/// Accept the new pixel if its value equals the value of the current pixel.
 			/// </summary>
 			Equal = D3DCMP_EQUAL,
 
 			/// <summary>
-			/// Accept if equal or less than.
+			/// Accept the new pixel if its value is less than or equal to the value of the current pixel.
 			/// </summary>
 			LessEqual = D3DCMP_LESSEQUAL,
 
 			/// <summary>
-			/// Accept if greater than.
+			/// Accept the new pixel if its value is greater than the value of the current pixel.
 			/// </summary>
 			Greater = D3DCMP_GREATER,
 
 			/// <summary>
-			/// Accept if not equal.
+			/// Accept the new pixel if its value does not equal the value of the current pixel.
 			/// </summary>
 			NotEqual = D3DCMP_NOTEQUAL,
 
 			/// <summary>
-			/// Accept if greater than or equal
+			/// Accept the new pixel if its value is greater than or equal to the value of the current pixel.
 			/// </summary>
 			GreaterEqual = D3DCMP_GREATEREQUAL,
 
 			/// <summary>
-			/// Always accept.
+			/// Always pass the test.
 			/// </summary>
 			Always = D3DCMP_ALWAYS
 		};
 
+		/// <summary>
+		/// Specifies a set of flags that describe the supported compare capabilities of the device.
+		/// </summary>
 		[System::Flags]
 		public enum class CompareCaps : System::Int32
 		{
+			/// <summary>
+			/// The device supports <see cref="Compare.Never"/>.
+			/// </summary>
 			Never = D3DPCMPCAPS_NEVER,
+
+			/// <summary>
+			/// The device supports <see cref="Compare.Less"/>.
+			/// </summary>
 			Less = D3DPCMPCAPS_LESS,
+
+			/// <summary>
+			/// The device supports <see cref="Compare.Equal"/>.
+			/// </summary>
 			Equal = D3DPCMPCAPS_EQUAL,
+
+			/// <summary>
+			/// The device supports <see cref="Compare.lessEqual"/>.
+			/// </summary>
 			LessEqual = D3DPCMPCAPS_LESSEQUAL,
+
+			/// <summary>
+			/// The device supports <see cref="Compare.Greater"/>.
+			/// </summary>
 			Greater = D3DPCMPCAPS_GREATER,
+
+			/// <summary>
+			/// The device supports <see cref="Compare.NotEqual"/>.
+			/// </summary>
 			NotEqual = D3DPCMPCAPS_NOTEQUAL,
+
+			/// <summary>
+			/// The device supports <see cref="Compare.GreaterEqual"/>.
+			/// </summary>
 			GreaterEqual = D3DPCMPCAPS_GREATEREQUAL,
-			Always = D3DPCMPCAPS_ALWAYS,
+
+			/// <summary>
+			/// The device supports <see cref="Compare.Always"/>.
+			/// </summary>
+			Always = D3DPCMPCAPS_ALWAYS
 		};
 
 		/// <summary>A combination of one or more flags that control the device creation behavior.</summary>
@@ -255,28 +677,143 @@ namespace SlimDX
 		[System::Flags]
 		public enum class CreateFlags : System::Int32
 		{
+			/// <summary>
+			/// No extra creation flags specified.
+			/// </summary>
 			None = 0,
+
+			/// <summary>
+			/// Asks the device to drive all heads that the master adapter owns.
+			/// </summary>
 			AdapterGroupDevice = D3DCREATE_ADAPTERGROUP_DEVICE,
+
+			/// <summary>
+			/// Direct3D will managed resources instead of the driver.
+			/// </summary>
 			DisableDriverManagement = D3DCREATE_DISABLE_DRIVER_MANAGEMENT,
+
+			/// <summary>
+			/// Direct3D will managed resources instead of the driver. Errors will still be thrown
+			/// for conditions such as insufficient video memory.
+			/// </summary>
 			DisableExtendedDriverManagement = D3DCREATE_DISABLE_DRIVER_MANAGEMENT_EX,
+
+			/// <summary>
+			/// Causes the runtime to not register hotkeys for print screen. Only available in Direct3D9Ex.
+			/// </summary>
+			DisablePrintScreen = D3DCREATE_DISABLE_PRINTSCREEN,
+
+			/// <summary>
+			/// Restrict computation to the main application thread. Only available on Windows Vista.
+			/// </summary>
+			DisablePsgpThreading = D3DCREATE_DISABLE_PSGP_THREADING,
+
+			/// <summary>
+			/// Enables the gathering of presentation statistics. Only available in Direct3D9Ex.
+			/// </summary>
+			EnablePresentStatistics = D3DCREATE_ENABLE_PRESENTSTATS,
+
+			/// <summary>
+			/// Preserve the floating point precision used in the calling thread.
+			/// </summary>
 			FpuPreserve = D3DCREATE_FPU_PRESERVE,
+
+			/// <summary>
+			/// Tells the device to use hardware vertex processing.
+			/// </summary>
 			HardwareVertexProcessing = D3DCREATE_HARDWARE_VERTEXPROCESSING,
+
+			/// <summary>
+			/// Tells the device to use mixed vertex processing.
+			/// </summary>
 			MixedVertexProcessing = D3DCREATE_MIXED_VERTEXPROCESSING,
+
+			/// <summary>
+			/// Indicates that the application requests Direct3D to be multithread safe.
+			/// </summary>
 			Multithreaded = D3DCREATE_MULTITHREADED,
+
+			/// <summary>
+			/// Indicates that Direct3D must not alter the focus window in any way.
+			/// </summary>
 			NoWindowChanges = D3DCREATE_NOWINDOWCHANGES,
+
+			/// <summary>
+			/// Specifies that the device does not support Get* calls for anything that can be stored
+			/// in state blocks.
+			/// </summary>
 			PureDevice = D3DCREATE_PUREDEVICE,
+
+			/// <summary>
+			/// Allows screensavers during a fullscreen application.
+			/// </summary>
+			AllowScreensavers = D3DCREATE_SCREENSAVER,
+
+			/// <summary>
+			/// Tells the device to use software vertex processing.
+			/// </summary>
 			SoftwareVertexProcessing = D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+		};
+
+		/// <summary>
+		/// Specifies how to combine glyph data from the source and destination surfaces in a ComposeRect operation.
+		/// </summary>
+		/// <unmanaged>D3DCOMPOSERECTSOP</unmanaged>
+		public enum class ComposeRectOperation : System::Int32
+		{
+			/// <summary>
+			/// Copy the source to the destination.
+			/// </summary>
+			Copy = D3DCOMPOSERECTS_COPY,
+
+			/// <summary>
+			/// Bitwise OR the source and the destination.
+			/// </summary>
+			Or = D3DCOMPOSERECTS_OR,
+
+			/// <summary>
+			/// Bitwise AND the source and the destination.
+			/// </summary>
+			And = D3DCOMPOSERECTS_AND,
+
+			/// <summary>
+			/// Copy the negated source to the destination.
+			/// </summary>
+			Negate = D3DCOMPOSERECTS_NEG
 		};
 		
 		/// <summary>Defines the faces of a cubemap.</summary>
 		/// <unmanaged>D3DCUBEMAP_FACES</unmanaged>
 		public enum class CubeMapFace : System::Int32
 		{
+			/// <summary>
+			/// Positive x-face of the cubemap.
+			/// </summary>
 			PositiveX = D3DCUBEMAP_FACE_POSITIVE_X,
+
+			/// <summary>
+			/// Negative x-face of the cubemap.
+			/// </summary>
 			NegativeX = D3DCUBEMAP_FACE_NEGATIVE_X,
+
+			/// <summary>
+			/// Positive y-face of the cubemap.
+			/// </summary>
 			PositiveY = D3DCUBEMAP_FACE_POSITIVE_Y,
+
+			/// <summary>
+			/// Negative y-face of the cubemap.
+			/// </summary>
 			NegativeY = D3DCUBEMAP_FACE_NEGATIVE_Y,
+
+			/// <summary>
+			/// Positive z-face of the cubemap.
+			/// </summary>
 			PositiveZ = D3DCUBEMAP_FACE_POSITIVE_Z,
+
+			/// <summary>
+			/// Negative z-face of the cubemap.
+			/// </summary>
 			NegativeZ = D3DCUBEMAP_FACE_NEGATIVE_Z
 		};
 		
@@ -284,8 +821,19 @@ namespace SlimDX
 		/// <unmanaged>D3DCULL</unmanaged>
 		public enum class Cull : System::Int32
 		{
+			/// <summary>
+			/// Cull back faces with clockwise vertices.
+			/// </summary>
 			Clockwise = D3DCULL_CW,
+
+			/// <summary>
+			/// Cull back faces with counterclockwise vertices.
+			/// </summary>
 			Counterclockwise = D3DCULL_CCW,
+
+			/// <summary>
+			/// Do not cull back faces.
+			/// </summary>
 			None = D3DCULL_NONE
 		};
 
@@ -294,8 +842,32 @@ namespace SlimDX
 		[System::Flags]
 		public enum class CursorCaps : System::Int32
 		{
+			/// <summary>
+			/// The driver supports color cursors.
+			/// </summary>
 			Color = D3DCURSORCAPS_COLOR,
-			LowRes = D3DCURSORCAPS_LOWRES,
+
+			/// <summary>
+			/// The driver supports cursors in low resolution modes.
+			/// </summary>
+			LowResolution = D3DCURSORCAPS_LOWRES,
+		};
+
+		/// <summary>
+		/// Defines settings for debug monitor tokens.
+		/// </summary>
+		/// <unmanaged>D3DDEBUGMONITORTOKENS</unmanaged>
+		public enum class DebugMonitorTokens : System::Int32
+		{
+			/// <summary>
+			/// Enable the debug monitor.
+			/// </summary>
+			Enable = D3DDMT_ENABLE,
+
+			/// <summary>
+			/// Disable the debug monitor.
+			/// </summary>
+			Disable = D3DDMT_DISABLE
 		};
 		
 		/// <summary>
@@ -305,12 +877,39 @@ namespace SlimDX
 		/// <unmanaged>D3DDECLMETHOD</unmanaged>
 		public enum class DeclarationMethod : System::Byte
 		{
+			/// <summary>
+			/// Default value. The tessellator copies the vertex data as is, with no additional calculations.
+			/// </summary>
 			Default = D3DDECLMETHOD_DEFAULT,
+
+			/// <summary>
+			/// Computes the tangent at a point on the rectangle or triangle patch in the U direction.
+			/// </summary>
 			PartialU = D3DDECLMETHOD_PARTIALU,
+
+			/// <summary>
+			/// Computes the tangent at a point on the rectangle or triangle patch in the V direction.
+			/// </summary>
 			PartialV = D3DDECLMETHOD_PARTIALV,
+
+			/// <summary>
+			/// Computes the normal at a point on the rectangle or triangle patch by taking the cross product of the two tangents.
+			/// </summary>
 			CrossUV = D3DDECLMETHOD_CROSSUV,
+
+			/// <summary>
+			/// Copies out the U and V values at a point on the rectangle or triangle patch.
+			/// </summary>
 			UV = D3DDECLMETHOD_UV,
+
+			/// <summary>
+			/// Look up a displacement map.
+			/// </summary>
 			Lookup = D3DDECLMETHOD_LOOKUP,
+
+			/// <summary>
+			/// Lookup a presampled displacement map.
+			/// </summary>
 			LookupPresampled = D3DDECLMETHOD_LOOKUPPRESAMPLED
 		};
 
@@ -318,61 +917,227 @@ namespace SlimDX
 		/// <unmanaged>D3DDECLTYPE</unmanaged>
 		public enum class DeclarationType : System::Byte
 		{
+			/// <summary>
+			/// One component float.
+			/// </summary>
 			Float1 = D3DDECLTYPE_FLOAT1,
+
+			/// <summary>
+			/// Two component float.
+			/// </summary>
 			Float2 = D3DDECLTYPE_FLOAT2,
+
+			/// <summary>
+			/// Three component float.
+			/// </summary>
 			Float3 = D3DDECLTYPE_FLOAT3,
+
+			/// <summary>
+			/// Four component float.
+			/// </summary>
 			Float4 = D3DDECLTYPE_FLOAT4,
+
+			/// <summary>
+			/// Four component, packed, unsigned bytes mapped to the 0 to 1 range. Input is a color
+			/// and is expanded to RGBA order.
+			/// </summary>
 			Color = D3DDECLTYPE_D3DCOLOR,
 
+			/// <summary>
+			/// Four component, unsigned byte.
+			/// </summary>
 			Ubyte4 = D3DDECLTYPE_UBYTE4,
+
+			/// <summary>
+			/// Two component, signed short.
+			/// </summary>
 			Short2 = D3DDECLTYPE_SHORT2,
+
+			/// <summary>
+			/// Four component, signed short.
+			/// </summary>
 			Short4 = D3DDECLTYPE_SHORT4,
 
+			/// <summary>
+			/// Four component byte with each byte normalized by dividing by 255.0f.
+			/// </summary>
 			UByte4N = D3DDECLTYPE_UBYTE4N,
+
+			/// <summary>
+			/// Normalized, two component, signed short normalized by dividing by 32767.0f.
+			/// </summary>
 			Short2N = D3DDECLTYPE_SHORT2N,
+
+			/// <summary>
+			/// Normalized, four component, signed short normalized by dividing by 32767.0f.
+			/// </summary>
 			Short4N = D3DDECLTYPE_SHORT4N,
+
+			/// <summary>
+			/// Normalized, two component, unsigned short normalized by dividing by 65535.0f.
+			/// </summary>
 			UShort2N = D3DDECLTYPE_USHORT2N,
+
+			/// <summary>
+			/// Normalized, four component, unsigned short normalized by dividing by 65535.0f.
+			/// </summary>
 			UShort4N = D3DDECLTYPE_USHORT4N,
+
+			/// <summary>
+			/// Three component, unsigned, 10 10 10 format.
+			/// </summary>
 			UDec3 = D3DDECLTYPE_UDEC3,
+
+			/// <summary>
+			/// Three component, signed, 10 10 10 format normalized by dividing by 511.0f.
+			/// </summary>
 			Dec3N = D3DDECLTYPE_DEC3N,
+
+			/// <summary>
+			/// Two component, 16 bit, floating point.
+			/// </summary>
 			HalfTwo = D3DDECLTYPE_FLOAT16_2,
+
+			/// <summary>
+			/// Four component, 16 bit, floating point.
+			/// </summary>
 			HalfFour = D3DDECLTYPE_FLOAT16_4,
 
+			/// <summary>
+			/// Type field in the declaration is unused.
+			/// </summary>
 			Unused = D3DDECLTYPE_UNUSED
 		};
 
+		/// <summary>
+		/// Specifies the declaration types supported by the device.
+		/// </summary>
 		[System::Flags]
 		public enum class DeclarationTypeCaps
 		{
+			/// <summary>
+			/// The device supports <see cref="DeclarationType.UByte4"/>.
+			/// </summary>
 			UByte4 = D3DDTCAPS_UBYTE4,
+
+			/// <summary>
+			/// The device supports <see cref="DeclarationType.UByte4N"/>.
+			/// </summary>
 			UByte4N = D3DDTCAPS_UBYTE4N,
+
+			/// <summary>
+			/// The device supports <see cref="DeclarationType.Short2N"/>.
+			/// </summary>
 			Short2N = D3DDTCAPS_SHORT2N,
+
+			/// <summary>
+			/// The device supports <see cref="DeclarationType.Short4N"/>.
+			/// </summary>
 			Short4N = D3DDTCAPS_SHORT4N,
+
+			/// <summary>
+			/// The device supports <see cref="DeclarationType.UShort2N"/>.
+			/// </summary>
 			UShort2N = D3DDTCAPS_USHORT2N,
+
+			/// <summary>
+			/// The device supports <see cref="DeclarationType.UShort4N"/>.
+			/// </summary>
 			UShort4N = D3DDTCAPS_USHORT4N,
+
+			/// <summary>
+			/// The device supports <see cref="DeclarationType.UDec3"/>.
+			/// </summary>
 			UDec3 = D3DDTCAPS_UDEC3,
+
+			/// <summary>
+			/// The device supports <see cref="DeclarationType.Dec3N"/>.
+			/// </summary>
 			Dec3N = D3DDTCAPS_DEC3N,
-			Float16_2 = D3DDTCAPS_FLOAT16_2,
-			Float16_4 = D3DDTCAPS_FLOAT16_4,
+
+			/// <summary>
+			/// The device supports <see cref="DeclarationType.HalfTwo"/>.
+			/// </summary>
+			HalfTwo = D3DDTCAPS_FLOAT16_2,
+
+			/// <summary>
+			/// The device supports <see cref="DeclarationType.HalfFour"/>.
+			/// </summary>
+			HalfFour = D3DDTCAPS_FLOAT16_4,
 		};
 
 		/// <summary>Identifies the intended use of vertex data.</summary>
 		/// <unmanaged>D3DDECLUSAGE</unmanaged>
 		public enum class DeclarationUsage : System::Byte
 		{
+			/// <summary>
+			/// Position data ranging from (-1, -1) to (1, 1).
+			/// </summary>
 			Position = D3DDECLUSAGE_POSITION,
+
+			/// <summary>
+			/// Blending weight data.
+			/// </summary>
 			BlendWeight = D3DDECLUSAGE_BLENDWEIGHT,
+
+			/// <summary>
+			/// Blending indices data.
+			/// </summary>
 			BlendIndices = D3DDECLUSAGE_BLENDINDICES,
+
+			/// <summary>
+			/// Vertex normal data.
+			/// </summary>
 			Normal = D3DDECLUSAGE_NORMAL,
+
+			/// <summary>
+			/// Point size data.
+			/// </summary>
 			PointSize = D3DDECLUSAGE_PSIZE,
+
+			/// <summary>
+			/// Texture coordinate data.
+			/// </summary>
 			TextureCoordinate = D3DDECLUSAGE_TEXCOORD,
+
+			/// <summary>
+			/// Vertex tangent data.
+			/// </summary>
 			Tangent = D3DDECLUSAGE_TANGENT,
+
+			/// <summary>
+			/// Vertex binormal data.
+			/// </summary>
 			Binormal = D3DDECLUSAGE_BINORMAL,
+
+			/// <summary>
+			/// Single positive floating point value.
+			/// </summary>
 			TessellateFactor = D3DDECLUSAGE_TESSFACTOR,
+
+			/// <summary>
+			/// Vertex data contains transformed position data ranging from (0, 0) to (viewport width, viewport height).
+			/// </summary>
 			PositionTransformed = D3DDECLUSAGE_POSITIONT,
+
+			/// <summary>
+			/// Vertex data contains diffuse or specular color.
+			/// </summary>
 			Color = D3DDECLUSAGE_COLOR,
+
+			/// <summary>
+			/// Vertex data contains fog data.
+			/// </summary>
 			Fog = D3DDECLUSAGE_FOG,
+
+			/// <summary>
+			/// Vertex data contains depth data.
+			/// </summary>
 			Depth = D3DDECLUSAGE_DEPTH,
+
+			/// <summary>
+			/// Vertex data contains sampler data.
+			/// </summary>
 			Sample = D3DDECLUSAGE_SAMPLE
 		};
 		
@@ -380,9 +1145,24 @@ namespace SlimDX
 		/// <unmanaged>D3DDEGREETYPE</unmanaged>
 		public enum class Degree : System::Int32
 		{
+			/// <summary>
+			/// Curve is described by variables of first order.
+			/// </summary>
 			Linear = D3DDEGREE_LINEAR,
+
+			/// <summary>
+			/// Curve is described by variables of second order.
+			/// </summary>
 			Quadratic = D3DDEGREE_QUADRATIC,
+
+			/// <summary>
+			/// Curve is described by variables of third order.
+			/// </summary>
 			Cubic = D3DDEGREE_CUBIC,
+
+			/// <summary>
+			/// Curve is described by variables of fourth order.
+			/// </summary>
 			Quintic = D3DDEGREE_QUINTIC,
 		};
 
@@ -391,37 +1171,146 @@ namespace SlimDX
 		[System::Flags]
 		public enum class DevCaps2
 		{
+			/// <summary>
+			/// Device supports stream offsets.
+			/// </summary>
 			StreamOffset = D3DDEVCAPS2_STREAMOFFSET,
+
+			/// <summary>
+			/// Device supports displacement maps for N-patches.
+			/// </summary>
 			DMapNPatch = D3DDEVCAPS2_DMAPNPATCH,
+
+			/// <summary>
+			/// Device supports adaptive tessellation of RT-patches.
+			/// </summary>
 			AdaptiveTessRTPatch = D3DDEVCAPS2_ADAPTIVETESSRTPATCH,
+
+			/// <summary>
+			/// Device supports adaptive tessellation of N-patches.
+			/// </summary>
 			AdaptiveTessNPatch = D3DDEVCAPS2_ADAPTIVETESSNPATCH,
+
+			/// <summary>
+			/// Device supports texture stretching using a texture as the source.
+			/// </summary>
 			CanStretchRectFromTextures = D3DDEVCAPS2_CAN_STRETCHRECT_FROM_TEXTURES,
+
+			/// <summary>
+			/// Devices supports presampled displacement maps for N-patches.
+			/// </summary>
 			PresampledMapNPatch = D3DDEVCAPS2_PRESAMPLEDDMAPNPATCH,
+
+			/// <summary>
+			/// Multiple vertex elements can share the same stream offset in a stream.
+			/// </summary>
 			VertexElementsCanShareStreamOffset = D3DDEVCAPS2_VERTEXELEMENTSCANSHARESTREAMOFFSET,
 		};
 
+		/// <summary>
+		/// Flags identifying the capabilities of the device.
+		/// </summary>
 		[System::Flags]
 		public enum class DeviceCaps : System::Int32
 		{
+			/// <summary>
+			/// Device can use execute buffers from system memory.
+			/// </summary>
 			ExecuteSystemMemory = D3DDEVCAPS_EXECUTESYSTEMMEMORY,
+
+			/// <summary>
+			/// Device can use execute buffers from video memory.
+			/// </summary>
 			ExecuteVideoMemory = D3DDEVCAPS_EXECUTEVIDEOMEMORY,
+
+			/// <summary>
+			/// Device can use buffers from system memory for transformed and lit vertices.
+			/// </summary>
 			TLVertexSystemMemory = D3DDEVCAPS_TLVERTEXSYSTEMMEMORY,
+
+			/// <summary>
+			/// Device can use buffers from video memory for transformed and lit vertices.
+			/// </summary>
 			TLVertexVideoMemory = D3DDEVCAPS_TLVERTEXVIDEOMEMORY,
+
+			/// <summary>
+			/// Device can retrieve textures from system memory.
+			/// </summary>
 			TextureSystemMemory = D3DDEVCAPS_TEXTURESYSTEMMEMORY,
+
+			/// <summary>
+			/// Device can retrieve textures from video memory.
+			/// </summary>
 			TextureVideoMemory = D3DDEVCAPS_TEXTUREVIDEOMEMORY,
+
+			/// <summary>
+			/// Device exports a DrawPrimitive aware HAL.
+			/// </summary>
 			DrawPrimTLVertex = D3DDEVCAPS_DRAWPRIMTLVERTEX,
+
+			/// <summary>
+			/// Device can queue rendering commands after a page flip.
+			/// </summary>
 			CanRenderAfterFlip = D3DDEVCAPS_CANRENDERAFTERFLIP,
+
+			/// <summary>
+			/// Device can retrieve textures from non-local video memory.
+			/// </summary>
 			TextureNonLocalVideoMemory = D3DDEVCAPS_TEXTURENONLOCALVIDMEM,
+
+			/// <summary>
+			/// Device can support at least a DirectX 5-compliant driver.
+			/// </summary>
 			DrawPrimitives2 = D3DDEVCAPS_DRAWPRIMITIVES2,
+
+			/// <summary>
+			/// Device is texturing from separate memory pools.
+			/// </summary>
 			SeparateTextureMemory = D3DDEVCAPS_SEPARATETEXTUREMEMORIES,
+
+			/// <summary>
+			/// Device can support at least a DirectX 7-compliant driver.
+			/// </summary>
 			DrawPrimitives2Extended = D3DDEVCAPS_DRAWPRIMITIVES2EX,
+
+			/// <summary>
+			/// Device can support hardware transformation and lighting.
+			/// </summary>
 			HWTransformAndLight = D3DDEVCAPS_HWTRANSFORMANDLIGHT,
+
+			/// <summary>
+			/// Device supports blits from system-memory textures to nonlocal video-memory textures.
+			/// </summary>
 			CanBlitSysToNonLocal = D3DDEVCAPS_CANBLTSYSTONONLOCAL,
+
+			/// <summary>
+			/// Device has hardware acceleration for scene rasterization.
+			/// </summary>
 			HWRasterization = D3DDEVCAPS_HWRASTERIZATION,
+
+			/// <summary>
+			/// Device can support rasterization, transform, lighting, and shading in hardware.
+			/// </summary>
 			PureDevice = D3DDEVCAPS_PUREDEVICE,
+
+			/// <summary>
+			/// Device supports quintic bezier curves and b-splines.
+			/// </summary>
 			QuinticRTPatches = D3DDEVCAPS_QUINTICRTPATCHES,
+
+			/// <summary>
+			/// Device supports rectangular and triangular patches.
+			/// </summary>
 			RTPatches = D3DDEVCAPS_RTPATCHES,
+
+			/// <summary>
+			/// The device does not require caching of any patch information.
+			/// </summary>
 			RTPatchHandleZero = D3DDEVCAPS_RTPATCHHANDLEZERO,
+
+			/// <summary>
+			/// Device supports N-patches.
+			/// </summary>
 			NPatches = D3DDEVCAPS_NPATCHES,
 		};
 		
@@ -429,76 +1318,296 @@ namespace SlimDX
 		/// <unmanaged>D3DDEVTYPE</unmanaged>
 		public enum class DeviceType : System::Int32
 		{
+			/// <summary>
+			/// Hardware rasterization.
+			/// </summary>
 			Hardware = D3DDEVTYPE_HAL,
+
+			/// <summary>
+			/// Initialize Direct3D on a computer that has neither hardware nor reference rasterization available.
+			/// </summary>
 			NullReference = D3DDEVTYPE_NULLREF,
+
+			/// <summary>
+			/// Direct3D features are implemented in software.
+			/// </summary>
 			Reference = D3DDEVTYPE_REF,
+
+			/// <summary>
+			/// A pluggable software renderer has been registered. Not supported by SlimDX.
+			/// </summary>
 			Software = D3DDEVTYPE_SW
 		};
 		
+		/// <summary>
+		/// Specifies formatting options for text rendering.
+		/// </summary>
 		[System::Flags]
 		public enum class DrawTextFormat : System::Int32
 		{
+			/// <summary>
+			/// Align the text to the top.
+			/// </summary>
 			Top = DT_TOP,
+
+			/// <summary>
+			/// Align the text to the left.
+			/// </summary>
 			Left = DT_LEFT,
+
+			/// <summary>
+			/// Align the text to the center.
+			/// </summary>
 			Center = DT_CENTER,
+
+			/// <summary>
+			/// Align the text to the right.
+			/// </summary>
 			Right = DT_RIGHT,
+
+			/// <summary>
+			/// Vertically align the text to the center.
+			/// </summary>
 			VerticalCenter = DT_VCENTER,
+
+			/// <summary>
+			/// Align the text to the bottom.
+			/// </summary>
 			Bottom = DT_BOTTOM,
+
+			/// <summary>
+			/// Allow word breaks.
+			/// </summary>
 			WordBreak = DT_WORDBREAK,
+
+			/// <summary>
+			/// Force all text to a single line.
+			/// </summary>
 			SingleLine = DT_SINGLELINE,
+
+			/// <summary>
+			/// Expand tab characters.
+			/// </summary>
 			ExpandTabs = DT_EXPANDTABS,
+
+			/// <summary>
+			/// Don't clip the text.
+			/// </summary>
 			NoClip = DT_NOCLIP,
+
+			/// <summary>
+			/// Calculate the dimensions of the text.
+			/// </summary>
 			CalcRect = DT_CALCRECT,
+
+			/// <summary>
+			/// Rendering the text in right-to-left reading order.
+			/// </summary>
 			RtlReading = DT_RTLREADING,
 		};
 		
+		/// <summary>
+		/// Specifies possible driver levels.
+		/// </summary>
 		public enum class DriverLevel : System::Int32
 		{
+			/// <summary>
+			/// The driver supports at least Direct3D7.
+			/// </summary>
 			Direct3D7 = 700,
+
+			/// <summary>
+			/// The driver supports at least Direct3D8.
+			/// </summary>
 			Direct3D8 = 800,
+
+			/// <summary>
+			/// The driver supports at least Direct3D9.
+			/// </summary>
 			Direct3D9 = 900,
 		};
+
+		/// <summary>
+		/// Specifies how the monitor being used to display a fullscreen application is rotated.
+		/// </summary>
+		/// <unmanaged>D3DDISPLAYROTATION</unmanaged>
+		public enum class DisplayRotation : System::Int32
+		{
+			/// <summary>
+			/// Display is not rotated.
+			/// </summary>
+			Identity = D3DDISPLAYROTATION_IDENTITY,
+
+			/// <summary>
+			/// Display is rotated 90 degrees.
+			/// </summary>
+			Rotation90 = D3DDISPLAYROTATION_90,
+
+			/// <summary>
+			/// Display is rotated 180 degrees.
+			/// </summary>
+			Rotation180 = D3DDISPLAYROTATION_180,
+
+			/// <summary>
+			/// Display is rotated 270 degrees.
+			/// </summary>
+			Rotation270 = D3DDISPLAYROTATION_270
+		};
 		
+		/// <summary>
+		/// Defines constants describing the fill mode.
+		/// </summary>
+		/// <unmanaged>D3DFILLMODE</unmanaged>
 		public enum class FillMode : System::Int32
 		{
+			/// <summary>
+			/// Fill points.
+			/// </summary>
 			Point = D3DFILL_POINT,
+
+			/// <summary>
+			/// Fill wireframe.
+			/// </summary>
 			Wireframe = D3DFILL_WIREFRAME,
+
+			/// <summary>
+			/// Fill solid.
+			/// </summary>
 			Solid = D3DFILL_SOLID
 		};
 
+		/// <summary>
+		/// Defines the filter capabilities of the device.
+		/// </summary>
+		/// <unmanaged>D3DPTFILTERCAPS</unmanaged>
 		[System::Flags]
 		public enum class FilterCaps : System::Int32
 		{
+			/// <summary>
+			/// Device supports per-stage point-sample filtering for minifying textures.
+			/// </summary>
 			MinPoint = D3DPTFILTERCAPS_MINFPOINT,
+
+			/// <summary>
+			/// Device supports per-stage linear filtering for minifying textures.
+			/// </summary>
 			MinLinear = D3DPTFILTERCAPS_MINFLINEAR,
+
+			/// <summary>
+			/// Device supports per-stage anisotropic filtering for minifying textures.
+			/// </summary>
 			MinAnisotropic = D3DPTFILTERCAPS_MINFANISOTROPIC,
+
+			/// <summary>
+			/// Device supports per-stage pyramidal sample filtering for minifying textures.
+			/// </summary>
 			MinPyramidalQuad = D3DPTFILTERCAPS_MINFPYRAMIDALQUAD,
+
+			/// <summary>
+			/// Device supports per-stage Gaussian quad filtering for minifying textures.
+			/// </summary>
 			MinGaussianQuad = D3DPTFILTERCAPS_MINFGAUSSIANQUAD,
+
+			/// <summary>
+			/// Device supports per-stage point-sample filtering for mipmaps.
+			/// </summary>
 			MipPoint = D3DPTFILTERCAPS_MIPFPOINT,
+
+			/// <summary>
+			/// Device supports per-stage linear filtering for mipmaps.
+			/// </summary>
 			MipLinear = D3DPTFILTERCAPS_MIPFLINEAR,
+
+			/// <summary>
+			/// Device supports per-stage point-sample filtering for magnifying textures.
+			/// </summary>
 			MagPoint = D3DPTFILTERCAPS_MAGFPOINT,
+
+			/// <summary>
+			/// Device supports per-stage linaer filtering for magnifying textures.
+			/// </summary>
 			MagLinear = D3DPTFILTERCAPS_MAGFLINEAR,
+
+			/// <summary>
+			/// Device supports per-stage anisotropic filtering for magnifying textures.
+			/// </summary>
 			MagAnisotropic = D3DPTFILTERCAPS_MAGFANISOTROPIC,
+
+			/// <summary>
+			/// Device supports per-stage pyramidal sample filtering for magnifying textures.
+			/// </summary>
 			MagPyramidalQuad = D3DPTFILTERCAPS_MAGFPYRAMIDALQUAD,
+
+			/// <summary>
+			/// Device supports per-stage Gaussian quad filtering for magnifying textures.
+			/// </summary>
 			MagGaussianQuad = D3DPTFILTERCAPS_MAGFGAUSSIANQUAD,
 		};
 
+		/// <summary>
+		/// Device constants that describe the fog mode.
+		/// </summary>
 		public enum class FogMode : System::Int32
 		{
+			/// <summary>
+			/// No fog effect.
+			/// </summary>
 			None = D3DFOG_NONE,
+
+			/// <summary>
+			/// Fog effect intensifies exponentially.
+			/// </summary>
 			Exponential = D3DFOG_EXP,
+
+			/// <summary>
+			/// Fog effect intesifies exponentially with the square of the distance.
+			/// </summary>
 			ExponentialSquared = D3DFOG_EXP2,
+
+			/// <summary>
+			/// Fog effect intesifies linearly between the start and end points.
+			/// </summary>
 			Linear = D3DFOG_LINEAR
 		};
 		
+		/// <summary>
+		/// Specifies quality options for font rendering.
+		/// </summary>
 		public enum class FontQuality : System::Int32
 		{
+			/// <summary>
+			/// Default quality levels.
+			/// </summary>
 			Default = DEFAULT_QUALITY,
+
+			/// <summary>
+			/// Draft quality.
+			/// </summary>
 			Draft = DRAFT_QUALITY,
+
+			/// <summary>
+			/// Proof quality.
+			/// </summary>
 			Proof = PROOF_QUALITY,
+
+			/// <summary>
+			/// Non-antialiased quality.
+			/// </summary>
 			NonAntialiased = NONANTIALIASED_QUALITY,
+
+			/// <summary>
+			/// Antialiased quality.
+			/// </summary>
 			Antialiased = ANTIALIASED_QUALITY,
+
+			/// <summary>
+			/// Clear type quality.
+			/// </summary>
 			ClearType = CLEARTYPE_QUALITY,
+
+			/// <summary>
+			/// Clear type natural quality.
+			/// </summary>
 			ClearTypeNatural = CLEARTYPE_NATURAL_QUALITY,
 		};
 
