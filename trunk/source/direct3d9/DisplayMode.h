@@ -27,26 +27,79 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		/// <summary>Describes the display mode.</summary>
+		/// <summary>Describes a display mode.</summary>
 		/// <unmanaged>D3DDISPLAYMODE</unmanaged>
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class DisplayMode : System::IEquatable<DisplayMode>
 		{
 		public:
+			/// <summary>
+			/// Screen width, in pixels.
+			/// </summary>
 			property int Width;
+
+			/// <summary>
+			/// Screen height, in pixels.
+			/// </summary>
             property int Height;
+
+			/// <summary>
+			/// Refresh rate of the monitor.
+			/// </summary>
             property int RefreshRate;
+
+			/// <summary>
+			/// The surface format of the display mode.
+			/// </summary>
             property Format Format;
 
+			/// <summary>
+			/// Tests for equality between two objects.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator == ( DisplayMode left, DisplayMode right );
+
+			/// <summary>
+			/// Tests for inequality between two objects.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator != ( DisplayMode left, DisplayMode right );
 
+			/// <summary>
+			/// Returns the hash code for this instance.
+			/// </summary>
+			/// <returns>A 32-bit signed integer hash code.</returns>
 			virtual int GetHashCode() override;
+
+			/// <summary>
+			/// Returns a value that indicates whether the current instance is equal to a specified object. 
+			/// </summary>
+			/// <param name="obj">Object to make the comparison with.</param>
+			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 			virtual bool Equals( System::Object^ obj ) override;
+
+			/// <summary>
+			/// Returns a value that indicates whether the current instance is equal to the specified object. 
+			/// </summary>
+			/// <param name="other">Object to make the comparison with.</param>
+			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 			virtual bool Equals( DisplayMode other );
+
+			/// <summary>
+			/// Determines whether the specified object instances are considered equal. 
+			/// </summary>
+			/// <param name="value1">The first value to compare.</param>
+			/// <param name="value2">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="value1"/> is the same instance as <paramref name="value2"/> or 
+			/// if both are <c>null</c> references or if <c>value1.Equals(value2)</c> returns <c>true</c>; otherwise, <c>false</c>.</returns>
 			static bool Equals( DisplayMode% value1, DisplayMode% value2 );
 		};
 
+		/// <summary>Implements a read-only collection of <see cref="DisplayMode"/> instances.</summary>
 		public ref class DisplayModeCollection : public System::Collections::Generic::ICollection<DisplayMode>
 		{
 		private:
@@ -58,22 +111,62 @@ namespace SlimDX
 			virtual System::Collections::IEnumerator^ GetEnumerator2() = System::Collections::IEnumerable::GetEnumerator;
 
 		public:
+			/// <summary>
+			/// Adds an item to the collection.
+			/// </summary>
+			/// <param name="item">The item to add to the collection.</param>
+			/// <exception cref="System.NotSupportedException">Always thrown, since the collection is read-only.</exception>
 			virtual void Add( DisplayMode item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
+
+			/// <summary>
+			/// Removes all items from the collection.
+			/// </summary>
+			/// <exception cref="System.NotSupportedException">Always thrown, since the collection is read-only.</exception>
 			virtual void Clear() { throw gcnew System::NotSupportedException(); }
+
+			/// <summary>
+			/// Determines whether the collection contains the specified item.
+			/// </summary>
+			/// <param name="item">The item for which to search.</param>
+			/// <returns><c>true</c> if the collection contains the item; otherwise, <c>false</c>.</returns>
 			virtual bool Contains( DisplayMode item ) { return list->Contains( item ); }
+
+			/// <summary>
+			/// Copies the elements of the collection to an array, starting at a particular array index.
+			/// </summary>
+			/// <param name="array">The destination array.</param>
+			/// <param name="arrayIndex">The index at which to start copying items.</param>
 			virtual void CopyTo( array<DisplayMode>^ array, int arrayIndex );
+
+			/// <summary>
+			/// Removes an item from the collection.
+			/// </summary>
+			/// <param name="item">The item to remove.</param>
+			/// <returns><c>true</c> if the item was removed from the collection; otherwise, <c>false</c>.</returns>
+			/// <exception cref="System.NotSupportedException">Always thrown, since the collection is read-only.</exception>
 			virtual bool Remove( DisplayMode item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
 
+			/// <summary>
+			/// Gets the number of items contained in the collection.
+			/// </summary>
             property virtual int Count
             {
                 int get() { return list->Count; }
             }
 
+			/// <summary>
+			/// Gets a value indicating whether the collection is read-only.
+			/// </summary>
+			/// <value>This property is always <c>true</c>.</value>
 			virtual property bool IsReadOnly
 			{
 				bool get() { return true; }
 			}
 
+			/// <summary>
+			/// Gets the <see cref="DisplayMode"/> item at the specified index.
+			/// </summary>
+			/// <param name="index">The index of the item to retrieve.</param>
             property DisplayMode default[int]
 			{
 				DisplayMode get( int index )
@@ -82,6 +175,10 @@ namespace SlimDX
 				}
 			}
 
+			/// <summary>
+			/// Returns an enumerator that iterates through the collection.
+			/// </summary>
+			/// <returns>An enumerator that can be used to iterate through the collection.</returns>
 			virtual System::Collections::Generic::IEnumerator<DisplayMode>^ GetEnumerator()
 			{
                 return list->GetEnumerator();

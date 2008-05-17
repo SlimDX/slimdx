@@ -45,17 +45,48 @@ namespace SlimDX
 			AdapterInformation( unsigned int adapter );
 
 		public:
+			/// <summary>
+			/// Gets the adapter ordinal.
+			/// </summary>
 			property int Adapter
 			{
 				int get() { return m_Adapter; }
 			}
 
+			/// <summary>
+			/// Gets the monitor associated with the adapter.
+			/// </summary>
 			property System::IntPtr Monitor { System::IntPtr get(); }
+
+			/// <summary>
+			/// Gets the current display mode of the adapter.
+			/// </summary>
 			property DisplayMode CurrentDisplayMode { DisplayMode get(); }
+
+			/// <summary>
+			/// Gets a list of all possible display modes for the adapter.
+			/// </summary>
+			/// <param name="format">The desired pixel format.</param>
+			/// <returns>A collection of possibly display modes.</returns>
             DisplayModeCollection^ GetDisplayModes( Format format );
+
+			/// <summary>
+			/// Gets the capabilities of the adapter.
+			/// </summary>
+			/// <param name="type">The desired device type.</param>
+			/// <returns>A <see cref="Capabilities"/> object containing the capabilities of the adapter.</returns>
             Capabilities^ GetCaps( DeviceType type );
+
+			/// <summary>
+			/// Determines whether the adapter supports Render-To-Vertex-Buffer (R2VB).
+			/// </summary>
+			/// <param name="type">The desired device type.</param>
+			/// <returns><c>true</c> if the adapter supports R2VB; otherwise, <c>false</c>.</returns>
 			bool SupportsR2VB( DeviceType type );
 
+			/// <summary>
+			/// Gets or sets the adapter details.
+			/// </summary>
 			property AdapterDetails^ Details
 			{
 				AdapterDetails^ get() { return details; }

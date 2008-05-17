@@ -1,0 +1,12 @@
+This file contains a set of doc comments to make it easy to copy/paste them into the source. 
+Seriously, I got tired of typing them over and over. Feel free to add more.
+
+/// <summary>
+/// 
+/// </summary>
+
+/// <param name=""></param>
+
+/// <returns></returns>
+
+A <see cref="SlimDX.Result"/> object describing the result of the operation.

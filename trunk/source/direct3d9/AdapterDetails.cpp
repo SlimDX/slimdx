@@ -45,18 +45,18 @@ namespace Direct3D9
 		HRESULT hr = Direct3D::InternalPointer->GetAdapterIdentifier( adapter, flags, &ident );
 		RECORD_D3D9( hr );
 		
-		Adapter = adapter;
-		DriverName = gcnew String( ident.Driver );
-		Description = gcnew String( ident.Description );
-		DeviceName = gcnew String( ident.DeviceName );
-		DriverVersion = gcnew Version( HIWORD( ident.DriverVersion.HighPart ), LOWORD( ident.DriverVersion.HighPart ),
+		this->adapter = adapter;
+		driverName = gcnew String( ident.Driver );
+		description = gcnew String( ident.Description );
+		deviceName = gcnew String( ident.DeviceName );
+		driverVersion = gcnew Version( HIWORD( ident.DriverVersion.HighPart ), LOWORD( ident.DriverVersion.HighPart ),
 			HIWORD( ident.DriverVersion.LowPart ), LOWORD( ident.DriverVersion.LowPart ) );
-		VendorId = ident.VendorId;
-		DeviceId = ident.DeviceId;
-		SubsystemId = ident.SubSysId;
-		Revision = ident.Revision;
-		DeviceIdentifier = Utilities::ConvertNativeGuid( ident.DeviceIdentifier );
-		WhqlLevel = ident.WHQLLevel;
+		vendorId = ident.VendorId;
+		deviceId = ident.DeviceId;
+		subsystemId = ident.SubSysId;
+		revision = ident.Revision;
+		deviceIdentifier = Utilities::ConvertNativeGuid( ident.DeviceIdentifier );
+		whqlLevel = ident.WHQLLevel;
 	}
 }
 }

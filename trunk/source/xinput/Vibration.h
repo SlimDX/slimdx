@@ -32,6 +32,7 @@ namespace SlimDX
 		/// The left motor is the low-frequency rumble motor. The right motor is the high-frequency rumble motor. 
 		/// The two motors are not the same, and they create different vibration effects.
 		/// </remarks>
+		/// <unmanaged>XINPUT_VIBRATION</unmanaged>
 		public value class Vibration : System::IEquatable<Vibration>
 		{
 		private:

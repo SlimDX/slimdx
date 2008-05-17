@@ -25,25 +25,122 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		/// <summary>Contains information identifying the adapter.</summary>
+		/// <summary>Contains information identifying an adapter.</summary>
 		/// <unmanaged>D3DADAPTER_IDENTIFIER9</unmanaged>
 		public ref class AdapterDetails
 		{
-		public:
-			property int Adapter;
-			property System::String^ Description;
-			property int DeviceId;
-			property System::Guid DeviceIdentifier;
-			property System::String^ DeviceName;
-			property System::String^ DriverName;
-			property System::Version^ DriverVersion;
-			property int Revision;
-			property int SubsystemId;
-			property int VendorId;
-			property int WhqlLevel;
+		private:
+			int adapter;
+			System::String^ description;
+			int deviceId;
+			System::Guid deviceIdentifier;
+			System::String^ deviceName;
+			System::String^ driverName;
+			System::Version^ driverVersion;
+			int revision;
+			int subsystemId;
+			int vendorId;
+			int whqlLevel;
 
 		internal:
 			AdapterDetails( unsigned int adapter );
+
+		public:
+			/// <summary>
+			/// Gets the adapter ordinal.
+			/// </summary>
+			property int Adapter
+			{
+				int get() { return adapter; }
+			}
+
+			/// <summary>
+			/// Gets a friendly description string for the adapter.
+			/// </summary>
+			property System::String^ Description
+			{
+				System::String^ get() { return description; }
+			}
+
+			/// <summary>
+			/// Gets the identifier of the adapter chip set.
+			/// </summary>
+			property int DeviceId
+			{
+				int get() { return deviceId; }
+			}
+
+			/// <summary>
+			/// Gets a unique identifier for the adapter/chip set pair.
+			/// </summary>
+			property System::Guid DeviceIdentifier
+			{
+				System::Guid get() { return deviceIdentifier; }
+			}
+
+			/// <summary>
+			/// Gets the name of the adapter.
+			/// </summary>
+			property System::String^ DeviceName
+			{
+				System::String^ get() { return deviceName; }
+			}
+
+			/// <summary>
+			/// Gets the name of the driver running on the adapter.
+			/// </summary>
+			property System::String^ DriverName
+			{
+				System::String^ get() { return driverName; }
+			}
+
+			/// <summary>
+			/// Gets the version of the driver running on the adapter.
+			/// </summary>
+			property System::Version^ DriverVersion
+			{
+				System::Version^ get() { return driverVersion; }
+			}
+
+			/// <summary>
+			/// Gets the revision level of the chip set.
+			/// </summary>
+			property int Revision
+			{
+				int get() { return revision; }
+			}
+
+			/// <summary>
+			/// Gets the subsystem identifier for the chip set.
+			/// </summary>
+			property int SubsystemId
+			{
+				int get() { return subsystemId; }
+			}
+
+			/// <summary>
+			/// Gets the manufacturer identifier.
+			/// </summary>
+			property int VendorId
+			{
+				int get() { return vendorId; }
+			}
+
+			/// <summary>
+			/// The Windows Hardware Quality Labs validation level for the driver/device pair.
+			/// </summary>
+			property int WhqlLevel
+			{
+				int get() { return whqlLevel; }
+			}
+
+			/// <summary>
+			/// Gets a value indicating whether the adapter is WHQL certified.
+			/// </summary>
+			property bool Certified
+			{
+				bool get() { return WhqlLevel != 0; }
+			}
 		};
 	}
 }

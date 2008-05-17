@@ -32,6 +32,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes the capabilities of a controller.
 		/// </summary>
+		/// <unmanaged>XINPUT_CAPABILITIES</unmanaged>
 		public value class Capabilities : System::IEquatable<Capabilities>
 		{
 		private:

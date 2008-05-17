@@ -30,6 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// Represents the state of a controller.
 		/// </summary>
+		/// <unmanaged>XINPUT_STATE</unmanaged>
 		public value class State : System::IEquatable<State>
 		{
 		private:
