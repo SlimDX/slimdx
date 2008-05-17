@@ -51,7 +51,7 @@ namespace Direct3D10
 				break;
 			case ShaderResourceViewDimension::Texture2D:
 				m_MipLevels = native.Texture2D.MipLevels;
-				m_MostDetailedMip = native.Texture2D.MipLevels;
+				m_MostDetailedMip = native.Texture2D.MostDetailedMip;
 				break;
 			case ShaderResourceViewDimension::Texture2DArray:
 				m_ArraySize = native.Texture2DArray.ArraySize;
@@ -102,7 +102,7 @@ namespace Direct3D10
 				break;
 			case ShaderResourceViewDimension::Texture2D:
 				native.Texture2D.MipLevels = m_MipLevels;
-				native.Texture2D.MipLevels = m_MostDetailedMip;
+				native.Texture2D.MostDetailedMip = m_MostDetailedMip;
 				break;
 			case ShaderResourceViewDimension::Texture2DArray:
 				native.Texture2DArray.ArraySize = m_ArraySize;
