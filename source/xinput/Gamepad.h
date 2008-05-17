@@ -36,6 +36,7 @@ namespace SlimDX
 		/// The constants GamepadLeftThumbDeadZone or GamepadRightThumbDeadZone can be used as a positive and negative value to filter
 		/// thumbstick input.
 		/// </remarks>
+		/// <unmanaged>XINPUT_GAMEPAD</unmanaged>
 		public value class Gamepad : System::IEquatable<Gamepad>
 		{
 		private:

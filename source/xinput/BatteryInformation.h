@@ -30,6 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains information about the battery of an XInput device.
 		/// </summary>
+		/// <unmanaged>XINPUT_BATTERY_INFORMATION</unmanaged>
 		public value class BatteryInformation : System::IEquatable<BatteryInformation>
 		{
 		private:

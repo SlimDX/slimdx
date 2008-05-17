@@ -934,6 +934,164 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="UsageId">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2008-05-17 17:17:32Z" FixCategory="Breaking">
+            <Issue Name="FlagsRename">
+             <Item>'UsageId'</Item>
+             <Item>'UsageId.KeyboardNoEvent'</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2008-05-17 17:17:32Z">
+            <Issue>
+             <Item>'UsageId'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#KeyboardaA">
+            <Messages>
+             <Message Id="Keyboarda" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-17 13:20:24Z">
+              <Issue Name="Member">
+               <Item>Keyboarda</Item>
+               <Item>'UsageId.KeyboardaA'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#KeyboardNumLock">
+            <Messages>
+             <Message Id="Num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-17 13:20:24Z">
+              <Issue Name="Member">
+               <Item>Num</Item>
+               <Item>'UsageId.KeyboardNumLock'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#KeyboardzZ">
+            <Messages>
+             <Message Id="Keyboardz" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-17 13:20:24Z">
+              <Issue Name="Member">
+               <Item>Keyboardz</Item>
+               <Item>'UsageId.KeyboardzZ'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LedCav">
+            <Messages>
+             <Message Id="Cav" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-17 13:20:24Z">
+              <Issue Name="Member">
+               <Item>Cav</Item>
+               <Item>'UsageId.LedCav'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LedClv">
+            <Messages>
+             <Message Id="Clv" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-17 13:20:24Z">
+              <Issue Name="Member">
+               <Item>Clv</Item>
+               <Item>'UsageId.LedClv'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LedNumLock">
+            <Messages>
+             <Message Id="Num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-17 13:20:24Z">
+              <Issue Name="Member">
+               <Item>Num</Item>
+               <Item>'UsageId.LedNumLock'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LedRecordingFormatDet">
+            <Messages>
+             <Message Id="Det" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-17 13:20:24Z">
+              <Issue Name="Member">
+               <Item>Det</Item>
+               <Item>'UsageId.LedRecordingFormatDet'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#VbrX">
+            <Messages>
+             <Message Id="Vbr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-17 13:20:24Z">
+              <Issue Name="Member">
+               <Item>Vbr</Item>
+               <Item>'UsageId.VbrX'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#VbrY">
+            <Messages>
+             <Message Id="Vbr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-17 13:20:24Z">
+              <Issue Name="Member">
+               <Item>Vbr</Item>
+               <Item>'UsageId.VbrY'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#VbrZ">
+            <Messages>
+             <Message Id="Vbr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-17 13:20:24Z">
+              <Issue Name="Member">
+               <Item>Vbr</Item>
+               <Item>'UsageId.VbrZ'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Vno">
+            <Messages>
+             <Message Id="Vno" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-17 13:20:24Z">
+              <Issue Name="Member">
+               <Item>Vno</Item>
+               <Item>'UsageId.Vno'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="UsagePage">
+          <Messages>
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2008-05-17 13:20:24Z">
+            <Issue>
+             <Item>'UsagePage'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Msr">
+            <Messages>
+             <Message Id="Msr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-17 13:20:24Z">
+              <Issue Name="Member">
+               <Item>Msr</Item>
+               <Item>'UsagePage.Msr'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Pid">
+            <Messages>
+             <Message Id="Pid" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-17 13:20:24Z">
+              <Issue Name="Member">
+               <Item>Pid</Item>
+               <Item>'UsagePage.Pid'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="Utilities">
           <Members>
            <Member Name="#AllocateNativeString(System.String)">
@@ -8663,6 +8821,16 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#GetContainer`1()">
+            <Messages>
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2008-05-17 13:20:24Z">
+              <Issue>
+               <Item>'Surface.GetContainer&lt;TContainer&gt;()'</Item>
+               <Item>'TContainer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#GetDC()">
             <Messages>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2007-10-01 21:38:08Z">
@@ -11951,9 +12119,9 @@
         <Types>
          <Type Name="Device">
           <Members>
-           <Member Name="#.ctor(SlimDX.RawInput.UsagePage,SlimDX.RawInput.UsageId,SlimDX.RawInput.DeviceFlags)">
+           <Member Name="#.ctor(SlimDX.UsagePage,SlimDX.UsageId,SlimDX.RawInput.DeviceFlags)">
             <Messages>
-             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-13 21:02:20Z">
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-17 13:20:24Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'Device.Device(UsagePage, UsageId, DeviceFlags)'</Item>
                <Item>flags</Item>
@@ -11962,9 +12130,9 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#.ctor(SlimDX.RawInput.UsagePage,SlimDX.RawInput.UsageId,SlimDX.RawInput.DeviceFlags,System.IntPtr)">
+           <Member Name="#.ctor(SlimDX.UsagePage,SlimDX.UsageId,SlimDX.RawInput.DeviceFlags,System.IntPtr)">
             <Messages>
-             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-13 21:02:20Z">
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-17 13:20:24Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'Device.Device(UsagePage, UsageId, DeviceFlags, IntPtr)'</Item>
                <Item>flags</Item>
@@ -12175,158 +12343,6 @@
             </Issue>
            </Message>
           </Messages>
-         </Type>
-         <Type Name="UsageId">
-          <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2008-05-13 21:02:20Z">
-            <Issue>
-             <Item>'UsageId'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#KeyboardaA">
-            <Messages>
-             <Message Id="Keyboarda" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>Keyboarda</Item>
-               <Item>'UsageId.KeyboardaA'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#KeyboardNumLock">
-            <Messages>
-             <Message Id="Num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>Num</Item>
-               <Item>'UsageId.KeyboardNumLock'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#KeyboardzZ">
-            <Messages>
-             <Message Id="Keyboardz" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 21:02:20Z">
-              <Issue Name="Member">
-               <Item>Keyboardz</Item>
-               <Item>'UsageId.KeyboardzZ'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LedCav">
-            <Messages>
-             <Message Id="Cav" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 23:07:35Z">
-              <Issue Name="Member">
-               <Item>Cav</Item>
-               <Item>'UsageId.LedCav'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LedClv">
-            <Messages>
-             <Message Id="Clv" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 23:07:35Z">
-              <Issue Name="Member">
-               <Item>Clv</Item>
-               <Item>'UsageId.LedClv'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LedNumLock">
-            <Messages>
-             <Message Id="Num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 22:58:39Z">
-              <Issue Name="Member">
-               <Item>Num</Item>
-               <Item>'UsageId.LedNumLock'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LedRecordingFormatDet">
-            <Messages>
-             <Message Id="Det" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 22:58:39Z">
-              <Issue Name="Member">
-               <Item>Det</Item>
-               <Item>'UsageId.LedRecordingFormatDet'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#VbrX">
-            <Messages>
-             <Message Id="Vbr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 23:07:35Z">
-              <Issue Name="Member">
-               <Item>Vbr</Item>
-               <Item>'UsageId.VbrX'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#VbrY">
-            <Messages>
-             <Message Id="Vbr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 23:07:35Z">
-              <Issue Name="Member">
-               <Item>Vbr</Item>
-               <Item>'UsageId.VbrY'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#VbrZ">
-            <Messages>
-             <Message Id="Vbr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 23:07:35Z">
-              <Issue Name="Member">
-               <Item>Vbr</Item>
-               <Item>'UsageId.VbrZ'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Vno">
-            <Messages>
-             <Message Id="Vno" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 23:07:35Z">
-              <Issue Name="Member">
-               <Item>Vno</Item>
-               <Item>'UsageId.Vno'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="UsagePage">
-          <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2008-05-13 21:02:20Z">
-            <Issue>
-             <Item>'UsagePage'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#Msr">
-            <Messages>
-             <Message Id="Msr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 22:58:39Z">
-              <Issue Name="Member">
-               <Item>Msr</Item>
-               <Item>'UsagePage.Msr'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Pid">
-            <Messages>
-             <Message Id="Pid" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-13 22:58:39Z">
-              <Issue Name="Member">
-               <Item>Pid</Item>
-               <Item>'UsagePage.Pid'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
          </Type>
         </Types>
        </Namespace>

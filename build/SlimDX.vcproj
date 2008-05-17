@@ -2713,6 +2713,14 @@
 			Name="DirectInput"
 			>
 			<File
+				RelativePath="..\source\directinput\DirectInput.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directinput\DirectInput.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\directinput\Enums.h"
 				>
 			</File>
@@ -2803,14 +2811,6 @@
 				</File>
 				<File
 					RelativePath="..\source\directinput\DeviceObjectCollection.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directinput\DirectInput.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directinput\DirectInput.h"
 					>
 				</File>
 				<File
@@ -4041,6 +4041,10 @@
 		</Filter>
 		<File
 			RelativePath="..\source\AssemblyInfo.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\DocComments.txt"
 			>
 		</File>
 	</Files>

@@ -90,16 +90,7 @@ namespace Direct3D9
 		System::AppDomain::CurrentDomain->ProcessExit -= gcnew System::EventHandler( OnExit );
 	}
 
-	/// <summary>
-	/// Tests the device to see if it supports conversion from one display format to another.
-	/// </summary>
-	/// <param name="adapter">Index of the adapter to use.</param>
-	/// <param name="deviceType">One of the DeviceType members.</param>
-	/// <param name="sourceFormat">Format to convert from.</param>
-	/// <param name="targetFormat">Format to convert into.</param>
-	/// <param name="result">0 if successful.  Otherwise an HRESULT error code for the function.</param>
-	/// <returns>TRUE if successful, FALSE if not.</returns>
-	bool Direct3D::CheckDeviceFormatConversion(int adapter, DeviceType deviceType, Format sourceFormat, Format targetFormat, [Out] int% result)
+	bool Direct3D::CheckDeviceFormatConversion(int adapter, DeviceType deviceType, Format sourceFormat, Format targetFormat, [Out] Result% result)
 	{
 		Initialize();
 
@@ -108,35 +99,29 @@ namespace Direct3D9
 		hr = m_Direct3D->CheckDeviceFormatConversion(adapter, static_cast<D3DDEVTYPE>( deviceType ), 
 			static_cast<D3DFORMAT>( sourceFormat ), static_cast<D3DFORMAT>( targetFormat) );
 
-		result = hr;
+		result = Result( hr );
 
 		return SUCCEEDED(hr);
 	}
 
-	/// <summary>
-	/// Tests the device to see if it supports conversion from one display format to another.
-	/// </summary>
-	/// <param name="adapter">Index of the adapter to use.</param>
-	/// <param name="deviceType">One of the DeviceType members.</param>
-	/// <param name="sourceFormat">Format to convert from.</param>
-	/// <param name="targetFormat">Format to convert into.</param>
-	/// <returns>TRUE if successful, FALSE if not.</returns>
 	bool Direct3D::CheckDeviceFormatConversion(int adapter, DeviceType deviceType, Format sourceFormat, Format targetFormat)
 	{
 		Initialize();
 
-		int result = 0;
+		Result result;
 		return CheckDeviceFormatConversion(adapter, deviceType, sourceFormat, targetFormat, result);
 	}
 
 	bool Direct3D::CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat,
-		Usage usage, ResourceType resourceType, Format checkFormat, [Out] int% result )
+		Usage usage, ResourceType resourceType, Format checkFormat, [Out] Result% result )
 	{
 		Initialize();
 
 		HRESULT hr = m_Direct3D->CheckDeviceFormat( adapter, static_cast<D3DDEVTYPE>( deviceType ), static_cast<D3DFORMAT>( adapterFormat ),
 			static_cast<DWORD>( usage ), static_cast<D3DRESOURCETYPE>( resourceType ), static_cast<D3DFORMAT>( checkFormat ) );
-		result = hr;
+		
+		result = Result( hr );
+		
 		return hr == S_OK;
 	}
 
@@ -145,18 +130,20 @@ namespace Direct3D9
 	{
 		Initialize();
 
-		int result;
+		Result result;
 		return CheckDeviceFormat( adapter, deviceType, adapterFormat, usage, resourceType, checkFormat, result );
 	}
 
 	bool Direct3D::CheckDeviceType( int adapter, DeviceType deviceType, Format adapterFormat, 
-		Format backBufferFormat, bool windowed, [Out] int% result )
+		Format backBufferFormat, bool windowed, [Out] Result% result )
 	{
 		Initialize();
 
 		HRESULT hr = m_Direct3D->CheckDeviceType( adapter, static_cast<D3DDEVTYPE>( deviceType ), 
 			static_cast<D3DFORMAT>( adapterFormat ), static_cast<D3DFORMAT>( backBufferFormat ), windowed );
-		result = hr;
+		
+		result = Result( hr );
+		
 		return hr == S_OK;
 	}
 
@@ -165,18 +152,20 @@ namespace Direct3D9
 	{
 		Initialize();
 
-		int result;
+		Result result;
 		return CheckDeviceType( adapter, deviceType, adapterFormat, backBufferFormat, windowed, result );
 	}
 
 	bool Direct3D::CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, 
-		Format renderTargetFormat, Format depthStencilFormat, [Out] int% result )
+		Format renderTargetFormat, Format depthStencilFormat, [Out] Result% result )
 	{
 		Initialize();
 
 		HRESULT hr = m_Direct3D->CheckDepthStencilMatch( adapter, static_cast<D3DDEVTYPE>( deviceType ),
 			static_cast<D3DFORMAT>( adapterFormat ), static_cast<D3DFORMAT>( renderTargetFormat ), static_cast<D3DFORMAT>( depthStencilFormat ) );
-		result = hr;
+		
+		result = Result( hr );
+		
 		return hr == S_OK;
 	}
 
@@ -185,13 +174,13 @@ namespace Direct3D9
 	{
 		Initialize();
 
-		int result;
+		Result result;
 		return CheckDepthStencilMatch( adapter, deviceType, adapterFormat,
 			renderTargetFormat, depthStencilFormat, result );
 	}
 
 	bool Direct3D::CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
-		bool windowed, MultisampleType multiSampleType, [Out] int% qualityLevels, [Out] int% result )
+		bool windowed, MultisampleType multiSampleType, [Out] int% qualityLevels, [Out] Result% result )
 	{
 		Initialize();
 
@@ -200,7 +189,8 @@ namespace Direct3D9
 			windowed, static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ),  static_cast<DWORD*>( &levels ) );
 
 		qualityLevels = levels;
-		result = hr;
+		result = Result( hr );
+
 		return hr == S_OK;
 	}
 
@@ -209,7 +199,7 @@ namespace Direct3D9
 	{
 		Initialize();
 
-		int result;
+		Result result;
 		return CheckDeviceMultisampleType( adapter, deviceType, surfaceFormat,
 			windowed, multiSampleType, qualityLevels, result );
 	}
@@ -219,7 +209,8 @@ namespace Direct3D9
 	{
 		Initialize();
 
-		int levels, result;
+		int levels;
+		Result result;
 		return CheckDeviceMultisampleType( adapter, deviceType, surfaceFormat, windowed,
 			multiSampleType, levels, result );
 	}

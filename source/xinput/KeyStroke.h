@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes keystroke data from a device.
 		/// </summary>
+		/// <unmanaged>XINPUT_KEYSTROKE</unmanaged>
 		public value class Keystroke : System::IEquatable<Keystroke>
 		{
 		private:

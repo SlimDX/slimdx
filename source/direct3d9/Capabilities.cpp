@@ -82,7 +82,7 @@ namespace Direct3D9
 	int PixelShader20Caps::GetHashCode()
 	{
 		return Caps.GetHashCode() + DynamicFlowControlDepth.GetHashCode() + TempCount.GetHashCode()
-			 + StaticFlowControlDepth.GetHashCode();
+			 + StaticFlowControlDepth.GetHashCode() + InstructionSlotCount.GetHashCode();
 	}
 
 	bool PixelShader20Caps::Equals( Object^ value )
@@ -99,13 +99,15 @@ namespace Direct3D9
 	bool PixelShader20Caps::Equals( PixelShader20Caps value )
 	{
 		return ( Caps == value.Caps && DynamicFlowControlDepth == value.DynamicFlowControlDepth && TempCount == value.TempCount
-			 && StaticFlowControlDepth == value.StaticFlowControlDepth );
+			 && StaticFlowControlDepth == value.StaticFlowControlDepth &&
+			 InstructionSlotCount == value.InstructionSlotCount );
 	}
 
 	bool PixelShader20Caps::Equals( PixelShader20Caps% value1, PixelShader20Caps% value2 )
 	{
 		return ( value1.Caps == value2.Caps && value1.DynamicFlowControlDepth == value2.DynamicFlowControlDepth && value1.TempCount == value2.TempCount
-			 && value1.StaticFlowControlDepth == value2.StaticFlowControlDepth );
+			 && value1.StaticFlowControlDepth == value2.StaticFlowControlDepth &&
+			 value1.InstructionSlotCount == value2.InstructionSlotCount );
 	}
 
 	Capabilities::Capabilities( D3DCAPS9& caps )
