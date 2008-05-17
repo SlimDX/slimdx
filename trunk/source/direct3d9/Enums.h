@@ -1611,319 +1611,1301 @@ namespace SlimDX
 			ClearTypeNatural = CLEARTYPE_NATURAL_QUALITY,
 		};
 
+		/// <summary>
+		/// Specifies weights for font rendering.
+		/// </summary>
 		public enum class FontWeight : System::Int32
 		{
+			/// <summary>
+			/// The font weight doesn't matter.
+			/// </summary>
 			DoNotCare = FW_DONTCARE,
+
+			/// <summary>
+			/// Make the font thin.
+			/// </summary>
 			Thin = FW_THIN,
+
+			/// <summary>
+			/// Make the font extra light.
+			/// </summary>
 			ExtraLight = FW_EXTRALIGHT,
+
+			/// <summary>
+			/// Make the font ultra light.
+			/// </summary>
 			UltraLight = FW_ULTRALIGHT,
+
+			/// <summary>
+			/// Make the font light.
+			/// </summary>
 			Light = FW_LIGHT,
+
+			/// <summary>
+			/// Use a normal weight.
+			/// </summary>
 			Normal = FW_NORMAL,
+
+			/// <summary>
+			/// Use a regular weight.
+			/// </summary>
 			Regular = FW_REGULAR,
+
+			/// <summary>
+			/// Use a medium weight.
+			/// </summary>
 			Medium = FW_MEDIUM,
+
+			/// <summary>
+			/// Use a semi-bold weight.
+			/// </summary>
 			SemiBold = FW_SEMIBOLD,
+
+			/// <summary>
+			/// Use a demi-bold weight.
+			/// </summary>
 			DemiBold = FW_DEMIBOLD,
+
+			/// <summary>
+			/// Use a bold weight.
+			/// </summary>
 			Bold = FW_BOLD,
+
+			/// <summary>
+			/// Use an extra bold weight.
+			/// </summary>
 			ExtraBold = FW_EXTRABOLD,
+
+			/// <summary>
+			/// Use an ultra bold weight.
+			/// </summary>
 			UltraBold = FW_ULTRABOLD,
+
+			/// <summary>
+			/// Use a heavy weight.
+			/// </summary>
 			Heavy = FW_HEAVY,
+
+			/// <summary>
+			/// Use a black weight.
+			/// </summary>
 			Black = FW_BLACK,
 		};
 
+		/// <summary>
+		/// Defines the various types of surface formats.
+		/// </summary>
+		/// <unmanaged>D3DFORMAT</unmanaged>
 		public enum class Format : System::Int32
 		{
-			R8G8B8 = D3DFMT_R8G8B8,
-			A8R8G8B8 = D3DFMT_A8R8G8B8,
-			X8R8G8B8 = D3DFMT_X8R8G8B8,
-			R5G6B5 = D3DFMT_R5G6B5,
-			X1R5G5B5 = D3DFMT_X1R5G5B5,
-			A1R5G5B5 = D3DFMT_A1R5G5B5,
-			A4R4G4B4 = D3DFMT_A4R4G4B4,
-			R3G3B2 = D3DFMT_R3G3B2,
-			A8 = D3DFMT_A8,
-			A8R3G3B2 = D3DFMT_A8R3G3B2,
-			X4R4G4B4 = D3DFMT_X4R4G4B4,
-			A2B10G10R10 = D3DFMT_A2B10G10R10,
-			A8B8G8R8 = D3DFMT_A8B8G8R8,
-			X8B8G8R8 = D3DFMT_X8B8G8R8,
-			G16R16 = D3DFMT_G16R16,
+			/// <summary>
+			/// 32-bit surface format using 2 bits for alpha and 10 bits for color components (red, green, blue).
+			/// </summary>
 			A2R10G10B10 = D3DFMT_A2R10G10B10,
-			A16B16G16R16 = D3DFMT_A16B16G16R16,
 
-			A8P8 = D3DFMT_A8P8,
-			P8 = D3DFMT_P8,
+			/// <summary>
+			/// 32-bit surface format using 8 bits for each channel (alpha, red, green, blue). 
+			/// </summary>
+			A8R8G8B8 = D3DFMT_A8R8G8B8,
 
-			L8 = D3DFMT_L8,
-			A8L8 = D3DFMT_A8L8,
-			A4L4 = D3DFMT_A4L4,
+			/// <summary>
+			/// 32-bit surface format using 8 bits for each color component (red, green, blue).
+			/// </summary>
+			X8R8G8B8 = D3DFMT_X8R8G8B8,
 
-			V8U8 = D3DFMT_V8U8,
-			L6V5U5 = D3DFMT_L6V5U5,
-			X8L8V8U8 = D3DFMT_X8L8V8U8,
-			Q8W8V8U8 = D3DFMT_Q8W8V8U8,
-			V16U16 = D3DFMT_V16U16,
-			A2W10V10U10 = D3DFMT_A2W10V10U10,
+			/// <summary>
+			/// 16-bit surface format using 1 bit for alpha and 5 bits for each channel (red, green, blue).
+			/// </summary>
+			A1R5G5B5 = D3DFMT_A1R5G5B5,
 
-			Uyvy = D3DFMT_UYVY,
-			Yuy2 = D3DFMT_YUY2,
-			Dxt1 = D3DFMT_DXT1,
-			Dxt2 = D3DFMT_DXT2,
-			Dxt3 = D3DFMT_DXT3,
-			Dxt4 = D3DFMT_DXT4,
-			Dxt5 = D3DFMT_DXT5,
+			/// <summary>
+			/// 16-bit surface format using 5 bits for each color component (red, green, blue).
+			/// </summary>
+			X1R5G5B5 = D3DFMT_X1R5G5B5,
 
-			Q16W16V16U16 = D3DFMT_Q16W16V16U16,
+			/// <summary>
+			/// 16-bit surface format using 5 bits for red and blue and 6 bits for green.
+			/// </summary>
+			R5G6B5 = D3DFMT_R5G6B5,
 
-			Multi2Argb8 = D3DFMT_MULTI2_ARGB8,
+			/***/
 
-			R16F = D3DFMT_R16F,
-			G16R16F = D3DFMT_G16R16F,
-			A16B16G16R16F = D3DFMT_A16B16G16R16F,
-
-			R32F = D3DFMT_R32F,
-			G32R32F = D3DFMT_G32R32F,
-			A32B32G32R32F = D3DFMT_A32B32G32R32F,
-
-			CxV8U8 = D3DFMT_CxV8U8,
-
-			D15S1 = D3DFMT_D15S1,
-			D16 = D3DFMT_D16,
+			/// <summary>
+			/// 16-bit z-buffer lockable format with 16 bits for depth.
+			/// </summary>
 			D16Lockable = D3DFMT_D16_LOCKABLE,
-			D24S8 = D3DFMT_D24S8,
-			D24SingleS8 = D3DFMT_D24FS8,
-			D24X4S4 = D3DFMT_D24X4S4,
-			D24X8 = D3DFMT_D24X8,
-			D24FS8 = D3DFMT_D24FS8,
-			D32 = D3DFMT_D32,
-			D32SingleLockable = D3DFMT_D32F_LOCKABLE,
-			S8Lockable = D3DFMT_S8_LOCKABLE,
-			L16 = D3DFMT_L16,
 
+			/// <summary>
+			/// 32-bit z-buffer format with 32 bits for depth.
+			/// </summary>
+			D32 = D3DFMT_D32,
+
+			/// <summary>
+			/// 16-bit z-buffer format with 15 bits for depth and 1 bit for stencil.
+			/// </summary>
+			D15S1 = D3DFMT_D15S1,
+
+			/// <summary>
+			/// 32-bit z-buffer format with 24 bits for depth and 8 bits for stencil.
+			/// </summary>
+			D24S8 = D3DFMT_D24S8,
+
+			/// <summary>
+			/// 32-bit z-buffer format with 24 bits for depth.
+			/// </summary>
+			D24X8 = D3DFMT_D24X8,
+
+			/// <summary>
+			/// 32-bit z-buffer format with 24 bits for depth and 4 bits for stencil.
+			/// </summary>
+			D24X4S4 = D3DFMT_D24X4S4,
+
+			/// <summary>
+			/// 32-bit z-buffer lockable format with 32 bits for depth (in standard IEEE floating point format).
+			/// </summary>
+			D32SingleLockable = D3DFMT_D32F_LOCKABLE,
+
+			/// <summary>
+			/// 32-bit z-buffer format with 24 bits for depth (in 24-bit floating point format) and 8 bits for stencil.
+			/// </summary>
+			D24SingleS8 = D3DFMT_D24FS8,
+
+			/// <summary>
+			/// Lockable 32-bit depth buffer. Available for Direct3D9Ex only.
+			/// </summary>
+			D32Lockable = D3DFMT_D32_LOCKABLE,
+
+			/// <summary>
+			/// Lockable 8-bit stencil buffer. Available for Direct3D9Ex only.
+			/// </summary>
+			S8Lockable = D3DFMT_S8_LOCKABLE,
+
+			/// <summary>
+			/// 16-bit z-buffer format with 16 bits for depth.
+			/// </summary>
+			D16 = D3DFMT_D16,
+
+			/***/
+
+			/// <summary>
+			/// Describes a vertex buffer surface.
+			/// </summary>
 			VertexData = D3DFMT_VERTEXDATA,
+
+			/// <summary>
+			/// 16-bit index buffer bit depth.
+			/// </summary>
 			Index16 = D3DFMT_INDEX16,
+
+			/// <summary>
+			/// 32-bit index buffer bit depth.
+			/// </summary>
 			Index32 = D3DFMT_INDEX32,
 
-			// extensions
+			/***/		
+
+			/// <summary>
+			/// DXT1 compression texture format.
+			/// </summary>
+			Dxt1 = D3DFMT_DXT1,
+
+			/// <summary>
+			/// DXT2 compression texture format.
+			/// </summary>
+			Dxt2 = D3DFMT_DXT2,
+
+			/// <summary>
+			/// DXT3 compression texture format.
+			/// </summary>
+			Dxt3 = D3DFMT_DXT3,
+
+			/// <summary>
+			/// DXT4 compression texture format.
+			/// </summary>
+			Dxt4 = D3DFMT_DXT4,
+
+			/// <summary>
+			/// DXT5 compression texture format.
+			/// </summary>
+			Dxt5 = D3DFMT_DXT5,
+
+			/***/
+
+			/// <summary>
+			/// 16-bit floating point format using 16 bits for the red channel.
+			/// </summary>
+			R16F = D3DFMT_R16F,
+
+			/// <summary>
+			/// 32-bit floating point format using 16 bits for the red channel and 16 bits for the green channel.
+			/// </summary>
+			G16R16F = D3DFMT_G16R16F,
+
+			/// <summary>
+			/// 64-bit floating point format using 16 bits for each channel (alpha, blue, green, red).
+			/// </summary>
+			A16B16G16R16F = D3DFMT_A16B16G16R16F,
+
+			/***/
+
+			/// <summary>
+			/// Multielement texture.
+			/// </summary>
+			Multi2Argb8 = D3DFMT_MULTI2_ARGB8,
+
+			/// <summary>
+			/// 16-bit packed RGB format consisting of pixel pairs to express color.
+			/// </summary>
+			G8R8_G8B8 = D3DFMT_G8R8_G8B8,
+
+			/// <summary>
+			/// 16-bit packed RGB format consisting of pixel pairs to express color.
+			/// </summary>
+			R8G8_B8G8 = D3DFMT_R8G8_B8G8,
+
+			/// <summary>
+			/// UYUV format (PC98 compliance).
+			/// </summary>
+			Uyvy = D3DFMT_UYVY,
+
+			/// <summary>
+			/// YUY2 format (PC98 compliance).
+			/// </summary>
+			Yuy2 = D3DFMT_YUY2,
+
+			/***/
+
+			/// <summary>
+			/// 32-bit floating point format using 32 bits for the red channel.
+			/// </summary>
+			R32F = D3DFMT_R32F,
+
+			/// <summary>
+			/// 64-bit floating point format using 32 bits for the red channel and 32 bits for the green channel.
+			/// </summary>
+			G32R32F = D3DFMT_G32R32F,
+
+			/// <summary>
+			/// 128-bit floating point format using 32 bits for each channel (alpha, blue, green, red).
+			/// </summary>
+			A32B32G32R32F = D3DFMT_A32B32G32R32F,
+
+			/***/
+
+			/// <summary>
+			/// 16-bit bump map format using 6 bits for luminance and 5 bits each for V and U.
+			/// </summary>
+			L6V5U5 = D3DFMT_L6V5U5,
+
+			/// <summary>
+			/// 32-bit bump map format using 8 bits for each channel (luminance, V, U).
+			/// </summary>
+			X8L8V8U8 = D3DFMT_X8L8V8U8,
+
+			/// <summary>
+			/// 32-bit bump map format using 2 bits for alpha and 10 bits each for W, V, and U.
+			/// </summary>
+			A2W10V10U10 = D3DFMT_A2W10V10U10,
+
+			/***/
+
+			/// <summary>
+			/// 16-bit bump map format using 8 bits each for U and V.
+			/// </summary>
+			V8U8 = D3DFMT_V8U8,
+
+			/// <summary>
+			/// 32-bit bump map format using 8 bits for each channel (Q, W, V, U).
+			/// </summary>
+			Q8W8V8U8 = D3DFMT_Q8W8V8U8,
+
+			/// <summary>
+			/// 32-bit bump map format using 16 bits each for V and U.
+			/// </summary>
+			V16U16 = D3DFMT_V16U16,
+
+			/// <summary>
+			/// 64-bit bump map format using 16 bits for each channel (Q, W, V, U).
+			/// </summary>
+			Q16W16V16U16 = D3DFMT_Q16W16V16U16,
+
+			/// <summary>
+			/// 16-bit normal compression format.
+			/// </summary>
+			CxV8U8 = D3DFMT_CxV8U8,
+
+			/***/
+
+			/// <summary>
+			/// 24-bit RGB format using 8 bits per channel.
+			/// </summary>
+			R8G8B8 = D3DFMT_R8G8B8,
+
+			/// <summary>
+			/// 16-bit ARGB format using 4 bits for each channel.
+			/// </summary>
+			A4R4G4B4 = D3DFMT_A4R4G4B4,
+
+			/// <summary>
+			/// 8-bit RGB format using 3 bits for red and green and 2 bits for blue.
+			/// </summary>
+			R3G3B2 = D3DFMT_R3G3B2,
+
+			/// <summary>
+			/// 8-bit alpha format.
+			/// </summary>
+			A8 = D3DFMT_A8,
+
+			/// <summary>
+			/// 16-bit ARGB format using 8 bits for alpha, 3 bits for red and green, and 2 bits for blue.
+			/// </summary>
+			A8R3G3B2 = D3DFMT_A8R3G3B2,
+
+			/// <summary>
+			/// 16-bit RGB format using 4 bits for each color channel.
+			/// </summary>
+			X4R4G4B4 = D3DFMT_X4R4G4B4,
+
+			/// <summary>
+			/// 32-bit ABGR format using 2 bits for alpha and 10 bits for each color component.
+			/// </summary>
+			A2B10G10R10 = D3DFMT_A2B10G10R10,
+
+			/// <summary>
+			/// 32-bit ABGR format using 8 bits for each channel.
+			/// </summary>
+			A8B8G8R8 = D3DFMT_A8B8G8R8,
+
+			/// <summary>
+			/// 32-bit BGR format using 8 bits for each color channel.
+			/// </summary>
+			X8B8G8R8 = D3DFMT_X8B8G8R8,
+
+			/// <summary>
+			/// 32-bit pixel format using 16 bits each for green and red.
+			/// </summary>
+			G16R16 = D3DFMT_G16R16,
+
+			/// <summary>
+			/// 64-bit pixel ABGR format using 16 bits for each channel.
+			/// </summary>
+			A16B16G16R16 = D3DFMT_A16B16G16R16,
+
+			/// <summary>
+			/// 8-bit color indexed with 8 bits of alpha.
+			/// </summary>
+			A8P8 = D3DFMT_A8P8,
+
+			/// <summary>
+			/// 8-bit color indexed.
+			/// </summary>
+			P8 = D3DFMT_P8,
+
+			/// <summary>
+			/// 16-bit luminance.
+			/// </summary>
+			L16 = D3DFMT_L16,
+
+			/// <summary>
+			/// 8-bit luminance.
+			/// </summary>
+			L8 = D3DFMT_L8,
+
+			/// <summary>
+			/// 16-bit format using 8 bits each for alpha and luminance.
+			/// </summary>
+			A8L8 = D3DFMT_A8L8,
+
+			/// <summary>
+			/// 8-bit format using 4 bits each for alpha and luminance.
+			/// </summary>
+			A4L4 = D3DFMT_A4L4,
+
+			/// <summary>
+			/// 1-bit monochrome format. Available for Direct3D9Ex only.
+			/// </summary>
+			A1 = D3DFMT_A1,
+
+			/// <summary>
+			/// Binary buffer format indicating that the data has no inherent type. Available for Direct3D9Ex only.
+			/// </summary>
+			BinaryBuffer = D3DFMT_BINARYBUFFER,
+
+			/***/
+
+			/// <summary>
+			/// Surface format for Render-To-Vertex-Buffer (R2VB).
+			/// </summary>
 			ATI_R2VB = R2VB_FOURCC_R2VB,
 
+			/***/
+
+			/// <summary>
+			/// Unknown surface format.
+			/// </summary>
 			Unknown = D3DFMT_UNKNOWN,
 		};
 
+		/// <summary>
+		/// Defines constants for query issues.
+		/// </summary>
 		[System::Flags]
 		public enum class Issue
 		{
+			/// <summary>
+			/// Start a query issue.
+			/// </summary>
 			Begin = D3DISSUE_BEGIN,
+
+			/// <summary>
+			/// End a query issue.
+			/// </summary>
 			End = D3DISSUE_END
 		};
 		
+		/// <summary>
+		/// Defines possible light types.
+		/// </summary>
+		/// <unmanaged>D3DLIGHTTYPE</unmanaged>
 		public enum class LightType : System::Int32
 		{
+			/// <summary>
+			/// Light is a point source. The light has a position in space and radiates in all directions.
+			/// </summary>
 			Point = D3DLIGHT_POINT,
+
+			/// <summary>
+			/// Light is a spotlight source. Illumination is limited to a cone.
+			/// </summary>
 			Spot = D3DLIGHT_SPOT,
+
+			/// <summary>
+			/// Light is a directional light source. This is equivalent to using a point light source at an infinite distance.
+			/// </summary>
 			Directional = D3DLIGHT_DIRECTIONAL,
 		};
 
+		/// <summary>
+		/// Specifies the line drawing capabilities of a device.
+		/// </summary>
 		[System::Flags]
 		public enum class LineCaps : System::Int32
 		{
+			/// <summary>
+			/// Supports texture-mapping.
+			/// </summary>
 			Texture = D3DLINECAPS_TEXTURE,
+
+			/// <summary>
+			/// Supports depth test.
+			/// </summary>
 			DepthTest = D3DLINECAPS_ZTEST,
+
+			/// <summary>
+			/// Supports source-blending.
+			/// </summary>
 			Blend = D3DLINECAPS_BLEND,
+
+			/// <summary>
+			/// Supports alpha test comparisons.
+			/// </summary>
 			AlphaCompare = D3DLINECAPS_ALPHACMP,
+
+			/// <summary>
+			/// Supports fog.
+			/// </summary>
 			Fog = D3DLINECAPS_FOG,
+
+			/// <summary>
+			/// Supports antialiasing.
+			/// </summary>
 			Antialias = D3DLINECAPS_ANTIALIAS,
 		};
 		
+		/// <summary>
+		/// Defines flags for buffer locking.
+		/// </summary>
+		/// <unmanaged>D3DLOCK</unmanaged>
 		[System::Flags]
 		public enum class LockFlags : System::Int32
 		{
+			/// <summary>
+			/// The application discards all memory within the locked region.
+			/// </summary>
 			Discard = D3DLOCK_DISCARD,
+
+			/// <summary>
+			/// Allows the application to gain back CPU cycles if the driver cannot lock the surface immediately.
+			/// </summary>
 			DoNotWait = D3DLOCK_DONOTWAIT,
+
+			/// <summary>
+			/// Prevents any changes to the dirty state of the resource.
+			/// </summary>
 			NoDirtyUpdate = D3DLOCK_NO_DIRTY_UPDATE,
+
+			/// <summary>
+			/// No locking flags specified.
+			/// </summary>
 			None = 0,
+
+			/// <summary>
+			/// Indicates that the last set of data written will not be modified during this lock call.
+			/// </summary>
 			NoOverwrite = D3DLOCK_NOOVERWRITE,
+
+			/// <summary>
+			/// Prevents the allocation of a system wide resource lock.
+			/// </summary>
 			NoSystemLock = D3DLOCK_NOSYSLOCK,
+
+			/// <summary>
+			/// The application will not write to the buffer.
+			/// </summary>
 			ReadOnly = D3DLOCK_READONLY,
 
 			// this just exists for ProcessVertices
 			DoNotCopyData = D3DPV_DONOTCOPYDATA,
 		};
 		
+		/// <summary>
+		/// Defines the levels of full-scene multisampling that the device can apply.
+		/// </summary>
+		/// <unmanaged>D3DMULTISAMPLE_TYPE</unmanaged>
 		public enum class MultisampleType : System::Int32
 		{
+			/// <summary>
+			/// No level of multisampling is available.
+			/// </summary>
 			None = D3DMULTISAMPLE_NONE,
+
+			/// <summary>
+			/// Enables the multisampling quality value.
+			/// </summary>
 			NonMaskable = D3DMULTISAMPLE_NONMASKABLE,
+
+			/// <summary>
+			/// Level of full-scene multisampling using 2 samples.
+			/// </summary>
 			TwoSamples = D3DMULTISAMPLE_2_SAMPLES,
+
+			/// <summary>
+			/// Level of full-scene multisampling using 3 samples.
+			/// </summary>
 			ThreeSamples = D3DMULTISAMPLE_3_SAMPLES,
+
+			/// <summary>
+			/// Level of full-scene multisampling using 4 samples.
+			/// </summary>
 			FourSamples = D3DMULTISAMPLE_4_SAMPLES,
+
+			/// <summary>
+			/// Level of full-scene multisampling using 5 samples.
+			/// </summary>
 			FiveSamples = D3DMULTISAMPLE_5_SAMPLES,
+
+			/// <summary>
+			/// Level of full-scene multisampling using 6 samples.
+			/// </summary>
 			SixSamples = D3DMULTISAMPLE_6_SAMPLES,
+
+			/// <summary>
+			/// Level of full-scene multisampling using 7 samples.
+			/// </summary>
 			SevenSamples = D3DMULTISAMPLE_7_SAMPLES,
+
+			/// <summary>
+			/// Level of full-scene multisampling using 8 samples.
+			/// </summary>
 			EightSamples = D3DMULTISAMPLE_8_SAMPLES,
+
+			/// <summary>
+			/// Level of full-scene multisampling using 9 samples.
+			/// </summary>
 			NineSamples = D3DMULTISAMPLE_9_SAMPLES,
+
+			/// <summary>
+			/// Level of full-scene multisampling using 10 samples.
+			/// </summary>
 			TenSamples = D3DMULTISAMPLE_10_SAMPLES,
+
+			/// <summary>
+			/// Level of full-scene multisampling using 11 samples.
+			/// </summary>
 			ElevenSamples = D3DMULTISAMPLE_11_SAMPLES,
+
+			/// <summary>
+			/// Level of full-scene multisampling using 12 samples.
+			/// </summary>
 			TwelveSamples = D3DMULTISAMPLE_12_SAMPLES,
+
+			/// <summary>
+			/// Level of full-scene multisampling using 13 samples.
+			/// </summary>
 			ThirteenSamples = D3DMULTISAMPLE_13_SAMPLES,
+
+			/// <summary>
+			/// Level of full-scene multisampling using 14 samples.
+			/// </summary>
 			FourteenSamples = D3DMULTISAMPLE_14_SAMPLES,
+
+			/// <summary>
+			/// Level of full-scene multisampling using 15 samples.
+			/// </summary>
 			FifteenSamples = D3DMULTISAMPLE_15_SAMPLES,
+
+			/// <summary>
+			/// Level of full-scene multisampling using 16 samples.
+			/// </summary>
 			SixteenSamples = D3DMULTISAMPLE_16_SAMPLES
 		};
+
+		/// <summary>
+		/// Defines whether the current tessellation mode is discrete or continuous.
+		/// </summary>
+		/// <unmanaged>D3DPATCHEDGESTYLE</unmanaged>
+		public enum class PatchEdgeStyle : System::Int32
+		{
+			/// <summary>
+			/// Discrete edge style.
+			/// </summary>
+			Discrete = D3DPATCHEDGE_DISCRETE,
+
+			/// <summary>
+			/// Continuous edge style.
+			/// </summary>
+			Continuous = D3DPATCHEDGE_CONTINUOUS
+		};
 		
+		/// <summary>
+		/// Defines pitch and family settings for fonts.
+		/// </summary>
 		[System::Flags]
 		public enum class PitchAndFamily : System::Int32
 		{
+			/// <summary>
+			/// Default pitch.
+			/// </summary>
 			Default = DEFAULT_PITCH,
+
+			/// <summary>
+			/// Fixed pitch.
+			/// </summary>
 			Fixed = FIXED_PITCH,
+
+			/// <summary>
+			/// Variable pitch.
+			/// </summary>
 			Variable = VARIABLE_PITCH,
+
+			/// <summary>
+			/// Mono pitch.
+			/// </summary>
 			Mono = MONO_FONT,
 
+			/// <summary>
+			/// The font family doesn't matter.
+			/// </summary>
 			DontCare = FF_DONTCARE,
+
+			/// <summary>
+			/// Use the Roman family.
+			/// </summary>
 			Roman = FF_ROMAN,
+
+			/// <summary>
+			/// Use the Swiss family.
+			/// </summary>
 			Swiss = FF_SWISS,
+
+			/// <summary>
+			/// Use the Modern family.
+			/// </summary>
 			Modern = FF_MODERN,
+
+			/// <summary>
+			/// Use the Script family.
+			/// </summary>
 			Script = FF_SCRIPT,
+
+			/// <summary>
+			/// Use the Decorative family.
+			/// </summary>
 			Decorative = FF_DECORATIVE,
 		};
 		
+		/// <summary>
+		/// Defines the memory class that holds the buffers for a resource.
+		/// </summary>
+		/// <unmanaged>D3DPOOL</unmanaged>
 		public enum class Pool : System::Int32
 		{
+			/// <summary>
+			/// Resources are placed in the memory pool most appropriate for the set of usages requested for the resource.
+			/// </summary>
 			Default = D3DPOOL_DEFAULT,
+
+			/// <summary>
+			/// Resources are copied automatically to device-accessable memory as needed. Managed resources are
+			/// backed by system memory and do not need to be recreated when the device is lost.
+			/// </summary>
 			Managed = D3DPOOL_MANAGED,
+
+			/// <summary>
+			/// Resources are placed in system memory that is not accessable by the device. These resources
+			/// do not need to be recreated when the device is lost.
+			/// </summary>
 			SystemMemory = D3DPOOL_SYSTEMMEM,
+
+			/// <summary>
+			/// Resources are placed in scratch memory. These resources cannot be used as textures or render
+			/// targets.
+			/// </summary>
 			Scratch = D3DPOOL_SCRATCH,
 		};
 
+		/// <summary>
+		/// Defines precision levels for font rendering.
+		/// </summary>
 		public enum class Precision : System::Int32
 		{
+			/// <summary>
+			/// Default precision.
+			/// </summary>
 			Default = OUT_DEFAULT_PRECIS,
+
+			/// <summary>
+			/// String-level precision.
+			/// </summary>
 			String = OUT_STRING_PRECIS,
+
+			/// <summary>
+			/// Character-level precision.
+			/// </summary>
 			Character = OUT_CHARACTER_PRECIS,
+
+			/// <summary>
+			/// Stroke-level precision.
+			/// </summary>
 			Stroke = OUT_STROKE_PRECIS,
+
+			/// <summary>
+			/// TrueType precision.
+			/// </summary>
 			TrueType = OUT_TT_PRECIS,
+
+			/// <summary>
+			/// Device precision.
+			/// </summary>
 			Device = OUT_DEVICE_PRECIS,
+
+			/// <summary>
+			/// Raster precision.
+			/// </summary>
 			Raster = OUT_RASTER_PRECIS,
+
+			/// <summary>
+			/// TrueType only precision.
+			/// </summary>
 			TrueTypeOnly = OUT_TT_ONLY_PRECIS,
+
+			/// <summary>
+			/// Outline precision.
+			/// </summary>
 			Outline = OUT_OUTLINE_PRECIS,
+
+			/// <summary>
+			/// Screen outline precision.
+			/// </summary>
 			ScreenOutline = OUT_SCREEN_OUTLINE_PRECIS,
+
+			/// <summary>
+			/// PostScript only precision.
+			/// </summary>
 			PostScriptOnly = OUT_PS_ONLY_PRECIS,
 		};
 		
+		/// <summary>
+		/// Defines flags for presentation calls.
+		/// </summary>
+		/// <unmanaged>D3DPRESENT</unmanaged>
 		[System::Flags]
 		public enum class Present : System::Int32
 		{
+			/// <summary>
+			/// No extra presentation flags.
+			/// </summary>
 			None = 0,
+
+			/// <summary>
+			/// Use the front buffer as both the source and the target surface during rendering.
+			/// Available for Direct3D9Ex only.
+			/// </summary>
+			DoNotFlip = D3DPRESENT_DONOTFLIP,
+
+			/// <summary>
+			/// Specifies that the application should not wait for rendering to finish.
+			/// </summary>
 			DoNotWait = D3DPRESENT_DONOTWAIT,
+
+			/// <summary>
+			/// The application will discard all previously queued frames and present the current frame next.
+			/// Available in Direct3D9Ex only.
+			/// </summary>
+			FlipRestart = D3DPRESENT_FLIPRESTART,
+
+			/// <summary>
+			/// Clips the rendered content to the monitor/device that the adapter is targetting. Available in
+			/// Direct3D9Ex only.
+			/// </summary>
+			VideoRestrictToMonitor = D3DPRESENT_VIDEO_RESTRICT_TO_MONITOR,
+
+			/// <summary>
+			/// The content of the backbuffer to be presented is in linear color space.
+			/// </summary>
 			LinearContent = D3DPRESENT_LINEAR_CONTENT
 		};
 		
+		/// <summary>
+		/// Specifies possible presentation flags.
+		/// </summary>
+		/// <unmanaged>D3DPRESENTFLAG</unmanaged>
 		[System::Flags]
 		public enum class PresentFlags : System::Int32
 		{
+			/// <summary>
+			/// Clips the presentation to the device.
+			/// </summary>
 			DeviceClip = D3DPRESENTFLAG_DEVICECLIP,
+
+			/// <summary>
+			/// Discards the contents of the depth/stencil surface after each presentation.
+			/// </summary>
 			DiscardDepthStencil = D3DPRESENTFLAG_DISCARD_DEPTHSTENCIL,
+
+			/// <summary>
+			/// Set when the application requires the ability to lock the back buffer.
+			/// </summary>
 			LockableBackBuffer = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER,
+
+			/// <summary>
+			/// No extra presentation flags specified.
+			/// </summary>
 			None = 0,
+
+			/// <summary>
+			/// Specifies that the application will perform its own display rotation. Available in Direct3D9Ex only.
+			/// </summary>
+			NoAutoRotate = D3DPRESENTFLAG_NOAUTOROTATE,
+
+			/// <summary>
+			/// Allows the device to use invalid display modes as if they were valid. Available in Direct3D9Ex only.
+			/// </summary>
+			UnprunedMode = D3DPRESENTFLAG_UNPRUNEDMODE,
+
+			/// <summary>
+			/// This is a hint to the driver that the back buffers will contain video data.
+			/// </summary>
 			Video = D3DPRESENTFLAG_VIDEO
 		};
 
+		/// <summary>
+		/// Specifies presentation intervals.
+		/// </summary>
+		/// <unmanaged>D3DPRESENT</unmanaged>
 		[System::Flags]
 		public enum class PresentInterval : System::Int32
 		{
+			/// <summary>
+			/// The device will wait for the vertical retrace period.
+			/// </summary>
 			Default = D3DPRESENT_INTERVAL_DEFAULT,
+
+			/// <summary>
+			/// The device will present immediately without waiting for the refresh.
+			/// </summary>
 			Immediate = (int) D3DPRESENT_INTERVAL_IMMEDIATE,
+
+			/// <summary>
+			/// The device will wait for the vertical retrace period.
+			/// </summary>
 			One = D3DPRESENT_INTERVAL_ONE,
+
+			/// <summary>
+			/// Present operations will not be affected more than twice every screen refresh.
+			/// </summary>
 			Two = D3DPRESENT_INTERVAL_TWO,
+
+			/// <summary>
+			/// Present operations will not be affected more than three times every screen refresh.
+			/// </summary>
 			Three = D3DPRESENT_INTERVAL_THREE,
+
+			/// <summary>
+			/// Present operations will not be affected more than four times every screen refresh.
+			/// </summary>
 			Four = D3DPRESENT_INTERVAL_FOUR,
 		};
 
+		/// <summary>
+		/// Specifies miscellaneous capabilities for primitive rendering supported by the device.
+		/// </summary>
+		/// <unmanaged>D3DPMISCCAPS</unmanaged>
 		[System::Flags]
 		public enum class PrimitiveMiscCaps : System::Int32
 		{
+			/// <summary>
+			/// Device can enabled and disable modification of the depth buffer on pixel operations.
+			/// </summary>
 			MaskZ = D3DPMISCCAPS_MASKZ,
+
+			/// <summary>
+			/// The driver does not perform triangle culling.
+			/// </summary>
 			CullNone = D3DPMISCCAPS_CULLNONE,
+
+			/// <summary>
+			/// The driver supports clockwise culling.
+			/// </summary>
 			CullCW = D3DPMISCCAPS_CULLCW,
+
+			/// <summary>
+			/// The driver supports counterclockwise culling.
+			/// </summary>
 			CullCCW = D3DPMISCCAPS_CULLCCW,
+
+			/// <summary>
+			/// Device supports per-channel writes of the color buffer.
+			/// </summary>
 			ColorWriteEnable = D3DPMISCCAPS_COLORWRITEENABLE,
+
+			/// <summary>
+			/// Device correctly clips scaled points of size greater than 1.0.
+			/// </summary>
 			ClipPlanesScaledPoints = D3DPMISCCAPS_CLIPPLANESCALEDPOINTS,
+
+			/// <summary>
+			/// Device clips post-transformed vertex primitives.
+			/// </summary>
 			ClipTLVertices = D3DPMISCCAPS_CLIPTLVERTS,
+
+			/// <summary>
+			/// Device supports temporary texture arguments.
+			/// </summary>
 			TssArgTemp = D3DPMISCCAPS_TSSARGTEMP,
+
+			/// <summary>
+			/// Device supports alpha blending operations.
+			/// </summary>
 			BlendOperation = D3DPMISCCAPS_BLENDOP,
+
+			/// <summary>
+			/// A reference device that does not render.
+			/// </summary>
 			NullReference = D3DPMISCCAPS_NULLREFERENCE,
+
+			/// <summary>
+			/// Device supports independent write masks for multiple render targets.
+			/// </summary>
 			IndependentWriteMasks = D3DPMISCCAPS_INDEPENDENTWRITEMASKS,
-			PerStateConstant = D3DPMISCCAPS_PERSTAGECONSTANT,
+
+			/// <summary>
+			/// Device supports per-stage constants.
+			/// </summary>
+			PerStageConstant = D3DPMISCCAPS_PERSTAGECONSTANT,
+
+			/// <summary>
+			/// Device supports conversion to sRGB after blending. Available for Direct3D9Ex only.
+			/// </summary>
+			PostBlendSrgbConvert = D3DPMISCCAPS_POSTBLENDSRGBCONVERT,
+
+			/// <summary>
+			/// Device supports fog and specular alpha.
+			/// </summary>
 			FogAndSpecularAlpha = D3DPMISCCAPS_FOGANDSPECULARALPHA,
+
+			/// <summary>
+			/// Device supports separate blend settings for the alpha channel.
+			/// </summary>
 			SeparateAlphaBlend = D3DPMISCCAPS_SEPARATEALPHABLEND,
+
+			/// <summary>
+			/// Device supports different bit depths for multiple render targets.
+			/// </summary>
 			MrtIndependentBitDepths = D3DPMISCCAPS_MRTINDEPENDENTBITDEPTHS,
+
+			/// <summary>
+			/// Device supports post pixel shader operations for multiple render targets.
+			/// </summary>
 			MrtPostPixelShaderBlending = D3DPMISCCAPS_MRTPOSTPIXELSHADERBLENDING,
-			FogVertexClamped = D3DPMISCCAPS_FOGVERTEXCLAMPED,
+
+			/// <summary>
+			/// Device clamps fog blend factor per vertex.
+			/// </summary>
+			FogVertexClamped = D3DPMISCCAPS_FOGVERTEXCLAMPED
 		};
 		
+		/// <summary>
+		/// Defines the primitives supported by Direct3D.
+		/// </summary>
+		/// <unmanaged>D3DPRIMITIVETYPE</unmanaged>
 		public enum class PrimitiveType : System::Int32
 		{
+			/// <summary>
+			/// Renders the vertices as a collection of isolated points.
+			/// </summary>
 			PointList = D3DPT_POINTLIST,
+
+			/// <summary>
+			/// Renders the vertices as a list of isolated line segments.
+			/// </summary>
 			LineList = D3DPT_LINELIST,
+
+			/// <summary>
+			/// Renders the vertices as a single polyline.
+			/// </summary>
 			LineStrip = D3DPT_LINESTRIP,
+
+			/// <summary>
+			/// Renders the vertices as a sequence of isolated triangles.
+			/// </summary>
 			TriangleList = D3DPT_TRIANGLELIST,
+
+			/// <summary>
+			/// Renders the vertices as a triangle strip.
+			/// </summary>
 			TriangleStrip = D3DPT_TRIANGLESTRIP,
+
+			/// <summary>
+			/// Renders the vertices as a triangle fan.
+			/// </summary>
 			TriangleFan = D3DPT_TRIANGLEFAN
 		};
 
+		/// <summary>
+		/// Identifies possible query types.
+		/// </summary>
+		/// <unmanaged>D3DQUERYTYPE</unmanaged>
 		public enum class QueryType : System::Int32
 		{
+			/// <summary>
+			/// Query for driver hints about data layout for vertex caching.
+			/// </summary>
 			VCache = D3DQUERYTYPE_VCACHE,
+
+			/// <summary>
+			/// Query the resource manager.
+			/// </summary>
 			ResourceManager = D3DQUERYTYPE_RESOURCEMANAGER,
+
+			/// <summary>
+			/// Query vertex statistics.
+			/// </summary>
 			VertexStats = D3DQUERYTYPE_VERTEXSTATS,
+
+			/// <summary>
+			/// Query for any and all asynchronous events that have been issued from API calls.
+			/// </summary>
 			Event = D3DQUERYTYPE_EVENT,
+
+			/// <summary>
+			/// Query for occluded pixels.
+			/// </summary>
 			Occlusion = D3DQUERYTYPE_OCCLUSION,
+
+			/// <summary>
+			/// Queryies the 64-bit timestamp.
+			/// </summary>
 			Timestamp = D3DQUERYTYPE_TIMESTAMP,
+
+			/// <summary>
+			/// Notifies the application that the timestamp frequency has changed.
+			/// </summary>
 			TimestampDisjoint = D3DQUERYTYPE_TIMESTAMPDISJOINT,
+
+			/// <summary>
+			/// Queries the device to see if timestamp frequencies can change mid-call.
+			/// </summary>
 			TimestampFreq = D3DQUERYTYPE_TIMESTAMPFREQ,
+
+			/// <summary>
+			/// Query for pipeline timings.
+			/// </summary>
 			PipelineTimings = D3DQUERYTYPE_PIPELINETIMINGS,
+
+			/// <summary>
+			/// Query for interface timings.
+			/// </summary>
 			InterfaceTimings = D3DQUERYTYPE_INTERFACETIMINGS,
+
+			/// <summary>
+			/// Query for vertex shader timings.
+			/// </summary>
 			VertexTimings = D3DQUERYTYPE_VERTEXTIMINGS,
+
+			/// <summary>
+			/// Query for pixel shader timings.
+			/// </summary>
 			PixelTimings = D3DQUERYTYPE_PIXELTIMINGS,
+
+			/// <summary>
+			/// Query for bandwidth timings.
+			/// </summary>
 			BandwidthTimings = D3DQUERYTYPE_BANDWIDTHTIMINGS,
+
+			/// <summary>
+			/// Measure the cache hit-rate performance for textures and indexed vertices.
+			/// </summary>
 			CacheUtilization = D3DQUERYTYPE_CACHEUTILIZATION,
 		};
 
+		/// <summary>
+		/// Specifies sampler values for Render-To-Vertex-Buffer (R2VB).
+		/// </summary>
 		public enum class R2VBSampler : System::Int32
 		{
+			/// <summary>
+			/// Override the stream with displacement map sampler.
+			/// </summary>
 			OverrideDMap = R2VB_VSMP_OVR_DMAP,
+
+			/// <summary>
+			/// Override the stream with vertex texture 0 sampler.
+			/// </summary>
 			OverrideVtx0 = R2VB_VSMP_OVR_VTX0,
+
+			/// <summary>
+			/// Override the stream with vertex texture 1 sampler.
+			/// </summary>
 			OverrideVtx1 = R2VB_VSMP_OVR_VTX1,
+
+			/// <summary>
+			/// Override the stream with vertex texture 2 sampler.
+			/// </summary>
 			OverrideVtx2 = R2VB_VSMP_OVR_VTX2,
+
+			/// <summary>
+			/// Override the stream with vertex texture 3 sampler.
+			/// </summary>
 			OverrideVtx3 = R2VB_VSMP_OVR_VTX3,
 
+			/// <summary>
+			/// Number of available texture samplers.
+			/// </summary>
 			Count = R2VB_VSMP_NUM,
 		};
 
+		/// <summary>
+		/// Specifies information about raster capabilities of the device.
+		/// </summary>
 		[System::Flags]
 		public enum class RasterCaps : System::Int32
 		{
+			/// <summary>
+			/// Device can dither to improve color resolution.
+			/// </summary>
 			Dither = D3DPRASTERCAPS_DITHER,
+
+			/// <summary>
+			/// Device can perform Z-test operations.
+			/// </summary>
 			DepthTest = D3DPRASTERCAPS_ZTEST,
+
+			/// <summary>
+			/// Device calculates the fog value during the lighting operation and interpolates the value during rasterization.
+			/// </summary>
 			FogVertex = D3DPRASTERCAPS_FOGVERTEX,
+
+			/// <summary>
+			/// Device calculates the fog value by referring to a lookup table.
+			/// </summary>
 			FogTable = D3DPRASTERCAPS_FOGTABLE,
+
+			/// <summary>
+			/// Device supports level-of-detail bias adjustments.
+			/// </summary>
 			MipMapLodBias = D3DPRASTERCAPS_MIPMAPLODBIAS,
+
+			/// <summary>
+			/// Device can perform hidden surface removal (HSR) without requiring the application to
+			/// sort polygons and without requiring the allocation of a depth buffer.
+			/// </summary>
 			ZBufferLessHsr = D3DPRASTERCAPS_ZBUFFERLESSHSR,
+
+			/// <summary>
+			/// Device supports range-based fog.
+			/// </summary>
 			FogRange = D3DPRASTERCAPS_FOGRANGE,
+
+			/// <summary>
+			/// Device supports anisotropic filtering.
+			/// </summary>
 			Anisotropy = D3DPRASTERCAPS_ANISOTROPY,
+
+			/// <summary>
+			/// Device supports depth buffering using w.
+			/// </summary>
 			WBuffer = D3DPRASTERCAPS_WBUFFER,
+
+			/// <summary>
+			/// Device supports w-based fog.
+			/// </summary>
 			WFog = D3DPRASTERCAPS_WFOG,
+
+			/// <summary>
+			/// Device supports z-based fog.
+			/// </summary>
 			ZFog = D3DPRASTERCAPS_ZFOG,
+
+			/// <summary>
+			/// Device iterates colors perspective correctly.
+			/// </summary>
 			ColorPerspective = D3DPRASTERCAPS_COLORPERSPECTIVE,
+
+			/// <summary>
+			/// Device supports scissor testing.
+			/// </summary>
 			ScissorTest = D3DPRASTERCAPS_SCISSORTEST,
+
+			/// <summary>
+			/// Device performs true slope-scale depth bias.
+			/// </summary>
 			SlopeScaleDepthBias = D3DPRASTERCAPS_SLOPESCALEDEPTHBIAS,
+
+			/// <summary>
+			/// Device supports legacy depth bias.
+			/// </summary>
 			DepthBias = D3DPRASTERCAPS_DEPTHBIAS,
+
+			/// <summary>
+			/// Device supports toggling multisampling on and off.
+			/// </summary>
 			MultisampleToggle = D3DPRASTERCAPS_MULTISAMPLE_TOGGLE,
 		};
 		
+		/// <summary>
+		/// Render states define set-up states for all kinds of vertex and pixel processing. 
+		/// Some render states set up vertex processing, and some set up pixel processing.
+		/// Render states can be saved and restored using stateblocks.
+		/// </summary>
+		/// <unmanaged>D3DRENDERSTATETYPE</unmanaged>
 		public enum class RenderState : System::Int32
 		{
+			/// <summary>
+			/// Depth-buffering state. Use values from <see cref="ZBufferType"/> to set this state. The
+			/// default value for this state is <see cref="ZBufferType.UseZBuffer"/> if a depth stencil was created
+			/// along with the device, or <see cref="ZBufferType.DontUseZBuffer"/> otherwise.
+			/// </summary>
 			ZEnable = D3DRS_ZENABLE,
+
+			/// <summary>
+			/// Defines the current fill mode of the device. Use values from <see cref="FillMode"/> to set this state.
+			/// </summary>
 			FillMode = D3DRS_FILLMODE,
+
+			/// <summary>
+			/// 
+			/// </summary>
 			ShadeMode = D3DRS_SHADEMODE,
 			ZWriteEnable = D3DRS_ZWRITEENABLE,
 			AlphaTestEnable = D3DRS_ALPHATESTENABLE,

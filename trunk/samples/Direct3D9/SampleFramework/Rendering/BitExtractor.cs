@@ -41,7 +41,7 @@ namespace SampleFramework
                 case Format.D24X8:
                 case Format.D24S8:
                 case Format.D24X4S4:
-                case Format.D24FS8:
+                case Format.D24SingleS8:
                     return 24;
 
                 case Format.D16Lockable:
@@ -67,7 +67,7 @@ namespace SampleFramework
                     return 4;
 
                 case Format.D24S8:
-                case Format.D24FS8:
+                case Format.D24SingleS8:
                     return 8;
 
                 default:
