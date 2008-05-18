@@ -43,6 +43,12 @@ namespace SlimDX
 		public:
 			void Preload();
 
+			literal int PriorityMinimum = D3D9_RESOURCE_PRIORITY_MINIMUM;
+			literal int PriorityLow = D3D9_RESOURCE_PRIORITY_LOW;
+			literal int PriorityNormal = D3D9_RESOURCE_PRIORITY_NORMAL;
+			literal int PriorityHigh = D3D9_RESOURCE_PRIORITY_HIGH;
+			literal int PriorityMaximum = D3D9_RESOURCE_PRIORITY_MAXIMUM;
+
 			property SlimDX::Direct3D9::Device^ Device
 			{
 				SlimDX::Direct3D9::Device^ get();

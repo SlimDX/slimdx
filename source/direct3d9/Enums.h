@@ -2333,6 +2333,44 @@ namespace SlimDX
 			/// </summary>
 			Decorative = FF_DECORATIVE,
 		};
+
+		/// <summary>
+		/// Specifies pixel shader capabilities supported by the device.
+		/// </summary>
+		/// <unmanaged>D3DPS20CAPS</unmanaged>
+		[System::Flags]
+		public enum class PixelShaderCaps : System::Int32
+		{
+			/// <summary>
+			/// No extra pixel shader capabilities specified.
+			/// </summary>
+			None = 0,
+
+			/// <summary>
+			/// Arbitrary swizzling is supported.
+			/// </summary>
+			ArbitrarySwizzle = D3DPS20CAPS_ARBITRARYSWIZZLE,
+
+			/// <summary>
+			/// Gradient instructions are supported.
+			/// </summary>
+			GradientInstructions = D3DPS20CAPS_GRADIENTINSTRUCTIONS,
+
+			/// <summary>
+			/// Instruction predication is supported.
+			/// </summary>
+			Predication = D3DPS20CAPS_PREDICATION,
+
+			/// <summary>
+			/// There is no limit on the number of dependent reads.
+			/// </summary>
+			NoDependentReadLimit = D3DPS20CAPS_NODEPENDENTREADLIMIT,
+
+			/// <summary>
+			/// There is no limit on the number of texture instructions.
+			/// </summary>
+			NoTextureInstructionLimit = D3DPS20CAPS_NOTEXINSTRUCTIONLIMIT,
+		};
 		
 		/// <summary>
 		/// Defines the memory class that holds the buffers for a resource.
@@ -3550,35 +3588,130 @@ namespace SlimDX
 		/// Some sampler states set-up vertex processing, and some set-up pixel processing. Sampler states can 
 		/// be saved and restored using stateblocks 
 		/// </summary>
+		/// <unmanaged>D3DSAMPLERSTATETYPE</unmanaged>
 		public enum class SamplerState : System::Int32
 		{
+			/// <summary>
+			/// Specifies the texture address mode for the U coordinate. Use values from <see cref="TextureAddress"/>
+			/// to set this state. The default value is <see cref="TextureAddress.Wrap"/>.
+			/// </summary>
 			AddressU = D3DSAMP_ADDRESSU,
+
+			/// <summary>
+			/// Specifies the texture address mode for the V coordinate. Use values from <see cref="TextureAddress"/>
+			/// to set this state. The default value is <see cref="TextureAddress.Wrap"/>.
+			/// </summary>
 			AddressV = D3DSAMP_ADDRESSV,
+
+			/// <summary>
+			/// Specifies the texture address mode for the W coordinate. Use values from <see cref="TextureAddress"/>
+			/// to set this state. The default value is <see cref="TextureAddress.Wrap"/>.
+			/// </summary>
 			AddressW = D3DSAMP_ADDRESSW,
+
+			/// <summary>
+			/// Specifies the texture border color. Use packed integer color values to set this state.
+			/// The default value is 0 (black).
+			/// </summary>
 			BorderColor = D3DSAMP_BORDERCOLOR,
+
+			/// <summary>
+			/// Specifies the magnification filter. Use values from <see cref="TextureFilter"/> to set this
+			/// state. The default value is <see cref="TextureFilter.Point"/>.
+			/// </summary>
 			MagFilter = D3DSAMP_MAGFILTER,
+
+			/// <summary>
+			/// Specifies the minification filter. Use values from <see cref="TextureFilter"/> to set this
+			/// state. The default value is <see cref="TextureFilter.Point"/>.
+			/// </summary>
 			MinFilter = D3DSAMP_MINFILTER,
+
+			/// <summary>
+			/// Specifies the mipmap filter. Use values from <see cref="TextureFilter"/> to set this
+			/// state. The default value is <see cref="TextureFilter.Point"/>.
+			/// </summary>
 			MipFilter = D3DSAMP_MIPFILTER,
+
+			/// <summary>
+			/// An integer value that specifies the level-of-detail bias. The default value is 0.
+			/// </summary>
 			MipMapLodBias = D3DSAMP_MIPMAPLODBIAS,
+
+			/// <summary>
+			/// An integer value that specifies the maximum mipmap level. The default value is 0.
+			/// </summary>
 			MaxMipLevel = D3DSAMP_MAXMIPLEVEL,
+
+			/// <summary>
+			/// An integer value that specifies the maximum anisotropy level. The default value is 1.
+			/// </summary>
 			MaxAnisotropy = D3DSAMP_MAXANISOTROPY,
+
+			/// <summary>
+			/// An integer value that specifies sRGB gamma correction. The default value is 0.
+			/// </summary>
 			SrgbTexture = D3DSAMP_SRGBTEXTURE,
+
+			/// <summary>
+			/// An integer value that specifies which element of a multielement texture to use. The default value is 0.
+			/// </summary>
 			ElementIndex = D3DSAMP_ELEMENTINDEX,
-			DMapOffset = D3DSAMP_DMAPOFFSET,
+
+			/// <summary>
+			/// An integer value that specifies the vertex offset into a presampled displacement map. The default value is 0.
+			/// </summary>
+			DisplacementMapOffset = D3DSAMP_DMAPOFFSET,
 		};
 
+		/// <summary>
+		/// Specifies the shading operations that a device supports.
+		/// </summary>
 		[System::Flags]
 		public enum class ShadeCaps : System::Int32
 		{
+			/// <summary>
+			/// Device supports colored Gouraud shading.
+			/// </summary>
 			ColorGouraudRgb = D3DPSHADECAPS_COLORGOURAUDRGB,
+
+			/// <summary>
+			/// Device supports Gouraud shading of specular highlights.
+			/// </summary>
 			SpecularGouraudRgb = D3DPSHADECAPS_SPECULARGOURAUDRGB,
+
+			/// <summary>
+			/// Device supports Gouraud-blended transparency.
+			/// </summary>
 			AlphaGouraudBlend = D3DPSHADECAPS_ALPHAGOURAUDBLEND,
-			FogGouraud = D3DPSHADECAPS_FOGGOURAUD,
+
+			/// <summary>
+			/// Device supports Gouraud fog.
+			/// </summary>
+			FogGouraud = D3DPSHADECAPS_FOGGOURAUD
+		};
+
+		/// <summary>
+		/// Flags indicating the method the rasterizer uses to create an image on a surface.
+		/// </summary>
+		/// <unmanaged>D3DSCANLINEORDERING</unmanaged>
+		public enum class ScanLineOrdering : System::Int32
+		{
+			/// <summary>
+			/// All scanlines are used to build the final image.
+			/// </summary>
+			Progressive = D3DSCANLINEORDERING_PROGRESSIVE,
+
+			/// <summary>
+			/// Every other line is interlaced with the previous one to build the final image.
+			/// </summary>
+			Interlaced = D3DSCANLINEORDERING_INTERLACED
 		};
 		
 		/// <summary>
-		/// Shading modes.
+		/// Defines the possible shading modes.
 		/// </summary>
+		/// <unmanaged>D3DSHADEMODE</unmanaged>
 		public enum class ShadeMode : System::Int32
 		{
 			/// <summary>
@@ -3592,34 +3725,88 @@ namespace SlimDX
 			Gouraud = D3DSHADE_GOURAUD
 		};
 
+		/// <summary>
+		/// Predefined sets of pipeline states used by state blocks.
+		/// </summary>
+		/// <unmanaged>D3DSTATEBLOCKTYPE</unmanaged>
 		public enum class StateBlockType : System::Int32
 		{
+			/// <summary>
+			/// Capture the current device state.
+			/// </summary>
 			All = D3DSBT_ALL,
+
+			/// <summary>
+			/// Capture the current pixel state.
+			/// </summary>
 			PixelState = D3DSBT_PIXELSTATE,
+
+			/// <summary>
+			/// Capture the current vertex state.
+			/// </summary>
 			VertexState = D3DSBT_VERTEXSTATE,
 		};
 
+		/// <summary>
+		/// Defines a set of stencil operations supported by a device.
+		/// </summary>
 		[System::Flags]
 		public enum class StencilCaps : System::Int32
 		{
+			/// <summary>
+			/// The device supports <see cref="StencilOperation.Keep"/>.
+			/// </summary>
 			Keep = D3DSTENCILCAPS_KEEP,
+
+			/// <summary>
+			/// The device supports <see cref="StencilOperation.Zero"/>.
+			/// </summary>
 			Zero = D3DSTENCILCAPS_ZERO,
+
+			/// <summary>
+			/// The device supports <see cref="StencilOperation.Replace"/>.
+			/// </summary>
 			Replace = D3DSTENCILCAPS_REPLACE,
+
+			/// <summary>
+			/// The device supports <see cref="StencilOperation.IncrementClamp"/>.
+			/// </summary>
 			IncrementClamp = D3DSTENCILCAPS_INCRSAT,
+
+			/// <summary>
+			/// The device supports <see cref="StencilOperation.DecrementClamp"/>.
+			/// </summary>
 			DecrementClamp = D3DSTENCILCAPS_DECRSAT,
+
+			/// <summary>
+			/// The device supports <see cref="StencilOperation.Invert"/>.
+			/// </summary>
 			Invert = D3DSTENCILCAPS_INVERT,
+
+			/// <summary>
+			/// The device supports <see cref="StencilOperation.Increment"/>.
+			/// </summary>
 			Increment = D3DSTENCILCAPS_INCR,
+
+			/// <summary>
+			/// The device supports <see cref="StencilOperation.Decrement"/>.
+			/// </summary>
 			Decrement = D3DSTENCILCAPS_DECR,
+
+			/// <summary>
+			/// The device supports <see cref="StencilOperation.TwoSided"/>.
+			/// </summary>
 			TwoSided = D3DSTENCILCAPS_TWOSIDED,
 		};
 		
 		/// <summary>
-		/// Stencil operations.
+		/// Defines stencil buffer operations.
 		/// </summary>
+		/// <unmanaged>D3DSTENCILOP</unmanaged>
 		public enum class StencilOperation
 		{
 			/// <summary>
-			/// Keep the stencil value.
+			/// Keep the current stencil value.
 			/// </summary>
 			Keep = D3DSTENCILOP_KEEP,
 
@@ -3634,12 +3821,12 @@ namespace SlimDX
 			Replace = D3DSTENCILOP_REPLACE,
 
 			/// <summary>
-			/// Increment and clamp stencil value.
+			/// Increment and clamp the stencil value.
 			/// </summary>
 			IncrementSaturate = D3DSTENCILOP_INCRSAT,
 
 			/// <summary>
-			/// Decrement and clamp stencil value.
+			/// Decrement and clamp the stencil value.
 			/// </summary>
 			DecrementSaturate = D3DSTENCILOP_DECRSAT,
 
@@ -3659,316 +3846,1298 @@ namespace SlimDX
 			Decrement = D3DSTENCILOP_DECR
 		};
 		
+		/// <summary>
+		/// Defines swap effects.
+		/// </summary>
+		/// <unmanaged>D3DSWAPEFFECT</unmanaged>
 		public enum class SwapEffect : System::Int32
 		{
+			/// <summary>
+			/// Discards the data in the back buffers and render targets after a presentation.
+			/// </summary>
 			Discard = D3DSWAPEFFECT_DISCARD,
+
+			/// <summary>
+			/// Flips between multiple back buffers.
+			/// </summary>
 			Flip = D3DSWAPEFFECT_FLIP,
+
+			/// <summary>
+			/// Copies the data between back buffers.
+			/// </summary>
 			Copy = D3DSWAPEFFECT_COPY,
 		};
 		
+		/// <summary>
+		/// Defines the texture-addressing modes.
+		/// </summary>
+		/// <unmanaged>D3DTEXTUREADDRESS</unmanaged>
 		public enum class TextureAddress : System::Int32
 		{
+			/// <summary>
+			/// Tile the texture at every integer junction.
+			/// </summary>
 			Wrap = D3DTADDRESS_WRAP,
+
+			/// <summary>
+			/// The texture is flipped at every integer junction.
+			/// </summary>
 			Mirror = D3DTADDRESS_MIRROR,
+
+			/// <summary>
+			/// Texture coordinates outside the range are clamped to the maximum values.
+			/// </summary>
 			Clamp = D3DTADDRESS_CLAMP,
+
+			/// <summary>
+			/// Texture coordinates outside the range are set to the border color.
+			/// </summary>
 			Border = D3DTADDRESS_BORDER,
-			MirrorOnce = D3DTADDRESS_MIRRORONCE,
+
+			/// <summary>
+			/// Similar to a combination of Wrap, Mirror, and Clamp.
+			/// </summary>
+			MirrorOnce = D3DTADDRESS_MIRRORONCE
 		};
 
+		/// <summary>
+		/// Specifies the set of texture addressing modes supported by the device.
+		/// </summary>
 		[System::Flags]
 		public enum class TextureAddressCaps : System::Int32
 		{
+			/// <summary>
+			/// The device supports <see cref="TextureAddress.Wrap"/>.
+			/// </summary>
 			Wrap = D3DPTADDRESSCAPS_WRAP,
+
+			/// <summary>
+			/// The device supports <see cref="TextureAddress.Mirror"/>.
+			/// </summary>
 			Mirror = D3DPTADDRESSCAPS_MIRROR,
+
+			/// <summary>
+			/// The device supports <see cref="TextureAddress.Clamp"/>.
+			/// </summary>
 			Clamp = D3DPTADDRESSCAPS_CLAMP,
+
+			/// <summary>
+			/// The device supports <see cref="TextureAddress.Border"/>.
+			/// </summary>
 			Border = D3DPTADDRESSCAPS_BORDER,
+
+			/// <summary>
+			/// The device can separate the texture-addressing modes of the u and v coordinates of the texture.
+			/// </summary>
 			IndependentUV = D3DPTADDRESSCAPS_INDEPENDENTUV,
+
+			/// <summary>
+			/// The device supports <see cref="TextureAddress.MirrorOnce"/>.
+			/// </summary>
 			MirrorOnce = D3DPTADDRESSCAPS_MIRRORONCE,
 		};
 		
+		/// <summary>
+		/// Specifies possible texture arguments.
+		/// </summary>
+		/// <unmanaged>D3DTA</unmanaged>
+		[System::Flags]
 		public enum class TextureArgument : System::Int32
 		{
+			/// <summary>
+			/// Mask value for all arguments.
+			/// </summary>
 			SelectMask = D3DTA_SELECTMASK,
+
+			/// <summary>
+			/// The texture argument is the diffuse color.
+			/// </summary>
 			Diffuse = D3DTA_DIFFUSE,
+
+			/// <summary>
+			/// The texture argument is the result of the previous blending stage.
+			/// </summary>
 			Current = D3DTA_CURRENT,
+
+			/// <summary>
+			/// The texture argument is the texture color.
+			/// </summary>
 			Texture = D3DTA_TEXTURE,
+
+			/// <summary>
+			/// The texture argument is the texture factor.
+			/// </summary>
 			TFactor = D3DTA_TFACTOR,
+
+			/// <summary>
+			/// The texture argument is the specular color.
+			/// </summary>
 			Specular = D3DTA_SPECULAR,
+
+			/// <summary>
+			/// The texture argument is a temporary color register.
+			/// </summary>
 			Temp = D3DTA_TEMP,
+
+			/// <summary>
+			/// Selects a constant from a texture stage.
+			/// </summary>
 			Constant = D3DTA_CONSTANT,
+
+			/// <summary>
+			/// Specifies that the function should take the complement of the argument.
+			/// </summary>
 			Complement = D3DTA_COMPLEMENT,
+
+			/// <summary>
+			/// Replicate the alpha information to all channels before the method completes.
+			/// </summary>
 			AlphaReplicate = D3DTA_ALPHAREPLICATE,
 		};
 
+		/// <summary>
+		/// Specifies miscellaneous texture mapping capabilities supported by the device.
+		/// </summary>
 		[System::Flags]
 		public enum class TextureCaps : System::Int32
 		{
+			/// <summary>
+			/// Perspective correction is supported.
+			/// </summary>
 			Perspective = D3DPTEXTURECAPS_PERSPECTIVE,
+
+			/// <summary>
+			/// Specifies that the device requires power of 2 texture sizes.
+			/// </summary>
 			Pow2 = D3DPTEXTURECAPS_POW2,
+
+			/// <summary>
+			/// Alpha in texture pixels is supported.
+			/// </summary>
 			Alpha = D3DPTEXTURECAPS_ALPHA,
+
+			/// <summary>
+			/// Specifies that all textures must be square.
+			/// </summary>
 			SquareOnly = D3DPTEXTURECAPS_SQUAREONLY,
+
+			/// <summary>
+			/// Texture indices are not scaled by their size prior to rendering.
+			/// </summary>
 			TextureRepeatNotScaledBySize = D3DPTEXTURECAPS_TEXREPEATNOTSCALEDBYSIZE,
+
+			/// <summary>
+			/// Device can draw alpha from texture palettes.
+			/// </summary>
 			AlphaPalette = D3DPTEXTURECAPS_ALPHAPALETTE,
+
+			/// <summary>
+			/// Determines whether power of 2 texture sizes are required by the device.
+			/// </summary>
 			NonPow2Conditional = D3DPTEXTURECAPS_NONPOW2CONDITIONAL,
+
+			/// <summary>
+			/// The device supports the <see cref="TextureTransform.Projected"/> texture transformation flag.
+			/// </summary>
 			Projected = D3DPTEXTURECAPS_PROJECTED,
+
+			/// <summary>
+			/// Supports cube map textures.
+			/// </summary>
 			CubeMap = D3DPTEXTURECAPS_CUBEMAP,
+
+			/// <summary>
+			/// Supports volume textures.
+			/// </summary>
 			VolumeMap = D3DPTEXTURECAPS_VOLUMEMAP,
+
+			/// <summary>
+			/// Device supports mipmaps.
+			/// </summary>
 			MipMap = D3DPTEXTURECAPS_MIPMAP,
+
+			/// <summary>
+			/// Device supports mipmaps for volume textures.
+			/// </summary>
 			MipVolumeMap = D3DPTEXTURECAPS_MIPVOLUMEMAP,
+
+			/// <summary>
+			/// Device supports mipmaps for cube textures.
+			/// </summary>
 			MipCubeMap = D3DPTEXTURECAPS_MIPCUBEMAP,
+
+			/// <summary>
+			/// Specifies whether cube maps must have powers of 2 sizes.
+			/// </summary>
 			CubeMapPow2 = D3DPTEXTURECAPS_CUBEMAP_POW2,
+
+			/// <summary>
+			/// Specifies whether volume textures must have powers of 2 sizes.
+			/// </summary>
 			VolumeMapPow2 = D3DPTEXTURECAPS_VOLUMEMAP_POW2,
+
+			/// <summary>
+			/// Specifies that the device does not support a projected bump environment lookup operation.
+			/// </summary>
 			NoProjectedBumpEnvironment = D3DPTEXTURECAPS_NOPROJECTEDBUMPENV,
 		};
 		
+		/// <summary>
+		/// Driver texture coordinate capability flags.
+		/// </summary>
+		/// <unmanaged>D3DTSS_TCI</unmanaged>
 		[System::Flags]
 		public enum class TextureCoordIndex : System::Int32
 		{
+			/// <summary>
+			/// Use the specified texture coordinates contained in the vertex format.
+			/// </summary>
 			PassThru = D3DTSS_TCI_PASSTHRU,
+
+			/// <summary>
+			/// Use the vertex normal, transformed to camera space, as the input texture coordinates.
+			/// </summary>
 			CameraSpaceNormal = D3DTSS_TCI_CAMERASPACENORMAL,
+
+			/// <summary>
+			/// Use the vertex position, transformed to camera space, as the input texture coordinates.
+			/// </summary>
 			CameraSpacePosition = D3DTSS_TCI_CAMERASPACEPOSITION,
+
+			/// <summary>
+			/// Use the reflection vector, transformed to camera space, as the input texture coordinates.
+			/// </summary>
 			CameraSpaceReflectionVector = D3DTSS_TCI_CAMERASPACEREFLECTIONVECTOR,
+
+			/// <summary>
+			/// Use the specified coordinates for sphere mapping.
+			/// </summary>
 			SphereMap = D3DTSS_TCI_SPHEREMAP,
 		};
 		
+		/// <summary>
+		/// Defines texture filtering modes for a texture stage.
+		/// </summary>
+		/// <unmanaged>D3DTEXTUREFILTERTYPE</unmanaged>
 		public enum class TextureFilter : System::Int32
 		{
+			/// <summary>
+			/// Mipmapping is disabled.
+			/// </summary>
 			None = D3DTEXF_NONE,
+
+			/// <summary>
+			/// Point filtering is used.
+			/// </summary>
 			Point = D3DTEXF_POINT,
+
+			/// <summary>
+			/// Bilinear interpolation is used.
+			/// </summary>
 			Linear = D3DTEXF_LINEAR,
+
+			/// <summary>
+			/// Anisotropic interpolation is used.
+			/// </summary>
 			Anisotropic = D3DTEXF_ANISOTROPIC,
+
+			/// <summary>
+			/// A 4 sample tent filter is used.
+			/// </summary>
 			PyramidalQuad = D3DTEXF_PYRAMIDALQUAD,
+
+			/// <summary>
+			/// A 4 sample Guassian filter is used.
+			/// </summary>
 			GaussianQuad = D3DTEXF_GAUSSIANQUAD,
+
+			/// <summary>
+			/// Convolution filter for monochrome textures. Available for Direct3D9Ex only.
+			/// </summary>
+			ConvolutionMono = D3DTEXF_CONVOLUTIONMONO
 		};
 
+		/// <summary>
+		/// Defines per-stage texture blending operations.
+		/// </summary>
+		/// <unmanaged>D3DTEXTUREOP</unmanaged>
 		public enum class TextureOperation : System::Int32
 		{
+			/// <summary>
+			/// Disabled output from the current stage and all higher stages.
+			/// </summary>
 			Disable = D3DTOP_DISABLE,
+
+			/// <summary>
+			/// Use the current stage's first color or alpha argument, unmodified, as the output.
+			/// </summary>
 			SelectArg1 = D3DTOP_SELECTARG1,
+
+			/// <summary>
+			/// Use the current stage's second color or alpha argument, unmodified, as the output.
+			/// </summary>
 			SelectArg2 = D3DTOP_SELECTARG2,
 
+			/// <summary>
+			/// Multiply the components of the arguments.
+			/// </summary>
 			Modulate = D3DTOP_MODULATE,
+
+			/// <summary>
+			/// Multiply the components of the arguments, and then multiply them by 2.
+			/// </summary>
 			Modulate2X = D3DTOP_MODULATE2X,
+
+			/// <summary>
+			/// Multiply the components of the arguments, and then multiply them by 2.
+			/// </summary>
 			Modulate4X = D3DTOP_MODULATE4X,
 
+			/// <summary>
+			/// Add the components of the arguments.
+			/// </summary>
 			Add = D3DTOP_ADD,
+
+			/// <summary>
+			/// Add the components of the arguments with a -0.5 bias.
+			/// </summary>
 			AddSigned = D3DTOP_ADDSIGNED,
+
+			/// <summary>
+			/// Add the components of the arguments with a -0.5 bias, and then multiply them by 2.
+			/// </summary>
 			AddSigned2X = D3DTOP_ADDSIGNED2X,
+
+			/// <summary>
+			/// Subtract the components of the second argument from the components of the first argument.
+			/// </summary>
 			Subtract = D3DTOP_SUBTRACT,
+
+			/// <summary>
+			/// Add the first and second arguments, and then subtract their product from the sum.
+			/// </summary>
 			AddSmooth = D3DTOP_ADDSMOOTH,
 
+			/// <summary>
+			/// Linearly blend the current stage, using the interpolated alpha from each vertex.
+			/// </summary>
 			BlendDiffuseAlpha = D3DTOP_BLENDDIFFUSEALPHA,
+
+			/// <summary>
+			/// Linearly blend the current stage, using the alpha from the stage's texture.
+			/// </summary>
 			BlendTextureAlpha = D3DTOP_BLENDTEXTUREALPHA,
+
+			/// <summary>
+			/// Linearly blend the current stage, using the current texture factor.
+			/// </summary>
 			BlendFactorAlpha = D3DTOP_BLENDFACTORALPHA,
 
+			/// <summary>
+			/// Linearly blend the current stage, using a premultiplied alpha.
+			/// </summary>
 			BlendTextureAlphaPM = D3DTOP_BLENDTEXTUREALPHAPM,
+
+			/// <summary>
+			/// Linearly blend the current stage, using the alpha from the previous stage.
+			/// </summary>
 			BlendCurrentAlpha = D3DTOP_BLENDCURRENTALPHA,
 
+			/// <summary>
+			/// Premodulate the arguments with the next stage's values.
+			/// </summary>
 			Premodulate = D3DTOP_PREMODULATE,
+
+			/// <summary>
+			/// Modulate the color of the second argument, using the alpha from the first argument, and then
+			/// add the result to argument one.
+			/// </summary>
 			ModulateAlphaAddColor = D3DTOP_MODULATEALPHA_ADDCOLOR,
+
+			/// <summary>
+			/// Modulate the arguments, then add the alpha of the first argument.
+			/// </summary>
 			ModulateColorAddAlpha = D3DTOP_MODULATECOLOR_ADDALPHA,
+
+			/// <summary>
+			/// Modulate the color of the second argument, using the inverted alpha from the first argument, and then
+			/// add the result to argument one.
+			/// </summary>
 			ModulateInvAlphaAddColor = D3DTOP_MODULATEINVALPHA_ADDCOLOR,
+
+			/// <summary>
+			/// Modulate the arguments, inverting the first argument, then add the alpha of the first argument.
+			/// </summary>
 			ModulateInvColorAddAlpha = D3DTOP_MODULATEINVCOLOR_ADDALPHA,
 
+			/// <summary>
+			/// Perform per-pixel bump mapping, using the environment map in the next stage.
+			/// </summary>
 			BumpEnvironmentMap = D3DTOP_BUMPENVMAP,
+
+			/// <summary>
+			/// Perform per-pixel bump mapping, using the environment map in the next stage, with luminance.
+			/// </summary>
 			BumpEnvironmentMapLuminance = D3DTOP_BUMPENVMAPLUMINANCE,
 
+			/// <summary>
+			/// Modulate the components of each argument as signed components, add their products; then 
+			/// replicate the sum to all color channels, including alpha. 
+			/// </summary>
 			DotProduct3 = D3DTOP_DOTPRODUCT3,
 
+			/// <summary>
+			/// Performs a multiply-accumulate operation. It takes the last two arguments, multiplies them 
+			/// together, and adds them to the remaining input/source argument, and places that into the result. 
+			/// </summary>
 			MultiplyAdd = D3DTOP_MULTIPLYADD,
+
+			/// <summary>
+			/// Linearly interpolates between the second and third source arguments by a proportion specified 
+			/// in the first source argument. 
+			/// </summary>
 			Lerp = D3DTOP_LERP,
 		};
 
+		/// <summary>
+		/// Specifies the texture operations supported by the device.
+		/// </summary>
 		[System::Flags]
 		public enum class TextureOperationCaps : System::Int32
 		{
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.Disable"/>.
+			/// </summary>
 			Disable = D3DTEXOPCAPS_DISABLE,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.SelectArg1"/>.
+			/// </summary>
 			SelectArg1 = D3DTEXOPCAPS_SELECTARG1,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.SelectArg2"/>.
+			/// </summary>
 			SelectArg2 = D3DTEXOPCAPS_SELECTARG2,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.Modulate"/>.
+			/// </summary>
 			Modulate = D3DTEXOPCAPS_MODULATE,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.Modulate2X"/>.
+			/// </summary>
 			Modulate2X = D3DTEXOPCAPS_MODULATE2X,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.Modulate4X"/>.
+			/// </summary>
 			Modulate4X = D3DTEXOPCAPS_MODULATE4X,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.Add"/>.
+			/// </summary>
 			Add = D3DTEXOPCAPS_ADD,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.AddSigned"/>.
+			/// </summary>
 			AddSigned = D3DTEXOPCAPS_ADDSIGNED,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.AddSigned2X"/>.
+			/// </summary>
 			AddSigned2X = D3DTEXOPCAPS_ADDSIGNED2X,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.Subtract"/>.
+			/// </summary>
 			Subtract = D3DTEXOPCAPS_SUBTRACT,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.AddSmooth"/>.
+			/// </summary>
 			AddSmooth = D3DTEXOPCAPS_ADDSMOOTH,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.BlendDiffuseAlpha"/>.
+			/// </summary>
 			BlendDiffuseAlpha = D3DTEXOPCAPS_BLENDDIFFUSEALPHA,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.BlendTextureAlpha"/>.
+			/// </summary>
 			BlendTextureAlpha = D3DTEXOPCAPS_BLENDTEXTUREALPHA,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.BlendFactorAlpha"/>.
+			/// </summary>
 			BlendFactorAlpha = D3DTEXOPCAPS_BLENDFACTORALPHA,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.BlendTextureAlphaPM"/>.
+			/// </summary>
 			BlendTextureAlphaPM = D3DTEXOPCAPS_BLENDTEXTUREALPHAPM,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.BlendCurrentAlpha"/>.
+			/// </summary>
 			BlendCurrentAlpha = D3DTEXOPCAPS_BLENDCURRENTALPHA,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.Premodulate"/>.
+			/// </summary>
 			Premodulate = D3DTEXOPCAPS_PREMODULATE,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.ModulateAlphaAddColor"/>.
+			/// </summary>
 			ModulateAlphaAddColor = D3DTEXOPCAPS_MODULATEALPHA_ADDCOLOR,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.ModulateColorAddAlpha"/>.
+			/// </summary>
 			ModulateColorAddAlpha = D3DTEXOPCAPS_MODULATECOLOR_ADDALPHA,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.ModulateInvAlphaAddColor"/>.
+			/// </summary>
 			ModulateInvAlphaAddColor = D3DTEXOPCAPS_MODULATEINVALPHA_ADDCOLOR,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.ModulateInvColorAddAlpha"/>.
+			/// </summary>
 			ModulateInvColorAddAlpha = D3DTEXOPCAPS_MODULATEINVCOLOR_ADDALPHA,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.BumpEnvironmentMap"/>.
+			/// </summary>
 			BumpEnvironmentMap = D3DTEXOPCAPS_BUMPENVMAP,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.BumpEnvironmentMapLuminance"/>.
+			/// </summary>
 			BumpEnvironmentMapLuminance = D3DTEXOPCAPS_BUMPENVMAPLUMINANCE,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.DotProduct3"/>.
+			/// </summary>
 			DotProduct3 = D3DTEXOPCAPS_DOTPRODUCT3,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.MultiplyAdd"/>.
+			/// </summary>
 			MultiplyAdd = D3DTEXOPCAPS_MULTIPLYADD,
-			Lerp = D3DTEXOPCAPS_LERP,
+
+			/// <summary>
+			/// The device supports <see cref="TextureOperation.Lerp"/>.
+			/// </summary>
+			Lerp = D3DTEXOPCAPS_LERP
 		};
 		
+		/// <summary>
+		/// Texture stage states define multi-blender texture operations. Some sampler states set up 
+		/// vertex processing, and some set up pixel processing. Texture stage states can be saved and 
+		/// restored using stateblocks.
+		/// </summary>
+		/// <unmanaged>D3DTEXTURESTAGESTATETYPE</unmanaged>
 		public enum class TextureStage : System::Int32
 		{
+			/// <summary>
+			/// Texture-stage state is a texture color blending operation. Use values from <see cref="TextureOperation"/>
+			/// to set this state. The default value for the first stage is <see cref="TextureOperation.Modulate"/>;
+			/// for all other stages the default is <see cref="TextureOperation.Disable"/>.
+			/// </summary>
 			ColorOperation = D3DTSS_COLOROP,
+
+			/// <summary>
+			/// Texture-stage state is the first color argument for the stage. Use values from <see cref="TextureArgument"/>
+			/// to set this state. The default value is <see cref="TextureArgument.Texture"/>.
+			/// </summary>
 			ColorArg1 = D3DTSS_COLORARG1,
+
+			/// <summary>
+			/// Texture-stage state is the second color argument for the stage. Use values from <see cref="TextureArgument"/>
+			/// to set this state. The default value is <see cref="TextureArgument.Current"/>.
+			/// </summary>
 			ColorArg2 = D3DTSS_COLORARG2,
+
+			/// <summary>
+			/// Texture-stage state is a texture alpha blending operation. Use values from <see cref="TextureOperation"/>
+			/// to set this state. The default value for the first stage is <see cref="TextureOperation.SelectArg1"/>;
+			/// for all other stages the default is <see cref="TextureOperation.Disable"/>.
+			/// </summary>
 			AlphaOperation = D3DTSS_ALPHAOP,
+
+			/// <summary>
+			/// Texture-stage state is the first alpha argument for the stage. Use values from <see cref="TextureArgument"/>
+			/// to set this state. The default value is <see cref="TextureArgument.Texture"/>.
+			/// </summary>
 			AlphaArg1 = D3DTSS_ALPHAARG1,
+
+			/// <summary>
+			/// Texture-stage state is the second alpha argument for the stage. Use values from <see cref="TextureArgument"/>
+			/// to set this state. The default value is <see cref="TextureArgument.Current"/>.
+			/// </summary>
 			AlphaArg2 = D3DTSS_ALPHAARG2,
+
+			/// <summary>
+			/// Texture-stage state is a floating-point value for the [0][0] coefficient in a bump-mapping 
+			/// matrix. The default value is 0.0f. 
+			/// </summary>
 			BumpEnvironmentMat00 = D3DTSS_BUMPENVMAT00,
+
+			/// <summary>
+			/// Texture-stage state is a floating-point value for the [0][1] coefficient in a bump-mapping 
+			/// matrix. The default value is 0.0f. 
+			/// </summary>
 			BumpEnvironmentMat01 = D3DTSS_BUMPENVMAT01,
+
+			/// <summary>
+			/// Texture-stage state is a floating-point value for the [1][0] coefficient in a bump-mapping 
+			/// matrix. The default value is 0.0f. 
+			/// </summary>
 			BumpEnvironmentMat10 = D3DTSS_BUMPENVMAT10,
+
+			/// <summary>
+			/// Texture-stage state is a floating-point value for the [1][1] coefficient in a bump-mapping 
+			/// matrix. The default value is 0.0f. 
+			/// </summary>
 			BumpEnvironmentMat11 = D3DTSS_BUMPENVMAT11,
+
+			/// <summary>
+			/// Index of the texture coordinate set to use with this texture stage. You can specify up to 
+			/// eight sets of texture coordinates per vertex. If a vertex does not include a set of texture 
+			/// coordinates at the specified index, the system defaults to the u and v coordinates (0,0). 
+			/// </summary>
 			TexCoordIndex = D3DTSS_TEXCOORDINDEX,
+
+			/// <summary>
+			/// Floating-point scale value for bump-map luminance. The default value is 0.0f.
+			/// </summary>
 			BumpEnvironmentLScale = D3DTSS_BUMPENVLSCALE,
+
+			/// <summary>
+			/// Floating-point offset value for bump-map luminance. The default value is 0.0f.
+			/// </summary>
 			BumpEnvironmentLOffset = D3DTSS_BUMPENVLOFFSET,
+
+			/// <summary>
+			/// Specifies transformation options for texture coordinates. Use values from <see cref="TextureTransform"/>
+			/// to set this state. The default value is <see cref="TextureTransform.Disable"/>.
+			/// </summary>
 			TextureTransformFlags = D3DTSS_TEXTURETRANSFORMFLAGS,
+
+			/// <summary>
+			/// Settings for the third color operand for triadic operations. Use values from <see cref="TextureArgument"/>
+			/// to set this state. The default value is <see cref="TextureArgument.Current"/>.
+			/// </summary>
 			ColorArg0 = D3DTSS_COLORARG0,
+
+			/// <summary>
+			/// Settings for the third alpha operand for triadic operations. Use values from <see cref="TextureArgument"/>
+			/// to set this state. The default value is <see cref="TextureArgument.Current"/>.
+			/// </summary>
 			AlphaArg0 = D3DTSS_ALPHAARG0,
+
+			/// <summary>
+			/// Setting to select the destination register for the result of this stage. Use values from
+			/// <see cref="TextureArgument"/> to set this state. The default value is <see cref="TextureArgument.Current"/>.
+			/// </summary>
 			ResultArg = D3DTSS_RESULTARG,
-			Constant = D3DTSS_CONSTANT,
+
+			/// <summary>
+			/// Per-stage constant color. Use packed integer colors to set this state.
+			/// </summary>
+			Constant = D3DTSS_CONSTANT
 		};
 		
+		/// <summary>
+		/// Defines texture coordinate transformation values.
+		/// </summary>
+		/// <unmanaged>D3DTEXTURETRANSFORMFLAGS</unmanaged>
 		public enum class TextureTransform : System::Int32
 		{
+			/// <summary>
+			/// Texture coordinates are passed directly to the rasterizer.
+			/// </summary>
 			Disable = D3DTTFF_DISABLE,
+
+			/// <summary>
+			/// The rasterizer should expect 1D coordinates.
+			/// </summary>
 			Count1 = D3DTTFF_COUNT1,
+
+			/// <summary>
+			/// The rasterizer should expect 2D coordinates.
+			/// </summary>
 			Count2 = D3DTTFF_COUNT2,
+
+			/// <summary>
+			/// The rasterizer should expect 3D coordinates.
+			/// </summary>
 			Count3 = D3DTTFF_COUNT3,
+
+			/// <summary>
+			/// The rasterizer should expect 4D coordinates.
+			/// </summary>
 			Count4 = D3DTTFF_COUNT4,
-			Projected = D3DTTFF_PROJECTED,
+
+			/// <summary>
+			/// Forces all coordinates to be projected before being sent to the rasterizer.
+			/// </summary>
+			Projected = D3DTTFF_PROJECTED
 		};
 		
+		/// <summary>
+		/// Defines possible transformation states.
+		/// </summary>
+		/// <unmanaged>D3DTRANSFORMSTATETYPE</unmanaged>
 		public enum class TransformState : System::Int32
 		{
+			/// <summary>
+			/// Identifies the transformation matrix being set as the view transformation matrix.
+			/// </summary>
 			View = D3DTS_VIEW,
+
+			/// <summary>
+			/// Identifies the transformation matrix being set as the projection transformation matrix.
+			/// </summary>
 			Projection = D3DTS_PROJECTION,
+
+			/// <summary>
+			/// Identifies the transformation matrix being set as a world transformation matrix.
+			/// </summary>
 			World = D3DTS_WORLD,
+
+			/// <summary>
+			/// Identifies the transformation matrix being set as a world transformation matrix.
+			/// </summary>
 			World1 = D3DTS_WORLD1,
+
+			/// <summary>
+			/// Identifies the transformation matrix being set as a world transformation matrix.
+			/// </summary>
 			World2 = D3DTS_WORLD2,
+
+			/// <summary>
+			/// Identifies the transformation matrix being set as a world transformation matrix.
+			/// </summary>
 			World3 = D3DTS_WORLD3,
+
+			/// <summary>
+			/// Identifies the transformation matrix being set for the specified texture stage.
+			/// </summary>
 			Texture0 = D3DTS_TEXTURE0,
+
+			/// <summary>
+			/// Identifies the transformation matrix being set for the specified texture stage.
+			/// </summary>
 			Texture1 = D3DTS_TEXTURE1,
+
+			/// <summary>
+			/// Identifies the transformation matrix being set for the specified texture stage.
+			/// </summary>
 			Texture2 = D3DTS_TEXTURE2,
+
+			/// <summary>
+			/// Identifies the transformation matrix being set for the specified texture stage.
+			/// </summary>
 			Texture3 = D3DTS_TEXTURE3,
+
+			/// <summary>
+			/// Identifies the transformation matrix being set for the specified texture stage.
+			/// </summary>
 			Texture4 = D3DTS_TEXTURE4,
+
+			/// <summary>
+			/// Identifies the transformation matrix being set for the specified texture stage.
+			/// </summary>
 			Texture5 = D3DTS_TEXTURE5,
+
+			/// <summary>
+			/// Identifies the transformation matrix being set for the specified texture stage.
+			/// </summary>
 			Texture6 = D3DTS_TEXTURE6,
-			Texture7 = D3DTS_TEXTURE7,
+
+			/// <summary>
+			/// Identifies the transformation matrix being set for the specified texture stage.
+			/// </summary>
+			Texture7 = D3DTS_TEXTURE7
 		};
 
+		/// <summary>
+		/// Specifies wrapping options for texture coordinates.
+		/// </summary>
 		[System::Flags]
 		public enum class TextureWrapping : System::Int32
 		{
+			/// <summary>
+			/// No wrapping is performed.
+			/// </summary>
 			None = 0,
+
+			/// <summary>
+			/// Wrap the 0 coordinate.
+			/// </summary>
 			WrapCoordinate0 = D3DWRAPCOORD_0,
+
+			/// <summary>
+			/// Wrap the 1 coordinate.
+			/// </summary>
 			WrapCoordinate1 = D3DWRAPCOORD_1,
+
+			/// <summary>
+			/// Wrap the 2 coordinate.
+			/// </summary>
 			WrapCoordinate2 = D3DWRAPCOORD_2,
+
+			/// <summary>
+			/// Wrap the 3 coordinate.
+			/// </summary>
 			WrapCoordinate3 = D3DWRAPCOORD_3,
+
+			/// <summary>
+			/// Wrap all coordinates.
+			/// </summary>
 			All = WrapCoordinate0 | WrapCoordinate1 | WrapCoordinate2 | WrapCoordinate3
 		};
 		
+		/// <summary>
+		/// Usage options that identify how resources are to be used.
+		/// </summary>
+		/// <unmanaged>D3DUSAGE</unmanaged>
 		[System::Flags]
 		public enum class Usage : System::Int32
 		{
+			/// <summary>
+			/// No specified usage options.
+			/// </summary>
 			None = 0,
+
+			/// <summary>
+			/// The resource will automatically generate mipmaps.
+			/// </summary>
 			AutoGenerateMipMap = D3DUSAGE_AUTOGENMIPMAP,
+
+			/// <summary>
+			/// The resource will be a depth/stencil buffer.
+			/// </summary>
 			DepthStencil = D3DUSAGE_DEPTHSTENCIL,
+
+			/// <summary>
+			/// The resource will be a displacement map.
+			/// </summary>
+			DisplacementMap = D3DUSAGE_DMAP,
+
+			/// <summary>
+			/// Set to indicate that the vertex buffer content will never require clipping.
+			/// </summary>
 			DoNotClip = D3DUSAGE_DONOTCLIP,
+
+			/// <summary>
+			/// Indicates that the resource requires dynamic memory use.
+			/// </summary>
 			Dynamic = D3DUSAGE_DYNAMIC,
+
+			/// <summary>
+			/// Allow a shared surface created by a secure application to be opened by a non-secure 
+			/// application that has the shared handle. Available for Direct3D9Ex only.
+			/// </summary>
+			NonSecure = D3DUSAGE_NONSECURE,
+
+			/// <summary>
+			/// Indicates that the vertex buffer is to be used for drawing N-patches.
+			/// </summary>
 			NPatches = D3DUSAGE_NPATCHES,
+
+			/// <summary>
+			/// Indicates that the buffer will be used to draw points.
+			/// </summary>
 			Points = D3DUSAGE_POINTS,
+
+			/// <summary>
+			/// The resource will be a render target.
+			/// </summary>
 			RenderTarget = D3DUSAGE_RENDERTARGET,
+
+			/// <summary>
+			/// Indicates that the vertex buffer is to be used for drawing high-order primitives.
+			/// </summary>
+			RTPatches = D3DUSAGE_RTPATCHES,
+
+			/// <summary>
+			/// Informs the system that the application will only ever write to the buffer.
+			/// </summary>
 			WriteOnly = D3DUSAGE_WRITEONLY,
+
+			/// <summary>
+			/// Indicates that vertex processing for this resource should be done in software.
+			/// </summary>
 			SoftwareProcessing = D3DUSAGE_SOFTWAREPROCESSING,
 
-			// Query usage
-			QueryLegacyBumpMap = D3DUSAGE_QUERY_LEGACYBUMPMAP,
-			QuerySrgbRead = D3DUSAGE_QUERY_SRGBREAD,
-			QueryFilter = D3DUSAGE_QUERY_FILTER,
-			QuerySrgbWrite = D3DUSAGE_QUERY_SRGBWRITE,
-			QueryPostPixelShaderBlending = D3DUSAGE_QUERY_POSTPIXELSHADER_BLENDING,
-			QueryVertexTexture = D3DUSAGE_QUERY_VERTEXTEXTURE,
-			QueryWrapAndMip = D3DUSAGE_QUERY_WRAPANDMIP,
-			QueryDisplacementMap = D3DUSAGE_DMAP,
+			/// <summary>
+			/// Indicates that the resource will be used for composition. Available for Direct3D9Ex only.
+			/// </summary>
+			TextApi = D3DUSAGE_TEXTAPI,
 
-			// Extensions
-			R2VBTarget = RenderTarget | QueryDisplacementMap,
+			/// <summary>
+			/// Query the resource abour a legacy bump map.
+			/// </summary>
+			QueryLegacyBumpMap = D3DUSAGE_QUERY_LEGACYBUMPMAP,
+
+			/// <summary>
+			/// Query the resource to verify if a texture supports gamma correction during a read operation.
+			/// </summary>
+			QuerySrgbRead = D3DUSAGE_QUERY_SRGBREAD,
+
+			/// <summary>
+			/// Query the resource format to see if it supports texture filters.
+			/// </summary>
+			QueryFilter = D3DUSAGE_QUERY_FILTER,
+
+			/// <summary>
+			/// Query the resource to verify if a texture supports gamma correction during a write operation.
+			/// </summary>
+			QuerySrgbWrite = D3DUSAGE_QUERY_SRGBWRITE,
+
+			/// <summary>
+			/// Query the resource to verify support for post pixel shader blending support.
+			/// </summary>
+			QueryPostPixelShaderBlending = D3DUSAGE_QUERY_POSTPIXELSHADER_BLENDING,
+
+			/// <summary>
+			/// Query the resource to verify support for vertex shader texture sampling.
+			/// </summary>
+			QueryVertexTexture = D3DUSAGE_QUERY_VERTEXTEXTURE,
+
+			/// <summary>
+			/// Query the resource to verify support for texture wrapping and mip-mapping.
+			/// </summary>
+			QueryWrapAndMip = D3DUSAGE_QUERY_WRAPANDMIP,
+
+			/// <summary>
+			/// The resource will be a Render-To-Vertex-Buffer (R2VB) target.
+			/// </summary>
+			R2VBTarget = RenderTarget | DisplacementMap,
+		};
+
+		/// <summary>
+		/// Defines flags used to control the number or matrices that the system applies when performing
+		/// multimatrix vertex blending.
+		/// </summary>
+		/// <unmanaged>D3DVERTEXBLENDFLAGS</unmanaged>
+		public enum class VertexBlend : System::Int32
+		{
+			/// <summary>
+			/// Disable vertex blending.
+			/// </summary>
+			Disable = D3DVBF_DISABLE,
+
+			/// <summary>
+			/// Enable vertex blending between two matrices.
+			/// </summary>
+			Weights1 = D3DVBF_1WEIGHTS,
+
+			/// <summary>
+			/// Enable vertex blending between three matrices.
+			/// </summary>
+			Weights2 = D3DVBF_2WEIGHTS,
+
+			/// <summary>
+			/// Enable vertex blending between four matrices.
+			/// </summary>
+			Weights3 = D3DVBF_3WEIGHTS,
+
+			/// <summary>
+			/// Enable vertex blending between one matrix and a weight of 1.0.
+			/// </summary>
+			Weights0 = D3DVBF_0WEIGHTS,
+
+			/// <summary>
+			/// Vertex blending is performed using vertex tweening.
+			/// </summary>
+			Tweening = D3DVBF_TWEENING
 		};
 		
+		/// <summary>
+		/// Specifies codes that can be used to define Flexible-Vertex-Formats (FVF).
+		/// </summary>
+		/// <unmanaged>D3DFVF</unmanaged>
 		[System::Flags]
 		public enum class VertexFormat : System::Int32
 		{
+			/// <summary>
+			/// No vertex format defined.
+			/// </summary>
 			None = 0,
 
-			PositionMask = D3DFVF_POSITION_MASK,
-			Position = D3DFVF_XYZ,
-			PositionRhw = D3DFVF_XYZRHW,
-			PositionBlend1 = D3DFVF_XYZB1,
-			PositionBlend2 = D3DFVF_XYZB2,
-			PositionBlend3 = D3DFVF_XYZB3,
-			PositionBlend4 = D3DFVF_XYZB4,
-			PositionBlend5 = D3DFVF_XYZB5,
-			PositionW = D3DFVF_XYZW,
+			/***/
 
+			/// <summary>
+			/// Vertex format includes a vertex normal vector.
+			/// </summary>
 			Normal = D3DFVF_NORMAL,
+
+			/// <summary>
+			/// Vertex format contains a point size.
+			/// </summary>
 			PointSize = D3DFVF_PSIZE,
+
+			/// <summary>
+			/// Vertex format includes a diffuse color component.
+			/// </summary>
 			Diffuse = D3DFVF_DIFFUSE,
+
+			/// <summary>
+			/// Vertex format includes a specular color component.
+			/// </summary>
 			Specular = D3DFVF_SPECULAR,
 
-			TextureCountMask = D3DFVF_TEXCOUNT_MASK,
-			TextureCountShift = D3DFVF_TEXCOUNT_SHIFT,
+			/// <summary>
+			/// Vertex format includes the position of an untransformed vertex.
+			/// </summary>
+			Position = D3DFVF_XYZ,
+
+			/// <summary>
+			/// Vertex format includes the position of a transformed vertex.
+			/// </summary>
+			PositionRhw = D3DFVF_XYZRHW,
+
+			/// <summary>
+			/// Vertex format contains position and weighting values for multimatrix blending operations.
+			/// </summary>
+			PositionBlend1 = D3DFVF_XYZB1,
+
+			/// <summary>
+			/// Vertex format contains position and weighting values for multimatrix blending operations.
+			/// </summary>
+			PositionBlend2 = D3DFVF_XYZB2,
+
+			/// <summary>
+			/// Vertex format contains position and weighting values for multimatrix blending operations.
+			/// </summary>
+			PositionBlend3 = D3DFVF_XYZB3,
+
+			/// <summary>
+			/// Vertex format contains position and weighting values for multimatrix blending operations.
+			/// </summary>
+			PositionBlend4 = D3DFVF_XYZB4,
+
+			/// <summary>
+			/// Vertex format contains position and weighting values for multimatrix blending operations.
+			/// </summary>
+			PositionBlend5 = D3DFVF_XYZB5,
+
+			/// <summary>
+			/// Vertex format contains transformed and clipped data.
+			/// </summary>
+			PositionW = D3DFVF_XYZW,
+
+			/// <summary>
+			/// Vertex format contains a position and a normal.
+			/// </summary>
+			PositionNormal = Position | Normal,
+
+			/***/
+
+			/// <summary>
+			/// Vertex format contains no texture coordinate sets.
+			/// </summary>
 			Texture0 = D3DFVF_TEX0,
+
+			/// <summary>
+			/// Vertex format contains 1 texture coordinate set.
+			/// </summary>
 			Texture1 = D3DFVF_TEX1,
+
+			/// <summary>
+			/// Vertex format contains 2 texture coordinate sets.
+			/// </summary>
 			Texture2 = D3DFVF_TEX2,
+
+			/// <summary>
+			/// Vertex format contains 3 texture coordinate sets.
+			/// </summary>
 			Texture3 = D3DFVF_TEX3,
+
+			/// <summary>
+			/// Vertex format contains 4 texture coordinate sets.
+			/// </summary>
 			Texture4 = D3DFVF_TEX4,
+
+			/// <summary>
+			/// Vertex format contains 5 texture coordinate sets.
+			/// </summary>
 			Texture5 = D3DFVF_TEX5,
+
+			/// <summary>
+			/// Vertex format contains 6 texture coordinate sets.
+			/// </summary>
 			Texture6 = D3DFVF_TEX6,
+
+			/// <summary>
+			/// Vertex format contains 7 texture coordinate sets.
+			/// </summary>
 			Texture7 = D3DFVF_TEX7,
+
+			/// <summary>
+			/// Vertex format contains 8 texture coordinate sets.
+			/// </summary>
 			Texture8 = D3DFVF_TEX8,
 
-			LastBetaUByte4 = D3DFVF_LASTBETA_UBYTE4,
-			LastBetaColor = D3DFVF_LASTBETA_D3DCOLOR,
+			/***/
 
-			PositionNormal = Position | Normal
+			/// <summary>
+			/// Mask for position bits.
+			/// </summary>
+			PositionMask = D3DFVF_POSITION_MASK,
+			
+			/// <summary>
+			/// Mask for texture flag bits.
+			/// </summary>
+			TextureCountMask = D3DFVF_TEXCOUNT_MASK,
+
+			/***/
+			
+			/// <summary>
+			/// The number of bits by which to shift an integer value that identifies the number of texture 
+			/// coordinates for a vertex.
+			/// </summary>
+			TextureCountShift = D3DFVF_TEXCOUNT_SHIFT,
+
+			/// <summary>
+			/// The last beta field in the vertex position data will be of type UByte4. The data in the beta 
+			/// fields are used with matrix palette skinning to specify matrix indices.
+			/// </summary>
+			LastBetaUByte4 = D3DFVF_LASTBETA_UBYTE4,
+
+			/// <summary>
+			/// The last beta field in the vertex position data will be of type Color. The data in the beta 
+			/// fields are used with matrix palette skinning to specify matrix indices.
+			/// </summary>
+			LastBetaColor = D3DFVF_LASTBETA_D3DCOLOR
 		};
 
+		/// <summary>
+		/// Specifies the flexible vertex format capabilities of the device.
+		/// </summary>
 		[System::Flags]
 		public enum class VertexFormatCaps : System::Int32
 		{
+			/// <summary>
+			/// Masks the low WORD of FVFCaps. These bits, cast to the WORD data type, describe the total 
+			/// number of texture coordinate sets that the device can simultaneously use for multiple texture 
+			/// blending.
+			/// </summary>
 			TextureCoordCountMask = D3DFVFCAPS_TEXCOORDCOUNTMASK,
+
+			/// <summary>
+			/// It is preferable that vertex elements not be stripped. That is, if the vertex format contains 
+			/// elements that are not used with the current render states, there is no need to regenerate the 
+			/// vertices. If this capability flag is not present, stripping extraneous elements from the vertex 
+			/// format provides better performance. 
+			/// </summary>
 			DoNotStripElements = D3DFVFCAPS_DONOTSTRIPELEMENTS,
-			PointSize = D3DFVFCAPS_PSIZE,
+
+			/// <summary>
+			/// Point size is determined by either the render state or the vertex data. If an FVF is used, 
+			/// point size can come from point size data in the vertex declaration.
+			/// </summary>
+			PointSize = D3DFVFCAPS_PSIZE
 		};
 
+		/// <summary>
+		/// Specifies vertex processing capabilities supported by the device.
+		/// </summary>
 		[System::Flags]
 		public enum class VertexProcessingCaps
 		{
+			/// <summary>
+			/// Device can do texture generation.
+			/// </summary>
 			TextureGen = D3DVTXPCAPS_TEXGEN,
+
+			/// <summary>
+			/// Indicates that the device supports the color material states.
+			/// </summary>
 			MaterialSource7 = D3DVTXPCAPS_MATERIALSOURCE7,
+
+			/// <summary>
+			/// Device can support directional lights.
+			/// </summary>
 			DirectionalLights = D3DVTXPCAPS_DIRECTIONALLIGHTS,
-			PositionAllLights = D3DVTXPCAPS_POSITIONALLIGHTS,
+
+			/// <summary>
+			/// Device can support positional lights.
+			/// </summary>
+			PositionallLights = D3DVTXPCAPS_POSITIONALLIGHTS,
+
+			/// <summary>
+			/// Device supports local viewer.
+			/// </summary>
 			LocalViewer = D3DVTXPCAPS_LOCALVIEWER,
+
+			/// <summary>
+			/// Device supports vertex tweening.
+			/// </summary>
 			Tweening = D3DVTXPCAPS_TWEENING,
+
+			/// <summary>
+			/// Device supports sphere maps.
+			/// </summary>
 			TexGenSphereMap = D3DVTXPCAPS_TEXGEN_SPHEREMAP,
-			NoTexGenNonLocalViewer = D3DVTXPCAPS_NO_TEXGEN_NONLOCALVIEWER,
+
+			/// <summary>
+			/// Device does not support texture generation in non-local viewer mode.
+			/// </summary>
+			NoTexGenNonLocalViewer = D3DVTXPCAPS_NO_TEXGEN_NONLOCALVIEWER
 		};
 
+		/// Specifies vertex shader capabilities supported by the device.
+		/// </summary>
+		/// <unmanaged>D3DVS20CAPS</unmanaged>
+		[System::Flags]
+		public enum class VertexShaderCaps : System::Int32
+		{
+			/// <summary>
+			/// No extra vertex shader capabilities specified.
+			/// </summary>
+			None = 0,
+
+			/// <summary>
+			/// Instruction predication is supported.
+			/// </summary>
+			Predication = D3DVS20CAPS_PREDICATION
+		};
+
+		/// <summary>
+		/// Specifies possible XFile formats.
+		/// </summary>
 		[System::Flags]
 		public enum class XFileFormat : System::Int32
 		{
+			/// <summary>
+			/// Legacy file format.
+			/// </summary>
 			Binary = D3DXF_FILEFORMAT_BINARY,
+
+			/// <summary>
+			/// Text file format.
+			/// </summary>
 			Text = D3DXF_FILEFORMAT_TEXT,
+
+			/// <summary>
+			/// Compressed file.
+			/// </summary>
 			Compressed = D3DXF_FILEFORMAT_COMPRESSED
 		};
 		
 		/// <summary>
 		/// Z-buffer usage types.
 		/// </summary>
+		/// <unmanaged>D3DZBUFFERTYPE</unmanaged>
 		public enum class ZBufferType
 		{
 			/// <summary>
