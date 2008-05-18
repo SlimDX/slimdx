@@ -32,6 +32,9 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
+		/// <summary>
+		/// A resource object.
+		/// </summary>
 		public ref class Resource : public DeviceChild
 		{
 			COMOBJECT_BASE(ID3D10Resource);
@@ -44,9 +47,10 @@ namespace SlimDX
 		
 		public:
 			/// <summary>
-			/// Constructs a Resource from an unmanaged pointer.
+			/// Constructs a Resource object from a marshalled native pointer.
 			/// </summary>
-			/// <param name="pointer">The unmanaged ID3D10Resource pointer.</param>
+			/// <param name="pointer">The native object pointer.</param>
+			/// <returns>The Resource object for the native object.</returns>
 			Resource( System::IntPtr pointer );
 			
 			/// <summary>
