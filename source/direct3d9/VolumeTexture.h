@@ -42,7 +42,7 @@ namespace SlimDX
 		/// <summary>
 		/// Represents a three dimensional texture resource.
 		/// </summary>
-		/// <unmanaged>IDirect3DTexture9</unmanaged>
+		/// <unmanaged>IDirect3DVolumeTexture9</unmanaged>
 		public ref class VolumeTexture : public BaseTexture
 		{
 			COMOBJECT(IDirect3DVolumeTexture9, VolumeTexture);
