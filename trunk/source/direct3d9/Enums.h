@@ -2900,126 +2900,656 @@ namespace SlimDX
 
 			/// <summary>
 			/// Defines the current fill mode of the device. Use values from <see cref="FillMode"/> to set this state.
+			/// The default value is <see cref="FillMode.Solid"/>.
 			/// </summary>
 			FillMode = D3DRS_FILLMODE,
 
 			/// <summary>
-			/// 
+			/// Defines the current shade mode of the device. Use values from <see cref="ShadeMode"/> to set this state.
+			/// The default value is <see cref="ShadeMode.Gouraud"/>.
 			/// </summary>
 			ShadeMode = D3DRS_SHADEMODE,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable writes to the depth buffer, and <c>false</c> to disable
+			/// them. The default value is <c>true</c>.
+			/// </summary>
 			ZWriteEnable = D3DRS_ZWRITEENABLE,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable alpha testing, and <c>false</c> to disable it. The
+			/// default value is <c>false</c>.
+			/// </summary>
 			AlphaTestEnable = D3DRS_ALPHATESTENABLE,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable drawing of the last pixel in a line, and <c>false</c>
+			/// to disable it. The default value is <c>true</c>.
+			/// </summary>
 			LastPixel = D3DRS_LASTPIXEL,
+
+			/// <summary>
+			/// Defines the current source blending mode of the device. Use values from <see cref="Blend"/> to
+			/// set this state. The default value is <see cref="Blend.One"/>.
+			/// </summary>
 			SourceBlend = D3DRS_SRCBLEND,
+
+			/// <summary>
+			/// Defines the current destination blending mode of the device. Use values from <see cref="Blend"/> to
+			/// set this state. The default value is <see cref="Blend.Zero"/>.
+			/// </summary>
 			DestinationBlend = D3DRS_DESTBLEND,
+
+			/// <summary>
+			/// Specifies how back-facing triangles are culled. Use values from <see cref="CullMode"/> to
+			/// set this state. The default value is <see cref="CullMode.Counterclockwise"/>.
+			/// </summary>
 			CullMode = D3DRS_CULLMODE,
+
+			/// <summary>
+			/// Specifies the current depth testing function. Use values from <see cref="Compare"/> to
+			/// set this state. The default value is <see cref="Compare.LessEqual"/>.
+			/// </summary>
 			ZFunc = D3DRS_ZFUNC,
+
+			/// <summary>
+			/// An integer value that specifies the reference alpha against which pixels are tested when
+			/// alpha blending is enabled. The default value is 0.
+			/// </summary>
 			AlphaRef = D3DRS_ALPHAREF,
+
+			/// <summary>
+			/// Specifies the current alpha testing function. Use values from <see cref="Compare"/> to
+			/// set this state. The default value is <see cref="Compare.Always"/>.
+			/// </summary>
 			AlphaFunc = D3DRS_ALPHAFUNC,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable dithering, and <c>false</c> to disable it. The default
+			/// value is <c>false</c>.
+			/// </summary>
 			DitherEnable = D3DRS_DITHERENABLE,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable alpha blending, and <c>false</c> to disable it. The default
+			/// value is <c>false</c>.
+			/// </summary>
 			AlphaBlendEnable = D3DRS_ALPHABLENDENABLE,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable fog blending, and <c>false</c> to disable it. The default
+			/// value is <c>false</c>.
+			/// </summary>
 			FogEnable = D3DRS_FOGENABLE,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable specular highlights, and <c>false</c> to disable them. 
+			/// The default value is <c>false</c>.
+			/// </summary>
 			SpecularEnable = D3DRS_SPECULARENABLE,
+
+			/// <summary>
+			/// Specifies current fog color. Use integer color values to set this state. The default value is
+			/// 0 (black).
+			/// </summary>
 			FogColor = D3DRS_FOGCOLOR,
+
+			/// <summary>
+			/// Specifies the current fog formula to be used for pixel fog. Use values from <see cref="FogMode"/>
+			/// to set this state. The default value is <see cref="FogMode.None"/>.
+			/// </summary>
 			FogTableMode = D3DRS_FOGTABLEMODE,
+
+			/// <summary>
+			/// A floating point value that defines the depth at which pixel or vertex fog effects begin.
+			/// The default value is 0.0f.
+			/// </summary>
 			FogStart = D3DRS_FOGSTART,
+
+			/// <summary>
+			/// A floating point value that defines the depth at which pixel or vertex fog effects end.
+			/// The default value is 1.0f.
+			/// </summary>
 			FogEnd = D3DRS_FOGEND,
+
+			/// <summary>
+			/// A floating point value that defines the density of fog used in exponential fog modes.
+			/// The default value is 1.0f.
+			/// </summary>
 			FogDensity = D3DRS_FOGDENSITY,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable range based fog, and <c>false</c> to use depth based fog. 
+			/// The default value is <c>false</c>.
+			/// </summary>
 			RangeFogEnable = D3DRS_RANGEFOGENABLE,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable stenciling, and <c>false</c> to disable it. 
+			/// The default value is <c>false</c>.
+			/// </summary>
 			StencilEnable = D3DRS_STENCILENABLE,
+
+			/// <summary>
+			/// Specifies the stencil operation to perform if the stencil test fails. Use values from 
+			/// <see cref="StencilOperation"/> to set this state. The default value is <see cref="StencilOperation.Keep"/>.
+			/// </summary>
 			StencilFail = D3DRS_STENCILFAIL,
+
+			/// <summary>
+			/// Specifies the stencil operation to perform if the stencil test passes and the depth test fails. 
+			/// Use values from <see cref="StencilOperation"/> to set this state. The default value is 
+			/// <see cref="StencilOperation.Keep"/>.
+			/// </summary>
 			StencilZFail = D3DRS_STENCILZFAIL,
+
+			/// <summary>
+			/// Specifies the stencil operation to perform if both the stencil and depth tests pass. Use values from 
+			/// <see cref="StencilOperation"/> to set this state. The default value is <see cref="StencilOperation.Keep"/>.
+			/// </summary>
 			StencilPass = D3DRS_STENCILPASS,
+
+			/// <summary>
+			/// Specifies the comparison function for stencil tests. Use values from <see cref="Compare"/> 
+			/// to set this state. The default value is <see cref="Compare.Always"/>.
+			/// </summary>
 			StencilFunc = D3DRS_STENCILFUNC,
+
+			/// <summary>
+			/// An integer value that specifies the reference value against which pixels are tested when
+			/// stencil testing is enabled. The default value is 0.
+			/// </summary>
 			StencilRef = D3DRS_STENCILREF,
+
+			/// <summary>
+			/// An integer value that specifies the mask for stencil values. The default value is 0xFFFFFFFF.
+			/// </summary>
 			StencilMask = D3DRS_STENCILMASK,
+
+			/// <summary>
+			/// An integer value that specifies the write mask used for values written into the stencil buffer.
+			/// The default value is 0xFFFFFFFF.
+			/// </summary>
 			StencilWriteMask = D3DRS_STENCILWRITEMASK,
+
+			/// <summary>
+			/// Specifies the color used for multiple texture blending. Use integer color values to set this 
+			/// state. The default value is 0xFFFFFFFF (white).
+			/// </summary>
 			TextureFactor = D3DRS_TEXTUREFACTOR,
+
+			/// <summary>
+			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
+			/// <see cref="TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// </summary>
 			Wrap0 = D3DRS_WRAP0,
+
+			/// <summary>
+			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
+			/// <see cref="TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// </summary>
 			Wrap1 = D3DRS_WRAP1,
+
+			/// <summary>
+			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
+			/// <see cref="TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// </summary>
 			Wrap2 = D3DRS_WRAP2,
+
+			/// <summary>
+			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
+			/// <see cref="TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// </summary>
 			Wrap3 = D3DRS_WRAP3,
+
+			/// <summary>
+			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
+			/// <see cref="TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// </summary>
 			Wrap4 = D3DRS_WRAP4,
+
+			/// <summary>
+			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
+			/// <see cref="TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// </summary>
 			Wrap5 = D3DRS_WRAP5,
+
+			/// <summary>
+			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
+			/// <see cref="TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// </summary>
 			Wrap6 = D3DRS_WRAP6,
+
+			/// <summary>
+			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
+			/// <see cref="TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// </summary>
 			Wrap7 = D3DRS_WRAP7,
-			Clipping = D3DRS_CLIPPING,
-			Lighting = D3DRS_LIGHTING,
-			Ambient = D3DRS_AMBIENT,
-			FogVertexMode = D3DRS_FOGVERTEXMODE,
-			ColorVertex = D3DRS_COLORVERTEX,
-			LocalViewer = D3DRS_LOCALVIEWER,
-			NormalizeNormals = D3DRS_NORMALIZENORMALS,
-			DiffuseMaterialSource = D3DRS_DIFFUSEMATERIALSOURCE,
-			SpecularMaterialSource = D3DRS_SPECULARMATERIALSOURCE,
-			AmbientMaterialSource = D3DRS_AMBIENTMATERIALSOURCE,
-			EmissiveMaterialSource = D3DRS_EMISSIVEMATERIALSOURCE,
-			VertexBlend = D3DRS_VERTEXBLEND,
-			ClipPlaneEnable = D3DRS_CLIPPLANEENABLE,
-			PointSize = D3DRS_POINTSIZE,
-			PointSizeMin = D3DRS_POINTSIZE_MIN,
-			PointSpriteEnable = D3DRS_POINTSPRITEENABLE,
-			PointScaleEnable = D3DRS_POINTSCALEENABLE,
-			PointScaleA = D3DRS_POINTSCALE_A,
-			PointScaleB = D3DRS_POINTSCALE_B,
-			PointScaleC = D3DRS_POINTSCALE_C,
-			MultisampleAntialias = D3DRS_MULTISAMPLEANTIALIAS,
-			MultisampleMask = D3DRS_MULTISAMPLEMASK,
-			PatchEdgeStyle = D3DRS_PATCHEDGESTYLE,
-			DebugMonitorToken = D3DRS_DEBUGMONITORTOKEN,
-			PointSizeMax = D3DRS_POINTSIZE_MAX,
-			IndexedVertexBlendEnable = D3DRS_INDEXEDVERTEXBLENDENABLE,
-			ColorWriteEnable = D3DRS_COLORWRITEENABLE,
-			TweenFactor = D3DRS_TWEENFACTOR,
-			BlendOperation = D3DRS_BLENDOP,
-			PositionDegree = D3DRS_POSITIONDEGREE,
-			NormalDegree = D3DRS_NORMALDEGREE,
-			ScissorTestEnable = D3DRS_SCISSORTESTENABLE,
-			SlopeScaleDepthBias = D3DRS_SLOPESCALEDEPTHBIAS,
-			AntialiasedLineEnable = D3DRS_ANTIALIASEDLINEENABLE,
-			MinTessellationLevel = D3DRS_MINTESSELLATIONLEVEL,
-			MaxTessellationLevel = D3DRS_MAXTESSELLATIONLEVEL,
-			AdaptiveTessX = D3DRS_ADAPTIVETESS_X,
-			AdaptiveTessY = D3DRS_ADAPTIVETESS_Y,
-			AdaptiveTessZ = D3DRS_ADAPTIVETESS_Z,
-			AdaptiveTessW = D3DRS_ADAPTIVETESS_W,
-			EnableAdaptiveTessellation = D3DRS_ENABLEADAPTIVETESSELLATION,
-			TwoSidedStencilMode = D3DRS_TWOSIDEDSTENCILMODE,
-			CcwStencilFail = D3DRS_CCW_STENCILFAIL,
-			CcwStencilZFail = D3DRS_CCW_STENCILZFAIL,
-			CcwStencilPass = D3DRS_CCW_STENCILPASS,
-			CcwStencilFunc = D3DRS_CCW_STENCILFUNC,
-			ColorWriteEnable1 = D3DRS_COLORWRITEENABLE1,
-			ColorWriteEnable2 = D3DRS_COLORWRITEENABLE2,
-			ColorWriteEnable3 = D3DRS_COLORWRITEENABLE3,
-			BlendFactor = D3DRS_BLENDFACTOR,
-			SrgbWriteEnable = D3DRS_SRGBWRITEENABLE,
-			DepthBias = D3DRS_DEPTHBIAS,
+
+			/// <summary>
+			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
+			/// <see cref="TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// </summary>
 			Wrap8 = D3DRS_WRAP8,
+
+			/// <summary>
+			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
+			/// <see cref="TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// </summary>
 			Wrap9 = D3DRS_WRAP9,
+
+			/// <summary>
+			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
+			/// <see cref="TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// </summary>
 			Wrap10 = D3DRS_WRAP10,
+
+			/// <summary>
+			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
+			/// <see cref="TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// </summary>
 			Wrap11 = D3DRS_WRAP11,
+
+			/// <summary>
+			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
+			/// <see cref="TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// </summary>
 			Wrap12 = D3DRS_WRAP12,
+
+			/// <summary>
+			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
+			/// <see cref="TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// </summary>
 			Wrap13 = D3DRS_WRAP13,
+
+			/// <summary>
+			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
+			/// <see cref="TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// </summary>
 			Wrap14 = D3DRS_WRAP14,
+
+			/// <summary>
+			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
+			/// <see cref="TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// </summary>
 			Wrap15 = D3DRS_WRAP15,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable primitive clipping, and <c>false</c>
+			/// to disable it. The default value is <c>true</c>.
+			/// </summary>
+			Clipping = D3DRS_CLIPPING,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable lighting, and <c>false</c>
+			/// to disable it. The default value is <c>true</c>.
+			/// </summary>
+			Lighting = D3DRS_LIGHTING,
+
+			/// <summary>
+			/// Specifies the ambient light color. Use integer color values to set this state. The default value 
+			/// is 0 (black).
+			/// </summary>
+			Ambient = D3DRS_AMBIENT,
+
+			/// <summary>
+			/// Specifies the current fog formula to be used for vertex fog. Use values from <see cref="FogMode"/>
+			/// to set this state. The default value is <see cref="FogMode.None"/>.
+			/// </summary>
+			FogVertexMode = D3DRS_FOGVERTEXMODE,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable colored vertices, and <c>false</c>
+			/// to disable them. The default value is <c>true</c>.
+			/// </summary>
+			ColorVertex = D3DRS_COLORVERTEX,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable camera-relative specular highlights, and <c>false</c>
+			/// to use orthogonal specular highlights. The default value is <c>true</c>.
+			/// </summary>
+			LocalViewer = D3DRS_LOCALVIEWER,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable automatic normalization of vertex normals, and <c>false</c>
+			/// to disable it. The default value is <c>false</c>.
+			/// </summary>
+			NormalizeNormals = D3DRS_NORMALIZENORMALS,
+
+			/// <summary>
+			/// Specifies the source for diffuse colors. Use values from <see cref="ColorSource"/> to set
+			/// this state. The default value is <see cref="ColorSource.Color1"/>.
+			/// </summary>
+			DiffuseMaterialSource = D3DRS_DIFFUSEMATERIALSOURCE,
+
+			/// <summary>
+			/// Specifies the source for specular colors. Use values from <see cref="ColorSource"/> to set
+			/// this state. The default value is <see cref="ColorSource.Color2"/>.
+			/// </summary>
+			SpecularMaterialSource = D3DRS_SPECULARMATERIALSOURCE,
+
+			/// <summary>
+			/// Specifies the source for ambient colors. Use values from <see cref="ColorSource"/> to set
+			/// this state. The default value is <see cref="ColorSource.Material"/>.
+			/// </summary>
+			AmbientMaterialSource = D3DRS_AMBIENTMATERIALSOURCE,
+
+			/// <summary>
+			/// Specifies the source for emissive colors. Use values from <see cref="ColorSource"/> to set
+			/// this state. The default value is <see cref="ColorSource.Material"/>.
+			/// </summary>
+			EmissiveMaterialSource = D3DRS_EMISSIVEMATERIALSOURCE,
+
+			/// <summary>
+			/// An integer value that specifies the number of matrices to use to perform geometry blending.
+			/// Use values from <see cref="VertexBlend"/> to set this state. The default value is
+			/// <see cref="VertexBlend.Disable"/>.
+			/// </summary>
+			VertexBlend = D3DRS_VERTEXBLEND,
+
+			/// <summary>
+			/// An integer value that specifies which user-defined clip planes are active. Use
+			/// </summary>
+			ClipPlaneEnable = D3DRS_CLIPPLANEENABLE,
+
+			/// <summary>
+			/// A floating point value that specifies the size of points.
+			/// </summary>
+			PointSize = D3DRS_POINTSIZE,
+
+			/// <summary>
+			/// A floating point value that specifies the minimum size of point primitives.
+			/// </summary>
+			PointSizeMin = D3DRS_POINTSIZE_MIN,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable point sprites, and <c>false</c>
+			/// to disable them. The default value is <c>false</c>.
+			/// </summary>
+			PointSpriteEnable = D3DRS_POINTSPRITEENABLE,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable point scaling, and <c>false</c>
+			/// to disable it. The default value is <c>false</c>.
+			/// </summary>
+			PointScaleEnable = D3DRS_POINTSCALEENABLE,
+
+			/// <summary>
+			/// A floating point value that specifies attenuation when point scaling is applied. The default
+			/// value is 1.0f.
+			/// </summary>
+			PointScaleA = D3DRS_POINTSCALE_A,
+
+			/// <summary>
+			/// A floating point value that specifies attenuation when point scaling is applied. The default
+			/// value is 0.0f.
+			/// </summary>
+			PointScaleB = D3DRS_POINTSCALE_B,
+
+			/// <summary>
+			/// A floating point value that specifies attenuation when point scaling is applied. The default
+			/// value is 0.0f.
+			/// </summary>
+			PointScaleC = D3DRS_POINTSCALE_C,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable point multisampling, and <c>false</c>
+			/// to disable it. The default value is <c>false</c>.
+			/// </summary>
+			MultisampleAntialias = D3DRS_MULTISAMPLEANTIALIAS,
+
+			/// <summary>
+			/// An integer mask that controls the samples in a multisampling render target.
+			/// </summary>
+			MultisampleMask = D3DRS_MULTISAMPLEMASK,
+
+			/// <summary>
+			/// Specifies the current patch edge style. Use values from <see cref="PatchEdgeStyle"/> to
+			/// set this state. The default value is <see cref="PatchEdgeStyle.Discrete"/>.
+			/// </summary>
+			PatchEdgeStyle = D3DRS_PATCHEDGESTYLE,
+
+			/// <summary>
+			/// Specifies the current debug monitor token. Use values from <see cref="DebugMonitorToken"/> to
+			/// set this state. The default value is <see cref="DebugMonitorToken.Enable"/>.
+			/// </summary>
+			DebugMonitorToken = D3DRS_DEBUGMONITORTOKEN,
+
+			/// <summary>
+			/// A floating point value that specifies the maximum size of point primitives.
+			/// </summary>
+			PointSizeMax = D3DRS_POINTSIZE_MAX,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable indexed vertex blending, and <c>false</c>
+			/// to disable it. The default value is <c>false</c>.
+			/// </summary>
+			IndexedVertexBlendEnable = D3DRS_INDEXEDVERTEXBLENDENABLE,
+
+			/// <summary>
+			/// Specifies the current color write state of the device. Use values from <see cref="ColorWriteEnable"/>
+			/// to set this state. The default value is <see cref="ColorWriteEnable.All"/>.
+			/// </summary>
+			ColorWriteEnable = D3DRS_COLORWRITEENABLE,
+
+			/// <summary>
+			/// A floating point value that specifies the tweening factor. The default value is 0.0f.
+			/// </summary>
+			TweenFactor = D3DRS_TWEENFACTOR,
+
+			/// <summary>
+			/// Specifies the blending operation to use when alpha blending is enabled. Use values from
+			/// <see cref="BlendOperation"/> to set this state. The default value is <see cref="BlendOperation.Add"/>.
+			/// </summary>
+			BlendOperation = D3DRS_BLENDOP,
+
+			/// <summary>
+			/// Specifies the N-patch position interpolation degree. Use values from <see cref="Degree"/> to
+			/// set this state. The default value is <see cref="Degree.Cubic"/>.
+			/// </summary>
+			PositionDegree = D3DRS_POSITIONDEGREE,
+
+			/// <summary>
+			/// Specifies the N-patch normal interpolation degree. Use values from <see cref="Degree"/> to
+			/// set this state. The default value is <see cref="Degree.Linear"/>.
+			/// </summary>
+			NormalDegree = D3DRS_NORMALDEGREE,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable scissor testing, and <c>false</c>
+			/// to disable it. The default value is <c>false</c>.
+			/// </summary>
+			ScissorTestEnable = D3DRS_SCISSORTESTENABLE,
+
+			/// <summary>
+			/// An integer value that specifies how much bias can be applied to co-planar primitives to reduce
+			/// Z-fighting. The default value is 0.
+			/// </summary>
+			SlopeScaleDepthBias = D3DRS_SLOPESCALEDEPTHBIAS,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable antialiased lines, and <c>false</c>
+			/// to disable them. The default value is <c>false</c>.
+			/// </summary>
+			AntialiasedLineEnable = D3DRS_ANTIALIASEDLINEENABLE,
+
+			/// <summary>
+			/// A floating point value that specifies the minium tessellation level. The default value is 1.0f.
+			/// </summary>
+			MinTessellationLevel = D3DRS_MINTESSELLATIONLEVEL,
+
+			/// <summary>
+			/// A floating point value that specifies the maximum tessellation level. The default value is 1.0f.
+			/// </summary>
+			MaxTessellationLevel = D3DRS_MAXTESSELLATIONLEVEL,
+
+			/// <summary>
+			/// A floating point value that specifies the amount to adaptively tessellate, in the X direction.
+			/// The default value is 0.0f.
+			/// </summary>
+			AdaptiveTessX = D3DRS_ADAPTIVETESS_X,
+
+			/// <summary>
+			/// A floating point value that specifies the amount to adaptively tessellate, in the Y direction.
+			/// The default value is 0.0f.
+			/// </summary>
+			AdaptiveTessY = D3DRS_ADAPTIVETESS_Y,
+
+			/// <summary>
+			/// A floating point value that specifies the amount to adaptively tessellate, in the Z direction.
+			/// The default value is 0.0f.
+			/// </summary>
+			AdaptiveTessZ = D3DRS_ADAPTIVETESS_Z,
+
+			/// <summary>
+			/// A floating point value that specifies the amount to adaptively tessellate, in the W direction.
+			/// The default value is 1.0f.
+			/// </summary>
+			AdaptiveTessW = D3DRS_ADAPTIVETESS_W,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable adaptive tessellation, and <c>false</c>
+			/// to disable it. The default value is <c>false</c>.
+			/// </summary>
+			EnableAdaptiveTessellation = D3DRS_ENABLEADAPTIVETESSELLATION,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable two sided stenciling, and <c>false</c>
+			/// to disable it. The default value is <c>false</c>.
+			/// </summary>
+			TwoSidedStencilMode = D3DRS_TWOSIDEDSTENCILMODE,
+
+			/// <summary>
+			/// Specifies the operation to perform if the stencil test fails. Use values from
+			/// <see cref="StencilOperation"/> to set the state. The default value is <see cref="StencilOperation.Keep"/>.
+			/// </summary>
+			CcwStencilFail = D3DRS_CCW_STENCILFAIL,
+
+			/// <summary>
+			/// Specifies the operation to perform if the stencil test passes and depth test fails. Use values from
+			/// <see cref="StencilOperation"/> to set the state. The default value is <see cref="StencilOperation.Keep"/>.
+			/// </summary>
+			CcwStencilZFail = D3DRS_CCW_STENCILZFAIL,
+
+			/// <summary>
+			/// Specifies the operation to perform if both the stencil and depth tests pass. Use values from
+			/// <see cref="StencilOperation"/> to set the state. The default value is <see cref="StencilOperation.Keep"/>.
+			/// </summary>
+			CcwStencilPass = D3DRS_CCW_STENCILPASS,
+
+			/// <summary>
+			/// Specifies the comparison function for stencil tests.. Use values from
+			/// <see cref="Compare"/> to set the state. The default value is <see cref="Compare.Always"/>.
+			/// </summary>
+			CcwStencilFunc = D3DRS_CCW_STENCILFUNC,
+
+			/// <summary>
+			/// Specifies additional color write enable settings for the device. Use values from <see cref="ColorWriteEnable"/>
+			/// to set this state. The default value is <see cref="ColorWriteEnable.All"/>.
+			/// </summary>
+			ColorWriteEnable1 = D3DRS_COLORWRITEENABLE1,
+
+			/// <summary>
+			/// Specifies additional color write enable settings for the device. Use values from <see cref="ColorWriteEnable"/>
+			/// to set this state. The default value is <see cref="ColorWriteEnable.All"/>.
+			/// </summary>
+			ColorWriteEnable2 = D3DRS_COLORWRITEENABLE2,
+
+			/// <summary>
+			/// Specifies additional color write enable settings for the device. Use values from <see cref="ColorWriteEnable"/>
+			/// to set this state. The default value is <see cref="ColorWriteEnable.All"/>.
+			/// </summary>
+			ColorWriteEnable3 = D3DRS_COLORWRITEENABLE3,
+
+			/// <summary>
+			/// Specifies a color to use as a constant blend factor for alpha blending. Use integer color values 
+			/// to set this state. The default value is 0xFFFFFFFF (white).
+			/// </summary>
+			BlendFactor = D3DRS_BLENDFACTOR,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable sRGB gamma correction, and <c>false</c>
+			/// to disable it. The default value is <c>false</c>.
+			/// </summary>
+			SrgbWriteEnable = D3DRS_SRGBWRITEENABLE,
+
+			/// <summary>
+			/// A floating point value that is used for comparison of depth values.
+			/// </summary>
+			DepthBias = D3DRS_DEPTHBIAS,
+
+			/// <summary>
+			/// Set this state to <c>true</c> to enable separate blending modes for the alpha channel, and <c>false</c>
+			/// to disable them. The default value is <c>false</c>.
+			/// </summary>
 			SeparateAlphaBlendEnable = D3DRS_SEPARATEALPHABLENDENABLE,
+
+			/// <summary>
+			/// Specifies the source alpha blending function. Use values from <see cref="Blend"/> to set this state.
+			/// The default value is <see cref="Blend.One"/>.
+			/// </summary>
 			SourceBlendAlpha = D3DRS_SRCBLENDALPHA,
+
+			/// <summary>
+			/// Specifies the destination alpha blending function. Use values from <see cref="Blend"/> to set this state.
+			/// The default value is <see cref="Blend.Zero"/>.
+			/// </summary>
 			DestinationBlendAlpha = D3DRS_DESTBLENDALPHA,
-			BlendOperationAlpha = D3DRS_BLENDOPALPHA,
+
+			/// <summary>
+			/// Specifies the operation to perform for separate alpha blending. Use values from <see cref="BlendOperation"/>
+			/// to set this state. The default value is <see cref="BlendOperation.Add"/>.
+			/// </summary>
+			BlendOperationAlpha = D3DRS_BLENDOPALPHA
 		};
 		
+		/// <summary>
+		/// Defines resource types.
+		/// </summary>
+		/// <unmanaged>D3DRESOURCETYPE</unmanaged>
 		public enum class ResourceType : System::Int32
 		{
+			/// <summary>
+			/// Surface resource.
+			/// </summary>
 			Surface = D3DRTYPE_SURFACE,
+
+			/// <summary>
+			/// Volume resource.
+			/// </summary>
 			Volume = D3DRTYPE_VOLUME,
+
+			/// <summary>
+			/// Texture resource.
+			/// </summary>
 			Texture = D3DRTYPE_TEXTURE,
+
+			/// <summary>
+			/// Volume texture resource.
+			/// </summary>
 			VolumeTexture = D3DRTYPE_VOLUMETEXTURE,
+
+			/// <summary>
+			/// Cube texture resource.
+			/// </summary>
 			CubeTexture = D3DRTYPE_CUBETEXTURE,
+
+			/// <summary>
+			/// Vertex buffer resource.
+			/// </summary>
 			VertexBuffer = D3DRTYPE_VERTEXBUFFER,
+
+			/// <summary>
+			/// Index buffer resource.
+			/// </summary>
 			IndexBuffer = D3DRTYPE_INDEXBUFFER,
 		};
 		
+		/// <summary>
+		/// Sampler states define texture sampling operations such as texture addressing and texture filtering. 
+		/// Some sampler states set-up vertex processing, and some set-up pixel processing. Sampler states can 
+		/// be saved and restored using stateblocks 
+		/// </summary>
 		public enum class SamplerState : System::Int32
 		{
 			AddressU = D3DSAMP_ADDRESSU,
@@ -3328,6 +3858,17 @@ namespace SlimDX
 			Texture5 = D3DTS_TEXTURE5,
 			Texture6 = D3DTS_TEXTURE6,
 			Texture7 = D3DTS_TEXTURE7,
+		};
+
+		[System::Flags]
+		public enum class TextureWrapping : System::Int32
+		{
+			None = 0,
+			WrapCoordinate0 = D3DWRAPCOORD_0,
+			WrapCoordinate1 = D3DWRAPCOORD_1,
+			WrapCoordinate2 = D3DWRAPCOORD_2,
+			WrapCoordinate3 = D3DWRAPCOORD_3,
+			All = WrapCoordinate0 | WrapCoordinate1 | WrapCoordinate2 | WrapCoordinate3
 		};
 		
 		[System::Flags]
