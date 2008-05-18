@@ -370,6 +370,12 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
+	Result VolumeTexture::AddDirtyBox()
+	{
+		HRESULT hr = InternalPointer->AddDirtyBox( NULL );
+		return RECORD_D3D9( hr );
+	}
+
 	Result VolumeTexture::AddDirtyBox( Box box )
 	{
 		HRESULT hr = InternalPointer->AddDirtyBox( reinterpret_cast<D3DBOX*>( &box ) );
