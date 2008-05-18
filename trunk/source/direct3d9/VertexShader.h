@@ -44,6 +44,13 @@ namespace SlimDX
 
 			virtual ~VertexShader() { delete m_ConstantTable; }
 
+			literal int MaxDynamicFlowControlDepth = D3DVS20_MAX_DYNAMICFLOWCONTROLDEPTH;
+			literal int MinDynamicFlowControlDepth = D3DVS20_MIN_DYNAMICFLOWCONTROLDEPTH;
+			literal int MaxTemps = D3DVS20_MAX_NUMTEMPS;
+			literal int MinTemps = D3DVS20_MIN_NUMTEMPS;
+			literal int MaxStaticFlowControlDepth = D3DVS20_MAX_STATICFLOWCONTROLDEPTH;
+			literal int MinStaticFlowControlDepth = D3DVS20_MIN_STATICFLOWCONTROLDEPTH;
+
 			property SlimDX::Direct3D9::Device^ Device
 			{
 				SlimDX::Direct3D9::Device^ get();

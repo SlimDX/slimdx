@@ -33,9 +33,9 @@ namespace SlimDX
 		{
 		public:
 			/// <summary>
-			/// Instruction prediction is supported if this value is non-zero.
+			/// Generic vertex shader capabilities.
 			/// </summary>
-			property int Caps;
+			property VertexShaderCaps Caps;
 
 			/// <summary>
 			/// The depth of dynamic flow control nesting.
@@ -104,9 +104,9 @@ namespace SlimDX
 		{
 		public:
 			/// <summary>
-			/// Instruction prediction is supported if this value is non-zero.
+			/// Generic pixel shader caps.
 			/// </summary>
-			property int Caps;
+			property PixelShaderCaps Caps;
 
 			/// <summary>
 			/// The depth of dynamic flow control nesting.
