@@ -359,7 +359,13 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	Result CubeTexture::AddDirtyRect( CubeMapFace face, System::Drawing::Rectangle rect )
+	Result CubeTexture::AddDirtyRectangle( CubeMapFace face )
+	{
+		HRESULT hr = InternalPointer->AddDirtyRect( static_cast<D3DCUBEMAP_FACES>( face ), NULL );
+		return RECORD_D3D9( hr );
+	}
+
+	Result CubeTexture::AddDirtyRectangle( CubeMapFace face, System::Drawing::Rectangle rect )
 	{
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
 		HRESULT hr = InternalPointer->AddDirtyRect( static_cast<D3DCUBEMAP_FACES>( face ), &nativeRect );

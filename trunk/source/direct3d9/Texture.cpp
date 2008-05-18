@@ -438,7 +438,13 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	Result Texture::AddDirtyRect( System::Drawing::Rectangle rect )
+	Result Texture::AddDirtyRectangle()
+	{
+		HRESULT hr = InternalPointer->AddDirtyRect( NULL );
+		return RECORD_D3D9( hr );
+	}
+
+	Result Texture::AddDirtyRectangle( System::Drawing::Rectangle rect )
 	{
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
 		HRESULT hr = InternalPointer->AddDirtyRect( &nativeRect );

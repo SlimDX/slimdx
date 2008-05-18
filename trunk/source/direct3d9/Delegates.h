@@ -25,6 +25,11 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>
+		/// Callback function used for animations.
+		/// </summary>
+		/// <param name="track">The track for which the callback is occuring.</param>
+		/// <param name="data">Application defined data.</param>
 		public delegate void AnimationCallback( int track, System::Object^ data );
 
 		/// <summary>
@@ -40,7 +45,7 @@ namespace SlimDX
 		/// </summary>
 		/// <param name="coordinate">Texture coordinate being sampled.</param>
 		/// <param name="texelSize">Dimensions of the texel.</param>
-		/// <returns>A 4 dimensional vector, representing a color value. X maps to R, G to Y, etc...</returns>
+		/// <returns>A 4 dimensional vector, representing a color value. X, Y, Z, and W map to R, G, B, and A, respectively.</returns>
 		public delegate Vector4 Fill3DCallback(Vector3 coordinate, Vector3 texelSize);
 	}
 }

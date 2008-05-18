@@ -31,35 +31,69 @@ namespace SlimDX
 	{
 		ref class Device;
 		
-		/// <summary>Applications use the methods of the Resource class to query and prepare resources.</summary>
+		/// <summary>Represents a base class for all Direct3D resources.</summary>
 		/// <unmanaged>IDirect3DResource9</unmanaged>
 		public ref class Resource abstract : public ComObject
 		{
 			COMOBJECT_BASE(IDirect3DResource9);
 
 		protected:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="Resource"/> class.
+			/// </summary>
 			Resource() { }
 
 		public:
+			/// <summary>
+			/// Preloads a managed resource.
+			/// </summary>
 			void Preload();
 
+			/// <summary>
+			/// The resource has the lowest priority possible.
+			/// </summary>
 			literal int PriorityMinimum = D3D9_RESOURCE_PRIORITY_MINIMUM;
+
+			/// <summary>
+			/// The resource is scheduled with low priority.
+			/// </summary>
 			literal int PriorityLow = D3D9_RESOURCE_PRIORITY_LOW;
+
+			/// <summary>
+			/// The resource is scheduled with normal priority.
+			/// </summary>
 			literal int PriorityNormal = D3D9_RESOURCE_PRIORITY_NORMAL;
+
+			/// <summary>
+			/// The resource is scheduled with high priority.
+			/// </summary>
 			literal int PriorityHigh = D3D9_RESOURCE_PRIORITY_HIGH;
+
+			/// <summary>
+			/// The resource has the maximum priority possible.
+			/// </summary>
 			literal int PriorityMaximum = D3D9_RESOURCE_PRIORITY_MAXIMUM;
 
+			/// <summary>
+			/// Gets the device associated with the resource.
+			/// </summary>
 			property SlimDX::Direct3D9::Device^ Device
 			{
 				SlimDX::Direct3D9::Device^ get();
 			}
 
+			/// <summary>
+			/// Gets or sets the resource's priority.
+			/// </summary>
 			property int Priority
 			{
 				int get() { return InternalPointer->GetPriority(); }
 				void set(int value) { InternalPointer->SetPriority( value ); }
 			};
 		
+			/// <summary>
+			/// Gets the type of the resource.
+			/// </summary>
 			property SlimDX::Direct3D9::ResourceType ResourceType
 			{
 				SlimDX::Direct3D9::ResourceType get() { return ( SlimDX::Direct3D9::ResourceType ) InternalPointer->GetType(); }
