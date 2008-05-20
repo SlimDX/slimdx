@@ -28,6 +28,10 @@ using System.Drawing;
 using SlimDX;
 using System.Windows.Forms;
 
+using System.Diagnostics;
+
+using MD3D = Microsoft.DirectX.Direct3D;
+
 namespace SimpleTriangle
 {
     class SimpleTriangleSample : Sample
@@ -37,9 +41,12 @@ namespace SimpleTriangle
         public SimpleTriangleSample()
         {
             Initialize("SlimDX - Simple Triangle Sample", true, 800, 600);
-        }
 
-        protected override void OnWindowCreated(EventArgs e)
+			Vector3 axis = new Vector3(2.0f, 1.0f, 1.0f);
+			Quaternion q = Quaternion.RotationAxis(axis, 45.0f);
+		}
+
+		protected override void OnWindowCreated(EventArgs e)
         {
             Window.KeyDown += new KeyEventHandler(Window_KeyDown);
         }
