@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{8FB4D979-047E-4260-81FC-3279D2F29414}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -23,8 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
+    <DocumentationFile>bin\Debug\SampleFramework.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -82,96 +81,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sample\Sample.cs" />
     <Compile Include="Sample\Timer.cs" />
-    <Compile Include="UserInterface\ColorArray.cs" />
-    <Compile Include="UserInterface\Exceptions.Designer.cs" />
-    <Compile Include="UserInterface\Utility.cs" />
-    <Compile Include="UserInterface\CustomVertex.cs" />
-    <Compile Include="UserInterface\FontManager.cs" />
-    <Compile Include="UserInterface\Graphics.cs" />
-    <Compile Include="UserInterface\Helpers\DebugManager.cs" />
-    <Compile Include="UserInterface\Helpers\DynamicPropertyAccessor.cs" />
-    <Compile Include="UserInterface\Helpers\Error.cs" />
-    <Compile Include="UserInterface\Helpers\IPropertyAccessor.cs" />
-    <Compile Include="UserInterface\Helpers\StaticReflection.cs" />
-    <Compile Include="UserInterface\Helpers\Text.cs" />
-    <Compile Include="UserInterface\Helpers\Timer.cs" />
-    <Compile Include="UserInterface\Helpers\TreeTraversal.cs" />
-    <Compile Include="UserInterface\Intersection.cs" />
-    <Compile Include="UserInterface\OdysseyUI.cs" />
-    <Compile Include="UserInterface\RenderableControls\BaseControl.cs" />
-    <Compile Include="UserInterface\RenderableControls\BaseControl.Events.cs" />
-    <Compile Include="UserInterface\RenderableControls\BaseControl.Methods.cs" />
-    <Compile Include="UserInterface\RenderableControls\BaseControl.Properties.cs" />
-    <Compile Include="UserInterface\RenderableControls\Buttons\BaseButton.cs" />
-    <Compile Include="UserInterface\RenderableControls\Buttons\Button.cs" />
-    <Compile Include="UserInterface\RenderableControls\Buttons\CheckBox.cs" />
-    <Compile Include="UserInterface\RenderableControls\Buttons\DecoratedButton.cs" />
-    <Compile Include="UserInterface\RenderableControls\Buttons\OptionButton.cs" />
-    <Compile Include="UserInterface\RenderableControls\Containers\Cell.cs" />
-    <Compile Include="UserInterface\RenderableControls\Containers\ContainerControl.cs" />
-    <Compile Include="UserInterface\RenderableControls\Containers\GroupBox.cs" />
-    <Compile Include="UserInterface\RenderableControls\Containers\Panel.cs" />
-    <Compile Include="UserInterface\RenderableControls\Containers\RichTextArea.cs" />
-    <Compile Include="UserInterface\RenderableControls\Containers\TabPage.cs" />
-    <Compile Include="UserInterface\RenderableControls\Containers\TabPanel.cs" />
-    <Compile Include="UserInterface\RenderableControls\ControlCollection.cs" />
-    <Compile Include="UserInterface\RenderableControls\DataViewer\DataViewer.cs" />
-    <Compile Include="UserInterface\RenderableControls\DataViewer\DataViewerBand.cs" />
-    <Compile Include="UserInterface\RenderableControls\DataViewer\DataViewerCell.cs" />
-    <Compile Include="UserInterface\RenderableControls\DataViewer\DataViewerCellCollection.cs" />
-    <Compile Include="UserInterface\RenderableControls\DataViewer\DataViewerColumn.cs" />
-    <Compile Include="UserInterface\RenderableControls\DataViewer\DataViewerColumnCollection.cs" />
-    <Compile Include="UserInterface\RenderableControls\DataViewer\DataViewerColumnHeaderCell.cs" />
-    <Compile Include="UserInterface\RenderableControls\DataViewer\DataViewerElement.cs" />
-    <Compile Include="UserInterface\RenderableControls\DataViewer\DataViewerEventArgs.cs" />
-    <Compile Include="UserInterface\RenderableControls\DataViewer\DataViewerExceptions.cs" />
-    <Compile Include="UserInterface\RenderableControls\DataViewer\DataViewerHeaderCell.cs" />
-    <Compile Include="UserInterface\RenderableControls\DataViewer\DataViewerLabelCell.cs" />
-    <Compile Include="UserInterface\RenderableControls\DataViewer\DataViewerLabelColumn.cs" />
-    <Compile Include="UserInterface\RenderableControls\DataViewer\DataViewerRow.cs" />
-    <Compile Include="UserInterface\RenderableControls\DataViewer\DataViewerRowCollection.cs" />
-    <Compile Include="UserInterface\RenderableControls\DataViewer\DataViewerRowHeaderCell.cs" />
-    <Compile Include="UserInterface\RenderableControls\Hud.cs" />
-    <Compile Include="UserInterface\RenderableControls\IActivableControl.cs" />
-    <Compile Include="UserInterface\RenderableControls\Input\DropDownList.cs" />
-    <Compile Include="UserInterface\RenderableControls\Input\OptionGroup.cs" />
-    <Compile Include="UserInterface\RenderableControls\Input\TextBox.cs" />
-    <Compile Include="UserInterface\RenderableControls\Input\TrackBar.cs" />
-    <Compile Include="UserInterface\RenderableControls\Interfaces\ICell.cs" />
-    <Compile Include="UserInterface\RenderableControls\Interfaces\ICircularControl.cs" />
-    <Compile Include="UserInterface\RenderableControls\Interfaces\IContainer.cs" />
-    <Compile Include="UserInterface\RenderableControls\Interfaces\IControl.cs" />
-    <Compile Include="UserInterface\RenderableControls\Interfaces\ISpriteControl.cs" />
-    <Compile Include="UserInterface\RenderableControls\Label.cs" />
-    <Compile Include="UserInterface\RenderableControls\PictureBox.cs" />
-    <Compile Include="UserInterface\RenderableControls\SimpleShapeControl.cs" />
-    <Compile Include="UserInterface\RenderableControls\Windows\CaptionBar.cs" />
-    <Compile Include="UserInterface\RenderableControls\Windows\DialogBox.cs" />
-    <Compile Include="UserInterface\RenderableControls\Windows\Window.cs" />
-    <Compile Include="UserInterface\SafeNativeMethods.cs" />
-    <Compile Include="UserInterface\ShapeDescriptor.cs" />
-    <Compile Include="UserInterface\Style\ColorArray.cs" />
-    <Compile Include="UserInterface\Style\ControlStyle.cs" />
-    <Compile Include="UserInterface\Style\DataViewerCellStyle.cs" />
-    <Compile Include="UserInterface\Style\LabelFormatter.cs" />
-    <Compile Include="UserInterface\Style\LabelPage.cs" />
-    <Compile Include="UserInterface\Style\Padding.cs" />
-    <Compile Include="UserInterface\Style\Shading.cs" />
-    <Compile Include="UserInterface\Style\Shapes.cs" />
-    <Compile Include="UserInterface\Style\StyleManager.cs" />
-    <Compile Include="UserInterface\Style\TextStyle.cs" />
-    <Compile Include="UserInterface\Style\UIParser.cs" />
-    <Compile Include="UserInterface\TextManager.cs" />
-    <Compile Include="UserInterface\UICommon.cs" />
-    <Compile Include="UserInterface\UIParser.cs" />
-    <Compile Include="UserInterface\WindowManager.cs" />
-    <Compile Include="UserInterface\Xml\UIParser.cs" />
-    <Compile Include="UserInterface\Xml\XmlBasicControls.cs" />
-    <Compile Include="UserInterface\Xml\XmlCommon.cs" />
-    <Compile Include="UserInterface\Xml\XmlComplexControls.cs" />
-    <Compile Include="UserInterface\Xml\XmlContainers.cs" />
-    <Compile Include="UserInterface\Xml\XmlControlStyle.cs" />
-    <Compile Include="UserInterface\Xml\XmlTextStyle.cs" />
     <Compile Include="Win32\FilterKeys.cs" />
     <Compile Include="Win32\Hooking.cs" />
     <Compile Include="Win32\NativeMessage.cs" />
@@ -184,10 +93,6 @@
     <Compile Include="Sample\Window.cs">
       <SubType>Form</SubType>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="UserInterface\RenderableControls\xdoc\BaseControl.xdoc" />
-    <None Include="UserInterface\RenderableControls\xdoc\Label.xdoc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\build\SlimDX.vcproj">

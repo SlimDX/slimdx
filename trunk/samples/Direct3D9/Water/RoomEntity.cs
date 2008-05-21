@@ -27,32 +27,16 @@ using SlimDX.Direct3D9;
 
 namespace Water
 {
-	/// <summary>
-	/// </summary>
-	/// <seealso cref="T:Water.Entity"/>
     class RoomEntity : Entity
     {
-		/// <summary>
-		/// </summary>
         Texture bumpTexture;
 
-		/// <summary>
-		/// Initializes a new Instance of Water.RoomEntity
-		/// </summary>
-		/// <param name="device"></param>
-		/// <param name="meshFileName"></param>
-		/// <param name="effectFileName"></param>
-		/// <param name="textureFileName"></param>
-		/// <param name="bumpTextureFileName"></param>
         public RoomEntity(Device device, string meshFileName, string effectFileName, string textureFileName, string bumpTextureFileName )
             :base(device, meshFileName, effectFileName, textureFileName)
         {
             bumpTexture = Texture.FromFile(device, bumpTextureFileName);
         }
 
-		/// <summary>
-		/// </summary>
-		/// <param name="device"></param>
         public override void Render(Device device)
         {
             Matrix modelViewProjection = WorldMatrix * ViewMatrix * ProjectionMatrix;
@@ -79,9 +63,6 @@ namespace Water
             Effect.End();
         }
 
-		/// <summary>
-		/// </summary>
-		/// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
