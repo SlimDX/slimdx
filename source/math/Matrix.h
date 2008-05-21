@@ -277,7 +277,7 @@ namespace SlimDX
 		/// <code>start + (end - start) * amount</code>
 		/// Passing <paramref name="amount"/> a value of 0 will cause <paramref name="start"/> to be returned; a value of 1 will cause <paramref name="end"/> to be returned. 
 		/// </remarks>
-		static Matrix Lerp( Matrix value1, Matrix value2, float amount );
+		static Matrix Lerp( Matrix start, Matrix end, float amount );
 		
 		/// <summary>
 		/// Performs a linear interpolation between two matricies.
@@ -291,7 +291,7 @@ namespace SlimDX
 		/// <code>start + (end - start) * amount</code>
 		/// Passing <paramref name="amount"/> a value of 0 will cause <paramref name="start"/> to be returned; a value of 1 will cause <paramref name="end"/> to be returned. 
 		/// </remarks>
-		static void   Lerp( Matrix% value1, Matrix% value2, float amount, [Out] Matrix% result );
+		static void   Lerp( Matrix% start, Matrix% end, float amount, [Out] Matrix% result );
 
 		/// <summary>
 		/// Creates a spherical billboard that rotates around a specified object position.

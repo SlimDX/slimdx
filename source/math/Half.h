@@ -117,14 +117,14 @@ namespace SlimDX
 		static array<Half>^ ConvertToHalf( array<float>^ values );
 
 		/// <summary>
-		/// Performs an explicit conversion from <see cref="System.Single"/> to <see cref="Half"/>.
+		/// Performs an explicit conversion from <see cref="System::Single"/> to <see cref="Half"/>.
 		/// </summary>
 		/// <param name="value">The value to be converted.</param>
 		/// <returns>The converted value.</param>
 		static explicit operator Half( float value );
 
 		/// <summary>
-		/// Performs an implicit conversion from <see cref="Half"/> to <see cref="System.Single"/>.
+		/// Performs an implicit conversion from <see cref="Half"/> to <see cref="System::Single"/>.
 		/// </summary>
 		/// <param name="value">The value to be converted.</param>
 		/// <returns>The converted value.</param>

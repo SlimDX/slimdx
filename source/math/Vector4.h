@@ -66,43 +66,43 @@ namespace SlimDX
 		property float W;
 
 		/// <summary>
-		/// Gets a <see cref="SlimDX.Vector4"/> with all of its components set to zero.
+		/// Gets a <see cref="Vector4"/> with all of its components set to zero.
 		/// </summary>
-		/// <value>A <see cref="SlimDX.Vector4"/> that has all of its components set to zero.</value>
+		/// <value>A <see cref="Vector4"/> that has all of its components set to zero.</value>
 		static property Vector4 Zero { Vector4 get() { return Vector4(0, 0, 0, 0); } }
 
 		/// <summary>
-		/// Gets the X unit <see cref="SlimDX.Vector4"/> (1, 0, 0, 0).
+		/// Gets the X unit <see cref="Vector4"/> (1, 0, 0, 0).
 		/// </summary>
-		/// <value>A <see cref="SlimDX.Vector4"/> that has a value of (1, 0, 0, 0).</value>
+		/// <value>A <see cref="Vector4"/> that has a value of (1, 0, 0, 0).</value>
 		static property Vector4 UnitX { Vector4 get() { return Vector4(1, 0, 0, 0); } }
 
 		/// <summary>
-		/// Gets the Y unit <see cref="SlimDX.Vector4"/> (0, 1, 0, 0).
+		/// Gets the Y unit <see cref="Vector4"/> (0, 1, 0, 0).
 		/// </summary>
-		/// <value>A <see cref="SlimDX.Vector4"/> that has a value of (0, 1, 0, 0).</value>
+		/// <value>A <see cref="Vector4"/> that has a value of (0, 1, 0, 0).</value>
 		static property Vector4 UnitY { Vector4 get() { return Vector4(0, 1, 0, 0); } }
 
 		/// <summary>
-		/// Gets the Z unit <see cref="SlimDX.Vector4"/> (0, 0, 1, 0).
+		/// Gets the Z unit <see cref="Vector4"/> (0, 0, 1, 0).
 		/// </summary>
-		/// <value>A <see cref="SlimDX.Vector4"/> that has a value of (0, 0, 1, 0).</value>
+		/// <value>A <see cref="Vector4"/> that has a value of (0, 0, 1, 0).</value>
 		static property Vector4 UnitZ { Vector4 get() { return Vector4(0, 0, 1, 0); } }
 
 		/// <summary>
-		/// Gets the W unit <see cref="SlimDX.Vector4"/> (0, 0, 0, 1).
+		/// Gets the W unit <see cref="Vector4"/> (0, 0, 0, 1).
 		/// </summary>
-		/// <value>A <see cref="SlimDX.Vector4"/> that has a value of (0, 0, 0, 1).</value>
+		/// <value>A <see cref="Vector4"/> that has a value of (0, 0, 0, 1).</value>
 		static property Vector4 UnitW { Vector4 get() { return Vector4(0, 0, 0, 1); } }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX.Vector4"/> class.
+		/// Initializes a new instance of the <see cref="Vector4"/> class.
 		/// </summary>
 		/// <param name="value">The value that will be assigned to all components.</param>
 		Vector4( float value );	
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX.Vector4"/> class.
+		/// Initializes a new instance of the <see cref="Vector4"/> class.
 		/// </summary>
 		/// <param name="value">A vector containing the values with which to initialize the X and Y components</param>
 		/// <param name="z">Initial value for the Z component of the vector.</param>
@@ -110,14 +110,14 @@ namespace SlimDX
 		Vector4( Vector2 value, float z, float w );
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX.Vector4"/> class.
+		/// Initializes a new instance of the <see cref="Vector4"/> class.
 		/// </summary>
 		/// <param name="value">A vector containing the values with which to initialize the X, Y, and Z components</param>
 		/// <param name="w">Initial value for the W component of the vector.</param>
 		Vector4( Vector3 value, float w );
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX.Vector4"/> class.
+		/// Initializes a new instance of the <see cref="Vector4"/> class.
 		/// </summary>
 		/// <param name="x">Initial value for the X component of the vector.</param>
 		/// <param name="y">Initial value for the Y component of the vector.</param>
@@ -237,22 +237,22 @@ namespace SlimDX
 		static void Negate( Vector4% value, [Out] Vector4% result );
 		
 		/// <summary>
-		/// Returns a <see cref="SlimDX.Vector4"/> containing the 4D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 4D triangle.
+		/// Returns a <see cref="Vector4"/> containing the 4D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 4D triangle.
 		/// </summary>
-		/// <param name="value1">A <see cref="SlimDX.Vector4"/> containing the 4D Cartesian coordinates of vertex 1 of the triangle.</param>
-		/// <param name="value2">A <see cref="SlimDX.Vector4"/> containing the 4D Cartesian coordinates of vertex 2 of the triangle.</param>
-		/// <param name="value3">A <see cref="SlimDX.Vector4"/> containing the 4D Cartesian coordinates of vertex 3 of the triangle.</param>
+		/// <param name="value1">A <see cref="Vector4"/> containing the 4D Cartesian coordinates of vertex 1 of the triangle.</param>
+		/// <param name="value2">A <see cref="Vector4"/> containing the 4D Cartesian coordinates of vertex 2 of the triangle.</param>
+		/// <param name="value3">A <see cref="Vector4"/> containing the 4D Cartesian coordinates of vertex 3 of the triangle.</param>
 		/// <param name="amount1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in <paramref name="value2"/>).</param>
 		/// <param name="amount2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in <paramref name="value3"/>).</param>
-		/// <returns>A new <see cref="SlimDX.Vector4"/> containing the 4D Cartesian coordinates of the specified point.</returns>
+		/// <returns>A new <see cref="Vector4"/> containing the 4D Cartesian coordinates of the specified point.</returns>
 		static Vector4 Barycentric( Vector4 value1, Vector4 value2, Vector4 value3, float amount1, float amount2 );		
 
 		/// <summary>
-		/// Returns a <see cref="SlimDX.Vector4"/> containing the 4D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 4D triangle.
+		/// Returns a <see cref="Vector4"/> containing the 4D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 4D triangle.
 		/// </summary>
-		/// <param name="value1">A <see cref="SlimDX.Vector4"/> containing the 4D Cartesian coordinates of vertex 1 of the triangle.</param>
-		/// <param name="value2">A <see cref="SlimDX.Vector4"/> containing the 4D Cartesian coordinates of vertex 2 of the triangle.</param>
-		/// <param name="value3">A <see cref="SlimDX.Vector4"/> containing the 4D Cartesian coordinates of vertex 3 of the triangle.</param>
+		/// <param name="value1">A <see cref="Vector4"/> containing the 4D Cartesian coordinates of vertex 1 of the triangle.</param>
+		/// <param name="value2">A <see cref="Vector4"/> containing the 4D Cartesian coordinates of vertex 2 of the triangle.</param>
+		/// <param name="value3">A <see cref="Vector4"/> containing the 4D Cartesian coordinates of vertex 3 of the triangle.</param>
 		/// <param name="amount1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in <paramref name="value2"/>).</param>
 		/// <param name="amount2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in <paramref name="value3"/>).</param>
 		/// <param name="result">When the method completes, contains the 4D Cartesian coordinates of the specified point.</param>
@@ -416,7 +416,7 @@ namespace SlimDX
 		/// </summary>
 		/// <param name="vector">The source vector.</param>
 		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
-		/// <returns>The transformed <see cref="SlimDX.Vector4"/>.</returns>
+		/// <returns>The transformed <see cref="Vector4"/>.</returns>
 		static Vector4 Transform( Vector4 vector, Matrix transformation );
 
 		/// <summary>
@@ -424,7 +424,7 @@ namespace SlimDX
 		/// </summary>
 		/// <param name="vector">The source vector.</param>
 		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
-		/// <param name="result">When the method completes, contains the transformed <see cref="SlimDX.Vector4"/>.</param>
+		/// <param name="result">When the method completes, contains the transformed <see cref="Vector4"/>.</param>
 		static void Transform( Vector4% vector, Matrix% transformation, [Out] Vector4% result );
 
 		/// <summary>
@@ -432,7 +432,7 @@ namespace SlimDX
 		/// </summary>
 		/// <param name="vectors">The source vectors.</param>
 		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
-		/// <returns>The transformed <see cref="SlimDX.Vector4"/>s.</returns>
+		/// <returns>The transformed <see cref="Vector4"/>s.</returns>
 		static array<Vector4>^ Transform( array<Vector4>^ vectors, Matrix% transformation );
 
 		/// <summary>
@@ -440,7 +440,7 @@ namespace SlimDX
 		/// </summary>
 		/// <param name="vector">The vector to rotate.</param>
 		/// <param name="rotation">The <see cref="SlimDX::Quaternion"/> rotation to apply.</param>
-		/// <returns>The transformed <see cref="SlimDX.Vector4"/>.</returns>
+		/// <returns>The transformed <see cref="Vector4"/>.</returns>
 		static Vector4 Transform( Vector4 vector, Quaternion rotation );
 
 		/// <summary>
@@ -448,7 +448,7 @@ namespace SlimDX
 		/// </summary>
 		/// <param name="vector">The vector to rotate.</param>
 		/// <param name="rotation">The <see cref="SlimDX::Quaternion"/> rotation to apply.</param>
-		/// <param name="result">When the method completes, contains the transformed <see cref="SlimDX.Vector4"/>.</param>
+		/// <param name="result">When the method completes, contains the transformed <see cref="Vector4"/>.</param>
 		static void Transform( Vector4% vector, Quaternion% rotation, [Out] Vector4% result );
 
 		/// <summary>
@@ -456,7 +456,7 @@ namespace SlimDX
 		/// </summary>
 		/// <param name="vectors">The vectors to rotate.</param>
 		/// <param name="rotation">The <see cref="SlimDX::Quaternion"/> rotation to apply.</param>
-		/// <returns>The transformed <see cref="SlimDX.Vector4"/>.</returns>
+		/// <returns>The transformed <see cref="Vector4"/>.</returns>
 		static array<Vector4>^ Transform( array<Vector4>^ vectors, Quaternion% rotation );
 
 			/// <summary>

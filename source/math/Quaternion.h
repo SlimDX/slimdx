@@ -140,25 +140,25 @@ namespace SlimDX
 		static void Add( Quaternion% left, Quaternion% right, [Out] Quaternion% result );
 
 		/// <summary>
-		/// Returns a <see cref="SlimDX.Quaternion"/> containing the 4D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 2D triangle.
+		/// Returns a <see cref="Quaternion"/> containing the 4D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 2D triangle.
 		/// </summary>
-		/// <param name="value1">A <see cref="SlimDX.Quaternion"/> containing the 4D Cartesian coordinates of vertex 1 of the triangle.</param>
-		/// <param name="value2">A <see cref="SlimDX.Quaternion"/> containing the 4D Cartesian coordinates of vertex 2 of the triangle.</param>
-		/// <param name="value3">A <see cref="SlimDX.Quaternion"/> containing the 4D Cartesian coordinates of vertex 3 of the triangle.</param>
-		/// <param name="weight1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in <paramref name="value2"/>).</param>
-		/// <param name="weight2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in <paramref name="value3"/>).</param>
-		/// <returns>A new <see cref="SlimDX.Quaternion"/> containing the 4D Cartesian coordinates of the specified point.</returns>
+		/// <param name="source1">A <see cref="Quaternion"/> containing the 4D Cartesian coordinates of vertex 1 of the triangle.</param>
+		/// <param name="source2">A <see cref="Quaternion"/> containing the 4D Cartesian coordinates of vertex 2 of the triangle.</param>
+		/// <param name="source3">A <see cref="Quaternion"/> containing the 4D Cartesian coordinates of vertex 3 of the triangle.</param>
+		/// <param name="weight1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in <paramref name="source2"/>).</param>
+		/// <param name="weight2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in <paramref name="source3"/>).</param>
+		/// <returns>A new <see cref="Quaternion"/> containing the 4D Cartesian coordinates of the specified point.</returns>
 		static Quaternion Barycentric( Quaternion source1, Quaternion source2, Quaternion source3, float weight1, float weight2 );
 		
 		/// <summary>
-		/// Returns a <see cref="SlimDX.Quaternion"/> containing the 4D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 2D triangle.
+		/// Returns a <see cref="Quaternion"/> containing the 4D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 2D triangle.
 		/// </summary>
-		/// <param name="value1">A <see cref="SlimDX.Quaternion"/> containing the 4D Cartesian coordinates of vertex 1 of the triangle.</param>
-		/// <param name="value2">A <see cref="SlimDX.Quaternion"/> containing the 4D Cartesian coordinates of vertex 2 of the triangle.</param>
-		/// <param name="value3">A <see cref="SlimDX.Quaternion"/> containing the 4D Cartesian coordinates of vertex 3 of the triangle.</param>
-		/// <param name="weight1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in <paramref name="value2"/>).</param>
-		/// <param name="weight2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in <paramref name="value3"/>).</param>
-		/// <param name="result">When the method completes, contains a new <see cref="SlimDX.Quaternion"/> containing the 4D Cartesian coordinates of the specified point.</param>
+		/// <param name="source1">A <see cref="Quaternion"/> containing the 4D Cartesian coordinates of vertex 1 of the triangle.</param>
+		/// <param name="source2">A <see cref="Quaternion"/> containing the 4D Cartesian coordinates of vertex 2 of the triangle.</param>
+		/// <param name="source3">A <see cref="Quaternion"/> containing the 4D Cartesian coordinates of vertex 3 of the triangle.</param>
+		/// <param name="weight1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in <paramref name="source2"/>).</param>
+		/// <param name="weight2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in <paramref name="source3"/>).</param>
+		/// <param name="result">When the method completes, contains a new <see cref="Quaternion"/> containing the 4D Cartesian coordinates of the specified point.</param>
 		static void Barycentric( Quaternion% source1, Quaternion% source2, Quaternion% source3, float weight1, float weight2, [Out] Quaternion% result );
 
 		/// <summary>
@@ -255,7 +255,7 @@ namespace SlimDX
 		/// <code>start + (end - start) * amount</code>
 		/// Passing <paramref name="amount"/> a value of 0 will cause <paramref name="start"/> to be returned; a value of 1 will cause <paramref name="end"/> to be returned. 
 		/// </remarks>
-		static Quaternion Lerp( Quaternion left, Quaternion right, float amount );
+		static Quaternion Lerp( Quaternion start, Quaternion end, float amount );
 
 		/// <summary>
 		/// Performs a linear interpolation between two quaternions.
@@ -269,7 +269,7 @@ namespace SlimDX
 		/// <code>start + (end - start) * amount</code>
 		/// Passing <paramref name="amount"/> a value of 0 will cause <paramref name="start"/> to be returned; a value of 1 will cause <paramref name="end"/> to be returned. 
 		/// </remarks>
-		static void Lerp( Quaternion% left, Quaternion% right, float amount, [Out] Quaternion% result );
+		static void Lerp( Quaternion% start, Quaternion% end, float amount, [Out] Quaternion% result );
 
 		/// <summary>
 		/// Calculates the natural logarithm of the specified quaternion.
@@ -304,7 +304,7 @@ namespace SlimDX
 		/// <summary>
 		/// Scales a quaternion by the given value.
 		/// </summary>
-		/// <param name="value">The quaternion to scale.</param>
+		/// <param name="quaternion">The quaternion to scale.</param>
 		/// <param name="scale">The amount by which to scale the quaternion.</param>
 		/// <returns>The scaled quaternion.</returns>
 		static Quaternion Multiply( Quaternion quaternion, float scale );
@@ -320,14 +320,14 @@ namespace SlimDX
 		/// <summary>
 		/// Reverses the direction of a given quaternion.
 		/// </summary>
-		/// <param name="value">The quaternion to negate.</param>
+		/// <param name="quaternion">The quaternion to negate.</param>
 		/// <returns>A quaternion facing in the opposite direction.</returns>
 		static Quaternion Negate( Quaternion quaternion );
 
 		/// <summary>
 		/// Reverses the direction of a given quaternion.
 		/// </summary>
-		/// <param name="value">The quaternion to negate.</param>
+		/// <param name="quaternion">The quaternion to negate.</param>
 		/// <param name="result">When the method completes, contains a quaternion facing in the opposite direction.</param>
 		static void Negate( Quaternion% quaternion, [Out] Quaternion% result );
 
@@ -341,7 +341,7 @@ namespace SlimDX
 		/// <summary>
 		/// Converts the quaternion into a unit quaternion.
 		/// </summary>
-		/// <param name="vector">The quaternion to normalize.</param>
+		/// <param name="quaternion">The quaternion to normalize.</param>
 		/// <param name="result">When the method completes, contains the normalized quaternion.</param>
 		static void Normalize( Quaternion% quaternion, [Out] Quaternion% result );
 
@@ -400,7 +400,7 @@ namespace SlimDX
 		/// <param name="end">End quaternion.</param>
 		/// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="end"/>.</param>
 		/// <returns>The spherical linear interpolation of the two quaternions.</returns>
-		static Quaternion Slerp( Quaternion left, Quaternion right, float amount );
+		static Quaternion Slerp( Quaternion start, Quaternion end, float amount );
 
 		/// <summary>
 		/// Interpolates between two quaternions, using spherical linear interpolation.
@@ -409,7 +409,7 @@ namespace SlimDX
 		/// <param name="end">End quaternion.</param>
 		/// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="end"/>.</param>
 		/// <param name="result">When the method completes, contains the spherical linear interpolation of the two quaternions.</param>
-		static void Slerp( Quaternion% left, Quaternion% right, float amount, [Out] Quaternion% result );
+		static void Slerp( Quaternion% start, Quaternion% end, float amount, [Out] Quaternion% result );
 
 		/// <summary>
 		/// Interpolates between quaternions, using spherical quadrangle interpolation.
@@ -438,9 +438,9 @@ namespace SlimDX
 		/// </summary>
 		/// <param name="source1">First source quaternion.</param>
 		/// <param name="source2">Second source quaternion.</param>
-		/// <param name="source3">Thrid source quaternion.</param>
+		/// <param name="source3">Third source quaternion.</param>
 		/// <param name="source4">Fourth source quaternion.</param>
-		/// <returns>An array of three quaternions that represent control points for spherical quadrangle interpolation.
+		/// <returns>An array of three quaternions that represent control points for spherical quadrangle interpolation.</returns>
 		static array<Quaternion>^ SquadSetup( Quaternion source1, Quaternion source2, Quaternion source3, Quaternion source4 );
 
 		/// <summary>
@@ -473,7 +473,7 @@ namespace SlimDX
 		/// <param name="quaternion">The quaternion to scale.</param>
 		/// <param name="scale">The amount by which to scale the quaternion.</param>
 		/// <returns>The scaled quaternion.</returns>
-		static Quaternion operator * ( Quaternion left, float right );
+		static Quaternion operator * ( Quaternion quaternion, float scale );
 
 		/// <summary>
 		/// Scales a quaternion by the given value.
@@ -481,7 +481,7 @@ namespace SlimDX
 		/// <param name="quaternion">The quaternion to scale.</param>
 		/// <param name="scale">The amount by which to scale the quaternion.</param>
 		/// <returns>The scaled quaternion.</returns>
-		static Quaternion operator * ( float left, Quaternion right );
+		static Quaternion operator * ( float scale, Quaternion quaternion );
 
 		/// <summary>
 		/// Divides a quaternion by another.
@@ -510,7 +510,7 @@ namespace SlimDX
 		/// <summary>
 		/// Reverses the direction of a given quaternion.
 		/// </summary>
-		/// <param name="value">The quaternion to negate.</param>
+		/// <param name="quaternion">The quaternion to negate.</param>
 		/// <returns>A quaternion facing in the opposite direction.</returns>
 		static Quaternion operator - ( Quaternion quaternion );
 

@@ -50,7 +50,7 @@ namespace SlimDX
 		Vector3 Direction;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX.Ray"/> structure.
+		/// Initializes a new instance of the <see cref="Ray"/> structure.
 		/// </summary>
 		/// <param name="position">The location of the ray's origin.</param>
 		/// <param name="direction">A unit vector specifying the direction in which the ray is pointing.</param>
@@ -74,7 +74,7 @@ namespace SlimDX
 		/// <param name="vertex3">The third vertex of a triangle that will be tested for intersection.</param>
 		/// <param name="distance">When the method completes, contains the distance at which the ray intersected the plane.</param>
 		/// <returns><c>true</c> if the ray intersects the plane; otherwise, <c>false</c>.</returns>
-		static bool Intersects( Ray ray, Vector3 vertex1, Vector3 vertex2, Vector3 vector3, [Out] float% distance );
+		static bool Intersects( Ray ray, Vector3 vertex1, Vector3 vertex2, Vector3 vertex3, [Out] float% distance );
 		
 		/// <summary>
 		/// Determines whether a ray intersects the specified object.

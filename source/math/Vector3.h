@@ -61,44 +61,44 @@ namespace SlimDX
 		property float Z;
 
 		/// <summary>
-		/// Gets a <see cref="SlimDX.Vector3"/> with all of its components set to zero.
+		/// Gets a <see cref="Vector3"/> with all of its components set to zero.
 		/// </summary>
-		/// <value>A <see cref="SlimDX.Vector3"/> that has all of its components set to zero.</value>
+		/// <value>A <see cref="Vector3"/> that has all of its components set to zero.</value>
 		static property Vector3 Zero { Vector3 get() { return Vector3(0, 0, 0); } }
 
 		/// <summary>
-		/// Gets the X unit <see cref="SlimDX.Vector3"/> (1, 0, 0).
+		/// Gets the X unit <see cref="Vector3"/> (1, 0, 0).
 		/// </summary>
-		/// <value>A <see cref="SlimDX.Vector3"/> that has a value of (1, 0, 0).</value>
+		/// <value>A <see cref="Vector3"/> that has a value of (1, 0, 0).</value>
 		static property Vector3 UnitX { Vector3 get() { return Vector3(1, 0, 0); } }
 
 		/// <summary>
-		/// Gets the Y unit <see cref="SlimDX.Vector3"/> (0, 1, 0).
+		/// Gets the Y unit <see cref="Vector3"/> (0, 1, 0).
 		/// </summary>
-		/// <value>A <see cref="SlimDX.Vector3"/> that has a value of (0, 1, 0).</value>
+		/// <value>A <see cref="Vector3"/> that has a value of (0, 1, 0).</value>
 		static property Vector3 UnitY { Vector3 get() { return Vector3(0, 1, 0); } }
 
 		/// <summary>
-		/// Gets the Z unit <see cref="SlimDX.Vector3"/> (0, 0, 1).
+		/// Gets the Z unit <see cref="Vector3"/> (0, 0, 1).
 		/// </summary>
-		/// <value>A <see cref="SlimDX.Vector3"/> that has a value of (0, 0, 1).</value>
+		/// <value>A <see cref="Vector3"/> that has a value of (0, 0, 1).</value>
 		static property Vector3 UnitZ { Vector3 get() { return Vector3(0, 0, 1); } }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX.Vector3"/> class.
+		/// Initializes a new instance of the <see cref="Vector3"/> class.
 		/// </summary>
 		/// <param name="value">The value that will be assigned to all components.</param>
 		Vector3( float value );		
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX.Vector3"/> class.
+		/// Initializes a new instance of the <see cref="Vector3"/> class.
 		/// </summary>
 		/// <param name="value">A vector containing the values with which to initialize the X and Y components</param>
 		/// <param name="z">Initial value for the Z component of the vector.</param>
 		Vector3( Vector2 value, float z );	
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX.Vector3"/> class.
+		/// Initializes a new instance of the <see cref="Vector3"/> class.
 		/// </summary>
 		/// <param name="x">Initial value for the X component of the vector.</param>
 		/// <param name="y">Initial value for the Y component of the vector.</param>
@@ -217,22 +217,22 @@ namespace SlimDX
 		static void Negate( Vector3% value, [Out] Vector3% result );
 
 		/// <summary>
-		/// Returns a <see cref="SlimDX.Vector3"/> containing the 3D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 3D triangle.
+		/// Returns a <see cref="Vector3"/> containing the 3D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 3D triangle.
 		/// </summary>
-		/// <param name="value1">A <see cref="SlimDX.Vector3"/> containing the 3D Cartesian coordinates of vertex 1 of the triangle.</param>
-		/// <param name="value2">A <see cref="SlimDX.Vector3"/> containing the 3D Cartesian coordinates of vertex 2 of the triangle.</param>
-		/// <param name="value3">A <see cref="SlimDX.Vector3"/> containing the 3D Cartesian coordinates of vertex 3 of the triangle.</param>
+		/// <param name="value1">A <see cref="Vector3"/> containing the 3D Cartesian coordinates of vertex 1 of the triangle.</param>
+		/// <param name="value2">A <see cref="Vector3"/> containing the 3D Cartesian coordinates of vertex 2 of the triangle.</param>
+		/// <param name="value3">A <see cref="Vector3"/> containing the 3D Cartesian coordinates of vertex 3 of the triangle.</param>
 		/// <param name="amount1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in <paramref name="value2"/>).</param>
 		/// <param name="amount2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in <paramref name="value3"/>).</param>
-		/// <returns>A new <see cref="SlimDX.Vector3"/> containing the 3D Cartesian coordinates of the specified point.</returns>
+		/// <returns>A new <see cref="Vector3"/> containing the 3D Cartesian coordinates of the specified point.</returns>
 		static Vector3 Barycentric( Vector3 value1, Vector3 value2, Vector3 value3, float amount1, float amount2 );		
 
 		/// <summary>
-		/// Returns a <see cref="SlimDX.Vector3"/> containing the 3D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 3D triangle.
+		/// Returns a <see cref="Vector3"/> containing the 3D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 3D triangle.
 		/// </summary>
-		/// <param name="value1">A <see cref="SlimDX.Vector3"/> containing the 3D Cartesian coordinates of vertex 1 of the triangle.</param>
-		/// <param name="value2">A <see cref="SlimDX.Vector3"/> containing the 3D Cartesian coordinates of vertex 2 of the triangle.</param>
-		/// <param name="value3">A <see cref="SlimDX.Vector3"/> containing the 3D Cartesian coordinates of vertex 3 of the triangle.</param>
+		/// <param name="value1">A <see cref="Vector3"/> containing the 3D Cartesian coordinates of vertex 1 of the triangle.</param>
+		/// <param name="value2">A <see cref="Vector3"/> containing the 3D Cartesian coordinates of vertex 2 of the triangle.</param>
+		/// <param name="value3">A <see cref="Vector3"/> containing the 3D Cartesian coordinates of vertex 3 of the triangle.</param>
 		/// <param name="amount1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in <paramref name="value2"/>).</param>
 		/// <param name="amount2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in <paramref name="value3"/>).</param>
 		/// <param name="result">When the method completes, contains the 3D Cartesian coordinates of the specified point.</param>
