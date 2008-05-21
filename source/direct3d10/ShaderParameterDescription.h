@@ -35,8 +35,8 @@ namespace SlimDX
 			System::UInt32 m_Register;
 			SystemValueType m_SystemValueType;
 			RegisterComponentType m_ComponentType;
-			System::Byte m_Mask;
-			System::Byte m_ReadWriteMask;
+			RegisterComponentMaskFlags m_Mask;
+			RegisterComponentMaskFlags m_ReadWriteMask;
 		
 		internal:
 			ShaderParameterDescription( const D3D10_SIGNATURE_PARAMETER_DESC& native );
@@ -67,14 +67,14 @@ namespace SlimDX
 				RegisterComponentType get();
 			}
 			
-			property System::Byte UsageMask
+			property RegisterComponentMaskFlags UsageMask
 			{
-				System::Byte get();
+				RegisterComponentMaskFlags get();
 			}
 			
-			property System::Byte ReadWriteMask
+			property RegisterComponentMaskFlags ReadWriteMask
 			{
-				System::Byte get();
+				RegisterComponentMaskFlags get();
 			}
 
 			static bool operator == ( ShaderParameterDescription left, ShaderParameterDescription right );

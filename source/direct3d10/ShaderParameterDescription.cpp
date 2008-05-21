@@ -37,8 +37,8 @@ namespace Direct3D10
 		m_Register = description.Register;
 		m_SystemValueType = static_cast<SystemValueType>( description.SystemValueType );
 		m_ComponentType = static_cast<RegisterComponentType>( description.ComponentType );
-		m_Mask = description.Mask;
-		m_ReadWriteMask = description.ReadWriteMask;
+		m_Mask = static_cast<RegisterComponentMaskFlags>( description.Mask );
+		m_ReadWriteMask = static_cast<RegisterComponentMaskFlags>( description.ReadWriteMask );
 	}
 	
 	System::String^ ShaderParameterDescription::SemanticName::get()
@@ -66,12 +66,12 @@ namespace Direct3D10
 		return m_ComponentType;
 	}
 
-	System::Byte ShaderParameterDescription::UsageMask::get()
+	RegisterComponentMaskFlags ShaderParameterDescription::UsageMask::get()
 	{
 		return m_Mask;
 	}
 
-	System::Byte ShaderParameterDescription::ReadWriteMask::get()
+	RegisterComponentMaskFlags ShaderParameterDescription::ReadWriteMask::get()
 	{
 		return m_ReadWriteMask;
 	}
