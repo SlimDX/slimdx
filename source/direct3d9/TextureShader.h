@@ -90,15 +90,15 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="parameter">The effect parameter.</param>
 			/// <param name="value">The parameter value.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetValue( EffectHandle^ parameter, bool value );
 
 			/// <summary>
 			/// Sets an array of effect parameter values.
 			/// </summary>
 			/// <param name="parameter">The effect parameter.</param>
-			/// <param name="valuse">The parameter values.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <param name="values">The parameter values.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetValue( EffectHandle^ parameter, array<bool>^ values );
 
 			/// <summary>
@@ -106,15 +106,15 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="parameter">The effect parameter.</param>
 			/// <param name="value">The parameter value.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetValue( EffectHandle^ parameter, int value );
 
 			/// <summary>
 			/// Sets an array of effect parameter values.
 			/// </summary>
 			/// <param name="parameter">The effect parameter.</param>
-			/// <param name="valuse">The parameter values.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <param name="values">The parameter values.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetValue( EffectHandle^ parameter, array<int>^ values );
 
 			/// <summary>
@@ -122,15 +122,15 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="parameter">The effect parameter.</param>
 			/// <param name="value">The parameter value.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetValue( EffectHandle^ parameter, float value );
 
 			/// <summary>
 			/// Sets an array of effect parameter values.
 			/// </summary>
 			/// <param name="parameter">The effect parameter.</param>
-			/// <param name="valuse">The parameter values.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <param name="values">The parameter values.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetValue( EffectHandle^ parameter, array<float>^ values );
 
 			/// <summary>
@@ -138,15 +138,15 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="parameter">The effect parameter.</param>
 			/// <param name="value">The parameter value.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetValue( EffectHandle^ parameter, Vector4 value );
 
 			/// <summary>
 			/// Sets an array of effect parameter values.
 			/// </summary>
 			/// <param name="parameter">The effect parameter.</param>
-			/// <param name="valuse">The parameter values.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <param name="values">The parameter values.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetValue( EffectHandle^ parameter, array<Vector4>^ values );
 
 			/// <summary>
@@ -154,15 +154,15 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="parameter">The effect parameter.</param>
 			/// <param name="value">The parameter value.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetValue( EffectHandle^ parameter, Color4 value );
 
 			/// <summary>
 			/// Sets an array of effect parameter values.
 			/// </summary>
 			/// <param name="parameter">The effect parameter.</param>
-			/// <param name="valuse">The parameter values.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <param name="values">The parameter values.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetValue( EffectHandle^ parameter, array<Color4>^ values );
 
 			/// <summary>
@@ -170,15 +170,15 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="parameter">The effect parameter.</param>
 			/// <param name="value">The parameter value.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetValue( EffectHandle^ parameter, Matrix value );
 
 			/// <summary>
 			/// Sets an array of effect parameter values.
 			/// </summary>
 			/// <param name="parameter">The effect parameter.</param>
-			/// <param name="valuse">The parameter values.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <param name="values">The parameter values.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetValue( EffectHandle^ parameter, array<Matrix>^ values );
 
 			/// <summary>
@@ -186,21 +186,21 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="parameter">The effect parameter.</param>
 			/// <param name="value">The parameter value.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetValueTranspose( EffectHandle^ parameter, Matrix value );
 
 			/// <summary>
 			/// Sets an array of effect parameter values.
 			/// </summary>
 			/// <param name="parameter">The effect parameter.</param>
-			/// <param name="valuse">The parameter values.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <param name="values">The parameter values.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetValueTranspose( EffectHandle^ parameter, array<Matrix>^ values );
 
 			/// <summary>
 			/// Resets constant values to those defined in the shader.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetDefaults();
 
 			/// <summary>

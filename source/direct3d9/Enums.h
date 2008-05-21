@@ -147,67 +147,67 @@ namespace SlimDX
 		public enum class BlendCaps : System::Int32
 		{
 			/// <summary>
-			/// The device supports <see cref="Blend.Zero"/>.
+			/// The device supports <see cref="Blend::Zero"/>.
 			/// </summary>
 			Zero = D3DPBLENDCAPS_ZERO,
 
 			/// <summary>
-			/// The device supports <see cref="Blend.One"/>.
+			/// The device supports <see cref="Blend::One"/>.
 			/// </summary>
 			One = D3DPBLENDCAPS_ONE,
 
 			/// <summary>
-			/// The device supports <see cref="Blend.SourceColor"/>.
+			/// The device supports <see cref="Blend::SourceColor"/>.
 			/// </summary>
 			SourceColor = D3DPBLENDCAPS_SRCCOLOR,
 
 			/// <summary>
-			/// The device supports <see cref="Blend.InverseSourceColor"/>.
+			/// The device supports <see cref="Blend::InverseSourceColor"/>.
 			/// </summary>
 			InverseSourceColor = D3DPBLENDCAPS_INVSRCCOLOR,
 
 			/// <summary>
-			/// The device supports <see cref="Blend.SourceAlpha"/>.
+			/// The device supports <see cref="Blend::SourceAlpha"/>.
 			/// </summary>
 			SourceAlpha = D3DPBLENDCAPS_SRCALPHA,
 
 			/// <summary>
-			/// The device supports <see cref="Blend.InverseSourceAlpha"/>.
+			/// The device supports <see cref="Blend::InverseSourceAlpha"/>.
 			/// </summary>
 			InverseSourceAlpha = D3DPBLENDCAPS_INVSRCALPHA,
 
 			/// <summary>
-			/// The device supports <see cref="Blend.DestinationAlpha"/>.
+			/// The device supports <see cref="Blend::DestinationAlpha"/>.
 			/// </summary>
 			DestinationAlpha = D3DPBLENDCAPS_DESTALPHA,
 
 			/// <summary>
-			/// The device supports <see cref="Blend.InverseDestinationAlpha"/>.
+			/// The device supports <see cref="Blend::InverseDestinationAlpha"/>.
 			/// </summary>
 			InverseDestinationAlpha = D3DPBLENDCAPS_INVDESTALPHA,
 
 			/// <summary>
-			/// The device supports <see cref="Blend.DestinationColor"/>.
+			/// The device supports <see cref="Blend::DestinationColor"/>.
 			/// </summary>
 			DestinationColor = D3DPBLENDCAPS_DESTCOLOR,
 
 			/// <summary>
-			/// The device supports <see cref="Blend.InverseDestinationColor"/>.
+			/// The device supports <see cref="Blend::InverseDestinationColor"/>.
 			/// </summary>
 			InverseDestinationColor = D3DPBLENDCAPS_INVDESTCOLOR,
 
 			/// <summary>
-			/// The device supports <see cref="Blend.SourceAlphaSaturated"/>.
+			/// The device supports <see cref="Blend::SourceAlphaSaturated"/>.
 			/// </summary>
 			SourceAlphaSaturated = D3DPBLENDCAPS_SRCALPHASAT,
 
 			/// <summary>
-			/// The device supports <see cref="Blend.BothInverseSourceAlpha"/>.
+			/// The device supports <see cref="Blend::BothInverseSourceAlpha"/>.
 			/// </summary>
 			BothInverseSourceAlpha = D3DPBLENDCAPS_BOTHINVSRCALPHA,
 
 			/// <summary>
-			/// The device supports <see cref="Blend.BlendFactor"/> and <see cref="Blend.InverseBlendFactor"/>
+			/// The device supports <see cref="Blend::BlendFactor"/> and <see cref="Blend::InverseBlendFactor"/>
 			/// </summary>
 			BlendFactor = D3DPBLENDCAPS_BLENDFACTOR
 		};
@@ -428,7 +428,7 @@ namespace SlimDX
 			Mac = MAC_CHARSET
 		};
 
-		/// <summary>These flags identify a surface to reset when calling <see cref="Device.Clear"/>.</summary>
+		/// <summary>These flags identify a surface to reset when calling <see cref="Device::Clear"/>.</summary>
 		/// <unmanaged>D3DCLEAR</unmanaged>
 		[System::Flags]
 		public enum class ClearFlags : System::Int32
@@ -632,42 +632,42 @@ namespace SlimDX
 		public enum class CompareCaps : System::Int32
 		{
 			/// <summary>
-			/// The device supports <see cref="Compare.Never"/>.
+			/// The device supports <see cref="Compare::Never"/>.
 			/// </summary>
 			Never = D3DPCMPCAPS_NEVER,
 
 			/// <summary>
-			/// The device supports <see cref="Compare.Less"/>.
+			/// The device supports <see cref="Compare::Less"/>.
 			/// </summary>
 			Less = D3DPCMPCAPS_LESS,
 
 			/// <summary>
-			/// The device supports <see cref="Compare.Equal"/>.
+			/// The device supports <see cref="Compare::Equal"/>.
 			/// </summary>
 			Equal = D3DPCMPCAPS_EQUAL,
 
 			/// <summary>
-			/// The device supports <see cref="Compare.lessEqual"/>.
+			/// The device supports <see cref="Compare::lessEqual"/>.
 			/// </summary>
 			LessEqual = D3DPCMPCAPS_LESSEQUAL,
 
 			/// <summary>
-			/// The device supports <see cref="Compare.Greater"/>.
+			/// The device supports <see cref="Compare::Greater"/>.
 			/// </summary>
 			Greater = D3DPCMPCAPS_GREATER,
 
 			/// <summary>
-			/// The device supports <see cref="Compare.NotEqual"/>.
+			/// The device supports <see cref="Compare::NotEqual"/>.
 			/// </summary>
 			NotEqual = D3DPCMPCAPS_NOTEQUAL,
 
 			/// <summary>
-			/// The device supports <see cref="Compare.GreaterEqual"/>.
+			/// The device supports <see cref="Compare::GreaterEqual"/>.
 			/// </summary>
 			GreaterEqual = D3DPCMPCAPS_GREATEREQUAL,
 
 			/// <summary>
-			/// The device supports <see cref="Compare.Always"/>.
+			/// The device supports <see cref="Compare::Always"/>.
 			/// </summary>
 			Always = D3DPCMPCAPS_ALWAYS
 		};
@@ -1016,52 +1016,52 @@ namespace SlimDX
 		public enum class DeclarationTypeCaps
 		{
 			/// <summary>
-			/// The device supports <see cref="DeclarationType.UByte4"/>.
+			/// The device supports <see cref="DeclarationType::UByte4"/>.
 			/// </summary>
 			UByte4 = D3DDTCAPS_UBYTE4,
 
 			/// <summary>
-			/// The device supports <see cref="DeclarationType.UByte4N"/>.
+			/// The device supports <see cref="DeclarationType::UByte4N"/>.
 			/// </summary>
 			UByte4N = D3DDTCAPS_UBYTE4N,
 
 			/// <summary>
-			/// The device supports <see cref="DeclarationType.Short2N"/>.
+			/// The device supports <see cref="DeclarationType::Short2N"/>.
 			/// </summary>
 			Short2N = D3DDTCAPS_SHORT2N,
 
 			/// <summary>
-			/// The device supports <see cref="DeclarationType.Short4N"/>.
+			/// The device supports <see cref="DeclarationType::Short4N"/>.
 			/// </summary>
 			Short4N = D3DDTCAPS_SHORT4N,
 
 			/// <summary>
-			/// The device supports <see cref="DeclarationType.UShort2N"/>.
+			/// The device supports <see cref="DeclarationType::UShort2N"/>.
 			/// </summary>
 			UShort2N = D3DDTCAPS_USHORT2N,
 
 			/// <summary>
-			/// The device supports <see cref="DeclarationType.UShort4N"/>.
+			/// The device supports <see cref="DeclarationType::UShort4N"/>.
 			/// </summary>
 			UShort4N = D3DDTCAPS_USHORT4N,
 
 			/// <summary>
-			/// The device supports <see cref="DeclarationType.UDec3"/>.
+			/// The device supports <see cref="DeclarationType::UDec3"/>.
 			/// </summary>
 			UDec3 = D3DDTCAPS_UDEC3,
 
 			/// <summary>
-			/// The device supports <see cref="DeclarationType.Dec3N"/>.
+			/// The device supports <see cref="DeclarationType::Dec3N"/>.
 			/// </summary>
 			Dec3N = D3DDTCAPS_DEC3N,
 
 			/// <summary>
-			/// The device supports <see cref="DeclarationType.HalfTwo"/>.
+			/// The device supports <see cref="DeclarationType::HalfTwo"/>.
 			/// </summary>
 			HalfTwo = D3DDTCAPS_FLOAT16_2,
 
 			/// <summary>
-			/// The device supports <see cref="DeclarationType.HalfFour"/>.
+			/// The device supports <see cref="DeclarationType::HalfFour"/>.
 			/// </summary>
 			HalfFour = D3DDTCAPS_FLOAT16_4,
 		};
@@ -2931,20 +2931,20 @@ namespace SlimDX
 		{
 			/// <summary>
 			/// Depth-buffering state. Use values from <see cref="ZBufferType"/> to set this state. The
-			/// default value for this state is <see cref="ZBufferType.UseZBuffer"/> if a depth stencil was created
-			/// along with the device, or <see cref="ZBufferType.DontUseZBuffer"/> otherwise.
+			/// default value for this state is <see cref="ZBufferType::UseZBuffer"/> if a depth stencil was created
+			/// along with the device, or <see cref="ZBufferType::DontUseZBuffer"/> otherwise.
 			/// </summary>
 			ZEnable = D3DRS_ZENABLE,
 
 			/// <summary>
 			/// Defines the current fill mode of the device. Use values from <see cref="FillMode"/> to set this state.
-			/// The default value is <see cref="FillMode.Solid"/>.
+			/// The default value is <see cref="FillMode::Solid"/>.
 			/// </summary>
 			FillMode = D3DRS_FILLMODE,
 
 			/// <summary>
 			/// Defines the current shade mode of the device. Use values from <see cref="ShadeMode"/> to set this state.
-			/// The default value is <see cref="ShadeMode.Gouraud"/>.
+			/// The default value is <see cref="ShadeMode::Gouraud"/>.
 			/// </summary>
 			ShadeMode = D3DRS_SHADEMODE,
 
@@ -2968,25 +2968,25 @@ namespace SlimDX
 
 			/// <summary>
 			/// Defines the current source blending mode of the device. Use values from <see cref="Blend"/> to
-			/// set this state. The default value is <see cref="Blend.One"/>.
+			/// set this state. The default value is <see cref="Blend::One"/>.
 			/// </summary>
 			SourceBlend = D3DRS_SRCBLEND,
 
 			/// <summary>
 			/// Defines the current destination blending mode of the device. Use values from <see cref="Blend"/> to
-			/// set this state. The default value is <see cref="Blend.Zero"/>.
+			/// set this state. The default value is <see cref="Blend::Zero"/>.
 			/// </summary>
 			DestinationBlend = D3DRS_DESTBLEND,
 
 			/// <summary>
 			/// Specifies how back-facing triangles are culled. Use values from <see cref="CullMode"/> to
-			/// set this state. The default value is <see cref="CullMode.Counterclockwise"/>.
+			/// set this state. The default value is <see cref="CullMode::Counterclockwise"/>.
 			/// </summary>
 			CullMode = D3DRS_CULLMODE,
 
 			/// <summary>
 			/// Specifies the current depth testing function. Use values from <see cref="Compare"/> to
-			/// set this state. The default value is <see cref="Compare.LessEqual"/>.
+			/// set this state. The default value is <see cref="Compare::LessEqual"/>.
 			/// </summary>
 			ZFunc = D3DRS_ZFUNC,
 
@@ -2998,7 +2998,7 @@ namespace SlimDX
 
 			/// <summary>
 			/// Specifies the current alpha testing function. Use values from <see cref="Compare"/> to
-			/// set this state. The default value is <see cref="Compare.Always"/>.
+			/// set this state. The default value is <see cref="Compare::Always"/>.
 			/// </summary>
 			AlphaFunc = D3DRS_ALPHAFUNC,
 
@@ -3034,7 +3034,7 @@ namespace SlimDX
 
 			/// <summary>
 			/// Specifies the current fog formula to be used for pixel fog. Use values from <see cref="FogMode"/>
-			/// to set this state. The default value is <see cref="FogMode.None"/>.
+			/// to set this state. The default value is <see cref="FogMode::None"/>.
 			/// </summary>
 			FogTableMode = D3DRS_FOGTABLEMODE,
 
@@ -3070,7 +3070,7 @@ namespace SlimDX
 
 			/// <summary>
 			/// Specifies the stencil operation to perform if the stencil test fails. Use values from 
-			/// <see cref="StencilOperation"/> to set this state. The default value is <see cref="StencilOperation.Keep"/>.
+			/// <see cref="StencilOperation"/> to set this state. The default value is <see cref="StencilOperation::Keep"/>.
 			/// </summary>
 			StencilFail = D3DRS_STENCILFAIL,
 
@@ -3083,13 +3083,13 @@ namespace SlimDX
 
 			/// <summary>
 			/// Specifies the stencil operation to perform if both the stencil and depth tests pass. Use values from 
-			/// <see cref="StencilOperation"/> to set this state. The default value is <see cref="StencilOperation.Keep"/>.
+			/// <see cref="StencilOperation"/> to set this state. The default value is <see cref="StencilOperation::Keep"/>.
 			/// </summary>
 			StencilPass = D3DRS_STENCILPASS,
 
 			/// <summary>
 			/// Specifies the comparison function for stencil tests. Use values from <see cref="Compare"/> 
-			/// to set this state. The default value is <see cref="Compare.Always"/>.
+			/// to set this state. The default value is <see cref="Compare::Always"/>.
 			/// </summary>
 			StencilFunc = D3DRS_STENCILFUNC,
 
@@ -3232,7 +3232,7 @@ namespace SlimDX
 
 			/// <summary>
 			/// Specifies the current fog formula to be used for vertex fog. Use values from <see cref="FogMode"/>
-			/// to set this state. The default value is <see cref="FogMode.None"/>.
+			/// to set this state. The default value is <see cref="FogMode::None"/>.
 			/// </summary>
 			FogVertexMode = D3DRS_FOGVERTEXMODE,
 
@@ -3256,32 +3256,32 @@ namespace SlimDX
 
 			/// <summary>
 			/// Specifies the source for diffuse colors. Use values from <see cref="ColorSource"/> to set
-			/// this state. The default value is <see cref="ColorSource.Color1"/>.
+			/// this state. The default value is <see cref="ColorSource::Color1"/>.
 			/// </summary>
 			DiffuseMaterialSource = D3DRS_DIFFUSEMATERIALSOURCE,
 
 			/// <summary>
 			/// Specifies the source for specular colors. Use values from <see cref="ColorSource"/> to set
-			/// this state. The default value is <see cref="ColorSource.Color2"/>.
+			/// this state. The default value is <see cref="ColorSource::Color2"/>.
 			/// </summary>
 			SpecularMaterialSource = D3DRS_SPECULARMATERIALSOURCE,
 
 			/// <summary>
 			/// Specifies the source for ambient colors. Use values from <see cref="ColorSource"/> to set
-			/// this state. The default value is <see cref="ColorSource.Material"/>.
+			/// this state. The default value is <see cref="ColorSource::Material"/>.
 			/// </summary>
 			AmbientMaterialSource = D3DRS_AMBIENTMATERIALSOURCE,
 
 			/// <summary>
 			/// Specifies the source for emissive colors. Use values from <see cref="ColorSource"/> to set
-			/// this state. The default value is <see cref="ColorSource.Material"/>.
+			/// this state. The default value is <see cref="ColorSource::Material"/>.
 			/// </summary>
 			EmissiveMaterialSource = D3DRS_EMISSIVEMATERIALSOURCE,
 
 			/// <summary>
 			/// An integer value that specifies the number of matrices to use to perform geometry blending.
 			/// Use values from <see cref="VertexBlend"/> to set this state. The default value is
-			/// <see cref="VertexBlend.Disable"/>.
+			/// <see cref="VertexBlend::Disable"/>.
 			/// </summary>
 			VertexBlend = D3DRS_VERTEXBLEND,
 
@@ -3524,13 +3524,13 @@ namespace SlimDX
 
 			/// <summary>
 			/// Specifies the source alpha blending function. Use values from <see cref="Blend"/> to set this state.
-			/// The default value is <see cref="Blend.One"/>.
+			/// The default value is <see cref="Blend::One"/>.
 			/// </summary>
 			SourceBlendAlpha = D3DRS_SRCBLENDALPHA,
 
 			/// <summary>
 			/// Specifies the destination alpha blending function. Use values from <see cref="Blend"/> to set this state.
-			/// The default value is <see cref="Blend.Zero"/>.
+			/// The default value is <see cref="Blend::Zero"/>.
 			/// </summary>
 			DestinationBlendAlpha = D3DRS_DESTBLENDALPHA,
 
@@ -5095,6 +5095,7 @@ namespace SlimDX
 			NoTexGenNonLocalViewer = D3DVTXPCAPS_NO_TEXGEN_NONLOCALVIEWER
 		};
 
+		/// <summary>
 		/// Specifies vertex shader capabilities supported by the device.
 		/// </summary>
 		/// <unmanaged>D3DVS20CAPS</unmanaged>

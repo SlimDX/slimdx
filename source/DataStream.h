@@ -63,7 +63,7 @@ namespace SlimDX
 
 	public:
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX.DataStream"/> class, and allocates a new buffer to use as a backing store.
+		/// Initializes a new instance of the <see cref="SlimDX::DataStream"/> class, and allocates a new buffer to use as a backing store.
 		/// </summary>
 		/// <param name="sizeInBytes">The size of the buffer to be allocated, in bytes.</param>
 		/// <param name="canRead"><c>true</c> if reading from the buffer should be allowed; otherwise, <c>false</c>.</param>
@@ -72,7 +72,7 @@ namespace SlimDX
 		DataStream( System::Int64 sizeInBytes, bool canRead, bool canWrite );
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX.DataStream"/> class, using a user provided buffer as a backing store.
+		/// Initializes a new instance of the <see cref="SlimDX::DataStream"/> class, using a user provided buffer as a backing store.
 		/// </summary>
 		/// <param name="userBuffer">A pointer to the buffer to be used as a backing store.</param>
 		/// <param name="sizeInBytes">The size of the buffer provided, in bytes.</param>
@@ -83,12 +83,12 @@ namespace SlimDX
 		DataStream( System::IntPtr userBuffer, System::Int64 sizeInBytes, bool canRead, bool canWrite );
 		
 		/// <summary>
-		/// Releases all resources used by the <see cref="SlimDX.DataStream"/>.
+		/// Releases all resources used by the <see cref="SlimDX::DataStream"/>.
 		/// </summary>
 		~DataStream();
 
 		/// <summary>
-		/// Releases unmanaged resources and performs other cleanup operations before the <see cref="SlimDX.DataStream"/> is reclaimed by garbage collection.
+		/// Releases unmanaged resources and performs other cleanup operations before the <see cref="SlimDX::DataStream"/> is reclaimed by garbage collection.
 		/// </summary>
 		!DataStream();
 		

@@ -116,9 +116,9 @@ namespace SlimDX
 		Color3 ToColor3();
 
 		/// <summary>
-		/// Converts the color to a <see cref="System.Drawing.Color"/>.
+		/// Converts the color to a <see cref="System::Drawing::Color"/>.
 		/// </summary>
-		/// <returns>The <see cref="System.Drawing.Color"/> that is equivalent to this instance.</returns>
+		/// <returns>The <see cref="System::Drawing::Color"/> that is equivalent to this instance.</returns>
 		System::Drawing::Color ToColor();
 
 		/// <summary>
@@ -190,28 +190,28 @@ namespace SlimDX
 		/// <summary>
 		/// Performs a linear interpolation between two colors.
 		/// </summary>
-		/// <param name="start">Start color.</param>
-		/// <param name="end">End color.</param>
-		/// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="end"/>.</param>
+		/// <param name="color1">Start color.</param>
+		/// <param name="color2">End color.</param>
+		/// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="color2"/>.</param>
 		/// <returns>The linear interpolation of the two colors.</returns>
 		/// <remarks>
 		/// This method performs the linear interpolation based on the following formula.
-		/// <code>start + (end - start) * amount</code>
-		/// Passing <paramref name="amount"/> a value of 0 will cause <paramref name="start"/> to be returned; a value of 1 will cause <paramref name="end"/> to be returned. 
+		/// <code>color1 + (color2 - color1) * amount</code>
+		/// Passing <paramref name="amount"/> a value of 0 will cause <paramref name="color1"/> to be returned; a value of 1 will cause <paramref name="color2"/> to be returned. 
 		/// </remarks>
 		static Color4 Lerp( Color4 color1, Color4 color2, float amount );
 
 		/// <summary>
 		/// Performs a linear interpolation between two colors.
 		/// </summary>
-		/// <param name="start">Start color.</param>
-		/// <param name="end">End color.</param>
-		/// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="end"/>.</param>
+		/// <param name="color1">Start color.</param>
+		/// <param name="color2">End color.</param>
+		/// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="color2"/>.</param>
 		/// <param name="result">When the method completes, contains the linear interpolation of the two colors.</param>
 		/// <remarks>
 		/// This method performs the linear interpolation based on the following formula.
-		/// <code>start + (end - start) * amount</code>
-		/// Passing <paramref name="amount"/> a value of 0 will cause <paramref name="start"/> to be returned; a value of 1 will cause <paramref name="end"/> to be returned. 
+		/// <code>color1 + (color2 - color1) * amount</code>
+		/// Passing <paramref name="amount"/> a value of 0 will cause <paramref name="color1"/> to be returned; a value of 1 will cause <paramref name="color2"/> to be returned. 
 		/// </remarks>
 		static void Lerp( Color4% color1, Color4% color2, float amount, [Out] Color4% result );
 
@@ -249,7 +249,7 @@ namespace SlimDX
 		/// Adjusts the contrast of a color.
 		/// </summary>
 		/// <param name="color">The color whose contrast is to be adjusted.</param>
-		/// <param name="constrast">The amount by which to adjust the contrast.</param>
+		/// <param name="contrast">The amount by which to adjust the contrast.</param>
 		/// <returns>The adjusted color.</returns>
 		static Color4 AdjustContrast( Color4 color, float contrast );
 
@@ -257,7 +257,7 @@ namespace SlimDX
 		/// Adjusts the contrast of a color.
 		/// </summary>
 		/// <param name="color">The color whose contrast is to be adjusted.</param>
-		/// <param name="constrast">The amount by which to adjust the contrast.</param>
+		/// <param name="contrast">The amount by which to adjust the contrast.</param>
 		/// <param name="result">When the method completes, contains the adjusted color.</param>
 		static void AdjustContrast( Color4% color, float contrast, [Out] Color4% result );
 
@@ -314,7 +314,7 @@ namespace SlimDX
 		/// <param name="value">The color to scale.</param>
 		/// <param name="scale">The amount by which to scale.</param>
 		/// <returns>The scaled color.</returns>
-		static Color4 operator * ( float scale, Color4 vector );
+		static Color4 operator * ( float scale, Color4 value );
 
 		/// <summary>
 		/// Modulates two colors.
@@ -341,7 +341,7 @@ namespace SlimDX
 		static bool operator != ( Color4 left, Color4 right );
 
 		/// <summary>
-		/// Performs an explicit conversion from <see cref="Color4"/> to <see cref="System.Int32"/>.
+		/// Performs an explicit conversion from <see cref="Color4"/> to <see cref="System::Int32"/>.
 		/// </summary>
 		/// <param name="value">The value to be converted.</param>
 		/// <returns>The converted value.</returns>
@@ -369,7 +369,7 @@ namespace SlimDX
 		static explicit operator Vector4( Color4 value );
 
 		/// <summary>
-		/// Performs an explicit conversion from <see cref="System.Int32"/> to <see cref="Color4"/>.
+		/// Performs an explicit conversion from <see cref="System::Int32"/> to <see cref="Color4"/>.
 		/// </summary>
 		/// <param name="value">The value to be converted.</param>
 		/// <returns>The converted value.</returns>
@@ -397,14 +397,14 @@ namespace SlimDX
 		static explicit operator Color4( Vector4 value );
 
 		/// <summary>
-		/// Performs an implicit conversion from <see cref="System.Drawing.Color"/> to <see cref="Color4"/>.
+		/// Performs an implicit conversion from <see cref="System::Drawing::Color"/> to <see cref="Color4"/>.
 		/// </summary>
 		/// <param name="value">The value to be converted.</param>
 		/// <returns>The converted value.</returns>
 		static operator Color4( System::Drawing::Color value );
 
 		/// <summary>
-		/// Performs an implicit conversion from <see cref="Color4"/> to <see cref="System.Drawing.Color"/>.
+		/// Performs an implicit conversion from <see cref="Color4"/> to <see cref="System::Drawing::Color"/>.
 		/// </summary>
 		/// <param name="value">The value to be converted.</param>
 		/// <returns>The converted value.</returns>

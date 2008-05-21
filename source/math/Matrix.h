@@ -271,7 +271,7 @@ namespace SlimDX
 		/// <param name="start">Start matrix.</param>
 		/// <param name="end">End matrix.</param>
 		/// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="end"/>.</param>
-		/// <returns>The linear interpolation of the two matricies.</returns>
+		/// <returns>The linear interpolation of the two matrices.</returns>
 		/// <remarks>
 		/// This method performs the linear interpolation based on the following formula.
 		/// <code>start + (end - start) * amount</code>

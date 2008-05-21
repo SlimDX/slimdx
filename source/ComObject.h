@@ -116,7 +116,7 @@ namespace SlimDX
 		property System::String^ DebugName;
 		
 		/// <summary>
-		/// Releases all resources used by the <see cref="SlimDX.ComObject"/>.
+		/// Releases all resources used by the <see cref="SlimDX::ComObject"/>.
 		/// </summary>
 		virtual ~ComObject();
 	};

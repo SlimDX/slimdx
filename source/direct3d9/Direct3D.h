@@ -106,7 +106,7 @@ namespace SlimDX
 			/// <param name="deviceType">The desired device type.</param>
 			/// <param name="sourceFormat">Source adapter format.</param>
 			/// <param name="targetFormat">Destination adapter format.</param>
-			/// <param name="result">When the method completes, contains a <see cref="SlimDX.Result"/> object describing the result of the operation.</param>
+			/// <param name="result">When the method completes, contains a <see cref="SlimDX::Result"/> object describing the result of the operation.</param>
 			/// <returns><c>true</c> if the conversion is possible; otherwise, <c>false</c>.</returns>
 			static bool CheckDeviceFormatConversion(int adapter, DeviceType deviceType, Format sourceFormat, Format targetFormat, [Out] Result% result);
 
@@ -131,7 +131,7 @@ namespace SlimDX
 			/// <param name="usage">Requested usage options for the surface.</param>
 			/// <param name="resourceType">Resource type requested for use with the queried format.</param>
 			/// <param name="checkFormat">The format that will be checked for compatibility.</param>
-			/// <param name="result">When the method completes, contains a <see cref="SlimDX.Result"/> object describing the result of the operation.</param>
+			/// <param name="result">When the method completes, contains a <see cref="SlimDX::Result"/> object describing the result of the operation.</param>
 			/// <returns><c>true</c> if the format is compatible with the specified device; otherwise, <c>false</c>.</returns>
 			static bool CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat, Usage usage, ResourceType resourceType, Format checkFormat, [Out] Result% result );
 			
@@ -157,7 +157,7 @@ namespace SlimDX
 			/// <param name="adapterFormat">Format of the display mode into which the adapter will be placed.</param>
 			/// <param name="backBufferFormat">Format of the back buffer.</param>
 			/// <param name="windowed">Value indicating whether the device type will be used in full-screen or windowed mode.</param>
-			/// <param name="result">When the method completes, contains a <see cref="SlimDX.Result"/> object describing the result of the operation.</param>
+			/// <param name="result">When the method completes, contains a <see cref="SlimDX::Result"/> object describing the result of the operation.</param>
 			/// <returns><c>true</c> if the device can be used with the specified settings; otherwise, <c>false</c>.</returns>
 			static bool CheckDeviceType( int adapter, DeviceType deviceType, Format adapterFormat, Format backBufferFormat, bool windowed, [Out] Result% result );
 			
@@ -180,7 +180,7 @@ namespace SlimDX
 			/// <param name="adapterFormat">Format of the display mode into which the adapter will be placed.</param>
 			/// <param name="renderTargetFormat">Format of the render target surface.</param>
 			/// <param name="depthStencilFormat">Format of the depth-stencil surface.</param>
-			/// <param name="result">When the method completes, contains a <see cref="SlimDX.Result"/> object describing the result of the operation.</param>
+			/// <param name="result">When the method completes, contains a <see cref="SlimDX::Result"/> object describing the result of the operation.</param>
 			/// <returns><c>true</c> if the depth-stencil surface is compatible with the render target format; otherwise, <c>false</c>.</returns>
 			static bool CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, Format renderTargetFormat, Format depthStencilFormat, [Out] Result% result );
 			
@@ -204,7 +204,7 @@ namespace SlimDX
 			/// <param name="windowed"><c>true</c> to inquire about windowed multisampling, <c>false</c> to inquire about fullscreen multisampling.</param>
 			/// <param name="multisampleType">The multisampling technique to test.</param>
 			/// <param name="qualityLevels">When the method completes, contains the number of quality stops available for a given multisample type.</param>
-			/// <param name="result">When the method completes, contains a <see cref="SlimDX.Result"/> object describing the result of the operation.</param>
+			/// <param name="result">When the method completes, contains a <see cref="SlimDX::Result"/> object describing the result of the operation.</param>
 			/// <returns><c>true</c> if the device can perform the specified multisampling method; otherwise, <c>false</c>.</returns>
 			static bool CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat, bool windowed, MultisampleType multisampleType, [Out] int% qualityLevels, [Out] Result% result );
 			
@@ -250,7 +250,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="adapter">Index of the adapter to use.</param>
 			/// <param name="format">Desired surface format.</param>
-			/// <returns>The number of display modes available on the specified adapter.
+			/// <returns>The number of display modes available on the specified adapter.</returns>
             static int GetAdapterModeCount( int adapter, Format format );
 
 			/// <summary>
@@ -282,7 +282,7 @@ namespace SlimDX
 			/// Determines whether the device supports Render-To-Vertex-Buffer (R2VB).
 			/// </summary>
 			/// <param name="adapter">Index of the adapter to use.</param>
-			/// <param name="type">The desired device type.</param>
+			/// <param name="deviceType">The desired device type.</param>
 			/// <returns><c>true</c> if the adapter supports R2VB; otherwise, <c>false</c>.</returns>
 			static bool SupportsR2VB( int adapter, DeviceType deviceType );
 		};

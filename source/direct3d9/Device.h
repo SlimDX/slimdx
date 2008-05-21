@@ -66,7 +66,7 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX.Direct3D9.Device"/> class.
+			/// Initializes a new instance of the <see cref="SlimDX::Direct3D9::Device"/> class.
 			/// </summary>
 			/// <param name="adapter">Ordinal number that denotes the display adapter.</param>
 			/// <param name="deviceType">Denotes the desired device type. If the desired device type is not available, device creation will fail.</param>
@@ -93,7 +93,7 @@ namespace SlimDX
 			/// <summary>
 			/// Evicts all managed resources, including both Direct3D and driver-managed resources.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result EvictManagedResources();
 
 			/// <summary>
@@ -105,14 +105,14 @@ namespace SlimDX
 			/// <summary>
 			/// Reports the current cooperative-level status of the device.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result TestCooperativeLevel();
 
 			/// <summary>
 			/// Resets the device.
 			/// </summary>
 			/// <param name="presentParameters">A set of new presentation parameters to apply to the device.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Reset( PresentParameters^ presentParameters );
 
 			/// <summary>
@@ -123,7 +123,7 @@ namespace SlimDX
 			/// <param name="zdepth">The value that will be used to fill the cleared depth buffer.</param>
 			/// <param name="stencil">The value that will be used to fill the cleared stencil buffer.</param>
 			/// <param name="rectangles">The areas on the surfaces that will be cleared.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Clear( ClearFlags clearFlags, Color4 color, float zdepth, int stencil, array<System::Drawing::Rectangle>^ rectangles );
 			
 			/// <summary>
@@ -133,32 +133,32 @@ namespace SlimDX
 			/// <param name="color">The color that will be used to fill the cleared render target.</param>
 			/// <param name="zdepth">The value that will be used to fill the cleared depth buffer.</param>
 			/// <param name="stencil">The value that will be used to fill the cleared stencil buffer.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Clear( ClearFlags clearFlags, Color4 color, float zdepth, int stencil );
 			
 			/// <summary>
 			/// Begins a scene.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result BeginScene();
 			
 			/// <summary>
 			/// Ends a scene.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result EndScene();
 
 			/// <summary>
 			/// Presents the contents of the next buffer in the sequence of back buffers to the screen.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Present();
 
 			/// <summary>
 			/// Presents the contents of the first swap chain in the device. 
 			/// </summary>
 			/// <param name="flags">Flags used to specify how the swap chain should be presented.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Present( SlimDX::Direct3D9::Present flags );
 
 			/// <summary>
@@ -166,7 +166,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="sourceRectangle">The area of the back buffer that should be presented.</param>
 			/// <param name="destinationRectangle">The area of the front buffer that should receive the result of the presentation.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Present( System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle );
 			
 			/// <summary>
@@ -175,7 +175,7 @@ namespace SlimDX
 			/// <param name="sourceRectangle">The area of the back buffer that should be presented.</param>
 			/// <param name="destinationRectangle">The area of the front buffer that should receive the result of the presentation.</param>
 			/// <param name="windowOverride">The destination window whose client area is taken as the target for this presentation.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Present( System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, System::IntPtr windowOverride );
 			
 			/// <summary>
@@ -185,7 +185,7 @@ namespace SlimDX
 			/// <param name="destinationRectangle">The area of the front buffer that should receive the result of the presentation.</param>
 			/// <param name="windowOverride">The destination window whose client area is taken as the target for this presentation.</param>
 			/// <param name="region">Specifies a region on the back buffer that contains the minimal amount of pixels that need to be updated.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Present( System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, System::IntPtr windowOverride, System::Drawing::Region^ region );
 
 			/// <summary>
@@ -221,7 +221,7 @@ namespace SlimDX
 			/// Retrieve's the display mode's spatial resolution, color resolution, and refresh frequency.
 			/// </summary>
 			/// <param name="swapChain">The index of the swap chain whose display mode is to be retrieved.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			DisplayMode GetDisplayMode( int swapChain );
 
 			/// <summary>
@@ -296,7 +296,7 @@ namespace SlimDX
 			/// <param name="streamData">A vertex buffer representing the data stream.</param>
 			/// <param name="offsetInBytes">The offset from the beginning of the stream to the beginning of vertex data, measured in bytes.</param>
 			/// <param name="stride">The stride of the vertex data, in bytes.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result GetStreamSource( int stream, [Out] VertexBuffer^% streamData, [Out] int% offsetInBytes, [Out] int% stride );
 			
 			/// <summary>
@@ -311,7 +311,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="swapChain">Index of the swap chain whose front buffer is to be copied.</param>
 			/// <param name="destinationSurface">The surface that will receive the copy of the front buffer.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result GetFrontBufferData( int swapChain, Surface^ destinationSurface );
 
 			/// <summary>
@@ -319,7 +319,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="renderTarget">A surface representing the render target.</param>
 			/// <param name="destinationSurface">The surface which will receive the copy of the render target.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result GetRenderTargetData( Surface^ renderTarget, Surface^ destinationSurface );
 
 			/// <summary>
@@ -327,7 +327,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="state">The render state that is being modified.</param>
 			/// <param name="value">The new value for the state.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetRenderState( RenderState state, int value );
 			
 			/// <summary>
@@ -335,7 +335,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="state">The render state that is being modified.</param>
 			/// <param name="value">The new value for the state.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetRenderState( RenderState state, bool value );
 			
 			/// <summary>
@@ -343,7 +343,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="state">The render state that is being modified.</param>
 			/// <param name="value">The new value for the state.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetRenderState( RenderState state, float value );
 			
 			/// <summary>
@@ -352,7 +352,7 @@ namespace SlimDX
 			/// <typeparam name="T">The type of the render state value.</typeparam>
 			/// <param name="state">The render state that is being modified.</param>
 			/// <param name="value">The new value for the state.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			generic<typename T> where T : System::Enum
 				Result SetRenderState( RenderState state, T value );
 
@@ -366,9 +366,9 @@ namespace SlimDX
 			/// <summary>
 			/// Sets palette entries.
 			/// </summary>
-			/// <param name="paletteNumber">An ordinal number identifying the particular palette upon which the operation is to be performed.
+			/// <param name="paletteNumber">An ordinal number identifying the particular palette upon which the operation is to be performed.</param>
 			/// <param name="entries">The individual entries of the palette that are to be set. The length of the array is assumed to be 256.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetPaletteEntries( int paletteNumber, array<PaletteEntry>^ entries );
 
 			/// <summary>
@@ -392,7 +392,7 @@ namespace SlimDX
 			/// <param name="stage">Zero-based stage identifier for the texture. Devices can have up to eight textures, so the maximum value allowed is 7.</param>
 			/// <param name="type">The texture state to set.</param>
 			/// <param name="value">The new value for the state.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetTextureStageState( int stage, TextureStage type, int value );
 			
 			/// <summary>
@@ -401,7 +401,7 @@ namespace SlimDX
 			/// <param name="stage">Zero-based stage identifier for the texture. Devices can have up to eight textures, so the maximum value allowed is 7.</param>
 			/// <param name="type">The texture state to set.</param>
 			/// <param name="textureOperation">The new value for the state.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetTextureStageState( int stage, TextureStage type, TextureOperation textureOperation );
 			
 			/// <summary>
@@ -410,7 +410,7 @@ namespace SlimDX
 			/// <param name="stage">Zero-based stage identifier for the texture. Devices can have up to eight textures, so the maximum value allowed is 7.</param>
 			/// <param name="type">The texture state to set.</param>
 			/// <param name="textureArgument">The new value for the state.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetTextureStageState( int stage, TextureStage type, TextureArgument textureArgument );
 			
 			/// <summary>
@@ -419,7 +419,7 @@ namespace SlimDX
 			/// <param name="stage">Zero-based stage identifier for the texture. Devices can have up to eight textures, so the maximum value allowed is 7.</param>
 			/// <param name="type">The texture state to set.</param>
 			/// <param name="textureTransform">The new value for the state.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetTextureStageState( int stage, TextureStage type, TextureTransform textureTransform );
 			
 			/// <summary>
@@ -428,7 +428,7 @@ namespace SlimDX
 			/// <param name="stage">Zero-based stage identifier for the texture. Devices can have up to eight textures, so the maximum value allowed is 7.</param>
 			/// <param name="type">The texture state to set.</param>
 			/// <param name="value">The new value for the state.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetTextureStageState( int stage, TextureStage type, float value );
 
 			/// <summary>
@@ -437,7 +437,7 @@ namespace SlimDX
 			/// <param name="sampler">The sampler stage index.</param>
 			/// <param name="type">The sampler state whose value is to be set.</param>
 			/// <param name="value">The new value for the sampler state.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetSamplerState( int sampler, SamplerState type, int value );
 
 			/// <summary>
@@ -446,7 +446,7 @@ namespace SlimDX
 			/// <param name="sampler">The sampler stage index.</param>
 			/// <param name="type">The sampler state whose value is to be set.</param>
 			/// <param name="value">The new value for the sampler state.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetSamplerState( int sampler, SamplerState type, float value );
 
 			/// <summary>
@@ -455,7 +455,7 @@ namespace SlimDX
 			/// <param name="sampler">The sampler stage index.</param>
 			/// <param name="type">The sampler state whose value is to be set.</param>
 			/// <param name="textureAddress">The new value for the sampler state.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetSamplerState( int sampler, SamplerState type, TextureAddress textureAddress );
 
 			/// <summary>
@@ -464,7 +464,7 @@ namespace SlimDX
 			/// <param name="sampler">The sampler stage index.</param>
 			/// <param name="type">The sampler state whose value is to be set.</param>
 			/// <param name="textureFilter">The new value for the sampler state.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetSamplerState( int sampler, SamplerState type, TextureFilter textureFilter );
 
 			/// <summary>
@@ -472,7 +472,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="lightIndex">The index of the light whose state is to be changed.</param>
 			/// <param name="enable"><c>true</c> if the light should be enabled; otherwise, <c>false</c>.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result EnableLight( int lightIndex, bool enable );
 
 			/// <summary>
@@ -487,7 +487,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="lightIndex">Index of the light whose properties are to be set.</param>
 			/// <param name="lightData">A <see cref="Light"/> structure which represents the light properties.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetLight( int lightIndex, Light lightData );
 
 			/// <summary>
@@ -502,7 +502,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="cursor">The cursor to set.</param>
 			/// <param name="addWatermark"><c>true</c> to add a watermark to the cursor; otherwise, <c>false</c>.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetCursor( System::Windows::Forms::Cursor^ cursor, bool addWatermark );
 
 			/// <summary>
@@ -510,14 +510,14 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="x">The new X-position of the cursor, in virtual desktop coordinates.</param>
 			/// <param name="y">The new Y-position of the cursor, in virtual desktop coordinates.</param>
-			/// <param name="immediateUpdate"><c>true</c> to force the cursor to update every time the monitor refreshes; otherwise, <c>false</c> to have the cursor update whenever <see cref="Device.Present"/> is called.</param>
+			/// <param name="immediateUpdate"><c>true</c> to force the cursor to update every time the monitor refreshes; otherwise, <c>false</c> to have the cursor update whenever <see cref="Device::Present()"/> is called.</param>
 			void SetCursorPosition( int x, int y, bool immediateUpdate );
 
 			/// <summary>
 			/// Sets the current cursor position.
 			/// </summary>
 			/// <param name="position">The position of the cursor, in virtual desktop coordinates.</param>
-			/// <param name="immediateUpdate"><c>true</c> to force the cursor to update every time the monitor refreshes; otherwise, <c>false</c> to have the cursor update whenever <see cref="Device.Present"/> is called.</param>
+			/// <param name="immediateUpdate"><c>true</c> to force the cursor to update every time the monitor refreshes; otherwise, <c>false</c> to have the cursor update whenever <see cref="Device::Present()"/> is called.</param>
 			void SetCursorPosition( System::Drawing::Point position, bool immediateUpdate ) { SetCursorPosition( position.X, position.Y, immediateUpdate ); }
 			
 			/// <summary>
@@ -526,7 +526,7 @@ namespace SlimDX
 			/// <param name="hotspotX">X-coordinate offset (in pixels) that marks the center of the cursor.</param>
 			/// <param name="hotspotY">Y-coordinate offset (in pixels) that marks the center of the cursor.</param>
 			/// <param name="cursorBitmap">The image data used to draw the cursor.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetCursorProperties( int hotspotX, int hotspotY, Surface^ cursorBitmap );
 			
 			/// <summary>
@@ -534,7 +534,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="hotspot">The offset (in pixels) that marks the center of the cursor.</param>
 			/// <param name="cursorBitmap">The image data used to draw the cursor.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetCursorProperties( System::Drawing::Point hotspot, Surface^ cursorBitmap ) { return SetCursorProperties( hotspot.X, hotspot.Y, cursorBitmap ); }
 
 			/// <summary>
@@ -542,7 +542,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="state">The transformation state which is to be set.</param>
 			/// <param name="value">The new value for the transformation state.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetTransform( TransformState state, Matrix value );
 
 			/// <summary>
@@ -557,7 +557,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="index">The transformation state which is to be set.</param>
 			/// <param name="value">The new value for the transformation state.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetTransform( int index, Matrix value );
 
 			/// <summary>
@@ -572,7 +572,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="state">The transformation state whose matrix is to be modified.</param>
 			/// <param name="value">The matrix to multiply with the device transform.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result MultiplyTransform( TransformState state, Matrix value );
 
 			/// <summary>
@@ -582,7 +582,7 @@ namespace SlimDX
 			/// <param name="streamData">The stream data to bind.</param>
 			/// <param name="offsetInBytes">Offset from the beginning of the stream to the beginning of the vertex data, in bytes.</param>
 			/// <param name="stride">The stride of the vertex data.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetStreamSource( int stream, VertexBuffer^ streamData, int offsetInBytes, int stride );
 			
 			/// <summary>
@@ -590,7 +590,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="stream">The stream index.</param>
 			/// <param name="frequency">The new frequency divider.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetStreamSourceFrequency( int stream, int frequency );
 			
 			/// <summary>
@@ -598,7 +598,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="sampler">Zero-based sampler index.</param>
 			/// <param name="texture">The texture that is to be bound.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetTexture( int sampler, BaseTexture^ texture );
 
 			/// <summary>
@@ -606,14 +606,14 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="targetIndex">Index of the render target.</param>
 			/// <param name="target">The new render target.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetRenderTarget( int targetIndex, Surface^ target );
 
 			/// <summary>
 			/// This method allows the use of GDI dialog boxes in full-screen mode applications.
 			/// </summary>
 			/// <param name="enableDialogs"><c>true</c> to enable GDI dialogs, <c>false</c> to disable them.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetDialogBoxMode( bool enableDialogs );
 
 			/// <summary>
@@ -621,7 +621,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="index">The index of the clipping plane to set.</param>
 			/// <param name="clipPlane">The new clipping plane data.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetClipPlane( int index, Plane clipPlane );
 
 			/// <summary>
@@ -679,7 +679,7 @@ namespace SlimDX
 			/// <param name="data">The constant data.</param>
 			/// <param name="offset">The offset into the data where constants will start being retrieved.</param>
 			/// <param name="count">The number of constants to set.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetVertexShaderConstant( int startRegister, array<bool>^ data, int offset, int count );
 			
 			/// <summary>
@@ -689,7 +689,7 @@ namespace SlimDX
 			/// <param name="data">The constant data.</param>
 			/// <param name="offset">The offset into the data where constants will start being retrieved.</param>
 			/// <param name="count">The number of constants to set.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetVertexShaderConstant( int startRegister, array<float>^ data, int offset, int count );
 			
 			/// <summary>
@@ -699,7 +699,7 @@ namespace SlimDX
 			/// <param name="data">The constant data.</param>
 			/// <param name="offset">The offset into the data where constants will start being retrieved.</param>
 			/// <param name="count">The number of constants to set.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetVertexShaderConstant( int startRegister, array<int>^ data, int offset, int count );
 			
 			/// <summary>
@@ -707,7 +707,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="startRegister">Register number that will contain the first constant value.</param>
 			/// <param name="data">The constant data.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetVertexShaderConstant( int startRegister, array<bool>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, 0 ); }
 			
 			/// <summary>
@@ -715,7 +715,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="startRegister">Register number that will contain the first constant value.</param>
 			/// <param name="data">The constant data.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetVertexShaderConstant( int startRegister, array<float>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, 0 ); }
 			
 			/// <summary>
@@ -723,7 +723,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="startRegister">Register number that will contain the first constant value.</param>
 			/// <param name="data">The constant data.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetVertexShaderConstant( int startRegister, array<int>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, 0 ); }
 
 			/// <summary>
@@ -733,7 +733,7 @@ namespace SlimDX
 			/// <param name="data">The constant data.</param>
 			/// <param name="offset">The offset into the data where constants will start being retrieved.</param>
 			/// <param name="count">The number of constants to set.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetPixelShaderConstant( int startRegister, array<bool>^ data, int offset, int count );
 
 			/// <summary>
@@ -743,7 +743,7 @@ namespace SlimDX
 			/// <param name="data">The constant data.</param>
 			/// <param name="offset">The offset into the data where constants will start being retrieved.</param>
 			/// <param name="count">The number of constants to set.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetPixelShaderConstant( int startRegister, array<float>^ data, int offset, int count );
 
 			/// <summary>
@@ -753,7 +753,7 @@ namespace SlimDX
 			/// <param name="data">The constant data.</param>
 			/// <param name="offset">The offset into the data where constants will start being retrieved.</param>
 			/// <param name="count">The number of constants to set.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetPixelShaderConstant( int startRegister, array<int>^ data, int offset, int count );
 
 			/// <summary>
@@ -761,7 +761,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="startRegister">Register number that will contain the first constant value.</param>
 			/// <param name="data">The constant data.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetPixelShaderConstant( int startRegister, array<bool>^ data ) { return SetPixelShaderConstant( startRegister, data, 0, 0 ); }
 			
 			/// <summary>
@@ -769,7 +769,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="startRegister">Register number that will contain the first constant value.</param>
 			/// <param name="data">The constant data.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetPixelShaderConstant( int startRegister, array<float>^ data ) { return SetPixelShaderConstant( startRegister, data, 0, 0 ); }
 			
 			/// <summary>
@@ -777,13 +777,13 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="startRegister">Register number that will contain the first constant value.</param>
 			/// <param name="data">The constant data.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetPixelShaderConstant( int startRegister, array<int>^ data ) { return SetPixelShaderConstant( startRegister, data, 0, 0 ); }
 
 			/// <summary>
 			/// Signals Direct3D to begin recording a device-state block.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result BeginStateBlock();
 			
 			/// <summary>
@@ -802,7 +802,7 @@ namespace SlimDX
 			/// <param name="destinationBuffer">The destination for the output vertex stream.</param>
 			/// <param name="vertexDeclaration">The output vertex declaration.</param>
 			/// <param name="flags">Vertex processing options.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result ProcessVertices( int sourceStartIndex, int destinationIndex, int vertexCount, VertexBuffer^ destinationBuffer, SlimDX::Direct3D9::VertexDeclaration^ vertexDeclaration, LockFlags flags );
 
 			/// <summary>
@@ -811,7 +811,7 @@ namespace SlimDX
 			/// <param name="primitiveType">Specifies the type of primitive to render.</param>
 			/// <param name="startIndex">Index of the first vertex to use.</param>
 			/// <param name="primitiveCount">The number of primitives to render. The number of vertices used is a function of the primitive count and the primitive type.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result DrawPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount );
 			
 			/// <summary>
@@ -819,22 +819,22 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="primitiveType">Specifies the type of primitive to render.</param>
 			/// <param name="baseVertexIndex">Offset from the start of the vertex buffer to the first vertex.</param>
-			/// <param name="minimumVertexIndex">Minimum vertex index for vertices used during this call. This is a zero-based index relative to <paramref name="baseVertexIndex">.</param>
+			/// <param name="minimumVertexIndex">Minimum vertex index for vertices used during this call. This is a zero-based index relative to <paramref name="baseVertexIndex" />.</param>
 			/// <param name="vertexCount">The number of vertices to render.</param>
 			/// <param name="startIndex">Index of the first index to use when accessing the vertex buffer.</param>
 			/// <param name="primitiveCount">The number of primitives to render. The number of vertices used is a function of the primitive count and the primitive type.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minimumVertexIndex, int vertexCount, int startIndex, int primitiveCount );
 
 			/// <summary>
 			/// Renders non-indexed geometric primitives using user-supplied data.
 			/// </summary>
-			/// <typeparam name="T">The type of the user-supplied vertices.</param>
+			/// <typeparam name="T">The type of the user-supplied vertices.</typeparam>
 			/// <param name="primitiveType">Specifies the type of primitive to render.</param>
 			/// <param name="startIndex">Index of the first vertex to use.</param>
 			/// <param name="primitiveCount">The number of primitives to render. The number of vertices used is a function of the primitive count and the primitive type.</param>
 			/// <param name="data">User-supplied vertex data.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			generic<typename T> where T : value class
 			Result DrawUserPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount, array<T>^ data );
 
@@ -851,7 +851,7 @@ namespace SlimDX
 			/// <param name="indexDataFormat">The format of the supplied index data.</param>
 			/// <param name="vertexData">User-supplied vertex data.</param>
 			/// <param name="vertexStride">The number of bytes of data for each vertex.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			generic<typename S, typename T> where S : value class where T : value class
 			Result DrawIndexedUserPrimitives( PrimitiveType primitiveType, int minimumVertexIndex, int vertexCount, int primitiveCount, array<S>^ indexData, Format indexDataFormat, array<T>^ vertexData, int vertexStride );
 
@@ -861,7 +861,7 @@ namespace SlimDX
 			/// <param name="handle">Handle to the triangular patch to draw.</param>
 			/// <param name="segmentCounts">An array of three floating point values that identify the number of segments on each edge of the triangular patch.</param>
 			/// <param name="info">Information on how to draw the triangular patch.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result DrawTrianglePatch( int handle, array<float>^ segmentCounts, TrianglePatchInfo info );
 			
 			/// <summary>
@@ -869,7 +869,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="handle">Handle to the triangular patch to draw.</param>
 			/// <param name="segmentCounts">An array of three floating point values that identify the number of segments on each edge of the triangular patch.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result DrawTrianglePatch( int handle, array<float>^ segmentCounts );
 			
 			/// <summary>
@@ -878,7 +878,7 @@ namespace SlimDX
 			/// <param name="handle">Handle to the rectangular patch to draw.</param>
 			/// <param name="segmentCounts">An array of four floating point values that identify the number of segments on each edge of the rectangular patch.</param>
 			/// <param name="info">Information on how to draw the rectangular patch.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result DrawRectanglePatch( int handle, array<float>^ segmentCounts, RectanglePatchInfo info );
 			
 			/// <summary>
@@ -886,14 +886,14 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="handle">Handle to the rectangular patch to draw.</param>
 			/// <param name="segmentCounts">An array of four floating point values that identify the number of segments on each edge of the rectangular patch.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result DrawRectanglePatch( int handle, array<float>^ segmentCounts );
 			
 			/// <summary>
 			/// Frees a cached high-order patch.
 			/// </summary>
 			/// <param name="handle">Handle of the cached high-order patch to delete.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result DeletePatch( int handle );
 
 			/// <summary>
@@ -904,7 +904,7 @@ namespace SlimDX
 			/// <param name="destination">The destination surface.</param>
 			/// <param name="destinationRectangle">The area on the destination surface where data will be copied.</param>
 			/// <param name="filter">The filter that will be used when the data is being stretched.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result StretchRectangle( Surface^ source, System::Drawing::Rectangle sourceRectangle, Surface^ destination, System::Drawing::Rectangle destinationRectangle, TextureFilter filter );
 			
 			/// <summary>
@@ -913,7 +913,7 @@ namespace SlimDX
 			/// <param name="source">The source surface.</param>
 			/// <param name="destination">The destination surface.</param>
 			/// <param name="filter">The filter that will be used when the data is being stretched.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result StretchRectangle( Surface^ source, Surface^ destination, TextureFilter filter );
 
 			/// <summary>
@@ -923,7 +923,7 @@ namespace SlimDX
 			/// <param name="sourceRectangle">The area on the source surface that is to be copied.</param>
 			/// <param name="destination">The destination surface.</param>
 			/// <param name="destinationPoint">The location on the destination surface where data will be copied.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result UpdateSurface( Surface^ source, System::Drawing::Rectangle sourceRectangle, Surface^ destination, System::Drawing::Point destinationPoint );
 			
 			/// <summary>
@@ -931,7 +931,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="source">The source surface.</param>
 			/// <param name="destination">The destination surface.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result UpdateSurface( Surface^ source, Surface^ destination );
 
 			/// <summary>
@@ -939,7 +939,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="sourceTexture">The source texture.</param>
 			/// <param name="destinationTexture">The destination texture.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result UpdateTexture( BaseTexture^ sourceTexture, BaseTexture^ destinationTexture );
 			
 			/// <summary>
@@ -948,7 +948,7 @@ namespace SlimDX
 			/// <param name="destinationSurface">The surface that will be filled.</param>
 			/// <param name="destinationRectangle">The area on the surface that will be filled.</param>
 			/// <param name="color">The color used for filling.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result ColorFill( Surface^ destinationSurface, System::Drawing::Rectangle destinationRectangle, Color4 color );
 			
 			/// <summary>
@@ -956,14 +956,14 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="destinationSurface">The surface that will be filled.</param>
 			/// <param name="color">The color used for filling.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result ColorFill( Surface^ destinationSurface, Color4 color );
 
 			/// <summary>
 			/// Enables or disables render-to-vertex-buffer mode.
 			/// </summary>
 			/// <param name="enableR2VB"><c>true</c> to enable render-to-vertex-buffer mode, <c>false</c> to disable it.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			/// <remarks>This functionality is only available on ATI cards which support render to vertex buffer.</remarks>
 			Result SetR2VBMode( bool enableR2VB );
 
@@ -974,16 +974,16 @@ namespace SlimDX
 			/// <param name="r2vbTarget">The target of the binding operation.</param>
 			/// <param name="stream">The stream index that will be bound to the texture.</param>
 			/// <param name="stride">The stride of the vertex data.</param>
-			/// <param name="dummyVertexBuffer">A vertex buffer that is used to fill a required parameter in <see cref="Device.SetStreamSource"/>.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <param name="dummyVertexBuffer">A vertex buffer that is used to fill a required parameter in <see cref="Device::SetStreamSource"/>.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			/// <remarks>This functionality is only available on ATI cards which support render to vertex buffer.</remarks>
 			Result BindRenderTargetToVertexStream( R2VBSampler sampler, Texture^ r2vbTarget, int stream, int stride, VertexBuffer^ dummyVertexBuffer );
 			
 			/// <summary>
 			/// Unbinds a previously bound vertex buffer as a render target.
 			/// </summary>
-			/// <param name="stream">The vertex stream that should be unbound.
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <param name="stream">The vertex stream that should be unbound.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			/// <remarks>This functionality is only available on ATI cards which support render to vertex buffer.</remarks>
 			Result RestoreVertexStream( int stream );
 
@@ -1024,7 +1024,7 @@ namespace SlimDX
 			/// <summary>
 			/// Gets or sets the current vertex declaration.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			property SlimDX::Direct3D9::VertexDeclaration^ VertexDeclaration
 			{
 				SlimDX::Direct3D9::VertexDeclaration^ get();

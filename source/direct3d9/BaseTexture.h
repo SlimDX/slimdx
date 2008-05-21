@@ -58,7 +58,7 @@ namespace SlimDX
 			/// <param name="sourceLevel">The mipmap level whose image is used to generate the subsequent levels.</param>
 			/// <param name="filter">Set of filtering options for the mipmap.</param>
 			/// <param name="palette">The texture palette.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result FilterTexture( int sourceLevel, Filter filter, array<PaletteEntry>^ palette );
 			
 			/// <summary>
@@ -66,7 +66,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="sourceLevel">The mipmap level whose image is used to generate the subsequent levels.</param>
 			/// <param name="filter">Set of filtering options for the mipmap.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result FilterTexture( int sourceLevel, Filter filter );
 			
 			/// <summary>
@@ -97,7 +97,7 @@ namespace SlimDX
 			/// <param name="texture">The texture containing the image to save.</param>
 			/// <param name="fileName">The name of the file to save to.</param>
 			/// <param name="format">The file format to use when saving.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			static Result ToFile( BaseTexture^ texture, System::String^ fileName, ImageFileFormat format );
 			
 			/// <summary>
@@ -107,7 +107,7 @@ namespace SlimDX
 			/// <param name="fileName">The name of the file to save to.</param>
 			/// <param name="format">The file format to use when saving.</param>
 			/// <param name="palette">The texture palette.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			static Result ToFile( BaseTexture^ texture, System::String^ fileName, ImageFileFormat format, array<PaletteEntry>^ palette );
 		
 			/// <summary>
