@@ -50,25 +50,25 @@ namespace SlimDX
 		}
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX::SlimDXException"/> class.
+		/// Initializes a new instance of the <see cref="SlimDXException"/> class.
 		/// </summary>
 		SlimDXException();
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX::SlimDXException"/> class.
+		/// Initializes a new instance of the <see cref="SlimDXException"/> class.
 		/// </summary>
 		/// <param name="message">The message describing the exception.</param>
 		SlimDXException( System::String^ message );
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX::SlimDXException"/> class.
+		/// Initializes a new instance of the <see cref="SlimDXException"/> class.
 		/// </summary>
 		/// <param name="message">The message describing the exception.</param>
 		/// <param name="innerException">The exception that caused this exception.</param>
 		SlimDXException( System::String^ message, System::Exception^ innerException );
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX::SlimDXException"/> class.
+		/// Initializes a new instance of the <see cref="SlimDXException"/> class.
 		/// </summary>
 		/// <param name="result">The result code that caused this exception.</param>
 		SlimDXException( Result result );

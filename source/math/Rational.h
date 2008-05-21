@@ -56,8 +56,8 @@ namespace SlimDX
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Rational"/> structure.
 		/// </summary>
-		/// <param name="numerator"/>The numerator of the rational pair.</param>
-		/// <param name="denominator"/>The denominator of the rational pair.</param>
+		/// <param name="numerator">The numerator of the rational pair.</param>
+		/// <param name="denominator">The denominator of the rational pair.</param>
 		Rational( int numerator, int denominator );
 
 		/// <summary>

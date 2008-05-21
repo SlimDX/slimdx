@@ -40,25 +40,25 @@ namespace SlimDX
 			
 		public:
 			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX.DXGIException"/> class.
+			/// Initializes a new instance of the <see cref="DXGIException"/> class.
 			/// </summary>
 			DXGIException();
 			
 			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX.DXGIException"/> class.
+			/// Initializes a new instance of the <see cref="DXGIException"/> class.
 			/// </summary>
 			/// <param name="message">The message describing the exception.</param>
 			DXGIException( System::String^ message );
 			
 			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX.DXGIException"/> class.
+			/// Initializes a new instance of the <see cref="DXGIException"/> class.
 			/// </summary>
 			/// <param name="message">The message describing the exception.</param>
 			/// <param name="innerException">The exception that caused this exception.</param>
 			DXGIException( System::String^ message, System::Exception^ innerException );
 			
 			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX.DXGIException"/> class.
+			/// Initializes a new instance of the <see cref="DXGIException"/> class.
 			/// </summary>
 			/// <param name="result">The result code that caused this exception.</param>
 			DXGIException( Result result );
