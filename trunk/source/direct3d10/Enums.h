@@ -29,6 +29,10 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
+#ifdef XMLDOCS
+		ref class Sprite;
+#endif
+	
 		// NOTE: The enumerations defined in this file are in alphabetical order. When
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
@@ -421,6 +425,43 @@ namespace SlimDX
 			TriangleStripWithAdjacency = D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP_ADJ
 		};
 		
+		/// <summary>
+		/// Flags that indicate which components of a value are valid.
+		/// </summary>
+		[System::Flags]
+		public enum class RegisterComponentMaskFlags : System::Int32
+		{
+			/// <summary>
+			/// Indicates that no components are valid.
+			/// </summary>
+			None = 0,
+			
+			/// <summary>
+			/// Indicates that the X (or R) component is valid.
+			/// </summary>
+			ComponentX = 1,
+			
+			/// <summary>
+			/// Indicates that the Y (or G) component is valid.
+			/// </summary>
+			ComponentY = 2,
+			
+			/// <summary>
+			/// Indicates that the Z (or B) component is valid.
+			/// </summary>
+			ComponentZ = 4,
+			
+			/// <summary>
+			/// Indicates that the W (or A) component is valid.
+			/// </summary>
+			ComponentW = 8,
+			
+			/// <summary>
+			/// Indicates that all components are valid.
+			/// </summary>
+			All = ComponentX | ComponentY | ComponentZ | ComponentW
+		};
+		
 		public enum class RegisterComponentType : System::Int32
 		{
 			Unknown = D3D10_REGISTER_COMPONENT_UNKNOWN,
@@ -518,10 +559,6 @@ namespace SlimDX
 			Texture3D = D3D10_SRV_DIMENSION_TEXTURE3D,
 			TextureCube = D3D10_SRV_DIMENSION_TEXTURECUBE
 		};
-		
-#ifdef XMLDOCS
-		ref class Sprite;
-#endif
 
 		/// <summary>
 		/// Flags that control the behavior of <see cref="Sprite"/> rendering.
