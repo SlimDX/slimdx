@@ -195,13 +195,6 @@ namespace SlimDX
 			Gouraud = D3DSHADE_GOURAUD
 		};
 
-		public enum class CullMode : System::Int32
-		{
-			None = D3DCULL_NONE,
-			Clockwise = D3DCULL_CW,
-			CounterClockwise = D3DCULL_CCW
-		};
-
 		/// <summary>
 		/// Defines texture coordinate transformation values.
 		/// </summary>
@@ -3751,8 +3744,8 @@ namespace SlimDX
 			DestinationBlend = D3DRS_DESTBLEND,
 
 			/// <summary>
-			/// Specifies how back-facing triangles are culled. Use values from <see cref="SlimDX::Direct3D9::CullMode"/> to
-			/// set this state. The default value is <see cref="SlimDX::Direct3D9::CullMode"/>.Counterclockwise.
+			/// Specifies how back-facing triangles are culled. Use values from <see cref="SlimDX::Direct3D9::Cull"/> to
+			/// set this state. The default value is <see cref="SlimDX::Direct3D9::Cull"/>.Counterclockwise.
 			/// </summary>
 			CullMode = D3DRS_CULLMODE,
 
