@@ -29,11 +29,11 @@ namespace SlimDX
 		public interface struct IResettable
 		{
 			/// <summary>Should be called when the Direct3D device has been lost.</summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</result>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			virtual Result OnLostDevice() = 0;
 
 			/// <summary>Should be called when the Direct3D device has been reset.</summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</result>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			virtual Result OnResetDevice() = 0;
 		};
 	}

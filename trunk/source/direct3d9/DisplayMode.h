@@ -115,13 +115,13 @@ namespace SlimDX
 			/// Adds an item to the collection.
 			/// </summary>
 			/// <param name="item">The item to add to the collection.</param>
-			/// <exception cref="System.NotSupportedException">Always thrown, since the collection is read-only.</exception>
+			/// <exception cref="System::NotSupportedException">Always thrown, since the collection is read-only.</exception>
 			virtual void Add( DisplayMode item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
 
 			/// <summary>
 			/// Removes all items from the collection.
 			/// </summary>
-			/// <exception cref="System.NotSupportedException">Always thrown, since the collection is read-only.</exception>
+			/// <exception cref="System::NotSupportedException">Always thrown, since the collection is read-only.</exception>
 			virtual void Clear() { throw gcnew System::NotSupportedException(); }
 
 			/// <summary>
@@ -143,7 +143,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="item">The item to remove.</param>
 			/// <returns><c>true</c> if the item was removed from the collection; otherwise, <c>false</c>.</returns>
-			/// <exception cref="System.NotSupportedException">Always thrown, since the collection is read-only.</exception>
+			/// <exception cref="System::NotSupportedException">Always thrown, since the collection is read-only.</exception>
 			virtual bool Remove( DisplayMode item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
 
 			/// <summary>

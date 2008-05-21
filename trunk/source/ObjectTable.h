@@ -65,7 +65,7 @@ namespace SlimDX
 		static void Add( ComObject^ object );
 		
 		/// <summary>
-		/// Removes a <see cref="ComObject">COM object</see> from the table.
+		/// Removes a <see cref="SlimDX::ComObject">COM object</see> from the table.
 		/// </summary>
 		/// <param name="object">The object to remove.</param>
 		/// <returns><c>true</c> if the object was in the table and was removed; otherwise, <c>false</c>.</returns>

@@ -60,7 +60,7 @@ namespace SlimDX
 
 		/// <summary>
 		/// Gets or sets whether SlimDX detects double disposal of objects. If set to <c>true</c>, SlimDX will throw
-		/// an <see cref="System.ObjectDisposedException"/> when an already disposed object is disposed. If set to <c>false</c>, double
+		/// an <see cref="System::ObjectDisposedException"/> when an already disposed object is disposed. If set to <c>false</c>, double
 		/// disposals will be silently ignored. The default value is <c>false</c>.
 		/// </summary>
 		static property bool DetectDoubleDispose;

@@ -50,34 +50,34 @@ namespace SlimDX
 		}
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX.SlimDXException"/> class.
+		/// Initializes a new instance of the <see cref="SlimDX::SlimDXException"/> class.
 		/// </summary>
 		SlimDXException();
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX.SlimDXException"/> class.
+		/// Initializes a new instance of the <see cref="SlimDX::SlimDXException"/> class.
 		/// </summary>
 		/// <param name="message">The message describing the exception.</param>
 		SlimDXException( System::String^ message );
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX.SlimDXException"/> class.
+		/// Initializes a new instance of the <see cref="SlimDX::SlimDXException"/> class.
 		/// </summary>
 		/// <param name="message">The message describing the exception.</param>
 		/// <param name="innerException">The exception that caused this exception.</param>
 		SlimDXException( System::String^ message, System::Exception^ innerException );
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX.SlimDXException"/> class.
+		/// Initializes a new instance of the <see cref="SlimDX::SlimDXException"/> class.
 		/// </summary>
 		/// <param name="result">The result code that caused this exception.</param>
 		SlimDXException( Result result );
 		
 		/// <summary>
-		/// When overridden in a derived class, sets the <see cref="System.Runtime.Serialization.SerializationInfo"/> with information about the exception.
+		/// When overridden in a derived class, sets the <see cref="System::Runtime::Serialization::SerializationInfo"/> with information about the exception.
 		/// </summary>
-		/// <param name="info">The <see cref="System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data about the exception being thrown.</param>
-		/// <param name="context">The <see cref="System.Runtime.Serialization.StreamingContext"/> that contains contextual information about the source or destination.</param>
+		/// <param name="info">The <see cref="System::Runtime::Serialization::SerializationInfo"/> that holds the serialized object data about the exception being thrown.</param>
+		/// <param name="context">The <see cref="System::Runtime::Serialization::StreamingContext"/> that contains contextual information about the source or destination.</param>
 		[System::Security::Permissions::SecurityPermission(System::Security::Permissions::SecurityAction::LinkDemand, Flags = System::Security::Permissions::SecurityPermissionFlag::SerializationFormatter)]
 		virtual void GetObjectData(System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context) override;
 	};
