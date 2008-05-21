@@ -52,7 +52,7 @@ namespace SlimDX
 		/// Initializes a new instance of the <see cref="BoundingSphere"/> structure.
 		/// </summary>
 		/// <param name="center">The center of the bounding sphere.</param>
-		/// <param name="radis">The radius of the sphere.</param>
+		/// <param name="radius">The radius of the sphere.</param>
 		BoundingSphere( Vector3 center, float radius );
 
 		/// <summary>
@@ -66,7 +66,7 @@ namespace SlimDX
 		/// <summary>
 		/// Determines whether the sphere contains the specified sphere.
 		/// </summary>
-		/// <param name="sphere">The first sphere that will be checked for containment.</param>
+		/// <param name="sphere1">The first sphere that will be checked for containment.</param>
 		/// <param name="sphere2">The second sphere that will be checked for containment.</param>
 		/// <returns>A member of the <see cref="ContainmentType"/> enumeration indicating whether the two objects intersect, are contained, or don't meet at all.</returns>
 		static ContainmentType Contains( BoundingSphere sphere1, BoundingSphere sphere2 );
@@ -112,7 +112,7 @@ namespace SlimDX
 		/// <summary>
 		/// Determines whether a sphere intersects the specified object.
 		/// </summary>
-		/// <param name="sphere">The first sphere which will be tested for intersection.</param>
+		/// <param name="sphere1">The first sphere which will be tested for intersection.</param>
 		/// <param name="sphere2">The second sphere that will be tested for intersection.</param>
 		/// <returns><c>true</c> if the two objects are intersecting; otherwise, <c>false</c>.</returns>
 		static bool Intersects( BoundingSphere sphere1, BoundingSphere sphere2 );

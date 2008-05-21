@@ -56,31 +56,31 @@ namespace SlimDX
 		property float Y;
 
 		/// <summary>
-		/// Gets a <see cref="SlimDX.Vector2"/> with all of its components set to zero.
+		/// Gets a <see cref="Vector2"/> with all of its components set to zero.
 		/// </summary>
-		/// <value>A <see cref="SlimDX.Vector2"/> that has all of its components set to zero.</value>
+		/// <value>A <see cref="Vector2"/> that has all of its components set to zero.</value>
 		static property Vector2 Zero { Vector2 get() { return Vector2(0, 0); } }
 
 		/// <summary>
-		/// Gets the X unit <see cref="SlimDX.Vector2"/> (1, 0).
+		/// Gets the X unit <see cref="Vector2"/> (1, 0).
 		/// </summary>
-		/// <value>A <see cref="SlimDX.Vector2"/> that has a value of (1, 0).</value>
+		/// <value>A <see cref="Vector2"/> that has a value of (1, 0).</value>
 		static property Vector2 UnitX { Vector2 get() { return Vector2(1, 0); } }
 
 		/// <summary>
-		/// Gets the Y unit <see cref="SlimDX.Vector2"/> (0, 1).
+		/// Gets the Y unit <see cref="Vector2"/> (0, 1).
 		/// </summary>
-		/// <value>A <see cref="SlimDX.Vector2"/> that has a value of (0, 1).</value>
+		/// <value>A <see cref="Vector2"/> that has a value of (0, 1).</value>
 		static property Vector2 UnitY { Vector2 get() { return Vector2(0, 1); } }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX.Vector2"/> class.
+		/// Initializes a new instance of the <see cref="Vector2"/> class.
 		/// </summary>
 		/// <param name="value">The value that will be assigned to all components.</param>
 		Vector2( float value );		
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SlimDX.Vector2"/> class.
+		/// Initializes a new instance of the <see cref="Vector2"/> class.
 		/// </summary>
 		/// <param name="x">Initial value for the X component of the vector.</param>
 		/// <param name="y">Initial value for the Y component of the vector.</param>
@@ -198,22 +198,22 @@ namespace SlimDX
 		static void Negate( Vector2% value, [Out] Vector2% result );
 		
 		/// <summary>
-		/// Returns a <see cref="SlimDX.Vector2"/> containing the 2D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 2D triangle.
+		/// Returns a <see cref="Vector2"/> containing the 2D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 2D triangle.
 		/// </summary>
-		/// <param name="value1">A <see cref="SlimDX.Vector2"/> containing the 2D Cartesian coordinates of vertex 1 of the triangle.</param>
-		/// <param name="value2">A <see cref="SlimDX.Vector2"/> containing the 2D Cartesian coordinates of vertex 2 of the triangle.</param>
-		/// <param name="value3">A <see cref="SlimDX.Vector2"/> containing the 2D Cartesian coordinates of vertex 3 of the triangle.</param>
+		/// <param name="value1">A <see cref="Vector2"/> containing the 2D Cartesian coordinates of vertex 1 of the triangle.</param>
+		/// <param name="value2">A <see cref="Vector2"/> containing the 2D Cartesian coordinates of vertex 2 of the triangle.</param>
+		/// <param name="value3">A <see cref="Vector2"/> containing the 2D Cartesian coordinates of vertex 3 of the triangle.</param>
 		/// <param name="amount1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in <paramref name="value2"/>).</param>
 		/// <param name="amount2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in <paramref name="value3"/>).</param>
-		/// <returns>A new <see cref="SlimDX.Vector2"/> containing the 2D Cartesian coordinates of the specified point.</returns>
+		/// <returns>A new <see cref="Vector2"/> containing the 2D Cartesian coordinates of the specified point.</returns>
 		static Vector2 Barycentric( Vector2 value1, Vector2 value2, Vector2 value3, float amount1, float amount2 );		
 
 		/// <summary>
-		/// Returns a <see cref="SlimDX.Vector2"/> containing the 2D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 2D triangle.
+		/// Returns a <see cref="Vector2"/> containing the 2D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 2D triangle.
 		/// </summary>
-		/// <param name="value1">A <see cref="SlimDX.Vector2"/> containing the 2D Cartesian coordinates of vertex 1 of the triangle.</param>
-		/// <param name="value2">A <see cref="SlimDX.Vector2"/> containing the 2D Cartesian coordinates of vertex 2 of the triangle.</param>
-		/// <param name="value3">A <see cref="SlimDX.Vector2"/> containing the 2D Cartesian coordinates of vertex 3 of the triangle.</param>
+		/// <param name="value1">A <see cref="Vector2"/> containing the 2D Cartesian coordinates of vertex 1 of the triangle.</param>
+		/// <param name="value2">A <see cref="Vector2"/> containing the 2D Cartesian coordinates of vertex 2 of the triangle.</param>
+		/// <param name="value3">A <see cref="Vector2"/> containing the 2D Cartesian coordinates of vertex 3 of the triangle.</param>
 		/// <param name="amount1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in <paramref name="value2"/>).</param>
 		/// <param name="amount2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in <paramref name="value3"/>).</param>
 		/// <param name="result">When the method completes, contains the 2D Cartesian coordinates of the specified point.</param>

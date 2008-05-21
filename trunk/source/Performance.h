@@ -77,7 +77,7 @@ namespace SlimDX
 
 		/// <summary>
 		/// Sets profiler options specified by the target platform.
-		/// <summary>
+		/// </summary>
 		static void SetOptions( PerformanceOptions options );
 
 		/// <summary>
