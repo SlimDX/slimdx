@@ -166,7 +166,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device">The device to be associated with the texture.</param>
 			/// <param name="stream">The stream containing the texture data.</param>
-			/// <param name="sizeInBytes">The size of the data, in bytes.</param>
+			/// <param name="sizeBytes">The size of the data, in bytes.</param>
 			/// <param name="width">Width of the texture, in pixels.</param>
 			/// <param name="height">Height of the texture, in pixels.</param>
 			/// <param name="levelCount">Number of mipmap levels requested. If set to 0, mipmaps will automatically be generated.</param>
@@ -186,7 +186,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device">The device to be associated with the texture.</param>
 			/// <param name="stream">The stream containing the texture data.</param>
-			/// <param name="sizeInBytes">The size of the data, in bytes.</param>
+			/// <param name="sizeBytes">The size of the data, in bytes.</param>
 			/// <param name="width">Width of the texture, in pixels.</param>
 			/// <param name="height">Height of the texture, in pixels.</param>
 			/// <param name="levelCount">Number of mipmap levels requested. If set to 0, mipmaps will automatically be generated.</param>
@@ -205,7 +205,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device">The device to be associated with the texture.</param>
 			/// <param name="stream">The stream containing the texture data.</param>
-			/// <param name="sizeInBytes">The size of the data, in bytes.</param>
+			/// <param name="sizeBytes">The size of the data, in bytes.</param>
 			/// <param name="width">Width of the texture, in pixels.</param>
 			/// <param name="height">Height of the texture, in pixels.</param>
 			/// <param name="levelCount">Number of mipmap levels requested. If set to 0, mipmaps will automatically be generated.</param>
@@ -334,7 +334,7 @@ namespace SlimDX
 			/// <param name="flags">Flags the control the generation of normal maps.</param>
 			/// <param name="channel">Flags specifying the source of height information.</param>
 			/// <param name="amplitude">Constant multiplier that increases or decreases values in the map. Higher values make bumps more visible, while lower values make them less visible.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			static Result ComputeNormalMap( Texture^ texture, Texture^ sourceTexture, array<PaletteEntry>^ palette, NormalMapFlags flags, Channel channel, float amplitude );
 			
 			/// <summary>
@@ -345,14 +345,14 @@ namespace SlimDX
 			/// <param name="flags">Flags the control the generation of normal maps.</param>
 			/// <param name="channel">Flags specifying the source of height information.</param>
 			/// <param name="amplitude">Constant multiplier that increases or decreases values in the map. Higher values make bumps more visible, while lower values make them less visible.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			static Result ComputeNormalMap( Texture^ texture, Texture^ sourceTexture, NormalMapFlags flags, Channel channel, float amplitude );
 
 			/// <summary>
 			/// Uses a user-provided function to fill each texel of each mip level of a given texture.
 			/// </summary>
 			/// <param name="callback">A function that is used to fill the texture.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			Result Fill(Fill2DCallback^ callback);
 
@@ -360,7 +360,7 @@ namespace SlimDX
 			/// Uses a compiled HLSL shader function to fill each texel of each mip level of a given texture.
 			/// </summary>
 			/// <param name="shader">A texture shader object that is used to fill the texture.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Fill( TextureShader^ shader );
 
 			/// <summary>
@@ -384,20 +384,20 @@ namespace SlimDX
 			/// Unlocks a previously locked region of a texture.
 			/// </summary>
 			/// <param name="level">The level of the texture to unlock.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result UnlockRectangle( int level );
 
 			/// <summary>
 			/// Adds a dirty region to a texture resource.
 			/// </summary>
 			/// <param name="rectangle">A rectangle specifying the dirty region to add.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result AddDirtyRectangle( System::Drawing::Rectangle rectangle );
 
 			/// <summary>
 			/// Marks the entire texture as dirty.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result AddDirtyRectangle();
 
 			/// <summary>

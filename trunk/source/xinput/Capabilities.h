@@ -71,7 +71,7 @@ namespace SlimDX
 			}
 
 			/// <summary>
-			/// Gets a <see cref="XInput.Gamepad"/> structure describing available gamepad features.
+			/// Gets a <see cref="XInput::Gamepad"/> structure describing available gamepad features.
 			/// </summary>
 			property XInput::Gamepad Gamepad
 			{
@@ -79,7 +79,7 @@ namespace SlimDX
 			}
 
 			/// <summary>
-			/// Gets a <see cref="XInput.Vibration"/> structure describing available vibration features.
+			/// Gets a <see cref="XInput::Vibration"/> structure describing available vibration features.
 			/// </summary>
 			property XInput::Vibration Vibration
 			{

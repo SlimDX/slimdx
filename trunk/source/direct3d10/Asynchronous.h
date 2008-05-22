@@ -76,7 +76,7 @@ namespace SlimDX
 			/// <summary>
 			/// Retrieves data from the GPU asychronously.
 			/// </summary>
-			/// <param name="flags">Flags indicating how the data should be retrieved.</params>
+			/// <param name="flags">Flags indicating how the data should be retrieved.</param>
 			/// <returns>The data.</returns>
 			DataStream^ GetData( AsynchronousFlags flags );
 		};

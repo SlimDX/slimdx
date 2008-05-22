@@ -95,7 +95,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="handle">The window handle.</param>
 			/// <param name="flags">Flags controlling window association behavior.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetWindowAssociation( System::IntPtr handle, WindowAssociationFlags flags );
 		};
 	}

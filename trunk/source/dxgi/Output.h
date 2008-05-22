@@ -94,28 +94,28 @@ namespace SlimDX
 			/// formats that are supported for scan-out by the device are returned.</param>
 			/// <param name="modeToMatch">The description of the display mode to match.</param>
 			/// <param name="result">Receives the best-matching display mode.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result GetClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription %result );
 			
 			/// <summary>
 			/// Sets gamma control information.
 			/// </summary>
 			/// <param name="control">The gamma control information.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetGammaControl( GammaControl control );
 			
 			/// <summary>
 			/// Changes the current display surface to the specified surface.
 			/// </summary>
 			/// <param name="surface">The new display surface.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetDisplaySurface( Surface^ surface );
 			
 			/// <summary>
 			/// Copies the display surface content to the specified destination surface.
 			/// </summary>
 			/// <param name="surface">The destination surface.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result CopyDisplaySurfaceTo( Surface^ surface );
 			
 			/// <summary>
@@ -123,7 +123,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device">The device interface.</param>
 			/// <param name="exclusive">If true, ownership is exclusive.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result TakeOwnership( ComObject^ device, bool exclusive );
 			
 			/// <summary>
@@ -134,7 +134,7 @@ namespace SlimDX
 			/// <summary>
 			/// Halts the current thread until a vertical blank occurs.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result WaitForVerticalBlank();
 		};
 	}

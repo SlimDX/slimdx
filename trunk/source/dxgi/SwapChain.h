@@ -100,7 +100,7 @@ namespace SlimDX
 			/// <summary>
 			/// Gets a swap chain back buffer.
 			/// </summary>
-			/// <typeparam name="T">The type of the buffer.</tpeparam>
+			/// <typeparam name="T">The type of the buffer.</typeparam>
 			/// <param name="buffer">The index of the desired buffer.</param>
 			/// <returns>The buffer interface, or <c>null</c> on failure.</returns>
 			generic< typename T > where T : ComObject, ref class
@@ -111,7 +111,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="isFullScreen">Receives a value indicating if the swap chain is running in full screen mode.</param>
 			/// <param name="target">Receives the full screen ouput if the swap chain is in full screen mode. Otherwise ignored.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result GetFullScreenState( [Out] bool% isFullScreen, [Out] Output^% target );
 			
 			/// <summary>
@@ -121,7 +121,7 @@ namespace SlimDX
 			/// <param name="target">If the current display mode is full screen, this parameter must be the
 			/// output containing the swap chain; otherwise, this parameter is ignored. If you set this parameter
 			/// to null, DXGI will choose the output based on the swap-chain's device and the output window's placement.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetFullScreenState( bool isFullScreen, Output^ target );
 			
 			/// <summary>
@@ -132,14 +132,14 @@ namespace SlimDX
 			/// <param name="height">The new back buffer height.</param>
 			/// <param name="format">The new back buffer format.</param>
 			/// <param name="flags">Flags controlling swap chain functionality.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result ResizeBuffers( int count, int width, int height, Format format, SwapChainFlags flags );
 			
 			/// <summary>
 			/// Changes the output target's size.
 			/// </summary>
 			/// <param name="description">Properties of the new output display mode.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result ResizeTarget( ModeDescription description );
 			
 			/// <summary>
@@ -149,7 +149,7 @@ namespace SlimDX
 			/// indicates that presentation should occur immediately, without synchronization. Any other value indicates that
 			/// presentation should be synchonized with the specified next vertical blank.</param>
 			/// <param name="flags">Flags controlling presentation behavior.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Present( int syncInterval, PresentFlags flags );
 		};
 	}

@@ -54,7 +54,7 @@ namespace SlimDX
 			}
       
 			/// <summary>
-			/// Gets a <see cref="XInput.Gamepad"/> structure describing the current state of the gamepad.
+			/// Gets a <see cref="XInput::Gamepad"/> structure describing the current state of the gamepad.
 			/// </summary>
 			property XInput::Gamepad Gamepad
 			{
