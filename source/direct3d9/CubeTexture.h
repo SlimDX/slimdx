@@ -158,7 +158,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device">The device to be associated with the texture.</param>
 			/// <param name="stream">The stream containing the texture data.</param>
-			/// <param name="sizeInBytes">The size of the data, in bytes.</param>
+			/// <param name="sizeBytes">The size of the data, in bytes.</param>
 			/// <param name="size">Size of the texture, in pixels.</param>
 			/// <param name="levelCount">Number of mipmap levels requested. If set to 0, mipmaps will automatically be generated.</param>
 			/// <param name="usage">The requested usage for the texture.</param>
@@ -177,7 +177,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device">The device to be associated with the texture.</param>
 			/// <param name="stream">The stream containing the texture data.</param>
-			/// <param name="sizeInBytes">The size of the data, in bytes.</param>
+			/// <param name="sizeBytes">The size of the data, in bytes.</param>
 			/// <param name="size">Size of the texture, in pixels.</param>
 			/// <param name="levelCount">Number of mipmap levels requested. If set to 0, mipmaps will automatically be generated.</param>
 			/// <param name="usage">The requested usage for the texture.</param>
@@ -195,7 +195,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device">The device to be associated with the texture.</param>
 			/// <param name="stream">The stream containing the texture data.</param>
-			/// <param name="sizeInBytes">The size of the data, in bytes.</param>
+			/// <param name="sizeBytes">The size of the data, in bytes.</param>
 			/// <param name="size">Size of the texture, in pixels.</param>
 			/// <param name="levelCount">Number of mipmap levels requested. If set to 0, mipmaps will automatically be generated.</param>
 			/// <param name="usage">The requested usage for the texture.</param>
@@ -314,7 +314,7 @@ namespace SlimDX
 			/// Uses a user-provided function to fill each texel of each mip level of a given texture.
 			/// </summary>
 			/// <param name="callback">A function that is used to fill the texture.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			Result Fill( Fill3DCallback^ callback );
 
@@ -322,7 +322,7 @@ namespace SlimDX
 			/// Uses a compiled HLSL shader function to fill each texel of each mip level of a given texture.
 			/// </summary>
 			/// <param name="shader">A texture shader object that is used to fill the texture.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Fill( TextureShader^ shader );
 
 			/// <summary>
@@ -349,7 +349,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="face">The cube map face to operate on.</param>
 			/// <param name="level">The level of the texture to unlock.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result UnlockRectangle( CubeMapFace face, int level );
 
 			/// <summary>
@@ -357,14 +357,14 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="face">The cube map face to operate on.</param>
 			/// <param name="rectangle">A rectangle specifying the dirty region to add.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result AddDirtyRectangle( CubeMapFace face, System::Drawing::Rectangle rectangle );
 
 			/// <summary>
 			/// Marks the entire texture face as dirty.
 			/// </summary>
 			/// <param name="face">The cube map face to operate on.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result AddDirtyRectangle( CubeMapFace face );
 
 			/// <summary>

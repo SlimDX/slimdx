@@ -165,7 +165,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device">The device to be associated with the texture.</param>
 			/// <param name="stream">The stream containing the texture data.</param>
-			/// <param name="sizeInBytes">The size of the data, in bytes.</param>
+			/// <param name="sizeBytes">The size of the data, in bytes.</param>
 			/// <param name="width">Width of the texture, in pixels.</param>
 			/// <param name="height">Height of the texture, in pixels.</param>
 			/// <param name="depth">Depth of the texture, in pixels.</param>
@@ -186,7 +186,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device">The device to be associated with the texture.</param>
 			/// <param name="stream">The stream containing the texture data.</param>
-			/// <param name="sizeInBytes">The size of the data, in bytes.</param>
+			/// <param name="sizeBytes">The size of the data, in bytes.</param>
 			/// <param name="width">Width of the texture, in pixels.</param>
 			/// <param name="height">Height of the texture, in pixels.</param>
 			/// <param name="depth">Depth of the texture, in pixels.</param>
@@ -206,7 +206,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device">The device to be associated with the texture.</param>
 			/// <param name="stream">The stream containing the texture data.</param>
-			/// <param name="sizeInBytes">The size of the data, in bytes.</param>
+			/// <param name="sizeBytes">The size of the data, in bytes.</param>
 			/// <param name="width">Width of the texture, in pixels.</param>
 			/// <param name="height">Height of the texture, in pixels.</param>
 			/// <param name="depth">Depth of the texture, in pixels.</param>
@@ -335,7 +335,7 @@ namespace SlimDX
 			/// Uses a user-provided function to fill each texel of each mip level of a given texture.
 			/// </summary>
 			/// <param name="callback">A function that is used to fill the texture.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			Result Fill( Fill3DCallback^ callback );
 
@@ -343,7 +343,7 @@ namespace SlimDX
 			/// Uses a compiled HLSL shader function to fill each texel of each mip level of a given texture.
 			/// </summary>
 			/// <param name="shader">A texture shader object that is used to fill the texture.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Fill( TextureShader^ shader );
 
 			/// <summary>
@@ -367,20 +367,20 @@ namespace SlimDX
 			/// Unlocks a previously locked region of a texture.
 			/// </summary>
 			/// <param name="level">The level of the texture to unlock.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result UnlockBox( int level );
 
 			/// <summary>
 			/// Adds a dirty region to a texture resource.
 			/// </summary>
 			/// <param name="box">A box specifying the dirty region to add.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result AddDirtyBox( Box box );
 
 			/// <summary>
 			/// Marks the entire texture as dirty.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result AddDirtyBox();
 			
 			/// <summary>

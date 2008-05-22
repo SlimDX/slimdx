@@ -81,13 +81,13 @@ namespace SlimDX
 			/// Retrieves the capabilities of the controller.
 			/// </summary>
 			/// <param name="device">The type of the device whose capabilities are being retrieved.</param>
-			/// <returns>A <see cref="XInput.Capabilities"/> structure describing the capabilities of the controller.</returns>
+			/// <returns>A <see cref="XInput::Capabilities"/> structure describing the capabilities of the controller.</returns>
 			Capabilities GetCapabilities( DeviceQueryType device );
 
 			/// <summary>
 			/// Gets the state of the controller.
 			/// </summary>
-			/// <returns>A <see cref="XInput.State"/> structure describing the state of the controller.</returns>
+			/// <returns>A <see cref="XInput::State"/> structure describing the state of the controller.</returns>
 			State GetState();
 			
 			/// <summary>
@@ -95,14 +95,14 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="flag">The type of the device to query.</param>
 			/// <param name="keystroke">Keystroke information from the device.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result GetKeystroke( DeviceQueryType flag, [Out] Keystroke% keystroke );
 				
 			/// <summary>
 			/// Sets vibration information for the controller.
 			/// </summary>
 			/// <param name="vibration">Vibration settings for the controller.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetVibration( Vibration vibration );
 
 			/// <summary>

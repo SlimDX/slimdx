@@ -119,7 +119,7 @@ namespace SlimDX
 			literal System::Int16 GamepadRightThumbDeadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
 
 			/// <summary>
-			/// This constant may be used as the value which <see cref="Gamepad.LeftTrigger"/> and <see cref="Gamepad.RightTrigger"/> must be greater than to register as pressed.
+			/// This constant may be used as the value which <see cref="Gamepad::LeftTrigger"/> and <see cref="Gamepad::RightTrigger"/> must be greater than to register as pressed.
 			/// </summary>
 			literal System::Byte GamepadTriggerThreshold = XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
 
