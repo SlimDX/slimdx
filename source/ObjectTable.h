@@ -41,6 +41,7 @@ namespace SlimDX
 		ObjectTable();
 
 		static System::Collections::Generic::Dictionary<System::IntPtr, ComObject^>^ m_Table;
+		static Object^ m_SyncObject;
 
 		static void OnExit( System::Object^ sender, System::EventArgs^ e );
 
@@ -52,9 +53,27 @@ namespace SlimDX
 		/// <summary>
 		/// Gets a list of all the <see cref="ComObject">COM objects</see> tracked by SlimDX.
 		/// </summary>
+		/// <remarks>
+		/// Access through this member is NOT thread-safe. Use <see cref="SyncObject" />
+		/// to protect multithreaded access if necessary.
+		/// </remarks>
 		static property System::Collections::Generic::Dictionary<System::IntPtr, ComObject^>::ValueCollection^ Objects
 		{
 			System::Collections::Generic::Dictionary<System::IntPtr, ComObject^>::ValueCollection^ get();
+		}
+
+		/// <summary>
+		/// Gets the synchronization object used by the ObjectTable. This object can be used to safely
+		/// access the internal object list.
+		/// </summary>
+		/// <remarks>
+		/// This member should only be used if it is necesssary to access the <see cref="Objects" /> property
+		/// in a thread-safe manner, and should not be used as anything other than a parameter for
+		/// functions in <see cref="System::Threading::Monitor" />.
+		/// </remarks>
+		static property Object^ SyncObject
+		{
+			Object^ get();
 		}
 		
 		/// <summary>
