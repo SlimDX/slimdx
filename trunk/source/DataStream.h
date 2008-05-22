@@ -83,7 +83,7 @@ namespace SlimDX
 		DataStream( System::IntPtr userBuffer, System::Int64 sizeInBytes, bool canRead, bool canWrite );
 		
 		/// <summary>
-		/// Releases all resources used by the <see cref="SlimDX.DataStream"/>.
+		/// Releases all resources used by the <see cref="DataStream"/>.
 		/// </summary>
 		~DataStream();
 

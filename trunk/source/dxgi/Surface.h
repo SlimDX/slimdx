@@ -29,6 +29,7 @@
 namespace SlimDX
 {
 	ref class DataRectangle;
+	value class Result;
 
 	namespace DXGI
 	{
@@ -62,13 +63,13 @@ namespace SlimDX
 			/// Acquires access to the surface data.
 			/// </summary>
 			/// <param name="flags">Flags specifying CPU access permissions.</param>
-			/// <returns>A <see cref="SlimDX.DataRectangle"/> for accessing the mapped data, or <c>null</c> on failure.</returns>.
+			/// <returns>A <see cref="SlimDX::DataRectangle"/> for accessing the mapped data, or <c>null</c> on failure.</returns>.
 			DataRectangle^ Map( MapFlags flags );
 			
 			/// <summary>
 			/// Relinquishes access to the surface data.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Unmap();
 		};
 	}

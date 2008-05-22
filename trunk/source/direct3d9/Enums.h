@@ -3883,97 +3883,97 @@ namespace SlimDX
 
 			/// <summary>
 			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
-			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="SlimDX::Direct3D9::TextureWrapping"/>.None.
 			/// </summary>
 			Wrap0 = D3DRS_WRAP0,
 
 			/// <summary>
 			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
-			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="SlimDX::Direct3D9::TextureWrapping"/>.None.
 			/// </summary>
 			Wrap1 = D3DRS_WRAP1,
 
 			/// <summary>
 			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
-			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="SlimDX::Direct3D9::TextureWrapping"/>.None.
 			/// </summary>
 			Wrap2 = D3DRS_WRAP2,
 
 			/// <summary>
 			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
-			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="SlimDX::Direct3D9::TextureWrapping"/>.None.
 			/// </summary>
 			Wrap3 = D3DRS_WRAP3,
 
 			/// <summary>
 			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
-			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="SlimDX::Direct3D9::TextureWrapping"/>.None.
 			/// </summary>
 			Wrap4 = D3DRS_WRAP4,
 
 			/// <summary>
 			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
-			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="SlimDX::Direct3D9::TextureWrapping"/>.None.
 			/// </summary>
 			Wrap5 = D3DRS_WRAP5,
 
 			/// <summary>
 			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
-			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="SlimDX::Direct3D9::TextureWrapping"/>.None.
 			/// </summary>
 			Wrap6 = D3DRS_WRAP6,
 
 			/// <summary>
 			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
-			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="SlimDX::Direct3D9::TextureWrapping"/>.None.
 			/// </summary>
 			Wrap7 = D3DRS_WRAP7,
 
 			/// <summary>
 			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
-			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="SlimDX::Direct3D9::TextureWrapping"/>.None.
 			/// </summary>
 			Wrap8 = D3DRS_WRAP8,
 
 			/// <summary>
 			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
-			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="SlimDX::Direct3D9::TextureWrapping"/>.None.
 			/// </summary>
 			Wrap9 = D3DRS_WRAP9,
 
 			/// <summary>
 			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
-			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="SlimDX::Direct3D9::TextureWrapping"/>.None.
 			/// </summary>
 			Wrap10 = D3DRS_WRAP10,
 
 			/// <summary>
 			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
-			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="SlimDX::Direct3D9::TextureWrapping"/>.None.
 			/// </summary>
 			Wrap11 = D3DRS_WRAP11,
 
 			/// <summary>
 			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
-			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="SlimDX::Direct3D9::TextureWrapping"/>.None.
 			/// </summary>
 			Wrap12 = D3DRS_WRAP12,
 
 			/// <summary>
 			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
-			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="SlimDX::Direct3D9::TextureWrapping"/>.None.
 			/// </summary>
 			Wrap13 = D3DRS_WRAP13,
 
 			/// <summary>
 			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
-			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="SlimDX::Direct3D9::TextureWrapping"/>.None.
 			/// </summary>
 			Wrap14 = D3DRS_WRAP14,
 
 			/// <summary>
 			/// Texture wrapping behavior for multiple sets of texture coordinates. Use values from
-			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="None"/>.
+			/// <see cref="SlimDX::Direct3D9::TextureWrapping"/> to set this state. The default value for this state is <see cref="SlimDX::Direct3D9::TextureWrapping"/>.None.
 			/// </summary>
 			Wrap15 = D3DRS_WRAP15,
 

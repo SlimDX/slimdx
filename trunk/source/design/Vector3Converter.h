@@ -79,11 +79,11 @@ namespace SlimDX
 				System::Globalization::CultureInfo^ culture, System::Object^ value) override;
 
 			/// <summary>
-			/// Returns whether changing a value on this object requires a call to <see cref="System::ComponentModel::TypeConverter::CreateInstance(System::Collections::IDictionary^)"/>
+			/// Returns whether changing a value on this object requires a call to <c>System::ComponentModel::TypeConverter::CreateInstance(System::Collections::IDictionary^)</c>
 			/// to create a new value, using the specified context.
 			/// </summary>
 			/// <param name="context">A <see cref="System::ComponentModel::ITypeDescriptorContext"/> that provides a format context.</param>
-			/// <returns><c>false</c> if changing a property on this object requires a call to <see cref="System.ComponentModel::TypeConverter::CreateInstance(System::Collections::IDictionary^)"/> to create a new value; otherwise, <c>false</c>.</returns>
+			/// <returns><c>false</c> if changing a property on this object requires a call to <c>System.ComponentModel::TypeConverter::CreateInstance(System::Collections::IDictionary^)</c> to create a new value; otherwise, <c>false</c>.</returns>
 			virtual bool GetCreateInstanceSupported(System::ComponentModel::ITypeDescriptorContext^ context) override;
 		
 			/// <summary>

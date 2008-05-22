@@ -37,6 +37,8 @@
 
 namespace SlimDX
 {
+	value class Result;
+
 	namespace DirectInput
 	{
 		/// <summary>
@@ -57,14 +59,14 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX.DirectInput.Device"/> class.
+			/// Initializes a new instance of the <see cref="Device"/> class.
 			/// </summary>
 			/// <param name="subsystem">The subsystem identifier.</param>
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			Device( System::Guid subsystem );
 
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX.DirectInput.Device"/> class using the specified pointer to a
+			/// Constructs a new instance of the <see cref="Device"/> class using the specified pointer to a
 			/// previously constructed unmanaged object.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDirectInputDevice8W pointer.</param>
@@ -74,13 +76,13 @@ namespace SlimDX
 			/// <summary>
 			/// Obtains access to the input device.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Acquire();
 
 			/// <summary>
 			/// Releases access to the device.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Unacquire();
 			
 			/// <summary>
@@ -88,7 +90,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="handle">A handle of a window to associate with the device.</param>
 			/// <param name="flags">Flags that describe the cooperative level of the device.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetCooperativeLevel( System::IntPtr handle, CooperativeLevel flags );
 
 			/// <summary>
@@ -96,7 +98,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="control">A control to associate with the device.</param>
 			/// <param name="flags">Flags that describe the cooperative level of the device.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetCooperativeLevel( System::Windows::Forms::Control^ control, CooperativeLevel flags );
 
 			/// <summary>
@@ -104,7 +106,7 @@ namespace SlimDX
 			/// device does not have a control panel associated with it, the default
 			/// device control panel is launched.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result RunControlPanel();
 
 			/// <summary>
@@ -113,7 +115,7 @@ namespace SlimDX
 			/// device control panel is launched.
 			/// </summary>
 			/// <param name="parent">The parent control.</param>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result RunControlPanel( System::Windows::Forms::Control^ parent );
 
 			/// <summary>
@@ -125,7 +127,7 @@ namespace SlimDX
 			/// <summary>
 			/// Retrieves the current device state.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			Result GetCurrentState( DataFormat% data );
 
@@ -138,7 +140,7 @@ namespace SlimDX
 			/// <summary>
 			/// Retrieves data from polled objects on a DirectInput device.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Poll();
 
 			/// <summary>
@@ -158,7 +160,7 @@ namespace SlimDX
 			/// <summary>
 			/// Gets properties about a single object on an input device.
 			/// </summary>
-			/// <param name="id">The identifier of the object whose properties are to be retrieved.</param>
+			/// <param name="objectId">The identifier of the object whose properties are to be retrieved.</param>
 			/// <returns>The properties of the desired object.</returns>
 			ObjectProperties^ GetObjectPropertiesById( int objectId );
 
