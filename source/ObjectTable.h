@@ -58,8 +58,8 @@ namespace SlimDX
 		}
 		
 		/// <summary>
-		/// Adds a <see cref="ComObject">COM object</see> to the table. This will set the object's <see cref="SlimDX::ComObject::CreationSource"/> property if
-		/// <see cref="SlimDX::Configuration::EnableObjectTracking">object tracking</see> is on.
+		/// Adds a <see cref="ComObject">COM object</see> to the table. This will set the object's <see cref="SlimDX::ComObject"/><c>::CreationSource</c> property if
+		/// <see cref="SlimDX::Configuration"/><c>::EnableObjectTracking</c>object tracking is on.
 		/// </summary>
 		/// <param name="object">The object to add.</param>
 		static void Add( ComObject^ object );
