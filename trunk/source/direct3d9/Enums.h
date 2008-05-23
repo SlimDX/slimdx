@@ -30,7 +30,10 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+#ifdef XMLDOCS
 		ref class Device;
+#endif
+
 		// NOTE: The enumerations defined in this file are in alphabetical order. When
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
@@ -1193,7 +1196,9 @@ namespace SlimDX
 			Mac = MAC_CHARSET
 		};
 
-		/// <summary>These flags identify a surface to reset when calling <see cref="M:SlimDX::Direct3D9::Device::Clear"/>.</summary>
+		/// <summary>
+		/// These flags identify a surface to reset when calling <see cref="SlimDX::Direct3D9::Device">Device.Clear</see>.
+		/// </summary>
 		/// <unmanaged>D3DCLEAR</unmanaged>
 		[System::Flags]
 		public enum class ClearFlags : System::Int32

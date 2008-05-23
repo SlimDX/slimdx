@@ -416,7 +416,7 @@ namespace SlimDX
             property float MaxPointSize;
 
 			/// <summary>
-			/// Maximum number of primitives for each <see cref="Device::DrawPrimitive"/> call.
+			/// Maximum number of primitives for each <see cref="SlimDX::Direct3D9::Device">Device.DrawPrimitive</see> call.
 			/// </summary>
             property int MaxPrimitiveCount;
 
@@ -491,7 +491,7 @@ namespace SlimDX
             property int SimultaneousRTCount;
 
 			/// <summary>
-			/// Describes the operations supported by <see cref="Device::StretchRectangle"/>.
+			/// Describes the operations supported by <see cref="SlimDX::Direct3D9::Device">Device.StretchRectangle</see>.
 			/// </summary>
             property FilterCaps StretchRectFilterCaps;
 
