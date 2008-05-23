@@ -42,7 +42,11 @@ namespace Direct3D10
 
 	void InputAssemblerWrapper::SetInputLayout( InputLayout^ value)
 	{
-		m_Device->IASetInputLayout( value->InternalPointer );
+		if( value == nullptr ) {
+			m_Device->IASetInputLayout( 0 );
+		} else {
+			m_Device->IASetInputLayout( value->InternalPointer );
+		}
 	}
 	
 	void InputAssemblerWrapper::SetPrimitiveTopology( PrimitiveTopology value)
