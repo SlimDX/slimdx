@@ -45,14 +45,6 @@ namespace SlimDX
 		{
 			COMOBJECT(ID3DXConstantTable, ConstantTable);
 
-		private:
-			Device^ m_Device;
-
-			ConstantTable( IDirect3DDevice9* device, ID3DXConstantTable* constantTable );
-
-		internal:
-			static ConstantTable^ FromPointer( IDirect3DDevice9* device, ID3DXConstantTable* constantTable );
-
 		public:
 			static ConstantTable^ FromPointer( System::IntPtr pointer );
 
@@ -65,22 +57,22 @@ namespace SlimDX
 			int GetSamplerIndex( EffectHandle^ sampler );
 
 			DataStream^ GetBuffer();
-			Result SetDefaults();
+			Result SetDefaults( Device^ device );
 
-			Result SetValue( EffectHandle^ constant, bool value );
-			Result SetValue( EffectHandle^ constant, array<bool>^ value );
-			Result SetValue( EffectHandle^ constant, int value );
-			Result SetValue( EffectHandle^ constant, array<int>^ values );
-			Result SetValue( EffectHandle^ constant, float value );
-			Result SetValue( EffectHandle^ constant, array<float>^ values );
-			Result SetValue( EffectHandle^ constant, Vector4 value );
-			Result SetValue( EffectHandle^ constant, array<Vector4>^ values );
-			Result SetValue( EffectHandle^ constant, Color4 value );
-			Result SetValue( EffectHandle^ constant, array<Color4>^ values );
-			Result SetValue( EffectHandle^ constant, Matrix value );
-			Result SetValue( EffectHandle^ constant, array<Matrix>^ values );
-			Result SetValueTranspose( EffectHandle^ constant, Matrix value );
-			Result SetValueTranspose( EffectHandle^ constant, array<Matrix>^ values );
+			Result SetValue( Device^ device, EffectHandle^ constant, bool value );
+			Result SetValue( Device^ device, EffectHandle^ constant, array<bool>^ value );
+			Result SetValue( Device^ device, EffectHandle^ constant, int value );
+			Result SetValue( Device^ device, EffectHandle^ constant, array<int>^ values );
+			Result SetValue( Device^ device, EffectHandle^ constant, float value );
+			Result SetValue( Device^ device, EffectHandle^ constant, array<float>^ values );
+			Result SetValue( Device^ device, EffectHandle^ constant, Vector4 value );
+			Result SetValue( Device^ device, EffectHandle^ constant, array<Vector4>^ values );
+			Result SetValue( Device^ device, EffectHandle^ constant, Color4 value );
+			Result SetValue( Device^ device, EffectHandle^ constant, array<Color4>^ values );
+			Result SetValue( Device^ device, EffectHandle^ constant, Matrix value );
+			Result SetValue( Device^ device, EffectHandle^ constant, array<Matrix>^ values );
+			Result SetValueTranspose( Device^ device, EffectHandle^ constant, Matrix value );
+			Result SetValueTranspose( Device^ device, EffectHandle^ constant, array<Matrix>^ values );
 
 			property int BufferSize
 			{

@@ -44,14 +44,14 @@ namespace SlimDX
 			
 		public:
 			/// <summary>
-			/// Initializes a new instance of the <see cref="VertexBuffer"/> class.
+			/// Initializes a new instance of the <see cref="IndexBuffer"/> class.
 			/// </summary>
 			/// <param name="device">The device that will be used to create the buffer.</param>
 			/// <param name="sizeInBytes">Size of the buffer, in bytes.</param>
 			/// <param name="usage">The requested usage of the buffer.</param>
 			/// <param name="pool">The memory class into which the resource will be placed.</param>
 			/// <param name="sixteenBit"><c>true</c> to create a buffer of 16-bit indices; <c>false</c> to create a buffer of 32-bit indices.</param>
-			IndexBuffer( SlimDX::Direct3D9::Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit );
+			IndexBuffer( SlimDX::Direct3D9::Device^ device, int sizeInBytes, Usage usage, Pool pool, bool sixteenBit );
 			
 			/// <summary>
 			/// Releases all resources used by the <see cref="IndexBuffer"/>.
@@ -78,7 +78,7 @@ namespace SlimDX
 			/// <summary>
 			/// Unlocks previously locked data.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Unlock();
 			
 			/// <summary>

@@ -717,7 +717,7 @@ namespace SlimDX
 			/// <summary>
 			/// Device can support positional lights.
 			/// </summary>
-			PositionallLights = D3DVTXPCAPS_POSITIONALLIGHTS,
+			PositionalLights = D3DVTXPCAPS_POSITIONALLIGHTS,
 
 			/// <summary>
 			/// Device supports local viewer.
@@ -4465,7 +4465,7 @@ namespace SlimDX
 		/// Flags indicating the method the rasterizer uses to create an image on a surface.
 		/// </summary>
 		/// <unmanaged>D3DSCANLINEORDERING</unmanaged>
-		public enum class ScanLineOrdering : System::Int32
+		public enum class ScanlineOrdering : System::Int32
 		{
 			/// <summary>
 			/// All scanlines are used to build the final image.

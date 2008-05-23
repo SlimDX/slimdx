@@ -38,7 +38,17 @@ namespace SlimDX
 			ShaderBytecode^ m_function;
 
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="VertexShader"/> class.
+			/// </summary>
+			/// <param name="device">The device used to create the shader.</param>
+			/// <param name="function">The shader function stream.</param>
 			VertexShader( Device^ device, ShaderBytecode^ function );
+
+			/// <summary>
+			/// Releases all resources used by the <see cref="VertexShader"/>.
+			/// </summary>
+			virtual ~VertexShader() { delete m_function; }
 
 			/// <summary>
 			/// Constructs a new instance of the <see cref="VertexShader"/> class using the specified pointer to a
@@ -48,11 +58,34 @@ namespace SlimDX
 			/// <returns>The newly constructed object.</returns>
 			static VertexShader^ FromPointer( System::IntPtr pointer );
 
+			/// <summary>
+			/// The maximum level of nesting of dynamic flow control instructions.
+			/// </summary>
 			literal int MaxDynamicFlowControlDepth = D3DVS20_MAX_DYNAMICFLOWCONTROLDEPTH;
+
+			/// <summary>
+			/// The minimum level of nesting of dynamic flow control instructions.
+			/// </summary>
 			literal int MinDynamicFlowControlDepth = D3DVS20_MIN_DYNAMICFLOWCONTROLDEPTH;
+
+			/// <summary>
+			/// The maximum number of temporary registers supported.
+			/// </summary>
 			literal int MaxTemps = D3DVS20_MAX_NUMTEMPS;
+
+			/// <summary>
+			/// The minimum number of temporary registers supported.
+			/// </summary>
 			literal int MinTemps = D3DVS20_MIN_NUMTEMPS;
+
+			/// <summary>
+			/// The maximum level of nesting of static flow control instructions.
+			/// </summary>
 			literal int MaxStaticFlowControlDepth = D3DVS20_MAX_STATICFLOWCONTROLDEPTH;
+
+			/// <summary>
+			/// The maximum level of nesting of static flow control instructions.
+			/// </summary>
 			literal int MinStaticFlowControlDepth = D3DVS20_MIN_STATICFLOWCONTROLDEPTH;
 
 			/// <summary>
@@ -63,6 +96,9 @@ namespace SlimDX
 				SlimDX::Direct3D9::Device^ get();
 			}
 
+			/// <summary>
+			/// Gets the shader function stream.
+			/// </summary>
 			property ShaderBytecode^ Function
 			{
 				ShaderBytecode^ get();
