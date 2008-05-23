@@ -130,7 +130,7 @@ namespace SlimDX
 			/// <summary>
 			/// Returns a value indicating whether this instance is equal to the specified object.
 			/// </summary>
-			/// <param name="other">A <see cref="SlimDX::Viewport"/> to compare with this instance.</param>
+			/// <param name="other">A <see cref="ResourceRegion"/> to compare with this instance.</param>
 			/// <returns><c>true</c> if <paramref name="other"/> has the same value as this instance; otherwise, <c>false</c>.</returns>
 			virtual bool Equals( ResourceRegion other );
 			

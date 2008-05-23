@@ -592,8 +592,8 @@ namespace SlimDX
 		/// <summary>
 		/// Determines whether the specified object instances are considered equal. 
 		/// </summary>
-		/// <param name="value1"></param>
-		/// <param name="value2"></param>
+		/// <param name="value1">The first value to compare.</param>
+		/// <param name="value2">The second value to compare.</param>
 		/// <returns><c>true</c> if <paramref name="value1"/> is the same instance as <paramref name="value2"/> or 
 		/// if both are <c>null</c> references or if <c>value1.Equals(value2)</c> returns <c>true</c>; otherwise, <c>false</c>.</returns>
 		static bool Equals( Vector2% value1, Vector2% value2 );

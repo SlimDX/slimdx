@@ -390,7 +390,7 @@ namespace SlimDX
 		/// </summary>
 		/// <param name="left">First source vector.</param>
 		/// <param name="right">Second source vector.</param>
-		/// <returns>The cross product of the two vectors.</returns>
+		/// <param name="result">The cross product of the two vectors.</param>
 		static void Cross( Vector3% left, Vector3% right, [Out] Vector3% result );
 
 		/// <summary>
