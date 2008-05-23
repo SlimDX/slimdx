@@ -21,28 +21,32 @@
 */
 #pragma once
 
-#include "ConstantTable.h"
+#include "ShaderBytecode.h"
 
 namespace SlimDX
 {
 	namespace Direct3D9
-	{	
+	{
+		/// <summary>
+		/// Represents a vertex shader.
+		/// </summary>
+		/// <unmanaged>IDirect3DVertexShader9</unmanaged>
 		public ref class VertexShader : public ComObject
 		{
 			COMOBJECT(IDirect3DVertexShader9, VertexShader);
 
-		private:
-			ConstantTable^ m_ConstantTable;
-
-			VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable );
-
-		internal:
-			static VertexShader^ FromPointer( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable );
+			ShaderBytecode^ m_function;
 
 		public:
-			static VertexShader^ FromPointer( System::IntPtr pointer );
+			VertexShader( Device^ device, ShaderBytecode^ function );
 
-			virtual ~VertexShader() { delete m_ConstantTable; }
+			/// <summary>
+			/// Constructs a new instance of the <see cref="VertexShader"/> class using the specified pointer to a
+			/// previously constructed unmanaged object.
+			/// </summary>
+			/// <param name="pointer">The unmanaged IDirect3DVertexShader9 pointer.</param>
+			/// <returns>The newly constructed object.</returns>
+			static VertexShader^ FromPointer( System::IntPtr pointer );
 
 			literal int MaxDynamicFlowControlDepth = D3DVS20_MAX_DYNAMICFLOWCONTROLDEPTH;
 			literal int MinDynamicFlowControlDepth = D3DVS20_MIN_DYNAMICFLOWCONTROLDEPTH;
@@ -51,18 +55,18 @@ namespace SlimDX
 			literal int MaxStaticFlowControlDepth = D3DVS20_MAX_STATICFLOWCONTROLDEPTH;
 			literal int MinStaticFlowControlDepth = D3DVS20_MIN_STATICFLOWCONTROLDEPTH;
 
+			/// <summary>
+			/// Gets the device associated with the shader.
+			/// </summary>
 			property SlimDX::Direct3D9::Device^ Device
 			{
 				SlimDX::Direct3D9::Device^ get();
 			}
-			
-			Result RetrieveConstantTable();
-			property ConstantTable^ Constants
+
+			property ShaderBytecode^ Function
 			{
-				ConstantTable^ get() { return m_ConstantTable; }
+				ShaderBytecode^ get();
 			}
-			
-			static VertexShader^ FromString( SlimDX::Direct3D9::Device^ device, System::String^ sourceCode, System::String^ entryPoint, System::String^ profile, ShaderFlags flags, [Out] System::String^ %compilationErrors );
 		};
 	}
 }

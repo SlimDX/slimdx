@@ -33,7 +33,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		/// <summary>Applications use the methods of the IndexBuffer class to manipulate an index buffer resource.</summary>
+		/// <summary>Represents a buffer of index data.</summary>
 		/// <unmanaged>IDirect3DIndexBuffer9</unmanaged>
 		public ref class IndexBuffer : public Resource
 		{
@@ -43,13 +43,47 @@ namespace SlimDX
 			void InitDescription();
 			
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="VertexBuffer"/> class.
+			/// </summary>
+			/// <param name="device">The device that will be used to create the buffer.</param>
+			/// <param name="sizeInBytes">Size of the buffer, in bytes.</param>
+			/// <param name="usage">The requested usage of the buffer.</param>
+			/// <param name="pool">The memory class into which the resource will be placed.</param>
+			/// <param name="sixteenBit"><c>true</c> to create a buffer of 16-bit indices; <c>false</c> to create a buffer of 32-bit indices.</param>
 			IndexBuffer( SlimDX::Direct3D9::Device^ device, int sizeBytes, Usage usage, Pool pool, bool sixteenBit );
+			
+			/// <summary>
+			/// Releases all resources used by the <see cref="IndexBuffer"/>.
+			/// </summary>
 			virtual ~IndexBuffer() { }
+
+			/// <summary>
+			/// Constructs a new instance of the <see cref="IndexBuffer"/> class using the specified pointer to a
+			/// previously constructed unmanaged object.
+			/// </summary>
+			/// <param name="pointer">The unmanaged IDirect3DIndexBuffer9 pointer.</param>
+			/// <returns>The newly constructed object.</returns>
 			static IndexBuffer^ FromPointer( System::IntPtr pointer );
 
+			/// <summary>
+			/// Locks the buffer and obtains a pointer to the memory.
+			/// </summary>
+			/// <param name="offset">Offset into the index data to lock, in bytes.</param>
+			/// <param name="size">Size of the index data to lock, in bytes.</param>
+			/// <param name="flags">Locking flags.</param>
+			/// <returns>A <see cref="DataStream"/> containing the index data.</returns>
 			DataStream^ Lock( int offset, int size, LockFlags flags );
+
+			/// <summary>
+			/// Unlocks previously locked data.
+			/// </summary>
+			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
 			Result Unlock();
 			
+			/// <summary>
+			/// Gets a description of the buffer.
+			/// </summary>
 			property IndexBufferDescription Description
 			{
 				IndexBufferDescription get() { return m_Description; }

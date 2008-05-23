@@ -28,12 +28,12 @@
 #include "../ComObject.h"
 #include "../Utilities.h"
 #include "../StackAlloc.h"
+#include "../DataStream.h"
 
 #include "Direct3D9Exception.h"
 
 #include "Device.h"
 #include "VertexShader.h"
-#include "ConstantTable.h"
 
 using namespace System;
 
@@ -44,29 +44,24 @@ namespace Direct3D9
 	VertexShader::VertexShader( IDirect3DVertexShader9* pointer )
 	{
 		Construct( pointer );
-		m_ConstantTable = nullptr;
 	}
 
 	VertexShader::VertexShader( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
-		m_ConstantTable = nullptr;
 	}
 
-	VertexShader::VertexShader( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable )
+	VertexShader::VertexShader( SlimDX::Direct3D9::Device^ device, ShaderBytecode^ function )
 	{
-		if( constantTable == NULL )
-			throw gcnew ArgumentNullException( "constantTable" );
+		IDirect3DVertexShader9 *result;
 
-		Construct(vertexShader);
-
-		IDirect3DDevice9* device;
-		HRESULT hr = vertexShader->GetDevice(&device);
-		
-		if( RECORD_D3D9(hr).IsFailure )
+		HRESULT hr = device->InternalPointer->CreateVertexShader( reinterpret_cast<const DWORD*>( function->Data->RawPointer ), &result );
+		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
-		
-		m_ConstantTable = ConstantTable::FromPointer( device, constantTable );
+
+		Construct( result );
+
+		m_function = function;
 	}
 
 	VertexShader^ VertexShader::FromPointer( IDirect3DVertexShader9* pointer )
@@ -98,91 +93,6 @@ namespace Direct3D9
 		return gcnew VertexShader( pointer );
 	}
 
-	VertexShader^ VertexShader::FromPointer( IDirect3DVertexShader9* vertexShader, ID3DXConstantTable* constantTable )
-	{
-		if( vertexShader == 0 )
-			return nullptr;
-
-		IntPtr vertexShaderPtr = static_cast<IntPtr>( vertexShader );
-		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Find( vertexShaderPtr ) );
-		if( tableEntry != nullptr )
-			return tableEntry;
-
-		return gcnew VertexShader( vertexShader, constantTable );
-	}
-
-	VertexShader^ VertexShader::FromString( SlimDX::Direct3D9::Device^ device, String^ sourceCode, String^ entryPoint, String^ profile, ShaderFlags flags, [Out] String^ %compilationErrors )
-	{
-		array<unsigned char>^ rawCode = System::Text::ASCIIEncoding::ASCII->GetBytes( sourceCode );
-		pin_ptr<unsigned char> pinnedCode = &rawCode[0];
-		array<Byte>^ rawFunction = System::Text::ASCIIEncoding::ASCII->GetBytes( entryPoint );
-		pin_ptr<unsigned char> pinnedFunction = &rawFunction[0];
-		array<Byte>^ rawProfile = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
-		pin_ptr<unsigned char> pinnedProfile = &rawProfile[0];
-		
-		ID3DXBuffer *shaderBuffer;
-		ID3DXBuffer *errorBuffer;
-		ID3DXConstantTable* constantTable;
-		
-		HRESULT hr = D3DXCompileShader( reinterpret_cast<const char*>( pinnedCode ), rawCode->Length, NULL, NULL,
-			reinterpret_cast<const char*>( pinnedFunction ), reinterpret_cast<const char*>( pinnedProfile ),
-			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, &constantTable );
-		
-		if( errorBuffer != NULL )
-		{
-			compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBuffer->GetBufferPointer() ) );
-		}
-		else
-		{
-			compilationErrors = String::Empty;
-		}
-		
-		// CheckHResult() is not used because we need to include the compiler errors.
-		if( FAILED( hr ) )
-		{
-			Direct3D9Exception^ ex = gcnew Direct3D9Exception( Result::Last );
-			ex->Data->Add( "CompilationErrors", compilationErrors );
-			throw ex;
-		}
-
-		SetLastError( hr );
-		
-		IDirect3DVertexShader9 *vertexShader;
-		device->InternalPointer->CreateVertexShader( reinterpret_cast<const DWORD*>( shaderBuffer->GetBufferPointer() ), &vertexShader );
-		if( vertexShader == NULL)
-			return nullptr;
-		return VertexShader::FromPointer( vertexShader, constantTable );
-	}
-
-	Result VertexShader::RetrieveConstantTable()
-	{
-		if( m_ConstantTable != nullptr )
-			return RECORD_D3D9( D3D_OK );
-
-		//Retrieve the binary data
-		UINT size;
-		HRESULT hr = InternalPointer->GetFunction( NULL, &size );
-		
-		if( RECORD_D3D9(hr).IsFailure )
-			return Result::Last;
-
-		stack_vector<char> data( size  );
-		hr = InternalPointer->GetFunction( &data[0], &size );		
-		if( RECORD_D3D9(hr).IsFailure )
-			return Result::Last;
-
-		//Ask D3DX to give us the actual table
-		ID3DXConstantTable* constantTable;
-		hr = D3DXGetShaderConstantTable( reinterpret_cast<const DWORD*>( &data[0] ), &constantTable );
-		
-		if( RECORD_D3D9(hr).IsFailure )
-			return Result::Last;
-
-		m_ConstantTable = ConstantTable::FromPointer( Device->InternalPointer, constantTable );
-
-		return Result::Last;
-	}
-
 	SlimDX::Direct3D9::Device^ VertexShader::Device::get()
 	{
 		IDirect3DDevice9* device;
@@ -193,6 +103,33 @@ namespace Direct3D9
 			return nullptr;
 
 		return SlimDX::Direct3D9::Device::FromPointer( device );
+	}
+
+	ShaderBytecode^ VertexShader::Function::get()
+	{
+		if( m_function != nullptr )
+			return m_function;
+
+		UINT size;
+		HRESULT hr = InternalPointer->GetFunction( NULL, &size );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		ID3DXBuffer *functionMemory;
+		hr = D3DXCreateBuffer( size, &functionMemory );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		hr = InternalPointer->GetFunction( functionMemory->GetBufferPointer(), &size );
+		if( FAILED( hr ) )
+			functionMemory->Release();
+
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		m_function = ShaderBytecode::FromPointer( functionMemory );
+
+		return m_function;
 	}
 }
 }
