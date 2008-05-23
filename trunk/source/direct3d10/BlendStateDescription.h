@@ -27,18 +27,21 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
+		ref class RenderTargetEnabledCollection;
+		ref class RenderTargetWriteMaskCollection;
+	
 		public value class BlendStateDescription : System::IEquatable<BlendStateDescription>
 		{
 		private:		
 			bool m_AlphaToCoverageEnable;
-			System::Collections::Generic::List<bool>^ m_BlendEnable;
+			RenderTargetEnabledCollection^ m_BlendEnable;
 			BlendOption m_SrcBlend;
 			BlendOption m_DestBlend;
 			Direct3D10::BlendOperation m_BlendOp;
 			BlendOption m_SrcBlendAlpha;
 			BlendOption m_DestBlendAlpha;
 			Direct3D10::BlendOperation m_BlendOpAlpha;
-			System::Collections::Generic::List<ColorWriteMaskFlags>^ m_RenderTargetWriteMask;
+			RenderTargetWriteMaskCollection^ m_RenderTargetWriteMask;
 
 		internal:
 			BlendStateDescription( const D3D10_BLEND_DESC& native );
@@ -52,9 +55,9 @@ namespace SlimDX
 				void set( bool value );
 			}
 
-			property System::Collections::ObjectModel::ReadOnlyCollection<bool>^ IsRenderTargetBlendEnabled
+			property RenderTargetEnabledCollection^ IsRenderTargetBlendEnabled
 			{
-				System::Collections::ObjectModel::ReadOnlyCollection<bool>^ get();
+				RenderTargetEnabledCollection^ get();
 			}
 
 			property BlendOption SourceBlend
@@ -93,9 +96,9 @@ namespace SlimDX
 				void set( Direct3D10::BlendOperation value );
 			}
 
-			property System::Collections::ObjectModel::ReadOnlyCollection<ColorWriteMaskFlags>^ RenderTargetWriteMask
+			property RenderTargetWriteMaskCollection^ RenderTargetWriteMask
 			{
-				System::Collections::ObjectModel::ReadOnlyCollection<ColorWriteMaskFlags>^ get();
+				RenderTargetWriteMaskCollection^ get();
 			}
 
 			static bool operator == ( BlendStateDescription left, BlendStateDescription right );
