@@ -23,6 +23,8 @@
 #include <d3d10.h>
 
 #include "BlendStateDescription.h"
+#include "RenderTargetEnabledCollection.h"
+#include "RenderTargetWriteMaskCollection.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -42,13 +44,8 @@ namespace Direct3D10
 		m_DestBlendAlpha = static_cast<BlendOption>( native.DestBlendAlpha );
 		m_BlendOpAlpha = static_cast<Direct3D10::BlendOperation>( native.BlendOpAlpha );
 		
-		m_BlendEnable = gcnew List<bool>(8);
-		m_RenderTargetWriteMask = gcnew List<ColorWriteMaskFlags>(8);
-		for(int index = 0; index < 8; ++index)
-		{
-			m_BlendEnable->Add( false );
-			m_RenderTargetWriteMask->Add( ColorWriteMaskFlags::All );
-		}
+		m_BlendEnable = gcnew RenderTargetEnabledCollection();
+		m_RenderTargetWriteMask = gcnew RenderTargetWriteMaskCollection();
 	}
 	
 	D3D10_BLEND_DESC BlendStateDescription::CreateNativeVersion()
@@ -81,9 +78,9 @@ namespace Direct3D10
 		m_AlphaToCoverageEnable = value;
 	}
 
-	ReadOnlyCollection<bool>^ BlendStateDescription::IsRenderTargetBlendEnabled::get()
+	RenderTargetEnabledCollection^ BlendStateDescription::IsRenderTargetBlendEnabled::get()
 	{
-		return gcnew ReadOnlyCollection<bool>( m_BlendEnable );
+		return m_BlendEnable;
 	}
 
 	BlendOption BlendStateDescription::SourceBlend::get()
@@ -146,9 +143,9 @@ namespace Direct3D10
 		m_BlendOpAlpha = value;
 	}
 
-	ReadOnlyCollection<ColorWriteMaskFlags>^ BlendStateDescription::RenderTargetWriteMask::get()
+	RenderTargetWriteMaskCollection^ BlendStateDescription::RenderTargetWriteMask::get()
 	{
-		return gcnew ReadOnlyCollection<ColorWriteMaskFlags>( m_RenderTargetWriteMask );
+		return m_RenderTargetWriteMask;
 	}
 
 	bool BlendStateDescription::operator == ( BlendStateDescription left, BlendStateDescription right )
