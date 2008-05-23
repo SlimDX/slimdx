@@ -23,7 +23,7 @@
 
 #include "Effect.h"
 #include "ConstantTable.h"
-#include "Shader.h"
+#include "ShaderBytecode.h"
 
 namespace SlimDX
 {

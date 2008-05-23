@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "ConstantTable.h"
+#include "ShaderBytecode.h"
 
 namespace SlimDX
 {
@@ -31,18 +31,12 @@ namespace SlimDX
 		{
 			COMOBJECT(IDirect3DPixelShader9, PixelShader);
 
-		private:
-			ConstantTable^ m_ConstantTable;
-
-			PixelShader( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable );
-
-		internal:
-			static PixelShader^ FromPointer( IDirect3DPixelShader9* pixelShader, ID3DXConstantTable* constantTable );
+			ShaderBytecode^ m_function;
 
 		public:
-			static PixelShader^ FromPointer( System::IntPtr pointer );
+			PixelShader( Device^ device, ShaderBytecode^ function );
 
-			virtual ~PixelShader() { delete m_ConstantTable; }
+			static PixelShader^ FromPointer( System::IntPtr pointer );
 
 			literal int MaxDynamicFlowControlDepth = D3DPS20_MAX_DYNAMICFLOWCONTROLDEPTH;
 			literal int MinDynamicFlowControlDepth = D3DPS20_MIN_DYNAMICFLOWCONTROLDEPTH;
@@ -57,14 +51,11 @@ namespace SlimDX
 			{
 				SlimDX::Direct3D9::Device^ get();
 			}
-			
-			Result RetrieveConstantTable();
-			property ConstantTable^ Constants
+
+			property ShaderBytecode^ Function
 			{
-				ConstantTable^ get() { return m_ConstantTable; }
+				ShaderBytecode^ get();
 			}
-			
-			static PixelShader^ FromString( SlimDX::Direct3D9::Device^ device, System::String^ sourceCode, System::String^ entryPoint, System::String^ profile, ShaderFlags flags, [Out] System::String^ %compilationErrors );
 		};
 	}
 }

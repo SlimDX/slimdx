@@ -21,7 +21,6 @@
 */
 #pragma once
 
-#include "Shader.h"
 #include "EffectHandle.h"
 #include "FragmentDescription.h"
 

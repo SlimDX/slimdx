@@ -57,7 +57,7 @@ namespace SlimDX
 
 		/// <summary>
 		/// Determines the current state of the profiler from the target program.
-		/// <summary>
+		/// </summary>
 		/// <returns><c>true</c> when PIX is profiling the target program; otherwise, <c>false</c>.</returns>
 		static bool GetStatus();
 

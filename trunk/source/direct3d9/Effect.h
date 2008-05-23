@@ -21,12 +21,13 @@
 */
 #pragma once
 
+#include <vcclr.h>
 #include "Device.h"
 #include "BaseEffect.h"
-#include "Shader.h"
 #include "EffectStateManager.h"
 #include "IResettable.h"
-
+#include "Macro.h"
+#include "Include.h"
 #include "EffectPool.h"
 
 namespace SlimDX

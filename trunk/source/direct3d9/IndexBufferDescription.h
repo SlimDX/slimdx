@@ -32,18 +32,74 @@ namespace SlimDX
 		public value class IndexBufferDescription : System::IEquatable<IndexBufferDescription>
 		{
 		public:
+			/// <summary>
+			/// Surface format of the index data.
+			/// </summary>
 			property Format Format;
+
+			/// <summary>
+			/// Identifies the resource as an index buffer.
+			/// </summary>
 			property ResourceType Type;
+
+			/// <summary>
+			/// The intended usage of the resource.
+			/// </summary>
 			property Usage Usage;
+
+			/// <summary>
+			/// The memory class allocated for the buffer.
+			/// </summary>
 			property Pool Pool;
+
+			/// <summary>
+			/// The size of the buffer data, in bytes.
+			/// </summary>
 			property int SizeInBytes;
 
+			/// <summary>
+			/// Tests for equality between two objects.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator == ( IndexBufferDescription left, IndexBufferDescription right );
+
+			/// <summary>
+			/// Tests for inequality between two objects.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator != ( IndexBufferDescription left, IndexBufferDescription right );
 
+			/// <summary>
+			/// Returns the hash code for this instance.
+			/// </summary>
+			/// <returns>A 32-bit signed integer hash code.</returns>
 			virtual int GetHashCode() override;
+
+			/// <summary>
+			/// Returns a value that indicates whether the current instance is equal to a specified object. 
+			/// </summary>
+			/// <param name="obj">Object to make the comparison with.</param>
+			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 			virtual bool Equals( System::Object^ obj ) override;
+
+			/// <summary>
+			/// Returns a value that indicates whether the current instance is equal to the specified object. 
+			/// </summary>
+			/// <param name="other">Object to make the comparison with.</param>
+			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 			virtual bool Equals( IndexBufferDescription other );
+
+			/// <summary>
+			/// Determines whether the specified object instances are considered equal. 
+			/// </summary>
+			/// <param name="value1">The first value to compare.</param>
+			/// <param name="value2">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="value1"/> is the same instance as <paramref name="value2"/> or 
+			/// if both are <c>null</c> references or if <c>value1.Equals(value2)</c> returns <c>true</c>; otherwise, <c>false</c>.</returns>
 			static bool Equals( IndexBufferDescription% value1, IndexBufferDescription% value2 );
 		};
 	}

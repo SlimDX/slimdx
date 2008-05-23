@@ -22,6 +22,9 @@
 #pragma once
 
 #include "ShaderSemantic.h"
+#include "ConstantTable.h"
+#include "Include.h"
+#include "Macro.h"
 
 namespace SlimDX
 {
@@ -35,8 +38,58 @@ namespace SlimDX
 		{
 			COMOBJECT(ID3DXBuffer, ShaderBytecode);
 
+			ConstantTable^ m_constantTable;
+
 		public:
+			virtual ~ShaderBytecode() { delete m_constantTable; }
+
 			static ShaderBytecode^ FromPointer( System::IntPtr pointer );
+
+			static ShaderBytecode^ Assemble( array<System::Byte>^ sourceData, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
+			static ShaderBytecode^ Assemble( array<System::Byte>^ sourceData, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags );
+			static ShaderBytecode^ Assemble( array<System::Byte>^ sourceData, ShaderFlags flags );
+
+			static ShaderBytecode^ Assemble( System::String^ sourceData, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
+			static ShaderBytecode^ Assemble( System::String^ sourceData, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags );
+			static ShaderBytecode^ Assemble( System::String^ sourceData, ShaderFlags flags );
+
+			static ShaderBytecode^ AssembleFromFile( System::String^ fileName, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
+			static ShaderBytecode^ AssembleFromFile( System::String^ fileName, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags );
+			static ShaderBytecode^ AssembleFromFile( System::String^ fileName, ShaderFlags flags );
+
+			static ShaderBytecode^ Compile( array<System::Byte>^ sourceData, array<Macro>^ defines, Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags, [Out] System::String^% errors );
+			static ShaderBytecode^ Compile( array<System::Byte>^ sourceData, array<Macro>^ defines, Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags );
+			static ShaderBytecode^ Compile( array<System::Byte>^ sourceData, System::String^ functionName, System::String^ profile, ShaderFlags flags );
+
+			static ShaderBytecode^ Compile( System::String^ sourceData, array<Macro>^ defines, Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags, [Out] System::String^% errors );
+			static ShaderBytecode^ Compile( System::String^ sourceData, array<Macro>^ defines, Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags );
+			static ShaderBytecode^ Compile( System::String^ sourceData, System::String^ functionName, System::String^ profile, ShaderFlags flags );
+
+			static ShaderBytecode^ CompileFromFile( System::String^ fileName, array<Macro>^ defines, Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags, [Out] System::String^% errors );
+			static ShaderBytecode^ CompileFromFile( System::String^ fileName, array<Macro>^ defines, Include^ includeFile, System::String^ functionName, System::String^ profile, ShaderFlags flags );
+			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ functionName, System::String^ profile, ShaderFlags flags );
+
+			static System::String^ Preprocess( array<System::Byte>^ sourceData, array<Macro>^ defines, Include^ includeFile, [Out] System::String^% errors );
+			static System::String^ Preprocess( array<System::Byte>^ sourceData, array<Macro>^ defines, Include^ includeFile );
+			static System::String^ Preprocess( array<System::Byte>^ sourceData );
+
+			static System::String^ Preprocess( System::String^ sourceData, array<Macro>^ defines, Include^ includeFile, [Out] System::String^% errors );
+			static System::String^ Preprocess( System::String^ sourceData, array<Macro>^ defines, Include^ includeFile );
+			static System::String^ Preprocess( System::String^ sourceData );
+
+			static System::String^ PreprocessFromFile( System::String^ fileName, array<Macro>^ defines, Include^ includeFile, [Out] System::String^% errors );
+			static System::String^ PreprocessFromFile( System::String^ fileName, array<Macro>^ defines, Include^ includeFile );
+			static System::String^ PreprocessFromFile( System::String^ fileName );
+
+			static int MajorVersion( int version );
+			static int MinorVersion( int version );
+			static System::Version^ ParseVersion( int version );
+
+			DataStream^ Disassemble( bool enableColorCode, System::String^ comments );
+			DataStream^ Disassemble( bool enableColorCode );
+			DataStream^ Disassemble();
+
+			DataStream^ FindComment( Format fourCC );
 
 			array<ShaderSemantic>^ GetInputSemantics();
 			array<ShaderSemantic>^ GetOutputSemantics();

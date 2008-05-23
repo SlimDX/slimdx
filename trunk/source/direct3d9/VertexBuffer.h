@@ -32,7 +32,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		/// <summary>Applications use the methods of the VertexBuffer class to manipulate vertex buffer resources.</summary>
+		/// <summary>Represents a buffer of vertex data.</summary>
 		/// <unmanaged>IDirect3DVertexBuffer9</unmanaged>
 		public ref class VertexBuffer : public Resource
 		{
@@ -43,13 +43,47 @@ namespace SlimDX
 			void InitDescription();
 
 		public:
-			VertexBuffer( SlimDX::Direct3D9::Device^ device, int sizeBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool );
+			/// <summary>
+			/// Initializes a new instance of the <see cref="VertexBuffer"/> class.
+			/// </summary>
+			/// <param name="device">The device that will be used to create the buffer.</param>
+			/// <param name="sizeInBytes">Size of the buffer, in bytes.</param>
+			/// <param name="usage">The requested usage of the buffer.</param>
+			/// <param name="format">The vertex format of the vertices in the buffer. If set to <see cref="VertexFormat.None"/>, the buffer will be a non-FVF buffer.</param>
+			/// <param name="pool">The memory class into which the resource will be placed.</param>
+			VertexBuffer( SlimDX::Direct3D9::Device^ device, int sizeInBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool );
+			
+			/// <summary>
+			/// Releases all resources used by the <see cref="VertexBuffer"/>.
+			/// </summary>
 			virtual ~VertexBuffer() { }
+
+			/// <summary>
+			/// Constructs a new instance of the <see cref="VertexBuffer"/> class using the specified pointer to a
+			/// previously constructed unmanaged object.
+			/// </summary>
+			/// <param name="pointer">The unmanaged IDirect3DVertexBuffer9 pointer.</param>
+			/// <returns>The newly constructed object.</returns>
 			static VertexBuffer^ FromPointer( System::IntPtr pointer );
 
+			/// <summary>
+			/// Locks the buffer and obtains a pointer to the memory.
+			/// </summary>
+			/// <param name="offset">Offset into the vertex data to lock, in bytes.</param>
+			/// <param name="size">Size of the vertex data to lock, in bytes.</param>
+			/// <param name="flags">Locking flags.</param>
+			/// <returns>A <see cref="DataStream"/> containing the vertex data.</returns>
 			DataStream^ Lock( int offset, int size, LockFlags flags );
+
+			/// <summary>
+			/// Unlocks previously locked data.
+			/// </summary>
+			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
 			Result Unlock();
 
+			/// <summary>
+			/// Gets a description of the buffer.
+			/// </summary>
 			property VertexBufferDescription Description
 			{
 				VertexBufferDescription get() { return m_Description; }
