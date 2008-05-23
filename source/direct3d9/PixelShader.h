@@ -26,7 +26,11 @@
 namespace SlimDX
 {
 	namespace Direct3D9
-	{	
+	{
+		/// <summary>
+		/// Represents a pixel shader.
+		/// </summary>
+		/// <unmanaged>IDirect3DPixelShader9</unmanaged>
 		public ref class PixelShader : public ComObject
 		{
 			COMOBJECT(IDirect3DPixelShader9, PixelShader);
@@ -34,24 +38,77 @@ namespace SlimDX
 			ShaderBytecode^ m_function;
 
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="PixelShader"/> class.
+			/// </summary>
+			/// <param name="device">The device used to create the shader.</param>
+			/// <param name="function">The shader function stream.</param>
 			PixelShader( Device^ device, ShaderBytecode^ function );
 
+			/// <summary>
+			/// Releases all resources used by the <see cref="PixelShader"/>.
+			/// </summary>
+			virtual ~PixelShader() { delete m_function; }
+
+			/// <summary>
+			/// Constructs a new instance of the <see cref="PixelShader"/> class using the specified pointer to a
+			/// previously constructed unmanaged object.
+			/// </summary>
+			/// <param name="pointer">The unmanaged IDirect3DPixelShader9 pointer.</param>
+			/// <returns>The newly constructed object.</returns>
 			static PixelShader^ FromPointer( System::IntPtr pointer );
 
+			/// <summary>
+			/// The maximum level of nesting of dynamic flow control instructions.
+			/// </summary>
 			literal int MaxDynamicFlowControlDepth = D3DPS20_MAX_DYNAMICFLOWCONTROLDEPTH;
+
+			/// <summary>
+			/// The minimum level of nesting of dynamic flow control instructions.
+			/// </summary>
 			literal int MinDynamicFlowControlDepth = D3DPS20_MIN_DYNAMICFLOWCONTROLDEPTH;
+
+			/// <summary>
+			/// The maximum number of temporary registers supported.
+			/// </summary>
 			literal int MaxTemps = D3DPS20_MAX_NUMTEMPS;
+
+			/// <summary>
+			/// The minimum number of temporary registers supported.
+			/// </summary>
 			literal int MinTemps = D3DPS20_MIN_NUMTEMPS;
+
+			/// <summary>
+			/// The maximum level of nesting of static flow control instructions.
+			/// </summary>
 			literal int MaxStaticFlowControlDepth = D3DPS20_MAX_STATICFLOWCONTROLDEPTH;
+
+			/// <summary>
+			/// The minimum level of nesting of static flow control instructions.
+			/// </summary>
 			literal int MinStaticFlowControlDepth = D3DPS20_MIN_STATICFLOWCONTROLDEPTH;
+
+			/// <summary>
+			/// The maximum number of instruction slots supported.
+			/// </summary>
 			literal int MaxInstructionSlots = D3DPS20_MAX_NUMINSTRUCTIONSLOTS;
+
+			/// <summary>
+			/// The minimum number of instructions slots supported.
+			/// </summary>
 			literal int MinInstructionSlots = D3DPS20_MIN_NUMINSTRUCTIONSLOTS;
 
+			/// <summary>
+			/// Gets the device associated with the shader.
+			/// </summary>
 			property SlimDX::Direct3D9::Device^ Device
 			{
 				SlimDX::Direct3D9::Device^ get();
 			}
 
+			/// <summary>
+			/// Gets the shader function stream.
+			/// </summary>
 			property ShaderBytecode^ Function
 			{
 				ShaderBytecode^ get();

@@ -87,7 +87,7 @@ namespace Water
 
             mesh.ComputeTangentFrame(TangentOptions.None);
 
-            effect = Effect.FromFile(device, effectFileName, null, null, ShaderFlags.Debug | ShaderFlags.PartialPrecision, null);
+            effect = Effect.FromFile(device, effectFileName, ShaderFlags.Debug | ShaderFlags.PartialPrecision);
             texture = Texture.FromFile(device, textureFileName);
         }
 

@@ -30,9 +30,24 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>
+		/// Specifies an interface for handling #include directives.
+		/// </summary>
+		/// <unmanaged>ID3DXInclude</unmanaged>
 		public interface struct Include
 		{
+			/// <summary>
+			/// Opens and reads the contents of a shader #include file.
+			/// </summary>
+			/// <param name="includeType">Flags specifying the type of the include file.</param>
+			/// <param name="fileName">Name of the include file to open.</param>
+			/// <param name="stream">When the method completes, contains a stream pointing to the include file.</param>
 			virtual void Open( IncludeType includeType, System::String^ fileName, [Out] System::IO::Stream^ stream ) = 0;
+			
+			/// <summary>
+			/// Closes a shader #include file.
+			/// </summary>
+			/// <param name="stream">The previously opened include stream.</param>
 			virtual void Close( System::IO::Stream^ stream ) = 0;
 		};
 

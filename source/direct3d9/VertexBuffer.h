@@ -49,7 +49,7 @@ namespace SlimDX
 			/// <param name="device">The device that will be used to create the buffer.</param>
 			/// <param name="sizeInBytes">Size of the buffer, in bytes.</param>
 			/// <param name="usage">The requested usage of the buffer.</param>
-			/// <param name="format">The vertex format of the vertices in the buffer. If set to <see cref="VertexFormat.None"/>, the buffer will be a non-FVF buffer.</param>
+			/// <param name="format">The vertex format of the vertices in the buffer. If set to <see cref="VertexFormat"/>.None, the buffer will be a non-FVF buffer.</param>
 			/// <param name="pool">The memory class into which the resource will be placed.</param>
 			VertexBuffer( SlimDX::Direct3D9::Device^ device, int sizeInBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool );
 			
@@ -78,7 +78,7 @@ namespace SlimDX
 			/// <summary>
 			/// Unlocks previously locked data.
 			/// </summary>
-			/// <returns>A <see cref="SlimDX.Result"/> object describing the result of the operation.</returns>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Unlock();
 
 			/// <summary>

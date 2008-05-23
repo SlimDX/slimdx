@@ -70,7 +70,7 @@ namespace Direct3D9
 
 	void StreamShim::Commit( int grfCommitFlags )
 	{
-		SLIMDX_DEBUG_UNREFERENCED_PARAMETER(grfCommitFlags);
+		SLIMDX_UNREFERENCED_PARAMETER(grfCommitFlags);
 		m_WrappedStream->Flush();
 	}
 
@@ -108,9 +108,9 @@ namespace Direct3D9
 
 	void StreamShim::LockRegion( long long libOffset, long long cb, int dwLockType )
 	{
-		SLIMDX_DEBUG_UNREFERENCED_PARAMETER(libOffset);
-		SLIMDX_DEBUG_UNREFERENCED_PARAMETER(cb);
-		SLIMDX_DEBUG_UNREFERENCED_PARAMETER(dwLockType);
+		SLIMDX_UNREFERENCED_PARAMETER(libOffset);
+		SLIMDX_UNREFERENCED_PARAMETER(cb);
+		SLIMDX_UNREFERENCED_PARAMETER(dwLockType);
 
 		throw gcnew ExternalException( nullptr, STG_E_INVALIDFUNCTION );
 	}
@@ -188,7 +188,7 @@ namespace Direct3D9
 
 	void StreamShim::Stat( [Out] System::Runtime::InteropServices::ComTypes::STATSTG% pstatstg, int grfStatFlag )
 	{
-		SLIMDX_DEBUG_UNREFERENCED_PARAMETER(grfStatFlag);
+		SLIMDX_UNREFERENCED_PARAMETER(grfStatFlag);
 
 		pstatstg = System::Runtime::InteropServices::ComTypes::STATSTG();
 		pstatstg.cbSize = m_WrappedStream->Length;
@@ -196,9 +196,9 @@ namespace Direct3D9
 
 	void StreamShim::UnlockRegion( long long libOffset, long long cb, int dwLockType )
 	{
-		SLIMDX_DEBUG_UNREFERENCED_PARAMETER(libOffset);
-		SLIMDX_DEBUG_UNREFERENCED_PARAMETER(cb);
-		SLIMDX_DEBUG_UNREFERENCED_PARAMETER(dwLockType);
+		SLIMDX_UNREFERENCED_PARAMETER(libOffset);
+		SLIMDX_UNREFERENCED_PARAMETER(cb);
+		SLIMDX_UNREFERENCED_PARAMETER(dwLockType);
 
 		throw gcnew ExternalException( nullptr, STG_E_INVALIDFUNCTION );
 	}
