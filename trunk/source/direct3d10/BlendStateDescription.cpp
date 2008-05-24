@@ -23,8 +23,6 @@
 #include <d3d10.h>
 
 #include "BlendStateDescription.h"
-#include "RenderTargetEnabledCollection.h"
-#include "RenderTargetWriteMaskCollection.h"
 
 using namespace System;
 using namespace System::Collections::Generic;

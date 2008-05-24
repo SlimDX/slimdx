@@ -1226,26 +1226,6 @@
 					RelativePath="..\source\direct3d10\RasterizerStateDescription.h"
 					>
 				</File>
-				<Filter
-					Name="Support"
-					>
-					<File
-						RelativePath="..\source\direct3d10\RenderTargetEnabledCollection.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d10\RenderTargetEnabledCollection.h"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d10\RenderTargetWriteMaskCollection.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d10\RenderTargetWriteMaskCollection.h"
-						>
-					</File>
-				</Filter>
 			</Filter>
 			<Filter
 				Name="Buffer"
