@@ -154,26 +154,26 @@
             this.calculateToolStripMenuItem,
             this.findSolutionToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(154, 48);
+            this.contextMenuStrip.Size = new System.Drawing.Size(153, 70);
             // 
             // calculateToolStripMenuItem
             // 
             this.calculateToolStripMenuItem.Name = "calculateToolStripMenuItem";
-            this.calculateToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.calculateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.calculateToolStripMenuItem.Text = "&Calculate";
             this.calculateToolStripMenuItem.Click += new System.EventHandler(this.calculateToolStripMenuItem_Click);
             // 
             // findSolutionToolStripMenuItem
             // 
             this.findSolutionToolStripMenuItem.Name = "findSolutionToolStripMenuItem";
-            this.findSolutionToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.findSolutionToolStripMenuItem.Text = "&Find Solution...";
+            this.findSolutionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.findSolutionToolStripMenuItem.Text = "&Find Project...";
             this.findSolutionToolStripMenuItem.Click += new System.EventHandler(this.findSolutionToolStripMenuItem_Click);
             // 
             // openFileDialog
             // 
             this.openFileDialog.Filter = "Project Files|*.vcproj|All files|*.*";
-            this.openFileDialog.Title = "Find Solution";
+            this.openFileDialog.Title = "Find Project";
             // 
             // MainForm
             // 
