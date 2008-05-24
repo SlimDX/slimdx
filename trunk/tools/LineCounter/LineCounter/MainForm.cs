@@ -70,6 +70,9 @@ namespace LineCounter
 
         void Calculate()
         {
+            outputView.Items.Clear();
+            sourceTree.Nodes.Clear();
+
             if (string.IsNullOrEmpty(projectPath) || !File.Exists(projectPath))
             {
                 MessageBox.Show("Invalid or missing project file.");
