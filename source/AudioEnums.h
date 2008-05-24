@@ -181,4 +181,19 @@ namespace SlimDX
 		/// </summary>
 		SevenPointOneSurround = SPEAKER_7POINT1_SURROUND,
 	};
+
+#pragma warning(disable: 4369)
+	public enum class WaveFormatTag : System::Int32
+	{
+		Pcm = WAVE_FORMAT_PCM,
+		AdPcm = WAVE_FORMAT_ADPCM,
+		IeeeFloat = WAVE_FORMAT_IEEE_FLOAT,
+		MpegLayer3 = WAVE_FORMAT_MPEGLAYER3,
+		DolbyAC3Spdif = WAVE_FORMAT_DOLBY_AC3_SPDIF,
+		WmAudio2 = WAVE_FORMAT_WMAUDIO2,
+		WmAudio3 = WAVE_FORMAT_WMAUDIO3,
+		WmaSpdif = WAVE_FORMAT_WMASPDIF,
+		Extensible = WAVE_FORMAT_EXTENSIBLE,
+	};
+#pragma warning(default: 4369)
 }

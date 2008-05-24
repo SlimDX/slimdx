@@ -21,26 +21,15 @@
 */
 #pragma once
 
-#include "Enums.h"
-
 namespace SlimDX
 {
-	namespace XAudio2
+	namespace XAPO
 	{
-		public value class WaveFormatExtended : System::IEquatable<WaveFormatExtended>
+		public value class LockParameter : System::IEquatable<LockParameter>
 		{
-		internal:
-			WAVEFORMATEX ToUnmanaged();
-			static WaveFormatExtended FromUnmanaged( const WAVEFORMATEX &format );
-
 		public:
-			property WaveFormatTag FormatTag;
-			property short Channels;
-			property int SamplesPerSecond;
-			property int AverageBytesPerSecond;
-			property short BlockAlignment;
-			property short BitsPerSample;
-			property short Size;
+			property WaveFormatExtended Format;
+			property int MaxFrameCount;
 
 			/// <summary>
 			/// Tests for equality between two objects.
@@ -48,7 +37,7 @@ namespace SlimDX
 			/// <param name="left">The first value to compare.</param>
 			/// <param name="right">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-			static bool operator == ( WaveFormatExtended left, WaveFormatExtended right );
+			static bool operator == ( LockParameter left, LockParameter right );
 
 			/// <summary>
 			/// Tests for inequality between two objects.
@@ -56,7 +45,7 @@ namespace SlimDX
 			/// <param name="left">The first value to compare.</param>
 			/// <param name="right">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-			static bool operator != ( WaveFormatExtended left, WaveFormatExtended right );
+			static bool operator != ( LockParameter left, LockParameter right );
 
 			/// <summary>
 			/// Returns the hash code for this instance.
@@ -76,7 +65,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="other">Object to make the comparison with.</param>
 			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
-			virtual bool Equals( WaveFormatExtended other );
+			virtual bool Equals( LockParameter other );
 
 			/// <summary>
 			/// Determines whether the specified object instances are considered equal. 
@@ -85,7 +74,7 @@ namespace SlimDX
 			/// <param name="value2">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="value1"/> is the same instance as <paramref name="value2"/> or 
 			/// if both are <c>null</c> references or if <c>value1.Equals(value2)</c> returns <c>true</c>; otherwise, <c>false</c>.</returns>
-			static bool Equals( WaveFormatExtended% value1, WaveFormatExtended% value2 );
+			static bool Equals( LockParameter% value1, LockParameter% value2 );
 		};
 	}
 }

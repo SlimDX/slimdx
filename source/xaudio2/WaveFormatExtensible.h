@@ -23,7 +23,7 @@
 
 #include "../AudioEnums.h"
 #include "Enums.h"
-#include "WaveFormatExtended.h"
+#include "../WaveFormatExtended.h"
 
 namespace SlimDX
 {
