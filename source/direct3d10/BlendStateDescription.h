@@ -34,15 +34,17 @@ namespace SlimDX
 		{
 		private:		
 			bool m_AlphaToCoverageEnable;
-			RenderTargetEnabledCollection^ m_BlendEnable;
+			array<bool>^ m_BlendEnable;
 			BlendOption m_SrcBlend;
 			BlendOption m_DestBlend;
 			Direct3D10::BlendOperation m_BlendOp;
 			BlendOption m_SrcBlendAlpha;
 			BlendOption m_DestBlendAlpha;
 			Direct3D10::BlendOperation m_BlendOpAlpha;
-			RenderTargetWriteMaskCollection^ m_RenderTargetWriteMask;
-
+			array<ColorWriteMaskFlags>^ m_RenderTargetWriteMask;
+		
+			void ConstructLazyProperties();
+			
 		internal:
 			BlendStateDescription( const D3D10_BLEND_DESC& native );
 			
@@ -53,11 +55,6 @@ namespace SlimDX
 			{
 				bool get();
 				void set( bool value );
-			}
-
-			property RenderTargetEnabledCollection^ IsRenderTargetBlendEnabled
-			{
-				RenderTargetEnabledCollection^ get();
 			}
 
 			property BlendOption SourceBlend
@@ -95,12 +92,15 @@ namespace SlimDX
 				Direct3D10::BlendOperation get();
 				void set( Direct3D10::BlendOperation value );
 			}
-
-			property RenderTargetWriteMaskCollection^ RenderTargetWriteMask
-			{
-				RenderTargetWriteMaskCollection^ get();
-			}
-
+			
+			bool GetBlendEnable( System::UInt32 index );
+			
+			void SetBlendEnable( System::UInt32 index, bool value );
+			
+			ColorWriteMaskFlags GetWriteMask( System::UInt32 index );
+			
+			void SetWriteMask( System::UInt32 index, ColorWriteMaskFlags value );
+		
 			static bool operator == ( BlendStateDescription left, BlendStateDescription right );
 			static bool operator != ( BlendStateDescription left, BlendStateDescription right );
 

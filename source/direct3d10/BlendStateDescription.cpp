@@ -44,8 +44,7 @@ namespace Direct3D10
 		m_DestBlendAlpha = static_cast<BlendOption>( native.DestBlendAlpha );
 		m_BlendOpAlpha = static_cast<Direct3D10::BlendOperation>( native.BlendOpAlpha );
 		
-		m_BlendEnable = gcnew RenderTargetEnabledCollection();
-		m_RenderTargetWriteMask = gcnew RenderTargetWriteMaskCollection();
+		ConstructLazyProperties();
 	}
 	
 	D3D10_BLEND_DESC BlendStateDescription::CreateNativeVersion()
@@ -59,6 +58,7 @@ namespace Direct3D10
 		native.DestBlendAlpha = static_cast<D3D10_BLEND>( m_DestBlendAlpha );
 		native.BlendOpAlpha = static_cast<D3D10_BLEND_OP>( m_BlendOpAlpha );
 		
+		ConstructLazyProperties();
 		for(int index = 0; index < 8; ++index)
 		{
 			native.BlendEnable[ index ] = m_BlendEnable[ index ];
@@ -77,12 +77,7 @@ namespace Direct3D10
 	{
 		m_AlphaToCoverageEnable = value;
 	}
-
-	RenderTargetEnabledCollection^ BlendStateDescription::IsRenderTargetBlendEnabled::get()
-	{
-		return m_BlendEnable;
-	}
-
+	
 	BlendOption BlendStateDescription::SourceBlend::get()
 	{
 		return m_SrcBlend;
@@ -143,9 +138,42 @@ namespace Direct3D10
 		m_BlendOpAlpha = value;
 	}
 
-	RenderTargetWriteMaskCollection^ BlendStateDescription::RenderTargetWriteMask::get()
+	bool BlendStateDescription::GetBlendEnable( UInt32 index )
 	{
-		return m_RenderTargetWriteMask;
+		ConstructLazyProperties();
+		return m_BlendEnable[ index ];
+	}
+	
+	void BlendStateDescription::SetBlendEnable( UInt32 index, bool value )
+	{
+		ConstructLazyProperties();
+		m_BlendEnable[ index ] = value;
+	}
+	
+	ColorWriteMaskFlags BlendStateDescription::GetWriteMask( UInt32 index )
+	{
+		ConstructLazyProperties();
+		return m_RenderTargetWriteMask[ index ];
+	}
+	
+	void BlendStateDescription::SetWriteMask( UInt32 index, ColorWriteMaskFlags value )
+	{
+		ConstructLazyProperties();
+		m_RenderTargetWriteMask[ index ] = value;
+	}
+
+	void BlendStateDescription::ConstructLazyProperties()
+	{
+		if( m_BlendEnable == nullptr )
+		{
+			m_BlendEnable = gcnew array<bool>(8);
+			m_RenderTargetWriteMask = gcnew array<ColorWriteMaskFlags>(8);
+			for(int index = 0; index < 8; ++index)
+			{
+				m_BlendEnable[ index ] = false;
+				m_RenderTargetWriteMask[ index ] = ColorWriteMaskFlags::All;
+			}
+		}
 	}
 
 	bool BlendStateDescription::operator == ( BlendStateDescription left, BlendStateDescription right )
