@@ -1936,6 +1936,14 @@
 					RelativePath="..\source\AudioEnums.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\WaveFormatExtended.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\WaveFormatExtended.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Input"
@@ -4147,14 +4155,6 @@
 				Name="WaveFormats"
 				>
 				<File
-					RelativePath="..\source\xaudio2\WaveFormatExtended.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\xaudio2\WaveFormatExtended.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\xaudio2\WaveFormatExtensible.cpp"
 					>
 				</File>
@@ -5055,6 +5055,38 @@
 					>
 				</File>
 			</Filter>
+		</Filter>
+		<Filter
+			Name="XAPO"
+			>
+			<File
+				RelativePath="..\source\xapo\BufferParameter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\xapo\Enums.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\xapo\IAudioProcessor.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\xapo\IAudioProcessor.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\xapo\LockParameter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\xapo\LockParameter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\xapo\RegistrationProperties.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath="..\source\AssemblyInfo.cpp"

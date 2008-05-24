@@ -23,7 +23,7 @@
 
 #include "Voice.h"
 #include "VoiceCallback.h"
-#include "WaveFormatExtended.h"
+#include "../WaveFormatExtended.h"
 #include "WaveFormatExtensible.h"
 #include "ContextEventArgs.h"
 #include "ErrorEventArgs.h"

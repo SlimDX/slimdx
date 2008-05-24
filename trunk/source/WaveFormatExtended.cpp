@@ -20,13 +20,12 @@
 * THE SOFTWARE.
 */
 
-#include <xaudio2.h>
+#include <windows.h>
+#include <audiodefs.h>
 
 #include "WaveFormatExtended.h"
 
 namespace SlimDX
-{
-namespace XAudio2
 {
 	WAVEFORMATEX WaveFormatExtended::ToUnmanaged()
 	{
@@ -100,5 +99,4 @@ namespace XAudio2
 			value1.BlockAlignment == value2.BlockAlignment && value1.BitsPerSample == value2.BitsPerSample &&
 			value1.Size == value2.Size );
 	}
-}
 }
