@@ -37,6 +37,7 @@ namespace SlimDX
 		ref class EffectVariable;
 		ref class EffectPool;
 		value class EffectDescription;
+		interface struct Include;
 		
 		public ref class Effect : public ComObject
 		{
@@ -82,14 +83,14 @@ namespace SlimDX
 			
 			Result Optimize();
 			
-			static Effect^ FromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool );
-			static Effect^ FromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] System::String^ %compilationErrors );
-			static Effect^ FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool );
-			static Effect^ FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] System::String^ %compilationErrors );
-			static Effect^ FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool );
-			static Effect^ FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] System::String^ %compilationErrors );
-			static Effect^ FromString( SlimDX::Direct3D10::Device^ device, System::String^ code, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool );
-			static Effect^ FromString( SlimDX::Direct3D10::Device^ device, System::String^ code, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] System::String^ %compilationErrors );
+			static Effect^ FromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include );
+			static Effect^ FromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] System::String^ %compilationErrors );
+			static Effect^ FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include );
+			static Effect^ FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] System::String^ %compilationErrors );
+			static Effect^ FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include );
+			static Effect^ FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] System::String^ %compilationErrors );
+			static Effect^ FromString( SlimDX::Direct3D10::Device^ device, System::String^ code, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include );
+			static Effect^ FromString( SlimDX::Direct3D10::Device^ device, System::String^ code, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] System::String^ %compilationErrors );
 		};
 	}
 };

@@ -1003,6 +1003,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\Include.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Include.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\PixelShader.cpp"
 					>
 					<FileConfiguration
