@@ -44,7 +44,7 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 
-	RasterizerState::RasterizerState( SlimDX::Direct3D10::Device^ device, RasterizerStateDescription description )
+	RasterizerState^ RasterizerState::FromDescription( SlimDX::Direct3D10::Device^ device, RasterizerStateDescription description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
@@ -52,9 +52,9 @@ namespace Direct3D10
 		ID3D10RasterizerState* state = 0;
 		D3D10_RASTERIZER_DESC nativeDescription = description.CreateNativeVersion();
 		if( RECORD_D3D10( device->InternalPointer->CreateRasterizerState( &nativeDescription, &state ) ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
+			return nullptr;
 		
-		Construct( state );
+		return FromPointer( state );
 	}
 
 	RasterizerState^ RasterizerState::FromPointer( ID3D10RasterizerState* pointer )
