@@ -44,7 +44,7 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 
-	DepthStencilState::DepthStencilState( SlimDX::Direct3D10::Device^ device, DepthStencilStateDescription description )
+	DepthStencilState^ DepthStencilState::FromDescription( SlimDX::Direct3D10::Device^ device, DepthStencilStateDescription description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
@@ -52,9 +52,9 @@ namespace Direct3D10
 		ID3D10DepthStencilState* state = 0;
 		D3D10_DEPTH_STENCIL_DESC nativeDescription = description.CreateNativeVersion();
 		if( RECORD_D3D10( device->InternalPointer->CreateDepthStencilState( &nativeDescription, &state ) ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
+			return nullptr;
 		
-		Construct( state );
+		return FromPointer( state );
 	}
 
 	DepthStencilState^ DepthStencilState::FromPointer( ID3D10DepthStencilState* pointer )

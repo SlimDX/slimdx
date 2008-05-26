@@ -33,17 +33,37 @@ namespace SlimDX
 		ref class Device;
 		value class DepthStencilStateDescription;
 		
+		/// <summary>
+		/// A state object defining the behavior of the depth and stencil test stages of the output merger. 
+		/// </summary>
 		public ref class DepthStencilState : public DeviceChild
 		{
 			COMOBJECT(ID3D10DepthStencilState, DepthStencilState);
 		
 		public:
+			/// <summary>
+			/// Gets the state's description.
+			/// </summary>
 			property DepthStencilStateDescription Description
 			{
 				DepthStencilStateDescription get();
 			}
 			
-			DepthStencilState( SlimDX::Direct3D10::Device^ device, DepthStencilStateDescription description );
+			/// <summary>
+			/// Constructs a new DepthStencilState based on the specified description. If the description
+			/// is identical to that of an existing DepthStencilState object, the existing DepthStencilState object
+			/// is returned instead of a new instance.
+			/// </summary>
+			/// <param name="device">The device to associate the state object with</param>
+			/// <param name="description">The state description.</param>
+			/// <returns>The DepthStencilState object.</returns>
+			static DepthStencilState^ FromDescription( SlimDX::Direct3D10::Device^ device, DepthStencilStateDescription description );
+			
+			/// <summary>
+			/// Constructs a DepthStencilState object from a marshaled native pointer.
+			/// </summary>
+			/// <param name="pointer">The native object pointer.</param>
+			/// <returns>The DepthStencilState object for the native object.</returns>
 			static DepthStencilState^ FromPointer( System::IntPtr pointer );
 		};
 	}

@@ -33,17 +33,37 @@ namespace SlimDX
 		ref class Device;
 		value class BlendStateDescription;
 		
+		/// <summary>
+		/// A state object defining the behavior of the pixel-blending stage of the output merger. 
+		/// </summary>
 		public ref class BlendState : public DeviceChild
 		{
 			COMOBJECT(ID3D10BlendState, BlendState);
 		
 		public:
+			/// <summary>
+			/// Gets the state's description.
+			/// </summary>
 			property BlendStateDescription Description
 			{
 				BlendStateDescription get();
 			}
 			
-			BlendState( SlimDX::Direct3D10::Device^ device, BlendStateDescription description );
+			/// <summary>
+			/// Constructs a new BlendState based on the specified description. If the description
+			/// is identical to that of an existing BlendState object, the existing BlendState object
+			/// is returned instead of a new instance.
+			/// </summary>
+			/// <param name="device">The device to associate the state object with</param>
+			/// <param name="description">The state description.</param>
+			/// <returns>The BlendState object.</returns>
+			static BlendState^ FromDescription( SlimDX::Direct3D10::Device^ device, BlendStateDescription description );
+			
+			/// <summary>
+			/// Constructs a BlendState object from a marshaled native pointer.
+			/// </summary>
+			/// <param name="pointer">The native object pointer.</param>
+			/// <returns>The BlendState object for the native object.</returns>
 			static BlendState^ FromPointer( System::IntPtr pointer );
 		};
 	}

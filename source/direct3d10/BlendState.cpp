@@ -45,7 +45,7 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 
-	BlendState::BlendState( SlimDX::Direct3D10::Device^ device, BlendStateDescription description )
+	BlendState^ BlendState::FromDescription( SlimDX::Direct3D10::Device^ device, BlendStateDescription description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
@@ -54,9 +54,9 @@ namespace Direct3D10
 		D3D10_BLEND_DESC nativeDescription = description.CreateNativeVersion();
 		
 		if( RECORD_D3D10( device->InternalPointer->CreateBlendState( &nativeDescription, &state ) ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
+			return nullptr;
 		
-		Construct( state );
+		return FromPointer( state );
 	}
 
 	BlendState^ BlendState::FromPointer( ID3D10BlendState* pointer )
