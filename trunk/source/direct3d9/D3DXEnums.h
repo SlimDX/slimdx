@@ -952,9 +952,10 @@ namespace SlimDX
 			SkipValidation = D3DXSHADER_SKIPVALIDATION,
 
 			/// <summary>
-			/// Instruct the compiler to skip optimization steps during code generation.
-			/// Unless you are trying to isolate a problem in your code and you suspect the
-			/// compiler, using this option is not recommended.
+			/// Do not validate the generated code against known capabilities and constraints.
+			/// This option is recommended only when compiling shaders that are known to work
+			/// (that is, shaders that have compiled before without this option). Shaders are
+			/// always validated by the runtime before they are set to the device.
 			/// </summary>
 			SkipOptimization = D3DXSHADER_SKIPOPTIMIZATION,
 
