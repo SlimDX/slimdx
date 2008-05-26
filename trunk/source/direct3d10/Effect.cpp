@@ -34,6 +34,7 @@
 #include "EffectTechnique.h"
 #include "EffectVariable.h"
 #include "EffectPool.h"
+#include "Include.h"
 
 using namespace System;
 using namespace System::IO;
@@ -193,24 +194,41 @@ namespace Direct3D10
 		return RECORD_D3D10( InternalPointer->Optimize() );
 	}
 
-	Effect^ Effect::FromFile( SlimDX::Direct3D10::Device^ device, String ^fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool )
+	Effect^ Effect::FromFile( SlimDX::Direct3D10::Device^ device, String ^fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include )
 	{
 		String^ compilationErrors;
-		return (FromFile( device, fileName, profile, shaderFlags, effectFlags, pool, compilationErrors ));
+		return (FromFile( device, fileName, profile, shaderFlags, effectFlags, pool, include, pump, compilationErrors ));
 	}
 	
-	Effect^ Effect::FromFile( SlimDX::Direct3D10::Device^ device, String ^fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] String^ %compilationErrors  )
+	Effect^ Effect::FromFile( SlimDX::Direct3D10::Device^ device, String ^fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors  )
 	{
 		pin_ptr<const wchar_t> pinnedFileName = PtrToStringChars( fileName );
 		array<unsigned char>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 		pin_ptr<unsigned char> pinnedProfile = &profileBytes[ 0 ];
-		ID3D10Effect* effect;
-		ID3D10Blob* errorBlob;
-		
+		ID3D10Effect* effect = 0;
 		ID3D10EffectPool* effectPool = pool == nullptr ? NULL : static_cast<ID3D10EffectPool*>( pool->InternalPointer );
-		HRESULT hr = D3DX10CreateEffectFromFile( pinnedFileName, NULL, NULL, reinterpret_cast<LPCSTR>( pinnedProfile ),
-			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), device->InternalPointer,
-			effectPool, NULL, &effect, &errorBlob, NULL );
+		ID3D10Blob* errorBlob = 0;
+		ID3D10Include* nativeInclude = 0;
+		IncludeShim shim = IncludeShim( include );
+
+		if( include != nullptr ) {
+			nativeInclude = &shim;
+		}
+		
+		HRESULT hr = D3DX10CreateEffectFromFile(
+			pinnedFileName,
+			0,
+			nativeInclude,
+			reinterpret_cast<LPCSTR>( pinnedProfile ),
+			static_cast<UINT>( shaderFlags ),
+			static_cast<UINT>( effectFlags ),
+			device->InternalPointer,
+			effectPool,
+			0,
+			&effect,
+			&errorBlob,
+			0
+		);
 
 		if( errorBlob != 0 )
 		{
@@ -228,24 +246,43 @@ namespace Direct3D10
 		return gcnew Effect( effect );
 	}
 	
-	Effect^ Effect::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool )
+	Effect^ Effect::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include )
 	{
 		String^ compilationErrors;
-		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, pool, compilationErrors ) );
+		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, pool, include, pump, compilationErrors ) );
 	}
 	
-	Effect^ Effect::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] String^ %compilationErrors  )
+	Effect^ Effect::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors  )
 	{
 		pin_ptr<unsigned char> pinnedData = &memory[ 0 ];
 		array<unsigned char>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 		pin_ptr<unsigned char> pinnedProfile = &profileBytes[ 0 ];
-		ID3D10Effect* effect;
-		ID3D10Blob* errorBlob;
-		
+		ID3D10Effect* effect = 0;
 		ID3D10EffectPool* effectPool = pool == nullptr ? NULL : static_cast<ID3D10EffectPool*>( pool->InternalPointer );
-		HRESULT hr = D3DX10CreateEffectFromMemory( pinnedData, memory->Length, "n/a", NULL, NULL, reinterpret_cast<LPCSTR>( pinnedProfile ),
-			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), device->InternalPointer,
-			effectPool, NULL, &effect, &errorBlob, NULL );
+		ID3D10Blob* errorBlob = 0;
+		ID3D10Include* nativeInclude = 0;
+		IncludeShim shim = IncludeShim( include );
+
+		if( include != nullptr ) {
+			nativeInclude = &shim;
+		}
+		
+		HRESULT hr = D3DX10CreateEffectFromMemory(
+			pinnedData,
+			memory->Length,
+			"n/a",
+			0,
+			nativeInclude,
+			reinterpret_cast<LPCSTR>( pinnedProfile ),
+			static_cast<UINT>( shaderFlags ),
+			static_cast<UINT>( effectFlags ),
+			device->InternalPointer,
+			effectPool,
+			0,
+			&effect,
+			&errorBlob,
+			0
+		);
 			
 		if( errorBlob != 0 )
 		{
@@ -263,37 +300,56 @@ namespace Direct3D10
 		return gcnew Effect( effect );
 	}
 	
-	Effect^ Effect::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool )
+	Effect^ Effect::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include )
 	{
 		String^ compilationErrors;
-		return (FromStream( device, stream, profile, shaderFlags, effectFlags, pool, compilationErrors ) );
+		return (FromStream( device, stream, profile, shaderFlags, effectFlags, pool, include, pump,  compilationErrors ) );
 	}
 	
-	Effect^ Effect::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] String^ %compilationErrors )
+	Effect^ Effect::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors )
 	{
 		array<Byte>^ memory = Utilities::ReadStream( stream, 0 );
-		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, pool, compilationErrors ) );
+		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, pool, include, pump, compilationErrors ) );
 	}
 	
-	Effect^ Effect::FromString( SlimDX::Direct3D10::Device^ device, String^ code, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool )
+	Effect^ Effect::FromString( SlimDX::Direct3D10::Device^ device, String^ code, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include )
 	{
 		String^ compilationErrors;
-		return (FromString( device, code, profile, shaderFlags, effectFlags, pool, compilationErrors ));
+		return (FromString( device, code, profile, shaderFlags, effectFlags, pool, include, pump, compilationErrors ));
 	}
 	
-	Effect^ Effect::FromString( SlimDX::Direct3D10::Device^ device, String^ code, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, [Out] String^ %compilationErrors  )
+	Effect^ Effect::FromString( SlimDX::Direct3D10::Device^ device, String^ code, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors  )
 	{
 		array<unsigned char>^ codeBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( code );
 		pin_ptr<unsigned char> pinnedCode = &codeBytes[ 0 ];
 		array<unsigned char>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 		pin_ptr<unsigned char> pinnedProfile = &profileBytes[ 0 ];
-		ID3D10Effect* effect;
-		ID3D10Blob* errorBlob;
-		
+		ID3D10Effect* effect = 0;
 		ID3D10EffectPool* effectPool = pool == nullptr ? NULL : static_cast<ID3D10EffectPool*>( pool->InternalPointer );
-		HRESULT hr = D3DX10CreateEffectFromMemory( pinnedCode, code->Length, "n/a", NULL, NULL, reinterpret_cast<LPCSTR>( pinnedProfile ),
-			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), device->InternalPointer,
-			effectPool, NULL, &effect, &errorBlob, NULL );
+		ID3D10Blob* errorBlob = 0;
+		ID3D10Include* nativeInclude = 0;
+		IncludeShim shim = IncludeShim( include );
+		
+		if( include != nullptr ) {
+			nativeInclude = &shim;
+		}
+		
+		HRESULT hr = D3DX10CreateEffectFromMemory(
+			pinnedCode,
+			code->Length,
+			"n/a",
+			0,
+			nativeInclude,
+			reinterpret_cast<LPCSTR>( pinnedProfile ),
+			static_cast<UINT>( shaderFlags ),
+			static_cast<UINT>( effectFlags ),
+			device->InternalPointer,
+			effectPool,
+			0,
+			&effect,
+			&errorBlob,
+			0
+		);
 		
 		if( errorBlob != 0 )
 		{

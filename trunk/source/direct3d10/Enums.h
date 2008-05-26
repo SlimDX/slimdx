@@ -370,7 +370,24 @@ namespace SlimDX
 			Gif = D3DX10_IFF_GIF,
 			Wmp = D3DX10_IFF_WMP,
 		};
-
+		
+		/// <summary>
+		/// Flags that indicate the location of an include file.
+		/// </summary>
+		[System::Flags]
+		public enum class IncludeType : System::Int32
+		{
+			/// <summary>
+			/// Indicates that the include is in the local path (or paths).
+			/// </summary>
+			Local = D3D10_INCLUDE_LOCAL,
+			
+			/// <summary>
+			/// Indicates that the include is in the system path (or paths).
+			/// </summary>
+			System = D3D10_INCLUDE_SYSTEM
+		};
+		
 		public enum class InputClassification : System::Int32
 		{
 			PerVertexData = D3D10_INPUT_PER_VERTEX_DATA,
