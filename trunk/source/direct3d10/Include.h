@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include <vcclr.h>
+
 #include "../ComObject.h"
 
 #include "Enums.h"

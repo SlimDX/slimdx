@@ -107,7 +107,7 @@ namespace MiniTri
 			Device.Rasterizer.SetViewports(ViewArea);
 			Device.OutputMerger.SetTargets(RenderTarget);
 
-			Effect = D3D10.Effect.FromFile(Device, "MiniTri.fx", "fx_4_0", D3D10.ShaderFlags.None, D3D10.EffectFlags.None, null);
+			Effect = D3D10.Effect.FromFile(Device, "MiniTri.fx", "fx_4_0", D3D10.ShaderFlags.None, D3D10.EffectFlags.None, null, null);
 			Technique = Effect.GetTechniqueByIndex(0);
 			Pass = Technique.GetPassByIndex(0);
 
