@@ -39,8 +39,18 @@ namespace SlimDX
 			EffectScalarVariable( System::IntPtr pointer );
 			
 			Result Set( bool value );
+			Result Set( array<bool>^ values );
 			Result Set( float value );
+			Result Set( array<float>^ values );
 			Result Set( int value );
+			Result Set( array<int>^ values );
+
+			bool GetBool();
+			array<bool>^ GetBoolArray( int count );
+			int GetInt();
+			array<int>^ GetIntArray( int count );
+			float GetFloat();
+			array<float>^ GetFloatArray( int count );
 		};
 	}
 };

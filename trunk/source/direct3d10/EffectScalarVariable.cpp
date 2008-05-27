@@ -32,30 +32,121 @@ namespace SlimDX
 namespace Direct3D10
 { 
 	EffectScalarVariable::EffectScalarVariable( ID3D10EffectScalarVariable* pointer )
-	: EffectVariable( pointer )
+		: EffectVariable( pointer )
 	{
 		m_Pointer = pointer;
 	}
-	
+
 	EffectScalarVariable::EffectScalarVariable( IntPtr pointer )
-	: EffectVariable( pointer )
+		: EffectVariable( pointer )
 	{
 		m_Pointer = reinterpret_cast<ID3D10EffectScalarVariable*>( pointer.ToPointer() );
 	}
-	
+
 	Result EffectScalarVariable::Set( bool value )
 	{
 		return RECORD_D3D10( m_Pointer->SetBool( value ) );
 	}
-	
+
+	Result EffectScalarVariable::Set( array<bool>^ values )
+	{
+		UINT offset = 0L;
+
+		array<BOOL>^ expandedArray = gcnew array<BOOL>( values->Length );
+		Array::Copy( values, expandedArray, values->Length );
+
+		pin_ptr<BOOL> pinned_values = &expandedArray[0];
+		return RECORD_D3D10( m_Pointer->SetBoolArray( pinned_values, offset, values->Length ) );
+	}
+
 	Result EffectScalarVariable::Set( float value )
 	{
 		return RECORD_D3D10( m_Pointer->SetFloat( value ) );
 	}
-	
+
+	Result EffectScalarVariable::Set( array<float>^ values )
+	{
+		UINT offset = 0L;
+		pin_ptr<float> pinned_values = &values[0];
+		return RECORD_D3D10( m_Pointer->SetFloatArray( pinned_values, offset, values->Length ) );
+	}
+
 	Result EffectScalarVariable::Set( int value )
 	{
 		return RECORD_D3D10( m_Pointer->SetInt( value ) );
+	}
+
+	Result EffectScalarVariable::Set( array<int>^ values )
+	{
+		UINT offset = 0L;
+		pin_ptr<int> pinned_values = &values[0];
+		return RECORD_D3D10( m_Pointer->SetIntArray( pinned_values, offset, values->Length ) );
+	}
+
+	bool EffectScalarVariable::GetBool()
+	{
+		BOOL value = FALSE;
+		RECORD_D3D10( m_Pointer->GetBool( &value ) );
+		return value > 0;
+	}
+
+	array<bool>^ EffectScalarVariable::GetBoolArray( int count )
+	{
+		if( count < 0 )
+			throw gcnew ArgumentOutOfRangeException( "count" );
+
+		array<BOOL>^ values = gcnew array<BOOL>( count );
+		pin_ptr<BOOL> pinned_values = &values[0];
+		HRESULT hr = m_Pointer->GetIntArray( pinned_values, 0, (UINT) count );
+		if( RECORD_D3D10( hr ).IsFailure )
+			return nullptr;
+
+        //now we go from BOOL to bool
+        array<bool>^ boolValues = gcnew array<bool>( count );
+        Array::Copy( values, boolValues, count );
+        return boolValues;
+	}
+
+	int EffectScalarVariable::GetInt()
+	{
+		int value = 0;
+		RECORD_D3D10( m_Pointer->GetInt( &value ) );
+		return value;
+	}
+
+	array<int>^ EffectScalarVariable::GetIntArray( int count )
+	{
+		if( count < 0 )
+			throw gcnew ArgumentOutOfRangeException( "count" );
+
+		array<int>^ values = gcnew array<int>( count );
+		pin_ptr<int> pinned_values = &values[0];
+		HRESULT hr = m_Pointer->GetIntArray( pinned_values, 0, (UINT) count );
+		if( RECORD_D3D10( hr ).IsFailure )
+			return nullptr;
+
+		return values;
+	}
+
+	float EffectScalarVariable::GetFloat()
+	{
+		float value = 0;
+		RECORD_D3D10( m_Pointer->GetFloat( &value ) );
+		return value;
+	}
+
+	array<float>^ EffectScalarVariable::GetFloatArray( int count )
+	{
+		if( count < 0 )
+			throw gcnew ArgumentOutOfRangeException( "count" );
+
+		array<float>^ values = gcnew array<float>( count );
+		pin_ptr<float> pinned_values = &values[0];
+		HRESULT hr = m_Pointer->GetFloatArray( pinned_values, 0, (UINT) count );
+		if( RECORD_D3D10( hr ).IsFailure )
+			return nullptr;
+
+		return values;
 	}
 }
 }
