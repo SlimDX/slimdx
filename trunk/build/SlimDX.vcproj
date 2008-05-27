@@ -1014,6 +1014,15 @@
 							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug|x64"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Include.h"
