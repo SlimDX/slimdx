@@ -197,7 +197,7 @@ namespace Direct3D10
 	Effect^ Effect::FromFile( SlimDX::Direct3D10::Device^ device, String ^fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include )
 	{
 		String^ compilationErrors;
-		return (FromFile( device, fileName, profile, shaderFlags, effectFlags, pool, include, pump, compilationErrors ));
+		return (FromFile( device, fileName, profile, shaderFlags, effectFlags, pool, include, compilationErrors ));
 	}
 	
 	Effect^ Effect::FromFile( SlimDX::Direct3D10::Device^ device, String ^fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors  )
@@ -249,7 +249,7 @@ namespace Direct3D10
 	Effect^ Effect::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include )
 	{
 		String^ compilationErrors;
-		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, pool, include, pump, compilationErrors ) );
+		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, pool, include, compilationErrors ) );
 	}
 	
 	Effect^ Effect::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors  )
@@ -303,19 +303,19 @@ namespace Direct3D10
 	Effect^ Effect::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include )
 	{
 		String^ compilationErrors;
-		return (FromStream( device, stream, profile, shaderFlags, effectFlags, pool, include, pump,  compilationErrors ) );
+		return (FromStream( device, stream, profile, shaderFlags, effectFlags, pool, include, compilationErrors ) );
 	}
 	
 	Effect^ Effect::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors )
 	{
 		array<Byte>^ memory = Utilities::ReadStream( stream, 0 );
-		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, pool, include, pump, compilationErrors ) );
+		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, pool, include, compilationErrors ) );
 	}
 	
 	Effect^ Effect::FromString( SlimDX::Direct3D10::Device^ device, String^ code, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include )
 	{
 		String^ compilationErrors;
-		return (FromString( device, code, profile, shaderFlags, effectFlags, pool, include, pump, compilationErrors ));
+		return (FromString( device, code, profile, shaderFlags, effectFlags, pool, include, compilationErrors ));
 	}
 	
 	Effect^ Effect::FromString( SlimDX::Direct3D10::Device^ device, String^ code, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors  )

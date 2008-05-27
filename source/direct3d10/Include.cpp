@@ -55,16 +55,16 @@ namespace SlimDX
 				{
 					if( stream->GetType() == DataStream::typeid )
 					{
-						DataStream^ data = safe_cast<DataStream^>( stream );
-						*data = data->RawPointer;
-						*bytes = static_cast<UINT>( data->Length );
+						DataStream^ localData = safe_cast<DataStream^>( stream );
+						*data = localData->RawPointer;
+						*bytes = static_cast<UINT>( localData->Length );
 					}
 					else
 					{
-						array<Byte>^ data = Utilities::ReadStream( stream, 0 );
-						m_Handle = GCHandle::Alloc( data, GCHandleType::Pinned );
+						array<Byte>^ localData = Utilities::ReadStream( stream, 0 );
+						m_Handle = GCHandle::Alloc( localData, GCHandleType::Pinned );
 						*data = m_Handle.AddrOfPinnedObject().ToPointer();
-						*bytes = data->Length;
+						*bytes = localData->Length;
 					}
 				}
 				else
@@ -83,6 +83,8 @@ namespace SlimDX
 
 		HRESULT IncludeShim::Close( LPCVOID data )
 		{
+			SLIMDX_UNREFERENCED_PARAMETER( data );
+
 			try
 			{
 				if( m_Handle.IsAllocated )
