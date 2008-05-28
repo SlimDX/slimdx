@@ -41,22 +41,29 @@ namespace Direct3D10
 
 	void StreamOutputWrapper::SetTargets( ... array<StreamOutputBufferBinding>^ bufferBindings )
 	{
-		ID3D10Buffer* buffers[D3D10_SO_BUFFER_SLOT_COUNT];
-		UINT offsets[D3D10_SO_BUFFER_SLOT_COUNT];
-		
-		for( int i = 0; i < D3D10_SO_BUFFER_SLOT_COUNT; ++i )
+		if( bufferBindings == nullptr )
 		{
-			buffers[ i ] = 0;
-			offsets[ i ] = 0;
+			m_Device->SOSetTargets( 0, 0, 0 );	
 		}
-		
-		for( int i = 0; i < bufferBindings->Length; ++i )
+		else 
 		{
-			buffers[i] = static_cast<ID3D10Buffer*>( bufferBindings[ i ].Buffer->InternalPointer );
-			offsets[i] = bufferBindings[ i ].Offset;
+			ID3D10Buffer* buffers[D3D10_SO_BUFFER_SLOT_COUNT];
+			UINT offsets[D3D10_SO_BUFFER_SLOT_COUNT];
+			
+			for( int i = 0; i < D3D10_SO_BUFFER_SLOT_COUNT; ++i )
+			{
+				buffers[ i ] = 0;
+				offsets[ i ] = 0;
+			}
+			
+			for( int i = 0; i < bufferBindings->Length; ++i )
+			{
+				buffers[i] = static_cast<ID3D10Buffer*>( bufferBindings[ i ].Buffer->InternalPointer );
+				offsets[i] = bufferBindings[ i ].Offset;
+			}
+			
+			m_Device->SOSetTargets( bufferBindings->Length, buffers, offsets );
 		}
-		
-		m_Device->SOSetTargets( bufferBindings->Length, buffers, offsets );
 	}
 }
 }

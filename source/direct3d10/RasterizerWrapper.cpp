@@ -62,18 +62,25 @@ namespace Direct3D10
 
 	void RasterizerWrapper::SetViewports( ... array<SlimDX::Viewport>^ viewports )
 	{
-		D3D10_VIEWPORT nativeVPs[D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE];
-		for( int i = 0; i < viewports->Length; ++i )
+		if( viewports == nullptr ) 
 		{
-			nativeVPs[ i ].TopLeftX = viewports[ i ].X;
-			nativeVPs[ i ].TopLeftY = viewports[ i ].Y;
-			nativeVPs[ i ].Width = viewports[ i ].Width;
-			nativeVPs[ i ].Height = viewports[ i ].Height;
-			nativeVPs[ i ].MinDepth = viewports[ i ].MinZ;
-			nativeVPs[ i ].MaxDepth = viewports[ i ].MaxZ;
+			m_Device->RSSetViewports( 0, 0 );
 		}
-		
-		m_Device->RSSetViewports( viewports->Length, nativeVPs );
+		else
+		{
+			D3D10_VIEWPORT nativeVPs[D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE];
+			for( int i = 0; i < viewports->Length; ++i )
+			{
+				nativeVPs[ i ].TopLeftX = viewports[ i ].X;
+				nativeVPs[ i ].TopLeftY = viewports[ i ].Y;
+				nativeVPs[ i ].Width = viewports[ i ].Width;
+				nativeVPs[ i ].Height = viewports[ i ].Height;
+				nativeVPs[ i ].MinDepth = viewports[ i ].MinZ;
+				nativeVPs[ i ].MaxDepth = viewports[ i ].MaxZ;
+			}
+			
+			m_Device->RSSetViewports( viewports->Length, nativeVPs );
+		}
 	}
 }
 }
