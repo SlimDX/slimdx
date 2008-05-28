@@ -88,7 +88,14 @@ namespace Direct3D10
 		int oldMask = 0;
 		m_Device->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
 		
-		m_Device->OMSetBlendState( value->InternalPointer, oldFactor, oldMask );
+		if( value == nullptr )
+		{
+			m_Device->OMSetBlendState( 0, oldFactor, oldMask );
+		}
+		else 
+		{
+			m_Device->OMSetBlendState( value->InternalPointer, oldFactor, oldMask );
+		}
 	}
 	
 	SlimDX::Direct3D10::BlendState^ OutputMergerWrapper::BlendState::get()
@@ -149,8 +156,8 @@ namespace Direct3D10
 	
 	void OutputMergerWrapper::SetTargets( DepthStencilView^ depthStencilView, RenderTargetView^ renderTargetView )
 	{
-		ID3D10DepthStencilView *nativeDSV = depthStencilView == nullptr ? NULL : static_cast<ID3D10DepthStencilView*>( depthStencilView->InternalPointer );
-		ID3D10RenderTargetView *nativeRTV[] = { static_cast<ID3D10RenderTargetView*>( renderTargetView->InternalPointer ) };
+		ID3D10DepthStencilView *nativeDSV = depthStencilView == nullptr ? 0 : static_cast<ID3D10DepthStencilView*>( depthStencilView->InternalPointer );
+		ID3D10RenderTargetView *nativeRTV[] = { renderTargetView == nullptr ? 0 : static_cast<ID3D10RenderTargetView*>( renderTargetView->InternalPointer ) };
 		
 		m_Device->OMSetRenderTargets( 1, nativeRTV, nativeDSV );
 	}
@@ -162,12 +169,19 @@ namespace Direct3D10
 
 	void OutputMergerWrapper::SetTargets( DepthStencilView^ depthStencilView, ... array<RenderTargetView^>^ renderTargets )
 	{
-		ID3D10DepthStencilView *nativeDSV = depthStencilView == nullptr ? NULL : static_cast<ID3D10DepthStencilView*>( depthStencilView->InternalPointer );
+		ID3D10DepthStencilView *nativeDSV = depthStencilView == nullptr ? 0 : static_cast<ID3D10DepthStencilView*>( depthStencilView->InternalPointer );
 		ID3D10RenderTargetView* nativeRTVs[D3D10_SIMULTANEOUS_RENDER_TARGET_COUNT];
 		
-		for( int i = 0; i < renderTargets->Length; ++i )
-			nativeRTVs[ i ] = static_cast<ID3D10RenderTargetView*>( renderTargets[ i ]->InternalPointer );
-		m_Device->OMSetRenderTargets( renderTargets->Length, nativeRTVs, nativeDSV );
+		if( renderTargets == nullptr )
+		{
+			m_Device->OMSetRenderTargets( 0, 0, nativeDSV );
+		}
+		else 
+		{
+			for( int i = 0; i < renderTargets->Length; ++i )
+				nativeRTVs[ i ] = renderTargets[ i ] == nullptr ? 0 : static_cast<ID3D10RenderTargetView*>( renderTargets[ i ]->InternalPointer );
+			m_Device->OMSetRenderTargets( renderTargets->Length, nativeRTVs, nativeDSV );
+		}
 	}
 }
 }

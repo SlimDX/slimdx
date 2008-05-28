@@ -42,9 +42,11 @@ namespace Direct3D10
 
 	void InputAssemblerWrapper::SetInputLayout( InputLayout^ value)
 	{
-		if( value == nullptr ) {
+		if( value == nullptr )
+		{
 			m_Device->IASetInputLayout( 0 );
-		} else {
+		} else
+		{
 			m_Device->IASetInputLayout( value->InternalPointer );
 		}
 	}
@@ -56,12 +58,19 @@ namespace Direct3D10
 	
 	void InputAssemblerWrapper::SetIndexBuffer( Buffer^ indexBuffer, DXGI::Format format, int offset )
 	{
-		m_Device->IASetIndexBuffer( static_cast<ID3D10Buffer*>( indexBuffer->InternalPointer ), static_cast<DXGI_FORMAT>( format ), offset );
+		if( indexBuffer == nullptr )
+		{
+			m_Device->IASetIndexBuffer( 0, DXGI_FORMAT_UNKNOWN, 0 );
+		}
+		else
+		{
+			m_Device->IASetIndexBuffer( static_cast<ID3D10Buffer*>( indexBuffer->InternalPointer ), static_cast<DXGI_FORMAT>( format ), offset );
+		}
 	}
 	
 	void InputAssemblerWrapper::SetVertexBuffers( int slot, VertexBufferBinding vertexBufferBinding )
 	{
-		ID3D10Buffer* buffers[] = { static_cast<ID3D10Buffer*>( vertexBufferBinding.Buffer->InternalPointer ) };
+		ID3D10Buffer* buffers[] = { static_cast<ID3D10Buffer*>( vertexBufferBinding.Buffer == nullptr ? 0 : vertexBufferBinding.Buffer->InternalPointer ) };
 		UINT strides[] = { vertexBufferBinding.Stride };
 		UINT offsets[] = { vertexBufferBinding.Offset };
 		
@@ -76,7 +85,7 @@ namespace Direct3D10
 		
 		for( int i = 0; i < vertexBufferBinding->Length; ++i )
 		{
-			buffers[i] = static_cast<ID3D10Buffer*>( vertexBufferBinding[ i ].Buffer->InternalPointer );
+			buffers[i] = vertexBufferBinding[ i ].Buffer == nullptr ? 0 : static_cast<ID3D10Buffer*>( vertexBufferBinding[ i ].Buffer->InternalPointer );
 			strides[i] = vertexBufferBinding[ i ].Stride;
 			offsets[i] = vertexBufferBinding[ i ].Offset;
 		}
