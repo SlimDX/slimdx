@@ -47,7 +47,14 @@ namespace Direct3D10
 	
 	Result EffectResourceVariable::SetResource( ShaderResourceView^ view )
 	{
-		return RECORD_D3D10( m_Pointer->SetResource( static_cast<ID3D10ShaderResourceView*>( view->InternalPointer ) ) );
+		if( view == nullptr )
+		{
+			return RECORD_D3D10( m_Pointer->SetResource( 0 ) );
+		}
+		else
+		{
+			return RECORD_D3D10( m_Pointer->SetResource( static_cast<ID3D10ShaderResourceView*>( view->InternalPointer ) ) );
+		}
 	}
 	
 	ShaderResourceView^ EffectResourceVariable::GetResource()

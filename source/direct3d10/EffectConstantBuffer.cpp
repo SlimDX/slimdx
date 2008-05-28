@@ -58,7 +58,14 @@ namespace Direct3D10
 
 	Result EffectConstantBuffer::SetConstantBuffer( Buffer^ buffer )
 	{
-		return RECORD_D3D10( m_Pointer->SetConstantBuffer( static_cast<ID3D10Buffer*>( buffer->InternalPointer ) ) );
+		if( buffer == nullptr )
+		{
+			return RECORD_D3D10( m_Pointer->SetConstantBuffer( 0 ) );
+		}
+		else
+		{
+			return RECORD_D3D10( m_Pointer->SetConstantBuffer( static_cast<ID3D10Buffer*>( buffer->InternalPointer ) ) );
+		}
 	}
 	
 	ShaderResourceView^ EffectConstantBuffer::GetTextureBuffer()
@@ -72,7 +79,14 @@ namespace Direct3D10
 
 	Result EffectConstantBuffer::SetTextureBuffer( ShaderResourceView^ buffer )
 	{
-		return RECORD_D3D10( m_Pointer->SetTextureBuffer( static_cast<ID3D10ShaderResourceView*>( buffer->InternalPointer ) ) );
+		if( buffer == nullptr )
+		{
+			return RECORD_D3D10( m_Pointer->SetTextureBuffer( 0 ) );
+		}
+		else
+		{
+			return RECORD_D3D10( m_Pointer->SetTextureBuffer( static_cast<ID3D10ShaderResourceView*>( buffer->InternalPointer ) ) );
+		}
 	}
 }
 }
