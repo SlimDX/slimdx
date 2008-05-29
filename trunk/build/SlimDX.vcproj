@@ -4904,6 +4904,14 @@
 			Name="Design"
 			>
 			<File
+				RelativePath="..\source\design\Color4Converter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\Color4Converter.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\design\Vector2Converter.cpp"
 				>
 			</File>

@@ -4552,7 +4552,21 @@ namespace SlimDX
 			TwoSided = D3DSTENCILCAPS_TWOSIDED,
 		};
 		
-		
+		/// <summary>
+		/// Specifies possible stream frequencies.
+		/// </summary>
+		public enum class StreamFrequency : System::Int32
+		{
+			/// <summary>
+			/// The stream uses indexed data.
+			/// </summary>
+			IndexedData = D3DSTREAMSOURCE_INDEXEDDATA,
+
+			/// <summary>
+			/// The stream uses instance data.
+			/// </summary>
+			InstanceData = D3DSTREAMSOURCE_INSTANCEDATA
+		};
 
 		/// <summary>
 		/// Specifies the set of texture addressing modes supported by the device.

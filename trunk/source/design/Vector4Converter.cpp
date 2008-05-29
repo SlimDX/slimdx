@@ -98,6 +98,9 @@ namespace Design
 			TypeConverter^ converter = TypeDescriptor::GetConverter(float::typeid);
 			array<String^>^ stringArray = string->Split( culture->TextInfo->ListSeparator[0] );
 
+			if( stringArray->Length != 4 )
+				throw gcnew ArgumentException("Invalid vector format.");
+
 			float X = safe_cast<float>( converter->ConvertFromString( context, culture, stringArray[0] ) );
 			float Y = safe_cast<float>( converter->ConvertFromString( context, culture, stringArray[1] ) );
 			float Z = safe_cast<float>( converter->ConvertFromString( context, culture, stringArray[2] ) );
