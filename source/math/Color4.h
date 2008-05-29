@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../design/Color4Converter.h"
+
 struct D3DXCOLOR;
 
 using System::Runtime::InteropServices::OutAttribute;
@@ -36,6 +38,7 @@ namespace SlimDX
 	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
+	[System::ComponentModel::TypeConverter( SlimDX::Design::Color4Converter::typeid )]
 	public value class Color4
 	{
 	internal:
