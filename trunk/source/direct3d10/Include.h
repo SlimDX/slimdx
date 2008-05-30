@@ -44,7 +44,7 @@ namespace SlimDX
 			/// <param name="includeType">Flags specifying the type of the include file.</param>
 			/// <param name="fileName">Name of the include file to open.</param>
 			/// <param name="stream">When the method completes, contains a stream pointing to the include file.</param>
-			virtual void Open( IncludeType type, System::String^ fileName, [Out] System::IO::Stream^ stream ) = 0;
+			virtual void Open( IncludeType type, System::String^ fileName, [Out] System::IO::Stream^ %stream ) = 0;
 
 			/// <summary>
 			/// Closes an included file.
