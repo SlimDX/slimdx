@@ -111,7 +111,7 @@ namespace Direct3D9
 		Macro::Unmarshal( macros, handles );
 		compilationErrors = Utilities::BufferToString( errorBuffer );
 		
-		if( RECORD_D3D9( hr ).IsFailure )
+		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
 		{
 			compilationErrors = nullptr;
 			return nullptr;
@@ -127,6 +127,7 @@ namespace Direct3D9
 		Include ^includeFile, String^ skipConstants, ShaderFlags flags, EffectPool^ pool )
 	{
 		ID3DXEffect* effect;
+		ID3DXBuffer* errorBuffer;
 		pin_ptr<unsigned char> pinnedData = &memory[0];
 
 		LPCSTR skipString = NULL;
@@ -149,11 +150,12 @@ namespace Direct3D9
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinnedData, memory->Length, macrosPtr, includePtr,
-			skipString, static_cast<DWORD>( flags ), effectPool, &effect, NULL );
+			skipString, static_cast<DWORD>( flags ), effectPool, &effect, &errorBuffer );
 		
 		Macro::Unmarshal( macros, handles );
+		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
 		
-		if( RECORD_D3D9( hr ).IsFailure )
+		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
 
 		if( effect == NULL )
@@ -166,6 +168,7 @@ namespace Direct3D9
 		Include ^includeFile, String^ skipConstants, ShaderFlags flags )
 	{
 		ID3DXEffect* effect;
+		ID3DXBuffer* errorBuffer;
 		pin_ptr<unsigned char> pinnedData = &memory[0];
 
 		LPCSTR skipString = NULL;
@@ -187,11 +190,12 @@ namespace Direct3D9
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinnedData, memory->Length, macrosPtr, includePtr,
-			skipString, static_cast<DWORD>( flags ), NULL, &effect, NULL );
+			skipString, static_cast<DWORD>( flags ), NULL, &effect, &errorBuffer );
 		
 		Macro::Unmarshal( macros, handles );
+		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
 		
-		if( RECORD_D3D9( hr ).IsFailure )
+		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
 
 		if( effect == NULL )
@@ -203,12 +207,15 @@ namespace Direct3D9
 	Effect^ Effect::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, ShaderFlags flags )
 	{
 		ID3DXEffect* effect;
+		ID3DXBuffer* errorBuffer;
 		pin_ptr<unsigned char> pinnedData = &memory[0];
 
 		HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinnedData, memory->Length, NULL, NULL,
-			NULL, static_cast<DWORD>( flags ), NULL, &effect, NULL );
+			NULL, static_cast<DWORD>( flags ), NULL, &effect, &errorBuffer );
 		
-		if( RECORD_D3D9( hr ).IsFailure )
+		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
+
+		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
 
 		if( effect == NULL )
@@ -317,7 +324,7 @@ namespace Direct3D9
 		Macro::Unmarshal( macros, handles );
 		compilationErrors = Utilities::BufferToString( errorBuffer );
 		
-		if( RECORD_D3D9( hr ).IsFailure )
+		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
 		{
 			compilationErrors = nullptr;
 			return nullptr;
@@ -333,6 +340,7 @@ namespace Direct3D9
 		String^ skipConstants, ShaderFlags flags, EffectPool^ pool )
 	{
 		ID3DXEffect* effect;
+		ID3DXBuffer* errorBuffer;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
 		LPCSTR skipString = NULL;
@@ -355,11 +363,12 @@ namespace Direct3D9
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXCreateEffectFromFileEx( device->InternalPointer, pinnedName, macrosPtr, includePtr,
-			skipString, static_cast<DWORD>( flags ), effectPool, &effect, NULL );
+			skipString, static_cast<DWORD>( flags ), effectPool, &effect, &errorBuffer );
 		
 		Macro::Unmarshal( macros, handles );
-		
-		if( RECORD_D3D9( hr ).IsFailure )
+		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
+
+		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
 
 		if( effect == NULL )
@@ -372,6 +381,7 @@ namespace Direct3D9
 		String^ skipConstants, ShaderFlags flags )
 	{
 		ID3DXEffect* effect;
+		ID3DXBuffer* errorBuffer;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
 		LPCSTR skipString = NULL;
@@ -393,11 +403,12 @@ namespace Direct3D9
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXCreateEffectFromFileEx( device->InternalPointer, pinnedName, macrosPtr, includePtr,
-			skipString, static_cast<DWORD>( flags ), NULL, &effect, NULL );
+			skipString, static_cast<DWORD>( flags ), NULL, &effect, &errorBuffer );
 		
 		Macro::Unmarshal( macros, handles );
-		
-		if( RECORD_D3D9( hr ).IsFailure )
+		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
+
+		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
 
 		if( effect == NULL )
@@ -409,12 +420,15 @@ namespace Direct3D9
 	Effect^ Effect::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, ShaderFlags flags )
 	{
 		ID3DXEffect* effect;
+		ID3DXBuffer* errorBuffer;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
 		HRESULT hr = D3DXCreateEffectFromFileEx( device->InternalPointer, pinnedName, NULL, NULL,
-			NULL, static_cast<DWORD>( flags ), NULL, &effect, NULL );
+			NULL, static_cast<DWORD>( flags ), NULL, &effect, &errorBuffer );
 		
-		if( RECORD_D3D9( hr ).IsFailure )
+		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
+
+		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
 
 		if( effect == NULL )

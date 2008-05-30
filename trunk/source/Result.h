@@ -31,6 +31,7 @@ namespace SlimDX
 		int m_Code;
 		System::String^ m_Name;
 		System::String^ m_Description;
+		System::Collections::Generic::SortedList<Object^, Object^>^ m_Data;
 	
 		[System::ThreadStatic]
 		static Result m_Last;
@@ -78,6 +79,11 @@ namespace SlimDX
 			System::String^ get();
 		};
 		
+		property System::Collections::IDictionary^ Data
+		{
+			System::Collections::IDictionary^ get();
+		}
+
 		/// <summary>
 		/// Gets a value indicating whether or not the result represents a successful operation.
 		/// </summary>

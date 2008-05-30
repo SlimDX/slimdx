@@ -46,6 +46,8 @@ namespace SlimDX
 		private:
 			IEffectStateManagerShim *shim;
 			
+			static System::String^ ExceptionDataKey = "CompilationErrors";
+
 		public:
 			/// <summary>
 			/// Releases all resources used by the <see cref="Effect"/>.
