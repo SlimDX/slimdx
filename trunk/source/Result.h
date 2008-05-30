@@ -31,7 +31,7 @@ namespace SlimDX
 		int m_Code;
 		System::String^ m_Name;
 		System::String^ m_Description;
-		System::Collections::Generic::SortedList<Object^, Object^>^ m_Data;
+		System::Collections::SortedList^ m_Data;
 	
 		[System::ThreadStatic]
 		static Result m_Last;
@@ -79,9 +79,10 @@ namespace SlimDX
 			System::String^ get();
 		};
 		
-		property System::Collections::IDictionary^ Data
+		property System::Collections::SortedList^ Data
 		{
-			System::Collections::IDictionary^ get();
+			System::Collections::SortedList^ get();
+			void set( System::Collections::SortedList^ value );
 		}
 
 		/// <summary>
