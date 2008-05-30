@@ -33,6 +33,7 @@ namespace SlimDX
 		{
 		internal:
 			D3DPRESENT_PARAMETERS ToUnmanaged();
+			PresentParameters( const D3DPRESENT_PARAMETERS& d3dpp );
 
 			virtual System::Object^ Clone2() = System::ICloneable::Clone
 			{

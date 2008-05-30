@@ -33,6 +33,7 @@
 
 #include "Device.h"
 #include "Direct3D.h"
+#include "PresentParameters.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "Texture.h"
@@ -193,6 +194,16 @@ namespace Direct3D9
 
 	Result Device::Clear( ClearFlags clearFlags, Color4 color, float zdepth, int stencil, array<System::Drawing::Rectangle>^ rectangles )
 	{
+		return Clear( clearFlags, color.ToArgb(), zdepth, stencil, rectangles );
+	}
+
+	Result Device::Clear( ClearFlags clearFlags, int color, float zdepth, int stencil, array<System::Drawing::Rectangle>^ rectangles )
+	{
+		if( rectangles == nullptr )
+		{
+			return Clear( clearFlags, color, zdepth, stencil );
+		}
+
 		stack_vector<D3DRECT> rects( rectangles->Length );
 		for( int i = 0; i < rectangles->Length; i++ )
 		{
@@ -205,13 +216,18 @@ namespace Direct3D9
 			rects[i] = rect;
 		}
 
-		HRESULT hr = InternalPointer->Clear( rectangles->Length, &rects[0], static_cast<DWORD>( clearFlags ), static_cast<D3DCOLOR>( color.ToArgb() ), zdepth, stencil );
+		HRESULT hr = InternalPointer->Clear( rectangles->Length, &rects[0], static_cast<DWORD>( clearFlags ), static_cast<D3DCOLOR>( color ), zdepth, stencil );
 		return RECORD_D3D9( hr );
 	}
 
 	Result Device::Clear( ClearFlags clearFlags, Color4 color, float zdepth, int stencil )
 	{
-		HRESULT hr = InternalPointer->Clear( 0, 0, static_cast<DWORD>( clearFlags ), static_cast<D3DCOLOR>( color.ToArgb() ), zdepth, stencil );
+		return Clear( clearFlags, color.ToArgb(), zdepth, stencil );
+	}
+
+	Result Device::Clear( ClearFlags clearFlags, int color, float zdepth, int stencil )
+	{
+		HRESULT hr = InternalPointer->Clear( 0, 0, static_cast<DWORD>( clearFlags ), static_cast<D3DCOLOR>( color ), zdepth, stencil );
 		return RECORD_D3D9( hr );
 	}
 

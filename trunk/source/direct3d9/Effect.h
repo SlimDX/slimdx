@@ -39,7 +39,7 @@ namespace SlimDX
 		/// <summary>
 		/// Represents a Direct3D rendering effect.
 		/// </summary>
-		public ref class Effect : public BaseEffect, IResettable
+		public ref class Effect : public BaseEffect, public IResettable
 		{
 			COMOBJECT(ID3DXEffect, Effect);
 

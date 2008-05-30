@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		value class DisplayMode;
+		ref class PresentParameters;
 		ref class Surface;
 
 		/// <summary>Applications use the methods of the SwapChain9 class to manipulate a swap chain.</summary>
@@ -61,6 +61,11 @@ namespace SlimDX
 			property SlimDX::Direct3D9::RasterStatus RasterStatus
 			{
 				SlimDX::Direct3D9::RasterStatus get();
+			}
+
+			property SlimDX::Direct3D9::PresentParameters^ PresentParameters
+			{
+				SlimDX::Direct3D9::PresentParameters^ get();
 			}
 		};
 	}

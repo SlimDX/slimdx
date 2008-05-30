@@ -76,7 +76,7 @@ namespace SlimDX
 			/// input device or modify configurations.
 			/// </summary>
 			/// <param name="parent">The parent control.</param>
-			static Result RunControlPanel( System::Windows::Forms::Control^ parent );
+			static Result RunControlPanel( System::IntPtr parent );
 
 			/// <summary>
 			/// Gets a value indicating whether the specified device is

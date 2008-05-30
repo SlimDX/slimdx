@@ -33,7 +33,6 @@
 
 using namespace System;
 using namespace System::Runtime::InteropServices;
-using namespace System::Windows::Forms;
 
 namespace SlimDX
 {
@@ -86,9 +85,9 @@ namespace DirectInput
 		return RECORD_DINPUT( hr );
 	}
 
-	Result DirectInput::RunControlPanel( Control^ parent )
+	Result DirectInput::RunControlPanel( IntPtr parent )
 	{
-		HRESULT hr = m_DirectInput->RunControlPanel( static_cast<HWND>( parent->Handle.ToPointer() ), 0 );
+		HRESULT hr = m_DirectInput->RunControlPanel( static_cast<HWND>( parent.ToPointer() ), 0 );
 		return RECORD_DINPUT( hr );
 	}
 
