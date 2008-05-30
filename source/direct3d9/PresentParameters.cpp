@@ -52,6 +52,24 @@ namespace Direct3D9
 		return d3dpp;
 	}
 
+	PresentParameters::PresentParameters( const D3DPRESENT_PARAMETERS& d3dpp )
+	{
+		AutoDepthStencilFormat = static_cast<Format>( d3dpp.AutoDepthStencilFormat );
+		BackBufferCount = d3dpp.BackBufferCount;
+		BackBufferFormat = static_cast<Format>( d3dpp.BackBufferFormat );
+		BackBufferHeight = d3dpp.BackBufferHeight;
+		BackBufferWidth = d3dpp.BackBufferWidth;
+		EnableAutoDepthStencil = d3dpp.EnableAutoDepthStencil == TRUE;
+		PresentFlags = static_cast<SlimDX::Direct3D9::PresentFlags>( d3dpp.Flags );
+		FullScreenRefreshRateInHertz = d3dpp.FullScreen_RefreshRateInHz;
+		DeviceWindowHandle = IntPtr( d3dpp.hDeviceWindow );
+		MultisampleQuality = d3dpp.MultiSampleQuality;
+		Multisample = static_cast<MultisampleType>( d3dpp.MultiSampleType );
+		PresentationInterval = static_cast<PresentInterval>( d3dpp.PresentationInterval );
+		SwapEffect = static_cast<SlimDX::Direct3D9::SwapEffect>( d3dpp.SwapEffect );
+		Windowed = d3dpp.Windowed == TRUE;
+	}
+
 	PresentParameters::PresentParameters()
 	{
 		BackBufferWidth = 640;

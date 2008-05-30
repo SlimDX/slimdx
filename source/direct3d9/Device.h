@@ -33,7 +33,6 @@
 #include "Light.h"
 #include "PatchInfo.h"
 #include "Material.h"
-#include "PresentParameters.h"
 #include "GammaRamp.h"
 #include "ClipStatus.h"
 #include "CreationParameters.h"
@@ -45,6 +44,7 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
+		ref class PresentParameters;
 		ref class IndexBuffer;
 		ref class VertexBuffer;
 		ref class BaseTexture;
@@ -133,8 +133,29 @@ namespace SlimDX
 			/// <param name="color">The color that will be used to fill the cleared render target.</param>
 			/// <param name="zdepth">The value that will be used to fill the cleared depth buffer.</param>
 			/// <param name="stencil">The value that will be used to fill the cleared stencil buffer.</param>
+			/// <param name="rectangles">The areas on the surfaces that will be cleared.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result Clear( ClearFlags clearFlags, int color, float zdepth, int stencil, array<System::Drawing::Rectangle>^ rectangles );
+			
+			/// <summary>
+			/// Clears one or more surfaces such as a render target, a stencil buffer, and a depth buffer.
+			/// </summary>
+			/// <param name="clearFlags">Flags that specify which surfaces will be cleared.</param>
+			/// <param name="color">The color that will be used to fill the cleared render target.</param>
+			/// <param name="zdepth">The value that will be used to fill the cleared depth buffer.</param>
+			/// <param name="stencil">The value that will be used to fill the cleared stencil buffer.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Clear( ClearFlags clearFlags, Color4 color, float zdepth, int stencil );
+			
+			/// <summary>
+			/// Clears one or more surfaces such as a render target, a stencil buffer, and a depth buffer.
+			/// </summary>
+			/// <param name="clearFlags">Flags that specify which surfaces will be cleared.</param>
+			/// <param name="color">The color that will be used to fill the cleared render target.</param>
+			/// <param name="zdepth">The value that will be used to fill the cleared depth buffer.</param>
+			/// <param name="stencil">The value that will be used to fill the cleared stencil buffer.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result Clear( ClearFlags clearFlags, int color, float zdepth, int stencil );
 			
 			/// <summary>
 			/// Begins a scene.

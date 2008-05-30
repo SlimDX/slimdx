@@ -42,8 +42,8 @@ namespace SlimDX
 
 		HRESULT IncludeShim::Open( D3D10_INCLUDE_TYPE type, LPCSTR fileName, LPCVOID parentData, LPCVOID* data, UINT* bytes )
 		{
-			SLIMDX_DEBUG_UNREFERENCED_PARAMETER(parentData);
-			SLIMDX_DEBUG_UNREFERENCED_PARAMETER(data);
+			SLIMDX_UNREFERENCED_PARAMETER(parentData);
+			SLIMDX_UNREFERENCED_PARAMETER(data);
 
 			try
 			{

@@ -29,6 +29,7 @@
 #include "Device.h"
 #include "Direct3D.h"
 #include "Surface.h"
+#include "PresentParameters.h"
 #include "SwapChain.h"
 
 using namespace System;
@@ -48,7 +49,7 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
-	SwapChain::SwapChain( SlimDX::Direct3D9::Device^ device, PresentParameters^ presentParameters )
+	SwapChain::SwapChain( SlimDX::Direct3D9::Device^ device, SlimDX::Direct3D9::PresentParameters^ presentParameters )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
@@ -149,6 +150,16 @@ namespace Direct3D9
 		result.InVBlank = status.InVBlank > 0;
 		result.Scanline = status.ScanLine;
 		return result;
+	}
+
+	SlimDX::Direct3D9::PresentParameters^ SwapChain::PresentParameters::get()
+	{
+		D3DPRESENT_PARAMETERS d3dpp;
+		HRESULT hr = InternalPointer->GetPresentParameters( &d3dpp );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		return gcnew SlimDX::Direct3D9::PresentParameters( d3dpp );
 	}
 
 	Result SwapChain::Present( SlimDX::Direct3D9::Present flags )

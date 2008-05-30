@@ -45,7 +45,9 @@ namespace SlimDX
 			static Font^ FromPointer( System::IntPtr pointer );
 
 			int DrawString( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rectangle, DrawTextFormat format, Color4 color );
+			int DrawString( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rectangle, DrawTextFormat format, int color );
 			int DrawString( Sprite^ sprite, System::String^ text, int x, int y, Color4 color );
+			int DrawString( Sprite^ sprite, System::String^ text, int x, int y, int color );
 
 			System::Drawing::Rectangle MeasureString( Sprite^ sprite, System::String^ text, DrawTextFormat format );
 
