@@ -23,7 +23,8 @@
 
 #include "../SlimDXException.h"
 
-#define RECORD_XINPUT(x) Result::Record<XInputException^>( (x) )
+#define RECORD_XINPUT_EX(x, key, value) Result::Record<XInputException^>( (x), (key), (value) )
+#define RECORD_XINPUT(x) RECORD_XINPUT_EX(x, nullptr, nullptr)
 
 namespace SlimDX
 {
