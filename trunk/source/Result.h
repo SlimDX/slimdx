@@ -36,7 +36,7 @@ namespace SlimDX
 		static Result m_Last;
 		
 		generic< typename T >
-		static void Throw();
+		static void Throw( Object^ dataKey, Object^ dataValue );
 
 	internal:
 		Result( int hr );
@@ -45,13 +45,13 @@ namespace SlimDX
 		static void BreakIfDebugging();
 
 		generic< typename T >
-		static Result Fail( int hr );
+		static Result Fail( int hr, Object^ dataKey, Object^ dataValue );
 
 		generic< typename T >
-		static Result Record( int hr );
+		static Result Record( int hr, Object^ dataKey, Object^ dataValue );
 
 		generic< typename T >
-		static Result Record( int hr, bool failed );
+		static Result Record( int hr, bool failed, Object^ dataKey, Object^ dataValue );
 
 	public:
 		/// <summary>

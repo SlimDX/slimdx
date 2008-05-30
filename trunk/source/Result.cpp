@@ -78,13 +78,17 @@ namespace SlimDX
 	}
 
 	generic< typename T >
-	void Result::Throw()
+	void Result::Throw( Object^ dataKey, Object^ dataValue )
 	{
-		throw safe_cast<SlimDXException^>( Activator::CreateInstance( T::typeid, m_Last ) );
+		SlimDXException^ ex = safe_cast<SlimDXException^>( Activator::CreateInstance( T::typeid, m_Last ) );
+		if( dataKey != nullptr )
+			ex->Data->Add(dataKey, dataValue);
+
+		throw ex;
 	}
 
 	generic< typename T >
-	Result Result::Record( int hr, bool failed )
+	Result Result::Record( int hr, bool failed, Object^ dataKey, Object^ dataValue )
 	{
 		m_Last = Result( hr );
 
@@ -98,25 +102,25 @@ namespace SlimDX
 				BreakIfDebugging();
 
 			if( static_cast<int>( flags & ResultWatchFlags::Throw ) != 0 )
-				Throw<T>();
+				Throw<T>(dataKey, dataValue);
 		}
 
 		if( failed && Configuration::ThrowOnError )
-			Throw<T>();
+			Throw<T>(dataKey, dataValue);
 
 		return m_Last;
 	}
 
 	generic< typename T >
-	Result Result::Fail( int hr )
+	Result Result::Fail( int hr, Object^ dataKey, Object^ dataValue )
 	{
-		return Record<T>( hr, true );
+		return Record<T>( hr, true, dataKey, dataValue );
 	}
 
 	generic< typename T >
-	Result Result::Record( int hr )
+	Result Result::Record( int hr, Object^ dataKey, Object^ dataValue )
 	{
-		return Record<T>( hr, hr < 0 );
+		return Record<T>( hr, hr < 0, dataKey, dataValue );
 	}
 	
 	Result Result::Last::get()

@@ -87,7 +87,7 @@ namespace Direct3D9
 
 	HRESULT IncludeShim::Close( LPCVOID pData )
 	{
-		SLIMDX_DEBUG_UNREFERENCED_PARAMETER(pData);
+		SLIMDX_UNREFERENCED_PARAMETER(pData);
 
 		try
 		{

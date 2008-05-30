@@ -23,7 +23,8 @@
 
 #include "../SlimDXException.h"
 
-#define RECORD_XAUDIO2(x) Result::Record<XAudio2Exception^>( (x) )
+#define RECORD_XAUDIO2_EX(x, key, value) Result::Record<XAudio2Exception^>( (x), (key), (value) )
+#define RECORD_XAUDIO2(x) RECORD_XAUDIO2_EX(x, nullptr, nullptr)
 
 namespace SlimDX
 {
