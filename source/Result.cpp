@@ -29,13 +29,13 @@
 
 using namespace System;
 using namespace System::Globalization;
+using namespace System::Collections;
 
 namespace SlimDX
 {
 	Result::Result( int hr )
 	: m_Code( hr )
 	{
-		m_Data = gcnew System::Collections::Generic::SortedList<Object^, Object^>();
 	}
 	
 	int Result::Code::get()
@@ -63,9 +63,14 @@ namespace SlimDX
 		return m_Description;
 	}
 	
-	System::Collections::IDictionary^ Result::Data::get()
+	SortedList^ Result::Data::get()
 	{
 		return m_Data;
+	}
+
+	void Result::Data::set( SortedList^ value )
+	{
+		m_Data = value;
 	}
 
 	bool Result::IsSuccess::get()
@@ -98,7 +103,10 @@ namespace SlimDX
 	{
 		m_Last = Result( hr );
 		if( dataKey != nullptr )
+		{
+			m_Last.Data = gcnew SortedList();
 			m_Last.Data->Add( dataKey, dataValue );
+		}
 
 		ResultWatchFlags flags;
 		if( Configuration::TryGetResultWatch( m_Last, flags ) )
