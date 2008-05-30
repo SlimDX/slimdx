@@ -35,6 +35,7 @@ namespace SlimDX
 	Result::Result( int hr )
 	: m_Code( hr )
 	{
+		m_Data = gcnew System::Collections::Generic::SortedList<Object^, Object^>();
 	}
 	
 	int Result::Code::get()
@@ -62,6 +63,11 @@ namespace SlimDX
 		return m_Description;
 	}
 	
+	System::Collections::IDictionary^ Result::Data::get()
+	{
+		return m_Data;
+	}
+
 	bool Result::IsSuccess::get()
 	{
 		return SUCCEEDED( m_Code );
@@ -91,6 +97,8 @@ namespace SlimDX
 	Result Result::Record( int hr, bool failed, Object^ dataKey, Object^ dataValue )
 	{
 		m_Last = Result( hr );
+		if( dataKey != nullptr )
+			m_Last.Data->Add( dataKey, dataValue );
 
 		ResultWatchFlags flags;
 		if( Configuration::TryGetResultWatch( m_Last, flags ) )
