@@ -193,7 +193,7 @@ namespace SlimDX
 		if( m_Position + size > m_Size )
 			throw gcnew InvalidOperationException();
 
-		memcpy( m_Buffer + m_Position, &value, size );
+		memcpy( m_Buffer + m_Position, &value, (size_t) size );
 		m_Position += size;
 	}
 	
@@ -238,7 +238,7 @@ namespace SlimDX
 			throw gcnew InvalidOperationException();
 
 		pin_ptr<T> pinnedData = &data[offset];
-		memcpy( m_Buffer + m_Position, pinnedData, size * count );
+		memcpy( m_Buffer + m_Position, pinnedData, (size_t) size * count );
 		m_Position += size * count;
 	}
 	
@@ -270,7 +270,7 @@ namespace SlimDX
 		if( Length - m_Position < size )
 			throw gcnew InvalidOperationException();
 
-		memcpy( &result, m_Buffer + m_Position, size );
+		memcpy( &result, m_Buffer + m_Position, (size_t) size );
 		m_Position += size;
 		return result;
 	}
