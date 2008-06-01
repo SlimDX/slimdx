@@ -39,7 +39,7 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the number of items in the IO queue.
 			/// </summary>
-			property System::UInt32 IoQueueCount
+			property System::UInt32 IOQueueCount
 			{
 				System::UInt32 get();
 			}

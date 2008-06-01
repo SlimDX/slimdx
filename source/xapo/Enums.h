@@ -38,14 +38,14 @@ namespace SlimDX
 		[System::Flags]
 		public enum class PropertyFlags : System::Int32
 		{
-			InplaceSupported = XAPO_FLAG_INPLACE_SUPPORTED,
-			InplaceRequired = XAPO_FLAG_INPLACE_REQUIRED,
+			InPlaceSupported = XAPO_FLAG_INPLACE_SUPPORTED,
+			InPlaceRequired = XAPO_FLAG_INPLACE_REQUIRED,
 			ChannelsMustMatch = XAPO_FLAG_CHANNELS_MUST_MATCH,
-			FramerateMustMatch = XAPO_FLAG_FRAMERATE_MUST_MATCH,
+			FrameRateMustMatch = XAPO_FLAG_FRAMERATE_MUST_MATCH,
 			BitsPerSampleMustMatch = XAPO_FLAG_BITSPERSAMPLE_MUST_MATCH,
 			BufferCountMustMatch = XAPO_FLAG_BUFFERCOUNT_MUST_MATCH,
-			Default = ChannelsMustMatch | FramerateMustMatch | BitsPerSampleMustMatch |
-							BufferCountMustMatch | InplaceSupported
+			Default = ChannelsMustMatch | FrameRateMustMatch | BitsPerSampleMustMatch |
+							BufferCountMustMatch | InPlaceSupported
 		};
 	}
 }

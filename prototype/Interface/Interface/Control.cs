@@ -320,6 +320,17 @@ namespace Interface
             private set;
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is pressed.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if this instance is pressed; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsPressed
+        {
+            get { return isMouseDown; }
+        }
+
         #endregion
 
         #region Constructor

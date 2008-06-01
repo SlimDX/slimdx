@@ -200,11 +200,11 @@ namespace RawInput
 
 			if( size != 0 )
 			{
-				bytes = new BYTE[size];
-				GetRawInputDeviceInfo( deviceList[i].hDevice, RIDI_DEVICENAME, bytes, &size );
+				TCHAR* chars = new TCHAR[size];
+				GetRawInputDeviceInfo( deviceList[i].hDevice, RIDI_DEVICENAME, chars, &size );
 
-				name = gcnew String( reinterpret_cast<const char*>( bytes ) );
-				delete[] bytes;
+				name = gcnew String( chars );
+				delete[] chars;
 			}
 
 			GetRawInputDeviceInfo( deviceList[i].hDevice, RIDI_DEVICEINFO, NULL, &size );

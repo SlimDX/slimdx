@@ -60,6 +60,7 @@
     <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\Label.cs" />
     <Compile Include="Controls\RadioButton.cs" />
+    <Compile Include="Controls\ScrollBar.cs" />
     <Compile Include="Controls\TextControl.cs" />
     <Compile Include="Dialog.cs" />
     <Compile Include="DialogCollection.cs" />
