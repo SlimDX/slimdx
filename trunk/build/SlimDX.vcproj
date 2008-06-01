@@ -5154,6 +5154,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\xapo\RegistrationProperties.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\source\xapo\RegistrationProperties.h"
 				>
 			</File>

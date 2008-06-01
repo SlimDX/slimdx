@@ -19,37 +19,20 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Enums.h"
+#include <windows.h>
+#include <audiodefs.h>
+#include <xapo.h>
+
+#include "RegistrationProperties.h"
 
 namespace SlimDX
 {
-	namespace XAPO
+namespace XAPO
+{
+	RegistrationProperties::RegistrationProperties()
 	{
-		public ref class RegistrationProperties
-		{
-		private:
-			System::Collections::ObjectModel::Collection<System::Guid>^ supportedInterfaces;
-
-		public:
-			RegistrationProperties();
-
-			property System::Guid ClassId;
-			property System::String^ FriendlyName;
-			property System::String^ CopyrightInfo;
-			property PropertyFlags Flags;
-			property int MajorVersion;
-			property int MinorVersion;
-			property int MinInputBufferCount;
-			property int MaxInputBufferCount;
-			property int MinOutputBufferCount;
-			property int MaxOutputBufferCount;
-
-			property System::Collections::ObjectModel::Collection<System::Guid>^ SupportedInterfaces
-			{
-				System::Collections::ObjectModel::Collection<System::Guid>^ get() { return supportedInterfaces; }
-			}
-		};
+		supportedInterfaces = gcnew System::Collections::ObjectModel::Collection<System::Guid>();
 	}
+}
 }

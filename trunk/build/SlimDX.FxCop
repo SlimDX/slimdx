@@ -40,6 +40,7 @@
   <Target Name="$(ProjectDir)/../samples/DirectInput/Joystick/bin/x86/Debug/Joystick.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/DirectInput/Keyboard/bin/x86/Debug/Keyboard.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/DirectInput/Mouse/bin/x86/Debug/Mouse.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/RawInput/Mouse/bin/x86/Debug/Mouse.exe" Analyze="True" AnalyzeAllChildren="True" />
  </Targets>
  <Rules>
   <RuleFiles>
@@ -141,6 +142,17 @@
        <Item>DXGI</Item>
        <Item>SlimDX.DXGI</Item>
        <Item>Dxgi</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="SlimDX.XAPO">
+    <Messages>
+     <Message Id="XAPO" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-30 21:21:38Z">
+      <Issue Name="Namespace">
+       <Item>XAPO</Item>
+       <Item>SlimDX.XAPO</Item>
+       <Item>Xapo</Item>
       </Issue>
      </Message>
     </Messages>
@@ -907,6 +919,19 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="Result">
+          <Members>
+           <Member Name="#Data">
+            <Messages>
+             <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Excluded" Created="2008-06-01 15:35:01Z">
+              <Issue>
+               <Item>'Result.Data'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="ResultWatchFlags">
           <Messages>
            <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2008-03-13 23:20:47Z" FixCategory="Breaking">
@@ -1263,6 +1288,57 @@
                <Item>'Utilities.FreeNativeString(sbyte*)'</Item>
                <Item>'Marshal.FreeHGlobal(IntPtr)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities.FreeNativeString(sbyte*)'&#xD;&#xA;   -&gt;'Utilities.FreeNativeString(sbyte*)'&#xD;&#xA;   -&gt;'ProgressiveMesh.ToStream(ProgressiveMesh, Stream)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="WaveFormatTag">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2008-05-30 21:21:38Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
+             <Item>'WaveFormatTag'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#AdPcm">
+            <Messages>
+             <Message Id="Pcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-30 21:21:38Z">
+              <Issue Name="Member">
+               <Item>Pcm</Item>
+               <Item>'WaveFormatTag.AdPcm'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#DolbyAC3Spdif">
+            <Messages>
+             <Message Id="Spdif" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-30 21:21:38Z">
+              <Issue Name="Member">
+               <Item>Spdif</Item>
+               <Item>'WaveFormatTag.DolbyAC3Spdif'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Pcm">
+            <Messages>
+             <Message Id="Pcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-30 21:21:38Z">
+              <Issue Name="Member">
+               <Item>Pcm</Item>
+               <Item>'WaveFormatTag.Pcm'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#WmaSpdif">
+            <Messages>
+             <Message Id="Spdif" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-30 21:21:38Z">
+              <Issue Name="Member">
+               <Item>Spdif</Item>
+               <Item>'WaveFormatTag.WmaSpdif'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1844,16 +1920,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#ClearAllObjects()">
-            <Messages>
-             <Message Id="&lt;Module&gt;.D3DX10UnsetAllDeviceObjects(ID3D10Device*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-05-23 21:09:41Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'Device.ClearAllObjects()'</Item>
-               <Item>'&lt;Module&gt;.D3DX10UnsetAllDeviceObjects(ID3D10Device*)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#ClearDepthStencilView(SlimDX.Direct3D10.DepthStencilView,SlimDX.Direct3D10.DepthStencilClearFlags,System.Single,System.Byte)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-02-23 15:03:39Z">
@@ -2013,80 +2079,64 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#FromFile(SlimDX.Direct3D10.Device,System.String,System.String,SlimDX.Direct3D10.ShaderFlags,SlimDX.Direct3D10.EffectFlags,SlimDX.Direct3D10.EffectPool)">
+           <Member Name="#FromFile(SlimDX.Direct3D10.Device,System.String,System.String,SlimDX.Direct3D10.ShaderFlags,SlimDX.Direct3D10.EffectFlags,SlimDX.Direct3D10.EffectPool,SlimDX.Direct3D10.Include)">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'Effect.FromFile(Device, string, string, ShaderFlags, EffectFlags, EffectPool)'</Item>
+               <Item>'Effect.FromFile(Device, string, string, ShaderFlags, EffectFlags, EffectPool, Include)'</Item>
                <Item>Flags</Item>
                <Item>'effectFlags'</Item>
               </Issue>
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'Effect.FromFile(Device, string, string, ShaderFlags, EffectFlags, EffectPool)'</Item>
+               <Item>'Effect.FromFile(Device, string, string, ShaderFlags, EffectFlags, EffectPool, Include)'</Item>
                <Item>Flags</Item>
                <Item>'shaderFlags'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#FromFile(SlimDX.Direct3D10.Device,System.String,System.String,SlimDX.Direct3D10.ShaderFlags,SlimDX.Direct3D10.EffectFlags,SlimDX.Direct3D10.EffectPool,System.String&amp;)">
+           <Member Name="#FromFile(SlimDX.Direct3D10.Device,System.String,System.String,SlimDX.Direct3D10.ShaderFlags,SlimDX.Direct3D10.EffectFlags,SlimDX.Direct3D10.EffectPool,SlimDX.Direct3D10.Include,System.String&amp;)">
             <Messages>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-12 22:40:40Z">
-              <Issue>
-               <Item>pool</Item>
-               <Item>Effect.FromFile(Device, String, String, ShaderFlags, EffectFlags, EffectPool, String&amp;):Effect</Item>
-               <Item>SlimDX.Direct3D10.EffectPool</Item>
-               <Item>SlimDX.DirectXObject&lt;ID3D10EffectPool&gt;</Item>
-              </Issue>
-             </Message>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'Effect.FromFile(Device, string, string, ShaderFlags, EffectFlags, EffectPool, out string)'</Item>
+               <Item>'Effect.FromFile(Device, string, string, ShaderFlags, EffectFlags, EffectPool, Include, out string)'</Item>
                <Item>Flags</Item>
                <Item>'effectFlags'</Item>
               </Issue>
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'Effect.FromFile(Device, string, string, ShaderFlags, EffectFlags, EffectPool, out string)'</Item>
+               <Item>'Effect.FromFile(Device, string, string, ShaderFlags, EffectFlags, EffectPool, Include, out string)'</Item>
                <Item>Flags</Item>
                <Item>'shaderFlags'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#FromMemory(SlimDX.Direct3D10.Device,System.Byte[],System.String,SlimDX.Direct3D10.ShaderFlags,SlimDX.Direct3D10.EffectFlags,SlimDX.Direct3D10.EffectPool)">
+           <Member Name="#FromMemory(SlimDX.Direct3D10.Device,System.Byte[],System.String,SlimDX.Direct3D10.ShaderFlags,SlimDX.Direct3D10.EffectFlags,SlimDX.Direct3D10.EffectPool,SlimDX.Direct3D10.Include)">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'Effect.FromMemory(Device, byte[], string, ShaderFlags, EffectFlags, EffectPool)'</Item>
+               <Item>'Effect.FromMemory(Device, byte[], string, ShaderFlags, EffectFlags, EffectPool, Include)'</Item>
                <Item>Flags</Item>
                <Item>'effectFlags'</Item>
               </Issue>
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'Effect.FromMemory(Device, byte[], string, ShaderFlags, EffectFlags, EffectPool)'</Item>
+               <Item>'Effect.FromMemory(Device, byte[], string, ShaderFlags, EffectFlags, EffectPool, Include)'</Item>
                <Item>Flags</Item>
                <Item>'shaderFlags'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#FromMemory(SlimDX.Direct3D10.Device,System.Byte[],System.String,SlimDX.Direct3D10.ShaderFlags,SlimDX.Direct3D10.EffectFlags,SlimDX.Direct3D10.EffectPool,System.String&amp;)">
+           <Member Name="#FromMemory(SlimDX.Direct3D10.Device,System.Byte[],System.String,SlimDX.Direct3D10.ShaderFlags,SlimDX.Direct3D10.EffectFlags,SlimDX.Direct3D10.EffectPool,SlimDX.Direct3D10.Include,System.String&amp;)">
             <Messages>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-12-02 22:23:38Z">
-              <Issue>
-               <Item>pool</Item>
-               <Item>Effect.FromMemory(Device, Byte[], String, ShaderFlags, EffectFlags, EffectPool, String&amp;):Effect</Item>
-               <Item>SlimDX.Direct3D10.EffectPool</Item>
-               <Item>SlimDX.DirectXObject&lt;ID3D10EffectPool&gt;</Item>
-              </Issue>
-             </Message>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'Effect.FromMemory(Device, byte[], string, ShaderFlags, EffectFlags, EffectPool, out string)'</Item>
+               <Item>'Effect.FromMemory(Device, byte[], string, ShaderFlags, EffectFlags, EffectPool, Include, out string)'</Item>
                <Item>Flags</Item>
                <Item>'effectFlags'</Item>
               </Issue>
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'Effect.FromMemory(Device, byte[], string, ShaderFlags, EffectFlags, EffectPool, out string)'</Item>
+               <Item>'Effect.FromMemory(Device, byte[], string, ShaderFlags, EffectFlags, EffectPool, Include, out string)'</Item>
                <Item>Flags</Item>
                <Item>'shaderFlags'</Item>
               </Issue>
@@ -2104,72 +2154,64 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#FromStream(SlimDX.Direct3D10.Device,System.IO.Stream,System.String,SlimDX.Direct3D10.ShaderFlags,SlimDX.Direct3D10.EffectFlags,SlimDX.Direct3D10.EffectPool)">
+           <Member Name="#FromStream(SlimDX.Direct3D10.Device,System.IO.Stream,System.String,SlimDX.Direct3D10.ShaderFlags,SlimDX.Direct3D10.EffectFlags,SlimDX.Direct3D10.EffectPool,SlimDX.Direct3D10.Include)">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'Effect.FromStream(Device, Stream, string, ShaderFlags, EffectFlags, EffectPool)'</Item>
+               <Item>'Effect.FromStream(Device, Stream, string, ShaderFlags, EffectFlags, EffectPool, Include)'</Item>
                <Item>Flags</Item>
                <Item>'effectFlags'</Item>
               </Issue>
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'Effect.FromStream(Device, Stream, string, ShaderFlags, EffectFlags, EffectPool)'</Item>
+               <Item>'Effect.FromStream(Device, Stream, string, ShaderFlags, EffectFlags, EffectPool, Include)'</Item>
                <Item>Flags</Item>
                <Item>'shaderFlags'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#FromStream(SlimDX.Direct3D10.Device,System.IO.Stream,System.String,SlimDX.Direct3D10.ShaderFlags,SlimDX.Direct3D10.EffectFlags,SlimDX.Direct3D10.EffectPool,System.String&amp;)">
+           <Member Name="#FromStream(SlimDX.Direct3D10.Device,System.IO.Stream,System.String,SlimDX.Direct3D10.ShaderFlags,SlimDX.Direct3D10.EffectFlags,SlimDX.Direct3D10.EffectPool,SlimDX.Direct3D10.Include,System.String&amp;)">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'Effect.FromStream(Device, Stream, string, ShaderFlags, EffectFlags, EffectPool, out string)'</Item>
+               <Item>'Effect.FromStream(Device, Stream, string, ShaderFlags, EffectFlags, EffectPool, Include, out string)'</Item>
                <Item>Flags</Item>
                <Item>'effectFlags'</Item>
               </Issue>
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'Effect.FromStream(Device, Stream, string, ShaderFlags, EffectFlags, EffectPool, out string)'</Item>
+               <Item>'Effect.FromStream(Device, Stream, string, ShaderFlags, EffectFlags, EffectPool, Include, out string)'</Item>
                <Item>Flags</Item>
                <Item>'shaderFlags'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#FromString(SlimDX.Direct3D10.Device,System.String,System.String,SlimDX.Direct3D10.ShaderFlags,SlimDX.Direct3D10.EffectFlags,SlimDX.Direct3D10.EffectPool)">
+           <Member Name="#FromString(SlimDX.Direct3D10.Device,System.String,System.String,SlimDX.Direct3D10.ShaderFlags,SlimDX.Direct3D10.EffectFlags,SlimDX.Direct3D10.EffectPool,SlimDX.Direct3D10.Include)">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'Effect.FromString(Device, string, string, ShaderFlags, EffectFlags, EffectPool)'</Item>
+               <Item>'Effect.FromString(Device, string, string, ShaderFlags, EffectFlags, EffectPool, Include)'</Item>
                <Item>Flags</Item>
                <Item>'effectFlags'</Item>
               </Issue>
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'Effect.FromString(Device, string, string, ShaderFlags, EffectFlags, EffectPool)'</Item>
+               <Item>'Effect.FromString(Device, string, string, ShaderFlags, EffectFlags, EffectPool, Include)'</Item>
                <Item>Flags</Item>
                <Item>'shaderFlags'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#FromString(SlimDX.Direct3D10.Device,System.String,System.String,SlimDX.Direct3D10.ShaderFlags,SlimDX.Direct3D10.EffectFlags,SlimDX.Direct3D10.EffectPool,System.String&amp;)">
+           <Member Name="#FromString(SlimDX.Direct3D10.Device,System.String,System.String,SlimDX.Direct3D10.ShaderFlags,SlimDX.Direct3D10.EffectFlags,SlimDX.Direct3D10.EffectPool,SlimDX.Direct3D10.Include,System.String&amp;)">
             <Messages>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2007-11-12 22:40:40Z">
-              <Issue>
-               <Item>pool</Item>
-               <Item>Effect.FromString(Device, String, String, ShaderFlags, EffectFlags, EffectPool, String&amp;):Effect</Item>
-               <Item>SlimDX.Direct3D10.EffectPool</Item>
-               <Item>SlimDX.DirectXObject&lt;ID3D10EffectPool&gt;</Item>
-              </Issue>
-             </Message>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'Effect.FromString(Device, string, string, ShaderFlags, EffectFlags, EffectPool, out string)'</Item>
+               <Item>'Effect.FromString(Device, string, string, ShaderFlags, EffectFlags, EffectPool, Include, out string)'</Item>
                <Item>Flags</Item>
                <Item>'effectFlags'</Item>
               </Issue>
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'Effect.FromString(Device, string, string, ShaderFlags, EffectFlags, EffectPool, out string)'</Item>
+               <Item>'Effect.FromString(Device, string, string, ShaderFlags, EffectFlags, EffectPool, Include, out string)'</Item>
                <Item>Flags</Item>
                <Item>'shaderFlags'</Item>
               </Issue>
@@ -2471,6 +2513,61 @@
                <Item>'EffectScalarVariable.EffectScalarVariable(IntPtr)'</Item>
                <Item>pointer</Item>
                <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetBool()">
+            <Messages>
+             <Message Id="bool" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-05-30 21:21:38Z">
+              <Issue Name="LanguageSpecificMember">
+               <Item>Bool</Item>
+               <Item>'EffectScalarVariable.GetBool()'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-05-30 21:21:38Z">
+              <Issue Certainty="50">
+               <Item>'EffectScalarVariable.GetBool()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetBoolArray(System.Int32)">
+            <Messages>
+             <Message Id="bool" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-05-30 21:21:38Z">
+              <Issue Name="LanguageSpecificMember">
+               <Item>Bool</Item>
+               <Item>'EffectScalarVariable.GetBoolArray(int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetFloat()">
+            <Messages>
+             <Message Id="float" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-05-30 21:21:38Z">
+              <Issue Name="LanguageSpecificMember">
+               <Item>Float</Item>
+               <Item>'EffectScalarVariable.GetFloat()'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-05-30 21:21:38Z">
+              <Issue Certainty="50">
+               <Item>'EffectScalarVariable.GetFloat()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetInt()">
+            <Messages>
+             <Message Id="int" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-05-30 21:21:38Z">
+              <Issue Name="LanguageSpecificMember">
+               <Item>Int</Item>
+               <Item>'EffectScalarVariable.GetInt()'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-05-30 21:21:38Z">
+              <Issue>
+               <Item>'EffectScalarVariable.GetInt()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -2864,6 +2961,30 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="Include">
+          <Messages>
+           <Message Id="I" TypeName="IdentifiersShouldHaveCorrectPrefix" Category="Microsoft.Naming" CheckId="CA1715" Status="Excluded" Created="2008-05-30 21:21:38Z" FixCategory="Breaking">
+            <Issue Name="Interface">
+             <Item>'Include'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="IncludeType">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2008-05-30 21:21:38Z" FixCategory="Breaking">
+            <Issue Name="FlagsRename">
+             <Item>'IncludeType'</Item>
+             <Item>'IncludeType.Local'</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2008-05-30 21:21:38Z">
+            <Issue>
+             <Item>'IncludeType'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="InputAssemblerWrapper">
           <Members>
            <Member Name="#SetIndexBuffer(SlimDX.Direct3D10.Buffer,SlimDX.DXGI.Format,System.Int32)">
@@ -3239,16 +3360,6 @@
            </Message>
           </Messages>
          </Type>
-         <Type Name="RenderTargetEnabledCollection">
-          <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2008-05-23 21:09:41Z">
-            <Issue Name="TypeNoAlternate">
-             <Item>'RenderTargetEnabledCollection'</Item>
-             <Item>Collection</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="RenderTargetView">
           <Members>
            <Member Name="#.ctor(ID3D10RenderTargetView*)">
@@ -3292,16 +3403,6 @@
             </Messages>
            </Member>
           </Members>
-         </Type>
-         <Type Name="RenderTargetWriteMaskCollection">
-          <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2008-05-23 21:09:41Z">
-            <Issue Name="TypeNoAlternate">
-             <Item>'RenderTargetWriteMaskCollection'</Item>
-             <Item>Collection</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
          <Type Name="Resource">
           <Members>
@@ -3860,6 +3961,39 @@
               <Issue Name="MemberNoAlternate">
                <Item>Flags</Item>
                <Item>'Texture3DDescription.OptionFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ThreadPump">
+          <Members>
+           <Member Name="#.ctor(ID3DX10ThreadPump*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-05-30 21:21:38Z">
+              <Issue>
+               <Item>'ThreadPump.ThreadPump(ID3DX10ThreadPump*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(ID3DX10ThreadPump*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-05-30 21:21:38Z">
+              <Issue>
+               <Item>'ThreadPump.FromPointer(ID3DX10ThreadPump*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-05-30 21:21:38Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'ThreadPump.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4977,6 +5111,42 @@
              <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-03-03 21:06:33Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'Device.Clear(ClearFlags, Color4, float, int, Rectangle[])'</Item>
+               <Item>Flags</Item>
+               <Item>'clearFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Clear(SlimDX.Direct3D9.ClearFlags,System.Int32,System.Single,System.Int32)">
+            <Messages>
+             <Message Id="zdepth" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-06-01 15:35:01Z">
+              <Issue Name="MemberParameter">
+               <Item>'Device.Clear(ClearFlags, int, float, int)'</Item>
+               <Item>zdepth</Item>
+               <Item>'zdepth'</Item>
+              </Issue>
+             </Message>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-06-01 15:35:01Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Device.Clear(ClearFlags, int, float, int)'</Item>
+               <Item>Flags</Item>
+               <Item>'clearFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Clear(SlimDX.Direct3D9.ClearFlags,System.Int32,System.Single,System.Int32,System.Drawing.Rectangle[])">
+            <Messages>
+             <Message Id="zdepth" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-06-01 15:35:01Z">
+              <Issue Name="MemberParameter">
+               <Item>'Device.Clear(ClearFlags, int, float, int, Rectangle[])'</Item>
+               <Item>zdepth</Item>
+               <Item>'zdepth'</Item>
+              </Issue>
+             </Message>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-06-01 15:35:01Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Device.Clear(ClearFlags, int, float, int, Rectangle[])'</Item>
                <Item>Flags</Item>
                <Item>'clearFlags'</Item>
               </Issue>
@@ -9115,6 +9285,15 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="StreamFrequency">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2008-05-30 21:21:38Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
+             <Item>'StreamFrequency'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="StreamShim">
           <Members>
            <Member Name="#Clone(System.Runtime.InteropServices.ComTypes.IStream&amp;)">
@@ -12991,6 +13170,63 @@
          </Type>
         </Types>
        </Namespace>
+       <Namespace Name="SlimDX.XAPO">
+        <Types>
+         <Type Name="BufferFlags">
+          <Messages>
+           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Excluded" Created="2008-05-30 21:21:38Z">
+            <Issue>
+             <Item>'BufferFlags'</Item>
+            </Issue>
+           </Message>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'BufferFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="BufferParameter">
+          <Members>
+           <Member Name="#Flags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'BufferParameter.Flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="PropertyFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'PropertyFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="RegistrationProperties">
+          <Members>
+           <Member Name="#Flags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'RegistrationProperties.Flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
        <Namespace Name="SlimDX.XAudio2">
         <Types>
          <Type Name="AudioBuffer">
@@ -13180,9 +13416,9 @@
          </Type>
          <Type Name="SourceVoice">
           <Members>
-           <Member Name="#.ctor(SlimDX.XAudio2.XAudio2,SlimDX.XAudio2.WaveFormatExtended,SlimDX.XAudio2.VoiceFlags,System.Single)">
+           <Member Name="#.ctor(SlimDX.XAudio2.XAudio2,SlimDX.WaveFormatExtended,SlimDX.XAudio2.VoiceFlags,System.Single)">
             <Messages>
-             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-10 20:49:32Z">
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'SourceVoice.SourceVoice(XAudio2, WaveFormatExtended, VoiceFlags, float)'</Item>
                <Item>flags</Item>
@@ -13271,79 +13507,6 @@
             </Issue>
            </Message>
           </Messages>
-         </Type>
-         <Type Name="WaveFormatTag">
-          <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2008-05-10 14:31:08Z" FixCategory="NonBreaking">
-            <Issue Name="NotFlagsNoZeroValue">
-             <Item>'WaveFormatTag'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#AdPcm">
-            <Messages>
-             <Message Id="Pcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-10 14:31:08Z">
-              <Issue Name="Member">
-               <Item>Pcm</Item>
-               <Item>'WaveFormatTag.AdPcm'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#DolbyAC3Spdif">
-            <Messages>
-             <Message Id="Spdif" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-10 14:31:08Z">
-              <Issue Name="Member">
-               <Item>Spdif</Item>
-               <Item>'WaveFormatTag.DolbyAC3Spdif'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Pcm">
-            <Messages>
-             <Message Id="Pcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-10 14:31:08Z">
-              <Issue Name="Member">
-               <Item>Pcm</Item>
-               <Item>'WaveFormatTag.Pcm'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#WmaSpdif">
-            <Messages>
-             <Message Id="Spdif" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-10 14:31:08Z">
-              <Issue Name="Member">
-               <Item>Spdif</Item>
-               <Item>'WaveFormatTag.WmaSpdif'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#WmAudio2">
-            <Messages>
-             <Message Id="Wm" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-10 14:31:08Z">
-              <Issue Name="Member">
-               <Item>Wm</Item>
-               <Item>'WaveFormatTag.WmAudio2'</Item>
-               <Item>WM</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#WmAudio3">
-            <Messages>
-             <Message Id="Wm" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-10 14:31:08Z">
-              <Issue Name="Member">
-               <Item>Wm</Item>
-               <Item>'WaveFormatTag.WmAudio3'</Item>
-               <Item>WM</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
          </Type>
          <Type Name="XAudio2">
           <Messages>
@@ -14162,14 +14325,43 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/../samples/RawInput/Mouse/bin/x86/Debug/Mouse.exe">
+    <Modules>
+     <Module Name="mouse.exe">
+      <Namespaces>
+       <Namespace Name="Mouse">
+        <Types>
+         <Type Name="MainForm">
+          <Members>
+           <Member Name="#Dispose(System.Boolean)">
+            <Messages>
+             <Message Id="mouse" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Status="Excluded" Created="2008-06-01 15:35:01Z">
+              <Issue>
+               <Item>'MainForm'</Item>
+               <Item>'MainForm.mouse'</Item>
+               <Item>'Device'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
   </Targets>
   <Rules>
    <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
     <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
    </Rule>
+   <Rule TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227">
+    <Resolution Name="Default">Change {0} to be read-only by removing the property setter.</Resolution>
+   </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
-    <Resolution Name="TypeShouldBeDiscreteTerm">The compound word '{0}' in type name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}'.</Resolution>
    </Rule>
    <Rule TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011">
     <Resolution Name="Default">Consider changing the type of parameter {0} in {1} from {2} to its base type {3}. This method appears to only require base class members in its implementation. Suppress this violation if there is a compelling reason to require the more derived type in the method signature.</Resolution>

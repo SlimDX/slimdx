@@ -188,7 +188,8 @@ namespace SlimDX
 			/// <summary>
 			/// Clears all resource bindings from the device.
 			/// </summary>
-			void ClearAllObjects();
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result ClearAllObjects();
 			
 			/// <summary>
 			/// Copies resource data using the GPU.

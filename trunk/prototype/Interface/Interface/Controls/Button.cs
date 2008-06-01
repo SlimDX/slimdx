@@ -12,13 +12,6 @@ namespace Interface
     /// </summary>
     public class Button : TextControl
     {
-        #region Variables
-
-        // variables
-        bool pressed;
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -109,7 +102,7 @@ namespace Interface
                 state = ControlState.Hidden;
             else if (!IsEnabled)
                 state = ControlState.Disabled;
-            else if (pressed)
+            else if (IsPressed)
                 state = ControlState.Pressed;
             else if (IsMouseOver)
                 state = ControlState.MouseOver;
@@ -149,7 +142,7 @@ namespace Interface
             // calculate the offset
             int offsetX = 0;
             int offsetY = 0;
-            if (pressed)
+            if (IsPressed)
             {
                 offsetX = 1;
                 offsetY = 2;
@@ -186,56 +179,21 @@ namespace Interface
             // call the base method
             base.OnHotKeyInvoked(e);
 
-            // request focus
-            HasFocus = true;
-
             // send the click event
             OnClick(EventArgs.Empty);
         }
 
         /// <summary>
-        /// Raises the <see cref="E:MouseDown"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
-        protected internal override void OnMouseDown(System.Windows.Forms.MouseEventArgs e)
-        {
-            // call the base method
-            base.OnMouseDown(e);
-
-            // pressed
-            if (e.Button == System.Windows.Forms.MouseButtons.Left)
-            {
-                // update state
-                HasFocus = true;
-                pressed = true;
-            }
-        }
-
-        /// <summary>
-        /// Raises the <see cref="E:MouseUp"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
-        protected internal override void OnMouseUp(System.Windows.Forms.MouseEventArgs e)
-        {
-            // call the base method
-            base.OnMouseUp(e);
-
-            // not pressed
-            if (e.Button == System.Windows.Forms.MouseButtons.Left)
-                pressed = false;
-        }
-
-        /// <summary>
-        /// Raises the <see cref="E:MouseLeave"/> event.
+        /// Raises the <see cref="E:Click"/> event.
         /// </summary>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected internal override void OnMouseLeave(EventArgs e)
+        protected internal override void OnClick(EventArgs e)
         {
-            // call the base method
-            base.OnMouseLeave(e);
+            // request focus
+            HasFocus = true;
 
-            // mouse left
-            pressed = false;
+            // call the base method
+            base.OnClick(e);
         }
 
         #endregion

@@ -35,7 +35,7 @@ namespace Direct3D10
 		m_DeviceQueue = deviceCount;
 	}
 
-	UInt32 ThreadPumpStatus::IoQueueCount::get()
+	UInt32 ThreadPumpStatus::IOQueueCount::get()
 	{
 		return m_IoQueue;
 	}
