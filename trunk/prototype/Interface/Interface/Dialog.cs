@@ -365,7 +365,7 @@ namespace Interface
                 new ScreenVertex((float)rectangle.Right - 0.5f, (float)rectangle.Top - 0.5f, 0.5f, 1.0f, (int)color, 0, 0),
                 new ScreenVertex((float)rectangle.Right - 0.5f, (float)rectangle.Bottom - 0.5f, 0.5f, 1.0f, (int)color, 0, 0),
                 new ScreenVertex((float)rectangle.Left - 0.5f, (float)rectangle.Bottom - 0.5f, 0.5f, 1.0f, (int)color, 0, 0)};
-        
+
             // flush the sprite
             Parent.Sprite.Flush();
             VertexDeclaration store = Parent.Device.VertexDeclaration;
@@ -573,7 +573,7 @@ namespace Interface
                     new UntexturedScreenVertex((float)X + Width,   (float)Y,          0.5f, 1.0f, (int)TopRightColor),
                     new UntexturedScreenVertex((float)X + Width,   (float)Y + Height, 0.5f, 1.0f, (int)BottomRightColor),
                     new UntexturedScreenVertex((float)X,           (float)Y + Height, 0.5f, 1.0f, (int)BottomLeftColor) };
-            
+
                 // set the declaration and render
                 Parent.Device.VertexFormat = UntexturedScreenVertex.Format;
                 Parent.Device.DrawUserPrimitives(PrimitiveType.TriangleFan, 0, 2, vertices);
@@ -718,7 +718,7 @@ namespace Interface
         /// </summary>
         /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
         protected internal virtual void OnMouseMove(System.Windows.Forms.MouseEventArgs e)
-        {            
+        {
             // raise the event
             if (MouseMove != null)
                 MouseMove(this, e);

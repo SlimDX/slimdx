@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
@@ -10,7 +7,7 @@ namespace Interface
     /// <summary>
     /// Contains various extension methods for .NET types.
     /// </summary>
-    public static class ExtensionMethods
+    static class ExtensionMethods
     {
         #region Collection<T> Methods
 

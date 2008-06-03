@@ -94,7 +94,7 @@ namespace Direct3D9
 
 	Result StateBlock::Capture()
 	{
-		HRESULT hr = InternalPointer->Apply();
+		HRESULT hr = InternalPointer->Capture();
 		return RECORD_D3D9( hr );
 	}
 
