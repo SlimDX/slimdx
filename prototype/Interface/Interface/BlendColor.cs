@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using SlimDX;
 using System.Drawing;
+using SlimDX;
 
 namespace Interface
 {
