@@ -1,50 +1,37 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build-Complete">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+	DefaultTargets="Build">
 
-  <!-- SlimDX.proj -->
-  
-  <!-- =====================================================================
-  Paths -->
-  <PropertyGroup>
-    <SlimDXRoot>$(MSBuildProjectDirectory)\..\</SlimDXRoot>
+	<PropertyGroup>
+		<SlimDXRoot>$(MSBuildProjectDirectory)\..\</SlimDXRoot>
 
-    <ProjectsRoot>$(SlimDXRoot)build\</ProjectsRoot>
-    <ExternalRoot>$(SlimDXRoot)external\</ExternalRoot>
-  </PropertyGroup>
+		<ProjectsRoot>$(SlimDXRoot)build\</ProjectsRoot>
+		<SamplesRoot>$(SlimDXRoot)samples\</SamplesRoot>
+	</PropertyGroup>
 
+	<UsingTask TaskName="DowngradeVCProject" AssemblyFile="$(SlimDXRoot)tools\BuildTasks\BuildTasks\bin\Release\BuildTasks.dll"/>
 
-  <!-- =====================================================================
-  Options -->
   <PropertyGroup>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
     <Platform Condition="'$(Platform)' == ''">Win32</Platform>
   </PropertyGroup>
 
-  <!-- =====================================================================
-  Items --> 
   <ItemGroup>
     <VCProjects Include="$(ProjectsRoot)SlimDX.vcproj"/>
+		<CSProjects Include="$(SamplesRoot)**\*.csproj"/>
+		<Solutions Include="$(ProjectsRoot)SlimDX.sln"/>
   </ItemGroup>
- 
-  <!-- ===================================================================== 
-  Target: CreateDirectories                                                 
-    Creates any directories that do not currently exist. -->
-  <Target Name="CreateDirectories">
-  </Target>
 
-  <!-- ===================================================================== 
-  Target: BuildProjects                                                 
-    Builds the SlimDX .vcproj. In the future, we should build samples here.
-    
-  Output: @(Documentation)                   
-    The set of XML files containing documentation comment information. -->
-  <Target Name="BuildProjects" DependsOnTargets="CreateDirectories">
-    <VCBuild Projects="@(VCProjects)"
-             Configuration="$(Configuration)|$(Platform)"/>
-  </Target>
+	<Target Name="CheckEnvironmentVariables">
+		<Error
+			Condition="'$(DXSDK_DIR)'==''"
+			Text="Environment variable DXSDK_DIR not set; have you installed the DirectX SDK?"/>
+	</Target>
+	
+  <Target Name="Build" DependsOnTargets="CheckEnvironmentVariables">
+		<!-- Build SlimDX explicitly. -->
 
-  <!-- ===================================================================== 
-  Target: Build-Complete                                                 
-    Builds everything. -->
-  <Target Name="Build-Complete" DependsOnTargets="BuildProjects">
+		<DowngradeVCProject InputProject="SlimDX.vcproj" OutputProject="SlimDX.2005.vcproj"/>
+		
+		<!--<VCBuild Platform="$(Platform)" Configuration="$(Configuration)" Projects="SlimDX.vcproj"/>-->
   </Target>
 </Project>
