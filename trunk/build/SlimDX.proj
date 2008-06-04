@@ -8,7 +8,7 @@
 		<SamplesRoot>$(SlimDXRoot)samples\</SamplesRoot>
 	</PropertyGroup>
 
-	<UsingTask TaskName="DowngradeVCProject" AssemblyFile="$(SlimDXRoot)tools\BuildTasks\BuildTasks\bin\Release\BuildTasks.dll"/>
+	<UsingTask TaskName="DowngradeVCProject" AssemblyFile="$(SlimDXRoot)tools\BuildTasks\BuildTasks.dll"/>
 
   <PropertyGroup>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>

@@ -59,7 +59,7 @@ namespace BuildTasks {
 
 			foreach (XPathNavigator attribute in element.Select("@*")) {
 				if (element.Name == "VisualStudioProject" && attribute.Name == "Version") {
-					writer.Write("{0}{1}Version=\"8.0\"", Environment.NewLine, attributePrefix );
+					writer.Write("{0}{1}Version=\"8.00\"", Environment.NewLine, attributePrefix );
 				}
 				else if(element.Name == "VisualStudioProject" && attribute.Name == "TargetFrameworkVersion") {
 					// No op.
@@ -68,14 +68,19 @@ namespace BuildTasks {
 					writer.Write("{0}{1}{2}=\"{3}\"", Environment.NewLine, attributePrefix, attribute.Name, attribute.Value);
 				}
 			}
-
-			writer.WriteLine(">");
-			
-			foreach (XPathNavigator child in element.SelectChildren(XPathNodeType.Element)) {
-				WriteElement(writer, indent + 1, child);
+		
+			if( element.HasChildren ) {
+				writer.WriteLine(">");
+				
+				foreach (XPathNavigator child in element.SelectChildren(XPathNodeType.Element)) {
+					WriteElement(writer, indent + 1, child);
+				}
+				
+				writer.WriteLine("{0}</{1}>", elementPrefix, element.Name);
 			}
-			
-			writer.WriteLine("{0}</{1}>", elementPrefix, element.Name);
+			else {
+				writer.WriteLine("/>");
+			}
 		}
 	}
 }
