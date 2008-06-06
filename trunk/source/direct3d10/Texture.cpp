@@ -51,11 +51,7 @@ namespace Direct3D10
 
 	Texture^ Texture::FromFile( SlimDX::Direct3D10::Device^ device, String^ fileName )
 	{	
-		ID3D10Resource* resource = 0;
-		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
-		HRESULT hr = D3DX10CreateTextureFromFile( device->InternalPointer, pinnedName, 0, 0, &resource, 0 );
-		RECORD_D3D10( hr );
-		
+		ID3D10Resource* resource = ConstructFromFile( device, fileName );
 		if( resource == 0 )
 			return nullptr;
 		return gcnew Texture( resource );
@@ -63,21 +59,18 @@ namespace Direct3D10
 
 	Texture^ Texture::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory )
 	{
-		pin_ptr<unsigned char> pinnedMemory = &memory[0];
-		
-		ID3D10Resource* resource = 0;
-		HRESULT hr = D3DX10CreateTextureFromMemory( device->InternalPointer, pinnedMemory, memory->Length, 0, 0, &resource, 0 ); 
-		RECORD_D3D10( hr );
-		
+		ID3D10Resource* resource = ConstructFromMemory( device, memory );
 		if( resource == 0 )
 			return nullptr;
-		return gcnew Texture( static_cast<ID3D10Resource*>( resource ) );
+		return gcnew Texture( resource );
 	}
 
 	Texture^ Texture::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, int sizeInBytes )
 	{
-		array<Byte>^ memory = SlimDX::Utilities::ReadStream( stream, sizeInBytes );
-		return FromMemory( device, memory );
+		ID3D10Resource* resource = ConstructFromStream( device, stream, sizeInBytes );
+		if( resource == 0 )
+			return nullptr;
+		return gcnew Texture( resource );
 	}
 
 
@@ -101,6 +94,33 @@ namespace Direct3D10
 		}
 		
 		return (static_cast< int >(size));
+	}
+	
+	ID3D10Resource* Texture::ConstructFromFile( SlimDX::Direct3D10::Device^ device, String^ fileName )
+	{	
+		ID3D10Resource* resource = 0;
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+		HRESULT hr = D3DX10CreateTextureFromFile( device->InternalPointer, pinnedName, 0, 0, &resource, 0 );
+		RECORD_D3D10( hr );
+		
+		return resource;
+	}
+	
+	ID3D10Resource* Texture::ConstructFromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory )
+	{
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+		
+		ID3D10Resource* resource = 0;
+		HRESULT hr = D3DX10CreateTextureFromMemory( device->InternalPointer, pinnedMemory, memory->Length, 0, 0, &resource, 0 ); 
+		RECORD_D3D10( hr );
+		
+		return resource;
+	}
+	
+	ID3D10Resource* Texture::ConstructFromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, int sizeInBytes )
+	{
+		array<Byte>^ memory = SlimDX::Utilities::ReadStream( stream, sizeInBytes );
+		return ConstructFromMemory( device, memory );
 	}
 }
 }

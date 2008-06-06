@@ -114,26 +114,41 @@ namespace Direct3D10
 	
 	Texture2D^ Texture2D::FromFile( SlimDX::Direct3D10::Device^ device, String^ fileName )
 	{
-		Texture^ baseTexture = Texture::FromFile( device, fileName );
-		if( baseTexture->Dimension != ResourceDimension::Texture2D )
+		ID3D10Resource* resource = Texture::ConstructFromFile( device, fileName );
+		if( resource == 0 )
+			return nullptr;
+			
+		D3D10_RESOURCE_DIMENSION type;
+		resource->GetType( &type );
+		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE2D )
 			throw gcnew InvalidOperationException( "Could not load file as 2D texture." ); 
-		return static_cast<Texture2D^>( baseTexture );
+		return gcnew Texture2D( static_cast<ID3D10Texture2D*>( resource ) );
 	}
 	
 	Texture2D^ Texture2D::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory )
 	{
-		Texture^ baseTexture = Texture::FromMemory( device, memory );
-		if( baseTexture->Dimension != ResourceDimension::Texture2D )
+		ID3D10Resource* resource = Texture::ConstructFromMemory( device, memory );
+		if( resource == 0 )
+			return nullptr;
+			
+		D3D10_RESOURCE_DIMENSION type;
+		resource->GetType( &type );
+		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE2D )
 			throw gcnew InvalidOperationException( "Could not load file as 2D texture." ); 
-		return static_cast<Texture2D^>( baseTexture );
+		return gcnew Texture2D( static_cast<ID3D10Texture2D*>( resource ) );
 	}
 	
 	Texture2D^ Texture2D::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, int sizeInBytes )
 	{
-		Texture^ baseTexture = Texture::FromStream( device, stream, sizeInBytes );
-		if( baseTexture->Dimension != ResourceDimension::Texture2D )
+		ID3D10Resource* resource = Texture::ConstructFromStream( device, stream, sizeInBytes );
+		if( resource == 0 )
+			return nullptr;
+			
+		D3D10_RESOURCE_DIMENSION type;
+		resource->GetType( &type );
+		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE2D )
 			throw gcnew InvalidOperationException( "Could not load file as 2D texture." ); 
-		return static_cast<Texture2D^>( baseTexture );
+		return gcnew Texture2D( static_cast<ID3D10Texture2D*>( resource ) );
 	}
 }
 }
