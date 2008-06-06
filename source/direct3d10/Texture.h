@@ -36,6 +36,10 @@ namespace SlimDX
 		internal:
 			static int GetMipSize( int mipSlice, int baseSliceSize );
 			
+			static ID3D10Resource* ConstructFromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName );
+			static ID3D10Resource* ConstructFromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory );
+			static ID3D10Resource* ConstructFromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes );
+			
 		protected:
 			Texture( ID3D10Resource *pointer );
 		
