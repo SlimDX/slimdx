@@ -27,6 +27,7 @@
 #include "WaveFormatExtensible.h"
 #include "ContextEventArgs.h"
 #include "ErrorEventArgs.h"
+#include "StartProcessingEventArgs.h"
 #include "AudioBuffer.h"
 #include "VoiceState.h"
 
@@ -53,7 +54,7 @@ namespace SlimDX
 			void InvokeStreamEnd() { OnStreamEnd( System::EventArgs::Empty ); }
 			void InvokeVoiceError( ErrorEventArgs^ e ) { OnVoiceError( e ); }
 			void InvokeVoiceProcessingPassEnd() { OnVoiceProcessingPassEnd( System::EventArgs::Empty ); }
-			void InvokeVoiceProcessingPassStart() { OnVoiceProcessingPassStart( System::EventArgs::Empty ); }
+			void InvokeVoiceProcessingPassStart( StartProcessingEventArgs^ e ) { OnVoiceProcessingPassStart( e ); }
 
 		protected:
 			void OnBufferEnd( ContextEventArgs^ e );
@@ -61,7 +62,7 @@ namespace SlimDX
 			void OnLoopEnd( ContextEventArgs^ e );
 			void OnStreamEnd( System::EventArgs^ e );
 			void OnVoiceError( ErrorEventArgs^ e );
-			void OnVoiceProcessingPassStart( System::EventArgs^ e );
+			void OnVoiceProcessingPassStart( StartProcessingEventArgs^ e );
 			void OnVoiceProcessingPassEnd( System::EventArgs^ e );
 
 		public:
@@ -100,12 +101,12 @@ namespace SlimDX
 			event System::EventHandler<ContextEventArgs^>^ BufferEnd;
 			event System::EventHandler<ContextEventArgs^>^ BufferStart;
 			event System::EventHandler<ContextEventArgs^>^ LoopEnd;
+			event System::EventHandler<StartProcessingEventArgs^>^ VoiceProcessingPassStart;
 
 			event System::EventHandler<ErrorEventArgs^>^ VoiceError;
 
 			event System::EventHandler^ StreamEnd;
 			event System::EventHandler^ VoiceProcessingPassEnd;
-			event System::EventHandler^ VoiceProcessingPassStart;
 		};
 	}
 }

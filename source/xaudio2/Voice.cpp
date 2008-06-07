@@ -127,11 +127,8 @@ namespace XAudio2
 		array<float>^ results = gcnew array<float>( sourceChannels * destinationChannels );
 		pin_ptr<float> pinResults = &results[0];
 
-		HRESULT hr = InternalPointer->GetOutputMatrix( destinationVoice->InternalPointer, sourceChannels,
+		InternalPointer->GetOutputMatrix( destinationVoice->InternalPointer, sourceChannels,
 			destinationChannels, reinterpret_cast<float*>( pinResults ) );
-
-		if( RECORD_XAUDIO2( hr ).IsFailure )
-			return nullptr;
 
 		return results;
 	}

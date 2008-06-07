@@ -44,7 +44,7 @@ namespace SlimDX
 			property int MaximumCyclesPerQuantum;
 			property int MemoryUsageInBytes;
 			property int CurrentLatencyInSamples;
-			property int GlitchesSinceLastQuery;
+			property int GlitchesSinceEngineStarted;
 			property int ActiveSourceVoiceCount;
 			property int TotalSourceVoiceCount;
 			property int ActiveSubmixVoiceCount;

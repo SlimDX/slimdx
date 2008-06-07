@@ -36,7 +36,7 @@ namespace XAudio2
 		MaximumCyclesPerQuantum = data.MaximumCyclesPerQuantum;
 		MemoryUsageInBytes = data.MemoryUsageInBytes;
 		CurrentLatencyInSamples = data.CurrentLatencyInSamples;
-		GlitchesSinceLastQuery = data.GlitchesSinceLastQuery;
+		GlitchesSinceEngineStarted = data.GlitchesSinceEngineStarted;
 		ActiveSourceVoiceCount = data.ActiveSourceVoiceCount;
 		TotalSourceVoiceCount = data.TotalSourceVoiceCount;
 		ActiveSubmixVoiceCount = data.ActiveSubmixVoiceCount;
@@ -55,7 +55,7 @@ namespace XAudio2
 		result->MaximumCyclesPerQuantum = MaximumCyclesPerQuantum;
 		result->MemoryUsageInBytes = MemoryUsageInBytes;
 		result->CurrentLatencyInSamples = CurrentLatencyInSamples;
-		result->GlitchesSinceLastQuery = GlitchesSinceLastQuery;
+		result->GlitchesSinceEngineStarted = GlitchesSinceEngineStarted;
 		result->ActiveSourceVoiceCount = ActiveSourceVoiceCount;
 		result->TotalSourceVoiceCount = TotalSourceVoiceCount;
 		result->ActiveSubmixVoiceCount = ActiveSubmixVoiceCount;
@@ -83,7 +83,7 @@ namespace XAudio2
 	{		
 		return AudioCyclesSinceLastQuery.GetHashCode() + TotalCyclesSinceLastQuery.GetHashCode() + MinimumCyclesPerQuantum.GetHashCode() +
 			MaximumCyclesPerQuantum.GetHashCode() + MemoryUsageInBytes.GetHashCode() + CurrentLatencyInSamples.GetHashCode() +
-			GlitchesSinceLastQuery.GetHashCode() + ActiveSubmixVoiceCount.GetHashCode() + TotalSubmixVoiceCount.GetHashCode() +
+			GlitchesSinceEngineStarted.GetHashCode() + ActiveSubmixVoiceCount.GetHashCode() + TotalSubmixVoiceCount.GetHashCode() +
 			ActiveSourceVoiceCount.GetHashCode() + TotalSourceVoiceCount.GetHashCode() + ActiveXmaSourceVoices.GetHashCode() + ActiveXmaStreams.GetHashCode();
 	}
 
@@ -108,7 +108,7 @@ namespace XAudio2
 
 		return ( value->AudioCyclesSinceLastQuery == AudioCyclesSinceLastQuery && value->TotalCyclesSinceLastQuery == TotalCyclesSinceLastQuery && value->MinimumCyclesPerQuantum == MinimumCyclesPerQuantum &&
 			value->MaximumCyclesPerQuantum == MaximumCyclesPerQuantum && value->MemoryUsageInBytes == MemoryUsageInBytes && value->CurrentLatencyInSamples == CurrentLatencyInSamples &&
-			value->GlitchesSinceLastQuery == GlitchesSinceLastQuery && value->ActiveSubmixVoiceCount == ActiveSubmixVoiceCount && value->TotalSubmixVoiceCount == TotalSubmixVoiceCount &&
+			value->GlitchesSinceEngineStarted == GlitchesSinceEngineStarted && value->ActiveSubmixVoiceCount == ActiveSubmixVoiceCount && value->TotalSubmixVoiceCount == TotalSubmixVoiceCount &&
 			value->ActiveSourceVoiceCount == ActiveSourceVoiceCount && value->TotalSourceVoiceCount == TotalSourceVoiceCount && value->ActiveXmaSourceVoices == ActiveXmaSourceVoices &&
 			value->ActiveXmaStreams == ActiveXmaStreams);
 	}

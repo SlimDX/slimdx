@@ -102,7 +102,7 @@ namespace XAudio2
 			VoiceProcessingPassEnd( this, e );
 	}
 
-	void SourceVoice::OnVoiceProcessingPassStart( EventArgs^ e )
+	void SourceVoice::OnVoiceProcessingPassStart( StartProcessingEventArgs^ e )
 	{
 		if( &SourceVoice::VoiceProcessingPassStart != nullptr )
 			VoiceProcessingPassStart( this, e );

@@ -33,9 +33,6 @@
 
 #include "XAudio2.h"
 
-// hack because it isn't defined anywhere that we can find
-const GUID IID_IXAudio2 = __uuidof(IXAudio2);
-
 using namespace System;
 
 namespace SlimDX
