@@ -25,23 +25,12 @@ namespace SlimDX
 {
 	namespace XAudio2
 	{
-		ref class SourceVoice;
-
-		class VoiceCallbackShim : public IXAudio2VoiceCallback
+		public ref class StartProcessingEventArgs : System::EventArgs
 		{
-		private:
-			gcroot<SourceVoice^> m_WrappedInterface;
-
 		public:
-			VoiceCallbackShim( SourceVoice^ wrappedInterface );
+			StartProcessingEventArgs(int bytesRequired) { BytesRequired = bytesRequired; }
 
-			void WINAPI OnBufferEnd( void *context );
-			void WINAPI OnBufferStart( void *context );
-			void WINAPI OnLoopEnd( void *context );
-			void WINAPI OnStreamEnd();
-			void WINAPI OnVoiceError( void *context, HRESULT error );
-			void WINAPI OnVoiceProcessingPassStart( UINT32 bytesRequired );
-			void WINAPI OnVoiceProcessingPassEnd();
+			property int BytesRequired;
 		};
 	}
 }
