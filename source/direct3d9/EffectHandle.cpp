@@ -51,19 +51,9 @@ namespace Direct3D9
 			System::Runtime::InteropServices::Marshal::FreeHGlobal( m_StringData );
 	}
 
-	EffectHandle^ EffectHandle::FromString( String^ name )
-	{
-		return gcnew EffectHandle( name );
-	}
-
 	EffectHandle::operator EffectHandle^( String^ name )
 	{
 		return gcnew EffectHandle( name );
-	}
-
-	String^ EffectHandle::ToString()
-	{
-		return gcnew String( m_Handle );
 	}
 
 	bool EffectHandle::operator == ( EffectHandle^ left, EffectHandle^ right )
@@ -81,8 +71,8 @@ namespace Direct3D9
 
 	int EffectHandle::GetHashCode()
 	{
-		String^ string = gcnew String( m_Handle );
-		return string->GetHashCode();
+		IntPtr ptr( const_cast<void*>( reinterpret_cast<const void*>( m_Handle ) ) );
+		return ptr.GetHashCode();
 	}
 
 	bool EffectHandle::Equals( Object^ value )
