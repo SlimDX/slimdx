@@ -411,7 +411,7 @@ namespace SlimDX
 		/// </summary>
 		/// <param name="value">The value to be converted.</param>
 		/// <returns>The converted value.</returns>
-		static operator System::Drawing::Color( Color4 value );
+		static explicit operator System::Drawing::Color( Color4 value );
 
 		/// <summary>
 		/// Converts the value of the object to its equivalent string representation.

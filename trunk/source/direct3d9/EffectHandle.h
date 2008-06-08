@@ -48,13 +48,11 @@ namespace SlimDX
 			virtual	~EffectHandle() { Destruct(); }
 			!EffectHandle() { Destruct(); }
 
-			static EffectHandle^ FromString( System::String^ name );
 			static operator EffectHandle^ ( System::String^ name );
 
 			static bool operator == ( EffectHandle^ left, EffectHandle^ right );
 			static bool operator != ( EffectHandle^ left, EffectHandle^ right );
 
-			virtual System::String^ ToString() override;
 			virtual int GetHashCode() override;
 			virtual bool Equals( System::Object^ obj ) override;
 			virtual bool Equals( EffectHandle^ other );
