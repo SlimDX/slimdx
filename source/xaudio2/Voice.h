@@ -46,7 +46,7 @@ namespace SlimDX
 			Voice() { }
 
 		public:
-			void Destroy();
+			virtual ~Voice();
 
 			Result EnableEffect( int effectIndex );
 			Result EnableEffect( int effectIndex, int operationSet );

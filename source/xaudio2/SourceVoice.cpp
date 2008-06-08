@@ -51,6 +51,36 @@ namespace XAudio2
 		InternalPointer = pointer;
 	}
 
+	SourceVoice::SourceVoice( XAudio2^ device, WaveFormatExtended sourceFormat, VoiceFlags flags )
+	{
+		IXAudio2SourceVoice *pointer;
+		WAVEFORMATEX format = sourceFormat.ToUnmanaged();
+
+		callback = new VoiceCallbackShim( this );
+
+		HRESULT hr = device->InternalPointer->CreateSourceVoice( &pointer, &format, static_cast<UINT32>( flags ), XAUDIO2_DEFAULT_FREQ_RATIO, callback );
+
+		if( RECORD_XAUDIO2( hr ).IsFailure )
+			throw gcnew XAudio2Exception( Result::Last );
+
+		InternalPointer = pointer;
+	}
+
+	SourceVoice::SourceVoice( XAudio2^ device, WaveFormatExtended sourceFormat )
+	{
+		IXAudio2SourceVoice *pointer;
+		WAVEFORMATEX format = sourceFormat.ToUnmanaged();
+
+		callback = new VoiceCallbackShim( this );
+
+		HRESULT hr = device->InternalPointer->CreateSourceVoice( &pointer, &format, 0, XAUDIO2_DEFAULT_FREQ_RATIO, callback );
+
+		if( RECORD_XAUDIO2( hr ).IsFailure )
+			throw gcnew XAudio2Exception( Result::Last );
+
+		InternalPointer = pointer;
+	}
+
 	SourceVoice::SourceVoice( XAudio2^ device, WaveFormatExtensible^ sourceFormat, VoiceFlags flags, float maximumFrequencyRatio )
 	{
 		IXAudio2SourceVoice *pointer;

@@ -34,7 +34,7 @@ namespace SlimDX
 {
 namespace XAudio2
 {
-	void Voice::Destroy()
+	Voice::~Voice()
 	{
 		InternalPointer->DestroyVoice();
 	}
