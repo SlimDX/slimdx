@@ -64,8 +64,12 @@ namespace BuildTasks {
 				else if(element.Name == "VisualStudioProject" && attribute.Name == "TargetFrameworkVersion") {
 					// No op.
 				}
-				else {
-					writer.Write("{0}{1}{2}=\"{3}\"", Environment.NewLine, attributePrefix, attribute.Name, attribute.Value);
+				else if(element.Name == "AssemblyReference" && attribute.Name == "MinFrameworkVersion")	{
+					// No op.
+				}
+				else
+				{
+					writer.Write( "{0}{1}{2}=\"{3}\"", Environment.NewLine, attributePrefix, attribute.Name, attribute.Value );
 				}
 			}
 		
