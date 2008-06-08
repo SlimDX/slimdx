@@ -47,5 +47,41 @@ namespace XAudio2
 
 		InternalPointer = pointer;
 	}
+
+	MasteringVoice::MasteringVoice( XAudio2^ device, int inputChannels, int inputSampleRate )
+	{
+		IXAudio2MasteringVoice *pointer;
+
+		HRESULT hr = device->InternalPointer->CreateMasteringVoice( &pointer, inputChannels, inputSampleRate, 0, 0 );
+
+		if( RECORD_XAUDIO2( hr ).IsFailure )
+			throw gcnew XAudio2Exception( Result::Last );
+
+		InternalPointer = pointer;
+	}
+
+	MasteringVoice::MasteringVoice( XAudio2^ device, int inputChannels )
+	{
+		IXAudio2MasteringVoice *pointer;
+
+		HRESULT hr = device->InternalPointer->CreateMasteringVoice( &pointer, inputChannels, XAUDIO2_DEFAULT_SAMPLERATE, 0, 0 );
+
+		if( RECORD_XAUDIO2( hr ).IsFailure )
+			throw gcnew XAudio2Exception( Result::Last );
+
+		InternalPointer = pointer;
+	}
+
+	MasteringVoice::MasteringVoice( XAudio2^ device )
+	{
+		IXAudio2MasteringVoice *pointer;
+
+		HRESULT hr = device->InternalPointer->CreateMasteringVoice( &pointer, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, 0 );
+
+		if( RECORD_XAUDIO2( hr ).IsFailure )
+			throw gcnew XAudio2Exception( Result::Last );
+
+		InternalPointer = pointer;
+	}
 }
 }

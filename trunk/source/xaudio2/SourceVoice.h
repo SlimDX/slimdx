@@ -66,8 +66,10 @@ namespace SlimDX
 			void OnVoiceProcessingPassEnd( System::EventArgs^ e );
 
 		public:
-			SourceVoice( XAudio2^ device, WaveFormatExtended sourceFormat, VoiceFlags flags, float maximumFrequencyRatio );
 			SourceVoice( XAudio2^ device, WaveFormatExtensible^ sourceFormat, VoiceFlags flags, float maximumFrequencyRatio );
+			SourceVoice( XAudio2^ device, WaveFormatExtended sourceFormat, VoiceFlags flags, float maximumFrequencyRatio );
+			SourceVoice( XAudio2^ device, WaveFormatExtended sourceFormat, VoiceFlags flags );
+			SourceVoice( XAudio2^ device, WaveFormatExtended sourceFormat );
 			virtual ~SourceVoice() { if( callback != NULL ) delete callback; callback = NULL; }
 
 			Result Discontinuity();

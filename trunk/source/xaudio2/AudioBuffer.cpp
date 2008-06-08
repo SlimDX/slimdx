@@ -52,7 +52,8 @@ namespace XAudio2
 
 	void AudioBuffer::Destruct()
 	{
-		handle.Free();
+		if( handle.IsAllocated )
+			handle.Free();
 	}
 }
 }

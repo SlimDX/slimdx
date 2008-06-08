@@ -41,6 +41,7 @@
   <Target Name="$(ProjectDir)/../samples/DirectInput/Keyboard/bin/x86/Debug/Keyboard.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/DirectInput/Mouse/bin/x86/Debug/Mouse.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/RawInput/Mouse/bin/x86/Debug/Mouse.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/XAudio2/BasicSound/bin/x86/Debug/BasicSound.exe" Analyze="True" AnalyzeAllChildren="True" />
  </Targets>
  <Rules>
   <RuleFiles>
@@ -6009,6 +6010,17 @@
                <Item>'EffectHandle::operator ==(EffectHandle^, EffectHandle^)'</Item>
                <Item>rhs</Item>
                <Item>'rhs'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#op_Implicit(System.String):SlimDX.Direct3D9.EffectHandle">
+            <Messages>
+             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Status="Excluded" Created="2008-06-08 16:42:41Z">
+              <Issue Name="Multiple">
+               <Item>ToXXX</Item>
+               <Item>FromXXX</Item>
+               <Item>'EffectHandle.implicit operator EffectHandle(string)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -13416,6 +13428,17 @@
          </Type>
          <Type Name="SourceVoice">
           <Members>
+           <Member Name="#.ctor(SlimDX.XAudio2.XAudio2,SlimDX.WaveFormatExtended,SlimDX.XAudio2.VoiceFlags)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2008-06-08 19:35:59Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'SourceVoice.SourceVoice(XAudio2, WaveFormatExtended, VoiceFlags)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#.ctor(SlimDX.XAudio2.XAudio2,SlimDX.WaveFormatExtended,SlimDX.XAudio2.VoiceFlags,System.Single)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
@@ -14352,6 +14375,231 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/../samples/XAudio2/BasicSound/bin/x86/Debug/BasicSound.exe">
+    <Modules>
+     <Module Name="basicsound.exe">
+      <Namespaces>
+       <Namespace Name="BasicSound">
+        <Types>
+         <Type Name="Program">
+          <Members>
+           <Member Name="#GetAsyncKeyState(System.Int32)">
+            <Messages>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2008-06-08 19:35:59Z">
+              <Issue>
+               <Item>'Program.GetAsyncKeyState(int)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="return" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Created="2008-06-08 19:35:59Z" FixCategory="NonBreaking">
+              <Issue Name="Return">
+               <Item>'Program.GetAsyncKeyState(int)'</Item>
+               <Item>4</Item>
+               <Item>32-bit</Item>
+               <Item>2</Item>
+               <Item>'int'</Item>
+              </Issue>
+              <Issue Name="Return">
+               <Item>'Program.GetAsyncKeyState(int)'</Item>
+               <Item>4</Item>
+               <Item>64-bit</Item>
+               <Item>2</Item>
+               <Item>'int'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="WaveFile">
+          <Members>
+           <Member Name="#.ctor(System.String)">
+            <Messages>
+             <Message Id="BasicSound.WaveFile.mmioClose(System.IntPtr,System.Int32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-06-08 19:35:59Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'WaveFile.WaveFile(string)'</Item>
+               <Item>'WaveFile.mmioClose(IntPtr, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Dispose()">
+            <Messages>
+             <Message TypeName="DisposableTypesShouldDeclareFinalizer" Category="Microsoft.Usage" CheckId="CA2216" Created="2008-06-08 19:35:59Z">
+              <Issue>
+               <Item>'WaveFile'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Dispose(System.Boolean)">
+            <Messages>
+             <Message Id="BasicSound.WaveFile.mmioClose(System.IntPtr,System.Int32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-06-08 19:35:59Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'WaveFile.Dispose(bool)'</Item>
+               <Item>'WaveFile.mmioClose(IntPtr, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#mmioAdvance(System.IntPtr,BasicSound.MMIOINFO&amp;,System.Int32)">
+            <Messages>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2008-06-08 19:35:59Z">
+              <Issue>
+               <Item>'WaveFile.mmioAdvance(IntPtr, ref MMIOINFO, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#mmioAscend(System.IntPtr,BasicSound.MMCKINFO&amp;,System.Int32)">
+            <Messages>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2008-06-08 19:35:59Z">
+              <Issue>
+               <Item>'WaveFile.mmioAscend(IntPtr, ref MMCKINFO, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#mmioClose(System.IntPtr,System.Int32)">
+            <Messages>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2008-06-08 19:35:59Z">
+              <Issue>
+               <Item>'WaveFile.mmioClose(IntPtr, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#mmioDescend(System.IntPtr,BasicSound.MMCKINFO&amp;,BasicSound.MMCKINFO&amp;,System.Int32)">
+            <Messages>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2008-06-08 19:35:59Z">
+              <Issue>
+               <Item>'WaveFile.mmioDescend(IntPtr, ref MMCKINFO, ref MMCKINFO, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#mmioDescend(System.IntPtr,BasicSound.MMCKINFO&amp;,System.IntPtr,System.Int32)">
+            <Messages>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2008-06-08 19:35:59Z">
+              <Issue>
+               <Item>'WaveFile.mmioDescend(IntPtr, ref MMCKINFO, IntPtr, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#mmioFOURCC(System.Char,System.Char,System.Char,System.Char)">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-06-08 19:35:59Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'WaveFile.mmioFOURCC(char, char, char, char)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#mmioGetInfo(System.IntPtr,BasicSound.MMIOINFO&amp;,System.Int32)">
+            <Messages>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2008-06-08 19:35:59Z">
+              <Issue>
+               <Item>'WaveFile.mmioGetInfo(IntPtr, ref MMIOINFO, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#mmioOpen(System.String,System.IntPtr,System.Int32)">
+            <Messages>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2008-06-08 19:35:59Z">
+              <Issue>
+               <Item>'WaveFile.mmioOpen(string, IntPtr, int)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="0" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2008-06-08 19:35:59Z">
+              <Issue Name="Parameter">
+               <Item>'fileName'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#mmioRead(System.IntPtr,System.IntPtr,System.Int64)">
+            <Messages>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2008-06-08 19:35:59Z">
+              <Issue>
+               <Item>'WaveFile.mmioRead(IntPtr, IntPtr, long)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="2" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Created="2008-06-08 19:35:59Z" FixCategory="NonBreaking">
+              <Issue Name="Parameter">
+               <Item>'length'</Item>
+               <Item>'WaveFile.mmioRead(IntPtr, IntPtr, long)'</Item>
+               <Item>8</Item>
+               <Item>32-bit</Item>
+               <Item>4</Item>
+               <Item>'long'</Item>
+              </Issue>
+              <Issue Name="Parameter">
+               <Item>'length'</Item>
+               <Item>'WaveFile.mmioRead(IntPtr, IntPtr, long)'</Item>
+               <Item>8</Item>
+               <Item>64-bit</Item>
+               <Item>4</Item>
+               <Item>'long'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#mmioSeek(System.IntPtr,System.Int64,System.Int32)">
+            <Messages>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2008-06-08 19:35:59Z">
+              <Issue>
+               <Item>'WaveFile.mmioSeek(IntPtr, long, int)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="1" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Created="2008-06-08 19:35:59Z" FixCategory="NonBreaking">
+              <Issue Name="Parameter">
+               <Item>'offset'</Item>
+               <Item>'WaveFile.mmioSeek(IntPtr, long, int)'</Item>
+               <Item>8</Item>
+               <Item>32-bit</Item>
+               <Item>4</Item>
+               <Item>'long'</Item>
+              </Issue>
+              <Issue Name="Parameter">
+               <Item>'offset'</Item>
+               <Item>'WaveFile.mmioSeek(IntPtr, long, int)'</Item>
+               <Item>8</Item>
+               <Item>64-bit</Item>
+               <Item>4</Item>
+               <Item>'long'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#mmioSetInfo(System.IntPtr,BasicSound.MMIOINFO&amp;,System.Int32)">
+            <Messages>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2008-06-08 19:35:59Z">
+              <Issue>
+               <Item>'WaveFile.mmioSetInfo(IntPtr, ref MMIOINFO, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Read(System.Byte[],System.Int32)">
+            <Messages>
+             <Message Id="ret" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-06-08 19:35:59Z">
+              <Issue>
+               <Item>'WaveFile.Read(byte[], int)'</Item>
+               <Item>'ret'</Item>
+               <Item>'long'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
   </Targets>
   <Rules>
    <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
@@ -14368,6 +14616,9 @@
    </Rule>
    <Rule TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213">
     <Resolution Name="Default">{0} contains field {1} that is of IDisposable type: {2}. Change the Dispose method on {0} to call Dispose or Close on this field.</Resolution>
+   </Rule>
+   <Rule TypeName="DisposableTypesShouldDeclareFinalizer" Category="Microsoft.Usage" CheckId="CA2216">
+    <Resolution Name="Default">Implement a finalizer or destructor on {0}.</Resolution>
    </Rule>
    <Rule TypeName="DoNotDeclareStaticMembersOnGenericTypes" Category="Microsoft.Design" CheckId="CA1000">
     <Resolution Name="Default">Remove {0} from {1} or make it an instance member.</Resolution>
@@ -14451,6 +14702,9 @@
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
    </Rule>
+   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
+    <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
+   </Rule>
    <Rule TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223">
     <Resolution Name="Default">'{0}' should differ from other members by more than its return type.</Resolution>
    </Rule>
@@ -14465,6 +14719,11 @@
    </Rule>
    <Rule TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225">
     <Resolution Name="Default">Provide a method named '{0}' as a friendly alternate for operator {1}.</Resolution>
+    <Resolution Name="Multiple">Provide a method named '{0}' or '{1}' as an alternate for operator {2}.</Resolution>
+   </Rule>
+   <Rule TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901">
+    <Resolution Name="Parameter">As it is declared in your code, parameter {0} of P/Invoke {1} will be {2} bytes wide on {3} platforms. This is not correct, as the actual native declaration of this API indicates it should be {4} bytes wide on {3} platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of {5}.</Resolution>
+    <Resolution Name="Return">As it is declared in your code, the return type of P/Invoke {0} will be {1} bytes wide on {2} platforms. This is not correct, as the actual native declaration of this API indicates it should be {3} bytes wide on {2} platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of {4}.</Resolution>
    </Rule>
    <Rule TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725">
     <Resolution Name="Default">In member {0}, change parameter name {1} to {2} in order to match the identifier as it has been declared in {3}.</Resolution>
@@ -14478,8 +14737,14 @@
    <Rule TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721">
     <Resolution Name="BaseType">The property name {0} is confusing given the existence of inherited method {1}. Rename or remove this property.</Resolution>
    </Rule>
+   <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
+    <Resolution Name="Default">{0} declares a variable, {1}, of type {2}, which is never used or is only assigned to. Use this variable or remove it.</Resolution>
+   </Rule>
    <Rule TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025">
     <Resolution Name="Default">Consider implementing a version of {0} that accepts a parameter array argument.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101">
+    <Resolution Name="Parameter">To reduce security risk, marshal parameter {0} as Unicode, by setting DllImport.CharSet to CharSet.Unicode, or by explicitly marshaling the parameter as UnmanagedType.LPWStr. If you need to marshal this string as ANSI or system-dependent, set BestFitMapping=false; for added security, also set ThrowOnUnmappableChar=true.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
     <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>
