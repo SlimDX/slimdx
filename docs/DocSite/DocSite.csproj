@@ -496,7 +496,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Help\Art\" />
+    <Folder Include="Help\Presentation\Art\" />
     <Folder Include="Help\Topics\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

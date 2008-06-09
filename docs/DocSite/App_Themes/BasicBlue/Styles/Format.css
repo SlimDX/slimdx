@@ -121,13 +121,13 @@ div.sidebar_content_hidden
 	filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr=#FFFFFFFF, endColorStr=#FFE1EBFF, gradientType=0);
 }
 
-.toc_button_container, .toc_button_dynamic_container
+.toc_button_container, .toc_button_dynamic_container, .toc_topicbutton_container
 {
 	/* IE only */
 	filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr=#FFFFFFFF, endColorStr=#FFCCDEFF, gradientType=0);
 }
 
-.toc_sync_button, .toc_bookmark_button, .toc_print_button, .toc_email_button, .toc_save_button
+.toc_sync_button, .toc_bookmark_button, .toc_print_button, .toc_email_button, .toc_save_button, .toc_topic_button
 {
   width: 100%;
 	height: 100%;

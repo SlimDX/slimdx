@@ -32,3 +32,5 @@ Seriously, I got tired of typing them over and over. Feel free to add more.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDirect3DDevice9 pointer.</param>
 			/// <returns>The newly constructed object.</returns>
+			
+			/// <unmanaged></unmanaged>

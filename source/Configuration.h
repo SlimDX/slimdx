@@ -49,7 +49,7 @@ namespace SlimDX
 		/// objects will not carry a call stack from when they were created. The default value is <c>false</c>.
 		/// </summary>
 		/// <remarks>Object tracking is a useful debugging facility, but may have a significant negative
-		/// impact on performance. The default value is <c>true</c>.</remarks>
+		/// impact on performance. The default value is <c>false</c>.</remarks>
 		static property bool EnableObjectTracking;
 
 		/// <summary>

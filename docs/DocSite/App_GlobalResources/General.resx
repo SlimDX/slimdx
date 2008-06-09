@@ -120,6 +120,9 @@
 	<data name="DocSiteBookmarkButtonToolTip" xml:space="preserve">
     <value>Bookmarks the current topic.</value>
   </data>
+	<data name="DocSiteTopicButtonToolTip" xml:space="preserve">
+    <value>Click to navigate to the full URL for the current topic.</value>
+  </data>
 	<data name="DocSiteBrowseButtonToolTip" xml:space="preserve">
     <value>Browse the index for the specified keywords.</value>
   </data>
