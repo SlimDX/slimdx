@@ -22,44 +22,96 @@
 
 #include <xaudio2.h>
 
-#include "../Utilities.h"
-
+#include "Utilities.h"
 #include "WaveFormatExtensible.h"
+
+using namespace System;
+using namespace System::IO;
+using namespace System::Collections::Generic;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-namespace XAudio2
-{
-	WAVEFORMATEXTENSIBLE WaveFormatExtensible::ToUnmanaged()
+	WaveFormatExtensible^ WaveFormatExtensible::FromBase( const WAVEFORMATEX *format )
 	{
-		WAVEFORMATEXTENSIBLE result;
+		if( format->cbSize < 22 )
+			throw gcnew InvalidDataException( "Invalid WaveFormatExtensible format." );
 
-		result.dwChannelMask = static_cast<DWORD>( ChannelMask );
-		result.Format = Format.ToUnmanaged();
-		result.Samples.wSamplesPerBlock = static_cast<WORD>( Samples );
-		result.SubFormat = Utilities::ConvertManagedGuid( SubFormat );
+		WaveFormatExtensible^ result = gcnew WaveFormatExtensible();
+
+		result->FormatTag = static_cast<WaveFormatTag>( format->wFormatTag );
+		result->Channels = format->nChannels;
+		result->SamplesPerSecond = format->nSamplesPerSec;
+		result->AverageBytesPerSecond = format->nAvgBytesPerSec;
+		result->BlockAlignment = format->nBlockAlign;
+		result->BitsPerSample = format->wBitsPerSample;
+		result->Size = format->cbSize;
+
+		const BYTE *ptr = ( reinterpret_cast<const BYTE*>( &format->cbSize ) + sizeof( WORD ) );
+		array<Byte>^ bytes = gcnew array<Byte>( result->Size );
+		for( int i = 0; i < result->Size; i++ )
+		{
+			bytes[i] = *ptr;
+			ptr++;
+		}
+
+		result->unionData = BitConverter::ToInt16( bytes, 0 );
+		result->ChannelMask = static_cast<Speakers>( BitConverter::ToInt32( bytes, 2 ) );
+
+		array<Byte>^ guidBytes = gcnew array<Byte>( 16 );
+		Array::Copy( bytes, 6, guidBytes, 0, 16 );
+
+		result->SubFormat = Guid( guidBytes );
 
 		return result;
 	}
 
+	WaveFormatExtensible::WaveFormatExtensible()
+	{
+		Size = 22;
+	}
+
 	WaveFormatExtensible::WaveFormatExtensible( const WAVEFORMATEXTENSIBLE &format )
 	{
+		FormatTag = static_cast<WaveFormatTag>( format.Format.wFormatTag );
+		Channels = format.Format.nChannels;
+		SamplesPerSecond = format.Format.nSamplesPerSec;
+		AverageBytesPerSecond = format.Format.nAvgBytesPerSec;
+		BlockAlignment = format.Format.nBlockAlign;
+		BitsPerSample = format.Format.wBitsPerSample;
 		ChannelMask = static_cast<Speakers>( format.dwChannelMask );
-		Format = WaveFormatExtended::FromUnmanaged( format.Format );
-		Samples = format.Samples.wSamplesPerBlock;
+		unionData = format.Samples.wSamplesPerBlock;
 		SubFormat = Utilities::ConvertNativeGuid( format.SubFormat );
+
+		Size = 22;
 	}
 
 	WaveFormatExtensible^ WaveFormatExtensible::Clone()
 	{
 		WaveFormatExtensible^ result = gcnew WaveFormatExtensible();
 
-		result->Format = Format;
-		result->Samples = Samples;
+		result->AverageBytesPerSecond = AverageBytesPerSecond;
+		result->BitsPerSample = BitsPerSample;
+		result->BlockAlignment = BlockAlignment;
+		result->Channels = Channels;
+		result->SamplesPerSecond = SamplesPerSecond;
+		result->ValidBitsPerSample = ValidBitsPerSample;
 		result->ChannelMask = ChannelMask;
 		result->SubFormat = SubFormat;
 
 		return result;
+	}
+
+	array<Byte>^ WaveFormatExtensible::GetBytes()
+	{
+		List<Byte>^ result = gcnew List<Byte>();
+
+		result->AddRange( WaveFormat::GetBytes() );
+		result->AddRange( BitConverter::GetBytes( unionData ) );
+		result->AddRange( BitConverter::GetBytes( static_cast<int>( ChannelMask ) ) );
+		result->AddRange( SubFormat.ToByteArray() );
+
+		return result->ToArray();
 	}
 
 	bool WaveFormatExtensible::operator == ( WaveFormatExtensible^ left, WaveFormatExtensible^ right )
@@ -77,7 +129,7 @@ namespace XAudio2
 
 	int WaveFormatExtensible::GetHashCode()
 	{		
-		return Format.GetHashCode() + Samples.GetHashCode() +
+		return WaveFormat::GetHashCode() + unionData.GetHashCode() +
 			ChannelMask.GetHashCode() + SubFormat.GetHashCode();
 	}
 
@@ -100,8 +152,8 @@ namespace XAudio2
 		if( ReferenceEquals( this, value ) )
 			return true;
 
-		return ( Format == value->Format &&
-			Samples == value->Samples && ChannelMask == value->ChannelMask &&
+		return ( WaveFormat::Equals( value ) &&
+			unionData == value->unionData && ChannelMask == value->ChannelMask &&
 			SubFormat == value->SubFormat );
 	}
 
@@ -109,5 +161,4 @@ namespace XAudio2
 	{
 		return value1->Equals( value2 );
 	}
-}
 }

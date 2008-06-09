@@ -36,14 +36,14 @@ namespace SlimDX
 {
 namespace XAudio2
 {
-	SourceVoice::SourceVoice( XAudio2^ device, WaveFormatExtended sourceFormat, VoiceFlags flags, float maximumFrequencyRatio )
+	SourceVoice::SourceVoice( XAudio2^ device, WaveFormat^ sourceFormat, VoiceFlags flags, float maximumFrequencyRatio )
 	{
 		IXAudio2SourceVoice *pointer;
-		WAVEFORMATEX format = sourceFormat.ToUnmanaged();
+		std::auto_ptr<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( sourceFormat );
 
 		callback = new VoiceCallbackShim( this );
 
-		HRESULT hr = device->InternalPointer->CreateSourceVoice( &pointer, &format, static_cast<UINT32>( flags ), maximumFrequencyRatio, callback );
+		HRESULT hr = device->InternalPointer->CreateSourceVoice( &pointer, format.get(), static_cast<UINT32>( flags ), maximumFrequencyRatio, callback );
 
 		if( RECORD_XAUDIO2( hr ).IsFailure )
 			throw gcnew XAudio2Exception( Result::Last );
@@ -51,14 +51,14 @@ namespace XAudio2
 		InternalPointer = pointer;
 	}
 
-	SourceVoice::SourceVoice( XAudio2^ device, WaveFormatExtended sourceFormat, VoiceFlags flags )
+	SourceVoice::SourceVoice( XAudio2^ device, WaveFormat^ sourceFormat, VoiceFlags flags )
 	{
 		IXAudio2SourceVoice *pointer;
-		WAVEFORMATEX format = sourceFormat.ToUnmanaged();
+		std::auto_ptr<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( sourceFormat );
 
 		callback = new VoiceCallbackShim( this );
 
-		HRESULT hr = device->InternalPointer->CreateSourceVoice( &pointer, &format, static_cast<UINT32>( flags ), XAUDIO2_DEFAULT_FREQ_RATIO, callback );
+		HRESULT hr = device->InternalPointer->CreateSourceVoice( &pointer, format.get(), static_cast<UINT32>( flags ), XAUDIO2_DEFAULT_FREQ_RATIO, callback );
 
 		if( RECORD_XAUDIO2( hr ).IsFailure )
 			throw gcnew XAudio2Exception( Result::Last );
@@ -66,29 +66,14 @@ namespace XAudio2
 		InternalPointer = pointer;
 	}
 
-	SourceVoice::SourceVoice( XAudio2^ device, WaveFormatExtended sourceFormat )
+	SourceVoice::SourceVoice( XAudio2^ device, WaveFormat^ sourceFormat )
 	{
 		IXAudio2SourceVoice *pointer;
-		WAVEFORMATEX format = sourceFormat.ToUnmanaged();
+		std::auto_ptr<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( sourceFormat );
 
 		callback = new VoiceCallbackShim( this );
 
-		HRESULT hr = device->InternalPointer->CreateSourceVoice( &pointer, &format, 0, XAUDIO2_DEFAULT_FREQ_RATIO, callback );
-
-		if( RECORD_XAUDIO2( hr ).IsFailure )
-			throw gcnew XAudio2Exception( Result::Last );
-
-		InternalPointer = pointer;
-	}
-
-	SourceVoice::SourceVoice( XAudio2^ device, WaveFormatExtensible^ sourceFormat, VoiceFlags flags, float maximumFrequencyRatio )
-	{
-		IXAudio2SourceVoice *pointer;
-		WAVEFORMATEXTENSIBLE format = sourceFormat->ToUnmanaged();
-
-		callback = new VoiceCallbackShim( this );
-
-		HRESULT hr = device->InternalPointer->CreateSourceVoice( &pointer, reinterpret_cast<WAVEFORMATEX*>( &format ), static_cast<UINT32>( flags ), maximumFrequencyRatio, callback );
+		HRESULT hr = device->InternalPointer->CreateSourceVoice( &pointer, format.get(), 0, XAUDIO2_DEFAULT_FREQ_RATIO, callback );
 
 		if( RECORD_XAUDIO2( hr ).IsFailure )
 			throw gcnew XAudio2Exception( Result::Last );
