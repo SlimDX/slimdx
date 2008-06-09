@@ -19,52 +19,51 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include <windows.h>
-#include <audiodefs.h>
-
-#include "../WaveFormat.h"
-
-#include "LockParameter.h"
+#include "WaveFormat.h"
+#include "WaveFormatExtensible.h"
 
 namespace SlimDX
 {
-namespace XAPO
-{
-	bool LockParameter::operator == ( LockParameter left, LockParameter right )
+	public ref class WaveFile : System::IDisposable
 	{
-		return LockParameter::Equals( left, right );
-	}
+	private:
+		int size;
+		WaveFormat^ format;
+		System::IO::FileAccess access;
 
-	bool LockParameter::operator != ( LockParameter left, LockParameter right )
-	{
-		return !LockParameter::Equals( left, right );
-	}
+		HMMIO fileHandle;
+		MMCKINFO *fileInfo;
+		MMCKINFO *dataChunk;
+		MMIOINFO *outputInfo;
 
-	int LockParameter::GetHashCode()
-	{
-		return Format->GetHashCode() + MaxFrameCount.GetHashCode();;
-	}
+		void Construct( System::String^ fileName, WaveFormat^ format, System::IO::FileAccess access );
+		void Destruct();
+		void Close();
 
-	bool LockParameter::Equals( Object^ value )
-	{
-		if( value == nullptr )
-			return false;
+		void ReadHeader();
+		void WriteHeader( WaveFormat^ format );
 
-		if( value->GetType() != GetType() )
-			return false;
+	public:
+		WaveFile( System::String^ fileName, WaveFormat^ format, System::IO::FileAccess access );
+		WaveFile( System::String^ fileName );
+		~WaveFile() { Destruct(); }
+		!WaveFile() { Destruct(); }
 
-		return Equals( safe_cast<LockParameter>( value ) );
-	}
+		void Reset();
 
-	bool LockParameter::Equals( LockParameter value )
-	{
-		return ( Format == value.Format && MaxFrameCount == value.MaxFrameCount );
-	}
+		int Read( array<System::Byte>^ buffer, int length );
+		int Write( array<System::Byte>^ buffer, int length );
 
-	bool LockParameter::Equals( LockParameter% value1, LockParameter% value2 )
-	{
-		return ( value1.Format == value2.Format && value1.MaxFrameCount == value2.MaxFrameCount );
-	}
-}
+		property int Size
+		{
+			int get() { return size; }
+		}
+
+		property WaveFormat^ Format
+		{
+			WaveFormat^ get() { return format; }
+		}
+	};
 }

@@ -22,7 +22,7 @@
 #pragma once
 
 #include "RegistrationProperties.h"
-#include "../WaveFormatExtended.h"
+#include "../WaveFormat.h"
 #include "LockParameter.h"
 #include "BufferParameter.h"
 
@@ -37,8 +37,8 @@ namespace SlimDX
 			virtual int CalculateInputFrames( int outputFrameCount ) = 0;
 			virtual int CalculateOutputFrames( int inputFrameCount ) = 0;
 			virtual Result Initialize( DataStream^ data ) = 0;
-			virtual bool IsInputFormatSupported( WaveFormatExtended outputFormat, WaveFormatExtended requestedInputFormat, [Out] WaveFormatExtended% supportedInputFormat ) = 0;
-			virtual bool IsOutputFormatSupported( WaveFormatExtended inputFormat, WaveFormatExtended requestedOutputFormat, [Out] WaveFormatExtended% supportedOutputFormat ) = 0;
+			virtual bool IsInputFormatSupported( WaveFormat^ outputFormat, WaveFormat^ requestedInputFormat, [Out] WaveFormat^% supportedInputFormat ) = 0;
+			virtual bool IsOutputFormatSupported( WaveFormat^ inputFormat, WaveFormat^ requestedOutputFormat, [Out] WaveFormat^% supportedOutputFormat ) = 0;
 			virtual Result LockForProcess( array<LockParameter>^ inputParameters, array<LockParameter>^ outputParameters ) = 0;
 			virtual void Process( array<BufferParameter^>^ inputParameters, array<BufferParameter^>^ outputParameters, bool isEnabled ) = 0;
 			virtual void Reset() = 0;

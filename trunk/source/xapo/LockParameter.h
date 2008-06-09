@@ -28,7 +28,7 @@ namespace SlimDX
 		public value class LockParameter : System::IEquatable<LockParameter>
 		{
 		public:
-			property WaveFormatExtended Format;
+			property WaveFormat^ Format;
 			property int MaxFrameCount;
 
 			/// <summary>

@@ -11,7 +11,7 @@ namespace BasicSound
     class Program
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        static extern int GetAsyncKeyState(int key);
+        static extern short GetAsyncKeyState(int key);
         const int VK_ESCAPE = 0x1B;
 
         static void Main()
@@ -26,7 +26,7 @@ namespace BasicSound
             PlayPCM(device, "MusicMono.wav");
 
             // play a 5.1 PCM wave extensible file (Can't do this yet)
-            //PlayPCM(device, "MusicSurround.wav");
+            PlayPCM(device, "MusicSurround.wav");
 
             // cleanup XAudio2
             masteringVoice.Dispose();
@@ -36,15 +36,15 @@ namespace BasicSound
         static void PlayPCM(XAudio2 device, string fileName)
         {
             byte[] data;
-            WaveFormatExtended format;
+            WaveFormat format;
 
             // read in the wav file
             using (WaveFile file = new WaveFile(fileName))
             {
                 format = file.Format;
-                data = new byte[file.DataSize];
+                data = new byte[file.Size];
 
-                file.Read(data, file.DataSize);
+                file.Read(data, file.Size);
             }
 
             // create the source voice
@@ -74,6 +74,10 @@ namespace BasicSound
             // cleanup the voice
             buffer.Dispose();
             sourceVoice.Dispose();
+
+            // if we don't sleep here, we will run around and hit ourselves in the butt when we play
+            // the second sample
+            Thread.Sleep(1000);
         }
     }
 }

@@ -76,7 +76,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WaveFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\build\SlimDX.vcproj">

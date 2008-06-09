@@ -22,7 +22,8 @@
 
 #include <xaudio2.h>
 
-#include "WaveFormatExtensible.h"
+#include "../WaveFormat.h"
+#include "../WaveFormatExtensible.h"
 #include "DeviceDetails.h"
 
 using namespace System;
