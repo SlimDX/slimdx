@@ -38,13 +38,13 @@ namespace DocSiteTest.Controls {
         protected global::System.Web.UI.WebControls.ImageButton tocSyncButton;
         
         /// <summary>
-        /// bookmarkImageButton control.
+        /// topicImageButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton bookmarkImageButton;
+        protected global::System.Web.UI.WebControls.ImageButton topicImageButton;
         
         /// <summary>
         /// saveImageButton control.
@@ -54,6 +54,15 @@ namespace DocSiteTest.Controls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton saveImageButton;
+        
+        /// <summary>
+        /// bookmarkImageButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton bookmarkImageButton;
         
         /// <summary>
         /// printImageButton control.
