@@ -122,32 +122,53 @@ namespace XAudio2
 		return result > 0;
 	}
 
+	array<float>^ Voice::GetOutputMatrix( int sourceChannels, int destinationChannels )
+	{
+		return GetOutputMatrix( nullptr, sourceChannels, destinationChannels );
+	}
+
 	array<float>^ Voice::GetOutputMatrix( Voice^ destinationVoice, int sourceChannels, int destinationChannels )
 	{
 		array<float>^ results = gcnew array<float>( sourceChannels * destinationChannels );
 		pin_ptr<float> pinResults = &results[0];
 
-		InternalPointer->GetOutputMatrix( destinationVoice->InternalPointer, sourceChannels,
+		IXAudio2Voice *voice = destinationVoice == nullptr ? NULL : destinationVoice->InternalPointer;
+
+		InternalPointer->GetOutputMatrix( voice, sourceChannels,
 			destinationChannels, reinterpret_cast<float*>( pinResults ) );
 
 		return results;
+	}
+
+	Result Voice::SetOutputMatrix( int sourceChannels, int destinationChannels, array<float>^ matrix )
+	{
+		return SetOutputMatrix( nullptr, sourceChannels, destinationChannels, matrix );
 	}
 
 	Result Voice::SetOutputMatrix( Voice^ destinationVoice, int sourceChannels, int destinationChannels, array<float>^ matrix )
 	{
 		pin_ptr<float> pinMatrix = &matrix[0];
 
-		HRESULT hr = InternalPointer->SetOutputMatrix( destinationVoice->InternalPointer, sourceChannels,
+		IXAudio2Voice *voice = destinationVoice == nullptr ? NULL : destinationVoice->InternalPointer;
+
+		HRESULT hr = InternalPointer->SetOutputMatrix( voice, sourceChannels,
 			destinationChannels, reinterpret_cast<const float*>( pinMatrix ) );
 
 		return RECORD_XAUDIO2( hr );
+	}
+
+	Result Voice::SetOutputMatrix( int sourceChannels, int destinationChannels, array<float>^ matrix, int operationSet )
+	{
+		return SetOutputMatrix( nullptr, sourceChannels, destinationChannels, matrix, operationSet );
 	}
 
 	Result Voice::SetOutputMatrix( Voice^ destinationVoice, int sourceChannels, int destinationChannels, array<float>^ matrix, int operationSet )
 	{
 		pin_ptr<float> pinMatrix = &matrix[0];
 
-		HRESULT hr = InternalPointer->SetOutputMatrix( destinationVoice->InternalPointer, sourceChannels,
+		IXAudio2Voice *voice = destinationVoice == nullptr ? NULL : destinationVoice->InternalPointer;
+
+		HRESULT hr = InternalPointer->SetOutputMatrix( voice, sourceChannels,
 			destinationChannels, reinterpret_cast<const float*>( pinMatrix ), operationSet );
 
 		return RECORD_XAUDIO2( hr );

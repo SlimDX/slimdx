@@ -56,6 +56,9 @@ namespace BasicSound
             buffer.AudioBytes = data.Length;
             buffer.Flags = BufferFlags.EndOfStream;
 
+            // to set the output speakers, uncomment the following line
+            //sourceVoice.SetOutputMatrix(1, 2, new float[] { 1.0f, 0.0f });
+
             // submit the data
             sourceVoice.SubmitSourceBuffer(buffer);
 
@@ -71,13 +74,13 @@ namespace BasicSound
                 Thread.Sleep(10);
             }
 
+            // wait until the escape key is released
+            while (GetAsyncKeyState(VK_ESCAPE) != 0)
+                Thread.Sleep(10);
+
             // cleanup the voice
             buffer.Dispose();
             sourceVoice.Dispose();
-
-            // if we don't sleep here, we will run around and hit ourselves in the butt when we play
-            // the second sample
-            Thread.Sleep(1000);
         }
     }
 }

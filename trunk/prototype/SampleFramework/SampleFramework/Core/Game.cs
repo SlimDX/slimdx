@@ -474,21 +474,28 @@ namespace SampleFramework
         /// <summary>
         /// Initializes the game.
         /// </summary>
-        protected virtual void Initialize()
+        protected internal virtual void Initialize()
         {
         }
 
         /// <summary>
         /// Loads graphical resources.
         /// </summary>
-        protected virtual void LoadContent()
+        protected internal virtual void LoadContent()
         {
         }
 
         /// <summary>
         /// Unloads graphical resources.
         /// </summary>
-        protected virtual void UnloadContent()
+        protected internal virtual void UnloadContent()
+        {
+        }
+
+        /// <summary>
+        /// Releases the game.
+        /// </summary>
+        protected internal virtual void Release()
         {
         }
 
@@ -501,6 +508,9 @@ namespace SampleFramework
             // check if we should release managed resources
             if (disposing)
             {
+                // release game data
+                Release();
+
                 // if we have an event, raise it
                 if( Disposed != null )
                     Disposed(this, EventArgs.Empty);
