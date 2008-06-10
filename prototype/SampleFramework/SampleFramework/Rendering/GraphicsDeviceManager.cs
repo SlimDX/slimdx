@@ -13,12 +13,13 @@ namespace SampleFramework
     /// <summary>
     /// Handles the configuration and management of the graphics device.
     /// </summary>
-    public class GraphicsDeviceManager
+    public class GraphicsDeviceManager : IDisposable
     {
         // general variables
         Game game;
         bool ignoreSizeChanges;
         bool deviceLost;
+        Factory factory;
 
         // cached window data
         int fullscreenWindowWidth;
@@ -118,6 +119,30 @@ namespace SampleFramework
 
             // construct the device
             Construct(desiredSettings);
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            // call the overload
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            // check if we should dispose of managed resources
+            if (disposing)
+            {
+                // release the devices
+                ReleaseDevice();
+            }
         }
 
         /// <summary>
@@ -245,7 +270,7 @@ namespace SampleFramework
             }
 
             // check if the device can be reset, or if we need to completely recreate it
-            Result result;
+            Result result = SlimDX.Direct3D9.ResultCode.Success;
             bool canReset = CanDeviceBeReset(oldSettings, settings);
             if (canReset)
                 result = ResetDevice();
@@ -390,6 +415,150 @@ namespace SampleFramework
             // make sure we have old settings and that the two versions are equal
             if (oldSettings == null || oldSettings.DeviceVersion != newSettings.DeviceVersion)
                 return false;
+
+            // check the device to see if it can be reset
+            if (oldSettings.DeviceVersion == DeviceVersion.Direct3D9)
+                return Device9 != null &&
+                    oldSettings.Direct3D9.AdapterOrdinal == newSettings.Direct3D9.AdapterOrdinal &&
+                    oldSettings.Direct3D9.DeviceType == newSettings.Direct3D9.DeviceType &&
+                    oldSettings.Direct3D9.CreationFlags == newSettings.Direct3D9.CreationFlags;
+            else
+                return Device10 != null &&
+                    oldSettings.Direct3D10.AdapterOrdinal == newSettings.Direct3D10.AdapterOrdinal &&
+                    oldSettings.Direct3D10.DriverType == newSettings.Direct3D10.DriverType &&
+                    oldSettings.Direct3D10.CreationFlags == newSettings.Direct3D10.CreationFlags &&
+                    oldSettings.Direct3D10.MultisampleCount == newSettings.Direct3D10.MultisampleCount &&
+                    oldSettings.Direct3D10.MultisampleQuality == newSettings.Direct3D10.MultisampleQuality;
+        }
+
+        /// <summary>
+        /// Initializes the device.
+        /// </summary>
+        void InitializeDevice()
+        {
+            // create the correct device based upon the version
+            if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
+            {
+                // create the device
+                Device9 = new SlimDX.Direct3D9.Device(CurrentSettings.Direct3D9.AdapterOrdinal,
+                    CurrentSettings.Direct3D9.DeviceType, game.Window.Handle,
+                    CurrentSettings.Direct3D9.CreationFlags, CurrentSettings.Direct3D9.PresentParameters);
+
+                // check for a device lost scenario
+                if (Result.Last == SlimDX.Direct3D9.ResultCode.DeviceLost)
+                {
+                    // device is lost
+                    deviceLost = true;
+                    return;
+                }
+            }
+            else
+            {
+                // TODO: Direct3D10
+            }
+
+            // update device stats
+            UpdateDeviceStats();
+
+            // update the cursor
+            SetupCursor();
+
+            // raise events
+            game.Initialize();
+            game.LoadContent();
+        }
+
+        /// <summary>
+        /// Resets the device.
+        /// </summary>
+        /// <returns>The result of the operation.</returns>
+        Result ResetDevice()
+        {
+            // raise the event
+            game.UnloadContent();
+
+            // reset the correct device based upong the version
+            if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
+            {
+                // make sure D3D10 is released
+                ReleaseDevice10();
+
+                // reset the device
+                Device9.Reset(CurrentSettings.Direct3D9.PresentParameters);
+            }
+            else
+            {
+                // TODO: Direct3D10
+            }
+
+            // update the cursor
+            SetupCursor();
+
+            // raise the event
+            game.LoadContent();
+
+            // return the last result
+            return Result.Last;
+        }
+
+        /// <summary>
+        /// Releases the device.
+        /// </summary>
+        void ReleaseDevice()
+        {
+            // reelase the correct device
+            if (CurrentSettings != null && CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
+                ReleaseDevice9();
+            else if (CurrentSettings != null)
+                ReleaseDevice10();
+        }
+
+        /// <summary>
+        /// Releases the Direct3D9 device.
+        /// </summary>
+        void ReleaseDevice9()
+        {
+        }
+
+        /// <summary>
+        /// Releases the Direct3D10 device.
+        /// </summary>
+        void ReleaseDevice10()
+        {
+        }
+
+        /// <summary>
+        /// Updates the device information.
+        /// </summary>
+        void UpdateDeviceInformation()
+        {
+        }
+
+        /// <summary>
+        /// Updates the device stats.
+        /// </summary>
+        void UpdateDeviceStats()
+        {
+        }
+
+        /// <summary>
+        /// Sets up the cursor.
+        /// </summary>
+        void SetupCursor()
+        {
+        }
+
+        /// <summary>
+        /// Finds valid device settings that are as close as possible to the desired input settings.
+        /// </summary>
+        /// <param name="desiredSettings">The desired settings.</param>
+        /// <returns>
+        /// Valid device settings that closely match the desired settings.
+        /// </returns>
+        DeviceSettings FindValidDeviceSettings(DeviceSettings desiredSettings)
+        {
+            // for now, just return the input
+            return desiredSettings;
         }
     }
 }

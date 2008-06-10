@@ -12,12 +12,12 @@ namespace SampleFramework
     /// <summary>
     /// Contains settings for creating a 3D device.
     /// </summary>
-    public class DeviceSettings
+    public class DeviceSettings : ICloneable
     {
         /// <summary>
         /// Contains settings for a Direct3D9 device.
         /// </summary>
-        public class Direct3D9Settings
+        public class Direct3D9Settings : ICloneable
         {
             /// <summary>
             /// Gets or sets the adapter ordinal.
@@ -88,12 +88,44 @@ namespace SampleFramework
                 PresentParameters.PresentFlags = SlimDX.Direct3D9.PresentFlags.DiscardDepthStencil;
                 PresentParameters.PresentationInterval = PresentInterval.Default;
             }
+
+            /// <summary>
+            /// Creates a new object that is a copy of the current instance.
+            /// </summary>
+            /// <returns>
+            /// A new object that is a copy of this instance.
+            /// </returns>
+            public Direct3D9Settings Clone()
+            {
+                // clone the object
+                Direct3D9Settings result = new Direct3D9Settings();
+                result.AdapterFormat = AdapterFormat;
+                result.AdapterOrdinal = AdapterOrdinal;
+                result.CreationFlags = CreationFlags;
+                result.DeviceType = DeviceType;
+                result.PresentParameters = PresentParameters.Clone();
+
+                // return the result
+                return result;
+            }
+
+            /// <summary>
+            /// Creates a new object that is a copy of the current instance.
+            /// </summary>
+            /// <returns>
+            /// A new object that is a copy of this instance.
+            /// </returns>
+            object ICloneable.Clone()
+            {
+                // call the overload
+                return Clone();
+            }
         }
 
         /// <summary>
         /// Contains settings for a Direct3D10 device.
         /// </summary>
-        public class Direct3D10Settings
+        public class Direct3D10Settings : ICloneable
         {
             /// <summary>
             /// Gets or sets the adapter ordinal.
@@ -295,6 +327,52 @@ namespace SampleFramework
             internal Direct3D10Settings()
             {
             }
+
+            /// <summary>
+            /// Creates a new object that is a copy of the current instance.
+            /// </summary>
+            /// <returns>
+            /// A new object that is a copy of this instance.
+            /// </returns>
+            public Direct3D10Settings Clone()
+            {
+                // clone the object
+                Direct3D10Settings result = new Direct3D10Settings();
+                result.AdapterOrdinal = AdapterOrdinal;
+                result.AutoCreateDepthStencil = AutoCreateDepthStencil;
+                result.AutoDepthStencilFormat = AutoDepthStencilFormat;
+                result.BufferCount = BufferCount;
+                result.BufferFormat = BufferFormat;
+                result.BufferHeight = BufferHeight;
+                result.BufferWidth = BufferWidth;
+                result.CreationFlags = CreationFlags;
+                result.DriverType = DriverType;
+                result.IsWindowed = IsWindowed;
+                result.MultisampleCount = MultisampleCount;
+                result.MultisampleQuality = MultisampleQuality;
+                result.Output = Output;
+                result.PresentFlags = PresentFlags;
+                result.RefreshRate = RefreshRate;
+                result.Scaling = Scaling;
+                result.ScanlineOrdering = ScanlineOrdering;
+                result.SwapChainFlags = SwapChainFlags;
+                result.SwapEffect = SwapEffect;
+                
+                // return the result
+                return result;
+            }
+
+            /// <summary>
+            /// Creates a new object that is a copy of the current instance.
+            /// </summary>
+            /// <returns>
+            /// A new object that is a copy of this instance.
+            /// </returns>
+            object ICloneable.Clone()
+            {
+                // call the overload
+                return Clone();
+            }
         }
 
         /// <summary>
@@ -415,6 +493,37 @@ namespace SampleFramework
             // initialize the individual settings sections
             Direct3D9 = new Direct3D9Settings();
             Direct3D10 = new Direct3D10Settings();
+        }
+
+        /// <summary>
+        /// Creates a new object that is a copy of the current instance.
+        /// </summary>
+        /// <returns>
+        /// A new object that is a copy of this instance.
+        /// </returns>
+        public DeviceSettings Clone()
+        {
+            // clone the object
+            DeviceSettings result = new DeviceSettings();
+            result.Direct3D10 = Direct3D10.Clone();
+            result.Direct3D9 = Direct3D9.Clone();
+            result.MinimumPixelShaderVersion = MinimumPixelShaderVersion;
+            result.MinimumVertexShaderVersion = MinimumVertexShaderVersion;
+
+            // return the result
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a new object that is a copy of the current instance.
+        /// </summary>
+        /// <returns>
+        /// A new object that is a copy of this instance.
+        /// </returns>
+        object ICloneable.Clone()
+        {
+            // call the overload
+            return Clone();
         }
     }
 }

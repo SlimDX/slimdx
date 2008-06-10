@@ -66,7 +66,11 @@ namespace SlimDX
 
 			bool IsEffectEnabled( int effectIndex );
 
+			array<float>^ GetOutputMatrix( int sourceChannels, int destinationChannels );
 			array<float>^ GetOutputMatrix( Voice^ destinationVoice, int sourceChannels, int destinationChannels );
+
+			Result SetOutputMatrix( int sourceChannels, int destinationChannels, array<float>^ matrix );
+			Result SetOutputMatrix( int sourceChannels, int destinationChannels, array<float>^ matrix, int operationSet );
 
 			Result SetOutputMatrix( Voice^ destinationVoice, int sourceChannels, int destinationChannels, array<float>^ matrix );
 			Result SetOutputMatrix( Voice^ destinationVoice, int sourceChannels, int destinationChannels, array<float>^ matrix, int operationSet );
