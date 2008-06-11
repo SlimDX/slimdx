@@ -20,6 +20,8 @@
 * THE SOFTWARE.
 */
 
+#ifdef WRAP_XAPO
+
 #include <windows.h>
 #include <audiodefs.h>
 
@@ -68,3 +70,5 @@ namespace XAPO
 	}
 }
 }
+
+#endif

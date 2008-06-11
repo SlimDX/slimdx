@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#ifdef WRAP_XAPO
+
 namespace SlimDX
 {
 	namespace XAPO
@@ -34,3 +36,5 @@ namespace SlimDX
 		};
 	}
 }
+
+#endif

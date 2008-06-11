@@ -43,6 +43,11 @@ namespace SampleFramework
             // marshal the structure
             stored = (FILTERKEYS)Marshal.PtrToStructure(pointer, typeof(FILTERKEYS));
             Marshal.FreeCoTaskMem(pointer);
+
+            // hook into the app domain unload so that we can ensure that the
+            // settings get returned to normal
+            AppDomain.CurrentDomain.DomainUnload += CurrentDomain_DomainUnload;
+            AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
         }
 
         /// <summary>
@@ -90,6 +95,28 @@ namespace SampleFramework
 
             // clean up memory
             Marshal.FreeCoTaskMem(pointer);
+        }
+
+        /// <summary>
+        /// Handles the DomainUnload event of the CurrentDomain control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        static void CurrentDomain_DomainUnload(object sender, EventArgs e)
+        {
+            // ensure that the settings are restored
+            Restore();
+        }
+
+        /// <summary>
+        /// Handles the ProcessExit event of the CurrentDomain control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        static void CurrentDomain_ProcessExit(object sender, EventArgs e)
+        {
+            // ensure that the settings are restored
+            Restore();
         }
     }
 }
