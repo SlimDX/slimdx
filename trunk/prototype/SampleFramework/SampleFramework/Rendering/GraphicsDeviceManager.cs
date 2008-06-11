@@ -7,6 +7,7 @@ using SlimDX.Direct3D10;
 using System.Windows.Forms;
 using System.Drawing;
 using SlimDX;
+using SlimDX.Direct3D9;
 
 namespace SampleFramework
 {
@@ -169,7 +170,6 @@ namespace SampleFramework
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void Window_UserResized(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -179,7 +179,6 @@ namespace SampleFramework
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void Window_ScreenChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -549,16 +548,509 @@ namespace SampleFramework
         }
 
         /// <summary>
-        /// Finds valid device settings that are as close as possible to the desired input settings.
+        /// Finds valid device settings.
         /// </summary>
-        /// <param name="desiredSettings">The desired settings.</param>
-        /// <returns>
-        /// Valid device settings that closely match the desired settings.
-        /// </returns>
-        DeviceSettings FindValidDeviceSettings(DeviceSettings desiredSettings)
+        /// <param name="settings">The settings.</param>
+        /// <returns>The validated device settings.</returns>
+        DeviceSettings FindValidDeviceSettings(DeviceSettings settings)
         {
-            // for now, just return the input
-            return desiredSettings;
+            // build the optimal settings for this machine
+            DeviceSettings optimal = BuildOptimalSettings(settings);
+
+            // if we haven't yet enumerated, do it now
+            if (!Enumeration9.HasEnumerated)
+                Enumeration9.Enumerate();
+
+            // setup for ranking combos
+            SettingsCombo9 bestCombo = null;
+            float bestRanking = -1.0f;
+
+            // loop through each enumerated adapter
+            foreach (AdapterInfo9 adapterInfo in Enumeration9.Adapters)
+            {
+                // get the desktop display mode
+                DisplayMode desktopMode = Direct3D.GetAdapterDisplayMode(adapterInfo.AdapterOrdinal);
+
+                // loop through each enumerated device
+                foreach (DeviceInfo9 deviceInfo in adapterInfo.Devices)
+                {
+                    // loop through each settings combo
+                    foreach (SettingsCombo9 combo in deviceInfo.DeviceSettings)
+                    {
+                        // make sure it matches the current display mode
+                        if (combo.Windowed && combo.AdapterFormat != desktopMode.Format)
+                            continue;
+
+                        // rank the combo
+                        float ranking = RankSettingsCombo(combo, optimal, desktopMode);
+
+                        // check if we have a new best ranking
+                        if (ranking > bestRanking)
+                        {
+                            // we do, so store the best ranking information
+                            bestCombo = combo;
+                            bestRanking = ranking;
+                        }
+                    }
+                }
+            }
+
+            // check if we couldn't find a compatible device
+            if (bestCombo == null)
+                throw new InvalidOperationException("No compatible devices were found.");
+
+            // return the new valid settings
+            return BuildValidDeviceSettings(bestCombo, optimal);
+        }
+
+        /// <summary>
+        /// Builds valid device settings.
+        /// </summary>
+        /// <param name="combo">The desired settings combo.</param>
+        /// <param name="input">The input settings.</param>
+        /// <returns>Valid device settings.</returns>
+        DeviceSettings BuildValidDeviceSettings(SettingsCombo9 combo, DeviceSettings input)
+        {
+            // setup the new settings class
+            DeviceSettings settings = new DeviceSettings();
+
+            // set initial values for the settings (the easy ones that
+            // don't require much thought)
+            settings.Direct3D9.AdapterOrdinal = combo.AdapterOrdinal;
+            settings.Direct3D9.DeviceType = combo.DeviceType;
+            settings.Direct3D9.PresentParameters.Windowed = combo.Windowed;
+            settings.Direct3D9.AdapterFormat = combo.AdapterFormat;
+            settings.Direct3D9.PresentParameters.BackBufferFormat = combo.BackBufferFormat;
+            settings.Direct3D9.PresentParameters.SwapEffect = input.Direct3D9.PresentParameters.SwapEffect;
+            settings.Direct3D9.PresentParameters.PresentFlags =
+                input.Direct3D9.PresentParameters.PresentFlags | SlimDX.Direct3D9.PresentFlags.DiscardDepthStencil;
+            settings.Direct3D9.PresentParameters.DeviceWindowHandle = game.Window.Handle;
+
+            // figure out the right behavior flags
+            settings.Direct3D9.CreationFlags = input.Direct3D9.CreationFlags;
+            if ((combo.DeviceInfo.Capabilities.DeviceCaps & DeviceCaps.HWTransformAndLight) == 0 &&
+                ((settings.Direct3D9.CreationFlags & CreateFlags.HardwareVertexProcessing) != 0 ||
+                (settings.Direct3D9.CreationFlags & CreateFlags.MixedVertexProcessing) != 0))
+            {
+                // software vertex processing only
+                settings.Direct3D9.CreationFlags &= ~CreateFlags.HardwareVertexProcessing;
+                settings.Direct3D9.CreationFlags &= ~CreateFlags.MixedVertexProcessing;
+                settings.Direct3D9.CreationFlags |= CreateFlags.SoftwareVertexProcessing;
+            }
+
+            // make sure we only have one form of vertex processing
+            if ((settings.Direct3D9.CreationFlags & CreateFlags.HardwareVertexProcessing) == 0 &&
+                (settings.Direct3D9.CreationFlags & CreateFlags.MixedVertexProcessing) == 0 &&
+                (settings.Direct3D9.CreationFlags & CreateFlags.SoftwareVertexProcessing) == 0)
+            {
+                // set either hardware or software
+                if ((combo.DeviceInfo.Capabilities.DeviceCaps & DeviceCaps.HWTransformAndLight) != 0)
+                    settings.Direct3D9.CreationFlags |= CreateFlags.HardwareVertexProcessing;
+                else
+                    settings.Direct3D9.CreationFlags |= CreateFlags.SoftwareVertexProcessing;
+            }
+
+            // figure out the best display mode
+            DisplayMode bestDisplayMode = FindValidResolution(combo, input);
+            settings.Direct3D9.PresentParameters.BackBufferWidth = bestDisplayMode.Width;
+            settings.Direct3D9.PresentParameters.BackBufferHeight = bestDisplayMode.Height;
+
+            // figure out the best number of back buffers
+            settings.Direct3D9.PresentParameters.BackBufferCount = input.Direct3D9.PresentParameters.BackBufferCount;
+            if (settings.Direct3D9.PresentParameters.BackBufferCount > 3)
+                settings.Direct3D9.PresentParameters.BackBufferCount = 3;
+            if (settings.Direct3D9.PresentParameters.BackBufferCount < 1)
+                settings.Direct3D9.PresentParameters.BackBufferCount = 1;
+
+            // figure out the best multisample type
+            if (input.Direct3D9.PresentParameters.SwapEffect != SlimDX.Direct3D9.SwapEffect.Discard)
+            {
+                // we aren't using Discard, so we can't have multisampling
+                settings.Direct3D9.PresentParameters.Multisample = MultisampleType.None;
+                settings.Direct3D9.PresentParameters.MultisampleQuality = 0;
+            }
+            else
+            {
+                // setup to rank the multisampling types
+                MultisampleType bestType = MultisampleType.None;
+                int bestQuality = 0;
+
+                // loop through each type
+                for (int i = 0; i < combo.MultisampleTypes.Count; i++)
+                {
+                    // grab the values
+                    MultisampleType type = combo.MultisampleTypes[i];
+                    int quality = combo.MultisampleQualities[0];
+
+                    // calculate the ranking
+                    if (Math.Abs(type - input.Direct3D9.PresentParameters.Multisample) < Math.Abs(bestType -
+                        input.Direct3D9.PresentParameters.Multisample))
+                    {
+                        // we have a new best, so store it
+                        bestType = type;
+                        bestQuality = Math.Min(quality - 1, input.Direct3D9.PresentParameters.MultisampleQuality);
+                    }
+                }
+
+                // store the selected settings
+                settings.Direct3D9.PresentParameters.Multisample = bestType;
+                settings.Direct3D9.PresentParameters.MultisampleQuality = bestQuality;
+            }
+
+            // setup to rank depth stencil formats
+            List<int> rankings = new List<int>();
+            int inputDepthBitDepth = input.Direct3D9.PresentParameters.AutoDepthStencilFormat.GetDepthBits();
+            int inputStencilBitDepth = input.Direct3D9.PresentParameters.AutoDepthStencilFormat.GetStencilBits();
+
+            // loop through each possible format
+            foreach (SlimDX.Direct3D9.Format format in combo.DepthStencilFormats)
+            {
+                // extract the bit values
+                int currentBitDepth = format.GetDepthBits();
+                int currentStencilDepth = format.GetStencilBits();
+
+                // calculate and store the ranking
+                int ranking = Math.Abs(currentBitDepth - inputDepthBitDepth);
+                ranking += Math.Abs(currentStencilDepth - inputStencilBitDepth);
+                rankings.Add(ranking);
+            }
+
+            // find the best ranking
+            int bestRanking = rankings.Min();
+            int bestIndex = rankings.IndexOf(bestRanking);
+
+            // check if we found a best ranking
+            if (bestIndex >= 0)
+            {
+                // use the ranking values
+                settings.Direct3D9.PresentParameters.AutoDepthStencilFormat = combo.DepthStencilFormats[bestIndex];
+                settings.Direct3D9.PresentParameters.EnableAutoDepthStencil = true;
+            }
+            else
+            {
+                // otherwise, we aren't going to use a depth stencil format
+                settings.Direct3D9.PresentParameters.AutoDepthStencilFormat = SlimDX.Direct3D9.Format.Unknown;
+                settings.Direct3D9.PresentParameters.EnableAutoDepthStencil = false;
+            }
+
+            // figure out the best refresh rate
+            if (combo.Windowed)
+                settings.Direct3D9.PresentParameters.FullScreenRefreshRateInHertz = 0;
+            else
+            {
+                // setup to find the best match
+                int match = input.Direct3D9.PresentParameters.FullScreenRefreshRateInHertz;
+                bestDisplayMode.RefreshRate = 0;
+                if (match != 0)
+                {
+                    // loop through each display mode to find the best ranking
+                    bestRanking = 100000;
+                    foreach (DisplayMode displayMode in combo.AdapterInfo.DisplayModes)
+                    {
+                        // make sure the display mode matches
+                        if (displayMode.Format != combo.AdapterFormat ||
+                            displayMode.Width != bestDisplayMode.Width ||
+                            displayMode.Height != bestDisplayMode.Height)
+                            continue;
+
+                        // calculate the ranking
+                        int ranking = Math.Abs(displayMode.RefreshRate - match);
+
+                        // see if we have a new best ranking
+                        if (ranking < bestRanking)
+                        {
+                            // we do, so store the ranking
+                            bestDisplayMode.RefreshRate = displayMode.RefreshRate;
+                            bestRanking = ranking;
+
+                            // check if the ranking is a perfect match
+                            if (bestRanking == 0)
+                                break;
+                        }
+                    }
+                }
+
+                // use the ranked value
+                settings.Direct3D9.PresentParameters.FullScreenRefreshRateInHertz = bestDisplayMode.RefreshRate;
+            }
+
+            // use the best presentation interval we have
+            if (combo.PresentIntervals.Contains(input.Direct3D9.PresentParameters.PresentationInterval))
+                settings.Direct3D9.PresentParameters.PresentationInterval = input.Direct3D9.PresentParameters.PresentationInterval;
+            else
+                settings.Direct3D9.PresentParameters.PresentationInterval = PresentInterval.Default;
+
+            // return the new valid device settings
+            return settings;
+        }
+
+        /// <summary>
+        /// Finds a valid resolution.
+        /// </summary>
+        /// <param name="combo">The desired settings combo.</param>
+        /// <param name="input">The input settings.</param>
+        /// <returns>A valid display mode containing the valid resolution.</returns>
+        static DisplayMode FindValidResolution(SettingsCombo9 combo, DeviceSettings input)
+        {
+            // setup for finding the new best mode
+            DisplayMode bestMode = new DisplayMode();
+
+            // check if we are windowed
+            if (combo.Windowed)
+            {
+                // if we are windowed, just use the back buffer size
+                bestMode.Width = input.Direct3D9.PresentParameters.BackBufferWidth;
+                bestMode.Height = input.Direct3D9.PresentParameters.BackBufferHeight;
+                return bestMode;
+            }
+
+            // loop through each mode to find the best ranking
+            int bestRanking = 100000;
+            int ranking;
+            foreach (DisplayMode mode in combo.AdapterInfo.DisplayModes)
+            {
+                // make sure the formats match
+                if (mode.Format != combo.AdapterFormat)
+                    continue;
+
+                // calculate the ranking
+                ranking = Math.Abs(mode.Width - input.Direct3D9.PresentParameters.BackBufferWidth) +
+                    Math.Abs(mode.Height - input.Direct3D9.PresentParameters.BackBufferHeight);
+
+                // check if we found a new best ranking
+                if (ranking < bestRanking)
+                {
+                    // we did, so store it
+                    bestMode = mode;
+                    bestRanking = ranking;
+
+                    // check if we have a perfect match
+                    if (bestRanking == 0)
+                        break;
+                }
+            }
+
+            // check if we didn't find a good match
+            if (bestMode.Width == 0)
+            {
+                // just use the back buffer format now
+                bestMode.Width = input.Direct3D9.PresentParameters.BackBufferWidth;
+                bestMode.Height = input.Direct3D9.PresentParameters.BackBufferHeight;
+            }
+
+            // return the best display mode
+            return bestMode;
+        }
+
+        /// <summary>
+        /// Ranks a settings combo.
+        /// </summary>
+        /// <param name="combo">The settings combo.</param>
+        /// <param name="optimal">The optimal settings.</param>
+        /// <param name="desktopMode">The desktop mode.</param>
+        /// <returns>The ranking of the combo.</returns>
+        static float RankSettingsCombo(SettingsCombo9 combo, DeviceSettings optimal, DisplayMode desktopMode)
+        {
+            // rank the combo by how close it is to the desired settings
+            float ranking = 0.0f;
+
+            // rank the adapter ordinal
+            if (combo.AdapterOrdinal == optimal.Direct3D9.AdapterOrdinal)
+                ranking += 1000.0f;
+
+            // rank the device type
+            if (combo.DeviceType == optimal.Direct3D9.DeviceType)
+                ranking += 100.0f;
+
+            // give slight preference to hardware devices
+            if (combo.DeviceType == DeviceType.Hardware)
+                ranking += 0.1f;
+
+            // rank the windowed mode
+            if (combo.Windowed == optimal.Direct3D9.PresentParameters.Windowed)
+                ranking += 10.0f;
+
+            // rank the adapter format
+            if (combo.AdapterFormat == optimal.Direct3D9.AdapterFormat)
+                ranking += 1.0f;
+            else
+            {
+                // rank by how close the two bit depths are
+                int bitDepthDelta = Math.Abs(combo.AdapterFormat.GetColorBits() -
+                    optimal.Direct3D9.AdapterFormat.GetColorBits());
+                float scale = Math.Max(0.9f - bitDepthDelta * 0.2f, 0.0f);
+                ranking += scale;
+            }
+
+            // check if we are in fullscreen mode
+            if (!combo.Windowed)
+            {
+                // slightly prefer matches that are in a preferred format
+                bool match;
+                if (desktopMode.Format.GetColorBits() >= 8)
+                    match = (combo.AdapterFormat == desktopMode.Format);
+                else
+                    match = (combo.AdapterFormat == SlimDX.Direct3D9.Format.X8R8G8B8);
+
+                // if we have a match, update the ranking
+                if (match)
+                    ranking += 0.1f;
+            }
+
+            // rank vertex processing
+            if ((optimal.Direct3D9.CreationFlags & CreateFlags.HardwareVertexProcessing) != 0 &&
+                (optimal.Direct3D9.CreationFlags & CreateFlags.MixedVertexProcessing) != 0)
+            {
+                if ((combo.DeviceInfo.Capabilities.DeviceCaps & DeviceCaps.HWTransformAndLight) != 0)
+                    ranking += 1.0f;
+            }
+
+            // prefer hardware transformation and lighting
+            if ((combo.DeviceInfo.Capabilities.DeviceCaps & DeviceCaps.HWTransformAndLight) != 0)
+                ranking += 0.1f;
+
+            // check if any of the display modes are valid
+            if (combo.AdapterInfo.DisplayModes.Any(displayMode =>
+                displayMode.Format == combo.AdapterFormat &&
+                displayMode.Width == optimal.Direct3D9.PresentParameters.BackBufferWidth &&
+                displayMode.Height == optimal.Direct3D9.PresentParameters.BackBufferHeight))
+                ranking += 1.0f;
+
+            // rank the back buffer format
+            if (combo.BackBufferFormat == optimal.Direct3D9.PresentParameters.BackBufferFormat)
+                ranking += 1.0f;
+            else
+            {
+                // rank by how close the formats are
+                int bitDepthDelta = Math.Abs(combo.BackBufferFormat.GetColorBits() -
+                    optimal.Direct3D9.PresentParameters.BackBufferFormat.GetColorBits());
+                float scale = Math.Max(0.9f - bitDepthDelta * 0.2f, 0.0f);
+                ranking += scale;
+            }
+
+            // slightly prefer that the back buffer format equal the adapter format
+            if (combo.BackBufferFormat == combo.AdapterFormat)
+                ranking += 0.1f;
+
+            // loop through each multisample type
+            for (int i = 0; i < combo.MultisampleTypes.Count; i++)
+            {
+                // grab the type and quality
+                MultisampleType type = combo.MultisampleTypes[i];
+                int quality = combo.MultisampleQualities[i];
+
+                // check for a match
+                if (type == optimal.Direct3D9.PresentParameters.Multisample && quality == optimal.Direct3D9.PresentParameters.MultisampleQuality)
+                {
+                    // update the ranking
+                    ranking += 1.0f;
+                    break;
+                }
+            }
+
+            // check if the depth stencil formats match
+            if (combo.DepthStencilFormats.Contains(optimal.Direct3D9.PresentParameters.AutoDepthStencilFormat))
+                ranking += 1.0f;
+
+            // check for a refresh rate match
+            if (combo.AdapterInfo.DisplayModes.Any(displayMode =>
+                displayMode.Format == combo.AdapterFormat &&
+                displayMode.RefreshRate == optimal.Direct3D9.PresentParameters.FullScreenRefreshRateInHertz))
+                ranking += 1.0f;
+
+            // check if the present intervals match
+            if (combo.PresentIntervals.Contains(optimal.Direct3D9.PresentParameters.PresentationInterval))
+                ranking += 1.0f;
+
+            // return the final ranking
+            return ranking;
+        }
+
+        /// <summary>
+        /// Builds optimal device settings.
+        /// </summary>
+        /// <param name="settings">The settings.</param>
+        /// <returns>The optimal device settings</returns>
+        static DeviceSettings BuildOptimalSettings(DeviceSettings settings)
+        {
+            // grab the desktop mode
+            DisplayMode desktopMode = Direct3D.GetAdapterDisplayMode(settings.Direct3D9.AdapterOrdinal);
+            DeviceSettings optimal = new DeviceSettings();
+
+            // setup the easy values first
+            optimal.Direct3D9.AdapterOrdinal = settings.Direct3D9.AdapterOrdinal;
+            optimal.Direct3D9.DeviceType = settings.Direct3D9.DeviceType;
+            optimal.Direct3D9.PresentParameters.Windowed = settings.Direct3D9.PresentParameters.Windowed;
+            optimal.Direct3D9.CreationFlags = settings.Direct3D9.CreationFlags;
+            optimal.Direct3D9.PresentParameters.BackBufferCount = settings.Direct3D9.PresentParameters.BackBufferCount;
+            optimal.Direct3D9.PresentParameters.Multisample = settings.Direct3D9.PresentParameters.Multisample;
+            optimal.Direct3D9.PresentParameters.MultisampleQuality = settings.Direct3D9.PresentParameters.MultisampleQuality;
+            optimal.Direct3D9.PresentParameters.PresentFlags = settings.Direct3D9.PresentParameters.PresentFlags;
+            optimal.Direct3D9.PresentParameters.FullScreenRefreshRateInHertz = settings.Direct3D9.PresentParameters.FullScreenRefreshRateInHertz;
+            optimal.Direct3D9.PresentParameters.PresentationInterval = settings.Direct3D9.PresentParameters.PresentationInterval;
+            optimal.Direct3D9.PresentParameters.SwapEffect = settings.Direct3D9.PresentParameters.SwapEffect;
+
+            // figure out the optimal adapter format
+            if (settings.Direct3D9.AdapterFormat == SlimDX.Direct3D9.Format.Unknown)
+            {
+                // depends on the windowed mode
+                if (optimal.Direct3D9.PresentParameters.Windowed || desktopMode.Format.GetColorBits() >= 8)
+                    optimal.Direct3D9.AdapterFormat = desktopMode.Format;
+                else
+                    optimal.Direct3D9.AdapterFormat = SlimDX.Direct3D9.Format.X8R8G8B8;
+            }
+            else
+                optimal.Direct3D9.AdapterFormat = settings.Direct3D9.AdapterFormat;
+
+            // figure out the optimal back buffer size
+            if (settings.Direct3D9.PresentParameters.BackBufferWidth == 0 || settings.Direct3D9.PresentParameters.BackBufferHeight == 0)
+            {
+                // depends on the windowed mode
+                if (optimal.Direct3D9.PresentParameters.Windowed)
+                {
+                    // just use a default size
+                    optimal.Direct3D9.PresentParameters.BackBufferWidth = 640;
+                    optimal.Direct3D9.PresentParameters.BackBufferHeight = 480;
+                }
+                else
+                {
+                    // use the desktop size
+                    optimal.Direct3D9.PresentParameters.BackBufferWidth = desktopMode.Width;
+                    optimal.Direct3D9.PresentParameters.BackBufferHeight = desktopMode.Height;
+                }
+            }
+            else
+            {
+                // otherwise, use the specified size
+                optimal.Direct3D9.PresentParameters.BackBufferWidth = settings.Direct3D9.PresentParameters.BackBufferWidth;
+                optimal.Direct3D9.PresentParameters.BackBufferHeight = settings.Direct3D9.PresentParameters.BackBufferHeight;
+            }
+
+            // figure out the optimal back buffer format
+            if (settings.Direct3D9.PresentParameters.BackBufferFormat == SlimDX.Direct3D9.Format.Unknown)
+                optimal.Direct3D9.PresentParameters.BackBufferFormat = optimal.Direct3D9.AdapterFormat;
+            else
+                optimal.Direct3D9.PresentParameters.BackBufferFormat = settings.Direct3D9.PresentParameters.BackBufferFormat;
+
+            // figure out the optimal depth stencil format
+            if (settings.Direct3D9.PresentParameters.AutoDepthStencilFormat == SlimDX.Direct3D9.Format.Unknown)
+            {
+                // depends on the bit depth
+                if (optimal.Direct3D9.PresentParameters.BackBufferFormat.GetColorBits() >= 8)
+                    optimal.Direct3D9.PresentParameters.AutoDepthStencilFormat = SlimDX.Direct3D9.Format.D32;
+                else
+                    optimal.Direct3D9.PresentParameters.AutoDepthStencilFormat = SlimDX.Direct3D9.Format.D16;
+                optimal.Direct3D9.PresentParameters.EnableAutoDepthStencil = true;
+            }
+            else
+            {
+                // otherwise, use the specified value
+                optimal.Direct3D9.PresentParameters.EnableAutoDepthStencil = true;
+                optimal.Direct3D9.PresentParameters.AutoDepthStencilFormat = settings.Direct3D9.PresentParameters.AutoDepthStencilFormat;
+            }
+
+            // return the optimal settings
+            return optimal;
         }
     }
 }

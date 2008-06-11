@@ -20,9 +20,13 @@
 * THE SOFTWARE.
 */
 
+#ifdef WRAP_XAPO
+
 #include <xapo.h>
 
 #include "../Result.h"
 #include "../DataStream.h"
 
 #include "IAudioProcessor.h"
+
+#endif

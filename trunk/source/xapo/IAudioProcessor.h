@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#ifdef WRAP_XAPO
+
 #include "RegistrationProperties.h"
 #include "../WaveFormat.h"
 #include "LockParameter.h"
@@ -51,3 +53,5 @@ namespace SlimDX
 		};
 	}
 }
+
+#endif

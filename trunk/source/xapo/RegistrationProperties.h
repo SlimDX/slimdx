@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#ifdef WRAP_XAPO
+
 #include "Enums.h"
 
 namespace SlimDX
@@ -53,3 +55,5 @@ namespace SlimDX
 		};
 	}
 }
+
+#endif
