@@ -52,6 +52,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XAudio2", "XAudio2", "{F187
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicSound", "..\samples\XAudio2\BasicSound\BasicSound.csproj", "{EAFA9427-D9FC-45AC-908C-30CE59DCB957}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SlimDXRedist32", "..\install\SlimDXRedist32\SlimDXRedist32.vdproj", "{7C99DFFE-2FD7-4966-93CF-B042458520C2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DXSetupAction", "..\install\DXSetupAction\DXSetupAction.vcproj", "{5D0704A4-C1A5-486F-8DDF-4A6670309146}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -194,6 +198,21 @@ Global
 		{EAFA9427-D9FC-45AC-908C-30CE59DCB957}.Release|x64.Build.0 = Release|x64
 		{EAFA9427-D9FC-45AC-908C-30CE59DCB957}.Release|x86.ActiveCfg = Release|x86
 		{EAFA9427-D9FC-45AC-908C-30CE59DCB957}.Release|x86.Build.0 = Release|x86
+		{7C99DFFE-2FD7-4966-93CF-B042458520C2}.Debug|x64.ActiveCfg = Debug
+		{7C99DFFE-2FD7-4966-93CF-B042458520C2}.Debug|x86.ActiveCfg = Debug
+		{7C99DFFE-2FD7-4966-93CF-B042458520C2}.Public|x64.ActiveCfg = Release
+		{7C99DFFE-2FD7-4966-93CF-B042458520C2}.Public|x86.ActiveCfg = Release
+		{7C99DFFE-2FD7-4966-93CF-B042458520C2}.Public|x86.Build.0 = Release
+		{7C99DFFE-2FD7-4966-93CF-B042458520C2}.Release|x64.ActiveCfg = Release
+		{7C99DFFE-2FD7-4966-93CF-B042458520C2}.Release|x86.ActiveCfg = Release
+		{5D0704A4-C1A5-486F-8DDF-4A6670309146}.Debug|x64.ActiveCfg = Debug|x64
+		{5D0704A4-C1A5-486F-8DDF-4A6670309146}.Debug|x86.ActiveCfg = Debug|Win32
+		{5D0704A4-C1A5-486F-8DDF-4A6670309146}.Public|x64.ActiveCfg = Release|x64
+		{5D0704A4-C1A5-486F-8DDF-4A6670309146}.Public|x64.Build.0 = Release|x64
+		{5D0704A4-C1A5-486F-8DDF-4A6670309146}.Public|x86.ActiveCfg = Release|Win32
+		{5D0704A4-C1A5-486F-8DDF-4A6670309146}.Public|x86.Build.0 = Release|Win32
+		{5D0704A4-C1A5-486F-8DDF-4A6670309146}.Release|x64.ActiveCfg = Release|x64
+		{5D0704A4-C1A5-486F-8DDF-4A6670309146}.Release|x86.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
