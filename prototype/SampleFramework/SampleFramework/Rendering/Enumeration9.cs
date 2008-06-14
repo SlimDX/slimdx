@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using SlimDX.Direct3D9;
@@ -7,7 +6,7 @@ using SlimDX.Direct3D9;
 namespace SampleFramework
 {
     /// <summary>
-    /// Contains information about a single graphics adapter.
+    /// Contains information about a Direct3D9 adapter.
     /// </summary>
     class AdapterInfo9
     {
@@ -73,7 +72,7 @@ namespace SampleFramework
     }
 
     /// <summary>
-    /// Contains information about a single graphics device.
+    /// Contains information about a Direct3D9 device.
     /// </summary>
     class DeviceInfo9
     {
@@ -128,7 +127,7 @@ namespace SampleFramework
     }
 
     /// <summary>
-    /// Contains information about a combination of device settings.
+    /// Contains a unique combination of Direct3D9 device settings.
     /// </summary>
     class SettingsCombo9
     {
@@ -357,48 +356,25 @@ namespace SampleFramework
     }
 
     /// <summary>
-    /// Handles device type enumeration.
+    /// Handles device type enumeration for Direct3D9.
     /// </summary>
     static class Enumeration9
     {
-        // variables
-        static int maxMultisampleQuality = 65535;
+        /// <summary>
+        /// Gets or sets the minimum required settings.
+        /// </summary>
+        /// <value>The minimum required settings.</value>
+        public static DeviceSettings MinimumSettings
+        {
+            get;
+            set;
+        }
 
         /// <summary>
-        /// Gets the Adapters that were enumerated.
+        /// Gets the adapters that were enumerated.
         /// </summary>
-        /// <value>The Adapters that were enumerated.</value>
+        /// <value>The adapters that were enumerated.</value>
         public static List<AdapterInfo9> Adapters
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Gets the possible depth stencil formats.
-        /// </summary>
-        /// <value>The possible depth stencil formats.</value>
-        public static List<Format> PossibleDepthStencilFormats
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Gets the possible multisample types.
-        /// </summary>
-        /// <value>The possible multisample types.</value>
-        public static List<MultisampleType> PossibleMultisampleTypes
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Gets the possible present intervals.
-        /// </summary>
-        /// <value>The possible present intervals.</value>
-        public static List<PresentInterval> PossiblePresentIntervals
         {
             get;
             private set;
@@ -417,246 +393,6 @@ namespace SampleFramework
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether software vertex processing is required.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if software vertex processing is required; otherwise, <c>false</c>.
-        /// </value>
-        public static bool RequireSoftwareVertexProcessing
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether hardware vertex processing is required.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if hardware vertex processing is required; otherwise, <c>false</c>.
-        /// </value>
-        public static bool RequireHardwareVertexProcessing
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether pure hardware vertex processing is required.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if pure hardware vertex processing is required; otherwise, <c>false</c>.
-        /// </value>
-        public static bool RequirePureHardwareVertexProcessing
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether mixed vertex processing is required.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if mixed vertex processing is required; otherwise, <c>false</c>.
-        /// </value>
-        public static bool RequireMixedVertexProcessing
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether post pixel shader blending is required.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if post pixel shader blending is required; otherwise, <c>false</c>.
-        /// </value>
-        public static bool RequirePostPixelShaderBlending
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the minimum resolution.
-        /// </summary>
-        /// <value>The minimum resolution.</value>
-        public static Size MinimumResolution
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the maximum resolution.
-        /// </summary>
-        /// <value>The maximum resolution.</value>
-        public static Size MaximumResolution
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the minimum refresh rate.
-        /// </summary>
-        /// <value>The minimum refresh rate.</value>
-        public static int MinimumRefreshRate
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the maximum refresh rate.
-        /// </summary>
-        /// <value>The maximum refresh rate.</value>
-        public static int MaximumRefreshRate
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the maximum multisample quality.
-        /// </summary>
-        /// <value>The maximum multisample quality.</value>
-        public static int MaximumMultisampleQuality
-        {
-            get { return maxMultisampleQuality; }
-            set
-            {
-                maxMultisampleQuality = value;
-                if (maxMultisampleQuality > 65535)
-                    maxMultisampleQuality = 65535;
-            }
-        }
-
-        /// <summary>
-        /// Initializes the <see cref="Enumeration9"/> class.
-        /// </summary>
-        static Enumeration9()
-        {
-            // set default values
-            RequirePostPixelShaderBlending = true;
-            MinimumResolution = new Size(640, 480);
-            MaximumResolution = new Size(int.MaxValue, int.MaxValue);
-            MaximumRefreshRate = int.MaxValue;
-            RequireSoftwareVertexProcessing = true;
-            RequireHardwareVertexProcessing = true;
-            RequirePureHardwareVertexProcessing = true;
-            Adapters = new List<AdapterInfo9>();
-
-            // reset the lists
-            ResetPossibleDepthStencilFormats();
-            ResetPossibleMultisampleTypes();
-            ResetPossiblePresentIntervals();
-        }
-
-        /// <summary>
-        /// Gets the adapter information descriptor for the given adapter.
-        /// </summary>
-        /// <param name="adapterOrdinal">The adapter ordinal.</param>
-        /// <returns>
-        /// The adapter information descriptor for the given adapter, or <c>null</c>
-        /// if a valid combination cannot be found.
-        /// </returns>
-        public static AdapterInfo9 GetAdapterInfo(int adapterOrdinal)
-        {
-            // return the correct adapter
-            return Adapters.FirstOrDefault(adapter => adapter.AdapterOrdinal == adapterOrdinal);
-        }
-
-        /// <summary>
-        /// Gets the device information descriptor for the given settings.
-        /// </summary>
-        /// <param name="adapterOrdinal">The adapter ordinal.</param>
-        /// <param name="deviceType">Type of the device.</param>
-        /// <returns>
-        /// The device information descriptor for the given settings, or <c>null</c>
-        /// if a valid combination cannot be found.
-        /// </returns>
-        public static DeviceInfo9 GetDeviceInfo(int adapterOrdinal, DeviceType deviceType)
-        {
-            // grab the adapter
-            AdapterInfo9 info = GetAdapterInfo(adapterOrdinal);
-            if (info != null)
-                return info.Devices.FirstOrDefault(device => device.DeviceType == deviceType);
-
-            // otherwise, we don't have it
-            return null;
-        }
-
-        /// <summary>
-        /// Gets the settings combination for the given settings.
-        /// </summary>
-        /// <param name="adapterOrdinal">The adapter ordinal.</param>
-        /// <param name="deviceType">Type of the device.</param>
-        /// <param name="adapterFormat">The adapter format.</param>
-        /// <param name="backBufferFormat">The back buffer format.</param>
-        /// <param name="windowed">if set to <c>true</c>, searches for windowed settings.</param>
-        /// <returns>
-        /// The settings combination for the given settings, or <c>null</c> if a valid combination
-        /// cannot be found.
-        /// </returns>
-        public static SettingsCombo9 GetSettingsCombo(int adapterOrdinal, DeviceType deviceType,
-            Format adapterFormat, Format backBufferFormat, bool windowed)
-        {
-            // grab the device
-            DeviceInfo9 info = GetDeviceInfo(adapterOrdinal, deviceType);
-            if (info != null)
-                return info.DeviceSettings.FirstOrDefault(setting =>
-                    (setting.AdapterFormat == adapterFormat) &&
-                    (setting.BackBufferFormat == backBufferFormat) &&
-                    (setting.Windowed == windowed));
-
-            // otherwise, we don't have it
-            return null;
-        }
-
-        /// <summary>
-        /// Resets the possible depth stencil formats.
-        /// </summary>
-        public static void ResetPossibleDepthStencilFormats()
-        {
-            // reset the list
-            PossibleDepthStencilFormats = new List<Format> {
-                Format.D16,     Format.D15S1,   Format.D24X8,
-                Format.D24S8,   Format.D24X4S4, Format.D32 };
-        }
-
-        /// <summary>
-        /// Resets the possible multisample types.
-        /// </summary>
-        public static void ResetPossibleMultisampleTypes()
-        {
-            // reset the list
-            PossibleMultisampleTypes = new List<MultisampleType>() {
-                MultisampleType.None,               MultisampleType.NonMaskable,
-                MultisampleType.TwoSamples,         MultisampleType.ThreeSamples,
-                MultisampleType.FourSamples,        MultisampleType.FiveSamples,
-                MultisampleType.SixSamples,         MultisampleType.SevenSamples,
-                MultisampleType.EightSamples,       MultisampleType.NineSamples,
-                MultisampleType.TenSamples,         MultisampleType.ElevenSamples,
-                MultisampleType.TwelveSamples,      MultisampleType.ThirteenSamples,
-                MultisampleType.FourteenSamples,    MultisampleType.FifteenSamples,
-                MultisampleType.SixteenSamples
-            };
-        }
-
-        /// <summary>
-        /// Resets the possible present intervals.
-        /// </summary>
-        public static void ResetPossiblePresentIntervals()
-        {
-            // reset the list
-            PossiblePresentIntervals = new List<PresentInterval>() {
-                PresentInterval.Immediate,  PresentInterval.Default,
-                PresentInterval.One,        PresentInterval.Two,
-                PresentInterval.Three,      PresentInterval.Four
-            };
-        }
-
-        /// <summary>
         /// Enumerates through all possible graphics devices.
         /// </summary>
         public static void Enumerate()
@@ -670,39 +406,32 @@ namespace SampleFramework
 
             // loop through each adapter
             int adapterCount = Direct3D.AdapterCount;
-            for (int adapterOrdinal = 0; adapterOrdinal < adapterCount; adapterOrdinal++)
+            foreach (AdapterInformation adapter in Direct3D.Adapters)
             {
-                // setup the adapter info structure
-                AdapterInfo9 AdapterInfo9 = new AdapterInfo9();
-                DisplayMode displayMode;
-                AdapterInfo9.AdapterOrdinal = adapterOrdinal;
-                AdapterInfo9.Details = Direct3D.GetAdapterIdentifier(adapterOrdinal);
+                // set up the adapter info structure
+                AdapterInfo9 info = new AdapterInfo9();
+                info.AdapterOrdinal = adapter.Adapter;
+                info.Details = adapter.Details;
 
                 // loop through each possible format
                 adapterFormats.Clear();
-                for (int formatList = 0; formatList < allowedAdapterFormats.Length; formatList++)
+                foreach (Format adapterFormat in allowedAdapterFormats)
                 {
-                    // grab the format
-                    Format allowedAdapterFormat = allowedAdapterFormats[formatList];
-
                     // loop through each possible mode
-                    int adapterModeCount = Direct3D.GetAdapterModeCount(adapterOrdinal, allowedAdapterFormat);
-                    for (int mode = 0; mode < adapterModeCount; mode++)
+                    foreach (DisplayMode displayMode in adapter.GetDisplayModes(adapterFormat))
                     {
-                        // grab the display mode
-                        displayMode = Direct3D.EnumerateAdapterModes(adapterOrdinal, allowedAdapterFormat, mode);
-
-                        // make sure we can use this display mode
-                        if (displayMode.Width < MinimumResolution.Width ||
-                            displayMode.Width > MaximumResolution.Width ||
-                            displayMode.Height < MinimumResolution.Height ||
-                            displayMode.Height > MaximumResolution.Height ||
-                            displayMode.RefreshRate < MinimumRefreshRate ||
-                            displayMode.RefreshRate > MaximumRefreshRate)
-                            continue;
+                        // if we have minimum settings, make sure this display mode passes them
+                        if (MinimumSettings != null)
+                        {
+                            // make sure the settings are sufficient
+                            if (displayMode.Width < MinimumSettings.BackBufferWidth ||
+                                displayMode.Height < MinimumSettings.BackBufferHeight ||
+                                displayMode.RefreshRate < MinimumSettings.RefreshRate)
+                                continue;
+                        }
 
                         // add the mode to the list
-                        AdapterInfo9.DisplayModes.Add(displayMode);
+                        info.DisplayModes.Add(displayMode);
 
                         // add the format to the adapter
                         if (!adapterFormats.Contains(displayMode.Format))
@@ -710,20 +439,19 @@ namespace SampleFramework
                     }
                 }
 
-                // grab the display mode and make sure it's in the list
-                displayMode = Direct3D.GetAdapterDisplayMode(adapterOrdinal);
-                if (!adapterFormats.Contains(displayMode.Format))
-                    adapterFormats.Add(displayMode.Format);
+                // make sure the current display mode is in the list
+                if (!adapterFormats.Contains(adapter.CurrentDisplayMode.Format))
+                    adapterFormats.Add(adapter.CurrentDisplayMode.Format);
 
                 // sort the list
-                AdapterInfo9.DisplayModes.Sort(DisplayModeComparer9.Comparer);
+                info.DisplayModes.Sort(DisplayModeComparer9.Comparer);
 
                 // enumerate all the devices on this adapter
-                EnumerateDevices(AdapterInfo9, adapterFormats);
+                EnumerateDevices(info, adapterFormats);
 
                 // only keep this adapter if it has valid devices
-                if (AdapterInfo9.Devices.Count > 0)
-                    Adapters.Add(AdapterInfo9);
+                if (info.Devices.Count > 0)
+                    Adapters.Add(info);
             }
 
             // check if all of the adapter names are unique
@@ -751,20 +479,24 @@ namespace SampleFramework
             DeviceType[] deviceTypes = { DeviceType.Hardware, DeviceType.Reference };
 
             // loop through each possible device type
-            for (int deviceType = 0; deviceType < deviceTypes.Length; deviceType++)
+            foreach (DeviceType deviceType in deviceTypes)
             {
+                // check the device type
+                if (MinimumSettings != null && MinimumSettings.DeviceType != deviceType)
+                    continue;
+
                 // build up the device
-                DeviceInfo9 DeviceInfo9 = new DeviceInfo9();
-                DeviceInfo9.AdapterOrdinal = info.AdapterOrdinal;
-                DeviceInfo9.DeviceType = deviceTypes[deviceType];
-                DeviceInfo9.Capabilities = Direct3D.GetDeviceCaps(info.AdapterOrdinal, DeviceInfo9.DeviceType);
+                DeviceInfo9 deviceInfo = new DeviceInfo9();
+                deviceInfo.AdapterOrdinal = info.AdapterOrdinal;
+                deviceInfo.DeviceType = deviceType;
+                deviceInfo.Capabilities = Direct3D.GetDeviceCaps(info.AdapterOrdinal, deviceInfo.DeviceType);
 
                 // enumerate the settings on this device
-                EnumerateSettingsCombos(info, DeviceInfo9, adapterFormats);
+                EnumerateSettingsCombos(info, deviceInfo, adapterFormats);
 
                 // only keep the device if it has valid settings combos
-                if (DeviceInfo9.DeviceSettings.Count > 0)
-                    info.Devices.Add(DeviceInfo9);
+                if (deviceInfo.DeviceSettings.Count > 0)
+                    info.Devices.Add(deviceInfo);
             }
         }
 
@@ -799,7 +531,7 @@ namespace SampleFramework
                             continue;
 
                         // check if post pixel shader blending is required
-                        if (RequirePostPixelShaderBlending && !Direct3D.CheckDeviceFormat(adapterInfo.AdapterOrdinal,
+                        if (!Direct3D.CheckDeviceFormat(adapterInfo.AdapterOrdinal,
                             deviceInfo.DeviceType, adapterFormat, Usage.QueryPostPixelShaderBlending,
                             ResourceType.Texture, backBufferFormat))
                             continue;
@@ -826,6 +558,24 @@ namespace SampleFramework
                         BuildDepthStencilConflictList(combo);
                         BuildPresentIntervalList(combo);
 
+                        // make sure the combo supports the minimum settings
+                        if (MinimumSettings != null)
+                        {
+                            // check the back buffer format
+                            if (MinimumSettings.BackBufferFormat != Format.Unknown &&
+                                MinimumSettings.BackBufferFormat != backBufferFormat)
+                                continue;
+
+                            // check the depth stencil format
+                            if (MinimumSettings.DepthStencilFormat != Format.Unknown &&
+                                !combo.DepthStencilFormats.Contains(MinimumSettings.DepthStencilFormat))
+                                continue;
+
+                            // check the multisample type
+                            if (!combo.MultisampleTypes.Contains(MinimumSettings.MultisampleType))
+                                continue;
+                        }
+
                         // add the item to the list
                         deviceInfo.DeviceSettings.Add(combo);
                     }
@@ -840,7 +590,12 @@ namespace SampleFramework
         static void BuildDepthStencilFormatList(SettingsCombo9 combo)
         {
             // build up the list
-            combo.DepthStencilFormats = PossibleDepthStencilFormats.Where(format =>
+            List<Format> possibleDepthStencilFormats = new List<Format> {
+                Format.D16,     Format.D15S1,   Format.D24X8,
+                Format.D24S8,   Format.D24X4S4, Format.D32 };
+
+            // return the valid depth stencil formats
+            combo.DepthStencilFormats = possibleDepthStencilFormats.Where(format =>
                 Direct3D.CheckDeviceFormat(combo.AdapterOrdinal, combo.DeviceType, combo.AdapterFormat,
                     Usage.DepthStencil, ResourceType.Surface, format) &&
                     Direct3D.CheckDepthStencilMatch(combo.AdapterOrdinal, combo.DeviceType,
@@ -853,9 +608,22 @@ namespace SampleFramework
         /// <param name="combo">The combo.</param>
         static void BuildMultisampleTypeList(SettingsCombo9 combo)
         {
+            // build the list
+            List<MultisampleType> possibleMultisampleTypes = new List<MultisampleType>() {
+                MultisampleType.None,               MultisampleType.NonMaskable,
+                MultisampleType.TwoSamples,         MultisampleType.ThreeSamples,
+                MultisampleType.FourSamples,        MultisampleType.FiveSamples,
+                MultisampleType.SixSamples,         MultisampleType.SevenSamples,
+                MultisampleType.EightSamples,       MultisampleType.NineSamples,
+                MultisampleType.TenSamples,         MultisampleType.ElevenSamples,
+                MultisampleType.TwelveSamples,      MultisampleType.ThirteenSamples,
+                MultisampleType.FourteenSamples,    MultisampleType.FifteenSamples,
+                MultisampleType.SixteenSamples
+            };
+
             // loop through each multisample type
             int quality;
-            foreach (MultisampleType type in PossibleMultisampleTypes)
+            foreach (MultisampleType type in possibleMultisampleTypes)
             {
                 // check if the multisample type is valid
                 if (Direct3D.CheckDeviceMultisampleType(combo.AdapterOrdinal, combo.DeviceType,
@@ -863,8 +631,6 @@ namespace SampleFramework
                 {
                     // add the items to the list
                     combo.MultisampleTypes.Add(type);
-                    if (quality > maxMultisampleQuality + 1)
-                        quality = maxMultisampleQuality + 1;
                     combo.MultisampleQualities.Add(quality);
                 }
             }
@@ -904,8 +670,15 @@ namespace SampleFramework
         /// <param name="combo">The combo.</param>
         static void BuildPresentIntervalList(SettingsCombo9 combo)
         {
+            // build the list
+            List<PresentInterval> possiblePresentIntervals = new List<PresentInterval>() {
+                PresentInterval.Immediate,  PresentInterval.Default,
+                PresentInterval.One,        PresentInterval.Two,
+                PresentInterval.Three,      PresentInterval.Four
+            };
+
             // loop through each possible present interval
-            foreach (PresentInterval interval in PossiblePresentIntervals)
+            foreach (PresentInterval interval in possiblePresentIntervals)
             {
                 // if we are windowed we can't use higher intervals
                 if (combo.Windowed && (interval == PresentInterval.Two ||
