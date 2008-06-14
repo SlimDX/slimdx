@@ -61,11 +61,16 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rendering\DeviceSettings.cs" />
+    <Compile Include="Rendering\DeviceSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rendering\Direct3D10Settings.cs" />
+    <Compile Include="Rendering\Direct3D9Settings.cs" />
     <Compile Include="Rendering\Enumeration10.cs" />
     <Compile Include="Rendering\Enumeration9.cs" />
     <Compile Include="Rendering\Enums.cs" />
     <Compile Include="Rendering\GraphicsDeviceManager.cs" />
+    <Compile Include="Rendering\NoCompatibleDevicesException.cs" />
     <Compile Include="Win32\FilterKeys.cs" />
     <Compile Include="Win32\NativeDelegates.cs" />
     <Compile Include="Win32\NativeMethods.cs" />

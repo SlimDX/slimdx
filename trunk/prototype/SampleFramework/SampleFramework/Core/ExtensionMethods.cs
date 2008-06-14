@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SlimDX.Direct3D9;
+using D3D10 = SlimDX.Direct3D10;
+using DXGI = SlimDX.DXGI;
+using SlimDX;
 
 namespace SampleFramework
 {
     /// <summary>
     /// Contains various extension methods for use with the sample framework.
     /// </summary>
-    public static class ExtensionMethods
+    static class ExtensionMethods
     {
         /// <summary>
         /// Finds the best match in the collection.
@@ -169,6 +172,162 @@ namespace SampleFramework
                 default:
                     return 0;
             }
+        }
+
+        /// <summary>
+        /// Gets the color bits in a format.
+        /// </summary>
+        /// <param name="format">The format.</param>
+        /// <returns>The number of bits in the format dedicated to color information.</returns>
+        public static int GetColorBits(this DXGI.Format format)
+        {
+            // check the format
+            switch (format)
+            {
+                // 32 bits
+                case SlimDX.DXGI.Format.R32G32B32A32_Float:
+                case SlimDX.DXGI.Format.R32G32B32A32_SInt:
+                case SlimDX.DXGI.Format.R32G32B32A32_Typeless:
+                case SlimDX.DXGI.Format.R32G32B32A32_UInt:
+                case SlimDX.DXGI.Format.R32G32B32_Float:
+                case SlimDX.DXGI.Format.R32G32B32_SInt:
+                case SlimDX.DXGI.Format.R32G32B32_Typeless:
+                case SlimDX.DXGI.Format.R32G32B32_UInt:
+                    return 32;
+
+                // 16 bits
+                case SlimDX.DXGI.Format.R16G16B16A16_Float:
+                case SlimDX.DXGI.Format.R16G16B16A16_SInt:
+                case SlimDX.DXGI.Format.R16G16B16A16_SNorm:
+                case SlimDX.DXGI.Format.R16G16B16A16_Typeless:
+                case SlimDX.DXGI.Format.R16G16B16A16_UInt:
+                case SlimDX.DXGI.Format.R16G16B16A16_UNorm:
+                    return 16;
+
+                // 10 bits
+                case SlimDX.DXGI.Format.R10G10B10A2_Typeless:
+                case SlimDX.DXGI.Format.R10G10B10A2_UInt:
+                case SlimDX.DXGI.Format.R10G10B10A2_UNorm:
+                    return 10;
+
+                // 8 bits
+                case SlimDX.DXGI.Format.R8G8B8A8_SInt:
+                case SlimDX.DXGI.Format.R8G8B8A8_SNorm:
+                case SlimDX.DXGI.Format.R8G8B8A8_Typeless:
+                case SlimDX.DXGI.Format.R8G8B8A8_UInt:
+                case SlimDX.DXGI.Format.R8G8B8A8_UNorm:
+                case SlimDX.DXGI.Format.R8G8B8A8_UNorm_SRGB:
+                    return 8;
+
+                // 5 bits
+                case SlimDX.DXGI.Format.B5G5R5A1_UNorm:
+                case SlimDX.DXGI.Format.B5G6R5_UNorm:
+                    return 5;
+
+                // unknown / 0 bits
+                default:
+                    return 0;
+            }
+        }
+
+        /// <summary>
+        /// Converts a Direct3D9 device type to a Direct3D10 driver type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>The equivalent driver type.</returns>
+        public static D3D10.DriverType ToDirect3D10(this DeviceType type)
+        {
+            // return the correct value
+            if (type == DeviceType.Hardware)
+                return SlimDX.Direct3D10.DriverType.Hardware;
+            else if (type == DeviceType.Reference)
+                return SlimDX.Direct3D10.DriverType.Reference;
+            else if (type == DeviceType.Software)
+                return SlimDX.Direct3D10.DriverType.Software;
+            else
+                return SlimDX.Direct3D10.DriverType.Null;
+        }
+
+        /// <summary>
+        /// Converts a Direct3D9 multisample type to a Direct3D10 multisample count.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="quality">The quality.</param>
+        /// <returns>The equivalent multisample count.</returns>
+        public static int ToDirect3D10(this MultisampleType type, int quality)
+        {
+            // convert the value
+            if (type == MultisampleType.NonMaskable)
+                return quality;
+            else
+                return (int)type;
+        }
+
+        /// <summary>
+        /// Converts a Direct3D9 surface format to a Direct3D10 surface format.
+        /// </summary>
+        /// <param name="format">The format.</param>
+        /// <returns>The equivalent format.</returns>
+        public static DXGI.Format ToDirect3D10(this Format format)
+        {
+            // return the appropriate format
+            switch (format)
+            {
+                case Format.R8G8B8:
+                case Format.A8R8G8B8:
+                case Format.X8R8G8B8:
+                case Format.A4R4G4B4:
+                case Format.R3G3B2:
+                case Format.A8R3G3B2:
+                case Format.X4R4G4B4:
+                    return SlimDX.DXGI.Format.R8G8B8A8_UNorm;      
+                case Format.R5G6B5:
+                    return SlimDX.DXGI.Format.B5G6R5_UNorm;
+                case Format.X1R5G5B5:
+                case Format.A1R5G5B5:
+                    return SlimDX.DXGI.Format.B5G5R5A1_UNorm;
+                case Format.A8:
+                    return SlimDX.DXGI.Format.A8_UNorm;
+                case Format.A2B10G10R10:
+                case Format.A2R10G10B10:
+                    return SlimDX.DXGI.Format.R10G10B10A2_UNorm;
+                case Format.A8B8G8R8:
+                case Format.X8B8G8R8:
+                    return SlimDX.DXGI.Format.B8G8R8A8_UNorm;
+                case Format.G16R16:
+                    return SlimDX.DXGI.Format.R16G16_UNorm;
+                case Format.A16B16G16R16:
+                    return SlimDX.DXGI.Format.R16G16B16A16_UNorm;
+                case Format.R16F:
+                    return SlimDX.DXGI.Format.R16_Float;
+                case Format.G16R16F:
+                    return SlimDX.DXGI.Format.R16G16_Float;
+                case Format.A16B16G16R16F:
+                    return SlimDX.DXGI.Format.R16G16B16A16_Float;
+                case Format.R32F:
+                    return SlimDX.DXGI.Format.R32_Float;
+                case Format.G32R32F:
+                    return SlimDX.DXGI.Format.R32G32_Float;
+                case Format.A32B32G32R32F:
+                    return SlimDX.DXGI.Format.R32G32B32A32_Float;
+            }
+
+            // otherwise, we don't know the right format
+            return SlimDX.DXGI.Format.Unknown;
+        }
+
+        /// <summary>
+        /// Converts a rational to a floating point value.
+        /// </summary>
+        /// <param name="rational">The rational.</param>
+        /// <returns>The floating point value.</returns>
+        public static float ToFloat(this Rational rational)
+        {
+            // make sure there are no divide-by-zero errors when we convert
+            float denom = 1;
+            if (rational.Denominator != 0)
+                denom = rational.Denominator;
+            return rational.Numerator / rational.Denominator;
         }
     }
 }
