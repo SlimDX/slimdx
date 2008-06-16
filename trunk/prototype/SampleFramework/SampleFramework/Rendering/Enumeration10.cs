@@ -340,6 +340,21 @@ namespace SampleFramework
         }
 
         /// <summary>
+        /// Gets the output info.
+        /// </summary>
+        /// <param name="adapterOrdinal">The adapter ordinal.</param>
+        /// <param name="outputOrdinal">The output ordinal.</param>
+        /// <returns>The output info with the desired settings.</returns>
+        public static OutputInfo10 GetOutputInfo(int adapterOrdinal, int outputOrdinal)
+        {
+            // find the right output info descriptor
+            AdapterInfo10 adapter = Adapters.FirstOrDefault(a => a.AdapterOrdinal == adapterOrdinal);
+            if (adapter != null && adapter.Outputs.Count > outputOrdinal)
+                return adapter.Outputs[outputOrdinal];
+            return null;
+        }
+
+        /// <summary>
         /// Enumerates through all possible graphics devices.
         /// </summary>
         public static void Enumerate()
@@ -476,6 +491,7 @@ namespace SampleFramework
                 DeviceInfo10 deviceInfo = new DeviceInfo10();
                 deviceInfo.AdapterOrdinal = adapterInfo.AdapterOrdinal;
                 deviceInfo.DriverType = type;
+                SlimDX.Direct3D10.Device device;
 
                 // create the device to ensure that this is a valid device
                 try
@@ -483,7 +499,7 @@ namespace SampleFramework
                     Adapter adapter = null;
                     if (type == DriverType.Hardware)
                         adapter = adapterInfo.Adapter;
-                    SlimDX.Direct3D10.Device device = new SlimDX.Direct3D10.Device(adapter, type, DeviceCreationFlags.None);
+                    device = new SlimDX.Direct3D10.Device(adapter, type, DeviceCreationFlags.None);
                 }
                 catch (Direct3D10Exception)
                 {
