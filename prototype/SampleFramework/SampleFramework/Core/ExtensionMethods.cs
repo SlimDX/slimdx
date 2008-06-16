@@ -249,6 +249,24 @@ namespace SampleFramework
         }
 
         /// <summary>
+        /// Converts a Direct3D10 driver type to a Direct3D9 device type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>The equivalent device type.</returns>
+        public static DeviceType ToDirect3D9(this D3D10.DriverType type)
+        {
+            // return the correct value
+            if (type == SlimDX.Direct3D10.DriverType.Hardware)
+                return DeviceType.Hardware;
+            else if (type == SlimDX.Direct3D10.DriverType.Reference)
+                return DeviceType.Reference;
+            else if (type == SlimDX.Direct3D10.DriverType.Software)
+                return DeviceType.Software;
+            else
+                return DeviceType.NullReference;
+        }
+
+        /// <summary>
         /// Converts a Direct3D9 multisample type to a Direct3D10 multisample count.
         /// </summary>
         /// <param name="type">The type.</param>
@@ -261,6 +279,17 @@ namespace SampleFramework
                 return quality;
             else
                 return (int)type;
+        }
+
+        /// <summary>
+        /// Converts a Direct3D10 multisample count to a Direct3D9 multisample type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>The equivalent multisample type.</returns>
+        public static MultisampleType ToDirect3D9(this int type)
+        {
+            // return the correct value
+            return (MultisampleType)type;
         }
 
         /// <summary>
@@ -314,6 +343,50 @@ namespace SampleFramework
 
             // otherwise, we don't know the right format
             return SlimDX.DXGI.Format.Unknown;
+        }
+
+        /// <summary>
+        /// Converts a Direct3D10 surface format to a Direct3D9 surface format.
+        /// </summary>
+        /// <param name="format">The format.</param>
+        /// <returns>The equivalent format.</returns>
+        public static Format ToDirect3D9(this DXGI.Format format)
+        {
+            // return the appropriate format
+            switch (format)
+            {
+                case SlimDX.DXGI.Format.R8G8B8A8_UNorm:
+                    return Format.A8R8G8B8;
+                case SlimDX.DXGI.Format.B5G6R5_UNorm:
+                    return Format.R5G6B5;
+                case SlimDX.DXGI.Format.B5G5R5A1_UNorm:
+                    return Format.A1R5G5B5;
+                case SlimDX.DXGI.Format.A8_UNorm:
+                    return Format.A8;
+                case SlimDX.DXGI.Format.R10G10B10A2_UNorm:
+                    return Format.A2B10G10R10;
+                case SlimDX.DXGI.Format.B8G8R8A8_UNorm:
+                    return Format.A8B8G8R8;
+                case SlimDX.DXGI.Format.R16G16_UNorm:
+                    return Format.G16R16;
+                case SlimDX.DXGI.Format.R16G16B16A16_UNorm:
+                    return Format.A16B16G16R16;
+                case SlimDX.DXGI.Format.R16_Float:
+                    return Format.R16F;
+                case SlimDX.DXGI.Format.R16G16_Float:
+                    return Format.G16R16F;
+                case SlimDX.DXGI.Format.R16G16B16A16_Float:
+                    return Format.A16B16G16R16F;
+                case SlimDX.DXGI.Format.R32_Float:
+                    return Format.R32F;
+                case SlimDX.DXGI.Format.R32G32_Float:
+                    return Format.G32R32F;
+                case SlimDX.DXGI.Format.R32G32B32A32_Float:
+                    return Format.A32B32G32R32F;
+            }
+
+            // otherwise, we don't know the right format
+            return Format.Unknown;
         }
 
         /// <summary>

@@ -26,6 +26,7 @@ namespace SampleFramework
         // variables
         bool minimized;
         bool maximized;
+        bool inSizeMove;
 
         /// <summary>
         /// Occurs when the application is suspended.
@@ -71,6 +72,15 @@ namespace SampleFramework
         /// Occurs when a screen saver is about to be activated.
         /// </summary>
         public event CancelEventHandler ScreenSaver;
+
+        /// <summary>
+        /// Gets a value indicating whether the window is in the middle of sizing operations.
+        /// </summary>
+        /// <value><c>true</c> if the window is in the middle of sizing operations; otherwise, <c>false</c>.</value>
+        internal bool InSizeMove
+        {
+            get { return inSizeMove; }
+        }
 
         /// <summary>
         /// Gets a value indicating whether this instance is minimized.
@@ -229,6 +239,7 @@ namespace SampleFramework
             base.OnResizeBegin(e);
 
             // suspend any processing until we are done being minimized
+            inSizeMove = true;
             OnSuspend(EventArgs.Empty);
         }
 
@@ -244,6 +255,7 @@ namespace SampleFramework
             // check for screen and size changes
             OnUserResized(EventArgs.Empty);
             UpdateScreen();
+            inSizeMove = false;
 
             // resume application processing
             OnResume(EventArgs.Empty);
@@ -304,8 +316,11 @@ namespace SampleFramework
                         maximized = false;
 
                         // check for screen and size changes
-                        OnUserResized(EventArgs.Empty);
-                        UpdateScreen();
+                        if (!inSizeMove)
+                        {
+                            OnUserResized(EventArgs.Empty);
+                            UpdateScreen();
+                        }
                     }
                 }
             }
