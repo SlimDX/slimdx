@@ -177,6 +177,12 @@ namespace SampleFramework
             result.MultisampleQuality = MultisampleQuality;
             result.MultisampleType = MultisampleType;
             result.Windowed = Windowed;
+            
+            // clone each API specific portion
+            if (Direct3D9 != null)
+                result.Direct3D9 = Direct3D9.Clone();
+            if (Direct3D10 != null)
+                result.Direct3D10 = Direct3D10.Clone();
 
             // return the result
             return result;
@@ -220,10 +226,10 @@ namespace SampleFramework
                     Enumeration9.Enumerate();
 
                 // find the best settings for the job
+                DeviceSettings newSettings = settings.Clone();
                 Direct3D9Settings d3d9 = FindValidD3D9Settings(settings);
-                settings.Direct3D10 = null;
-                settings.Direct3D9 = d3d9;
-                return settings;
+                newSettings.Direct3D9 = d3d9;
+                return newSettings;
             }
             else
             {
@@ -243,10 +249,10 @@ namespace SampleFramework
                     Enumeration10.Enumerate();
 
                 // find the best settings for the job
+                DeviceSettings newSettings = settings.Clone();
                 Direct3D10Settings d3d10 = FindValidD3D10Settings(settings);
-                settings.Direct3D9 = null;
-                settings.Direct3D10 = d3d10;
-                return settings;
+                newSettings.Direct3D10 = d3d10;
+                return newSettings;
             }
         }
 

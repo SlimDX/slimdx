@@ -59,6 +59,16 @@ namespace SampleFramework
         public event EventHandler Exiting;
 
         /// <summary>
+        /// Occurs when a drawing frame is about to start.
+        /// </summary>
+        public event CancelEventHandler FrameStart;
+
+        /// <summary>
+        /// Occurs when a drawing frame ends.
+        /// </summary>
+        public event EventHandler FrameEnd;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the Windows key should be disabled.
         /// </summary>
         /// <value><c>true</c> if the Windows key should be disabled; otherwise, <c>false</c>.</value>
@@ -400,7 +410,7 @@ namespace SampleFramework
                         gameTime.ElapsedGameTime = targetElapsedTime;
                         gameTime.TotalGameTime = totalGameTime;
                         gameTime.IsRunningSlowly = drawRunningSlowly;
-                        
+
                         // perform an update
                         Update(gameTime);
                     }
@@ -440,8 +450,9 @@ namespace SampleFramework
                 }
             }
 
-            // draw the frame
-            DrawFrame();
+            // draw the frame, but only if we aren't in the middle of sizing operations
+            if (!Window.InSizeMove)
+                DrawFrame();
         }
 
         /// <summary>
@@ -512,7 +523,7 @@ namespace SampleFramework
                 Release();
 
                 // if we have an event, raise it
-                if( Disposed != null )
+                if (Disposed != null)
                     Disposed(this, EventArgs.Empty);
             }
         }
@@ -551,6 +562,28 @@ namespace SampleFramework
         }
 
         /// <summary>
+        /// Raises the <see cref="E:FrameStart"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="System.ComponentModel.CancelEventArgs"/> instance containing the event data.</param>
+        protected virtual void OnFrameStart(CancelEventArgs e)
+        {
+            // raise the event
+            if (FrameStart != null)
+                FrameStart(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:FrameEnd"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnFrameEnd(EventArgs e)
+        {
+            // raise the event
+            if (FrameEnd != null)
+                FrameEnd(this, e);
+        }
+
+        /// <summary>
         /// Draws a frame.
         /// </summary>
         void DrawFrame()
@@ -560,15 +593,24 @@ namespace SampleFramework
                 // make sure all conditions are met
                 if (!IsExiting && !Window.IsMinimized)
                 {
-                    // fill in the game time
-                    gameTime.TotalRealTime = clock.CurrentTime;
-                    gameTime.ElapsedRealTime = lastFrameElapsedRealTime;
-                    gameTime.TotalGameTime = totalGameTime;
-                    gameTime.ElapsedGameTime = lastFrameElapsedGameTime;
-                    gameTime.IsRunningSlowly = drawRunningSlowly;
+                    // start the frame
+                    CancelEventArgs e = new CancelEventArgs(false);
+                    OnFrameStart(e);
+                    if (!e.Cancel)
+                    {
+                        // fill in the game time
+                        gameTime.TotalRealTime = clock.CurrentTime;
+                        gameTime.ElapsedRealTime = lastFrameElapsedRealTime;
+                        gameTime.TotalGameTime = totalGameTime;
+                        gameTime.ElapsedGameTime = lastFrameElapsedGameTime;
+                        gameTime.IsRunningSlowly = drawRunningSlowly;
 
-                    // draw the frame
-                    Draw(gameTime);
+                        // draw the frame
+                        Draw(gameTime);
+
+                        // end the frame
+                        OnFrameEnd(EventArgs.Empty);
+                    }
                 }
             }
             finally

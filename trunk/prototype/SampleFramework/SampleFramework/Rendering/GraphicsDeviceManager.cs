@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SlimDX.DXGI;
-using SlimDX.Direct3D10;
-using System.Windows.Forms;
+using System.ComponentModel;
 using System.Drawing;
+using System.Threading;
 using SlimDX;
 using SlimDX.Direct3D9;
+using SlimDX.DXGI;
 
 namespace SampleFramework
 {
@@ -20,7 +17,6 @@ namespace SampleFramework
         Game game;
         bool ignoreSizeChanges;
         bool deviceLost;
-        Factory factory;
 
         // cached window data
         int fullscreenWindowWidth;
@@ -86,12 +82,8 @@ namespace SampleFramework
         /// Initializes a new instance of the <see cref="GraphicsDeviceManager"/> class.
         /// </summary>
         /// <param name="game">The game.</param>
-        /// <param name="deviceVersion">The device version.</param>
-        /// <param name="windowed">if set to <c>true</c>, the application will run in windowed mode instead of full screen.</param>
-        /// <param name="desiredWidth">Desired width of the window.</param>
-        /// <param name="desiredHeight">Desired height of the window.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="game"/> is <c>null</c>.</exception>
-        public GraphicsDeviceManager(Game game, DeviceVersion deviceVersion, bool windowed, int desiredWidth, int desiredHeight)
+        public GraphicsDeviceManager(Game game)
         {
             // error checking
             if (game == null)
@@ -100,36 +92,13 @@ namespace SampleFramework
             // store the game reference
             this.game = game;
 
-            // build up device settings
-            DeviceSettings desiredSettings = new DeviceSettings();
-            desiredSettings.DeviceVersion = deviceVersion;
-            desiredSettings.Windowed = windowed;
-            desiredSettings.BackBufferWidth = desiredWidth;
-            desiredSettings.BackBufferHeight = desiredHeight;
+            // hook up window events
+            game.Window.ScreenChanged += Window_ScreenChanged;
+            game.Window.UserResized += Window_UserResized;
 
-            // construct the device
-            Construct(desiredSettings);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GraphicsDeviceManager"/> class.
-        /// </summary>
-        /// <param name="game">The game.</param>
-        /// <param name="desiredSettings">The desired settings.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="game"/> or <paramref name="desiredSettings"/> is <c>null</c>.</exception>
-        public GraphicsDeviceManager(Game game, DeviceSettings desiredSettings)
-        {
-            // error checking
-            if (game == null)
-                throw new ArgumentNullException("game");
-            if (desiredSettings == null)
-                throw new ArgumentNullException("desiredSettings");
-
-            // store the game reference
-            this.game = game;
-
-            // construct the device
-            Construct(desiredSettings);
+            // hook up game events
+            game.FrameStart += game_FrameStart;
+            game.FrameEnd += game_FrameEnd;
         }
 
         /// <summary>
@@ -162,6 +131,128 @@ namespace SampleFramework
         }
 
         /// <summary>
+        /// Changes the device.
+        /// </summary>
+        /// <param name="settings">The settings.</param>
+        /// <param name="minimumSettings">The minimum settings.</param>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="settings"/> is <c>null</c>.</exception>
+        public void ChangeDevice(DeviceSettings settings, DeviceSettings minimumSettings)
+        {
+            // error checking
+            if (settings == null)
+                throw new ArgumentNullException("settings");
+
+            // propogate the minimum settings
+            Enumeration9.MinimumSettings = minimumSettings;
+            Enumeration10.MinimumSettings = minimumSettings;
+
+            // find valid device settings
+            DeviceSettings validSettings = DeviceSettings.FindValidSettings(settings);
+
+            // ensure that the correct window is placed into the settings
+            if (validSettings.DeviceVersion == DeviceVersion.Direct3D9)
+                validSettings.Direct3D9.PresentParameters.DeviceWindowHandle = game.Window.Handle;
+            else
+            {
+                // set the output handle
+                SwapChainDescription scd = validSettings.Direct3D10.SwapChainDescription;
+                scd.OutputHandle = game.Window.Handle;
+                validSettings.Direct3D10.SwapChainDescription = scd;
+            }
+
+            // create the device
+            CreateDevice(validSettings);
+
+            // propogate new settings into the current settings account
+            if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
+            {
+                // propogate settings
+                CurrentSettings.BackBufferCount = CurrentSettings.Direct3D9.PresentParameters.BackBufferCount;
+                CurrentSettings.BackBufferWidth = CurrentSettings.Direct3D9.PresentParameters.BackBufferWidth;
+                CurrentSettings.BackBufferHeight = CurrentSettings.Direct3D9.PresentParameters.BackBufferHeight;
+                CurrentSettings.BackBufferFormat = CurrentSettings.Direct3D9.PresentParameters.BackBufferFormat;
+                CurrentSettings.DepthStencilFormat = CurrentSettings.Direct3D9.PresentParameters.AutoDepthStencilFormat;
+                CurrentSettings.DeviceType = CurrentSettings.Direct3D9.DeviceType;
+                CurrentSettings.MultisampleQuality = CurrentSettings.Direct3D9.PresentParameters.MultisampleQuality;
+                CurrentSettings.MultisampleType = CurrentSettings.Direct3D9.PresentParameters.Multisample;
+                CurrentSettings.RefreshRate = CurrentSettings.Direct3D9.PresentParameters.FullScreenRefreshRateInHertz;
+                CurrentSettings.Windowed = CurrentSettings.Direct3D9.PresentParameters.Windowed;
+            }
+            else
+            {
+                // propogate settings
+                CurrentSettings.BackBufferCount = CurrentSettings.Direct3D10.SwapChainDescription.BufferCount;
+                CurrentSettings.BackBufferWidth = CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Width;
+                CurrentSettings.BackBufferHeight = CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Height;
+                CurrentSettings.BackBufferFormat = CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Format.ToDirect3D9();
+                CurrentSettings.DepthStencilFormat = CurrentSettings.Direct3D10.DepthStencilFormat.ToDirect3D9();
+                CurrentSettings.DeviceType = CurrentSettings.Direct3D10.DriverType.ToDirect3D9();
+                CurrentSettings.MultisampleQuality = CurrentSettings.Direct3D10.SwapChainDescription.SampleDescription.Quality;
+                CurrentSettings.MultisampleType = CurrentSettings.Direct3D10.SwapChainDescription.SampleDescription.Count.ToDirect3D9();
+                CurrentSettings.RefreshRate = (int)CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.RefreshRate.ToFloat();
+                CurrentSettings.Windowed = CurrentSettings.Direct3D10.SwapChainDescription.IsWindowed;
+            }
+        }
+
+        /// <summary>
+        /// Changes the device.
+        /// </summary>
+        /// <param name="deviceVersion">The device version.</param>
+        /// <param name="windowed">if set to <c>true</c>, the application will run in windowed mode instead of full screen.</param>
+        /// <param name="desiredWidth">Desired width of the window.</param>
+        /// <param name="desiredHeight">Desired height of the window.</param>
+        public void ChangeDevice(DeviceVersion deviceVersion, bool windowed, int desiredWidth, int desiredHeight)
+        {
+            // build up device settings
+            DeviceSettings desiredSettings = new DeviceSettings();
+            desiredSettings.DeviceVersion = deviceVersion;
+            desiredSettings.Windowed = windowed;
+            desiredSettings.BackBufferWidth = desiredWidth;
+            desiredSettings.BackBufferHeight = desiredHeight;
+
+            // construct the device
+            ChangeDevice(desiredSettings, null);
+        }
+
+        /// <summary>
+        /// Changes the device.
+        /// </summary>
+        /// <param name="settings">The settings.</param>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="settings"/> is <c>null</c>.</exception>
+        public void ChangeDevice(DeviceSettings settings)
+        {
+            // call the overload
+            ChangeDevice(settings, null);
+        }
+
+        /// <summary>
+        /// Toggles between full screen and windowed mode.
+        /// </summary>
+        public void ToggleFullScreen()
+        {
+            // error checking
+            if (CurrentSettings == null || (Device9 == null && Device10 == null))
+                throw new InvalidOperationException("No valid device.");
+
+            // set up the new settings
+            DeviceSettings newSettings = CurrentSettings.Clone();
+
+            // flip the bit
+            newSettings.Windowed = !newSettings.Windowed;
+
+            // go back to the previous size
+            int width = newSettings.Windowed ? windowedWindowWidth : fullscreenWindowWidth;
+            int height = newSettings.Windowed ? windowedWindowHeight : fullscreenWindowHeight;
+
+            // store the size
+            newSettings.BackBufferWidth = width;
+            newSettings.BackBufferHeight = height;
+
+            // change the device
+            ChangeDevice(newSettings);
+        }
+
+        /// <summary>
         /// Releases unmanaged and - optionally - managed resources
         /// </summary>
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
@@ -173,41 +264,6 @@ namespace SampleFramework
                 // release the devices
                 ReleaseDevice();
             }
-        }
-
-        /// <summary>
-        /// Constructs this instance.
-        /// </summary>
-        /// <param name="desiredSettings">The desired settings.</param>
-        void Construct(DeviceSettings desiredSettings)
-        {
-            // hook up events
-            game.Window.ScreenChanged += Window_ScreenChanged;
-            game.Window.UserResized += Window_UserResized;
-
-            // find valid device settings
-            DeviceSettings settings = DeviceSettings.FindValidSettings(desiredSettings);
-
-            // create the device
-            CreateDevice(settings);
-        }
-
-        /// <summary>
-        /// Handles the UserResized event of the Window control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        void Window_UserResized(object sender, EventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Handles the ScreenChanged event of the Window control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        void Window_ScreenChanged(object sender, EventArgs e)
-        {
         }
 
         /// <summary>
@@ -431,6 +487,135 @@ namespace SampleFramework
         }
 
         /// <summary>
+        /// Handles the UserResized event of the Window control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        void Window_UserResized(object sender, EventArgs e)
+        {
+            // skip the check for various reasons
+            if (ignoreSizeChanges || (Device9 == null && Device10 == null) || CurrentSettings == null ||
+                (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9 && !IsWindowed))
+                return;
+
+            // clone the settings
+            DeviceSettings newSettings = CurrentSettings.Clone();
+
+            // check the version
+            if (newSettings.DeviceVersion == DeviceVersion.Direct3D9)
+            {
+                // get the client rectangle
+                Rectangle rect = NativeMethods.GetClientRectangle(game.Window.Handle);
+                if (rect.Width != newSettings.BackBufferWidth || rect.Height != newSettings.BackBufferHeight)
+                {
+                    // recreate the device
+                    newSettings.BackBufferWidth = 0;
+                    newSettings.BackBufferHeight = 0;
+                    CreateDevice(newSettings);
+                }
+            }
+            else
+            {
+                // TODO: Direct3D10
+            }
+        }
+
+        /// <summary>
+        /// Handles the ScreenChanged event of the Window control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        void Window_ScreenChanged(object sender, EventArgs e)
+        {
+            // TODO: Do this
+        }
+
+        /// <summary>
+        /// Handles the FrameEnd event of the game control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        void game_FrameEnd(object sender, EventArgs e)
+        {
+            // check the device version
+            if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
+            {
+                // present the frame
+                Result result = Device9.Present();
+                if (result == SlimDX.Direct3D9.ResultCode.DeviceLost)
+                    deviceLost = true;
+            }
+            else
+            {
+                // TODO: Direct3D10
+            }
+        }
+
+        /// <summary>
+        /// Handles the FrameStart event of the game control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.ComponentModel.CancelEventArgs"/> instance containing the event data.</param>
+        void game_FrameStart(object sender, CancelEventArgs e)
+        {
+            // make sure we have a valid device
+            if (CurrentSettings == null || (Device9 == null && Device10 == null))
+            {
+                // nothing to render
+                e.Cancel = true;
+                return;
+            }
+
+            // if the device is lost or the game is not active, sleep for a bit
+            if (!game.IsActive || deviceLost)
+                Thread.Sleep(50);
+
+            // if the device is lost, see if we can do something about it
+            if (deviceLost)
+            {
+                // test to see if it's ok to render again
+                Result result = Device9.TestCooperativeLevel();
+                if (result == SlimDX.Direct3D9.ResultCode.DeviceLost)
+                {
+                    // device is lost but cannot be reset at this time
+                    e.Cancel = true;
+                    return;
+                }
+
+                // if we are windowed, check the adapter format to see if the user
+                // changed the desktop format, causing a lost device
+                if (IsWindowed)
+                {
+                    // get the current display mode
+                    DisplayMode displayMode = Direct3D.GetAdapterDisplayMode(CurrentSettings.Direct3D9.AdapterOrdinal);
+                    if (CurrentSettings.Direct3D9.AdapterFormat != displayMode.Format)
+                    {
+                        // create the new device
+                        DeviceSettings newSettings = CurrentSettings.Clone();
+                        ChangeDevice(newSettings);
+                        e.Cancel = true;
+                        return;
+                    }
+                }
+
+                // try to reset the device
+                result = ResetDevice();
+                if (result.IsFailure)
+                {
+                    // device is still lost
+                    e.Cancel = true;
+                    return;
+                }
+            }
+
+            // if we made it to this point, the device is no longer lost
+            deviceLost = false;
+
+            // update frame stats
+            UpdateFrameStats();
+        }
+
+        /// <summary>
         /// Determines whether the device can be reset.
         /// </summary>
         /// <param name="oldSettings">The old settings.</param>
@@ -534,11 +719,9 @@ namespace SampleFramework
         /// </summary>
         void ReleaseDevice()
         {
-            // reelase the correct device
-            if (CurrentSettings != null && CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
-                ReleaseDevice9();
-            else if (CurrentSettings != null)
-                ReleaseDevice10();
+            // ensure that both devices are released
+            ReleaseDevice9();
+            ReleaseDevice10();
         }
 
         /// <summary>
@@ -546,6 +729,25 @@ namespace SampleFramework
         /// </summary>
         void ReleaseDevice9()
         {
+            // make sure we have a device
+            if (Device9 == null)
+                return;
+
+            // inform the game
+            if (game != null)
+            {
+                // inform the game
+                game.UnloadContent();
+                game.Release();
+            }
+
+            // release the device
+            Device9.Dispose();
+
+            // clear references
+            Device9 = null;
+            if (CurrentSettings != null)
+                CurrentSettings.Direct3D9 = null;
         }
 
         /// <summary>
@@ -553,6 +755,27 @@ namespace SampleFramework
         /// </summary>
         void ReleaseDevice10()
         {
+            // make sure we have a device
+            if (Device10 == null)
+                return;
+
+            // inform the game
+            if (game != null)
+            {
+                // inform the game
+                game.UnloadContent();
+                game.Release();
+            }
+
+            // release the device
+            Device10.Dispose();
+            Factory.Dispose();
+
+            // clear references
+            Device10 = null;
+            Factory = null;
+            if (CurrentSettings != null)
+                CurrentSettings.Direct3D10 = null;
         }
 
         /// <summary>
@@ -560,6 +783,7 @@ namespace SampleFramework
         /// </summary>
         void UpdateDeviceInformation()
         {
+            // TODO: Do this
         }
 
         /// <summary>
@@ -567,6 +791,15 @@ namespace SampleFramework
         /// </summary>
         void UpdateDeviceStats()
         {
+            // TODO: Do this
+        }
+
+        /// <summary>
+        /// Updates the frame stats.
+        /// </summary>
+        void UpdateFrameStats()
+        {
+            // TODO: Do this
         }
 
         /// <summary>
@@ -574,6 +807,7 @@ namespace SampleFramework
         /// </summary>
         void SetupCursor()
         {
+            // TODO: Do this
         }
     }
 }
