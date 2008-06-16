@@ -32,6 +32,16 @@ namespace SampleFramework
         bool savedTopmost;
 
         /// <summary>
+        /// Gets the Direct3D10 factory.
+        /// </summary>
+        /// <value>The Direct3D10 factory.</value>
+        internal static Factory Factory
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// Gets  the current device settings.
         /// </summary>
         /// <value>The current device settings.</value>
@@ -123,6 +133,25 @@ namespace SampleFramework
         }
 
         /// <summary>
+        /// Ensures that Direct3D9 is initialized.
+        /// </summary>
+        internal static void EnsureD3D9()
+        {
+            // initialize Direct3D9
+            Direct3D.Initialize();
+        }
+
+        /// <summary>
+        /// Ensures that Direct3D10 is initialized.
+        /// </summary>
+        internal static void EnsureD3D10()
+        {
+            // create the factory, if we don't have one yet
+            if (Factory == null)
+                Factory = new Factory();
+        }
+
+        /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
@@ -157,7 +186,7 @@ namespace SampleFramework
             game.Window.UserResized += Window_UserResized;
 
             // find valid device settings
-            DeviceSettings settings = FindValidDeviceSettings(desiredSettings);
+            DeviceSettings settings = DeviceSettings.FindValidSettings(desiredSettings);
 
             // create the device
             CreateDevice(settings);
@@ -426,8 +455,8 @@ namespace SampleFramework
                     oldSettings.Direct3D10.AdapterOrdinal == newSettings.Direct3D10.AdapterOrdinal &&
                     oldSettings.Direct3D10.DriverType == newSettings.Direct3D10.DriverType &&
                     oldSettings.Direct3D10.CreationFlags == newSettings.Direct3D10.CreationFlags &&
-                    oldSettings.Direct3D10.MultisampleCount == newSettings.Direct3D10.MultisampleCount &&
-                    oldSettings.Direct3D10.MultisampleQuality == newSettings.Direct3D10.MultisampleQuality;
+                    oldSettings.Direct3D10.SwapChainDescription.SampleDescription.Count == newSettings.Direct3D10.SwapChainDescription.SampleDescription.Count &&
+                    oldSettings.Direct3D10.SwapChainDescription.SampleDescription.Quality == newSettings.Direct3D10.SwapChainDescription.SampleDescription.Quality;
         }
 
         /// <summary>
