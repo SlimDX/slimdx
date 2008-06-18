@@ -61,6 +61,9 @@ namespace SlimDX
 	{
 		List<Byte>^ result = gcnew List<Byte>();
 
+#if _MSC_VER < 1500
+#pragma message( "This code's broken on VS 2005. I don't know how to fix it yet." )
+#else
 		result->AddRange( BitConverter::GetBytes( static_cast<short>( FormatTag ) ) );
 		result->AddRange( BitConverter::GetBytes( Channels ) );
 		result->AddRange( BitConverter::GetBytes( SamplesPerSecond ) );
@@ -68,6 +71,7 @@ namespace SlimDX
 		result->AddRange( BitConverter::GetBytes( BlockAlignment ) );
 		result->AddRange( BitConverter::GetBytes( BitsPerSample ) );
 		result->AddRange( BitConverter::GetBytes( Size ) );
+#endif
 
 		return result->ToArray();
 	}

@@ -106,10 +106,14 @@ namespace SlimDX
 	{
 		List<Byte>^ result = gcnew List<Byte>();
 
+#if _MSC_VER < 1500
+#pragma message( "This code's broken on VS 2005. I don't know how to fix it yet." )
+#else
 		result->AddRange( WaveFormat::GetBytes() );
 		result->AddRange( BitConverter::GetBytes( unionData ) );
 		result->AddRange( BitConverter::GetBytes( static_cast<int>( ChannelMask ) ) );
 		result->AddRange( SubFormat.ToByteArray() );
+#endif
 
 		return result->ToArray();
 	}
