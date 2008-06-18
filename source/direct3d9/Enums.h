@@ -2166,11 +2166,6 @@ namespace SlimDX
 			NoClip = DT_NOCLIP,
 
 			/// <summary>
-			/// Calculate the dimensions of the text.
-			/// </summary>
-			CalcRect = DT_CALCRECT,
-
-			/// <summary>
 			/// Rendering the text in right-to-left reading order.
 			/// </summary>
 			RtlReading = DT_RTLREADING,
