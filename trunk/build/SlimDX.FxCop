@@ -34,7 +34,9 @@
   <Target Name="$(ProjectDir)/Debug/SlimDX.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D10/MiniTri/bin/x86/Debug/MiniTri.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/MiniTri/bin/x86/Debug/MiniTri.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/Direct3D9/Particles/bin/x86/Debug/Particles.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/SampleFramework/bin/x86/Debug/SampleFramework.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/Direct3D9/SimpleLighting/bin/x86/Debug/SimpleLighting.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/SimpleTriangle/bin/x86/Debug/SimpleTriangle.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/Water/bin/x86/Debug/Water.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/DirectInput/Joystick/bin/x86/Debug/Joystick.exe" Analyze="True" AnalyzeAllChildren="True" />
@@ -143,17 +145,6 @@
        <Item>DXGI</Item>
        <Item>SlimDX.DXGI</Item>
        <Item>Dxgi</Item>
-      </Issue>
-     </Message>
-    </Messages>
-   </Namespace>
-   <Namespace Name="SlimDX.XAPO">
-    <Messages>
-     <Message Id="XAPO" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-30 21:21:38Z">
-      <Issue Name="Namespace">
-       <Item>XAPO</Item>
-       <Item>SlimDX.XAPO</Item>
-       <Item>Xapo</Item>
       </Issue>
      </Message>
     </Messages>
@@ -13218,63 +13209,6 @@
          </Type>
         </Types>
        </Namespace>
-       <Namespace Name="SlimDX.XAPO">
-        <Types>
-         <Type Name="BufferFlags">
-          <Messages>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Excluded" Created="2008-05-30 21:21:38Z">
-            <Issue>
-             <Item>'BufferFlags'</Item>
-            </Issue>
-           </Message>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
-            <Issue Name="TypeNoAlternate">
-             <Item>Flags</Item>
-             <Item>'BufferFlags'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="BufferParameter">
-          <Members>
-           <Member Name="#Flags">
-            <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
-              <Issue Name="MemberNoAlternate">
-               <Item>Flags</Item>
-               <Item>'BufferParameter.Flags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="PropertyFlags">
-          <Messages>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
-            <Issue Name="TypeNoAlternate">
-             <Item>Flags</Item>
-             <Item>'PropertyFlags'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="RegistrationProperties">
-          <Members>
-           <Member Name="#Flags">
-            <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-30 21:21:38Z">
-              <Issue Name="MemberNoAlternate">
-               <Item>Flags</Item>
-               <Item>'RegistrationProperties.Flags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
        <Namespace Name="SlimDX.XAudio2">
         <Types>
          <Type Name="AudioBuffer">
@@ -13915,6 +13849,98 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/../samples/Direct3D9/Particles/bin/x86/Debug/Particles.exe">
+    <Modules>
+     <Module Name="particles.exe">
+      <Messages>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2008-06-18 21:22:27Z">
+        <Issue>
+         <Item>'Particles.exe'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Created="2008-06-18 21:22:27Z">
+        <Issue>
+         <Item>'Particles.exe'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="SampleFramework">
+        <Types>
+         <Type Name="Camera">
+          <Members>
+           <Member Name="#FoV">
+            <Messages>
+             <Message Id="Fo" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-06-18 21:22:27Z">
+              <Issue Name="Member">
+               <Item>Fo</Item>
+               <Item>'Camera.FoV'</Item>
+               <Item>FO</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Quad">
+          <Members>
+           <Member Name="#Indices">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2008-06-18 21:22:27Z">
+              <Issue>
+               <Item>'Quad.Indices'</Item>
+              </Issue>
+             </Message>
+             <Message Id="Indices" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2008-06-18 21:22:27Z">
+              <Issue Name="Member">
+               <Item>Indices</Item>
+               <Item>'Quad.Indices'</Item>
+               <Item>Indexes</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Vertices">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2008-06-18 21:22:27Z">
+              <Issue>
+               <Item>'Quad.Vertices'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="SampleFramework.Particles">
+        <Types>
+         <Type Name="Particles">
+          <Members>
+           <Member Name="#RenderParticles(SlimDX.Matrix,SlimDX.Matrix,SlimDX.Matrix)">
+            <Messages>
+             <Message Id="projection" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-06-18 21:22:27Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'projection'</Item>
+               <Item>'Particles.RenderParticles(Matrix, Matrix, Matrix)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="view" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-06-18 21:22:27Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'view'</Item>
+               <Item>'Particles.RenderParticles(Matrix, Matrix, Matrix)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
    <Target Name="$(ProjectDir)/../samples/Direct3D9/SampleFramework/bin/x86/Debug/SampleFramework.dll">
     <Modules>
      <Module Name="sampleframework.dll">
@@ -14266,6 +14292,193 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/../samples/Direct3D9/SimpleLighting/bin/x86/Debug/SimpleLighting.exe">
+    <Modules>
+     <Module Name="simplelighting.exe">
+      <Messages>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2008-06-18 21:22:27Z">
+        <Issue>
+         <Item>'SimpleLighting.exe'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="SimpleLighting">
+        <Types>
+         <Type Name="Camera">
+          <Members>
+           <Member Name="#.ctor(System.Int32,System.Int32)">
+            <Messages>
+             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2008-06-18 21:22:27Z">
+              <Issue>
+               <Item>'Camera.Camera(int, int)'</Item>
+               <Item>'Camera.zNearPlane'</Item>
+               <Item>'float'</Item>
+               <Item>0.0</Item>
+              </Issue>
+             </Message>
+             <Message Id="xres" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-06-18 21:22:27Z">
+              <Issue Name="MemberParameter">
+               <Item>'Camera.Camera(int, int)'</Item>
+               <Item>xres</Item>
+               <Item>'xres'</Item>
+              </Issue>
+             </Message>
+             <Message Id="yres" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-06-18 21:22:27Z">
+              <Issue Name="MemberParameter">
+               <Item>'Camera.Camera(int, int)'</Item>
+               <Item>yres</Item>
+               <Item>'yres'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#cameraPosition">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
+              <Issue>
+               <Item>'Camera.cameraPosition'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#cameraTarget">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
+              <Issue>
+               <Item>'Camera.cameraTarget'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#cameraUpVector">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
+              <Issue>
+               <Item>'Camera.cameraUpVector'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#color">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
+              <Issue>
+               <Item>'Camera.color'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#cullMode">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
+              <Issue>
+               <Item>'Camera.cullMode'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#device">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
+              <Issue>
+               <Item>'Camera.device'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FOVAngle">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
+              <Issue>
+               <Item>'Camera.FOVAngle'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#lighting">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
+              <Issue>
+               <Item>'Camera.lighting'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#setupCamera(SlimDX.Direct3D9.Device,SampleFramework.Window,System.Windows.Forms.MouseEventArgs)">
+            <Messages>
+             <Message Id="setup" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-06-18 21:22:27Z">
+              <Issue Name="Member">
+               <Item>setup</Item>
+               <Item>'Camera.setupCamera(Device, Window, MouseEventArgs)'</Item>
+               <Item>Setup</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#window">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-06-18 21:22:27Z">
+              <Issue>
+               <Item>'Camera.window'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#zFarPlane">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
+              <Issue>
+               <Item>'Camera.zFarPlane'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#zNearPlane">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
+              <Issue>
+               <Item>'Camera.zNearPlane'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SimpleLighting">
+          <Members>
+           <Member Name="#.cctor()">
+            <Messages>
+             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2008-06-18 21:22:27Z">
+              <Issue>
+               <Item>'SimpleLighting.SimpleLighting()'</Item>
+               <Item>'SimpleLighting.pointLight'</Item>
+               <Item>'bool'</Item>
+               <Item>false</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor()">
+            <Messages>
+             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2008-06-18 21:22:27Z">
+              <Issue>
+               <Item>'SimpleLighting.SimpleLighting()'</Item>
+               <Item>'SimpleLighting.index'</Item>
+               <Item>'float'</Item>
+               <Item>0.0</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
    <Target Name="$(ProjectDir)/../samples/DirectInput/Joystick/bin/x86/Debug/Joystick.exe">
     <Modules>
      <Module Name="joystick.exe">
@@ -14430,6 +14643,9 @@
    <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
     <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
    </Rule>
+   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
+    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+   </Rule>
    <Rule TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227">
     <Resolution Name="Default">Change {0} to be read-only by removing the property setter.</Resolution>
    </Rule>
@@ -14453,6 +14669,9 @@
    </Rule>
    <Rule TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122">
     <Resolution Name="Default">{0} calls into {1} which has a LinkDemand. By making this call, {1} is indirectly exposed to user code. Review the following call stack that might expose a way to circumvent security protection: {2}</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805">
+    <Resolution Name="Default">{0} initializes field {1} of type {2} to {3}. Remove this initialization because it will be done automatically by the runtime.</Resolution>
    </Rule>
    <Rule TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217">
     <Resolution Name="Default">{0} is marked with FlagsAttribute but a discrete member cannot be found for every settable bit that is used across the range of enum values. Remove FlagsAttribute from the type or define new members for the following (currently missing) values: {1}</Resolution>
@@ -14521,6 +14740,12 @@
    <Rule TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810">
     <Resolution Name="Default">Initialize all static fields in {0} when those fields are declared and remove the explicit static constructor.</Resolution>
    </Rule>
+   <Rule TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014">
+    <Resolution Name="Default">Mark {0} with CLSCompliant(true) because it exposes externally visible types.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
+    <Resolution Name="Default">Because assembly {0} contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Resolution>
+   </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
    </Rule>
@@ -14554,6 +14779,9 @@
    </Rule>
    <Rule TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025">
     <Resolution Name="Default">Consider implementing a version of {0} that accepts a parameter array argument.</Resolution>
+   </Rule>
+   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
     <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>

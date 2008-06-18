@@ -5,6 +5,7 @@ using System.Threading;
 using SlimDX;
 using SlimDX.Direct3D9;
 using SlimDX.DXGI;
+using SlimDX.Direct3D10;
 
 namespace SampleFramework
 {
@@ -117,7 +118,14 @@ namespace SampleFramework
         {
             // create the factory, if we don't have one yet
             if (Factory == null)
+            {
+                // try to create a test device
+                SlimDX.Direct3D10.Device device = new SlimDX.Direct3D10.Device(DeviceCreationFlags.None);
+                device.Dispose();
+
+                // create the factory
                 Factory = new Factory();
+            }
         }
 
         /// <summary>

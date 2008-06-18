@@ -6,6 +6,7 @@ using SlimDX.DXGI;
 using SlimDX.Direct3D10;
 using System.Globalization;
 using System.Collections.ObjectModel;
+using SlimDX;
 
 namespace SampleFramework
 {
