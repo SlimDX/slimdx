@@ -50,6 +50,7 @@ namespace SlimDX
 			int DrawString( Sprite^ sprite, System::String^ text, int x, int y, int color );
 
 			System::Drawing::Rectangle MeasureString( Sprite^ sprite, System::String^ text, DrawTextFormat format );
+			int MeasureString( Sprite^ sprite, System::String^ text, DrawTextFormat format, System::Drawing::Rectangle% rectangle );
 
 			Result PreloadCharacters( int first, int last );
 			Result PreloadGlyphs( int first, int last );

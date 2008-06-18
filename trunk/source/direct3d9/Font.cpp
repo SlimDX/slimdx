@@ -138,15 +138,24 @@ namespace Direct3D9
 
 	System::Drawing::Rectangle Font::MeasureString( Sprite^ sprite, String^ text, DrawTextFormat format )
 	{
+		System::Drawing::Rectangle rect;
+		MeasureString( sprite, text, format, rect );
+		return rect;
+	}
+
+	int Font::MeasureString( Sprite^ sprite, System::String^ text, DrawTextFormat format,
+		System::Drawing::Rectangle% rectangle )
+	{
 		ID3DXSprite* spritePtr = sprite != nullptr ? sprite->InternalPointer : NULL;
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
-		RECT nativeRect;
+		RECT nativeRect = {rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom};
 
-		InternalPointer->DrawTextW( spritePtr, reinterpret_cast<LPCWSTR>( pinned_text ), text->Length, &nativeRect, 
-			static_cast<DWORD>(format | DrawTextFormat::CalcRect), 0 );
+		int result = InternalPointer->DrawTextW( spritePtr, reinterpret_cast<LPCWSTR>( pinned_text ), text->Length, &nativeRect, 
+			static_cast<DWORD>(format) | DT_CALCRECT, 0 );
 	
-		return System::Drawing::Rectangle( nativeRect.left, nativeRect.top, 
+		rectangle = System::Drawing::Rectangle( nativeRect.left, nativeRect.top, 
 			nativeRect.right - nativeRect.left, nativeRect.bottom - nativeRect.top );
+		return result;
 	}
 
 	Result Font::PreloadCharacters( int first, int last )
