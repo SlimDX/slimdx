@@ -1,0 +1,409 @@
+/*
+* Copyright (c) 2007-2008 SlimDX Group
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
+#include <d3d9.h>
+#include <d3dx9.h>
+#include <vcclr.h>
+
+#include "../DataStream.h"
+#include "../ComObject.h"
+#include "../Utilities.h"
+
+#include "../math/Vector2.h"
+
+#include "Device.h"
+#include "D3DX.h"
+#include "CubeTexture.h"
+
+#include "Direct3D9Exception.h"
+
+using namespace System;
+using namespace System::IO;
+using namespace System::Runtime::InteropServices;
+
+namespace SlimDX
+{
+namespace Direct3D9
+{
+	void WINAPI NativeD3DXFill2D(D3DXVECTOR4 *out, CONST D3DXVECTOR2 *pTexCoord, CONST D3DXVECTOR2 *pTexelSize, LPVOID data);
+	void WINAPI NativeD3DXFill3D(D3DXVECTOR4 *out, CONST D3DXVECTOR3 *pTexCoord, CONST D3DXVECTOR3 *pTexelSize, LPVOID data);
+
+	CubeTexture::CubeTexture( IDirect3DCubeTexture9* texture )
+	{
+		Construct(texture);
+	}
+
+	CubeTexture::CubeTexture( IntPtr cubeTexture )
+	{
+		Construct( cubeTexture, NativeInterface );
+	}
+
+	CubeTexture::CubeTexture( SlimDX::Direct3D9::Device^ device, int edgeLength, int numLevels, Usage usage, Format format, Pool pool )
+	{
+		IDirect3DCubeTexture9* texture;
+		HRESULT hr = device->InternalPointer->CreateCubeTexture( edgeLength, numLevels, static_cast<DWORD>( usage ),
+			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, NULL );
+		
+		if( RECORD_D3D9(hr).IsFailure )
+			throw gcnew Direct3D9Exception( Result::Last );
+
+		Construct(texture);
+		if( pool == Pool::Default )
+			this->IsDefaultPool = true;
+	}
+
+	CubeTexture^ CubeTexture::FromPointer( IDirect3DCubeTexture9* pointer )
+	{
+		if( pointer == 0 )
+			return nullptr;
+
+		CubeTexture^ tableEntry = safe_cast<CubeTexture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew CubeTexture( pointer );
+	}
+
+	CubeTexture^ CubeTexture::FromPointer( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		CubeTexture^ tableEntry = safe_cast<CubeTexture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew CubeTexture( pointer );
+	}
+
+	CubeTextureRequirements CubeTexture::CheckRequirements(SlimDX::Direct3D9::Device^ device, int size,
+		int numMipLevels, Usage usage, Format format, Pool pool)
+	{
+		CubeTextureRequirements result;					// Result.
+		D3DFORMAT d3dFormat = static_cast<D3DFORMAT>( format );	// Format.
+		HRESULT hr;									// Error code.
+
+		// Get texture requirements.
+		hr = D3DXCheckCubeTextureRequirements(device->InternalPointer, reinterpret_cast<UINT*>( &size ), 
+			reinterpret_cast<UINT*>( &numMipLevels ),
+			static_cast<DWORD>( usage ), reinterpret_cast<D3DFORMAT*>( &d3dFormat ), static_cast<D3DPOOL>( pool ) );
+		
+		if( RECORD_D3D9(hr).IsFailure )
+			return CubeTextureRequirements();
+
+		// Return proposed values.
+		result.Size = size;
+		result.Format = format;
+		result.MipLevelCount = numMipLevels;
+
+		return result;
+	}
+
+	CubeTexture^ CubeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, int size, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
+		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
+	{
+		IDirect3DCubeTexture9* texture;
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+		imageInformation = ImageInformation();
+		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		palette = gcnew array<PaletteEntry>( 256 );
+		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+
+		HRESULT hr = D3DXCreateCubeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, size, numLevels,
+			static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
+			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), 
+			reinterpret_cast<PALETTEENTRY*>( pinnedPalette ), &texture );
+		
+		if( RECORD_D3D9(hr).IsFailure )
+		{
+			palette = nullptr;
+			return nullptr;
+		}
+
+		CubeTexture^ result = gcnew CubeTexture( texture );
+		if( pool == Pool::Default )
+			result->IsDefaultPool = true;
+		return result;
+	}
+
+	CubeTexture^ CubeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, int size, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
+		[Out] ImageInformation% imageInformation )
+	{
+		IDirect3DCubeTexture9* texture;
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+
+		HRESULT hr = D3DXCreateCubeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, size, numLevels,
+			static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
+			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), 
+			NULL, &texture );
+		
+		if( RECORD_D3D9(hr).IsFailure )
+			return nullptr;
+
+		CubeTexture^ result = gcnew CubeTexture( texture );
+		if( pool == Pool::Default )
+			result->IsDefaultPool = true;
+		return result;
+	}
+
+	CubeTexture^ CubeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, int size, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
+	{
+		IDirect3DCubeTexture9* texture;
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+
+		HRESULT hr = D3DXCreateCubeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, size, numLevels,
+			static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
+			static_cast<D3DCOLOR>( colorKey ), 0, 0, &texture );
+		
+		if( RECORD_D3D9(hr).IsFailure )
+			return nullptr;
+
+		CubeTexture^ result = gcnew CubeTexture( texture );
+		if( pool == Pool::Default )
+			result->IsDefaultPool = true;
+		return result;
+	}
+
+	CubeTexture^ CubeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, Usage usage, Pool pool )
+	{
+		return CubeTexture::FromMemory( device, memory, D3DX::Default, D3DX::Default,
+			usage, Format::Unknown, pool, Filter::Default, Filter::Default, 0 );
+	}
+
+	CubeTexture^ CubeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory )
+	{
+		return CubeTexture::FromMemory( device, memory, Usage::None, Pool::Managed );
+	}
+
+	CubeTexture^ CubeTexture::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, int sizeBytes, int size, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
+		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
+	{
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
+		return CubeTexture::FromMemory( device, data, size, numLevels, usage, format, pool, filter, mipFilter, 
+			colorKey, imageInformation, palette );
+	}
+
+	CubeTexture^ CubeTexture::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, int sizeBytes, int size, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
+		[Out] ImageInformation% imageInformation )
+	{
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
+		return CubeTexture::FromMemory( device, data, size, numLevels, usage, format, pool, filter, mipFilter, 
+			colorKey, imageInformation );
+	}
+
+	CubeTexture^ CubeTexture::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, int sizeBytes, int size, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
+	{
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
+		return CubeTexture::FromMemory( device, data, size, numLevels, usage, format, pool, filter, mipFilter, colorKey );
+	}
+
+	CubeTexture^ CubeTexture::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, int size, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
+	{
+		return CubeTexture::FromStream( device, stream, 0, size, numLevels, usage, format, pool, filter, mipFilter, colorKey );
+	}
+
+	CubeTexture^ CubeTexture::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, Usage usage, Pool pool )
+	{
+		return CubeTexture::FromStream( device, stream, D3DX::Default, D3DX::Default,
+			usage, Format::Unknown, pool, Filter::Default, Filter::Default, 0 );
+	}
+
+	CubeTexture^ CubeTexture::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream )
+	{
+		return CubeTexture::FromStream( device, stream, Usage::None, Pool::Managed );
+	}
+
+	CubeTexture^ CubeTexture::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, int size, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
+		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
+	{
+		IDirect3DCubeTexture9* texture;
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+		imageInformation = ImageInformation();
+		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		palette = gcnew array<PaletteEntry>( 256 );
+		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+
+		HRESULT hr = D3DXCreateCubeTextureFromFileEx( device->InternalPointer, pinnedName, size, 
+			numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), 
+			colorKey, reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), reinterpret_cast<PALETTEENTRY*>( pinnedPalette ), &texture );
+		
+		if( RECORD_D3D9(hr).IsFailure )
+		{
+			palette = nullptr;
+			return nullptr;
+		}
+
+		CubeTexture^ result = gcnew CubeTexture( texture );
+		if( pool == Pool::Default )
+			result->IsDefaultPool = true;
+		return result;
+	}
+
+	CubeTexture^ CubeTexture::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, int size, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
+		[Out] ImageInformation% imageInformation )
+	{
+		IDirect3DCubeTexture9* texture;
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+
+		HRESULT hr = D3DXCreateCubeTextureFromFileEx( device->InternalPointer, pinnedName, size, 
+			numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), 
+			colorKey, reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), NULL, &texture );
+		
+		if( RECORD_D3D9(hr).IsFailure )
+			return nullptr;
+
+		CubeTexture^ result = gcnew CubeTexture( texture );
+		if( pool == Pool::Default )
+			result->IsDefaultPool = true;
+		return result;
+	}
+
+	CubeTexture^ CubeTexture::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, int size, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
+	{
+		IDirect3DCubeTexture9* texture;
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+
+		HRESULT hr = D3DXCreateCubeTextureFromFileEx( device->InternalPointer, pinnedName, size, 
+			numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), 
+			colorKey, NULL, NULL, &texture );
+		
+		if( RECORD_D3D9(hr).IsFailure )
+			return nullptr;
+
+		CubeTexture^ result = gcnew CubeTexture( texture );
+		if( pool == Pool::Default )
+			result->IsDefaultPool = true;
+		return result;
+	}
+
+	CubeTexture^ CubeTexture::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, Usage usage, Pool pool )
+	{
+		return CubeTexture::FromFile( device, fileName, D3DX::Default, D3DX::Default,
+			usage, Format::Unknown, pool, Filter::Default, Filter::Default, 0 );
+	}
+
+	CubeTexture^ CubeTexture::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName )
+	{
+		return CubeTexture::FromFile( device, fileName, Usage::None, Pool::Managed );
+	}
+
+	DataRectangle^ CubeTexture::LockRectangle( CubeMapFace face, int level, System::Drawing::Rectangle rect, LockFlags flags )
+	{
+		D3DLOCKED_RECT lockedRect;
+		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
+		HRESULT hr = InternalPointer->LockRect( static_cast<D3DCUBEMAP_FACES>( face ), level, &lockedRect, &nativeRect, static_cast<DWORD>( flags ) );
+		
+		if( RECORD_D3D9(hr).IsFailure )
+			return nullptr;
+		
+		int lockedSize = lockedRect.Pitch * GetLevelDescription( level ).Height;
+		
+		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
+		DataRectangle^ outRect = gcnew DataRectangle( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
+		return outRect;
+	}
+
+	DataRectangle^ CubeTexture::LockRectangle( CubeMapFace face, int level, LockFlags flags )
+	{
+		D3DLOCKED_RECT lockedRect;
+		HRESULT hr = InternalPointer->LockRect( static_cast<D3DCUBEMAP_FACES>( face ), level, &lockedRect, NULL, static_cast<DWORD>( flags ) );
+		
+		if( RECORD_D3D9(hr).IsFailure )
+			return nullptr;
+		
+		int lockedSize = lockedRect.Pitch * GetLevelDescription( level ).Height;
+
+		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
+		DataRectangle^ outRect = gcnew DataRectangle( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
+		return outRect;
+	}
+
+	Result CubeTexture::UnlockRectangle( CubeMapFace face, int level )
+	{
+		HRESULT hr = InternalPointer->UnlockRect( static_cast<D3DCUBEMAP_FACES>( face ), level );
+		return RECORD_D3D9( hr );
+	}
+
+	Result CubeTexture::AddDirtyRectangle( CubeMapFace face )
+	{
+		HRESULT hr = InternalPointer->AddDirtyRect( static_cast<D3DCUBEMAP_FACES>( face ), NULL );
+		return RECORD_D3D9( hr );
+	}
+
+	Result CubeTexture::AddDirtyRectangle( CubeMapFace face, System::Drawing::Rectangle rect )
+	{
+		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
+		HRESULT hr = InternalPointer->AddDirtyRect( static_cast<D3DCUBEMAP_FACES>( face ), &nativeRect );
+		return RECORD_D3D9( hr );
+	}
+
+	SurfaceDescription CubeTexture::GetLevelDescription( int level )
+	{
+		SurfaceDescription description;
+		HRESULT hr = InternalPointer->GetLevelDesc( level, reinterpret_cast<D3DSURFACE_DESC*>( &description ) );
+		RECORD_D3D9( hr );
+		return description;
+	}
+
+	Surface^ CubeTexture::GetCubeMapSurface( CubeMapFace face, int level )
+	{
+		IDirect3DSurface9* surface;
+		HRESULT hr = InternalPointer->GetCubeMapSurface( static_cast<D3DCUBEMAP_FACES>( face ), level, &surface );
+		
+		if( RECORD_D3D9(hr).IsFailure )
+			return nullptr;
+		return Surface::FromPointer( surface );
+	}
+
+	Result CubeTexture::Fill(Fill3DCallback^ callback)
+	{
+		HRESULT hr;		// Error code.
+
+		// Call the function.
+		hr = D3DXFillCubeTexture(InternalPointer, NativeD3DXFill3D, Marshal::GetFunctionPointerForDelegate(callback).ToPointer());
+
+		return RECORD_D3D9(hr);
+	}
+
+	Result CubeTexture::Fill( TextureShader^ shader )
+	{
+		HRESULT hr = D3DXFillCubeTextureTX( InternalPointer, shader->InternalPointer );
+		return RECORD_D3D9( hr );
+	}
+}
+}

@@ -1,0 +1,37 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+	DefaultTargets="Build">
+
+	<PropertyGroup>
+		<SlimDXRoot>$(MSBuildProjectDirectory)\..\</SlimDXRoot>
+
+		<ProjectsRoot>$(SlimDXRoot)build\</ProjectsRoot>
+		<SamplesRoot>$(SlimDXRoot)samples\</SamplesRoot>
+	</PropertyGroup>
+
+	<UsingTask TaskName="DowngradeVCProject" AssemblyFile="$(SlimDXRoot)tools\BuildTasks\BuildTasks.dll"/>
+
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <Platform Condition="'$(Platform)' == ''">Win32</Platform>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <VCProjects Include="$(ProjectsRoot)SlimDX.vcproj"/>
+		<CSProjects Include="$(SamplesRoot)**\*.csproj"/>
+		<Solutions Include="$(ProjectsRoot)SlimDX.sln"/>
+  </ItemGroup>
+
+	<Target Name="CheckEnvironmentVariables">
+		<Error
+			Condition="'$(DXSDK_DIR)'==''"
+			Text="Environment variable DXSDK_DIR not set; have you installed the DirectX SDK?"/>
+	</Target>
+	
+  <Target Name="Build" DependsOnTargets="CheckEnvironmentVariables">
+		<!-- Build SlimDX explicitly. -->
+
+		<DowngradeVCProject InputProject="SlimDX.vcproj" OutputProject="SlimDX.2005.vcproj"/>
+		
+		<!--<VCBuild Platform="$(Platform)" Configuration="$(Configuration)" Projects="SlimDX.vcproj"/>-->
+  </Target>
+</Project>
