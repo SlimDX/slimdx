@@ -1137,6 +1137,10 @@ namespace SampleFramework
             {
                 device = new Device(currentSettings.AdapterOrdinal, currentSettings.DeviceType,
                     Window.Handle, currentSettings.BehaviorFlags, currentSettings.PresentParameters);
+
+                //Disable lost/reset exceptions
+                Configuration.AddResultWatch(ResultCode.DeviceLost, ResultWatchFlags.AlwaysIgnore);
+                Configuration.AddResultWatch(ResultCode.DeviceNotReset, ResultWatchFlags.AlwaysIgnore);
             }
             catch(Direct3D9Exception)
             {
