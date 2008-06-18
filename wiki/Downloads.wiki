@@ -1,7 +1,9 @@
-#summary SlimDX -- March 2008 Release
+#summary SlimDX -- June 2008 Release
 = Introduction =
 
-The March 2008 release of SlimDX is now out. If you're new to this whole thing, read the [http://slimdx.mdxinfo.com/wiki/index.php?title=Getting_Started Getting Started] document on our wiki. It should help get you moving. Other pages of interest include:
+The June 2008 release of SlimDX is now out! As of this release, SlimDX is no longer considered beta software, but a fully stable library. It is now packaged as a redistributable installer which can be used by both developers and end users. SlimDX also finally officially supports 64 bit (x64) operating systems and code.
+
+If you're new to this whole thing, read the [http://slimdx.mdxinfo.com/wiki/index.php?title=Getting_Started Getting Started] document on our wiki. It should help get you moving. Other pages of interest include:
 
 [http://slimdx.mdxinfo.com/wiki/index.php?title=Main_Page SlimDX Main Page] -- The front page of our wiki. This page makes it fairly straightforward to get to all of the other pages related to this project, both in the wiki and outside of it.
 
@@ -14,39 +16,26 @@ The March 2008 release of SlimDX is now out. If you're new to this whole thing, 
 = Files to Download =
 The following packages are available to download:
 
-[http://slimdx.googlecode.com/files/SlimDX%20Samples%20%28Mar%2008%29.zip Samples] -- *Recommended!* Includes the SlimDX binaries, and all of the currently available samples.
+[http://slimdx.googlecode.com/files/SlimDX%20%28June%202008%29.exe SlimDX Installer] -- *Recommended for all developers and end users!* This installer contains everything you need to run and develop SlimDX applications, including the prerequisite DirectX and Visual C++ libraries.
 
-[http://slimdx.googlecode.com/files/SlimDX%20%28Mar%2008%29.zip Binaries] -- Contains just the SlimDX binaries.
+[http://slimdx.googlecode.com/files/SlimDX%20x64%20%28June%202008%29.exe SlimDX Installer for x64] -- Same as the above, but contains 64 bit versions of everything. Only download this if you are using Windows XP 64 bit or Windows 64 bit, and wish to develop 64 bit applications.
 
-[http://slimdx.googlecode.com/files/SlimDX.chm Documentation] -- In CHM format. Still in the preliminary stages, but useful nonetheless.
+[http://slimdx.googlecode.com/files/SlimDX%20Samples%20%28June%202008%29.zip SlimDX Samples] -- Archive of all our available samples, with source code. Currently contains 11 samples across Direct3D9, Direct3D10, DirectInupt, RawInput, and XAudio2. Also includes our SampleFramework, used to easily and quickly build SlimDX applications based on Direct3D9 without having to worry about boilerplate details.
 
-[http://slimdx.googlecode.com/files/SlimDX%20Symbols%20%28Mar%2008%29.zip Debugging Symbols] -- Download if you know why you need them.
+[http://slimdx.mdxinfo.com/latestdocs/Help/bin/SlimDX.chm Documentation] -- In CHM format. Our official class reference documentation. Note that this documentation is also available [http://slimdx.mdxinfo.com/latestdocs/ online].
 
 [http://code.google.com/p/slimdx/downloads/list?can=1 Older files] are still available, in case you have some need for them.
 
 = Remarks =
-
-This release of SlimDX has been quite significantly refactored and redesigned. It's much nicer and smoother to use, and overall a vast improvement. There are tons of new features too; check the [http://slimdx.mdxinfo.com/wiki/index.php?title=Release_Notes Release Notes] for details. Note that the March 2008 version of DirectX is necessary for this release. You can get it in one of two ways:
-
-[http://www.microsoft.com/downloads/details.aspx?familyid=572BE8A6-263A-4424-A7FE-69CFF1A5B180&displaylang=en DirectX SDK for March 2008] -- The full SDK, which is strongly recommended for anyone doing any DirectX work at all. A little under 450 MB in size.
-
-[https://www.microsoft.com/downloads/details.aspx?familyid=2da43d38-db71-4c1b-bc6a-9b6652cd92a3&displaylang=en DirectX End User Redistributable] -- This is all that's actually necessary for people to either develop using SlimDX or run SlimDX based applications. Size varies based on what you already have on your system.
-
-[http://www.microsoft.com/downloads/details.aspx?familyid=200b2fd9-ae1a-4a14-984d-389c36f85647&displaylang=en Microsoft Visual C++ 2005 SP1 Redistributable] -- SlimDX applications will need this installed too. It has some more necessary runtime libraries.
-
-If you *really* object to getting the March SDK, you can read [http://slimdx.mdxinfo.com/wiki/index.php?title=Changing_SDK_Version this page] for instructions on compiling a custom SlimDX with a different SDK.
-
-*There are major breaking changes in this version.* The object management model has been changed. This was not done lightly, and it was an unfortunate change, but it was better than the alternatives. Previously, SlimDX continuously spawned new instances of objects from functions like GetDevice, and it was necessary to manually dispose _every last one_. We felt that this was inconsistent with typical .NET programming style, and extremely error prone besides. Instead, starting from this March release, each distinct SlimDX object must only be disposed once. Functions like GetDevice will _not_ create a new instance, but will instead return a reference to the already existing reference. All of these references are kept in the ObjectTable class, which can be used to track leaked SlimDX objects. They are removed from the table when the object is disposed. It's also suggested that you enable Configuration.DetectDoubleDispose, as this will help catch bugs related to these changes.
-
-We've added a prototype Sample Framework in this release, similar in basic spirit to the DXUT library. It's still in an early phase, and will be refined as we continue development. This library, like the rest of SlimDX, is under the MIT license and we encourage all of you to use as little or as much of it as you like.
-
-Interoperability with other libraries was a major focus this time as well. SlimDX has been carefully written to allow any SlimDX object to be created from an existing DirectX object, and to allow any SlimDX object to be passed off to another API that does not have any awareness of SlimDX. It is important to be very careful about reference counts and object disposal when doing this kind of communication, but a little care will ensure that everything works cleanly when interfacing SlimDX with third party libraries.
+The June release of SlimDX marks a major milestone for us, since it's no longer beta. In an effort to streamline and improve the experience for both users and developers, we've focused on two major projects that are not part of SlimDX itself:
+  * [http://slimdx.mdxinfo.com/latestdocs/ Online Documentation] -- Online documentation was available before this release, but the documentation has been heavily worked on since, both in content and layout. The new version loads much quicker, and is far easier to navigate. ''We are aware of some minor rendering bugs in Firefox. If you know how to fix these, please contact us, because we have no idea how.''
+  * Redistributable Installer -- Before this release, users and developers had to go out and get all the pieces that SlimDX depended on, which led to a lot of headaches in initial setup. The installer packages and installs SlimDX, a minimal subset of the DirectX redistributable, and the Visual C++ redistributable in one simple package.
 
 = Known Issues =
-== Debug Configuration ==
-The Configuration class is supposed to change its values dynamically at runtime based on whether the DEBUG symbol has been defined. This does not work. It's suggested that you explicitly set the values of these options.
 == 64 Bit Support ==
-64 bit support is still not available in this version. We do expect to have it for the next release. Please contact us if you are willing to help develop the 64 bit version.
+While 64 bit is now a completely supported configuration, there is a glitch in the installation package. Visual Studio users may not see SlimDX as a reference that can be added in the .NET tab of the Add Reference dialog. They will need to browse to the install location and add the reference that way. ''This only affects developers.'' Users will not see any difference, and the assembly is still properly registered in and referenced from the Global Assembly Cache.
+== XInput Support ==
+The installer does not bundle an XInput driver, as it's unclear exactly how Microsoft intends for this package to be redistributed. Testing of the downloadable driver showed that it consistently failed to install, so it was omitted. If you are using XInput, your users may need to visit Microsoft Update in order to get a functional driver.
 
 = Communication =
 There are several different ways to get in touch with the SlimDX team:
