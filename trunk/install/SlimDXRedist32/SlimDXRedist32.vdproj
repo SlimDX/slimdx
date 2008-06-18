@@ -201,7 +201,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "Version" = "8:3.5.21022"
+                "Version" = "8:2.0.50727"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=76617"
                 }
@@ -348,18 +348,6 @@
                 {
                 }
             }
-            "{994432C3-9487-495D-8656-3E829A8DBDDE}:_E54358DB35314E7382B9DF3C75FC545F"
-            {
-            "DefaultLocation" = "8:[TempFolder]"
-            "Name" = "8:Temp Folder"
-            "AlwaysCreate" = "11:FALSE"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Property" = "8:TEMPFOLDERPATH"
-                "Folders"
-                {
-                }
-            }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_EABFA0CC83E94E3A9592F177FFAD9A13"
             {
             "DefaultLocation" = "8:[ProgramFilesFolder]\\[ProductName]"
@@ -389,7 +377,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SlimDX (June 2008)"
         "ProductCode" = "8:{164F893B-AF6C-47A8-8052-61D96EAB53C8}"
-        "PackageCode" = "8:{B199BE42-4CDA-4AE6-91AA-81C6A788FB98}"
+        "PackageCode" = "8:{EE35D448-9C4E-49DD-9562-9898DAAAB2F6}"
         "UpgradeCode" = "8:{81F1D53E-ED5D-43BB-8803-60B4356FA799}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
@@ -403,7 +391,7 @@
         "Subject" = "8:"
         "ARPCONTACT" = "8:SlimDX Group"
         "Keywords" = "8:"
-        "ARPCOMMENTS" = "8:SlimDX Redistributable for x86"
+        "ARPCOMMENTS" = "8:SlimDX Redistributable Package for x86"
         "ARPURLINFOABOUT" = "8:http://slimdx.mdxinfo.com"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
@@ -496,34 +484,6 @@
             {
                 "Keys"
                 {
-                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_ACC6C2115F854A5595F9831731AFF8DA"
-                    {
-                    "Name" = "8:Software"
-                    "Condition" = "8:"
-                    "AlwaysCreate" = "11:FALSE"
-                    "DeleteAtUninstall" = "11:FALSE"
-                    "Transitive" = "11:FALSE"
-                        "Keys"
-                        {
-                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_63C1224682674EECB3FC8D000E50C2B7"
-                            {
-                            "Name" = "8:[Manufacturer]"
-                            "Condition" = "8:"
-                            "AlwaysCreate" = "11:FALSE"
-                            "DeleteAtUninstall" = "11:FALSE"
-                            "Transitive" = "11:FALSE"
-                                "Keys"
-                                {
-                                }
-                                "Values"
-                                {
-                                }
-                            }
-                        }
-                        "Values"
-                        {
-                        }
-                    }
                 }
             }
             "HKCR"
@@ -912,6 +872,34 @@
             "OutputConfiguration" = "8:Release|Win32"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{5D0704A4-C1A5-486F-8DDF-4A6670309146}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C593ACB1D0D14CA1A46A2FBB69E55E70"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_EABFA0CC83E94E3A9592F177FFAD9A13"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:Public|Win32"
+            "OutputGroupCanonicalName" = "8:Symbols"
+            "OutputProjectGuid" = "8:{8ECCE443-0440-40F4-A94C-F02E027282C3}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
