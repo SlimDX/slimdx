@@ -18,7 +18,7 @@ The following packages are available to download:
 
 [http://slimdx.googlecode.com/files/SlimDX%20%28June%202008%29.exe SlimDX Installer] -- *Recommended for all developers and end users!* This installer contains everything you need to run and develop SlimDX applications, including the prerequisite DirectX and Visual C++ libraries.
 
-[http://slimdx.googlecode.com/files/SlimDX%20x64%20%28June%202008%29.exe SlimDX Installer for x64] -- Same as the above, but contains 64 bit versions of everything. Only download this if you are using Windows XP 64 bit or Windows 64 bit, and wish to develop 64 bit applications.
+[http://slimdx.googlecode.com/files/SlimDX%20x64%20%28June%202008%29.exe SlimDX Installer for x64] -- Same as the above, but contains 64 bit versions of everything. Only download this if you are using Windows XP 64 bit or Windows Vista 64 bit, and wish to develop 64 bit applications.
 
 [http://slimdx.googlecode.com/files/SlimDX%20Samples%20%28June%202008%29.zip SlimDX Samples] -- Archive of all our available samples, with source code. Currently contains 11 samples across Direct3D9, Direct3D10, DirectInupt, RawInput, and XAudio2. Also includes our SampleFramework, used to easily and quickly build SlimDX applications based on Direct3D9 without having to worry about boilerplate details. _Samples are only built as 32 bit currently._
 
