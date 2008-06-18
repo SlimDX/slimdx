@@ -1,5 +1,6 @@
-// DXSetupAction.cpp : Defines the exported functions for the DLL application.
-//
+#ifndef UNICODE
+#error This code is written for Unicode only.
+#endif
 
 #include <cstdio>
 #include <windows.h>
@@ -95,31 +96,23 @@ bool RunDXSetup(LPCWSTR extractPath)
 	GetCurrentDirectory(MAX_PATH, oldCurrentDir);
 	SetCurrentDirectory(extractPath);
 
-	HMODULE hDll = LoadLibrary(L"dsetup.dll");
-	if(hDll == NULL)
+	STARTUPINFO startupInfo = {0};
+	PROCESS_INFORMATION processInfo = {0};
+
+	startupInfo.cb = sizeof(STARTUPINFO);
+	//can't use a read-only string with CreateProcessW
+	wchar_t commandLine[] = L"dxsetup.exe /silent";
+	if(!CreateProcess(NULL, commandLine, NULL, NULL, FALSE, 0, NULL, NULL, &startupInfo, &processInfo))
 	{
 		SetCurrentDirectory(oldCurrentDir);
-		FreeLibrary(hDll);
 		return false;
 	}
 
-	LPDIRECTXSETUP dxSetupFunc = (LPDIRECTXSETUP) GetProcAddress( hDll, "DirectXSetupW" );
-	if(dxSetupFunc == NULL)
-	{
-		SetCurrentDirectory(oldCurrentDir);
-		FreeLibrary(hDll);
-		return false;
-	}
+	WaitForSingleObject(processInfo.hProcess, INFINITE);
 
-	if(FAILED(dxSetupFunc(NULL, NULL, DSETUP_DIRECTX)))
-	{
-		SetCurrentDirectory(oldCurrentDir);
-		FreeLibrary(hDll);
-		return false;
-	}
-
+	CloseHandle(processInfo.hThread);
+	CloseHandle(processInfo.hProcess);
 	SetCurrentDirectory(oldCurrentDir);
-	FreeLibrary(hDll);
 	return true;
 }
 
@@ -134,13 +127,8 @@ EXTERN_C DLLEXPORT UINT DXSetupAction(MSIHANDLE session)
 	wchar_t tempDir[MAX_PATH];
 	DWORD tempDirLength = MAX_PATH;
 	UINT x = MsiGetPropertyW(session, L"CustomActionData", tempDir, &tempDirLength);
-	MessageBox(NULL, tempDir, L"Installing to...", MB_OK);
-	//wcscat_s(tempDir, MAX_PATH, L"\\DXSetup\\");
-	//CreateDirectory(tempDir, NULL);
 
 	wchar_t fileName[MAX_PATH];
-
-	MessageBox(NULL, L"Creating files", L"Update", MB_OK);
 
 	int fileCount = sizeof(FileTable) / sizeof(LPCWSTR);
 	for(int f = 0; f < fileCount; ++f)
@@ -151,16 +139,11 @@ EXTERN_C DLLEXPORT UINT DXSetupAction(MSIHANDLE session)
 		bool result = ExtractResource(hInstance, IDR_BASEVALUE + f, fileName);
 		if(!result)
 		{
-			MessageBox(NULL, fileName, L"Failed", MB_OK);
 			return E_FAIL;
 		}
 	}
 
-	//bool setupResult = RunDXSetup(tempDir);
-	bool setupResult = true;
-	Sleep(15000);
-
-	MessageBox(NULL, L"Deleting files", L"Update", MB_OK);
+	bool setupResult = RunDXSetup(tempDir);
 
 	//Delete all the temp files regardless
 	for(int f = 0; f < fileCount; ++f)
@@ -170,8 +153,6 @@ EXTERN_C DLLEXPORT UINT DXSetupAction(MSIHANDLE session)
 
 		DeleteFile(fileName);
 	}
-
-	//RemoveDirectory(tempDir);
 
 	return setupResult ? S_OK : E_FAIL;
 }
