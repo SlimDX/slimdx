@@ -20,7 +20,7 @@ The following packages are available to download:
 
 [http://slimdx.googlecode.com/files/SlimDX%20x64%20%28June%202008%29.exe SlimDX Installer for x64] -- Same as the above, but contains 64 bit versions of everything. Only download this if you are using Windows XP 64 bit or Windows 64 bit, and wish to develop 64 bit applications.
 
-[http://slimdx.googlecode.com/files/SlimDX%20Samples%20%28June%202008%29.zip SlimDX Samples] -- Archive of all our available samples, with source code. Currently contains 11 samples across Direct3D9, Direct3D10, DirectInupt, RawInput, and XAudio2. Also includes our SampleFramework, used to easily and quickly build SlimDX applications based on Direct3D9 without having to worry about boilerplate details.
+[http://slimdx.googlecode.com/files/SlimDX%20Samples%20%28June%202008%29.zip SlimDX Samples] -- Archive of all our available samples, with source code. Currently contains 11 samples across Direct3D9, Direct3D10, DirectInupt, RawInput, and XAudio2. Also includes our SampleFramework, used to easily and quickly build SlimDX applications based on Direct3D9 without having to worry about boilerplate details. _Samples are only built as 32 bit currently._
 
 [http://slimdx.mdxinfo.com/latestdocs/Help/bin/SlimDX.chm Documentation] -- In CHM format. Our official class reference documentation. Note that this documentation is also available [http://slimdx.mdxinfo.com/latestdocs/ online].
 
@@ -28,12 +28,12 @@ The following packages are available to download:
 
 = Remarks =
 The June release of SlimDX marks a major milestone for us, since it's no longer beta. In an effort to streamline and improve the experience for both users and developers, we've focused on two major projects that are not part of SlimDX itself:
-  * [http://slimdx.mdxinfo.com/latestdocs/ Online Documentation] -- Online documentation was available before this release, but the documentation has been heavily worked on since, both in content and layout. The new version loads much quicker, and is far easier to navigate. ''We are aware of some minor rendering bugs in Firefox. If you know how to fix these, please contact us, because we have no idea how.''
+  * [http://slimdx.mdxinfo.com/latestdocs/ Online Documentation] -- Online documentation was available before this release, but the documentation has been heavily worked on since, both in content and layout. The new version loads much quicker, and is far easier to navigate. _We are aware of some minor rendering bugs in Firefox. If you know how to fix these, please contact us, because we have no idea how._
   * Redistributable Installer -- Before this release, users and developers had to go out and get all the pieces that SlimDX depended on, which led to a lot of headaches in initial setup. The installer packages and installs SlimDX, a minimal subset of the DirectX redistributable, and the Visual C++ redistributable in one simple package.
 
 = Known Issues =
 == 64 Bit Support ==
-While 64 bit is now a completely supported configuration, there is a glitch in the installation package. Visual Studio users may not see SlimDX as a reference that can be added in the .NET tab of the Add Reference dialog. They will need to browse to the install location and add the reference that way. ''This only affects developers.'' Users will not see any difference, and the assembly is still properly registered in and referenced from the Global Assembly Cache.
+While 64 bit is now a completely supported configuration, there is a glitch in the installation package. Visual Studio users may not see SlimDX as a reference that can be added in the .NET tab of the Add Reference dialog. They will need to browse to the install location and add the reference that way. _This only affects developers._ Users will not see any difference, and the assembly is still properly registered in and referenced from the Global Assembly Cache.
 == XInput Support ==
 The installer does not bundle an XInput driver, as it's unclear exactly how Microsoft intends for this package to be redistributed. Testing of the downloadable driver showed that it consistently failed to install, so it was omitted. If you are using XInput, your users may need to visit Microsoft Update in order to get a functional driver.
 
