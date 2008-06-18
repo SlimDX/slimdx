@@ -22,7 +22,14 @@ namespace Test
         public TestGame()
         {
             graphicsManager = new GraphicsDeviceManager(this);
-            graphicsManager.ChangeDevice(DeviceVersion.Direct3D9, true, 800, 600);
+            DeviceSettings settings = new DeviceSettings();
+            settings.BackBufferWidth = 800;
+            settings.BackBufferHeight = 600;
+            settings.DeviceVersion = DeviceVersion.Direct3D9;
+            settings.MultisampleType = MultisampleType.TenSamples;
+            settings.MultisampleQuality = 100;
+            settings.Windowed = true;
+            graphicsManager.ChangeDevice(settings);
         }
 
         protected override void LoadContent()

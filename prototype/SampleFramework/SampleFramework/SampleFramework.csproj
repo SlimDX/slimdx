@@ -34,7 +34,7 @@
   <ItemGroup>
     <Reference Include="SlimDX, Version=2.0.3.37, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SlimDX\build\Release\SlimDX.dll</HintPath>
+      <HintPath>..\..\..\build\Debug\SlimDX.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
