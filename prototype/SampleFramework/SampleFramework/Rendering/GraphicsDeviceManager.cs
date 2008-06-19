@@ -6,6 +6,8 @@ using SlimDX;
 using SlimDX.Direct3D10;
 using SlimDX.Direct3D9;
 using SlimDX.DXGI;
+using System.Windows.Forms;
+using System.Linq;
 
 namespace SampleFramework
 {
@@ -1104,6 +1106,39 @@ namespace SampleFramework
 
             // clean up the back buffer
             backBuffer.Dispose();
+        }
+
+        /// <summary>
+        /// Gets the adapter ordinal from the given screen.
+        /// </summary>
+        /// <param name="screen">The screen.</param>
+        /// <returns>The ordinal of the adapter that renders to the given screen.</returns>
+        int GetAdapterOrdinal(Screen screen)
+        {
+            // check the current device status
+            if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
+            {
+                // loop through the adapters until we find the right one
+                AdapterInfo9 adapter = Enumeration9.Adapters.First(a => Screen.FromHandle(Direct3D.GetAdapterMonitor(a.AdapterOrdinal)) == screen);
+                return adapter.AdapterOrdinal;
+            }
+            else
+            {
+                // loop through the adapters until we find the right one
+                AdapterInfo10 adapter = Enumeration10.Adapters.First(a => a.Outputs.FirstOrDefault(o => o.OutputDescription.Name == screen.DeviceName) != null);
+                return adapter.AdapterOrdinal;
+            }
+        }
+
+        /// <summary>
+        /// Gets the output ordinal from the given screen.
+        /// </summary>
+        /// <param name="screen">The screen.</param>
+        /// <returns>The ordinal of the output that renders to the given screen.</returns>
+        int GetOutputOrdinal(Screen screen)
+        {
+            // find the right monitor
+            
         }
     }
 }

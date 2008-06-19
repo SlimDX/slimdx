@@ -18,12 +18,12 @@ namespace SampleFramework.Particles
 
         private void RenderParticles(Matrix world, Matrix projection, Matrix view)
         {
-            Matrix viewProjection = camera.View * camera.Projection;
+            Matrix viewProjection = view * projection;
 
             effect.Technique = "Position";
             effect.SetValue("matViewProjection", Matrix.Transpose(viewProjection));
             effect.SetValue("matWorld", world);
-            effect.SetValue("matView", Matrix.Transpose(camera.View));
+            effect.SetValue("matView", Matrix.Transpose(view));
             effect.SetValue("tex", texture);
             effect.SetValue("explosion", 3.45f);
             effect.SetValue("turnCount", 4);

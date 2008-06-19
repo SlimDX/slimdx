@@ -13852,18 +13852,6 @@
    <Target Name="$(ProjectDir)/../samples/Direct3D9/Particles/bin/x86/Debug/Particles.exe">
     <Modules>
      <Module Name="particles.exe">
-      <Messages>
-       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2008-06-18 21:22:27Z">
-        <Issue>
-         <Item>'Particles.exe'</Item>
-        </Issue>
-       </Message>
-       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Created="2008-06-18 21:22:27Z">
-        <Issue>
-         <Item>'Particles.exe'</Item>
-        </Issue>
-       </Message>
-      </Messages>
       <Namespaces>
        <Namespace Name="SampleFramework">
         <Types>
@@ -13886,12 +13874,12 @@
           <Members>
            <Member Name="#Indices">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2008-06-18 21:22:27Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-06-18 21:22:27Z">
               <Issue>
                <Item>'Quad.Indices'</Item>
               </Issue>
              </Message>
-             <Message Id="Indices" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2008-06-18 21:22:27Z">
+             <Message Id="Indices" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-06-18 21:22:27Z">
               <Issue Name="Member">
                <Item>Indices</Item>
                <Item>'Quad.Indices'</Item>
@@ -13902,33 +13890,9 @@
            </Member>
            <Member Name="#Vertices">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2008-06-18 21:22:27Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-06-18 21:22:27Z">
               <Issue>
                <Item>'Quad.Vertices'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-       <Namespace Name="SampleFramework.Particles">
-        <Types>
-         <Type Name="Particles">
-          <Members>
-           <Member Name="#RenderParticles(SlimDX.Matrix,SlimDX.Matrix,SlimDX.Matrix)">
-            <Messages>
-             <Message Id="projection" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-06-18 21:22:27Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'projection'</Item>
-               <Item>'Particles.RenderParticles(Matrix, Matrix, Matrix)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="view" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-06-18 21:22:27Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'view'</Item>
-               <Item>'Particles.RenderParticles(Matrix, Matrix, Matrix)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -14295,13 +14259,6 @@
    <Target Name="$(ProjectDir)/../samples/Direct3D9/SimpleLighting/bin/x86/Debug/SimpleLighting.exe">
     <Modules>
      <Module Name="simplelighting.exe">
-      <Messages>
-       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2008-06-18 21:22:27Z">
-        <Issue>
-         <Item>'SimpleLighting.exe'</Item>
-        </Issue>
-       </Message>
-      </Messages>
       <Namespaces>
        <Namespace Name="SimpleLighting">
         <Types>
@@ -14740,12 +14697,6 @@
    <Rule TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810">
     <Resolution Name="Default">Initialize all static fields in {0} when those fields are declared and remove the explicit static constructor.</Resolution>
    </Rule>
-   <Rule TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014">
-    <Resolution Name="Default">Mark {0} with CLSCompliant(true) because it exposes externally visible types.</Resolution>
-   </Rule>
-   <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
-    <Resolution Name="Default">Because assembly {0} contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Resolution>
-   </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
    </Rule>
@@ -14779,9 +14730,6 @@
    </Rule>
    <Rule TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025">
     <Resolution Name="Default">Consider implementing a version of {0} that accepts a parameter array argument.</Resolution>
-   </Rule>
-   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
-    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
     <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>
