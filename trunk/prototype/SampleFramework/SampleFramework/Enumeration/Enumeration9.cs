@@ -1,4 +1,25 @@
-﻿using System.Collections.Generic;
+﻿/*
+* Copyright (c) 2007-2008 SlimDX Group
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using SlimDX.Direct3D9;
@@ -76,16 +97,6 @@ namespace SampleFramework
     /// </summary>
     class DeviceInfo9
     {
-        /// <summary>
-        /// Gets or sets the adapter ordinal.
-        /// </summary>
-        /// <value>The adapter ordinal.</value>
-        public int AdapterOrdinal
-        {
-            get;
-            set;
-        }
-
         /// <summary>
         /// Gets or sets the type of the device.
         /// </summary>
@@ -222,16 +233,6 @@ namespace SampleFramework
         }
 
         /// <summary>
-        /// Gets the depth stencil conflicts.
-        /// </summary>
-        /// <value>The depth stencil conflicts.</value>
-        public List<DepthStencilConflict9> DepthStencilConflicts
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
         /// Gets or sets the adapter info.
         /// </summary>
         /// <value>The adapter info.</value>
@@ -258,43 +259,9 @@ namespace SampleFramework
         {
             // create the lists
             DepthStencilFormats = new List<Format>();
-            DepthStencilConflicts = new List<DepthStencilConflict9>();
             MultisampleQualities = new List<int>();
             MultisampleTypes = new List<MultisampleType>();
             PresentIntervals = new List<PresentInterval>();
-        }
-    }
-
-    /// <summary>
-    /// Contains information about a depth stencil conflict.
-    /// </summary>
-    class DepthStencilConflict9
-    {
-        /// <summary>
-        /// Gets or sets the depth stencil format.
-        /// </summary>
-        /// <value>The depth stencil format.</value>
-        public Format DepthStencilFormat
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the multisample type.
-        /// </summary>
-        /// <value>The multisample type.</value>
-        public MultisampleType MultisampleType
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DepthStencilConflict9"/> class.
-        /// </summary>
-        public DepthStencilConflict9()
-        {
         }
     }
 
@@ -487,7 +454,6 @@ namespace SampleFramework
 
                 // build up the device
                 DeviceInfo9 deviceInfo = new DeviceInfo9();
-                deviceInfo.AdapterOrdinal = info.AdapterOrdinal;
                 deviceInfo.DeviceType = deviceType;
                 deviceInfo.Capabilities = Direct3D.GetDeviceCaps(info.AdapterOrdinal, deviceInfo.DeviceType);
 
@@ -555,7 +521,6 @@ namespace SampleFramework
                             continue;
 
                         // build up more info lists
-                        BuildDepthStencilConflictList(combo);
                         BuildPresentIntervalList(combo);
 
                         // make sure the combo supports the minimum settings
@@ -632,34 +597,6 @@ namespace SampleFramework
                     // add the items to the list
                     combo.MultisampleTypes.Add(type);
                     combo.MultisampleQualities.Add(quality);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Builds the depth stencil conflict list for a given combo.
-        /// </summary>
-        /// <param name="combo">The combo.</param>
-        static void BuildDepthStencilConflictList(SettingsCombo9 combo)
-        {
-            // check each format
-            foreach (Format format in combo.DepthStencilFormats)
-            {
-                // check each multisample type
-                foreach (MultisampleType type in combo.MultisampleTypes)
-                {
-                    // check for errors
-                    if (!Direct3D.CheckDeviceMultisampleType(combo.AdapterOrdinal, combo.DeviceType,
-                        format, combo.Windowed, type))
-                    {
-                        // build up the conflict
-                        DepthStencilConflict9 conflict = new DepthStencilConflict9();
-                        conflict.DepthStencilFormat = format;
-                        conflict.MultisampleType = type;
-
-                        // add the item to the list
-                        combo.DepthStencilConflicts.Add(conflict);
-                    }
                 }
             }
         }

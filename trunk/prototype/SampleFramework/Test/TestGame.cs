@@ -82,13 +82,13 @@ namespace Test
         {
             TransformedColoredVertex[] vertexData = new TransformedColoredVertex[3];
 
-            vertexData[0].PositionRhw = new Vector4(400.0f, 100.0f, 0.5f, 1.0f);
+            vertexData[0].Position = new Vector4(400.0f, 100.0f, 0.5f, 1.0f);
             vertexData[0].Color = Color.Red.ToArgb();
 
-            vertexData[1].PositionRhw = new Vector4(650.0f, 500.0f, 0.5f, 1.0f);
+            vertexData[1].Position = new Vector4(650.0f, 500.0f, 0.5f, 1.0f);
             vertexData[1].Color = Color.Blue.ToArgb();
 
-            vertexData[2].PositionRhw = new Vector4(150.0f, 500.0f, 0.5f, 1.0f);
+            vertexData[2].Position = new Vector4(150.0f, 500.0f, 0.5f, 1.0f);
             vertexData[2].Color = Color.Green.ToArgb();
 
             return vertexData;
