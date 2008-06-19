@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using SlimDX.Direct3D9;
 
 namespace SampleFramework
@@ -177,7 +174,7 @@ namespace SampleFramework
             result.MultisampleQuality = MultisampleQuality;
             result.MultisampleType = MultisampleType;
             result.Windowed = Windowed;
-            
+
             // clone each API specific portion
             if (Direct3D9 != null)
                 result.Direct3D9 = Direct3D9.Clone();
@@ -228,6 +225,7 @@ namespace SampleFramework
                 // find the best settings for the job
                 DeviceSettings newSettings = settings.Clone();
                 Direct3D9Settings d3d9 = FindValidD3D9Settings(settings);
+                newSettings.Direct3D10 = null;
                 newSettings.Direct3D9 = d3d9;
                 return newSettings;
             }
@@ -251,6 +249,7 @@ namespace SampleFramework
                 // find the best settings for the job
                 DeviceSettings newSettings = settings.Clone();
                 Direct3D10Settings d3d10 = FindValidD3D10Settings(settings);
+                newSettings.Direct3D9 = null;
                 newSettings.Direct3D10 = d3d10;
                 return newSettings;
             }

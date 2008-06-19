@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SlimDX.DXGI;
-using SlimDX.Direct3D10;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using SlimDX;
+using System.Globalization;
+using System.Linq;
+using SlimDX.Direct3D10;
+using SlimDX.DXGI;
 
 namespace SampleFramework
 {
@@ -301,6 +298,16 @@ namespace SampleFramework
             get;
             set;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SettingsCombo10"/> class.
+        /// </summary>
+        public SettingsCombo10()
+        {
+            // initialize the lists
+            MultisampleCounts = new List<int>();
+            MultisampleQualities = new List<int>();
+        }
     }
 
     /// <summary>
@@ -508,8 +515,16 @@ namespace SampleFramework
                     continue;
                 }
 
-                // TODO: If the driver type is not hardware, create a DXGI device and GetAdapter
+                // if the driver type is not hardware, create a DXGI device and GetAdapter
                 // from it to replace adapterInfo.Adapter
+                if (type != DriverType.Hardware)
+                {
+                    // TODO: Uncomment the following lines, as soon as jpetrie makes the changes
+                    // so that it will compile
+                    //SlimDX.DXGI.Device dxgiDevice = new SlimDX.DXGI.Device(device);
+                    //adapterInfo.Adapter = dxgiDevice.Adapter;
+                    //dxgiDevice.Dispose();
+                }
 
                 // release the device
                 device.Dispose();
@@ -527,7 +542,7 @@ namespace SampleFramework
         {
             // set up the backbuffer format list
             Format[] backBufferFormats = { Format.R8G8B8A8_UNorm_SRGB, Format.R8G8B8A8_UNorm,
-                                             Format.R16G16B16A16_Float, Format.R10G10B10A2_UNorm };
+                                           Format.R16G16B16A16_Float, Format.R10G10B10A2_UNorm };
 
             // loop over each output
             foreach (OutputInfo10 outputInfo in adapterInfo.Outputs)
@@ -571,7 +586,7 @@ namespace SampleFramework
                             // make sure we don't violate our minimum settings
                             if (MinimumSettings != null && !combo.MultisampleCounts.Contains(MinimumSettings.MultisampleType.ToDirect3D10(0)))
                                 continue;
-                            
+
                             // add the item to the list
                             adapterInfo.SettingsCombos.Add(combo);
                         }
@@ -604,7 +619,7 @@ namespace SampleFramework
                     combo.MultisampleCounts.Add(i);
                     combo.MultisampleQualities.Add(quality);
                 }
-                catch(Direct3D10Exception)
+                catch (Direct3D10Exception)
                 {
                     // eat the exception
                 }

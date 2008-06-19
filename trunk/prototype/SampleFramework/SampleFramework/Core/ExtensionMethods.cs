@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using SlimDX;
 using SlimDX.Direct3D9;
 using D3D10 = SlimDX.Direct3D10;
 using DXGI = SlimDX.DXGI;
-using SlimDX;
 
 namespace SampleFramework
 {
@@ -309,7 +307,7 @@ namespace SampleFramework
                 case Format.R3G3B2:
                 case Format.A8R3G3B2:
                 case Format.X4R4G4B4:
-                    return SlimDX.DXGI.Format.R8G8B8A8_UNorm;      
+                    return SlimDX.DXGI.Format.R8G8B8A8_UNorm;
                 case Format.R5G6B5:
                     return SlimDX.DXGI.Format.B5G6R5_UNorm;
                 case Format.X1R5G5B5:
