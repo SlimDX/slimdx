@@ -30,7 +30,7 @@ using System.Drawing;
 
 namespace Water
 {
-    class WaterSample : Sample
+    class WaterSample : Game
     {
         RoomEntity room;
         RoomEntity fountain;
@@ -40,20 +40,26 @@ namespace Water
         Matrix projectionMatrix = Matrix.Identity;
         Vector3 position = new Vector3(450, 350, 750);
 
-        public WaterSample()
+        GraphicsDeviceManager graphicsManager;
+
+        Device Device
         {
-            Initialize("SlimDX - Water Sample", true, 800, 600);
+            get { return graphicsManager.Device9; }
         }
 
-        protected override void OnWindowCreated(EventArgs e)
+        public WaterSample()
         {
+            Window.Text = "SlimDX - Water Sample";
             Window.KeyDown += new KeyEventHandler(Window_KeyDown);
+
+            graphicsManager = new GraphicsDeviceManager(this);
+            graphicsManager.ChangeDevice(DeviceVersion.Direct3D9, true, 800, 600);
         }
 
         void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F1)
-                ToggleFullScreen();
+                graphicsManager.ToggleFullScreen();
             else if (e.KeyCode == Keys.Up)
                 position.Y += 10;
             else if (e.KeyCode == Keys.Down)
@@ -68,7 +74,7 @@ namespace Water
                 position.Z -= 10;
         }
 
-        protected override void OnDeviceLost(EventArgs e)
+        protected override void UnloadContent()
         {
             if (room != null)
                 room.Dispose();
@@ -80,7 +86,7 @@ namespace Water
                 water.Dispose();
         }
 
-        protected override void OnDeviceReset(EventArgs e)
+        protected override void LoadContent()
         {
             projectionMatrix = Matrix.PerspectiveFovLH((float)Math.PI / 4, 1.0f, 1.0f, 5000.0f);
 
@@ -100,7 +106,7 @@ namespace Water
                 "Resources/Textures/water.dds", "Resources/Textures/bricks.dds");
         }
 
-        protected override void OnMainLoop(EventArgs e)
+        protected override void Draw(GameTime gameTime)
         {
             viewMatrix = Matrix.LookAtLH(new Vector3(position.X, position.Y, position.Z),
                 new Vector3(0.0f, 0.0f, 0.0f),
@@ -118,9 +124,6 @@ namespace Water
             water.Render(Device);
 
             Device.EndScene();
-
-            if (Device.Present() == ResultCode.DeviceLost)
-                IsDeviceLost = true;
         }
     }
 }

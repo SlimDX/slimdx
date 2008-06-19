@@ -22,7 +22,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Linq;
 using SlimDX.Direct3D10;
 using SlimDX.DXGI;
 
@@ -347,7 +346,19 @@ namespace SampleFramework
         public static OutputInfo10 GetOutputInfo(int adapterOrdinal, int outputOrdinal)
         {
             // find the right output info descriptor
-            AdapterInfo10 adapter = Adapters.FirstOrDefault(a => a.AdapterOrdinal == adapterOrdinal);
+            AdapterInfo10 adapter = null;
+            foreach( AdapterInfo10 a in Adapters )
+            {
+                // check for an ordinal match
+                if( adapterOrdinal == a.AdapterOrdinal )
+                {
+                    // found it
+                    adapter = a;
+                    break;
+                }
+            }
+            
+            // return the found information
             if (adapter != null && adapter.Outputs.Count > outputOrdinal)
                 return adapter.Outputs[outputOrdinal];
             return null;
@@ -394,8 +405,27 @@ namespace SampleFramework
             }
 
             // check if all of the adapter names are unique
-            bool unique = !Adapters.Any(adapter1 => Adapters.Any(adapter2 =>
-                adapter1.AdapterDescription.Description == adapter2.AdapterDescription.Description));
+            bool unique = true;
+            foreach (AdapterInfo10 adapter1 in Adapters)
+            {
+                // check each adapter against every other adapter
+                foreach (AdapterInfo10 adapter2 in Adapters)
+                {
+                    // check for a duplicate name
+                    if (adapter1 == adapter2)
+                        continue;
+                    if (adapter1.AdapterDescription.Description == adapter2.AdapterDescription.Description)
+                    {
+                        // not unique
+                        unique = false;
+                        break;
+                    }
+                }
+
+                // check for a cut off right now
+                if (!unique)
+                    break;
+            }
 
             // loop through each adapter to build up the descriptions
             foreach (AdapterInfo10 info in Adapters)
@@ -460,7 +490,7 @@ namespace SampleFramework
                         // check the settings
                         if (mode.Width < MinimumSettings.BackBufferWidth ||
                             mode.Height < MinimumSettings.BackBufferHeight ||
-                            (int)mode.RefreshRate.ToFloat() < MinimumSettings.RefreshRate)
+                            (int)ConversionMethods.ToFloat(mode.RefreshRate) < MinimumSettings.RefreshRate)
                             continue;
                     }
 
@@ -483,7 +513,7 @@ namespace SampleFramework
             foreach (DriverType type in allowedTypes)
             {
                 // make sure the type matches that of the minimum settings
-                if (MinimumSettings != null && type != MinimumSettings.DeviceType.ToDirect3D10())
+                if (MinimumSettings != null && type != ConversionMethods.ToDirect3D10(MinimumSettings.DeviceType))
                     continue;
 
                 // set up the device type descriptor
@@ -546,7 +576,7 @@ namespace SampleFramework
                     {
                         // make sure we don't violate our minimum settings
                         if (MinimumSettings != null && MinimumSettings.BackBufferFormat != SlimDX.Direct3D9.Format.Unknown &&
-                            MinimumSettings.BackBufferFormat.ToDirect3D10() != backBufferFormat)
+                            ConversionMethods.ToDirect3D10(MinimumSettings.BackBufferFormat) != backBufferFormat)
                             continue;
 
                         // loop through each windowed mode
@@ -557,7 +587,18 @@ namespace SampleFramework
                                 continue;
 
                             // make sure we have valid display modes
-                            if (outputInfo.DisplayModes.Count(mode => backBufferFormat == mode.Format) == 0)
+                            bool found = false;
+                            foreach (ModeDescription mode in outputInfo.DisplayModes)
+                            {
+                                // check for a match
+                                if (mode.Format == backBufferFormat)
+                                {
+                                    // found it
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (!found)
                                 continue;
 
                             // build up the settings combo
@@ -573,7 +614,7 @@ namespace SampleFramework
                             BuildMultisampleList(backBufferFormat, combo);
 
                             // make sure we don't violate our minimum settings
-                            if (MinimumSettings != null && !combo.MultisampleCounts.Contains(MinimumSettings.MultisampleType.ToDirect3D10(0)))
+                            if (MinimumSettings != null && !combo.MultisampleCounts.Contains(ConversionMethods.ToDirect3D10(MinimumSettings.MultisampleType, 0)))
                                 continue;
 
                             // add the item to the list

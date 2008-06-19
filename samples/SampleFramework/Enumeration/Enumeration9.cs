@@ -21,7 +21,6 @@
 */
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using SlimDX.Direct3D9;
 
 namespace SampleFramework
@@ -422,8 +421,27 @@ namespace SampleFramework
             }
 
             // check if all of the adapter names are unique
-            bool unique = !Adapters.Any(adapter1 => Adapters.Any(adapter2 =>
-                adapter1.Details.Description == adapter2.Details.Description));
+            bool unique = true;
+            foreach (AdapterInfo9 adapter1 in Adapters)
+            {
+                // check each adapter against every other adapter
+                foreach (AdapterInfo9 adapter2 in Adapters)
+                {
+                    // check for a duplicate name
+                    if (adapter1 == adapter2)
+                        continue;
+                    if (adapter1.Details.Description == adapter2.Details.Description)
+                    {
+                        // not unique
+                        unique = false;
+                        break;
+                    }
+                }
+
+                // check for a cut off right now
+                if (!unique)
+                    break;
+            }
 
             // loop through each adapter to build up the descriptions
             foreach (AdapterInfo9 info in Adapters)
@@ -560,11 +578,15 @@ namespace SampleFramework
                 Format.D24S8,   Format.D24X4S4, Format.D32 };
 
             // return the valid depth stencil formats
-            combo.DepthStencilFormats = possibleDepthStencilFormats.Where(format =>
-                Direct3D.CheckDeviceFormat(combo.AdapterOrdinal, combo.DeviceType, combo.AdapterFormat,
+            foreach (Format format in possibleDepthStencilFormats)
+            {
+                // check for a valid format
+                if (Direct3D.CheckDeviceFormat(combo.AdapterOrdinal, combo.DeviceType, combo.AdapterFormat,
                     Usage.DepthStencil, ResourceType.Surface, format) &&
                     Direct3D.CheckDepthStencilMatch(combo.AdapterOrdinal, combo.DeviceType,
-                    combo.AdapterFormat, combo.BackBufferFormat, format)).ToList();
+                    combo.AdapterFormat, combo.BackBufferFormat, format))
+                    combo.DepthStencilFormats.Add(format);
+            }
         }
 
         /// <summary>

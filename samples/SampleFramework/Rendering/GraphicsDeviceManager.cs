@@ -22,7 +22,6 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -336,12 +335,12 @@ namespace SampleFramework
                 CurrentSettings.BackBufferCount = CurrentSettings.Direct3D10.SwapChainDescription.BufferCount;
                 CurrentSettings.BackBufferWidth = CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Width;
                 CurrentSettings.BackBufferHeight = CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Height;
-                CurrentSettings.BackBufferFormat = CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Format.ToDirect3D9();
-                CurrentSettings.DepthStencilFormat = CurrentSettings.Direct3D10.DepthStencilFormat.ToDirect3D9();
-                CurrentSettings.DeviceType = CurrentSettings.Direct3D10.DriverType.ToDirect3D9();
+                CurrentSettings.BackBufferFormat = ConversionMethods.ToDirect3D9(CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Format);
+                CurrentSettings.DepthStencilFormat = ConversionMethods.ToDirect3D9(CurrentSettings.Direct3D10.DepthStencilFormat);
+                CurrentSettings.DeviceType = ConversionMethods.ToDirect3D9(CurrentSettings.Direct3D10.DriverType);
                 CurrentSettings.MultisampleQuality = CurrentSettings.Direct3D10.SwapChainDescription.SampleDescription.Quality;
-                CurrentSettings.MultisampleType = CurrentSettings.Direct3D10.SwapChainDescription.SampleDescription.Count.ToDirect3D9();
-                CurrentSettings.RefreshRate = (int)CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.RefreshRate.ToFloat();
+                CurrentSettings.MultisampleType = ConversionMethods.ToDirect3D9(CurrentSettings.Direct3D10.SwapChainDescription.SampleDescription.Count);
+                CurrentSettings.RefreshRate = (int)ConversionMethods.ToFloat(CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.RefreshRate);
                 CurrentSettings.Windowed = CurrentSettings.Direct3D10.SwapChainDescription.IsWindowed;
             }
         }
@@ -1119,7 +1118,19 @@ namespace SampleFramework
 
                 // append the adapter description
                 if (CurrentSettings.Direct3D9.DeviceType == DeviceType.Hardware)
-                    builder.AppendFormat(": {0}", Enumeration9.Adapters.First(a => a.AdapterOrdinal == CurrentSettings.Direct3D9.AdapterOrdinal).Description);
+                {
+                    // loop through each adapter until we find the right one
+                    foreach (AdapterInfo9 adapterInfo in Enumeration9.Adapters)
+                    {
+                        // check for a match
+                        if (adapterInfo.AdapterOrdinal == CurrentSettings.Direct3D9.AdapterOrdinal)
+                        {
+                            // found it
+                            builder.AppendFormat(": {0}", adapterInfo.Description);
+                            break;
+                        }
+                    }
+                }
             }
             else
             {
@@ -1133,7 +1144,19 @@ namespace SampleFramework
 
                 // append the adapter description
                 if (CurrentSettings.Direct3D10.DriverType == DriverType.Hardware)
-                    builder.AppendFormat(": {0}", Enumeration10.Adapters.First(a => a.AdapterOrdinal == CurrentSettings.Direct3D10.AdapterOrdinal).Description);
+                {
+                    // loop through each adapter until we find the right one
+                    foreach (AdapterInfo10 adapterInfo in Enumeration10.Adapters)
+                    {
+                        // check for a match
+                        if (adapterInfo.AdapterOrdinal == CurrentSettings.Direct3D10.AdapterOrdinal)
+                        {
+                            // found it
+                            builder.AppendFormat(": {0}", adapterInfo.Description);
+                            break;
+                        }
+                    }
+                }
             }
 
             // store the device information
@@ -1375,14 +1398,42 @@ namespace SampleFramework
             if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
             {
                 // loop through the adapters until we find the right one
-                AdapterInfo9 adapter = Enumeration9.Adapters.FirstOrDefault(a => Direct3D.GetAdapterMonitor(a.AdapterOrdinal) == screen);
+                AdapterInfo9 adapter = null;
+                foreach( AdapterInfo9 a in Enumeration9.Adapters )
+                {
+                    // check for a matching ordinal
+                    if( Direct3D.GetAdapterMonitor(a.AdapterOrdinal) == screen)
+                    {
+                        // found a match
+                        adapter = a;
+                        break;
+                    }
+                }
+
+                // return the found adapter
                 if (adapter != null)
                     return adapter.AdapterOrdinal;
             }
             else
             {
                 // loop through the adapters until we find the right one
-                AdapterInfo10 adapter = Enumeration10.Adapters.FirstOrDefault(a => a.Outputs.FirstOrDefault(o => o.OutputDescription.Name == game.Window.Screen.DeviceName) != null);
+                AdapterInfo10 adapter = null;
+                foreach (AdapterInfo10 a in Enumeration10.Adapters)
+                {
+                    // loop through the outputs to look for a name
+                    foreach (OutputInfo10 o in a.Outputs)
+                    {
+                        // check for a match
+                        if (o.OutputDescription.Name == game.Window.Screen.DeviceName)
+                        {
+                            // found a match
+                            adapter = a;
+                            break;
+                        }
+                    }
+                }
+
+                // return the found adapter
                 if (adapter != null)
                     return adapter.AdapterOrdinal;
             }

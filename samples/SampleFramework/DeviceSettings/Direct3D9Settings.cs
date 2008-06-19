@@ -21,7 +21,6 @@
 */
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using SlimDX.Direct3D9;
 
 namespace SampleFramework
@@ -154,7 +153,7 @@ namespace SampleFramework
             optimal.PresentParameters.FullScreenRefreshRateInHertz = settings.RefreshRate;
 
             // figure out the optimal adapter format
-            if (optimal.PresentParameters.Windowed || desktopMode.Format.GetColorBits() >= 8)
+            if (optimal.PresentParameters.Windowed || ConversionMethods.GetColorBits(desktopMode.Format) >= 8)
                 optimal.AdapterFormat = desktopMode.Format;
             else
                 optimal.AdapterFormat = Format.X8R8G8B8;
@@ -193,7 +192,7 @@ namespace SampleFramework
             if (settings.DepthStencilFormat == Format.Unknown)
             {
                 // depends on the bit depth
-                if (optimal.PresentParameters.BackBufferFormat.GetColorBits() >= 8)
+                if (ConversionMethods.GetColorBits(optimal.PresentParameters.BackBufferFormat) >= 8)
                     optimal.PresentParameters.AutoDepthStencilFormat = Format.D32;
                 else
                     optimal.PresentParameters.AutoDepthStencilFormat = Format.D16;
@@ -239,8 +238,8 @@ namespace SampleFramework
             else
             {
                 // rank by how close the two bit depths are
-                int bitDepthDelta = Math.Abs(combo.AdapterFormat.GetColorBits() -
-                    optimal.AdapterFormat.GetColorBits());
+                int bitDepthDelta = Math.Abs(ConversionMethods.GetColorBits(combo.AdapterFormat) -
+                    ConversionMethods.GetColorBits(optimal.AdapterFormat));
                 float scale = Math.Max(0.9f - bitDepthDelta * 0.2f, 0.0f);
                 ranking += scale;
             }
@@ -250,7 +249,7 @@ namespace SampleFramework
             {
                 // slightly prefer matches that are in a preferred format
                 bool match;
-                if (desktopMode.Format.GetColorBits() >= 8)
+                if (ConversionMethods.GetColorBits(desktopMode.Format) >= 8)
                     match = (combo.AdapterFormat == desktopMode.Format);
                 else
                     match = (combo.AdapterFormat == Format.X8R8G8B8);
@@ -273,11 +272,18 @@ namespace SampleFramework
                 ranking += 0.1f;
 
             // check if any of the display modes are valid
-            if (combo.AdapterInfo.DisplayModes.Any(displayMode =>
-                displayMode.Format == combo.AdapterFormat &&
-                displayMode.Width == optimal.PresentParameters.BackBufferWidth &&
-                displayMode.Height == optimal.PresentParameters.BackBufferHeight))
-                ranking += 1.0f;
+            foreach (DisplayMode displayMode in combo.AdapterInfo.DisplayModes)
+            {
+                // check for a match
+                if (displayMode.Format == combo.AdapterFormat &&
+                    displayMode.Width == optimal.PresentParameters.BackBufferWidth &&
+                    displayMode.Height == optimal.PresentParameters.BackBufferHeight)
+                {
+                    // found it
+                    ranking += 1.0f;
+                    break;
+                }
+            }
 
             // rank the back buffer format
             if (combo.BackBufferFormat == optimal.PresentParameters.BackBufferFormat)
@@ -285,8 +291,8 @@ namespace SampleFramework
             else
             {
                 // rank by how close the formats are
-                int bitDepthDelta = Math.Abs(combo.BackBufferFormat.GetColorBits() -
-                    optimal.PresentParameters.BackBufferFormat.GetColorBits());
+                int bitDepthDelta = Math.Abs(ConversionMethods.GetColorBits(combo.BackBufferFormat) -
+                    ConversionMethods.GetColorBits(optimal.PresentParameters.BackBufferFormat));
                 float scale = Math.Max(0.9f - bitDepthDelta * 0.2f, 0.0f);
                 ranking += scale;
             }
@@ -316,10 +322,17 @@ namespace SampleFramework
                 ranking += 1.0f;
 
             // check for a refresh rate match
-            if (combo.AdapterInfo.DisplayModes.Any(displayMode =>
-                displayMode.Format == combo.AdapterFormat &&
-                displayMode.RefreshRate == optimal.PresentParameters.FullScreenRefreshRateInHertz))
-                ranking += 1.0f;
+            foreach (DisplayMode displayMode in combo.AdapterInfo.DisplayModes)
+            {
+                // check for a match
+                if (displayMode.Format == combo.AdapterFormat &&
+                    displayMode.RefreshRate == optimal.PresentParameters.FullScreenRefreshRateInHertz)
+                {
+                    // found it
+                    ranking += 1.0f;
+                    break;
+                }
+            }
 
             // check if the present intervals match
             if (combo.PresentIntervals.Contains(optimal.PresentParameters.PresentationInterval))
@@ -423,15 +436,15 @@ namespace SampleFramework
 
             // setup to rank depth stencil formats
             List<int> rankings = new List<int>();
-            int inputDepthBitDepth = input.PresentParameters.AutoDepthStencilFormat.GetDepthBits();
-            int inputStencilBitDepth = input.PresentParameters.AutoDepthStencilFormat.GetStencilBits();
+            int inputDepthBitDepth = ConversionMethods.GetDepthBits(input.PresentParameters.AutoDepthStencilFormat);
+            int inputStencilBitDepth = ConversionMethods.GetStencilBits(input.PresentParameters.AutoDepthStencilFormat);
 
             // loop through each possible format
             foreach (Format format in combo.DepthStencilFormats)
             {
                 // extract the bit values
-                int currentBitDepth = format.GetDepthBits();
-                int currentStencilDepth = format.GetStencilBits();
+                int currentBitDepth = ConversionMethods.GetDepthBits(format);
+                int currentStencilDepth = ConversionMethods.GetStencilBits(format);
 
                 // calculate and store the ranking
                 int ranking = Math.Abs(currentBitDepth - inputDepthBitDepth);
@@ -440,7 +453,13 @@ namespace SampleFramework
             }
 
             // find the best ranking
-            int bestRanking = rankings.Min();
+            int bestRanking = int.MaxValue;
+            foreach (int ranking in rankings)
+            {
+                // check for a better match
+                if (ranking < bestRanking)
+                    bestRanking = ranking;
+            }
             int bestIndex = rankings.IndexOf(bestRanking);
 
             // check if we found a best ranking

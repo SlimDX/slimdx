@@ -30,33 +30,39 @@ using System.Windows.Forms;
 
 namespace SimpleTriangle
 {
-    class SimpleTriangleSample : Sample
+    class SimpleTriangleSample : Game
     {
         VertexBuffer vertices;
 
-        public SimpleTriangleSample()
+        GraphicsDeviceManager graphicsManager;
+
+        Device Device
         {
-            Initialize("SlimDX - Simple Triangle Sample", true, 800, 600);
+            get { return graphicsManager.Device9; }
         }
 
-        protected override void OnWindowCreated(EventArgs e)
+        public SimpleTriangleSample()
         {
+            Window.Text = "SlimDX - Simple Triangle Sample";
             Window.KeyDown += new KeyEventHandler(Window_KeyDown);
+
+            graphicsManager = new GraphicsDeviceManager(this);
+            graphicsManager.ChangeDevice(DeviceVersion.Direct3D9, true, 800, 600);
         }
 
         void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F1)
-                ToggleFullScreen();
+                graphicsManager.ToggleFullScreen();
         }
 
-        protected override void OnDeviceLost(EventArgs e)
+        protected override void UnloadContent()
         {
             if( vertices != null )
                 vertices.Dispose();
         }
 
-        protected override void OnDeviceReset(EventArgs e)
+        protected override void LoadContent()
         {
             vertices = new VertexBuffer(Device, 3 * Vertex.SizeBytes, Usage.WriteOnly, VertexFormat.None, Pool.Managed);
             DataStream stream = vertices.Lock(0, 0, LockFlags.None);
@@ -64,7 +70,7 @@ namespace SimpleTriangle
             vertices.Unlock();
         }
 
-        protected override void OnMainLoop(EventArgs e)
+        protected override void Draw(GameTime gameTime)
         {
             Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
             Device.BeginScene();
@@ -74,9 +80,6 @@ namespace SimpleTriangle
             Device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
 
             Device.EndScene();
-
-            if (Device.Present() == ResultCode.DeviceLost)
-                IsDeviceLost = true;
         }
 
         static Vertex[] BuildVertexData()
