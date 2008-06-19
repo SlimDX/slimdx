@@ -1,16 +1,18 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Resources;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SimpleLighting")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A SlimDX sample showing simple Direct3D9 lighting.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Day 1 Studios")]
-[assembly: AssemblyProduct("SimpleLighting.Properties")]
-[assembly: AssemblyCopyright("Copyright © Day 1 Studios 2008")]
+[assembly: AssemblyCompany("SlimDX Group")]
+[assembly: AssemblyProduct("SimpleLighting")]
+[assembly: AssemblyCopyright("Copyright © 2008 SlimDX Group")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -18,6 +20,10 @@ using System.Runtime.InteropServices;
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
+
+// Setting CLSCompliant to true allows the types in this assembly to be
+// used by other CLS compliant languages, such as VB.Net.
+[assembly: CLSCompliant(true)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("101808cf-7412-42ef-87e3-9786ec2d921f")]
@@ -31,3 +37,4 @@ using System.Runtime.InteropServices;
 //
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: NeutralResourcesLanguageAttribute("en-US")]
