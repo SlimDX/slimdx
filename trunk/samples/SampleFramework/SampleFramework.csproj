@@ -65,10 +65,42 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\ExtensionMethods.cs" />
+    <Compile Include="Core\Game.cs" />
+    <Compile Include="Core\GameClock.cs" />
+    <Compile Include="Core\GameTime.cs" />
+    <Compile Include="Core\GameWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeviceSettings\DeviceSettings.cs" />
+    <Compile Include="DeviceSettings\Direct3D10Settings.cs" />
+    <Compile Include="DeviceSettings\Direct3D9Settings.cs" />
+    <Compile Include="Enumeration\Enumeration10.cs" />
+    <Compile Include="Enumeration\Enumeration9.cs" />
+    <Compile Include="Geometry\TransformedColoredVertex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rendering\DeviceCreationException.cs" />
+    <Compile Include="Rendering\Enums.cs" />
+    <Compile Include="Rendering\GraphicsDeviceManager.cs" />
+    <Compile Include="Rendering\NoCompatibleDevicesException.cs" />
+    <Compile Include="Win32\FilterKeys.cs" />
+    <Compile Include="Win32\NativeDelegates.cs" />
+    <Compile Include="Win32\NativeMethods.cs" />
+    <Compile Include="Win32\NativeStructures.cs" />
+    <Compile Include="Win32\StickyKeys.cs" />
+    <Compile Include="Win32\ToggleKeys.cs" />
+    <Compile Include="Win32\WindowConstants.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\build\SlimDX.vcproj">
+      <Project>{8ECCE443-0440-40F4-A94C-F02E027282C3}</Project>
+      <Name>SlimDX</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
