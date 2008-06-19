@@ -24,6 +24,8 @@ The following packages are available to download:
 
 [http://slimdx.mdxinfo.com/latestdocs/Help/bin/SlimDX.chm Documentation] -- In CHM format. Our official class reference documentation. Note that this documentation is also available [http://slimdx.mdxinfo.com/latestdocs/ online].
 
+[http://slimdx.googlecode.com/files/SlimDX%20Binaries%20%28June%202008%29.zip SlimDX Binaries] -- _Advanced users only._ If for some reason you don't want to use the installer, this ZIP archive contains the SlimDX binaries for x86 and x64. Not recommended for most people.
+
 [http://code.google.com/p/slimdx/downloads/list?can=1 Older files] are still available, in case you have some need for them.
 
 = Remarks =
