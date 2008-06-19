@@ -18,7 +18,7 @@ using System.Windows.Forms;
 
 namespace SimpleLighting
 {
-    class SimpleLighting : Sample
+    class SimpleLighting : Game
     {
         public static float x, y, z;//Coordinates of teapot
         public static bool pointLight;
@@ -30,16 +30,23 @@ namespace SimpleLighting
         float index;
         Camera camera;
 
-        public SimpleLighting()
+        GraphicsDeviceManager graphicsManager;
+
+        Device Device
         {
-            Initialize("Lighting and Mesh Animation Sample for SlimDX", true, XRES, YRES);
+            get { return graphicsManager.Device9; }
         }
 
-        protected override void OnWindowCreated(EventArgs e)
+        public SimpleLighting()
         {
+            Window.Text = "Lighting and Mesh Animation Sample for SlimDX";
+
             Window.KeyDown += new KeyEventHandler(Window_KeyDown);
             Window.MouseMove += new MouseEventHandler(Window_MouseMove);
             Window.MouseClick += new MouseEventHandler(Window_MouseClick);
+
+            graphicsManager = new GraphicsDeviceManager(this);
+            graphicsManager.ChangeDevice(DeviceVersion.Direct3D9, true, XRES, YRES);
         }
 
         void Window_MouseClick(object sender, MouseEventArgs e)
@@ -51,10 +58,7 @@ namespace SimpleLighting
         {
             //Enables Escape Key Exit
             if (e.KeyCode == Keys.Escape)
-            {
-                Window.Close();
-                OnDeviceDestroyed(EventArgs.Empty);
-            }
+                Exit();
         }
 
         void Window_MouseMove(object sender, MouseEventArgs e)
@@ -64,18 +68,18 @@ namespace SimpleLighting
             camera.SetupCamera(Device, Window, e);
         }
 
-        protected override void OnDeviceLost(EventArgs e)
+        protected override void UnloadContent()
         {
             mesh.Dispose();
         }
 
-        protected override void OnDeviceReset(EventArgs e)
+        protected override void LoadContent()
         {
             camera = new Camera(XRES, YRES);
             mesh = Mesh.CreateTeapot(Device);
         }
 
-        protected override void OnMainLoop(EventArgs e)
+        protected override void Draw(GameTime gameTime)
         {
             Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
             Device.BeginScene();
@@ -96,9 +100,6 @@ namespace SimpleLighting
 
             mesh.DrawSubset(0);
             Device.EndScene();
-
-            if (Device.Present() == ResultCode.DeviceLost)
-                IsDeviceLost = true;
         }
     }
 }

@@ -6,14 +6,25 @@ using SlimDX.Direct3D9;
 
 namespace SampleFramework.Particles
 {
-    class Particles : Sample
+    class Particles : Game
     {
         Camera camera;
+
+        GraphicsDeviceManager graphicsManager;
+
+        Device Device
+        {
+            get { return graphicsManager.Device9; }
+        }
 
         public Particles()
         {
             camera = new Camera();
-            Initialize("Particles", true, 800, 600);
+
+            Window.Text = "Particles";
+
+            graphicsManager = new GraphicsDeviceManager(this);
+            graphicsManager.ChangeDevice(DeviceVersion.Direct3D9, true, 800, 600);
         }
 
         private void RenderParticles(Matrix world, Matrix projection, Matrix view)
@@ -43,10 +54,8 @@ namespace SampleFramework.Particles
 
         }
 
-        protected override void OnMainLoop(EventArgs e)
+        protected override void Draw(GameTime gameTime)
         {
-            base.OnMainLoop(e);
-
             this.Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, new Color4(0, 0, 0), 1, 0);
 
             if (this.Device.BeginScene() == ResultCode.Success)
@@ -163,10 +172,8 @@ technique Position
         Effect effect;
         Texture texture;
 
-        protected override void OnDeviceReset(EventArgs e)
+        protected override void LoadContent()
         {
-            base.OnDeviceReset(e);
-
             Device device = this.Device;
             Quad q = new Quad();
 

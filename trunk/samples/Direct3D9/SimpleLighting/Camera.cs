@@ -36,7 +36,7 @@ namespace SimpleLighting
         }
 
         //Called whenever mouse moved event occurs in order to alter the lighting state
-        public void SetupCamera(Device device, Window window, MouseEventArgs e)
+        public void SetupCamera(Device device, GameWindow window, MouseEventArgs e)
         {
             //View and Projection Transform setup occurs here
             device.SetTransform(TransformState.Projection, Matrix.PerspectiveFovLH(FOVAngle,

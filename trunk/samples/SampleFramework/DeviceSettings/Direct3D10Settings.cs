@@ -21,7 +21,6 @@
 */
 using System;
 using System.Drawing;
-using System.Linq;
 using SlimDX;
 using SlimDX.Direct3D10;
 using SlimDX.DXGI;
@@ -200,11 +199,11 @@ namespace SampleFramework
             SampleDescription sample = new SampleDescription();
 
             // set up the easy values first
-            optimal.DriverType = settings.DeviceType.ToDirect3D10();
+            optimal.DriverType = ConversionMethods.ToDirect3D10(settings.DeviceType);
             optimal.PresentFlags = PresentFlags.None;
             swapChainDescription.IsWindowed = settings.Windowed;
             swapChainDescription.BufferCount = settings.BackBufferCount;
-            sample.Count = settings.MultisampleType.ToDirect3D10(settings.MultisampleQuality);
+            sample.Count = ConversionMethods.ToDirect3D10(settings.MultisampleType, settings.MultisampleQuality);
             sample.Quality = settings.MultisampleQuality;
             swapChainDescription.SwapEffect = SwapEffect.Discard;
 
@@ -233,19 +232,19 @@ namespace SampleFramework
             }
 
             // figure out the optimal back buffer format
-            if (settings.BackBufferFormat.ToDirect3D10() == Format.Unknown)
+            if (ConversionMethods.ToDirect3D10(settings.BackBufferFormat) == Format.Unknown)
                 mode.Format = desktopMode.Format;
             else
-                mode.Format = settings.BackBufferFormat.ToDirect3D10();
+                mode.Format = ConversionMethods.ToDirect3D10(settings.BackBufferFormat);
 
             // figure out the usage
             swapChainDescription.Usage = Usage.RenderTargetOutput;
 
             // figure out the optimal depth stencil format
-            if (settings.DepthStencilFormat.ToDirect3D10() == Format.Unknown)
+            if (ConversionMethods.ToDirect3D10(settings.DepthStencilFormat) == Format.Unknown)
                 optimal.DepthStencilFormat = Format.D32_Float;
             else
-                optimal.DepthStencilFormat = settings.DepthStencilFormat.ToDirect3D10();
+                optimal.DepthStencilFormat = ConversionMethods.ToDirect3D10(settings.DepthStencilFormat);
 
             // figure out the refresh rate
             if (settings.RefreshRate == 0)
@@ -298,8 +297,8 @@ namespace SampleFramework
             else
             {
                 // rank by how close the formats are
-                int bitDepthDelta = Math.Abs(combo.BackBufferFormat.GetColorBits() -
-                    optimal.SwapChainDescription.ModeDescription.Format.GetColorBits());
+                int bitDepthDelta = Math.Abs(ConversionMethods.GetColorBits(combo.BackBufferFormat) -
+                    ConversionMethods.GetColorBits(optimal.SwapChainDescription.ModeDescription.Format));
                 float scale = Math.Max(0.9f - bitDepthDelta * 0.2f, 0.0f);
                 ranking += scale;
             }
@@ -321,14 +320,29 @@ namespace SampleFramework
             }
 
             // check for a resolution match
-            if (combo.OutputInfo.DisplayModes.Any(mode => mode.Width == optimal.SwapChainDescription.ModeDescription.Width &&
-                mode.Height == optimal.SwapChainDescription.ModeDescription.Height))
-                ranking += 1.0f;
+            foreach (ModeDescription mode in combo.OutputInfo.DisplayModes)
+            {
+                // check for a match
+                if (mode.Width == optimal.SwapChainDescription.ModeDescription.Width &&
+                    mode.Height == optimal.SwapChainDescription.ModeDescription.Height)
+                {
+                    // found it
+                    ranking += 1.0f;
+                    break;
+                }
+            }
 
             // check for a refresh rate match
-            if (combo.OutputInfo.DisplayModes.Any(displayMode => Math.Abs(
-                displayMode.RefreshRate.ToFloat() - optimal.SwapChainDescription.ModeDescription.RefreshRate.ToFloat()) < 0.1f))
-                ranking += 1.0f;
+            foreach (ModeDescription mode in combo.OutputInfo.DisplayModes)
+            {
+                // check for a match
+                if (Math.Abs(ConversionMethods.ToFloat(mode.RefreshRate) - ConversionMethods.ToFloat(optimal.SwapChainDescription.ModeDescription.RefreshRate)) < 0.1f)
+                {
+                    // found it
+                    ranking += 1.0f;
+                    break;
+                }
+            }
 
             // return the final ranking
             return ranking;
@@ -371,7 +385,7 @@ namespace SampleFramework
                             continue;
 
                         // calculate the ranking
-                        float ranking = Math.Abs(displayMode.RefreshRate.ToFloat() - match.ToFloat());
+                        float ranking = Math.Abs(ConversionMethods.ToFloat(displayMode.RefreshRate) - ConversionMethods.ToFloat(match));
 
                         // see if we have a new best ranking
                         if (ranking < bestRanking)

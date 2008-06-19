@@ -105,6 +105,10 @@
       <Project>{8ECCE443-0440-40F4-A94C-F02E027282C3}</Project>
       <Name>SlimDX</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SampleFramework\SampleFramework.csproj">
+      <Project>{CF09C015-11D7-4E97-8A29-7FA4922C8A46}</Project>
+      <Name>SampleFramework</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />

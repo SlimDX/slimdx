@@ -432,13 +432,27 @@ namespace SampleFramework
             Rectangle rectangle = NativeMethods.GetWindowRectangle(windowHandle);
 
             // find the screen that contains the most area of the window
-            Screen screen = Screen.AllScreens.BestMatch(new Func<Screen, int>(delegate(Screen s)
-            { Rectangle r = Rectangle.Intersect(rectangle, s.Bounds); return r.Width * r.Height; }));
+            Screen bestScreen = null;
+            int mostArea = 0;
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                // calculate the area
+                Rectangle r = Rectangle.Intersect(rectangle, screen.Bounds);
+                int area = r.Width * r.Height;
+                
+                // check for a better match
+                if (area > mostArea)
+                {
+                    // update the match
+                    mostArea = area;
+                    bestScreen = screen;
+                }
+            }
 
             // if we didn't find a screen, return the default one
-            if (screen == null)
-                screen = Screen.PrimaryScreen;
-            return screen;
+            if (bestScreen == null)
+                bestScreen = Screen.PrimaryScreen;
+            return bestScreen;
         }
 
         /// <summary>

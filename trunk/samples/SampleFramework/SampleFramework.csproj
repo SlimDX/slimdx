@@ -70,7 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\ExtensionMethods.cs" />
+    <Compile Include="DeviceSettings\ConversionMethods.cs" />
     <Compile Include="Core\Game.cs" />
     <Compile Include="Core\GameClock.cs" />
     <Compile Include="Core\GameTime.cs" />
