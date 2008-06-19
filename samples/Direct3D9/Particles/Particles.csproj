@@ -106,10 +106,6 @@
       <Project>{8ECCE443-0440-40F4-A94C-F02E027282C3}</Project>
       <Name>SlimDX</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SampleFramework\SampleFramework.csproj">
-      <Project>{8FB4D979-047E-4260-81FC-3279D2F29414}</Project>
-      <Name>SampleFramework</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

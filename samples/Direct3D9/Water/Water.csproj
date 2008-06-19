@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AEA0E0A2-6A30-4679-84F8-71C85D44AE9E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -130,10 +130,6 @@
     <ProjectReference Include="..\..\..\build\SlimDX.vcproj">
       <Project>{8ECCE443-0440-40F4-A94C-F02E027282C3}</Project>
       <Name>SlimDX</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SampleFramework\SampleFramework.csproj">
-      <Project>{8FB4D979-047E-4260-81FC-3279D2F29414}</Project>
-      <Name>SampleFramework</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
