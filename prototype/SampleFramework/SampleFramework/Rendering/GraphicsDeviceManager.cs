@@ -1,13 +1,35 @@
-﻿using System;
+﻿/*
+* Copyright (c) 2007-2008 SlimDX Group
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
+using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
+using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 using SlimDX;
 using SlimDX.Direct3D10;
 using SlimDX.Direct3D9;
 using SlimDX.DXGI;
-using System.Windows.Forms;
-using System.Linq;
 
 namespace SampleFramework
 {
@@ -22,6 +44,10 @@ namespace SampleFramework
         bool deviceLost;
         bool doNotStoreBufferSize;
         bool renderingOccluded;
+
+        // cursor variables
+        bool showCursorInFullScreen = true;
+        bool clipCursorInFullScreen = true;
 
         // cached window data
         int fullscreenWindowWidth;
@@ -134,6 +160,68 @@ namespace SampleFramework
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the cursor should be shown in full screen mode.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if the cursor should be shown in full screen mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool ShowCursorInFullScreen
+        {
+            get { return showCursorInFullScreen; }
+            set
+            {
+                // avoid unecessary changes
+                if (showCursorInFullScreen == value)
+                    return;
+
+                // update the value
+                showCursorInFullScreen = value;
+                SetupCursor();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the cursor should be clipped in full screen mode.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if the cursor should be clipped in full screen mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool ClipCursorInFullScreen
+        {
+            get { return clipCursorInFullScreen; }
+            set
+            {
+                // avoid unecessary changes
+                if (clipCursorInFullScreen == value)
+                    return;
+
+                // update the value
+                clipCursorInFullScreen = value;
+                SetupCursor();
+            }
+        }
+
+        /// <summary>
+        /// Gets the static frame statistics.
+        /// </summary>
+        /// <value>The static frame statistics.</value>
+        public string DeviceStatistics
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the device information.
+        /// </summary>
+        /// <value>The device information.</value>
+        public string DeviceInformation
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GraphicsDeviceManager"/> class.
         /// </summary>
         /// <param name="game">The game.</param>
@@ -150,6 +238,8 @@ namespace SampleFramework
             // hook up window events
             game.Window.ScreenChanged += Window_ScreenChanged;
             game.Window.UserResized += Window_UserResized;
+            game.Window.MouseMove += Window_MouseMove;
+            game.Window.CursorChanged += Window_CursorChanged;
 
             // hook up game events
             game.FrameStart += game_FrameStart;
@@ -599,19 +689,50 @@ namespace SampleFramework
                 ignoreSizeChanges)
                 return;
 
+            // check for changes
+            IntPtr windowMonitor = NativeMethods.MonitorFromWindow(game.Window.Handle, WindowConstants.MONITOR_DEFAULTTOPRIMARY);
+
             // get the new ordinals
             DeviceSettings newSettings = CurrentSettings.Clone();
-            int adapterOrdinal = GetAdapterOrdinal(game.Window.Screen);
+            int adapterOrdinal = GetAdapterOrdinal(windowMonitor);
+            if (adapterOrdinal == -1)
+                return;
             if (newSettings.DeviceVersion == DeviceVersion.Direct3D9)
                 newSettings.Direct3D9.AdapterOrdinal = adapterOrdinal;
             else
             {
                 newSettings.Direct3D10.AdapterOrdinal = adapterOrdinal;
                 newSettings.Direct3D10.OutputOrdinal = GetOutputOrdinal(game.Window.Screen);
+                if (newSettings.Direct3D10.OutputOrdinal == -1)
+                    return;
             }
 
             // change the device
             CreateDevice(newSettings);
+        }
+
+        /// <summary>
+        /// Handles the CursorChanged event of the Window control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        void Window_CursorChanged(object sender, EventArgs e)
+        {
+            // if we have a Direct3D9 device, update the cursor
+            if (Device9 != null && CurrentSettings != null && !IsWindowed)
+                Device9.SetCursor(game.Window.Cursor, false);
+        }
+
+        /// <summary>
+        /// Handles the MouseMove event of the Window control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
+        void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            // if we have a Direct3D9 device, update the cursor
+            if (Device9 != null && CurrentSettings != null && !IsWindowed)
+                Device9.SetCursorPosition(Cursor.Position, true);
         }
 
         /// <summary>
@@ -640,12 +761,13 @@ namespace SampleFramework
                 Result result = SwapChain10.Present(CurrentSettings.Direct3D10.SyncInterval, flags);
 
                 // check the result for errors or status updates
-                if (result == SlimDX.DXGI.ResultCode.Occluded)
-                    renderingOccluded = true;
-                else if (result == SlimDX.DXGI.ResultCode.DeviceReset)
-                    ResetDevice();
-                else
-                    renderingOccluded = false;
+                // TODO: Uncomment the following lines
+                //if (result == SlimDX.DXGI.ResultCode.Occluded)
+                //    renderingOccluded = true;
+                //else if (result == SlimDX.DXGI.ResultCode.DeviceReset)
+                //    ResetDevice();
+                //else
+                //    renderingOccluded = false;
             }
         }
 
@@ -708,9 +830,6 @@ namespace SampleFramework
 
             // if we made it to this point, the device is no longer lost
             deviceLost = false;
-
-            // update frame stats
-            UpdateFrameStats();
         }
 
         /// <summary>
@@ -970,7 +1089,55 @@ namespace SampleFramework
         /// </summary>
         void UpdateDeviceInformation()
         {
-            // TODO: Do this
+            // build up the device information
+            StringBuilder builder = new StringBuilder();
+
+            // check the device version
+            if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
+            {
+                // print out device description
+                if (CurrentSettings.Direct3D9.DeviceType == DeviceType.Hardware)
+                    builder.Append("HAL");
+                else if (CurrentSettings.Direct3D9.DeviceType == DeviceType.Reference)
+                    builder.Append("REF");
+                else if (CurrentSettings.Direct3D9.DeviceType == DeviceType.Software)
+                    builder.Append("SW");
+
+                // print out the vertex processing information
+                if ((CurrentSettings.Direct3D9.CreationFlags & CreateFlags.HardwareVertexProcessing) != 0)
+                    if (CurrentSettings.Direct3D9.DeviceType == DeviceType.Hardware)
+                        builder.Append(" (hw vp)");
+                    else
+                        builder.Append(" (simulated hw vp)");
+                else if ((CurrentSettings.Direct3D9.CreationFlags & CreateFlags.MixedVertexProcessing) != 0)
+                    if (CurrentSettings.Direct3D9.DeviceType == DeviceType.Hardware)
+                        builder.Append(" (mixed vp)");
+                    else
+                        builder.Append(" (simulated mixed vp)");
+                else
+                    builder.Append(" (sw vp)");
+
+                // append the adapter description
+                if (CurrentSettings.Direct3D9.DeviceType == DeviceType.Hardware)
+                    builder.AppendFormat(": {0}", Enumeration9.Adapters.First(a => a.AdapterOrdinal == CurrentSettings.Direct3D9.AdapterOrdinal).Description);
+            }
+            else
+            {
+                // print out device description
+                if (CurrentSettings.Direct3D10.DriverType == DriverType.Hardware)
+                    builder.Append("HARDWARE");
+                else if (CurrentSettings.Direct3D10.DriverType == DriverType.Reference)
+                    builder.Append("REFERENCE");
+                else if (CurrentSettings.Direct3D10.DriverType == DriverType.Software)
+                    builder.Append("SOFTWARE");
+
+                // append the adapter description
+                if (CurrentSettings.Direct3D10.DriverType == DriverType.Hardware)
+                    builder.AppendFormat(": {0}", Enumeration10.Adapters.First(a => a.AdapterOrdinal == CurrentSettings.Direct3D10.AdapterOrdinal).Description);
+            }
+
+            // store the device information
+            DeviceInformation = builder.ToString();
         }
 
         /// <summary>
@@ -978,15 +1145,65 @@ namespace SampleFramework
         /// </summary>
         void UpdateDeviceStats()
         {
-            // TODO: Do this
-        }
+            // build up the static frame stats
+            StringBuilder builder = new StringBuilder();
 
-        /// <summary>
-        /// Updates the frame stats.
-        /// </summary>
-        void UpdateFrameStats()
-        {
-            // TODO: Do this
+            // check the device version
+            if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
+            {
+                // initial information
+                builder.Append("D3D9 Vsync ");
+
+                // print out the vsync status
+                if (CurrentSettings.Direct3D9.PresentParameters.PresentationInterval == PresentInterval.Immediate)
+                    builder.Append("off");
+                else
+                    builder.Append("on");
+
+                // print out the resolution
+                builder.AppendFormat(" ({0}x{1}), ", CurrentSettings.Direct3D9.PresentParameters.BackBufferWidth, CurrentSettings.Direct3D9.PresentParameters.BackBufferHeight);
+
+                // print out the back buffer and adapter format
+                if (CurrentSettings.Direct3D9.AdapterFormat == CurrentSettings.Direct3D9.PresentParameters.BackBufferFormat)
+                    builder.Append(Enum.GetName(typeof(SlimDX.Direct3D9.Format), CurrentSettings.Direct3D9.AdapterFormat));
+                else
+                    builder.AppendFormat("backbuf {0}, adapter {1}",
+                        Enum.GetName(typeof(SlimDX.Direct3D9.Format), CurrentSettings.Direct3D9.AdapterFormat),
+                        Enum.GetName(typeof(SlimDX.Direct3D9.Format), CurrentSettings.Direct3D9.PresentParameters.BackBufferFormat));
+
+                // print out the depth / stencil format
+                builder.AppendFormat(" ({0})", Enum.GetName(typeof(SlimDX.Direct3D9.Format), CurrentSettings.Direct3D9.PresentParameters.AutoDepthStencilFormat));
+
+                // print out the multisample state
+                if (CurrentSettings.Direct3D9.PresentParameters.Multisample == MultisampleType.NonMaskable)
+                    builder.Append(" (Nonmaskable Multisample)");
+                else if (CurrentSettings.Direct3D9.PresentParameters.Multisample != MultisampleType.None)
+                    builder.AppendFormat(" ({0}x Multisample)", (int)CurrentSettings.Direct3D9.PresentParameters.Multisample);
+            }
+            else
+            {
+                // initial information
+                builder.Append("D3D10 Vsync ");
+
+                // print out the vsync status
+                if (CurrentSettings.Direct3D10.SyncInterval == 0)
+                    builder.Append("off");
+                else
+                    builder.Append("on");
+
+                // print out the resolution
+                builder.AppendFormat(" ({0}x{1}), ", CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Width, CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Height);
+
+                // print out the back buffer format
+                builder.Append(Enum.GetName(typeof(SlimDX.DXGI.Format), CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Format));
+
+                // print out the multisample state
+                builder.AppendFormat(" (MS{0}, Q{1})", CurrentSettings.Direct3D10.SwapChainDescription.SampleDescription.Count,
+                    CurrentSettings.Direct3D10.SwapChainDescription.SampleDescription.Quality);
+            }
+
+            // store the static frame stats
+            DeviceStatistics = builder.ToString();
         }
 
         /// <summary>
@@ -994,7 +1211,46 @@ namespace SampleFramework
         /// </summary>
         void SetupCursor()
         {
-            // TODO: Do this
+            // check the device version
+            if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
+            {
+                // check if we have are returning to fullscreen
+                if (!IsWindowed && Device9 != null)
+                {
+                    // check if we should show or hide the cursor
+                    if (ShowCursorInFullScreen)
+                    {
+                        // hide the Windows cursor, show the D3D9 cursor
+                        Cursor.Current = null;
+                        Device9.SetCursor(Cursor.Current, false);
+                        Device9.ShowCursor = true;
+                    }
+                    else
+                    {
+                        // hide the Windows cursor, hide the D3D9 cursor
+                        Cursor.Current = null;
+                        Device9.ShowCursor = false;
+                    }
+                }
+
+                // clip cursor if requested
+                if (!IsWindowed && ClipCursorInFullScreen)
+                    Cursor.Clip = game.Window.Bounds;
+                else
+                    Cursor.Clip = Rectangle.Empty;
+            }
+            else
+            {
+                // clip cursor if requested
+                if (!IsWindowed && ClipCursorInFullScreen)
+                {
+                    // reset the cursor in case we turned it off in D3D9 mode
+                    Cursor.Current = game.Window.Cursor;
+                    Cursor.Clip = game.Window.Bounds;
+                }
+                else
+                    Cursor.Clip = Rectangle.Empty;
+            }
         }
 
         /// <summary>
@@ -1113,21 +1369,26 @@ namespace SampleFramework
         /// </summary>
         /// <param name="screen">The screen.</param>
         /// <returns>The ordinal of the adapter that renders to the given screen.</returns>
-        int GetAdapterOrdinal(Screen screen)
+        int GetAdapterOrdinal(IntPtr screen)
         {
             // check the current device status
             if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
             {
                 // loop through the adapters until we find the right one
-                AdapterInfo9 adapter = Enumeration9.Adapters.First(a => Screen.FromHandle(Direct3D.GetAdapterMonitor(a.AdapterOrdinal)) == screen);
-                return adapter.AdapterOrdinal;
+                AdapterInfo9 adapter = Enumeration9.Adapters.FirstOrDefault(a => Direct3D.GetAdapterMonitor(a.AdapterOrdinal) == screen);
+                if (adapter != null)
+                    return adapter.AdapterOrdinal;
             }
             else
             {
                 // loop through the adapters until we find the right one
-                AdapterInfo10 adapter = Enumeration10.Adapters.First(a => a.Outputs.FirstOrDefault(o => o.OutputDescription.Name == screen.DeviceName) != null);
-                return adapter.AdapterOrdinal;
+                AdapterInfo10 adapter = Enumeration10.Adapters.FirstOrDefault(a => a.Outputs.FirstOrDefault(o => o.OutputDescription.Name == game.Window.Screen.DeviceName) != null);
+                if (adapter != null)
+                    return adapter.AdapterOrdinal;
             }
+
+            // otherwise, not found
+            return -1;
         }
 
         /// <summary>
@@ -1135,10 +1396,22 @@ namespace SampleFramework
         /// </summary>
         /// <param name="screen">The screen.</param>
         /// <returns>The ordinal of the output that renders to the given screen.</returns>
-        int GetOutputOrdinal(Screen screen)
+        static int GetOutputOrdinal(Screen screen)
         {
             // find the right monitor
-            
+            foreach (AdapterInfo10 adapter in Enumeration10.Adapters)
+            {
+                // loop through each output
+                foreach (OutputInfo10 output in adapter.Outputs)
+                {
+                    // check for a match
+                    if (output.OutputDescription.Name == screen.DeviceName)
+                        return output.OutputOrdinal;
+                }
+            }
+
+            // otherwise, we couldn't find it
+            return -1;
         }
     }
 }

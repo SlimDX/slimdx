@@ -1,9 +1,29 @@
-﻿using System;
+﻿/*
+* Copyright (c) 2007-2008 SlimDX Group
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
+using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Windows.Forms;
@@ -69,7 +89,7 @@ namespace SampleFramework
         /// <summary>
         /// Occurs when a screen saver is about to be activated.
         /// </summary>
-        public event CancelEventHandler ScreenSaver;
+        public event CancelEventHandler Screensaver;
 
         /// <summary>
         /// Gets a value indicating whether the window is in the middle of sizing operations.
@@ -217,14 +237,14 @@ namespace SampleFramework
         }
 
         /// <summary>
-        /// Raises the <see cref="E:ScreenSaver"/> event.
+        /// Raises the <see cref="E:Screensaver"/> event.
         /// </summary>
         /// <param name="e">The <see cref="System.ComponentModel.CancelEventArgs"/> instance containing the event data.</param>
-        protected virtual void OnScreenSaver(CancelEventArgs e)
+        protected virtual void OnScreensaver(CancelEventArgs e)
         {
             // raise the event
-            if (ScreenSaver != null)
-                ScreenSaver(this, e);
+            if (Screensaver != null)
+                Screensaver(this, e);
         }
 
         /// <summary>
@@ -356,7 +376,7 @@ namespace SampleFramework
                 {
                     // allow the command to be canceled
                     CancelEventArgs e = new CancelEventArgs();
-                    OnScreenSaver(e);
+                    OnScreensaver(e);
                     if (e.Cancel)
                     {
                         // cancel the command
@@ -419,22 +439,6 @@ namespace SampleFramework
             if (screen == null)
                 screen = Screen.PrimaryScreen;
             return screen;
-        }
-
-        /// <summary>
-        /// Finds a screen based upon its given device name.
-        /// </summary>
-        /// <param name="screenDeviceName">Name of the screen device.</param>
-        /// <returns>The desired screen.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="screenDeviceName"/> is <c>null</c>.</exception>
-        static Screen ScreenFromDeviceName(string screenDeviceName)
-        {
-            // error checking
-            if (string.IsNullOrEmpty(screenDeviceName))
-                throw new ArgumentNullException("screenDeviceName");
-
-            // return the appropriate screen
-            return Screen.AllScreens.First(s => DeviceNameFromScreen(s) == screenDeviceName);
         }
 
         /// <summary>
