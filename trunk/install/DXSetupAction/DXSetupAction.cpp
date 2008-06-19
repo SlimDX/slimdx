@@ -32,8 +32,8 @@ LPCWSTR FileTable[] =
 
 	VERSION_NAME L"_d3dx9_" VERSION_NUMBER L"_" PLATFORM L".cab",
 	VERSION_NAME L"_d3dx10_" VERSION_NUMBER L"_" PLATFORM L".cab",
-	VERSION_NAME L"_X3DAudio_" VERSION_NUMBER L"_" PLATFORM L".cab",
-	VERSION_NAME L"_XAudio_" VERSION_NUMBER L"_" PLATFORM L".cab"
+	VERSION_NAME L"_X3DAudio_" PLATFORM L".cab",
+	VERSION_NAME L"_XAudio_" PLATFORM L".cab"
 };
 
 //based on http://syedgakbar.wordpress.com/2007/11/07/embedding-dll-and-binary-files-in-the-executable-applications/
