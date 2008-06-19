@@ -12,40 +12,35 @@ namespace SimpleLighting
     //away in an object of this class.
     public class Camera
     {
-        public Vector3 cameraPosition, cameraTarget, cameraUpVector;
-        public Device device;
-        public Cull cullMode;
-        public bool lighting;
-        public float zNearPlane, zFarPlane;
-        public float FOVAngle;
-        Window window;
-        public Color color;
+        Vector3 cameraPosition, cameraTarget, cameraUpVector;
+        Cull cullMode;
+        bool lighting;
+        float zFarPlane;
+        float FOVAngle;
+        Color color;
         int XRES, YRES;
 
-        public Camera(int xres, int yres)
+        public Camera(int width, int height)
         {
             //Initializing with default values for parameters
-            XRES = xres;
-            YRES = yres;
+            XRES = width;
+            YRES = height;
             cameraPosition = new Vector3(0.0f, 7.0f, 20.0f);
             cameraTarget = new Vector3(0, 0, 0);
             cameraUpVector = new Vector3(0, 1.0f, 0);
             cullMode = Cull.Clockwise;
             lighting = true;
-            zNearPlane = 0;
             color = Color.MidnightBlue;
             zFarPlane = 40.0f;
             FOVAngle = (float)Math.PI / 4;
         }
 
         //Called whenever mouse moved event occurs in order to alter the lighting state
-        public void setupCamera(Device device, Window window, MouseEventArgs e)
+        public void SetupCamera(Device device, Window window, MouseEventArgs e)
         {
             //View and Projection Transform setup occurs here
-            this.device = device;
-            this.window = window;
             device.SetTransform(TransformState.Projection, Matrix.PerspectiveFovLH(FOVAngle,
-                 window.Width / window.Height, zNearPlane, zFarPlane));
+                 window.Width / window.Height, 0, zFarPlane));
             device.SetTransform(TransformState.View, Matrix.LookAtLH(cameraPosition, cameraTarget,
                  cameraUpVector));
             device.SetRenderState(RenderState.Lighting, lighting);

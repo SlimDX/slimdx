@@ -13855,21 +13855,6 @@
       <Namespaces>
        <Namespace Name="SampleFramework">
         <Types>
-         <Type Name="Camera">
-          <Members>
-           <Member Name="#FoV">
-            <Messages>
-             <Message Id="Fo" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-06-18 21:22:27Z">
-              <Issue Name="Member">
-               <Item>Fo</Item>
-               <Item>'Camera.FoV'</Item>
-               <Item>FO</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Quad">
           <Members>
            <Member Name="#Indices">
@@ -14264,166 +14249,14 @@
         <Types>
          <Type Name="Camera">
           <Members>
-           <Member Name="#.ctor(System.Int32,System.Int32)">
+           <Member Name="#SetupCamera(SlimDX.Direct3D9.Device,SampleFramework.Window,System.Windows.Forms.MouseEventArgs)">
             <Messages>
-             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2008-06-18 21:22:27Z">
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2008-06-19 16:45:26Z">
               <Issue>
-               <Item>'Camera.Camera(int, int)'</Item>
-               <Item>'Camera.zNearPlane'</Item>
-               <Item>'float'</Item>
-               <Item>0.0</Item>
-              </Issue>
-             </Message>
-             <Message Id="xres" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-06-18 21:22:27Z">
-              <Issue Name="MemberParameter">
-               <Item>'Camera.Camera(int, int)'</Item>
-               <Item>xres</Item>
-               <Item>'xres'</Item>
-              </Issue>
-             </Message>
-             <Message Id="yres" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-06-18 21:22:27Z">
-              <Issue Name="MemberParameter">
-               <Item>'Camera.Camera(int, int)'</Item>
-               <Item>yres</Item>
-               <Item>'yres'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#cameraPosition">
-            <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
-              <Issue>
-               <Item>'Camera.cameraPosition'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#cameraTarget">
-            <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
-              <Issue>
-               <Item>'Camera.cameraTarget'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#cameraUpVector">
-            <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
-              <Issue>
-               <Item>'Camera.cameraUpVector'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#color">
-            <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
-              <Issue>
-               <Item>'Camera.color'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#cullMode">
-            <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
-              <Issue>
-               <Item>'Camera.cullMode'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#device">
-            <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
-              <Issue>
-               <Item>'Camera.device'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FOVAngle">
-            <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
-              <Issue>
-               <Item>'Camera.FOVAngle'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#lighting">
-            <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
-              <Issue>
-               <Item>'Camera.lighting'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#setupCamera(SlimDX.Direct3D9.Device,SampleFramework.Window,System.Windows.Forms.MouseEventArgs)">
-            <Messages>
-             <Message Id="setup" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-06-18 21:22:27Z">
-              <Issue Name="Member">
-               <Item>setup</Item>
-               <Item>'Camera.setupCamera(Device, Window, MouseEventArgs)'</Item>
-               <Item>Setup</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#window">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-06-18 21:22:27Z">
-              <Issue>
-               <Item>'Camera.window'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#zFarPlane">
-            <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
-              <Issue>
-               <Item>'Camera.zFarPlane'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#zNearPlane">
-            <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-18 21:22:27Z">
-              <Issue>
-               <Item>'Camera.zNearPlane'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="SimpleLighting">
-          <Members>
-           <Member Name="#.cctor()">
-            <Messages>
-             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2008-06-18 21:22:27Z">
-              <Issue>
-               <Item>'SimpleLighting.SimpleLighting()'</Item>
-               <Item>'SimpleLighting.pointLight'</Item>
-               <Item>'bool'</Item>
-               <Item>false</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#.ctor()">
-            <Messages>
-             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2008-06-18 21:22:27Z">
-              <Issue>
-               <Item>'SimpleLighting.SimpleLighting()'</Item>
-               <Item>'SimpleLighting.index'</Item>
-               <Item>'float'</Item>
-               <Item>0.0</Item>
+               <Item>'window'</Item>
+               <Item>'Camera.SetupCamera(Device, Window, MouseEventArgs)'</Item>
+               <Item>'Window'</Item>
+               <Item>'Control'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -14600,9 +14433,6 @@
    <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
     <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
    </Rule>
-   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
-    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
-   </Rule>
    <Rule TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227">
     <Resolution Name="Default">Change {0} to be read-only by removing the property setter.</Resolution>
    </Rule>
@@ -14626,9 +14456,6 @@
    </Rule>
    <Rule TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122">
     <Resolution Name="Default">{0} calls into {1} which has a LinkDemand. By making this call, {1} is indirectly exposed to user code. Review the following call stack that might expose a way to circumvent security protection: {2}</Resolution>
-   </Rule>
-   <Rule TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805">
-    <Resolution Name="Default">{0} initializes field {1} of type {2} to {3}. Remove this initialization because it will be done automatically by the runtime.</Resolution>
    </Rule>
    <Rule TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217">
     <Resolution Name="Default">{0} is marked with FlagsAttribute but a discrete member cannot be found for every settable bit that is used across the range of enum values. Remove FlagsAttribute from the type or define new members for the following (currently missing) values: {1}</Resolution>

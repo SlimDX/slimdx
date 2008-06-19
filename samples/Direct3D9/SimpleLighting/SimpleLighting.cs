@@ -21,13 +21,13 @@ namespace SimpleLighting
     class SimpleLighting : Sample
     {
         public static float x, y, z;//Coordinates of teapot
-        public static bool pointLight = false;
+        public static bool pointLight;
         //Defines the resolution of the screen
         const int XRES = 1024, YRES = 768;
         Mesh mesh;
         //This variable is used to keep track of the mesh movement and is 
         //incremented per frame
-        float index = 0;
+        float index;
         Camera camera;
 
         public SimpleLighting()
@@ -61,7 +61,7 @@ namespace SimpleLighting
         {
             //We refresh the camera to align the light source with the mouse pointer
             if (camera == null) camera = new Camera(XRES, YRES);
-            camera.setupCamera(Device, Window, e);
+            camera.SetupCamera(Device, Window, e);
         }
 
         protected override void OnDeviceLost(EventArgs e)

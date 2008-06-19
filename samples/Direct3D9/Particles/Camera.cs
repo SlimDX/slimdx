@@ -91,7 +91,7 @@ namespace SampleFramework
 
         float fov;
 
-        public float FoV
+        public float FieldOfView
         {
             get
             {
