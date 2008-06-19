@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using System.Text;
+using SlimDX;
 using SlimDX.Direct3D10;
 using SlimDX.DXGI;
-using SlimDX;
-using System.Drawing;
 
 namespace SampleFramework
 {
@@ -339,7 +337,7 @@ namespace SampleFramework
             {
                 // setup to find the best match
                 Rational match = input.SwapChainDescription.ModeDescription.RefreshRate;
-                bestDisplayMode.RefreshRate = new Rational(0,0);
+                bestDisplayMode.RefreshRate = new Rational(0, 0);
                 if (match != new Rational(0, 0))
                 {
                     // loop through each display mode to find the best ranking
@@ -419,7 +417,7 @@ namespace SampleFramework
             mode.Height = bestDisplayMode.Height;
             mode.Format = combo.BackBufferFormat;
             mode.RefreshRate = bestDisplayMode.RefreshRate;
-            
+
             // build up the sample
             sample.Count = bestCount;
             sample.Quality = bestQuality;

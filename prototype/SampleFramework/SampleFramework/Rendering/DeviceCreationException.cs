@@ -3,25 +3,25 @@
 namespace SampleFramework
 {
     /// <summary>
-    /// Thrown when no available graphics device fits the given device preferences.
+    /// Thrown when a graphics device cannot be created.
     /// </summary>
-    public class NoCompatibleDevicesException : Exception
+    public class DeviceCreationException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="NoCompatibleDevicesException"/> class.
+        /// Initializes a new instance of the <see cref="DeviceCreationException"/> class.
         /// </summary>
         /// <param name="message">The message.</param>
-        public NoCompatibleDevicesException(string message)
+        public DeviceCreationException(string message)
             : base(message)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NoCompatibleDevicesException"/> class.
+        /// Initializes a new instance of the <see cref="DeviceCreationException"/> class.
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="innerException">The inner exception.</param>
-        public NoCompatibleDevicesException(string message, Exception innerException)
+        public DeviceCreationException(string message, Exception innerException)
             : base(message, innerException)
         {
         }

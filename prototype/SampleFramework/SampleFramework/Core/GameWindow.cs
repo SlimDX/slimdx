@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Drawing;
-using System.ComponentModel;
-using System.Reflection;
-using System.IO;
 using System.Collections;
+using System.ComponentModel;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Resources;
+using System.Windows.Forms;
 
 namespace SampleFramework
 {
@@ -354,7 +352,7 @@ namespace SampleFramework
             {
                 // process the parameter
                 long wparam = m.WParam.ToInt64() & 0xFFF0;
-                if (wparam == WindowConstants.SC_MONITORPOWER || wparam == WindowConstants.SC_SCREENSAVE )
+                if (wparam == WindowConstants.SC_MONITORPOWER || wparam == WindowConstants.SC_SCREENSAVE)
                 {
                     // allow the command to be canceled
                     CancelEventArgs e = new CancelEventArgs();

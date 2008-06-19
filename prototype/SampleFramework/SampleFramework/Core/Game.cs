@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Windows.Forms;
 using SlimDX;
 using SlimDX.Direct3D9;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using System.Drawing;
-using System.Threading;
-using System.ComponentModel;
 
 namespace SampleFramework
 {
@@ -69,38 +65,6 @@ namespace SampleFramework
         public event EventHandler FrameEnd;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the Windows key should be disabled.
-        /// </summary>
-        /// <value><c>true</c> if the Windows key should be disabled; otherwise, <c>false</c>.</value>
-        public static bool DisableWindowsKey
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether screensavers should be disabled.
-        /// </summary>
-        /// <value><c>true</c> if screensavers should be disabled; otherwise, <c>false</c>.</value>
-        public static bool DisableScreensaver
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether shortcut keys are disabled.
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if shortcut keys are disabled; otherwise, <c>false</c>.
-        /// </value>
-        public static bool AreShortcutKeysDisabled
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
         /// Gets or sets the inactive sleep time.
         /// </summary>
         /// <value>The inactive sleep time.</value>
@@ -142,16 +106,6 @@ namespace SampleFramework
         {
             get;
             set;
-        }
-
-        /// <summary>
-        /// Gets the registered game services.
-        /// </summary>
-        /// <value>The game services.</value>
-        public GameServiceContainer Services
-        {
-            get;
-            private set;
         }
 
         /// <summary>
@@ -217,6 +171,9 @@ namespace SampleFramework
             // setup the application
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // disable shortcut keys
+            DisableShortcutKeys();
         }
 
         /// <summary>
@@ -224,9 +181,6 @@ namespace SampleFramework
         /// </summary>
         public Game()
         {
-            // initialize collections
-            Services = new GameServiceContainer();
-
             // set initial values
             IsFixedTimeStep = true;
 
@@ -238,44 +192,6 @@ namespace SampleFramework
             Window.Resume += Window_Resume;
             Window.Paint += Window_Paint;
             Window.ScreenSaver += Window_ScreenSaver;
-        }
-
-        /// <summary>
-        /// Disables shortcut keys.
-        /// </summary>
-        public static void DisableShortcutKeys()
-        {
-            // store the value
-            AreShortcutKeysDisabled = true;
-
-            // disable the shortcut keys
-            StickyKeys.Disable();
-            ToggleKeys.Disable();
-            FilterKeys.Disable();
-
-            // if we haven't set up the keyboard hook yet, do it now
-            if (keyboardHook == IntPtr.Zero)
-                keyboardHook = NativeMethods.SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProc,
-                    NativeMethods.GetModuleHandle(null), 0);
-        }
-
-        /// <summary>
-        /// Restores the shortcut keys settings.
-        /// </summary>
-        public static void RestoreShortcutKeys()
-        {
-            // restore shortcut keys
-            StickyKeys.Restore();
-            ToggleKeys.Restore();
-            FilterKeys.Restore();
-
-            // if we have a keyboard hook, unhook it
-            if (keyboardHook != IntPtr.Zero)
-            {
-                // unhook the procedure
-                NativeMethods.UnhookWindowsHookEx(keyboardHook);
-                keyboardHook = IntPtr.Zero;
-            }
         }
 
         /// <summary>
@@ -647,9 +563,8 @@ namespace SampleFramework
         /// <param name="e">The <see cref="CancelEventArgs"/> instance containing the event data.</param>
         void Window_ScreenSaver(object sender, CancelEventArgs e)
         {
-            // if we should disable screen savers, don't let this message pass
-            if (DisableScreensaver)
-                e.Cancel = true;
+            // don't let this message pass
+            e.Cancel = true;
         }
 
         /// <summary>
@@ -681,9 +596,8 @@ namespace SampleFramework
             // check if the state has changed
             if (!IsActive)
             {
-                // check if we need to disable shortcut keys again
-                if (AreShortcutKeysDisabled)
-                    DisableShortcutKeys();
+                // disable the shortcut keys again
+                DisableShortcutKeys();
 
                 // raise the event
                 IsActive = true;
@@ -725,6 +639,41 @@ namespace SampleFramework
         }
 
         /// <summary>
+        /// Disables shortcut keys.
+        /// </summary>
+        static void DisableShortcutKeys()
+        {
+            // disable the shortcut keys
+            StickyKeys.Disable();
+            ToggleKeys.Disable();
+            FilterKeys.Disable();
+
+            // if we haven't set up the keyboard hook yet, do it now
+            if (keyboardHook == IntPtr.Zero)
+                keyboardHook = NativeMethods.SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProc,
+                    NativeMethods.GetModuleHandle(null), 0);
+        }
+
+        /// <summary>
+        /// Restores the shortcut keys settings.
+        /// </summary>
+        static void RestoreShortcutKeys()
+        {
+            // restore shortcut keys
+            StickyKeys.Restore();
+            ToggleKeys.Restore();
+            FilterKeys.Restore();
+
+            // if we have a keyboard hook, unhook it
+            if (keyboardHook != IntPtr.Zero)
+            {
+                // unhook the procedure
+                NativeMethods.UnhookWindowsHookEx(keyboardHook);
+                keyboardHook = IntPtr.Zero;
+            }
+        }
+
+        /// <summary>
         /// A procedure for low level keyboard hooks.
         /// </summary>
         /// <param name="code">The hook code.</param>
@@ -743,7 +692,7 @@ namespace SampleFramework
             // check if we want to eat the message
             bool eat = false;
             if (wparam == WindowConstants.WM_KEYDOWN || wparam == WindowConstants.WM_KEYUP)
-                eat = DisableWindowsKey && (hookInfo.vkCode == WindowConstants.VK_LWIN || hookInfo.vkCode == WindowConstants.VK_RWIN);
+                eat = hookInfo.vkCode == WindowConstants.VK_LWIN || hookInfo.vkCode == WindowConstants.VK_RWIN;
 
             // return the appropriate result
             if (eat)
