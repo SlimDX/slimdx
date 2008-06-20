@@ -23,6 +23,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using SlimDX.Direct3D9;
+using System;
+using System.Xml;
 
 namespace SampleFramework
 {
@@ -378,7 +380,31 @@ namespace SampleFramework
         /// <summary>
         /// Selects the specified items.
         /// </summary>
-        public void SelectItems()
+        /// <param name="items">The items.</param>
+        public void SelectItems(IEnumerable<ListBoxItem> items)
+        {
+            // make sure we are allowed to do multiselect
+            if (!AllowMultiselect)
+                throw new InvalidOperationException("Cannot select multiple items in a non-multiselect list box.");
+        
+            // run through and select each item
+            foreach (ListBoxItem item in items)
+                item.Selected = true;
+        }
+
+        /// <summary>
+        /// Selects the specified items.
+        /// </summary>
+        /// <param name="items">The items.</param>
+        public void SelectItems(IEnumerable<int> items)
+        {
+            // TODO
+        }
+
+        /// <summary>
+        /// Selects all items.
+        /// </summary>
+        public void SelectAll()
         {
             // TODO
         }
@@ -387,6 +413,14 @@ namespace SampleFramework
         /// Deselects the specified items.
         /// </summary>
         public void DeselectItems()
+        {
+            // TODO
+        }
+
+        /// <summary>
+        /// Deselects all items.
+        /// </summary>
+        public void DeselectAll()
         {
             // TODO
         }
@@ -447,14 +481,64 @@ namespace SampleFramework
             // draw the one sprite
             Parent.DrawSprite(DrawingElements[0], Bounds);
 
+            // set up drawing rectangle
+            Rectangle rectangle = textRectangle;
+            rectangle.Height = textHeight;
+
+            // render the items
+            for (int i = ScrollBar.Position; i < Items.Count; i++)
+            {
+                // bounds checking
+                if (rectangle.Bottom > textRectangle.Bottom)
+                    break;
+
+                // get the item
+                ListBoxItem item = Items[i];
+
+                // render differently depending on the selected style
+                if (item.Selected)
+                {
+                    // draw the selected text
+                    Rectangle selection = selectionRectangle;
+                    selection.Y = rectangle.Y;
+                    selection.Height = textHeight;
+                    Parent.DrawSprite(DrawingElements[1], selection);
+                    Parent.DrawText(item.Text, DrawingElements[1], rectangle);
+                }
+                else
+                    Parent.DrawText(item.Text, DrawingElements[0], rectangle);
+
+                // update the rectangle
+                rectangle.Offset(0, textHeight);
+            }
+
             // render the scroll bar
             ScrollBar.Render();
         }
 
         /// <summary>
+        /// Loads the contents of the control from a set of XML nodes.
+        /// </summary>
+        /// <param name="contentNodes"></param>
+        protected internal override void LoadXmlContent(XmlNodeList contentNodes)
+        {
+            // load any sub items into the list box
+            foreach (XmlNode node in contentNodes)
+            {
+                // only handle item nodes
+                if (node.Name != "Item")
+                    continue;
+
+                // add the new item
+                ListBoxItem item = new ListBoxItem(node.InnerText);
+                Items.Add(item);
+            }
+        }
+
+        /// <summary>
         /// Called when an item is removed.
         /// </summary>
-        private void OnItemRemoved()
+        void OnItemRemoved()
         {
             // check if the selection has been invalidated
             if (SelectedIndex >= Items.Count)

@@ -21,7 +21,7 @@
 */
 using System;
 
-namespace EmptyProject
+namespace CustomUI
 {
     static class Program
     {
@@ -31,8 +31,8 @@ namespace EmptyProject
         [STAThread]
         static void Main()
         {
-            using (EmptyProject game = new EmptyProject())
-                game.Run();
+            using (CustomUI sample = new CustomUI())
+                sample.Run();
         }
     }
 }

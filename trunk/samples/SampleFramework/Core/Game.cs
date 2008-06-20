@@ -254,7 +254,6 @@ namespace SampleFramework
         public void Run()
         {
             // let the application perform any necessary initialization
-            Initialize();
             IsRunning = true;
 
             try
