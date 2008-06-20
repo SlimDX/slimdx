@@ -20,18 +20,23 @@
 * THE SOFTWARE.
 */
 using System;
-using System.Collections.Generic;
-using System.Text;
-using SampleFramework;
+using System.Drawing;
 using System.Windows.Forms;
+using SampleFramework;
 using SlimDX;
 using SlimDX.Direct3D9;
-using System.Drawing;
 
 namespace Water
 {
+    /// <summary>
+    /// The top level game object. Manages the entire game.
+    /// </summary>
     class WaterSample : Game
     {
+        // constants
+        const int InitialWidth = 800;
+        const int InitialHeight = 600;
+
         RoomEntity room;
         RoomEntity fountain;
         WaterEntity water;
@@ -40,52 +45,60 @@ namespace Water
         Matrix projectionMatrix = Matrix.Identity;
         Vector3 position = new Vector3(450, 350, 750);
 
-        GraphicsDeviceManager graphicsManager;
-
-        Device Device
+        /// <summary>
+        /// Gets the Direct3D device.
+        /// </summary>
+        /// <value>The Direct3D device.</value>
+        public Device Device
         {
-            get { return graphicsManager.Device9; }
+            get { return GraphicsDeviceManager.Device9; }
         }
 
+        /// <summary>
+        /// Gets or sets the clear color.
+        /// </summary>
+        /// <value>The clear color.</value>
+        public Color ClearColor
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WaterSample"/> class.
+        /// </summary>
         public WaterSample()
         {
-            Window.Text = "SlimDX - Water Sample";
-            Window.KeyDown += new KeyEventHandler(Window_KeyDown);
+            // initialize the clear color
+            ClearColor = Color.FromArgb(0, 45, 50, 170);
 
-            graphicsManager = new GraphicsDeviceManager(this);
-            graphicsManager.ChangeDevice(DeviceVersion.Direct3D9, true, 800, 600);
+            // set up the window
+            Window.ClientSize = new Size(InitialWidth, InitialHeight);
+            Window.Text = "SlimDX - Water Sample";
+            Window.KeyDown += Window_KeyDown;
+
+            // create the Direct3D device
+            GraphicsDeviceManager.ChangeDevice(DeviceVersion.Direct3D9, true, InitialWidth, InitialHeight);
         }
 
+        /// <summary>
+        /// Handles the KeyDown event of the Window control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.KeyEventArgs"/> instance containing the event data.</param>
         void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            // F1 toggles between full screen and windowed mode
+            // Escape quits the application
             if (e.KeyCode == Keys.F1)
-                graphicsManager.ToggleFullScreen();
-            else if (e.KeyCode == Keys.Up)
-                position.Y += 10;
-            else if (e.KeyCode == Keys.Down)
-                position.Y -= 10;
-            else if (e.KeyCode == Keys.Left)
-                position.X += 10;
-            else if (e.KeyCode == Keys.Right)
-                position.X -= 10;
-            else if (e.KeyCode == Keys.A)
-                position.Z += 10;
-            else if (e.KeyCode == Keys.Z)
-                position.Z -= 10;
+                GraphicsDeviceManager.ToggleFullScreen();
+            else if (e.KeyCode == Keys.Escape)
+                Exit();
         }
 
-        protected override void UnloadContent()
-        {
-            if (room != null)
-                room.Dispose();
-
-            if (fountain != null)
-                fountain.Dispose();
-
-            if (water != null)
-                water.Dispose();
-        }
-
+        /// <summary>
+        /// Loads graphical resources.
+        /// </summary>
         protected override void LoadContent()
         {
             projectionMatrix = Matrix.PerspectiveFovLH((float)Math.PI / 4, 1.0f, 1.0f, 5000.0f);
@@ -106,6 +119,29 @@ namespace Water
                 "Resources/Textures/water.dds", "Resources/Textures/bricks.dds");
         }
 
+        /// <summary>
+        /// Unloads graphical resources.
+        /// </summary>
+        protected override void UnloadContent()
+        {
+            if (room != null)
+                room.Dispose();
+
+            if (fountain != null)
+                fountain.Dispose();
+
+            if (water != null)
+                water.Dispose();
+
+            room = null;
+            fountain = null;
+            water = null;
+        }
+
+        /// <summary>
+        /// Called when a frame is ready to be drawn.
+        /// </summary>
+        /// <param name="gameTime">The time passed since the last frame.</param>
         protected override void Draw(GameTime gameTime)
         {
             viewMatrix = Matrix.LookAtLH(new Vector3(position.X, position.Y, position.Z),
@@ -116,13 +152,15 @@ namespace Water
             fountain.Update(new Vector3(0, -800, 0), viewMatrix, projectionMatrix);
             water.Update(new Vector3(0, -80, 0), viewMatrix, projectionMatrix);
 
-            Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
+            // start the scene
+            Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, ClearColor, 1.0f, 0);
             Device.BeginScene();
 
             room.Render(Device);
             fountain.Render(Device);
             water.Render(Device);
 
+            // end the scene
             Device.EndScene();
         }
     }

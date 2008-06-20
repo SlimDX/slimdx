@@ -39,6 +39,7 @@ namespace SampleFramework
 
         // static variables
         static IntPtr keyboardHook;
+        static LowLevelKeyboardProc keyboardProc;
 
         // timing variables
         GameClock clock = new GameClock();
@@ -162,6 +163,16 @@ namespace SampleFramework
         }
 
         /// <summary>
+        /// Gets the graphics device manager.
+        /// </summary>
+        /// <value>The graphics device manager.</value>
+        public GraphicsDeviceManager GraphicsDeviceManager
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether this <see cref="Game"/> is active.
         /// </summary>
         /// <value><c>true</c> if active; otherwise, <c>false</c>.</value>
@@ -192,9 +203,6 @@ namespace SampleFramework
             // setup the application
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            // disable shortcut keys
-            DisableShortcutKeys();
         }
 
         /// <summary>
@@ -213,6 +221,12 @@ namespace SampleFramework
             Window.Resume += Window_Resume;
             Window.Paint += Window_Paint;
             Window.Screensaver += Window_Screensaver;
+
+            // create the manager
+            GraphicsDeviceManager = new GraphicsDeviceManager(this);
+
+            // disable shortcut keys
+            DisableShortcutKeys();
         }
 
         /// <summary>
@@ -459,6 +473,11 @@ namespace SampleFramework
                 // release game data
                 Release();
 
+                // release the graphics device manager
+                if (GraphicsDeviceManager != null)
+                    GraphicsDeviceManager.Dispose();
+                GraphicsDeviceManager = null;
+
                 // if we have an event, raise it
                 if (Disposed != null)
                     Disposed(this, EventArgs.Empty);
@@ -670,8 +689,9 @@ namespace SampleFramework
             FilterKeys.Disable();
 
             // if we haven't set up the keyboard hook yet, do it now
+            keyboardProc = new LowLevelKeyboardProc(LowLevelKeyboardProc);
             if (keyboardHook == IntPtr.Zero)
-                keyboardHook = NativeMethods.SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProc,
+                keyboardHook = NativeMethods.SetWindowsHookEx(WH_KEYBOARD_LL, keyboardProc,
                     NativeMethods.GetModuleHandle(null), 0);
         }
 

@@ -25,6 +25,7 @@
    <Directory>$(ProjectDir)/../samples/Direct3D10/MiniTri/bin/Debug/</Directory>
    <Directory>$(ProjectDir)/../samples/Direct3D9/MiniTri/bin/Debug/</Directory>
    <Directory>$(ProjectDir)/../samples/Direct3D9/SampleFramework/bin/Debug/</Directory>
+   <Directory>$(ProjectDir)/../samples/Direct3D9/SampleFramework/bin/x86/Debug/</Directory>
    <Directory>$(ProjectDir)/../samples/Direct3D9/SimpleTriangle/bin/Debug/</Directory>
    <Directory>$(ProjectDir)/../samples/Direct3D9/Water/bin/Debug/</Directory>
    <Directory>$(ProjectDir)/../samples/DirectInput/Joystick/bin/Debug/</Directory>
@@ -33,9 +34,9 @@
   </AssemblyReferenceDirectories>
   <Target Name="$(ProjectDir)/Debug/SlimDX.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D10/MiniTri/bin/x86/Debug/MiniTri.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/Direct3D9/EmptyProject/bin/x86/Debug/EmptyProject.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/MiniTri/bin/x86/Debug/MiniTri.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/Particles/bin/x86/Debug/Particles.exe" Analyze="True" AnalyzeAllChildren="True" />
-  <Target Name="$(ProjectDir)/../samples/Direct3D9/SampleFramework/bin/x86/Debug/SampleFramework.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/SimpleLighting/bin/x86/Debug/SimpleLighting.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/SimpleTriangle/bin/x86/Debug/SimpleTriangle.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/Water/bin/x86/Debug/Water.exe" Analyze="True" AnalyzeAllChildren="True" />
@@ -43,6 +44,7 @@
   <Target Name="$(ProjectDir)/../samples/DirectInput/Keyboard/bin/x86/Debug/Keyboard.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/DirectInput/Mouse/bin/x86/Debug/Mouse.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/RawInput/Mouse/bin/x86/Debug/Mouse.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/SampleFramework/bin/x86/Debug/SampleFramework.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/XAudio2/BasicSound/bin/x86/Debug/BasicSound.exe" Analyze="True" AnalyzeAllChildren="True" />
  </Targets>
  <Rules>
@@ -124,8 +126,8 @@
     <Messages>
      <Message TypeName="IdentifiersShouldDifferByMoreThanCase" Category="Microsoft.Naming" CheckId="CA1708" Status="Excluded" Created="2008-02-28 11:36:27Z">
       <Issue Name="Type">
-       <Item>'FILTERKEYS'</Item>
-       <Item>FilterKeys</Item>
+       <Item>'FilterKeys'</Item>
+       <Item>FILTERKEYS</Item>
       </Issue>
       <Issue Name="Type">
        <Item>'STICKYKEYS'</Item>
@@ -13890,357 +13892,6 @@
      </Module>
     </Modules>
    </Target>
-   <Target Name="$(ProjectDir)/../samples/Direct3D9/SampleFramework/bin/x86/Debug/SampleFramework.dll">
-    <Modules>
-     <Module Name="sampleframework.dll">
-      <Namespaces>
-       <Namespace Name="SampleFramework">
-        <Types>
-         <Type Name="DeviceSettings">
-          <Members>
-           <Member Name="#BehaviorFlags">
-            <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-02-28 11:36:27Z">
-              <Issue Name="MemberNoAlternate">
-               <Item>Flags</Item>
-               <Item>'DeviceSettings.BehaviorFlags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Enumeration">
-          <Members>
-           <Member Name="#.cctor()">
-            <Messages>
-             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Status="Excluded" Created="2008-02-28 11:36:27Z">
-              <Issue>
-               <Item>'Enumeration'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="FilterKeys">
-          <Members>
-           <Member Name="#.cctor()">
-            <Messages>
-             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Status="Excluded" Created="2008-02-28 11:36:27Z">
-              <Issue>
-               <Item>'FilterKeys'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Disable()">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-28 11:36:27Z">
-              <Issue>
-               <Item>'FilterKeys.Disable()'</Item>
-               <Item>'Marshal.AllocCoTaskMem(int)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'FilterKeys.Disable()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'FilterKeys.Disable()'</Item>
-               <Item>'Marshal.FreeCoTaskMem(IntPtr)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'FilterKeys.Disable()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'FilterKeys.Disable()'</Item>
-               <Item>'Marshal.SizeOf(object)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'FilterKeys.Disable()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'FilterKeys.Disable()'</Item>
-               <Item>'Marshal.StructureToPtr(object, IntPtr, bool)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'FilterKeys.Disable()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Restore()">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-28 11:36:27Z">
-              <Issue>
-               <Item>'FilterKeys.Restore()'</Item>
-               <Item>'Marshal.AllocCoTaskMem(int)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'FilterKeys.Restore()'&#xD;&#xA;   -&gt;'FilterKeys.Restore()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'FilterKeys.Restore()'</Item>
-               <Item>'Marshal.FreeCoTaskMem(IntPtr)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'FilterKeys.Restore()'&#xD;&#xA;   -&gt;'FilterKeys.Restore()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'FilterKeys.Restore()'</Item>
-               <Item>'Marshal.SizeOf(object)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'FilterKeys.Restore()'&#xD;&#xA;   -&gt;'FilterKeys.Restore()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'FilterKeys.Restore()'</Item>
-               <Item>'Marshal.StructureToPtr(object, IntPtr, bool)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'FilterKeys.Restore()'&#xD;&#xA;   -&gt;'FilterKeys.Restore()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Sample">
-          <Members>
-           <Member Name="#.cctor()">
-            <Messages>
-             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Status="Excluded" Created="2008-02-28 11:36:27Z">
-              <Issue>
-               <Item>'Sample'</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-02-28 11:36:27Z">
-              <Issue>
-               <Item>'Sample.Sample()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#CreateDevice(SampleFramework.DeviceSettings)">
-            <Messages>
-             <Message Id="SampleFramework.NativeMethods.SetThreadExecutionState(System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-02-28 11:36:27Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'Sample.CreateDevice(DeviceSettings)'</Item>
-               <Item>'NativeMethods.SetThreadExecutionState(uint)'</Item>
-              </Issue>
-              <Issue Name="HResultOrErrorCode">
-               <Item>'Sample.CreateDevice(DeviceSettings)'</Item>
-               <Item>'NativeMethods.SetThreadExecutionState(uint)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="SampleFramework.NativeMethods.SetWindowLong(System.IntPtr,System.Int32,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-02-28 11:36:27Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'Sample.CreateDevice(DeviceSettings)'</Item>
-               <Item>'NativeMethods.SetWindowLong(IntPtr, int, uint)'</Item>
-              </Issue>
-              <Issue Name="HResultOrErrorCode">
-               <Item>'Sample.CreateDevice(DeviceSettings)'</Item>
-               <Item>'NativeMethods.SetWindowLong(IntPtr, int, uint)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="StickyKeys">
-          <Members>
-           <Member Name="#.cctor()">
-            <Messages>
-             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Status="Excluded" Created="2008-02-28 11:36:27Z">
-              <Issue>
-               <Item>'StickyKeys'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Disable()">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-28 11:36:27Z">
-              <Issue>
-               <Item>'StickyKeys.Disable()'</Item>
-               <Item>'Marshal.AllocCoTaskMem(int)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'StickyKeys.Disable()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'StickyKeys.Disable()'</Item>
-               <Item>'Marshal.FreeCoTaskMem(IntPtr)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'StickyKeys.Disable()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'StickyKeys.Disable()'</Item>
-               <Item>'Marshal.SizeOf(object)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'StickyKeys.Disable()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'StickyKeys.Disable()'</Item>
-               <Item>'Marshal.StructureToPtr(object, IntPtr, bool)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'StickyKeys.Disable()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Restore()">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-28 11:36:27Z">
-              <Issue>
-               <Item>'StickyKeys.Restore()'</Item>
-               <Item>'Marshal.AllocCoTaskMem(int)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'StickyKeys.Restore()'&#xD;&#xA;   -&gt;'StickyKeys.Restore()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'StickyKeys.Restore()'</Item>
-               <Item>'Marshal.FreeCoTaskMem(IntPtr)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'StickyKeys.Restore()'&#xD;&#xA;   -&gt;'StickyKeys.Restore()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'StickyKeys.Restore()'</Item>
-               <Item>'Marshal.SizeOf(object)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'StickyKeys.Restore()'&#xD;&#xA;   -&gt;'StickyKeys.Restore()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'StickyKeys.Restore()'</Item>
-               <Item>'Marshal.StructureToPtr(object, IntPtr, bool)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'StickyKeys.Restore()'&#xD;&#xA;   -&gt;'StickyKeys.Restore()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Timer">
-          <Members>
-           <Member Name="#GetAbsoluteTime()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-02-29 00:17:56Z">
-              <Issue Certainty="50">
-               <Item>'Timer.GetAbsoluteTime()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetElapsedTime()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-02-29 00:17:56Z">
-              <Issue>
-               <Item>'Timer.GetElapsedTime()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetTime()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-02-29 00:17:56Z">
-              <Issue>
-               <Item>'Timer.GetTime()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="ToggleKeys">
-          <Members>
-           <Member Name="#.cctor()">
-            <Messages>
-             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Status="Excluded" Created="2008-02-28 11:36:27Z">
-              <Issue>
-               <Item>'ToggleKeys'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Disable()">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-28 11:36:27Z">
-              <Issue>
-               <Item>'ToggleKeys.Disable()'</Item>
-               <Item>'Marshal.AllocCoTaskMem(int)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'ToggleKeys.Disable()'</Item>
-               <Item>'Marshal.FreeCoTaskMem(IntPtr)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'ToggleKeys.Disable()'</Item>
-               <Item>'Marshal.SizeOf(object)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'ToggleKeys.Disable()'</Item>
-               <Item>'Marshal.StructureToPtr(object, IntPtr, bool)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Restore()">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-28 11:36:27Z">
-              <Issue>
-               <Item>'ToggleKeys.Restore()'</Item>
-               <Item>'Marshal.AllocCoTaskMem(int)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'ToggleKeys.Restore()'&#xD;&#xA;   -&gt;'ToggleKeys.Restore()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'ToggleKeys.Restore()'</Item>
-               <Item>'Marshal.FreeCoTaskMem(IntPtr)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'ToggleKeys.Restore()'&#xD;&#xA;   -&gt;'ToggleKeys.Restore()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'ToggleKeys.Restore()'</Item>
-               <Item>'Marshal.SizeOf(object)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'ToggleKeys.Restore()'&#xD;&#xA;   -&gt;'ToggleKeys.Restore()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'ToggleKeys.Restore()'</Item>
-               <Item>'Marshal.StructureToPtr(object, IntPtr, bool)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'ToggleKeys.Restore()'&#xD;&#xA;   -&gt;'ToggleKeys.Restore()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="WINDOWPLACEMENT">
-          <Members>
-           <Member Name="#Length">
-            <Accessors>
-             <Accessor Name="#get_Length()">
-              <Messages>
-               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-02-28 11:36:27Z">
-                <Issue>
-                 <Item>'WINDOWPLACEMENT.Length.get()'</Item>
-                 <Item>'Marshal.SizeOf(Type)'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'Sample.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Construct(Window, DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Initialize(Window, DeviceSettings)'</Item>
-                </Issue>
-                <Issue>
-                 <Item>'WINDOWPLACEMENT.Length.get()'</Item>
-                 <Item>'Marshal.SizeOf(Type)'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'Sample.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Construct(Window, DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Initialize(Window, bool, int, int)'</Item>
-                </Issue>
-                <Issue>
-                 <Item>'WINDOWPLACEMENT.Length.get()'</Item>
-                 <Item>'Marshal.SizeOf(Type)'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'Sample.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Construct(Window, DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Initialize(string, DeviceSettings)'</Item>
-                </Issue>
-                <Issue>
-                 <Item>'WINDOWPLACEMENT.Length.get()'</Item>
-                 <Item>'Marshal.SizeOf(Type)'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'Sample.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Construct(Window, DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.Initialize(string, bool, int, int)'</Item>
-                </Issue>
-                <Issue>
-                 <Item>'WINDOWPLACEMENT.Length.get()'</Item>
-                 <Item>'Marshal.SizeOf(Type)'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'Sample.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.ToggleFullScreen()'</Item>
-                </Issue>
-                <Issue>
-                 <Item>'WINDOWPLACEMENT.Length.get()'</Item>
-                 <Item>'Marshal.SizeOf(Type)'</Item>
-                 <Item>&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'Sample.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'Sample.ToggleReference()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
    <Target Name="$(ProjectDir)/../samples/Direct3D9/SimpleLighting/bin/x86/Debug/SimpleLighting.exe">
     <Modules>
      <Module Name="simplelighting.exe">
@@ -14249,13 +13900,13 @@
         <Types>
          <Type Name="Camera">
           <Members>
-           <Member Name="#SetupCamera(SlimDX.Direct3D9.Device,SampleFramework.Window,System.Windows.Forms.MouseEventArgs)">
+           <Member Name="#SetupCamera(SlimDX.Direct3D9.Device,SampleFramework.GameWindow,System.Windows.Forms.MouseEventArgs)">
             <Messages>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2008-06-19 16:45:26Z">
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2008-06-19 23:56:34Z">
               <Issue>
                <Item>'window'</Item>
-               <Item>'Camera.SetupCamera(Device, Window, MouseEventArgs)'</Item>
-               <Item>'Window'</Item>
+               <Item>'Camera.SetupCamera(Device, GameWindow, MouseEventArgs)'</Item>
+               <Item>'GameWindow'</Item>
                <Item>'Control'</Item>
               </Issue>
              </Message>
@@ -14403,6 +14054,545 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/../samples/SampleFramework/bin/x86/Debug/SampleFramework.dll">
+    <Modules>
+     <Module Name="sampleframework.dll">
+      <Namespaces>
+       <Namespace Name="SampleFramework">
+        <Types>
+         <Type Name="ConversionMethods">
+          <Members>
+           <Member Name="#ToFloat(SlimDX.Rational)">
+            <Messages>
+             <Message Id="denom" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-06-19 23:56:34Z">
+              <Issue>
+               <Item>'ConversionMethods.ToFloat(Rational)'</Item>
+               <Item>'denom'</Item>
+               <Item>'float'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="DeviceCreationException">
+          <Messages>
+           <Message TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032" Created="2008-06-19 23:56:34Z">
+            <Issue Name="MissingConstructor">
+             <Item>'DeviceCreationException'</Item>
+             <Item>protected DeviceCreationException(SerializationInfo, StreamingContext)</Item>
+            </Issue>
+            <Issue Name="MissingConstructor">
+             <Item>'DeviceCreationException'</Item>
+             <Item>public DeviceCreationException()</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Created="2008-06-19 23:56:34Z">
+            <Issue Certainty="95" Level="Error">
+             <Item>'DeviceCreationException'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="Direct3D10Settings">
+          <Members>
+           <Member Name="#RankSettingsCombo(SampleFramework.SettingsCombo10,SampleFramework.Direct3D10Settings,SlimDX.DXGI.ModeDescription)">
+            <Messages>
+             <Message Id="desktopMode" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-06-19 23:56:34Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'desktopMode'</Item>
+               <Item>'Direct3D10Settings.RankSettingsCombo(SettingsCombo10, Direct3D10Settings, ModeDescription)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Enumeration9">
+          <Members>
+           <Member Name="#Enumerate()">
+            <Messages>
+             <Message Id="adapterCount" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-06-19 23:56:34Z">
+              <Issue>
+               <Item>'Enumeration9.Enumerate()'</Item>
+               <Item>'adapterCount'</Item>
+               <Item>'int'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FilterKeys">
+          <Members>
+           <Member Name="#.cctor()">
+            <Messages>
+             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Created="2008-06-19 23:56:34Z">
+              <Issue>
+               <Item>'FilterKeys'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Disable()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-06-19 23:56:34Z">
+              <Issue>
+               <Item>'FilterKeys.Disable()'</Item>
+               <Item>'Marshal.AllocCoTaskMem(int)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'FilterKeys.Disable()'</Item>
+               <Item>'Marshal.FreeCoTaskMem(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'FilterKeys.Disable()'</Item>
+               <Item>'Marshal.SizeOf(object)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'FilterKeys.Disable()'</Item>
+               <Item>'Marshal.StructureToPtr(object, IntPtr, bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="GameWindow">
+          <Members>
+           <Member Name="#DeviceNameFromScreen(System.Windows.Forms.Screen)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-06-19 23:56:34Z">
+              <Issue>
+               <Item>'GameWindow.DeviceNameFromScreen(Screen)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FindFirstIcon(System.Reflection.Assembly)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2008-06-19 23:56:34Z">
+              <Issue>
+               <Item>'GameWindow.FindFirstIcon(Assembly)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'GameWindow.FindFirstIcon(Assembly)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#OnScreenChanged(System.EventArgs)">
+            <Messages>
+             <Message Id="OnScreen" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-06-19 23:56:34Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>OnScreen</Item>
+               <Item>'GameWindow.OnScreenChanged(EventArgs)'</Item>
+               <Item>Onscreen</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#WndProc(System.Windows.Forms.Message&amp;)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-06-19 23:56:34Z">
+              <Issue>
+               <Item>'GameWindow.WndProc(ref Message)'</Item>
+               <Item>'Form.WndProc(ref Message)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'GameWindow.WndProc(ref Message)'&#xD;&#xA;   -&gt;'GameWindow.WndProc(ref Message)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'GameWindow.WndProc(ref Message)'</Item>
+               <Item>'Message.HWnd.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'GameWindow.WndProc(ref Message)'&#xD;&#xA;   -&gt;'GameWindow.WndProc(ref Message)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'GameWindow.WndProc(ref Message)'</Item>
+               <Item>'Message.Msg.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'GameWindow.WndProc(ref Message)'&#xD;&#xA;   -&gt;'GameWindow.WndProc(ref Message)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'GameWindow.WndProc(ref Message)'</Item>
+               <Item>'Message.Result.set(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'GameWindow.WndProc(ref Message)'&#xD;&#xA;   -&gt;'GameWindow.WndProc(ref Message)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'GameWindow.WndProc(ref Message)'</Item>
+               <Item>'Message.WParam.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'GameWindow.WndProc(ref Message)'&#xD;&#xA;   -&gt;'GameWindow.WndProc(ref Message)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="OverrideLinkDemandsShouldBeIdenticalToBase" Category="Microsoft.Security" CheckId="CA2123" Created="2008-06-19 23:56:34Z">
+              <Issue Name="BaseOnly">
+               <Item>'GameWindow.WndProc(ref Message)'</Item>
+               <Item>'Form.WndProc(ref Message)'</Item>
+               <Item>[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="GraphicsDeviceManager">
+          <Members>
+           <Member Name="#CreateDevice(SampleFramework.DeviceSettings)">
+            <Messages>
+             <Message Id="SampleFramework.NativeMethods.SetThreadExecutionState(System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-06-19 23:56:34Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'GraphicsDeviceManager.CreateDevice(DeviceSettings)'</Item>
+               <Item>'NativeMethods.SetThreadExecutionState(uint)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'GraphicsDeviceManager.CreateDevice(DeviceSettings)'</Item>
+               <Item>'NativeMethods.SetThreadExecutionState(uint)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="SampleFramework.NativeMethods.SetWindowLong(System.IntPtr,System.Int32,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-06-19 23:56:34Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'GraphicsDeviceManager.CreateDevice(DeviceSettings)'</Item>
+               <Item>'NativeMethods.SetWindowLong(IntPtr, int, uint)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'GraphicsDeviceManager.CreateDevice(DeviceSettings)'</Item>
+               <Item>'NativeMethods.SetWindowLong(IntPtr, int, uint)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="NativeMethods">
+          <Members>
+           <Member Name="#AdjustWindowRect(SampleFramework.NativeRectangle&amp;,System.UInt32,System.Boolean)">
+            <Messages>
+             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Created="2008-06-19 23:56:34Z">
+              <Issue Name="PlatformInvokeStack">
+               <Item>'NativeMethods.AdjustWindowRect(ref NativeRectangle, uint, bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'NativeMethods.AdjustWindowRect(ref NativeRectangle, uint, bool)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.ChangeDevice(DeviceSettings, DeviceSettings)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetClientRect(System.IntPtr,SampleFramework.NativeRectangle&amp;)">
+            <Messages>
+             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Created="2008-06-19 23:56:34Z">
+              <Issue Name="PlatformInvokeStack">
+               <Item>'NativeMethods.GetClientRect(IntPtr, out NativeRectangle)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'NativeMethods.GetClientRect(IntPtr, out NativeRectangle)'&#xD;&#xA;   -&gt;'NativeMethods.GetClientRectangle(IntPtr)'&#xD;&#xA;   -&gt;'GameWindow.WndProc(ref Message)'</Item>
+              </Issue>
+              <Issue Name="PlatformInvokeStack">
+               <Item>'NativeMethods.GetClientRect(IntPtr, out NativeRectangle)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'NativeMethods.GetClientRect(IntPtr, out NativeRectangle)'&#xD;&#xA;   -&gt;'NativeMethods.GetClientRectangle(IntPtr)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.ChangeDevice(DeviceSettings, DeviceSettings)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetModuleHandle(System.String)">
+            <Messages>
+             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Created="2008-06-19 23:56:34Z">
+              <Issue Name="PlatformInvokeStack">
+               <Item>'NativeMethods.GetModuleHandle(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'NativeMethods.GetModuleHandle(string)'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetWindowLong(System.IntPtr,System.Int32)">
+            <Messages>
+             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Created="2008-06-19 23:56:34Z">
+              <Issue Name="PlatformInvokeStack">
+               <Item>'NativeMethods.GetWindowLong(IntPtr, int)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'NativeMethods.GetWindowLong(IntPtr, int)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.ChangeDevice(DeviceSettings, DeviceSettings)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetWindowPlacement(System.IntPtr,SampleFramework.WINDOWPLACEMENT&amp;)">
+            <Messages>
+             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Created="2008-06-19 23:56:34Z">
+              <Issue Name="PlatformInvokeStack">
+               <Item>'NativeMethods.GetWindowPlacement(IntPtr, ref WINDOWPLACEMENT)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'NativeMethods.GetWindowPlacement(IntPtr, ref WINDOWPLACEMENT)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.ChangeDevice(DeviceSettings, DeviceSettings)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetWindowRect(System.IntPtr,SampleFramework.NativeRectangle&amp;)">
+            <Messages>
+             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Created="2008-06-19 23:56:34Z">
+              <Issue Name="PlatformInvokeStack">
+               <Item>'NativeMethods.GetWindowRect(IntPtr, out NativeRectangle)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'NativeMethods.GetWindowRect(IntPtr, out NativeRectangle)'&#xD;&#xA;   -&gt;'NativeMethods.GetWindowRectangle(IntPtr)'&#xD;&#xA;   -&gt;'GameWindow.ScreenFromHandle(IntPtr)'&#xD;&#xA;   -&gt;'GameWindow.GameWindow()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#IsIconic(System.IntPtr)">
+            <Messages>
+             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Created="2008-06-19 23:56:34Z">
+              <Issue Name="PlatformInvokeStack">
+               <Item>'NativeMethods.IsIconic(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'NativeMethods.IsIconic(IntPtr)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.ChangeDevice(DeviceSettings, DeviceSettings)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#IsZoomed(System.IntPtr)">
+            <Messages>
+             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Created="2008-06-19 23:56:34Z">
+              <Issue Name="PlatformInvokeStack">
+               <Item>'NativeMethods.IsZoomed(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'NativeMethods.IsZoomed(IntPtr)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.ChangeDevice(DeviceSettings, DeviceSettings)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SetThreadExecutionState(System.UInt32)">
+            <Messages>
+             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Created="2008-06-19 23:56:34Z">
+              <Issue Name="PlatformInvokeStack">
+               <Item>'NativeMethods.SetThreadExecutionState(uint)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'NativeMethods.SetThreadExecutionState(uint)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.ChangeDevice(DeviceSettings, DeviceSettings)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SetWindowLong(System.IntPtr,System.Int32,System.UInt32)">
+            <Messages>
+             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Created="2008-06-19 23:56:34Z">
+              <Issue Name="PlatformInvokeStack">
+               <Item>'NativeMethods.SetWindowLong(IntPtr, int, uint)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'NativeMethods.SetWindowLong(IntPtr, int, uint)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.ChangeDevice(DeviceSettings, DeviceSettings)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SetWindowPlacement(System.IntPtr,SampleFramework.WINDOWPLACEMENT&amp;)">
+            <Messages>
+             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Created="2008-06-19 23:56:34Z">
+              <Issue Name="PlatformInvokeStack">
+               <Item>'NativeMethods.SetWindowPlacement(IntPtr, ref WINDOWPLACEMENT)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'NativeMethods.SetWindowPlacement(IntPtr, ref WINDOWPLACEMENT)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.ChangeDevice(DeviceSettings, DeviceSettings)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SetWindowPos(System.IntPtr,System.IntPtr,System.Int32,System.Int32,System.Int32,System.Int32,System.UInt32)">
+            <Messages>
+             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Created="2008-06-19 23:56:34Z">
+              <Issue Name="PlatformInvokeStack">
+               <Item>'NativeMethods.SetWindowPos(IntPtr, IntPtr, int, int, int, int, uint)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'NativeMethods.SetWindowPos(IntPtr, IntPtr, int, int, int, int, uint)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.ChangeDevice(DeviceSettings, DeviceSettings)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SetWindowsHookEx(System.Int32,SampleFramework.LowLevelKeyboardProc,System.IntPtr,System.UInt32)">
+            <Messages>
+             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Created="2008-06-19 23:56:34Z">
+              <Issue Name="PlatformInvokeStack">
+               <Item>'NativeMethods.SetWindowsHookEx(int, LowLevelKeyboardProc, IntPtr, uint)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'NativeMethods.SetWindowsHookEx(int, LowLevelKeyboardProc, IntPtr, uint)'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ShowWindow(System.IntPtr,System.Int32)">
+            <Messages>
+             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Created="2008-06-19 23:56:34Z">
+              <Issue Name="PlatformInvokeStack">
+               <Item>'NativeMethods.ShowWindow(IntPtr, int)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'NativeMethods.ShowWindow(IntPtr, int)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.ChangeDevice(DeviceSettings, DeviceSettings)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SystemParametersInfo(System.UInt32,System.UInt32,System.IntPtr,System.UInt32)">
+            <Messages>
+             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Created="2008-06-19 23:56:34Z">
+              <Issue Name="PlatformInvokeStack">
+               <Item>'NativeMethods.SystemParametersInfo(uint, uint, IntPtr, uint)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'NativeMethods.SystemParametersInfo(uint, uint, IntPtr, uint)'&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="NoCompatibleDevicesException">
+          <Messages>
+           <Message TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032" Created="2008-06-19 23:56:34Z">
+            <Issue Name="MissingConstructor">
+             <Item>'NoCompatibleDevicesException'</Item>
+             <Item>protected NoCompatibleDevicesException(SerializationInfo, StreamingContext)</Item>
+            </Issue>
+            <Issue Name="MissingConstructor">
+             <Item>'NoCompatibleDevicesException'</Item>
+             <Item>public NoCompatibleDevicesException()</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Created="2008-06-19 23:56:34Z">
+            <Issue Certainty="95" Level="Error">
+             <Item>'NoCompatibleDevicesException'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="StickyKeys">
+          <Members>
+           <Member Name="#.cctor()">
+            <Messages>
+             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Created="2008-06-19 23:56:34Z">
+              <Issue>
+               <Item>'StickyKeys'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Disable()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-06-19 23:56:34Z">
+              <Issue>
+               <Item>'StickyKeys.Disable()'</Item>
+               <Item>'Marshal.AllocCoTaskMem(int)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'StickyKeys.Disable()'</Item>
+               <Item>'Marshal.FreeCoTaskMem(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'StickyKeys.Disable()'</Item>
+               <Item>'Marshal.SizeOf(object)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'StickyKeys.Disable()'</Item>
+               <Item>'Marshal.StructureToPtr(object, IntPtr, bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ToggleKeys">
+          <Members>
+           <Member Name="#.cctor()">
+            <Messages>
+             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Created="2008-06-19 23:56:34Z">
+              <Issue>
+               <Item>'ToggleKeys'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Disable()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-06-19 23:56:34Z">
+              <Issue>
+               <Item>'ToggleKeys.Disable()'</Item>
+               <Item>'Marshal.AllocCoTaskMem(int)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ToggleKeys.Disable()'</Item>
+               <Item>'Marshal.FreeCoTaskMem(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ToggleKeys.Disable()'</Item>
+               <Item>'Marshal.SizeOf(object)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ToggleKeys.Disable()'</Item>
+               <Item>'Marshal.StructureToPtr(object, IntPtr, bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TransformedColoredVertex">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-06-19 23:56:34Z">
+            <Issue Name="Equals">
+             <Item>'TransformedColoredVertex'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'TransformedColoredVertex'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Color">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-19 23:56:34Z">
+              <Issue>
+               <Item>'TransformedColoredVertex.Color'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Position">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-06-19 23:56:34Z">
+              <Issue>
+               <Item>'TransformedColoredVertex.Position'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SizeInBytes">
+            <Accessors>
+             <Accessor Name="#get_SizeInBytes()">
+              <Messages>
+               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-06-19 23:56:34Z">
+                <Issue>
+                 <Item>'TransformedColoredVertex.SizeInBytes.get()'</Item>
+                 <Item>'Marshal.SizeOf(Type)'</Item>
+                 <Item>&#xD;&#xA;   -&gt;'TransformedColoredVertex.SizeInBytes.get()'&#xD;&#xA;   -&gt;'TransformedColoredVertex.SizeInBytes.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="WINDOWPLACEMENT">
+          <Members>
+           <Member Name="#Length">
+            <Accessors>
+             <Accessor Name="#get_Length()">
+              <Messages>
+               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-06-19 23:56:34Z">
+                <Issue>
+                 <Item>'WINDOWPLACEMENT.Length.get()'</Item>
+                 <Item>'Marshal.SizeOf(Type)'</Item>
+                 <Item>&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'WINDOWPLACEMENT.Length.get()'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.ChangeDevice(DeviceSettings, DeviceSettings)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
    <Target Name="$(ProjectDir)/../samples/XAudio2/BasicSound/bin/x86/Debug/BasicSound.exe">
     <Modules>
      <Module Name="basicsound.exe">
@@ -14444,6 +14634,9 @@
    </Rule>
    <Rule TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213">
     <Resolution Name="Default">{0} contains field {1} that is of IDisposable type: {2}. Change the Dispose method on {0} to call Dispose or Close on this field.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
+    <Resolution Name="Default">Modify {0} to catch a more specific exception than {1} or rethrow the exception.</Resolution>
    </Rule>
    <Rule TypeName="DoNotDeclareStaticMembersOnGenericTypes" Category="Microsoft.Design" CheckId="CA1000">
     <Resolution Name="Default">Remove {0} from {1} or make it an instance member.</Resolution>
@@ -14521,11 +14714,17 @@
     <Resolution Name="Default">Rename '{0}' so that it does not end in '{1}'.</Resolution>
     <Resolution Name="TypeNoAlternate">Rename type name {0} so that it does not end in '{1}'.</Resolution>
    </Rule>
+   <Rule TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032">
+    <Resolution Name="MissingConstructor">Add the following constructor to {0}: {1}.</Resolution>
+   </Rule>
    <Rule TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810">
     <Resolution Name="Default">Initialize all static fields in {0} when those fields are declared and remove the explicit static constructor.</Resolution>
    </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237">
+    <Resolution Name="Default">Add [Serializable] to {0} as this type implements ISerializable.</Resolution>
    </Rule>
    <Rule TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223">
     <Resolution Name="Default">'{0}' should differ from other members by more than its return type.</Resolution>
@@ -14543,6 +14742,13 @@
     <Resolution Name="Default">Provide a method named '{0}' as a friendly alternate for operator {1}.</Resolution>
     <Resolution Name="Multiple">Provide a method named '{0}' or '{1}' as an alternate for operator {2}.</Resolution>
    </Rule>
+   <Rule TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815">
+    <Resolution Name="Equals">{0} should override Equals.</Resolution>
+    <Resolution Name="op_Equality">{0} should override the equality (==) and inequality (!=) operators.</Resolution>
+   </Rule>
+   <Rule TypeName="OverrideLinkDemandsShouldBeIdenticalToBase" Category="Microsoft.Security" CheckId="CA2123">
+    <Resolution Name="BaseOnly">Add the following security attribute to {0} in order to match a LinkDemand on base method {1}:  {2}.</Resolution>
+   </Rule>
    <Rule TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725">
     <Resolution Name="Default">In member {0}, change parameter name {1} to {2} in order to match the identifier as it has been declared in {3}.</Resolution>
    </Rule>
@@ -14555,8 +14761,17 @@
    <Rule TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721">
     <Resolution Name="BaseType">The property name {0} is confusing given the existence of inherited method {1}. Rename or remove this property.</Resolution>
    </Rule>
+   <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
+    <Resolution Name="Default">{0} declares a variable, {1}, of type {2}, which is never used or is only assigned to. Use this variable or remove it.</Resolution>
+   </Rule>
    <Rule TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025">
     <Resolution Name="Default">Consider implementing a version of {0} that accepts a parameter array argument.</Resolution>
+   </Rule>
+   <Rule TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118">
+    <Resolution Name="PlatformInvokeStack">Review declarative security for {0} and its callers for potential vulnerabilities. The following call stack might expose a way to circumvent security protection: {1}</Resolution>
+   </Rule>
+   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
     <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>

@@ -1183,6 +1183,9 @@ namespace Direct3D9
 
 	Result Device::SetCursor( Cursor^ cursor, bool addWatermark )
 	{
+		if( cursor == nullptr )
+			return RECORD_D3D9( S_OK );
+
 		IDirect3DSurface9 *cursorSurface = NULL;
 		ICONINFO iconInfo = {0};
 		HRESULT hr;

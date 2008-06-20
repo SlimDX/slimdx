@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SlimDX.XAudio2;
-using SlimDX;
+﻿using System.Runtime.InteropServices;
 using System.Threading;
-using System.Runtime.InteropServices;
+using SlimDX;
+using SlimDX.XAudio2;
 
 namespace BasicSound
 {
