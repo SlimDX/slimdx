@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,27 +21,20 @@
 */
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Runtime.InteropServices;
-using SlimDX;
-using SlimDX.Direct3D9;
+using System.Windows.Forms;
 
-namespace SimpleTriangle
+namespace EmptyProject
 {
-    [StructLayout(LayoutKind.Sequential)]
-    struct Vertex
+    static class Program
     {
-        public Vector4 PositionRhw;
-        public int Color;
-
-        public static int SizeBytes
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
         {
-            get { return Marshal.SizeOf(typeof(Vertex)); }
-        }
-
-        public static VertexFormat Format
-        {
-            get { return VertexFormat.PositionRhw | VertexFormat.Diffuse; }
+            using (EmptyProject game = new EmptyProject())
+                game.Run();
         }
     }
 }

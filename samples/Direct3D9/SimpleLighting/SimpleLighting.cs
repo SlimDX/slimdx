@@ -22,31 +22,49 @@ namespace SimpleLighting
     {
         public static float x, y, z;//Coordinates of teapot
         public static bool pointLight;
-        //Defines the resolution of the screen
-        const int XRES = 1024, YRES = 768;
         Mesh mesh;
         //This variable is used to keep track of the mesh movement and is 
         //incremented per frame
         float index;
         Camera camera;
 
-        GraphicsDeviceManager graphicsManager;
+        // constants
+        const int InitialWidth = 1024;
+        const int InitialHeight = 768;
 
-        Device Device
+        /// <summary>
+        /// Gets the Direct3D device.
+        /// </summary>
+        /// <value>The Direct3D device.</value>
+        public Device Device
         {
-            get { return graphicsManager.Device9; }
+            get { return GraphicsDeviceManager.Device9; }
+        }
+
+        /// <summary>
+        /// Gets or sets the clear color.
+        /// </summary>
+        /// <value>The clear color.</value>
+        public Color ClearColor
+        {
+            get;
+            set;
         }
 
         public SimpleLighting()
         {
-            Window.Text = "Lighting and Mesh Animation Sample for SlimDX";
+            // initialize the clear color
+            ClearColor = Color.FromArgb(0, 45, 50, 170);
+
+            Window.Text = "SlimDX - Simple Lighting Sample";
+            Window.ClientSize = new Size(InitialWidth, InitialHeight);
 
             Window.KeyDown += new KeyEventHandler(Window_KeyDown);
             Window.MouseMove += new MouseEventHandler(Window_MouseMove);
             Window.MouseClick += new MouseEventHandler(Window_MouseClick);
 
-            graphicsManager = new GraphicsDeviceManager(this);
-            graphicsManager.ChangeDevice(DeviceVersion.Direct3D9, true, XRES, YRES);
+            // create the Direct3D device
+            GraphicsDeviceManager.ChangeDevice(DeviceVersion.Direct3D9, true, InitialWidth, InitialHeight);
         }
 
         void Window_MouseClick(object sender, MouseEventArgs e)
@@ -64,7 +82,7 @@ namespace SimpleLighting
         void Window_MouseMove(object sender, MouseEventArgs e)
         {
             //We refresh the camera to align the light source with the mouse pointer
-            if (camera == null) camera = new Camera(XRES, YRES);
+            if (camera == null) camera = new Camera(Window.ClientSize.Width, Window.ClientSize.Height);
             camera.SetupCamera(Device, Window, e);
         }
 
@@ -75,7 +93,7 @@ namespace SimpleLighting
 
         protected override void LoadContent()
         {
-            camera = new Camera(XRES, YRES);
+            camera = new Camera(Window.ClientSize.Width, Window.ClientSize.Height);
             mesh = Mesh.CreateTeapot(Device);
         }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Resources;
@@ -7,11 +6,11 @@ using System.Resources;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SampleFramework")]
-[assembly: AssemblyDescription("Provides a framework for SlimDX based games and samples.")]
+[assembly: AssemblyTitle("EmptyProject")]
+[assembly: AssemblyDescription("An empty project for use as a template for SlimDX samples.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SlimDX Group")]
-[assembly: AssemblyProduct("SampleFramework")]
+[assembly: AssemblyProduct("EmptyProject")]
 [assembly: AssemblyCopyright("Copyright ©  2008 SlimDX Group")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -21,12 +20,8 @@ using System.Resources;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-// Setting CLSCompliant to true allows the types in this assembly to be
-// used by other CLS compliant languages, such as VB.Net.
-[assembly: CLSCompliant(true)]
-
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4adf6476-61cb-425f-95ae-d15a5b75f20a")]
+[assembly: Guid("8e7a001d-6a18-4f43-a6fd-3da8ea2ae71d")]
 
 // Version information for an assembly consists of the following four values:
 //

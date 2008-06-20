@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,21 +22,18 @@
 using System.Drawing;
 using System.Windows.Forms;
 using SampleFramework;
-using SlimDX;
 using SlimDX.Direct3D9;
 
-namespace SimpleTriangle
+namespace EmptyProject
 {
     /// <summary>
     /// The top level game object. Manages the entire game.
     /// </summary>
-    class SimpleTriangleSample : Game
+    class EmptyProject : Game
     {
         // constants
         const int InitialWidth = 800;
         const int InitialHeight = 600;
-
-        VertexBuffer vertices;
 
         /// <summary>
         /// Gets the Direct3D device.
@@ -58,16 +55,16 @@ namespace SimpleTriangle
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SimpleTriangleSample"/> class.
+        /// Initializes a new instance of the <see cref="EmptyProject"/> class.
         /// </summary>
-        public SimpleTriangleSample()
+        public EmptyProject()
         {
             // initialize the clear color
-            ClearColor = Color.Black;
+            ClearColor = Color.FromArgb(0, 45, 50, 170);
 
             // set up the window
             Window.ClientSize = new Size(InitialWidth, InitialHeight);
-            Window.Text = "SlimDX - Simple Triangle Sample";
+            Window.Text = "SlimDX - Empty Project Template";
             Window.KeyDown += Window_KeyDown;
 
             // create the Direct3D device
@@ -90,27 +87,6 @@ namespace SimpleTriangle
         }
 
         /// <summary>
-        /// Loads graphical resources.
-        /// </summary>
-        protected override void LoadContent()
-        {
-            vertices = new VertexBuffer(Device, 3 * TransformedColoredVertex.SizeInBytes, Usage.WriteOnly, VertexFormat.None, Pool.Managed);
-            DataStream stream = vertices.Lock(0, 0, LockFlags.None);
-            stream.WriteRange(BuildVertexData());
-            vertices.Unlock();
-        }
-
-        /// <summary>
-        /// Unloads graphical resources.
-        /// </summary>
-        protected override void UnloadContent()
-        {
-            if( vertices != null )
-                vertices.Dispose();
-            vertices = null;
-        }
-
-        /// <summary>
         /// Called when a frame is ready to be drawn.
         /// </summary>
         /// <param name="gameTime">The time passed since the last frame.</param>
@@ -120,28 +96,8 @@ namespace SimpleTriangle
             Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, ClearColor, 1.0f, 0);
             Device.BeginScene();
 
-            Device.SetStreamSource(0, vertices, 0, TransformedColoredVertex.SizeInBytes);
-            Device.VertexFormat = TransformedColoredVertex.Format;
-            Device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
-
             // end the scene
             Device.EndScene();
-        }
-
-        static TransformedColoredVertex[] BuildVertexData()
-        {
-            TransformedColoredVertex[] vertexData = new TransformedColoredVertex[3];
-
-            vertexData[0].Position = new Vector4(400.0f, 100.0f, 0.5f, 1.0f);
-            vertexData[0].Color = Color.Red.ToArgb();
-
-            vertexData[1].Position = new Vector4(650.0f, 500.0f, 0.5f, 1.0f);
-            vertexData[1].Color = Color.Blue.ToArgb();
-
-            vertexData[2].Position = new Vector4(150.0f, 500.0f, 0.5f, 1.0f);
-            vertexData[2].Color = Color.Green.ToArgb();
-
-            return vertexData;
         }
     }
 }
