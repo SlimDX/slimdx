@@ -347,17 +347,17 @@ namespace SampleFramework
         {
             // find the right output info descriptor
             AdapterInfo10 adapter = null;
-            foreach( AdapterInfo10 a in Adapters )
+            foreach (AdapterInfo10 a in Adapters)
             {
                 // check for an ordinal match
-                if( adapterOrdinal == a.AdapterOrdinal )
+                if (adapterOrdinal == a.AdapterOrdinal)
                 {
                     // found it
                     adapter = a;
                     break;
                 }
             }
-            
+
             // return the found information
             if (adapter != null && adapter.Outputs.Count > outputOrdinal)
                 return adapter.Outputs[outputOrdinal];

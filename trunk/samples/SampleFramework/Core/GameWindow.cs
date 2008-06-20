@@ -26,8 +26,8 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Resources;
-using System.Windows.Forms;
 using System.Security.Permissions;
+using System.Windows.Forms;
 
 namespace SampleFramework
 {
@@ -426,7 +426,7 @@ namespace SampleFramework
                 // calculate the area
                 Rectangle r = Rectangle.Intersect(rectangle, screen.Bounds);
                 int area = r.Width * r.Height;
-                
+
                 // check for a better match
                 if (area > mostArea)
                 {
