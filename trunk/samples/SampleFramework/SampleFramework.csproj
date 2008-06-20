@@ -70,6 +70,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\Button.cs" />
+    <Compile Include="Controls\CheckBox.cs" />
+    <Compile Include="Controls\Label.cs" />
+    <Compile Include="Controls\ListBox.cs" />
+    <Compile Include="Controls\RadioButton.cs" />
+    <Compile Include="Controls\ScrollBar.cs" />
+    <Compile Include="Controls\TextControl.cs">
+    </Compile>
     <Compile Include="DeviceSettings\ConversionMethods.cs" />
     <Compile Include="Core\Game.cs" />
     <Compile Include="Core\GameClock.cs" />

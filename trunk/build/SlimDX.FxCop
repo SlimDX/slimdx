@@ -14215,6 +14215,48 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="ListBox">
+          <Members>
+           <Member Name="#DeselectItems()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-06-20 13:40:28Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'ListBox.DeselectItems()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SelectedIndices">
+            <Messages>
+             <Message Id="Indices" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-06-20 13:40:28Z">
+              <Issue Name="Member">
+               <Item>Indices</Item>
+               <Item>'ListBox.SelectedIndices'</Item>
+               <Item>Indexes</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SelectItems()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-06-20 13:40:28Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'ListBox.SelectItems()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ListBox+ObjectCollection">
+          <Messages>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2008-06-20 13:40:28Z">
+            <Issue>
+             <Item>'ListBox.ObjectCollection'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="NativeMethods">
           <Members>
            <Member Name="#AdjustWindowRect(SampleFramework.NativeRectangle&amp;,System.UInt32,System.Boolean)">
@@ -14402,6 +14444,19 @@
                <Item>'StickyKeys.Disable()'</Item>
                <Item>'Marshal.StructureToPtr(object, IntPtr, bool)'</Item>
                <Item>&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TextControl">
+          <Members>
+           <Member Name="#GetPreferredSize()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-06-20 13:40:28Z">
+              <Issue Certainty="50">
+               <Item>'TextControl.GetPreferredSize()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -14637,11 +14692,17 @@
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
    </Rule>
+   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
+    <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
+   </Rule>
    <Rule TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223">
     <Resolution Name="Default">'{0}' should differ from other members by more than its return type.</Resolution>
    </Rule>
    <Rule TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060">
     <Resolution Name="Default">Because it is a P/Invoke method, {0} should be defined in a class named NativeMethods, SafeNativeMethods, or UnsafeNativeMethods.</Resolution>
+   </Rule>
+   <Rule TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034">
+    <Resolution Name="Default">Do not nest type {0}. Alternatively, change its accessibility so that it is not externally visible.</Resolution>
    </Rule>
    <Rule TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717">
     <Resolution Name="Default">If the name {0} is plural, change it to its singular form.</Resolution>
