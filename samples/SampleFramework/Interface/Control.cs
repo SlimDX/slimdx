@@ -23,6 +23,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace SampleFramework
 {
@@ -338,6 +339,13 @@ namespace SampleFramework
         /// Renders the control.
         /// </summary>
         protected internal virtual void Render()
+        {
+        }
+
+        /// <summary>
+        /// Loads the contents of the control from a set of XML nodes.
+        /// </summary>
+        protected internal virtual void LoadXmlContent(XmlNodeList contentNodes)
         {
         }
 

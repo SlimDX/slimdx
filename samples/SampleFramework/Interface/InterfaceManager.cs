@@ -267,7 +267,7 @@ namespace SampleFramework
 
             // check if we have a local name
             if (localName)
-                name = "Interface." + name;
+                name = "SampleFramework." + name;
 
             // try to find the control type
             Type type = Type.GetType(name, false);
@@ -849,7 +849,7 @@ namespace SampleFramework
                     if (fullName != null)
                         name = fullName.Value;
                     else
-                        name = "Interface." + controlElement.Name;
+                        name = "SampleFramework." + controlElement.Name;
 
                     // create the control
                     Control control = CreateControl(name);
@@ -879,6 +879,10 @@ namespace SampleFramework
                         }
                     }
 
+                    // check if the control has any content nodes to process
+                    if (controlElement.HasChildNodes)
+                        control.LoadXmlContent(controlElement.ChildNodes);
+
                     // add the control to the dialog
                     dialog.Controls.Add(control);
                 }
@@ -900,7 +904,7 @@ namespace SampleFramework
                 if (fullName != null)
                     name = fullName.Value;
                 else
-                    name = "Interface." + element.Name;
+                    name = "SampleFramework." + element.Name;
 
                 // process each element
                 List<DrawingElement> actualElements = new List<DrawingElement>();
