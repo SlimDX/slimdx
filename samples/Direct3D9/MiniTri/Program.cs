@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
 using System.Drawing;
-using SlimDX.Direct3D9;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using SlimDX;
+using SlimDX.Direct3D9;
 
 namespace MiniTri
 {
@@ -61,6 +60,7 @@ namespace MiniTri
 
             Device = new Device(0, DeviceType.Hardware, RenderForm.Handle, CreateFlags.HardwareVertexProcessing, presentParams);
             Vertices = new VertexBuffer(Device, 3 * 20, Usage.WriteOnly, VertexFormat.None, Pool.Managed);
+            
             DataStream stream = Vertices.Lock(0, 0, LockFlags.None);
             Vertex[] vertexData = new Vertex[3];
             vertexData[0].PositionRhw = new Vector4(400.0f, 100.0f, 0.5f, 1.0f);

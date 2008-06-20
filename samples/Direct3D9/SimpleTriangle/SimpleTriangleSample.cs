@@ -94,6 +94,7 @@ namespace SimpleTriangle
         /// </summary>
         protected override void LoadContent()
         {
+            // create the vertex buffer for the vertices and fill it with data
             vertices = new VertexBuffer(Device, 3 * TransformedColoredVertex.SizeInBytes, Usage.WriteOnly, VertexFormat.None, Pool.Managed);
             DataStream stream = vertices.Lock(0, 0, LockFlags.None);
             stream.WriteRange(BuildVertexData());
@@ -105,7 +106,8 @@ namespace SimpleTriangle
         /// </summary>
         protected override void UnloadContent()
         {
-            if( vertices != null )
+            // release the vertex data
+            if (vertices != null)
                 vertices.Dispose();
             vertices = null;
         }
@@ -120,6 +122,7 @@ namespace SimpleTriangle
             Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, ClearColor, 1.0f, 0);
             Device.BeginScene();
 
+            // draw the vertices
             Device.SetStreamSource(0, vertices, 0, TransformedColoredVertex.SizeInBytes);
             Device.VertexFormat = TransformedColoredVertex.Format;
             Device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
@@ -128,20 +131,17 @@ namespace SimpleTriangle
             Device.EndScene();
         }
 
+        /// <summary>
+        /// Builds the vertex data.
+        /// </summary>
+        /// <returns>The created vertex data.</returns>
         static TransformedColoredVertex[] BuildVertexData()
         {
-            TransformedColoredVertex[] vertexData = new TransformedColoredVertex[3];
-
-            vertexData[0].Position = new Vector4(400.0f, 100.0f, 0.5f, 1.0f);
-            vertexData[0].Color = Color.Red.ToArgb();
-
-            vertexData[1].Position = new Vector4(650.0f, 500.0f, 0.5f, 1.0f);
-            vertexData[1].Color = Color.Blue.ToArgb();
-
-            vertexData[2].Position = new Vector4(150.0f, 500.0f, 0.5f, 1.0f);
-            vertexData[2].Color = Color.Green.ToArgb();
-
-            return vertexData;
+            // build the vertex data
+            return new TransformedColoredVertex[3] {
+                new TransformedColoredVertex(new Vector4(400.0f, 100.0f, 0.5f, 1.0f), Color.Red.ToArgb()),
+                new TransformedColoredVertex(new Vector4(650.0f, 500.0f, 0.5f, 1.0f), Color.Blue.ToArgb()),
+                new TransformedColoredVertex(new Vector4(150.0f, 500.0f, 0.5f, 1.0f), Color.Green.ToArgb()) };
         }
     }
 }

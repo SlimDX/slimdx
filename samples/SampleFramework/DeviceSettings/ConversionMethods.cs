@@ -373,7 +373,7 @@ namespace SampleFramework
             float denom = 1;
             if (rational.Denominator != 0)
                 denom = rational.Denominator;
-            return rational.Numerator / rational.Denominator;
+            return rational.Numerator / denom;
         }
     }
 }

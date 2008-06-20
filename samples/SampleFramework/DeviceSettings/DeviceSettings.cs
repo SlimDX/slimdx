@@ -345,14 +345,11 @@ namespace SampleFramework
             // loop through each enumerated adapter
             foreach (AdapterInfo10 adapterInfo in Enumeration10.Adapters)
             {
-                // get the desktop display mode
-                SlimDX.DXGI.ModeDescription desktopMode = Direct3D10Settings.GetAdapterDisplayMode(adapterInfo.AdapterOrdinal, 0);
-
                 // loop through each settings combo
                 foreach (SettingsCombo10 combo in adapterInfo.SettingsCombos)
                 {
                     // rank the combo
-                    float ranking = Direct3D10Settings.RankSettingsCombo(combo, optimal, desktopMode);
+                    float ranking = Direct3D10Settings.RankSettingsCombo(combo, optimal);
 
                     // check if we have a new best ranking
                     if (ranking > bestRanking)
