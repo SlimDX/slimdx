@@ -1399,10 +1399,10 @@ namespace SampleFramework
             {
                 // loop through the adapters until we find the right one
                 AdapterInfo9 adapter = null;
-                foreach( AdapterInfo9 a in Enumeration9.Adapters )
+                foreach (AdapterInfo9 a in Enumeration9.Adapters)
                 {
                     // check for a matching ordinal
-                    if( Direct3D.GetAdapterMonitor(a.AdapterOrdinal) == screen)
+                    if (Direct3D.GetAdapterMonitor(a.AdapterOrdinal) == screen)
                     {
                         // found a match
                         adapter = a;

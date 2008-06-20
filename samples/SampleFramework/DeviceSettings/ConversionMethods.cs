@@ -19,8 +19,6 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-using System;
-using System.Collections.Generic;
 using SlimDX;
 using SlimDX.Direct3D9;
 using D3D10 = SlimDX.Direct3D10;

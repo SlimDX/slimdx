@@ -13826,6 +13826,31 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/../samples/Direct3D9/MiniTri/bin/x86/Debug/MiniTri.exe">
+    <Modules>
+     <Module Name="minitri.exe">
+      <Namespaces>
+       <Namespace Name="MiniTri">
+        <Types>
+         <Type Name="Program">
+          <Members>
+           <Member Name="#PeekMessage(MiniTri.Message&amp;,System.IntPtr,System.UInt32,System.UInt32,System.UInt32)">
+            <Messages>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Status="Excluded" Created="2008-06-20 12:57:30Z">
+              <Issue>
+               <Item>'Program.PeekMessage(out Message, IntPtr, uint, uint, uint)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
    <Target Name="$(ProjectDir)/../samples/Direct3D9/Particles/bin/x86/Debug/Particles.exe">
     <Modules>
      <Module Name="particles.exe">
@@ -13886,23 +13911,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="SimpleLighting">
-          <Members>
-           <Member Name="#ClearColor">
-            <Accessors>
-             <Accessor Name="#get_ClearColor()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-06-20 00:37:34Z">
-                <Issue>
-                 <Item>'SimpleLighting.ClearColor.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -14052,6 +14060,19 @@
       <Namespaces>
        <Namespace Name="SampleFramework">
         <Types>
+         <Type Name="BlendColor">
+          <Members>
+           <Member Name="#States">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-06-20 12:57:30Z">
+              <Issue>
+               <Item>'BlendColor.States'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="FilterKeys">
           <Members>
            <Member Name="#.cctor()">
@@ -14173,6 +14194,21 @@
               <Issue Name="HResultOrErrorCode">
                <Item>'GraphicsDeviceManager.CreateDevice(DeviceSettings)'</Item>
                <Item>'NativeMethods.SetWindowLong(IntPtr, int, uint)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="InterfaceManager">
+          <Members>
+           <Member Name="#Dispose(System.Boolean)">
+            <Messages>
+             <Message Id="stateBlock" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Status="Excluded" Created="2008-06-20 13:14:57Z">
+              <Issue>
+               <Item>'InterfaceManager'</Item>
+               <Item>'InterfaceManager.stateBlock'</Item>
+               <Item>'StateBlock'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -14411,6 +14447,25 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="TransformedColoredTexturedVertex">
+          <Members>
+           <Member Name="#SizeInBytes">
+            <Accessors>
+             <Accessor Name="#get_SizeInBytes()">
+              <Messages>
+               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-06-20 12:57:30Z">
+                <Issue>
+                 <Item>'TransformedColoredTexturedVertex.SizeInBytes.get()'</Item>
+                 <Item>'Marshal.SizeOf(Type)'</Item>
+                 <Item>&#xD;&#xA;   -&gt;'TransformedColoredTexturedVertex.SizeInBytes.get()'&#xD;&#xA;   -&gt;'TransformedColoredTexturedVertex.SizeInBytes.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="TransformedColoredVertex">
           <Members>
            <Member Name="#SizeInBytes">
@@ -14427,17 +14482,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#ToString()">
-            <Messages>
-             <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-06-20 00:50:15Z">
-              <Issue>
-               <Item>'string.Format(string, object, object)'</Item>
-               <Item>'TransformedColoredVertex.ToString()'</Item>
-               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -14626,9 +14670,6 @@
    </Rule>
    <Rule TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118">
     <Resolution Name="PlatformInvokeStack">Review declarative security for {0} and its callers for potential vulnerabilities. The following call stack might expose a way to circumvent security protection: {1}</Resolution>
-   </Rule>
-   <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
-    <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
     <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>

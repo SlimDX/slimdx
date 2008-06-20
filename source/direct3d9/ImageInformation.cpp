@@ -77,12 +77,6 @@ namespace Direct3D9
 			 && value1.ImageFileFormat == value2.ImageFileFormat );
 	}
 
-	/// <summary>
-	/// Function to extract image information from a stream.
-	/// </summary>
-	/// <param name="stream">Stream containing the image.</param>
-	/// <param name="peek">TRUE to preserve the stream position, FALSE will move the stream pointer.</param>
-	/// <returns>Information about the image.</returns>
 	ImageInformation ImageInformation::FromStream(Stream^ stream, bool peek)
 	{
 		array<Byte>^ buffer = nullptr;			// Buffer for the data.
@@ -104,11 +98,6 @@ namespace Direct3D9
 		return FromMemory(buffer);
 	}
 
-	/// <summary>
-	/// Function to extract image information from a stream.
-	/// </summary>
-	/// <param name="stream">Stream containing the image.</param>
-	/// <returns>Information about the image.</returns>
 	ImageInformation ImageInformation::FromStream(Stream^ stream)
 	{
 		return FromStream(stream, true);

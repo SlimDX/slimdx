@@ -1,27 +1,40 @@
-﻿using System;
+﻿/*
+* Copyright (c) 2007-2008 SlimDX Group
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 using SlimDX;
 using SlimDX.Direct3D9;
 
-namespace Interface
+namespace SampleFramework
 {
     /// <summary>
     /// Represents a user interface form.
     /// </summary>
     public class Dialog
     {
-        #region Variables
-
         // variables
         bool isModal;
         Control mouseOverControl;
-
-        #endregion
-
-        #region Events
 
         /// <summary>
         /// Occurs when the dialog is clicked.
@@ -67,10 +80,6 @@ namespace Interface
         /// Occurs when a key is released.
         /// </summary>
         public event System.Windows.Forms.KeyEventHandler KeyUp;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Gets or sets the name.
@@ -272,10 +281,6 @@ namespace Interface
             private set;
         }
 
-        #endregion
-
-        #region Constructor
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Dialog"/> class.
         /// </summary>
@@ -304,17 +309,21 @@ namespace Interface
             Height = 500;
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>
         /// Cycles the focus between controls.
         /// </summary>
         public void CycleFocus()
         {
             // get the set of visible controls
-            List<Control> validControls = Controls.Where(c => c.IsVisible && c.IsEnabled && c.CanHaveFocus).ToList();
+            List<Control> validControls = new List<Control>();
+            foreach (Control control in Controls)
+            {
+                // add any valid controls (visible, enabled, and can have focus)
+                if (control.IsVisible && control.IsEnabled && control.CanHaveFocus)
+                    validControls.Add(control);
+            }
+
+            // make sure we have at least one valid control
             if (validControls.Count == 0)
                 return;
 
@@ -344,9 +353,9 @@ namespace Interface
                 index = 0;
 
             // focus on the correct control
-            Control control = validControls[index];
-            FocusControl = control;
-            control.OnGotFocus(EventArgs.Empty);
+            Control topControl = validControls[index];
+            FocusControl = topControl;
+            topControl.OnGotFocus(EventArgs.Empty);
         }
 
         /// <summary>
@@ -360,18 +369,18 @@ namespace Interface
             rectangle.Offset(X, Y);
 
             // build up the vertices
-            ScreenVertex[] vertices = new ScreenVertex[] {
-                new ScreenVertex((float)rectangle.Left - 0.5f, (float)rectangle.Top - 0.5f, 0.5f, 1.0f, (int)color, 0, 0),
-                new ScreenVertex((float)rectangle.Right - 0.5f, (float)rectangle.Top - 0.5f, 0.5f, 1.0f, (int)color, 0, 0),
-                new ScreenVertex((float)rectangle.Right - 0.5f, (float)rectangle.Bottom - 0.5f, 0.5f, 1.0f, (int)color, 0, 0),
-                new ScreenVertex((float)rectangle.Left - 0.5f, (float)rectangle.Bottom - 0.5f, 0.5f, 1.0f, (int)color, 0, 0)};
+            TransformedColoredTexturedVertex[] vertices = new TransformedColoredTexturedVertex[] {
+                new TransformedColoredTexturedVertex(new Vector4((float)rectangle.Left - 0.5f, (float)rectangle.Top - 0.5f, 0.5f, 1.0f), (int)color, Vector2.Zero),
+                new TransformedColoredTexturedVertex(new Vector4((float)rectangle.Right - 0.5f, (float)rectangle.Top - 0.5f, 0.5f, 1.0f), (int)color, Vector2.Zero),
+                new TransformedColoredTexturedVertex(new Vector4((float)rectangle.Right - 0.5f, (float)rectangle.Bottom - 0.5f, 0.5f, 1.0f), (int)color, Vector2.Zero),
+                new TransformedColoredTexturedVertex(new Vector4((float)rectangle.Left - 0.5f, (float)rectangle.Bottom - 0.5f, 0.5f, 1.0f), (int)color, Vector2.Zero)};
 
             // flush the sprite
             Parent.Sprite.Flush();
             VertexDeclaration store = Parent.Device.VertexDeclaration;
 
             // set states
-            Parent.Device.VertexFormat = ScreenVertex.Format;
+            Parent.Device.VertexFormat = TransformedColoredTexturedVertex.Format;
             Parent.Device.SetTextureStageState(0, TextureStage.ColorOperation, TextureOperation.SelectArg2);
             Parent.Device.SetTextureStageState(0, TextureStage.AlphaOperation, TextureOperation.SelectArg2);
 
@@ -392,16 +401,16 @@ namespace Interface
         public void DrawPolyline(Point[] points, Color4 color)
         {
             // build up the vertices
-            ScreenVertex[] vertices = new ScreenVertex[points.Length];
+            TransformedColoredTexturedVertex[] vertices = new TransformedColoredTexturedVertex[points.Length];
             for (int i = 0; i < points.Length; i++)
-                vertices[i] = new ScreenVertex((float)points[i].X + X, (float)points[i].Y + Y, 0.5f, 1.0f, (int)color, 0, 0);
+                vertices[i] = new TransformedColoredTexturedVertex(new Vector4((float)points[i].X + X, (float)points[i].Y + Y, 0.5f, 1.0f), (int)color, Vector2.Zero);
 
             // flush the sprite
             Parent.Sprite.Flush();
             VertexDeclaration store = Parent.Device.VertexDeclaration;
 
             // set states
-            Parent.Device.VertexFormat = ScreenVertex.Format;
+            Parent.Device.VertexFormat = TransformedColoredTexturedVertex.Format;
             Parent.Device.SetTextureStageState(0, TextureStage.ColorOperation, TextureOperation.SelectArg2);
             Parent.Device.SetTextureStageState(0, TextureStage.AlphaOperation, TextureOperation.SelectArg2);
 
@@ -565,14 +574,14 @@ namespace Interface
                 Parent.Device.SetTextureStageState(0, TextureStage.AlphaArg1, TextureArgument.Diffuse);
 
                 // build up the vertices
-                UntexturedScreenVertex[] vertices = new UntexturedScreenVertex[] {
-                    new UntexturedScreenVertex((float)X,           (float)Y,          0.5f, 1.0f, (int)TopLeftColor),
-                    new UntexturedScreenVertex((float)X + Width,   (float)Y,          0.5f, 1.0f, (int)TopRightColor),
-                    new UntexturedScreenVertex((float)X + Width,   (float)Y + Height, 0.5f, 1.0f, (int)BottomRightColor),
-                    new UntexturedScreenVertex((float)X,           (float)Y + Height, 0.5f, 1.0f, (int)BottomLeftColor) };
+                TransformedColoredVertex[] vertices = new TransformedColoredVertex[] {
+                    new TransformedColoredVertex(new Vector4((float)X,           (float)Y,          0.5f, 1.0f), (int)TopLeftColor),
+                    new TransformedColoredVertex(new Vector4((float)X + Width,   (float)Y,          0.5f, 1.0f), (int)TopRightColor),
+                    new TransformedColoredVertex(new Vector4((float)X + Width,   (float)Y + Height, 0.5f, 1.0f), (int)BottomRightColor),
+                    new TransformedColoredVertex(new Vector4((float)X,           (float)Y + Height, 0.5f, 1.0f), (int)BottomLeftColor) };
 
                 // set the declaration and render
-                Parent.Device.VertexFormat = UntexturedScreenVertex.Format;
+                Parent.Device.VertexFormat = TransformedColoredVertex.Format;
                 Parent.Device.DrawUserPrimitives(PrimitiveType.TriangleFan, 0, 2, vertices);
             }
 
@@ -605,10 +614,6 @@ namespace Interface
             IsVisible = false;
             Parent.Dialogs.Remove(this);
         }
-
-        #endregion
-
-        #region Event Handlers
 
         /// <summary>
         /// Raises the <see cref="E:Click"/> event.
@@ -832,10 +837,8 @@ namespace Interface
 
             // otherwise, see if a control has a corresponding hotkey
             foreach (Control control in Controls)
-                if (control.HotKey == e.KeyCode)
-                    control.OnHotKeyInvoked(EventArgs.Empty);
+                if (control.Hotkey == e.KeyCode)
+                    control.OnHotkeyInvoked(EventArgs.Empty);
         }
-
-        #endregion
     }
 }
