@@ -54,7 +54,7 @@ namespace SimpleLighting
         public SimpleLighting()
         {
             // initialize the clear color
-            ClearColor = Color.FromArgb(0, 45, 50, 170);
+            ClearColor = Color.Black;
 
             Window.Text = "SlimDX - Simple Lighting Sample";
             Window.ClientSize = new Size(InitialWidth, InitialHeight);
@@ -99,7 +99,7 @@ namespace SimpleLighting
 
         protected override void Draw(GameTime gameTime)
         {
-            Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
+            Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, ClearColor, 1.0f, 0);
             Device.BeginScene();
             mesh.ComputeNormals();
             //Setting up world transformation matrix

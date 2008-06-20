@@ -371,7 +371,6 @@ namespace SampleFramework
                 Format.A2R10G10B10 };
 
             // loop through each adapter
-            int adapterCount = Direct3D.AdapterCount;
             foreach (AdapterInformation adapter in Direct3D.Adapters)
             {
                 // set up the adapter info structure

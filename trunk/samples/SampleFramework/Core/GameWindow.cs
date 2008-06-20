@@ -27,6 +27,7 @@ using System.IO;
 using System.Reflection;
 using System.Resources;
 using System.Windows.Forms;
+using System.Security.Permissions;
 
 namespace SampleFramework
 {
@@ -283,6 +284,7 @@ namespace SampleFramework
         /// Handles raw window messages.
         /// </summary>
         /// <param name="m">The raw message.</param>
+        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         protected override void WndProc(ref Message m)
         {
             // check if we should handle the message
@@ -404,21 +406,6 @@ namespace SampleFramework
                 if (Screen != null)
                     OnScreenChanged(EventArgs.Empty);
             }
-        }
-
-        /// <summary>
-        /// Gets the screen's device name.
-        /// </summary>
-        /// <param name="screen">The screen.</param>
-        /// <returns>The screen's device name.</returns>
-        static string DeviceNameFromScreen(Screen screen)
-        {
-            // remove any garbage characters
-            string deviceName = screen.DeviceName;
-            int index = screen.DeviceName.IndexOf('\0');
-            if (index != -1)
-                deviceName = screen.DeviceName.Substring(0, index);
-            return deviceName;
         }
 
         /// <summary>
