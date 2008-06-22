@@ -69,7 +69,7 @@ namespace SlimDX
 			SourceVoice( XAudio2^ device, WaveFormat^ sourceFormat, VoiceFlags flags, float maximumFrequencyRatio );
 			SourceVoice( XAudio2^ device, WaveFormat^ sourceFormat, VoiceFlags flags );
 			SourceVoice( XAudio2^ device, WaveFormat^ sourceFormat );
-			virtual ~SourceVoice() { if( callback != NULL ) delete callback; callback = NULL; }
+			virtual ~SourceVoice();
 
 			Result Discontinuity();
 			Result FlushSourceBuffers();

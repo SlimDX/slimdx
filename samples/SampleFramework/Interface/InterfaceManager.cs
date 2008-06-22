@@ -946,7 +946,7 @@ namespace SampleFramework
             // check for a texture rectangle
             XmlNode textureRectangleElement = element["TextureRectangle"];
             if (textureRectangleElement != null)
-                drawingElement.TextureRectangle = ToObject<Rectangle>(textureRectangleElement.Value);
+                drawingElement.TextureRectangle = ToObject<Rectangle>(textureRectangleElement.InnerText);
 
             // check for a text format
             XmlNode textFormat = element["TextFormat"];
@@ -955,7 +955,7 @@ namespace SampleFramework
                 try
                 {
                     // try to parse the data
-                    DrawTextFormat format = (DrawTextFormat)Enum.Parse(typeof(DrawTextFormat), textFormat.Value, true);
+                    DrawTextFormat format = (DrawTextFormat)Enum.Parse(typeof(DrawTextFormat), textFormat.InnerText, true);
                     drawingElement.TextFormat = format;
                 }
                 catch (ArgumentNullException e)
@@ -966,14 +966,14 @@ namespace SampleFramework
                 catch (ArgumentException e)
                 {
                     // throw a more specific exception
-                    throw new InvalidDataException("The specified text format \"" + textFormat.Value + "\" is not a valid text format.", e);
+                    throw new InvalidDataException("The specified text format \"" + textFormat.InnerText + "\" is not a valid text format.", e);
                 }
             }
 
             // check for a font
             XmlNode fontElement = element["Font"];
             if (fontElement != null)
-                drawingElement.CachedFont = ParseFont(fontElement.Value);
+                drawingElement.CachedFont = ParseFont(fontElement.InnerText);
 
             // return the created element
             return drawingElement;
@@ -1055,7 +1055,7 @@ namespace SampleFramework
                     throw new InvalidDataException("State element for font color is missing a name attribute");
 
                 // grab the real values
-                Color4 value = ToObject<Color4>(stateElement.Value);
+                Color4 value = ToObject<Color4>(stateElement.InnerText);
                 ControlState actualState;
 
                 try

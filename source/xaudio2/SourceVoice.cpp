@@ -81,6 +81,15 @@ namespace XAudio2
 		InternalPointer = pointer;
 	}
 
+	SourceVoice::~SourceVoice()
+	{
+		InternalPointer->DestroyVoice();
+
+		if( callback != NULL )
+			delete callback;
+		callback = NULL;
+	}
+
 	void SourceVoice::OnBufferEnd( ContextEventArgs^ e )
 	{
 		if( &SourceVoice::BufferEnd != nullptr )

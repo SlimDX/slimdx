@@ -34,11 +34,6 @@ namespace SlimDX
 {
 namespace XAudio2
 {
-	Voice::~Voice()
-	{
-		InternalPointer->DestroyVoice();
-	}
-
 	Result Voice::DisableEffect( int effectIndex )
 	{
 		HRESULT hr = InternalPointer->DisableEffect( effectIndex );
