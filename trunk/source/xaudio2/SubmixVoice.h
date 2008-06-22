@@ -33,6 +33,8 @@ namespace SlimDX
 		{
 		public:
 			SubmixVoice( XAudio2^ device, int inputChannels, int inputSampleRate, int processingStage );
+
+			virtual ~SubmixVoice();
 		};
 	}
 }

@@ -36,6 +36,8 @@ namespace SlimDX
 			MasteringVoice( XAudio2^ device, int inputChannels, int inputSampleRate );
 			MasteringVoice( XAudio2^ device, int inputChannels );
 			MasteringVoice( XAudio2^ device );
+
+			virtual ~MasteringVoice();
 		};
 	}
 }

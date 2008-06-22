@@ -83,5 +83,10 @@ namespace XAudio2
 
 		InternalPointer = pointer;
 	}
+
+	MasteringVoice::~MasteringVoice()
+	{
+		InternalPointer->DestroyVoice();
+	}
 }
 }

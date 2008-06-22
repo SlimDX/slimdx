@@ -1,5 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SlimUI>
+  
+  <GlobalLayout>
+    <Button>
+      <Element Name="fill">
+        <TextureRectangle>0, 0, 136, 54</TextureRectangle>
+        <TextureColor>
+          <State Name="Normal">150, 255, 255, 255</State>
+          <State Name="Pressed">200, 255, 255, 255</State>
+        </TextureColor>
+        <FontColor>
+          <State Name="MouseOver">255, 0, 0, 0</State>
+        </FontColor>
+      </Element>
+      <Element Name="main">
+        <TextureRectangle>136, 0, 116, 54</TextureRectangle>
+        <TextureColor Default="0, 255, 255, 255">
+          <State Name="MouseOver">160, 255, 255, 255</State>
+          <State Name="Pressed">60, 0, 0, 0</State>
+          <State Name="Focus">30, 255, 255, 255</State>
+        </TextureColor>
+        <FontColor>
+          <State Name="MouseOver">255, 0, 0, 0</State>
+        </FontColor>
+      </Element>
+    </Button>
+  </GlobalLayout>
+  
   <Interface>
     <Dialog>
       <Label Text="Hello" Font="Arial, 32, Bold"/>

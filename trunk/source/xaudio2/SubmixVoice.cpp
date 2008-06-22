@@ -47,5 +47,10 @@ namespace XAudio2
 
 		InternalPointer = pointer;
 	}
+
+	SubmixVoice::~SubmixVoice()
+	{
+		InternalPointer->DestroyVoice();
+	}
 }
 }
