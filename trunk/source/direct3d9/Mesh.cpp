@@ -399,7 +399,8 @@ namespace Direct3D9
 	{
 		ID3DXBuffer *buffer;
 		DWORD *adjacencyIn = NULL;
-		stack_vector<DWORD> adjacencyOut;
+		DWORD *adjacencyOutPtr = NULL;
+		stack_vector<DWORD> adjacencyOut( FaceCount * 3 );
 
 		array<int>^ adjacency = GetAdjacency();
 		pin_ptr<int> pinnedAdjIn;
@@ -411,11 +412,11 @@ namespace Direct3D9
 		{
 			pinnedAdjIn = &adjacency[0];
 			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
-			adjacencyOut.resize( FaceCount * 3 );
+			adjacencyOutPtr = &adjacencyOut[0];
 		}		
 
 		HRESULT hr = InternalPointer->OptimizeInplace( static_cast<DWORD>( flags ), adjacencyIn,
-			&adjacencyOut[0], reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
+			adjacencyOutPtr, reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
 		RECORD_D3D9( hr );
 
 		if( FAILED( hr ) )
@@ -427,7 +428,7 @@ namespace Direct3D9
 		else
 		{
 			vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
-			if( adjacencyOut.size() > 0 )
+			if( adjacencyOutPtr != NULL )
 				SetAdjacency( &adjacencyOut[0] );
 			else
 				SetAdjacency( NULL );
@@ -439,7 +440,8 @@ namespace Direct3D9
 	Result Mesh::OptimizeInPlace( MeshOptimizeFlags flags )
 	{
 		DWORD *adjacencyIn = NULL;
-		stack_vector<DWORD> adjacencyOut;
+		DWORD *adjacencyOutPtr = NULL;
+		stack_vector<DWORD> adjacencyOut( FaceCount * 3 );
 
 		array<int>^ adjacency = GetAdjacency();
 		pin_ptr<int> pinnedAdjIn;
@@ -447,18 +449,18 @@ namespace Direct3D9
 		{
 			pinnedAdjIn = &adjacency[0];
 			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
-			adjacencyOut.resize( FaceCount * 3 );
-		}		
+			adjacencyOutPtr = &adjacencyOut[0];
+		}
 
 		HRESULT hr = InternalPointer->OptimizeInplace( static_cast<DWORD>( flags ), adjacencyIn,
-			&adjacencyOut[0], NULL, NULL );
+			adjacencyOutPtr, NULL, NULL );
 		RECORD_D3D9( hr );
 
 		if( FAILED( hr ) )
 			SetAdjacency( NULL );
 		else
 		{
-			if( adjacencyOut.size() > 0 )
+			if( adjacencyOutPtr != NULL )
 				SetAdjacency( &adjacencyOut[0] );
 			else
 				SetAdjacency( NULL );
@@ -472,7 +474,8 @@ namespace Direct3D9
 		ID3DXMesh *result;
 		ID3DXBuffer *buffer;
 		DWORD *adjacencyIn = NULL;
-		stack_vector<DWORD> adjacencyOut;
+		DWORD *adjacencyOutPtr = NULL;
+		stack_vector<DWORD> adjacencyOut( FaceCount * 3 );
 
 		array<int>^ adjacency = GetAdjacency();
 		pin_ptr<int> pinnedAdjIn;
@@ -484,11 +487,11 @@ namespace Direct3D9
 		{
 			pinnedAdjIn = &adjacency[0];
 			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
-			adjacencyOut.resize( FaceCount * 3 );
+			adjacencyOutPtr = &adjacencyOut[0];
 		}		
 
 		HRESULT hr = InternalPointer->Optimize( static_cast<DWORD>( flags ), adjacencyIn,
-			&adjacencyOut[0], reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
+			adjacencyOutPtr, reinterpret_cast<DWORD*>( pinnedFR ), &buffer, &result );
 
 		if( RECORD_D3D9( hr ).IsFailure )
 		{
@@ -501,7 +504,7 @@ namespace Direct3D9
 
 		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
 
-		if( adjacencyOut.size() > 0 )
+		if( adjacencyOutPtr != NULL )
 			mesh->SetAdjacency( &adjacencyOut[0] );
 
 		return mesh;
@@ -511,7 +514,8 @@ namespace Direct3D9
 	{
 		ID3DXMesh *result;
 		DWORD *adjacencyIn = NULL;
-		stack_vector<DWORD> adjacencyOut;
+		DWORD *adjacencyOutPtr = NULL;
+		stack_vector<DWORD> adjacencyOut( FaceCount * 3 );
 
 		array<int>^ adjacency = GetAdjacency();
 		pin_ptr<int> pinnedAdjIn;
@@ -520,18 +524,18 @@ namespace Direct3D9
 		{
 			pinnedAdjIn = &adjacency[0];
 			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
-			adjacencyOut.resize( FaceCount * 3 );
+			adjacencyOutPtr = &adjacencyOut[0];
 		}
 
 		HRESULT hr = InternalPointer->Optimize( static_cast<DWORD>( flags ), adjacencyIn,
-			&adjacencyOut[0], NULL, NULL, &result );
+			adjacencyOutPtr, NULL, NULL, &result );
 
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		Mesh^ mesh = Mesh::FromPointer( result );
 
-		if( adjacencyOut.size() > 0 )
+		if( adjacencyOutPtr != NULL )
 			mesh->SetAdjacency( &adjacencyOut[0] );
 
 		return mesh;
@@ -542,7 +546,8 @@ namespace Direct3D9
 		ID3DXMesh *result;
 		ID3DXBuffer *errors;
 		DWORD *adjacencyIn = NULL;
-		stack_vector<DWORD> adjacencyOut;
+		DWORD *adjacencyOutPtr = NULL;
+		stack_vector<DWORD> adjacencyOut( FaceCount * 3 );
 
 		array<int>^ adjacency = GetAdjacency();
 		pin_ptr<int> pinnedAdjIn;
@@ -551,11 +556,11 @@ namespace Direct3D9
 		{
 			pinnedAdjIn = &adjacency[0];
 			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
-			adjacencyOut.resize( FaceCount * 3 );
+			adjacencyOutPtr = &adjacencyOut[0];
 		}
 
 		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), InternalPointer, 
-			adjacencyIn, &result, &adjacencyOut[0], &errors );
+			adjacencyIn, &result, adjacencyOutPtr, &errors );
 
 		if( RECORD_D3D9( hr ).IsFailure )
 		{
@@ -567,7 +572,7 @@ namespace Direct3D9
 
 		Mesh^ mesh = Mesh::FromPointer( result );
 
-		if( adjacencyOut.size() > 0 )
+		if( adjacencyOutPtr != NULL )
 			mesh->SetAdjacency( &adjacencyOut[0] );
 
 		return mesh;
@@ -577,7 +582,8 @@ namespace Direct3D9
 	{
 		ID3DXMesh *result;
 		DWORD *adjacencyIn = NULL;
-		stack_vector<DWORD> adjacencyOut;
+		DWORD *adjacencyOutPtr = NULL;
+		stack_vector<DWORD> adjacencyOut( FaceCount * 3 );
 
 		array<int>^ adjacency = GetAdjacency();
 		pin_ptr<int> pinnedAdjIn;
@@ -586,18 +592,18 @@ namespace Direct3D9
 		{
 			pinnedAdjIn = &adjacency[0];
 			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
-			adjacencyOut.resize( FaceCount * 3 );
+			adjacencyOutPtr = &adjacencyOut[0];
 		}
 
 		HRESULT hr = D3DXCleanMesh( static_cast<D3DXCLEANTYPE>( type ), InternalPointer, 
-			&adjacencyIn[0], &result, &adjacencyOut[0], NULL );
+			&adjacencyIn[0], &result, adjacencyOutPtr, NULL );
 
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
 		Mesh^ mesh = Mesh::FromPointer( result );
 
-		if( adjacencyOut.size() > 0 )
+		if( adjacencyOutPtr != NULL )
 			mesh->SetAdjacency( &adjacencyOut[0] );
 
 		return mesh;
