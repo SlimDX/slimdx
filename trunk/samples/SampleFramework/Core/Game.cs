@@ -34,13 +34,6 @@ namespace SampleFramework
     /// </summary>
     public abstract class Game : IDisposable
     {
-        // constants
-        const int WH_KEYBOARD_LL = 13;
-
-        // static variables
-        static IntPtr keyboardHook;
-        static LowLevelKeyboardProc keyboardProc;
-
         // timing variables
         GameClock clock = new GameClock();
         GameTime gameTime = new GameTime();
@@ -220,13 +213,9 @@ namespace SampleFramework
             Window.Suspend += Window_Suspend;
             Window.Resume += Window_Resume;
             Window.Paint += Window_Paint;
-            Window.Screensaver += Window_Screensaver;
 
             // create the manager
             GraphicsDeviceManager = new GraphicsDeviceManager(this);
-
-            // disable shortcut keys
-            DisableShortcutKeys();
         }
 
         /// <summary>
@@ -596,17 +585,6 @@ namespace SampleFramework
         }
 
         /// <summary>
-        /// Handles the Screensaver event of the Window control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="CancelEventArgs"/> instance containing the event data.</param>
-        void Window_Screensaver(object sender, CancelEventArgs e)
-        {
-            // don't let this message pass
-            e.Cancel = true;
-        }
-
-        /// <summary>
         /// Handles the ApplicationDeactivated event of the Window control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -616,9 +594,6 @@ namespace SampleFramework
             // check if the state has changed
             if (IsActive)
             {
-                // be sure to reenable shortcut keys
-                RestoreShortcutKeys();
-
                 // raise the event
                 IsActive = false;
                 OnDeactivated(EventArgs.Empty);
@@ -635,9 +610,6 @@ namespace SampleFramework
             // check if the state has changed
             if (!IsActive)
             {
-                // disable the shortcut keys again
-                DisableShortcutKeys();
-
                 // raise the event
                 IsActive = true;
                 OnActivated(EventArgs.Empty);
@@ -675,70 +647,6 @@ namespace SampleFramework
         {
             // suspend the clock
             clock.Suspend();
-        }
-
-        /// <summary>
-        /// Disables shortcut keys.
-        /// </summary>
-        static void DisableShortcutKeys()
-        {
-            // disable the shortcut keys
-            StickyKeys.Disable();
-            ToggleKeys.Disable();
-            FilterKeys.Disable();
-
-            // if we haven't set up the keyboard hook yet, do it now
-            keyboardProc = new LowLevelKeyboardProc(LowLevelKeyboardProc);
-            if (keyboardHook == IntPtr.Zero)
-                keyboardHook = NativeMethods.SetWindowsHookEx(WH_KEYBOARD_LL, keyboardProc,
-                    NativeMethods.GetModuleHandle(null), 0);
-        }
-
-        /// <summary>
-        /// Restores the shortcut keys settings.
-        /// </summary>
-        static void RestoreShortcutKeys()
-        {
-            // restore shortcut keys
-            StickyKeys.Restore();
-            ToggleKeys.Restore();
-            FilterKeys.Restore();
-
-            // if we have a keyboard hook, unhook it
-            if (keyboardHook != IntPtr.Zero)
-            {
-                // unhook the procedure
-                NativeMethods.UnhookWindowsHookEx(keyboardHook);
-                keyboardHook = IntPtr.Zero;
-            }
-        }
-
-        /// <summary>
-        /// A procedure for low level keyboard hooks.
-        /// </summary>
-        /// <param name="code">The hook code.</param>
-        /// <param name="wparam">The first generic parameter.</param>
-        /// <param name="lparam">The second generic parameter.</param>
-        /// <returns>A the next hook in the chain.</returns>
-        static IntPtr LowLevelKeyboardProc(int code, IntPtr wparam, IntPtr lparam)
-        {
-            // grab the hook info
-            KBDLLHOOKSTRUCT hookInfo = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lparam, typeof(KBDLLHOOKSTRUCT));
-
-            // check if we should handle it
-            if (code != 0)
-                return NativeMethods.CallNextHookEx(keyboardHook, code, wparam, lparam);
-
-            // check if we want to eat the message
-            bool eat = false;
-            if (wparam == WindowConstants.WM_KEYDOWN || wparam == WindowConstants.WM_KEYUP)
-                eat = hookInfo.vkCode == WindowConstants.VK_LWIN || hookInfo.vkCode == WindowConstants.VK_RWIN;
-
-            // return the appropriate result
-            if (eat)
-                return new IntPtr(1);
-            else
-                return NativeMethods.CallNextHookEx(keyboardHook, code, wparam, lparam);
         }
     }
 }

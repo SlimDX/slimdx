@@ -609,6 +609,12 @@ namespace Direct3D9
 		return mesh;
 	}
 
+	void Mesh::GenerateAdjacency( float epsilon )
+	{
+		array<int>^ adj = BaseMesh::GenerateAdjacency( epsilon );
+		SetAdjacency( adj );
+	}
+
 	void Mesh::SetAdjacency( DWORD *adj )
 	{
 		if( adj == NULL )

@@ -14073,45 +14073,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="FilterKeys">
-          <Members>
-           <Member Name="#.cctor()">
-            <Messages>
-             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Status="Excluded" Created="2008-06-19 23:56:34Z">
-              <Issue>
-               <Item>'FilterKeys'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Disable()">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-06-19 23:56:34Z">
-              <Issue>
-               <Item>'FilterKeys.Disable()'</Item>
-               <Item>'Marshal.AllocCoTaskMem(int)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'FilterKeys.Disable()'</Item>
-               <Item>'Marshal.FreeCoTaskMem(IntPtr)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'FilterKeys.Disable()'</Item>
-               <Item>'Marshal.SizeOf(object)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'FilterKeys.Disable()'</Item>
-               <Item>'Marshal.StructureToPtr(object, IntPtr, bool)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="GameWindow">
           <Members>
            <Member Name="#FindFirstIcon(System.Reflection.Assembly)">
@@ -14217,11 +14178,29 @@
          </Type>
          <Type Name="ListBox">
           <Members>
+           <Member Name="#DeselectAll()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-06-24 01:53:02Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'ListBox.DeselectAll()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#DeselectItems()">
             <Messages>
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-06-20 13:40:28Z" FixCategory="DependsOnFix">
               <Issue>
                <Item>'ListBox.DeselectItems()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SelectAll()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-06-24 01:53:02Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'ListBox.SelectAll()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -14237,11 +14216,17 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#SelectItems()">
+           <Member Name="#SelectItems(System.Collections.Generic.IEnumerable`1&lt;System.Int32&gt;)">
             <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-06-20 13:40:28Z" FixCategory="DependsOnFix">
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-06-24 01:53:02Z" FixCategory="DependsOnFix">
               <Issue>
-               <Item>'ListBox.SelectItems()'</Item>
+               <Item>'ListBox.SelectItems(IEnumerable&lt;int&gt;)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="items" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-06-24 01:53:02Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'items'</Item>
+               <Item>'ListBox.SelectItems(IEnumerable&lt;int&gt;)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -14275,16 +14260,6 @@
               <Issue Name="PlatformInvokeStack">
                <Item>'NativeMethods.GetClientRect(IntPtr, out NativeRectangle)'</Item>
                <Item>&#xD;&#xA;   -&gt;'NativeMethods.GetClientRect(IntPtr, out NativeRectangle)'&#xD;&#xA;   -&gt;'NativeMethods.GetClientRectangle(IntPtr)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.ChangeDevice(DeviceSettings, DeviceSettings)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetModuleHandle(System.String)">
-            <Messages>
-             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Status="Excluded" Created="2008-06-19 23:56:34Z">
-              <Issue Name="PlatformInvokeStack">
-               <Item>'NativeMethods.GetModuleHandle(string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'NativeMethods.GetModuleHandle(string)'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -14379,71 +14354,12 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#SetWindowsHookEx(System.Int32,SampleFramework.LowLevelKeyboardProc,System.IntPtr,System.UInt32)">
-            <Messages>
-             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Status="Excluded" Created="2008-06-19 23:56:34Z">
-              <Issue Name="PlatformInvokeStack">
-               <Item>'NativeMethods.SetWindowsHookEx(int, LowLevelKeyboardProc, IntPtr, uint)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'NativeMethods.SetWindowsHookEx(int, LowLevelKeyboardProc, IntPtr, uint)'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#ShowWindow(System.IntPtr,System.Int32)">
             <Messages>
              <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Status="Excluded" Created="2008-06-19 23:56:34Z">
               <Issue Name="PlatformInvokeStack">
                <Item>'NativeMethods.ShowWindow(IntPtr, int)'</Item>
                <Item>&#xD;&#xA;   -&gt;'NativeMethods.ShowWindow(IntPtr, int)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.CreateDevice(DeviceSettings)'&#xD;&#xA;   -&gt;'GraphicsDeviceManager.ChangeDevice(DeviceSettings, DeviceSettings)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#SystemParametersInfo(System.UInt32,System.UInt32,System.IntPtr,System.UInt32)">
-            <Messages>
-             <Message TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118" Status="Excluded" Created="2008-06-19 23:56:34Z">
-              <Issue Name="PlatformInvokeStack">
-               <Item>'NativeMethods.SystemParametersInfo(uint, uint, IntPtr, uint)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'NativeMethods.SystemParametersInfo(uint, uint, IntPtr, uint)'&#xD;&#xA;   -&gt;'FilterKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="StickyKeys">
-          <Members>
-           <Member Name="#.cctor()">
-            <Messages>
-             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Status="Excluded" Created="2008-06-19 23:56:34Z">
-              <Issue>
-               <Item>'StickyKeys'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Disable()">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-06-19 23:56:34Z">
-              <Issue>
-               <Item>'StickyKeys.Disable()'</Item>
-               <Item>'Marshal.AllocCoTaskMem(int)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'StickyKeys.Disable()'</Item>
-               <Item>'Marshal.FreeCoTaskMem(IntPtr)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'StickyKeys.Disable()'</Item>
-               <Item>'Marshal.SizeOf(object)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'StickyKeys.Disable()'</Item>
-               <Item>'Marshal.StructureToPtr(object, IntPtr, bool)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'StickyKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -14457,45 +14373,6 @@
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-06-20 13:40:28Z">
               <Issue Certainty="50">
                <Item>'TextControl.GetPreferredSize()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="ToggleKeys">
-          <Members>
-           <Member Name="#.cctor()">
-            <Messages>
-             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Status="Excluded" Created="2008-06-19 23:56:34Z">
-              <Issue>
-               <Item>'ToggleKeys'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Disable()">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-06-19 23:56:34Z">
-              <Issue>
-               <Item>'ToggleKeys.Disable()'</Item>
-               <Item>'Marshal.AllocCoTaskMem(int)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'ToggleKeys.Disable()'</Item>
-               <Item>'Marshal.FreeCoTaskMem(IntPtr)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'ToggleKeys.Disable()'</Item>
-               <Item>'Marshal.SizeOf(object)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'ToggleKeys.Disable()'</Item>
-               <Item>'Marshal.StructureToPtr(object, IntPtr, bool)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'ToggleKeys.Disable()'&#xD;&#xA;   -&gt;'Game.DisableShortcutKeys()'&#xD;&#xA;   -&gt;'Game.Game()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -14686,9 +14563,6 @@
     <Resolution Name="Default">Rename '{0}' so that it does not end in '{1}'.</Resolution>
     <Resolution Name="TypeNoAlternate">Rename type name {0} so that it does not end in '{1}'.</Resolution>
    </Rule>
-   <Rule TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810">
-    <Resolution Name="Default">Initialize all static fields in {0} when those fields are declared and remove the explicit static constructor.</Resolution>
-   </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
    </Rule>
@@ -14731,6 +14605,9 @@
    </Rule>
    <Rule TypeName="ReviewSuppressUnmanagedCodeSecurityUsage" Category="Microsoft.Security" CheckId="CA2118">
     <Resolution Name="PlatformInvokeStack">Review declarative security for {0} and its callers for potential vulnerabilities. The following call stack might expose a way to circumvent security protection: {1}</Resolution>
+   </Rule>
+   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
     <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>

@@ -46,62 +46,6 @@ namespace SampleFramework
         public static extern bool PeekMessage(out NativeMessage message, IntPtr hwnd, uint messageFilterMin, uint messageFilterMax, uint flags);
 
         /// <summary>
-        /// Gets or sets information about system parameters.
-        /// </summary>
-        /// <param name="uiAction">The action.</param>
-        /// <param name="uiParam">The first parameter.</param>
-        /// <param name="pvParam">The second parameter.</param>
-        /// <param name="fWinIni">Reserved, set to zero.</param>
-        /// <returns><c>true</c> on success; otherwise, <c>false</c>.</returns>
-        [SuppressUnmanagedCodeSecurityAttribute]
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool SystemParametersInfo(uint uiAction, uint uiParam, IntPtr pvParam, uint fWinIni);
-
-        /// <summary>
-        /// Sets a Windows hook.
-        /// </summary>
-        /// <param name="hook">The hook.</param>
-        /// <param name="callback">The callback.</param>
-        /// <param name="hMod">A handle to the current module.</param>
-        /// <param name="dwThreadId">The thread ID.</param>
-        /// <returns>A handle to the hook.</returns>
-        [SuppressUnmanagedCodeSecurityAttribute]
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern IntPtr SetWindowsHookEx(int hook, LowLevelKeyboardProc callback, IntPtr hMod, uint dwThreadId);
-
-        /// <summary>
-        /// Gets a module handle.
-        /// </summary>
-        /// <param name="lpModuleName">Name of the module.</param>
-        /// <returns>A handle to the desired module.</returns>
-        [SuppressUnmanagedCodeSecurityAttribute]
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        public static extern IntPtr GetModuleHandle(string lpModuleName);
-
-        /// <summary>
-        /// Unhooks a Windows hook.
-        /// </summary>
-        /// <param name="hhk">The hook handle.</param>
-        /// <returns><c>true</c> on success; otherwise, <c>false</c>.</returns>
-        [SuppressUnmanagedCodeSecurityAttribute]
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool UnhookWindowsHookEx(IntPtr hhk);
-
-        /// <summary>
-        /// Calls the next hook.
-        /// </summary>
-        /// <param name="hhk">The hook handle.</param>
-        /// <param name="nCode">The hook code.</param>
-        /// <param name="wParam">The first generic parameter.</param>
-        /// <param name="lParam">The second generic parameter.</param>
-        /// <returns>The next hook in the chain.</returns>
-        [SuppressUnmanagedCodeSecurityAttribute]
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
-        public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
-
-        /// <summary>
         /// Gets a window's client rectangle.
         /// </summary>
         /// <param name="hWnd">The window handle.</param>

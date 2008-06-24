@@ -29,16 +29,6 @@ namespace SampleFramework
     static class WindowConstants
     {
         /// <summary>
-        /// A key was pressed.
-        /// </summary>
-        public static readonly IntPtr WM_KEYDOWN = new IntPtr(0x100);
-
-        /// <summary>
-        /// A key was released.
-        /// </summary>
-        public static readonly IntPtr WM_KEYUP = new IntPtr(0x101);
-
-        /// <summary>
         /// A window's size is changing.
         /// </summary>
         public const int WM_SIZE = 0x5;

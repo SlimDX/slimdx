@@ -106,12 +106,8 @@
     <Compile Include="Rendering\Enums.cs" />
     <Compile Include="Rendering\GraphicsDeviceManager.cs" />
     <Compile Include="Rendering\NoCompatibleDevicesException.cs" />
-    <Compile Include="Win32\FilterKeys.cs" />
-    <Compile Include="Win32\NativeDelegates.cs" />
     <Compile Include="Win32\NativeMethods.cs" />
     <Compile Include="Win32\NativeStructures.cs" />
-    <Compile Include="Win32\StickyKeys.cs" />
-    <Compile Include="Win32\ToggleKeys.cs" />
     <Compile Include="Win32\WindowConstants.cs" />
   </ItemGroup>
   <ItemGroup>
