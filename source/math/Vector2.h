@@ -74,6 +74,11 @@ namespace SlimDX
 		static property Vector2 UnitY { Vector2 get() { return Vector2(0, 1); } }
 
 		/// <summary>
+		/// Gets the size of the <see cref="Vector2"/> type, in bytes.
+		/// </summary>
+		static property int SizeInBytes { int get() { return System::Runtime::InteropServices::Marshal::SizeOf(Vector2::typeid); } }
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="Vector2"/> class.
 		/// </summary>
 		/// <param name="value">The value that will be assigned to all components.</param>

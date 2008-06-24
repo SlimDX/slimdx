@@ -21,7 +21,6 @@
 */
 using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using SampleFramework;
 using SlimDX;
@@ -34,8 +33,14 @@ namespace Particles
         // constants
         const int InitialWidth = 800;
         const int InitialHeight = 600;
+        const int ParticleCount = 1500;
 
-        Camera camera;
+        // variables
+        Camera camera = new Camera();
+        VertexBuffer vertexBuffer;
+        IndexBuffer indexBuffer;
+        Effect effect;
+        Texture texture;
 
         /// <summary>
         /// Gets the Direct3D device.
@@ -72,7 +77,12 @@ namespace Particles
             // create the Direct3D device
             GraphicsDeviceManager.ChangeDevice(DeviceVersion.Direct3D9, true, InitialWidth, InitialHeight);
 
-            camera = new Camera();
+            // initialize the camera
+            camera.FieldOfView = (float)(Math.PI / 4);
+            camera.NearPlane = 1.0f;
+            camera.FarPlane = 1000.0f;
+            camera.Location = new Vector3(0.0f, 0.0f, -100.0f);
+            camera.Target = Vector3.Zero;
         }
 
         /// <summary>
@@ -90,30 +100,82 @@ namespace Particles
                 Exit();
         }
 
-        void RenderParticles(Matrix world, Matrix projection, Matrix view)
+        /// <summary>
+        /// Loads graphical resources.
+        /// </summary>
+        protected override void LoadContent()
         {
-            Matrix viewProjection = view * projection;
+            // build vertex and index buffers
+            vertexBuffer = new VertexBuffer(Device, 4 * Vector3.SizeInBytes * ParticleCount, Usage.WriteOnly, VertexFormat.Position, Pool.Default);
+            indexBuffer = new IndexBuffer(Device, 6 * sizeof(int) * ParticleCount, Usage.WriteOnly, Pool.Default, false);
 
-            effect.Technique = "Position";
-            effect.SetValue("matViewProjection", Matrix.Transpose(viewProjection));
-            effect.SetValue("matWorld", world);
-            effect.SetValue("matView", Matrix.Transpose(view));
-            effect.SetValue("tex", texture);
-            effect.SetValue("explosion", 3.45f);
-            effect.SetValue("turnCount", 4);
-            effect.SetValue("diffuse", new Color4(1, 1, 1, 1));
+            // write the vertices to the vertex buffer
+            using (DataStream stream = vertexBuffer.Lock(0, 0, LockFlags.None))
+            {
+                // create each particle
+                for (int particle = 0; particle < ParticleCount; particle++)
+                {
+                    // create a translation matrix based upon the index of the particle
+                    Matrix translation = Matrix.Translation(0.0f, 0.0f, particle);
 
-            effect.Begin(FX.None);
+                    // upper left corner
+                    Vector3 vertex = Vector3.TransformCoordinate(new Vector3(-1.0f, -1.0f, 0.0f), translation);
+                    stream.Write(vertex);
 
-            effect.BeginPass(0);
+                    // upper right corner
+                    vertex = Vector3.TransformCoordinate(new Vector3(-1.0f, 0.0f, 0.0f), translation);
+                    stream.Write(vertex);
 
-            Device.SetStreamSource(0, vbuffer, 0, Marshal.SizeOf(typeof(Vector3)));
-            Device.VertexFormat = VertexFormat.Position;
-            Device.Indices = ibuffer;
-            Device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, Count * Quad.VertexCount, 0, Quad.IndexCount * Count / 3);
+                    // lower right corner
+                    vertex = Vector3.TransformCoordinate(new Vector3(0.0f, -1.0f, 0.0f), translation);
+                    stream.Write(vertex);
 
-            effect.EndPass();
-            effect.End();
+                    // lower left corner
+                    vertex = Vector3.TransformCoordinate(new Vector3(0.0f, 0.0f, 0.0f), translation);
+                    stream.Write(vertex);
+                }
+
+                // unlock the vertex buffer
+                vertexBuffer.Unlock();
+            }
+
+            // write the indices to the index buffer
+            using (DataStream stream = indexBuffer.Lock(0, 0, LockFlags.None))
+            {
+                // create indices for each particle
+                for (int particle = 0; particle < ParticleCount; particle++)
+                {
+                    // write each index
+                    stream.Write(0 + (4 * particle));
+                    stream.Write(1 + (4 * particle));
+                    stream.Write(2 + (4 * particle));
+                    stream.Write(2 + (4 * particle));
+                    stream.Write(1 + (4 * particle));
+                    stream.Write(3 + (4 * particle));
+                }
+
+                // unlock the index buffer
+                indexBuffer.Unlock();
+            }
+
+            // load the effect and texture
+            effect = Effect.FromFile(Device, "particle.fx", ShaderFlags.None);
+            texture = Texture.FromFile(Device, "particle.dds");
+
+            // update the camera
+            camera.AspectRatio = (float)Window.Width / Window.Height;
+        }
+
+        /// <summary>
+        /// Unloads graphical resources.
+        /// </summary>
+        protected override void UnloadContent()
+        {
+            // release graphical resources
+            vertexBuffer.Dispose();
+            indexBuffer.Dispose();
+            effect.Dispose();
+            texture.Dispose();
         }
 
         /// <summary>
@@ -126,170 +188,49 @@ namespace Particles
             Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, ClearColor, 1.0f, 0);
             Device.BeginScene();
 
-            DateTime current = DateTime.Now;
+            // calculate the world matrix
+            Matrix worldMatrix = Matrix.RotationY(((float)gameTime.TotalGameTime.TotalMilliseconds / 1000.0f) * -0.5f) * Matrix.RotationX(75.0f);
 
-            float time = (float)current.Second + (float)current.Millisecond / 1000f;
+            // draw the particles
+            DrawParticles(worldMatrix, camera.ViewMatrix, camera.ProjectionMatrix);
 
-            Matrix world = Matrix.RotationY(-time * 0.5f);
-            world *= Matrix.RotationX(75);
-
-            RenderParticles(world, camera.Projection, camera.View);
-
+            // end the scene
             Device.EndScene();
         }
 
-        #region Shader Code
-
-        const string src = @"
-float4x4 matViewProjection : ViewProjection;
-float4x4 matView : View;
-float4x4 matWorld : World;
-float4 diffuse;
-float explosion;
-float turnCount;
-
-texture tex;
-
-sampler2D partText = sampler_state
-{
-   Texture = (tex);
-};
-
-struct VS_INPUT 
-{
-   float4 Position : POSITION0;
-};
-
-struct VS_OUTPUT 
-{
-   float4 Position : POSITION0;
-   float2 Texture  : TEXCOORD0;
-};
-
-VS_OUTPUT vs_main( VS_INPUT Input )
-{
-   VS_OUTPUT Output;
-   
-   float3 pos = Input.Position;
-
-   // vertex position by dividing the circle count
-   float g = (pos.z) / ( 360 * 3.14 / 180 * 5 );
-
-   // spiral extending
-   float extend = g * 3.8f;
-
-   // position vertex
-   pos.x = sin( g ) * (extend);
-   pos.y = 0;   
-   pos.z = cos( g ) * (extend);
-
-   // add some randomization
-   pos.x += sin( pos.z * g * 7 ) * 0.103 * extend;
-   pos.y += cos( pos.z * g * 3 ) * 0.102 * extend * 1.5f;
-   pos.z += cos( pos.z * g * 2 ) * 0.106 * extend;
-
-   // transform to object space
-   pos = mul( pos, matWorld );
-
-   // transform to view space
-   pos += 4.0f * (Input.Position.x * matView[0] + Input.Position.y * matView[1]);
-   
-   // sprite transformation
-   Output.Position = mul( matViewProjection, float4(pos,1) );
-   
-   // use xy as texture coordinate
-   Output.Texture = Input.Position.xy;
-   
-   return( Output );
-}
-
-float4 ps_main(float2 texCoord:TEXCOORD) : COLOR0
-{
-   return (1 - pow(dot(texCoord, texCoord), explosion)) * tex2D(partText,texCoord).a * diffuse;
-}
-
-technique Position
-{
-   pass Pass_0
-   {
-      DESTBLEND = ONE;
-      SRCBLEND = ONE;
-      ZENABLE = TRUE;
-      ZWRITEENABLE = FALSE;
-      CULLMODE = NONE;
-      ALPHABLENDENABLE = TRUE;
-
-      VertexShader = compile vs_2_0 vs_main();
-      PixelShader = compile ps_2_0 ps_main();
-   }
-}
-";
-        #endregion
-
-        int Count = 1500;
-        int vertexSize;
-
-        VertexBuffer vbuffer;
-        IndexBuffer ibuffer;
-        Effect effect;
-        Texture texture;
-
         /// <summary>
-        /// Loads graphical resources.
+        /// Draws the particles.
         /// </summary>
-        protected override void LoadContent()
+        /// <param name="worldMatrix">The world matrix.</param>
+        /// <param name="viewMatrix">The view matrix.</param>
+        /// <param name="projectionMatrix">The projection matrix.</param>
+        void DrawParticles(Matrix worldMatrix, Matrix viewMatrix, Matrix projectionMatrix)
         {
-            Device device = this.Device;
-            Quad q = new Quad();
+            // build up the view projection matrix
+            Matrix viewProjectionMatrix = viewMatrix * projectionMatrix;
 
-            vertexSize = Marshal.SizeOf(typeof(Vector3)) * this.Count * Quad.VertexCount;
+            // set effect values
+            effect.Technique = "Position";
+            effect.SetValue("viewProjectionMatrix", Matrix.Transpose(viewProjectionMatrix));
+            effect.SetValue("worldMatrix", worldMatrix);
+            effect.SetValue("viewMatrix", Matrix.Transpose(viewMatrix));
+            effect.SetValue("particleTexture", texture);
+            effect.SetValue("explosion", 3.45f);
+            effect.SetValue("diffuseColor", new Color4(1, 1, 1, 1));
 
-            // Build quad array
-            ibuffer = new IndexBuffer(device, 4 * this.Count * Quad.IndexCount, Usage.WriteOnly, Pool.Default, false);
+            // start the effect
+            effect.Begin();
+            effect.BeginPass(0);
 
-            vbuffer = new VertexBuffer(device, vertexSize, Usage.WriteOnly, VertexFormat.Position, Pool.Default);
+            // draw the particles
+            Device.SetStreamSource(0, vertexBuffer, 0, Vector3.SizeInBytes);
+            Device.VertexFormat = VertexFormat.Position;
+            Device.Indices = indexBuffer;
+            Device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, ParticleCount * 4, 0, ParticleCount * 2);
 
-            using (DataStream s = vbuffer.Lock(0, 0, LockFlags.None))
-            {
-                Matrix m = Matrix.Identity;
-
-                // order quads by z index
-                for (int c = 0; c < this.Count; c++)
-                {
-                    m = Matrix.Translation(0f, 0f, c);
-
-                    // copy quad vertices
-                    for (int vi = 0; vi < Quad.VertexCount; vi++)
-                    {
-                        // Center texture (cause quad uses -1 to 1 coordinates but we use them as texture coordinate)
-                        Vector3 v = Vector3.TransformCoordinate(Vector3.Subtract(q.Vertices[vi] * 0.5f, new Vector3(0.5f, 0.5f, 0)), m);
-
-                        s.Write(v);
-                    }
-                }
-
-                vbuffer.Unlock();
-            }
-
-            // copy quad indices
-            using (DataStream s = ibuffer.Lock(0, 0, LockFlags.None))
-            {
-                for (int c = 0; c < this.Count; c++)
-                {
-                    for (int i = 0; i < Quad.IndexCount; i++)
-                    {
-                        s.Write(q.Indices[i] + (Quad.VertexCount * c));
-                    }
-                }
-
-                ibuffer.Unlock();
-            }
-
-            // load shader
-            this.effect = Effect.FromString(device, src, ShaderFlags.PartialPrecision);
-
-            // load particle texture
-            this.texture = Texture.FromFile(device, "particle.dds");
+            // end the effect
+            effect.EndPass();
+            effect.End();
         }
     }
 }
