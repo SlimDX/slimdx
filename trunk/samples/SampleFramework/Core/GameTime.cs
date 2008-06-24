@@ -29,40 +29,40 @@ namespace SampleFramework
     public class GameTime
     {
         /// <summary>
-        /// Gets the elapsed game time.
+        /// Gets the elapsed game time, in seconds.
         /// </summary>
         /// <value>The elapsed game time.</value>
-        public TimeSpan ElapsedGameTime
+        public double ElapsedGameTime
         {
             get;
             internal set;
         }
 
         /// <summary>
-        /// Gets the elapsed real time.
+        /// Gets the elapsed real time, in seconds.
         /// </summary>
         /// <value>The elapsed real time.</value>
-        public TimeSpan ElapsedRealTime
+        public double ElapsedRealTime
         {
             get;
             internal set;
         }
 
         /// <summary>
-        /// Gets the total game time.
+        /// Gets the total game time, in seconds.
         /// </summary>
         /// <value>The total game time.</value>
-        public TimeSpan TotalGameTime
+        public double TotalGameTime
         {
             get;
             internal set;
         }
 
         /// <summary>
-        /// Gets the total real time.
+        /// Gets the total real time, in seconds.
         /// </summary>
         /// <value>The total real time.</value>
-        public TimeSpan TotalRealTime
+        public double TotalRealTime
         {
             get;
             internal set;
@@ -94,7 +94,7 @@ namespace SampleFramework
         /// <param name="elapsedRealTime">The elapsed real time.</param>
         /// <param name="totalGameTime">The total game time.</param>
         /// <param name="elapsedGameTime">The elapsed game time.</param>
-        public GameTime(TimeSpan totalRealTime, TimeSpan elapsedRealTime, TimeSpan totalGameTime, TimeSpan elapsedGameTime)
+        public GameTime(double totalRealTime, double elapsedRealTime, double totalGameTime, double elapsedGameTime)
             : this(totalRealTime, elapsedRealTime, totalGameTime, elapsedGameTime, false)
         {
         }
@@ -107,7 +107,7 @@ namespace SampleFramework
         /// <param name="totalGameTime">The total game time.</param>
         /// <param name="elapsedGameTime">The elapsed game time.</param>
         /// <param name="isRunningSlowly">if set to <c>true</c>, the game is running slowly.</param>
-        public GameTime(TimeSpan totalRealTime, TimeSpan elapsedRealTime, TimeSpan totalGameTime, TimeSpan elapsedGameTime, bool isRunningSlowly)
+        public GameTime(double totalRealTime, double elapsedRealTime, double totalGameTime, double elapsedGameTime, bool isRunningSlowly)
         {
             // store variables
             TotalRealTime = totalRealTime;
