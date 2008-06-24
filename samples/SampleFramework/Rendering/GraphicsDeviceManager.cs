@@ -44,10 +44,6 @@ namespace SampleFramework
         bool doNotStoreBufferSize;
         bool renderingOccluded;
 
-        // cursor variables
-        bool showCursorInFullScreen = true;
-        bool clipCursorInFullScreen = true;
-
         // cached window data
         int fullscreenWindowWidth;
         int fullscreenWindowHeight;
@@ -159,48 +155,6 @@ namespace SampleFramework
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the cursor should be shown in full screen mode.
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if the cursor should be shown in full screen mode; otherwise, <c>false</c>.
-        /// </value>
-        public bool ShowCursorInFullScreen
-        {
-            get { return showCursorInFullScreen; }
-            set
-            {
-                // avoid unecessary changes
-                if (showCursorInFullScreen == value)
-                    return;
-
-                // update the value
-                showCursorInFullScreen = value;
-                SetupCursor();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the cursor should be clipped in full screen mode.
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if the cursor should be clipped in full screen mode; otherwise, <c>false</c>.
-        /// </value>
-        public bool ClipCursorInFullScreen
-        {
-            get { return clipCursorInFullScreen; }
-            set
-            {
-                // avoid unecessary changes
-                if (clipCursorInFullScreen == value)
-                    return;
-
-                // update the value
-                clipCursorInFullScreen = value;
-                SetupCursor();
-            }
-        }
-
-        /// <summary>
         /// Gets the static frame statistics.
         /// </summary>
         /// <value>The static frame statistics.</value>
@@ -237,8 +191,6 @@ namespace SampleFramework
             // hook up window events
             game.Window.ScreenChanged += Window_ScreenChanged;
             game.Window.UserResized += Window_UserResized;
-            game.Window.MouseMove += Window_MouseMove;
-            game.Window.CursorChanged += Window_CursorChanged;
 
             // hook up game events
             game.FrameStart += game_FrameStart;
@@ -731,30 +683,6 @@ namespace SampleFramework
         }
 
         /// <summary>
-        /// Handles the CursorChanged event of the Window control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        void Window_CursorChanged(object sender, EventArgs e)
-        {
-            // if we have a Direct3D9 device, update the cursor
-            if (Device9 != null && CurrentSettings != null && !IsWindowed)
-                Device9.SetCursor(game.Window.Cursor, false);
-        }
-
-        /// <summary>
-        /// Handles the MouseMove event of the Window control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
-        void Window_MouseMove(object sender, MouseEventArgs e)
-        {
-            // if we have a Direct3D9 device, update the cursor
-            if (Device9 != null && CurrentSettings != null && !IsWindowed)
-                Device9.SetCursorPosition(Cursor.Position, true);
-        }
-
-        /// <summary>
         /// Handles the FrameEnd event of the game control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -930,9 +858,6 @@ namespace SampleFramework
             // update device stats
             UpdateDeviceStats();
 
-            // update the cursor
-            SetupCursor();
-
             // raise events
             game.Initialize();
             game.LoadContent();
@@ -954,7 +879,9 @@ namespace SampleFramework
                 ReleaseDevice10();
 
                 // reset the device
-                Device9.Reset(CurrentSettings.Direct3D9.PresentParameters);
+                Result result = Device9.Reset(CurrentSettings.Direct3D9.PresentParameters);
+                if (result == SlimDX.Direct3D9.ResultCode.DeviceLost)
+                    return result;
             }
             else
             {
@@ -1002,9 +929,6 @@ namespace SampleFramework
 
             // update device stats
             UpdateDeviceStats();
-
-            // update the cursor
-            SetupCursor();
 
             // raise the event
             game.LoadContent();
@@ -1247,53 +1171,6 @@ namespace SampleFramework
 
             // store the static frame stats
             DeviceStatistics = builder.ToString();
-        }
-
-        /// <summary>
-        /// Sets up the cursor.
-        /// </summary>
-        void SetupCursor()
-        {
-            // check the device version
-            if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
-            {
-                // check if we have are returning to fullscreen
-                if (!IsWindowed && Device9 != null)
-                {
-                    // check if we should show or hide the cursor
-                    if (ShowCursorInFullScreen)
-                    {
-                        // hide the Windows cursor, show the D3D9 cursor
-                        Cursor.Current = null;
-                        Device9.SetCursor(Cursor.Current, false);
-                        Device9.ShowCursor = true;
-                    }
-                    else
-                    {
-                        // hide the Windows cursor, hide the D3D9 cursor
-                        Cursor.Current = null;
-                        Device9.ShowCursor = false;
-                    }
-                }
-
-                // clip cursor if requested
-                if (!IsWindowed && ClipCursorInFullScreen)
-                    Cursor.Clip = game.Window.Bounds;
-                else
-                    Cursor.Clip = Rectangle.Empty;
-            }
-            else
-            {
-                // clip cursor if requested
-                if (!IsWindowed && ClipCursorInFullScreen)
-                {
-                    // reset the cursor in case we turned it off in D3D9 mode
-                    Cursor.Current = game.Window.Cursor;
-                    Cursor.Clip = game.Window.Bounds;
-                }
-                else
-                    Cursor.Clip = Rectangle.Empty;
-            }
         }
 
         /// <summary>

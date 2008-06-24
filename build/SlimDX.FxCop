@@ -34,6 +34,7 @@
   </AssemblyReferenceDirectories>
   <Target Name="$(ProjectDir)/Debug/SlimDX.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D10/MiniTri/bin/x86/Debug/MiniTri.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/Direct3D9/CustomUI/bin/x86/Debug/CustomUI.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/EmptyProject/bin/x86/Debug/EmptyProject.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/MiniTri/bin/x86/Debug/MiniTri.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/Particles/bin/x86/Debug/Particles.exe" Analyze="True" AnalyzeAllChildren="True" />
