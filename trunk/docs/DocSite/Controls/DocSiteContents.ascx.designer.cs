@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DocSiteTest.Controls {
+namespace SlimDXDocs.Controls {
     
     
     /// <summary>

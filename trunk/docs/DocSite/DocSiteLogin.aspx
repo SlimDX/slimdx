@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/DocSite.Master" AutoEventWireup="true" CodeBehind="DocSiteLogin.aspx.cs" Inherits="DocSiteTest.DocSiteLogin" Title="DocSiteTest - Login" 
+<%@ Page Language="C#" MasterPageFile="~/DocSite.Master" AutoEventWireup="true" CodeBehind="DocSiteLogin.aspx.cs" Inherits="SlimDXDocs.DocSiteLogin" Title="DocSiteTest - Login" 
 Culture="auto" meta:resourcekey="PageResource1" UICulture="auto" %>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="contentPlaceholder" runat="server">

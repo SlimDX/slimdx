@@ -1,3 +1,3 @@
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DocSiteFooter.ascx.cs" Inherits="DocSiteTest.Controls.DocSiteFooter" %>
+<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DocSiteFooter.ascx.cs" Inherits="SlimDXDocs.Controls.DocSiteFooter" %>
 
-<span><%= DocSiteTest.DocSite.ProjectCopyright %></span>
+<span><%= SlimDXDocs.DocSite.ProjectCopyright%></span>

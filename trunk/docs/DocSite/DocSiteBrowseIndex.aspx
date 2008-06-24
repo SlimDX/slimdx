@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/DocSite.Master" AutoEventWireup="true" CodeBehind="DocSiteBrowseIndex.aspx.cs" Inherits="DocSiteTest.DocSiteBrowseIndex" Title="DocSiteTest - Browse Index" 
+<%@ Page Language="C#" MasterPageFile="~/DocSite.Master" AutoEventWireup="true" CodeBehind="DocSiteBrowseIndex.aspx.cs" Inherits="SlimDXDocs.DocSiteBrowseIndex" Title="DocSiteTest - Browse Index" 
 Culture="auto" meta:resourcekey="PageResource1" UICulture="auto" %>
 <%@ Import Namespace="System.Drawing" %>
 <%@ Register Src="~/Controls/DocSiteLetterBar.ascx" TagName="DocSiteLetterBar" TagPrefix="DocSite" %>

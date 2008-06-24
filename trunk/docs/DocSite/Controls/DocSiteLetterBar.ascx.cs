@@ -11,7 +11,7 @@ using System.Web.UI.HtmlControls;
 using System.ComponentModel;
 using DaveSexton.DocProject.DocSites;
 
-namespace DocSiteTest.Controls
+namespace SlimDXDocs.Controls
 {
 	public partial class DocSiteLetterBar : System.Web.UI.UserControl
 	{

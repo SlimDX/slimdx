@@ -341,6 +341,9 @@
     <Content Include="Help\Presentation\Style\Configuration\MRefBuilder.config" />
     <Content Include="Help\Presentation\Style\Configuration\sandcastle.help1x.config" />
     <Content Include="Help\Presentation\Style\Configuration\sandcastle.help2x.config" />
+    <Content Include="Help\Settings\topics.xml" />
+    <Content Include="Help\Topics\014b13f4-a2eb-4ebc-8591-23cc0ad239a1.xml" />
+    <Content Include="Help\Topics\6fc3fab4-2601-4ef3-81a1-861fa3c6bdb2.xml" />
     <None Include="Help\Schemas\base.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -497,7 +500,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Help\Presentation\Art\" />
-    <Folder Include="Help\Topics\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v8.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -522,7 +524,7 @@
           <NTLMAuthentication>False</NTLMAuthentication>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties DeploymentSandcastle_DeploymentContent="AspNet, AllBuildOutput" DeploymentSandcastle_DeploymentLocation="C:\TEMP\SlimDX" DeploymentSandcastle_DeploymentEnabled="True" IsDocProject="true" ProcessComponentTypeName="DocSiteTest.BuildProcess" BuildEngineProviderName="Sandcastle/Deployment" Sandcastle_PresentationName="Sandcastle Prototype" Sandcastle_ProduceHelp1x="True" Sandcastle_ProduceHelp2x="False" Sandcastle_DocumentationSetName="SlimDX" DoNotAskIncludeOutputInProject="True" DefaultApplyToAll="True" />
+      <UserProperties Sandcastle_GenerateRootApiTopic="True" DeploymentSandcastle_DeploymentContent="AspNet, AllBuildOutput" DeploymentSandcastle_DeploymentLocation="C:\TEMP\SlimDX" DeploymentSandcastle_DeploymentEnabled="True" IsDocProject="true" ProcessComponentTypeName="DocSiteTest.BuildProcess" BuildEngineProviderName="Sandcastle/Deployment" Sandcastle_PresentationName="Sandcastle Prototype" Sandcastle_ProduceHelp1x="True" Sandcastle_ProduceHelp2x="False" Sandcastle_DocumentationSetName="SlimDX" DoNotAskIncludeOutputInProject="True" DefaultApplyToAll="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

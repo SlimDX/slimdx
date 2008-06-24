@@ -10,7 +10,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Reflection;
 
-namespace DocSiteTest.Controls
+namespace SlimDXDocs.Controls
 {
 	public partial class DocSiteFooter : System.Web.UI.UserControl
 	{

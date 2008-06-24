@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 
-namespace DocSiteTest
+namespace SlimDXDocs
 {
 	public partial class HelpFileNotFound : System.Web.UI.Page
 	{

@@ -11,7 +11,7 @@ using System.Web.UI.HtmlControls;
 using System.Reflection;
 using DaveSexton.DocProject.DocSites;
 
-namespace DocSiteTest
+namespace SlimDXDocs
 {
 	public partial class DocSite : System.Web.UI.MasterPage
 	{

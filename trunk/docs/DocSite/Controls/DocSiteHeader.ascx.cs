@@ -11,7 +11,7 @@ using System.Web.UI.HtmlControls;
 using System.Reflection;
 using DaveSexton.DocProject.DocSites;
 
-namespace DocSiteTest.Controls
+namespace SlimDXDocs.Controls
 {
 	public partial class DocSiteHeader : System.Web.UI.UserControl
 	{

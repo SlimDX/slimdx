@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DocSiteTest.Controls {
+namespace SlimDXDocs.Controls {
     
     
     /// <summary>
@@ -74,6 +74,15 @@ namespace DocSiteTest.Controls {
         protected global::System.Web.UI.WebControls.ImageButton browseImageButton;
         
         /// <summary>
+        /// homepageHyperLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink homepageHyperLink;
+        
+        /// <summary>
         /// logoImage control.
         /// </summary>
         /// <remarks>
@@ -81,5 +90,14 @@ namespace DocSiteTest.Controls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image logoImage;
+        
+        /// <summary>
+        /// docpageHyperLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink docpageHyperLink;
     }
 }

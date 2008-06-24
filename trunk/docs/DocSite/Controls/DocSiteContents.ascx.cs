@@ -12,7 +12,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using DaveSexton.DocProject.DocSites;
 
-namespace DocSiteTest.Controls
+namespace SlimDXDocs.Controls
 {
 	public partial class DocSiteContents : System.Web.UI.UserControl
 	{

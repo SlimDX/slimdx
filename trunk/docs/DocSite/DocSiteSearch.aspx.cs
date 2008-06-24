@@ -10,7 +10,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using DaveSexton.DocProject.DocSites;
 
-namespace DocSiteTest
+namespace SlimDXDocs
 {
 	public partial class DocSiteSearch : System.Web.UI.Page
 	{

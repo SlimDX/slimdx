@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Xml;
 using DaveSexton.DocProject.DocSites;
 
-namespace DocSiteTest.Controls
+namespace SlimDXDocs.Controls
 {
 	public partial class DocSiteIndex : System.Web.UI.UserControl, IPostBackEventHandler
 	{

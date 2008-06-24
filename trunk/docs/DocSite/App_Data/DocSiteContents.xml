@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <topics>
+  <topic name="Introduction" file="help/html/014b13f4-a2eb-4ebc-8591-23cc0ad239a1.htm" />
   <topic name="SlimDX Namespace" file="help/html/b3d3df04-8129-5a82-3ca7-2b275859e6ef.htm">
     <topic name="BoundingBox Structure" file="help/html/33c9a322-6c1e-3d80-2dfc-79ab2f645b55.htm">
       <topic name="BoundingBox Constructor (minimum, maximum)" file="help/html/86076f9b-aa02-c044-2c2c-fafdc0d1393b.htm" />
@@ -105,6 +106,7 @@
       </topic>
       <topic name="Explicit Method " file="help/html/7817338e-358e-f43c-c890-f3f1a043d02f.htm">
         <topic name="Explicit Operator" file="help/html/fe8acdff-9233-553f-3d7f-c7d59e637ae8.htm" />
+        <topic name="Explicit Operator" file="help/html/c0556df3-b94e-f121-706f-e69aed309789.htm" />
         <topic name="Explicit Operator" file="help/html/372a36d6-0640-cc49-38aa-b58ddfdbdfe1.htm" />
         <topic name="Explicit Operator" file="help/html/5848f89e-9299-99c9-66dd-7f0eca41cd8f.htm" />
         <topic name="Explicit Operator" file="help/html/6bf6b38b-8fed-5ffd-8961-21f3cd528178.htm" />
@@ -115,10 +117,7 @@
       </topic>
       <topic name="GetHashCode Method " file="help/html/9a40c7d6-303c-9066-5560-7fd9a8bc89fd.htm" />
       <topic name="Green Property " file="help/html/26cc0dc3-b1c8-a722-d4ad-b5d467758377.htm" />
-      <topic name="Implicit Method " file="help/html/43cde74d-ef8e-859c-7bec-a86241b9c749.htm">
-        <topic name="Implicit Operator" file="help/html/14e020e9-a6fb-3706-b421-41f21a07f6df.htm" />
-        <topic name="Implicit Operator" file="help/html/b3486cd4-e2d8-bac6-dcd5-7bbbcd6bbed5.htm" />
-      </topic>
+      <topic name="Implicit Operator" file="help/html/b3486cd4-e2d8-bac6-dcd5-7bbbcd6bbed5.htm" />
       <topic name="Inequality Operator" file="help/html/2ae3a804-7485-1bde-dfb4-ed9342d1532b.htm" />
       <topic name="Lerp Method " file="help/html/0bc9edf2-0a86-1022-bceb-f3878554993f.htm">
         <topic name="Lerp Method (color1, color2, amount)" file="help/html/56128f6b-728e-4101-2a0d-153b38c75ec4.htm" />
@@ -1097,22 +1096,60 @@
       <topic name="X Property " file="help/html/a82fafee-e2be-54f1-f9d8-46032095df01.htm" />
       <topic name="Y Property " file="help/html/b578c745-5df8-bcc9-e43a-d6b1b41839a6.htm" />
     </topic>
-    <topic name="WaveFormatExtended Structure" file="help/html/eba7b57c-2b4e-568f-60fe-073c5e7cb1ef.htm">
-      <topic name="AverageBytesPerSecond Property " file="help/html/381bb5aa-c23f-ab79-a9b6-f2210ab6311b.htm" />
-      <topic name="BitsPerSample Property " file="help/html/639fab7c-33eb-72ad-8228-2af9f40ab40f.htm" />
-      <topic name="BlockAlignment Property " file="help/html/98a4ab49-2842-ab60-7d85-199da5a29fa2.htm" />
-      <topic name="Channels Property " file="help/html/7fbb6ced-4d71-37c6-9e98-0d00a09bc016.htm" />
-      <topic name="Equality Operator" file="help/html/6b0269c8-9742-6caa-8435-2f936eec06a0.htm" />
-      <topic name="Equals Method " file="help/html/d7ae3b71-47df-80ec-6ed6-ab788a01e816.htm">
-        <topic name="Equals Method (other)" file="help/html/9992a167-7ca7-a1fb-9608-bd84a14b73b2.htm" />
-        <topic name="Equals Method (value1, value2)" file="help/html/b4d8868e-772b-50ca-9249-7dc13757c714.htm" />
-        <topic name="Equals Method (obj)" file="help/html/d2184651-9370-95f1-45f8-44321c53bfd7.htm" />
+    <topic name="WaveFile Class" file="help/html/7de1cbb7-112a-f2e9-bb8b-3d3d3d85c19c.htm">
+      <topic name="WaveFile Constructor " file="help/html/0c28f0a3-ba7b-261a-dc27-40ba535960ba.htm">
+        <topic name="WaveFile Constructor (fileName)" file="help/html/6efd406a-383d-5aed-114d-3607be268b77.htm" />
+        <topic name="WaveFile Constructor (fileName, format, access)" file="help/html/bcf8ffdd-a9b5-6595-54ab-5974ce40a617.htm" />
       </topic>
-      <topic name="FormatTag Property " file="help/html/108e271b-55d3-5459-2b88-7de58814c527.htm" />
-      <topic name="GetHashCode Method " file="help/html/e29ed848-5eb7-ae90-fc24-3d15f290a6cc.htm" />
-      <topic name="Inequality Operator" file="help/html/8e3cce69-347d-c6c8-808d-bbc3be591b26.htm" />
-      <topic name="SamplesPerSecond Property " file="help/html/25692fd1-d3ad-9ba1-1e87-6dfbd74ceb4f.htm" />
-      <topic name="Size Property " file="help/html/ec81bcf2-38b3-0ce2-9f66-795dc6b239cc.htm" />
+      <topic name="Dispose Method " file="help/html/8a190dad-ab6c-1030-5bfd-e34d1b74120b.htm">
+        <topic name="Dispose Method " file="help/html/de8e5642-ba55-5559-76f4-c66bfb3e9bf2.htm" />
+        <topic name="Dispose Method ()" file="help/html/e826a7a2-02c6-5dea-c460-d49e1789b89e.htm" />
+      </topic>
+      <topic name="Finalize Method " file="help/html/a8e1183c-937b-af91-729e-ea80b7362295.htm" />
+      <topic name="Format Property " file="help/html/8bfe7e82-bca1-6642-af66-b7e77bf09c0d.htm" />
+      <topic name="Read Method (buffer, length)" file="help/html/ac0c8186-1a76-a41a-6037-79d4e58c58b0.htm" />
+      <topic name="Reset Method " file="help/html/a1fd886f-6797-3f60-424e-67d01df62369.htm" />
+      <topic name="Size Property " file="help/html/49ea33b0-b177-2783-00c4-8ec702776f68.htm" />
+      <topic name="Write Method (buffer, length)" file="help/html/36ab98e2-44d8-572c-4806-a1242a542d48.htm" />
+    </topic>
+    <topic name="WaveFormat Class" file="help/html/a18fa21f-fcb3-f49b-162f-033eb8359f27.htm">
+      <topic name="WaveFormat Constructor " file="help/html/d2dbe54f-916f-7ec8-63fb-92162edcedef.htm" />
+      <topic name="AverageBytesPerSecond Property " file="help/html/c776bd72-52b8-91e5-18cb-d464d149a5eb.htm" />
+      <topic name="BitsPerSample Property " file="help/html/61b478f8-e1fd-89ba-4a97-c73681ac93aa.htm" />
+      <topic name="BlockAlignment Property " file="help/html/fcfc2406-9645-4779-d0ed-b330fc8f6c76.htm" />
+      <topic name="Channels Property " file="help/html/3be16d4b-d522-7811-4c94-1ee5a2077e17.htm" />
+      <topic name="Clone Method " file="help/html/c94fc966-d3dd-0807-26e6-e052664d3da2.htm" />
+      <topic name="Clone2 Method " file="help/html/796f7028-326f-8436-729c-1b310b4ad1ac.htm" />
+      <topic name="Equality Operator" file="help/html/fa1afb30-1bf4-8316-c3fb-d31fd4bf7380.htm" />
+      <topic name="Equals Method " file="help/html/0674d368-dac7-9339-7f32-775d4c476a3d.htm">
+        <topic name="Equals Method (other)" file="help/html/bdd6aa46-6fcf-5d46-9982-87a3f7aca3ef.htm" />
+        <topic name="Equals Method (value1, value2)" file="help/html/3114203b-e246-309c-050b-e43337f0417f.htm" />
+        <topic name="Equals Method (obj)" file="help/html/cd4d0097-e555-9e73-e0c6-7888fa7cf219.htm" />
+      </topic>
+      <topic name="FormatTag Property " file="help/html/75c7210f-7da6-eaa2-296e-157b5100a520.htm" />
+      <topic name="GetBytes Method " file="help/html/1d6aa6fc-e374-fd3e-691e-8c352987188e.htm" />
+      <topic name="GetHashCode Method " file="help/html/ab7c0564-648c-a52c-e1cc-89221deb3ba6.htm" />
+      <topic name="Inequality Operator" file="help/html/10c03985-9b4b-4477-bdce-8dc9254cc40e.htm" />
+      <topic name="SamplesPerSecond Property " file="help/html/9481d0ba-55fe-93f9-ec63-83098d6007bd.htm" />
+      <topic name="Size Property " file="help/html/3dfcc573-1dd5-bb7a-8ef5-7953dec524e4.htm" />
+    </topic>
+    <topic name="WaveFormatExtensible Class" file="help/html/9c76bc46-ca22-2f39-7ade-bd21d5eea187.htm">
+      <topic name="WaveFormatExtensible Constructor " file="help/html/f15d6d05-1e5c-7bd2-372d-aac43c325c65.htm" />
+      <topic name="ChannelMask Property " file="help/html/f7ef78eb-d1c3-482a-4bce-b5368c6fa18e.htm" />
+      <topic name="Clone Method " file="help/html/49eefae2-75c2-6f8c-0165-90e5d8de9e69.htm" />
+      <topic name="Clone2 Method " file="help/html/88418338-5384-a722-0a9b-2476110b2ad9.htm" />
+      <topic name="Equality Operator" file="help/html/28d13a71-27ed-f849-747c-4a1d2a30b471.htm" />
+      <topic name="Equals Method " file="help/html/1a0ecef8-52fe-2f17-0814-5df78213eb73.htm">
+        <topic name="Equals Method (other)" file="help/html/a3c30fca-974e-adf3-9c15-446e81805193.htm" />
+        <topic name="Equals Method (value1, value2)" file="help/html/88f98cfa-3189-9d20-8916-da549741a90a.htm" />
+        <topic name="Equals Method (obj)" file="help/html/c4234473-29b2-8779-3918-d6dd0c485c14.htm" />
+      </topic>
+      <topic name="GetBytes Method " file="help/html/daea7a07-24c8-2069-3427-176b5bc0866e.htm" />
+      <topic name="GetHashCode Method " file="help/html/5ec93714-8aaf-62bf-e9f0-9c634065dda3.htm" />
+      <topic name="Inequality Operator" file="help/html/84e568ce-5680-db71-e533-970fa3eeed59.htm" />
+      <topic name="SamplesPerBlock Property " file="help/html/df06010a-aaae-c9b3-8d1b-690f1c5782a9.htm" />
+      <topic name="SubFormat Property " file="help/html/a8279bef-cb5f-6af0-d3d3-62f655040dd1.htm" />
+      <topic name="ValidBitsPerSample Property " file="help/html/065234e4-512f-2e3a-87c0-386b7294546f.htm" />
     </topic>
     <topic name="WaveFormatTag Enumeration" file="help/html/cf5d9522-0dcc-b57e-595d-034ede762c1c.htm" />
   </topic>
@@ -3160,11 +3197,9 @@
         <topic name="Equals Method (obj)" file="help/html/2a8dfec0-aabd-0828-36ed-f8342ac9a023.htm" />
       </topic>
       <topic name="Finalize Method " file="help/html/ff7bef3e-4a5e-142f-adb1-683af7733bb0.htm" />
-      <topic name="FromString Method (name)" file="help/html/09b32efa-aff2-d9ea-690a-54056f46c187.htm" />
       <topic name="GetHashCode Method " file="help/html/b3bda89a-f137-76d9-f361-9fd2f2dbc835.htm" />
       <topic name="Implicit Operator" file="help/html/5e011af8-6405-bbcf-3dba-ca1a18ba6907.htm" />
       <topic name="Inequality Operator" file="help/html/705efd3e-3155-0213-6961-37f9a77df0c3.htm" />
-      <topic name="ToString Method " file="help/html/a1e4a11d-dc92-6115-66ec-d690df72049d.htm" />
     </topic>
     <topic name="EffectInstance Structure" file="help/html/a5472490-0a9c-cbc5-cac5-b06e1459673b.htm">
       <topic name="Defaults Property " file="help/html/ca195fab-2cd6-6f5a-d05f-395fbcff30ee.htm" />
@@ -3234,7 +3269,10 @@
         <topic name="DrawString Method (sprite, text, x, y, color)" file="help/html/7c21a3cb-9f57-6582-c063-bcf31c479041.htm" />
       </topic>
       <topic name="FromPointer Method (pointer)" file="help/html/1423f2f0-8697-80c6-4fde-5942e366e4dc.htm" />
-      <topic name="MeasureString Method (sprite, text, format)" file="help/html/c09bcd61-e042-5aae-07ed-de97e1342c91.htm" />
+      <topic name="MeasureString Method " file="help/html/79ec583b-ff05-f5dd-a828-9c07f2086b42.htm">
+        <topic name="MeasureString Method (sprite, text, format)" file="help/html/c09bcd61-e042-5aae-07ed-de97e1342c91.htm" />
+        <topic name="MeasureString Method (sprite, text, format, rectangle)" file="help/html/70d3111e-8dba-fcb5-e757-4aca54d815f9.htm" />
+      </topic>
       <topic name="OnLostDevice Method " file="help/html/1f49c311-4c21-4534-f30f-376f636b628c.htm" />
       <topic name="OnResetDevice Method " file="help/html/d94a35c2-e493-2136-896f-970ca4ed8035.htm" />
       <topic name="PreloadCharacters Method (first, last)" file="help/html/8cc1dfce-62b1-7804-dacf-bc164182cb54.htm" />
@@ -6685,54 +6723,6 @@
       <topic name="Finalize Method " file="help/html/a7848e18-7fdc-a433-f210-c8e63dd90bc4.htm" />
     </topic>
   </topic>
-  <topic name="SlimDX.XAPO Namespace" file="help/html/cdc9c48e-8b99-965a-265b-95fb847d7e0c.htm">
-    <topic name="BufferFlags Enumeration" file="help/html/4e2d0a93-e107-476f-44d8-1f41f7ea10dc.htm" />
-    <topic name="BufferParameter Class" file="help/html/8b6e9dd1-3fdf-9942-3a37-5f480b7cba47.htm">
-      <topic name="BufferParameter Constructor " file="help/html/407b2a45-edaa-70ef-696b-31f7b8d5c7ff.htm" />
-      <topic name="Buffer Property " file="help/html/ea5a0263-b301-b37b-959c-6c36c7a9e5a1.htm" />
-      <topic name="Flags Property " file="help/html/39718f99-cfbc-d3af-422b-f80c6efff68f.htm" />
-      <topic name="ValidFrameCount Property " file="help/html/f1cd2270-34b8-68e9-fd55-aa4a774a7be7.htm" />
-    </topic>
-    <topic name="IAudioProcessor Interface" file="help/html/65027cce-83ad-31c2-96bd-285971b77844.htm">
-      <topic name="CalculateInputFrames Method (outputFrameCount)" file="help/html/6ad28b57-e152-6faa-a635-d1dffabb5900.htm" />
-      <topic name="CalculateOutputFrames Method (inputFrameCount)" file="help/html/8f7d7d7a-d295-371a-7007-53f855ba4385.htm" />
-      <topic name="Initialize Method (data)" file="help/html/363fab7b-b188-00b6-c74d-d8fe37fe358f.htm" />
-      <topic name="IsInputFormatSupported Method (outputFormat, requestedInputFormat, supportedInputFormat)" file="help/html/017cd105-80de-8bb5-46e5-a368b9df6acd.htm" />
-      <topic name="IsOutputFormatSupported Method (inputFormat, requestedOutputFormat, supportedOutputFormat)" file="help/html/324c4cdc-ff99-402b-af18-d94cd99e1ee2.htm" />
-      <topic name="LockForProcess Method (inputParameters, outputParameters)" file="help/html/5e144458-854e-628e-42bc-153312784696.htm" />
-      <topic name="Process Method (inputParameters, outputParameters, isEnabled)" file="help/html/a4dee898-80b1-54e1-9126-1f7bc0c050c1.htm" />
-      <topic name="RegistrationProperties Property " file="help/html/d74d9853-b965-4476-8e12-8c5b740b0e96.htm" />
-      <topic name="Reset Method " file="help/html/c3fddf8b-3d4c-1098-88df-f3ec7411703b.htm" />
-      <topic name="UnlockForProcess Method " file="help/html/cf691c61-91fc-35a2-5737-ab7eeae6e49e.htm" />
-    </topic>
-    <topic name="LockParameter Structure" file="help/html/4e6f7b66-5f86-5cf7-de42-0fb52fcae72f.htm">
-      <topic name="Equality Operator" file="help/html/2d0b6c9b-b0e8-3d70-4601-3d556492d770.htm" />
-      <topic name="Equals Method " file="help/html/d73bce46-b966-01d6-a107-6e26e307671f.htm">
-        <topic name="Equals Method (other)" file="help/html/e6f3087e-3f13-e193-f3d1-3a00972df857.htm" />
-        <topic name="Equals Method (value1, value2)" file="help/html/b515b4b2-170a-2d86-7ac7-f212454c1c1b.htm" />
-        <topic name="Equals Method (obj)" file="help/html/95bccb73-fa67-9e53-16e0-570f78712dfd.htm" />
-      </topic>
-      <topic name="Format Property " file="help/html/30967841-ea9e-c34d-2026-deb37ecd20ba.htm" />
-      <topic name="GetHashCode Method " file="help/html/241fd6c3-d2b5-20e0-99fc-37abb3ab3088.htm" />
-      <topic name="Inequality Operator" file="help/html/cc457681-1769-a0c1-d3a0-8093e11185c3.htm" />
-      <topic name="MaxFrameCount Property " file="help/html/8b7de0fa-50db-568d-7f13-6f6c4bb01018.htm" />
-    </topic>
-    <topic name="PropertyFlags Enumeration" file="help/html/1b53d5ce-dda7-74af-d2f6-e6431eac977a.htm" />
-    <topic name="RegistrationProperties Class" file="help/html/06f5092f-bed1-8f8b-2619-8f0a07469694.htm">
-      <topic name="RegistrationProperties Constructor " file="help/html/108bacac-a713-50f6-1a49-4fafc74e4df3.htm" />
-      <topic name="ClassId Property " file="help/html/55cece43-34fe-5b28-78a5-4ebe62f1dabf.htm" />
-      <topic name="CopyrightInfo Property " file="help/html/46933464-b546-22fa-f231-a3a96d548fff.htm" />
-      <topic name="Flags Property " file="help/html/05340d89-a561-56c3-f22a-5043dd1338fd.htm" />
-      <topic name="FriendlyName Property " file="help/html/8ee32d08-6335-6fac-feee-a3ac60512a1e.htm" />
-      <topic name="MajorVersion Property " file="help/html/d1e33d68-b467-12fa-5cf2-3db59727eccb.htm" />
-      <topic name="MaxInputBufferCount Property " file="help/html/45725167-f992-d9d7-30cd-9389814145f7.htm" />
-      <topic name="MaxOutputBufferCount Property " file="help/html/1cdaf743-f3c3-1df6-1d55-67924090c26d.htm" />
-      <topic name="MinInputBufferCount Property " file="help/html/5707cb19-e4fe-3ad6-b779-455bfc404241.htm" />
-      <topic name="MinorVersion Property " file="help/html/3c74aed3-005b-90cc-978d-68cd3727ed4d.htm" />
-      <topic name="MinOutputBufferCount Property " file="help/html/74f0cb9d-c022-5e22-d402-bf4237190ec6.htm" />
-      <topic name="SupportedInterfaces Property " file="help/html/29d16de1-3c5c-b7cb-924d-06284ba23510.htm" />
-    </topic>
-  </topic>
   <topic name="SlimDX.XAudio2 Namespace" file="help/html/30ced117-dcd3-2d82-371c-42cbe1579ca3.htm">
     <topic name="AudioBuffer Class" file="help/html/8b2aa2a6-cb6b-580d-62e4-55b22ec0b8a1.htm">
       <topic name="AudioBuffer Constructor " file="help/html/8e157784-94e7-770b-d13c-f38887eb6b5e.htm" />
@@ -6814,7 +6804,12 @@
     <topic name="FilterType Enumeration" file="help/html/f3e6f246-6416-8a20-658b-848a80718592.htm" />
     <topic name="LogType Enumeration" file="help/html/bd35a415-eb29-7353-0af1-551c442e4a71.htm" />
     <topic name="MasteringVoice Class" file="help/html/3ee925f3-a593-a92c-50c7-83aeadbd59d3.htm">
-      <topic name="MasteringVoice Constructor (device, inputChannels, inputSampleRate, deviceIndex)" file="help/html/8e614f41-7be2-3b11-869c-4757129db778.htm" />
+      <topic name="MasteringVoice Constructor " file="help/html/3cc8ebf2-380d-80c8-88ce-7e0a0ef1bd44.htm">
+        <topic name="MasteringVoice Constructor (device)" file="help/html/4dd483f3-1391-c4d7-7b62-42255c15d9c4.htm" />
+        <topic name="MasteringVoice Constructor (device, inputChannels)" file="help/html/c312aadc-c709-ba4d-6d83-81613ac00ac6.htm" />
+        <topic name="MasteringVoice Constructor (device, inputChannels, inputSampleRate)" file="help/html/2d3682bd-318e-2010-3e09-60e137e0848a.htm" />
+        <topic name="MasteringVoice Constructor (device, inputChannels, inputSampleRate, deviceIndex)" file="help/html/8e614f41-7be2-3b11-869c-4757129db778.htm" />
+      </topic>
     </topic>
     <topic name="PerformanceData Class" file="help/html/732c0faf-0ebb-840f-ab49-11910ecdc63c.htm">
       <topic name="PerformanceData Constructor " file="help/html/e7a18261-4095-3c90-20af-f5cc3cb78836.htm" />
@@ -6833,7 +6828,7 @@
         <topic name="Equals Method (obj)" file="help/html/58e3cadc-5ab7-c210-e28a-4fd0ac162168.htm" />
       </topic>
       <topic name="GetHashCode Method " file="help/html/ab052204-0f1c-c2af-7aa8-94b75ef86259.htm" />
-      <topic name="GlitchesSinceLastQuery Property " file="help/html/a34c39e4-17c7-fe27-0f6a-e07bb4a05d8a.htm" />
+      <topic name="GlitchesSinceEngineStarted Property " file="help/html/968d002b-7572-1f43-8d90-81bd7d293988.htm" />
       <topic name="Inequality Operator" file="help/html/d1024fc4-befc-39ce-164e-60b066f196b9.htm" />
       <topic name="MaximumCyclesPerQuantum Property " file="help/html/991a534c-920e-d51c-3992-3cbbbb16d052.htm" />
       <topic name="MemoryUsageInBytes Property " file="help/html/65a28bd9-1c15-2d8a-99ae-a45898e35ee7.htm" />
@@ -6853,16 +6848,14 @@
     </topic>
     <topic name="SourceVoice Class" file="help/html/dde60d77-a885-316f-881b-1f0d3e24feba.htm">
       <topic name="SourceVoice Constructor " file="help/html/49ffd147-b4da-50b4-7166-f26e8be616ad.htm">
-        <topic name="SourceVoice Constructor (device, sourceFormat, flags, maximumFrequencyRatio)" file="help/html/b73924db-8432-05e4-6c91-4c283c12ad50.htm" />
-        <topic name="SourceVoice Constructor (device, sourceFormat, flags, maximumFrequencyRatio)" file="help/html/d44c8a45-4d61-51b5-1d38-738c1a4c047a.htm" />
+        <topic name="SourceVoice Constructor (device, sourceFormat)" file="help/html/d6d9bca8-6de2-0cf0-66c1-0b01624bc7e2.htm" />
+        <topic name="SourceVoice Constructor (device, sourceFormat, flags)" file="help/html/05562f17-0908-14e4-44c4-b41f0810c644.htm" />
+        <topic name="SourceVoice Constructor (device, sourceFormat, flags, maximumFrequencyRatio)" file="help/html/77bbace6-462a-6e14-a077-c9441c47fce5.htm" />
       </topic>
       <topic name="BufferEnd Event" file="help/html/2366d872-7565-c8a4-b107-3d294af21175.htm" />
       <topic name="BufferStart Event" file="help/html/d5ba0f34-17ec-6f5c-b351-b208ddf62678.htm" />
       <topic name="Discontinuity Method " file="help/html/be61d680-2ad0-c97e-da17-04d42024aa13.htm" />
-      <topic name="Dispose Method " file="help/html/1b8245ae-1db8-884b-8247-d72855c6a300.htm">
-        <topic name="Dispose Method " file="help/html/57230a4b-e534-a38e-78ab-dac035193e89.htm" />
-        <topic name="Dispose Method ()" file="help/html/810c1e9c-f4e3-88ce-34be-f2d2b2f2d99e.htm" />
-      </topic>
+      <topic name="Dispose Method ()" file="help/html/810c1e9c-f4e3-88ce-34be-f2d2b2f2d99e.htm" />
       <topic name="ExitLoop Method " file="help/html/767fd179-b068-54f8-ab01-d44c3f9f7c00.htm">
         <topic name="ExitLoop Method " file="help/html/757dedac-1f1c-f0b9-8c92-d1580995389d.htm" />
         <topic name="ExitLoop Method (operationSet)" file="help/html/be29649e-2010-de60-4ec9-fc6eb1f1b5b5.htm" />
@@ -6876,7 +6869,7 @@
       <topic name="OnStreamEnd Method (e)" file="help/html/363d94ce-74b2-33e9-c060-2598a547e264.htm" />
       <topic name="OnVoiceError Method (e)" file="help/html/3025dc04-bde9-b59e-eb0c-1d06d90bb360.htm" />
       <topic name="OnVoiceProcessingPassEnd Method (e)" file="help/html/970c21ca-cba2-27d8-dc40-d81ce5944c86.htm" />
-      <topic name="OnVoiceProcessingPassStart Method (e)" file="help/html/1c587c93-5012-8abc-4940-3c910cfa57b7.htm" />
+      <topic name="OnVoiceProcessingPassStart Method (e)" file="help/html/5c306742-a39e-40f5-0986-833bc923f3d5.htm" />
       <topic name="Start Method " file="help/html/12171629-fbab-61f1-7626-8ceb3b33e3b2.htm">
         <topic name="Start Method " file="help/html/e8525181-1b87-9524-84c7-868d609c1360.htm" />
         <topic name="Start Method (flags)" file="help/html/bd803513-e4e5-10f5-9218-4e0dc6756bf6.htm" />
@@ -6897,15 +6890,22 @@
       <topic name="VoiceProcessingPassEnd Event" file="help/html/73b786ab-2308-0a6e-cf6f-7ab64a1c2e42.htm" />
       <topic name="VoiceProcessingPassStart Event" file="help/html/7d541f3a-5495-4c76-f462-e9901c2d76bf.htm" />
     </topic>
+    <topic name="StartProcessingEventArgs Class" file="help/html/5c4f3de0-d311-074e-86b4-0c4e39f8ce41.htm">
+      <topic name="StartProcessingEventArgs Constructor (bytesRequired)" file="help/html/40f0d4ea-e93e-1562-2635-219f1b18a567.htm" />
+      <topic name="BytesRequired Property " file="help/html/34aade55-e24d-bfdd-179c-9b9a1354428b.htm" />
+    </topic>
     <topic name="SubmixVoice Class" file="help/html/8149bca0-1564-cd63-6b32-9ce2f4c076dd.htm">
       <topic name="SubmixVoice Constructor (device, inputChannels, inputSampleRate, processingStage)" file="help/html/7b20ff5c-3bd2-e92f-9762-80abef0dcae4.htm" />
     </topic>
     <topic name="Voice Class" file="help/html/0841fb5a-982c-3f53-d9a8-921475784505.htm">
       <topic name="Voice Constructor " file="help/html/d410b10f-ac7a-2820-35e9-960f64cc8dad.htm" />
-      <topic name="Destroy Method " file="help/html/9d7cb7e8-d1cd-8aed-5feb-e5fe3ae591b3.htm" />
       <topic name="DisableEffect Method " file="help/html/8a5a1cda-4523-38c7-b715-8c4a45460f51.htm">
         <topic name="DisableEffect Method (effectIndex)" file="help/html/2264ce99-e558-6290-8378-88fe66c77341.htm" />
         <topic name="DisableEffect Method (effectIndex, operationSet)" file="help/html/8407ef43-7a68-72f4-52fc-8cca39668619.htm" />
+      </topic>
+      <topic name="Dispose Method " file="help/html/30c09cd1-2ec3-a34b-70a6-41e24e2c22c6.htm">
+        <topic name="Dispose Method " file="help/html/fa91cfa4-3026-703c-25c8-a746c0cde5d6.htm" />
+        <topic name="Dispose Method ()" file="help/html/69760757-98d9-64f7-c541-976f134ce25e.htm" />
       </topic>
       <topic name="EnableEffect Method " file="help/html/332ace35-70b4-b8f5-a7a9-e7bc0a88133c.htm">
         <topic name="EnableEffect Method (effectIndex)" file="help/html/6b0dd860-64ae-1e8c-e026-1055902c0c20.htm" />
@@ -6914,7 +6914,10 @@
       <topic name="FilterParameters Property " file="help/html/45930fc3-28a2-77a6-a7fd-92a74586368e.htm" />
       <topic name="GetChannelVolumes Method (channels)" file="help/html/33e097f5-c7a1-49c9-dbcb-f6882dd41f5f.htm" />
       <topic name="GetEffectParameters Method (effectIndex, parameters)" file="help/html/1183ae12-38e5-0088-1a40-d8dacfd15904.htm" />
-      <topic name="GetOutputMatrix Method (destinationVoice, sourceChannels, destinationChannels)" file="help/html/3cbecd2e-5d4e-0f55-e492-91cc9aceb1bb.htm" />
+      <topic name="GetOutputMatrix Method " file="help/html/c7ce794d-3b94-8b89-40d8-5aaef70f3349.htm">
+        <topic name="GetOutputMatrix Method (destinationVoice, sourceChannels, destinationChannels)" file="help/html/3cbecd2e-5d4e-0f55-e492-91cc9aceb1bb.htm" />
+        <topic name="GetOutputMatrix Method (sourceChannels, destinationChannels)" file="help/html/71c94549-b652-fb6a-2ace-dc8b641a7d32.htm" />
+      </topic>
       <topic name="IsEffectEnabled Method (effectIndex)" file="help/html/4f4f2295-2cff-1523-2165-2393567179f5.htm" />
       <topic name="SetChannelVolumes Method " file="help/html/5064a636-b448-5243-3fe4-3432bd5e57ac.htm">
         <topic name="SetChannelVolumes Method (channels, volumes)" file="help/html/629da80b-0d61-7f02-80d4-ec9f9cd123ab.htm" />
@@ -6927,6 +6930,8 @@
       <topic name="SetOutputMatrix Method " file="help/html/b3f6ec50-3c59-ec48-57e0-d490689d8dcc.htm">
         <topic name="SetOutputMatrix Method (destinationVoice, sourceChannels, destinationChannels, matrix)" file="help/html/34c153be-6127-2409-d74a-42d6bcf54eca.htm" />
         <topic name="SetOutputMatrix Method (destinationVoice, sourceChannels, destinationChannels, matrix, operationSet)" file="help/html/4ac5b2de-4ead-f659-2105-818b77dc431b.htm" />
+        <topic name="SetOutputMatrix Method (sourceChannels, destinationChannels, matrix)" file="help/html/95d1fff1-3e9c-d60c-f4fd-bb6a4423f18b.htm" />
+        <topic name="SetOutputMatrix Method (sourceChannels, destinationChannels, matrix, operationSet)" file="help/html/5e784731-aa96-2640-5cf1-77ba396f1191.htm" />
       </topic>
       <topic name="SetOutputVoices Method (outputVoices)" file="help/html/4ba98edf-9392-3d52-0c10-cbb18f8d004a.htm" />
       <topic name="VoiceDetails Property " file="help/html/f704b801-060d-1fbe-4443-6299db786660.htm" />
@@ -6958,23 +6963,6 @@
       <topic name="GetHashCode Method " file="help/html/314e56d7-7dba-bb69-0f73-6fbac4e7cf38.htm" />
       <topic name="Inequality Operator" file="help/html/def617c5-615a-c474-a55e-7aec22a46457.htm" />
       <topic name="SamplesPlayed Property " file="help/html/d7ecaa22-b826-9a32-102c-b369cd0f00da.htm" />
-    </topic>
-    <topic name="WaveFormatExtensible Class" file="help/html/35271030-4efc-6111-8b54-3285ecb425f3.htm">
-      <topic name="WaveFormatExtensible Constructor " file="help/html/9f1de712-d8b7-5bf2-b9e6-0fbf4fb97599.htm" />
-      <topic name="ChannelMask Property " file="help/html/79b391aa-8e24-3fc1-9a90-106249ef393d.htm" />
-      <topic name="Clone Method " file="help/html/c67bd3cf-8563-beff-abd6-21e9df5a67d5.htm" />
-      <topic name="Clone2 Method " file="help/html/cf4c07c4-76be-09b2-8424-cb3a1c48b857.htm" />
-      <topic name="Equality Operator" file="help/html/3387e9cd-b040-1323-f2c2-dafc67eaf404.htm" />
-      <topic name="Equals Method " file="help/html/76ec43b8-3bbc-6f8f-c1f3-918896dab10a.htm">
-        <topic name="Equals Method (other)" file="help/html/dcf4a546-83f0-c7ff-5c5b-ba007a10eb8c.htm" />
-        <topic name="Equals Method (value1, value2)" file="help/html/e059e6a9-9b03-ffe5-e518-ce366914249e.htm" />
-        <topic name="Equals Method (obj)" file="help/html/71cf67e5-5446-ed1e-cf60-da48313f40c0.htm" />
-      </topic>
-      <topic name="Format Property " file="help/html/9814b455-abd5-8c2c-4bae-7670ad7299d7.htm" />
-      <topic name="GetHashCode Method " file="help/html/10809022-6076-caf5-bea3-6db3043e365d.htm" />
-      <topic name="Inequality Operator" file="help/html/9266f6aa-fe68-9597-6149-b7e6e39a39b7.htm" />
-      <topic name="Samples Property " file="help/html/d8ea06ee-04bf-9d2e-74f2-25ddeeda52ef.htm" />
-      <topic name="SubFormat Property " file="help/html/45f12f65-e8bc-b314-67e7-d149d06cac1a.htm" />
     </topic>
     <topic name="XAudio2 Class" file="help/html/a277c198-c312-338f-785d-da46e757fd11.htm">
       <topic name="XAudio2 Constructor " file="help/html/d12f81d0-4daa-41b2-8b25-5de22c38d356.htm">
