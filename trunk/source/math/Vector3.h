@@ -85,6 +85,11 @@ namespace SlimDX
 		static property Vector3 UnitZ { Vector3 get() { return Vector3(0, 0, 1); } }
 
 		/// <summary>
+		/// Gets the size of the <see cref="Vector3"/> type, in bytes.
+		/// </summary>
+		static property int SizeInBytes { int get() { return System::Runtime::InteropServices::Marshal::SizeOf(Vector3::typeid); } }
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="Vector3"/> class.
 		/// </summary>
 		/// <param name="value">The value that will be assigned to all components.</param>

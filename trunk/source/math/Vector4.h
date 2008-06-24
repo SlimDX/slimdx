@@ -96,6 +96,11 @@ namespace SlimDX
 		static property Vector4 UnitW { Vector4 get() { return Vector4(0, 0, 0, 1); } }
 
 		/// <summary>
+		/// Gets the size of the <see cref="Vector4"/> type, in bytes.
+		/// </summary>
+		static property int SizeInBytes { int get() { return System::Runtime::InteropServices::Marshal::SizeOf(Vector4::typeid); } }
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="Vector4"/> class.
 		/// </summary>
 		/// <param name="value">The value that will be assigned to all components.</param>
