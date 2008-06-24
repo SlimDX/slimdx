@@ -23,6 +23,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using SampleFramework;
 using SlimDX.Direct3D9;
+using SlimDX;
 
 namespace CustomUI
 {

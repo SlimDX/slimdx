@@ -85,6 +85,8 @@ namespace SlimDX
 
 			static Mesh^ TessellateNPatches( Mesh^ mesh, float segmentCount, bool quadraticInterpolation );
 
+			void GenerateAdjacency( float epsilon ) new;
+
 			DataStream^ LockAttributeBuffer( LockFlags flags );
 			Result UnlockAttributeBuffer();
 			Result SetAttributeTable( array<AttributeRange>^ table );

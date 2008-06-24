@@ -616,6 +616,22 @@ namespace SampleFramework
                         DeviceSettings newSettings = CurrentSettings.Clone();
                         newSettings.BackBufferWidth = 0;
                         newSettings.BackBufferHeight = 0;
+                        if (newSettings.Direct3D9 != null)
+                        {
+                            // clear out the old size information
+                            newSettings.Direct3D9.PresentParameters.BackBufferWidth = 0;
+                            newSettings.Direct3D9.PresentParameters.BackBufferHeight = 0;
+                        }
+                        if (newSettings.Direct3D10 != null)
+                        {
+                            // clear out the old size information
+                            SwapChainDescription scd = newSettings.Direct3D10.SwapChainDescription;
+                            ModeDescription md = scd.ModeDescription;
+                            md.Width = 0;
+                            md.Height = 0;
+                            scd.ModeDescription = md;
+                            newSettings.Direct3D10.SwapChainDescription = scd;
+                        }
 
                         // create the device
                         CreateDevice(newSettings);
@@ -662,7 +678,11 @@ namespace SampleFramework
                     // recreate the device
                     newSettings.BackBufferWidth = 0;
                     newSettings.BackBufferHeight = 0;
+                    newSettings.Direct3D9.PresentParameters.BackBufferWidth = 0;
+                    newSettings.Direct3D9.PresentParameters.BackBufferHeight = 0;
                     CreateDevice(newSettings);
+                    newSettings.BackBufferWidth = newSettings.Direct3D9.PresentParameters.BackBufferWidth;
+                    newSettings.BackBufferHeight = newSettings.Direct3D9.PresentParameters.BackBufferHeight;
                 }
             }
             else

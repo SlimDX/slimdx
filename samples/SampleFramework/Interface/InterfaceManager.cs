@@ -403,11 +403,6 @@ namespace SampleFramework
             // make sure the sprite is created
             if (Sprite == null)
                 Sprite = new Sprite(Device);
-
-            // release the state block
-            if (stateBlock != null)
-                stateBlock.Dispose();
-            stateBlock = null;
         }
 
         /// <summary>
@@ -439,6 +434,11 @@ namespace SampleFramework
             // release the sprite
             if (Sprite != null)
                 Sprite.OnLostDevice();
+
+            // release the state block
+            if (stateBlock != null)
+                stateBlock.Dispose();
+            stateBlock = null;
         }
 
         /// <summary>
