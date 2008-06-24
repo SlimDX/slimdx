@@ -1,22 +1,31 @@
-﻿<project schemaVersion="1.6.0.2">
+﻿<project schemaVersion="1.6.0.7">
     <assemblies>
         <assembly assemblyPath="..\build\Release\SlimDX.dll" xmlCommentsPath="..\build\Release\SlimDX.xml" commentsOnly="False" />
     </assemblies>
     <namespaceSummaries>
         <namespaceSummaryItem name="" isDocumented="False" />
-        <namespaceSummaryItem name="&lt;CppImplementationDetails&gt;" isDocumented="True" />
-        <namespaceSummaryItem name="&lt;CrtImplementationDetails&gt;" isDocumented="True" />
+        <namespaceSummaryItem name="&lt;CppImplementationDetails&gt;" isDocumented="False" />
+        <namespaceSummaryItem name="&lt;CrtImplementationDetails&gt;" isDocumented="False" />
         <namespaceSummaryItem name="SlimDX" isDocumented="True">The SlimDX namespace contains common classes and functionality that is intended for use by all of the components of SlimDX, as well as user code. It also contains all of the SlimDX mathematical functionality.</namespaceSummaryItem>
+        <namespaceSummaryItem name="SlimDX.Design" isDocumented="True">The SlimDX.Design namespace contains classes such as type converters that are intended to support visual designers.</namespaceSummaryItem>
         <namespaceSummaryItem name="SlimDX.Direct3D10" isDocumented="True">The SlimDX.Direct3D10 namespace provides hardware accelerated 3D graphics functionality via the Direct3D 10 API.</namespaceSummaryItem>
         <namespaceSummaryItem name="SlimDX.Direct3D9" isDocumented="True">The SlimDX.Direct3D9 namespace provides hardware accelerated 3D graphics functionality via the Direct3D 9 API.</namespaceSummaryItem>
         <namespaceSummaryItem name="SlimDX.DirectInput" isDocumented="True">The SlimDX.DirectInput namespace provides functionality to process data from keyboards, mice, joysticks, and other game controllers via the DirectInput API.</namespaceSummaryItem>
-        <namespaceSummaryItem name="SlimDX.DirectSound" isDocumented="True" />
+        <namespaceSummaryItem name="SlimDX.DirectSound" isDocumented="False" />
         <namespaceSummaryItem name="SlimDX.DXGI" isDocumented="True">The SlimDX.DXGI namespaces provides functionality to manage low-level tasks that can be independent of the DirectX graphics runtime. DXGI provides a common framework for future graphics components; the first component that takes advantage of DXGI is Direct3D 10.</namespaceSummaryItem>
+        <namespaceSummaryItem name="SlimDX.RawInput" isDocumented="True">The SlimDX.RawInput namespace provides support for input devices via the RawInput API.</namespaceSummaryItem>
+        <namespaceSummaryItem name="SlimDX.X3DAudio" isDocumented="True">The SlimDX.X3DAudio provides functionality for processing 3D audio effects.</namespaceSummaryItem>
+        <namespaceSummaryItem name="SlimDX.XAPO" isDocumented="False" />
+        <namespaceSummaryItem name="SlimDX.XAudio2" isDocumented="True">The SlimDX.XAudio2 namespace provides support for audio recording and playback via the XAudio2 API.</namespaceSummaryItem>
         <namespaceSummaryItem name="SlimDX.XInput" isDocumented="True">The SlimDX.XInput namespace provides access to the XInput API, which allows applications to interact with Xbox 360 controllers when they are connected to a Windows PC.</namespaceSummaryItem>
-        <namespaceSummaryItem name="std" isDocumented="True">C++ standard library namespace.</namespaceSummaryItem>
+        <namespaceSummaryItem name="std" isDocumented="False">C++ standard library namespace.</namespaceSummaryItem>
     </namespaceSummaries>
-    <ProjectSummary />
-    <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, Namespace</MissingTags>
+    <ProjectSummary>&lt;a href="http://slimdx.mdxinfo.com/"&gt;SlimDX&lt;/a&gt; is a library originally prototyped by Promit Roy which allows .NET 2.0 applications to use Microsoft's DirectX APIs, as well as several related Microsoft APIs that share similar goals. This role was previously filled for .NET 1.1 applications by Microsoft's own Managed DirectX (MDX) library. However, the age of .NET 1.1, plus Microsoft's lack of interest in continuing MDX has made it necessary to build a new library. Thanks to enthusiastic community support and the invaluable contributions of several other developers who have worked on and with SlimDX, the library has made immense strides and is now a fully viable platform on which to build DirectX based applications. 
+
+In addition, SlimDX is open source software, and the complete source code is available to anybody under the MIT/X11 license. Right now we do not offer a downloadable archive of the source code, but you can use a Subversion client to download the source. We recommend TortoiseSVN for this purpose, but any Subversion client will work just as well.
+
+This documentation is available &lt;a href="http://slimdx.mdxinfo.com/docs/"&gt;online&lt;/a&gt; as well as in &lt;a href="http://slimdx.mdxinfo.com/docs/SlimDX.chm"&gt;compiled CHM&lt;/a&gt; form. Our wiki, as well as our development page, can be accessed from our &lt;a href="http://slimdx.mdxinfo.com/"&gt;home page&lt;/a&gt;.</ProjectSummary>
+    <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, Namespace, TypeParameter</MissingTags>
     <VisibleItems>InheritedMembers, InheritedFrameworkMembers, Protected, SealedProtected</VisibleItems>
     <HtmlHelp1xCompilerPath path="" />
     <HtmlHelp2xCompilerPath path="" />
@@ -25,31 +34,35 @@
     <WorkingPath path="" />
     <CleanIntermediates>True</CleanIntermediates>
     <KeepLogFile>True</KeepLogFile>
+    <BuildLogFile path="" />
     <HelpFileFormat>HtmlHelp1x</HelpFileFormat>
-    <PurgeDuplicateTopics>True</PurgeDuplicateTopics>
     <CppCommentsFixup>True</CppCommentsFixup>
     <FrameworkVersion>2.0.50727</FrameworkVersion>
-    <BinaryTOC>True</BinaryTOC>
-    <IncludeFavorites>False</IncludeFavorites>
-    <Preliminary>False</Preliminary>
-    <RootNamespaceContainer>False</RootNamespaceContainer>
-    <RootNamespaceTitle />
-    <HelpTitle>SlimDX Documentation (March 2008)</HelpTitle>
+    <IndentHtml>False</IndentHtml>
+    <Preliminary>True</Preliminary>
+    <RootNamespaceContainer>True</RootNamespaceContainer>
+    <RootNamespaceTitle>SlimDX Class Reference</RootNamespaceTitle>
+    <HelpTitle>SlimDX Documentation (June 2008)</HelpTitle>
     <HtmlHelpName>SlimDX</HtmlHelpName>
     <Language>en-US</Language>
     <CopyrightHref />
     <CopyrightText>Copyright (c) 2008 SlimDX Group</CopyrightText>
     <FeedbackEMailAddress />
+    <FeedbackEMailLinkText />
     <HeaderText />
     <FooterText />
     <ProjectLinkType>Local</ProjectLinkType>
     <SdkLinkType>Msdn</SdkLinkType>
     <SdkLinkTarget>Self</SdkLinkTarget>
-    <PresentationStyle>vs2005</PresentationStyle>
+    <PresentationStyle>Prototype</PresentationStyle>
     <NamingMethod>HashedMemberName</NamingMethod>
-    <SyntaxFilters>Standard</SyntaxFilters>
+    <SyntaxFilters>CSharp, VisualBasic</SyntaxFilters>
     <ShowFeedbackControl>False</ShowFeedbackControl>
+    <BinaryTOC>True</BinaryTOC>
+    <IncludeFavorites>False</IncludeFavorites>
+    <CollectionTocStyle>Hierarchical</CollectionTocStyle>
+    <IncludeStopWordList>True</IncludeStopWordList>
+    <PlugInNamespaces>ms.vsipcc+, ms.vsexpresscc+</PlugInNamespaces>
+    <HelpFileVersion>1.0.0.0</HelpFileVersion>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
-    <ContentSiteMap path="" />
-    <TopicFileTransform path="" />
 </project>

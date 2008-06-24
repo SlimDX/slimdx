@@ -11,7 +11,7 @@ using System.Web.UI.HtmlControls;
 using System.Collections.Generic;
 using DaveSexton.DocProject.DocSites;
 
-namespace DocSiteTest
+namespace SlimDXDocs
 {
 	public partial class DocSiteBrowseIndex : System.Web.UI.Page
 	{

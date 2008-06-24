@@ -1,19 +1,19 @@
-<%@ Page Language="C#" MasterPageFile="~/DocSite.Master" AutoEventWireup="true" CodeBehind="DocSiteAdmin.aspx.cs" Inherits="DocSiteTest.DocSiteAdmin" Title="DocSiteTest - Administration" 
+<%@ Page Language="C#" MasterPageFile="~/DocSite.Master" AutoEventWireup="true" CodeBehind="DocSiteAdmin.aspx.cs" Inherits="SlimDXDocs.DocSiteAdmin" Title="DocSiteTest - Administration" 
 EnableEventValidation="false" Culture="auto" meta:resourcekey="PageResource1" UICulture="auto" %>
 <%@ Register Src="~/Controls/DocSiteLetterBar.ascx" TagName="DocSiteLetterBar" TagPrefix="DocSite" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="contentPlaceholder" runat="server">
   <h2 id="docsite_page_header"><asp:Localize runat="server" ID="administrationHeaderLocalize" Text="Administration" meta:resourcekey="administrationHeaderLocalize" /></h2>
   <asp:ObjectDataSource runat="server" ID="statisticsDataSource" TypeName="DocSiteTest.DocSiteAdmin" SelectMethod="GetStatisticsForBinding" />
-	<asp:ObjectDataSource runat="server" ID="clientSettingsDataSource" TypeName="DocSiteTest.DocSiteAdmin" SelectMethod="GetSettingsForBinding" UpdateMethod="UpdateSettings"
+	<asp:ObjectDataSource runat="server" ID="clientSettingsDataSource" TypeName="SlimDXDocs.DocSiteAdmin" SelectMethod="GetSettingsForBinding" UpdateMethod="UpdateSettings"
 	                      DataObjectTypeName="DaveSexton.DocProject.DocSites.Configuration.DocSiteSettings, DaveSexton.DocProject.DocSites, Version=1.0.1.0, Culture=neutral, PublicKeyToken=af1a4bab65cc4ece" />
-	<asp:ObjectDataSource runat="server" ID="searchSettingsDataSource" TypeName="DocSiteTest.DocSiteAdmin" SelectMethod="GetSettingsForBinding" UpdateMethod="UpdateSettings"
+	<asp:ObjectDataSource runat="server" ID="searchSettingsDataSource" TypeName="SlimDXDocs.DocSiteAdmin" SelectMethod="GetSettingsForBinding" UpdateMethod="UpdateSettings"
 	                      DataObjectTypeName="DaveSexton.DocProject.DocSites.Configuration.DocSiteSettings, DaveSexton.DocProject.DocSites, Version=1.0.1.0, Culture=neutral, PublicKeyToken=af1a4bab65cc4ece" />
-	<asp:ObjectDataSource runat="server" ID="keywordSettingsDataSource" TypeName="DocSiteTest.DocSiteAdmin" SelectMethod="GetSettingsForBinding" UpdateMethod="UpdateSettings"
+	<asp:ObjectDataSource runat="server" ID="keywordSettingsDataSource" TypeName="SlimDXDocs.DocSiteAdmin" SelectMethod="GetSettingsForBinding" UpdateMethod="UpdateSettings"
 	                      DataObjectTypeName="DaveSexton.DocProject.DocSites.Configuration.DocSiteSettings, DaveSexton.DocProject.DocSites, Version=1.0.1.0, Culture=neutral, PublicKeyToken=af1a4bab65cc4ece" />
-	<asp:ObjectDataSource runat="server" ID="weightFactorsDataSource" TypeName="DocSiteTest.DocSiteAdmin" SelectMethod="GetSettingsForBinding" UpdateMethod="UpdateSettings"
+	<asp:ObjectDataSource runat="server" ID="weightFactorsDataSource" TypeName="SlimDXDocs.DocSiteAdmin" SelectMethod="GetSettingsForBinding" UpdateMethod="UpdateSettings"
 	                      DataObjectTypeName="DaveSexton.DocProject.DocSites.Configuration.DocSiteSettings, DaveSexton.DocProject.DocSites, Version=1.0.1.0, Culture=neutral, PublicKeyToken=af1a4bab65cc4ece" />
-	<asp:ObjectDataSource runat="server" ID="additionalWeightsDataSource" TypeName="DocSiteTest.DocSiteAdmin" SelectMethod="GetSettingsForBinding" UpdateMethod="UpdateSettings"
+	<asp:ObjectDataSource runat="server" ID="additionalWeightsDataSource" TypeName="SlimDXDocs.DocSiteAdmin" SelectMethod="GetSettingsForBinding" UpdateMethod="UpdateSettings"
 	                      DataObjectTypeName="DaveSexton.DocProject.DocSites.Configuration.DocSiteSettings, DaveSexton.DocProject.DocSites, Version=1.0.1.0, Culture=neutral, PublicKeyToken=af1a4bab65cc4ece" />
 	<div id="docsite_admin" class="content_padding">
     <fieldset>

@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/DocSite.Master" AutoEventWireup="true" CodeBehind="DocSiteSearch.aspx.cs" Inherits="DocSiteTest.DocSiteSearch" Title="DocSiteTest - Search" 
+<%@ Page Language="C#" MasterPageFile="~/DocSite.Master" AutoEventWireup="true" CodeBehind="DocSiteSearch.aspx.cs" Inherits="SlimDXDocs.DocSiteSearch" Title="DocSiteTest - Search" 
 Culture="auto" meta:resourcekey="PageResource1" UICulture="auto" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="contentPlaceholder" runat="server">

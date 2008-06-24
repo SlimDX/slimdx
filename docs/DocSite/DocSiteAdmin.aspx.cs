@@ -13,7 +13,7 @@ using System.Drawing;
 using DaveSexton.DocProject.DocSites;
 using DaveSexton.DocProject.DocSites.Configuration;
 
-namespace DocSiteTest
+namespace SlimDXDocs
 {
 	public partial class DocSiteAdmin : System.Web.UI.Page
 	{
