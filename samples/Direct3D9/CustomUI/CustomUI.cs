@@ -142,7 +142,7 @@ namespace CustomUI
         protected override void Update(GameTime gameTime)
         {
             // update the interface
-            InterfaceManager.Update(gameTime.ElapsedGameTime.Milliseconds / 1000.0f);
+            InterfaceManager.Update((float)gameTime.ElapsedGameTime);
         }
 
         /// <summary>

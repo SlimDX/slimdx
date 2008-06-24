@@ -248,10 +248,10 @@ namespace SampleFramework
             try
             {
                 // reset the timing state
-                gameTime.ElapsedGameTime = TimeSpan.Zero;
-                gameTime.ElapsedRealTime = TimeSpan.Zero;
-                gameTime.TotalGameTime = totalGameTime;
-                gameTime.TotalRealTime = clock.CurrentTime;
+                gameTime.ElapsedGameTime = 0;
+                gameTime.ElapsedRealTime = 0;
+                gameTime.TotalGameTime = totalGameTime.TotalMilliseconds / 1000.0f;
+                gameTime.TotalRealTime = clock.CurrentTime.TotalMilliseconds / 1000.0f;
                 gameTime.IsRunningSlowly = false;
 
                 // run the first update
@@ -287,8 +287,8 @@ namespace SampleFramework
             clock.Step();
 
             // update the game time
-            gameTime.TotalRealTime = clock.CurrentTime;
-            gameTime.ElapsedRealTime = clock.ElapsedTime;
+            gameTime.TotalRealTime = clock.CurrentTime.TotalMilliseconds / 1000.0;
+            gameTime.ElapsedRealTime = clock.ElapsedTime.TotalMilliseconds / 1000.0;
             lastFrameElapsedRealTime += clock.ElapsedTime;
             TimeSpan elapsedAdjustedTime = clock.ElapsedAdjustedTime;
             if (elapsedAdjustedTime < TimeSpan.Zero)
@@ -298,7 +298,8 @@ namespace SampleFramework
             if (forceElapsedTimeToZero)
             {
                 // force the time
-                gameTime.ElapsedRealTime = lastFrameElapsedRealTime = elapsedAdjustedTime = TimeSpan.Zero;
+                gameTime.ElapsedRealTime = 0;
+                lastFrameElapsedRealTime = elapsedAdjustedTime = TimeSpan.Zero;
                 forceElapsedTimeToZero = false;
             }
 
@@ -346,8 +347,8 @@ namespace SampleFramework
                     try
                     {
                         // fill out the rest of the game time
-                        gameTime.ElapsedGameTime = targetElapsedTime;
-                        gameTime.TotalGameTime = totalGameTime;
+                        gameTime.ElapsedGameTime = targetElapsedTime.TotalMilliseconds / 1000.0;
+                        gameTime.TotalGameTime = totalGameTime.TotalMilliseconds / 1000.0;
                         gameTime.IsRunningSlowly = drawRunningSlowly;
 
                         // perform an update
@@ -374,8 +375,9 @@ namespace SampleFramework
                     try
                     {
                         // fill out the rest of the game time
-                        gameTime.ElapsedGameTime = lastFrameElapsedGameTime = elapsedAdjustedTime;
-                        gameTime.TotalGameTime = totalGameTime;
+                        gameTime.ElapsedGameTime = 0;
+                        lastFrameElapsedGameTime = elapsedAdjustedTime;
+                        gameTime.TotalGameTime = totalGameTime.TotalMilliseconds / 1000.0;
                         gameTime.IsRunningSlowly = false;
 
                         // perform an update
@@ -543,10 +545,10 @@ namespace SampleFramework
                     if (!e.Cancel)
                     {
                         // fill in the game time
-                        gameTime.TotalRealTime = clock.CurrentTime;
-                        gameTime.ElapsedRealTime = lastFrameElapsedRealTime;
-                        gameTime.TotalGameTime = totalGameTime;
-                        gameTime.ElapsedGameTime = lastFrameElapsedGameTime;
+                        gameTime.TotalRealTime = clock.CurrentTime.TotalMilliseconds / 1000.0;
+                        gameTime.ElapsedRealTime = lastFrameElapsedRealTime.TotalMilliseconds / 1000.0;
+                        gameTime.TotalGameTime = totalGameTime.TotalMilliseconds / 1000.0;
+                        gameTime.ElapsedGameTime = lastFrameElapsedGameTime.TotalMilliseconds / 1000.0;
                         gameTime.IsRunningSlowly = drawRunningSlowly;
 
                         // draw the frame

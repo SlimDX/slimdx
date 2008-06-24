@@ -356,6 +356,24 @@ namespace SampleFramework
         }
 
         /// <summary>
+        /// Ensures that the device is properly initialized and ready to render.
+        /// </summary>
+        /// <returns><c>true</c> if the device is in a valid state; otherwise, <c>false</c>.</returns>
+        public bool EnsureDevice()
+        {
+            // make sure we have a device
+            if (Device10 != null)
+                return true;
+
+            // if we have a D3D9 device, ensure that it is not lost
+            if (Device9 != null && !deviceLost)
+                return true;
+
+            // otherwise, no good
+            return false;
+        }
+
+        /// <summary>
         /// Releases unmanaged and - optionally - managed resources
         /// </summary>
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>

@@ -74,15 +74,15 @@ namespace Particles
             Window.Text = "SlimDX - Particle Sample";
             Window.KeyDown += Window_KeyDown;
 
-            // create the Direct3D device
-            GraphicsDeviceManager.ChangeDevice(DeviceVersion.Direct3D9, true, InitialWidth, InitialHeight);
-
             // initialize the camera
             camera.FieldOfView = (float)(Math.PI / 4);
             camera.NearPlane = 1.0f;
             camera.FarPlane = 1000.0f;
             camera.Location = new Vector3(0.0f, 0.0f, -100.0f);
             camera.Target = Vector3.Zero;
+
+            // create the Direct3D device
+            GraphicsDeviceManager.ChangeDevice(DeviceVersion.Direct3D9, true, InitialWidth, InitialHeight);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Particles
             Device.BeginScene();
 
             // calculate the world matrix
-            Matrix worldMatrix = Matrix.RotationY(((float)gameTime.TotalGameTime.TotalMilliseconds / 1000.0f) * -0.5f) * Matrix.RotationX(75.0f);
+            Matrix worldMatrix = Matrix.RotationY((float)gameTime.TotalGameTime * -0.5f) * Matrix.RotationX(75.0f);
 
             // draw the particles
             DrawParticles(worldMatrix, camera.ViewMatrix, camera.ProjectionMatrix);

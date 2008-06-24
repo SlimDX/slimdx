@@ -1289,6 +1289,63 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="Vector2">
+          <Members>
+           <Member Name="#SizeInBytes">
+            <Accessors>
+             <Accessor Name="#get_SizeInBytes()">
+              <Messages>
+               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-06-24 23:36:15Z">
+                <Issue>
+                 <Item>'Vector2.SizeInBytes.get()'</Item>
+                 <Item>'Marshal.SizeOf(Type)'</Item>
+                 <Item>&#xD;&#xA;   -&gt;'Vector2.SizeInBytes.get()'&#xD;&#xA;   -&gt;'Vector2.SizeInBytes.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Vector3">
+          <Members>
+           <Member Name="#SizeInBytes">
+            <Accessors>
+             <Accessor Name="#get_SizeInBytes()">
+              <Messages>
+               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-06-24 23:36:15Z">
+                <Issue>
+                 <Item>'Vector3.SizeInBytes.get()'</Item>
+                 <Item>'Marshal.SizeOf(Type)'</Item>
+                 <Item>&#xD;&#xA;   -&gt;'Vector3.SizeInBytes.get()'&#xD;&#xA;   -&gt;'Vector3.SizeInBytes.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Vector4">
+          <Members>
+           <Member Name="#SizeInBytes">
+            <Accessors>
+             <Accessor Name="#get_SizeInBytes()">
+              <Messages>
+               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-06-24 23:36:15Z">
+                <Issue>
+                 <Item>'Vector4.SizeInBytes.get()'</Item>
+                 <Item>'Marshal.SizeOf(Type)'</Item>
+                 <Item>&#xD;&#xA;   -&gt;'Vector4.SizeInBytes.get()'&#xD;&#xA;   -&gt;'Vector4.SizeInBytes.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="WaveFile">
           <Members>
            <Member Name="#Close()">
@@ -13840,75 +13897,6 @@
              <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Status="Excluded" Created="2008-06-20 12:57:30Z">
               <Issue>
                <Item>'Program.PeekMessage(out Message, IntPtr, uint, uint, uint)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
-   <Target Name="$(ProjectDir)/../samples/Direct3D9/Particles/bin/x86/Debug/Particles.exe">
-    <Modules>
-     <Module Name="particles.exe">
-      <Namespaces>
-       <Namespace Name="SampleFramework">
-        <Types>
-         <Type Name="Quad">
-          <Members>
-           <Member Name="#Indices">
-            <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-06-18 21:22:27Z">
-              <Issue>
-               <Item>'Quad.Indices'</Item>
-              </Issue>
-             </Message>
-             <Message Id="Indices" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-06-18 21:22:27Z">
-              <Issue Name="Member">
-               <Item>Indices</Item>
-               <Item>'Quad.Indices'</Item>
-               <Item>Indexes</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Vertices">
-            <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-06-18 21:22:27Z">
-              <Issue>
-               <Item>'Quad.Vertices'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
-   <Target Name="$(ProjectDir)/../samples/Direct3D9/SimpleLighting/bin/x86/Debug/SimpleLighting.exe">
-    <Modules>
-     <Module Name="simplelighting.exe">
-      <Namespaces>
-       <Namespace Name="SimpleLighting">
-        <Types>
-         <Type Name="Camera">
-          <Members>
-           <Member Name="#SetupCamera(SlimDX.Direct3D9.Device,SampleFramework.GameWindow,System.Windows.Forms.MouseEventArgs)">
-            <Messages>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2008-06-19 23:56:34Z">
-              <Issue>
-               <Item>'window'</Item>
-               <Item>'Camera.SetupCamera(Device, GameWindow, MouseEventArgs)'</Item>
-               <Item>'GameWindow'</Item>
-               <Item>'Control'</Item>
               </Issue>
              </Message>
             </Messages>
