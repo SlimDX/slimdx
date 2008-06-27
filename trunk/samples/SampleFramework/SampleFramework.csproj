@@ -104,6 +104,8 @@
     <Compile Include="Interface\InterfaceManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\DeviceCreationException.cs" />
+    <Compile Include="Rendering\Direct3D10Manager.cs" />
+    <Compile Include="Rendering\Direct3D9Manager.cs" />
     <Compile Include="Rendering\Enums.cs" />
     <Compile Include="Rendering\GraphicsDeviceManager.cs" />
     <Compile Include="Rendering\NoCompatibleDevicesException.cs" />
