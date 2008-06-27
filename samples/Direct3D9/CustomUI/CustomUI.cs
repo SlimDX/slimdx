@@ -42,7 +42,7 @@ namespace CustomUI
         /// <value>The Direct3D device.</value>
         public Device Device
         {
-            get { return GraphicsDeviceManager.Device9; }
+            get { return GraphicsDeviceManager.Direct3D9.Device; }
         }
 
         /// <summary>
