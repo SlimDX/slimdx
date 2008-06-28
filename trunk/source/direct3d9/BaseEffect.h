@@ -23,6 +23,8 @@
 
 #include "../math/Color4.h"
 #include "../math/Matrix.h"
+#include "../math/Vector2.h"
+#include "../math/Vector3.h"
 #include "../math/Vector4.h"
 
 #include "Device.h"
@@ -236,6 +238,38 @@ namespace SlimDX
 			/// <param name="values">The new values for the parameter.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetValue( EffectHandle^ parameter, array<float>^ values );
+
+			/// <summary>
+			/// Sets the value of a parameter using the specified data.
+			/// </summary>
+			/// <param name="parameter">The parameter whose value is to be set.</param>
+			/// <param name="value">The new value for the parameter.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result SetValue( EffectHandle^ parameter, Vector2 value );
+
+			/// <summary>
+			/// Sets the value of a parameter using the specified data.
+			/// </summary>
+			/// <param name="parameter">The parameter whose value is to be set.</param>
+			/// <param name="values">The new values for the parameter.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result SetValue( EffectHandle^ parameter, array<Vector2>^ values );
+
+			/// <summary>
+			/// Sets the value of a parameter using the specified data.
+			/// </summary>
+			/// <param name="parameter">The parameter whose value is to be set.</param>
+			/// <param name="value">The new value for the parameter.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result SetValue( EffectHandle^ parameter, Vector3 value );
+
+			/// <summary>
+			/// Sets the value of a parameter using the specified data.
+			/// </summary>
+			/// <param name="parameter">The parameter whose value is to be set.</param>
+			/// <param name="values">The new values for the parameter.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result SetValue( EffectHandle^ parameter, array<Vector3>^ values );
 
 			/// <summary>
 			/// Sets the value of a parameter using the specified data.

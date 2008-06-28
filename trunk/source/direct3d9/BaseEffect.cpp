@@ -28,6 +28,8 @@
 
 #include "../math/Color4.h"
 #include "../math/Matrix.h"
+#include "../math/Vector2.h"
+#include "../math/Vector3.h"
 #include "../math/Vector4.h"
 
 #include "Direct3D9Exception.h"
@@ -341,6 +343,36 @@ namespace Direct3D9
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		pin_ptr<float> pinnedValues = &values[0];
 		HRESULT hr = InternalPointer->SetFloatArray( handle, pinnedValues, values->Length );
+		return RECORD_D3D9( hr );
+	}
+
+	Result BaseEffect::SetValue( EffectHandle^ parameter, Vector2 value )
+	{
+		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
+		HRESULT hr = InternalPointer->SetFloatArray( handle, reinterpret_cast<const FLOAT*>( &value ), 2 );
+		return RECORD_D3D9( hr );
+	}
+
+	Result BaseEffect::SetValue( EffectHandle^ parameter, array<Vector2>^ values )
+	{
+		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
+		pin_ptr<Vector2> pinnedValue = &values[0];
+		HRESULT hr = InternalPointer->SetFloatArray( handle, reinterpret_cast<const FLOAT*>( pinnedValue ), values->Length * 2 );
+		return RECORD_D3D9( hr );
+	}
+
+	Result BaseEffect::SetValue( EffectHandle^ parameter, Vector3 value )
+	{
+		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
+		HRESULT hr = InternalPointer->SetFloatArray( handle, reinterpret_cast<const FLOAT*>( &value ), 3 );
+		return RECORD_D3D9( hr );
+	}
+
+	Result BaseEffect::SetValue( EffectHandle^ parameter, array<Vector3>^ values )
+	{
+		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
+		pin_ptr<Vector3> pinnedValue = &values[0];
+		HRESULT hr = InternalPointer->SetFloatArray( handle, reinterpret_cast<const FLOAT*>( pinnedValue ), values->Length * 3 );
 		return RECORD_D3D9( hr );
 	}
 

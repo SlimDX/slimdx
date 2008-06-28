@@ -22,6 +22,7 @@
 using SlimDX.Direct3D9;
 using SlimDX;
 using System;
+using System.Diagnostics;
 
 namespace SampleFramework
 {
@@ -59,84 +60,106 @@ namespace SampleFramework
         /// <param name="width">The width of the surface.</param>
         /// <param name="height">The height of the surface.</param>
         /// <returns>The newly created render target surface.</returns>
-        public Surface CreateRenderTarget(int width, int height)
+        public Texture CreateRenderTarget(int width, int height)
         {
             // create the surface, using the current device settings
-            return Surface.CreateRenderTarget(Device, width, height, manager.CurrentSettings.BackBufferFormat,
-                manager.CurrentSettings.MultisampleType, manager.CurrentSettings.MultisampleQuality, false);
+            return new Texture(Device, width, height, 1, Usage.RenderTarget, manager.CurrentSettings.BackBufferFormat, Pool.Default);
+        }
+
+        /// <summary>
+        /// Creates a resolve target for capturing the back buffer.
+        /// </summary>
+        /// <returns>The newly created resolve target.</returns>
+        public Texture CreateResolveTarget()
+        {
+            // create the texture target
+            return new Texture(Device, manager.ScreenWidth, manager.ScreenHeight, 1, Usage.RenderTarget, manager.CurrentSettings.BackBufferFormat, Pool.Default);
         }
 
         /// <summary>
         /// Resolves the current back buffer into a texture.
         /// </summary>
-        /// <returns>A texture containing the resolved back buffer.</returns>
+        /// <param name="target">The target texture.</param>
         /// <exception cref="InvalidOperationException">Thrown when the resolve process fails.</exception>
-        public Texture ResolveBackBuffer()
+        public void ResolveBackBuffer(Texture target)
         {
             // call the overload
-            return ResolveBackBuffer(0);
+            ResolveBackBuffer(target, 0);
         }
 
         /// <summary>
         /// Resolves the current back buffer into a texture.
         /// </summary>
+        /// <param name="target">The target texture.</param>
         /// <param name="backBufferIndex">The index of the back buffer.</param>
-        /// <returns>A texture containing the resolved back buffer.</returns>
         /// <exception cref="InvalidOperationException">Thrown when the resolve process fails.</exception>
-        public Texture ResolveBackBuffer(int backBufferIndex)
+        public void ResolveBackBuffer(Texture target, int backBufferIndex)
         {
             // disable exceptions for this method
             bool storedThrow = Configuration.ThrowOnError;
             Configuration.ThrowOnError = false;
 
-            // create the destination texture
-            Texture target = new Texture(Device, manager.CurrentSettings.BackBufferWidth, manager.CurrentSettings.BackBufferHeight,
-                1, Usage.RenderTarget, manager.CurrentSettings.BackBufferFormat, Pool.Default);
-            if (target == null || Result.Last.IsFailure)
+            // grab the current back buffer
+            Surface backBuffer = Device.GetBackBuffer(0, backBufferIndex);
+            if (backBuffer == null || Result.Last.IsFailure)
             {
-                // error occured in target creation
+                // error occurred
                 Configuration.ThrowOnError = storedThrow;
-                throw new InvalidOperationException("Could not create resolve target texture.");
+                throw new InvalidOperationException("Could not obtain back buffer surface.");
             }
 
-            try
+            // grab the destination surface
+            Surface destination = target.GetSurfaceLevel(0);
+            if (destination == null || Result.Last.IsFailure)
             {
-                // grab the current back buffer
-                Surface backBuffer = Device.GetBackBuffer(0, backBufferIndex);
-                if (backBuffer == null || Result.Last.IsFailure)
-                    throw new InvalidOperationException("Could not obtain back buffer surface.");
+                // error occurred
+                backBuffer.Dispose();
+                Configuration.ThrowOnError = storedThrow;
+                throw new InvalidOperationException("Could not obtain resolve target surface.");
+            }
 
-                // grab the destination surface
-                Surface destination = target.GetSurfaceLevel(0);
-                if (destination == null || Result.Last.IsFailure)
-                    throw new InvalidOperationException("Could not obtain resolve target surface.");
-
-                // first try to copy using linear filtering
-                if (Device.StretchRectangle(backBuffer, destination, TextureFilter.Linear).IsFailure)
+            // first try to copy using linear filtering
+            if (Device.StretchRectangle(backBuffer, destination, TextureFilter.Linear).IsFailure)
+            {
+                // that failed, so try with no filtering
+                if (Device.StretchRectangle(backBuffer, destination, TextureFilter.None).IsFailure)
                 {
-                    // that failed, so try with no filtering
-                    if (Device.StretchRectangle(backBuffer, destination, TextureFilter.None).IsFailure)
+                    // that failed as well, so the last thing we can try is a load surface call
+                    if (Surface.FromSurface(destination, backBuffer, Filter.Default, 0).IsFailure)
                     {
-                        // that failed as well, so the last thing we can try is a load surface call
-                        if (Surface.FromSurface(destination, backBuffer, Filter.Default, 0).IsFailure)
-                            throw new InvalidOperationException("Could not copy surfaces.");
+                        // error occurred
+                        backBuffer.Dispose();
+                        destination.Dispose();
+                        Configuration.ThrowOnError = storedThrow;
+                        throw new InvalidOperationException("Could not copy surfaces.");
                     }
                 }
             }
-            catch
+
+            // clean up
+            backBuffer.Dispose();
+            destination.Dispose();
+            Configuration.ThrowOnError = storedThrow;
+        }
+
+        /// <summary>
+        /// Resets the render target.
+        /// </summary>
+        public void ResetRenderTarget()
+        {
+            // grab the back buffer
+            Surface backBuffer = Device.GetBackBuffer(0, 0);
+
+            try
             {
-                // clean up the target
-                target.Dispose();
-                throw;
+                // reset the render target
+                Device.SetRenderTarget(0, backBuffer);
             }
             finally
             {
-                // restore the throw state
-                Configuration.ThrowOnError = storedThrow;
+                // release the back buffer
+                backBuffer.Dispose();
             }
-
-            // return the target
-            return target;
         }
     }
 }
