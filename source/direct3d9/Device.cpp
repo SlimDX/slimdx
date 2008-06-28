@@ -655,7 +655,9 @@ namespace Direct3D9
 		RECORD_D3D9( hr );
 
 		int intValue = static_cast<int>( value );
-		return (T) intValue;
+		if( T::typeid == bool::typeid )
+			return safe_cast<T>(intValue != 0);
+		return safe_cast<T>( intValue );
 	}
 	
 	int Device::GetRenderState( RenderState state )
@@ -674,7 +676,9 @@ namespace Direct3D9
 		RECORD_D3D9( hr );
 
 		int intValue = static_cast<int>( value );
-		return (T) intValue;
+		if( T::typeid == bool::typeid )
+			return safe_cast<T>(intValue != 0);
+		return safe_cast<T>( intValue );
 	}
 #pragma warning(default:4717)
 
@@ -691,7 +695,9 @@ namespace Direct3D9
 		RECORD_D3D9( hr );
 
 		int intValue = static_cast<int>( value );
-		return (T) intValue;
+		if( T::typeid == bool::typeid )
+			return safe_cast<T>(intValue != 0);
+		return safe_cast<T>( intValue );
 	}
 
 	int Device::GetTextureStageState( int stage, TextureStage type )
