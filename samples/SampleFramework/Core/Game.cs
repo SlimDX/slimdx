@@ -460,9 +460,6 @@ namespace SampleFramework
             // check if we should release managed resources
             if (disposing)
             {
-                // release game data
-                Release();
-
                 // release the graphics device manager
                 if (GraphicsDeviceManager != null)
                     GraphicsDeviceManager.Dispose();

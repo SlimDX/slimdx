@@ -176,9 +176,6 @@ namespace SampleFramework
             // create the managers
             Direct3D9 = new Direct3D9Manager(this);
             Direct3D10 = new Direct3D10Manager(this);
-
-            // initialize the current settings
-            CurrentSettings = new DeviceSettings();
         }
 
         /// <summary>
@@ -225,36 +222,6 @@ namespace SampleFramework
 
             // create the device
             CreateDevice(validSettings);
-
-            // propogate new settings into the current settings account
-            if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
-            {
-                // propogate settings
-                CurrentSettings.BackBufferCount = CurrentSettings.Direct3D9.PresentParameters.BackBufferCount;
-                CurrentSettings.BackBufferWidth = CurrentSettings.Direct3D9.PresentParameters.BackBufferWidth;
-                CurrentSettings.BackBufferHeight = CurrentSettings.Direct3D9.PresentParameters.BackBufferHeight;
-                CurrentSettings.BackBufferFormat = CurrentSettings.Direct3D9.PresentParameters.BackBufferFormat;
-                CurrentSettings.DepthStencilFormat = CurrentSettings.Direct3D9.PresentParameters.AutoDepthStencilFormat;
-                CurrentSettings.DeviceType = CurrentSettings.Direct3D9.DeviceType;
-                CurrentSettings.MultisampleQuality = CurrentSettings.Direct3D9.PresentParameters.MultisampleQuality;
-                CurrentSettings.MultisampleType = CurrentSettings.Direct3D9.PresentParameters.Multisample;
-                CurrentSettings.RefreshRate = CurrentSettings.Direct3D9.PresentParameters.FullScreenRefreshRateInHertz;
-                CurrentSettings.Windowed = CurrentSettings.Direct3D9.PresentParameters.Windowed;
-            }
-            else
-            {
-                // propogate settings
-                CurrentSettings.BackBufferCount = CurrentSettings.Direct3D10.SwapChainDescription.BufferCount;
-                CurrentSettings.BackBufferWidth = CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Width;
-                CurrentSettings.BackBufferHeight = CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Height;
-                CurrentSettings.BackBufferFormat = ConversionMethods.ToDirect3D9(CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Format);
-                CurrentSettings.DepthStencilFormat = ConversionMethods.ToDirect3D9(CurrentSettings.Direct3D10.DepthStencilFormat);
-                CurrentSettings.DeviceType = ConversionMethods.ToDirect3D9(CurrentSettings.Direct3D10.DriverType);
-                CurrentSettings.MultisampleQuality = CurrentSettings.Direct3D10.SwapChainDescription.SampleDescription.Quality;
-                CurrentSettings.MultisampleType = ConversionMethods.ToDirect3D9(CurrentSettings.Direct3D10.SwapChainDescription.SampleDescription.Count);
-                CurrentSettings.RefreshRate = (int)ConversionMethods.ToFloat(CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.RefreshRate);
-                CurrentSettings.Windowed = CurrentSettings.Direct3D10.SwapChainDescription.IsWindowed;
-            }
         }
 
         /// <summary>
@@ -618,8 +585,6 @@ namespace SampleFramework
                     newSettings.Direct3D9.PresentParameters.BackBufferWidth = 0;
                     newSettings.Direct3D9.PresentParameters.BackBufferHeight = 0;
                     CreateDevice(newSettings);
-                    newSettings.BackBufferWidth = newSettings.Direct3D9.PresentParameters.BackBufferWidth;
-                    newSettings.BackBufferHeight = newSettings.Direct3D9.PresentParameters.BackBufferHeight;
                 }
             }
             else
@@ -839,6 +804,9 @@ namespace SampleFramework
                 throw new DeviceCreationException("Could not create graphics device.", e);
             }
 
+            // propogate the settings
+            PropogateSettings();
+
             // update device stats
             UpdateDeviceStats();
 
@@ -910,6 +878,9 @@ namespace SampleFramework
                         Direct3D10.SwapChain.ResizeTarget(newSettings.Direct3D10.SwapChainDescription.ModeDescription);
                 }
             }
+
+            // propogate the settings
+            PropogateSettings();
 
             // update device stats
             UpdateDeviceStats();
@@ -1009,6 +980,42 @@ namespace SampleFramework
             Factory = null;
             if (CurrentSettings != null)
                 CurrentSettings.Direct3D10 = null;
+        }
+
+        /// <summary>
+        /// Propogates the settings.
+        /// </summary>
+        void PropogateSettings()
+        {
+            // propogate new settings into the current settings account
+            if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
+            {
+                // propogate settings
+                CurrentSettings.BackBufferCount = CurrentSettings.Direct3D9.PresentParameters.BackBufferCount;
+                CurrentSettings.BackBufferWidth = CurrentSettings.Direct3D9.PresentParameters.BackBufferWidth;
+                CurrentSettings.BackBufferHeight = CurrentSettings.Direct3D9.PresentParameters.BackBufferHeight;
+                CurrentSettings.BackBufferFormat = CurrentSettings.Direct3D9.PresentParameters.BackBufferFormat;
+                CurrentSettings.DepthStencilFormat = CurrentSettings.Direct3D9.PresentParameters.AutoDepthStencilFormat;
+                CurrentSettings.DeviceType = CurrentSettings.Direct3D9.DeviceType;
+                CurrentSettings.MultisampleQuality = CurrentSettings.Direct3D9.PresentParameters.MultisampleQuality;
+                CurrentSettings.MultisampleType = CurrentSettings.Direct3D9.PresentParameters.Multisample;
+                CurrentSettings.RefreshRate = CurrentSettings.Direct3D9.PresentParameters.FullScreenRefreshRateInHertz;
+                CurrentSettings.Windowed = CurrentSettings.Direct3D9.PresentParameters.Windowed;
+            }
+            else
+            {
+                // propogate settings
+                CurrentSettings.BackBufferCount = CurrentSettings.Direct3D10.SwapChainDescription.BufferCount;
+                CurrentSettings.BackBufferWidth = CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Width;
+                CurrentSettings.BackBufferHeight = CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Height;
+                CurrentSettings.BackBufferFormat = ConversionMethods.ToDirect3D9(CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Format);
+                CurrentSettings.DepthStencilFormat = ConversionMethods.ToDirect3D9(CurrentSettings.Direct3D10.DepthStencilFormat);
+                CurrentSettings.DeviceType = ConversionMethods.ToDirect3D9(CurrentSettings.Direct3D10.DriverType);
+                CurrentSettings.MultisampleQuality = CurrentSettings.Direct3D10.SwapChainDescription.SampleDescription.Quality;
+                CurrentSettings.MultisampleType = ConversionMethods.ToDirect3D9(CurrentSettings.Direct3D10.SwapChainDescription.SampleDescription.Count);
+                CurrentSettings.RefreshRate = (int)ConversionMethods.ToFloat(CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.RefreshRate);
+                CurrentSettings.Windowed = CurrentSettings.Direct3D10.SwapChainDescription.IsWindowed;
+            }
         }
 
         /// <summary>
