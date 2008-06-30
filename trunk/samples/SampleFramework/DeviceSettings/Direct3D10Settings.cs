@@ -252,6 +252,12 @@ namespace SampleFramework
             else
                 mode.RefreshRate = new Rational(settings.RefreshRate, 1);
 
+            // sync interval
+            if (settings.EnableVSync)
+                optimal.SyncInterval = 1;
+            else
+                optimal.SyncInterval = 0;
+
             // return the optimal settings
             swapChainDescription.SampleDescription = sample;
             swapChainDescription.ModeDescription = mode;
@@ -264,7 +270,6 @@ namespace SampleFramework
         /// </summary>
         /// <param name="combo">The settings combo.</param>
         /// <param name="optimal">The optimal settings.</param>
-        /// <param name="desktopMode">The desktop mode.</param>
         /// <returns>The ranking of the combo.</returns>
         public static float RankSettingsCombo(SettingsCombo10 combo, Direct3D10Settings optimal)
         {

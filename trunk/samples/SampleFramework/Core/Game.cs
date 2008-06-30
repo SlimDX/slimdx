@@ -21,7 +21,6 @@
 */
 using System;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using SlimDX;
@@ -48,6 +47,8 @@ namespace SampleFramework
         int updatesSinceRunningSlowly2 = int.MaxValue;
         bool forceElapsedTimeToZero;
         bool drawRunningSlowly;
+        long lastUpdateFrame;
+        float lastUpdateTime;
 
         /// <summary>
         /// Occurs when the game is disposed.
@@ -146,6 +147,16 @@ namespace SampleFramework
         }
 
         /// <summary>
+        /// Gets the resources collection.
+        /// </summary>
+        /// <value>The resources collection.</value>
+        public ResourceCollection Resources
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// Gets the game window.
         /// </summary>
         /// <value>The game window.</value>
@@ -206,6 +217,9 @@ namespace SampleFramework
             // set initial values
             IsFixedTimeStep = true;
 
+            // create the resource collection
+            Resources = new ResourceCollection();
+
             // create the window
             Window = new GameWindow();
             Window.ApplicationActivated += Window_ApplicationActivated;
@@ -250,8 +264,8 @@ namespace SampleFramework
                 // reset the timing state
                 gameTime.ElapsedGameTime = 0;
                 gameTime.ElapsedRealTime = 0;
-                gameTime.TotalGameTime = totalGameTime.TotalMilliseconds / 1000.0f;
-                gameTime.TotalRealTime = clock.CurrentTime.TotalMilliseconds / 1000.0f;
+                gameTime.TotalGameTime = (float)totalGameTime.TotalSeconds;
+                gameTime.TotalRealTime = (float)clock.CurrentTime.TotalSeconds;
                 gameTime.IsRunningSlowly = false;
 
                 // run the first update
@@ -287,8 +301,8 @@ namespace SampleFramework
             clock.Step();
 
             // update the game time
-            gameTime.TotalRealTime = clock.CurrentTime.TotalMilliseconds / 1000.0;
-            gameTime.ElapsedRealTime = clock.ElapsedTime.TotalMilliseconds / 1000.0;
+            gameTime.TotalRealTime = (float)clock.CurrentTime.TotalSeconds;
+            gameTime.ElapsedRealTime = (float)clock.ElapsedTime.TotalSeconds;
             lastFrameElapsedRealTime += clock.ElapsedTime;
             TimeSpan elapsedAdjustedTime = clock.ElapsedAdjustedTime;
             if (elapsedAdjustedTime < TimeSpan.Zero)
@@ -347,8 +361,8 @@ namespace SampleFramework
                     try
                     {
                         // fill out the rest of the game time
-                        gameTime.ElapsedGameTime = targetElapsedTime.TotalMilliseconds / 1000.0;
-                        gameTime.TotalGameTime = totalGameTime.TotalMilliseconds / 1000.0;
+                        gameTime.ElapsedGameTime = (float)targetElapsedTime.TotalSeconds;
+                        gameTime.TotalGameTime = (float)totalGameTime.TotalSeconds;
                         gameTime.IsRunningSlowly = drawRunningSlowly;
 
                         // perform an update
@@ -377,7 +391,7 @@ namespace SampleFramework
                         // fill out the rest of the game time
                         gameTime.ElapsedGameTime = 0;
                         lastFrameElapsedGameTime = elapsedAdjustedTime;
-                        gameTime.TotalGameTime = totalGameTime.TotalMilliseconds / 1000.0;
+                        gameTime.TotalGameTime = (float)totalGameTime.TotalSeconds;
                         gameTime.IsRunningSlowly = false;
 
                         // perform an update
@@ -391,9 +405,18 @@ namespace SampleFramework
                 }
             }
 
-            // draw the frame, but only if we aren't in the middle of sizing operations
-            if (!Window.InSizeMove)
-                DrawFrame();
+            // draw the frame
+            DrawFrame();
+
+            // refresh the FPS counter once per second
+            lastUpdateFrame++;
+            if ((float)clock.CurrentTime.TotalSeconds - lastUpdateTime > 1.0f)
+            {
+                // update the frames per second
+                gameTime.FramesPerSecond = (float)lastUpdateFrame / (float)(clock.CurrentTime.TotalSeconds - lastUpdateTime);
+                lastUpdateTime = (float)clock.CurrentTime.TotalSeconds;
+                lastUpdateFrame = 0;
+            }
         }
 
         /// <summary>
@@ -428,6 +451,8 @@ namespace SampleFramework
         /// </summary>
         protected internal virtual void Initialize()
         {
+            // update the resources
+            Resources.Initialize(GraphicsDeviceManager);
         }
 
         /// <summary>
@@ -435,6 +460,8 @@ namespace SampleFramework
         /// </summary>
         protected internal virtual void LoadContent()
         {
+            // update the resources
+            Resources.LoadContent();
         }
 
         /// <summary>
@@ -442,6 +469,8 @@ namespace SampleFramework
         /// </summary>
         protected internal virtual void UnloadContent()
         {
+            // update the resources
+            Resources.UnloadContent();
         }
 
         /// <summary>
@@ -449,6 +478,8 @@ namespace SampleFramework
         /// </summary>
         protected internal virtual void Release()
         {
+            // update the resources
+            Resources.Release();
         }
 
         /// <summary>
@@ -542,10 +573,10 @@ namespace SampleFramework
                     if (!e.Cancel)
                     {
                         // fill in the game time
-                        gameTime.TotalRealTime = clock.CurrentTime.TotalMilliseconds / 1000.0;
-                        gameTime.ElapsedRealTime = lastFrameElapsedRealTime.TotalMilliseconds / 1000.0;
-                        gameTime.TotalGameTime = totalGameTime.TotalMilliseconds / 1000.0;
-                        gameTime.ElapsedGameTime = lastFrameElapsedGameTime.TotalMilliseconds / 1000.0;
+                        gameTime.TotalRealTime = (float)clock.CurrentTime.TotalSeconds;
+                        gameTime.ElapsedRealTime = (float)lastFrameElapsedRealTime.TotalSeconds;
+                        gameTime.TotalGameTime = (float)totalGameTime.TotalSeconds;
+                        gameTime.ElapsedGameTime = (float)lastFrameElapsedGameTime.TotalSeconds;
                         gameTime.IsRunningSlowly = drawRunningSlowly;
 
                         // draw the frame

@@ -32,7 +32,7 @@ namespace SampleFramework
         Dialog parent;
 
         /// <summary>
-        /// Gets the <see cref="Interface.Control"/> with the specified name.
+        /// Gets the <see cref="Control"/> with the specified name.
         /// </summary>
         /// <value>The control with the specified name.</value>
         public Control this[string name]

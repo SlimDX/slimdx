@@ -110,6 +110,16 @@ namespace SampleFramework
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether VSync is enabled.
+        /// </summary>
+        /// <value><c>true</c> if VSync is enabled; otherwise, <c>false</c>.</value>
+        public bool EnableVSync
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the multisample type.
         /// </summary>
         /// <value>The multisample type.</value>
@@ -172,6 +182,7 @@ namespace SampleFramework
             MultisampleType = MultisampleType.None;
             DepthStencilFormat = Format.Unknown;
             Windowed = true;
+            EnableVSync = true;
         }
 
         /// <summary>
@@ -195,6 +206,7 @@ namespace SampleFramework
             result.MultisampleQuality = MultisampleQuality;
             result.MultisampleType = MultisampleType;
             result.Windowed = Windowed;
+            result.EnableVSync = EnableVSync;
 
             // clone each API specific portion
             if (Direct3D9 != null)

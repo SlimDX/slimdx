@@ -45,6 +45,7 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
+    <DocumentationFile>bin\x86\Release\SampleFramework.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DebugSymbols>true</DebugSymbols>
@@ -79,6 +80,7 @@
     <Compile Include="Controls\ScrollBar.cs" />
     <Compile Include="Controls\TextControl.cs">
     </Compile>
+    <Compile Include="Resources\IResource.cs" />
     <Compile Include="DeviceSettings\ConversionMethods.cs" />
     <Compile Include="Core\Game.cs" />
     <Compile Include="Core\GameClock.cs" />
@@ -109,6 +111,8 @@
     <Compile Include="Rendering\Enums.cs" />
     <Compile Include="Rendering\GraphicsDeviceManager.cs" />
     <Compile Include="Rendering\NoCompatibleDevicesException.cs" />
+    <Compile Include="Resources\ResourceCollection.cs" />
+    <Compile Include="Text\TextConsole.cs" />
     <Compile Include="Win32\NativeMethods.cs" />
     <Compile Include="Win32\NativeStructures.cs" />
     <Compile Include="Win32\WindowConstants.cs" />
