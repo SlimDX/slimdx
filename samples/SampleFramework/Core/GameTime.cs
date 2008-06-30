@@ -29,10 +29,20 @@ namespace SampleFramework
     public class GameTime
     {
         /// <summary>
+        /// Gets the current frames-per-second measure.
+        /// </summary>
+        /// <value>The current frames-per-second measure.</value>
+        public float FramesPerSecond
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
         /// Gets the elapsed game time, in seconds.
         /// </summary>
         /// <value>The elapsed game time.</value>
-        public double ElapsedGameTime
+        public float ElapsedGameTime
         {
             get;
             internal set;
@@ -42,7 +52,7 @@ namespace SampleFramework
         /// Gets the elapsed real time, in seconds.
         /// </summary>
         /// <value>The elapsed real time.</value>
-        public double ElapsedRealTime
+        public float ElapsedRealTime
         {
             get;
             internal set;
@@ -52,7 +62,7 @@ namespace SampleFramework
         /// Gets the total game time, in seconds.
         /// </summary>
         /// <value>The total game time.</value>
-        public double TotalGameTime
+        public float TotalGameTime
         {
             get;
             internal set;
@@ -62,7 +72,7 @@ namespace SampleFramework
         /// Gets the total real time, in seconds.
         /// </summary>
         /// <value>The total real time.</value>
-        public double TotalRealTime
+        public float TotalRealTime
         {
             get;
             internal set;
@@ -94,7 +104,7 @@ namespace SampleFramework
         /// <param name="elapsedRealTime">The elapsed real time.</param>
         /// <param name="totalGameTime">The total game time.</param>
         /// <param name="elapsedGameTime">The elapsed game time.</param>
-        public GameTime(double totalRealTime, double elapsedRealTime, double totalGameTime, double elapsedGameTime)
+        public GameTime(float totalRealTime, float elapsedRealTime, float totalGameTime, float elapsedGameTime)
             : this(totalRealTime, elapsedRealTime, totalGameTime, elapsedGameTime, false)
         {
         }
@@ -107,7 +117,7 @@ namespace SampleFramework
         /// <param name="totalGameTime">The total game time.</param>
         /// <param name="elapsedGameTime">The elapsed game time.</param>
         /// <param name="isRunningSlowly">if set to <c>true</c>, the game is running slowly.</param>
-        public GameTime(double totalRealTime, double elapsedRealTime, double totalGameTime, double elapsedGameTime, bool isRunningSlowly)
+        public GameTime(float totalRealTime, float elapsedRealTime, float totalGameTime, float elapsedGameTime, bool isRunningSlowly)
         {
             // store variables
             TotalRealTime = totalRealTime;

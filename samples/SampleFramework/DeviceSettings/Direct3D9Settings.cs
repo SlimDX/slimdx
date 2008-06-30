@@ -200,6 +200,10 @@ namespace SampleFramework
             else
                 optimal.PresentParameters.AutoDepthStencilFormat = settings.DepthStencilFormat;
 
+            // figure out the presentation interval
+            if (!settings.EnableVSync)
+                optimal.PresentParameters.PresentationInterval = PresentInterval.Immediate;
+
             // return the optimal settings
             return optimal;
         }

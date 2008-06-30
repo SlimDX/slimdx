@@ -33,7 +33,7 @@ namespace SampleFramework
         InterfaceManager parent;
 
         /// <summary>
-        /// Gets the <see cref="Interface.Dialog"/> with the specified name.
+        /// Gets the <see cref="Dialog"/> with the specified name.
         /// </summary>
         /// <value>The dialog with the specified name.</value>
         public Dialog this[string name]

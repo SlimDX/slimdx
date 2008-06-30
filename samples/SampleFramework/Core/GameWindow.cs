@@ -43,6 +43,7 @@ namespace SampleFramework
         const string DefaultIconName = "Game.ico";
 
         // variables
+        Size cachedSize;
         bool minimized;
         bool maximized;
         bool inSizeMove;
@@ -91,15 +92,6 @@ namespace SampleFramework
         /// Occurs when a screen saver is about to be activated.
         /// </summary>
         public event CancelEventHandler Screensaver;
-
-        /// <summary>
-        /// Gets a value indicating whether the window is in the middle of sizing operations.
-        /// </summary>
-        /// <value><c>true</c> if the window is in the middle of sizing operations; otherwise, <c>false</c>.</value>
-        internal bool InSizeMove
-        {
-            get { return inSizeMove; }
-        }
 
         /// <summary>
         /// Gets a value indicating whether this instance is minimized.
@@ -249,6 +241,19 @@ namespace SampleFramework
         }
 
         /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Form.Load"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
+        protected override void OnLoad(EventArgs e)
+        {
+            // call the base method
+            base.OnLoad(e);
+
+            // cache the size
+            cachedSize = Size;
+        }
+
+        /// <summary>
         /// Raises the <see cref="E:System.Windows.Forms.Form.ResizeBegin"/> event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.EventArgs"/> that contains the event data.</param>
@@ -259,6 +264,7 @@ namespace SampleFramework
 
             // suspend any processing until we are done being minimized
             inSizeMove = true;
+            cachedSize = Size;
             OnSuspend(EventArgs.Empty);
         }
 
@@ -336,10 +342,12 @@ namespace SampleFramework
                         maximized = false;
 
                         // check for screen and size changes
-                        if (!inSizeMove)
+                        if (!inSizeMove && Size != cachedSize)
                         {
+                            // update the state of the window
                             OnUserResized(EventArgs.Empty);
                             UpdateScreen();
+                            cachedSize = Size;
                         }
                     }
                 }
@@ -399,7 +407,7 @@ namespace SampleFramework
         {
             // grab the current screen
             Screen current = Screen.FromHandle(Handle);
-            if (Screen == null || Screen != current)
+            if (Screen == null || Screen.DeviceName != current.DeviceName)
             {
                 // update the value
                 Screen = current;

@@ -86,6 +86,7 @@ namespace SampleFramework
         /// </summary>
         /// <param name="position">The position.</param>
         /// <param name="color">The color.</param>
+        /// <param name="textureCoordinates">The texture coordinates.</param>
         public TransformedColoredTexturedVertex(Vector4 position, int color, Vector2 textureCoordinates)
             : this()
         {
