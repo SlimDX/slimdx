@@ -28,6 +28,7 @@ using System.Reflection;
 using System.Resources;
 using System.Security.Permissions;
 using System.Windows.Forms;
+using SampleFramework.Properties;
 
 namespace SampleFramework
 {
@@ -40,7 +41,6 @@ namespace SampleFramework
         const int DefaultWidth = 800;
         const int DefaultHeight = 600;
         const string DefaultTitle = "Game";
-        const string DefaultIconName = "Game.ico";
 
         // variables
         Size cachedSize;
@@ -506,75 +506,8 @@ namespace SampleFramework
         /// <returns>The default application icon, or <c>null</c> if it cannot be found.</returns>
         static Icon GetDefaultIcon()
         {
-            // try to get the entry assembly
-            Icon icon;
-            Assembly entry = Assembly.GetEntryAssembly();
-            if (entry != null)
-            {
-                try
-                {
-                    // extract the icon
-                    icon = Icon.ExtractAssociatedIcon(entry.Location);
-                    if (icon != null)
-                        return icon;
-                }
-                catch (ArgumentException)
-                {
-                    // swallow the exception
-                }
-            }
-
-            // if we haven't found a default icon yet, search for the first icon in the assembly
-            icon = FindFirstIcon(entry);
-            if (icon != null)
-                return icon;
-
-            // if there are no icons, create a default one for use with the game
-            return new Icon(typeof(Game), DefaultIconName);
-        }
-
-        /// <summary>
-        /// Finds the first icon in an assembly.
-        /// </summary>
-        /// <param name="assembly">The assembly.</param>
-        /// <returns>The first icon resource in the assembly, or <c>null</c> if one cannot be found.</returns>
-        static Icon FindFirstIcon(Assembly assembly)
-        {
-            // make sure we have an assembly
-            if (assembly == null)
-                return null;
-
-            // check each resource
-            foreach (string name in assembly.GetManifestResourceNames())
-            {
-                try
-                {
-                    // try to load the resource stream as an icon
-                    return new Icon(assembly.GetManifestResourceStream(name));
-                }
-                catch
-                {
-                    try
-                    {
-                        // it didn't work, so try loading different parts of the resource
-                        IDictionaryEnumerator enumerator = new ResourceReader(assembly.GetManifestResourceStream(name)).GetEnumerator();
-                        while (enumerator.MoveNext())
-                        {
-                            // try to get the icon
-                            Icon icon = enumerator.Value as Icon;
-                            if (icon != null)
-                                return icon;
-                        }
-                    }
-                    catch
-                    {
-                        // swallow the exception
-                    }
-                }
-            }
-
-            // if we got to this point, no icon was found
-            return null;
+            // create a default one for use with the game
+            return (Icon)Resources.sdx_icon_black.Clone();
         }
     }
 }
