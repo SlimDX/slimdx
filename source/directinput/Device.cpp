@@ -21,10 +21,10 @@
 */
 #include <windows.h>
 #include <dinput.h>
+#include <vector>
 
 #include "../ComObject.h"
 #include "../Utilities.h"
-#include "../StackAlloc.h"
 
 #include "DirectInput.h"
 #include "DirectInputException.h"
@@ -118,7 +118,7 @@ namespace DirectInput
 			format.dwDataSize = sizeof( type );
 			format.dwNumObjs = objectAttributes->Count;
 
-			stack_vector<DIOBJECTDATAFORMAT> objectFormats( objectAttributes->Count );
+			std::vector<DIOBJECTDATAFORMAT> objectFormats( objectAttributes->Count );
 			for( int i = 0; i < objectAttributes->Count; i++ )
 			{
 				GUID *guid = new GUID( Utilities::ConvertManagedGuid( objectAttributes[i]->SourceGuid ) );
@@ -237,7 +237,7 @@ namespace DirectInput
 		if( size == 0 )
 			return list;
 
-		stack_vector<DIDEVICEOBJECTDATA> data( size );
+		std::vector<DIDEVICEOBJECTDATA> data( size );
 		hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), &data[0], &size, 0 );
 		if( RecordError( hr ).IsFailure )
 			return nullptr;
@@ -340,7 +340,7 @@ namespace DirectInput
 		else
 		{
 			size_t typeSize = sizeof(type);
-			stack_vector<BYTE> bytes(typeSize);
+			std::vector<BYTE> bytes(typeSize);
 			HRESULT hr = InternalPointer->GetDeviceState( static_cast<DWORD>(sizeof(BYTE) * typeSize), &bytes[0] );
 			if( RecordError( hr ).IsFailure )
 				return Result::Last;
@@ -405,7 +405,7 @@ namespace DirectInput
 		else
 		{
 			size_t typeSize = sizeof(type);
-			stack_vector<BYTE> bytes(typeSize);
+			std::vector<BYTE> bytes(typeSize);
 			HRESULT hr = InternalPointer->GetDeviceState( static_cast<DWORD>(sizeof(BYTE) * typeSize), &bytes[0] );
 
 			DataFormat result = Activator::CreateInstance<DataFormat>();

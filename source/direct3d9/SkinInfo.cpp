@@ -22,10 +22,10 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <vcclr.h>
+#include <vector>
 
 #include "../DataStream.h"
 #include "../ComObject.h"
-#include "../StackAlloc.h"
 
 #include "Device.h"
 #include "IndexBuffer.h"
@@ -70,7 +70,7 @@ namespace Direct3D9
 		ID3DXSkinInfo *result;
 
 		int length = boneCombinationTable->Length;
-		stack_vector<D3DXBONECOMBINATION> bones( length );
+		std::vector<D3DXBONECOMBINATION> bones( length );
 		for( int i = 0; i < length; i++ )
 			bones[i] = boneCombinationTable[i]->ToUnmanaged();
 

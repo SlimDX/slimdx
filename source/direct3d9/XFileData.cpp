@@ -21,10 +21,10 @@
 */
 #include <d3d9.h>
 #include <d3dx9.h>
+#include <vector>
 
 #include "../ComObject.h"
 #include "../DataStream.h"
-#include "../StackAlloc.h"
 #include "XFile.h"
 
 #include "Direct3D9Exception.h"
@@ -146,7 +146,7 @@ namespace Direct3D9
 
 	String^ XFileData::Name::get()
 	{
-		stack_vector<char> name;
+		std::vector<char> name;
 		SIZE_T size = 0;
 
 		HRESULT hr = InternalPointer->GetName( NULL, &size );

@@ -22,11 +22,11 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <vcclr.h>
+#include <vector>
 
 #include "../ComObject.h"
 #include "../Utilities.h"
 #include "../DataStream.h"
-#include "../StackAlloc.h"
 
 #include "Device.h"
 #include "Texture.h"
@@ -471,8 +471,8 @@ namespace Direct3D9
 		array<ExtendedMaterial>^ materials = mesh->GetMaterials();
 		array<EffectInstance>^ effects = mesh->GetEffects();
 
-		stack_vector<D3DXMATERIAL> nativeMaterials;
-		stack_vector<D3DXEFFECTINSTANCE> nativeEffects;
+		std::vector<D3DXMATERIAL> nativeMaterials;
+		std::vector<D3DXEFFECTINSTANCE> nativeEffects;
 
 		if( materials != nullptr )
 		{

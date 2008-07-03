@@ -22,11 +22,11 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <vcclr.h>
+#include <vector>
 
 #include "../ComObject.h"
 #include "../Utilities.h"
 #include "../DataStream.h"
-#include "../StackAlloc.h"
 
 #include "Direct3D9Exception.h"
 
@@ -400,7 +400,7 @@ namespace Direct3D9
 		ID3DXBuffer *buffer;
 		DWORD *adjacencyIn = NULL;
 		DWORD *adjacencyOutPtr = NULL;
-		stack_vector<DWORD> adjacencyOut( FaceCount * 3 );
+		std::vector<DWORD> adjacencyOut( FaceCount * 3 );
 
 		array<int>^ adjacency = GetAdjacency();
 		pin_ptr<int> pinnedAdjIn;
@@ -441,7 +441,7 @@ namespace Direct3D9
 	{
 		DWORD *adjacencyIn = NULL;
 		DWORD *adjacencyOutPtr = NULL;
-		stack_vector<DWORD> adjacencyOut( FaceCount * 3 );
+		std::vector<DWORD> adjacencyOut( FaceCount * 3 );
 
 		array<int>^ adjacency = GetAdjacency();
 		pin_ptr<int> pinnedAdjIn;
@@ -475,7 +475,7 @@ namespace Direct3D9
 		ID3DXBuffer *buffer;
 		DWORD *adjacencyIn = NULL;
 		DWORD *adjacencyOutPtr = NULL;
-		stack_vector<DWORD> adjacencyOut( FaceCount * 3 );
+		std::vector<DWORD> adjacencyOut( FaceCount * 3 );
 
 		array<int>^ adjacency = GetAdjacency();
 		pin_ptr<int> pinnedAdjIn;
@@ -515,7 +515,7 @@ namespace Direct3D9
 		ID3DXMesh *result;
 		DWORD *adjacencyIn = NULL;
 		DWORD *adjacencyOutPtr = NULL;
-		stack_vector<DWORD> adjacencyOut( FaceCount * 3 );
+		std::vector<DWORD> adjacencyOut( FaceCount * 3 );
 
 		array<int>^ adjacency = GetAdjacency();
 		pin_ptr<int> pinnedAdjIn;
@@ -547,7 +547,7 @@ namespace Direct3D9
 		ID3DXBuffer *errors;
 		DWORD *adjacencyIn = NULL;
 		DWORD *adjacencyOutPtr = NULL;
-		stack_vector<DWORD> adjacencyOut( FaceCount * 3 );
+		std::vector<DWORD> adjacencyOut( FaceCount * 3 );
 
 		array<int>^ adjacency = GetAdjacency();
 		pin_ptr<int> pinnedAdjIn;
@@ -583,7 +583,7 @@ namespace Direct3D9
 		ID3DXMesh *result;
 		DWORD *adjacencyIn = NULL;
 		DWORD *adjacencyOutPtr = NULL;
-		stack_vector<DWORD> adjacencyOut( FaceCount * 3 );
+		std::vector<DWORD> adjacencyOut( FaceCount * 3 );
 
 		array<int>^ adjacency = GetAdjacency();
 		pin_ptr<int> pinnedAdjIn;
@@ -734,7 +734,7 @@ namespace Direct3D9
 		D3DXMATRIX *geoXForms = NULL;
 		D3DXMATRIX *textureXForms = NULL;
 		D3DVERTEXELEMENT9 *decl = NULL;
-		stack_vector<ID3DXMesh*> input;
+		std::vector<ID3DXMesh*> input;
 
 		pin_ptr<Matrix> pinnedGeo = nullptr;
 		pin_ptr<Matrix> pinnedTexture = nullptr;
@@ -777,7 +777,7 @@ namespace Direct3D9
 		ID3DXMesh *result;
 		D3DXMATRIX *geoXForms = NULL;
 		D3DXMATRIX *textureXForms = NULL;
-		stack_vector<ID3DXMesh*> input;
+		std::vector<ID3DXMesh*> input;
 
 		pin_ptr<Matrix> pinnedGeo = nullptr;
 		pin_ptr<Matrix> pinnedTexture = nullptr;
@@ -810,7 +810,7 @@ namespace Direct3D9
 	Mesh^ Mesh::Concatenate( SlimDX::Direct3D9::Device^ device, array<Mesh^>^ meshes, MeshFlags options )
 	{
 		ID3DXMesh *result;
-		stack_vector<ID3DXMesh*> input;
+		std::vector<ID3DXMesh*> input;
 
 		input.resize( meshes->Length );
 		for( int i = 0; i < meshes->Length; i++ )
@@ -834,8 +834,8 @@ namespace Direct3D9
 		array<EffectInstance>^ effects = mesh->GetEffects();
 
 		DWORD *adjacencyIn = NULL;
-		stack_vector<D3DXMATERIAL> nativeMaterials;
-		stack_vector<D3DXEFFECTINSTANCE> nativeEffects;
+		std::vector<D3DXMATERIAL> nativeMaterials;
+		std::vector<D3DXEFFECTINSTANCE> nativeEffects;
 		pin_ptr<int> pinnedAdj;
 		int length = 0;
 

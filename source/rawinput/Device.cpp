@@ -21,10 +21,9 @@
 */
 
 #include <windows.h>
+#include <vector>
 
-#include "../StackAlloc.h"
 #include "../Utilities.h"
-
 #include "../SlimDXException.h"
 
 #include "Device.h"
@@ -186,7 +185,7 @@ namespace RawInput
 		if( count == 0 )
 			return nullptr;
 
-		stack_vector<RAWINPUTDEVICELIST> deviceList( count );
+		std::vector<RAWINPUTDEVICELIST> deviceList( count );
 		if( GetRawInputDeviceList( &deviceList[0], &count, sizeof(RAWINPUTDEVICELIST) ) == -1 )
 			throw gcnew Win32Exception();
 

@@ -22,8 +22,7 @@
 
 #include <d3d10.h>
 #include <d3dx10.h>
-
-#include "../StackAlloc.h"
+#include <vector>
 
 #include "Direct3D10Exception.h"
 
@@ -139,7 +138,7 @@ namespace Direct3D10
 
 	Result Sprite::DrawBuffered( array<SpriteInstance^>^ instances )
 	{
-		stack_vector<D3DX10_SPRITE> nativeInstances( instances->Length );
+		std::vector<D3DX10_SPRITE> nativeInstances( instances->Length );
 		for( int instanceIndex = 0; instanceIndex < instances->Length; ++instanceIndex )
 			instances[instanceIndex]->ToNativeObject( nativeInstances[instanceIndex] );
 		return RECORD_D3D10( InternalPointer->DrawSpritesBuffered( &nativeInstances[0], instances->Length ) );
@@ -147,7 +146,7 @@ namespace Direct3D10
 
 	Result Sprite::DrawImmediate( array<SpriteInstance^>^ instances )
 	{
-		stack_vector<D3DX10_SPRITE> nativeInstances( instances->Length );
+		std::vector<D3DX10_SPRITE> nativeInstances( instances->Length );
 		for( int instanceIndex = 0; instanceIndex < instances->Length; ++instanceIndex )
 			instances[instanceIndex]->ToNativeObject( nativeInstances[instanceIndex] );
 		return RECORD_D3D10( InternalPointer->DrawSpritesImmediate( &nativeInstances[0], instances->Length, sizeof(D3DX10_SPRITE), 0 ) );

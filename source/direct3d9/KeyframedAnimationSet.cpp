@@ -22,11 +22,11 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <vcclr.h>
+#include <vector>
 
 #include "../ComObject.h"
 #include "../Math/Vector3.h"
 #include "../DataStream.h"
-#include "../StackAlloc.h"
 
 #include "Device.h"
 #include "Mesh.h"
@@ -57,7 +57,7 @@ namespace Direct3D9
 
 		int count = callbackKeys->Length;
 
-		stack_vector<D3DXKEY_CALLBACK> keys( count );
+		std::vector<D3DXKEY_CALLBACK> keys( count );
 		for( int i = 0; i < count; i++ )
 		{
 			keys[i].Time = callbackKeys[i].Time;
@@ -110,7 +110,7 @@ namespace Direct3D9
 	array<CallbackKey>^ KeyframedAnimationSet::GetCallbackKeys()
 	{
 		int count = CallbackKeyCount;
-		stack_vector<D3DXKEY_CALLBACK> keys( count );
+		std::vector<D3DXKEY_CALLBACK> keys( count );
 
 		HRESULT hr = KASPointer->GetCallbackKeys( &keys[0] );
 		
@@ -149,7 +149,7 @@ namespace Direct3D9
 	array<RotationKey>^ KeyframedAnimationSet::GetRotationKeys( int animation )
 	{
 		int count = GetRotationKeyCount( animation );
-		stack_vector<D3DXKEY_QUATERNION> keys(count);
+		std::vector<D3DXKEY_QUATERNION> keys(count);
 
 		HRESULT hr = KASPointer->GetRotationKeys( animation, &keys[0] );
 		
@@ -199,7 +199,7 @@ namespace Direct3D9
 	array<ScaleKey>^ KeyframedAnimationSet::GetScaleKeys( int animation )
 	{
 		int count = GetScaleKeyCount( animation );
-		stack_vector<D3DXKEY_VECTOR3> keys(count);
+		std::vector<D3DXKEY_VECTOR3> keys(count);
 
 		HRESULT hr = KASPointer->GetScaleKeys( animation, &keys[0] );
 		
@@ -249,7 +249,7 @@ namespace Direct3D9
 	array<TranslationKey>^ KeyframedAnimationSet::GetTranslationKeys( int animation )
 	{
 		int count = GetTranslationKeyCount( animation );
-		stack_vector<D3DXKEY_VECTOR3> keys(count);
+		std::vector<D3DXKEY_VECTOR3> keys(count);
 
 		HRESULT hr = KASPointer->GetTranslationKeys( animation, &keys[0] );
 		
@@ -297,9 +297,9 @@ namespace Direct3D9
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		stack_vector<D3DXKEY_VECTOR3> scales( scaleCount );
-		stack_vector<D3DXKEY_QUATERNION> rotations( rotateCount );
-		stack_vector<D3DXKEY_VECTOR3> translations( translateCount );
+		std::vector<D3DXKEY_VECTOR3> scales( scaleCount );
+		std::vector<D3DXKEY_QUATERNION> rotations( rotateCount );
+		std::vector<D3DXKEY_VECTOR3> translations( translateCount );
 
 		HRESULT hr = KASPointer->RegisterAnimationSRTKeys( reinterpret_cast<LPCSTR>( pinnedName ), scaleCount, rotateCount,
 			translateCount, &scales[0], &rotations[0], &translations[0], &result );

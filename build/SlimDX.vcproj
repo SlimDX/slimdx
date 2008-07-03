@@ -1927,14 +1927,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\StackAlloc.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\StackAlloc.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\Utilities.cpp"
 				>
 			</File>

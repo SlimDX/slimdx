@@ -21,11 +21,9 @@
 */
 
 #include <xaudio2.h>
-
-#include "../StackAlloc.h"
+#include <vector>
 
 #include "XAudio2Exception.h"
-
 #include "Voice.h"
 
 using namespace System;
@@ -177,7 +175,7 @@ namespace XAudio2
 			hr = InternalPointer->SetOutputVoices( NULL );
 		else
 		{
-			stack_vector<IXAudio2Voice*> voices( outputVoices->Length );
+			std::vector<IXAudio2Voice*> voices( outputVoices->Length );
 			for( int i = 0; i < outputVoices->Length; i++ )
 				voices[i] = outputVoices[i]->InternalPointer;
 
