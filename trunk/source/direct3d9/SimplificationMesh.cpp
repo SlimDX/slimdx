@@ -26,7 +26,6 @@
 #include "../ComObject.h"
 #include "../Utilities.h"
 #include "../DataStream.h"
-#include "../StackAlloc.h"
 
 #include "Device.h"
 #include "Texture.h"

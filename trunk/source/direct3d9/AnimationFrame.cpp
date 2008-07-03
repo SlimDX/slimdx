@@ -27,7 +27,6 @@
 #include "../ComObject.h"
 #include "../DataStream.h"
 #include "../Utilities.h"
-#include "../StackAlloc.h"
 
 #include "../math/BoundingSphere.h"
 
@@ -166,7 +165,7 @@ namespace Direct3D9
 
 	Result Frame::DestroyHierarchy( Frame^ root, IAllocateHierarchy^ allocator )
 	{
-		stack_ptr<IAllocateHierarchyShim> shim( new (stackalloc) IAllocateHierarchyShim( allocator ) );
+		std::auto_ptr<IAllocateHierarchyShim> shim( new IAllocateHierarchyShim( allocator ) );
 		std::auto_ptr<FrameShim> frameShim( Frame::BuildHierarchyFromManaged( root ) );
 
 		HRESULT hr = D3DXFrameDestroy( frameShim.get(), shim.get() );
@@ -264,15 +263,15 @@ namespace Direct3D9
 	Frame^ Frame::LoadHierarchyFromX( Device^ device, String^ fileName, MeshFlags options, 
 		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
 	{
-		stack_ptr<IAllocateHierarchyShim> allocatorShim( new (stackalloc) IAllocateHierarchyShim( allocator ) );
-		stack_ptr<ILoadUserDataShim> userDataLoaderShim( NULL );
+		std::auto_ptr<IAllocateHierarchyShim> allocatorShim( new IAllocateHierarchyShim( allocator ) );
+		std::auto_ptr<ILoadUserDataShim> userDataLoaderShim( NULL );
 		LPD3DXFRAME result = NULL;
 		LPD3DXANIMATIONCONTROLLER animationResult;
 
 		animationController = nullptr;
 
 		if( userDataLoader != nullptr )
-			userDataLoaderShim.reset( new (stackalloc) ILoadUserDataShim( userDataLoader ) );
+			userDataLoaderShim.reset( new ILoadUserDataShim( userDataLoader ) );
 
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
@@ -296,15 +295,15 @@ namespace Direct3D9
 	Frame^ Frame::LoadHierarchyFromX( Device^ device, array<Byte>^ memory, MeshFlags options, 
 		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
 	{
-		stack_ptr<IAllocateHierarchyShim> allocatorShim( new (stackalloc) IAllocateHierarchyShim( allocator ) );
-		stack_ptr<ILoadUserDataShim> userDataLoaderShim( NULL );
+		std::auto_ptr<IAllocateHierarchyShim> allocatorShim( new IAllocateHierarchyShim( allocator ) );
+		std::auto_ptr<ILoadUserDataShim> userDataLoaderShim( NULL );
 		LPD3DXFRAME result = NULL;
 		LPD3DXANIMATIONCONTROLLER animationResult = NULL;
 
 		animationController = nullptr;
 
 		if( userDataLoader != nullptr )
-			userDataLoaderShim.reset( new (stackalloc) ILoadUserDataShim( userDataLoader ) );
+			userDataLoaderShim.reset( new ILoadUserDataShim( userDataLoader ) );
 
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
@@ -342,7 +341,7 @@ namespace Direct3D9
 	Result Frame::SaveHierarchyToFile( String^ fileName, XFileFormat format, Frame^ root, AnimationController^ animationController, ISaveUserData^ userDataSaver )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
-		stack_ptr<ISaveUserDataShim> shim( new (stackalloc) ISaveUserDataShim( userDataSaver ) );
+		std::auto_ptr<ISaveUserDataShim> shim( new ISaveUserDataShim( userDataSaver ) );
 		std::auto_ptr<FrameShim> frameShim( Frame::BuildHierarchyFromManaged( root ) );
 
 		// If animation controller is null, handle it.

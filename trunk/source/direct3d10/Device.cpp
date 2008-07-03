@@ -21,9 +21,9 @@
 */
 
 #include <d3d10.h>
+#include <vector>
 
 #include "../DataBox.h"
-#include "../StackAlloc.h"
 
 #include "../dxgi/Adapter.h"
 
@@ -189,9 +189,9 @@ namespace Direct3D10
 		if( RECORD_D3D10( InternalPointer->CheckCounter( &nativeDescription, &type, &count, 0, &nameLength, 0, &unitsLength, 0, &descriptionLength ) ).IsFailure )
 			return CounterMetadata();
 		
-		stack_vector<char> nameChars( nameLength );
-		stack_vector<char> unitsChars( unitsLength );
-		stack_vector<char> descriptionChars( descriptionLength );
+		std::vector<char> nameChars( nameLength );
+		std::vector<char> unitsChars( unitsLength );
+		std::vector<char> descriptionChars( descriptionLength );
 		if( RECORD_D3D10( InternalPointer->CheckCounter( &nativeDescription, &type, &count, &nameChars[ 0 ], &nameLength, &unitsChars[ 0 ], &unitsLength, &descriptionChars[ 0 ], &descriptionLength ) ).IsFailure )
 			return CounterMetadata();
 			

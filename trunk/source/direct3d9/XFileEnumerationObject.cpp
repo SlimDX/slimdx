@@ -24,7 +24,6 @@
 
 #include "../ComObject.h"
 #include "../DataStream.h"
-#include "../StackAlloc.h"
 #include "XFile.h"
 
 #include "Direct3D9Exception.h"

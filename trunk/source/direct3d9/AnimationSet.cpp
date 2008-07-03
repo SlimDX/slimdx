@@ -26,7 +26,6 @@
 #include "../ComObject.h"
 #include "../Math/Vector3.h"
 #include "../DataStream.h"
-#include "../StackAlloc.h"
 
 #include "Device.h"
 #include "Mesh.h"

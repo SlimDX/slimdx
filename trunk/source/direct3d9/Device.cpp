@@ -22,11 +22,11 @@
 #include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
+#include <vector>
 
 #include "../DataStream.h"
 #include "../ComObject.h"
 #include "../Utilities.h"
-#include "../StackAlloc.h"
 #include "../Viewport.h"
 
 #include "Direct3D9Exception.h"
@@ -204,7 +204,7 @@ namespace Direct3D9
 			return Clear( clearFlags, color, zdepth, stencil );
 		}
 
-		stack_vector<D3DRECT> rects( rectangles->Length );
+		std::vector<D3DRECT> rects( rectangles->Length );
 		for( int i = 0; i < rectangles->Length; i++ )
 		{
 			D3DRECT rect;
@@ -825,7 +825,7 @@ namespace Direct3D9
 
 	array<bool>^ Device::GetVertexShaderBooleanConstant( int startRegister, int count )
 	{
-		stack_vector<BOOL> booleans( count );
+		std::vector<BOOL> booleans( count );
 
 		HRESULT hr = InternalPointer->GetVertexShaderConstantB( startRegister, &booleans[0], count );
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -840,7 +840,7 @@ namespace Direct3D9
 
 	array<float>^ Device::GetVertexShaderFloatConstant( int startRegister, int count )
 	{
-		stack_vector<FLOAT> floats( count );
+		std::vector<FLOAT> floats( count );
 
 		HRESULT hr = InternalPointer->GetVertexShaderConstantF( startRegister, &floats[0], count );
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -855,7 +855,7 @@ namespace Direct3D9
 
 	array<int>^ Device::GetVertexShaderIntegerConstant( int startRegister, int count )
 	{
-		stack_vector<INT> integers( count );
+		std::vector<INT> integers( count );
 
 		HRESULT hr = InternalPointer->GetVertexShaderConstantI( startRegister, &integers[0], count );
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -870,7 +870,7 @@ namespace Direct3D9
 
 	array<bool>^ Device::GetPixelShaderBooleanConstant( int startRegister, int count )
 	{
-		stack_vector<BOOL> booleans( count );
+		std::vector<BOOL> booleans( count );
 
 		HRESULT hr = InternalPointer->GetPixelShaderConstantB( startRegister, &booleans[0], count );
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -885,7 +885,7 @@ namespace Direct3D9
 
 	array<float>^ Device::GetPixelShaderFloatConstant( int startRegister, int count )
 	{
-		stack_vector<FLOAT> floats( count );
+		std::vector<FLOAT> floats( count );
 
 		HRESULT hr = InternalPointer->GetPixelShaderConstantF( startRegister, &floats[0], count );
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -900,7 +900,7 @@ namespace Direct3D9
 
 	array<int>^ Device::GetPixelShaderIntegerConstant( int startRegister, int count )
 	{
-		stack_vector<INT> integers( count );
+		std::vector<INT> integers( count );
 
 		HRESULT hr = InternalPointer->GetPixelShaderConstantI( startRegister, &integers[0], count );
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -1201,8 +1201,8 @@ namespace Direct3D9
 		int width = 0;
 		int heightSrc = 0;
 		int heightDest = 0;
-		stack_vector<COLORREF> arrayMask;
-		stack_vector<COLORREF> arrayColor;
+		std::vector<COLORREF> arrayMask;
+		std::vector<COLORREF> arrayColor;
 		COLORREF color;
 		COLORREF mask;
 		HDC hdcColor = NULL;

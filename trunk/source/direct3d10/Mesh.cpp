@@ -22,8 +22,7 @@
 
 #include <d3dx10.h>
 #include <vcclr.h>
-
-#include "../StackAlloc.h"
+#include <vector>
 
 #include "Direct3D10Exception.h"
 
@@ -233,7 +232,7 @@ namespace Direct3D10
 
 	Result Mesh::SetAttributeTable( array<MeshAttributeRange>^ ranges ) 
 	{
-		stack_vector<D3DX10_ATTRIBUTE_RANGE> nativeRanges( ranges->Length );
+		std::vector<D3DX10_ATTRIBUTE_RANGE> nativeRanges( ranges->Length );
 		for( int rangeIndex = 0; rangeIndex < ranges->Length; ++rangeIndex )
 			nativeRanges[ rangeIndex ] = ranges[ rangeIndex].CreateNativeVersion();
 
@@ -246,7 +245,7 @@ namespace Direct3D10
 		if( RECORD_D3D10( InternalPointer->GetAttributeTable( 0, &count ) ).IsFailure )
 			return nullptr;
 
-		stack_vector<D3DX10_ATTRIBUTE_RANGE> ranges( count );
+		std::vector<D3DX10_ATTRIBUTE_RANGE> ranges( count );
 		if( RECORD_D3D10( InternalPointer->GetAttributeTable( reinterpret_cast<D3DX10_ATTRIBUTE_RANGE*>( &ranges[0] ), &count ) ).IsFailure )
 			return nullptr;
 		

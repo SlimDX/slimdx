@@ -24,7 +24,6 @@
 
 #include "../ComObject.h"
 #include "../DataStream.h"
-#include "../StackAlloc.h"
 
 #include "Direct3D9Exception.h"
 #include "ConstantTable.h"
@@ -771,7 +770,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 		
-		stack_vector<LPCSTR> samplers( count );
+		std::vector<LPCSTR> samplers( count );
 
 		hr = D3DXGetShaderSamplers( function, &samplers[0], &count );
 		

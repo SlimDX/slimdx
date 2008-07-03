@@ -21,11 +21,10 @@
 */
 #include <d3d9.h>
 #include <d3dx9.h>
+#include <vector>
 
 #include "../DataStream.h"
 #include "../ComObject.h"
-#include "../StackAlloc.h"
-
 #include "Direct3D9Exception.h"
 
 #include "Device.h"
@@ -259,7 +258,7 @@ namespace Direct3D9
 		array<Byte>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 		pin_ptr<const Byte> pinnedProfile = &profileBytes[0];
 
-		stack_vector<D3DXHANDLE> handles(fragmentHandles->Length);
+		std::vector<D3DXHANDLE> handles(fragmentHandles->Length);
 		for( int i = 0; i < fragmentHandles->Length; ++i )
 		{
 			handles[i] = fragmentHandles[i] != nullptr ? fragmentHandles[i]->InternalHandle : NULL;
@@ -283,7 +282,7 @@ namespace Direct3D9
 		array<Byte>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 		pin_ptr<const Byte> pinnedProfile = &profileBytes[0];
 
-		stack_vector<D3DXHANDLE> handles(fragmentHandles->Length);
+		std::vector<D3DXHANDLE> handles(fragmentHandles->Length);
 		for( int i = 0; i < fragmentHandles->Length; ++i )
 		{
 			handles[i] = fragmentHandles[i] != nullptr ? fragmentHandles[i]->InternalHandle : NULL;
@@ -307,7 +306,7 @@ namespace Direct3D9
 		array<Byte>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 		pin_ptr<const Byte> pinnedProfile = &profileBytes[0];
 
-		stack_vector<D3DXHANDLE> handles(fragmentHandles->Length);
+		std::vector<D3DXHANDLE> handles(fragmentHandles->Length);
 		for( int i = 0; i < fragmentHandles->Length; ++i )
 		{
 			handles[i] = fragmentHandles[i] != nullptr ? fragmentHandles[i]->InternalHandle : NULL;
