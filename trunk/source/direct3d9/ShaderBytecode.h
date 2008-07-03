@@ -44,6 +44,8 @@ namespace SlimDX
 			ConstantTable^ m_constantTable;
 
 		public:
+			ShaderBytecode( array<System::Byte>^ data );
+
 			/// <summary>
 			/// Releases all resources used by the <see cref="ShaderBytecode"/>.
 			/// </summary>

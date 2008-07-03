@@ -32,6 +32,7 @@
 #include "ExtendedMaterial.h"
 #include "GlyphMetricsFloat.h"
 #include "AttributeWeights.h"
+#include "WeldEpsilons.h"
 
 namespace SlimDX
 {
@@ -128,6 +129,11 @@ namespace SlimDX
 
 			void SetAdjacency( array<int>^ adjacency ) { this->adjacency = adjacency; }
 			array<int>^ GetAdjacency() { return adjacency; }
+
+			Result WeldVertices( WeldFlags flags, WeldEpsilons epsilons, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
+			Result WeldVertices( WeldFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
+			Result WeldVertices( WeldFlags flags, WeldEpsilons epsilons );
+			Result WeldVertices( WeldFlags flags );
 
 			property SkinInfo^ SkinInfo
 			{ 
