@@ -48,6 +48,24 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
+	ShaderBytecode::ShaderBytecode( array<Byte>^ data )
+	{
+		ID3DXBuffer *buffer = NULL;
+
+		if( data == nullptr )
+			throw gcnew ArgumentNullException( "data" );
+
+		HRESULT hr = D3DXCreateBuffer( data->Length, &buffer );
+		if( RECORD_D3D9( hr ).IsFailure )
+			throw gcnew Direct3D9Exception( Result::Last );
+
+		pin_ptr<Byte> pinnedData = &data[0];
+
+		memcpy( buffer->GetBufferPointer(), pinnedData, data->Length );
+
+		Construct( buffer );
+	}
+
 	ShaderBytecode^ ShaderBytecode::FromPointer( ID3DXBuffer* pointer )
 	{
 		if( pointer == 0 )

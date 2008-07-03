@@ -1168,5 +1168,14 @@ namespace SlimDX
 			/// </summary>
 			EaseInEaseOut = D3DXTRANSITION_EASEINEASEOUT
 		};
+
+		[System::Flags]
+		public enum class WeldFlags : System::Int32
+		{
+			WeldAll = D3DXWELDEPSILONS_WELDALL,
+			WeldPartialMatches = D3DXWELDEPSILONS_WELDPARTIALMATCHES,
+			DoNotRemoveVertices = D3DXWELDEPSILONS_DONOTREMOVEVERTICES,
+			DoNotSplit = D3DXWELDEPSILONS_DONOTSPLIT
+		};
 	}
 }

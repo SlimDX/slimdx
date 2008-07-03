@@ -1018,5 +1018,137 @@ namespace Direct3D9
 
 		return RECORD_D3D9( hr );
 	}
+
+	Result Mesh::WeldVertices( WeldFlags flags, WeldEpsilons epsilons, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
+	{
+		ID3DXBuffer *buffer;
+		DWORD *adjIn = NULL;
+		DWORD *adjOut = NULL;
+		std::vector<DWORD> adjacencyOut( FaceCount * 3 );
+
+		array<int>^ adjacency = GetAdjacency();
+		pin_ptr<int> pinnedAdjIn;
+
+		faceRemap = gcnew array<int>( FaceCount );
+		pin_ptr<int> pinnedFR = &faceRemap[0];
+
+		if( adjacency != nullptr )
+		{
+			pinnedAdjIn = &adjacency[0];
+			adjIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
+			adjOut = &adjacencyOut[0];
+		}
+
+		HRESULT hr = D3DXWeldVertices( InternalPointer, static_cast<DWORD>( flags ), 
+			reinterpret_cast<const D3DXWELDEPSILONS*>( &epsilons ), adjIn, adjOut, 
+			reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
+
+		if( RECORD_D3D9( hr ).IsFailure )
+		{
+			faceRemap = nullptr;
+			vertexRemap = nullptr;
+			return Result::Last;
+		}
+
+		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
+
+		if( adjOut != NULL )
+			SetAdjacency( &adjacencyOut[0] );
+
+		return Result::Last;
+	}
+
+	Result Mesh::WeldVertices( WeldFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
+	{
+		ID3DXBuffer *buffer;
+		DWORD *adjIn = NULL;
+		DWORD *adjOut = NULL;
+		std::vector<DWORD> adjacencyOut( FaceCount * 3 );
+
+		array<int>^ adjacency = GetAdjacency();
+		pin_ptr<int> pinnedAdjIn;
+
+		faceRemap = gcnew array<int>( FaceCount );
+		pin_ptr<int> pinnedFR = &faceRemap[0];
+
+		if( adjacency != nullptr )
+		{
+			pinnedAdjIn = &adjacency[0];
+			adjIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
+			adjOut = &adjacencyOut[0];
+		}
+
+		HRESULT hr = D3DXWeldVertices( InternalPointer, static_cast<DWORD>( flags ), NULL, adjIn, adjOut, 
+			reinterpret_cast<DWORD*>( pinnedFR ), &buffer );
+
+		if( RECORD_D3D9( hr ).IsFailure )
+		{
+			faceRemap = nullptr;
+			vertexRemap = nullptr;
+			return Result::Last;
+		}
+
+		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
+
+		if( adjOut != NULL )
+			SetAdjacency( &adjacencyOut[0] );
+
+		return Result::Last;
+	}
+
+	Result Mesh::WeldVertices( WeldFlags flags, WeldEpsilons epsilons )
+	{
+		DWORD *adjIn = NULL;
+		DWORD *adjOut = NULL;
+		std::vector<DWORD> adjacencyOut( FaceCount * 3 );
+
+		array<int>^ adjacency = GetAdjacency();
+		pin_ptr<int> pinnedAdjIn;
+
+		if( adjacency != nullptr )
+		{
+			pinnedAdjIn = &adjacency[0];
+			adjIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
+			adjOut = &adjacencyOut[0];
+		}
+
+		HRESULT hr = D3DXWeldVertices( InternalPointer, static_cast<DWORD>( flags ), 
+			reinterpret_cast<const D3DXWELDEPSILONS*>( &epsilons ), adjIn, adjOut, NULL, NULL );
+
+		if( RECORD_D3D9( hr ).IsFailure )
+			return Result::Last;
+
+		if( adjOut != NULL )
+			SetAdjacency( &adjacencyOut[0] );
+
+		return Result::Last;
+	}
+
+	Result Mesh::WeldVertices( WeldFlags flags )
+	{
+		DWORD *adjIn = NULL;
+		DWORD *adjOut = NULL;
+		std::vector<DWORD> adjacencyOut( FaceCount * 3 );
+
+		array<int>^ adjacency = GetAdjacency();
+		pin_ptr<int> pinnedAdjIn;
+
+		if( adjacency != nullptr )
+		{
+			pinnedAdjIn = &adjacency[0];
+			adjIn = reinterpret_cast<DWORD*>( pinnedAdjIn );
+			adjOut = &adjacencyOut[0];
+		}
+
+		HRESULT hr = D3DXWeldVertices( InternalPointer, static_cast<DWORD>( flags ), NULL, adjIn, adjOut, NULL, NULL );
+
+		if( RECORD_D3D9( hr ).IsFailure )
+			return Result::Last;
+
+		if( adjOut != NULL )
+			SetAdjacency( &adjacencyOut[0] );
+
+		return Result::Last;
+	}
 }
 }
