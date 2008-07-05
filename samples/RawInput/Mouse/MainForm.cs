@@ -30,7 +30,7 @@ namespace Mouse
             extraLabel.Text = e.ExtraInformation.ToString(CultureInfo.CurrentCulture);
             rawButtonsLabel.Text = e.RawButtons.ToString(CultureInfo.CurrentCulture);
             locationLabel.Text = new Point(e.X, e.Y).ToString();
-            stateLabel.Text = Enum.Format(typeof(MouseState), e.State, "G");
+            stateLabel.Text = Enum.Format(typeof(MouseMode), e.Mode, "G");
             wheelLabel.Text = e.WheelDelta.ToString(CultureInfo.CurrentCulture);
         }
 

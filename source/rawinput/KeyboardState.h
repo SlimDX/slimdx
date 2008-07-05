@@ -21,33 +21,45 @@
 */
 #pragma once
 
-#include "Enums.h"
+#include "KeyCollection.h"
 
 namespace SlimDX
 {
 	namespace RawInput
 	{
-		public ref class MouseInputEventArgs : System::EventArgs
+		/// <summary>
+		/// Describes the state of a keyboard device.
+		/// </summary>
+		public ref class KeyboardState
 		{
+		private:
+			KeyCollection^ keys;
+			KeyCollection^ pressed;
+			KeyCollection^ released;
+
+		internal:
+			void UpdateKey( System::Windows::Forms::Keys key, bool pressed );
+
 		public:
-			MouseInputEventArgs(MouseMode mode, MouseButtonFlags buttonFlags, int wheelDelta, long rawButtons, long x, long y, long extraInformation)
+			KeyboardState();
+
+			bool IsPressed( System::Windows::Forms::Keys key );
+			bool IsReleased( System::Windows::Forms::Keys key );
+
+			property KeyCollection^ AllKeys
 			{
-				Mode = mode;
-				ButtonFlags = buttonFlags;
-				WheelDelta = wheelDelta;
-				RawButtons = rawButtons;
-				X = x;
-				Y = y;
-				ExtraInformation = extraInformation;
+				KeyCollection^ get() { return keys; }
 			}
 
-			property MouseMode Mode;
-			property MouseButtonFlags ButtonFlags;
-			property int WheelDelta;
-			property long RawButtons;
-			property long X;
-			property long Y;
-			property long ExtraInformation;
+			property KeyCollection^ PressedKeys
+			{
+				KeyCollection^ get() { return pressed; }
+			}
+
+			property KeyCollection^ ReleasedKeys
+			{
+				KeyCollection^ get() { return released; }
+			}
 		};
 	}
 }

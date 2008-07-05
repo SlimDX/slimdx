@@ -53,6 +53,9 @@ namespace RawInput
 
 	void Device::Construct( SlimDX::UsagePage usagePage, SlimDX::UsageId usageId, DeviceFlags flags, IntPtr target )
 	{
+		mouseState = gcnew SlimDX::RawInput::MouseState( 0, 0, 0 );
+		keyboardState = gcnew SlimDX::RawInput::KeyboardState();
+
 		m_usagePage = usagePage;
 		m_usageId = usageId;
 		m_flags = flags;
@@ -107,7 +110,7 @@ namespace RawInput
 		}
 		else if( rawInput->header.dwType == RIM_TYPEMOUSE )
 		{
-			OnMouseInput( gcnew MouseInputEventArgs( static_cast<MouseState>( rawInput->data.mouse.usFlags ),
+			OnMouseInput( gcnew MouseInputEventArgs( static_cast<MouseMode>( rawInput->data.mouse.usFlags ),
 				static_cast<MouseButtonFlags>( rawInput->data.mouse.usButtonFlags ),
 				rawInput->data.mouse.usButtonData,
 				rawInput->data.mouse.ulRawButtons,
@@ -158,12 +161,46 @@ namespace RawInput
 
 	void Device::OnKeyboardInput( KeyboardInputEventArgs^ e )
 	{
+		if( e->State == KeyState::Pressed )
+			keyboardState->UpdateKey( e->Key, true );
+		else if( e->State == KeyState::Released )
+			keyboardState->UpdateKey( e->Key, false );
+
 		if( &Device::KeyboardInput != nullptr )
 			KeyboardInput( this, e );
 	}
 
 	void Device::OnMouseInput( MouseInputEventArgs^ e )
 	{
+		mouseState->X = e->X;
+		mouseState->Y = e->Y;
+		mouseState->Z = e->WheelDelta;
+
+		if( (e->ButtonFlags & MouseButtonFlags::LeftDown) != static_cast<MouseButtonFlags>( 0 ) )
+			mouseState->buttons[0] = true;
+		else if( (e->ButtonFlags & MouseButtonFlags::LeftUp) != static_cast<MouseButtonFlags>( 0 ) )
+			mouseState->buttons[0] = false;
+
+		if( (e->ButtonFlags & MouseButtonFlags::RightDown) != static_cast<MouseButtonFlags>( 0 ) )
+			mouseState->buttons[1] = true;
+		else if( (e->ButtonFlags & MouseButtonFlags::RightUp) != static_cast<MouseButtonFlags>( 0 ) )
+			mouseState->buttons[1] = false;
+
+		if( (e->ButtonFlags & MouseButtonFlags::MiddleDown) != static_cast<MouseButtonFlags>( 0 ) )
+			mouseState->buttons[2] = true;
+		else if( (e->ButtonFlags & MouseButtonFlags::MiddleUp) != static_cast<MouseButtonFlags>( 0 ) )
+			mouseState->buttons[2] = false;
+
+		if( (e->ButtonFlags & MouseButtonFlags::Button4Down) != static_cast<MouseButtonFlags>( 0 ) )
+			mouseState->buttons[3] = true;
+		else if( (e->ButtonFlags & MouseButtonFlags::Button4Up) != static_cast<MouseButtonFlags>( 0 ) )
+			mouseState->buttons[3] = false;
+
+		if( (e->ButtonFlags & MouseButtonFlags::Button5Down) != static_cast<MouseButtonFlags>( 0 ) )
+			mouseState->buttons[4] = true;
+		else if( (e->ButtonFlags & MouseButtonFlags::Button5Up) != static_cast<MouseButtonFlags>( 0 ) )
+			mouseState->buttons[4] = false;
+
 		if( &Device::MouseInput != nullptr )
 			MouseInput( this, e );
 	}

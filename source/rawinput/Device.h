@@ -30,6 +30,8 @@
 #include "MouseInputEventArgs.h"
 #include "RawInputEventArgs.h"
 #include "DeviceInfo.h"
+#include "MouseState.h"
+#include "KeyboardState.h"
 
 namespace SlimDX
 {
@@ -39,6 +41,9 @@ namespace SlimDX
 		{
 		private:
 			static InputMessageFilter^ filter;
+
+			MouseState^ mouseState;
+			KeyboardState^ keyboardState;
 
 			UsagePage m_usagePage;
 			UsageId m_usageId;
@@ -90,6 +95,16 @@ namespace SlimDX
 			property System::IntPtr Target
 			{
 				System::IntPtr get() { return m_target; }
+			}
+
+			property MouseState^ MouseState
+			{
+				SlimDX::RawInput::MouseState^ get() { return mouseState; }
+			}
+
+			property KeyboardState^ KeyboardState
+			{
+				SlimDX::RawInput::KeyboardState^ get() { return keyboardState; }
 			}
 
 			event System::EventHandler<KeyboardInputEventArgs^>^ KeyboardInput;
