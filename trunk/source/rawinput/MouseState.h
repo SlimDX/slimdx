@@ -27,27 +27,54 @@ namespace SlimDX
 {
 	namespace RawInput
 	{
-		public ref class MouseInputEventArgs : System::EventArgs
+		/// <summary>
+		/// Describes the state of a mouse device.
+		/// </summary>
+		public ref class MouseState
 		{
+		internal:
+			array<bool>^ buttons;
+
 		public:
-			MouseInputEventArgs(MouseMode mode, MouseButtonFlags buttonFlags, int wheelDelta, long rawButtons, long x, long y, long extraInformation)
+			MouseState()
 			{
-				Mode = mode;
-				ButtonFlags = buttonFlags;
-				WheelDelta = wheelDelta;
-				RawButtons = rawButtons;
-				X = x;
-				Y = y;
-				ExtraInformation = extraInformation;
+				buttons = gcnew array<bool>( 8 );
 			}
 
-			property MouseMode Mode;
-			property MouseButtonFlags ButtonFlags;
-			property int WheelDelta;
-			property long RawButtons;
-			property long X;
-			property long Y;
-			property long ExtraInformation;
+			MouseState( int x, int y, int z )
+			{
+				X = x;
+				Y = y;
+				Z = z;
+				buttons = gcnew array<bool>( 8 );
+			}
+
+			/// <summary>
+			/// Gets the X axis of the mouse.
+			/// </summary>
+			property int X;
+
+			/// <summary>
+			/// Gets the Y axis of the mouse.
+			/// </summary>
+			property int Y;
+
+			/// <summary>
+			/// Gets the Z axis of the mouse.
+			/// </summary>
+			property int Z;
+
+			/// <summary>
+			/// Gets the state of the mouse buttons.
+			/// </summary>
+			array<bool>^ GetButtons()
+			{
+				return buttons;
+			}
+
+			bool IsPressed(int button) { return buttons[button]; }
+
+			bool IsReleased(int button) { return !buttons[button]; }
 		};
 	}
 }

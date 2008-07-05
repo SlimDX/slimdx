@@ -19,35 +19,47 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include <windows.h>
 
-#include "Enums.h"
+#include "KeyboardState.h"
+
+using namespace System;
+using namespace System::Windows::Forms;
 
 namespace SlimDX
 {
-	namespace RawInput
+namespace RawInput
+{
+	KeyboardState::KeyboardState()
 	{
-		public ref class MouseInputEventArgs : System::EventArgs
-		{
-		public:
-			MouseInputEventArgs(MouseMode mode, MouseButtonFlags buttonFlags, int wheelDelta, long rawButtons, long x, long y, long extraInformation)
-			{
-				Mode = mode;
-				ButtonFlags = buttonFlags;
-				WheelDelta = wheelDelta;
-				RawButtons = rawButtons;
-				X = x;
-				Y = y;
-				ExtraInformation = extraInformation;
-			}
+		keys = gcnew KeyCollection();
+		pressed = gcnew KeyCollection();
+		released = gcnew KeyCollection();
 
-			property MouseMode Mode;
-			property MouseButtonFlags ButtonFlags;
-			property int WheelDelta;
-			property long RawButtons;
-			property long X;
-			property long Y;
-			property long ExtraInformation;
-		};
+		Array^ values = Enum::GetValues( Keys::typeid );
+		for each( Keys key in values )
+			keys->AddItem( key );
 	}
+
+	bool KeyboardState::IsPressed( Keys key )
+	{
+		return pressed->Contains( key );
+	}
+
+	bool KeyboardState::IsReleased( Keys key )
+	{
+		return released->Contains( key );
+	}
+
+	void KeyboardState::UpdateKey( Keys key, bool down )
+	{
+		pressed->RemoveItem( key );
+		released->RemoveItem( key );
+
+		if( down )
+			pressed->AddItem( key );
+		else
+			released->AddItem( key );
+	}
+}
 }

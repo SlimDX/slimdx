@@ -85,7 +85,7 @@ namespace SlimDX
 		};
 
 		[System::Flags]
-		public enum class MouseState : System::Int32
+		public enum class MouseMode : System::Int32
 		{
 			AbsoluteMovement = MOUSE_MOVE_ABSOLUTE,
 			AttributesChanged = MOUSE_ATTRIBUTES_CHANGED,
