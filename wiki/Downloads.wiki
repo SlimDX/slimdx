@@ -39,6 +39,8 @@ The June release of SlimDX marks a major milestone for us, since it's no longer 
 While 64 bit is now a completely supported configuration, there is a glitch in the installation package. Visual Studio users may not see SlimDX as a reference that can be added in the .NET tab of the Add Reference dialog. They will need to browse to the install location and add the reference that way. _This only affects developers._ Users will not see any difference, and the assembly is still properly registered in and referenced from the Global Assembly Cache.
 == XInput Support ==
 The installer does not bundle an XInput driver, as it's unclear exactly how Microsoft intends for this package to be redistributed. Testing of the downloadable driver showed that it consistently failed to install, so it was omitted. If you are using XInput, your users may need to visit Microsoft Update in order to get a functional driver.
+== Allocation Bug ==
+Several methods across SlimDX made use of an internal stack allocation scheme to try to boost performance. Unfortunately, there was a bug in this allocator that caused intermittent crashes and AccessViolation exceptions, mostly in Release mode. The allocator has since been removed, and the current version in the repository no longer suffers from these problems. If you find yourself running into this issue, getting the current source from the repository is the way to go. 
 
 = Communication =
 There are several different ways to get in touch with the SlimDX team:
