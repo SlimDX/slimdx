@@ -1291,6 +1291,14 @@
 					RelativePath="..\source\direct3d10\RasterizerStateDescription.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d10\StateBlockMask.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\StateBlockMask.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Buffer"

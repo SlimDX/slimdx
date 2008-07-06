@@ -25,6 +25,7 @@
 #include "SlimDXException.h"
 
 using namespace System;
+using namespace System::Collections::Generic;
 using namespace System::IO;
 using namespace System::Reflection;
 
@@ -220,7 +221,7 @@ namespace SlimDX
 
 		return buffer;
 	}
-
+	
 	generic<typename T>
 	void Utilities::CheckArrayBounds( array<T>^ data, int offset, int% count )
 	{
@@ -232,7 +233,41 @@ namespace SlimDX
 		if( count < 0 || count > data->Length - offset )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 	}
-
+	
+	generic<typename T>
+	bool Utilities::CheckElementEquality( array<T>^ left, array<T>^ right )
+	{
+		if( left->Length != right->Length )
+			return false;
+		
+		for( int index = 0; index < left->Length; ++index )
+		{
+			if( !left[index]->Equals( right[index] ) ) 
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	generic<typename T>
+	bool Utilities::CheckElementEquality( IList<T>^ left, IList<T>^ right )
+	{
+		if( left->Count != right->Count )
+			return false;
+		
+		for( int index = 0; index < left->Count; ++index )
+		{
+			if( !left[index]->Equals( right[index] ) ) 
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	String^ Utilities::BufferToString( ID3DXBuffer *buffer )
 	{
 		if( buffer != NULL )
