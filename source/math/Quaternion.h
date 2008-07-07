@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../design/QuaternionConverter.h"
+
 using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
@@ -33,6 +35,7 @@ namespace SlimDX
 	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+	[System::ComponentModel::TypeConverter( SlimDX::Design::QuaternionConverter::typeid )]
 	public value class Quaternion : System::IEquatable<Quaternion>
 	{
 	public:

@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../design/MatrixConverter.h"
+
 struct D3DXMATRIX;
 
 using System::Runtime::InteropServices::OutAttribute;
@@ -38,6 +40,7 @@ namespace SlimDX
 	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+	[System::ComponentModel::TypeConverter( SlimDX::Design::MatrixConverter::typeid )]
 	public value class Matrix : System::IEquatable<Matrix>
 	{
 	internal:

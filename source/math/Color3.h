@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../design/Color3Converter.h"
+
 namespace SlimDX
 {
 	/// <summary>
@@ -28,6 +30,7 @@ namespace SlimDX
 	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
+	[System::ComponentModel::TypeConverter( SlimDX::Design::Color3Converter::typeid )]
 	public value class Color3 : System::IEquatable<Color3>
 	{
 	private:

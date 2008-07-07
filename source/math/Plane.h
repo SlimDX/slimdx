@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../design/PlaneConverter.h"
+
 #include "Enums.h"
 #include "Vector3.h"
 
@@ -37,6 +39,7 @@ namespace SlimDX
 	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+	[System::ComponentModel::TypeConverter( SlimDX::Design::PlaneConverter::typeid )]
 	public value class Plane : System::IEquatable<Plane>
 	{
 	public:

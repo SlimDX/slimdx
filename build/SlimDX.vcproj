@@ -4923,11 +4923,107 @@
 			Name="Design"
 			>
 			<File
+				RelativePath="..\source\design\BoundingBoxConverter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\BoundingBoxConverter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\BoundingSphereConverter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\BoundingSphereConverter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\Color3Converter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\Color3Converter.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\design\Color4Converter.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\source\design\Color4Converter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\Half2Converter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\Half2Converter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\Half3Converter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\Half3Converter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\Half4Converter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\Half4Converter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\HalfConverter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\HalfConverter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\MatrixConverter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\MatrixConverter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\PlaneConverter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\PlaneConverter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\QuaternionConverter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\QuaternionConverter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\RationalConverter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\RationalConverter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\RayConverter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\RayConverter.h"
 				>
 			</File>
 			<File

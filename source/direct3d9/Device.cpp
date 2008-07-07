@@ -272,7 +272,15 @@ namespace Direct3D9
 		RECT nativeSourceRect = { sourceRectangle.Left, sourceRectangle.Top, sourceRectangle.Right, sourceRectangle.Bottom };
 		RECT nativeDestRect = { destinationRectangle.Left, destinationRectangle.Top, destinationRectangle.Right, destinationRectangle.Bottom };
 	
-		HRESULT hr = InternalPointer->Present( &nativeSourceRect, &nativeDestRect, NULL, NULL );
+		RECT *sourcePtr = NULL;
+		RECT *destPtr = NULL;
+
+		if( sourceRectangle != Rectangle::Empty )
+			sourcePtr = &nativeSourceRect;
+		if( destinationRectangle != Rectangle::Empty )
+			destPtr = &nativeDestRect;
+
+		HRESULT hr = InternalPointer->Present( sourcePtr, destPtr, NULL, NULL );
 
 		return RECORD_D3D9( hr );
 	}
@@ -282,7 +290,15 @@ namespace Direct3D9
 		RECT nativeSourceRect = { sourceRectangle.Left, sourceRectangle.Top, sourceRectangle.Right, sourceRectangle.Bottom };
 		RECT nativeDestRect = { destinationRectangle.Left, destinationRectangle.Top, destinationRectangle.Right, destinationRectangle.Bottom };
 	
-		HRESULT hr = InternalPointer->Present( &nativeSourceRect, &nativeDestRect, static_cast<HWND>( windowOverride.ToPointer() ), NULL );
+		RECT *sourcePtr = NULL;
+		RECT *destPtr = NULL;
+
+		if( sourceRectangle != Rectangle::Empty )
+			sourcePtr = &nativeSourceRect;
+		if( destinationRectangle != Rectangle::Empty )
+			destPtr = &nativeDestRect;
+
+		HRESULT hr = InternalPointer->Present( sourcePtr, destPtr, static_cast<HWND>( windowOverride.ToPointer() ), NULL );
 
 		return RECORD_D3D9( hr );
 	}
@@ -297,8 +313,16 @@ namespace Direct3D9
 		int count = GetRegionData( static_cast<HRGN>( region->GetHrgn(graphics).ToPointer() ), 0, NULL );
 		GetRegionData( static_cast<HRGN>( region->GetHrgn(graphics).ToPointer() ), count, &nativeRegion );
 		delete graphics;
+
+		RECT *sourcePtr = NULL;
+		RECT *destPtr = NULL;
+
+		if( sourceRectangle != Rectangle::Empty )
+			sourcePtr = &nativeSourceRect;
+		if( destinationRectangle != Rectangle::Empty )
+			destPtr = &nativeDestRect;
 	
-		HRESULT hr = InternalPointer->Present( &nativeSourceRect, &nativeDestRect, static_cast<HWND>( windowOverride.ToPointer() ), &nativeRegion );
+		HRESULT hr = InternalPointer->Present( sourcePtr, destPtr, static_cast<HWND>( windowOverride.ToPointer() ), &nativeRegion );
 
 		return RECORD_D3D9( hr );
 	}

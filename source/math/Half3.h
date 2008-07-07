@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../design/Half3Converter.h"
+
 using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
@@ -30,6 +32,7 @@ namespace SlimDX
 	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+	[System::ComponentModel::TypeConverter( SlimDX::Design::Half3Converter::typeid )]
 	public value class Half3 : System::IEquatable<Half3>
 	{
 	public:
