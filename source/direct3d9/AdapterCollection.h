@@ -32,7 +32,7 @@ namespace SlimDX
 		public ref class AdapterCollection : public System::Collections::ObjectModel::ReadOnlyCollection<AdapterInformation^>
 		{
 		internal:
-			AdapterCollection( Direct3D^ pointer );
+			AdapterCollection( IDirect3D9 *pointer, bool checkWhql );
 
 		public:
 			/// <summary>

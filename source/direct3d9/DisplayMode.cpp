@@ -75,13 +75,17 @@ namespace Direct3D9
 			 && value1.Format == value2.Format );
 	}
 
-	DisplayModeCollection::DisplayModeCollection( Direct3D^ direct3D, unsigned int adapter, Format format )
-		: ReadOnlyCollection( gcnew List<DisplayMode>( direct3D->GetAdapterModeCount( adapter, format ) ) )
+	DisplayModeCollection::DisplayModeCollection( IDirect3D9 *direct3D, unsigned int adapter, Format format )
+		: ReadOnlyCollection( gcnew List<DisplayMode>() )
 	{
-		int count = direct3D->GetAdapterModeCount( adapter, format );
+		int count = direct3D->GetAdapterModeCount( adapter, static_cast<D3DFORMAT>( format ) );
 
 		for( int i = 0; i < count; ++i )
-			Items->Add( direct3D->EnumerateAdapterModes( adapter, format, i ) );
+		{
+			DisplayMode displayMode;
+			direct3D->EnumAdapterModes( adapter, static_cast<D3DFORMAT>( format ), i, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
+			Items->Add( displayMode );
+		}
 	}
 }
 }
