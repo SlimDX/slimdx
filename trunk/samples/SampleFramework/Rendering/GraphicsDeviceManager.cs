@@ -64,6 +64,16 @@ namespace SampleFramework
         }
 
         /// <summary>
+        /// Gets or sets the Direct3D9 object.
+        /// </summary>
+        /// <value>The Direct3D9 object.</value>
+        internal static Direct3D Direct3D9Object
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// Gets the current device settings.
         /// </summary>
         /// <value>The current device settings.</value>
@@ -703,7 +713,7 @@ namespace SampleFramework
                 if (IsWindowed)
                 {
                     // get the current display mode
-                    DisplayMode displayMode = Direct3D.GetAdapterDisplayMode(CurrentSettings.Direct3D9.AdapterOrdinal);
+                    DisplayMode displayMode = GraphicsDeviceManager.Direct3D9Object.GetAdapterDisplayMode(CurrentSettings.Direct3D9.AdapterOrdinal);
                     if (CurrentSettings.Direct3D9.AdapterFormat != displayMode.Format)
                     {
                         // create the new device
@@ -768,7 +778,7 @@ namespace SampleFramework
                 if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
                 {
                     // create the device
-                    Direct3D9.Device = new SlimDX.Direct3D9.Device(CurrentSettings.Direct3D9.AdapterOrdinal,
+                    Direct3D9.Device = new SlimDX.Direct3D9.Device(Direct3D9Object, CurrentSettings.Direct3D9.AdapterOrdinal,
                         CurrentSettings.Direct3D9.DeviceType, game.Window.Handle,
                         CurrentSettings.Direct3D9.CreationFlags, CurrentSettings.Direct3D9.PresentParameters);
 
@@ -921,8 +931,10 @@ namespace SampleFramework
 
             // release the device
             Direct3D9.Device.Dispose();
+            Direct3D9Object.Dispose();
 
             // clear references
+            Direct3D9Object = null;
             Direct3D9.Device = null;
             if (CurrentSettings != null)
                 CurrentSettings.Direct3D9 = null;
@@ -1290,7 +1302,7 @@ namespace SampleFramework
                 foreach (AdapterInfo9 a in Enumeration9.Adapters)
                 {
                     // check for a matching ordinal
-                    if (Direct3D.GetAdapterMonitor(a.AdapterOrdinal) == screen)
+                    if (Direct3D9Object.GetAdapterMonitor(a.AdapterOrdinal) == screen)
                     {
                         // found a match
                         adapter = a;
@@ -1358,8 +1370,12 @@ namespace SampleFramework
         /// </summary>
         internal static void EnsureD3D9()
         {
-            // initialize Direct3D9
-            Direct3D.Initialize();
+            // initialize Direct3D9 if we haven't already
+            if (Direct3D9Object == null)
+            {
+                // create the object
+                Direct3D9Object = new Direct3D();
+            }
         }
 
         /// <summary>

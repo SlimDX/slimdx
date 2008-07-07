@@ -22,9 +22,14 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "Direct3D.h"
+#include "../ComObject.h"
+#include "../InternalHelpers.h"
+#include "../Result.h"
+
+#include "AdapterInformation.h"
 #include "AdapterDetails.h"
 #include "AdapterCollection.h"
+#include "Direct3D.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -33,12 +38,11 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	AdapterCollection::AdapterCollection( unsigned int adapterCount )
+	AdapterCollection::AdapterCollection( Direct3D^ direct3D )
+		: ReadOnlyCollection( gcnew List<AdapterInformation^>( direct3D->AdapterCount ) )
 	{
-		list = gcnew System::Collections::Generic::List<AdapterInformation^>( adapterCount );
-
-		for( unsigned int i = 0; i < adapterCount; ++i )
-			list->Add( gcnew AdapterInformation( i ) );
+		for( int i = 0; i < direct3D->AdapterCount; ++i )
+			Items->Add( gcnew AdapterInformation( direct3D, i ) );
 	}
 }
 }

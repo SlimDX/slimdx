@@ -64,15 +64,13 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
-	Device::Device( int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParameters )
+	Device::Device( Direct3D^ direct3D, int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParameters )
 	{
-		Direct3D::Initialize();
-
 		IDirect3DDevice9* device;
 		D3DPRESENT_PARAMETERS d3dpp;
 
 		d3dpp = presentParameters->ToUnmanaged();
-		HRESULT hr = Direct3D::InternalPointer->CreateDevice( adapter,
+		HRESULT hr = direct3D->InternalPointer->CreateDevice( adapter,
 			static_cast<D3DDEVTYPE>( deviceType ),
 			static_cast<HWND>( controlHandle.ToPointer() ), 
 			static_cast<DWORD>( createFlags ),

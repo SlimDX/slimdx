@@ -371,7 +371,7 @@ namespace SampleFramework
                 Format.A2R10G10B10 };
 
             // loop through each adapter
-            foreach (AdapterInformation adapter in Direct3D.Adapters)
+            foreach (AdapterInformation adapter in GraphicsDeviceManager.Direct3D9Object.Adapters)
             {
                 // set up the adapter info structure
                 AdapterInfo9 info = new AdapterInfo9();
@@ -472,7 +472,7 @@ namespace SampleFramework
                 // build up the device
                 DeviceInfo9 deviceInfo = new DeviceInfo9();
                 deviceInfo.DeviceType = deviceType;
-                deviceInfo.Capabilities = Direct3D.GetDeviceCaps(info.AdapterOrdinal, deviceInfo.DeviceType);
+                deviceInfo.Capabilities = GraphicsDeviceManager.Direct3D9Object.GetDeviceCaps(info.AdapterOrdinal, deviceInfo.DeviceType);
 
                 // enumerate the settings on this device
                 EnumerateSettingsCombos(info, deviceInfo, adapterFormats);
@@ -509,12 +509,12 @@ namespace SampleFramework
                             continue;
 
                         // make sure we have a valid device type
-                        if (!Direct3D.CheckDeviceType(adapterInfo.AdapterOrdinal, deviceInfo.DeviceType,
+                        if (!GraphicsDeviceManager.Direct3D9Object.CheckDeviceType(adapterInfo.AdapterOrdinal, deviceInfo.DeviceType,
                             adapterFormat, backBufferFormat, (windowed == 1)))
                             continue;
 
                         // check if post pixel shader blending is required
-                        if (!Direct3D.CheckDeviceFormat(adapterInfo.AdapterOrdinal,
+                        if (!GraphicsDeviceManager.Direct3D9Object.CheckDeviceFormat(adapterInfo.AdapterOrdinal,
                             deviceInfo.DeviceType, adapterFormat, Usage.QueryPostPixelShaderBlending,
                             ResourceType.Texture, backBufferFormat))
                             continue;
@@ -580,9 +580,9 @@ namespace SampleFramework
             foreach (Format format in possibleDepthStencilFormats)
             {
                 // check for a valid format
-                if (Direct3D.CheckDeviceFormat(combo.AdapterOrdinal, combo.DeviceType, combo.AdapterFormat,
+                if (GraphicsDeviceManager.Direct3D9Object.CheckDeviceFormat(combo.AdapterOrdinal, combo.DeviceType, combo.AdapterFormat,
                     Usage.DepthStencil, ResourceType.Surface, format) &&
-                    Direct3D.CheckDepthStencilMatch(combo.AdapterOrdinal, combo.DeviceType,
+                    GraphicsDeviceManager.Direct3D9Object.CheckDepthStencilMatch(combo.AdapterOrdinal, combo.DeviceType,
                     combo.AdapterFormat, combo.BackBufferFormat, format))
                     combo.DepthStencilFormats.Add(format);
             }
@@ -612,7 +612,7 @@ namespace SampleFramework
             foreach (MultisampleType type in possibleMultisampleTypes)
             {
                 // check if the multisample type is valid
-                if (Direct3D.CheckDeviceMultisampleType(combo.AdapterOrdinal, combo.DeviceType,
+                if (GraphicsDeviceManager.Direct3D9Object.CheckDeviceMultisampleType(combo.AdapterOrdinal, combo.DeviceType,
                     combo.AdapterFormat, combo.Windowed, type, out quality))
                 {
                     // add the items to the list

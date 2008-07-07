@@ -141,7 +141,7 @@ namespace SampleFramework
         public static Direct3D9Settings BuildOptimalSettings(DeviceSettings settings)
         {
             // grab the desktop mode
-            DisplayMode desktopMode = Direct3D.GetAdapterDisplayMode(0);
+            DisplayMode desktopMode = GraphicsDeviceManager.Direct3D9Object.GetAdapterDisplayMode(0);
             Direct3D9Settings optimal = new Direct3D9Settings();
 
             // set up the easy values first

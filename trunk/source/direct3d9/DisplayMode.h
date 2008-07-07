@@ -27,6 +27,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		ref class Direct3D;
+
 		/// <summary>Describes a display mode.</summary>
 		/// <unmanaged>D3DDISPLAYMODE</unmanaged>
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
@@ -100,89 +102,10 @@ namespace SlimDX
 		};
 
 		/// <summary>Implements a read-only collection of <see cref="DisplayMode"/> instances.</summary>
-		public ref class DisplayModeCollection : public System::Collections::Generic::ICollection<DisplayMode>
+		public ref class DisplayModeCollection : public System::Collections::ObjectModel::ReadOnlyCollection<DisplayMode>
 		{
-		private:
-			System::Collections::Generic::List<DisplayMode>^ list;
-
 		internal:
-			DisplayModeCollection( unsigned int adapter, Format format );
-
-			virtual System::Collections::IEnumerator^ GetEnumerator2() = System::Collections::IEnumerable::GetEnumerator;
-
-		public:
-			/// <summary>
-			/// Adds an item to the collection.
-			/// </summary>
-			/// <param name="item">The item to add to the collection.</param>
-			/// <exception cref="System::NotSupportedException">Always thrown, since the collection is read-only.</exception>
-			virtual void Add( DisplayMode item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
-
-			/// <summary>
-			/// Removes all items from the collection.
-			/// </summary>
-			/// <exception cref="System::NotSupportedException">Always thrown, since the collection is read-only.</exception>
-			virtual void Clear() { throw gcnew System::NotSupportedException(); }
-
-			/// <summary>
-			/// Determines whether the collection contains the specified item.
-			/// </summary>
-			/// <param name="item">The item for which to search.</param>
-			/// <returns><c>true</c> if the collection contains the item; otherwise, <c>false</c>.</returns>
-			virtual bool Contains( DisplayMode item ) { return list->Contains( item ); }
-
-			/// <summary>
-			/// Copies the elements of the collection to an array, starting at a particular array index.
-			/// </summary>
-			/// <param name="array">The destination array.</param>
-			/// <param name="arrayIndex">The index at which to start copying items.</param>
-			virtual void CopyTo( array<DisplayMode>^ array, int arrayIndex );
-
-			/// <summary>
-			/// Removes an item from the collection.
-			/// </summary>
-			/// <param name="item">The item to remove.</param>
-			/// <returns><c>true</c> if the item was removed from the collection; otherwise, <c>false</c>.</returns>
-			/// <exception cref="System::NotSupportedException">Always thrown, since the collection is read-only.</exception>
-			virtual bool Remove( DisplayMode item ) { SLIMDX_UNREFERENCED_PARAMETER(item); throw gcnew System::NotSupportedException(); }
-
-			/// <summary>
-			/// Gets the number of items contained in the collection.
-			/// </summary>
-            property virtual int Count
-            {
-                int get() { return list->Count; }
-            }
-
-			/// <summary>
-			/// Gets a value indicating whether the collection is read-only.
-			/// </summary>
-			/// <value>This property is always <c>true</c>.</value>
-			virtual property bool IsReadOnly
-			{
-				bool get() { return true; }
-			}
-
-			/// <summary>
-			/// Gets the <see cref="DisplayMode"/> item at the specified index.
-			/// </summary>
-			/// <param name="index">The index of the item to retrieve.</param>
-            property DisplayMode default[int]
-			{
-				DisplayMode get( int index )
-				{
-					return list[index];
-				}
-			}
-
-			/// <summary>
-			/// Returns an enumerator that iterates through the collection.
-			/// </summary>
-			/// <returns>An enumerator that can be used to iterate through the collection.</returns>
-			virtual System::Collections::Generic::IEnumerator<DisplayMode>^ GetEnumerator()
-			{
-                return list->GetEnumerator();
-			}
+			DisplayModeCollection( Direct3D^ direct3D, unsigned int adapter, Format format );
 		};
 	}
 }

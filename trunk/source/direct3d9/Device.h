@@ -22,7 +22,6 @@
 #pragma once
 
 #include "Enums.h"
-#include "Direct3D.h"
 #include "VertexDeclaration.h"
 
 #include "../Viewport.h"
@@ -37,6 +36,8 @@
 #include "ClipStatus.h"
 #include "CreationParameters.h"
 #include "RasterStatus.h"
+#include "DisplayMode.h"
+#include "Capabilities.h"
 
 namespace SlimDX
 {
@@ -73,7 +74,7 @@ namespace SlimDX
 			/// <param name="controlHandle">Specifies the target window for Direct3D rendering.</param>
 			/// <param name="createFlags">Combination of one or more options that control device creation.</param>
 			/// <param name="presentParameters">Describes the presentation parameters for the device being created.</param>
-			Device( int adapter, DeviceType deviceType, System::IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParameters );
+			Device( Direct3D^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParameters );
 			
 			/// <summary>
 			/// Constructs a new instance of the <see cref="Device"/> class using the specified pointer to a

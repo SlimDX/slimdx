@@ -22,6 +22,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include "../ComObject.h"
 #include "../Utilities.h"
 
 #include "Direct3D.h"
@@ -35,14 +36,12 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	AdapterDetails::AdapterDetails( unsigned int adapter )
+	AdapterDetails::AdapterDetails( Direct3D^ direct3D, unsigned int adapter )
 	{
-		Direct3D::Initialize();
-
 		D3DADAPTER_IDENTIFIER9 ident;
-		DWORD flags = Direct3D::CheckWhql ? D3DENUM_WHQL_LEVEL : 0;
+		DWORD flags = direct3D->CheckWhql ? D3DENUM_WHQL_LEVEL : 0;
 
-		HRESULT hr = Direct3D::InternalPointer->GetAdapterIdentifier( adapter, flags, &ident );
+		HRESULT hr = direct3D->InternalPointer->GetAdapterIdentifier( adapter, flags, &ident );
 		RECORD_D3D9( hr );
 		
 		this->adapter = adapter;
