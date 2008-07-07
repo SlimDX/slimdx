@@ -22,6 +22,8 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include "../ComObject.h"
+
 #include "Direct3D.h"
 #include "AdapterDetails.h"
 #include "AdapterInformation.h"
@@ -33,35 +35,36 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	AdapterInformation::AdapterInformation( unsigned int adapter )
+	AdapterInformation::AdapterInformation( Direct3D^ direct3D, unsigned int adapter )
 	{
+		m_direct3D = direct3D;
 		m_Adapter = static_cast<int>( adapter );
-		Details = gcnew AdapterDetails( adapter );
+		Details = gcnew AdapterDetails( direct3D, adapter );
 	}
 
 	IntPtr AdapterInformation::Monitor::get()
 	{
-		return Direct3D::GetAdapterMonitor( m_Adapter );
+		return m_direct3D->GetAdapterMonitor( m_Adapter );
 	}
 
 	DisplayMode AdapterInformation::CurrentDisplayMode::get()
 	{
-        return Direct3D::GetAdapterDisplayMode( m_Adapter );
+        return m_direct3D->GetAdapterDisplayMode( m_Adapter );
 	}
 
     Capabilities^ AdapterInformation::GetCaps( DeviceType type )
     {
-        return Direct3D::GetDeviceCaps( m_Adapter, type );
+        return m_direct3D->GetDeviceCaps( m_Adapter, type );
     }
 
 	bool AdapterInformation::SupportsR2VB( DeviceType type )
 	{
-		return Direct3D::SupportsR2VB( m_Adapter, type );
+		return m_direct3D->SupportsR2VB( m_Adapter, type );
 	}
 
     DisplayModeCollection^ AdapterInformation::GetDisplayModes( Format format )
     {
-        return gcnew DisplayModeCollection( m_Adapter, format );
+        return gcnew DisplayModeCollection( m_direct3D, m_Adapter, format );
     }
 }
 }

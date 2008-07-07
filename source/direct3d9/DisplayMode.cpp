@@ -22,6 +22,10 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include "../ComObject.h"
+#include "../InternalHelpers.h"
+#include "../Result.h"
+
 #include "Direct3D.h"
 #include "DisplayMode.h"
 
@@ -71,23 +75,13 @@ namespace Direct3D9
 			 && value1.Format == value2.Format );
 	}
 
-	DisplayModeCollection::DisplayModeCollection( unsigned int adapter, Format format )
+	DisplayModeCollection::DisplayModeCollection( Direct3D^ direct3D, unsigned int adapter, Format format )
+		: ReadOnlyCollection( gcnew List<DisplayMode>( direct3D->GetAdapterModeCount( adapter, format ) ) )
 	{
-		int count = Direct3D::GetAdapterModeCount( adapter, format );
-		list = gcnew List<DisplayMode>( count );
+		int count = direct3D->GetAdapterModeCount( adapter, format );
 
 		for( int i = 0; i < count; ++i )
-			list->Add( Direct3D::EnumerateAdapterModes( adapter, format, i ) );
-	}
-
-	System::Collections::IEnumerator^ DisplayModeCollection::GetEnumerator2()
-	{
-		return ((System::Collections::IEnumerable^)list)->GetEnumerator();
-	}
-
-	void DisplayModeCollection::CopyTo( array<DisplayMode>^ destination, int arrayIndex )
-	{
-		list->CopyTo( destination, arrayIndex );
+			Items->Add( direct3D->EnumerateAdapterModes( adapter, format, i ) );
 	}
 }
 }

@@ -306,7 +306,7 @@ namespace SampleFramework
             foreach (AdapterInfo9 adapterInfo in Enumeration9.Adapters)
             {
                 // get the desktop display mode
-                DisplayMode desktopMode = Direct3D.GetAdapterDisplayMode(adapterInfo.AdapterOrdinal);
+                DisplayMode desktopMode = GraphicsDeviceManager.Direct3D9Object.GetAdapterDisplayMode(adapterInfo.AdapterOrdinal);
 
                 // loop through each enumerated device
                 foreach (DeviceInfo9 deviceInfo in adapterInfo.Devices)

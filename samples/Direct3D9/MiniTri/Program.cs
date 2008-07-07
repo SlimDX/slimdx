@@ -51,14 +51,14 @@ namespace MiniTri
             RenderForm.ClientSize = new Size(800, 600);
             RenderForm.Text = "SlimDX - MiniTri Direct3D9 Sample";
 
-            Direct3D.Initialize();
+            Direct3D direct3D = new Direct3D();
 
             PresentParameters presentParams = new PresentParameters();
             presentParams.BackBufferHeight = RenderForm.ClientRectangle.Height;
             presentParams.BackBufferWidth = RenderForm.ClientRectangle.Width;
             presentParams.DeviceWindowHandle = RenderForm.Handle;
 
-            Device = new Device(0, DeviceType.Hardware, RenderForm.Handle, CreateFlags.HardwareVertexProcessing, presentParams);
+            Device = new Device(direct3D, 0, DeviceType.Hardware, RenderForm.Handle, CreateFlags.HardwareVertexProcessing, presentParams);
             Vertices = new VertexBuffer(Device, 3 * 20, Usage.WriteOnly, VertexFormat.None, Pool.Managed);
             
             DataStream stream = Vertices.Lock(0, 0, LockFlags.None);

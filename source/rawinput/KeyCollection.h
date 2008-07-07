@@ -44,7 +44,6 @@ namespace SlimDX
 			}
 
 			void AddItem( Keys item ) { list->Add( item ); }
-			void ClearItems() { list->Clear(); }
 			void RemoveItem( Keys item ) { list->Remove( item ); }
 
 		public:

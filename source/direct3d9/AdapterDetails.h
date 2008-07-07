@@ -25,6 +25,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		ref class Direct3D;
+
 		/// <summary>Contains information identifying an adapter.</summary>
 		/// <unmanaged>D3DADAPTER_IDENTIFIER9</unmanaged>
 		public ref class AdapterDetails
@@ -43,7 +45,7 @@ namespace SlimDX
 			int whqlLevel;
 
 		internal:
-			AdapterDetails( unsigned int adapter );
+			AdapterDetails( Direct3D^ direct3D, unsigned int adapter );
 
 		public:
 			/// <summary>

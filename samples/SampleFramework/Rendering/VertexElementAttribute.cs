@@ -28,7 +28,7 @@ namespace SampleFramework
     /// Indicates that the target code element is part of a vertex declaration.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-    public class VertexElementAttribute : Attribute
+    public sealed class VertexElementAttribute : Attribute
     {
         /// <summary>
         /// Gets or sets the stream index.
@@ -57,17 +57,17 @@ namespace SampleFramework
         public DeclarationUsage Usage
         {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
         /// Gets or sets the type of the data.
         /// </summary>
         /// <value>The type of the data.</value>
-        public DeclarationType DataType
+        public DeclarationType Type
         {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace SampleFramework
         public VertexElementAttribute(DeclarationType type, DeclarationUsage usage)
         {
             // store the values
-            DataType = type;
+            Type = type;
             Usage = usage;
         }
     }

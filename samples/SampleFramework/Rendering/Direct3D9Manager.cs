@@ -26,6 +26,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Security.Permissions;
 
 namespace SampleFramework
 {
@@ -62,6 +63,7 @@ namespace SampleFramework
         /// </summary>
         /// <param name="vertexType">Type of the vertex.</param>
         /// <returns>The vertex declaration for the specified vertex type.</returns>
+        [EnvironmentPermission(SecurityAction.LinkDemand)]
         public VertexDeclaration CreateVertexDeclaration(Type vertexType)
         {
             // ensure that we have a value type
@@ -113,7 +115,7 @@ namespace SampleFramework
                 usages[attribute.Usage]++;
 
                 // create the element
-                elements.Add(new VertexElement((short)attribute.Stream, (short)attribute.Offset, attribute.DataType,
+                elements.Add(new VertexElement((short)attribute.Stream, (short)attribute.Offset, attribute.Type,
                     attribute.Method, attribute.Usage, (byte)index));
             }
 

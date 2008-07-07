@@ -26,6 +26,7 @@
 #error You are not compiling against the June 2008 SDK. Change the linker settings to delay load the correct DLLs and update this code.
 #endif
 
+#include "../ComObject.h"
 #include "../Utilities.h"
 
 #include "Direct3D9Exception.h"
@@ -43,30 +44,34 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	void Direct3D::Initialize()
+	Direct3D::Direct3D( IDirect3D9* line )
 	{
-		if( m_Direct3D != NULL )
-			return;
+		Construct( line );
+	}
+
+	Direct3D::Direct3D( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+
+	Direct3D::Direct3D()
+	{
+		IDirect3D9 *direct3D;
 
         try
         {
-		    m_Direct3D = Direct3DCreate9( D3D_SDK_VERSION );
+		    direct3D = Direct3DCreate9( D3D_SDK_VERSION );
         }
         catch( System::Runtime::InteropServices::SEHException^ ex )
         {
             throw gcnew Direct3D9NotFoundException( "Direct3D 9 was not found. Reinstalling DirectX may fix the problem.", ex );
         }
 
-		if( m_Direct3D == NULL )
+		if( direct3D == NULL )
 			throw gcnew Direct3D9Exception( "Could not create Direct3D instance." );
 
-		CheckWhql = false;
-		adapters = gcnew AdapterCollection( m_Direct3D->GetAdapterCount() );
-		
-		System::AppDomain::CurrentDomain->DomainUnload += gcnew System::EventHandler( OnExit );
-		System::AppDomain::CurrentDomain->ProcessExit += gcnew System::EventHandler( OnExit );
+		adapters = gcnew AdapterCollection( this );
 
-        //probe for D3DX
         try
         {
             D3DXCheckVersion( D3D_SDK_VERSION, D3DX_SDK_VERSION );
@@ -76,27 +81,44 @@ namespace Direct3D9
             throw gcnew Direct3DX9NotFoundException( "Direct3DX 9 was not found. Please install "
                 "the latest DirectX end-user redistributable package from Microsoft.", ex );
         }
+
+		Construct( direct3D );
 	}
 
-	void Direct3D::Terminate()
+	Direct3D^ Direct3D::FromPointer( IDirect3D9* pointer )
 	{
-		if( m_Direct3D == NULL )
-            return;
+		if( pointer == 0 )
+			return nullptr;
 
-		m_Direct3D->Release();
-		m_Direct3D = NULL;
+		Direct3D^ tableEntry = safe_cast<Direct3D^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
 
-		System::AppDomain::CurrentDomain->DomainUnload -= gcnew System::EventHandler( OnExit );
-		System::AppDomain::CurrentDomain->ProcessExit -= gcnew System::EventHandler( OnExit );
+		return gcnew Direct3D( pointer );
+	}
+
+	Direct3D^ Direct3D::FromPointer( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		Direct3D^ tableEntry = safe_cast<Direct3D^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Direct3D( pointer );
 	}
 
 	bool Direct3D::CheckDeviceFormatConversion(int adapter, DeviceType deviceType, Format sourceFormat, Format targetFormat, [Out] Result% result)
 	{
-		Initialize();
-
 		HRESULT hr;		// Error code.
 
-		hr = m_Direct3D->CheckDeviceFormatConversion(adapter, static_cast<D3DDEVTYPE>( deviceType ), 
+		hr = InternalPointer->CheckDeviceFormatConversion(adapter, static_cast<D3DDEVTYPE>( deviceType ), 
 			static_cast<D3DFORMAT>( sourceFormat ), static_cast<D3DFORMAT>( targetFormat) );
 
 		result = Result( hr );
@@ -106,8 +128,6 @@ namespace Direct3D9
 
 	bool Direct3D::CheckDeviceFormatConversion(int adapter, DeviceType deviceType, Format sourceFormat, Format targetFormat)
 	{
-		Initialize();
-
 		Result result;
 		return CheckDeviceFormatConversion(adapter, deviceType, sourceFormat, targetFormat, result);
 	}
@@ -115,9 +135,7 @@ namespace Direct3D9
 	bool Direct3D::CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat,
 		Usage usage, ResourceType resourceType, Format checkFormat, [Out] Result% result )
 	{
-		Initialize();
-
-		HRESULT hr = m_Direct3D->CheckDeviceFormat( adapter, static_cast<D3DDEVTYPE>( deviceType ), static_cast<D3DFORMAT>( adapterFormat ),
+		HRESULT hr = InternalPointer->CheckDeviceFormat( adapter, static_cast<D3DDEVTYPE>( deviceType ), static_cast<D3DFORMAT>( adapterFormat ),
 			static_cast<DWORD>( usage ), static_cast<D3DRESOURCETYPE>( resourceType ), static_cast<D3DFORMAT>( checkFormat ) );
 		
 		result = Result( hr );
@@ -128,8 +146,6 @@ namespace Direct3D9
 	bool Direct3D::CheckDeviceFormat( int adapter, DeviceType deviceType, Format adapterFormat,
 		Usage usage, ResourceType resourceType, Format checkFormat )
 	{
-		Initialize();
-
 		Result result;
 		return CheckDeviceFormat( adapter, deviceType, adapterFormat, usage, resourceType, checkFormat, result );
 	}
@@ -137,9 +153,7 @@ namespace Direct3D9
 	bool Direct3D::CheckDeviceType( int adapter, DeviceType deviceType, Format adapterFormat, 
 		Format backBufferFormat, bool windowed, [Out] Result% result )
 	{
-		Initialize();
-
-		HRESULT hr = m_Direct3D->CheckDeviceType( adapter, static_cast<D3DDEVTYPE>( deviceType ), 
+		HRESULT hr = InternalPointer->CheckDeviceType( adapter, static_cast<D3DDEVTYPE>( deviceType ), 
 			static_cast<D3DFORMAT>( adapterFormat ), static_cast<D3DFORMAT>( backBufferFormat ), windowed );
 		
 		result = Result( hr );
@@ -150,8 +164,6 @@ namespace Direct3D9
 	bool Direct3D::CheckDeviceType( int adapter, DeviceType deviceType, Format adapterFormat, 
 		Format backBufferFormat, bool windowed )
 	{
-		Initialize();
-
 		Result result;
 		return CheckDeviceType( adapter, deviceType, adapterFormat, backBufferFormat, windowed, result );
 	}
@@ -159,9 +171,7 @@ namespace Direct3D9
 	bool Direct3D::CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, 
 		Format renderTargetFormat, Format depthStencilFormat, [Out] Result% result )
 	{
-		Initialize();
-
-		HRESULT hr = m_Direct3D->CheckDepthStencilMatch( adapter, static_cast<D3DDEVTYPE>( deviceType ),
+		HRESULT hr = InternalPointer->CheckDepthStencilMatch( adapter, static_cast<D3DDEVTYPE>( deviceType ),
 			static_cast<D3DFORMAT>( adapterFormat ), static_cast<D3DFORMAT>( renderTargetFormat ), static_cast<D3DFORMAT>( depthStencilFormat ) );
 		
 		result = Result( hr );
@@ -172,8 +182,6 @@ namespace Direct3D9
 	bool Direct3D::CheckDepthStencilMatch( int adapter, DeviceType deviceType, Format adapterFormat, 
 		Format renderTargetFormat, Format depthStencilFormat )
 	{
-		Initialize();
-
 		Result result;
 		return CheckDepthStencilMatch( adapter, deviceType, adapterFormat,
 			renderTargetFormat, depthStencilFormat, result );
@@ -182,10 +190,8 @@ namespace Direct3D9
 	bool Direct3D::CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
 		bool windowed, MultisampleType multiSampleType, [Out] int% qualityLevels, [Out] Result% result )
 	{
-		Initialize();
-
 		DWORD levels;
-		HRESULT hr = m_Direct3D->CheckDeviceMultiSampleType( adapter, static_cast<D3DDEVTYPE>( deviceType ), static_cast<D3DFORMAT>( surfaceFormat ),
+		HRESULT hr = InternalPointer->CheckDeviceMultiSampleType( adapter, static_cast<D3DDEVTYPE>( deviceType ), static_cast<D3DFORMAT>( surfaceFormat ),
 			windowed, static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ),  static_cast<DWORD*>( &levels ) );
 
 		qualityLevels = levels;
@@ -197,8 +203,6 @@ namespace Direct3D9
 	bool Direct3D::CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
 		bool windowed, MultisampleType multiSampleType, [Out] int% qualityLevels )
 	{
-		Initialize();
-
 		Result result;
 		return CheckDeviceMultisampleType( adapter, deviceType, surfaceFormat,
 			windowed, multiSampleType, qualityLevels, result );
@@ -207,8 +211,6 @@ namespace Direct3D9
 	bool Direct3D::CheckDeviceMultisampleType( int adapter, DeviceType deviceType, Format surfaceFormat,
 		bool windowed, MultisampleType multiSampleType )
 	{
-		Initialize();
-
 		int levels;
 		Result result;
 		return CheckDeviceMultisampleType( adapter, deviceType, surfaceFormat, windowed,
@@ -217,31 +219,25 @@ namespace Direct3D9
 
     DisplayMode Direct3D::GetAdapterDisplayMode( int adapter )
     {
-		Initialize();
-
         DisplayMode displayMode;
-        m_Direct3D->GetAdapterDisplayMode( adapter, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
+        InternalPointer->GetAdapterDisplayMode( adapter, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
         return displayMode;
     }
 
     AdapterDetails^ Direct3D::GetAdapterIdentifier( int adapter )
     {
-        return gcnew AdapterDetails( adapter );
+        return gcnew AdapterDetails( this, adapter );
     }
 
     int Direct3D::GetAdapterModeCount( int adapter, Format format )
     {
-		Initialize();
-
-        return m_Direct3D->GetAdapterModeCount( adapter, static_cast<D3DFORMAT>( format ) );
+        return InternalPointer->GetAdapterModeCount( adapter, static_cast<D3DFORMAT>( format ) );
     }
 
     DisplayMode Direct3D::EnumerateAdapterModes( int adapter, Format format, int modeIndex )
     {
-		Initialize();
-
         DisplayMode displayMode;
-        HRESULT hr = m_Direct3D->EnumAdapterModes( adapter, static_cast<D3DFORMAT>( format ),
+        HRESULT hr = InternalPointer->EnumAdapterModes( adapter, static_cast<D3DFORMAT>( format ),
 			modeIndex, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
         RECORD_D3D9( hr );
         return displayMode;
@@ -249,15 +245,11 @@ namespace Direct3D9
 
     IntPtr Direct3D::GetAdapterMonitor( int adapter )
     {
-		Initialize();
-
-        return IntPtr( m_Direct3D->GetAdapterMonitor( adapter ) );
+        return IntPtr( InternalPointer->GetAdapterMonitor( adapter ) );
     }
 
 	Capabilities^ Direct3D::GetDeviceCaps( int adapter, DeviceType deviceType )
 	{
-		Initialize();
-
 		D3DCAPS9 caps;
 		HRESULT hr = Direct3D::InternalPointer->GetDeviceCaps( adapter, static_cast<D3DDEVTYPE>( deviceType ), &caps );
 		RECORD_D3D9( hr );

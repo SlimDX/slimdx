@@ -37,12 +37,13 @@ namespace SlimDX
 		public ref class AdapterInformation
 		{
 		private:
+			Direct3D^ m_direct3D;
 			AdapterDetails^ details;
 
 		internal:
 			initonly int m_Adapter;
 
-			AdapterInformation( unsigned int adapter );
+			AdapterInformation( Direct3D^ direct3D, unsigned int adapter );
 
 		public:
 			/// <summary>
