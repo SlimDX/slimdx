@@ -23,6 +23,9 @@ using SlimDX.Direct3D9;
 using SlimDX;
 using System;
 using System.Diagnostics;
+using System.Reflection;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace SampleFramework
 {
@@ -52,6 +55,73 @@ namespace SampleFramework
         {
             // store variables
             this.manager = manager;
+        }
+
+        /// <summary>
+        /// Creates a vertex declaration using the specified vertex type.
+        /// </summary>
+        /// <param name="vertexType">Type of the vertex.</param>
+        /// <returns>The vertex declaration for the specified vertex type.</returns>
+        public VertexDeclaration CreateVertexDeclaration(Type vertexType)
+        {
+            // ensure that we have a value type
+            if (!vertexType.IsValueType)
+                throw new InvalidOperationException("Vertex types must be value types.");
+
+            // grab the list of elements in the vertex
+            List<VertexElementAttribute> objectAttributes = new List<VertexElementAttribute>();
+            FieldInfo[] fields = vertexType.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+            foreach (FieldInfo field in fields)
+            {
+                // check for the custom attribute
+                VertexElementAttribute[] attributes = (VertexElementAttribute[])field.GetCustomAttributes(typeof(VertexElementAttribute), false);
+                if (field.Name.Contains("<") && field.Name.Contains(">"))
+                {
+                    // look up the property matching this field to see if it has the attribute
+                    int index1 = field.Name.IndexOf('<');
+                    int index2 = field.Name.IndexOf('>');
+
+                    // parse out the name
+                    string propertyName = field.Name.Substring(index1 + 1, index2 - index1 - 1);
+                    PropertyInfo property = vertexType.GetProperty(propertyName, field.FieldType);
+                    if (property != null)
+                        attributes = (VertexElementAttribute[])property.GetCustomAttributes(typeof(VertexElementAttribute), false);
+                }
+                if (attributes.Length == 1)
+                {
+                    // add the attribute to the list
+                    attributes[0].Offset = Marshal.OffsetOf(vertexType, field.Name).ToInt32();
+                    objectAttributes.Add(attributes[0]);
+                }
+            }
+
+            // make sure we have at least one element
+            if (objectAttributes.Count < 1)
+                throw new InvalidOperationException("The vertex type must have at least one field or property marked with the VertexElement attribute.");
+        
+            // loop through the attributes and start building vertex elements
+            List<VertexElement> elements = new List<VertexElement>();
+            Dictionary<DeclarationUsage, int> usages = new Dictionary<DeclarationUsage, int>();
+            foreach (VertexElementAttribute attribute in objectAttributes)
+            {
+                // check the current usage index
+                if (!usages.ContainsKey(attribute.Usage))
+                    usages.Add(attribute.Usage, 0);
+
+                // advance the current usage count
+                int index = usages[attribute.Usage];
+                usages[attribute.Usage]++;
+
+                // create the element
+                elements.Add(new VertexElement((short)attribute.Stream, (short)attribute.Offset, attribute.DataType,
+                    attribute.Method, attribute.Usage, (byte)index));
+            }
+
+            // add the end element
+            elements.Add(VertexElement.VertexDeclarationEnd);
+
+            // return the new declaration
+            return new VertexDeclaration(Device, elements.ToArray());
         }
 
         /// <summary>
