@@ -38,11 +38,11 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	AdapterCollection::AdapterCollection( Direct3D^ direct3D )
-		: ReadOnlyCollection( gcnew List<AdapterInformation^>( direct3D->AdapterCount ) )
+	AdapterCollection::AdapterCollection( IDirect3D9 *direct3D, bool checkWhql )
+		: ReadOnlyCollection( gcnew List<AdapterInformation^>() )
 	{
-		for( int i = 0; i < direct3D->AdapterCount; ++i )
-			Items->Add( gcnew AdapterInformation( direct3D, i ) );
+		for( unsigned int i = 0; i < direct3D->GetAdapterCount(); ++i )
+			Items->Add( gcnew AdapterInformation( direct3D, i, checkWhql ) );
 	}
 }
 }

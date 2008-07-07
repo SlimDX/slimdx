@@ -36,12 +36,12 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	AdapterDetails::AdapterDetails( Direct3D^ direct3D, unsigned int adapter )
+	AdapterDetails::AdapterDetails( IDirect3D9 *direct3D, unsigned int adapter, bool checkWhql )
 	{
 		D3DADAPTER_IDENTIFIER9 ident;
-		DWORD flags = direct3D->CheckWhql ? D3DENUM_WHQL_LEVEL : 0;
+		DWORD flags = checkWhql ? D3DENUM_WHQL_LEVEL : 0;
 
-		HRESULT hr = direct3D->InternalPointer->GetAdapterIdentifier( adapter, flags, &ident );
+		HRESULT hr = direct3D->GetAdapterIdentifier( adapter, flags, &ident );
 		RECORD_D3D9( hr );
 		
 		this->adapter = adapter;

@@ -70,7 +70,7 @@ namespace Direct3D9
 		if( direct3D == NULL )
 			throw gcnew Direct3D9Exception( "Could not create Direct3D instance." );
 
-		adapters = gcnew AdapterCollection( this );
+		adapters = gcnew AdapterCollection( direct3D, false );
 
         try
         {
@@ -226,7 +226,7 @@ namespace Direct3D9
 
     AdapterDetails^ Direct3D::GetAdapterIdentifier( int adapter )
     {
-        return gcnew AdapterDetails( this, adapter );
+        return gcnew AdapterDetails( InternalPointer, adapter, CheckWhql );
     }
 
     int Direct3D::GetAdapterModeCount( int adapter, Format format )
@@ -251,7 +251,7 @@ namespace Direct3D9
 	Capabilities^ Direct3D::GetDeviceCaps( int adapter, DeviceType deviceType )
 	{
 		D3DCAPS9 caps;
-		HRESULT hr = Direct3D::InternalPointer->GetDeviceCaps( adapter, static_cast<D3DDEVTYPE>( deviceType ), &caps );
+		HRESULT hr = InternalPointer->GetDeviceCaps( adapter, static_cast<D3DDEVTYPE>( deviceType ), &caps );
 		RECORD_D3D9( hr );
 
 		return gcnew Capabilities( caps );

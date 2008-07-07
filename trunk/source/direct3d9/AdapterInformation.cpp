@@ -35,32 +35,32 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	AdapterInformation::AdapterInformation( Direct3D^ direct3D, unsigned int adapter )
+	AdapterInformation::AdapterInformation( IDirect3D9 *direct3D, unsigned int adapter, bool checkWhql )
 	{
 		m_direct3D = direct3D;
 		m_Adapter = static_cast<int>( adapter );
-		Details = gcnew AdapterDetails( direct3D, adapter );
+		details = gcnew AdapterDetails( direct3D, adapter, checkWhql );
 	}
 
 	IntPtr AdapterInformation::Monitor::get()
 	{
-		return m_direct3D->GetAdapterMonitor( m_Adapter );
+		return IntPtr( m_direct3D->GetAdapterMonitor( m_Adapter ) );
 	}
 
 	DisplayMode AdapterInformation::CurrentDisplayMode::get()
 	{
-        return m_direct3D->GetAdapterDisplayMode( m_Adapter );
+        DisplayMode displayMode;
+        m_direct3D->GetAdapterDisplayMode( m_Adapter, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
+        return displayMode;
 	}
 
     Capabilities^ AdapterInformation::GetCaps( DeviceType type )
     {
-        return m_direct3D->GetDeviceCaps( m_Adapter, type );
-    }
+		D3DCAPS9 caps;
+		m_direct3D->GetDeviceCaps( m_Adapter, static_cast<D3DDEVTYPE>( type ), &caps );
 
-	bool AdapterInformation::SupportsR2VB( DeviceType type )
-	{
-		return m_direct3D->SupportsR2VB( m_Adapter, type );
-	}
+		return gcnew Capabilities( caps );
+    }
 
     DisplayModeCollection^ AdapterInformation::GetDisplayModes( Format format )
     {

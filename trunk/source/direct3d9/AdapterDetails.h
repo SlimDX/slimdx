@@ -45,7 +45,7 @@ namespace SlimDX
 			int whqlLevel;
 
 		internal:
-			AdapterDetails( Direct3D^ direct3D, unsigned int adapter );
+			AdapterDetails( IDirect3D9 *direct3D, unsigned int adapter, bool checkWhql );
 
 		public:
 			/// <summary>

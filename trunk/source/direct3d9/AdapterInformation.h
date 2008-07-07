@@ -37,13 +37,13 @@ namespace SlimDX
 		public ref class AdapterInformation
 		{
 		private:
-			Direct3D^ m_direct3D;
+			IDirect3D9 *m_direct3D;
 			AdapterDetails^ details;
 
 		internal:
 			initonly int m_Adapter;
 
-			AdapterInformation( Direct3D^ direct3D, unsigned int adapter );
+			AdapterInformation( IDirect3D9 *direct3D, unsigned int adapter, bool checkWhql );
 
 		public:
 			/// <summary>
@@ -79,20 +79,11 @@ namespace SlimDX
             Capabilities^ GetCaps( DeviceType type );
 
 			/// <summary>
-			/// Determines whether the adapter supports Render-To-Vertex-Buffer (R2VB).
-			/// </summary>
-			/// <param name="type">The desired device type.</param>
-			/// <returns><c>true</c> if the adapter supports R2VB; otherwise, <c>false</c>.</returns>
-			bool SupportsR2VB( DeviceType type );
-
-			/// <summary>
 			/// Gets or sets the adapter details.
 			/// </summary>
 			property AdapterDetails^ Details
 			{
 				AdapterDetails^ get() { return details; }
-			protected:
-				void set( AdapterDetails^ value ) { details = value; }
 			}
 		};
 	}

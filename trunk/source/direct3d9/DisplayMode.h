@@ -105,7 +105,7 @@ namespace SlimDX
 		public ref class DisplayModeCollection : public System::Collections::ObjectModel::ReadOnlyCollection<DisplayMode>
 		{
 		internal:
-			DisplayModeCollection( Direct3D^ direct3D, unsigned int adapter, Format format );
+			DisplayModeCollection( IDirect3D9 *direct3D, unsigned int adapter, Format format );
 		};
 	}
 }
