@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../design/BoundingSphereConverter.h"
+
 #include "Enums.h"
 #include "Vector3.h"
 
@@ -35,6 +37,7 @@ namespace SlimDX
 	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+	[System::ComponentModel::TypeConverter( SlimDX::Design::BoundingSphereConverter::typeid )]
 	public value class BoundingSphere : System::IEquatable<BoundingSphere>
 	{
 	public:

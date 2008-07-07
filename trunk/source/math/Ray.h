@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../design/RayConverter.h"
+
 #include "Vector3.h"
 
 using System::Runtime::InteropServices::OutAttribute;
@@ -36,6 +38,7 @@ namespace SlimDX
 	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+	[System::ComponentModel::TypeConverter( SlimDX::Design::RayConverter::typeid )]
 	public value class Ray : System::IEquatable<Ray>
 	{
 	public:

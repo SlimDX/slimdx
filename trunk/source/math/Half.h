@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../design/HalfConverter.h"
+
 namespace SlimDX
 {
 	/// <summary>
@@ -28,6 +30,7 @@ namespace SlimDX
 	/// </summary>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
+	[System::ComponentModel::TypeConverter( SlimDX::Design::HalfConverter::typeid )]
 	public value class Half
 	{
 	private:
