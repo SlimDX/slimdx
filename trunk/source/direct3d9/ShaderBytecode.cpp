@@ -743,7 +743,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXGetShaderInputSemantics( function, NULL, &count );
 		
-		if( RECORD_D3D9( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure || count == 0 )
 			return nullptr;
 		
 		array<ShaderSemantic>^ inputs = gcnew array<ShaderSemantic>( count );
@@ -764,7 +764,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXGetShaderOutputSemantics( function, NULL, &count );
 		
-		if( RECORD_D3D9( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure || count == 0 )
 			return nullptr;
 		
 		array<ShaderSemantic>^ outputs = gcnew array<ShaderSemantic>( count );
@@ -785,7 +785,7 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXGetShaderSamplers( function, NULL, &count );
 		
-		if( RECORD_D3D9( hr ).IsFailure )
+		if( RECORD_D3D9( hr ).IsFailure || count == 0 )
 			return nullptr;
 		
 		std::vector<LPCSTR> samplers( count );
