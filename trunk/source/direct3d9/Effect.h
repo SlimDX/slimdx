@@ -46,6 +46,7 @@ namespace SlimDX
 		private:
 			IEffectStateManagerShim *shim;
 			
+		internal:
 			static System::String^ ExceptionDataKey = "CompilationErrors";
 
 		public:

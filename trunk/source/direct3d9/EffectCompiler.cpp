@@ -50,17 +50,17 @@ namespace Direct3D9
 		Construct( compiler, NativeInterface );
 	}
 
-	EffectCompiler::EffectCompiler( String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
+	EffectCompiler::EffectCompiler( String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% compilationErrors )
 	{
-		InitThis( System::Text::ASCIIEncoding::ASCII->GetBytes( data ), defines, includeFile, flags, errors );
+		InitThis( System::Text::ASCIIEncoding::ASCII->GetBytes( data ), defines, includeFile, flags, compilationErrors );
 	}
 
-	EffectCompiler::EffectCompiler( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
+	EffectCompiler::EffectCompiler( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% compilationErrors )
 	{
-		InitThis( data, defines, includeFile, flags, errors );
+		InitThis( data, defines, includeFile, flags, compilationErrors );
 	}
 
-	void EffectCompiler::InitThis( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
+	void EffectCompiler::InitThis( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% compilationErrors )
 	{
 		ID3DXEffectCompiler* compiler;
 		ID3DXBuffer* errorBuffer;
@@ -81,10 +81,9 @@ namespace Direct3D9
 		//clean up after marshaling macros
 		Macro::Unmarshal( macros, handles );
 		//marshal errors if necessary
-		errors = Utilities::BufferToString( errorBuffer );
+		compilationErrors = Utilities::BufferToString( errorBuffer );
 		
-		RECORD_D3D9( hr );
-		if( FAILED( hr ) )
+		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		Construct(compiler);
@@ -136,16 +135,7 @@ namespace Direct3D9
 		//marshal errors if necessary
 		compilationErrors = Utilities::BufferToString( errorBuffer );
 			
-		// CheckHResult() is not used because we need to include the compiler errors.
-		if( FAILED(hr) )
-		{
-			Direct3D9Exception^ ex = gcnew Direct3D9Exception( Result::Last );
-			ex->Data->Add( "CompilationErrors", compilationErrors );
-			throw ex;
-		}
-
-		SetLastError( hr );		
-		if( FAILED( hr ) )
+		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
 
 		constantTable = ConstantTable::FromPointer( table );
@@ -174,16 +164,7 @@ namespace Direct3D9
 			compilationErrors = String::Empty;
 		}
 			
-		// CheckHResult() is not used because we need to include the compiler errors.
-		if( FAILED(hr) )
-		{
-			Direct3D9Exception^ ex = gcnew Direct3D9Exception( Result::Last );
-			ex->Data->Add( "CompilationErrors", compilationErrors );
-			throw ex;
-		}
-
-		SetLastError( hr );		
-		if( FAILED( hr ) )
+		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
 
 		return ShaderBytecode::FromPointer( shader );
@@ -212,16 +193,7 @@ namespace Direct3D9
 			compilationErrors = String::Empty;
 		}
 		
-		// CheckHResult() is not used because we need to include the compiler errors.
-		if( FAILED(hr) )
-		{
-			Direct3D9Exception^ ex = gcnew Direct3D9Exception( Result::Last );
-			ex->Data->Add( "CompilationErrors", compilationErrors );
-			throw ex;
-		}
-
-		SetLastError( hr );		
-		if( FAILED( hr ) )
+		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
 
 		return gcnew DataStream( effect );

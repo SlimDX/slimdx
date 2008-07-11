@@ -112,12 +112,6 @@ namespace Direct3D9
 		compilationErrors = Utilities::BufferToString( errorBuffer );
 		
 		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
-		{
-			compilationErrors = nullptr;
-			return nullptr;
-		}
-
-		if( effect == NULL )
 			return nullptr;
 
 		return gcnew Effect( effect );
@@ -158,9 +152,6 @@ namespace Direct3D9
 		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
 
-		if( effect == NULL )
-			return nullptr;
-
 		return gcnew Effect( effect );
 	}
 
@@ -198,9 +189,6 @@ namespace Direct3D9
 		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
 
-		if( effect == NULL )
-			return nullptr;
-
 		return gcnew Effect( effect );
 	}
 
@@ -216,9 +204,6 @@ namespace Direct3D9
 		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
 
 		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
-			return nullptr;
-
-		if( effect == NULL )
 			return nullptr;
 
 		return gcnew Effect( effect );
@@ -325,12 +310,6 @@ namespace Direct3D9
 		compilationErrors = Utilities::BufferToString( errorBuffer );
 		
 		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
-		{
-			compilationErrors = nullptr;
-			return nullptr;
-		}
-
-		if( effect == NULL )
 			return nullptr;
 
 		return gcnew Effect( effect );
@@ -371,9 +350,6 @@ namespace Direct3D9
 		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
 
-		if( effect == NULL )
-			return nullptr;
-
 		return gcnew Effect( effect );
 	}
 
@@ -411,9 +387,6 @@ namespace Direct3D9
 		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
 
-		if( effect == NULL )
-			return nullptr;
-
 		return gcnew Effect( effect );
 	}
 
@@ -429,9 +402,6 @@ namespace Direct3D9
 		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
 
 		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
-			return nullptr;
-
-		if( effect == NULL )
 			return nullptr;
 
 		return gcnew Effect( effect );
