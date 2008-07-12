@@ -676,10 +676,14 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetRenderState( static_cast<D3DRENDERSTATETYPE>( state ), &value );
 		RECORD_D3D9( hr );
 
-		int intValue = static_cast<int>( value );
-		if( T::typeid == bool::typeid )
-			return safe_cast<T>(intValue != 0);
-		return safe_cast<T>( intValue );
+		try
+		{
+			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid ) );
+		}
+		catch( InvalidCastException^ )
+		{
+			return safe_cast<T>( static_cast<int>( value ) );
+		}
 	}
 	
 	int Device::GetRenderState( RenderState state )
@@ -697,10 +701,14 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetSamplerState( sampler, static_cast<D3DSAMPLERSTATETYPE>( type ), &value );
 		RECORD_D3D9( hr );
 
-		int intValue = static_cast<int>( value );
-		if( T::typeid == bool::typeid )
-			return safe_cast<T>(intValue != 0);
-		return safe_cast<T>( intValue );
+		try
+		{
+			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid ) );
+		}
+		catch( InvalidCastException^ )
+		{
+			return safe_cast<T>( static_cast<int>( value ) );
+		}
 	}
 #pragma warning(default:4717)
 
@@ -716,10 +724,14 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetTextureStageState( stage, static_cast<D3DTEXTURESTAGESTATETYPE>( type ), &value );
 		RECORD_D3D9( hr );
 
-		int intValue = static_cast<int>( value );
-		if( T::typeid == bool::typeid )
-			return safe_cast<T>(intValue != 0);
-		return safe_cast<T>( intValue );
+		try
+		{
+			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid ) );
+		}
+		catch( InvalidCastException^ )
+		{
+			return safe_cast<T>( static_cast<int>( value ) );
+		}
 	}
 
 	int Device::GetTextureStageState( int stage, TextureStage type )

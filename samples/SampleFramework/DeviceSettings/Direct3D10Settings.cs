@@ -199,6 +199,7 @@ namespace SampleFramework
             SampleDescription sample = new SampleDescription();
 
             // set up the easy values first
+            optimal.AdapterOrdinal = settings.AdapterOrdinal;
             optimal.DriverType = ConversionMethods.ToDirect3D10(settings.DeviceType);
             optimal.PresentFlags = PresentFlags.None;
             swapChainDescription.IsWindowed = settings.Windowed;

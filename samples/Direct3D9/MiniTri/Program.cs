@@ -72,6 +72,8 @@ namespace MiniTri
             stream.WriteRange(vertexData);
             Vertices.Unlock();
 
+            Blend b = Device.GetRenderState<Blend>(RenderState.AlphaFunc);
+
             Application.Idle += new EventHandler(Application_Idle);
             Application.Run(RenderForm);
 

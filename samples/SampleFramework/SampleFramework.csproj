@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30428</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CF09C015-11D7-4E97-8A29-7FA4922C8A46}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -126,12 +126,6 @@
     <Compile Include="Win32\WindowConstants.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\build\SlimDX.vcproj">
-      <Project>{8ECCE443-0440-40F4-A94C-F02E027282C3}</Project>
-      <Name>SlimDX</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -140,6 +134,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\sdx_icon_black.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\build\SlimDX.vcproj">
+      <Project>{8ECCE443-0440-40F4-A94C-F02E027282C3}</Project>
+      <Name>SlimDX</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
