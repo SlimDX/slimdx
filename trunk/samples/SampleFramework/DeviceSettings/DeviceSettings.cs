@@ -40,6 +40,16 @@ namespace SampleFramework
         }
 
         /// <summary>
+        /// Gets or sets the adapter ordinal.
+        /// </summary>
+        /// <value>The adapter ordinal.</value>
+        public int AdapterOrdinal
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the type of the device.
         /// </summary>
         /// <value>The type of the device.</value>
@@ -114,6 +124,17 @@ namespace SampleFramework
         /// </summary>
         /// <value><c>true</c> if VSync is enabled; otherwise, <c>false</c>.</value>
         public bool EnableVSync
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="DeviceSettings"/> is multithreaded.
+        /// </summary>
+        /// <value><c>true</c> if multithreaded; otherwise, <c>false</c>.</value>
+        /// <remarks>This only has an effect for Direct3D9 devices.</remarks>
+        public bool Multithreaded
         {
             get;
             set;
@@ -207,6 +228,8 @@ namespace SampleFramework
             result.MultisampleType = MultisampleType;
             result.Windowed = Windowed;
             result.EnableVSync = EnableVSync;
+            result.AdapterOrdinal = AdapterOrdinal;
+            result.Multithreaded = Multithreaded;
 
             // clone each API specific portion
             if (Direct3D9 != null)

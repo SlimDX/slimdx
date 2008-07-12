@@ -936,8 +936,6 @@ namespace SampleFramework
             // clear references
             Direct3D9Object = null;
             Direct3D9.Device = null;
-            if (CurrentSettings != null)
-                CurrentSettings.Direct3D9 = null;
         }
 
         /// <summary>
@@ -990,8 +988,6 @@ namespace SampleFramework
             // clear references
             Direct3D10.Device = null;
             Factory = null;
-            if (CurrentSettings != null)
-                CurrentSettings.Direct3D10 = null;
         }
 
         /// <summary>

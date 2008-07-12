@@ -145,12 +145,17 @@ namespace SampleFramework
             Direct3D9Settings optimal = new Direct3D9Settings();
 
             // set up the easy values first
+            optimal.AdapterOrdinal = settings.AdapterOrdinal;
             optimal.DeviceType = settings.DeviceType;
             optimal.PresentParameters.Windowed = settings.Windowed;
             optimal.PresentParameters.BackBufferCount = settings.BackBufferCount;
             optimal.PresentParameters.Multisample = settings.MultisampleType;
             optimal.PresentParameters.MultisampleQuality = settings.MultisampleQuality;
             optimal.PresentParameters.FullScreenRefreshRateInHertz = settings.RefreshRate;
+
+            // multithreaded
+            if (settings.Multithreaded)
+                optimal.CreationFlags |= CreateFlags.Multithreaded;
 
             // figure out the optimal adapter format
             if (optimal.PresentParameters.Windowed || ConversionMethods.GetColorBits(desktopMode.Format) >= 8)
