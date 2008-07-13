@@ -22,6 +22,7 @@
  </ProjectOptions>
  <Targets>
   <AssemblyReferenceDirectories>
+   <Directory>$(ProjectDir)/../games/Asteroids/Asteroids/bin/Debug/</Directory>
    <Directory>$(ProjectDir)/../samples/Direct3D10/MiniTri/bin/Debug/</Directory>
    <Directory>$(ProjectDir)/../samples/Direct3D9/MiniTri/bin/Debug/</Directory>
    <Directory>$(ProjectDir)/../samples/Direct3D9/SampleFramework/bin/Debug/</Directory>
@@ -31,9 +32,9 @@
    <Directory>$(ProjectDir)/../samples/DirectInput/Joystick/bin/Debug/</Directory>
    <Directory>$(ProjectDir)/../samples/DirectInput/Keyboard/bin/Debug/</Directory>
    <Directory>$(ProjectDir)/../samples/DirectInput/Mouse/bin/Debug/</Directory>
+   <Directory>$(ProjectDir)/Debug/</Directory>
   </AssemblyReferenceDirectories>
-  <Target Name="$(ProjectDir)/Debug/SlimDX.dll" Analyze="True" AnalyzeAllChildren="True" />
-  <Target Name="$(ProjectDir)/../games/Asteroids/Asteroids/bin/Debug/Asteroids.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/x86/Debug/SlimDX.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D10/MiniTri/bin/x86/Debug/MiniTri.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/CustomUI/bin/x86/Debug/CustomUI.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/EmptyProject/bin/x86/Debug/EmptyProject.exe" Analyze="True" AnalyzeAllChildren="True" />
@@ -45,9 +46,11 @@
   <Target Name="$(ProjectDir)/../samples/DirectInput/Joystick/bin/x86/Debug/Joystick.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/DirectInput/Keyboard/bin/x86/Debug/Keyboard.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/DirectInput/Mouse/bin/x86/Debug/Mouse.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/Games/Asteroids/bin/x86/Debug/Asteroids.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/RawInput/Mouse/bin/x86/Debug/Mouse.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/SampleFramework/bin/x86/Debug/SampleFramework.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/XAudio2/BasicSound/bin/x86/Debug/BasicSound.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../tests/SlimDX/bin/x86/Debug/SlimDX.Tests.dll" Analyze="True" AnalyzeAllChildren="True" />
  </Targets>
  <Rules>
   <RuleFiles>
@@ -155,7 +158,7 @@
    </Namespace>
   </Namespaces>
   <Targets>
-   <Target Name="$(ProjectDir)/Debug/SlimDX.dll">
+   <Target Name="$(ProjectDir)/x86/Debug/SlimDX.dll">
     <Modules>
      <Module Name="slimdx.dll">
       <Namespaces>
@@ -2877,6 +2880,17 @@
                <Item>'Font.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
                <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Measure(SlimDX.Direct3D10.Sprite,System.String,System.Drawing.Rectangle,SlimDX.Direct3D10.FontDrawFlags)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-07-13 20:38:57Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Font.Measure(Sprite, string, Rectangle, FontDrawFlags)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -13920,87 +13934,6 @@
      </Module>
     </Modules>
    </Target>
-   <Target Name="$(ProjectDir)/../games/Asteroids/Asteroids/bin/Debug/Asteroids.exe">
-    <Modules>
-     <Module Name="asteroids.exe">
-      <Namespaces>
-       <Namespace Name="Asteroids">
-        <Types>
-         <Type Name="Bullet">
-          <Members>
-           <Member Name="#Direction">
-            <Accessors>
-             <Accessor Name="#get_Direction()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-07-13 14:30:00Z">
-                <Issue>
-                 <Item>'Bullet.Direction.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#Speed">
-            <Accessors>
-             <Accessor Name="#get_Speed()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-07-13 14:30:00Z">
-                <Issue>
-                 <Item>'Bullet.Speed.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="VectorModel">
-          <Messages>
-           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Excluded" Created="2008-07-13 14:30:00Z" FixCategory="NonBreaking">
-            <Issue Name="NonBreaking">
-             <Item>'VectorModel'</Item>
-             <Item>'VertexBuffer', 'IndexBuffer'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#MakeList`1(!!0)">
-            <Messages>
-             <Message Id="type" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Excluded" Created="2008-07-13 14:30:00Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'type'</Item>
-               <Item>'VectorModel.MakeList&lt;T&gt;(T)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Weapon">
-          <Members>
-           <Member Name="#Damage">
-            <Accessors>
-             <Accessor Name="#get_Damage()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-07-13 14:30:00Z">
-                <Issue>
-                 <Item>'Weapon.Damage.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
    <Target Name="$(ProjectDir)/../samples/Direct3D10/MiniTri/bin/x86/Debug/MiniTri.exe">
     <Modules>
      <Module Name="minitri.exe">
@@ -14149,6 +14082,100 @@
               </Issue>
              </Message>
             </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/../samples/Games/Asteroids/bin/x86/Debug/Asteroids.exe">
+    <Modules>
+     <Module Name="asteroids.exe">
+      <Namespaces>
+       <Namespace Name="Asteroids">
+        <Types>
+         <Type Name="Bullet">
+          <Members>
+           <Member Name="#Direction">
+            <Accessors>
+             <Accessor Name="#get_Direction()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-07-13 14:30:00Z">
+                <Issue>
+                 <Item>'Bullet.Direction.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#Speed">
+            <Accessors>
+             <Accessor Name="#get_Speed()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-07-13 14:30:00Z">
+                <Issue>
+                 <Item>'Bullet.Speed.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="VectorModel">
+          <Messages>
+           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Excluded" Created="2008-07-13 14:30:00Z" FixCategory="NonBreaking">
+            <Issue Name="NonBreaking">
+             <Item>'VectorModel'</Item>
+             <Item>'VertexBuffer', 'IndexBuffer'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#MakeList`1(!!0)">
+            <Messages>
+             <Message Id="type" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Excluded" Created="2008-07-13 14:30:00Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'type'</Item>
+               <Item>'VectorModel.MakeList&lt;T&gt;(T)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Weapon">
+          <Members>
+           <Member Name="#BulletCount">
+            <Accessors>
+             <Accessor Name="#get_BulletCount()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-07-13 20:38:57Z">
+                <Issue>
+                 <Item>'Weapon.BulletCount.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#Damage">
+            <Accessors>
+             <Accessor Name="#get_Damage()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-07-13 14:30:00Z">
+                <Issue>
+                 <Item>'Weapon.Damage.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -14609,6 +14636,76 @@
              <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Status="Excluded" Created="2008-06-08 19:35:59Z">
               <Issue>
                <Item>'Program.GetAsyncKeyState(int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/../tests/SlimDX/bin/x86/Debug/SlimDX.Tests.dll">
+    <Modules>
+     <Module Name="slimdx.tests.dll">
+      <Namespaces>
+       <Namespace Name="SlimDXTests">
+        <Types>
+         <Type Name="Color3Tests">
+          <Members>
+           <Member Name="#ConstructDefault()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-07-13 20:40:12Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Color3Tests.ConstructDefault()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ConstructFromRGB()">
+            <Messages>
+             <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-07-13 20:40:12Z">
+              <Issue Name="Member">
+               <Item>RGB</Item>
+               <Item>'Color3Tests.ConstructFromRGB()'</Item>
+               <Item>Rgb</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-07-13 20:40:12Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Color3Tests.ConstructFromRGB()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Color4Tests">
+          <Members>
+           <Member Name="#ConstructDefault()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-07-13 20:40:12Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Color4Tests.ConstructDefault()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ConstructFromARGB()">
+            <Messages>
+             <Message Id="ARGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-07-13 20:40:12Z">
+              <Issue Name="Member">
+               <Item>ARGB</Item>
+               <Item>'Color4Tests.ConstructFromARGB()'</Item>
+               <Item>Argb</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-07-13 20:40:12Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Color4Tests.ConstructFromARGB()'</Item>
               </Issue>
              </Message>
             </Messages>

@@ -19,32 +19,33 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-using System;
 using NUnit.Framework;
-using SlimDX;
 
-namespace SlimDXTests {
-	[TestFixture]
-	public class Color4Tests {
-		[Test]
-		public void ConstructDefault() {
-			Color4 color = new Color4();
+namespace SlimDX.Tests
+{
+    [TestFixture]
+    public class Color4Tests
+    {
+        [Test]
+        public void ConstructDefault()
+        {
+            Color4 color = new Color4();
 
-			Assert.AreEqual(color.Alpha, 0.0f);
-			Assert.AreEqual(color.Red, 0.0f);
-			Assert.AreEqual(color.Green, 0.0f);
-			Assert.AreEqual(color.Blue, 0.0f);
-		}
+            Assert.AreEqual(color.Alpha, 0.0f);
+            Assert.AreEqual(color.Red, 0.0f);
+            Assert.AreEqual(color.Green, 0.0f);
+            Assert.AreEqual(color.Blue, 0.0f);
+        }
 
-		[Test]
-		public void ConstructFromARGB() {
-			Color4 color = new Color4(0.75f,1.0f,0.5f,0.25f);
+        [Test]
+        public void ConstructFromARGB()
+        {
+            Color4 color = new Color4(0.75f, 1.0f, 0.5f, 0.25f);
 
-			Assert.AreEqual(color.Alpha, 0.75f);
-			Assert.AreEqual(color.Red, 1.0f);
-			Assert.AreEqual(color.Green, 0.5f);
-			Assert.AreEqual(color.Blue, 0.25f);
-		}
-	}
+            Assert.AreEqual(color.Alpha, 0.75f);
+            Assert.AreEqual(color.Red, 1.0f);
+            Assert.AreEqual(color.Green, 0.5f);
+            Assert.AreEqual(color.Blue, 0.25f);
+        }
+    }
 }
