@@ -87,6 +87,11 @@ namespace BuildTasks {
 				else if (element.Name == "AssemblyReference" && attribute.Name == "MinFrameworkVersion") {
 					// No op.
 				}
+				else if( element.Name == "ProjectReference" && attribute.Name=="Include") {
+					string newValue = Path.GetFileNameWithoutExtension(attribute.Value);
+					newValue += ".2005" + Path.GetExtension(attribute.Value);
+					writer.Write(" Include=\"{0}\"", newValue);
+				}
 				else {
 					writer.Write("{0}{1}{2}=\"{3}\"", Environment.NewLine, attributePrefix, attribute.Name, attribute.Value);
 				}
@@ -97,6 +102,10 @@ namespace BuildTasks {
 
 				foreach (XPathNavigator child in element.SelectChildren(XPathNodeType.Element)) {
 					WriteElement(writer, indent + 1, child);
+				}
+
+				foreach (XPathNavigator child in element.SelectChildren(XPathNodeType.Text)) {
+					writer.WriteLine(child.Value);
 				}
 
 				writer.WriteLine("{0}</{1}>", elementPrefix, element.Name);
