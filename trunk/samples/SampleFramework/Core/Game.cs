@@ -38,15 +38,10 @@ namespace SampleFramework
         GameTime gameTime = new GameTime();
         TimeSpan maximumElapsedTime = TimeSpan.FromMilliseconds(500.0);
         TimeSpan totalGameTime;
-        TimeSpan accumulatedElapsedGameTime;
         TimeSpan lastFrameElapsedGameTime;
         TimeSpan lastFrameElapsedRealTime;
-        TimeSpan targetElapsedTime = TimeSpan.FromTicks(166667);
         TimeSpan inactiveSleepTime = TimeSpan.FromMilliseconds(20.0);
-        int updatesSinceRunningSlowly1 = int.MaxValue;
-        int updatesSinceRunningSlowly2 = int.MaxValue;
         bool forceElapsedTimeToZero;
-        bool drawRunningSlowly;
         long lastUpdateFrame;
         float lastUpdateTime;
 
@@ -97,34 +92,6 @@ namespace SampleFramework
         }
 
         /// <summary>
-        /// Gets or sets the target elapsed time.
-        /// </summary>
-        /// <value>The target elapsed time.</value>
-        public TimeSpan TargetElapsedTime
-        {
-            get { return targetElapsedTime; }
-            set
-            {
-                // error checking
-                if (value <= TimeSpan.Zero)
-                    throw new ArgumentOutOfRangeException("value", "Target elapsed time must be greater than zero.");
-                targetElapsedTime = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the game is using a fixed time step.
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if the game is using a fixed time step; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsFixedTimeStep
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets a value indicating whether this <see cref="Game"/> is exiting.
         /// </summary>
         /// <value><c>true</c> if exiting; otherwise, <c>false</c>.</value>
@@ -151,6 +118,26 @@ namespace SampleFramework
         /// </summary>
         /// <value>The resources collection.</value>
         public ResourceCollection Resources
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the game components collection.
+        /// </summary>
+        /// <value>The game components collection.</value>
+        public GameComponentCollection Components
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the trigger collection.
+        /// </summary>
+        /// <value>The trigger collection.</value>
+        public TriggerCollection Triggers
         {
             get;
             private set;
@@ -214,11 +201,10 @@ namespace SampleFramework
         /// </summary>
         protected Game()
         {
-            // set initial values
-            IsFixedTimeStep = true;
-
-            // create the resource collection
+            // create the collections
             Resources = new ResourceCollection();
+            Components = new GameComponentCollection();
+            Triggers = new TriggerCollection();
 
             // create the window
             Window = new GameWindow();
@@ -266,7 +252,6 @@ namespace SampleFramework
                 gameTime.ElapsedRealTime = 0;
                 gameTime.TotalGameTime = (float)totalGameTime.TotalSeconds;
                 gameTime.TotalRealTime = (float)clock.CurrentTime.TotalSeconds;
-                gameTime.IsRunningSlowly = false;
 
                 // run the first update
                 Update(gameTime);
@@ -321,87 +306,23 @@ namespace SampleFramework
             if (elapsedAdjustedTime > maximumElapsedTime)
                 elapsedAdjustedTime = maximumElapsedTime;
 
-            // check if we are using a fixed or variable time step
-            if (IsFixedTimeStep)
+            // make sure we shouldn't be exiting
+            if (!IsExiting)
             {
-                // update the timing state
-                accumulatedElapsedGameTime += elapsedAdjustedTime;
-                long ratio = accumulatedElapsedGameTime.Ticks / TargetElapsedTime.Ticks;
-                accumulatedElapsedGameTime = TimeSpan.FromTicks(accumulatedElapsedGameTime.Ticks % TargetElapsedTime.Ticks);
-                lastFrameElapsedGameTime = TimeSpan.Zero;
-                if (ratio == 0)
-                    return;
-                TimeSpan targetElapsedTime = TargetElapsedTime;
-
-                // check if the ratio is too large (ie. running slowly)
-                if (ratio > 1)
+                try
                 {
-                    // running slowly
-                    updatesSinceRunningSlowly2 = updatesSinceRunningSlowly1;
-                    updatesSinceRunningSlowly1 = 0;
+                    // fill out the rest of the game time
+                    gameTime.ElapsedGameTime = (float)elapsedAdjustedTime.TotalSeconds;
+                    lastFrameElapsedGameTime = elapsedAdjustedTime;
+                    gameTime.TotalGameTime = (float)totalGameTime.TotalSeconds;
+
+                    // perform an update
+                    Update(gameTime);
                 }
-                else
+                finally
                 {
-                    // not running slowly
-                    if (updatesSinceRunningSlowly1 < int.MaxValue)
-                        updatesSinceRunningSlowly1++;
-                    if (updatesSinceRunningSlowly2 < int.MaxValue)
-                        updatesSinceRunningSlowly2++;
-                }
-
-                // check whether we are officially running slowly
-                drawRunningSlowly = updatesSinceRunningSlowly2 < 20;
-
-                // update until it's time to draw the next frame
-                while (ratio > 0 && !IsExiting)
-                {
-                    // decrement the ratio
-                    ratio -= 1;
-
-                    try
-                    {
-                        // fill out the rest of the game time
-                        gameTime.ElapsedGameTime = (float)targetElapsedTime.TotalSeconds;
-                        gameTime.TotalGameTime = (float)totalGameTime.TotalSeconds;
-                        gameTime.IsRunningSlowly = drawRunningSlowly;
-
-                        // perform an update
-                        Update(gameTime);
-                    }
-                    finally
-                    {
-                        // update the total clocks
-                        lastFrameElapsedGameTime += targetElapsedTime;
-                        totalGameTime += targetElapsedTime;
-                    }
-                }
-            }
-            else
-            {
-                // we can't be running slowly here
-                drawRunningSlowly = false;
-                updatesSinceRunningSlowly1 = int.MaxValue;
-                updatesSinceRunningSlowly2 = int.MaxValue;
-
-                // make sure we shouldn't be exiting
-                if (!IsExiting)
-                {
-                    try
-                    {
-                        // fill out the rest of the game time
-                        gameTime.ElapsedGameTime = 0;
-                        lastFrameElapsedGameTime = elapsedAdjustedTime;
-                        gameTime.TotalGameTime = (float)totalGameTime.TotalSeconds;
-                        gameTime.IsRunningSlowly = false;
-
-                        // perform an update
-                        Update(gameTime);
-                    }
-                    finally
-                    {
-                        // update the total clocks
-                        totalGameTime += elapsedAdjustedTime;
-                    }
+                    // update the total clocks
+                    totalGameTime += elapsedAdjustedTime;
                 }
             }
 
@@ -426,8 +347,6 @@ namespace SampleFramework
         {
             // reset the elapsed time
             forceElapsedTimeToZero = true;
-            updatesSinceRunningSlowly1 = int.MaxValue;
-            updatesSinceRunningSlowly2 = int.MaxValue;
         }
 
         /// <summary>
@@ -436,6 +355,11 @@ namespace SampleFramework
         /// <param name="gameTime">The time passed since the last update.</param>
         protected virtual void Update(GameTime gameTime)
         {
+            // update the components
+            Components.Update(gameTime);
+
+            // update each trigger
+            Triggers.Update(gameTime);
         }
 
         /// <summary>
@@ -444,6 +368,8 @@ namespace SampleFramework
         /// <param name="gameTime">The time passed since the last frame.</param>
         protected virtual void Draw(GameTime gameTime)
         {
+            // draw the components
+            Components.Draw();
         }
 
         /// <summary>
@@ -577,7 +503,6 @@ namespace SampleFramework
                         gameTime.ElapsedRealTime = (float)lastFrameElapsedRealTime.TotalSeconds;
                         gameTime.TotalGameTime = (float)totalGameTime.TotalSeconds;
                         gameTime.ElapsedGameTime = (float)lastFrameElapsedGameTime.TotalSeconds;
-                        gameTime.IsRunningSlowly = drawRunningSlowly;
 
                         // draw the frame
                         Draw(gameTime);

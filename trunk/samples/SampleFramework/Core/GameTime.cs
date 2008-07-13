@@ -79,18 +79,6 @@ namespace SampleFramework
         }
 
         /// <summary>
-        /// Gets a value indicating whether the game is running slowly.
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if the game is running slowly; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsRunningSlowly
-        {
-            get;
-            internal set;
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GameTime"/> class.
         /// </summary>
         public GameTime()
@@ -105,26 +93,12 @@ namespace SampleFramework
         /// <param name="totalGameTime">The total game time.</param>
         /// <param name="elapsedGameTime">The elapsed game time.</param>
         public GameTime(float totalRealTime, float elapsedRealTime, float totalGameTime, float elapsedGameTime)
-            : this(totalRealTime, elapsedRealTime, totalGameTime, elapsedGameTime, false)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GameTime"/> class.
-        /// </summary>
-        /// <param name="totalRealTime">The total real time.</param>
-        /// <param name="elapsedRealTime">The elapsed real time.</param>
-        /// <param name="totalGameTime">The total game time.</param>
-        /// <param name="elapsedGameTime">The elapsed game time.</param>
-        /// <param name="isRunningSlowly">if set to <c>true</c>, the game is running slowly.</param>
-        public GameTime(float totalRealTime, float elapsedRealTime, float totalGameTime, float elapsedGameTime, bool isRunningSlowly)
         {
             // store variables
             TotalRealTime = totalRealTime;
             ElapsedRealTime = elapsedRealTime;
             TotalGameTime = totalGameTime;
             ElapsedGameTime = elapsedGameTime;
-            IsRunningSlowly = isRunningSlowly;
         }
     }
 }

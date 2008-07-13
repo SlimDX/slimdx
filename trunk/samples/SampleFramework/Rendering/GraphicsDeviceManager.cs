@@ -777,6 +777,9 @@ namespace SampleFramework
                 // create the correct device based upon the version
                 if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
                 {
+                    // ensure that D3D9 is initialized
+                    EnsureD3D9();
+
                     // create the device
                     Direct3D9.Device = new SlimDX.Direct3D9.Device(Direct3D9Object, CurrentSettings.Direct3D9.AdapterOrdinal,
                         CurrentSettings.Direct3D9.DeviceType, game.Window.Handle,
@@ -792,6 +795,9 @@ namespace SampleFramework
                 }
                 else
                 {
+                    // ensure that D3D10 is initialized
+                    EnsureD3D10();
+
                     // clear window associations
                     Factory.SetWindowAssociation(IntPtr.Zero, WindowAssociationFlags.None);
 
