@@ -1,119 +1,126 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
 	DefaultTargets="Build">
 
-	<PropertyGroup>
-		<SlimDXRoot>$(MSBuildProjectDirectory)\..\</SlimDXRoot>
-	</PropertyGroup>
+  <PropertyGroup>
+    <SlimDXRoot>$(MSBuildProjectDirectory)\..\</SlimDXRoot>
+  </PropertyGroup>
 
-	<UsingTask TaskName="DowngradeVCProject" AssemblyFile="$(SlimDXRoot)tools\BuildTasks\BuildTasks.dll"/>
+  <UsingTask TaskName="DowngradeProject" AssemblyFile="$(SlimDXRoot)tools\BuildTasks\BuildTasks.dll"/>
 
-	<!-- Properties: Standard Configuration
+  <!-- Properties: Standard Configuration
 				These are properties that typical users are expected to set as part of the build. -->
   <PropertyGroup>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
     <Platform Condition="'$(Platform)' == ''"></Platform>
   </PropertyGroup>
-	
-	<ItemGroup>
-		<PurgeOnClean Include="$(SlimDXRoot)\build\x86"/>
-		<PurgeOnClean Include="$(SlimDXRoot)\build\x64"/>
-	</ItemGroup>
 
-	<ItemGroup>
-		<TestProjects Include="$(SlimDXRoot)\tests\**\*.csproj"/>
-	</ItemGroup>
+  <ItemGroup>
+    <PurgeOnClean Include="$(SlimDXRoot)\build\x86"/>
+    <PurgeOnClean Include="$(SlimDXRoot)\build\x64"/>
+  </ItemGroup>
 
-	<Target Name="Build" DependsOnTargets="_PopulateVCProjects">
-		<MSBuild Project="@(TestProjects)"/>
-		
-		<!-- .vcproj files use 'Win32' for the 32-bit platform name, not 'x86' like .csproj. -->
-		<VCBuild
+  <ItemGroup>
+    <TestProjects Include="$(SlimDXRoot)\tests\**\*.csproj"/>
+  </ItemGroup>
+
+  <Target Name="Build" DependsOnTargets="_PopulateVCProjects">
+    <MSBuild Project="@(TestProjects)"/>
+
+    <!-- .vcproj files use 'Win32' for the 32-bit platform name, not 'x86' like .csproj. -->
+    <VCBuild
 			Condition="'$(Platform)'=='x86' or '$(Platform)'==''"
 			Projects="@(VCProjects)"
 			Platform="Win32"/>
-		<VCBuild
+    <VCBuild
 			Condition="'$(Platform)'=='x64' or '$(Platform)'==''"
 			Projects="@(VCProjects)"
 			Platform="$(Platform)"/>
 
-		
 
-	</Target>
 
-	<Target
+  </Target>
+
+  <Target
 		Name="Clean">
-		<RemoveDir Directories="@(PurgeOnClean)"/>
-	</Target>
+    <RemoveDir Directories="@(PurgeOnClean)"/>
+  </Target>
 
-	<!-- Target: _PopulateVCProjects
+  <Target
+    Name="Hax">
+    <DowngradeProject
+      InputProject="$(SlimDXRoot)\tests\SlimDX\SlimDX.Tests.csproj"
+      OutputProject="$(SlimDXRoot)\tests\SlimDX\SlimDX.Tests.2005.csproj"/>
+  </Target>
+
+  <!-- Target: _PopulateVCProjects
 				Populates the @(VCProjects) item group with the .vcproj files that should
 				be built (in particular with respect to the $(BuildWith2005) property). 
 				If neccessary, this target will generate the 2005 versions of the .vcproj files. -->
-	<Target
+  <Target
 		Name="_PopulateVCProjects"
 		DependsOnTargets="_DetectVisualCppVersion">
-		<DowngradeVCProject
+    <DowngradeVCProject
 			Condition="'$(BuildWith2005)'=='True'"
 			InputProject="SlimDX.vcproj"
 			OutputProject="SlimDX.2005.vcproj"/>
-		<CreateItem
+    <CreateItem
 			Condition="'$(BuildWith2005)'=='True'"
 			Include="SlimDX.2005.vcproj">
-			<Output
+      <Output
 				ItemName="VCProjects"
 				TaskParameter="Include"/>
-		</CreateItem>
-		<CreateItem
+    </CreateItem>
+    <CreateItem
 			Condition="'$(BuildWith2005)'=='False'"
 			Include="SlimDX.vcproj">
-			<Output
+      <Output
 				ItemName="VCProjects"
 				TaskParameter="Include"/>
-		</CreateItem>
-	</Target>
+    </CreateItem>
+  </Target>
 
-	<!-- Target: _DetectVisualCppVersion
+  <!-- Target: _DetectVisualCppVersion
 				Determines which versions of Visual C++ are available and populates the
 				$(BuildWith2005) property appropriately. -->
-	<Target
+  <Target
 		Name="_DetectVisualCppVersion"
 		DependsOnTargets="_CheckEnvironmentVariables">
-		<!-- Use 2005 if we have it but don't have 2008. -->
-		<Message
+    <!-- Use 2005 if we have it but don't have 2008. -->
+    <Message
 			Condition="'$(VS80COMNTOOLS)'!='' and '$(VS90COMNTOOLS)'==''"
 			Importance="high"
 			Text="Building with a VC++ 2005 installation."/>
-		<CreateProperty
+    <CreateProperty
 			Condition="'$(VS80COMNTOOLS)'!='' and '$(VS90COMNTOOLS)'==''"
 			Value="True">
-			<Output
+      <Output
 				PropertyName="BuildWith2005"
 				TaskParameter="Value"/>
-		</CreateProperty>
+    </CreateProperty>
 
-		<!-- But prefer 2008 if we have it. -->
-		<Message
+    <!-- But prefer 2008 if we have it. -->
+    <Message
 			Condition="'$(VS90COMNTOOLS)'!=''"
 			Importance="high"
 			Text="Building with a VC++ 2008 installation."/>
-		<CreateProperty
+    <CreateProperty
 					Condition="'$(VS90COMNTOOLS)'!=''"
 					Value="False">
-			<Output
+      <Output
 				PropertyName="BuildWith2005"
 				TaskParameter="Value"/>
-		</CreateProperty>
-	</Target>
-	
-	<!-- Target: _CheckEnvironmentVariables
+    </CreateProperty>
+  </Target>
+
+  <!-- Target: _CheckEnvironmentVariables
 				Checks the value of environment variables that are required by the build process.
 				Raises an error and halts the build if any values are not suitable. -->
-	<Target Name="_CheckEnvironmentVariables">
-		<Error
+  <Target Name="_CheckEnvironmentVariables">
+    <Error
 				Condition="'$(VS80COMNTOOLS)'=='' and '$(VS90COMNTOOLS)'==''"
 				Text="Environment variable VS80COMNTOOLS or VS90COMNTOOLS not found; have you installed Visual C++ 2005 or 2008?"/>
-		<Error
+    <Error
 			Condition="'$(DXSDK_DIR)'==''"
 			Text="Environment variable DXSDK_DIR not set; have you installed the DirectX SDK?"/>
-	</Target>
+  </Target>
 </Project>
