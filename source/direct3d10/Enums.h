@@ -258,7 +258,6 @@ namespace SlimDX
 		public enum class FontDrawFlags : System::Int32
 		{
 			Bottom = DT_BOTTOM,
-			CalculateBounds = DT_CALCRECT,
 			Center = DT_CENTER,
 			ExpandTabs = DT_EXPANDTABS,
 			Left = DT_LEFT,
