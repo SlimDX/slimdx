@@ -1,13 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿/*
+* Copyright (c) 2007-2008 SlimDX Group
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
+
+using System;
 using System.IO;
+using System.Xml.XPath;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-using System.Xml.XPath;
 
 namespace BuildTasks {
-	public class DowngradeVCProject : Task {
+	public class DowngradeProject : Task {
 		string inputProject;
 		string outputProject;
 
@@ -33,7 +53,7 @@ namespace BuildTasks {
 
 		public override bool Execute() {
 			if (!File.Exists(inputProject)) {
-				Log.LogError(string.Format("Input .vcproj '{0}' does not exist.", inputProject));
+				Log.LogError(string.Format("Input project '{0}' does not exist.", inputProject));
 				return false;
 			}
 
@@ -59,27 +79,26 @@ namespace BuildTasks {
 
 			foreach (XPathNavigator attribute in element.Select("@*")) {
 				if (element.Name == "VisualStudioProject" && attribute.Name == "Version") {
-					writer.Write("{0}{1}Version=\"8.00\"", Environment.NewLine, attributePrefix );
+					writer.Write("{0}{1}Version=\"8.00\"", Environment.NewLine, attributePrefix);
 				}
-				else if(element.Name == "VisualStudioProject" && attribute.Name == "TargetFrameworkVersion") {
+				else if (element.Name == "VisualStudioProject" && attribute.Name == "TargetFrameworkVersion") {
 					// No op.
 				}
-				else if(element.Name == "AssemblyReference" && attribute.Name == "MinFrameworkVersion")	{
+				else if (element.Name == "AssemblyReference" && attribute.Name == "MinFrameworkVersion") {
 					// No op.
 				}
-				else
-				{
-					writer.Write( "{0}{1}{2}=\"{3}\"", Environment.NewLine, attributePrefix, attribute.Name, attribute.Value );
+				else {
+					writer.Write("{0}{1}{2}=\"{3}\"", Environment.NewLine, attributePrefix, attribute.Name, attribute.Value);
 				}
 			}
-		
-			if( element.HasChildren ) {
+
+			if (element.HasChildren) {
 				writer.WriteLine(">");
-				
+
 				foreach (XPathNavigator child in element.SelectChildren(XPathNodeType.Element)) {
 					WriteElement(writer, indent + 1, child);
 				}
-				
+
 				writer.WriteLine("{0}</{1}>", elementPrefix, element.Name);
 			}
 			else {

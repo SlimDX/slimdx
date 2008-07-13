@@ -3,35 +3,117 @@
 
 	<PropertyGroup>
 		<SlimDXRoot>$(MSBuildProjectDirectory)\..\</SlimDXRoot>
-
-		<ProjectsRoot>$(SlimDXRoot)build\</ProjectsRoot>
-		<SamplesRoot>$(SlimDXRoot)samples\</SamplesRoot>
 	</PropertyGroup>
 
 	<UsingTask TaskName="DowngradeVCProject" AssemblyFile="$(SlimDXRoot)tools\BuildTasks\BuildTasks.dll"/>
 
+	<!-- Properties: Standard Configuration
+				These are properties that typical users are expected to set as part of the build. -->
   <PropertyGroup>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
-    <Platform Condition="'$(Platform)' == ''">Win32</Platform>
+    <Platform Condition="'$(Platform)' == ''"></Platform>
   </PropertyGroup>
+	
+	<ItemGroup>
+		<PurgeOnClean Include="$(SlimDXRoot)\build\x86"/>
+		<PurgeOnClean Include="$(SlimDXRoot)\build\x64"/>
+	</ItemGroup>
 
-  <ItemGroup>
-    <VCProjects Include="$(ProjectsRoot)SlimDX.vcproj"/>
-		<CSProjects Include="$(SamplesRoot)**\*.csproj"/>
-		<Solutions Include="$(ProjectsRoot)SlimDX.sln"/>
-  </ItemGroup>
+	<ItemGroup>
+		<TestProjects Include="$(SlimDXRoot)\tests\**\*.csproj"/>
+	</ItemGroup>
 
-	<Target Name="CheckEnvironmentVariables">
+	<Target Name="Build" DependsOnTargets="_PopulateVCProjects">
+		<MSBuild Project="@(TestProjects)"/>
+		
+		<!-- .vcproj files use 'Win32' for the 32-bit platform name, not 'x86' like .csproj. -->
+		<VCBuild
+			Condition="'$(Platform)'=='x86' or '$(Platform)'==''"
+			Projects="@(VCProjects)"
+			Platform="Win32"/>
+		<VCBuild
+			Condition="'$(Platform)'=='x64' or '$(Platform)'==''"
+			Projects="@(VCProjects)"
+			Platform="$(Platform)"/>
+
+		
+
+	</Target>
+
+	<Target
+		Name="Clean">
+		<RemoveDir Directories="@(PurgeOnClean)"/>
+	</Target>
+
+	<!-- Target: _PopulateVCProjects
+				Populates the @(VCProjects) item group with the .vcproj files that should
+				be built (in particular with respect to the $(BuildWith2005) property). 
+				If neccessary, this target will generate the 2005 versions of the .vcproj files. -->
+	<Target
+		Name="_PopulateVCProjects"
+		DependsOnTargets="_DetectVisualCppVersion">
+		<DowngradeVCProject
+			Condition="'$(BuildWith2005)'=='True'"
+			InputProject="SlimDX.vcproj"
+			OutputProject="SlimDX.2005.vcproj"/>
+		<CreateItem
+			Condition="'$(BuildWith2005)'=='True'"
+			Include="SlimDX.2005.vcproj">
+			<Output
+				ItemName="VCProjects"
+				TaskParameter="Include"/>
+		</CreateItem>
+		<CreateItem
+			Condition="'$(BuildWith2005)'=='False'"
+			Include="SlimDX.vcproj">
+			<Output
+				ItemName="VCProjects"
+				TaskParameter="Include"/>
+		</CreateItem>
+	</Target>
+
+	<!-- Target: _DetectVisualCppVersion
+				Determines which versions of Visual C++ are available and populates the
+				$(BuildWith2005) property appropriately. -->
+	<Target
+		Name="_DetectVisualCppVersion"
+		DependsOnTargets="_CheckEnvironmentVariables">
+		<!-- Use 2005 if we have it but don't have 2008. -->
+		<Message
+			Condition="'$(VS80COMNTOOLS)'!='' and '$(VS90COMNTOOLS)'==''"
+			Importance="high"
+			Text="Building with a VC++ 2005 installation."/>
+		<CreateProperty
+			Condition="'$(VS80COMNTOOLS)'!='' and '$(VS90COMNTOOLS)'==''"
+			Value="True">
+			<Output
+				PropertyName="BuildWith2005"
+				TaskParameter="Value"/>
+		</CreateProperty>
+
+		<!-- But prefer 2008 if we have it. -->
+		<Message
+			Condition="'$(VS90COMNTOOLS)'!=''"
+			Importance="high"
+			Text="Building with a VC++ 2008 installation."/>
+		<CreateProperty
+					Condition="'$(VS90COMNTOOLS)'!=''"
+					Value="False">
+			<Output
+				PropertyName="BuildWith2005"
+				TaskParameter="Value"/>
+		</CreateProperty>
+	</Target>
+	
+	<!-- Target: _CheckEnvironmentVariables
+				Checks the value of environment variables that are required by the build process.
+				Raises an error and halts the build if any values are not suitable. -->
+	<Target Name="_CheckEnvironmentVariables">
+		<Error
+				Condition="'$(VS80COMNTOOLS)'=='' and '$(VS90COMNTOOLS)'==''"
+				Text="Environment variable VS80COMNTOOLS or VS90COMNTOOLS not found; have you installed Visual C++ 2005 or 2008?"/>
 		<Error
 			Condition="'$(DXSDK_DIR)'==''"
 			Text="Environment variable DXSDK_DIR not set; have you installed the DirectX SDK?"/>
 	</Target>
-	
-  <Target Name="Build" DependsOnTargets="CheckEnvironmentVariables">
-		<!-- Build SlimDX explicitly. -->
-
-		<DowngradeVCProject InputProject="SlimDX.vcproj" OutputProject="SlimDX.2005.vcproj"/>
-		
-		<!--<VCBuild Platform="$(Platform)" Configuration="$(Configuration)" Projects="SlimDX.vcproj"/>-->
-  </Target>
 </Project>

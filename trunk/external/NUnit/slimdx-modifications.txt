@@ -1,0 +1,3 @@
+This distribution of NUnit has been modified by The SlimDX Group in the following fashion:
+1) The 'doc' subdirectory has been removed.
+2) The 'samples' subdirectory has been removed.
