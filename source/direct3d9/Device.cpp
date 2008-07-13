@@ -49,6 +49,7 @@ using namespace System::Collections::Generic;
 using namespace System::Drawing;
 using namespace System::Runtime::InteropServices;
 using namespace System::Windows::Forms;
+using namespace System::Globalization;
 
 namespace SlimDX
 {
@@ -678,7 +679,7 @@ namespace Direct3D9
 
 		try
 		{
-			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid ) );
+			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid, CultureInfo::InvariantCulture ) );
 		}
 		catch( InvalidCastException^ )
 		{
@@ -703,7 +704,7 @@ namespace Direct3D9
 
 		try
 		{
-			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid ) );
+			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid, CultureInfo::InvariantCulture ) );
 		}
 		catch( InvalidCastException^ )
 		{
@@ -726,7 +727,7 @@ namespace Direct3D9
 
 		try
 		{
-			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid ) );
+			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid, CultureInfo::InvariantCulture ) );
 		}
 		catch( InvalidCastException^ )
 		{
