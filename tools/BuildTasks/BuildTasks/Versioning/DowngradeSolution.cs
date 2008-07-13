@@ -29,50 +29,54 @@ using System.Text.RegularExpressions;
 
 namespace BuildTasks {
 	public class DowngradeSolution : Task {
-		string inputSolution;
-		string outputSolution;
+		ITaskItem[] inputSolutions;
+		ITaskItem[] outputSolutions;
 
 		static readonly string sourceFormatVersion = "Microsoft Visual Studio Solution File, Format Version 10.00";
 		static readonly string sourceToolVersion = "# Visual Studio 2008";
 		static readonly string targetFormatVersion = "Microsoft Visual Studio Solution File, Format Version 9.00";
 		static readonly string targetToolVersion = "# Visual Studio 2005";
-		
+
 		[Required]
-		public string InputSolution {
+		public ITaskItem[] InputSolutions {
 			get {
-				return inputSolution;
+				return inputSolutions;
 			}
 			set {
-				inputSolution = value;
+				inputSolutions = value;
 			}
 		}
 
 		[Required]
-		public string OutputSolution {
+		public ITaskItem[] OutputSolutions {
 			get {
-				return outputSolution;
+				return outputSolutions;
 			}
 			set {
-				outputSolution = value;
+				outputSolutions = value;
 			}
 		}
 
 		public override bool Execute() {
-			if (!File.Exists(inputSolution)) {
-				Log.LogError(string.Format("Input solution file '{0}' does not exist.", inputSolution));
-				return false;
-			}
-			
-			string[] lines = File.ReadAllLines(inputSolution);			
-			for(int index = 0; index < lines.Length; ++index) {
-				if(lines[index].StartsWith(sourceFormatVersion)) {
-					lines[index] = targetFormatVersion;
-				} else if(lines[index].StartsWith(sourceToolVersion)) {
-					lines[index] = targetToolVersion;
+			for ( int fileIndex = 0; fileIndex < inputSolutions.Length; ++fileIndex ) {
+				if ( !File.Exists( inputSolutions[fileIndex].ItemSpec ) ) {
+					Log.LogError( string.Format( "Input solution file '{0}' does not exist.", inputSolutions[fileIndex].ItemSpec ) );
+					return false;
 				}
+
+				string[] lines = File.ReadAllLines( inputSolutions[fileIndex].ItemSpec );
+				for ( int lineIndex = 0; lineIndex < lines.Length; ++lineIndex ) {
+					if ( lines[lineIndex].StartsWith( sourceFormatVersion ) ) {
+						lines[lineIndex] = targetFormatVersion;
+					}
+					else if ( lines[lineIndex].StartsWith( sourceToolVersion ) ) {
+						lines[lineIndex] = targetToolVersion;
+					}
+				}
+
+				File.WriteAllLines( outputSolutions[fileIndex].ItemSpec, lines );
 			}
-			
-			File.WriteAllLines(outputSolution,lines);
+
 			return true;
 		}
 	}

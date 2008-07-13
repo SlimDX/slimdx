@@ -28,90 +28,91 @@ using Microsoft.Build.Utilities;
 
 namespace BuildTasks {
 	public class DowngradeProject : Task {
-		string inputProject;
-		string outputProject;
+		ITaskItem[] inputProjects;
+		ITaskItem[] outputProjects;
 
 		[Required]
-		public string InputProject {
+		public ITaskItem[] InputProjects {
 			get {
-				return inputProject;
+				return inputProjects;
 			}
 			set {
-				inputProject = value;
+				inputProjects = value;
 			}
 		}
 
 		[Required]
-		public string OutputProject {
+		public ITaskItem[] OutputProjects {
 			get {
-				return outputProject;
+				return outputProjects;
 			}
 			set {
-				outputProject = value;
+				outputProjects = value;
 			}
 		}
 
 		public override bool Execute() {
-			if (!File.Exists(inputProject)) {
-				Log.LogError(string.Format("Input project '{0}' does not exist.", inputProject));
-				return false;
-			}
+			for ( int fileIndex = 0; fileIndex < inputProjects.Length; ++fileIndex ) {
+				if ( !File.Exists( inputProjects[fileIndex].ItemSpec ) ) {
+					Log.LogError( string.Format( "Input project '{0}' does not exist.", inputProjects[fileIndex].ItemSpec ) );
+					return false;
+				}
 
-			XPathDocument doc = new XPathDocument(inputProject);
-			XPathNavigator root = doc.CreateNavigator();
+				XPathDocument doc = new XPathDocument( inputProjects[fileIndex].ItemSpec );
+				XPathNavigator root = doc.CreateNavigator();
 
-			using (FileStream stream = new FileStream(outputProject, FileMode.Create))
-			using (StreamWriter writer = new StreamWriter(stream)) {
-				foreach (XPathNavigator element in root.SelectDescendants(XPathNodeType.Element, true)) {
-					WriteElement(writer, 0, element);
-					break;
+				using ( StreamWriter writer = new StreamWriter( outputProjects[fileIndex].ItemSpec ) ) {
+					foreach ( XPathNavigator element in root.SelectDescendants( XPathNodeType.Element, true ) ) {
+						WriteElement( writer, 0, element );
+						break;
+					}
 				}
 			}
 
 			return true;
 		}
 
-		static void WriteElement(StreamWriter writer, int indent, XPathNavigator element) {
-			string elementPrefix = new string(' ', indent * 2);
-			string attributePrefix = new string(' ', indent * 2 + 2);
+		static void WriteElement( StreamWriter writer, int indent, XPathNavigator element ) {
+			string elementPrefix = new string( ' ', indent * 2 );
+			string attributePrefix = new string( ' ', indent * 2 + 2 );
 
-			writer.Write("{0}<{1}", elementPrefix, element.Name);
+			writer.Write( "{0}<{1}", elementPrefix, element.Name );
 
-			foreach (XPathNavigator attribute in element.Select("@*")) {
-				if (element.Name == "VisualStudioProject" && attribute.Name == "Version") {
-					writer.Write("{0}{1}Version=\"8.00\"", Environment.NewLine, attributePrefix);
+			foreach ( XPathNavigator attribute in element.Select( "@*" ) ) {
+				if ( element.Name == "VisualStudioProject" && attribute.Name == "Version" ) {
+					writer.Write( "{0}{1}Version=\"8.00\"", Environment.NewLine, attributePrefix );
 				}
-				else if (element.Name == "VisualStudioProject" && attribute.Name == "TargetFrameworkVersion") {
+				else if ( element.Name == "VisualStudioProject" && attribute.Name == "TargetFrameworkVersion" ) {
 					// No op.
 				}
-				else if (element.Name == "AssemblyReference" && attribute.Name == "MinFrameworkVersion") {
+				else if ( element.Name == "AssemblyReference" && attribute.Name == "MinFrameworkVersion" ) {
 					// No op.
 				}
-				else if( element.Name == "ProjectReference" && attribute.Name=="Include") {
-					string newValue = Path.GetFileNameWithoutExtension(attribute.Value);
-					newValue += ".2005" + Path.GetExtension(attribute.Value);
-					writer.Write(" Include=\"{0}\"", newValue);
+				else if ( element.Name == "ProjectReference" && attribute.Name == "Include" ) {
+					string newValue = Path.GetFileNameWithoutExtension( attribute.Value );
+					newValue += ".2005" + Path.GetExtension( attribute.Value );
+					writer.Write( " Include=\"{0}\"", newValue );
 				}
 				else {
-					writer.Write("{0}{1}{2}=\"{3}\"", Environment.NewLine, attributePrefix, attribute.Name, attribute.Value);
+					writer.Write( "{0}{1}{2}=\"{3}\"", Environment.NewLine, attributePrefix, attribute.Name, attribute.Value );
 				}
 			}
 
-			if (element.HasChildren) {
-				writer.WriteLine(">");
+			if ( element.HasChildren ) {
+				writer.WriteLine( ">" );
 
-				foreach (XPathNavigator child in element.SelectChildren(XPathNodeType.Element)) {
-					WriteElement(writer, indent + 1, child);
+				foreach ( XPathNavigator child in element.SelectChildren( XPathNodeType.Element ) ) {
+					WriteElement( writer, indent + 1, child );
 				}
 
-				foreach (XPathNavigator child in element.SelectChildren(XPathNodeType.Text)) {
-					writer.WriteLine(child.Value);
+				foreach ( XPathNavigator child in element.SelectChildren( XPathNodeType.Text ) ) {
+					writer.WriteLine( child.Value );
 				}
 
-				writer.WriteLine("{0}</{1}>", elementPrefix, element.Name);
+				writer.WriteLine( "{0}</{1}>", elementPrefix, element.Name );
 			}
 			else {
-				writer.WriteLine("/>");
+				writer.WriteLine( "/>" );
 			}
 		}
 	}
