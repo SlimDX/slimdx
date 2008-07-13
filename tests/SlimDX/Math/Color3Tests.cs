@@ -19,30 +19,31 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-using System;
 using NUnit.Framework;
-using SlimDX;
 
-namespace SlimDXTests {
-	[TestFixture]
-	public class Color3Tests {
-		[Test]
-		public void ConstructDefault() {
-			Color3 color = new Color3();
+namespace SlimDX.Tests
+{
+    [TestFixture]
+    public class Color3Tests
+    {
+        [Test]
+        public void ConstructDefault()
+        {
+            Color3 color = new Color3();
 
-			Assert.AreEqual(color.Red, 0.0f);
-			Assert.AreEqual(color.Green, 0.0f);
-			Assert.AreEqual(color.Blue, 0.0f);
-		}
+            Assert.AreEqual(color.Red, 0.0f);
+            Assert.AreEqual(color.Green, 0.0f);
+            Assert.AreEqual(color.Blue, 0.0f);
+        }
 
-		[Test]
-		public void ConstructFromRGB() {
-			Color3 color = new Color3(1.0f, 0.5f, 0.25f);
+        [Test]
+        public void ConstructFromRGB()
+        {
+            Color3 color = new Color3(1.0f, 0.5f, 0.25f);
 
-			Assert.AreEqual(color.Red, 1.0f);
-			Assert.AreEqual(color.Green, 0.5f);
-			Assert.AreEqual(color.Blue, 0.25f);
-		}
-	}
+            Assert.AreEqual(color.Red, 1.0f);
+            Assert.AreEqual(color.Green, 0.5f);
+            Assert.AreEqual(color.Blue, 0.25f);
+        }
+    }
 }
