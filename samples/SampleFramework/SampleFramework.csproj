@@ -74,6 +74,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cameras\Camera.cs" />
+    <Compile Include="Components\GameComponentCollection.cs" />
+    <Compile Include="Components\IGameComponent.cs" />
+    <Compile Include="Components\Trigger.cs" />
+    <Compile Include="Components\TriggerCollection.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\Label.cs" />
@@ -88,7 +92,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Rendering\VertexElementAttribute.cs" />
-    <Compile Include="Resources\IResource.cs" />
+    <Compile Include="Components\IResource.cs" />
     <Compile Include="DeviceSettings\ConversionMethods.cs" />
     <Compile Include="Core\Game.cs" />
     <Compile Include="Core\GameClock.cs" />
@@ -119,7 +123,7 @@
     <Compile Include="Rendering\Enums.cs" />
     <Compile Include="Rendering\GraphicsDeviceManager.cs" />
     <Compile Include="Rendering\NoCompatibleDevicesException.cs" />
-    <Compile Include="Resources\ResourceCollection.cs" />
+    <Compile Include="Components\ResourceCollection.cs" />
     <Compile Include="Text\TextConsole.cs" />
     <Compile Include="Win32\NativeMethods.cs" />
     <Compile Include="Win32\NativeStructures.cs" />
