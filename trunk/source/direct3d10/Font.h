@@ -51,6 +51,8 @@ namespace SlimDX
 			static Font^ FromPointer( System::IntPtr pointer );
 
 			int Draw( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rect, FontDrawFlags flags, int color );
+			
+			System::Drawing::Rectangle Measure( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rect, FontDrawFlags flags );
 
 			Result PreloadCharacters( int first, int last );
 			Result PreloadGlyphs( int first, int last );

@@ -115,6 +115,16 @@ namespace Direct3D10
 		return result;
 	}
 
+	Drawing::Rectangle Font::Measure( Sprite^ sprite, String^ text, Drawing::Rectangle rect, FontDrawFlags flags )
+	{
+		ID3DX10Sprite* nativeSprite = sprite == nullptr ? 0 : sprite->InternalPointer;
+		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
+		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
+		InternalPointer->DrawTextW( nativeSprite, pinned_text, text->Length, &nativeRect, static_cast<DWORD>( flags ) | DT_CALCRECT, 0xFFFFFFFF );
+		
+		return Drawing::Rectangle( nativeRect.left, nativeRect.top, nativeRect.right - nativeRect.left, nativeRect.bottom - nativeRect.top );
+	}
+
 	Result Font::PreloadCharacters( int first, int last )
 	{
 		return RECORD_D3D10( InternalPointer->PreloadCharacters( first, last ) );
