@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <UsingTask TaskName="DowngradeProject" AssemblyFile="$(SlimDXRoot)tools\BuildTasks\BuildTasks.dll"/>
+  <UsingTask TaskName="DowngradeSolution" AssemblyFile="$(SlimDXRoot)tools\BuildTasks\BuildTasks.dll"/>
+
 
   <!-- Properties: Standard Configuration
 				These are properties that typical users are expected to set as part of the build. -->
@@ -14,15 +16,36 @@
     <Platform Condition="'$(Platform)' == ''"></Platform>
   </PropertyGroup>
 
+  <!-- ItemGroup: SlimDXSolutions
+				The collection of all .sln files in the SlimDX repository. -->
+	<ItemGroup>
+		<SlimDXSolutions
+      Include="$(SlimDXRoot)\**\*.sln"
+      Exclude="$(SlimDXRoot)\**\*.2005.sln"/>
+	</ItemGroup>
+
+  <!-- ItemGroup: SlimDXProjects
+				The collection of all .vcproj and .csproj files in the SlimDX repository. -->
+  <ItemGroup>
+    <SlimDXProjects
+      Include="$(SlimDXRoot)\**\*.vcproj"
+      Exclude="$(SlimDXRoot)\**\*.2005.vcproj"/>
+    <SlimDXProjects
+      Include="$(SlimDXRoot)\**\*.csproj"
+      Exclude="$(SlimDXRoot)\**\*.2005.csproj"/>
+  </ItemGroup>
+  
   <ItemGroup>
     <PurgeOnClean Include="$(SlimDXRoot)\build\x86"/>
     <PurgeOnClean Include="$(SlimDXRoot)\build\x64"/>
   </ItemGroup>
-
-  <ItemGroup>
+  
+	<ItemGroup>
     <TestProjects Include="$(SlimDXRoot)\tests\**\*.csproj"/>
   </ItemGroup>
 
+  
+  
   <Target Name="Build" DependsOnTargets="_PopulateVCProjects">
     <MSBuild Project="@(TestProjects)"/>
 
@@ -35,9 +58,6 @@
 			Condition="'$(Platform)'=='x64' or '$(Platform)'==''"
 			Projects="@(VCProjects)"
 			Platform="$(Platform)"/>
-
-
-
   </Target>
 
   <Target
@@ -45,11 +65,16 @@
     <RemoveDir Directories="@(PurgeOnClean)"/>
   </Target>
 
+	<!-- Target: Generate2005Environment
+				Generates solution and project files for building SlimDX under a VS 2005 build environment. -->
   <Target
-    Name="Hax">
-    <DowngradeProject
-      InputProject="$(SlimDXRoot)\tests\SlimDX\SlimDX.Tests.csproj"
-      OutputProject="$(SlimDXRoot)\tests\SlimDX\SlimDX.Tests.2005.csproj"/>
+    Name="Generate2005Environment">
+    <DowngradeSolution
+      InputSolutions="@(SlimDXSolutions)"
+      OutputSolutions="@(SlimDXSolutions->'%(RootDir)%(Directory)%(FileName).2005%(Extension)')"/>
+    <DowngradeProject 
+			InputProjects="@(SlimDXProjects)"
+			OutputProjects="@(SlimDXProjects->'%(RootDir)%(Directory)%(FileName).2005%(Extension)')"/>
   </Target>
 
   <!-- Target: _PopulateVCProjects
