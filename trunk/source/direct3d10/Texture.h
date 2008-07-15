@@ -51,6 +51,7 @@ namespace SlimDX
 			static Texture^ FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes );
 
 			static bool ToFile( Texture^ texture, ImageFileFormat format, System::String^ fileName );
+			static bool ToStream( Texture^ teture, ImageFileFormat format, System::IO::Stream^ stream );
 		};
 	}
 };

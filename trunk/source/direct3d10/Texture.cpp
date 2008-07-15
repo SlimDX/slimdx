@@ -82,6 +82,25 @@ namespace Direct3D10
 		
 		return ( FAILED( hr ) );
 	}
+	
+	bool Texture::ToStream( Texture^ texture, ImageFileFormat format, Stream^ stream )
+	{
+		ID3D10Blob* blob = 0;
+		HRESULT hr = D3DX10SaveTextureToMemory( texture->InternalPointer, (D3DX10_IMAGE_FILE_FORMAT) format, &blob, 0 );
+		if( RECORD_D3D10( hr ).IsFailure )
+			return false;
+		
+		if( stream->Length - stream->Position < blob->GetBufferSize() )
+			throw gcnew InvalidOperationException( "The specified stream does not have sufficient capacity for the specified texture." );
+		
+		// Write byte-by-byte to avoid allocating a managed byte[] that will wastefully persist.
+		unsigned char* bytes = reinterpret_cast<unsigned char*>( blob->GetBufferPointer() );
+		for(SIZE_T byteIndex = 0; byteIndex < blob->GetBufferSize(); ++byteIndex)
+			stream->WriteByte( bytes[byteIndex] );
+		
+		blob->Release();
+		return true;
+	}
 
 	int Texture::GetMipSize( int mipSlice, int baseSliceSize )
 	{
