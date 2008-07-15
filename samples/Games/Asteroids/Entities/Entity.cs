@@ -193,7 +193,7 @@ namespace Asteroids
                 Velocity = new Vector2(Velocity.X, 0);
 
             // update the position based upon the velocity
-            Position += Velocity * (gameTime.ElapsedGameTime / Asteroids.TargetFrameRate);
+            Position += Velocity;
 
             // check if we should wrap
             if (Wrap)

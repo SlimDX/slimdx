@@ -38,18 +38,28 @@ namespace Asteroids
         // constants
         const int InitialWidth = 800;
         const int InitialHeight = 600;
+        const float LevelInterval = 2.0f;
 
         // static data
         static Random random = new Random();
-        public const float TargetFrameRate = 1.0f / 60.0f;
 
         // variables
+        List<Interpolator> interpolators = new List<Interpolator>();
         List<Entity> entities = new List<Entity>();
+        List<Trigger> triggers = new List<Trigger>();
         TextConsole console = new TextConsole();
         Camera camera = new Camera();
         bool[] keyState = new bool[256];
         bool[] keyStateThisFrame = new bool[256];
         bool[] keyStateNotReleased = new bool[256];
+        int currentLevel;
+
+        // fonts
+        Sprite fontSprite;
+        string levelText;
+        SlimDX.Direct3D9.Font levelFont;
+        Color4 levelFontColor = Color.White;
+        Interpolator levelTextInterpolator;
 
         /// <summary>
         /// Gets the random number generator.
@@ -67,6 +77,24 @@ namespace Asteroids
         public List<Entity> Entities
         {
             get { return entities; }
+        }
+
+        /// <summary>
+        /// Gets the triggers.
+        /// </summary>
+        /// <value>The triggers.</value>
+        public List<Trigger> Triggers
+        {
+            get { return triggers; }
+        }
+
+        /// <summary>
+        /// Gets the interpolators.
+        /// </summary>
+        /// <value>The interpolators.</value>
+        public List<Interpolator> Interpolators
+        {
+            get { return interpolators; }
         }
 
         /// <summary>
@@ -125,6 +153,7 @@ namespace Asteroids
             settings.BackBufferHeight = InitialHeight;
             settings.DeviceVersion = DeviceVersion.Direct3D9;
             settings.Windowed = true;
+           // settings.EnableVSync = false;
             settings.MultisampleType = MultisampleType.EightSamples;
 
             // create resources
@@ -181,6 +210,20 @@ namespace Asteroids
         }
 
         /// <summary>
+        /// Initializes the game.
+        /// </summary>
+        protected override void Initialize()
+        {
+            // call the base method
+            base.Initialize();
+
+            // create fonts
+            fontSprite = new Sprite(Device);
+            levelFont = new SlimDX.Direct3D9.Font(Device, 40, 0, FontWeight.Bold, 0, false, CharacterSet.Default,
+                Precision.Default, FontQuality.ClearTypeNatural, PitchAndFamily.DontCare, "");
+        }
+
+        /// <summary>
         /// Loads all graphical content.
         /// </summary>
         protected override void LoadContent()
@@ -195,6 +238,36 @@ namespace Asteroids
             float halfHeight = (float)Math.Abs(Math.Tan(camera.FieldOfView / 2) * camera.Location.Z);
             float halfWidth = halfHeight * camera.AspectRatio;
             WorldBounds = new Vector4(-halfWidth, -halfHeight, halfWidth, halfHeight);
+
+            // reload fonts
+            fontSprite.OnResetDevice();
+            levelFont.OnResetDevice();
+        }
+
+        /// <summary>
+        /// Unloads graphical resources.
+        /// </summary>
+        protected override void UnloadContent()
+        {
+            // call the base method
+            base.UnloadContent();
+
+            // unload fonts
+            fontSprite.OnLostDevice();
+            levelFont.OnLostDevice();
+        }
+
+        /// <summary>
+        /// Releases the game.
+        /// </summary>
+        protected override void Release()
+        {
+            // call the base method
+            base.Release();
+
+            // release fonts
+            fontSprite.Dispose();
+            levelFont.Dispose();
         }
 
         /// <summary>
@@ -203,23 +276,52 @@ namespace Asteroids
         /// <param name="gameTime">The time passed since the last update.</param>
         protected override void Update(GameTime gameTime)
         {
+            // call the base method
+            base.Update(gameTime);
+
+            // process each trigger
+            for (int i = triggers.Count - 1; i >= 0; i--)
+            {
+                // check if the trigger has a predicate that is allowing us to proceed
+                Trigger trigger = triggers[i];
+                if (trigger.ActivationPredicate != null && trigger.ActivationPredicate())
+                {
+                    // activate the trigger
+                    trigger.Activate();
+                    if (!trigger.Repeat)
+                        triggers.RemoveAt(i);
+                }
+                else
+                {
+                    // set the start time if it doesn't yet have one
+                    if (trigger.StartTime == 0)
+                        trigger.StartTime = gameTime.TotalGameTime;
+                    else if (gameTime.TotalGameTime - trigger.StartTime > trigger.Duration)
+                    {
+                        // activate the trigger
+                        trigger.Activate();
+                        if (!trigger.Repeat)
+                            triggers.RemoveAt(i);
+                        else
+                            trigger.StartTime = gameTime.TotalGameTime;
+                    }
+                }
+            }
+
+            // process each interpolator
+            for (int i = interpolators.Count - 1; i >= 0; i--)
+            {
+                // make sure it isn't dead
+                Interpolator interpolator = Interpolators[i];
+                if (interpolator.IsFinished)
+                    Interpolators.RemoveAt(i);
+                else
+                    interpolator.Update();
+            }
+
             // update game objects
             foreach (Entity entity in entities)
                 entity.Update(gameTime);
-
-            // reset the key frame list
-            Array.Clear(keyStateThisFrame, 0, 256);
-        }
-
-        /// <summary>
-        /// Called when a frame is ready to be drawn.
-        /// </summary>
-        /// <param name="gameTime">The time passed since the last frame.</param>
-        protected override void Draw(GameTime gameTime)
-        {
-            // start the scene
-            Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, ClearColor, 1.0f, 0);
-            Device.BeginScene();
 
             // clear out dead entities
             for (int i = Entities.Count - 1; i >= 0; i--)
@@ -234,6 +336,42 @@ namespace Asteroids
                 }
             }
 
+            // reset the key frame list
+            Array.Clear(keyStateThisFrame, 0, 256);
+
+            // check to see if all the asteroids are gone
+            if (Asteroid.AsteroidCount == 0 && levelText == null)
+            {
+                // set the level text
+                currentLevel++;
+                levelText = "LEVEL " + currentLevel.ToString(CultureInfo.CurrentCulture);
+
+                // rig up a trigger to start the new level
+                Trigger trigger = new Trigger(LevelInterval);
+                trigger.Activated += delegate
+                {
+                    // start the new level when the alpha of the text reaches 0
+                    levelTextInterpolator = new Interpolator(a => (a - 0.01f), 1.0f, a => (a <= 0.0f));
+                    levelTextInterpolator.Finished += NewLevel;
+                    interpolators.Add(levelTextInterpolator);
+                };
+                Triggers.Add(trigger);
+            }
+        }
+
+        /// <summary>
+        /// Called when a frame is ready to be drawn.
+        /// </summary>
+        /// <param name="gameTime">The time passed since the last frame.</param>
+        protected override void Draw(GameTime gameTime)
+        {
+            // call the base method
+            base.Draw(gameTime);
+
+            // start the scene
+            Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, ClearColor, 1.0f, 0);
+            Device.BeginScene();
+
             // update the vector matrices
             VectorModel.ViewMatrix = camera.ViewMatrix;
             VectorModel.ProjectionMatrix = camera.ProjectionMatrix;
@@ -245,8 +383,25 @@ namespace Asteroids
             // flush all vector data
             VectorModel.FlushAll();
 
+            // start drawing text
+            fontSprite.Begin(SpriteFlags.AlphaBlend | SpriteFlags.SortTexture);
+
+            // draw the level text, if we have any
+            if (!string.IsNullOrEmpty(levelText))
+            {
+                // center the text in the screen
+                Rectangle rectangle = levelFont.MeasureString(fontSprite, levelText, DrawTextFormat.Center);
+                Rectangle outputRectangle = new Rectangle((GraphicsDeviceManager.ScreenWidth - rectangle.Width) / 2,
+                    (GraphicsDeviceManager.ScreenHeight - rectangle.Height) / 2, rectangle.Width, rectangle.Height);
+                levelFont.DrawString(fontSprite, levelText, outputRectangle, DrawTextFormat.Center, 
+                    new Color4((levelTextInterpolator == null ? 1.0f : levelTextInterpolator.Value) * 0.8f, 1.0f, 1.0f, 1.0f) );
+            }
+
+            // stop drawing text
+            fontSprite.End();
+
 #if DEBUG
-            // set up the console
+            // set up the debug console
             console.Begin();
             console.Location = new Point(5, 5);
             console.ForegroundColor = new Color4(1.0f, 1.0f, 1.0f, 0.0f);
@@ -288,6 +443,21 @@ namespace Asteroids
         {
             // check the key state array
             return keyStateThisFrame[(int)key];
+        }
+
+        /// <summary>
+        /// Starts a new level.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        void NewLevel(object sender, EventArgs e)
+        {
+            // clear out the level text for now
+            levelText = null;
+
+            // spawn some asteroids for the player to deal with
+            for (int i = 0; i < currentLevel; i++)
+                Entities.Add(new Asteroid(this, AsteroidSize.Huge));
         }
     }
 }

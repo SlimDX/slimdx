@@ -1087,7 +1087,7 @@ namespace SampleFramework
         {
             // look up the type converter to convert the value
             TypeConverter converter = TypeDescriptor.GetConverter(typeof(T));
-            return (T)converter.ConvertFromString(value);
+            return (T)converter.ConvertFromString(null, CultureInfo.InvariantCulture, value);
         }
     }
 }

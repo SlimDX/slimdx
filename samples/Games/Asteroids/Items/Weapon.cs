@@ -159,14 +159,14 @@ namespace Asteroids
         public virtual void Update(GameTime gameTime)
         {
             // update the cool down rate
-            CoolDown -= gameTime.ElapsedGameTime / Asteroids.TargetFrameRate;
+            CoolDown--;
 
             // update the active bullets
             foreach (Bullet bullet in Bullets)
             {
                 // decrease the life on the bullet
                 // I feel old
-                bullet.Life -= gameTime.ElapsedGameTime / Asteroids.TargetFrameRate;
+                bullet.Life--;
                 if (bullet.Life > 0.0f)
                 {
                     // update the bullet
@@ -209,6 +209,15 @@ namespace Asteroids
             // draw the active bullets
             foreach (Bullet bullet in Bullets)
                 bullet.Draw();
+        }
+
+        /// <summary>
+        /// Clears the currently active bullets.
+        /// </summary>
+        public void Clear()
+        {
+            // clear the list
+            Bullets.Clear();
         }
 
         /// <summary>

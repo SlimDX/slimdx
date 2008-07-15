@@ -75,6 +75,8 @@
   <ItemGroup>
     <Compile Include="Asteroids.cs" />
     <Compile Include="Entities\Bullet.cs" />
+    <Compile Include="Events\Interpolator.cs" />
+    <Compile Include="Events\Trigger.cs" />
     <Compile Include="Items\PrimaryWeapon.cs" />
     <Compile Include="Items\Weapon.cs" />
     <Compile Include="Entities\Entity.cs" />
