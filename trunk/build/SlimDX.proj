@@ -1,4 +1,5 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+<Project
+	xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
 	DefaultTargets="Build">
 
   <PropertyGroup>
@@ -7,7 +8,6 @@
 
   <UsingTask TaskName="DowngradeProject" AssemblyFile="$(SlimDXRoot)tools\BuildTasks\BuildTasks.dll"/>
   <UsingTask TaskName="DowngradeSolution" AssemblyFile="$(SlimDXRoot)tools\BuildTasks\BuildTasks.dll"/>
-
 
   <!-- Properties: Standard Configuration
 				These are properties that typical users are expected to set as part of the build. -->
@@ -44,19 +44,17 @@
     <TestProjects Include="$(SlimDXRoot)\tests\**\*.csproj"/>
   </ItemGroup>
 
-  
-  
   <Target Name="Build" DependsOnTargets="_PopulateVCProjects">
-    <MSBuild Project="@(TestProjects)"/>
-
     <!-- .vcproj files use 'Win32' for the 32-bit platform name, not 'x86' like .csproj. -->
+
+		<Message Importance="high" Text="Building the following native projects:&#xa;@(BuildableVCProjects,'&#xa;')"/>
     <VCBuild
 			Condition="'$(Platform)'=='x86' or '$(Platform)'==''"
-			Projects="@(VCProjects)"
+			Projects="@(BuildableVCProjects)"
 			Platform="Win32"/>
     <VCBuild
 			Condition="'$(Platform)'=='x64' or '$(Platform)'==''"
-			Projects="@(VCProjects)"
+			Projects="@(BuildableVCProjects)"
 			Platform="$(Platform)"/>
   </Target>
 
@@ -65,6 +63,11 @@
     <RemoveDir Directories="@(PurgeOnClean)"/>
   </Target>
 
+	<Target
+		Name="Rebuild"
+		DependsOnTargets="Clean;Build">
+	</Target>
+	
 	<!-- Target: Generate2005Environment
 				Generates solution and project files for building SlimDX under a VS 2005 build environment. -->
   <Target
@@ -78,30 +81,33 @@
   </Target>
 
   <!-- Target: _PopulateVCProjects
-				Populates the @(VCProjects) item group with the .vcproj files that should
+				Populates the @(BuildableVCProjects) item group with the .vcproj files that should
 				be built (in particular with respect to the $(BuildWith2005) property). 
-				If neccessary, this target will generate the 2005 versions of the .vcproj files. -->
+				If neccessary, this target will generate the 2005 versions of the .vcproj files via
+				a call to the Generate2005Environment target. -->
   <Target
 		Name="_PopulateVCProjects"
 		DependsOnTargets="_DetectVisualCppVersion">
-    <DowngradeVCProject
-			Condition="'$(BuildWith2005)'=='True'"
-			InputProject="SlimDX.vcproj"
-			OutputProject="SlimDX.2005.vcproj"/>
+		<CallTarget
+			Targets="Generate2005Environment"
+			Condition="'$(BuildWith2005)'=='True'"/>
+			
     <CreateItem
 			Condition="'$(BuildWith2005)'=='True'"
-			Include="SlimDX.2005.vcproj">
+			Include="$(SlimDXRoot)**\*.2005.vcproj"
+			Exclude="$(SlimDXRoot)**\*.vcproj">
       <Output
-				ItemName="VCProjects"
+				ItemName="BuildableVCProjects"
 				TaskParameter="Include"/>
     </CreateItem>
-    <CreateItem
+		<CreateItem
 			Condition="'$(BuildWith2005)'=='False'"
-			Include="SlimDX.vcproj">
-      <Output
-				ItemName="VCProjects"
+			Include="$(SlimDXRoot)**\*.vcproj"
+			Exclude="$(SlimDXRoot)**\*.2005.vcproj">
+			<Output
+				ItemName="BuildableVCProjects"
 				TaskParameter="Include"/>
-    </CreateItem>
+		</CreateItem>
   </Target>
 
   <!-- Target: _DetectVisualCppVersion
