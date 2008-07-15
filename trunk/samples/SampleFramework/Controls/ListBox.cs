@@ -19,12 +19,12 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
-using SlimDX.Direct3D9;
-using System;
 using System.Xml;
+using SlimDX.Direct3D9;
 
 namespace SampleFramework
 {
@@ -118,7 +118,7 @@ namespace SampleFramework
             /// </summary>
             /// <param name="index">The zero-based index of the element to remove.</param>
             /// <exception cref="T:System.ArgumentOutOfRangeException">
-            /// 	<paramref name="index"/> is less than zero.-or-<paramref name="index"/> is equal to or greater than <see cref="P:System.Collections.ObjectModel.Collection`1.Count"/>.</exception>
+            /// <paramref name="index"/> is less than zero.-or-<paramref name="index"/> is equal to or greater than <see cref="P:System.Collections.ObjectModel.Collection`1.Count"/>.</exception>
             protected override void RemoveItem(int index)
             {
                 // call the base method
@@ -334,6 +334,9 @@ namespace SampleFramework
         /// </summary>
         public ListBox()
         {
+            // list box isn't finished yet
+            throw new NotImplementedException("ListBox is not yet complete.");
+
             // create the collection
             Items = new ObjectCollection(this);
 
@@ -386,7 +389,7 @@ namespace SampleFramework
             // make sure we are allowed to do multiselect
             if (!AllowMultiselect)
                 throw new InvalidOperationException("Cannot select multiple items in a non-multiselect list box.");
-        
+
             // run through and select each item
             foreach (ListBoxItem item in items)
                 item.Selected = true;

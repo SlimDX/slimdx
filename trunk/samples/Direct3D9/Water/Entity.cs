@@ -20,10 +20,8 @@
 * THE SOFTWARE.
 */
 using System;
-using System.Collections.Generic;
-using System.Text;
-using SlimDX.Direct3D9;
 using SlimDX;
+using SlimDX.Direct3D9;
 
 namespace Water
 {
@@ -67,7 +65,7 @@ namespace Water
             get { return projectionMatrix; }
         }
 
-        public Entity(Device device, string meshFileName, string effectFileName, string textureFileName )
+        public Entity(Device device, string meshFileName, string effectFileName, string textureFileName)
         {
             mesh = Mesh.FromFile(device, meshFileName, MeshFlags.Managed);
 

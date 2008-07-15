@@ -20,15 +20,10 @@
 * THE SOFTWARE.
 */
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using SlimDX.DirectInput;
-using SlimDX;
 using System.Globalization;
+using System.Windows.Forms;
+using SlimDX;
+using SlimDX.DirectInput;
 
 namespace Joystick
 {
@@ -59,7 +54,7 @@ namespace Joystick
                 joystick = new Device<JoystickState>(devices[0].InstanceGuid);
                 joystick.SetCooperativeLevel(this, CooperativeLevel.Exclusive | CooperativeLevel.Foreground);
             }
-            catch(DirectInputException e)
+            catch (DirectInputException e)
             {
                 MessageBox.Show(e.Message);
                 return;

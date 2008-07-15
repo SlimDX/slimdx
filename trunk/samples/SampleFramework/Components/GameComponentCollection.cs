@@ -38,7 +38,7 @@ namespace SampleFramework
         /// <summary>
         /// Updates the components in the collection.
         /// </summary>
-        /// <param name="gameTime">The game time.</param>
+        /// <param name="gameTime">The game's timing information</param>
         public void Update(GameTime gameTime)
         {
             // update each component

@@ -20,8 +20,6 @@
 * THE SOFTWARE.
 */
 using System;
-using System.Collections.Generic;
-using System.Text;
 using SlimDX;
 using SlimDX.Direct3D9;
 
@@ -31,8 +29,8 @@ namespace Water
     {
         Texture bumpTexture;
 
-        public RoomEntity(Device device, string meshFileName, string effectFileName, string textureFileName, string bumpTextureFileName )
-            :base(device, meshFileName, effectFileName, textureFileName)
+        public RoomEntity(Device device, string meshFileName, string effectFileName, string textureFileName, string bumpTextureFileName)
+            : base(device, meshFileName, effectFileName, textureFileName)
         {
             bumpTexture = Texture.FromFile(device, bumpTextureFileName);
         }

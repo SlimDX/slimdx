@@ -19,14 +19,13 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-using SlimDX.Direct3D9;
-using SlimDX;
 using System;
-using System.Diagnostics;
-using System.Reflection;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
+using SlimDX;
+using SlimDX.Direct3D9;
 
 namespace SampleFramework
 {
@@ -100,7 +99,7 @@ namespace SampleFramework
             // make sure we have at least one element
             if (objectAttributes.Count < 1)
                 throw new InvalidOperationException("The vertex type must have at least one field or property marked with the VertexElement attribute.");
-        
+
             // loop through the attributes and start building vertex elements
             List<VertexElement> elements = new List<VertexElement>();
             Dictionary<DeclarationUsage, int> usages = new Dictionary<DeclarationUsage, int>();

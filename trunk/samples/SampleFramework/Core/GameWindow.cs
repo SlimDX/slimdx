@@ -20,12 +20,10 @@
 * THE SOFTWARE.
 */
 using System;
-using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
-using System.Resources;
 using System.Security.Permissions;
 using System.Windows.Forms;
 using SampleFramework.Properties;

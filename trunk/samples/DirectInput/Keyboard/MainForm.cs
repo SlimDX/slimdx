@@ -20,14 +20,10 @@
 * THE SOFTWARE.
 */
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using SlimDX.DirectInput;
 using SlimDX;
+using SlimDX.DirectInput;
 
 namespace Keyboard
 {
@@ -101,7 +97,7 @@ namespace Keyboard
                 return;
 
             StringBuilder data = new StringBuilder();
-            foreach( Key key in state.PressedKeys )
+            foreach (Key key in state.PressedKeys)
                 data.Append(Enum.GetName(typeof(Key), key) + " ");
 
             dataBox.Text = data.ToString();
@@ -142,7 +138,7 @@ namespace Keyboard
                 keyboard.Unacquire();
                 keyboard.Dispose();
             }
-            keyboard = null;            
+            keyboard = null;
         }
 
         #region Boilerplate

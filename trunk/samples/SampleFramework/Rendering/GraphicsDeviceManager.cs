@@ -208,6 +208,10 @@ namespace SampleFramework
         /// <exception cref="DeviceCreationException">Thrown when device creation fails.</exception>
         public void ChangeDevice(DeviceSettings settings, DeviceSettings minimumSettings)
         {
+            // framework can't handle D3D10 right now
+            if (settings.DeviceVersion == DeviceVersion.Direct3D10)
+                throw new NotImplementedException("Direct3D10 support is not yet complete.");
+
             // error checking
             if (settings == null)
                 throw new ArgumentNullException("settings");
