@@ -79,6 +79,18 @@ namespace SampleFramework
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this instance is running slowly.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is running slowly; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsRunningSlowly
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GameTime"/> class.
         /// </summary>
         public GameTime()

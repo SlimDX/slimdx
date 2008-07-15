@@ -21,11 +21,12 @@
 */
 using System;
 
-namespace SampleFramework
+namespace Asteroids
 {
     /// <summary>
     /// A delegate that represents a trigger activation function.
     /// </summary>
+    /// <returns><c>true</c> if the trigger should activate; otherwise, <c>false</c>.</returns>
     public delegate bool TriggerActivation();
 
     /// <summary>

@@ -28,6 +28,7 @@ using System.Xml;
 using SampleFramework;
 using SlimDX;
 using SlimDX.Direct3D9;
+using System.Globalization;
 
 namespace Asteroids
 {
@@ -440,7 +441,7 @@ namespace Asteroids
         {
             // look up the type converter to convert the value
             TypeConverter converter = TypeDescriptor.GetConverter(typeof(T));
-            return (T)converter.ConvertFromString(value);
+            return (T)converter.ConvertFromString(null, CultureInfo.InvariantCulture, value);
         }
     }
 }

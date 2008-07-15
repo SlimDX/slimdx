@@ -33,7 +33,10 @@ namespace Asteroids
     {
         // constants
         const float Acceleration = 0.5f;
+        const float RespawnInterval = 1.0f;
+        const float RespawnBuffer = 50.0f;
         static readonly float RotationDelta = ToRadians(5.0f);
+        static readonly Vector2 SpawnPoint = new Vector2(0.0f, 0.0f);
 
         // variables
         Weapon currentWeapon;
@@ -95,7 +98,7 @@ namespace Asteroids
                 currentWeapon.AutoFire(Position, Rotation);
 
             // check for collisions
-            /*BoundingSphere sphere = new BoundingSphere(new Vector3(Position, 0), Model.Radius);
+            BoundingSphere sphere = new BoundingSphere(new Vector3(Position, 0), Model.Radius);
             foreach (Entity entity in Game.Entities)
             {
                 // player can't collide with himself
@@ -109,7 +112,7 @@ namespace Asteroids
                     IsDead = true;
                     break;
                 }
-            }*/
+            }
         }
 
         /// <summary>
@@ -130,7 +133,43 @@ namespace Asteroids
         public override void OnDeath()
         {
             // add a new trigger to happen when we need to respawn
+            Trigger trigger = new Trigger(RespawnInterval) { Repeat = true };
+            trigger.Activated += Respawn;
+            Game.Triggers.Add(trigger);
+        }
 
+        /// <summary>
+        /// Occurs when the player needs to respawn.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        void Respawn(object sender, EventArgs e)
+        {
+            // make sure there are no asteroids around that could kill us
+            BoundingSphere sphere = new BoundingSphere(new Vector3(SpawnPoint, 0), Model.Radius);
+            foreach (Entity entity in Game.Entities)
+            {
+                // only care about asteroids
+                if( !(entity is Asteroid) )
+                    continue;
+
+                // check for a collision within the allowed buffer time
+                if (entity.Collides(sphere))
+                {
+                    // no good, wait a bit more
+                    ((Trigger)sender).Duration = RespawnInterval / 2;
+                    return;
+                }
+            }
+
+            // otherwise, we can go ahead and respawn the player
+            ((Trigger)sender).Repeat = false;
+            IsDead = false;
+            Position = SpawnPoint;
+            Velocity = Vector2.Zero;
+            Rotation = float.Epsilon;
+            currentWeapon.Clear();
+            Game.Entities.Add(this);
         }
     }
 }

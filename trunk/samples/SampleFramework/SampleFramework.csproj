@@ -76,8 +76,6 @@
     <Compile Include="Cameras\Camera.cs" />
     <Compile Include="Components\GameComponentCollection.cs" />
     <Compile Include="Components\IGameComponent.cs" />
-    <Compile Include="Components\Trigger.cs" />
-    <Compile Include="Components\TriggerCollection.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\Label.cs" />

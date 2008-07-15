@@ -117,6 +117,7 @@ namespace Asteroids
                 game.Resources.Add(Model);
 
             // set properties
+            Position = new Vector2(RandomFloat(Game.WorldBounds.X, Game.WorldBounds.Z), RandomFloat(Game.WorldBounds.Y, Game.WorldBounds.W));
             Velocity = new Vector2(RandomFloat(MinAsteroidSpeed, MaxAsteroidSpeed), RandomFloat(MinAsteroidSpeed, MaxAsteroidSpeed));
             RotationalVelocity = RandomFloat(MinAsteroidSpin, MaxAsteroidSpin);
 
