@@ -12,7 +12,7 @@
   <!-- Properties: Standard Configuration
 				These are properties that typical users are expected to set as part of the build. -->
   <PropertyGroup>
-    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <Configuration Condition="'$(Configuration)' == ''"></Configuration>
     <Platform Condition="'$(Platform)' == ''"></Platform>
   </PropertyGroup>
 
@@ -50,12 +50,14 @@
 		<Message Importance="high" Text="Building the following native projects:&#xa;@(BuildableVCProjects,'&#xa;')"/>
     <VCBuild
 			Condition="'$(Platform)'=='x86' or '$(Platform)'==''"
-			Projects="@(BuildableVCProjects)"
-			Platform="Win32"/>
+			Projects="SlimDX.vcproj"
+			Platform="Win32"
+			Configuration="$(Configuration)"/>
     <VCBuild
 			Condition="'$(Platform)'=='x64' or '$(Platform)'==''"
-			Projects="@(BuildableVCProjects)"
-			Platform="$(Platform)"/>
+			Projects="SlimDX.vcproj"
+			Platform="$(Platform)"
+			Configuration="$(Configuration)"/>
   </Target>
 
   <Target
