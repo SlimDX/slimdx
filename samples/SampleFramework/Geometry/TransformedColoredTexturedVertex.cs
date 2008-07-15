@@ -37,6 +37,7 @@ namespace SampleFramework
         /// Gets or sets the transformed position of the vertex.
         /// </summary>
         /// <value>The transformed position of the vertex.</value>
+        [VertexElement(DeclarationType.Float4, DeclarationUsage.PositionTransformed)]
         public Vector4 Position
         {
             get;
@@ -47,6 +48,7 @@ namespace SampleFramework
         /// Gets or sets the color of the vertex.
         /// </summary>
         /// <value>The color of the vertex.</value>
+        [VertexElement(DeclarationType.Color, DeclarationUsage.Color)]
         public int Color
         {
             get;
@@ -57,6 +59,7 @@ namespace SampleFramework
         /// Gets or sets the texture coordinates.
         /// </summary>
         /// <value>The texture coordinates.</value>
+        [VertexElement(DeclarationType.Float2, DeclarationUsage.TextureCoordinate)]
         public Vector2 TextureCoordinates
         {
             get;

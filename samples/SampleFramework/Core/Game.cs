@@ -98,12 +98,9 @@ namespace SampleFramework
 
         /// <summary>
         /// Gets or sets the target elapsed time.
-
         /// </summary>
         /// <value>The target elapsed time.</value>
         public TimeSpan TargetElapsedTime
-
-
         {
             get { return targetElapsedTime; }
             set
@@ -113,20 +110,15 @@ namespace SampleFramework
                     throw new ArgumentOutOfRangeException("value", "Target elapsed time must be greater than zero.");
                 targetElapsedTime = value;
             }
-
-
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the game is using a fixed time step.
-
         /// </summary>
         /// <value>
-        /// 	<c>true</c> if the game is using a fixed time step; otherwise, <c>false</c>.
-
+        /// <c>true</c> if the game is using a fixed time step; otherwise, <c>false</c>.
         /// </value>
         public bool IsFixedTimeStep
-
         {
             get;
             set;
@@ -135,12 +127,9 @@ namespace SampleFramework
 
         /// <summary>
         /// Gets a value indicating whether this <see cref="Game"/> is exiting.
-
         /// </summary>
         /// <value><c>true</c> if exiting; otherwise, <c>false</c>.</value>
         public bool IsExiting
-
-
         {
             get;
             private set;
@@ -148,14 +137,11 @@ namespace SampleFramework
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is running.
-
         /// </summary>
         /// <value>
-        /// 	<c>true</c> if this instance is running; otherwise, <c>false</c>.
+        /// <c>true</c> if this instance is running; otherwise, <c>false</c>.
         /// </value>
         public bool IsRunning
-
-
         {
             get;
             private set;
@@ -163,12 +149,9 @@ namespace SampleFramework
 
         /// <summary>
         /// Gets the resources collection.
-
         /// </summary>
         /// <value>The resources collection.</value>
         public ResourceCollection Resources
-
-
         {
             get;
             private set;
@@ -245,13 +228,8 @@ namespace SampleFramework
             // set initial values
             IsFixedTimeStep = true;
 
-            // create the resource collection
-            // set initial values
-            IsFixedTimeStep = true;
-
             // create the collections
             Resources = new ResourceCollection();
-
             Components = new GameComponentCollection();
 
             // create the window
@@ -357,8 +335,6 @@ namespace SampleFramework
 
             // check if we are using a fixed or variable time step
             if (IsFixedTimeStep)
-
-
             {
                 // update the timing state
                 accumulatedElapsedGameTime += elapsedAdjustedTime;
@@ -371,7 +347,6 @@ namespace SampleFramework
 
                 // check if the ratio is too large (ie. running slowly)
                 if (ratio > 1)
-
                 {
                     // running slowly
                     updatesSinceRunningSlowly2 = updatesSinceRunningSlowly1;
@@ -385,10 +360,6 @@ namespace SampleFramework
                     if (updatesSinceRunningSlowly2 < int.MaxValue)
                         updatesSinceRunningSlowly2++;
                 }
-
-
-
-
 
                 // check whether we are officially running slowly
                 drawRunningSlowly = updatesSinceRunningSlowly2 < 20;
@@ -415,8 +386,6 @@ namespace SampleFramework
                         lastFrameElapsedGameTime += targetElapsedTime;
                         totalGameTime += targetElapsedTime;
                     }
-
-
                 }
             }
             else
@@ -428,7 +397,6 @@ namespace SampleFramework
 
                 // make sure we shouldn't be exiting
                 if (!IsExiting)
-
                 {
                     try
                     {
@@ -446,8 +414,6 @@ namespace SampleFramework
                         // update the total clocks
                         totalGameTime += elapsedAdjustedTime;
                     }
-
-
                 }
             }
 
@@ -482,7 +448,6 @@ namespace SampleFramework
         /// <param name="gameTime">The time passed since the last update.</param>
         protected virtual void Update(GameTime gameTime)
         {
-
             // update the components
             foreach (IGameComponent component in Components)
                 component.Update(gameTime);
@@ -494,7 +459,6 @@ namespace SampleFramework
         /// <param name="gameTime">The time passed since the last frame.</param>
         protected virtual void Draw(GameTime gameTime)
         {
-
             // draw the components
             foreach (IGameComponent component in Components)
                 component.Draw();

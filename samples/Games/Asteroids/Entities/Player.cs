@@ -150,7 +150,7 @@ namespace Asteroids
             foreach (Entity entity in Game.Entities)
             {
                 // only care about asteroids
-                if( !(entity is Asteroid) )
+                if (!(entity is Asteroid))
                     continue;
 
                 // check for a collision within the allowed buffer time

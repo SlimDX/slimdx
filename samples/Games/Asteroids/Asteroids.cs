@@ -153,7 +153,7 @@ namespace Asteroids
             settings.BackBufferHeight = InitialHeight;
             settings.DeviceVersion = DeviceVersion.Direct3D9;
             settings.Windowed = true;
-           // settings.EnableVSync = false;
+            settings.EnableVSync = false;
             settings.MultisampleType = MultisampleType.EightSamples;
 
             // create resources
@@ -393,8 +393,8 @@ namespace Asteroids
                 Rectangle rectangle = levelFont.MeasureString(fontSprite, levelText, DrawTextFormat.Center);
                 Rectangle outputRectangle = new Rectangle((GraphicsDeviceManager.ScreenWidth - rectangle.Width) / 2,
                     (GraphicsDeviceManager.ScreenHeight - rectangle.Height) / 2, rectangle.Width, rectangle.Height);
-                levelFont.DrawString(fontSprite, levelText, outputRectangle, DrawTextFormat.Center, 
-                    new Color4((levelTextInterpolator == null ? 1.0f : levelTextInterpolator.Value) * 0.8f, 1.0f, 1.0f, 1.0f) );
+                levelFont.DrawString(fontSprite, levelText, outputRectangle, DrawTextFormat.Center,
+                    new Color4((levelTextInterpolator == null ? 1.0f : levelTextInterpolator.Value) * 0.8f, 1.0f, 1.0f, 1.0f));
             }
 
             // stop drawing text

@@ -20,10 +20,8 @@
 * THE SOFTWARE.
 */
 using System;
-using System.Collections.Generic;
-using System.Text;
-using SlimDX.Direct3D9;
 using SlimDX;
+using SlimDX.Direct3D9;
 
 namespace Water
 {
@@ -32,8 +30,8 @@ namespace Water
         CubeTexture cubeTexture;
         float waterTime;
 
-        public WaterEntity(Device device, string meshFileName, string effectFileName, string textureFileName, string cubeTextureFileName )
-            :base(device, meshFileName, effectFileName, textureFileName)
+        public WaterEntity(Device device, string meshFileName, string effectFileName, string textureFileName, string cubeTextureFileName)
+            : base(device, meshFileName, effectFileName, textureFileName)
         {
             cubeTexture = CubeTexture.FromFile(device, cubeTextureFileName);
         }
