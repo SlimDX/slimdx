@@ -551,6 +551,18 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
+	DataStream^ Effect::Disassemble( bool enableColorCode )
+	{
+		ID3DXBuffer *result = NULL;
+
+		HRESULT hr = D3DXDisassembleEffect( InternalPointer, enableColorCode, &result );
+
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		return gcnew DataStream( result );
+	}
+
 	void Effect::StateManager::set( IEffectStateManager^ manager )
 	{
 		if( shim != NULL )
