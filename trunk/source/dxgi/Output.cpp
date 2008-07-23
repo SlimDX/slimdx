@@ -115,7 +115,7 @@ namespace DXGI
 	{
 		UINT modeCount = 0;
 		RECORD_DXGI( InternalPointer->GetDisplayModeList( static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ), &modeCount, 0 ) );
-		if( Result::Last.IsFailure )
+		if( Result::Last.IsFailure || modeCount == 0 )
 			return nullptr;
 		
 		std::vector<DXGI_MODE_DESC> nativeDescriptions(modeCount);

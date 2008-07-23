@@ -366,6 +366,15 @@ namespace SlimDX
 			Result SetRawValue( EffectHandle^ handle, DataStream^ data, int offset );
 
 			/// <summary>
+			/// Disassembles the effect.
+			/// </summary>		
+			/// <param name="enableColorCode"><c>true</c> to enable color coding to make the disassembly easier to read, <c>false</c> to disable color coding.</param>
+			/// <returns>
+			/// A <see cref="SlimDX::DataStream"/> that contains the disassembled effect.
+			/// </returns>
+			DataStream^ Disassemble(bool enableColorCode);
+
+			/// <summary>
 			/// Gets or sets the currently active technique.
 			/// </summary>
 			property EffectHandle^ Technique
