@@ -45,7 +45,7 @@ namespace DXGI
 		return m_DeviceName;
 	}
 
-	Drawing::Rectangle^ OutputDescription::DesktopBounds::get()
+	Drawing::Rectangle OutputDescription::DesktopBounds::get()
 	{
 		return m_DesktopCoordinates;
 	}
@@ -77,7 +77,7 @@ namespace DXGI
 
 	int OutputDescription::GetHashCode()
 	{
-		return m_DeviceName->GetHashCode() + m_DesktopCoordinates->GetHashCode() + m_AttachedToDesktop.GetHashCode()
+		return m_DeviceName->GetHashCode() + m_DesktopCoordinates.GetHashCode() + m_AttachedToDesktop.GetHashCode()
 			 + m_Rotation.GetHashCode() + m_Monitor.GetHashCode();
 	}
 
