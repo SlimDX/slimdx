@@ -21,61 +21,16 @@
 */
 #pragma once
 
-#include <gcroot.h>
 #include "DeviceInformation.h"
 
 namespace SlimDX
 {
 	namespace DirectSound
 	{
-		public ref class DeviceCollection : public System::Collections::Generic::ICollection<DeviceInformation^>
+		public ref class DeviceCollection : public System::Collections::ObjectModel::Collection<DeviceInformation^>
 		{
-		private:
-			System::Collections::Generic::List<DeviceInformation^>^ list;
-
-		internal:
-			virtual System::Collections::IEnumerator^ GetEnumerator2() = System::Collections::IEnumerable::GetEnumerator
-			{
-				return ((System::Collections::IEnumerable^)list)->GetEnumerator();
-			}
-
 		public:
-			DeviceCollection() { list = gcnew System::Collections::Generic::List<DeviceInformation^>(); }
-			DeviceCollection( int initialCapacity ) { list = gcnew System::Collections::Generic::List<DeviceInformation^>( initialCapacity ); }
-
-			virtual void Add( DeviceInformation^ item ) { list->Add( item ); }
-			virtual void Clear() { list->Clear(); }
-			virtual bool Contains( DeviceInformation^ item ) { return list->Contains( item ); }
-			virtual void CopyTo( array<DeviceInformation^>^ array, int arrayIndex ) { list->CopyTo( array, arrayIndex ); }
-			virtual bool Remove( DeviceInformation^ item ) { return list->Remove( item ); }
-
-			virtual System::Collections::Generic::IEnumerator<DeviceInformation^>^ GetEnumerator() { return list->GetEnumerator(); }
-
-			virtual property int Count
-			{
-				int get() { return list->Count; }
-			}
-
-			property DeviceInformation^ default[int]
-			{
-				DeviceInformation^ get( int index ) { return list[index]; }
-			}
-
-			virtual property bool IsReadOnly
-			{
-				bool get() { return false; }
-			}
-		};
-
-		class DeviceCollectionShim
-		{
-		private:
-			gcroot<DeviceCollection^> devices;
-
-		public:
-			DeviceCollectionShim( DeviceCollection^ collection ) { devices = collection; }
-
-			DeviceCollection^ GetDevices() { return devices; }
+			DeviceCollection() { }
 		};
 	}
 }

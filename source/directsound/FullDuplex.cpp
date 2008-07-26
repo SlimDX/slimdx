@@ -19,43 +19,66 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
-
 #include <windows.h>
-#include <mmreg.h>
 #include <dsound.h>
 
 #include "../Result.h"
 #include "../ComObject.h"
-#include "Enums.h"
+
+#include "DirectSoundException.h"
 
 #include "SoundBufferDescription.h"
 #include "CaptureBufferDescription.h"
 #include "CaptureBuffer.h"
 #include "SecondarySoundBuffer.h"
-#include "DirectSoundFullDuplex.h"
-#include "DirectSoundException.h"
+#include "FullDuplex.h"
+
+using namespace System;
 
 namespace SlimDX
 {
 namespace DirectSound
 {
-	DirectSoundFullDuplex::DirectSoundFullDuplex( IDirectSoundFullDuplex *pointer )
+	FullDuplex::FullDuplex( IDirectSoundFullDuplex *pointer )
 	{
-		IDirectSoundFullDuplex8* duplex;
-		HRESULT hr = pointer->QueryInterface( IID_IDirectSoundFullDuplex8, reinterpret_cast<void**>( &duplex ) );
-		if( RECORD_DSOUND( hr ).IsFailure )
-			throw gcnew DirectSoundException( Result::Last );
-
-		Construct( duplex );
+		Construct( pointer );
 	}
 
-	DirectSoundFullDuplex::DirectSoundFullDuplex( System::IntPtr pointer )
+	FullDuplex::FullDuplex( System::IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
 
-	DirectSoundFullDuplex::DirectSoundFullDuplex( System::Guid captureDevice, System::Guid playbackDevice, SlimDX::DirectSound::CaptureBufferDescription captureDesc, SlimDX::DirectSound::SoundBufferDescription bufferDesc, System::IntPtr windowHandle, SlimDX::DirectSound::CooperativeLevel level, [Out] SlimDX::DirectSound::CaptureBuffer ^%captureBuffer, [Out] SlimDX::DirectSound::SecondarySoundBuffer ^%secondaryBuffer )
+	FullDuplex^ FullDuplex::FromPointer( IDirectSoundFullDuplex* pointer )
+	{
+		if( pointer == NULL )
+			return nullptr;
+
+		FullDuplex^ tableEntry = safe_cast<FullDuplex^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew FullDuplex( pointer );
+	}
+
+	FullDuplex^ FullDuplex::FromPointer( System::IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		FullDuplex^ tableEntry = safe_cast<FullDuplex^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew FullDuplex( pointer );
+	}
+
+	FullDuplex::FullDuplex( System::Guid captureDevice, System::Guid playbackDevice, SlimDX::DirectSound::CaptureBufferDescription captureDesc, SlimDX::DirectSound::SoundBufferDescription bufferDesc, System::IntPtr windowHandle, SlimDX::DirectSound::CooperativeLevel level, [Out] SlimDX::DirectSound::CaptureBuffer ^%captureBuffer, [Out] SlimDX::DirectSound::SecondarySoundBuffer ^%secondaryBuffer )
 	{
 		DSCBUFFERDESC cbDesc = captureDesc.ToUnmanaged();
 		DSBUFFERDESC bDesc = bufferDesc.ToUnmanaged();
@@ -77,34 +100,6 @@ namespace DirectSound
 			captureBuffer = CaptureBuffer::FromPointer( capture );
 			secondaryBuffer = static_cast<SecondarySoundBuffer^>( SecondarySoundBuffer::FromPointer( buffer ) );
 		}
-	}
-
-	DirectSoundFullDuplex^ DirectSoundFullDuplex::FromPointer( IDirectSoundFullDuplex* pointer )
-	{
-		DirectSoundFullDuplex^ tableEntry = safe_cast<DirectSoundFullDuplex^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew DirectSoundFullDuplex( pointer );
-	}
-
-	DirectSoundFullDuplex^ DirectSoundFullDuplex::FromPointer( System::IntPtr pointer )
-	{
-		DirectSoundFullDuplex^ tableEntry = safe_cast<DirectSoundFullDuplex^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew DirectSoundFullDuplex( pointer );
-	}
-
-	DirectSoundFullDuplex::~DirectSoundFullDuplex()
-	{
-		Destruct();
 	}
 }
 }

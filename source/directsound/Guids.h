@@ -21,9 +21,6 @@
 */
 #pragma once
 
-#include <dsound.h>
-
-#include "../ComObject.h"
 #include "../Utilities.h"
 
 namespace SlimDX

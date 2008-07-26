@@ -35,10 +35,12 @@ namespace SlimDX
 			/// Identifies the DirectSound driver being enumerated
 			/// </summary>
 			property System::Guid DriverGuid;
+
 			/// <summary>
 			/// String that provides a textual description of the DirectSound device.
 			/// </summary>
 			property System::String^ Description;
+
 			/// <summary>
 			/// String that specifies the module name of the DirectSound driver corresponding to this device.
 			/// </summary>

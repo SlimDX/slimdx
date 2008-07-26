@@ -31,6 +31,8 @@ namespace SlimDX
 	[System::Flags]
 	public enum class Speakers : System::Int32
 	{
+		None = 0,
+
 		/// <summary>
 		/// A front left speaker will be used.
 		/// </summary>
