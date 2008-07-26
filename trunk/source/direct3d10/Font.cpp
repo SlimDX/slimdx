@@ -51,6 +51,11 @@ namespace Direct3D10
 		Construct( Build( device, description.Width, description.Height, description.Weight, description.MipLevels, description.IsItalic, description.CharacterSet, description.Precision, description.Quality, description.PitchAndFamily, description.FaceName ) );
 	}
 
+	Font::Font( Device^ device, int height, String^ faceName )
+	{
+		Construct( Build( device, 0, height, FontWeight::Normal, 1, false, FontCharacterSet::Default, FontPrecision::Default, FontQuality::Default, FontPitchAndFamily::Default, faceName ) );
+	}
+
 	Font::Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic, FontCharacterSet characterSet, FontPrecision precision, FontQuality quality, FontPitchAndFamily pitchAndFamily, String^ faceName )
 	{
 		Construct( Build( device, width, height, weight, mipLevels, isItalic, characterSet, precision, quality, pitchAndFamily, faceName ) );
@@ -104,7 +109,7 @@ namespace Direct3D10
 		return FontDescription( nativeDescription );
 	}
 
-	int Font::Draw( Sprite^ sprite, String^ text, Drawing::Rectangle rect, FontDrawFlags flags, int color )
+	int Font::Draw( Sprite^ sprite, String^ text, Drawing::Rectangle rect, FontDrawFlags flags, unsigned int color )
 	{
 		ID3DX10Sprite* nativeSprite = sprite == nullptr ? 0 : sprite->InternalPointer;
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );

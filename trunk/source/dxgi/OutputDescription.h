@@ -35,7 +35,7 @@ namespace SlimDX
 		public value class OutputDescription : System::IEquatable<OutputDescription>
 		{
 			System::String^ m_DeviceName;
-			System::Drawing::Rectangle^ m_DesktopCoordinates;
+			System::Drawing::Rectangle m_DesktopCoordinates;
 			bool m_AttachedToDesktop;
 			DisplayModeRotation m_Rotation;
 			System::IntPtr m_Monitor;
@@ -55,9 +55,9 @@ namespace SlimDX
 			/// <summary>
 			/// Gets output's bounds in desktop coordinates.
 			/// </summary>
-			property System::Drawing::Rectangle^ DesktopBounds
+			property System::Drawing::Rectangle DesktopBounds
 			{
-				System::Drawing::Rectangle^ get();
+				System::Drawing::Rectangle get();
 			}
 
 			/// <summary>
