@@ -58,7 +58,7 @@ namespace Direct3D9
 			return tableEntry;
 		}
 
-		return XFileEnumerationObject::FromPointer( pointer );
+		return gcnew XFileEnumerationObject( pointer );
 	}
 
 	XFileEnumerationObject^ XFileEnumerationObject::FromPointer( IntPtr pointer )
@@ -72,7 +72,7 @@ namespace Direct3D9
 			return tableEntry;
 		}
 
-		return XFileEnumerationObject::FromPointer( pointer );
+		return gcnew XFileEnumerationObject( pointer );
 	}
 
 	XFileData^ XFileEnumerationObject::GetChild( int id )

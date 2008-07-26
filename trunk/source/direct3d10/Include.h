@@ -52,16 +52,39 @@ namespace SlimDX
 			/// <param name="stream">The previously opened include stream.</param>
 			virtual void Close( System::IO::Stream^ stream ) = 0;
 		};
+
+		value class IncludeFrame
+		{
+		private:
+			System::IO::Stream^ m_stream;
+			System::Runtime::InteropServices::GCHandle m_handle;
+
+		public:
+			IncludeFrame(System::IO::Stream^ stream, System::Runtime::InteropServices::GCHandle handle)
+				: m_stream(stream), m_handle(handle) { }
+
+			property System::IO::Stream^ Stream
+			{
+				System::IO::Stream^ get() { return m_stream; }
+			}
+
+			property System::Runtime::InteropServices::GCHandle Handle
+			{
+				System::Runtime::InteropServices::GCHandle get() { return m_handle; }
+			}
+
+			void Close();
+		};
 		
 		class IncludeShim : public ID3D10Include
 		{
 		private:
 			gcroot<Include^> m_Wrapped;
-			gcroot<System::IO::Stream^> m_Stream;
-			System::Runtime::InteropServices::GCHandle m_Handle;
+			gcroot<System::Collections::Generic::Stack<IncludeFrame>^> m_Frames;
 
 		public:
 			IncludeShim( Include^ wrapped );
+			~IncludeShim();
 
 			HRESULT WINAPI Open( D3D10_INCLUDE_TYPE type, LPCSTR fileName, LPCVOID parentData, LPCVOID* data, UINT* bytes );
 			HRESULT WINAPI Close( LPCVOID data );

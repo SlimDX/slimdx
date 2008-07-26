@@ -28,81 +28,97 @@
 
 using namespace System;
 using namespace System::IO;
+using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	namespace Direct3D10
+namespace Direct3D10
+{
+	IncludeShim::IncludeShim( Include^ wrapped )
 	{
-		IncludeShim::IncludeShim( Include^ wrapped )
-		{
-			m_Wrapped = wrapped;
-			m_Stream = nullptr;
-		}
+		m_Wrapped = wrapped;
+		m_Frames = gcnew Stack<IncludeFrame>();
+	}
 
-		HRESULT IncludeShim::Open( D3D10_INCLUDE_TYPE type, LPCSTR fileName, LPCVOID parentData, LPCVOID* data, UINT* bytes )
-		{
-			SLIMDX_UNREFERENCED_PARAMETER(parentData);
-			SLIMDX_UNREFERENCED_PARAMETER(data);
+	IncludeShim::~IncludeShim()
+	{
+		while( m_Frames->Count > 0 )
+			m_Frames->Pop().Close();
+	}
 
-			try
+	HRESULT IncludeShim::Open( D3D10_INCLUDE_TYPE type, LPCSTR fileName, LPCVOID parentData, LPCVOID* data, UINT* bytes )
+	{
+		SLIMDX_UNREFERENCED_PARAMETER(parentData);
+		SLIMDX_UNREFERENCED_PARAMETER(data);
+
+		try
+		{
+			Stream^ stream;
+			m_Wrapped->Open( static_cast<IncludeType>( type ), gcnew String( fileName ), stream );
+
+			if( stream != nullptr )
 			{
-				Stream^ stream;
-				m_Wrapped->Open( static_cast<IncludeType>( type ), gcnew String( fileName ), stream );
-				m_Stream = stream;
-
-				if( stream != nullptr )
+				if( stream->GetType() == DataStream::typeid )
 				{
-					if( stream->GetType() == DataStream::typeid )
-					{
-						DataStream^ localData = safe_cast<DataStream^>( stream );
-						*data = localData->RawPointer;
-						*bytes = static_cast<UINT>( localData->Length );
-					}
-					else
-					{
-						array<Byte>^ localData = Utilities::ReadStream( stream, 0 );
-						m_Handle = GCHandle::Alloc( localData, GCHandleType::Pinned );
-						*data = m_Handle.AddrOfPinnedObject().ToPointer();
-						*bytes = localData->Length;
-					}
+					DataStream^ localData = safe_cast<DataStream^>( stream );
+					*data = localData->RawPointer;
+					*bytes = static_cast<UINT>( localData->Length );
+
+					m_Frames->Push( IncludeFrame( stream, GCHandle() ) );
 				}
 				else
 				{
-					*data = 0;
-					*bytes = 0;
-				}
+					array<Byte>^ localData = Utilities::ReadStream( stream, 0 );
+					GCHandle handle = GCHandle::Alloc( localData, GCHandleType::Pinned );
+					*data = handle.AddrOfPinnedObject().ToPointer();
+					*bytes = localData->Length;
 
-				return S_OK;
+					m_Frames->Push( IncludeFrame( stream, handle ) );
+				}
 			}
-			catch( Exception^ )
+			else
 			{
-				return E_FAIL;
+				*data = 0;
+				*bytes = 0;
+
+				m_Frames->Push( IncludeFrame( nullptr, GCHandle() ) );
 			}
+
+			return S_OK;
 		}
-
-		HRESULT IncludeShim::Close( LPCVOID data )
+		catch( Exception^ )
 		{
-			SLIMDX_UNREFERENCED_PARAMETER( data );
-
-			try
-			{
-				if( m_Handle.IsAllocated )
-				{
-					m_Handle.Free();
-				}
-
-				Stream^ stream = m_Stream;
-				m_Wrapped->Close( stream );
-				delete stream;
-				m_Stream = nullptr;
-
-				return S_OK;
-			}
-			catch( Exception^ )
-			{
-				return E_FAIL;
-			}
+			return E_FAIL;
 		}
 	}
+
+	HRESULT IncludeShim::Close( LPCVOID data )
+	{
+		SLIMDX_UNREFERENCED_PARAMETER( data );
+
+		try
+		{
+			IncludeFrame frame = m_Frames->Pop();
+
+			m_Wrapped->Close( frame.Stream );
+
+			frame.Close();
+
+			return S_OK;
+		}
+		catch( Exception^ )
+		{
+			return E_FAIL;
+		}
+	}
+
+	void IncludeFrame::Close()
+	{
+		if( m_stream != nullptr )
+			delete m_stream;
+		if( m_handle.IsAllocated )
+			m_handle.Free();
+	}
+}
 }
