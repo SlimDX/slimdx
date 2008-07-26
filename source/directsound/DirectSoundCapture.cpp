@@ -1,0 +1,124 @@
+/*
+* Copyright (c) 2007 SlimDX Group
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
+#pragma once
+
+#include <windows.h>
+#include <vcclr.h>
+#include <memory>
+#include <dsound.h>
+
+#include "../Utilities.h"
+#include "../Result.h"
+
+#include "DirectSoundCallbacks.h"
+#include "DeviceCollection.h"
+#include "DirectSoundCapture.h"
+#include "DirectSoundException.h"
+#include "CaptureCapabilities.h"
+
+namespace SlimDX
+{
+	namespace DirectSound
+	{
+		DirectSoundCapture::DirectSoundCapture()
+		{
+			IDirectSoundCapture8* capture;
+			HRESULT hr = DirectSoundCaptureCreate8( NULL, &capture, NULL );
+
+			if( RECORD_DSOUND( hr ).IsFailure )
+				throw gcnew DirectSoundException( Result::Last );
+
+			Construct( capture );
+		}
+
+		DirectSoundCapture::DirectSoundCapture( IDirectSoundCapture *capture )
+		{
+			Construct( capture );
+		}
+
+		DirectSoundCapture::DirectSoundCapture( System::IntPtr pointer )
+		{
+			Construct( pointer, NativeInterface );
+		}
+
+		DirectSoundCapture::DirectSoundCapture( System::Guid device )
+		{
+			IDirectSoundCapture8* capture;
+			HRESULT hr = DirectSoundCaptureCreate8( reinterpret_cast<GUID*>( &device ), &capture, NULL );
+
+			if( RECORD_DSOUND( hr ).IsFailure )
+				throw gcnew DirectSoundException( Result::Last );
+
+			Construct( capture );
+		}
+
+		DirectSoundCapture^ DirectSoundCapture::FromPointer( IDirectSoundCapture* pointer )
+		{
+			DirectSoundCapture^ tableEntry = safe_cast<DirectSoundCapture^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				pointer->Release();
+				return tableEntry;
+			}
+
+			return gcnew DirectSoundCapture( pointer );
+		}
+
+		DirectSoundCapture^ DirectSoundCapture::FromPointer( System::IntPtr pointer )
+		{
+			DirectSoundCapture^ tableEntry = safe_cast<DirectSoundCapture^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				return tableEntry;
+			}
+
+			return gcnew DirectSoundCapture( pointer );
+		}
+
+		DirectSoundCapture::~DirectSoundCapture()
+		{
+			Destruct();
+		}
+
+		CaptureCapabilities DirectSoundCapture::Capabilities::get()
+		{
+			DSCCAPS caps;
+			caps.dwSize = sizeof( DSCCAPS );
+			HRESULT hr = InternalPointer->GetCaps( &caps );
+			RECORD_DSOUND( hr );
+
+			return CaptureCapabilities( caps );
+		}
+
+		DeviceCollection^ DirectSoundCapture::GetDevices()
+		{
+			DeviceCollection^ results = gcnew DeviceCollection();
+			std::auto_ptr<DeviceCollectionShim> shim( new DeviceCollectionShim( results ) );
+
+			HRESULT hr = DirectSoundCaptureEnumerate( (LPDSENUMCALLBACK)( EnumerateDevices ), shim.get() );
+			if( RECORD_DSOUND( hr ).IsFailure )
+				return nullptr;
+
+			return results;
+		}
+	}
+}

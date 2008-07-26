@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include <audiodefs.h>
+
 namespace SlimDX
 {
 	/// <summary>
