@@ -21,13 +21,10 @@
 */
 #pragma once
 
-#include <dsound.h>
-
-#include "../ComObject.h"
 #include "../AudioEnums.h"
-#include "DirectSoundGuids.h"
+
 #include "Enums.h"
-#include "DirectSoundCapabilities.h"
+#include "Capabilities.h"
 #include "DeviceCollection.h"
 
 using System::Runtime::InteropServices::OutAttribute;
@@ -43,19 +40,7 @@ namespace SlimDX
 		{
 			COMOBJECT(IDirectSound8, DirectSound);
 
-		private:
-			Capabilities caps;
-			Capabilities GetCapabilities();
-
 		public:
-			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::DirectSound"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSound8 pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static DirectSound^ FromPointer( System::IntPtr pointer );
-
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::DirectSound"/> class.
 			/// </summary>
@@ -68,25 +53,33 @@ namespace SlimDX
 			DirectSound( System::Guid device );
 
 			/// <summary>
+			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::DirectSound"/> class using the specified pointer to a
+			/// previously constructed unmanaged object.
+			/// </summary>
+			/// <param name="pointer">The unmanaged IDirectSound8 pointer.</param>
+			/// <returns>The newly constructed object.</returns>
+			static DirectSound^ FromPointer( System::IntPtr pointer );
+
+			/// <summary>
 			/// Sets the cooperative level of the application for this sound device.
 			/// </summary>
 			/// <param name="windowHandle"></param>
 			/// <param name="cooperativeLevel"></param>
-			void SetCooperativeLevel( System::IntPtr windowHandle, CooperativeLevel cooperativeLevel );
+			Result SetCooperativeLevel( System::IntPtr windowHandle, CooperativeLevel cooperativeLevel );
 
 			/// <summary>
 			/// Sets the speaker configuration of the device.
 			/// </summary>
 			/// <param name="speakerSet"></param>
 			/// <param name="geometry"></param>
-			void SetSpeakerConfig( Speakers speakerSet, SpeakerGeometry geometry );
+			Result SetSpeakerConfiguration( Speakers speakerSet, SpeakerGeometry geometry );
 
 			/// <summary>
 			/// Retrieves the speaker configuration of the device.
 			/// </summary>
 			/// <param name="speakerSet"></param>
 			/// <param name="geometry"></param>
-			void GetSpeakerConfig( [Out] Speakers% speakerSet, [Out] SpeakerGeometry% geometry );
+			Result GetSpeakerConfiguration( [Out] Speakers% speakerSet, [Out] SpeakerGeometry% geometry );
 
 			/// <summary>
 			/// Ascertains whether the device driver is certified for DirectX.
@@ -96,9 +89,9 @@ namespace SlimDX
 			/// <summary>
 			/// Retrieves the capabilities of the hardware device.
 			/// </summary>
-			property Capabilities Capabilities
+			property Capabilities^ Capabilities
 			{
-				SlimDX::DirectSound::Capabilities get() { return caps; }
+				SlimDX::DirectSound::Capabilities^ get();
 			}
 
 			/// <summary>

@@ -34,55 +34,65 @@ namespace SlimDX
 			ResultCode();
 
 		public:
+			property static Result Success
+			{
+				Result get();
+			}
+
+			property static Result Failure
+			{
+				Result get();
+			}
+
 			property static Result NoVirtualization
 			{
 				Result get();
-			};
+			}
 
 			property static Result AccessDenied
 			{
 				Result get();
-			};
+			}
 
 			property static Result Allocated
 			{
 				Result get();
-			};
+			}
 
 			property static Result AlreadyInitialized
 			{
 				Result get();
-			};
+			}
 
 			property static Result BadFormat
 			{
 				Result get();
-			};
+			}
 
 			property static Result BadSendBufferGuid
 			{
 				Result get();
-			};
+			}
 
 			property static Result BufferLost
 			{
 				Result get();
-			};
+			}
 
 			property static Result BufferTooSmall
 			{
 				Result get();
-			};
+			}
 
 			property static Result ControlUnavailable
 			{
 				Result get();
-			};
+			}
 
 			property static Result DirectSound8Required
 			{
 				Result get();
-			};
+			}
 
 			property static Result EffectsUnavailable
 			{
@@ -92,62 +102,62 @@ namespace SlimDX
 			property static Result Generic
 			{
 				Result get();
-			};
+			}
 
 			property static Result InvalidCall
 			{
 				Result get();
-			};
+			}
 
 			property static Result InvalidParameter
 			{
 				Result get();
-			};
+			}
 
 			property static Result NoAggregation
 			{
 				Result get();
-			};
+			}
 
 			property static Result NoDriver
 			{
 				Result get();
-			};
+			}
 
 			property static Result NoInterface
 			{
 				Result get();
-			};
+			}
 
 			property static Result ObjectNotFound
 			{
 				Result get();
-			};
+			}
 
 			property static Result OtherApplicationHasPriority
 			{
 				Result get();
-			};
+			}
 
 			property static Result PriorityLevelNeeded
 			{
 				Result get();
-			};
+			}
 
 			property static Result SendLoop
 			{
 				Result get();
-			};
+			}
 
 			property static Result Uninitialized
 			{
 				Result get();
-			};
+			}
 
 			property static Result Unsupported
 			{
 				Result get();
-			};
+			}
 		};
 	}
 }

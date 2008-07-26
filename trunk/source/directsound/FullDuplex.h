@@ -21,33 +21,20 @@
 */
 #pragma once
 
-#include <dsound.h>
-
 #include "Enums.h"
-#include "CaptureBuffer.h"
-#include "SoundBufferDescription.h"
-#include "CaptureBufferDescription.h"
 
 namespace SlimDX
 {
 	namespace DirectSound
 	{
 		/// <summary>
-		/// The DirectSoundFullDuplex object represents a full-duplex stream.
+		/// The FullDuplex object represents a full-duplex stream.
 		/// </summary>
-		public ref class DirectSoundFullDuplex : public ComObject
+		public ref class FullDuplex : public ComObject
 		{
-			COMOBJECT(IDirectSoundFullDuplex, DirectSoundFullDuplex);
+			COMOBJECT(IDirectSoundFullDuplex, FullDuplex);
 
 		public:
-			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::DirectSoundFullDuplex"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSoundFullDuplex pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static DirectSoundFullDuplex^ FromPointer( System::IntPtr pointer );
-
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::DirectSoundFullDuplex"/> class.
 			/// </summary>
@@ -59,14 +46,17 @@ namespace SlimDX
 			/// <param name="level"></param>
 			/// <param name="captureBuffer"></param>
 			/// <param name="secondaryBuffer"></param>
-			DirectSoundFullDuplex( System::Guid captureDevice, System::Guid playbackDevice, CaptureBufferDescription captureDesc, 
+			FullDuplex( System::Guid captureDevice, System::Guid playbackDevice, CaptureBufferDescription captureDesc, 
 								   SoundBufferDescription bufferDesc, System::IntPtr windowHandle, CooperativeLevel level, 
 								   [Out] CaptureBuffer^% captureBuffer, [Out] SecondarySoundBuffer^% secondaryBuffer );
 
 			/// <summary>
-			/// Releases all resources used by the <see cref="SlimDX::DirectSound::DirectSoundFullDuplex"/> class.
+			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::FullDuplex"/> class using the specified pointer to a
+			/// previously constructed unmanaged object.
 			/// </summary>
-			~DirectSoundFullDuplex();
+			/// <param name="pointer">The unmanaged IDirectSoundFullDuplex pointer.</param>
+			/// <returns>The newly constructed object.</returns>
+			static FullDuplex^ FromPointer( System::IntPtr pointer );
 		};
 	}
 }

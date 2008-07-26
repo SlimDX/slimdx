@@ -24,28 +24,36 @@
 #include <dsound.h>
 
 #include "../Utilities.h"
+
 #include "DeviceCollection.h"
 #include "Callbacks.h"
 
+using namespace System;
+using namespace System::Runtime::InteropServices;
+
 namespace SlimDX
 {
-	namespace DirectSound
+namespace DirectSound
+{
+	BOOL CALLBACK EnumerateDevices( LPGUID lpGuid, LPCWSTR description, LPCWSTR module, LPVOID lpContext )
 	{
-		BOOL CALLBACK EnumerateDevices( LPGUID lpGuid, LPCSTR lpcstrDescription, LPCSTR lpcstrModule, LPVOID lpContext )
-		{
-			DeviceCollectionShim* shim = static_cast<DeviceCollectionShim*>( lpContext );
+		GCHandle handle = GCHandle::FromIntPtr( IntPtr( lpContext ) );
+		DeviceCollection^ collection = safe_cast<DeviceCollection^>( handle.Target );
 
-			DeviceInformation info = DeviceInformation();
-			info.Description = System::Runtime::InteropServices::Marshal::PtrToStringAuto( System::IntPtr( (void*)lpcstrDescription) );
-			info.ModuleName = System::Runtime::InteropServices::Marshal::PtrToStringAuto( System::IntPtr( (void*)lpcstrModule ) );
-			if( lpGuid == NULL )
-				info.DriverGuid = System::Guid::Empty;
-			else
-				info.DriverGuid = Utilities::ConvertNativeGuid( *lpGuid );
+		DeviceInformation^ info = gcnew DeviceInformation();
+		info->Description = gcnew String( description );
+		info->ModuleName = gcnew String( module );
 
-			shim->GetDevices()->Add( info );
+		if( lpGuid == NULL )
+			info->DriverGuid = System::Guid::Empty;
+		else
+			info->DriverGuid = Utilities::ConvertNativeGuid( *lpGuid );
 
-			return TRUE;
-		}
+		collection->Add( info );
+
+		handle.Free();
+
+		return TRUE;
 	}
+}
 }

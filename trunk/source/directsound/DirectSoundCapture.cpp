@@ -29,11 +29,13 @@
 #include "../Utilities.h"
 #include "../Result.h"
 
-#include "DirectSoundCallbacks.h"
+#include "Callbacks.h"
 #include "DeviceCollection.h"
 #include "DirectSoundCapture.h"
 #include "DirectSoundException.h"
 #include "CaptureCapabilities.h"
+
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
@@ -112,9 +114,11 @@ namespace SlimDX
 		DeviceCollection^ DirectSoundCapture::GetDevices()
 		{
 			DeviceCollection^ results = gcnew DeviceCollection();
-			std::auto_ptr<DeviceCollectionShim> shim( new DeviceCollectionShim( results ) );
+			GCHandle handle = GCHandle::Alloc( results, GCHandleType::Pinned );
 
-			HRESULT hr = DirectSoundCaptureEnumerate( (LPDSENUMCALLBACK)( EnumerateDevices ), shim.get() );
+			HRESULT hr = DirectSoundCaptureEnumerate( EnumerateDevices, handle.AddrOfPinnedObject().ToPointer() );
+			handle.Free();
+
 			if( RECORD_DSOUND( hr ).IsFailure )
 				return nullptr;
 

@@ -25,7 +25,7 @@
 
 #include "../Utilities.h"
 #include "../WaveFormat.h"
-#include "DirectSoundGuids.h"
+#include "Guids.h"
 #include "SoundBufferDescription.h"
 
 namespace SlimDX

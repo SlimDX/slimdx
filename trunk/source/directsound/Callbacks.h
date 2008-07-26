@@ -25,6 +25,6 @@ namespace SlimDX
 {
 	namespace DirectSound
 	{
-		BOOL CALLBACK EnumerateDevices( LPGUID lpGuid, LPCSTR lpcstrDescription, LPCSTR lpcstrModule, LPVOID lpContext );
+		BOOL CALLBACK EnumerateDevices( LPGUID lpGuid, LPCWSTR description, LPCWSTR module, LPVOID lpContext );
 	}
 }
