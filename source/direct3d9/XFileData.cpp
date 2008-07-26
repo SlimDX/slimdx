@@ -59,7 +59,7 @@ namespace Direct3D9
 			return tableEntry;
 		}
 
-		return XFileData::FromPointer( pointer );
+		return gcnew XFileData( pointer );
 	}
 
 	XFileData^ XFileData::FromPointer( IntPtr pointer )
@@ -73,7 +73,7 @@ namespace Direct3D9
 			return tableEntry;
 		}
 
-		return XFileData::FromPointer( pointer );
+		return gcnew XFileData( pointer );
 	}
 
 	XFileData^ XFileData::GetChild( int id )

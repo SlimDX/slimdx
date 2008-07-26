@@ -70,7 +70,7 @@ namespace Direct3D9
 			return tableEntry;
 		}
 
-		return XFile::FromPointer( pointer );
+		return gcnew XFile( pointer );
 	}
 
 	XFile^ XFile::FromPointer( IntPtr pointer )

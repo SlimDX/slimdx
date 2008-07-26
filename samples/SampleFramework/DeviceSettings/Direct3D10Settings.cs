@@ -176,7 +176,7 @@ namespace SampleFramework
             mode.Format = Format.R8G8B8A8_UNorm_SRGB;
             mode.Scaling = DisplayModeScaling.Unspecified;
             mode.ScanlineOrdering = DisplayModeScanlineOrdering.Unspecified;
-            Rectangle rectangle = (Rectangle)outputInfo.OutputDescription.DesktopBounds;
+            Rectangle rectangle = outputInfo.OutputDescription.DesktopBounds;
             mode.Width = rectangle.Width;
             mode.Height = rectangle.Height;
 

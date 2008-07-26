@@ -30,6 +30,7 @@
 
 using namespace System;
 using namespace System::IO;
+using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
@@ -39,7 +40,13 @@ namespace Direct3D9
 	IncludeShim::IncludeShim( Include^ wrappedInterface )
 	{
 		m_WrappedInterface = wrappedInterface;
-		m_stream = nullptr;
+		m_Frames = gcnew Stack<IncludeFrame>();
+	}
+
+	IncludeShim::~IncludeShim()
+	{
+		while( m_Frames->Count > 0 )
+			m_Frames->Pop().Close();
 	}
 
 	HRESULT IncludeShim::Open( D3DXINCLUDE_TYPE includeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID* ppData, UINT* pBytes )
@@ -51,7 +58,6 @@ namespace Direct3D9
 		{
 			Stream^ stream;
 			m_WrappedInterface->Open( static_cast<IncludeType>( includeType ), gcnew String(pFileName), stream );
-			m_stream = stream;
 
 			if( stream != nullptr )
 			{
@@ -61,20 +67,26 @@ namespace Direct3D9
 					DataStream^ data = safe_cast<DataStream^>( stream );
 					*ppData = data->RawPointer;
 					*pBytes = static_cast<UINT>( data->Length );
+
+					m_Frames->Push( IncludeFrame( stream, GCHandle() ) );
 				}
 				else
 				{
 					//Read the stream into a byte array and pin it
 					array<Byte>^ data = Utilities::ReadStream( stream, 0 );
-					m_handle = GCHandle::Alloc( data, GCHandleType::Pinned );
-					*ppData = m_handle.AddrOfPinnedObject().ToPointer();
+					GCHandle handle = GCHandle::Alloc( data, GCHandleType::Pinned );
+					*ppData = handle.AddrOfPinnedObject().ToPointer();
 					*pBytes = data->Length;
+
+					m_Frames->Push( IncludeFrame( stream, handle ) );
 				}
 			}
 			else
 			{
 				*ppData = NULL;
 				*pBytes = 0;
+
+				m_Frames->Push( IncludeFrame( nullptr, GCHandle() ) );
 			}
 
 			return S_OK;
@@ -91,15 +103,11 @@ namespace Direct3D9
 
 		try
 		{
-			if( m_handle.IsAllocated )
-			{
-				m_handle.Free();
-			}
+			IncludeFrame frame = m_Frames->Pop();
 
-			Stream^ stream = m_stream;
-			m_WrappedInterface->Close( stream );
-			delete stream;
-			m_stream = nullptr;
+			m_WrappedInterface->Close( frame.Stream );
+			
+			frame.Close();
 
 			return S_OK;
 		}
@@ -107,6 +115,14 @@ namespace Direct3D9
 		{
 			return E_FAIL;
 		}
+	}
+
+	void IncludeFrame::Close()
+	{
+		if( m_stream != nullptr )
+			delete m_stream;
+		if( m_handle.IsAllocated )
+			m_handle.Free();
 	}
 }
 }
