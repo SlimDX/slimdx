@@ -19,80 +19,34 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
-
 #include <dsound.h>
+
 #include "BufferCapabilities.h"
 
 namespace SlimDX
 {
-	namespace DirectSound
+namespace DirectSound
+{
+	BufferCapabilities::BufferCapabilities( const DSBCAPS &caps )
 	{
-		BufferCapabilities::BufferCapabilities( const DSBCAPS &caps )
-		{
-			BufferBytes = caps.dwBufferBytes;
-			PlayCpuOverhead = caps.dwPlayCpuOverhead;
-			UnlockTransferRate = caps.dwUnlockTransferRate;
-			CanGetCurrentPosition = false;
-			Control3D = false;
-			ControlFrequency = false;
-			ControlVolume = false;
-			ControlPan = false;
-			ControlPositionNotify = false;
-			ControlEffects = false;
-			GlobalFocus = false;
-			LocateInHardware = false;
-			LocateInSoftware = false;
-			LocationDefer = false;
-			Mute3DAtMaximumDistance = false;
-			PrimaryBuffer = false;
-			StaticBuffer = false;
-			StickyFocus = false;
-
-			if( ( caps.dwFlags & DSBCAPS_GETCURRENTPOSITION2 ) != 0 )
-				CanGetCurrentPosition = true;
-
-			if( ( caps.dwFlags & DSBCAPS_CTRL3D ) != 0 )
-				Control3D = true;
-
-			if( ( caps.dwFlags & DSBCAPS_CTRLFX ) != 0 )
-				ControlEffects = true;
-
-			if( ( caps.dwFlags & DSBCAPS_CTRLFREQUENCY ) != 0 )
-				ControlFrequency = true;
-
-			if( ( caps.dwFlags & DSBCAPS_CTRLPAN ) != 0 )
-				ControlPan = true;
-
-			if( ( caps.dwFlags & DSBCAPS_CTRLPOSITIONNOTIFY ) != 0 )
-				ControlPositionNotify = true;
-
-			if( ( caps.dwFlags & DSBCAPS_CTRLVOLUME ) != 0 )
-				ControlVolume = true;
-
-			if( ( caps.dwFlags & DSBCAPS_GLOBALFOCUS ) != 0 )
-				GlobalFocus = true;
-
-			if( ( caps.dwFlags & DSBCAPS_LOCHARDWARE ) != 0 )
-				LocateInHardware = true;
-
-			if( ( caps.dwFlags & DSBCAPS_LOCSOFTWARE ) != 0 )
-				LocateInSoftware = true;
-
-			if( ( caps.dwFlags & DSBCAPS_LOCDEFER ) != 0 )
-				LocationDefer = true;
-
-			if( ( caps.dwFlags & DSBCAPS_MUTE3DATMAXDISTANCE ) != 0 )
-				Mute3DAtMaximumDistance = true;
-
-			if( ( caps.dwFlags & DSBCAPS_PRIMARYBUFFER ) != 0 )
-				PrimaryBuffer = true;
-
-			if( ( caps.dwFlags & DSBCAPS_STATIC ) != 0 )
-				StaticBuffer = true;
-
-			if( ( caps.dwFlags & DSBCAPS_STICKYFOCUS ) != 0 )
-				StickyFocus = true;
-		}
+		BufferSize = caps.dwBufferBytes;
+		PlayCpuOverhead = caps.dwPlayCpuOverhead;
+		UnlockTransferRate = caps.dwUnlockTransferRate;
+		CanGetCurrentPosition = ( caps.dwFlags & DSBCAPS_GETCURRENTPOSITION2 ) != 0;
+		Control3D = ( caps.dwFlags & DSBCAPS_CTRL3D ) != 0;
+		ControlEffects = ( caps.dwFlags & DSBCAPS_CTRLFX ) != 0;
+		ControlFrequency = ( caps.dwFlags & DSBCAPS_CTRLFREQUENCY ) != 0;
+		ControlPan = ( caps.dwFlags & DSBCAPS_CTRLPAN ) != 0;
+		ControlPositionNotify = ( caps.dwFlags & DSBCAPS_CTRLPOSITIONNOTIFY ) != 0;
+		ControlVolume = ( caps.dwFlags & DSBCAPS_CTRLVOLUME ) != 0;
+		GlobalFocus = ( caps.dwFlags & DSBCAPS_GLOBALFOCUS ) != 0;
+		LocateInHardware = ( caps.dwFlags & DSBCAPS_LOCHARDWARE ) != 0;
+		LocateInSoftware = ( caps.dwFlags & DSBCAPS_LOCSOFTWARE ) != 0;
+		LocationDefer = ( caps.dwFlags & DSBCAPS_LOCDEFER ) != 0;
+		Mute3DAtMaximumDistance = ( caps.dwFlags & DSBCAPS_MUTE3DATMAXDISTANCE ) != 0;
+		PrimaryBuffer = ( caps.dwFlags & DSBCAPS_PRIMARYBUFFER ) != 0;
+		StaticBuffer = ( caps.dwFlags & DSBCAPS_STATIC ) != 0;
+		StickyFocus = ( caps.dwFlags & DSBCAPS_STICKYFOCUS ) != 0;
 	}
+}
 }

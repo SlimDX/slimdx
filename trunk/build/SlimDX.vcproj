@@ -5526,14 +5526,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\directsound\BufferDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\BufferDescription.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\directsound\SoundBuffer.cpp"
 					>
 				</File>
@@ -5578,6 +5570,18 @@
 					</File>
 					<File
 						RelativePath="..\source\directsound\SecondarySoundBuffer.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="PrimarySoundBuffer"
+					>
+					<File
+						RelativePath="..\source\directsound\PrimarySoundBuffer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directsound\PrimarySoundBuffer.h"
 						>
 					</File>
 				</Filter>
@@ -5659,14 +5663,6 @@
 				</File>
 				<File
 					RelativePath="..\source\directsound\SoundEffectCompressor.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectDescription.h"
 					>
 				</File>
 				<File

@@ -75,7 +75,7 @@ namespace SlimDX
 		SoundBuffer3D::SoundBuffer3D( SecondarySoundBuffer^ secondaryBuffer )
 		{
 			IDirectSound3DBuffer8* buffer;
-			HRESULT hr = secondaryBuffer->DS8Pointer->QueryInterface( IID_IDirectSound3DBuffer8, reinterpret_cast<void**>( &buffer ) );
+			HRESULT hr = secondaryBuffer->InternalPointer->QueryInterface( IID_IDirectSound3DBuffer8, reinterpret_cast<void**>( &buffer ) );
 			if( RECORD_DSOUND( hr ).IsFailure )
 				throw gcnew DirectSoundException( Result::Last );
 			

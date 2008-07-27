@@ -76,7 +76,7 @@ namespace SlimDX
 		SoundListener3D::SoundListener3D( SecondarySoundBuffer^ secondaryBuffer )
 		{
 			IDirectSound3DListener8* listener;
-			HRESULT hr = secondaryBuffer->DS8Pointer->QueryInterface( IID_IDirectSound3DListener8, reinterpret_cast<void**>( &listener ) );
+			HRESULT hr = secondaryBuffer->InternalPointer->QueryInterface( IID_IDirectSound3DListener8, reinterpret_cast<void**>( &listener ) );
 			if( RECORD_DSOUND( hr ).IsFailure )
 				throw gcnew DirectSoundException( Result::Last );
 			
