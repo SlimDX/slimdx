@@ -21,12 +21,7 @@
 */
 #pragma once
 
-#include <dsound.h>
-
-#include "../ComObject.h"
-
 #include "Enums.h"
-#include "ResultCode.h"
 #include "DeviceCollection.h"
 #include "CaptureCapabilities.h"
 
@@ -43,14 +38,6 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::DirectSoundCapture"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSoundCapture pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static DirectSoundCapture^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::DirectSoundCapture"/> class.
 			/// </summary>
 			DirectSoundCapture();
@@ -63,9 +50,12 @@ namespace SlimDX
 			DirectSoundCapture( System::Guid device );
 
 			/// <summary>
-			/// Releases all resources used by the <see cref="SlimDX::DirectSound::DirectSoundCapture"/> class.
+			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::DirectSoundCapture"/> class using the specified pointer to a
+			/// previously constructed unmanaged object.
 			/// </summary>
-			~DirectSoundCapture();
+			/// <param name="pointer">The unmanaged IDirectSoundCapture pointer.</param>
+			/// <returns>The newly constructed object.</returns>
+			static DirectSoundCapture^ FromPointer( System::IntPtr pointer );
 
 			/// <summary>
 			/// Retrieves the capabilities of the capture device.

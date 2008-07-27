@@ -21,20 +21,14 @@
 */
 #pragma once
 
-#include <dsound.h>
-
-#include "../ComObject.h"
-#include "../Utilities.h"
-#include "../DataStream.h"
-#include "../WaveFormat.h"
-
 #include "Enums.h"
-#include "ResultCode.h"
 #include "DirectSoundCapture.h"
 #include "CaptureBufferDescription.h"
 
 namespace SlimDX
 {
+	ref class DataStream;
+
 	namespace DirectSound
 	{
 		/// <summary>
@@ -46,9 +40,16 @@ namespace SlimDX
 
 		private:
 			DataStream^ Lock( int offset, int sizeBytes, bool lockEntireBuffer, [Out] DataStream^% secondPart );
-			void Unlock( DataStream^ firstPart, DataStream^ secondPart );
+			Result Unlock( DataStream^ firstPart, DataStream^ secondPart );
 
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::CaptureBuffer"/> class.
+			/// </summary>
+			/// <param name="capture"></param>
+			/// <param name="description"></param>
+			CaptureBuffer( DirectSoundCapture^ capture, CaptureBufferDescription description );
+
 			/// <summary>
 			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::CaptureBuffer"/> class using the specified pointer to a
 			/// previously constructed unmanaged object.
@@ -57,23 +58,9 @@ namespace SlimDX
 			/// <returns>The newly constructed object.</returns>
 			static CaptureBuffer^ FromPointer( System::IntPtr pointer );
 
-			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::CaptureBuffer"/> class.
-			/// </summary>
-			/// <param name="capture"></param>
-			/// <param name="description"></param>
-			CaptureBuffer( DirectSoundCapture^ capture, CaptureBufferDescription description );
-			/// <summary>
-			/// Releases all resources used by the <see cref="SlimDX::DirectSound::CaptureBuffer"/> class.
-			/// </summary>
-			~CaptureBuffer();
+			generic<typename T> where T : ComObject
+				T GetEffect( int index );
 
-			/// <summary>
-			/// Retrieves an effect object associated with the buffer.
-			/// </summary>
-			/// <param name="index"></param>
-			/// <returns></returns>
-			System::Object^ GetEffect( int index );
 			/// <summary>
 			/// Retrieves the status of capture effects.
 			/// </summary>
@@ -88,7 +75,8 @@ namespace SlimDX
 			/// <param name="sizeBytes"></param>
 			/// <param name="lockEntireBuffer"></param>
 			/// <returns></returns>
-			array<unsigned char>^ Read( int offset, int sizeBytes, bool lockEntireBuffer );
+			array<System::Byte>^ Read( int offset, int sizeBytes, bool lockEntireBuffer );
+
 			/// <summary>
 			/// Write data to the capture buffer.
 			/// </summary>
@@ -96,16 +84,17 @@ namespace SlimDX
 			/// <param name="offset"></param>
 			/// <param name="lockEntireBuffer"></param>
 			/// <returns></returns>
-			void Write( array<unsigned char>^ data, int offset, bool lockEntireBuffer );
+			Result Write( array<System::Byte>^ data, int offset, bool lockEntireBuffer );
 
 			/// <summary>
 			/// Begins capturing data into the buffer. If the buffer is already capturing, the method has no effect.
 			/// </summary>
-			void Start( bool looping );
+			Result Start( bool looping );
+
 			/// <summary>
 			/// Stops the buffer so that it is no longer capturing data. If the buffer is not capturing, the method has no effect.
 			/// </summary>
-			void Stop();
+			Result Stop();
 
 			/// <summary>
 			/// True if the buffer is currently capturing.
