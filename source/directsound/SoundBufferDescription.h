@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#include <dsound.h>
-
 #include "../WaveFormat.h"
 #include "Enums.h"
 
@@ -43,14 +41,17 @@ namespace SlimDX
 			/// Size of the new buffer, in bytes. This value must be 0 when creating a buffer.
 			/// </summary>
 			property int SizeInBytes;
+
 			/// <summary>
 			/// Flags specifying the capabilities of the buffer.
 			/// </summary>
 			property BufferFlags Flags;
+
 			/// <summary>
 			/// Structure specifying the waveform format for the buffer.
 			/// </summary>
 			property WaveFormat^ Format;
+
 			/// <summary>
 			/// Unique identifier of the two-speaker virtualization algorithm to be used by DirectSound3D hardware emulation.
 			/// </summary>

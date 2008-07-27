@@ -21,14 +21,7 @@
 */
 #pragma once
 
-#include <dsound.h>
-
-#include "../Utilities.h"
-#include "Enums.h"
 #include "SoundBuffer.h"
-#include "DirectSound.h"
-#include "SoundBufferDescription.h"
-#include "SoundEffectDescription.h"
 
 namespace SlimDX
 {
@@ -39,21 +32,7 @@ namespace SlimDX
 		/// </summary>
 		public ref class SecondarySoundBuffer : public SoundBuffer
 		{
-		internal:
-			property IDirectSoundBuffer8* DS8Pointer
-			{
-				IDirectSoundBuffer8* get() 
-				{ 
-					return m_DS8Pointer; 
-				}
-			}
-
-			//While I believe the IDirectSoundBuffer can be safely cast to one of these, it's not
-			//guaranteed to be safe to do so, so we'll just do the Right Thing (tm) and use QueryInterface
-			//to get it and store it separately.
-			IDirectSoundBuffer8* m_DS8Pointer;
-
-			void SetDS8Pointer();
+			COMOBJECT(IDirectSoundBuffer8, SecondarySoundBuffer);
 
 		public:
 			/// <summary>
@@ -63,39 +42,24 @@ namespace SlimDX
 			/// <param name="description"></param>
 			/// <returns></returns>
 			SecondarySoundBuffer( DirectSound^ dsound, SoundBufferDescription description );
-			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::"/> class.
-			/// </summary>
-			/// <param name="filename"></param>
-			/// <param name="dsound"></param>
-			/// <returns></returns>
-			SecondarySoundBuffer( System::String^ filename, DirectSound^ dsound );
-			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::"/> class.
-			/// </summary>
-			/// <param name="filename"></param>
-			/// <param name="dsound"></param>
-			/// <param name="description"></param>
-			/// <returns></returns>
-			SecondarySoundBuffer( System::String^ filename, DirectSound^ dsound, SoundBufferDescription description );
 
 			/// <summary>
-			/// Releases all resources used by the <see cref="SlimDX::DirectSound::"/> class.
+			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::SoundBuffer"/> class using the specified pointer to a
+			/// previously constructed unmanaged object.
 			/// </summary>
-			~SecondarySoundBuffer();
+			/// <param name="pointer">The unmanaged IDirectSoundBuffer pointer.</param>
+			/// <returns>The newly constructed object.</returns>
+			static SecondarySoundBuffer^ FromPointer( System::IntPtr pointer );
 
 			/// <summary>
 			/// 
 			/// </summary>
 			/// <param name="effects"></param>
 			/// <returns></returns>
-			array<SoundEffectReturnValue>^ SetEffects( array<SoundEffectDescription>^ effects );
-			/// <summary>
-			/// 
-			/// </summary>
-			/// <param name="index"></param>
-			/// <returns></returns>
-			System::Object^ GetEffect( int index );
+			array<SoundEffectReturnValue>^ SetEffects( array<System::Guid>^ effects );
+
+			generic<typename T> where T : ComObject
+				T GetEffect( int index );
 		};
 	}
 }

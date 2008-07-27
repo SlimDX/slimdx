@@ -19,144 +19,135 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
-
 #include <windows.h>
-#include <mmreg.h>
 #include <dsound.h>
-#include <d3dx9.h>
+#include <vector>
 
 #include "../ComObject.h"
-#include "../DataStream.h"
 #include "../Utilities.h"
-#include "../Result.h"
-#include "Enums.h"
-#include "ResultCode.h"
 
-#include "DirectSound.h"
 #include "DirectSoundException.h"
 
-#include "SoundBuffer.h"
-#include "SoundBufferDescription.h"
-#include "SoundEffectDescription.h"
 #include "SecondarySoundBuffer.h"
-#include "SoundEffectChorus.h"
-#include "SoundEffectCompressor.h"
-#include "SoundEffectDistortion.h"
-#include "SoundEffectEcho.h"
-#include "SoundEffectFlanger.h"
-#include "SoundEffectGargle.h"
-#include "SoundEffectI3DL2Reverb.h"
-#include "SoundEffectParametricEqualizer.h"
-#include "SoundEffectWavesReverb.h"
+
+using namespace System;
+using namespace System::Reflection;
 
 namespace SlimDX
 {
-	namespace DirectSound
+namespace DirectSound
+{
+	SecondarySoundBuffer::SecondarySoundBuffer( IDirectSoundBuffer8* buffer )
 	{
-		SecondarySoundBuffer::SecondarySoundBuffer( DirectSound^ dsound, SoundBufferDescription description ) : SoundBuffer( dsound, description )
-		{
-			SetDS8Pointer();
-		}
-
-		SecondarySoundBuffer::SecondarySoundBuffer( System::String^ filename, DirectSound^ dsound ) : SoundBuffer( filename, dsound )
-		{
-			SetDS8Pointer();
-		}
-
-		SecondarySoundBuffer::SecondarySoundBuffer( System::String^ filename, DirectSound^ dsound, SoundBufferDescription description ) : SoundBuffer( filename, dsound, description )
-		{
-			SetDS8Pointer();
-		}
-
-		SecondarySoundBuffer::~SecondarySoundBuffer()
-		{
-			if( m_DS8Pointer != NULL )
-			{
-				m_DS8Pointer->Release();
-				m_DS8Pointer = NULL;
-			}
-		}
-
-		void SecondarySoundBuffer::SetDS8Pointer()
-		{
-			IDirectSoundBuffer8* buffer;
-			HRESULT hr = InternalPointer->QueryInterface( IID_IDirectSoundBuffer8, reinterpret_cast<void**>( &buffer ) );
-			
-			if( SUCCEEDED( hr ) )
-			{
-				m_DS8Pointer = buffer;
-			}
-			else
-			{
-				m_DS8Pointer = NULL;
-			}
-		}
-
-		array<SoundEffectReturnValue>^ SecondarySoundBuffer::SetEffects( array<SoundEffectDescription> ^effects )
-		{
-			DWORD count = 0;
-			LPDWORD dwResults = NULL;
-			LPDSEFFECTDESC dsEffects = NULL;
-			array<SoundEffectReturnValue>^ results = nullptr;
-			
-			if( effects != nullptr )
-			{
-				count = effects->Length;
-				dwResults = new DWORD[count];
-
-				dsEffects = new DSEFFECTDESC[count];
-				for( DWORD i = 0; i < count; i++ )
-					dsEffects[i] = effects[i].ToUnmanaged();
-			}
-
-			HRESULT hr = DS8Pointer->SetFX( count, dsEffects, dwResults );
-			if( RECORD_DSOUND( hr ).IsFailure )
-				throw gcnew DirectSoundException( Result::Last );
-
-			if( count > 0 )
-			{
-				results = gcnew array<SoundEffectReturnValue>( count );
-
-				for( DWORD i = 0; i < count; i++ )
-					results[i] = static_cast<SoundEffectReturnValue>( dwResults[i] );
-			}
-
-			return results;
-		}
-
-		System::Object^ SecondarySoundBuffer::GetEffect( int index )
-		{
-			IUnknown* pointer;
-
-			if( SUCCEEDED( DS8Pointer->GetObjectInPath( GUID_All_Objects, index, IID_IDirectSoundFXChorus, reinterpret_cast<void**>( &pointer ) ) ) )
-				return SoundEffectChorus::FromPointer( System::IntPtr( pointer ) );
-
-			else if( SUCCEEDED( DS8Pointer->GetObjectInPath( GUID_All_Objects, index, IID_IDirectSoundFXCompressor, reinterpret_cast<void**>( &pointer ) ) ) )
-				return SoundEffectCompressor::FromPointer( System::IntPtr( pointer ) );
-
-			else if( SUCCEEDED( DS8Pointer->GetObjectInPath( GUID_All_Objects, index, IID_IDirectSoundFXDistortion, reinterpret_cast<void**>( &pointer ) ) ) )
-				return SoundEffectDistortion::FromPointer( System::IntPtr( pointer ) );
-
-			else if( SUCCEEDED( DS8Pointer->GetObjectInPath( GUID_All_Objects, index, IID_IDirectSoundFXEcho, reinterpret_cast<void**>( &pointer ) ) ) )
-				return SoundEffectEcho::FromPointer( System::IntPtr( pointer ) );
-
-			else if( SUCCEEDED( DS8Pointer->GetObjectInPath( GUID_All_Objects, index, IID_IDirectSoundFXFlanger, reinterpret_cast<void**>( &pointer ) ) ) )
-				return SoundEffectFlanger::FromPointer( System::IntPtr( pointer ) );
-
-			else if( SUCCEEDED( DS8Pointer->GetObjectInPath( GUID_All_Objects, index, IID_IDirectSoundFXGargle, reinterpret_cast<void**>( &pointer ) ) ) )
-				return SoundEffectGargle::FromPointer( System::IntPtr( pointer ) );
-
-			else if( SUCCEEDED( DS8Pointer->GetObjectInPath( GUID_All_Objects, index, IID_IDirectSoundFXI3DL2Reverb, reinterpret_cast<void**>( &pointer ) ) ) )
-				return SoundEffectI3DL2Reverb::FromPointer( System::IntPtr( pointer ) );
-
-			else if( SUCCEEDED( DS8Pointer->GetObjectInPath( GUID_All_Objects, index, IID_IDirectSoundFXParamEq, reinterpret_cast<void**>( &pointer ) ) ) )
-				return SoundEffectParametricEqualizer::FromPointer( System::IntPtr( pointer ) );
-
-			else if( SUCCEEDED( DS8Pointer->GetObjectInPath( GUID_All_Objects, index, IID_IDirectSoundFXWavesReverb, reinterpret_cast<void**>( &pointer ) ) ) )
-				return SoundEffectWavesReverb::FromPointer( System::IntPtr( pointer ) );
-
-			throw gcnew DirectSoundException( ResultCode::ObjectNotFound );
-		}
+		Construct( buffer );
 	}
+
+	SecondarySoundBuffer::SecondarySoundBuffer( IntPtr buffer )
+	{
+		Construct( buffer, NativeInterface );
+	}
+
+	SecondarySoundBuffer^ SecondarySoundBuffer::FromPointer( IDirectSoundBuffer8* pointer )
+	{
+		if( pointer == NULL )
+			return nullptr;
+
+		SecondarySoundBuffer^ tableEntry = safe_cast<SecondarySoundBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew SecondarySoundBuffer( pointer );
+	}
+
+	SecondarySoundBuffer^ SecondarySoundBuffer::FromPointer( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		SecondarySoundBuffer^ tableEntry = safe_cast<SecondarySoundBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew SecondarySoundBuffer( pointer );
+	}
+
+	SecondarySoundBuffer::SecondarySoundBuffer( DirectSound^ dsound, SoundBufferDescription description )
+	{
+		IDirectSoundBuffer* buffer;
+		DSBUFFERDESC nativeDesc = description.ToUnmanaged();
+		
+		HRESULT hr = dsound->InternalPointer->CreateSoundBuffer( &nativeDesc, &buffer, NULL );
+
+		delete nativeDesc.lpwfxFormat;
+
+		if( RECORD_DSOUND( hr ).IsFailure )
+			throw gcnew DirectSoundException( Result::Last );
+
+		IDirectSoundBuffer8* result;
+		hr = buffer->QueryInterface( IID_IDirectSoundBuffer8, reinterpret_cast<void**>( &result ) );
+		
+		buffer->Release();
+
+		if( RECORD_DSOUND( hr ).IsFailure )
+			throw gcnew DirectSoundException( Result::Last );
+
+		Construct( result );
+	}
+
+	array<SoundEffectReturnValue>^ SecondarySoundBuffer::SetEffects( array<Guid>^ effects )
+	{
+		DWORD count = effects->Length;
+		LPDWORD dwResults = NULL;
+		LPDSEFFECTDESC dsEffects = NULL;
+
+		std::vector<DWORD> outputs( count );
+		std::vector<DSEFFECTDESC> inputs( count );
+
+		if( effects != nullptr && count > 0 )
+		{
+			for( unsigned int i = 0; i < count; i++ )
+			{
+				DSEFFECTDESC desc;
+				ZeroMemory( &desc, sizeof( DSEFFECTDESC ) );
+				desc.dwSize = sizeof( DSEFFECTDESC );
+				desc.guidDSFXClass = Utilities::ConvertManagedGuid( effects[i] );
+
+				inputs[i] = desc;
+			}
+
+			dwResults = &outputs[0];
+			dsEffects = &inputs[0];
+		}
+
+		HRESULT hr = InternalPointer->SetFX( count, dsEffects, dwResults );
+		if( RECORD_DSOUND( hr ).IsFailure || count == 0 )
+			return nullptr;
+
+		array<SoundEffectReturnValue>^ results = gcnew array<SoundEffectReturnValue>( count );
+
+		for( unsigned int i = 0; i < count; i++ )
+			results[i] = static_cast<SoundEffectReturnValue>( outputs[i] );
+
+		return results;
+	}
+
+	generic<typename T>
+	T SecondarySoundBuffer::GetEffect( int index )
+	{
+		GUID guid = Utilities::GetNativeGuidForType( T::typeid );
+		void *resultPointer;
+
+		HRESULT hr = InternalPointer->GetObjectInPath( GUID_All_Objects, index, guid, &resultPointer );
+		if( RECORD_DSOUND( hr ).IsFailure )
+			return T();
+
+		MethodInfo^ method = T::typeid->GetMethod( "FromPointer", BindingFlags::Public | BindingFlags::Static );
+		return safe_cast<T>( method->Invoke( nullptr, gcnew array<Object^> { IntPtr( resultPointer ) } ) );
+	}
+}
 }

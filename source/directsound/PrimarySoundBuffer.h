@@ -21,34 +21,32 @@
 */
 #pragma once
 
-#include <dsound.h>
+#include "SoundBuffer.h"
 
 namespace SlimDX
 {
 	namespace DirectSound
 	{
-		/// <summary>
-		/// Describes an effect associated with a buffer.
-		/// </summary>
-		public value class SoundEffectDescription
+		public ref class PrimarySoundBuffer : SoundBuffer
 		{
-		internal:
-			SoundEffectDescription( const DSEFFECTDESC& description );
-			DSEFFECTDESC ToUnmanaged();
+			COMOBJECT(IDirectSoundBuffer, PrimarySoundBuffer);
 
 		public:
 			/// <summary>
-			/// Class identifier of the effect.
+			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::SoundBuffer"/> class.
 			/// </summary>
-			property System::Guid EffectClassGuid;
+			/// <param name="dsound"></param>
+			/// <param name="description"></param>
+			/// <returns></returns>
+			PrimarySoundBuffer( DirectSound^ dsound, SoundBufferDescription description );
+
 			/// <summary>
-			/// Effect must be in hardware. Because DirectX 9.0 does not support hardware acceleration of effects, this flag should not be used.
+			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::SoundBuffer"/> class using the specified pointer to a
+			/// previously constructed unmanaged object.
 			/// </summary>
-			property bool LocateInHardware;
-			/// <summary>
-			/// Effect must be in software. In DirectX 9.0, all effects are in software regardless of whether this flag is set.
-			/// </summary>
-			property bool LocateInSoftware;
+			/// <param name="pointer">The unmanaged IDirectSoundBuffer pointer.</param>
+			/// <returns>The newly constructed object.</returns>
+			static PrimarySoundBuffer^ FromPointer( System::IntPtr pointer );
 		};
 	}
 }

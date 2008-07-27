@@ -21,111 +21,60 @@
 */
 #pragma once
 
-#include <dsound.h>
-
-#include "../ComObject.h"
-#include "../Utilities.h"
-#include "../DataStream.h"
-#include "../AudioEnums.h"
-#include "../WaveFormat.h"
-
 #include "Enums.h"
 #include "DirectSound.h"
 #include "SoundBufferDescription.h"
-#include "SoundEffectDescription.h"
 #include "BufferCapabilities.h"
 
 namespace SlimDX
 {
+	ref class DataStream;
+
 	namespace DirectSound
 	{
 		/// <summary>
 		/// The SoundBuffer object is used to manage sound buffers.
 		/// </summary>
-		public ref class SoundBuffer : public ComObject
+		public ref class SoundBuffer abstract : public ComObject
 		{
-			COMOBJECT(IDirectSoundBuffer, SoundBuffer);
+			COMOBJECT_BASE(IDirectSoundBuffer);
+
+		private:
+			bool notVirtualized;
 
 		protected:
-			DataStream^ Lock( int offset, int sizeBytes, LockFlags flags, [Out] DataStream^% secondPart );
-			void Unlock( DataStream^ firstPart, DataStream^ secondPart );
+			SoundBuffer() { }
 
-			bool notVirtualized;
+			DataStream^ Lock( int offset, int sizeBytes, LockFlags flags, [Out] DataStream^% secondPart );
+			Result Unlock( DataStream^ firstPart, DataStream^ secondPart );
 
 		public:
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::SoundBuffer"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSoundBuffer pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static SoundBuffer^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::SoundBuffer"/> class.
-			/// </summary>
-			/// <param name="dsound"></param>
-			/// <param name="description"></param>
-			/// <returns></returns>
-			SoundBuffer( DirectSound^ dsound, SoundBufferDescription description );
-			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::SoundBuffer"/> class.
-			/// </summary>
-			/// <param name="filename"></param>
-			/// <param name="dsound"></param>
-			/// <returns></returns>
-			SoundBuffer( System::String^ filename, DirectSound^ dsound );
-			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::SoundBuffer"/> class.
-			/// </summary>
-			/// <param name="filename"></param>
-			/// <param name="dsound"></param>
-			/// <param name="description"></param>
-			/// <returns></returns>
-			SoundBuffer( System::String^ filename, DirectSound^ dsound, SoundBufferDescription description );
-
-			/// <summary>
-			/// Releases all resources used by the <see cref="SlimDX::DirectSound::SoundBuffer"/> class.
-			/// </summary>
-			~SoundBuffer();
-
-			/// <summary>
 			/// Restores the memory allocation for a lost sound buffer.
 			/// </summary>
-			void Restore();
+			Result Restore();
 
 			/// <summary>
 			/// Causes the sound buffer to play, starting at the play cursor.
 			/// </summary>
-			void Play( int priority, PlayFlags flags );
+			Result Play( int priority, PlayFlags flags );
 
 			/// <summary>
 			/// Causes the sound buffer to stop playing.
 			/// </summary>
-			void Stop();
-
-			/// <summary>
-			/// Reads the current data in the buffer.
-			/// </summary>
-			/// <returns></returns>
-			array<unsigned char>^ Read( int offset, int sizeBytes, LockFlags flags );
+			Result Stop();
 
 			/// <summary>
 			/// Writes data to the buffer.
 			/// </summary>
 			/// <returns></returns>
-			void Write( array<unsigned char>^ data, int offset, LockFlags flags );
+			Result Write( array<System::Byte>^ data, int offset, LockFlags flags );
 
-			/// <summary>
-			/// Sets a description of the sound data format in the buffer.
-			/// </summary>
-			void SetFormat( WaveFormat^ format );
-
-			/// <summary>
-			/// Retrieves a description of the sound data format in the buffer.
-			/// </summary>
-			/// <returns></returns>
-			WaveFormat^ GetFormat();
+			property WaveFormat^ Format
+			{
+				WaveFormat^ get();
+				void set( WaveFormat^ value );
+			}
 
 			/// <summary>
 			/// Retrieves the position of the write cursor in the sound buffer.
@@ -184,7 +133,9 @@ namespace SlimDX
 			/// </summary>
 			property bool NoVirtualization
 			{
-				bool get();
+				bool get() { return notVirtualized; }
+			protected:
+				void set( bool value ) { notVirtualized = value; }
 			}
 
 			/// <summary>

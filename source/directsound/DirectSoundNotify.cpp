@@ -70,7 +70,7 @@ namespace SlimDX
 		DirectSoundNotify::DirectSoundNotify( SlimDX::DirectSound::SecondarySoundBuffer ^secondaryBuffer )
 		{
 			IDirectSoundNotify8* dsNotify;
-			HRESULT hr = secondaryBuffer->DS8Pointer->QueryInterface( IID_IDirectSoundNotify8, reinterpret_cast<void**>( &dsNotify ) );
+			HRESULT hr = secondaryBuffer->InternalPointer->QueryInterface( IID_IDirectSoundNotify8, reinterpret_cast<void**>( &dsNotify ) );
 			if( RECORD_DSOUND( hr ).IsFailure )
 				throw gcnew DirectSoundException( Result::Last );
 			

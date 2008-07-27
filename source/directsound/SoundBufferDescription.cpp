@@ -19,37 +19,38 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
-
 #include <dsound.h>
 
 #include "../Utilities.h"
 #include "../WaveFormat.h"
-#include "Guids.h"
+
 #include "SoundBufferDescription.h"
 
 namespace SlimDX
 {
-	namespace DirectSound
+namespace DirectSound
+{
+	DSBUFFERDESC SoundBufferDescription::ToUnmanaged()
 	{
-		DSBUFFERDESC SoundBufferDescription::ToUnmanaged()
+		DSBUFFERDESC result; 
+		ZeroMemory( &result, sizeof( DSBUFFERDESC ) );
+		result.dwSize = sizeof( DSBUFFERDESC );
+		result.dwFlags = static_cast<DWORD>( Flags );
+		result.dwBufferBytes = static_cast<DWORD>( SizeInBytes );
+		result.dwReserved = 0;
+		result.guid3DAlgorithm = DS3DALG_DEFAULT;
+		result.lpwfxFormat = NULL;
+
+		if( ( result.dwFlags & DSBCAPS_CTRL3D ) != 0 )
+			result.guid3DAlgorithm = Utilities::ConvertManagedGuid( AlgorithmFor3D );
+
+		if( Format != nullptr )
 		{
-			DSBUFFERDESC result; 
-			ZeroMemory( &result, sizeof( DSBUFFERDESC ) );
-			result.dwSize = sizeof( DSBUFFERDESC );
-			result.dwFlags = static_cast<DWORD>( this->Flags );
-			result.dwBufferBytes = static_cast<DWORD>( this->SizeInBytes );
-			result.dwReserved = 0;
-			result.guid3DAlgorithm = DS3DALG_DEFAULT;
-			result.lpwfxFormat = NULL;
-
-			if( ( result.dwFlags & DSBCAPS_CTRL3D ) != 0 )
-				result.guid3DAlgorithm = Utilities::ConvertManagedGuid( this->AlgorithmFor3D );
-
-			if( this->Format != nullptr )
-				result.lpwfxFormat = new WAVEFORMATEX( *( WaveFormat::ToUnmanaged( this->Format ).get() ) );
-
-			return result;
+			std::auto_ptr<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( Format );
+			result.lpwfxFormat = new WAVEFORMATEX( *format.get() );
 		}
+
+		return result;
 	}
+}
 }
