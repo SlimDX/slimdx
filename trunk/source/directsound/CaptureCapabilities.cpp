@@ -19,111 +19,108 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
-
 #include <dsound.h>
 
-#include "../AudioEnums.h"
 #include "CaptureCapabilities.h"
 
 namespace SlimDX
 {
-	namespace DirectSound
+namespace DirectSound
+{
+	CaptureCapabilities::CaptureCapabilities( const DSCCAPS &caps )
 	{
-		CaptureCapabilities::CaptureCapabilities( const DSCCAPS &caps )
-		{
-			Channels = caps.dwChannels;
-			EmulatedDriver = false;
-			MultipleCapture = false;
-			Format11KhzMono16Bit = false;
-			Format11KhzMono8Bit = false;
-			Format11KhzStereo16Bit = false;
-			Format11KhzStereo8Bit = false;
-			Format22KhzMono16Bit = false;
-			Format22KhzMono8Bit = false;
-			Format22KhzStereo16Bit = false;
-			Format22KhzStereo8Bit = false;
-			Format44KhzMono16Bit = false;
-			Format44KhzMono8Bit = false;
-			Format44KhzStereo16Bit = false;
-			Format44KhzStereo8Bit = false;
-			Format48KhzMono16Bit = false;
-			Format48KhzMono8Bit = false;
-			Format48KhzStereo16Bit = false;
-			Format48KhzStereo8Bit = false;
-			Format96KhzMono16Bit = false;
-			Format96KhzMono8Bit = false;
-			Format96KhzStereo16Bit = false;
-			Format96KhzStereo8Bit = false;
+		Channels = caps.dwChannels;
+		EmulatedDriver = false;
+		MultipleCapture = false;
+		Format11KhzMono16Bit = false;
+		Format11KhzMono8Bit = false;
+		Format11KhzStereo16Bit = false;
+		Format11KhzStereo8Bit = false;
+		Format22KhzMono16Bit = false;
+		Format22KhzMono8Bit = false;
+		Format22KhzStereo16Bit = false;
+		Format22KhzStereo8Bit = false;
+		Format44KhzMono16Bit = false;
+		Format44KhzMono8Bit = false;
+		Format44KhzStereo16Bit = false;
+		Format44KhzStereo8Bit = false;
+		Format48KhzMono16Bit = false;
+		Format48KhzMono8Bit = false;
+		Format48KhzStereo16Bit = false;
+		Format48KhzStereo8Bit = false;
+		Format96KhzMono16Bit = false;
+		Format96KhzMono8Bit = false;
+		Format96KhzStereo16Bit = false;
+		Format96KhzStereo8Bit = false;
 
-			if( ( caps.dwFlags & DSCCAPS_CERTIFIED ) != 0 )
-				Certified = true;
+		if( ( caps.dwFlags & DSCCAPS_CERTIFIED ) != 0 )
+			Certified = true;
 
-			if( ( caps.dwFlags & DSCCAPS_EMULDRIVER ) != 0 )
-				EmulatedDriver = true;
+		if( ( caps.dwFlags & DSCCAPS_EMULDRIVER ) != 0 )
+			EmulatedDriver = true;
 
-			if( ( caps.dwFlags & DSCCAPS_MULTIPLECAPTURE ) != 0 )
-				MultipleCapture = true;
+		if( ( caps.dwFlags & DSCCAPS_MULTIPLECAPTURE ) != 0 )
+			MultipleCapture = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_1M16 ) != 0 )
-				Format11KhzMono16Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_1M16 ) != 0 )
+			Format11KhzMono16Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_1M08 ) != 0 )
-				Format11KhzMono8Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_1M08 ) != 0 )
+			Format11KhzMono8Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_1S16 ) != 0 )
-				Format11KhzStereo16Bit = true; 
+		if( ( caps.dwFormats & WAVE_FORMAT_1S16 ) != 0 )
+			Format11KhzStereo16Bit = true; 
 
-			if( ( caps.dwFormats & WAVE_FORMAT_1S08 ) != 0 )
-				Format11KhzStereo8Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_1S08 ) != 0 )
+			Format11KhzStereo8Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_2M16 ) != 0 )
-				Format22KhzMono16Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_2M16 ) != 0 )
+			Format22KhzMono16Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_2M08 ) != 0 )
-				Format22KhzMono8Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_2M08 ) != 0 )
+			Format22KhzMono8Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_2S16 ) != 0 )
-				Format22KhzStereo16Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_2S16 ) != 0 )
+			Format22KhzStereo16Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_2S08 ) != 0 )
-				Format22KhzStereo8Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_2S08 ) != 0 )
+			Format22KhzStereo8Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_4M16 ) != 0 )
-				Format44KhzMono16Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_4M16 ) != 0 )
+			Format44KhzMono16Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_4M08 ) != 0 )
-				Format44KhzMono8Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_4M08 ) != 0 )
+			Format44KhzMono8Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_4S16 ) != 0 )
-				Format44KhzStereo16Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_4S16 ) != 0 )
+			Format44KhzStereo16Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_4S08 ) != 0 )
-				Format44KhzStereo8Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_4S08 ) != 0 )
+			Format44KhzStereo8Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_48M16 ) != 0 )
-				Format48KhzMono16Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_48M16 ) != 0 )
+			Format48KhzMono16Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_48M08 ) != 0 )
-				Format48KhzMono8Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_48M08 ) != 0 )
+			Format48KhzMono8Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_48S16 ) != 0 )
-				Format48KhzStereo16Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_48S16 ) != 0 )
+			Format48KhzStereo16Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_48S08 ) != 0 )
-				Format48KhzStereo8Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_48S08 ) != 0 )
+			Format48KhzStereo8Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_96M16 ) != 0 )
-				Format96KhzMono16Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_96M16 ) != 0 )
+			Format96KhzMono16Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_96M08 ) != 0 )
-				Format96KhzMono8Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_96M08 ) != 0 )
+			Format96KhzMono8Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_96S16 ) != 0 )
-				Format96KhzStereo16Bit = true;
+		if( ( caps.dwFormats & WAVE_FORMAT_96S16 ) != 0 )
+			Format96KhzStereo16Bit = true;
 
-			if( ( caps.dwFormats & WAVE_FORMAT_96S08 ) != 0 )
-				Format96KhzStereo8Bit = true;
-		}
+		if( ( caps.dwFormats & WAVE_FORMAT_96S08 ) != 0 )
+			Format96KhzStereo8Bit = true;
 	}
+}
 }

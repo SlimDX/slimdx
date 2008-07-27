@@ -19,110 +19,103 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
-
 #include <windows.h>
-#include <vcclr.h>
-#include <memory>
 #include <dsound.h>
 
+#include "../ComObject.h"
 #include "../Utilities.h"
-#include "../Result.h"
+
+#include "DirectSoundException.h"
 
 #include "Callbacks.h"
-#include "DeviceCollection.h"
 #include "DirectSoundCapture.h"
-#include "DirectSoundException.h"
-#include "CaptureCapabilities.h"
 
 using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	namespace DirectSound
+namespace DirectSound
+{
+	DirectSoundCapture::DirectSoundCapture( IDirectSoundCapture *capture )
 	{
-		DirectSoundCapture::DirectSoundCapture()
-		{
-			IDirectSoundCapture8* capture;
-			HRESULT hr = DirectSoundCaptureCreate8( NULL, &capture, NULL );
-
-			if( RECORD_DSOUND( hr ).IsFailure )
-				throw gcnew DirectSoundException( Result::Last );
-
-			Construct( capture );
-		}
-
-		DirectSoundCapture::DirectSoundCapture( IDirectSoundCapture *capture )
-		{
-			Construct( capture );
-		}
-
-		DirectSoundCapture::DirectSoundCapture( System::IntPtr pointer )
-		{
-			Construct( pointer, NativeInterface );
-		}
-
-		DirectSoundCapture::DirectSoundCapture( System::Guid device )
-		{
-			IDirectSoundCapture8* capture;
-			HRESULT hr = DirectSoundCaptureCreate8( reinterpret_cast<GUID*>( &device ), &capture, NULL );
-
-			if( RECORD_DSOUND( hr ).IsFailure )
-				throw gcnew DirectSoundException( Result::Last );
-
-			Construct( capture );
-		}
-
-		DirectSoundCapture^ DirectSoundCapture::FromPointer( IDirectSoundCapture* pointer )
-		{
-			DirectSoundCapture^ tableEntry = safe_cast<DirectSoundCapture^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-			if( tableEntry != nullptr )
-			{
-				pointer->Release();
-				return tableEntry;
-			}
-
-			return gcnew DirectSoundCapture( pointer );
-		}
-
-		DirectSoundCapture^ DirectSoundCapture::FromPointer( System::IntPtr pointer )
-		{
-			DirectSoundCapture^ tableEntry = safe_cast<DirectSoundCapture^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-			if( tableEntry != nullptr )
-			{
-				return tableEntry;
-			}
-
-			return gcnew DirectSoundCapture( pointer );
-		}
-
-		DirectSoundCapture::~DirectSoundCapture()
-		{
-			Destruct();
-		}
-
-		CaptureCapabilities DirectSoundCapture::Capabilities::get()
-		{
-			DSCCAPS caps;
-			caps.dwSize = sizeof( DSCCAPS );
-			HRESULT hr = InternalPointer->GetCaps( &caps );
-			RECORD_DSOUND( hr );
-
-			return CaptureCapabilities( caps );
-		}
-
-		DeviceCollection^ DirectSoundCapture::GetDevices()
-		{
-			DeviceCollection^ results = gcnew DeviceCollection();
-			GCHandle handle = GCHandle::Alloc( results, GCHandleType::Pinned );
-
-			HRESULT hr = DirectSoundCaptureEnumerate( EnumerateDevices, handle.AddrOfPinnedObject().ToPointer() );
-			handle.Free();
-
-			if( RECORD_DSOUND( hr ).IsFailure )
-				return nullptr;
-
-			return results;
-		}
+		Construct( capture );
 	}
+
+	DirectSoundCapture::DirectSoundCapture( System::IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+
+	DirectSoundCapture^ DirectSoundCapture::FromPointer( IDirectSoundCapture* pointer )
+	{
+		DirectSoundCapture^ tableEntry = safe_cast<DirectSoundCapture^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew DirectSoundCapture( pointer );
+	}
+
+	DirectSoundCapture^ DirectSoundCapture::FromPointer( System::IntPtr pointer )
+	{
+		DirectSoundCapture^ tableEntry = safe_cast<DirectSoundCapture^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew DirectSoundCapture( pointer );
+	}
+
+	DirectSoundCapture::DirectSoundCapture()
+	{
+		IDirectSoundCapture8* capture;
+
+		HRESULT hr = DirectSoundCaptureCreate8( NULL, &capture, NULL );
+
+		if( RECORD_DSOUND( hr ).IsFailure )
+			throw gcnew DirectSoundException( Result::Last );
+
+		Construct( capture );
+	}
+
+	DirectSoundCapture::DirectSoundCapture( System::Guid device )
+	{
+		IDirectSoundCapture8* capture;
+
+		GUID guid = Utilities::ConvertManagedGuid( device );
+		HRESULT hr = DirectSoundCaptureCreate8( &guid, &capture, NULL );
+
+		if( RECORD_DSOUND( hr ).IsFailure )
+			throw gcnew DirectSoundException( Result::Last );
+
+		Construct( capture );
+	}
+
+	CaptureCapabilities DirectSoundCapture::Capabilities::get()
+	{
+		DSCCAPS caps;
+		caps.dwSize = sizeof( DSCCAPS );
+		HRESULT hr = InternalPointer->GetCaps( &caps );
+		RECORD_DSOUND( hr );
+
+		return CaptureCapabilities( caps );
+	}
+
+	DeviceCollection^ DirectSoundCapture::GetDevices()
+	{
+		DeviceCollection^ results = gcnew DeviceCollection();
+		GCHandle handle = GCHandle::Alloc( results, GCHandleType::Pinned );
+
+		HRESULT hr = DirectSoundCaptureEnumerate( EnumerateDevices, handle.AddrOfPinnedObject().ToPointer() );
+		handle.Free();
+
+		if( RECORD_DSOUND( hr ).IsFailure )
+			return nullptr;
+
+		return results;
+	}
+}
 }

@@ -42,18 +42,22 @@ namespace SlimDX
 			/// Size of capture buffer to create, in bytes.
 			/// </summary>
 			property int BufferBytes;
+
 			/// <summary>
 			/// The buffer supports effects.
 			/// </summary>
 			property bool ControlEffects;
+
 			/// <summary>
 			/// The Win32 wave mapper will be used for formats not supported by the device.
 			/// </summary>
 			property bool WaveMapped;
+
 			/// <summary>
 			/// The format in which to capture the data.
 			/// </summary>
 			property WaveFormat^ Format;
+
 			/// <summary>
 			/// Describes effects supported by hardware for the buffer.
 			/// </summary>

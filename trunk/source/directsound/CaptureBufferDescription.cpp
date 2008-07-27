@@ -19,73 +19,68 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
-
 #include <dsound.h>
 
-#include "../WaveFormat.h"
-
-#include "CaptureEffectDescription.h"
 #include "CaptureBufferDescription.h"
 
 namespace SlimDX
 {
-	namespace DirectSound
+namespace DirectSound
+{
+	CaptureBufferDescription::CaptureBufferDescription( const DSCBUFFERDESC &description )
 	{
-		CaptureBufferDescription::CaptureBufferDescription( const DSCBUFFERDESC &description )
+		BufferBytes = description.dwBufferBytes;
+		EffectDescriptions = nullptr;
+
+		if( description.dwFXCount > 0 )
 		{
-			BufferBytes = description.dwBufferBytes;
-			EffectDescriptions = nullptr;
+			EffectDescriptions = gcnew array<CaptureEffectDescription>( description.dwFXCount );
 
-			if( description.dwFXCount > 0 )
-			{
-				EffectDescriptions = gcnew array<CaptureEffectDescription>( description.dwFXCount );
-
-				for( DWORD i = 0; i < description.dwFXCount; i++ )
-					EffectDescriptions[i] = CaptureEffectDescription( description.lpDSCFXDesc[i] );
-			}
-
-			if( ( description.dwFlags & DSCBCAPS_CTRLFX ) != 0 )
-				ControlEffects = true;
-
-			if( ( description.dwFlags & DSCBCAPS_WAVEMAPPED ) != 0 )
-				WaveMapped = true;
+			for( DWORD i = 0; i < description.dwFXCount; i++ )
+				EffectDescriptions[i] = CaptureEffectDescription( description.lpDSCFXDesc[i] );
 		}
 
-		DSCBUFFERDESC CaptureBufferDescription::ToUnmanaged()
-		{
-			DSCBUFFERDESC description;
-			ZeroMemory( &description, sizeof(description) );
-			description.dwSize = sizeof( DSCBUFFERDESC );
-			description.dwBufferBytes = BufferBytes;
-			description.dwFXCount = 0;
-			description.dwFlags = 0;
-			description.dwReserved = 0;
-			description.lpwfxFormat = NULL;
-			description.lpDSCFXDesc = NULL;
+		if( ( description.dwFlags & DSCBCAPS_CTRLFX ) != 0 )
+			ControlEffects = true;
 
-			if( ControlEffects && ( EffectDescriptions != nullptr ) )
-			{
-				description.dwFXCount = EffectDescriptions->Length;
-				LPDSCEFFECTDESC lpDSCFXDesc = new DSCEFFECTDESC[ description.dwFXCount ];
-
-				for( DWORD i = 0; i < description.dwFXCount; i++ )
-					lpDSCFXDesc[i] = EffectDescriptions[i].Marshal();
-
-				description.lpDSCFXDesc = lpDSCFXDesc;
-			}
-
-			if( ControlEffects && WaveMapped )
-				description.dwFlags = DSCBCAPS_CTRLFX | DSCBCAPS_WAVEMAPPED;
-			else if( ControlEffects )
-				description.dwFlags = DSCBCAPS_CTRLFX;
-			else if( WaveMapped )
-				description.dwFlags = DSCBCAPS_WAVEMAPPED;
-
-			if( Format != nullptr )
-				description.lpwfxFormat = new WAVEFORMATEX( *( WaveFormat::ToUnmanaged( Format ).get() ) );
-
-			return description;
-		}
+		if( ( description.dwFlags & DSCBCAPS_WAVEMAPPED ) != 0 )
+			WaveMapped = true;
 	}
+
+	DSCBUFFERDESC CaptureBufferDescription::ToUnmanaged()
+	{
+		DSCBUFFERDESC description;
+		ZeroMemory( &description, sizeof(description) );
+		description.dwSize = sizeof( DSCBUFFERDESC );
+		description.dwBufferBytes = BufferBytes;
+		description.dwFXCount = 0;
+		description.dwFlags = 0;
+		description.dwReserved = 0;
+		description.lpwfxFormat = NULL;
+		description.lpDSCFXDesc = NULL;
+
+		if( ControlEffects && ( EffectDescriptions != nullptr ) )
+		{
+			description.dwFXCount = EffectDescriptions->Length;
+			LPDSCEFFECTDESC lpDSCFXDesc = new DSCEFFECTDESC[ description.dwFXCount ];
+
+			for( DWORD i = 0; i < description.dwFXCount; i++ )
+				lpDSCFXDesc[i] = EffectDescriptions[i].Marshal();
+
+			description.lpDSCFXDesc = lpDSCFXDesc;
+		}
+
+		if( ControlEffects && WaveMapped )
+			description.dwFlags = DSCBCAPS_CTRLFX | DSCBCAPS_WAVEMAPPED;
+		else if( ControlEffects )
+			description.dwFlags = DSCBCAPS_CTRLFX;
+		else if( WaveMapped )
+			description.dwFlags = DSCBCAPS_WAVEMAPPED;
+
+		if( Format != nullptr )
+			description.lpwfxFormat = new WAVEFORMATEX( *( WaveFormat::ToUnmanaged( Format ).get() ) );
+
+		return description;
+	}
+}
 }

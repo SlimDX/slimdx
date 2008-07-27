@@ -5417,10 +5417,6 @@
 			Name="DirectSound"
 			>
 			<File
-				RelativePath="..\source\directsound\BufferPositionNotify.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\directsound\DirectSound.cpp"
 				>
 			</File>
@@ -5434,14 +5430,6 @@
 			</File>
 			<File
 				RelativePath="..\source\directsound\DirectSoundException.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directsound\DirectSoundNotify.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directsound\DirectSoundNotify.h"
 				>
 			</File>
 			<File
@@ -5590,22 +5578,6 @@
 				Name="Capture"
 				>
 				<File
-					RelativePath="..\source\directsound\CaptureBuffer.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\CaptureBuffer.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\CaptureBufferDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\CaptureBufferDescription.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\directsound\CaptureCapabilities.cpp"
 					>
 				</File>
@@ -5645,6 +5617,26 @@
 					RelativePath="..\source\directsound\DirectSoundCapture.h"
 					>
 				</File>
+				<Filter
+					Name="CaptureBuffer"
+					>
+					<File
+						RelativePath="..\source\directsound\CaptureBuffer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directsound\CaptureBuffer.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directsound\CaptureBufferDescription.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directsound\CaptureBufferDescription.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Effects"
@@ -5899,6 +5891,22 @@
 				</File>
 				<File
 					RelativePath="..\source\directsound\FullDuplex.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Notification"
+				>
+				<File
+					RelativePath="..\source\directsound\BufferPositionNotify.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directsound\DirectSoundNotify.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directsound\DirectSoundNotify.h"
 					>
 				</File>
 			</Filter>
