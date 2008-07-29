@@ -106,14 +106,17 @@ namespace SlimDX
 	{
 		List<Byte>^ result = gcnew List<Byte>();
 
+		//see WaveFormat.cpp
 #if _MSC_VER < 1500
-#pragma message( "This code's broken on VS 2005. I don't know how to fix it yet." )
+#define VS05_PATCH(val) Array::AsReadOnly( val )
 #else
-		result->AddRange( WaveFormat::GetBytes() );
-		result->AddRange( BitConverter::GetBytes( unionData ) );
-		result->AddRange( BitConverter::GetBytes( static_cast<int>( ChannelMask ) ) );
-		result->AddRange( SubFormat.ToByteArray() );
+#define VS05_PATCH(val) val
 #endif
+
+		result->AddRange( VS05_PATCH( WaveFormat::GetBytes() ) );
+		result->AddRange( VS05_PATCH( BitConverter::GetBytes( unionData ) ) );
+		result->AddRange( VS05_PATCH( BitConverter::GetBytes( static_cast<int>( ChannelMask ) ) ) );
+		result->AddRange( VS05_PATCH( SubFormat.ToByteArray() ) );
 
 		return result->ToArray();
 	}
