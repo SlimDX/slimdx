@@ -86,13 +86,13 @@ namespace SlimDX
 #define VS05_PATCH(val) val
 #endif
 
-		result->AddRange( VS05_PATCH( BitConverter::GetBytes( static_cast<short>( FormatTag ) ) );
-		result->AddRange( VS05_PATCH( BitConverter::GetBytes( Channels ) );
-		result->AddRange( VS05_PATCH( BitConverter::GetBytes( SamplesPerSecond ) );
-		result->AddRange( VS05_PATCH( BitConverter::GetBytes( AverageBytesPerSecond ) );
-		result->AddRange( VS05_PATCH( BitConverter::GetBytes( BlockAlignment ) );
-		result->AddRange( VS05_PATCH( BitConverter::GetBytes( BitsPerSample ) );
-		result->AddRange( VS05_PATCH( BitConverter::GetBytes( Size ) );
+		result->AddRange( VS05_PATCH( BitConverter::GetBytes( static_cast<short>( FormatTag ) ) ) );
+		result->AddRange( VS05_PATCH( BitConverter::GetBytes( Channels ) ) );
+		result->AddRange( VS05_PATCH( BitConverter::GetBytes( SamplesPerSecond ) ) );
+		result->AddRange( VS05_PATCH( BitConverter::GetBytes( AverageBytesPerSecond ) ) );
+		result->AddRange( VS05_PATCH( BitConverter::GetBytes( BlockAlignment ) ) );
+		result->AddRange( VS05_PATCH( BitConverter::GetBytes( BitsPerSample ) ) );
+		result->AddRange( VS05_PATCH( BitConverter::GetBytes( Size ) ) );
 
 		return result->ToArray();
 	}
