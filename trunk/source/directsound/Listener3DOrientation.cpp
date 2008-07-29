@@ -19,27 +19,25 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
-
-#include <dsound.h>
+#include <d3d9.h>
 
 #include "../math/Vector3.h"
 #include "Listener3DOrientation.h"
 
 namespace SlimDX
 {
-	namespace DirectSound
+namespace DirectSound
+{
+	Listener3DOrientation::Listener3DOrientation( Vector3 front, Vector3 top )
 	{
-		Listener3DOrientation::Listener3DOrientation( Vector3 front, Vector3 top )
-		{
-			Front = front;
-			Top = top;
-		}
-
-		Listener3DOrientation::Listener3DOrientation( D3DVECTOR front, D3DVECTOR top )
-		{
-			Front = Vector3( front.x, front.y, front.z );
-			Top = Vector3( top.x, top.y, top.z );
-		}
+		Front = front;
+		Top = top;
 	}
+
+	Listener3DOrientation::Listener3DOrientation( D3DVECTOR front, D3DVECTOR top )
+	{
+		Front = Vector3( front.x, front.y, front.z );
+		Top = Vector3( top.x, top.y, top.z );
+	}
+}
 }

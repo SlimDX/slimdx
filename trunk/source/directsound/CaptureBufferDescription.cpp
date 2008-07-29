@@ -40,11 +40,8 @@ namespace DirectSound
 				EffectDescriptions[i] = CaptureEffectDescription( description.lpDSCFXDesc[i] );
 		}
 
-		if( ( description.dwFlags & DSCBCAPS_CTRLFX ) != 0 )
-			ControlEffects = true;
-
-		if( ( description.dwFlags & DSCBCAPS_WAVEMAPPED ) != 0 )
-			WaveMapped = true;
+		ControlEffects = ( description.dwFlags & DSCBCAPS_CTRLFX ) != 0;
+		WaveMapped = ( description.dwFlags & DSCBCAPS_WAVEMAPPED ) != 0;
 	}
 
 	DSCBUFFERDESC CaptureBufferDescription::ToUnmanaged()
@@ -78,7 +75,10 @@ namespace DirectSound
 			description.dwFlags = DSCBCAPS_WAVEMAPPED;
 
 		if( Format != nullptr )
-			description.lpwfxFormat = new WAVEFORMATEX( *( WaveFormat::ToUnmanaged( Format ).get() ) );
+		{
+			std::auto_ptr<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( Format );
+			description.lpwfxFormat = new WAVEFORMATEX( *format.get() );
+		}
 
 		return description;
 	}

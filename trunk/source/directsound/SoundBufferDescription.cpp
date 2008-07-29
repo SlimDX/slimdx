@@ -22,7 +22,6 @@
 #include <dsound.h>
 
 #include "../Utilities.h"
-#include "../WaveFormat.h"
 
 #include "SoundBufferDescription.h"
 

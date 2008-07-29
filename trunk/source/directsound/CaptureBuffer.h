@@ -66,7 +66,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="effectCount"></param>
 			/// <returns></returns>
-			array<CaptureEffectReturnValue>^ GetEffectStatus( int effectCount );
+			array<CaptureEffectResult>^ GetEffectStatus( int effectCount );
 
 			/// <summary>
 			/// Reads data from the capture buffer.

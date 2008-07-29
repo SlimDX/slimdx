@@ -26,28 +26,11 @@ namespace SlimDX
 	namespace DirectSound
 	{
 		/// <summary>
-		/// Contains parameters for noise supression in a capture buffer.
-		/// </summary>		
-		public value class NoiseSuppressParameters
-		{
-		internal:
-			NoiseSuppressParameters( const DSCFXNoiseSuppress& value );
-			DSCFXNoiseSuppress Marshal();
-
-		public:
-			/// <summary>
-			/// Boolean value that specifies whether the effect is enabled.
-			/// </summary>
-			property bool Enable;
-		};
-
-
-		/// <summary>
-		/// The CaptureEffectNoiseSuppress object is used to set and retrieve parameters on a capture buffer that supports noise suppression. This object requires Microsoft Windows XP or later.
+		/// The NoiseSuppress object is used to set and retrieve parameters on a capture buffer that supports noise suppression. This object requires Microsoft Windows XP or later.
 		/// </summary>
-		public ref class CaptureEffectNoiseSuppress : public ComObject
+		public ref class NoiseSuppress : public ComObject
 		{
-			COMOBJECT(IDirectSoundCaptureFXNoiseSuppress, CaptureEffectNoiseSuppress);
+			COMOBJECT(IDirectSoundCaptureFXNoiseSuppress, NoiseSuppress);
 
 		public:
 			/// <summary>
@@ -56,25 +39,20 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDirectSoundCaptureFXNoiseSuppress pointer.</param>
 			/// <returns>The newly constructed object.</returns>
-			static CaptureEffectNoiseSuppress^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
-			/// Releases all resources used by the <see cref="SlimDX::DirectSound::CaptureEffectNoiseSuppress"/> class.
-			/// </summary>
-			~CaptureEffectNoiseSuppress();
+			static NoiseSuppress^ FromPointer( System::IntPtr pointer );
 
 			/// <summary>
 			/// Sets the enumerator to its initial position, which is before the first element in the collection.
 			/// </summary>
-			void Reset();
+			Result Reset();
 
 			/// <summary>
 			/// Gets or sets he noise suppression parameters of a buffer.
 			/// </summary>
-			property NoiseSuppressParameters AllParameters
+			property bool Enabled
 			{
-				NoiseSuppressParameters get();
-				void set( NoiseSuppressParameters value );
+				bool get();
+				void set( bool value );
 			}
 		};
 	}

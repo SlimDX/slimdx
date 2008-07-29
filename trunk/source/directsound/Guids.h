@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#include "../Utilities.h"
-
 namespace SlimDX
 {
 	namespace DirectSound

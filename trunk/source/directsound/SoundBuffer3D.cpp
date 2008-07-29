@@ -19,247 +19,223 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
-
 #include <windows.h>
-#include <mmreg.h>
 #include <dsound.h>
-#include <d3dx9.h>
 
-#include "../DataStream.h"
 #include "../ComObject.h"
-#include "../Result.h"
-#include "../Math/Vector3.h"
+#include "../math/Vector3.h"
 
-#include "ResultCode.h"
-#include "DirectSound.h"
 #include "DirectSoundException.h"
 
-#include "SoundBuffer.h"
-#include "SecondarySoundBuffer.h"
-#include "Buffer3DSettings.h"
+#include "DirectSound.h"
 #include "SoundBuffer3D.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace DirectSound
+namespace DirectSound
+{
+	SoundBuffer3D::SoundBuffer3D( IDirectSound3DBuffer* buffer )
 	{
-		SoundBuffer3D::SoundBuffer3D( IDirectSound3DBuffer* buffer )
-		{
-			if( buffer == NULL )
-				throw gcnew System::ArgumentNullException( "buffer" );
-
-			IDirectSound3DBuffer8* dsBuffer;
-			HRESULT hr = buffer->QueryInterface( IID_IDirectSound3DBuffer8, reinterpret_cast<void**>( &dsBuffer ) );
-			if( RECORD_DSOUND( hr ).IsFailure )
-				throw gcnew DirectSoundException( Result::Last );
-
-			Construct(buffer);
-		}
-
-		SoundBuffer3D::SoundBuffer3D( System::IntPtr pointer )
-		{
-			Construct( pointer, NativeInterface );
-		}
-
-		SoundBuffer3D::SoundBuffer3D( SoundBuffer^ soundBuffer )
-		{
-			IDirectSound3DBuffer8* buffer;
-			HRESULT hr = soundBuffer->InternalPointer->QueryInterface( IID_IDirectSound3DBuffer8, reinterpret_cast<void**>( &buffer ) );
-			if( RECORD_DSOUND( hr ).IsFailure )
-				throw gcnew DirectSoundException( Result::Last );
-			
-			Construct(buffer);
-		}
-
-		SoundBuffer3D::SoundBuffer3D( SecondarySoundBuffer^ secondaryBuffer )
-		{
-			IDirectSound3DBuffer8* buffer;
-			HRESULT hr = secondaryBuffer->InternalPointer->QueryInterface( IID_IDirectSound3DBuffer8, reinterpret_cast<void**>( &buffer ) );
-			if( RECORD_DSOUND( hr ).IsFailure )
-				throw gcnew DirectSoundException( Result::Last );
-			
-			Construct(buffer);
-		}
-
-		SoundBuffer3D^ SoundBuffer3D::FromPointer( IDirectSound3DBuffer* pointer )
-		{
-			SoundBuffer3D^ tableEntry = safe_cast<SoundBuffer3D^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-			if( tableEntry != nullptr )
-			{
-				pointer->Release();
-				return tableEntry;
-			}
-
-			return gcnew SoundBuffer3D( pointer );
-		}
-
-		SoundBuffer3D^ SoundBuffer3D::FromPointer( System::IntPtr pointer )
-		{
-			SoundBuffer3D^ tableEntry = safe_cast<SoundBuffer3D^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-			if( tableEntry != nullptr )
-			{
-				return tableEntry;
-			}
-
-			return gcnew SoundBuffer3D( pointer );
-		}
-
-		SoundBuffer3D::~SoundBuffer3D()
-		{
-			Destruct();
-		}
-
-		Buffer3DSettings SoundBuffer3D::AllParameters::get()
-		{
-			DS3DBUFFER result;
-			result.dwSize = sizeof( DS3DBUFFER );
-			HRESULT hr = InternalPointer->GetAllParameters( &result );
-			RECORD_DSOUND( hr );
-
-			return Buffer3DSettings( result );
-		}
-
-		void SoundBuffer3D::AllParameters::set( Buffer3DSettings value )
-		{
-			DS3DBUFFER result = value.ToUnmanaged();
-			HRESULT hr = InternalPointer->SetAllParameters( &result, Deferred ? DS3D_DEFERRED : DS3D_IMMEDIATE );
-			RECORD_DSOUND( hr );
-		}
-
-		int SoundBuffer3D::InsideConeAngle::get()
-		{
-			DWORD inside = 0;
-			HRESULT hr = InternalPointer->GetConeAngles( &inside, NULL );
-			RECORD_DSOUND( hr );
-
-			return inside; 
-		}
-
-		void SoundBuffer3D::InsideConeAngle::set( int value )
-		{
-			HRESULT hr = InternalPointer->SetConeAngles( value, NULL, Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
-			RECORD_DSOUND( hr );
-		}
-
-		int SoundBuffer3D::OutsideConeAngle::get()
-		{
-			DWORD outside = 0;
-			HRESULT hr = InternalPointer->GetConeAngles( NULL, &outside );
-			RECORD_DSOUND( hr );
-
-			return outside; 
-		}
-
-		void SoundBuffer3D::OutsideConeAngle::set( int value )
-		{
-			HRESULT hr = InternalPointer->SetConeAngles( NULL, value, Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
-			RECORD_DSOUND( hr );
-		}
-
-		Vector3 SoundBuffer3D::ConeOrientation::get()
-		{
-			D3DVECTOR orientation = D3DVECTOR();
-			HRESULT hr = InternalPointer->GetConeOrientation( &orientation );
-			RECORD_DSOUND( hr );
-
-			return Vector3( orientation.x, orientation.y, orientation.z );
-		}
-
-		void SoundBuffer3D::ConeOrientation::set( Vector3 value )
-		{
-			HRESULT hr = InternalPointer->SetConeOrientation( value.X, value.Y, value.Z, Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
-			RECORD_DSOUND( hr );
-		}
-
-		int SoundBuffer3D::ConeOutsideVolume::get()
-		{
-			LONG volume = 0;
-			HRESULT hr = InternalPointer->GetConeOutsideVolume( &volume );
-			RECORD_DSOUND( hr );
-
-			return static_cast<int>( volume );
-		}
-
-		void SoundBuffer3D::ConeOutsideVolume::set( int value )
-		{
-			HRESULT hr = InternalPointer->SetConeOutsideVolume( static_cast<LONG>( value ), Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
-			RECORD_DSOUND( hr );
-		}
-
-		float SoundBuffer3D::MaxDistance::get()
-		{
-			float maxDistance = 0.0f;
-			HRESULT hr = InternalPointer->GetMaxDistance( &maxDistance );
-			RECORD_DSOUND( hr );
-
-			return maxDistance;
-		}
-
-		void SoundBuffer3D::MaxDistance::set( float value )
-		{
-			HRESULT hr = InternalPointer->SetMaxDistance( value, Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
-			RECORD_DSOUND( hr );
-		}
-
-		float SoundBuffer3D::MinDistance::get()
-		{
-			float minDistance = 0.0f;
-			HRESULT hr = InternalPointer->GetMinDistance( &minDistance );
-			RECORD_DSOUND( hr );
-
-			return minDistance;
-		}
-
-		void SoundBuffer3D::MinDistance::set( float value )
-		{
-			HRESULT hr = InternalPointer->SetMinDistance( value, Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
-			RECORD_DSOUND( hr );
-		}
-
-		Mode3D SoundBuffer3D::Mode::get()
-		{
-			DWORD mode = 0;
-			HRESULT hr = InternalPointer->GetMode( &mode );
-			RECORD_DSOUND( hr );
-		
-			return static_cast<Mode3D>( mode );
-		}
-
-		void SoundBuffer3D::Mode::set( Mode3D value )
-		{
-			HRESULT hr = InternalPointer->SetMode( static_cast<DWORD>( value ), Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
-			RECORD_DSOUND( hr );
-		}
-
-		Vector3 SoundBuffer3D::Position::get()
-		{
-			D3DVECTOR position = D3DVECTOR();
-			HRESULT hr = InternalPointer->GetPosition( &position );
-			RECORD_DSOUND( hr );
-
-			return Vector3( position.x, position.y, position.z );
-		}
-
-		void SoundBuffer3D::Position::set( Vector3 value )
-		{
-			HRESULT hr = InternalPointer->SetPosition( value.X, value.Y, value.Z, Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
-			RECORD_DSOUND( hr );
-		}
-
-		Vector3 SoundBuffer3D::Velocity::get()
-		{
-			D3DVECTOR velocity = D3DVECTOR();
-			HRESULT hr = InternalPointer->GetVelocity( &velocity );
-			RECORD_DSOUND( hr );
-
-			return Vector3( velocity.x, velocity.y, velocity.z );
-		}
-
-		void SoundBuffer3D::Velocity::set( Vector3 value )
-		{
-			HRESULT hr = InternalPointer->SetVelocity( value.X, value.Y, value.Z, Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
-			RECORD_DSOUND( hr );
-		}
+		Construct( buffer );
 	}
+
+	SoundBuffer3D::SoundBuffer3D( System::IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+
+	SoundBuffer3D^ SoundBuffer3D::FromPointer( IDirectSound3DBuffer* pointer )
+	{
+		if( pointer == NULL )
+			return nullptr;
+
+		SoundBuffer3D^ tableEntry = safe_cast<SoundBuffer3D^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew SoundBuffer3D( pointer );
+	}
+
+	SoundBuffer3D^ SoundBuffer3D::FromPointer( System::IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		SoundBuffer3D^ tableEntry = safe_cast<SoundBuffer3D^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew SoundBuffer3D( pointer );
+	}
+
+	SoundBuffer3D::SoundBuffer3D( SoundBuffer^ soundBuffer )
+	{
+		IDirectSound3DBuffer8* buffer;
+
+		HRESULT hr = soundBuffer->InternalPointer->QueryInterface( IID_IDirectSound3DBuffer8, reinterpret_cast<void**>( &buffer ) );
+		if( RECORD_DSOUND( hr ).IsFailure )
+			throw gcnew DirectSoundException( Result::Last );
+		
+		Construct( buffer );
+	}
+
+	Buffer3DSettings SoundBuffer3D::AllParameters::get()
+	{
+		DS3DBUFFER result;
+		result.dwSize = sizeof( DS3DBUFFER );
+		HRESULT hr = InternalPointer->GetAllParameters( &result );
+		RECORD_DSOUND( hr );
+
+		return Buffer3DSettings( result );
+	}
+
+	void SoundBuffer3D::AllParameters::set( Buffer3DSettings value )
+	{
+		DS3DBUFFER result = value.ToUnmanaged();
+		HRESULT hr = InternalPointer->SetAllParameters( &result, Deferred ? DS3D_DEFERRED : DS3D_IMMEDIATE );
+		RECORD_DSOUND( hr );
+	}
+
+	int SoundBuffer3D::InsideConeAngle::get()
+	{
+		DWORD inside = 0;
+		HRESULT hr = InternalPointer->GetConeAngles( &inside, NULL );
+		RECORD_DSOUND( hr );
+
+		return inside; 
+	}
+
+	void SoundBuffer3D::InsideConeAngle::set( int value )
+	{
+		HRESULT hr = InternalPointer->SetConeAngles( value, NULL, Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
+		RECORD_DSOUND( hr );
+	}
+
+	int SoundBuffer3D::OutsideConeAngle::get()
+	{
+		DWORD outside = 0;
+		HRESULT hr = InternalPointer->GetConeAngles( NULL, &outside );
+		RECORD_DSOUND( hr );
+
+		return outside; 
+	}
+
+	void SoundBuffer3D::OutsideConeAngle::set( int value )
+	{
+		HRESULT hr = InternalPointer->SetConeAngles( NULL, value, Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
+		RECORD_DSOUND( hr );
+	}
+
+	Vector3 SoundBuffer3D::ConeOrientation::get()
+	{
+		D3DVECTOR orientation = D3DVECTOR();
+		HRESULT hr = InternalPointer->GetConeOrientation( &orientation );
+		RECORD_DSOUND( hr );
+
+		return Vector3( orientation.x, orientation.y, orientation.z );
+	}
+
+	void SoundBuffer3D::ConeOrientation::set( Vector3 value )
+	{
+		HRESULT hr = InternalPointer->SetConeOrientation( value.X, value.Y, value.Z, Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
+		RECORD_DSOUND( hr );
+	}
+
+	int SoundBuffer3D::ConeOutsideVolume::get()
+	{
+		LONG volume = 0;
+		HRESULT hr = InternalPointer->GetConeOutsideVolume( &volume );
+		RECORD_DSOUND( hr );
+
+		return static_cast<int>( volume );
+	}
+
+	void SoundBuffer3D::ConeOutsideVolume::set( int value )
+	{
+		HRESULT hr = InternalPointer->SetConeOutsideVolume( static_cast<LONG>( value ), Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
+		RECORD_DSOUND( hr );
+	}
+
+	float SoundBuffer3D::MaxDistance::get()
+	{
+		float maxDistance = 0.0f;
+		HRESULT hr = InternalPointer->GetMaxDistance( &maxDistance );
+		RECORD_DSOUND( hr );
+
+		return maxDistance;
+	}
+
+	void SoundBuffer3D::MaxDistance::set( float value )
+	{
+		HRESULT hr = InternalPointer->SetMaxDistance( value, Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
+		RECORD_DSOUND( hr );
+	}
+
+	float SoundBuffer3D::MinDistance::get()
+	{
+		float minDistance = 0.0f;
+		HRESULT hr = InternalPointer->GetMinDistance( &minDistance );
+		RECORD_DSOUND( hr );
+
+		return minDistance;
+	}
+
+	void SoundBuffer3D::MinDistance::set( float value )
+	{
+		HRESULT hr = InternalPointer->SetMinDistance( value, Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
+		RECORD_DSOUND( hr );
+	}
+
+	Mode3D SoundBuffer3D::Mode::get()
+	{
+		DWORD mode = 0;
+		HRESULT hr = InternalPointer->GetMode( &mode );
+		RECORD_DSOUND( hr );
+	
+		return static_cast<Mode3D>( mode );
+	}
+
+	void SoundBuffer3D::Mode::set( Mode3D value )
+	{
+		HRESULT hr = InternalPointer->SetMode( static_cast<DWORD>( value ), Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
+		RECORD_DSOUND( hr );
+	}
+
+	Vector3 SoundBuffer3D::Position::get()
+	{
+		D3DVECTOR position = D3DVECTOR();
+		HRESULT hr = InternalPointer->GetPosition( &position );
+		RECORD_DSOUND( hr );
+
+		return Vector3( position.x, position.y, position.z );
+	}
+
+	void SoundBuffer3D::Position::set( Vector3 value )
+	{
+		HRESULT hr = InternalPointer->SetPosition( value.X, value.Y, value.Z, Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
+		RECORD_DSOUND( hr );
+	}
+
+	Vector3 SoundBuffer3D::Velocity::get()
+	{
+		D3DVECTOR velocity = D3DVECTOR();
+		HRESULT hr = InternalPointer->GetVelocity( &velocity );
+		RECORD_DSOUND( hr );
+
+		return Vector3( velocity.x, velocity.y, velocity.z );
+	}
+
+	void SoundBuffer3D::Velocity::set( Vector3 value )
+	{
+		HRESULT hr = InternalPointer->SetVelocity( value.X, value.Y, value.Z, Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
+		RECORD_DSOUND( hr );
+	}
+}
 }

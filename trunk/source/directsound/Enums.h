@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#include <dsound.h>
-
 namespace SlimDX
 {
 	namespace DirectSound
@@ -108,14 +106,14 @@ namespace SlimDX
 			/// <summary>
 			/// The buffer supports effects processing.
 			/// </summary>
-			ControlFx = DSBCAPS_CTRLFX,
+			ControlEffects = DSBCAPS_CTRLFX,
 
 			/// <summary>
 			/// The buffer has sticky focus. 
 			/// If the user switches to another application not using DirectSound, the buffer is still audible. 
 			/// However, if the user switches to another DirectSound application, the buffer is muted.
 			/// </summary>
-			StickFocus = DSBCAPS_STICKYFOCUS,
+			StickyFocus = DSBCAPS_STICKYFOCUS,
 
 			/// <summary>
 			/// The buffer is a global sound buffer. 
@@ -186,7 +184,7 @@ namespace SlimDX
 		/// <summary>
 		/// Return values for Capture effects.
 		/// </summary>
-		public enum class CaptureEffectReturnValue : System::Int32
+		public enum class CaptureEffectResult : System::Int32
 		{
 			/// <summary>
 			/// Effect is instantiated in hardware.
@@ -215,13 +213,6 @@ namespace SlimDX
 			/// Sets the priority level.
 			/// </summary>
 			Priority = DSSCL_PRIORITY,
-
-			/// <summary>
-			/// For DirectX 8.0 and later, has the same effect as CooperativeLevel::Priority. 
-			/// For previous versions, sets the application to the exclusive level. 
-			/// This means that when it has the input focus, the application will be the only one audible; sounds from applications with the BufferFLags::GlobalFocus flag set will be muted. 
-			/// </summary>
-			Exclusive = DSSCL_EXCLUSIVE,
 
 			/// <summary>
 			/// Sets the write-primary level. The application has write access to the primary buffer. No secondary buffers can be played. 
@@ -274,7 +265,7 @@ namespace SlimDX
 		/// <summary>
 		/// Indicates the result of the attempt to set an effect in the buffer. 
 		/// </summary>
-		public enum class SoundEffectReturnValue : System::Int32
+		public enum class SoundEffectResult : System::Int32
 		{
 			/// <summary>
 			/// Effect is available but was not created because one of the other effects requested could not be created. 
@@ -319,7 +310,7 @@ namespace SlimDX
 			/// <summary>
 			/// The speakers are directed over an arc of 5 degrees.
 			/// </summary>
-			Min = DSSPEAKER_GEOMETRY_MIN,
+			Minimum = DSSPEAKER_GEOMETRY_MIN,
 
 			/// <summary>
 			/// The speakers are directed over an arc of 10 degrees.
@@ -334,7 +325,7 @@ namespace SlimDX
 			/// <summary>
 			/// The speakers are directed over an arc of 180 degrees.
 			/// </summary>
-			Max = DSSPEAKER_GEOMETRY_MAX,
+			Maximum = DSSPEAKER_GEOMETRY_MAX,
 		};
 
 		/// <summary>
@@ -405,8 +396,8 @@ namespace SlimDX
 			/// <summary>
 			/// 
 			/// </summary>
-
 			CarpetedHallway = DSFX_I3DL2_ENVIRONMENT_PRESET_CARPETEDHALLWAY,
+
 			/// <summary>
 			/// 
 			/// </summary>
@@ -546,12 +537,12 @@ namespace SlimDX
 			/// <summary>
 			/// Indicates an audio volume attenuated by 100 dB, which, for all practical purposes, is silence.
 			/// </summary>
-			Min = DSBVOLUME_MIN,
+			Minimum = DSBVOLUME_MIN,
 
 			/// <summary>
 			/// Represents the original, unadjusted volume of the stream.
 			/// </summary>
-			Max = DSBVOLUME_MAX,
+			Maximum = DSBVOLUME_MAX,
 		};
 	}
 }

@@ -19,41 +19,37 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include <windows.h>
+#include <dsound.h>
+
+#include "../ComObject.h"
+
+#include "DirectSoundException.h"
+
+#include "Enums.h"
+#include "AcousticEchoCancelParameters.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace DirectSound
+namespace DirectSound
+{
+	AcousticEchoCancelParameters::AcousticEchoCancelParameters( const DSCFXAec &value )
 	{
-		/// <summary>
-		/// Contains parameters for an effect associated with a capture buffer.
-		/// </summary>
-		public value class CaptureEffectDescription
-		{
-		internal:
-			CaptureEffectDescription( const DSCEFFECTDESC& description );
-			DSCEFFECTDESC Marshal();
-
-		public:
-			/// <summary>
-			/// Specifies the class identifier of the effect.
-			/// </summary>
-			property System::Guid CaptureEffectClass;
-
-			/// <summary>
-			/// Specifies the unique identifier of the preferred effect.
-			/// </summary>
-			property System::Guid CaptureEffectInstance;
-
-			/// <summary>
-			/// Effect specified must be in hardware.
-			/// </summary>
-			property bool LocateInHardware;
-
-			/// <summary>
-			/// Effect specified must be in software.
-			/// </summary>
-			property bool LocateInSoftware;
-		};
+		Enable = value.fEnable ? true : false;
+		NoiseFill = value.fNoiseFill ? true : false;
+		Mode = static_cast<AcousticEchoCancelMode>( value.dwMode );
 	}
+
+	DSCFXAec AcousticEchoCancelParameters::Marshal()
+	{
+		DSCFXAec value;
+		value.dwMode = static_cast<DWORD>( Mode );
+		value.fEnable = Enable;
+		value.fNoiseFill = NoiseFill;
+
+		return value;
+	}
+}
 }

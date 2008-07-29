@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#include <dsound.h>
-
 #include "SoundBuffer.h"
 #include "Buffer3DSettings.h"
 
@@ -39,29 +37,19 @@ namespace SlimDX
 
 		public:
 			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::SoundBuffer3D"/> class.
+			/// </summary>
+			/// <param name="soundBuffer"></param>
+			/// <returns></returns>
+			SoundBuffer3D( SoundBuffer^ soundBuffer );
+
+			/// <summary>
 			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::SoundBuffer3D"/> class using the specified pointer to a
 			/// previously constructed unmanaged object.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDirectSound3DBuffer pointer.</param>
 			/// <returns>The newly constructed object.</returns>
 			static SoundBuffer3D^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::SoundBuffer3D"/> class.
-			/// </summary>
-			/// <param name="soundBuffer"></param>
-			/// <returns></returns>
-			SoundBuffer3D( SoundBuffer^ soundBuffer );
-			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::SoundBuffer3D"/> class.
-			/// </summary>
-			/// <param name="secondaryBuffer"></param>
-			/// <returns></returns>
-			SoundBuffer3D( SecondarySoundBuffer^ secondaryBuffer );
-			/// <summary>
-			/// Releases all resources used by the <see cref="SlimDX::DirectSound::SoundBuffer3D"/> class.
-			/// </summary>
-			~SoundBuffer3D();
 
 			/// <summary>
 			/// Gets or sets all the  parameters of a buffer
@@ -159,25 +147,30 @@ namespace SlimDX
 			}
 
 			/// <summary>
-			/// Default minimum distance, in meters. The value is 1.0 (corresponding to 1.0 meter at the default distance factor of 1.0 meters per unit).
+			/// Default minimum distance, in meters.
 			/// </summary>
 			literal float DefaultMinDistance = DS3D_DEFAULTMINDISTANCE;
+
 			/// <summary>
-			/// Default maximum distance, in meters. The value is effectively infinite.
+			/// Default maximum distance, in meters.
 			/// </summary>
 			literal float DefaultMaxDistance = DS3D_DEFAULTMAXDISTANCE;
+
 			/// <summary>
-			/// Default cone angle, in degrees. The value is 360.
+			/// Default cone angle, in degrees.
 			/// </summary>
 			literal float DefaultConeAngle = DS3D_DEFAULTCONEANGLE;
+
 			/// <summary>
 			/// Default outside cone volume. Volume levels are expressed as attenuation, in hundredths of a decibel.
 			/// </summary>
-			literal int	  DefaultConeOutsideVolume = DS3D_DEFAULTCONEOUTSIDEVOLUME;
+			literal int DefaultConeOutsideVolume = DS3D_DEFAULTCONEOUTSIDEVOLUME;
+
 			/// <summary>
 			/// Minimum cone angle, in degrees.
 			/// </summary>
 			literal float MinConeAngle = DS3D_MINCONEANGLE;
+
 			/// <summary>
 			/// Maximum cone angle, in degrees.
 			/// </summary>
