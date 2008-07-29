@@ -61,17 +61,38 @@ namespace SlimDX
 	{
 		List<Byte>^ result = gcnew List<Byte>();
 
+		/*
+		VS05 generates following compiler error, probably due to bug in array<T> implementation:
+		1>..\source\WaveFormat.cpp(73) : error C2664: 'System::Collections::Generic::List<T>::AddRange' : cannot convert parameter 1 from 'cli::array<Type> ^' to 'System::Collections::Generic::IEnumerable<T> ^'
+		1>        with
+		1>        [
+		1>            T=unsigned char
+		1>        ]
+		1>        and
+		1>        [
+		1>            Type=unsigned char
+		1>        ]
+		1>        and
+		1>        [
+		1>            T=unsigned char
+		1>        ]
+		1>        No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+		*/
+
 #if _MSC_VER < 1500
-#pragma message( "This code's broken on VS 2005. I don't know how to fix it yet." )
+#define VS05_PATCH(val) Array::AsReadOnly( val )
+#pragma message(
 #else
-		result->AddRange( BitConverter::GetBytes( static_cast<short>( FormatTag ) ) );
-		result->AddRange( BitConverter::GetBytes( Channels ) );
-		result->AddRange( BitConverter::GetBytes( SamplesPerSecond ) );
-		result->AddRange( BitConverter::GetBytes( AverageBytesPerSecond ) );
-		result->AddRange( BitConverter::GetBytes( BlockAlignment ) );
-		result->AddRange( BitConverter::GetBytes( BitsPerSample ) );
-		result->AddRange( BitConverter::GetBytes( Size ) );
+#define VS05_PATCH(val) val
 #endif
+
+		result->AddRange( VS05_PATCH( BitConverter::GetBytes( static_cast<short>( FormatTag ) ) );
+		result->AddRange( VS05_PATCH( BitConverter::GetBytes( Channels ) );
+		result->AddRange( VS05_PATCH( BitConverter::GetBytes( SamplesPerSecond ) );
+		result->AddRange( VS05_PATCH( BitConverter::GetBytes( AverageBytesPerSecond ) );
+		result->AddRange( VS05_PATCH( BitConverter::GetBytes( BlockAlignment ) );
+		result->AddRange( VS05_PATCH( BitConverter::GetBytes( BitsPerSample ) );
+		result->AddRange( VS05_PATCH( BitConverter::GetBytes( Size ) );
 
 		return result->ToArray();
 	}
