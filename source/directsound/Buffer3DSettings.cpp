@@ -19,52 +19,49 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
-
 #include <dsound.h>
-#include "../Math/Vector3.h"
-#include "Enums.h"
+
 #include "Buffer3DSettings.h"
 
 namespace SlimDX
 {
-	namespace DirectSound
+namespace DirectSound
+{
+	Buffer3DSettings::Buffer3DSettings( const DS3DBUFFER& value )
 	{
-		Buffer3DSettings::Buffer3DSettings( const DS3DBUFFER& value )
-		{
-			ConeOrientation = Vector3( value.vConeOrientation.x, value.vConeOrientation.y, value.vConeOrientation.z );
-			ConeOutsideVolume = value.lConeOutsideVolume;
-			InsideConeAngle = value.dwInsideConeAngle;
-			OutsideConeAngle = value.dwOutsideConeAngle;
-			MaxDistance = value.flMaxDistance;
-			MinDistance = value.flMinDistance;
-			Position = Vector3( value.vPosition.x, value.vPosition.y, value.vPosition.z );
-			Velocity = Vector3( value.vVelocity.x, value.vVelocity.y, value.vVelocity.z );
-			Mode = static_cast<Mode3D>( value.dwMode );
-		}
-
-		DS3DBUFFER Buffer3DSettings::ToUnmanaged()
-		{
-			DS3DBUFFER result;
-			ZeroMemory( &result, sizeof( DS3DBUFFER ) );
-			result.dwSize = sizeof( DS3DBUFFER );
-			result.vConeOrientation.x = ConeOrientation.X;
-			result.vConeOrientation.y = ConeOrientation.Y;
-			result.vConeOrientation.z = ConeOrientation.Z;
-			result.lConeOutsideVolume = ConeOutsideVolume;
-			result.dwInsideConeAngle = InsideConeAngle;
-			result.dwOutsideConeAngle = OutsideConeAngle;
-			result.flMaxDistance = MaxDistance;
-			result.flMinDistance = MinDistance;
-			result.vPosition.x = Position.X;
-			result.vPosition.y = Position.Y;
-			result.vPosition.z = Position.Z;
-			result.vVelocity.x = Velocity.X;
-			result.vVelocity.y = Velocity.Y;
-			result.vVelocity.z = Velocity.Z;
-			result.dwMode = static_cast<DWORD>( Mode );
-
-			return result;
-		}
+		ConeOrientation = Vector3( value.vConeOrientation.x, value.vConeOrientation.y, value.vConeOrientation.z );
+		ConeOutsideVolume = value.lConeOutsideVolume;
+		InsideConeAngle = value.dwInsideConeAngle;
+		OutsideConeAngle = value.dwOutsideConeAngle;
+		MaxDistance = value.flMaxDistance;
+		MinDistance = value.flMinDistance;
+		Position = Vector3( value.vPosition.x, value.vPosition.y, value.vPosition.z );
+		Velocity = Vector3( value.vVelocity.x, value.vVelocity.y, value.vVelocity.z );
+		Mode = static_cast<Mode3D>( value.dwMode );
 	}
+
+	DS3DBUFFER Buffer3DSettings::ToUnmanaged()
+	{
+		DS3DBUFFER result;
+		ZeroMemory( &result, sizeof( DS3DBUFFER ) );
+		result.dwSize = sizeof( DS3DBUFFER );
+		result.vConeOrientation.x = ConeOrientation.X;
+		result.vConeOrientation.y = ConeOrientation.Y;
+		result.vConeOrientation.z = ConeOrientation.Z;
+		result.lConeOutsideVolume = ConeOutsideVolume;
+		result.dwInsideConeAngle = InsideConeAngle;
+		result.dwOutsideConeAngle = OutsideConeAngle;
+		result.flMaxDistance = MaxDistance;
+		result.flMinDistance = MinDistance;
+		result.vPosition.x = Position.X;
+		result.vPosition.y = Position.Y;
+		result.vPosition.z = Position.Z;
+		result.vVelocity.x = Velocity.X;
+		result.vVelocity.y = Velocity.Y;
+		result.vVelocity.z = Velocity.Z;
+		result.dwMode = static_cast<DWORD>( Mode );
+
+		return result;
+	}
+}
 }

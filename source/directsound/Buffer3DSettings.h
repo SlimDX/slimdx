@@ -21,10 +21,8 @@
 */
 #pragma once
 
-#include <dsound.h>
-
 #include "Enums.h"
-#include "../Math/Vector3.h"
+#include "../math/Vector3.h"
 
 namespace SlimDX
 {
@@ -44,34 +42,42 @@ namespace SlimDX
 			/// Describes the current orientation of this 3-D buffer's sound projection cone.
 			/// </summary>
 			property Vector3 ConeOrientation;
+
 			/// <summary>
 			/// The cone outside volume.
 			/// </summary>
 			property int ConeOutsideVolume;
+
 			/// <summary>
 			/// The angle of the inside sound projection cone.
 			/// </summary>
 			property int InsideConeAngle;
+
 			/// <summary>
 			/// The maximum distance.
 			/// </summary>
 			property float MaxDistance;
+
 			/// <summary>
 			/// The minimum distance.
 			/// </summary>
 			property float MinDistance;
+
 			/// <summary>
 			/// The 3-D sound processing mode to be set.
 			/// </summary>
 			property Mode3D Mode;
+
 			/// <summary>
 			/// The angle of the outside sound projection cone.
 			/// </summary>
 			property int OutsideConeAngle;
+
 			/// <summary>
 			/// Describes the current position of the 3-D sound buffer.
 			/// </summary>
 			property Vector3 Position;
+
 			/// <summary>
 			/// Describes the current velocity of the 3-D sound buffer.
 			/// </summary>

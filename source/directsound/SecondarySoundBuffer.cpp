@@ -99,7 +99,7 @@ namespace DirectSound
 		Construct( result );
 	}
 
-	array<SoundEffectReturnValue>^ SecondarySoundBuffer::SetEffects( array<Guid>^ effects )
+	array<SoundEffectResult>^ SecondarySoundBuffer::SetEffects( array<Guid>^ effects )
 	{
 		DWORD count = effects->Length;
 		LPDWORD dwResults = NULL;
@@ -128,10 +128,10 @@ namespace DirectSound
 		if( RECORD_DSOUND( hr ).IsFailure || count == 0 )
 			return nullptr;
 
-		array<SoundEffectReturnValue>^ results = gcnew array<SoundEffectReturnValue>( count );
+		array<SoundEffectResult>^ results = gcnew array<SoundEffectResult>( count );
 
 		for( unsigned int i = 0; i < count; i++ )
-			results[i] = static_cast<SoundEffectReturnValue>( outputs[i] );
+			results[i] = static_cast<SoundEffectResult>( outputs[i] );
 
 		return results;
 	}

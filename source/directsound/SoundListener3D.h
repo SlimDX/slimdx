@@ -21,14 +21,9 @@
 */
 #pragma once
 
-#include <dsound.h>
-#include "../DataStream.h"
-
-#include "Buffer3DSettings.h"
+#include "SoundBuffer.h"
 #include "Listener3DSettings.h"
 #include "Listener3DOrientation.h"
-#include "SoundBuffer.h"
-#include "SecondarySoundBuffer.h"
 
 namespace SlimDX
 {
@@ -43,6 +38,13 @@ namespace SlimDX
 
 		public:
 			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::SoundListener3D"/> class
+			/// with a previously created sound buffer.
+			/// </summary>
+			/// <param name="pointer">The SlimDX::DirectSound::SoundBuffer object.</param>
+			SoundListener3D( SoundBuffer^ soundBuffer );
+
+			/// <summary>
 			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::SoundListener3D"/> class using the specified pointer to a
 			/// previously constructed unmanaged object.
 			/// </summary>
@@ -51,28 +53,9 @@ namespace SlimDX
 			static SoundListener3D^ FromPointer( System::IntPtr pointer );
 
 			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::SoundListener3D"/> class
-			/// with a previously created sound buffer.
-			/// </summary>
-			/// <param name="pointer">The SlimDX::DirectSound::SoundBuffer object.</param>
-			SoundListener3D( SoundBuffer^ soundBuffer );
-
-			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::SoundListener3D"/> class.
-			/// with a previously created secondary sound buffer.
-			/// </summary>
-			/// <param name="pointer">The SecondarySoundBuffer object.</param>
-			SoundListener3D( SecondarySoundBuffer^ secondaryBuffer );
-
-			/// <summary>
-			/// Releases all resources used by the <see cref="SlimDX::DirectSound::SoundListener3D"/>.
-			/// </summary>
-		   ~SoundListener3D();
-
-			/// <summary>
 			/// Commits any deferred settings made since the last call to this method.
 			/// </summary>
-			void CommitDeferredSettings();
+			Result CommitDeferredSettings();
 
 			/// <summary>
 			/// Gets or sets all 3-D parameters of the sound environment and the listener.
@@ -146,34 +129,42 @@ namespace SlimDX
 			/// Default distance factor. The default value is (1.0).
 			/// </summary>
 			literal float DefaultDistanceFactor = DS3D_DEFAULTDISTANCEFACTOR;
+
 			/// <summary>
 			/// Default Doppler factor. The default value is (1.0).
 			/// </summary>
 			literal float DefaultDopplerFactor = DS3D_DEFAULTDOPPLERFACTOR;
+
 			/// <summary>
 			/// Default rolloff factor. The default value is (1.0).
 			/// </summary>
 			literal float DefaultRolloffFactor = DS3D_DEFAULTROLLOFFFACTOR;
+
 			/// <summary>
 			/// Minimum distance factor. The default value is (1.0).
 			/// </summary>
 			literal float MinDistanceFactor = DS3D_MINDISTANCEFACTOR;
+
 			/// <summary>
 			/// Minimum Doppler factor. The default value is (1.0).
 			/// </summary>
 			literal float MinDopplerFactor = DS3D_MINDOPPLERFACTOR;
+
 			/// <summary>
 			/// Minimum rolloff factor. The default value is (1.0).
 			/// </summary>
 			literal float MinRolloffFactor = DS3D_MINROLLOFFFACTOR;
+
 			/// <summary>
 			/// Maximum distance factor. The default value is (1.0).
 			/// </summary>
 			literal float MaxDistanceFactor = DS3D_MAXDISTANCEFACTOR;
+
 			/// <summary>
 			/// Maximum Doppler factor. The default value is (1.0).
 			/// </summary>
 			literal float MaxDopplerFactor = DS3D_MAXDOPPLERFACTOR;
+
 			/// <summary>
 			/// Maximum rolloff factor. The default value is (1.0).
 			/// </summary>

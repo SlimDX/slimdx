@@ -21,6 +21,8 @@
 */
 #include <dsound.h>
 
+#include "../Result.h"
+
 #include "ResultCode.h"
 
 namespace SlimDX

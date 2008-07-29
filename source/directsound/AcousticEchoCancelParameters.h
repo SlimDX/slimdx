@@ -20,46 +20,35 @@
 * THE SOFTWARE.
 */
 #pragma once
-
-#include "SoundBuffer.h"
-
+			
 namespace SlimDX
 {
 	namespace DirectSound
 	{
 		/// <summary>
-		/// The SecondarySoundBuffer object is used to manage sound buffers and effects.
-		/// </summary>
-		public ref class SecondarySoundBuffer : public SoundBuffer
+		/// Contains parameters for acoustic echo cancellation in a capture buffer.
+		/// </summary>		
+		public value class AcousticEchoCancelParameters
 		{
-			COMOBJECT(IDirectSoundBuffer8, SecondarySoundBuffer);
+		internal:
+			AcousticEchoCancelParameters( const DSCFXAec& value );
+			DSCFXAec Marshal();
 
 		public:
 			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::"/> class.
+			/// Boolean value that specifies whether the effect is enabled.
 			/// </summary>
-			/// <param name="dsound"></param>
-			/// <param name="description"></param>
-			/// <returns></returns>
-			SecondarySoundBuffer( DirectSound^ dsound, SoundBufferDescription description );
+			property bool Enable;
 
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::SoundBuffer"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
+			/// Boolean value that specifies whether to enable background comfort noise, which makes the capture signal sound more natural by preventing periods of dead silence. By default, background comfort noise is not enabled.
 			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSoundBuffer pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static SecondarySoundBuffer^ FromPointer( System::IntPtr pointer );
+			property bool NoiseFill;
 
 			/// <summary>
-			/// 
+			/// Operation mode.
 			/// </summary>
-			/// <param name="effects"></param>
-			/// <returns></returns>
-			array<SoundEffectResult>^ SetEffects( array<System::Guid>^ effects );
-
-			generic<typename T> where T : ComObject
-				T GetEffect( int index );
+			property AcousticEchoCancelMode Mode;
 		};
 	}
 }

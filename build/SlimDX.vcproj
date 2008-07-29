@@ -5586,27 +5586,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\directsound\CaptureEffectAcousticEchoCancel.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\CaptureEffectAcousticEchoCancel.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\directsound\CaptureEffectDescription.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\directsound\CaptureEffectDescription.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\CaptureEffectNoiseSuppress.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\CaptureEffectNoiseSuppress.h"
 					>
 				</File>
 				<File
@@ -5634,6 +5618,38 @@
 					</File>
 					<File
 						RelativePath="..\source\directsound\CaptureBufferDescription.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="AcousticEchoCancel"
+					>
+					<File
+						RelativePath="..\source\directsound\AcousticEchoCancel.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directsound\AcousticEchoCancel.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directsound\AcousticEchoCancelParameters.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directsound\AcousticEchoCancelParameters.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="NoiseSupress"
+					>
+					<File
+						RelativePath="..\source\directsound\NoiseSuppress.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directsound\NoiseSuppress.h"
 						>
 					</File>
 				</Filter>

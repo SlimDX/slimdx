@@ -20,41 +20,19 @@
 * THE SOFTWARE.
 */
 #pragma once
+
+#include "AcousticEchoCancelParameters.h"
 			
 namespace SlimDX
 {
 	namespace DirectSound
 	{
 		/// <summary>
-		/// Contains parameters for acoustic echo cancellation in a capture buffer.
-		/// </summary>		
-		public value class AcousticEchoCancelParameters
-		{
-		internal:
-			AcousticEchoCancelParameters( const DSCFXAec& value );
-			DSCFXAec Marshal();
-
-		public:
-			/// <summary>
-			/// Boolean value that specifies whether the effect is enabled.
-			/// </summary>
-			property bool Enable;
-			/// <summary>
-			/// Boolean value that specifies whether to enable background comfort noise, which makes the capture signal sound more natural by preventing periods of dead silence. By default, background comfort noise is not enabled.
-			/// </summary>
-			property bool NoiseFill;
-			/// <summary>
-			/// Operation mode.
-			/// </summary>
-			property AcousticEchoCancelMode Mode;
-		};
-
-		/// <summary>
 		/// The CaptureEffectAcousticEchoCancel object is used to set and retrieve parameters on a capture buffer that supports acoustic echo cancellation. This object requires Microsoft® Windows® XP or later operating systems.
 		/// </summary>
-		public ref class CaptureEffectAcousticEchoCancel : public ComObject
+		public ref class AcousticEchoCancel : public ComObject
 		{
-			COMOBJECT(IDirectSoundCaptureFXAec, CaptureEffectAcousticEchoCancel);
+			COMOBJECT(IDirectSoundCaptureFXAec, AcousticEchoCancel);
 
 		public:
 			/// <summary>
@@ -63,17 +41,12 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDirectSoundCaptureFXAec pointer.</param>
 			/// <returns>The newly constructed object.</returns>
-			static CaptureEffectAcousticEchoCancel^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
-			/// Releases all resources used by the <see cref="SlimDX::DirectSound::CaptureEffectAcousticEchoCancel"/> class.
-			/// </summary>
-			~CaptureEffectAcousticEchoCancel();
+			static AcousticEchoCancel^ FromPointer( System::IntPtr pointer );
 
 			/// <summary>
 			/// Sets the enumerator to its initial position, which is before the first element in the collection.
 			/// </summary>
-			void Reset();
+			Result Reset();
 
 			/// <summary>
 			/// Gets or sets the acoustic echo cancellation parameters of a buffer.

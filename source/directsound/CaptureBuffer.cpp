@@ -57,6 +57,8 @@ namespace DirectSound
 
 		HRESULT hr = capture->InternalPointer->CreateCaptureBuffer( &value, &buffer, NULL );
 
+		delete value.lpwfxFormat;
+
 		if( RECORD_DSOUND( hr ).IsFailure )
 			throw gcnew DirectSoundException( Result::Last );
 
@@ -71,6 +73,9 @@ namespace DirectSound
 
 	CaptureBuffer^ CaptureBuffer::FromPointer( IDirectSoundCaptureBuffer8* pointer )
 	{
+		if( pointer == NULL )
+			return nullptr;
+
 		CaptureBuffer^ tableEntry = safe_cast<CaptureBuffer^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -83,6 +88,9 @@ namespace DirectSound
 
 	CaptureBuffer^ CaptureBuffer::FromPointer( System::IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		CaptureBuffer^ tableEntry = safe_cast<CaptureBuffer^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -227,7 +235,7 @@ namespace DirectSound
 		return result;
 	}
 
-	array<CaptureEffectReturnValue>^ CaptureBuffer::GetEffectStatus( int effectCount )
+	array<CaptureEffectResult>^ CaptureBuffer::GetEffectStatus( int effectCount )
 	{
 		std::vector<DWORD> results( effectCount );
 
@@ -235,10 +243,10 @@ namespace DirectSound
 		if( RECORD_DSOUND( hr ).IsFailure )
 			return nullptr;
 
-		array<CaptureEffectReturnValue>^ output = gcnew array<CaptureEffectReturnValue>( effectCount );
+		array<CaptureEffectResult>^ output = gcnew array<CaptureEffectResult>( effectCount );
 
 		for( int i = 0; i < effectCount; i++ )
-			output[i] = static_cast<CaptureEffectReturnValue>( results[i] );
+			output[i] = static_cast<CaptureEffectResult>( results[i] );
 
 		return output;
 	}

@@ -30,6 +30,7 @@
 #include "Callbacks.h"
 #include "DirectSoundCapture.h"
 
+using namespace System;
 using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
@@ -48,6 +49,9 @@ namespace DirectSound
 
 	DirectSoundCapture^ DirectSoundCapture::FromPointer( IDirectSoundCapture* pointer )
 	{
+		if( pointer == NULL )
+			return nullptr;
+
 		DirectSoundCapture^ tableEntry = safe_cast<DirectSoundCapture^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
@@ -60,6 +64,9 @@ namespace DirectSound
 
 	DirectSoundCapture^ DirectSoundCapture::FromPointer( System::IntPtr pointer )
 	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
 		DirectSoundCapture^ tableEntry = safe_cast<DirectSoundCapture^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{

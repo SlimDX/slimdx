@@ -19,45 +19,43 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
-
 #include <windows.h>
-#include <mmreg.h>
 #include <dsound.h>
 
 #include "../Utilities.h"
+
 #include "CaptureEffectDescription.h"
 
 namespace SlimDX
 {
-	namespace DirectSound
+namespace DirectSound
+{
+	CaptureEffectDescription::CaptureEffectDescription( const DSCEFFECTDESC &description )
 	{
-		CaptureEffectDescription::CaptureEffectDescription( const DSCEFFECTDESC &description )
-		{
-			CaptureEffectClass = Utilities::ConvertNativeGuid( description.guidDSCFXClass );
-			CaptureEffectInstance = Utilities::ConvertNativeGuid( description.guidDSCFXInstance );
+		CaptureEffectClass = Utilities::ConvertNativeGuid( description.guidDSCFXClass );
+		CaptureEffectInstance = Utilities::ConvertNativeGuid( description.guidDSCFXInstance );
 
-			if( description.dwFlags == DSCFX_LOCHARDWARE )
-				LocateInHardware = true;
-			else if( description.dwFlags == DSCFX_LOCSOFTWARE )
-				LocateInSoftware = true;
-		}
-
-		DSCEFFECTDESC CaptureEffectDescription::Marshal()
-		{
-			DSCEFFECTDESC description;
-			ZeroMemory( &description, sizeof(description) );
-			description.dwSize = sizeof( DSCEFFECTDESC );
-			description.guidDSCFXClass = Utilities::ConvertManagedGuid( CaptureEffectClass );
-			description.guidDSCFXInstance = Utilities::ConvertManagedGuid( CaptureEffectInstance );
-			description.dwFlags = DSCFX_LOCSOFTWARE;
-			description.dwReserved1 = 0;
-			description.dwReserved2 = 0;
-
-			if( LocateInHardware )
-				description.dwFlags = DSCFX_LOCHARDWARE;
-
-			return description;
-		}
+		if( description.dwFlags == DSCFX_LOCHARDWARE )
+			LocateInHardware = true;
+		else if( description.dwFlags == DSCFX_LOCSOFTWARE )
+			LocateInSoftware = true;
 	}
+
+	DSCEFFECTDESC CaptureEffectDescription::Marshal()
+	{
+		DSCEFFECTDESC description;
+		ZeroMemory( &description, sizeof(description) );
+		description.dwSize = sizeof( DSCEFFECTDESC );
+		description.guidDSCFXClass = Utilities::ConvertManagedGuid( CaptureEffectClass );
+		description.guidDSCFXInstance = Utilities::ConvertManagedGuid( CaptureEffectInstance );
+		description.dwFlags = DSCFX_LOCSOFTWARE;
+		description.dwReserved1 = 0;
+		description.dwReserved2 = 0;
+
+		if( LocateInHardware )
+			description.dwFlags = DSCFX_LOCHARDWARE;
+
+		return description;
+	}
+}
 }

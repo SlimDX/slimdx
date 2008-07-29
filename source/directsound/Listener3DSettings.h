@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#include <dsound.h>
-
 namespace SlimDX
 {
 	namespace DirectSound
@@ -41,26 +39,32 @@ namespace SlimDX
 			/// Number of meters in a vector unit.
 			/// </summary>
 			property float DistanceFactor;
+
 			/// <summary>
 			/// Ratio of Doppler effect to that in the real world.
 			/// </summary>
 			property float DopplerFactor;
+
 			/// <summary>
 			/// Ratio of attenuation over distance to that in the real world.
 			/// </summary>
 			property float RolloffFactor;
+
 			/// <summary>
 			/// Describes the listener's front orientation.
 			/// </summary>
 			property Vector3 FrontOrientation;
+
 			/// <summary>
 			/// Describes the listener's top orientation.
 			/// </summary>
 			property Vector3 TopOrientation;
+
 			/// <summary>
 			/// Describes the listener's position.
 			/// </summary>
 			property Vector3 Position;
+
 			/// <summary>
 			/// Describes the listener's velocity.
 			/// </summary>

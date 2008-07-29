@@ -20,7 +20,6 @@
 * THE SOFTWARE.
 */
 #include <windows.h>
-#include <vcclr.h>
 #include <dsound.h>
 
 #include "../ComObject.h"
@@ -31,8 +30,6 @@
 
 #include "Guids.h"
 #include "Enums.h"
-#include "Capabilities.h"
-#include "DeviceCollection.h"
 #include "Callbacks.h"
 #include "DirectSound.h"
 

@@ -21,9 +21,6 @@
 */
 #pragma once
 
-#include <dsound.h>
-#include "../Math/Vector3.h"
-
 namespace SlimDX
 {
 	namespace DirectSound
@@ -48,6 +45,7 @@ namespace SlimDX
 			/// Gets or Sets the top of the listener's orientation.
 			/// </summary>
 			property Vector3 Top;
+
 			/// <summary>
 			/// Gets or Sets the front of the listener's orientation.
 			/// </summary>
