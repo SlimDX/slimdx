@@ -21,50 +21,16 @@
 */
 #pragma once
 
-#include <dsound.h>
-
 namespace SlimDX
 {
 	namespace DirectSound
 	{
 		/// <summary>
-		/// Contains parameters for a distortion effect.
-		/// </summary>
-		public value class DistortionParameters
-		{
-		internal:
-			DistortionParameters( const DSFXDistortion& value );
-			DSFXDistortion Marshal();
-
-		public:
-			/// <summary>
-			/// Amount of signal change after distortion. The default value is -18 dB.
-			/// </summary>
-			property float Gain;
-			/// <summary>
-			/// Percentage of distortion intensity. The default value is 15 percent.
-			/// </summary>
-			property float Edge;
-			/// <summary>
-			/// Center frequency of harmonic content addition. The default value is 2400 Hz.
-			/// </summary>
-			property float PostEQCenterFrequency;
-			/// <summary>
-			/// Width of frequency band that determines range of harmonic content addition. The default value is 2400 Hz.
-			/// </summary>
-			property float PostEQBandwidth;
-			/// <summary>
-			/// Filter cutoff for high-frequency harmonics attenuation. The default value is 8000 Hz.
-			/// </summary>
-			property float PreLowpassCutoff;
-		};
-
-		/// <summary>
 		/// The SoundEffectDistortion object is used to set and retrieve effect parameters on a buffer that supports distortion.
 		/// </summary>
-		public ref class SoundEffectDistortion : public ComObject
+		public ref class DistortionEffect : public ComObject
 		{
-			COMOBJECT(IDirectSoundFXDistortion, SoundEffectDistortion);
+			COMOBJECT(IDirectSoundFXDistortion, DistortionEffect);
 
 		public:
 			/// <summary>
@@ -73,78 +39,123 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDirectSoundFXDistortion pointer.</param>
 			/// <returns>The newly constructed object.</returns>
-			static SoundEffectDistortion^ FromPointer( System::IntPtr pointer );
+			static DistortionEffect^ FromPointer( System::IntPtr pointer );
 
 			/// <summary>
-			/// Releases all resources used by the <see cref="SlimDX::DirectSound::SoundEffectDistortion"/> class.
+			/// Amount of signal change after distortion. The default value is -18 dB.
 			/// </summary>
-			~SoundEffectDistortion();
-
-			/// <summary>
-			/// Gets or sets all the distortion parameters of a buffer
-			/// </summary>
-			property DistortionParameters AllParameters
+			property float Gain
 			{
-				DistortionParameters get();
-				void set( DistortionParameters value );
+				float get();
+				void set( float value );
+			}
+
+			/// <summary>
+			/// Percentage of distortion intensity. The default value is 15 percent.
+			/// </summary>
+			property float Edge
+			{
+				float get();
+				void set( float value );
+			}
+
+			/// <summary>
+			/// Center frequency of harmonic content addition. The default value is 2400 Hz.
+			/// </summary>
+			property float PostEQCenterFrequency
+			{
+				float get();
+				void set( float value );
+			}
+
+			/// <summary>
+			/// Width of frequency band that determines range of harmonic content addition. The default value is 2400 Hz.
+			/// </summary>
+			property float PostEQBandwidth
+			{
+				float get();
+				void set( float value );
+			}
+
+			/// <summary>
+			/// Filter cutoff for high-frequency harmonics attenuation. The default value is 8000 Hz.
+			/// </summary>
+			property float PreLowpassCutoff
+			{
+				float get();
+				void set( float value );
 			}
 
 			/// <summary>
 			/// Default amount of signal change after distortion.
 			/// </summary>
 			literal float GainDefault = -18.0f;
+
 			/// <summary>
 			/// Maximum amount of signal change after distortion.
 			/// </summary>
 			literal float GainMax = DSFXDISTORTION_GAIN_MAX;
+
 			/// <summary>
 			/// Minimum amount of signal change after distortion.
 			/// </summary>
 			literal float GainMin = DSFXDISTORTION_GAIN_MIN;
+
 			/// <summary>
 			///  Default percentage of distortion intensity.
 			/// </summary>
 			literal float EdgeDefault = 15.0f;
+
 			/// <summary>
 			/// Maximum percentage of distortion intensity.
 			/// </summary>
 			literal float EdgeMax = DSFXDISTORTION_EDGE_MAX;
+
 			/// <summary>
 			/// Minimum percentage of distortion intensity.
 			/// </summary>
 			literal float EdgeMin = DSFXDISTORTION_EDGE_MIN;
+
 			/// <summary>
 			/// Default center frequency of harmonic content addition.
 			/// </summary>
 			literal float PostEQCenterFrequencyDefault = 2400.0f;
+
 			/// <summary>
 			/// Maximum center frequency of harmonic content addition.
 			/// </summary>
 			literal float PostEQCenterFrequencyMax = DSFXDISTORTION_POSTEQCENTERFREQUENCY_MAX;
+
 			/// <summary>
 			/// Minimum center frequency of harmonic content addition.
 			/// </summary>
 			literal float PostEQCenterFrequencyMin = DSFXDISTORTION_POSTEQCENTERFREQUENCY_MIN;
+
 			/// <summary>
 			/// Default width of frequency band that determines range of harmonic content addition.
 			/// </summary>
 			literal float PostEQBandwidthDefault = 2400.0f;
+
 			/// <summary>
 			/// Maximum width of frequency band that determines range of harmonic content addition.
 			/// </summary>
 			literal float PostEQBandwidthMax = DSFXDISTORTION_POSTEQBANDWIDTH_MAX;
+
 			/// <summary>
 			/// Minimum width of frequency band that determines range of harmonic content addition.
 			/// </summary>
 			literal float PostEQBandwidthMin = DSFXDISTORTION_POSTEQBANDWIDTH_MIN;
+
 			/// <summary>
 			/// Default filter cutoff for high-frequency harmonics attenuation.
 			/// </summary>
 			literal float PreLowpassCutoffDefault = 8000.0f;
+
 			/// <summary>
 			/// Maximum filter cutoff for high-frequency harmonics attenuation.
 			/// </summary>
 			literal float PreLowpassCutoffMax = DSFXDISTORTION_PRELOWPASSCUTOFF_MAX;
+
 			/// <summary>
 			/// Minimum filter cutoff for high-frequency harmonics attenuation.
 			/// </summary>

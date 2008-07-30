@@ -27,7 +27,7 @@
 #include "DirectSoundException.h"
 
 #include "Enums.h"
-#include "AcousticEchoCancel.h"
+#include "EchoEffect.h"
 
 using namespace System;
 
@@ -35,157 +35,163 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	AcousticEchoCancel::AcousticEchoCancel( IDirectSoundCaptureFXAec *pointer )
+	EchoEffect::EchoEffect( IDirectSoundFXEcho *pointer )
 	{
 		Construct( pointer );
 	}
 
-	AcousticEchoCancel::AcousticEchoCancel( System::IntPtr pointer )
+	EchoEffect::EchoEffect( System::IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
 
-	AcousticEchoCancel^ AcousticEchoCancel::FromPointer( IDirectSoundCaptureFXAec* pointer )
+	EchoEffect^ EchoEffect::FromPointer( IDirectSoundFXEcho* pointer )
 	{
 		if( pointer == NULL )
 			return nullptr;
 
-		AcousticEchoCancel^ tableEntry = safe_cast<AcousticEchoCancel^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		EchoEffect^ tableEntry = safe_cast<EchoEffect^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
 			return tableEntry;
 		}
 
-		return gcnew AcousticEchoCancel( pointer );
+		return gcnew EchoEffect( pointer );
 	}
 
-	AcousticEchoCancel^ AcousticEchoCancel::FromPointer( IntPtr pointer )
+	EchoEffect^ EchoEffect::FromPointer( System::IntPtr pointer )
 	{
 		if( pointer == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "pointer" );
 
-		AcousticEchoCancel^ tableEntry = safe_cast<AcousticEchoCancel^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		EchoEffect^ tableEntry = safe_cast<EchoEffect^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
 		}
 
-		return gcnew AcousticEchoCancel( pointer );
+		return gcnew EchoEffect( pointer );
 	}
 
-	Result AcousticEchoCancel::Reset()
+	float EchoEffect::LeftDelay::get()
 	{
-		HRESULT hr = InternalPointer->Reset();
-		return RECORD_DSOUND( hr );
-	}
-
-	bool AcousticEchoCancel::Enabled::get()
-	{
-		DSCFXAec param;
+		DSFXEcho param;
 
 		HRESULT hr = InternalPointer->GetAllParameters( &param );
 		if( RECORD_DSOUND( hr ).IsFailure )
-			return false;
+			return 0.0f;
 
-		return param.fEnable == TRUE;
+		return param.fLeftDelay;
 	}
 
-	void AcousticEchoCancel::Enabled::set( bool value )
+	void EchoEffect::LeftDelay::set( float value )
 	{
-		DSCFXAec param;
+		DSFXEcho param;
 
 		HRESULT hr = InternalPointer->GetAllParameters( &param );
 		if( RECORD_DSOUND( hr ).IsFailure )
 			return;
 
-		param.fEnable = value;
+		param.fLeftDelay = value;
 		hr = InternalPointer->SetAllParameters( &param );
 		RECORD_DSOUND( hr );
 	}
 
-	bool AcousticEchoCancel::NoiseFill::get()
+	float EchoEffect::RightDelay::get()
 	{
-		DSCFXAec param;
+		DSFXEcho param;
 
 		HRESULT hr = InternalPointer->GetAllParameters( &param );
 		if( RECORD_DSOUND( hr ).IsFailure )
-			return false;
+			return 0.0f;
 
-		return param.fNoiseFill == TRUE;
+		return param.fRightDelay;
 	}
 
-	void AcousticEchoCancel::NoiseFill::set( bool value )
+	void EchoEffect::RightDelay::set( float value )
 	{
-		DSCFXAec param;
+		DSFXEcho param;
 
 		HRESULT hr = InternalPointer->GetAllParameters( &param );
 		if( RECORD_DSOUND( hr ).IsFailure )
 			return;
 
-		param.fNoiseFill = value;
+		param.fRightDelay = value;
 		hr = InternalPointer->SetAllParameters( &param );
 		RECORD_DSOUND( hr );
 	}
 
-	AcousticEchoCancelMode AcousticEchoCancel::Mode::get()
+	float EchoEffect::Feedback::get()
 	{
-		DSCFXAec param;
+		DSFXEcho param;
 
 		HRESULT hr = InternalPointer->GetAllParameters( &param );
 		if( RECORD_DSOUND( hr ).IsFailure )
-			return AcousticEchoCancelMode::PassThrough;
+			return 0.0f;
 
-		return static_cast<AcousticEchoCancelMode>( param.dwMode );
+		return param.fFeedback;
 	}
 
-	void AcousticEchoCancel::Mode::set( AcousticEchoCancelMode value )
+	void EchoEffect::Feedback::set( float value )
 	{
-		DSCFXAec param;
+		DSFXEcho param;
 
 		HRESULT hr = InternalPointer->GetAllParameters( &param );
 		if( RECORD_DSOUND( hr ).IsFailure )
 			return;
 
-		param.dwMode = static_cast<DWORD>( value );
+		param.fFeedback = value;
 		hr = InternalPointer->SetAllParameters( &param );
 		RECORD_DSOUND( hr );
 	}
 
-	bool AcousticEchoCancel::UnInitialized::get()
+	float EchoEffect::WetDryMix::get()
 	{
-		DWORD status = 0;
-		HRESULT hr = InternalPointer->GetStatus( &status );
-		RECORD_DSOUND( hr );
+		DSFXEcho param;
 
-		return ( status & DSCFX_AEC_STATUS_HISTORY_UNINITIALIZED ) != 0;
+		HRESULT hr = InternalPointer->GetAllParameters( &param );
+		if( RECORD_DSOUND( hr ).IsFailure )
+			return 0.0f;
+
+		return param.fWetDryMix;
 	}
 
-	bool AcousticEchoCancel::ContinuouslyConverged::get()
+	void EchoEffect::WetDryMix::set( float value )
 	{
-		DWORD status = 0;
-		HRESULT hr = InternalPointer->GetStatus( &status );
-		RECORD_DSOUND( hr );
+		DSFXEcho param;
 
-		return ( status & DSCFX_AEC_STATUS_HISTORY_CONTINUOUSLY_CONVERGED ) != 0;
+		HRESULT hr = InternalPointer->GetAllParameters( &param );
+		if( RECORD_DSOUND( hr ).IsFailure )
+			return;
+
+		param.fWetDryMix = value;
+		hr = InternalPointer->SetAllParameters( &param );
+		RECORD_DSOUND( hr );
 	}
 
-	bool AcousticEchoCancel::CurrentlyConverged::get()
+	int EchoEffect::PanDelay::get()
 	{
-		DWORD status = 0;
-		HRESULT hr = InternalPointer->GetStatus( &status );
-		RECORD_DSOUND( hr );
+		DSFXEcho param;
 
-		return ( status & DSCFX_AEC_STATUS_CURRENTLY_CONVERGED ) != 0;
+		HRESULT hr = InternalPointer->GetAllParameters( &param );
+		if( RECORD_DSOUND( hr ).IsFailure )
+			return 0;
+
+		return param.lPanDelay;
 	}
 
-	bool AcousticEchoCancel::PreviouslyDiverged::get()
+	void EchoEffect::PanDelay::set( int value )
 	{
-		DWORD status = 0;
-		HRESULT hr = InternalPointer->GetStatus( &status );
-		RECORD_DSOUND( hr );
+		DSFXEcho param;
 
-		return ( status & DSCFX_AEC_STATUS_HISTORY_PREVIOUSLY_DIVERGED ) != 0;
+		HRESULT hr = InternalPointer->GetAllParameters( &param );
+		if( RECORD_DSOUND( hr ).IsFailure )
+			return;
+
+		param.lPanDelay = value;
+		hr = InternalPointer->SetAllParameters( &param );
+		RECORD_DSOUND( hr );
 	}
 }
 }
