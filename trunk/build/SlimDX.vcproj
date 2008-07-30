@@ -5632,14 +5632,6 @@
 						RelativePath="..\source\directsound\AcousticEchoCancel.h"
 						>
 					</File>
-					<File
-						RelativePath="..\source\directsound\AcousticEchoCancelParameters.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\directsound\AcousticEchoCancelParameters.h"
-						>
-					</File>
 				</Filter>
 				<Filter
 					Name="NoiseSupress"
@@ -5657,46 +5649,6 @@
 			<Filter
 				Name="Effects"
 				>
-				<File
-					RelativePath="..\source\directsound\SoundEffectChorus.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectChorus.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectCompressor.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectCompressor.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectDistortion.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectDistortion.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectEcho.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectEcho.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectFlanger.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectFlanger.h"
-					>
-				</File>
 				<File
 					RelativePath="..\source\directsound\SoundEffectGargle.cpp"
 					>
@@ -5729,6 +5681,66 @@
 					RelativePath="..\source\directsound\SoundEffectWavesReverb.h"
 					>
 				</File>
+				<Filter
+					Name="Chorus"
+					>
+					<File
+						RelativePath="..\source\directsound\ChorusEffect.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directsound\ChorusEffect.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Compressor"
+					>
+					<File
+						RelativePath="..\source\directsound\CompressorEffect.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directsound\CompressorEffect.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Distortion"
+					>
+					<File
+						RelativePath="..\source\directsound\DistortionEffect.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directsound\DistortionEffect.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Echo"
+					>
+					<File
+						RelativePath="..\source\directsound\EchoEffect.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directsound\EchoEffect.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Flanger"
+					>
+					<File
+						RelativePath="..\source\directsound\FlangerEffect.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directsound\FlangerEffect.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Listener"
@@ -5907,22 +5919,6 @@
 				</File>
 				<File
 					RelativePath="..\source\directsound\FullDuplex.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Notification"
-				>
-				<File
-					RelativePath="..\source\directsound\BufferPositionNotify.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\DirectSoundNotify.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\DirectSoundNotify.h"
 					>
 				</File>
 			</Filter>

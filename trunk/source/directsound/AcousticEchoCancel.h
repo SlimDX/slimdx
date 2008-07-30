@@ -20,8 +20,6 @@
 * THE SOFTWARE.
 */
 #pragma once
-
-#include "AcousticEchoCancelParameters.h"
 			
 namespace SlimDX
 {
@@ -49,12 +47,30 @@ namespace SlimDX
 			Result Reset();
 
 			/// <summary>
-			/// Gets or sets the acoustic echo cancellation parameters of a buffer.
+			/// Boolean value that specifies whether the effect is enabled.
 			/// </summary>
-			property AcousticEchoCancelParameters AllParameters
+			property bool Enabled
 			{
-				AcousticEchoCancelParameters get();
-				void set( AcousticEchoCancelParameters value );
+				bool get();
+				void set( bool value );
+			}
+
+			/// <summary>
+			/// Boolean value that specifies whether to enable background comfort noise, which makes the capture signal sound more natural by preventing periods of dead silence. By default, background comfort noise is not enabled.
+			/// </summary>
+			property bool NoiseFill
+			{
+				bool get();
+				void set( bool value );
+			}
+
+			/// <summary>
+			/// Operation mode.
+			/// </summary>
+			property AcousticEchoCancelMode Mode
+			{
+				AcousticEchoCancelMode get();
+				void set( AcousticEchoCancelMode value );
 			}
 
 			/// <summary>
