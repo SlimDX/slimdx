@@ -21,38 +21,16 @@
 */
 #pragma once
 
-#include <dsound.h>
-
 namespace SlimDX
 {
 	namespace DirectSound
 	{
 		/// <summary>
-		/// Contains parameters for an amplitude modulation effect.
-		/// </summary>
-		public value class GargleParameters
-		{
-		internal:
-			GargleParameters( const DSFXGargle& value );
-			DSFXGargle Marshal();
-
-		public:
-			/// <summary>
-			/// Rate of modulation, in Hertz. The default value is 20.
-			/// </summary>
-			property int RateHz;
-			/// <summary>
-			/// Shape of the modulation waveform. By default the waveform is a triangle.
-			/// </summary>
-			property int WaveShape;
-		};
-
-		/// <summary>
 		/// The SoundEffectGargle object is used to set and retrieve effect parameters on a buffer that supports amplitude modulation.
 		/// </summary>
-		public ref class SoundEffectGargle : public ComObject
+		public ref class GargleEffect : public ComObject
 		{
-			COMOBJECT(IDirectSoundFXGargle, SoundEffectGargle);
+			COMOBJECT(IDirectSoundFXGargle, GargleEffect);
 
 		public:
 			/// <summary>
@@ -61,46 +39,55 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDirectSoundFXGargle pointer.</param>
 			/// <returns>The newly constructed object.</returns>
-			static SoundEffectGargle^ FromPointer( System::IntPtr pointer );
+			static GargleEffect^ FromPointer( System::IntPtr pointer );
 
 			/// <summary>
-			/// Releases all resources used by the <see cref="SlimDX::DirectSound::SoundEffectGargle"/> class.
+			/// Rate of modulation, in Hertz. The default value is 20.
 			/// </summary>
-			~SoundEffectGargle();
-
-			/// <summary>
-			/// Gets or sets all the gargle parameters of a buffer
-			/// </summary>
-			property GargleParameters AllParameters
+			property int RateHz
 			{
-				GargleParameters get();
-				void set( GargleParameters value );
+				int get();
+				void set( int value );
+			}
+
+			/// <summary>
+			/// Shape of the modulation waveform. By default the waveform is a triangle.
+			/// </summary>
+			property int WaveShape
+			{
+				int get();
+				void set( int value );
 			}
 
 			/// <summary>
 			/// Default shape of the modulation waveform.
 			/// </summary>
-			literal int   WaveShapeDefault = DSFXGARGLE_WAVE_TRIANGLE;
+			literal int WaveShapeDefault = DSFXGARGLE_WAVE_TRIANGLE;
+
 			/// <summary>
 			/// Triangular shape of the modulation waveform.
 			/// </summary>
-			literal int   WaveShapeTriangle = DSFXGARGLE_WAVE_TRIANGLE;
+			literal int WaveShapeTriangle = DSFXGARGLE_WAVE_TRIANGLE;
+
 			/// <summary>
 			/// Square shape of the modulation waveform.
 			/// </summary>
-			literal int   WaveShapeSquare = DSFXGARGLE_WAVE_SQUARE;
+			literal int WaveShapeSquare = DSFXGARGLE_WAVE_SQUARE;
+
 			/// <summary>
 			/// Default rate of modulation, in Hertz.
 			/// </summary>
-			literal int   RateHzDefault = 20;
+			literal int RateHzDefault = 20;
+
 			/// <summary>
 			/// Maximum rate of modulation, in Hertz.
 			/// </summary>
-			literal int   RateHzMax = DSFXGARGLE_RATEHZ_MAX;
+			literal int RateHzMax = DSFXGARGLE_RATEHZ_MAX;
+
 			/// <summary>
 			/// Minimum rate of modulation, in Hertz.
 			/// </summary>
-			literal int   RateHzMin = DSFXGARGLE_RATEHZ_MIN;
+			literal int RateHzMin = DSFXGARGLE_RATEHZ_MIN;
 		};
 	}
 }

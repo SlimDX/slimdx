@@ -5649,38 +5649,6 @@
 			<Filter
 				Name="Effects"
 				>
-				<File
-					RelativePath="..\source\directsound\SoundEffectGargle.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectGargle.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectI3DL2Reverb.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectI3DL2Reverb.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectParametricEqualizer.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectParametricEqualizer.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectWavesReverb.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\SoundEffectWavesReverb.h"
-					>
-				</File>
 				<Filter
 					Name="Chorus"
 					>
@@ -5738,6 +5706,54 @@
 					</File>
 					<File
 						RelativePath="..\source\directsound\FlangerEffect.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Gargle"
+					>
+					<File
+						RelativePath="..\source\directsound\GargleEffect.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directsound\GargleEffect.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="I3DL2Reverb"
+					>
+					<File
+						RelativePath="..\source\directsound\I3DL2Reverb.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directsound\I3DL2Reverb.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ParametricEqualizer"
+					>
+					<File
+						RelativePath="..\source\directsound\ParametricEqualizer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directsound\ParametricEqualizer.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="WaveReverb"
+					>
+					<File
+						RelativePath="..\source\directsound\WavesReverb.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directsound\WavesReverb.h"
 						>
 					</File>
 				</Filter>
