@@ -87,7 +87,7 @@ namespace SlimDX
 			/// <summary>
 			/// Size, in bytes, of the largest contiguous block of free memory on the sound card.
 			/// </summary>
-			property int MaxContigousFreeHardwareMemoryBytes;
+			property int MaxContiguousFreeHardwareMemoryBytes;
 
 			/// <summary>
 			/// Maximum number of 3-D buffers.

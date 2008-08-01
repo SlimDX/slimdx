@@ -34,7 +34,7 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::CaptureEffectAcousticEchoCancel"/> class using the specified pointer to a
+			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::AcousticEchoCancel"/> class using the specified pointer to a
 			/// previously constructed unmanaged object.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDirectSoundCaptureFXAec pointer.</param>
@@ -76,7 +76,7 @@ namespace SlimDX
 			/// <summary>
 			/// True if the AEC algorithm is in the uninitialized state.
 			/// </summary>
-			property bool UnInitialized
+			property bool Uninitialized
 			{
 				bool get();
 			}

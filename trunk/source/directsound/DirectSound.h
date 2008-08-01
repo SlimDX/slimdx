@@ -42,18 +42,18 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::DirectSound"/> class.
+			/// Initializes a new instance of the <see cref="DirectSound"/> class.
 			/// </summary>
 			DirectSound();
 
 			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::DirectSound"/> class.
+			/// Initializes a new instance of the <see cref="DirectSound"/> class.
 			/// </summary>
 			/// <param name="device"></param>
 			DirectSound( System::Guid device );
 
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::DirectSound"/> class using the specified pointer to a
+			/// Constructs a new instance of the <see cref="DirectSound"/> class using the specified pointer to a
 			/// previously constructed unmanaged object.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDirectSound8 pointer.</param>

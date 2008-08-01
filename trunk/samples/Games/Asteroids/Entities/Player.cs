@@ -146,6 +146,7 @@ namespace Asteroids
         void Respawn(object sender, EventArgs e)
         {
             // make sure there are no asteroids around that could kill us
+            Trigger trigger = sender as Trigger;
             BoundingSphere sphere = new BoundingSphere(new Vector3(SpawnPoint, 0), Model.Radius);
             foreach (Entity entity in Game.Entities)
             {
@@ -157,13 +158,13 @@ namespace Asteroids
                 if (entity.Collides(sphere))
                 {
                     // no good, wait a bit more
-                    ((Trigger)sender).Duration = RespawnInterval / 2;
+                    trigger.Duration = RespawnInterval / 2;
                     return;
                 }
             }
 
             // otherwise, we can go ahead and respawn the player
-            ((Trigger)sender).Repeat = false;
+            trigger.Repeat = false;
             IsDead = false;
             Position = SpawnPoint;
             Velocity = Vector2.Zero;

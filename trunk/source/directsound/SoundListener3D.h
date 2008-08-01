@@ -22,8 +22,6 @@
 #pragma once
 
 #include "SoundBuffer.h"
-#include "Listener3DSettings.h"
-#include "Listener3DOrientation.h"
 
 namespace SlimDX
 {
@@ -41,7 +39,7 @@ namespace SlimDX
 			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::SoundListener3D"/> class
 			/// with a previously created sound buffer.
 			/// </summary>
-			/// <param name="pointer">The SlimDX::DirectSound::SoundBuffer object.</param>
+			/// <param name="soundBuffer">The SlimDX::DirectSound::SoundBuffer object.</param>
 			SoundListener3D( SoundBuffer^ soundBuffer );
 
 			/// <summary>
@@ -58,12 +56,21 @@ namespace SlimDX
 			Result CommitDeferredSettings();
 
 			/// <summary>
-			/// Gets or sets all 3-D parameters of the sound environment and the listener.
+			/// Describes the listener's front orientation.
 			/// </summary>
-			property Listener3DSettings AllParameters
+			property Vector3 FrontOrientation
 			{
-			   Listener3DSettings get();
-			   void set( Listener3DSettings value );
+				Vector3 get();
+				void set( Vector3 value );
+			}
+
+			/// <summary>
+			/// Describes the listener's top orientation.
+			/// </summary>
+			property Vector3 TopOrientation
+			{
+				Vector3 get();
+				void set( Vector3 value );
 			}
 
 			/// <summary>
@@ -96,15 +103,6 @@ namespace SlimDX
 			{
 			   float get();
 			   void set( float value );
-			}
-
-			/// <summary>
-			/// Gets or sets the orientation of the listener's head.
-			/// </summary>
-			property Listener3DOrientation Orientation
-			{
-			   Listener3DOrientation get();
-			   void set( Listener3DOrientation value );
 			}
 
 			/// <summary>

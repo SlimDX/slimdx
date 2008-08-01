@@ -68,11 +68,6 @@ namespace SlimDX
 				System::IO::Stream^ get() { return m_stream; }
 			}
 
-			property System::Runtime::InteropServices::GCHandle Handle
-			{
-				System::Runtime::InteropServices::GCHandle get() { return m_handle; }
-			}
-
 			void Close();
 		};
 		

@@ -48,32 +48,21 @@ namespace DirectSound
 		FreeHardware3DStreamingBuffers = caps.dwFreeHw3DStreamingBuffers;
 		TotalHardwareMemory = caps.dwTotalHwMemBytes;
 		FreeHardwareMemory = caps.dwFreeHwMemBytes;
-		MaxContigousFreeHardwareMemoryBytes = caps.dwMaxContigFreeHwMemBytes;
+		MaxContiguousFreeHardwareMemoryBytes = caps.dwMaxContigFreeHwMemBytes;
 		UnlockTransferRateHardwareBuffers = caps.dwUnlockTransferRateHwBuffers;
 		PlayCpuOverheadSoftwareBuffers = caps.dwPlayCpuOverheadSwBuffers;
 
-		if( ( caps.dwFlags & DSCAPS_CERTIFIED ) != 0 )
-			Certified = true;
-		if( ( caps.dwFlags & DSCAPS_CONTINUOUSRATE ) != 0 )
-			ContinuousRate = true;
-		if( ( caps.dwFlags & DSCAPS_EMULDRIVER ) != 0 )
-			EmulatedDriver = true;
-		if( ( caps.dwFlags & DSCAPS_PRIMARYMONO ) != 0 )
-			PrimaryMono = true;
-		if( ( caps.dwFlags & DSCAPS_PRIMARYSTEREO ) != 0 )
-			PrimaryStereo = true;	
-		if( ( caps.dwFlags & DSCAPS_PRIMARY16BIT ) != 0 )
-			Primary16Bit = true;
-		if( ( caps.dwFlags & DSCAPS_PRIMARY8BIT ) != 0 )
-			Primary8Bit = true;
-		if( ( caps.dwFlags & DSCAPS_SECONDARYMONO ) != 0 )
-			SecondaryMono = true;
-		if( ( caps.dwFlags & DSCAPS_SECONDARYSTEREO ) != 0 )
-			SecondaryStereo = true;
-		if( ( caps.dwFlags & DSCAPS_SECONDARY16BIT ) != 0 )
-			Secondary16Bit = true;
-		if( ( caps.dwFlags & DSCAPS_SECONDARY8BIT ) != 0 )
-			Secondary8Bit = true;
+		Certified = ( caps.dwFlags & DSCAPS_CERTIFIED ) != 0;
+		ContinuousRate = ( caps.dwFlags & DSCAPS_CONTINUOUSRATE ) != 0;
+		EmulatedDriver = ( caps.dwFlags & DSCAPS_EMULDRIVER ) != 0;
+		PrimaryMono = ( caps.dwFlags & DSCAPS_PRIMARYMONO ) != 0;
+		PrimaryStereo = ( caps.dwFlags & DSCAPS_PRIMARYSTEREO ) != 0;
+		Primary16Bit = ( caps.dwFlags & DSCAPS_PRIMARY16BIT ) != 0;
+		Primary8Bit = ( caps.dwFlags & DSCAPS_PRIMARY8BIT ) != 0;
+		SecondaryMono = ( caps.dwFlags & DSCAPS_SECONDARYMONO ) != 0;
+		SecondaryStereo = ( caps.dwFlags & DSCAPS_SECONDARYSTEREO ) != 0;
+		Secondary16Bit = ( caps.dwFlags & DSCAPS_SECONDARY16BIT ) != 0;
+		Secondary8Bit = ( caps.dwFlags & DSCAPS_SECONDARY8BIT ) != 0;
 	}
 }
 }

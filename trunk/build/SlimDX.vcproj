@@ -5762,22 +5762,6 @@
 				Name="Listener"
 				>
 				<File
-					RelativePath="..\source\directsound\Listener3DOrientation.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\Listener3DOrientation.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\Listener3DSettings.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directsound\Listener3DSettings.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\directsound\SoundListener3D.cpp"
 					>
 				</File>

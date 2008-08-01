@@ -38,7 +38,7 @@ namespace SlimDX.Tests
         }
 
         [Test]
-        public void ConstructFromARGB()
+        public void ConstructFromArgb()
         {
             Color4 color = new Color4(0.75f, 1.0f, 0.5f, 0.25f);
 

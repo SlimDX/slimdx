@@ -30,17 +30,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	CaptureEffectDescription::CaptureEffectDescription( const DSCEFFECTDESC &description )
-	{
-		CaptureEffectClass = Utilities::ConvertNativeGuid( description.guidDSCFXClass );
-		CaptureEffectInstance = Utilities::ConvertNativeGuid( description.guidDSCFXInstance );
-
-		if( description.dwFlags == DSCFX_LOCHARDWARE )
-			LocateInHardware = true;
-		else if( description.dwFlags == DSCFX_LOCSOFTWARE )
-			LocateInSoftware = true;
-	}
-
 	DSCEFFECTDESC CaptureEffectDescription::Marshal()
 	{
 		DSCEFFECTDESC description;

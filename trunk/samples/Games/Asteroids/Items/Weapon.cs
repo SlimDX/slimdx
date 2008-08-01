@@ -82,16 +82,6 @@ namespace Asteroids
         }
 
         /// <summary>
-        /// Gets or sets the damage.
-        /// </summary>
-        /// <value>The damage.</value>
-        public float Damage
-        {
-            get;
-            protected set;
-        }
-
-        /// <summary>
         /// Gets or sets the bullet model.
         /// </summary>
         /// <value>The bullet model.</value>
@@ -99,15 +89,6 @@ namespace Asteroids
         {
             get;
             protected set;
-        }
-
-        /// <summary>
-        /// Gets the bullet count.
-        /// </summary>
-        /// <value>The bullet count.</value>
-        public int BulletCount
-        {
-            get { return Bullets.Count; }
         }
 
         /// <summary>

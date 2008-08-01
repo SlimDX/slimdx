@@ -34,7 +34,6 @@ namespace SlimDX
 		public value class CaptureBufferDescription
 		{
 		internal:
-			CaptureBufferDescription( const DSCBUFFERDESC &description );
 			DSCBUFFERDESC ToUnmanaged();
 
 		public:

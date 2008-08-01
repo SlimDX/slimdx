@@ -25,6 +25,10 @@ namespace SlimDX
 {
 	namespace DirectSound
 	{
+#ifdef XMLDOCS
+		ref class SoundBuffer;
+#endif
+
 		/// <summary>
 		/// Describes the capabilities of a DirectSound buffer object.
 		/// </summary>
@@ -40,7 +44,7 @@ namespace SlimDX
 			property int BufferSize;
 
 			/// <summary>
-			/// The rate, in kilobytes per second, at which data is transferred to the buffer memory when <see cref="SoundBuffer::Unlock"/> is called.
+			/// The rate, in kilobytes per second, at which data is transferred to the buffer memory when <see cref="SlimDX::DirectSound::SoundBuffer">SoundBuffer.Unlock</see> is called.
 			/// </summary>
 			property int UnlockTransferRate;
 

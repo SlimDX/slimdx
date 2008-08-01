@@ -43,7 +43,6 @@ namespace Asteroids
             BulletSpeed = 10.0f;
             BulletRotation = 4.0f;
             BulletLife = 75.0f;
-            Damage = 100.0f;
         }
     }
 }

@@ -36,18 +36,18 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::DirectSoundFullDuplex"/> class.
+			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::FullDuplex"/> class.
 			/// </summary>
 			/// <param name="captureDevice"></param>
 			/// <param name="playbackDevice"></param>
-			/// <param name="captureDesc"></param>
-			/// <param name="bufferDesc"></param>
+			/// <param name="captureDescription"></param>
+			/// <param name="bufferDescription"></param>
 			/// <param name="windowHandle"></param>
 			/// <param name="level"></param>
 			/// <param name="captureBuffer"></param>
 			/// <param name="secondaryBuffer"></param>
-			FullDuplex( System::Guid captureDevice, System::Guid playbackDevice, CaptureBufferDescription captureDesc, 
-								   SoundBufferDescription bufferDesc, System::IntPtr windowHandle, CooperativeLevel level, 
+			FullDuplex( System::Guid captureDevice, System::Guid playbackDevice, CaptureBufferDescription captureDescription, 
+								   SoundBufferDescription bufferDescription, System::IntPtr windowHandle, CooperativeLevel level, 
 								   [Out] CaptureBuffer^% captureBuffer, [Out] SecondarySoundBuffer^% secondaryBuffer );
 
 			/// <summary>

@@ -34,7 +34,7 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::SoundEffectChorus"/> class using the specified pointer to a
+			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::ChorusEffect"/> class using the specified pointer to a
 			/// previously constructed unmanaged object.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDirectSoundFXChorus pointer.</param>
@@ -207,17 +207,17 @@ namespace SlimDX
 			/// <summary>
 			/// Default waveform shape of the LFO. By default, the waveform is a sine.
 			/// </summary>
-			literal int WaveFormDefault = DSFXCHORUS_WAVE_SIN;
+			literal int WaveformDefault = DSFXCHORUS_WAVE_SIN;
 
 			/// <summary>
 			/// Sine waveform shape of the LFO.
 			/// </summary>
-			literal int WaveFormSin = DSFXCHORUS_WAVE_SIN;
+			literal int WaveformSin = DSFXCHORUS_WAVE_SIN;
 
 			/// <summary>
 			/// Triangle waveform shape of the LFO.
 			/// </summary>
-			literal int WaveFormTriangle = DSFXCHORUS_WAVE_TRIANGLE;
+			literal int WaveformTriangle = DSFXCHORUS_WAVE_TRIANGLE;
 
 			/// <summary>
 			/// Default ratio of wet (processed) signal to dry (unprocessed) signal.

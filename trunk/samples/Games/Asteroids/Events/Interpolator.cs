@@ -78,25 +78,6 @@ namespace Asteroids
         /// Initializes a new instance of the <see cref="Interpolator"/> class.
         /// </summary>
         /// <param name="function">The function.</param>
-        public Interpolator(InterpolationFunction function)
-            : this(function, 0.0f, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Interpolator"/> class.
-        /// </summary>
-        /// <param name="function">The function.</param>
-        /// <param name="startValue">The start value.</param>
-        public Interpolator(InterpolationFunction function, float startValue)
-            : this(function, startValue, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Interpolator"/> class.
-        /// </summary>
-        /// <param name="function">The function.</param>
         /// <param name="startValue">The start value.</param>
         /// <param name="predicate">The predicate.</param>
         public Interpolator(InterpolationFunction function, float startValue, Predicate<float> predicate)
