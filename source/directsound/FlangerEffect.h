@@ -34,7 +34,7 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::SoundEffectFlanger"/> class using the specified pointer to a
+			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::FlangerEffect"/> class using the specified pointer to a
 			/// previously constructed unmanaged object.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDirectSoundFXFlanger pointer.</param>
@@ -207,17 +207,17 @@ namespace SlimDX
 			/// <summary>
 			/// Default waveform shape of the LFO. By default, the waveform is a sine.
 			/// </summary>
-			literal int   WaveFormDefault = DSFXFLANGER_WAVE_SIN;
+			literal int   WaveformDefault = DSFXFLANGER_WAVE_SIN;
 
 			/// <summary>
 			/// Triangular waveform shape of the LFO. By default, the waveform is a sine.
 			/// </summary>
-			literal int   WaveFormTriangle = DSFXFLANGER_WAVE_TRIANGLE;
+			literal int   WaveformTriangle = DSFXFLANGER_WAVE_TRIANGLE;
 
 			/// <summary>
 			/// Sine waveform shape of the LFO. By default, the waveform is a sine.
 			/// </summary>
-			literal int   WaveFormSin = DSFXFLANGER_WAVE_SIN;
+			literal int   WaveformSin = DSFXFLANGER_WAVE_SIN;
 
 			/// <summary>
 			/// Default ratio of wet (processed) signal to dry (unprocessed) signal.

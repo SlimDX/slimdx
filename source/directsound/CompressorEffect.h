@@ -34,7 +34,7 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::SoundEffectCompressor"/> class using the specified pointer to a
+			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::CompressorEffect"/> class using the specified pointer to a
 			/// previously constructed unmanaged object.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDirectSoundFXCompressor pointer.</param>

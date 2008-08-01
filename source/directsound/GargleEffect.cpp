@@ -74,7 +74,7 @@ namespace DirectSound
 		return gcnew GargleEffect( pointer );
 	}
 
-	int GargleEffect::RateHz::get()
+	int GargleEffect::Rate::get()
 	{
 		DSFXGargle param;
 
@@ -85,7 +85,7 @@ namespace DirectSound
 		return param.dwRateHz;
 	}
 
-	void GargleEffect::RateHz::set( int value )
+	void GargleEffect::Rate::set( int value )
 	{
 		DSFXGargle param;
 

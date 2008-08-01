@@ -34,7 +34,7 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::CaptureEffectNoiseSuppress"/> class using the specified pointer to a
+			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::NoiseSuppress"/> class using the specified pointer to a
 			/// previously constructed unmanaged object.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDirectSoundCaptureFXNoiseSuppress pointer.</param>

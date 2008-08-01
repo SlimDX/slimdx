@@ -34,7 +34,7 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::SoundEffectGargle"/> class using the specified pointer to a
+			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::GargleEffect"/> class using the specified pointer to a
 			/// previously constructed unmanaged object.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDirectSoundFXGargle pointer.</param>
@@ -44,7 +44,7 @@ namespace SlimDX
 			/// <summary>
 			/// Rate of modulation, in Hertz. The default value is 20.
 			/// </summary>
-			property int RateHz
+			property int Rate
 			{
 				int get();
 				void set( int value );
@@ -77,17 +77,17 @@ namespace SlimDX
 			/// <summary>
 			/// Default rate of modulation, in Hertz.
 			/// </summary>
-			literal int RateHzDefault = 20;
+			literal int RateDefault = 20;
 
 			/// <summary>
 			/// Maximum rate of modulation, in Hertz.
 			/// </summary>
-			literal int RateHzMax = DSFXGARGLE_RATEHZ_MAX;
+			literal int RateMax = DSFXGARGLE_RATEHZ_MAX;
 
 			/// <summary>
 			/// Minimum rate of modulation, in Hertz.
 			/// </summary>
-			literal int RateHzMin = DSFXGARGLE_RATEHZ_MIN;
+			literal int RateMin = DSFXGARGLE_RATEHZ_MIN;
 		};
 	}
 }

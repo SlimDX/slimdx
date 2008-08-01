@@ -54,7 +54,7 @@
       <Word>Antialias</Word>
       <Word>Tween</Word>
       <Word>Keyframed</Word>
-      <Word>lossiness</Word>
+      <Word>Lossiness</Word>
       <Word>Unkey</Word>
       <Word>Mag</Word>
       <Word>Min</Word>
@@ -72,9 +72,11 @@
       <Word>Resettable</Word>
       <Word>Polyline</Word>
       <Word>Multiselect</Word>
-	    <Word>Submix</Word>
-	    <Word>Subresource</Word>
-	    <Word>Unpruned</Word>
+	<Word>Submix</Word>
+	<Word>Subresource</Word>
+	<Word>Unpruned</Word>
+	<Word>Flanger</Word>
+	<Word>Rolloff</Word>
     </Recognized>
   </Words>
 </Dictionary>

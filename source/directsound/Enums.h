@@ -25,6 +25,10 @@ namespace SlimDX
 {
 	namespace DirectSound
 	{
+#ifdef XMLDOCS
+		value class SoundBufferDescription;
+#endif
+
 		// NOTE: The enumerations defined in this file are in alphabetical order. When
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
@@ -200,6 +204,7 @@ namespace SlimDX
 		/// <summary>
 		/// Values specifying the cooperative level of the device.
 		/// </summary>
+		[System::Flags]
 		public enum class CooperativeLevel : System::Int32
 		{
 			/// <summary>

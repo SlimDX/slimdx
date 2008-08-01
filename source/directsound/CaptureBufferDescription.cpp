@@ -27,23 +27,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	CaptureBufferDescription::CaptureBufferDescription( const DSCBUFFERDESC &description )
-	{
-		BufferBytes = description.dwBufferBytes;
-		EffectDescriptions = nullptr;
-
-		if( description.dwFXCount > 0 )
-		{
-			EffectDescriptions = gcnew array<CaptureEffectDescription>( description.dwFXCount );
-
-			for( DWORD i = 0; i < description.dwFXCount; i++ )
-				EffectDescriptions[i] = CaptureEffectDescription( description.lpDSCFXDesc[i] );
-		}
-
-		ControlEffects = ( description.dwFlags & DSCBCAPS_CTRLFX ) != 0;
-		WaveMapped = ( description.dwFlags & DSCBCAPS_WAVEMAPPED ) != 0;
-	}
-
 	DSCBUFFERDESC CaptureBufferDescription::ToUnmanaged()
 	{
 		DSCBUFFERDESC description;

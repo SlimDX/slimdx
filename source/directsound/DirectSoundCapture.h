@@ -45,7 +45,7 @@ namespace SlimDX
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::DirectSoundCapture"/> class.
 			/// </summary>
-			/// <param name=""></param>
+			/// <param name="device"></param>
 			/// <returns></returns>
 			DirectSoundCapture( System::Guid device );
 

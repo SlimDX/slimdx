@@ -152,7 +152,7 @@ namespace DirectSound
 		RECORD_DSOUND( hr );
 	}
 
-	bool AcousticEchoCancel::UnInitialized::get()
+	bool AcousticEchoCancel::Uninitialized::get()
 	{
 		DWORD status = 0;
 		HRESULT hr = InternalPointer->GetStatus( &status );

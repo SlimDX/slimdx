@@ -215,7 +215,7 @@ namespace DirectSound
 
 		HRESULT hr = InternalPointer->GetFormat( NULL, 0, &size );
 		if( RECORD_DSOUND( hr ).IsFailure )
-			throw gcnew DirectSoundException( Result::Last );
+			return nullptr;
 
 		format = reinterpret_cast<WAVEFORMATEX*>( new char[size] );
 		hr = InternalPointer->GetFormat( format, size, NULL );

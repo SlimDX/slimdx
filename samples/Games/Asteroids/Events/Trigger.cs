@@ -27,12 +27,12 @@ namespace Asteroids
     /// A delegate that represents a trigger activation function.
     /// </summary>
     /// <returns><c>true</c> if the trigger should activate; otherwise, <c>false</c>.</returns>
-    public delegate bool TriggerActivation();
+    delegate bool TriggerActivation();
 
     /// <summary>
     /// Represents a trigger linking an action with a condition.
     /// </summary>
-    public class Trigger
+    class Trigger
     {
         /// <summary>
         /// Occurs when the trigger is activated.

@@ -58,7 +58,6 @@ namespace Asteroids
         Sprite fontSprite;
         string levelText;
         SlimDX.Direct3D9.Font levelFont;
-        Color4 levelFontColor = Color.White;
         Interpolator levelTextInterpolator;
 
         /// <summary>

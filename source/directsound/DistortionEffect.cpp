@@ -170,7 +170,7 @@ namespace DirectSound
 		RECORD_DSOUND( hr );
 	}
 
-	float DistortionEffect::PreLowpassCutoff::get()
+	float DistortionEffect::PreLowPassCutoff::get()
 	{
 		DSFXDistortion param;
 
@@ -181,7 +181,7 @@ namespace DirectSound
 		return param.fPreLowpassCutoff;
 	}
 
-	void DistortionEffect::PreLowpassCutoff::set( float value )
+	void DistortionEffect::PreLowPassCutoff::set( float value )
 	{
 		DSFXDistortion param;
 

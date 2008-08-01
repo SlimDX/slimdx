@@ -95,7 +95,7 @@ namespace SlimDX
 			/// <summary>
 			/// Noise suppression capture effect
 			/// </summary>
-			static property System::Guid NoiseSuppressionCapturEffect
+			static property System::Guid NoiseSuppressionCaptureEffect
 			{
 				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_DSCFX_CLASS_NS ); }
 			}
@@ -218,7 +218,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains system-defined identifiers for DirectSound 3-D Algorithms.
 		/// </summary>
-		public ref class DirectSound3DAlgorithmGuid
+		public ref class DirectSound3DAlgorithmGuid sealed
 		{
 		private:
 			DirectSound3DAlgorithmGuid() {}

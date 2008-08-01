@@ -34,7 +34,7 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::SoundEffectDistortion"/> class using the specified pointer to a
+			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::DistortionEffect"/> class using the specified pointer to a
 			/// previously constructed unmanaged object.
 			/// </summary>
 			/// <param name="pointer">The unmanaged IDirectSoundFXDistortion pointer.</param>
@@ -80,7 +80,7 @@ namespace SlimDX
 			/// <summary>
 			/// Filter cutoff for high-frequency harmonics attenuation. The default value is 8000 Hz.
 			/// </summary>
-			property float PreLowpassCutoff
+			property float PreLowPassCutoff
 			{
 				float get();
 				void set( float value );
@@ -149,17 +149,17 @@ namespace SlimDX
 			/// <summary>
 			/// Default filter cutoff for high-frequency harmonics attenuation.
 			/// </summary>
-			literal float PreLowpassCutoffDefault = 8000.0f;
+			literal float PreLowPassCutoffDefault = 8000.0f;
 
 			/// <summary>
 			/// Maximum filter cutoff for high-frequency harmonics attenuation.
 			/// </summary>
-			literal float PreLowpassCutoffMax = DSFXDISTORTION_PRELOWPASSCUTOFF_MAX;
+			literal float PreLowPassCutoffMax = DSFXDISTORTION_PRELOWPASSCUTOFF_MAX;
 
 			/// <summary>
 			/// Minimum filter cutoff for high-frequency harmonics attenuation.
 			/// </summary>
-			literal float PreLowpassCutoffMin = DSFXDISTORTION_PRELOWPASSCUTOFF_MIN;
+			literal float PreLowPassCutoffMin = DSFXDISTORTION_PRELOWPASSCUTOFF_MIN;
 		};
 	}
 }

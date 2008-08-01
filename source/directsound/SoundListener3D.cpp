@@ -94,23 +94,6 @@ namespace DirectSound
 		return RECORD_DSOUND( hr );
 	}
 
-	Listener3DSettings SoundListener3D::AllParameters::get()
-	{
-		DS3DLISTENER result;
-		result.dwSize = sizeof( DS3DLISTENER );
-		HRESULT hr = InternalPointer->GetAllParameters( &result );
-		RECORD_DSOUND( hr );
-
-		return Listener3DSettings( result );
-	}
-
-	void SoundListener3D::AllParameters::set( Listener3DSettings value )
-	{
-		DS3DLISTENER result = value.ToUnmanaged();
-		HRESULT hr = InternalPointer->SetAllParameters( &result, Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
-		RECORD_DSOUND( hr );
-	}
-
 	float SoundListener3D::DistanceFactor::get()
 	{
 		float distance = 0.0f;
@@ -156,21 +139,55 @@ namespace DirectSound
 		RECORD_DSOUND( hr );
 	}
 
-	Listener3DOrientation SoundListener3D::Orientation::get()
+	Vector3 SoundListener3D::FrontOrientation::get()
 	{
 		D3DVECTOR front = D3DVECTOR();
 		D3DVECTOR top = D3DVECTOR();
 		HRESULT hr = InternalPointer->GetOrientation( &front, &top );
-		RECORD_DSOUND( hr );
 
-		return Listener3DOrientation( front, top );
+		if( RECORD_DSOUND( hr ).IsFailure )
+			return Vector3::Zero;
+
+		return Vector3( front.x, front.y, front.z );
 	}
 
-	void SoundListener3D::Orientation::set( Listener3DOrientation value )
+	Vector3 SoundListener3D::TopOrientation::get()
 	{
-		HRESULT hr = InternalPointer->SetOrientation( value.Front.X, value.Front.Y, value.Front.Z,
-													  value.Top.X, value.Top.Y, value.Top.Z,
-													  Deferred ?  DS3D_DEFERRED : DS3D_IMMEDIATE );
+		D3DVECTOR front = D3DVECTOR();
+		D3DVECTOR top = D3DVECTOR();
+		HRESULT hr = InternalPointer->GetOrientation( &front, &top );
+
+		if( RECORD_DSOUND( hr ).IsFailure )
+			return Vector3::Zero;
+
+		return Vector3( top.x, top.y, top.z );
+	}
+
+	void SoundListener3D::FrontOrientation::set( Vector3 value )
+	{
+		D3DVECTOR front = D3DVECTOR();
+		D3DVECTOR top = D3DVECTOR();
+		HRESULT hr = InternalPointer->GetOrientation( &front, &top );
+
+		if( RECORD_DSOUND( hr ).IsFailure )
+			return;
+
+		hr = InternalPointer->SetOrientation( value.X, value.Y, value.Z, top.x, top.y, top.z,
+			Deferred ? DS3D_DEFERRED : DS3D_IMMEDIATE );
+		RECORD_DSOUND( hr );
+	}
+
+	void SoundListener3D::TopOrientation::set( Vector3 value )
+	{
+		D3DVECTOR front = D3DVECTOR();
+		D3DVECTOR top = D3DVECTOR();
+		HRESULT hr = InternalPointer->GetOrientation( &front, &top );
+
+		if( RECORD_DSOUND( hr ).IsFailure )
+			return;
+
+		hr = InternalPointer->SetOrientation( front.x, front.y, front.z, value.X, value.Y, value.Z,
+			Deferred ? DS3D_DEFERRED : DS3D_IMMEDIATE );
 		RECORD_DSOUND( hr );
 	}
 

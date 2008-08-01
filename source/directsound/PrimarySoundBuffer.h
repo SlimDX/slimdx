@@ -35,10 +35,10 @@ namespace SlimDX
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::SoundBuffer"/> class.
 			/// </summary>
-			/// <param name="dsound"></param>
+			/// <param name="device"></param>
 			/// <param name="description"></param>
 			/// <returns></returns>
-			PrimarySoundBuffer( DirectSound^ dsound, SoundBufferDescription description );
+			PrimarySoundBuffer( DirectSound^ device, SoundBufferDescription description );
 
 			/// <summary>
 			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::SoundBuffer"/> class using the specified pointer to a

@@ -31,7 +31,6 @@ namespace SlimDX
 		public value class CaptureEffectDescription
 		{
 		internal:
-			CaptureEffectDescription( const DSCEFFECTDESC& description );
 			DSCEFFECTDESC Marshal();
 
 		public:
