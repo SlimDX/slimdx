@@ -22,7 +22,7 @@
 
 #include <xaudio2.h>
 
-#include "Utilities.h"
+#include "../Utilities.h"
 #include "WaveFormatExtensible.h"
 
 using namespace System;
@@ -31,6 +31,8 @@ using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
+{
+namespace Multimedia
 {
 	WaveFormatExtensible^ WaveFormatExtensible::FromBase( const WAVEFORMATEX *format )
 	{
@@ -168,4 +170,5 @@ namespace SlimDX
 	{
 		return value1->Equals( value2 );
 	}
+}
 }

@@ -115,9 +115,9 @@ namespace SlimDX
 			/// <summary>
 			/// Retrieves the waveform format of the capture buffer.
 			/// </summary>
-			property WaveFormat^ Format
+			property SlimDX::Multimedia::WaveFormat^ Format
 			{
-				WaveFormat^ get();
+				SlimDX::Multimedia::WaveFormat^ get();
 			}
 
 			/// <summary>

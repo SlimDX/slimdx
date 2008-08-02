@@ -26,8 +26,8 @@
 #include "../ComObject.h"
 #include "../Utilities.h"
 #include "../DataStream.h"
-#include "../WaveFormat.h"
-#include "../WaveFormatExtensible.h"
+#include "../multimedia/WaveFormat.h"
+#include "../multimedia/WaveFormatExtensible.h"
 
 #include "DirectSoundException.h"
 
@@ -35,6 +35,7 @@
 
 using namespace System;
 using namespace System::Reflection;
+using namespace SlimDX::Multimedia;
 
 namespace SlimDX
 {

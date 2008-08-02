@@ -22,7 +22,7 @@
 
 #include <xaudio2.h>
 
-#include "Utilities.h"
+#include "../Utilities.h"
 #include "WaveFormat.h"
 
 using namespace System;
@@ -30,6 +30,8 @@ using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
+{
+namespace Multimedia
 {
 	std::auto_ptr<WAVEFORMATEX> WaveFormat::ToUnmanaged( WaveFormat^ format )
 	{
@@ -159,4 +161,5 @@ namespace SlimDX
 	{
 		return value1->Equals( value2 );
 	}
+}
 }

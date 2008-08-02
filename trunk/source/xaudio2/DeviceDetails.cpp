@@ -22,11 +22,12 @@
 
 #include <xaudio2.h>
 
-#include "../WaveFormat.h"
-#include "../WaveFormatExtensible.h"
+#include "../multimedia/WaveFormat.h"
+#include "../multimedia/WaveFormatExtensible.h"
 #include "DeviceDetails.h"
 
 using namespace System;
+using namespace SlimDX::Multimedia;
 
 namespace SlimDX
 {

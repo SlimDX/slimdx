@@ -70,10 +70,10 @@ namespace SlimDX
 			/// <returns></returns>
 			Result Write( array<System::Byte>^ data, int offset, LockFlags flags );
 
-			property WaveFormat^ Format
+			property SlimDX::Multimedia::WaveFormat^ Format
 			{
-				WaveFormat^ get();
-				void set( WaveFormat^ value );
+				SlimDX::Multimedia::WaveFormat^ get();
+				void set( SlimDX::Multimedia::WaveFormat^ value );
 			}
 
 			/// <summary>

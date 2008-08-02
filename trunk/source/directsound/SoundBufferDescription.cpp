@@ -25,6 +25,8 @@
 
 #include "SoundBufferDescription.h"
 
+using namespace SlimDX::Multimedia;
+
 namespace SlimDX
 {
 namespace DirectSound

@@ -31,6 +31,8 @@ using namespace System::IO;
 
 namespace SlimDX
 {
+namespace Multimedia
+{
 	WaveFile::WaveFile( String^ fileName, WaveFormat^ format, FileAccess access )
 	{
 		Construct( fileName, format, access );
@@ -358,4 +360,5 @@ namespace SlimDX
 
 		return written;
 	}
+}
 }

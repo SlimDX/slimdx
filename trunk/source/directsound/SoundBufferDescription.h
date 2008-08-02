@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../WaveFormat.h"
+#include "../multimedia/WaveFormat.h"
 #include "Enums.h"
 
 namespace SlimDX
@@ -50,7 +50,7 @@ namespace SlimDX
 			/// <summary>
 			/// Structure specifying the waveform format for the buffer.
 			/// </summary>
-			property WaveFormat^ Format;
+			property SlimDX::Multimedia::WaveFormat^ Format;
 
 			/// <summary>
 			/// Unique identifier of the two-speaker virtualization algorithm to be used by DirectSound3D hardware emulation.

@@ -2057,38 +2057,6 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Audio"
-				>
-				<File
-					RelativePath="..\source\AudioEnums.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\WaveFile.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\WaveFile.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\WaveFormat.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\WaveFormat.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\WaveFormatExtensible.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\WaveFormatExtensible.h"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="Input"
 				>
 				<File
@@ -5919,6 +5887,46 @@
 				</File>
 				<File
 					RelativePath="..\source\directsound\FullDuplex.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Multimedia"
+			>
+			<File
+				RelativePath="..\source\multimedia\Enums.h"
+				>
+			</File>
+			<Filter
+				Name="WaveFormat"
+				>
+				<File
+					RelativePath="..\source\multimedia\WaveFormat.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\multimedia\WaveFormat.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\multimedia\WaveFormatExtensible.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\multimedia\WaveFormatExtensible.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="WaveFile"
+				>
+				<File
+					RelativePath="..\source\multimedia\WaveFile.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\multimedia\WaveFile.h"
 					>
 				</File>
 			</Filter>

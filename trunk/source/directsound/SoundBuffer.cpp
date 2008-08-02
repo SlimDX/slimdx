@@ -24,13 +24,14 @@
 
 #include "../ComObject.h"
 #include "../DataStream.h"
-#include "../WaveFormatExtensible.h"
+#include "../multimedia/WaveFormatExtensible.h"
 
 #include "DirectSoundException.h"
 
 #include "SoundBuffer.h"
 
 using namespace System;
+using namespace SlimDX::Multimedia;
 
 namespace SlimDX
 {

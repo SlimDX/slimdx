@@ -31,6 +31,7 @@
 #include "SourceVoice.h"
 
 using namespace System;
+using namespace SlimDX::Multimedia;
 
 namespace SlimDX
 {

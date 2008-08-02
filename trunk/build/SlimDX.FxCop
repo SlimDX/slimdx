@@ -156,6 +156,15 @@
      </Message>
     </Messages>
    </Namespace>
+   <Namespace Name="SlimDX.Multimedia">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-08-02 13:07:30Z">
+      <Issue>
+       <Item>SlimDX.Multimedia</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
   </Namespaces>
   <Targets>
    <Target Name="$(ProjectDir)/x86/Debug/SlimDX.dll">
@@ -1347,42 +1356,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="WaveFile">
-          <Members>
-           <Member Name="#Close()">
-            <Messages>
-             <Message Id="&lt;Module&gt;.mmioAscend(HMMIO__*,_MMCKINFO*,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-06-09 19:29:41Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'WaveFile.Close()'</Item>
-               <Item>'&lt;Module&gt;.mmioAscend(HMMIO__*, _MMCKINFO*, uint)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="&lt;Module&gt;.mmioClose(HMMIO__*,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-06-09 19:29:41Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'WaveFile.Close()'</Item>
-               <Item>'&lt;Module&gt;.mmioClose(HMMIO__*, uint)'</Item>
-              </Issue>
-              <Issue Name="HResultOrErrorCode">
-               <Item>'WaveFile.Close()'</Item>
-               <Item>'&lt;Module&gt;.mmioClose(HMMIO__*, uint)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="&lt;Module&gt;.mmioSeek(HMMIO__*,optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.Int32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-06-09 19:29:41Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'WaveFile.Close()'</Item>
-               <Item>'&lt;Module&gt;.mmioSeek(HMMIO__*, int, int)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="&lt;Module&gt;.mmioWrite(HMMIO__*,System.optional(IsConst) optional(IsSignUnspecifiedByte) SByte*,optional(System.Runtime.CompilerServices.IsLong) System.Int32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-06-09 19:29:41Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'WaveFile.Close()'</Item>
-               <Item>'&lt;Module&gt;.mmioWrite(HMMIO__*, sbyte*, int)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -13977,6 +13950,46 @@
          </Type>
         </Types>
        </Namespace>
+       <Namespace Name="SlimDX.Multimedia">
+        <Types>
+         <Type Name="WaveFile">
+          <Members>
+           <Member Name="#Close()">
+            <Messages>
+             <Message Id="&lt;Module&gt;.mmioAscend(HMMIO__*,_MMCKINFO*,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-08-02 13:07:30Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'WaveFile.Close()'</Item>
+               <Item>'&lt;Module&gt;.mmioAscend(HMMIO__*, _MMCKINFO*, uint)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="&lt;Module&gt;.mmioClose(HMMIO__*,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-08-02 13:07:30Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'WaveFile.Close()'</Item>
+               <Item>'&lt;Module&gt;.mmioClose(HMMIO__*, uint)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'WaveFile.Close()'</Item>
+               <Item>'&lt;Module&gt;.mmioClose(HMMIO__*, uint)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="&lt;Module&gt;.mmioSeek(HMMIO__*,optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.Int32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-08-02 13:07:30Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'WaveFile.Close()'</Item>
+               <Item>'&lt;Module&gt;.mmioSeek(HMMIO__*, int, int)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="&lt;Module&gt;.mmioWrite(HMMIO__*,System.optional(IsConst) optional(IsSignUnspecifiedByte) SByte*,optional(System.Runtime.CompilerServices.IsLong) System.Int32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-08-02 13:07:30Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'WaveFile.Close()'</Item>
+               <Item>'&lt;Module&gt;.mmioWrite(HMMIO__*, sbyte*, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
        <Namespace Name="SlimDX.RawInput">
         <Types>
          <Type Name="Device">
@@ -14645,9 +14658,9 @@
          </Type>
          <Type Name="SourceVoice">
           <Members>
-           <Member Name="#.ctor(SlimDX.XAudio2.XAudio2,SlimDX.WaveFormat,SlimDX.XAudio2.VoiceFlags)">
+           <Member Name="#.ctor(SlimDX.XAudio2.XAudio2,SlimDX.Multimedia.WaveFormat,SlimDX.XAudio2.VoiceFlags)">
             <Messages>
-             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-06-09 19:29:41Z">
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-08-02 13:07:30Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'SourceVoice.SourceVoice(XAudio2, WaveFormat, VoiceFlags)'</Item>
                <Item>flags</Item>
@@ -14656,9 +14669,9 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#.ctor(SlimDX.XAudio2.XAudio2,SlimDX.WaveFormat,SlimDX.XAudio2.VoiceFlags,System.Single)">
+           <Member Name="#.ctor(SlimDX.XAudio2.XAudio2,SlimDX.Multimedia.WaveFormat,SlimDX.XAudio2.VoiceFlags,System.Single)">
             <Messages>
-             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-06-09 19:29:41Z">
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-08-02 13:07:30Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'SourceVoice.SourceVoice(XAudio2, WaveFormat, VoiceFlags, float)'</Item>
                <Item>flags</Item>
@@ -15844,6 +15857,9 @@
    </Target>
   </Targets>
   <Rules>
+   <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
+    <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
+   </Rule>
    <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
     <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
    </Rule>
