@@ -21,35 +21,51 @@
 */
 #pragma once
 
-#include "Enums.h"
+#include "WaveFormat.h"
 
 namespace SlimDX
 {
-	namespace XAudio2
+	namespace Multimedia
 	{
-		public ref class DeviceDetails : System::ICloneable, System::IEquatable<DeviceDetails^>
+		public ref class WaveFormatExtensible : WaveFormat, System::ICloneable, System::IEquatable<WaveFormatExtensible^>
 		{
+		private:
+			short unionData;
+
 		internal:
-			virtual System::Object^ Clone2() = System::ICloneable::Clone
+			virtual System::Object^ Clone2() override = System::ICloneable::Clone
 			{
 				return Clone();
 			}
 
-			DeviceDetails( const XAUDIO2_DEVICE_DETAILS &details );
+			static WaveFormatExtensible^ FromBase( const WAVEFORMATEX *format );
+			WaveFormatExtensible( const WAVEFORMATEXTENSIBLE &format );
 
 		public:
-			DeviceDetails() { }
+			WaveFormatExtensible();
 
-			property System::String^ DeviceId;
-			property System::String^ DisplayName;
-			property DeviceRole Role;
-			property SlimDX::Multimedia::WaveFormatExtensible^ OutputFormat;
+			property Speakers ChannelMask;
+			property System::Guid SubFormat;
+
+			property short ValidBitsPerSample
+			{
+				short get() { return unionData; }
+				void set( short value ) { unionData = value; }
+			}
+
+			property short SamplesPerBlock
+			{
+				short get() { return unionData; }
+				void set( short value ) { unionData = value; }
+			}
+
+			virtual array<System::Byte>^ GetBytes() override;
 
 			/// <summary>
 			/// Clones the instance and returns a new object containing the same values.
 			/// </summary>
-			/// <returns>A new <see cref="DeviceDetails"/> object containing the same values as the current instance.</returns>
-			DeviceDetails^ Clone();
+			/// <returns>A new <see cref="WaveFormatExtensible"/> object containing the same values as the current instance.</returns>
+			WaveFormatExtensible^ Clone() new;
 
 			/// <summary>
 			/// Tests for equality between two objects.
@@ -57,7 +73,7 @@ namespace SlimDX
 			/// <param name="left">The first value to compare.</param>
 			/// <param name="right">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-			static bool operator == ( DeviceDetails^ left, DeviceDetails^ right );
+			static bool operator == ( WaveFormatExtensible^ left, WaveFormatExtensible^ right );
 
 			/// <summary>
 			/// Tests for inequality between two objects.
@@ -65,7 +81,7 @@ namespace SlimDX
 			/// <param name="left">The first value to compare.</param>
 			/// <param name="right">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-			static bool operator != ( DeviceDetails^ left, DeviceDetails^ right );
+			static bool operator != ( WaveFormatExtensible^ left, WaveFormatExtensible^ right );
 
 			/// <summary>
 			/// Returns the hash code for this instance.
@@ -85,7 +101,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="other">Object to make the comparison with.</param>
 			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
-			virtual bool Equals( DeviceDetails^ other );
+			virtual bool Equals( WaveFormatExtensible^ other );
 
 			/// <summary>
 			/// Determines whether the specified object instances are considered equal. 
@@ -94,7 +110,7 @@ namespace SlimDX
 			/// <param name="value2">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="value1"/> is the same instance as <paramref name="value2"/> or 
 			/// if both are <c>null</c> references or if <c>value1.Equals(value2)</c> returns <c>true</c>; otherwise, <c>false</c>.</returns>
-			static bool Equals( DeviceDetails^ value1, DeviceDetails^ value2 );
+			static bool Equals( WaveFormatExtensible^ value1, WaveFormatExtensible^ value2 );
 		};
 	}
 }

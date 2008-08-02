@@ -23,6 +23,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using SlimDX;
 using SlimDX.XAudio2;
+using SlimDX.Multimedia;
 
 namespace BasicSound
 {

@@ -23,8 +23,8 @@
 
 #include "Voice.h"
 #include "VoiceCallback.h"
-#include "../WaveFormat.h"
-#include "../WaveFormatExtensible.h"
+#include "../multimedia/WaveFormat.h"
+#include "../multimedia/WaveFormatExtensible.h"
 #include "ContextEventArgs.h"
 #include "ErrorEventArgs.h"
 #include "StartProcessingEventArgs.h"
@@ -66,9 +66,9 @@ namespace SlimDX
 			void OnVoiceProcessingPassEnd( System::EventArgs^ e );
 
 		public:
-			SourceVoice( XAudio2^ device, WaveFormat^ sourceFormat, VoiceFlags flags, float maximumFrequencyRatio );
-			SourceVoice( XAudio2^ device, WaveFormat^ sourceFormat, VoiceFlags flags );
-			SourceVoice( XAudio2^ device, WaveFormat^ sourceFormat );
+			SourceVoice( XAudio2^ device, SlimDX::Multimedia::WaveFormat^ sourceFormat, VoiceFlags flags, float maximumFrequencyRatio );
+			SourceVoice( XAudio2^ device, SlimDX::Multimedia::WaveFormat^ sourceFormat, VoiceFlags flags );
+			SourceVoice( XAudio2^ device, SlimDX::Multimedia::WaveFormat^ sourceFormat );
 			virtual ~SourceVoice();
 
 			Result Discontinuity();

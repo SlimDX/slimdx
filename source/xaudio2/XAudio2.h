@@ -21,8 +21,8 @@
 */
 #pragma once
 
-#include "../WaveFormat.h"
-#include "../WaveFormatExtensible.h"
+#include "../multimedia/WaveFormat.h"
+#include "../multimedia/WaveFormatExtensible.h"
 #include "DeviceDetails.h"
 #include "PerformanceData.h"
 #include "DebugConfiguration.h"

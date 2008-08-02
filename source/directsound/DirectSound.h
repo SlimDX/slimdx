@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../AudioEnums.h"
+#include "../multimedia/Enums.h"
 
 #include "Enums.h"
 #include "Capabilities.h"

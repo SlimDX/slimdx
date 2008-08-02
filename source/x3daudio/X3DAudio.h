@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../AudioEnums.h"
+#include "../multimedia/Enums.h"
 #include "Listener.h"
 #include "Emitter.h"
 #include "DspSettings.h"

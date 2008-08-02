@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../WaveFormat.h"
+#include "../multimedia/WaveFormat.h"
 #include "CaptureEffectDescription.h"
 
 namespace SlimDX
@@ -55,7 +55,7 @@ namespace SlimDX
 			/// <summary>
 			/// The format in which to capture the data.
 			/// </summary>
-			property WaveFormat^ Format;
+			property SlimDX::Multimedia::WaveFormat^ Format;
 
 			/// <summary>
 			/// Describes effects supported by hardware for the buffer.

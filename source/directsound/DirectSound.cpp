@@ -23,7 +23,7 @@
 #include <dsound.h>
 
 #include "../ComObject.h"
-#include "../AudioEnums.h"
+#include "../multimedia/Enums.h"
 #include "../Utilities.h"
 
 #include "DirectSoundException.h"

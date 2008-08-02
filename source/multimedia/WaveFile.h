@@ -26,44 +26,47 @@
 
 namespace SlimDX
 {
-	public ref class WaveFile : System::IDisposable
+	namespace Multimedia
 	{
-	private:
-		int size;
-		WaveFormat^ format;
-		System::IO::FileAccess access;
-
-		HMMIO fileHandle;
-		MMCKINFO *fileInfo;
-		MMCKINFO *dataChunk;
-		MMIOINFO *outputInfo;
-
-		void Construct( System::String^ fileName, WaveFormat^ format, System::IO::FileAccess access );
-		void Destruct();
-		void Close();
-
-		void ReadHeader();
-		void WriteHeader( WaveFormat^ format );
-
-	public:
-		WaveFile( System::String^ fileName, WaveFormat^ format, System::IO::FileAccess access );
-		WaveFile( System::String^ fileName );
-		~WaveFile() { Destruct(); }
-		!WaveFile() { Destruct(); }
-
-		void Reset();
-
-		int Read( array<System::Byte>^ buffer, int length );
-		int Write( array<System::Byte>^ buffer, int length );
-
-		property int Size
+		public ref class WaveFile : System::IDisposable
 		{
-			int get() { return size; }
-		}
+		private:
+			int size;
+			WaveFormat^ format;
+			System::IO::FileAccess access;
 
-		property WaveFormat^ Format
-		{
-			WaveFormat^ get() { return format; }
-		}
-	};
+			HMMIO fileHandle;
+			MMCKINFO *fileInfo;
+			MMCKINFO *dataChunk;
+			MMIOINFO *outputInfo;
+
+			void Construct( System::String^ fileName, WaveFormat^ format, System::IO::FileAccess access );
+			void Destruct();
+			void Close();
+
+			void ReadHeader();
+			void WriteHeader( WaveFormat^ format );
+
+		public:
+			WaveFile( System::String^ fileName, WaveFormat^ format, System::IO::FileAccess access );
+			WaveFile( System::String^ fileName );
+			~WaveFile() { Destruct(); }
+			!WaveFile() { Destruct(); }
+
+			void Reset();
+
+			int Read( array<System::Byte>^ buffer, int length );
+			int Write( array<System::Byte>^ buffer, int length );
+
+			property int Size
+			{
+				int get() { return size; }
+			}
+
+			property WaveFormat^ Format
+			{
+				WaveFormat^ get() { return format; }
+			}
+		};
+	}
 }
