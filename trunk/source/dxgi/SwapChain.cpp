@@ -145,7 +145,11 @@ namespace DXGI
 		BindingFlags flags = BindingFlags::Public | BindingFlags::Static | BindingFlags::InvokeMethod;
 		array<Object^>^ args = gcnew array<Object^>( 1 );
 		args[ 0 ] = IntPtr( unknown );
-		return safe_cast<T>( T::typeid->InvokeMember( "FromPointer", flags, nullptr, nullptr, args, CultureInfo::InvariantCulture ) );
+		
+		// Calling FromPointer to create the object will increment the reference count on the IUnknown. 
+		T result =  safe_cast<T>( T::typeid->InvokeMember( "FromPointer", flags, nullptr, nullptr, args, CultureInfo::InvariantCulture ) );
+		unknown->Release();
+		return result;
 	}
 
 	
