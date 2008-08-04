@@ -427,6 +427,48 @@ namespace SlimDX
 			DiscardDeviceBuffers = D3DX10_MESH_DISCARD_DEVICE_BUFFERS
 		};
 		
+		/// <summary>
+		/// Values that indicate how to alter mesh data during an optimization operation.
+		/// </summary>
+		[System::Flags]
+		public enum class MeshOptimizeFlags : System::Int32
+		{
+			/// <summary>
+			/// Reorders faces to remove unused vertices and faces.
+			/// </summary>
+			Compact = D3DX10_MESHOPT_COMPACT,
+			
+			/// <summary>
+			/// Reorders faces to optimize for fewer attribute bundle state changes and enhanced draw performance.
+			/// </summary>
+			AttributeSort = D3DX10_MESHOPT_ATTR_SORT,
+	    
+			/// <summary>
+			/// Reorders faces to increase the cache hit rate of vertex caches.
+			/// </summary>
+			VertexCache = D3DX10_MESHOPT_VERTEX_CACHE,
+	    
+			/// <summary>
+			/// Reorders faces to maximize length of adjacent triangles.
+			/// </summary>
+			StripReorder = D3DX10_MESHOPT_STRIP_REORDER,
+	    
+			/// <summary>
+			/// Optimize the faces only; do not optimize the vertices.
+			/// </summary>
+			IgnoreVertices = D3DX10_MESHOPT_IGNORE_VERTS,
+			
+			/// <summary>
+			/// While attribute sorting, do not split vertices that are shared between attribute groups.
+			/// </summary>
+			DoNotSplit = D3DX10_MESHOPT_DO_NOT_SPLIT,
+			
+			/// <summary>
+			/// Affects the vertex cache size. Using this flag specifies a default vertex cache size that works well on legacy hardware.
+			/// </summary>
+			DeviceIndependent = D3DX10_MESHOPT_DEVICE_INDEPENDENT,
+		};
+		
 		public enum class PrimitiveTopology : System::Int32
 		{
 			Undefined = D3D10_PRIMITIVE_TOPOLOGY_UNDEFINED,
