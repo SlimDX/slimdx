@@ -270,5 +270,38 @@ namespace Direct3D10
 			return nullptr;
 		return Buffer::FromPointer( buffer );
 	}
+	
+	Result Mesh::Optimize( MeshOptimizeFlags flags )
+	{
+		RECORD_D3D10( InternalPointer->Optimize( static_cast<UINT>( flags ), 0, 0 ) );
+		return Result::Last;
+	}
+	
+	Result Mesh::Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
+	{
+		std::vector<UINT> nativeFaceRemap( FaceCount );
+		ID3D10Blob* nativeVertexRemap = 0;
+		
+		if( RECORD_D3D10( InternalPointer->Optimize( static_cast<UINT>( flags ), &nativeFaceRemap[0], &nativeVertexRemap ) ).IsFailure )
+		{
+			faceRemap = nullptr;
+			vertexRemap = nullptr;
+		}
+		else 
+		{
+			faceRemap = gcnew array<int>( FaceCount );
+			for( size_t faceIndex = 0; faceIndex < nativeFaceRemap.size(); ++faceIndex )
+				faceRemap[faceIndex] = nativeFaceRemap[faceIndex];
+			
+			vertexRemap = gcnew array<int>( VertexCount );
+			DWORD* currentVertex = reinterpret_cast<DWORD*>( nativeVertexRemap->GetBufferPointer() );
+			for( int vertexIndex = 0; vertexIndex < VertexCount; ++vertexIndex )
+				vertexRemap[vertexIndex] = *currentVertex++;	
+			
+			nativeVertexRemap->Release();
+		}
+		
+		return Result::Last;
+	}
 }
 }

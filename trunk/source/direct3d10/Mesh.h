@@ -82,7 +82,23 @@ namespace SlimDX
 			/// <param name="flags">Flags indicating which pieces of data to discard.</param>
 			/// <returns>A result code.</returns>
 			Result Discard( MeshDiscardFlags flags );
-
+			
+			/// <summary>
+			/// Optimizes the mesh data.
+			/// </summary>
+			/// <param name="flags">Flags indicating which optimizations to perform.</param>
+			/// <returns>A result code.</returns>
+			Result Optimize( MeshOptimizeFlags flags );
+			
+			/// <summary>
+			/// Optimizes the mesh data.
+			/// </summary>
+			/// <param name="flags">Flags indicating which optimizations to perform.</param>
+			/// <param name="faceRemap">An array of integers, one per face, that map the original mesh faces to the optimized mesh faces.</param>
+			/// <param name="vertexRemap">An array of integers, one per vertex, that map the original mesh vertices to the optimized mesh vertices.</param>
+			/// <returns>A result code.</returns>
+			Result Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap );
+			
 			Result DrawSubset( int id );
 			Result DrawSubsetInstanced( int id, int count, int startLocation );
 			
