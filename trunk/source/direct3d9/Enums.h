@@ -34,9 +34,25 @@ namespace SlimDX
 		ref class Device;
 #endif
 
-		// NOTE: The enumerations defined in this file are in alphabetical order. When
+		// NOTE: The enumerations defined in this file are in alphabetical order (haha, not anymore). When
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
+
+		/// <summary>
+		/// Defines stream sources for hardware instancing.
+		/// </summary>
+		public enum class StreamSource : System::Int32
+		{
+			/// <summary>
+			/// Indexed data.
+			/// </summary>
+			IndexedData,
+
+			/// <summary>
+			/// Instance data.
+			/// </summary>
+			InstanceData
+		};
 
 		/// <summary>
 		/// Defines texture filtering modes for a texture stage.

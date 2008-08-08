@@ -441,7 +441,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( result->GetNumVertices() );
+		vertexRemap = Utilities::ReadRange<int>( buffer, result->GetNumVertices() );
 		
 		Mesh^ mesh = Mesh::FromPointer( result );
 		mesh->SetAdjacency( adjacencyOut );

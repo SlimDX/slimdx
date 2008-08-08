@@ -20,6 +20,7 @@
 * THE SOFTWARE.
 */
 
+#include "DataStream.h"
 #include "Utilities.h"
 
 #include "SlimDXException.h"
@@ -33,6 +34,21 @@ namespace SlimDX
 {
 	Utilities::Utilities()
 	{
+	}
+
+	generic<typename T> where T : value class
+	array<T>^ Utilities::ReadRange( ID3DXBuffer *buffer, int count )
+	{
+		if( count < 0 )
+			throw gcnew ArgumentOutOfRangeException( "count" );
+			
+		size_t elementSize = sizeof(T);
+		array<T>^ result = gcnew array<T>( count );
+
+		pin_ptr<T> pinnedBuffer = &result[0];
+		memcpy( pinnedBuffer, buffer, count * elementSize );
+
+		return result;
 	}
 	
 	GUID Utilities::GetNativeGuidForType( Type^ type )
@@ -204,19 +220,29 @@ namespace SlimDX
 		if( !stream->CanRead )
 			throw gcnew NotSupportedException();
 
+		if( readLength > stream->Length - stream->Position )
+			throw gcnew ArgumentOutOfRangeException( "readLength" );
 		if( readLength == 0 )
-			readLength = (int) ( stream->Length - stream->Position );
+			readLength = static_cast<int>( stream->Length - stream->Position );
 		if( readLength < 0 )
 			throw gcnew ArgumentOutOfRangeException( "readLength" );
 		if( readLength == 0 )
 			return gcnew array<Byte>( 0 );
 
 		array<Byte>^ buffer = gcnew array<Byte>( readLength ); 
-		int bytesRead = 0;
 
-		while( bytesRead < readLength )
+		if( stream->GetType() == DataStream::typeid )
 		{
-			bytesRead += stream->Read( buffer, bytesRead, readLength - bytesRead );
+			DataStream^ ds = safe_cast<DataStream^>( stream );
+
+			pin_ptr<Byte> pinnedBuffer = &buffer[0];
+			memcpy( pinnedBuffer, ds->RawPointer + ds->Position, readLength );
+		}
+		else
+		{
+			int bytesRead = 0;
+			while( bytesRead < readLength )
+				bytesRead += stream->Read( buffer, bytesRead, readLength - bytesRead );
 		}
 
 		return buffer;

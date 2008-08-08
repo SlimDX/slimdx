@@ -31,24 +31,26 @@ namespace SlimDX
 	{
 		public ref class EffectCompiler : public BaseEffect
 		{
-		private:
-			void InitThis( array<System::Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% compilationErrors );
-
-		internal:
-			property ID3DXEffectCompiler* CompilerPointer
-			{
-				ID3DXEffectCompiler* get() { return static_cast<ID3DXEffectCompiler*>( InternalPointer ); }
-			}
-
-			EffectCompiler( ID3DXEffectCompiler* compiler );
+			COMOBJECT(ID3DXEffectCompiler, EffectCompiler);
 
 		public:
-			EffectCompiler( System::IntPtr compiler );
 			EffectCompiler( System::String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% compilationErrors );
-			EffectCompiler( array<System::Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% compilationErrors );
-			virtual ~EffectCompiler() { }
+			EffectCompiler( System::String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags );
+			EffectCompiler( System::String^ data, ShaderFlags flags );
 
-			static EffectCompiler^ FromFile( System::String^ fileName, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
+			static EffectCompiler^ FromPointer( System::IntPtr pointer );
+
+			static EffectCompiler^ FromMemory( array<System::Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% compilationErrors );
+			static EffectCompiler^ FromMemory( array<System::Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags );
+			static EffectCompiler^ FromMemory( array<System::Byte>^ data, ShaderFlags flags );
+
+			static EffectCompiler^ FromStream( System::IO::Stream^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% compilationErrors );
+			static EffectCompiler^ FromStream( System::IO::Stream^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags );
+			static EffectCompiler^ FromStream( System::IO::Stream^ data, ShaderFlags flags );
+
+			static EffectCompiler^ FromFile( System::String^ fileName, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% compilationErrors );
+			static EffectCompiler^ FromFile( System::String^ fileName, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags );
+			static EffectCompiler^ FromFile( System::String^ fileName, ShaderFlags flags );
 
 			ShaderBytecode^ CompileShader( EffectHandle^ functionHandle, System::String^ target, ShaderFlags flags, [Out] System::String^% compilationErrors, [Out] ConstantTable^% constantTable );
 			ShaderBytecode^ CompileShader( EffectHandle^ functionHandle, System::String^ target, ShaderFlags flags, [Out] System::String^% compilationErrors );

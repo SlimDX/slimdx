@@ -129,7 +129,7 @@ namespace Direct3D9
 
 		Mesh^ result = Mesh::FromPointer( mesh );
 
-		result->SetAdjacency( ( gcnew DataStream( adjacencyBuffer ) )->ReadRange<int>( mesh->GetNumFaces() * 3 ) );
+		result->SetAdjacency( Utilities::ReadRange<int>( adjacencyBuffer, mesh->GetNumFaces() * 3 ) );
 		result->SetMaterials( ExtendedMaterial::FromBuffer( materialBuffer, materialCount ) );
 
 		// figure out how many effect instances there are, and get them out of the buffer
@@ -166,7 +166,7 @@ namespace Direct3D9
 
 		Mesh^ result = Mesh::FromPointer( mesh );
 
-		result->SetAdjacency( ( gcnew DataStream( adjacencyBuffer ) )->ReadRange<int>( mesh->GetNumFaces() * 3 ) );
+		result->SetAdjacency( Utilities::ReadRange<int>( adjacencyBuffer, mesh->GetNumFaces() * 3 ) );
 		result->SetMaterials( ExtendedMaterial::FromBuffer( materialBuffer, materialCount ) );
 
 		DWORD instanceCount = 0;
@@ -196,7 +196,7 @@ namespace Direct3D9
 
 		Mesh^ result = Mesh::FromPointer( mesh );
 
-		result->SetAdjacency( ( gcnew DataStream( adjacencyBuffer ) )->ReadRange<int>( mesh->GetNumFaces() * 3 ) );
+		result->SetAdjacency( Utilities::ReadRange<int>( adjacencyBuffer, mesh->GetNumFaces() * 3 ) );
 		result->SetMaterials( ExtendedMaterial::FromBuffer( materialBuffer, materialCount ) );
 
 		DWORD instanceCount = 0;
@@ -229,7 +229,7 @@ namespace Direct3D9
 
 		Mesh^ mesh = Mesh::FromPointer( result );
 
-		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
+		mesh->SetAdjacency( Utilities::ReadRange<int>( adj, result->GetNumFaces() * 3 ) );
 		return mesh;
 	}
 
@@ -245,7 +245,7 @@ namespace Direct3D9
 
 		Mesh^ mesh = Mesh::FromPointer( result );
 
-		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
+		mesh->SetAdjacency( Utilities::ReadRange<int>( adj, result->GetNumFaces() * 3 ) );
 		return mesh;
 	}
 
@@ -261,7 +261,7 @@ namespace Direct3D9
 
 		Mesh^ mesh = Mesh::FromPointer( result );
 
-		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
+		mesh->SetAdjacency( Utilities::ReadRange<int>( adj, result->GetNumFaces() * 3 ) );
 		return mesh;
 	}
 
@@ -277,7 +277,7 @@ namespace Direct3D9
 
 		Mesh^ mesh = Mesh::FromPointer( result );
 
-		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
+		mesh->SetAdjacency( Utilities::ReadRange<int>( adj, result->GetNumFaces() * 3 ) );
 		return mesh;
 	}
 
@@ -293,7 +293,7 @@ namespace Direct3D9
 
 		Mesh^ mesh = Mesh::FromPointer( result );
 
-		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
+		mesh->SetAdjacency( Utilities::ReadRange<int>( adj, result->GetNumFaces() * 3 ) );
 		return mesh;
 	}
 
@@ -331,7 +331,7 @@ namespace Direct3D9
 
 		Mesh^ mesh = Mesh::FromPointer( result );
 
-		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
+		mesh->SetAdjacency( Utilities::ReadRange<int>( adj, result->GetNumFaces() * 3 ) );
 		return mesh;
 	}
 
@@ -363,7 +363,7 @@ namespace Direct3D9
 
 		Mesh^ mesh = Mesh::FromPointer( result );
 
-		mesh->SetAdjacency( ( gcnew DataStream( adj ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
+		mesh->SetAdjacency( Utilities::ReadRange<int>( adj, result->GetNumFaces() * 3 ) );
 		return mesh;
 	}
 
@@ -427,7 +427,7 @@ namespace Direct3D9
 		}
 		else
 		{
-			vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
+			vertexRemap = Utilities::ReadRange<int>( buffer, VertexCount );
 			if( adjacencyOutPtr != NULL )
 				SetAdjacency( &adjacencyOut[0] );
 			else
@@ -502,7 +502,7 @@ namespace Direct3D9
 
 		Mesh^ mesh = Mesh::FromPointer( result );
 
-		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
+		vertexRemap = Utilities::ReadRange<int>( buffer, VertexCount );
 
 		if( adjacencyOutPtr != NULL )
 			mesh->SetAdjacency( &adjacencyOut[0] );
@@ -688,7 +688,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		vertexMapping = ( gcnew DataStream( vertex ) )->ReadRange<int>( result->GetNumVertices() );
+		vertexMapping = Utilities::ReadRange<int>( vertex, result->GetNumVertices() );
 
 		if( (options & TangentOptions::GenerateInPlace) == TangentOptions::GenerateInPlace )
 			return this;
@@ -988,7 +988,7 @@ namespace Direct3D9
 			return nullptr;
 
 		Mesh^ newMesh = Mesh::FromPointer( result );
-		newMesh->SetAdjacency( ( gcnew DataStream( adjacencyOut ) )->ReadRange<int>( result->GetNumFaces() * 3 ) );
+		newMesh->SetAdjacency( Utilities::ReadRange<int>( adjacencyOut, result->GetNumFaces() * 3 ) );
 
 		return newMesh;
 	}
@@ -1050,7 +1050,7 @@ namespace Direct3D9
 			return Result::Last;
 		}
 
-		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
+		vertexRemap = Utilities::ReadRange<int>( buffer, VertexCount );
 
 		if( adjOut != NULL )
 			SetAdjacency( &adjacencyOut[0] );
@@ -1088,7 +1088,7 @@ namespace Direct3D9
 			return Result::Last;
 		}
 
-		vertexRemap = ( gcnew DataStream( buffer ) )->ReadRange<int>( VertexCount );
+		vertexRemap = Utilities::ReadRange<int>( buffer, VertexCount );
 
 		if( adjOut != NULL )
 			SetAdjacency( &adjacencyOut[0] );

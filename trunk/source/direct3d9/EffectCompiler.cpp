@@ -31,6 +31,7 @@
 #include "EffectCompiler.h"
 
 using namespace System;
+using namespace System::IO;
 using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
@@ -39,10 +40,7 @@ namespace Direct3D9
 {
 	EffectCompiler::EffectCompiler( ID3DXEffectCompiler* compiler )
 	{
-		if( compiler == NULL )
-			throw gcnew ArgumentNullException( "compiler" );
-
-		Construct(compiler);
+		Construct( compiler );
 	}
 
 	EffectCompiler::EffectCompiler( IntPtr compiler )
@@ -50,20 +48,117 @@ namespace Direct3D9
 		Construct( compiler, NativeInterface );
 	}
 
+	EffectCompiler^ EffectCompiler::FromPointer( ID3DXEffectCompiler* pointer )
+	{
+		if( pointer == 0 )
+			return nullptr;
+
+		EffectCompiler^ tableEntry = safe_cast<EffectCompiler^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew EffectCompiler( pointer );
+	}
+
+	EffectCompiler^ EffectCompiler::FromPointer( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		EffectCompiler^ tableEntry = safe_cast<EffectCompiler^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew EffectCompiler( pointer );
+	}
+
 	EffectCompiler::EffectCompiler( String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% compilationErrors )
-	{
-		InitThis( System::Text::ASCIIEncoding::ASCII->GetBytes( data ), defines, includeFile, flags, compilationErrors );
-	}
-
-	EffectCompiler::EffectCompiler( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% compilationErrors )
-	{
-		InitThis( data, defines, includeFile, flags, compilationErrors );
-	}
-
-	void EffectCompiler::InitThis( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% compilationErrors )
 	{
 		ID3DXEffectCompiler* compiler;
 		ID3DXBuffer* errorBuffer;
+
+		array<Byte>^ dataBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( data );
+		pin_ptr<Byte> pinnedData = &dataBytes[0];
+
+		IncludeShim includeShim = IncludeShim( includeFile );
+		ID3DXInclude* includePtr = NULL;
+		if( includeFile != nullptr )
+			includePtr = &includeShim;
+
+		array<GCHandle>^ handles;
+		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
+
+		HRESULT hr = D3DXCreateEffectCompiler( reinterpret_cast<LPCSTR>( pinnedData ), data->Length, macrosPtr, includePtr,
+			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
+
+		Macro::Unmarshal( macros, handles );
+		compilationErrors = Utilities::BufferToString( errorBuffer );
+		
+		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
+			throw gcnew Direct3D9Exception( Result::Last );
+
+		Construct( compiler );
+	}
+
+	EffectCompiler::EffectCompiler( String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags )
+	{
+		ID3DXEffectCompiler* compiler;
+		ID3DXBuffer* errorBuffer;
+
+		array<Byte>^ dataBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( data );
+		pin_ptr<Byte> pinnedData = &dataBytes[0];
+
+		IncludeShim includeShim = IncludeShim( includeFile );
+		ID3DXInclude* includePtr = NULL;
+		if( includeFile != nullptr )
+			includePtr = &includeShim;
+
+		array<GCHandle>^ handles;
+		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
+
+		HRESULT hr = D3DXCreateEffectCompiler( reinterpret_cast<LPCSTR>( pinnedData ), data->Length, macrosPtr, includePtr,
+			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
+
+		Macro::Unmarshal( macros, handles );
+		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
+		
+		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
+			throw gcnew Direct3D9Exception( Result::Last );
+
+		Construct( compiler );
+	}
+
+	EffectCompiler::EffectCompiler( String^ data, ShaderFlags flags )
+	{
+		ID3DXEffectCompiler* compiler;
+		ID3DXBuffer* errorBuffer;
+
+		array<Byte>^ dataBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( data );
+		pin_ptr<Byte> pinnedData = &dataBytes[0];
+
+		HRESULT hr = D3DXCreateEffectCompiler( reinterpret_cast<LPCSTR>( pinnedData ), data->Length, NULL, NULL,
+			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
+
+		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
+		
+		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
+			throw gcnew Direct3D9Exception( Result::Last );
+
+		Construct( compiler );
+	}
+
+	EffectCompiler^ EffectCompiler::FromMemory( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% compilationErrors )
+	{
+		ID3DXEffectCompiler* compiler;
+		ID3DXBuffer* errorBuffer;
+
 		pin_ptr<Byte> pinnedData = &data[0];
 
 		IncludeShim includeShim = IncludeShim( includeFile );
@@ -77,23 +172,86 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateEffectCompiler( reinterpret_cast<LPCSTR>( pinnedData ), data->Length, macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
-		
-		//clean up after marshaling macros
+
 		Macro::Unmarshal( macros, handles );
-		//marshal errors if necessary
 		compilationErrors = Utilities::BufferToString( errorBuffer );
 		
 		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
-		Construct(compiler);
+		return EffectCompiler::FromPointer( compiler );
 	}
 
-	EffectCompiler^ EffectCompiler::FromFile( String^ fileName, array<Macro>^ defines,
-		Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
+	EffectCompiler^ EffectCompiler::FromMemory( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags )
 	{
 		ID3DXEffectCompiler* compiler;
 		ID3DXBuffer* errorBuffer;
+
+		pin_ptr<Byte> pinnedData = &data[0];
+
+		IncludeShim includeShim = IncludeShim( includeFile );
+		ID3DXInclude* includePtr = NULL;
+		if( includeFile != nullptr )
+			includePtr = &includeShim;
+
+		array<GCHandle>^ handles;
+		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
+
+		HRESULT hr = D3DXCreateEffectCompiler( reinterpret_cast<LPCSTR>( pinnedData ), data->Length, macrosPtr, includePtr,
+			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
+
+		Macro::Unmarshal( macros, handles );
+		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
+		
+		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
+			throw gcnew Direct3D9Exception( Result::Last );
+
+		return EffectCompiler::FromPointer( compiler );
+	}
+
+	EffectCompiler^ EffectCompiler::FromMemory( array<Byte>^ data, ShaderFlags flags )
+	{
+		ID3DXEffectCompiler* compiler;
+		ID3DXBuffer* errorBuffer;
+
+		pin_ptr<Byte> pinnedData = &data[0];
+
+		HRESULT hr = D3DXCreateEffectCompiler( reinterpret_cast<LPCSTR>( pinnedData ), data->Length, NULL, NULL,
+			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
+
+		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
+		
+		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
+			throw gcnew Direct3D9Exception( Result::Last );
+
+		return EffectCompiler::FromPointer( compiler );
+	}
+
+	EffectCompiler^ EffectCompiler::FromStream( Stream^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% compilationErrors )
+	{
+		array<Byte>^ bytes = Utilities::ReadStream( data, 0 );
+		return EffectCompiler::FromMemory( bytes, defines, includeFile, flags, compilationErrors );
+	}
+
+	EffectCompiler^ EffectCompiler::FromStream( Stream^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags )
+	{
+		array<Byte>^ bytes = Utilities::ReadStream( data, 0 );
+		return EffectCompiler::FromMemory( bytes, defines, includeFile, flags );
+	}
+
+	EffectCompiler^ EffectCompiler::FromStream( Stream^ data, ShaderFlags flags )
+	{
+		array<Byte>^ bytes = Utilities::ReadStream( data, 0 );
+		return EffectCompiler::FromMemory( bytes, flags );
+	}
+
+	EffectCompiler^ EffectCompiler::FromFile( String^ fileName, array<Macro>^ defines, Include^ includeFile, 
+		ShaderFlags flags, [Out] String^% errors )
+	{
+		ID3DXEffectCompiler* compiler;
+		ID3DXBuffer* errorBuffer;
+
 		pin_ptr<const wchar_t> pinnedFile = PtrToStringChars( fileName );
 
 		IncludeShim includeShim = IncludeShim( includeFile );
@@ -107,16 +265,60 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCreateEffectCompilerFromFile( reinterpret_cast<LPCTSTR>( pinnedFile ), macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
-		
-		//clean up after marshaling macros
+
 		Macro::Unmarshal( macros, handles );
-		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );
 		
-		if( RECORD_D3D9( hr ).IsFailure )
+		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, errors ).IsFailure )
 			return nullptr;
 
-		return gcnew EffectCompiler( compiler );
+		return EffectCompiler::FromPointer( compiler );
+	}
+
+	EffectCompiler^ EffectCompiler::FromFile( String^ fileName, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags )
+	{
+		ID3DXEffectCompiler* compiler;
+		ID3DXBuffer* errorBuffer;
+
+		pin_ptr<const wchar_t> pinnedFile = PtrToStringChars( fileName );
+
+		IncludeShim includeShim = IncludeShim( includeFile );
+		ID3DXInclude* includePtr = NULL;
+		if( includeFile != nullptr )
+			includePtr = &includeShim;
+
+		array<GCHandle>^ handles;
+		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
+
+		HRESULT hr = D3DXCreateEffectCompilerFromFile( reinterpret_cast<LPCTSTR>( pinnedFile ), macrosPtr, includePtr,
+			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
+
+		Macro::Unmarshal( macros, handles );
+		String^ errors = Utilities::BufferToString( errorBuffer );
+		
+		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, errors ).IsFailure )
+			return nullptr;
+
+		return EffectCompiler::FromPointer( compiler );
+	}
+
+	EffectCompiler^ EffectCompiler::FromFile( String^ fileName, ShaderFlags flags )
+	{
+		ID3DXEffectCompiler* compiler;
+		ID3DXBuffer* errorBuffer;
+
+		pin_ptr<const wchar_t> pinnedFile = PtrToStringChars( fileName );
+
+		HRESULT hr = D3DXCreateEffectCompilerFromFile( reinterpret_cast<LPCTSTR>( pinnedFile ), NULL, NULL,
+			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
+
+		String^ errors = Utilities::BufferToString( errorBuffer );
+		
+		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, errors ).IsFailure )
+			return nullptr;
+
+		return EffectCompiler::FromPointer( compiler );
 	}
 
 	ShaderBytecode^ EffectCompiler::CompileShader( EffectHandle^ functionHandle, String^ target, ShaderFlags flags,
@@ -130,9 +332,8 @@ namespace Direct3D9
 		ID3DXBuffer* shader;
 		ID3DXConstantTable* table;
 
-		HRESULT hr = CompilerPointer->CompileShader( handle, reinterpret_cast<LPCSTR>( pinnedTarget ), static_cast<DWORD>( flags ), &shader, &errorBuffer, &table );
+		HRESULT hr = InternalPointer->CompileShader( handle, reinterpret_cast<LPCSTR>( pinnedTarget ), static_cast<DWORD>( flags ), &shader, &errorBuffer, &table );
 
-		//marshal errors if necessary
 		compilationErrors = Utilities::BufferToString( errorBuffer );
 			
 		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
@@ -152,17 +353,12 @@ namespace Direct3D9
 		ID3DXBuffer* errorBuffer;
 		ID3DXBuffer* shader;
 
-		HRESULT hr = CompilerPointer->CompileShader( handle, reinterpret_cast<LPCSTR>( pinnedTarget ), static_cast<DWORD>( flags ), &shader, &errorBuffer, NULL );
+		HRESULT hr = InternalPointer->CompileShader( handle, reinterpret_cast<LPCSTR>( pinnedTarget ), static_cast<DWORD>( flags ), &shader, &errorBuffer, NULL );
 
-		//marshal errors if necessary
 		if( errorBuffer != NULL )
-		{
-			compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBuffer->GetBufferPointer() ) );
-		}
+			compilationErrors = Utilities::BufferToString( errorBuffer );
 		else
-		{
 			compilationErrors = String::Empty;
-		}
 			
 		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
@@ -181,17 +377,12 @@ namespace Direct3D9
 		ID3DXBuffer* effect;
 		ID3DXBuffer* errorBuffer;
 
-		HRESULT hr = CompilerPointer->CompileEffect( static_cast<DWORD>( flags ), &effect, &errorBuffer );
+		HRESULT hr = InternalPointer->CompileEffect( static_cast<DWORD>( flags ), &effect, &errorBuffer );
 
-		//marshal errors if necessary
 		if( errorBuffer != NULL )
-		{
-			compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBuffer->GetBufferPointer() ) );
-		}
+			compilationErrors = Utilities::BufferToString( errorBuffer );
 		else
-		{
 			compilationErrors = String::Empty;
-		}
 		
 		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
@@ -208,7 +399,7 @@ namespace Direct3D9
 	Result EffectCompiler::SetLiteral( EffectHandle^ handle, bool literal )
 	{
 		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
-		HRESULT hr = CompilerPointer->SetLiteral( nativeHandle, literal );
+		HRESULT hr = InternalPointer->SetLiteral( nativeHandle, literal );
 		return RECORD_D3D9( hr );
 	}
 
@@ -216,7 +407,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		BOOL literal = false;
-		HRESULT hr = CompilerPointer->GetLiteral( nativeHandle, &literal );
+		HRESULT hr = InternalPointer->GetLiteral( nativeHandle, &literal );
 		RECORD_D3D9( hr );
 		
 		return literal > 0;

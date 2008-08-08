@@ -453,9 +453,15 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	Result Device::SetStreamSourceFrequency( int stream, int frequency )
+	Result Device::SetStreamSourceFrequency( int stream, int frequency, StreamSource source )
 	{
-		HRESULT hr = InternalPointer->SetStreamSourceFreq( stream, frequency );
+		int value;
+		if( source == StreamSource::IndexedData )
+			value = D3DSTREAMSOURCE_INDEXEDDATA;
+		else
+			value = D3DSTREAMSOURCE_INSTANCEDATA;
+
+		HRESULT hr = InternalPointer->SetStreamSourceFreq( stream, value | frequency );
 		return RECORD_D3D9( hr );
 	}
 
@@ -677,14 +683,10 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetRenderState( static_cast<D3DRENDERSTATETYPE>( state ), &value );
 		RECORD_D3D9( hr );
 
-		try
-		{
-			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid, CultureInfo::InvariantCulture ) );
-		}
-		catch( InvalidCastException^ )
-		{
+		if( T::typeid->IsEnum )
 			return safe_cast<T>( static_cast<int>( value ) );
-		}
+		else
+			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid, CultureInfo::InvariantCulture ) );
 	}
 	
 	int Device::GetRenderState( RenderState state )
@@ -702,14 +704,10 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetSamplerState( sampler, static_cast<D3DSAMPLERSTATETYPE>( type ), &value );
 		RECORD_D3D9( hr );
 
-		try
-		{
-			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid, CultureInfo::InvariantCulture ) );
-		}
-		catch( InvalidCastException^ )
-		{
+		if( T::typeid->IsEnum )
 			return safe_cast<T>( static_cast<int>( value ) );
-		}
+		else
+			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid, CultureInfo::InvariantCulture ) );
 	}
 #pragma warning(default:4717)
 
@@ -725,14 +723,10 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetTextureStageState( stage, static_cast<D3DTEXTURESTAGESTATETYPE>( type ), &value );
 		RECORD_D3D9( hr );
 
-		try
-		{
-			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid, CultureInfo::InvariantCulture ) );
-		}
-		catch( InvalidCastException^ )
-		{
+		if( T::typeid->IsEnum )
 			return safe_cast<T>( static_cast<int>( value ) );
-		}
+		else
+			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid, CultureInfo::InvariantCulture ) );
 	}
 
 	int Device::GetTextureStageState( int stage, TextureStage type )
