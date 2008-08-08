@@ -38,9 +38,6 @@ namespace SlimDX
 		public ref class IndexBuffer : public Resource
 		{
 			COMOBJECT(IDirect3DIndexBuffer9, IndexBuffer);
-
-			IndexBufferDescription m_Description;
-			void InitDescription();
 			
 		public:
 			/// <summary>
@@ -52,11 +49,6 @@ namespace SlimDX
 			/// <param name="pool">The memory class into which the resource will be placed.</param>
 			/// <param name="sixteenBit"><c>true</c> to create a buffer of 16-bit indices; <c>false</c> to create a buffer of 32-bit indices.</param>
 			IndexBuffer( SlimDX::Direct3D9::Device^ device, int sizeInBytes, Usage usage, Pool pool, bool sixteenBit );
-			
-			/// <summary>
-			/// Releases all resources used by the <see cref="IndexBuffer"/>.
-			/// </summary>
-			virtual ~IndexBuffer() { }
 
 			/// <summary>
 			/// Constructs a new instance of the <see cref="IndexBuffer"/> class using the specified pointer to a
@@ -86,7 +78,7 @@ namespace SlimDX
 			/// </summary>
 			property IndexBufferDescription Description
 			{
-				IndexBufferDescription get() { return m_Description; }
+				IndexBufferDescription get();
 			}
 		};
 	}

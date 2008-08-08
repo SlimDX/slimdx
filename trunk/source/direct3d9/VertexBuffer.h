@@ -37,10 +37,6 @@ namespace SlimDX
 		public ref class VertexBuffer : public Resource
 		{
 			COMOBJECT( IDirect3DVertexBuffer9, VertexBuffer );
-		
-			VertexBufferDescription m_Description;
-			
-			void InitDescription();
 
 		public:
 			/// <summary>
@@ -52,11 +48,6 @@ namespace SlimDX
 			/// <param name="format">The vertex format of the vertices in the buffer. If set to <see cref="VertexFormat"/>.None, the buffer will be a non-FVF buffer.</param>
 			/// <param name="pool">The memory class into which the resource will be placed.</param>
 			VertexBuffer( SlimDX::Direct3D9::Device^ device, int sizeInBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool );
-			
-			/// <summary>
-			/// Releases all resources used by the <see cref="VertexBuffer"/>.
-			/// </summary>
-			virtual ~VertexBuffer() { }
 
 			/// <summary>
 			/// Constructs a new instance of the <see cref="VertexBuffer"/> class using the specified pointer to a
@@ -86,7 +77,7 @@ namespace SlimDX
 			/// </summary>
 			property VertexBufferDescription Description
 			{
-				VertexBufferDescription get() { return m_Description; }
+				VertexBufferDescription get();
 			}
 		};
 	}

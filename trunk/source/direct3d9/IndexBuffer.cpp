@@ -35,24 +35,12 @@ namespace Direct3D9
 {
 	IndexBuffer::IndexBuffer( IDirect3DIndexBuffer9* buffer )
 	{
-		Construct(buffer);
-		InitDescription();
+		Construct( buffer );
 	}
 
 	IndexBuffer::IndexBuffer( IntPtr buffer )
 	{
-		if( buffer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( buffer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_IDirect3DIndexBuffer9, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		IDirect3DIndexBuffer9* ibPtr = static_cast<IDirect3DIndexBuffer9*>( pointer );
-		Construct(ibPtr);
-		InitDescription();
+		Construct( buffer, NativeInterface );
 	}
 
 	IndexBuffer^ IndexBuffer::FromPointer( IDirect3DIndexBuffer9* pointer )
@@ -88,30 +76,14 @@ namespace Direct3D9
 	{
 		IDirect3DIndexBuffer9* ib;
 		D3DFORMAT format = sixteenBit ? D3DFMT_INDEX16 : D3DFMT_INDEX32;
+
 		HRESULT hr = device->InternalPointer->CreateIndexBuffer( sizeInBytes, static_cast<DWORD>( usage ), format, static_cast<D3DPOOL>( pool ), &ib, NULL );
 		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
-		Construct(ib);
+		Construct( ib );
 
-		//set description from local info instead of getting the desc
-		m_Description.Format = static_cast<SlimDX::Direct3D9::Format>( format );
-		m_Description.Type = SlimDX::Direct3D9::ResourceType::IndexBuffer;
-		m_Description.Usage = usage;
-		m_Description.Pool = pool;
-		m_Description.SizeInBytes = sizeInBytes;
-
-		if( m_Description.Pool == Pool::Default )
-			this->IsDefaultPool = true;
-	}
-	
-	void IndexBuffer::InitDescription()
-	{
-		IndexBufferDescription desc;
-		HRESULT hr = InternalPointer->GetDesc( reinterpret_cast<D3DINDEXBUFFER_DESC*>( &desc ) );
-		RECORD_D3D9( hr );
-		
-		if( m_Description.Pool == Pool::Default )
+		if( pool == Pool::Default )
 			this->IsDefaultPool = true;
 	}
 	
@@ -121,7 +93,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->Lock( offset, size, &lockedPtr, static_cast<DWORD>( flags ) );
 		RECORD_D3D9( hr );
 		
-		int lockedSize = size == 0 ? m_Description.SizeInBytes : size;
+		int lockedSize = size == 0 ? Description.SizeInBytes : size;
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		DataStream^ stream = gcnew DataStream( lockedPtr, lockedSize, true, !readOnly, false );
@@ -131,6 +103,15 @@ namespace Direct3D9
 	Result IndexBuffer::Unlock()
 	{
 		return RECORD_D3D9( InternalPointer->Unlock() );
+	}
+
+	IndexBufferDescription IndexBuffer::Description::get()
+	{
+		IndexBufferDescription desc;
+		HRESULT hr = InternalPointer->GetDesc( reinterpret_cast<D3DINDEXBUFFER_DESC*>( &desc ) );
+		RECORD_D3D9( hr );
+
+		return desc;
 	}
 }
 }

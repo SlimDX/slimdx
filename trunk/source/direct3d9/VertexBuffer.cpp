@@ -37,28 +37,12 @@ namespace Direct3D9
 {
 	VertexBuffer::VertexBuffer( IDirect3DVertexBuffer9* buffer )
 	{
-		D3DVERTEXBUFFER_DESC description;
-		HRESULT hr = buffer->GetDesc( &description );
-		
-		if( RECORD_D3D9(hr).IsFailure )
-			throw gcnew Direct3D9Exception( Result::Last );
-		
-		Construct(buffer);
-		InitDescription();
+		Construct( buffer );
 	}
 
 	VertexBuffer::VertexBuffer( IntPtr buffer )
 	{
-		void* pointer;
-		IUnknown* unknown = static_cast<IUnknown*>( buffer.ToPointer() );
-		HRESULT hr = unknown->QueryInterface( IID_IDirect3DVertexBuffer9, &pointer );
-		if( FAILED( hr ) )
-			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
-
-		IDirect3DVertexBuffer9* vbPtr = static_cast<IDirect3DVertexBuffer9*>( pointer );
-
-		Construct(vbPtr);
-		InitDescription();
+		Construct( buffer, NativeInterface );
 	}
 
 	VertexBuffer^ VertexBuffer::FromPointer( IDirect3DVertexBuffer9* pointer )
@@ -99,32 +83,9 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 		
-		Construct(vb);
+		Construct( vb );
 
-		//set description from local info instead of getting the desc
-		m_Description.Format = Format::VertexData;
-		m_Description.Type = SlimDX::Direct3D9::ResourceType::VertexBuffer;
-		m_Description.Usage = usage;
-		m_Description.Pool = pool;
-		m_Description.SizeInBytes = sizeInBytes;
-		m_Description.FVF = format;
-
-		if( m_Description.Pool == Pool::Default )
-			this->IsDefaultPool = true;
-	}
-
-	void VertexBuffer::InitDescription()
-	{
-		VertexBufferDescription desc;
-		HRESULT hr = InternalPointer->GetDesc( reinterpret_cast<D3DVERTEXBUFFER_DESC*>( &desc ) );
-		if( FAILED( hr ) )
-		{
-			//fail this silently
-			return;
-		}
-
-		m_Description = desc;
-		if( m_Description.Pool == Pool::Default )
+		if( pool == Pool::Default )
 			this->IsDefaultPool = true;
 	}
 
@@ -136,7 +97,7 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 		
-		int lockedSize = size == 0 ? m_Description.SizeInBytes : size;
+		int lockedSize = size == 0 ? Description.SizeInBytes : size;
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		DataStream^ stream = gcnew DataStream( lockedPtr, lockedSize, true, !readOnly, false );
@@ -146,6 +107,15 @@ namespace Direct3D9
 	Result VertexBuffer::Unlock()
 	{
 		return RECORD_D3D9( InternalPointer->Unlock() );
+	}
+
+	VertexBufferDescription VertexBuffer::Description::get()
+	{
+		VertexBufferDescription desc;
+		HRESULT hr = InternalPointer->GetDesc( reinterpret_cast<D3DVERTEXBUFFER_DESC*>( &desc ) );
+		RECORD_D3D9( hr );
+
+		return desc;
 	}
 }
 }
