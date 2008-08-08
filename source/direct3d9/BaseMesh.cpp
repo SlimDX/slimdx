@@ -282,7 +282,7 @@ namespace Direct3D9
 		}
 
 		indexCount = numIndices;
-		stripLengths = ( gcnew DataStream( buffer ) )->ReadRange<int>( numStrips );
+		stripLengths = Utilities::ReadRange<int>( buffer, numStrips );
 		return SlimDX::Direct3D9::IndexBuffer::FromPointer( result );
 	}
 
@@ -311,7 +311,7 @@ namespace Direct3D9
 		if( allHits == NULL )
 			hits = nullptr;
 		else
-			hits = ( gcnew DataStream( allHits ) )->ReadRange<IntersectInformation>( count );
+			hits = Utilities::ReadRange<IntersectInformation>( allHits, count );
 
 		if( result )
 			return true;
@@ -374,7 +374,7 @@ namespace Direct3D9
 
 		faceIndex = face;
 		distance = dist;
-		hits = ( gcnew DataStream( allHits ) )->ReadRange<IntersectInformation>( count );
+		hits = Utilities::ReadRange<IntersectInformation>( allHits, count );
 
 		if( result )
 			return true;

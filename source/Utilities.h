@@ -50,6 +50,9 @@ namespace SlimDX
 
 		static array<System::Byte>^ ReadStream( System::IO::Stream^ stream, int readLength );
 
+		generic<typename T> where T : value class
+		static array<T>^ ReadRange( ID3DXBuffer *buffer, int count );
+
 		generic<typename T>
 		static void CheckArrayBounds( array<T>^ data, int offset, int% count );
 		

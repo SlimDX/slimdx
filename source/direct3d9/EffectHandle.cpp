@@ -34,12 +34,14 @@ namespace Direct3D9
 	EffectHandle::EffectHandle( D3DXHANDLE handle )
 	{
 		m_Handle = handle;
-		m_StringData = System::IntPtr::Zero;
+		m_StringData = IntPtr::Zero;
+
+		GC::SuppressFinalize(this);
 	}
 
 	EffectHandle::EffectHandle( String^ name )
 	{
-		m_StringData = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi( name );
+		m_StringData = Marshal::StringToHGlobalAnsi( name );
 		m_HasString = true;
 
 		m_Handle = reinterpret_cast<D3DXHANDLE>( m_StringData.ToPointer() );
@@ -48,7 +50,7 @@ namespace Direct3D9
 	void EffectHandle::Destruct()
 	{
 		if( m_HasString )
-			System::Runtime::InteropServices::Marshal::FreeHGlobal( m_StringData );
+			Marshal::FreeHGlobal( m_StringData );
 	}
 
 	EffectHandle::operator EffectHandle^( String^ name )

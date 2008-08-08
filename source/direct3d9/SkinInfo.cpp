@@ -194,7 +194,7 @@ namespace Direct3D9
 			out->SetAdjacency( NULL );
 
 		maxVertexInfluence = mvi;
-		vertexRemap = ( gcnew DataStream( vr ) )->ReadRange<int>( result->GetNumVertices() );
+		vertexRemap = Utilities::ReadRange<int>( vr, result->GetNumVertices() );
 		return out;
 	}
 
@@ -305,7 +305,7 @@ namespace Direct3D9
 			out->SetAdjacency( NULL );
 
 		maxVertexInfluence = mvi;
-		vertexRemap = ( gcnew DataStream( vr ) )->ReadRange<int>( result->GetNumVertices() );
+		vertexRemap = Utilities::ReadRange<int>( vr, result->GetNumVertices() );
 		return out;
 	}
 

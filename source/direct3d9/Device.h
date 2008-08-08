@@ -612,8 +612,9 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="stream">The stream index.</param>
 			/// <param name="frequency">The new frequency divider.</param>
+			/// <param name="source">The type of data being set.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result SetStreamSourceFrequency( int stream, int frequency );
+			Result SetStreamSourceFrequency( int stream, int frequency, StreamSource source );
 			
 			/// <summary>
 			/// Assigns a texture to a stage.
