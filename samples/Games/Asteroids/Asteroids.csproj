@@ -82,6 +82,8 @@
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Asteroid.cs" />
     <Compile Include="Entities\Player.cs" />
+    <Compile Include="Particles\Particle.cs" />
+    <Compile Include="Particles\ParticleSystem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

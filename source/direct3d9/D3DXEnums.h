@@ -29,13 +29,36 @@ namespace SlimDX
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
 
+
+		/// <summary>
+		/// Specifies which members of the <see cref="AnimationOutput"/> structure are valid.
+		/// </summary>
 		[System::Flags]
 		public enum class AnimationOutputFlags : System::Int32
 		{
+			/// <summary>
+			/// None of the members are valid.
+			/// </summary>
 			None,
+
+			/// <summary>
+			/// The transformation member is valid.
+			/// </summary>
 			Transformation,
+
+			/// <summary>
+			/// The translation member is valid.
+			/// </summary>
 			Translation,
+
+			/// <summary>
+			/// The scale member is valid.
+			/// </summary>
 			Scale,
+
+			/// <summary>
+			/// The rotation member is valid.
+			/// </summary>
 			Rotation
 		};
 
@@ -1169,12 +1192,34 @@ namespace SlimDX
 			EaseInEaseOut = D3DXTRANSITION_EASEINEASEOUT
 		};
 
+		/// <summary>
+		/// Specifies options for welding together vertices.
+		/// </summary>
+		/// <unmanaged>D3DXWELDEPSILONSFLAGS</unmanaged>
 		[System::Flags]
 		public enum class WeldFlags : System::Int32
 		{
+			/// <summary>
+			/// Weld together all vertices that are at the same location.
+			/// </summary>
 			WeldAll = D3DXWELDEPSILONS_WELDALL,
+
+			/// <summary>
+			/// If a given vertex component is within epsilon, modify partially matched vertices so that both components are identical. 
+			/// If all components are equal, remove one of the vertices. 
+			/// </summary>
 			WeldPartialMatches = D3DXWELDEPSILONS_WELDPARTIALMATCHES,
+
+			/// <summary>
+			/// Instructs the weld to allow only modifications to vertices and not removal. This flag is 
+			/// valid only if WeldPartialMatches is set. It is useful to modify vertices to be equal, 
+			/// but not to allow vertices to be removed.
+			/// </summary>
 			DoNotRemoveVertices = D3DXWELDEPSILONS_DONOTREMOVEVERTICES,
+
+			/// <summary>
+			/// Instructs the weld not to split vertices that are in separate attribute groups.
+			/// </summary>
 			DoNotSplit = D3DXWELDEPSILONS_DONOTSPLIT
 		};
 	}
