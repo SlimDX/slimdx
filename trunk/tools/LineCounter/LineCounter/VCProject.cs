@@ -45,6 +45,8 @@ namespace LineCounter
                 Node node = new Node();
                 node.Name = attribute.Value;
                 ProcessElement(e, node);
+
+                rootNode.ChildNodes.Add(node);
             }
         }
     }

@@ -12,6 +12,11 @@ namespace LineCounter
     {
         public string Name;
         public List<Node> ChildNodes = new List<Node>();
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     class FileNode : Node
