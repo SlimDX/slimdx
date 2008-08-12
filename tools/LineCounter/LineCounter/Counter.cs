@@ -2,16 +2,66 @@
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
+using System.Text;
 
 namespace LineCounter
 {
-    public static class Counter
+    public class Counter
     {
-        public static void Calculate(string inputFile)
-        {
-            if (string.IsNullOrEmpty(inputFile))
-                throw new ArgumentNullException("inputFile");
+        string inputFile;
 
+        public List<string> Warnings = new List<string>();
+
+        public int TotalLines
+        {
+            get;
+            private set;
+        }
+
+        public int Comments
+        {
+            get;
+            private set;
+        }
+
+        public int BlankLines
+        {
+            get;
+            private set;
+        }
+
+        public int CodeLines
+        {
+            get;
+            private set;
+        }
+
+        public int Directories
+        {
+            get;
+            private set;
+        }
+
+        public int Files
+        {
+            get;
+            private set;
+        }
+
+        public int Projects
+        {
+            get;
+            private set;
+        }
+
+        public Counter(string inputFile)
+        {
+            this.inputFile = inputFile;
+        }
+
+        public void Calculate()
+        {
             Node rootNode = new Node();
             rootNode.Name = Path.GetFileNameWithoutExtension(inputFile);
 
@@ -29,14 +79,22 @@ namespace LineCounter
                 else if (project.Contains(".csproj") || project.Contains(".vbproj"))
                     rootNode.ChildNodes.Add(CSProject.Process(project));
                 else
-                    throw new InvalidOperationException("Invalid project type: " + Path.GetExtension(project));
+                    Warnings.Add("Invalid project type: " + Path.GetExtension(project));
             }
 
             if (rootNode.ChildNodes.Count == 0)
                 throw new InvalidOperationException("No valid projects found.");
 
-            HtmlReport report = new HtmlReport(Path.Combine(Path.GetDirectoryName(inputFile), "statistics"));
-            report.Output(rootNode);
+            FileNode results = Count(rootNode);
+
+            CodeLines = results.CodeLines;
+            Comments = results.Comments;
+            BlankLines = results.BlankLines;
+            TotalLines = results.TotalLines;
+
+            Directories = CountFolders(rootNode, false);
+            Projects = rootNode.ChildNodes.Count;
+            Files = CountFiles(rootNode);
         }
 
         internal static int CountFolders(Node node, bool countTopLevel)
@@ -50,6 +108,20 @@ namespace LineCounter
                         count++;
                     count += CountFolders(n, true);
                 }
+            }
+
+            return count;
+        }
+
+        internal static int CountFiles(Node node)
+        {
+            int count = 0;
+            foreach (Node n in node.ChildNodes)
+            {
+                if (n is FileNode)
+                    count++;
+
+                count += CountFiles(n);
             }
 
             return count;
