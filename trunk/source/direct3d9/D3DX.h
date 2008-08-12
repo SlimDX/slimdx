@@ -33,22 +33,52 @@ namespace SlimDX
 		enum class VertexFormat;
 		enum class Format;
 
+		/// <summary>
+		/// Contains miscellaneous constants and methods for use with D3DX.
+		/// </summary>
 		public ref class D3DX sealed
 		{
 		private:
 			D3DX() { }
 
 		public:
+			/// <summary>
+			/// The value used to signify that the default value for a parameter should be used.
+			/// </summary>
 			literal int Default = D3DX_DEFAULT;
+
+			/// <summary>
+			/// The default value for non power-of-two textures.
+			/// </summary>
 			literal int DefaultNonPowerOf2 = D3DX_DEFAULT_NONPOW2;
+
+			/// <summary>
+			/// Indicates that the method should load from file.
+			/// </summary>
 			literal int FromFile = D3DX_FROM_FILE;
+
+			/// <summary>
+			/// Indicates that the method should format from file.
+			/// </summary>
 			literal int FormatFromFile = D3DFMT_FROM_FILE;
 
+			/// <summary>
+			/// 
+			/// </summary>
 			static int GetDeclarationVertexSize( array<VertexElement>^ elements, int stream );
 			static int GetFVFVertexSize( VertexFormat fvf );
 
+			/// <summary>
+			/// Retrieves a declarator from a Flexible Vertex Format (FVF) code.
+			/// </summary>
 			static array<VertexElement>^ DeclaratorFromFVF( VertexFormat fvf );
+
+			/// <summary>
+			/// Retrieves a Flexible Vertex Format (FVF) code from a declarator.
+			/// </summary>
 			static VertexFormat FVFFromDeclarator( array<VertexElement>^ declarator );
+
+
 			static array<VertexElement>^ GenerateOutputDeclaration( array<VertexElement>^ declaration );
 			static int GetDeclarationLength( array<VertexElement>^ declaration );
 
@@ -65,7 +95,11 @@ namespace SlimDX
 			static array<int>^ OptimizeVertices( array<int>^ indices, int faceCount, int vertexCount );
 			static array<int>^ OptimizeVertices( array<System::Int16>^ indices, int faceCount, int vertexCount );
 
-			static bool CheckVersion( int d3dVersion, int d3dxVersion );
+			/// <summary>
+			/// Verifies that the compiled version of D3DX matches the runtime version of D3DX.
+			/// </summary>
+			/// <returns><c>true</c> if the versions match; otherwise, <c>false</c>.</returns>
+			static bool CheckVersion();
 
 			static float FresnelTerm( float cosTheta, float refractionIndex );
 

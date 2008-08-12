@@ -227,9 +227,9 @@ namespace Direct3D9
 		return results;
 	}
 
-	bool D3DX::CheckVersion( int d3dVersion, int d3dxVersion )
+	bool D3DX::CheckVersion()
 	{
-		if( D3DXCheckVersion( d3dVersion, d3dxVersion ) )
+		if( D3DXCheckVersion( D3D_SDK_VERSION, D3DX_SDK_VERSION ) )
 			return true;
 		else
 			return false;
