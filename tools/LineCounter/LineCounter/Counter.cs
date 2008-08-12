@@ -7,6 +7,22 @@ using System.Text;
 
 namespace LineCounter
 {
+    class CommentProfile
+    {
+        public static CommentProfile Default = new CommentProfile()
+        {
+            LineComment = "//",
+            StartComment = "/*",
+            EndComment = "*/"
+        };
+
+        public static CommentProfile Empty = new CommentProfile();
+
+        public string LineComment;
+        public string StartComment;
+        public string EndComment;
+    }
+
     public class Counter
     {
         string inputFile;
@@ -55,9 +71,46 @@ namespace LineCounter
             private set;
         }
 
-        public Counter(string inputFile)
+        List<string> fileTypes = new List<string>();
+        Dictionary<string, CommentProfile> profiles = new Dictionary<string, CommentProfile>();
+
+        public Counter(string inputFile, string[] configuration)
         {
             this.inputFile = inputFile;
+
+            foreach (string c in configuration)
+            {
+                string[] parts = c.Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length != 1 && parts.Length != 2 && parts.Length != 4)
+                {
+                    Warnings.Add("Invalid configuration line: " + c);
+                    continue;
+                }
+
+                string extension = "." + parts[0].ToLower();
+                fileTypes.Add(extension);
+
+                if (parts.Length > 1)
+                {
+                    if (parts[1].ToLower() == "default")
+                        profiles.Add(extension, CommentProfile.Default);
+                    else
+                    {
+                        CommentProfile profile = new CommentProfile();
+                        profile.LineComment = parts[1];
+
+                        if (parts.Length > 2)
+                        {
+                            profile.StartComment = parts[2];
+                            profile.EndComment = parts[3];
+                        }
+
+                        profiles.Add(extension, profile);
+                    }
+                }
+                else
+                    profiles.Add(extension, CommentProfile.Empty);
+            }
         }
 
         public void Calculate()
@@ -73,13 +126,16 @@ namespace LineCounter
 
                 project = Path.Combine(Path.GetDirectoryName(inputFile), project);
 
-                // no guarantees that vbproj actually works
                 if (project.Contains(".vcproj"))
-                    rootNode.ChildNodes.Add(VCProject.Process(project));
-                else if (project.Contains(".csproj") || project.Contains(".vbproj"))
-                    rootNode.ChildNodes.Add(CSProject.Process(project));
+                    rootNode.ChildNodes.Add(VCProject.Process(this, project));
                 else
-                    Warnings.Add("Invalid project type: " + Path.GetExtension(project));
+                {
+                    Node node = CSProject.Process(this, project);
+                    if( node != null )
+                        rootNode.ChildNodes.Add(node);
+                    else
+                        Warnings.Add("Invalid project type: " + Path.GetExtension(project));
+                }
             }
 
             if (rootNode.ChildNodes.Count == 0)
@@ -127,17 +183,27 @@ namespace LineCounter
             return count;
         }
 
-        internal static void CountFile(FileNode file)
+        internal void CountFile(FileNode file)
         {
+            string extension = Path.GetExtension(file.Path).ToLower();
+            if (!fileTypes.Contains(extension))
+            {
+                file.Valid = false;
+                return;
+            }
+
             if (!File.Exists(file.Path))
                 throw new InvalidOperationException("Could not open file " + file.Path);
 
+            file.Valid = true;
             file.Name = Path.GetFileName(file.Path);
-            file.FileType = file.Path.EndsWith(".h") ? FileType.HeaderFile : FileType.SourceFile;
 
             string[] lines = File.ReadAllLines(file.Path);
-
             bool inComment = false;
+
+            CommentProfile profile = CommentProfile.Empty;
+            if (profiles.ContainsKey(extension))
+                profile = profiles[extension];
 
             foreach (string line in lines)
             {
@@ -151,14 +217,14 @@ namespace LineCounter
                 {
                     file.Comments++;
 
-                    if (temp.Contains("*/"))
+                    if (temp.Contains(profile.EndComment))
                         inComment = false;
                 }
                 else
                 {
-                    if (temp.StartsWith("//"))
+                    if (profile.LineComment != null && temp.StartsWith(profile.LineComment))
                         file.Comments++;
-                    else if (temp.Contains("/*"))
+                    else if (profile.StartComment != null && temp.Contains(profile.StartComment))
                     {
                         file.Comments++;
                         inComment = true;

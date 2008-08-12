@@ -2,12 +2,6 @@
 
 namespace LineCounter
 {
-    enum FileType
-    {
-        SourceFile,
-        HeaderFile
-    }
-
     class Node
     {
         public string Name;
@@ -26,6 +20,6 @@ namespace LineCounter
         public int CodeLines;
         public int Comments;
         public int BlankLines;
-        public FileType FileType;
+        public bool Valid;
     }
 }
