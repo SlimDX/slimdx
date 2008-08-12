@@ -7,7 +7,7 @@ namespace LineCounter
     {
         static string projectPath;
 
-        public static Node Process(string fileName)
+        public static Node Process(Counter counter, string fileName)
         {
             projectPath = fileName;
 
@@ -16,12 +16,12 @@ namespace LineCounter
 
             XDocument project = XDocument.Load(fileName);
             XElement rootFile = project.Element("VisualStudioProject").Element("Files");
-            ProcessElement(rootFile, rootNode);
+            ProcessElement(counter, rootFile, rootNode);
 
             return rootNode;
         }
 
-        static void ProcessElement(XElement element, Node rootNode)
+        static void ProcessElement(Counter counter, XElement element, Node rootNode)
         {
             foreach (XElement e in element.Elements("File"))
             {
@@ -31,9 +31,10 @@ namespace LineCounter
 
                 FileNode file = new FileNode();
                 file.Path = Path.Combine(Path.GetDirectoryName(projectPath), attribute.Value);
-                Counter.CountFile(file);
+                counter.CountFile(file);
 
-                rootNode.ChildNodes.Add(file);
+                if (file.Valid)
+                    rootNode.ChildNodes.Add(file);
             }
 
             foreach (XElement e in element.Elements("Filter"))
@@ -44,7 +45,7 @@ namespace LineCounter
 
                 Node node = new Node();
                 node.Name = attribute.Value;
-                ProcessElement(e, node);
+                ProcessElement(counter, e, node);
 
                 rootNode.ChildNodes.Add(node);
             }

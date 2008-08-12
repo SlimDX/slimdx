@@ -1,19 +1,31 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using System.Xml;
 
 namespace LineCounter
 {
     static class CSProject
     {
-        public static Node Process(string fileName)
+        public static Node Process(Counter counter, string fileName)
         {
             Node rootNode = new Node();
             rootNode.Name = Path.GetFileNameWithoutExtension(fileName);
 
             XNamespace ns = "http://schemas.microsoft.com/developer/msbuild/2003";
-            XDocument document = XDocument.Load(fileName);
+            XDocument document;
+            try
+            {
+                document = XDocument.Load(fileName);
+            }
+            catch (XmlException)
+            {
+                return null;
+            }
+
             XElement projectElement = document.Element(ns + "Project");
+            if (projectElement == null)
+                return null;
 
             foreach (XElement e in projectElement.Elements(ns + "ItemGroup"))
             {
@@ -52,9 +64,10 @@ namespace LineCounter
 
                     FileNode fileNode = new FileNode();
                     fileNode.Path = path;
-                    Counter.CountFile(fileNode);
+                    counter.CountFile(fileNode);
 
-                    currentNode.ChildNodes.Add(fileNode);
+                    if (fileNode.Valid)
+                        currentNode.ChildNodes.Add(fileNode);
                 }
             }
 
