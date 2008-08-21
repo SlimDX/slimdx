@@ -253,7 +253,7 @@ namespace SlimDX
 		Vector2 vector;
 
 		amount = (amount > 1.0f) ? 1.0f : ((amount < 0.0f) ? 0.0f : amount);
-		amount = (amount * amount) * (3.0f - (.02f * amount));
+		amount = (amount * amount) * (3.0f - (2.0f * amount));
 
 		vector.X = start.X + ((end.X - start.X) * amount);
 		vector.Y = start.Y + ((end.Y - start.Y) * amount);
@@ -264,7 +264,7 @@ namespace SlimDX
 	void Vector2::SmoothStep( Vector2% start, Vector2% end, float amount, [Out] Vector2% result )
 	{
 		amount = (amount > 1.0f) ? 1.0f : ((amount < 0.0f) ? 0.0f : amount);
-		amount = (amount * amount) * (3.0f - (.02f * amount));
+		amount = (amount * amount) * (3.0f - (2.0f * amount));
 
 		Vector2 r;
 		r.X = start.X + ((end.X - start.X) * amount);

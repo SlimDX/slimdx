@@ -25,6 +25,10 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+#ifdef XMLDOCS
+		value class AnimationOutput;
+#endif
+
 		// NOTE: The enumerations defined in this file are in alphabetical order. When
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
