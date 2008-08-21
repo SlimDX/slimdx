@@ -290,8 +290,8 @@ namespace Direct3D10
 		else 
 		{
 			faceRemap = gcnew array<int>( FaceCount );
-			for( size_t faceIndex = 0; faceIndex < nativeFaceRemap.size(); ++faceIndex )
-				faceRemap[faceIndex] = nativeFaceRemap[faceIndex];
+			for( int faceIndex = 0; faceIndex < nativeFaceRemap.size(); ++faceIndex )
+				faceRemap[faceIndex] = static_cast<int>( nativeFaceRemap[faceIndex] );
 			
 			vertexRemap = gcnew array<int>( VertexCount );
 			DWORD* currentVertex = reinterpret_cast<DWORD*>( nativeVertexRemap->GetBufferPointer() );
