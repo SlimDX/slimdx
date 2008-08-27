@@ -82,7 +82,7 @@ namespace Particles
             camera.Target = Vector3.Zero;
 
             // create the Direct3D device
-            GraphicsDeviceManager.ChangeDevice(DeviceVersion.Direct3D9, true, InitialWidth, InitialHeight);
+            GraphicsDeviceManager.ChangeDevice(DeviceVersion.Direct3D10, true, InitialWidth, InitialHeight);
         }
 
         /// <summary>
