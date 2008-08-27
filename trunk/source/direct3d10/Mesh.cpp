@@ -290,7 +290,8 @@ namespace Direct3D10
 		else 
 		{
 			faceRemap = gcnew array<int>( FaceCount );
-			for( int faceIndex = 0; faceIndex < nativeFaceRemap.size(); ++faceIndex )
+			int size = nativeFaceRemap.size();
+			for( int faceIndex = 0; faceIndex < size; ++faceIndex )
 				faceRemap[faceIndex] = static_cast<int>( nativeFaceRemap[faceIndex] );
 			
 			vertexRemap = gcnew array<int>( VertexCount );

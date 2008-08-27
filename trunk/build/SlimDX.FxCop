@@ -6239,7 +6239,7 @@
           <Members>
            <Member Name="#.ctor({modopt(System.Runtime.CompilerServices.IsConst),modopt(System.Runtime.CompilerServices.IsSignUnspecifiedByte)}System.SByte*)">
             <Messages>
-             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-08-20 12:09:23Z">
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Excluded" Created="2008-08-20 12:09:23Z">
               <Issue Name="OutsideDispose">
                <Item>'EffectHandle.EffectHandle(sbyte*)'</Item>
                <Item>'GC.SuppressFinalize(object)'</Item>

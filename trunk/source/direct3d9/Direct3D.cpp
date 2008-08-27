@@ -22,8 +22,8 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#if D3DX_SDK_VERSION != 38
-#error You are not compiling against the June 2008 SDK. Change the linker settings to delay load the correct DLLs and update this code.
+#if D3DX_SDK_VERSION != 39
+#error You are not compiling against the August 2008 SDK. Change the linker settings to delay load the correct DLLs and update this code.
 #endif
 
 #include "../ComObject.h"
