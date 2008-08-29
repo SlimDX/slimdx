@@ -122,9 +122,9 @@ namespace DirectInput
 	InputDeviceCollection^ DirectInput::GetDevices( DeviceClass deviceClass, DeviceEnumerationFlags enumerationFlags )
 	{
 		InputDeviceCollection^ results = gcnew InputDeviceCollection();
-		std::auto_ptr<InputDeviceCollectionShim> shim( new InputDeviceCollectionShim( results ) );
+		InputDeviceCollectionShim shim( results );
 
-		HRESULT hr = m_DirectInput->EnumDevices( static_cast<DWORD>( deviceClass ), static_cast<LPDIENUMDEVICESCALLBACK>( EnumerateDevices ), shim.get(), static_cast<DWORD>( enumerationFlags ) );
+		HRESULT hr = m_DirectInput->EnumDevices( static_cast<DWORD>( deviceClass ), static_cast<LPDIENUMDEVICESCALLBACK>( EnumerateDevices ), &shim, static_cast<DWORD>( enumerationFlags ) );
 		if( RECORD_DINPUT( hr ).IsFailure )
 			return nullptr;
 
@@ -134,9 +134,9 @@ namespace DirectInput
 	InputDeviceCollection^ DirectInput::GetDevices( DeviceType deviceType, DeviceEnumerationFlags enumerationFlags )
 	{
 		InputDeviceCollection^ results = gcnew InputDeviceCollection();
-		std::auto_ptr<InputDeviceCollectionShim> shim( new InputDeviceCollectionShim( results ) );
+		InputDeviceCollectionShim shim( results );
 
-		HRESULT hr = m_DirectInput->EnumDevices( static_cast<DWORD>( deviceType ), static_cast<LPDIENUMDEVICESCALLBACK>( EnumerateDevices ), shim.get(), static_cast<DWORD>( enumerationFlags ) );
+		HRESULT hr = m_DirectInput->EnumDevices( static_cast<DWORD>( deviceType ), static_cast<LPDIENUMDEVICESCALLBACK>( EnumerateDevices ), &shim, static_cast<DWORD>( enumerationFlags ) );
 		if( RECORD_DINPUT( hr ).IsFailure )
 			return nullptr;
 

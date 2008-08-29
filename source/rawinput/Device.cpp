@@ -95,40 +95,47 @@ namespace RawInput
 		if( size == 0 )
 			return;
 
+		// Manual Allocation: cleaned up in the try/finally clause below
 		BYTE *bytes = new BYTE[size];
-		GetRawInputData( handle, RID_INPUT, bytes, &size, sizeof(RAWINPUTHEADER) );
 
-		RAWINPUT *rawInput = reinterpret_cast<RAWINPUT*>( bytes );
-
-		if( rawInput->header.dwType == RIM_TYPEKEYBOARD )
+		try
 		{
-			OnKeyboardInput( gcnew KeyboardInputEventArgs( rawInput->data.keyboard.MakeCode,
-				static_cast<ScanCodeFlags>( rawInput->data.keyboard.Flags ),
-				static_cast<Keys>( rawInput->data.keyboard.VKey ),
-				static_cast<KeyState>( rawInput->data.keyboard.Message ),
-				rawInput->data.keyboard.ExtraInformation ) );
-		}
-		else if( rawInput->header.dwType == RIM_TYPEMOUSE )
-		{
-			OnMouseInput( gcnew MouseInputEventArgs( static_cast<MouseMode>( rawInput->data.mouse.usFlags ),
-				static_cast<MouseButtonFlags>( rawInput->data.mouse.usButtonFlags ),
-				rawInput->data.mouse.usButtonData,
-				rawInput->data.mouse.ulRawButtons,
-				rawInput->data.mouse.lLastX,
-				rawInput->data.mouse.lLastY,
-				rawInput->data.mouse.ulExtraInformation ) );
-		}
-		else
-		{
-			int length = rawInput->data.hid.dwCount * rawInput->data.hid.dwSizeHid;
-			array<Byte>^ bytes = gcnew array<Byte>( length );
-			for( int i = 0; i < length; i++ )
-				bytes[i] = rawInput->data.hid.bRawData[i];
+			GetRawInputData( handle, RID_INPUT, bytes, &size, sizeof(RAWINPUTHEADER) );
 
-			OnRawInput( gcnew RawInputEventArgs( rawInput->data.hid.dwSizeHid, rawInput->data.hid.dwCount, bytes ) );
-		}
+			RAWINPUT *rawInput = reinterpret_cast<RAWINPUT*>( bytes );
 
-		delete[] bytes;
+			if( rawInput->header.dwType == RIM_TYPEKEYBOARD )
+			{
+				OnKeyboardInput( gcnew KeyboardInputEventArgs( rawInput->data.keyboard.MakeCode,
+					static_cast<ScanCodeFlags>( rawInput->data.keyboard.Flags ),
+					static_cast<Keys>( rawInput->data.keyboard.VKey ),
+					static_cast<KeyState>( rawInput->data.keyboard.Message ),
+					rawInput->data.keyboard.ExtraInformation ) );
+			}
+			else if( rawInput->header.dwType == RIM_TYPEMOUSE )
+			{
+				OnMouseInput( gcnew MouseInputEventArgs( static_cast<MouseMode>( rawInput->data.mouse.usFlags ),
+					static_cast<MouseButtonFlags>( rawInput->data.mouse.usButtonFlags ),
+					rawInput->data.mouse.usButtonData,
+					rawInput->data.mouse.ulRawButtons,
+					rawInput->data.mouse.lLastX,
+					rawInput->data.mouse.lLastY,
+					rawInput->data.mouse.ulExtraInformation ) );
+			}
+			else
+			{
+				int length = rawInput->data.hid.dwCount * rawInput->data.hid.dwSizeHid;
+				array<Byte>^ bytes = gcnew array<Byte>( length );
+				for( int i = 0; i < length; i++ )
+					bytes[i] = rawInput->data.hid.bRawData[i];
+
+				OnRawInput( gcnew RawInputEventArgs( rawInput->data.hid.dwSizeHid, rawInput->data.hid.dwCount, bytes ) );
+			}
+		}
+		finally
+		{
+			delete[] bytes;
+		}
 	}
 
 	void Device::Destruct()
@@ -236,11 +243,10 @@ namespace RawInput
 
 			if( size != 0 )
 			{
-				TCHAR* chars = new TCHAR[size];
-				GetRawInputDeviceInfo( deviceList[i].hDevice, RIDI_DEVICENAME, chars, &size );
+				std::vector<TCHAR> chars( size );
+				GetRawInputDeviceInfo( deviceList[i].hDevice, RIDI_DEVICENAME, &chars[0], &size );
 
-				name = gcnew String( chars );
-				delete[] chars;
+				name = gcnew String( &chars[0] );
 			}
 
 			GetRawInputDeviceInfo( deviceList[i].hDevice, RIDI_DEVICEINFO, NULL, &size );
@@ -248,53 +254,60 @@ namespace RawInput
 			if( size == 0 )
 				continue;
 
+			// Manual Allocation: cleaned up by the try/finally clause below
 			bytes = new BYTE[size];
-			RID_DEVICE_INFO *nativeInfo = reinterpret_cast<RID_DEVICE_INFO*>( bytes );
-			nativeInfo->cbSize = sizeof( RID_DEVICE_INFO );
 
-			GetRawInputDeviceInfo( deviceList[i].hDevice, RIDI_DEVICEINFO, nativeInfo, &size );			
-
-			if( nativeInfo->dwType == RIM_TYPEKEYBOARD )
+			try
 			{
-				KeyboardInfo^ info = gcnew KeyboardInfo();
+				RID_DEVICE_INFO *nativeInfo = reinterpret_cast<RID_DEVICE_INFO*>( bytes );
+				nativeInfo->cbSize = sizeof( RID_DEVICE_INFO );
 
-				info->DeviceType = static_cast<DeviceType>( nativeInfo->dwType );
-				info->DeviceName = name;
-				info->KeyboardType = nativeInfo->keyboard.dwType;
-				info->Subtype = nativeInfo->keyboard.dwSubType;
-				info->KeyboardMode = nativeInfo->keyboard.dwKeyboardMode;
-				info->FunctionKeyCount = nativeInfo->keyboard.dwNumberOfFunctionKeys;
-				info->IndicatorCount = nativeInfo->keyboard.dwNumberOfIndicators;
-				info->TotalKeyCount = nativeInfo->keyboard.dwNumberOfKeysTotal;
+				GetRawInputDeviceInfo( deviceList[i].hDevice, RIDI_DEVICEINFO, nativeInfo, &size );			
 
-				devices->Add( info );
+				if( nativeInfo->dwType == RIM_TYPEKEYBOARD )
+				{
+					KeyboardInfo^ info = gcnew KeyboardInfo();
+
+					info->DeviceType = static_cast<DeviceType>( nativeInfo->dwType );
+					info->DeviceName = name;
+					info->KeyboardType = nativeInfo->keyboard.dwType;
+					info->Subtype = nativeInfo->keyboard.dwSubType;
+					info->KeyboardMode = nativeInfo->keyboard.dwKeyboardMode;
+					info->FunctionKeyCount = nativeInfo->keyboard.dwNumberOfFunctionKeys;
+					info->IndicatorCount = nativeInfo->keyboard.dwNumberOfIndicators;
+					info->TotalKeyCount = nativeInfo->keyboard.dwNumberOfKeysTotal;
+
+					devices->Add( info );
+				}
+				else if( nativeInfo->dwType == RIM_TYPEMOUSE )
+				{
+					MouseInfo^ info = gcnew MouseInfo();
+
+					info->DeviceType = static_cast<DeviceType>( nativeInfo->dwType );
+					info->DeviceName = name;
+					info->Id = nativeInfo->mouse.dwId;
+					info->ButtonCount = nativeInfo->mouse.dwNumberOfButtons;
+					info->SampleRate = nativeInfo->mouse.dwSampleRate;
+
+					devices->Add( info );
+				}
+				else
+				{
+					HidInfo^ info = gcnew HidInfo();
+
+					info->DeviceType = static_cast<DeviceType>( nativeInfo->dwType );
+					info->DeviceName = name;
+					info->VendorId = nativeInfo->hid.dwVendorId;
+					info->ProductId = nativeInfo->hid.dwProductId;
+					info->VersionNumber = nativeInfo->hid.dwVersionNumber;
+
+					devices->Add( info );
+				}
 			}
-			else if( nativeInfo->dwType == RIM_TYPEMOUSE )
+			finally
 			{
-				MouseInfo^ info = gcnew MouseInfo();
-
-				info->DeviceType = static_cast<DeviceType>( nativeInfo->dwType );
-				info->DeviceName = name;
-				info->Id = nativeInfo->mouse.dwId;
-				info->ButtonCount = nativeInfo->mouse.dwNumberOfButtons;
-				info->SampleRate = nativeInfo->mouse.dwSampleRate;
-
-				devices->Add( info );
+				delete[] bytes;
 			}
-			else
-			{
-				HidInfo^ info = gcnew HidInfo();
-
-				info->DeviceType = static_cast<DeviceType>( nativeInfo->dwType );
-				info->DeviceName = name;
-				info->VendorId = nativeInfo->hid.dwVendorId;
-				info->ProductId = nativeInfo->hid.dwProductId;
-				info->VersionNumber = nativeInfo->hid.dwVersionNumber;
-
-				devices->Add( info );
-			}
-
-			delete[] bytes;
 		}
 
 		return gcnew ReadOnlyCollection<DeviceInfo^>( devices );

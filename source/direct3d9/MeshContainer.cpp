@@ -49,7 +49,9 @@ namespace Direct3D9
 
 	MeshContainer::MeshContainer()
 	{
-		Pointer = new D3DXMESHCONTAINER();
+		// Manual Allocation: ugly, but necessary
+		// we clean up in both the destructor and the finalizer
+		Pointer = new MeshContainerShim(this);
 		Pointer->Name = NULL;
 		Pointer->MeshData = D3DXMESHDATA();
 		Pointer->pMaterials = NULL;
@@ -141,6 +143,9 @@ namespace Direct3D9
 		}
 
 		Pointer->NumMaterials = materials->Length;
+		// Manual Allocation: ugly, but necessary
+		// we clean up whenever a new set of materials is given to us, and in
+		// both the destructor and finalizer
 		Pointer->pMaterials = new D3DXMATERIAL[Pointer->NumMaterials];
 
 		for( int i = 0; i < materials->Length; i++ )
@@ -173,6 +178,9 @@ namespace Direct3D9
 		}
 
 		Pointer->NumMaterials = effects->Length;
+		// Manual Allocation: ugly, but necessary
+		// we clean up whenever a new set of effects is given, and
+		// in both the destructor and finalizer
 		Pointer->pEffects = new D3DXEFFECTINSTANCE[effects->Length];
 
 		for( int i = 0; i < effects->Length; i++ )
@@ -205,6 +213,9 @@ namespace Direct3D9
 			delete[] Pointer->pAdjacency;
 
 		int count = adjacency->Length;
+		// Manual Allocation: ugly, but necessary
+		// we clean up whenever a new set is given to us, and
+		// in both the destructor and finalizer
 		Pointer->pAdjacency = new DWORD[count];
 
 		for( int i = 0; i < count; i++ )

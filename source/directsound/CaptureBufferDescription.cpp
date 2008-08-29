@@ -43,6 +43,8 @@ namespace DirectSound
 
 		if( ControlEffects && ( EffectDescriptions != nullptr ) )
 		{
+			// Manual Allocation: ugly, but necessary
+			// we are only called by one other method, which performs the clean up
 			description.dwFXCount = EffectDescriptions->Length;
 			LPDSCEFFECTDESC lpDSCFXDesc = new DSCEFFECTDESC[ description.dwFXCount ];
 
@@ -61,6 +63,8 @@ namespace DirectSound
 
 		if( Format != nullptr )
 		{
+			// Manual Allocation: ugly, but necessary
+			// we are only called by one other method, which performs the clean up
 			std::auto_ptr<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( Format );
 			description.lpwfxFormat = new WAVEFORMATEX( *format.get() );
 		}

@@ -47,6 +47,8 @@ namespace DirectSound
 
 		if( Format != nullptr )
 		{
+			// Manual Allocation: ugly, but necessary
+			// we are only called by one other method, which performs the clean up
 			std::auto_ptr<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( Format );
 			result.lpwfxFormat = new WAVEFORMATEX( *format.get() );
 		}

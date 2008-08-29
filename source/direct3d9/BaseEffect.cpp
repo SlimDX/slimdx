@@ -656,18 +656,28 @@ namespace Direct3D9
 	DataStream^ BaseEffect::GetValue( EffectHandle^ parameter, int bytes )
 	{
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		std::auto_ptr<char> data( new char[bytes] );
 
-		HRESULT hr = InternalPointer->GetValue( handle, data.get(), bytes );
-		
-		if( RECORD_D3D9( hr ).IsFailure )
+		// Manual Allocation: Handled properly
+		// data is either taken by the DataStream or disposed of when
+		// an exception occurs
+		char *data = new char[bytes];
+
+		try
 		{
-			return nullptr;
-		}
+			HRESULT hr = InternalPointer->GetValue( handle, data, bytes );
 
-		DataStream^ ds = gcnew DataStream( data.release(), bytes, true, true, false );
-		ds->TakeOwnership();
-		return ds;
+			if( RECORD_D3D9( hr ).IsFailure )
+				return nullptr;
+
+			DataStream^ ds = gcnew DataStream( data, bytes, true, true, false );
+			ds->TakeOwnership();
+			data = NULL;
+			return ds;
+		}
+		finally
+		{
+			delete[] data;
+		}
 	}
 }
 }

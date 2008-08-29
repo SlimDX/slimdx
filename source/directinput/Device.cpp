@@ -121,6 +121,8 @@ namespace DirectInput
 			std::vector<DIOBJECTDATAFORMAT> objectFormats( objectAttributes->Count );
 			for( int i = 0; i < objectAttributes->Count; i++ )
 			{
+				// Manual Allocation: handled properly
+				// we clean up just below. No methods in between throw exceptions
 				GUID *guid = new GUID( Utilities::ConvertManagedGuid( objectAttributes[i]->SourceGuid ) );
 				objectFormats[i].dwFlags = static_cast<DWORD>( objectAttributes[i]->Flags );
 				objectFormats[i].dwType = static_cast<DWORD>( objectAttributes[i]->Type );
@@ -492,9 +494,9 @@ namespace DirectInput
 	DeviceObjectCollection^ Device<DataFormat>::GetDeviceObjects( ObjectDeviceType objectType )
 	{
 		DeviceObjectCollection^ results = gcnew DeviceObjectCollection();
-		std::auto_ptr<DeviceObjectCollectionShim> shim( new DeviceObjectCollectionShim( results ) );
+		DeviceObjectCollectionShim shim( results );
 
-		HRESULT hr = InternalPointer->EnumObjects( static_cast<LPDIENUMDEVICEOBJECTSCALLBACK>( EnumerateObjects ), shim.get(), static_cast<DWORD>( objectType ) );
+		HRESULT hr = InternalPointer->EnumObjects( static_cast<LPDIENUMDEVICEOBJECTSCALLBACK>( EnumerateObjects ), &shim, static_cast<DWORD>( objectType ) );
 		if( RECORD_DINPUT( hr ).IsFailure )
 			return nullptr;
 

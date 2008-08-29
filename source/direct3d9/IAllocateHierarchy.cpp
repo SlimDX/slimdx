@@ -63,7 +63,8 @@ namespace Direct3D9
 			return E_FAIL;
 		}
 		 
-		*ppNewFrame = new FrameShim( frame, *(frame->Pointer) );
+		// return the unmanaged shim
+		*ppNewFrame = frame->Pointer;
 
 		return D3D_OK;
 	}
@@ -130,7 +131,8 @@ namespace Direct3D9
 			return E_FAIL;
 		}
 
-		*ppNewMeshContainer = new MeshContainerShim( meshContainer );
+		// return the unmanaged shim
+		*ppNewMeshContainer = meshContainer->Pointer; 
 
 		return D3D_OK;
 	}
@@ -152,7 +154,7 @@ namespace Direct3D9
 	HRESULT IAllocateHierarchyShim::DestroyMeshContainer( LPD3DXMESHCONTAINER pMeshContainerToFree )
 	{
 		try
-		{
+		{			
 			m_WrappedInterface->DestroyMeshContainer( ((MeshContainerShim*)pMeshContainerToFree)->GetMeshContainer() );
 		}
 		catch( Exception^ )

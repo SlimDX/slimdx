@@ -58,6 +58,7 @@ namespace DirectSound
 
 		HRESULT hr = capture->InternalPointer->CreateCaptureBuffer( &value, &buffer, NULL );
 
+		delete[] value.lpDSCFXDesc;
 		delete value.lpwfxFormat;
 
 		if( RECORD_DSOUND( hr ).IsFailure )
@@ -218,22 +219,27 @@ namespace DirectSound
 		if( RECORD_DSOUND( hr ).IsFailure )
 			return nullptr;
 
+		// Manual Allocation: handled properly in the try/finally clause below
 		format = reinterpret_cast<WAVEFORMATEX*>( new char[size] );
-		hr = InternalPointer->GetFormat( format, size, NULL );
 
-		if( FAILED( hr ) )
+		try
+		{
+			hr = InternalPointer->GetFormat( format, size, NULL );
+
+			if( RECORD_DSOUND( hr ).IsFailure )
+				return nullptr;
+
+			if( format->wFormatTag == WAVE_FORMAT_EXTENSIBLE )
+				result = WaveFormatExtensible::FromBase( format );
+			else 
+				result = WaveFormat::FromUnmanaged( *format );
+
+			return result;
+		}
+		finally
+		{
 			delete[] format;
-
-		if( RECORD_DSOUND( hr ).IsFailure )
-			return nullptr;
-
-		if( format->wFormatTag == WAVE_FORMAT_EXTENSIBLE )
-			result = WaveFormatExtensible::FromBase( format );
-		else 
-			result = WaveFormat::FromUnmanaged( *format );
-
-		delete[] format;
-		return result;
+		}
 	}
 
 	array<CaptureEffectResult>^ CaptureBuffer::GetEffectStatus( int effectCount )
