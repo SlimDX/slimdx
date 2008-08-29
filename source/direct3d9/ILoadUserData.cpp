@@ -50,8 +50,8 @@ namespace Direct3D9
 		try
 		{
 			XFileData^ data = XFileData::FromPointer( pXofChildData );
-			m_WrappedInterface->LoadFrameData( ((FrameShim*)pFrame)->GetFrame(), data );
-			data->~XFileData();
+			m_WrappedInterface->LoadFrameData( static_cast<FrameShim*>( pFrame )->GetFrame(), data );
+			delete data;
 		}
 		catch( Exception^ )
 		{
@@ -66,8 +66,8 @@ namespace Direct3D9
 		try
 		{
 			XFileData^ data = XFileData::FromPointer( pXofChildData );
-			m_WrappedInterface->LoadMeshData( ((MeshContainerShim*)pMeshContainer)->GetMeshContainer(), data );
-			data->~XFileData();
+			m_WrappedInterface->LoadMeshData( static_cast<MeshContainerShim*>( pMeshContainer )->GetMeshContainer(), data );
+			delete data;
 		}
 		catch( Exception^ )
 		{
@@ -83,7 +83,7 @@ namespace Direct3D9
 		{
 			XFileData^ data = XFileData::FromPointer( pXofChildData );
 			m_WrappedInterface->LoadTopLevelData( data );
-			data->~XFileData();
+			delete data;
 		}
 		catch( Exception^ )
 		{

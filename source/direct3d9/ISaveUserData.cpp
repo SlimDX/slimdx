@@ -51,9 +51,9 @@ namespace Direct3D9
 		{
 			XFileSaveObject^ saveObject = XFileSaveObject::FromPointer( pXofSave );
 			XFileSaveData^ saveData = XFileSaveData::FromPointer( pXofFrameData );
-			m_WrappedInterface->AddFrameChildData( ((FrameShim*)pFrame)->GetFrame(), saveObject, saveData );
-			saveObject->~XFileSaveObject();
-			saveData->~XFileSaveData();
+			m_WrappedInterface->AddFrameChildData( const_cast<FrameShim*>( static_cast<const FrameShim*>( pFrame ) )->GetFrame(), saveObject, saveData );
+			delete saveObject;
+			delete saveData;
 		}
 		catch( Exception^ )
 		{
@@ -69,9 +69,9 @@ namespace Direct3D9
 		{
 			XFileSaveObject^ saveObject = XFileSaveObject::FromPointer( pXofSave );
 			XFileSaveData^ saveData = XFileSaveData::FromPointer( pXofMeshData );
-			m_WrappedInterface->AddMeshChildData( ((MeshContainerShim*)pMeshContainer)->GetMeshContainer(), saveObject, saveData );
-			saveObject->~XFileSaveObject();
-			saveData->~XFileSaveData();
+			m_WrappedInterface->AddMeshChildData( const_cast<MeshContainerShim*>( static_cast<const MeshContainerShim*>( pMeshContainer ) )->GetMeshContainer(), saveObject, saveData );
+			delete saveObject;
+			delete saveData;
 		}
 		catch( Exception^ )
 		{
@@ -87,7 +87,7 @@ namespace Direct3D9
 		{
 			XFileSaveObject^ saveObject = XFileSaveObject::FromPointer( pXofSave );
 			m_WrappedInterface->AddTopLevelDataPost( saveObject );
-			saveObject->~XFileSaveObject();
+			delete saveObject;
 		}
 		catch( Exception^ )
 		{
@@ -103,7 +103,7 @@ namespace Direct3D9
 		{
 			XFileSaveObject^ saveObject = XFileSaveObject::FromPointer( pXofSave );
 			m_WrappedInterface->AddTopLevelDataPre( saveObject );
-			saveObject->~XFileSaveObject();
+			delete saveObject;
 		}
 		catch( Exception^ )
 		{
@@ -119,7 +119,7 @@ namespace Direct3D9
 		{
 			XFile^ xFile = XFile::FromPointer( pXFileApi );
 			m_WrappedInterface->RegisterTemplates( xFile );
-			xFile->~XFile();
+			delete xFile;
 		}
 		catch( Exception^ )
 		{
@@ -135,7 +135,7 @@ namespace Direct3D9
 		{
 			XFileSaveObject^ saveObject = XFileSaveObject::FromPointer( pXofSave );
 			m_WrappedInterface->SaveTemplates( saveObject );
-			saveObject->~XFileSaveObject();
+			delete saveObject;
 		}
 		catch( Exception^ )
 		{

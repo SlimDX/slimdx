@@ -514,7 +514,7 @@ namespace Direct3D9
 	bool Effect::ValidateTechnique( EffectHandle^ technique )
 	{
 		D3DXHANDLE handle = technique != nullptr ? technique->InternalHandle : NULL;
-		return FAILED( InternalPointer->ValidateTechnique( handle ) );
+		return SUCCEEDED( InternalPointer->ValidateTechnique( handle ) );
 	}
 
 	EffectHandle^ Effect::Technique::get()
