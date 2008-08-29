@@ -91,6 +91,7 @@ namespace XAudio2
 
 		Construct( pointer );
 
+		// Manual Allocation: cleaned up in the finalizer / destructor
 		callback = new EngineCallbackShim( this );
 		hr = InternalPointer->RegisterForCallbacks( callback );
 
@@ -111,6 +112,7 @@ namespace XAudio2
 
 		Construct( pointer );
 
+		// Manual Allocation: cleaned up in the finalizer / destructor
 		callback = new EngineCallbackShim( this );
 		hr = InternalPointer->RegisterForCallbacks( callback );
 

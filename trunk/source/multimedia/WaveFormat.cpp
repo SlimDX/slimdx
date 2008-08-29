@@ -38,6 +38,7 @@ namespace Multimedia
 		array<Byte>^ bytes = format->GetBytes();
 		pin_ptr<Byte> pinnedBytes = &bytes[0];
 
+		// Manual Allocation: it's ok, the pointer gets wrapped up into a std::auto_ptr
 		BYTE *result = new BYTE[bytes->Length];
 		memcpy( result, pinnedBytes, bytes->Length * sizeof( BYTE ) );
 

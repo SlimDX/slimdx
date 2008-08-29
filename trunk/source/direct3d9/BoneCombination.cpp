@@ -40,6 +40,9 @@ namespace Direct3D9
 		result.VertexCount = VertexCount;
 		result.VertexStart = VertexStart;
 
+		// Manual Allocation: ugly, but necessary
+		// this method is only called once, and it is properly cleaned up
+		// before the method returns
 		result.BoneId = new DWORD[BoneIds->Length];
 		for( int i = 0; i < BoneIds->Length; i++ )
 			result.BoneId[i] = BoneIds[i];

@@ -568,6 +568,8 @@ namespace Direct3D9
 		if( shim != NULL )
 			delete shim;
 
+		// Manual Allocation: Handled properly
+		// the class needs to keep this pointer around
 		shim = new IEffectStateManagerShim( manager );
 
 		HRESULT hr = InternalPointer->SetStateManager( shim );

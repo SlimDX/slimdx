@@ -54,6 +54,7 @@ namespace SlimDX
 	
 		if( makeCopy )
 		{
+			// Manual Allocation: this is fine
 			m_Buffer = new char[static_cast<size_t>( sizeInBytes )];
 			memcpy( m_Buffer, buffer, static_cast<size_t>( sizeInBytes ) );
 		}
@@ -78,6 +79,7 @@ namespace SlimDX
 	
 		try
 		{
+			// Manual Allocation: this is fine
 			m_Buffer = new char[ static_cast<int>( sizeInBytes ) ];
 		}
 		catch (std::bad_alloc&)

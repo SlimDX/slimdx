@@ -36,6 +36,7 @@ namespace X3DAudio
 
 	X3DAudio::X3DAudio( Speakers speakers, float speedOfSound )
 	{
+		// Manual Allocation: cleaned up in the finalizer / destructor
 		handle = new HandleWrapper();
 		X3DAudioInitialize( static_cast<UINT32>( speakers ), speedOfSound, handle->Handle );
 	}

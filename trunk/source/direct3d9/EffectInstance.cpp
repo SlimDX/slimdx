@@ -56,6 +56,10 @@ namespace Direct3D9
 		int count = effect.Defaults->Length;
 		result.NumDefaults = count;
 
+		// Manual Allocation: Handled properly
+		// this is pretty damn ugly, but I don't think I can see a way around it
+		// each method that calls this one must make sure to clean up this array
+		// right now, all of them do
 		result.pDefaults = new D3DXEFFECTDEFAULT[count];
 		result.pEffectFilename = Utilities::AllocateNativeString( effect.EffectFileName );
 

@@ -55,23 +55,24 @@ namespace Direct3D9
 		m_Frame = frame;
 	}
 
-	FrameShim::FrameShim( Frame^ frame ) : D3DXFRAME( )
+	FrameShim::FrameShim( Frame^ frame )
 	{
 		m_Frame = frame;
 
-		// This step is important when saving the frame hierarchy.
-		if(frame->Pointer != NULL)
+		if( frame->Pointer != NULL )
 			TransformationMatrix = frame->Pointer->TransformationMatrix;
 	}
 
 	Frame::Frame()
-	{
-		Pointer = new D3DXFRAME();
+	{		
+		// Manual Allocation: ugly, but necessary
+		// we clean up in the destructor and finalizer
+		Pointer = new FrameShim(this);
 		Pointer->Name = NULL;
 		Pointer->pFrameFirstChild = NULL;
 		Pointer->pFrameSibling = NULL;
 		Pointer->pMeshContainer = NULL;
-
+        		
 		m_Name = String::Empty;
 		m_FirstChild = nullptr;
 		m_Sibling = nullptr;
@@ -99,30 +100,29 @@ namespace Direct3D9
 		}
 	}
 
+	// TODO: Check this
 	void Frame::AppendChild( Frame^ child )
 	{
 		if( child == this )
 			throw gcnew Direct3D9Exception("Child frame can't be the same as the parent." + 
 			" This will cause a StackOverflowException.");
 
-		// Append managed child frame to parent.
 		if( m_FirstChild != nullptr )
 		{
-            // Go through all the child frames connected to this frame
-			Frame^ frame = FirstChild;
-			while( frame != nullptr )
+			Frame^ current = FirstChild;
+			Frame^ lastValidChild = nullptr;
+			while( current != nullptr )
 			{
-				// Go to the next child
-				frame = frame->Sibling;
+				lastValidChild = current;
+				current = current->Sibling;
 			}
 
-			// Set child
-			frame = child;
+			System::Diagnostics::Debug::Assert(lastValidChild != nullptr, "lastValidChild != nullptr");
+		
+			lastValidChild->Sibling = child;		
 		}
 		else
-		{
 			FirstChild = child;
-		}
 	}
 
 	Frame^ Frame::FindChild( String^ name )
@@ -130,17 +130,11 @@ namespace Direct3D9
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		FrameShim* shim = Frame::BuildHierarchyFromManaged( this );
-
-		FrameShim* pFrame = (FrameShim*)D3DXFrameFind( shim, reinterpret_cast<LPCSTR>( pinnedName ) );
+		FrameShim* pFrame = static_cast<FrameShim*>( D3DXFrameFind( Pointer, reinterpret_cast<LPCSTR>( pinnedName ) ) );
 
 		if( pFrame == NULL )
-		{
-			delete shim;
 			return nullptr;
-		}
 
-		delete shim;
 		return pFrame->GetFrame();
 	}
 
@@ -149,37 +143,25 @@ namespace Direct3D9
 		Vector3 objectCenter;
 		float radius;
 
-		FrameShim* shim = Frame::BuildHierarchyFromManaged( root );
-
-		HRESULT hr = D3DXFrameCalculateBoundingSphere( shim, reinterpret_cast<D3DXVECTOR3*>( &objectCenter ), &radius );
+		HRESULT hr = D3DXFrameCalculateBoundingSphere( root->Pointer, reinterpret_cast<D3DXVECTOR3*>( &objectCenter ), &radius );
 
 		if( RECORD_D3D9( hr ).IsFailure )
-		{
-			delete shim;
 			return BoundingSphere( Vector3( 0, 0, 0 ), 0.0f );
-		}
 
-		delete shim;
 		return BoundingSphere( objectCenter, radius );
 	}
 
 	Result Frame::DestroyHierarchy( Frame^ root, IAllocateHierarchy^ allocator )
 	{
-		std::auto_ptr<IAllocateHierarchyShim> shim( new IAllocateHierarchyShim( allocator ) );
-		std::auto_ptr<FrameShim> frameShim( Frame::BuildHierarchyFromManaged( root ) );
+		IAllocateHierarchyShim shim( allocator );					
+		HRESULT hr = D3DXFrameDestroy( root->Pointer, &shim );
 
-		HRESULT hr = D3DXFrameDestroy( frameShim.get(), shim.get() );
-		RECORD_D3D9( hr );
-
-		return Result::Last;
+		return RECORD_D3D9( hr );
 	}
 
 	int Frame::CountNamedFrames( Frame^ root )
-	{
-		std::auto_ptr<FrameShim> frameShim( Frame::BuildHierarchyFromManaged( root ) );
-		int count = D3DXFrameNumNamedMatrices( frameShim.get() );
-
-		return count;
+	{		
+		return D3DXFrameNumNamedMatrices( root->Pointer );
 	}
 
 	void Frame::RegisterNamedMatrices( Frame^ root, AnimationController^ controller )
@@ -263,20 +245,20 @@ namespace Direct3D9
 	Frame^ Frame::LoadHierarchyFromX( Device^ device, String^ fileName, MeshFlags options, 
 		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
 	{
-		std::auto_ptr<IAllocateHierarchyShim> allocatorShim( new IAllocateHierarchyShim( allocator ) );
-		std::auto_ptr<ILoadUserDataShim> userDataLoaderShim( NULL );
+		IAllocateHierarchyShim allocatorShim( allocator );
+		ID3DXLoadUserData *userDataLoaderShimPtr = NULL;
+		ILoadUserDataShim userDataLoaderShim( userDataLoader );
 		LPD3DXFRAME result = NULL;
 		LPD3DXANIMATIONCONTROLLER animationResult;
 
 		animationController = nullptr;
-
-		if( userDataLoader != nullptr )
-			userDataLoaderShim.reset( new ILoadUserDataShim( userDataLoader ) );
-
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
+		if( userDataLoader != nullptr )
+			userDataLoaderShimPtr = &userDataLoaderShim;
+
 		HRESULT hr = D3DXLoadMeshHierarchyFromX( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( options ), device->InternalPointer,
-			allocatorShim.get(), userDataLoaderShim.get(), &result, &animationResult);
+			&allocatorShim, userDataLoaderShimPtr, &result, &animationResult);
 
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
@@ -284,7 +266,7 @@ namespace Direct3D9
 		if( animationResult != NULL )
 			animationController = AnimationController::FromPointer( animationResult );
 
-		Frame^ frame = Frame::BuildHierarchyFromUnmanaged( ((FrameShim*)result) );
+		Frame^ frame = Frame::BuildHierarchyFromUnmanaged( static_cast<FrameShim*>( result ) );
 
 		if( animationResult != NULL )
 			Frame::RegisterAnimations( frame, animationResult );
@@ -295,36 +277,29 @@ namespace Direct3D9
 	Frame^ Frame::LoadHierarchyFromX( Device^ device, array<Byte>^ memory, MeshFlags options, 
 		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
 	{
-		std::auto_ptr<IAllocateHierarchyShim> allocatorShim( new IAllocateHierarchyShim( allocator ) );
-		std::auto_ptr<ILoadUserDataShim> userDataLoaderShim( NULL );
+		IAllocateHierarchyShim allocatorShim( allocator );
+		ID3DXLoadUserData *userDataLoaderShimPtr = NULL;
+		ILoadUserDataShim userDataLoaderShim( userDataLoader );
 		LPD3DXFRAME result = NULL;
-		LPD3DXANIMATIONCONTROLLER animationResult = NULL;
+		LPD3DXANIMATIONCONTROLLER animationResult;
 
 		animationController = nullptr;
-
-		if( userDataLoader != nullptr )
-			userDataLoaderShim.reset( new ILoadUserDataShim( userDataLoader ) );
-
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
-		HRESULT hr = D3DXLoadMeshHierarchyFromX( reinterpret_cast<LPCWSTR>( pinnedMemory ), static_cast<DWORD>( options ), device->InternalPointer,
-			allocatorShim.get(), userDataLoaderShim.get(), &result, &animationResult);
+		if( userDataLoader != nullptr )
+			userDataLoaderShimPtr = &userDataLoaderShim;
+
+		HRESULT hr = D3DXLoadMeshHierarchyFromXInMemory( reinterpret_cast<LPCVOID>( pinnedMemory ), memory->Length, static_cast<DWORD>( options ), device->InternalPointer,
+			&allocatorShim, userDataLoaderShimPtr, &result, &animationResult);
 
 		if( RECORD_D3D9( hr ).IsFailure )
-		{
 			return nullptr;
-		}
 
-		// If there is no animation, return a nullptr.
 		if( animationResult != NULL )
-		{
 			animationController = AnimationController::FromPointer( animationResult );
-		}
 
-		// Build frame hierarchy.
-		Frame^ frame = Frame::BuildHierarchyFromUnmanaged( (FrameShim*)result );
+		Frame^ frame = Frame::BuildHierarchyFromUnmanaged( static_cast<FrameShim*>( result ) );
 
-		// Register frame animations.
 		if( animationResult != NULL )
 			Frame::RegisterAnimations( frame, animationResult );
 
@@ -341,94 +316,73 @@ namespace Direct3D9
 	Result Frame::SaveHierarchyToFile( String^ fileName, XFileFormat format, Frame^ root, AnimationController^ animationController, ISaveUserData^ userDataSaver )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
-		std::auto_ptr<ISaveUserDataShim> shim( new ISaveUserDataShim( userDataSaver ) );
-		std::auto_ptr<FrameShim> frameShim( Frame::BuildHierarchyFromManaged( root ) );
+		ISaveUserDataShim shim( userDataSaver );
 
-		// If animation controller is null, handle it.
 		LPD3DXANIMATIONCONTROLLER animation = NULL;
 		if(animationController != nullptr)
 			animation = animationController->InternalPointer;
 
 		HRESULT hr = D3DXSaveMeshHierarchyToFile( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( format ),
-			frameShim.get(), animation, shim.get() );
-		RECORD_D3D9( hr );
-
-		return Result::Last;
+			root->Pointer, animation, &shim );
+		
+		return RECORD_D3D9( hr );
 	}
 
 	Result Frame::SaveHierarchyToFile( String^ fileName, XFileFormat format, Frame^ root, AnimationController^ animationController )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
-		FrameShim *frameShim = Frame::BuildHierarchyFromManaged( root );
 
-		// If animation controller is null, handle it.
 		LPD3DXANIMATIONCONTROLLER animation = NULL;
 		if(animationController != nullptr)
 			animation = animationController->InternalPointer;
 
 		HRESULT hr = D3DXSaveMeshHierarchyToFile( reinterpret_cast<LPCWSTR>( pinnedName ), static_cast<DWORD>( format ),
-			frameShim, animation, NULL );
+			root->Pointer, animation, NULL );
 		
-		Utilities::FreeNativeString( frameShim->Name );
-		delete frameShim;
-
-		RECORD_D3D9( hr );
-
-		return Result::Last;
+		return RECORD_D3D9( hr );
 	}
 
 	void Frame::RegisterAnimations( Frame^ frame, LPD3DXANIMATIONCONTROLLER animation )
 	{
 		if( frame->Name != nullptr )
-		{
 			animation->RegisterAnimationOutput( frame->Pointer->Name, &frame->Pointer->TransformationMatrix, NULL, NULL, NULL );
-		}
 
 		if( frame->FirstChild != nullptr )
-		{
 			RegisterAnimations( frame->FirstChild, animation );
-		}
 
 		if( frame->Sibling != nullptr )
-		{
 			RegisterAnimations( frame->Sibling, animation );
-		}
 	}
 
 	Frame^ Frame::BuildHierarchyFromUnmanaged( FrameShim* pFrame )
-	{
-		Frame^ hierarchy = nullptr;
-		BuildManagedFrames( hierarchy, pFrame );
-		return hierarchy;
+	{		
+		Frame ^ frame;
+		BuildManagedFrames(frame, pFrame);
+		return frame;
 	}
 
 	void Frame::BuildManagedFrames( Frame^% frame, FrameShim* pFrame )
 	{
 		frame = pFrame->GetFrame();
 
-		// Since DX adds the frame's transformation matrix after creating the frame,
-		// we have to update that here.
-		frame->Pointer->TransformationMatrix = pFrame->TransformationMatrix;
-
-		// Get any meshes.
 		if( pFrame->pMeshContainer != NULL )
 		{
 			SlimDX::Direct3D9::MeshContainer^ mc;
-			BuildManagedMeshes( mc, (MeshContainerShim*)pFrame->pMeshContainer );
+			BuildManagedMeshes( mc, static_cast<MeshContainerShim*>( pFrame->pMeshContainer ) );
 			frame->MeshContainer = mc;
 		}
 
 		if( pFrame->pFrameFirstChild != NULL )
 		{
 			Frame^ fc;
-			BuildManagedFrames( fc, (FrameShim*)pFrame->pFrameFirstChild );
+			BuildManagedFrames( fc, static_cast<FrameShim*>( pFrame->pFrameFirstChild ) );
 			frame->FirstChild = fc;
 		}
 
 		if( pFrame->pFrameSibling != NULL )
 		{
 			Frame^ sb;
-			BuildManagedFrames( sb, (FrameShim*)pFrame->pFrameSibling );
+			BuildManagedFrames( sb, static_cast<FrameShim*>( pFrame->pFrameSibling ) );
 			frame->Sibling = sb;
 		}
 	}
@@ -440,69 +394,8 @@ namespace Direct3D9
 		if( pMesh->pNextMeshContainer != NULL )
 		{
 			SlimDX::Direct3D9::MeshContainer^ nc;
-			BuildManagedMeshes( nc, (MeshContainerShim*)pMesh->pNextMeshContainer );
+			BuildManagedMeshes( nc, static_cast<MeshContainerShim*>( pMesh->pNextMeshContainer ) );
 			mesh->NextMeshContainer = nc;
-		}
-	}
-
-	FrameShim* Frame::BuildHierarchyFromManaged( Frame^ frame )
-	{
-		FrameShim* hierarchy = nullptr;
-		BuildUnmanagedFrames( hierarchy, frame );
-		return hierarchy;
-	}
-
-	void Frame::BuildUnmanagedFrames( FrameShim*% pFrame, Frame^ frame )
-	{
-		pFrame = new FrameShim( frame );
-		pFrame->Name = Utilities::AllocateNativeString( frame->Name );
-
-		// Get any meshes.
-		if( frame->MeshContainer != nullptr )
-		{
-			MeshContainerShim* mc;
-			BuildUnmanagedMeshes( mc, frame->MeshContainer );
-			pFrame->pMeshContainer = mc;
-		}
-
-		if( frame->FirstChild != nullptr )
-		{
-			FrameShim* fc;
-			BuildUnmanagedFrames( fc, frame->FirstChild );
-			pFrame->pFrameFirstChild = fc;
-		}
-
-		if( frame->Sibling != nullptr )
-		{
-			FrameShim* sb;
-			BuildUnmanagedFrames( sb, frame->Sibling );
-			pFrame->pFrameSibling = sb;
-		}
-	}
-
-	void Frame::BuildUnmanagedMeshes( MeshContainerShim*% pMesh, SlimDX::Direct3D9::MeshContainer^ mesh )
-	{
-		pMesh = new MeshContainerShim( mesh );
-		pMesh->Name = Utilities::AllocateNativeString( mesh->Name );
-
-		if( mesh->Pointer != NULL )
-		{
-			pMesh->NumMaterials = mesh->Pointer->NumMaterials;
-			pMesh->pMaterials = mesh->Pointer->pMaterials;
-			pMesh->pEffects = mesh->Pointer->pEffects;
-			pMesh->pAdjacency = mesh->Pointer->pAdjacency;
-			pMesh->pSkinInfo = mesh->Pointer->pSkinInfo;
-			pMesh->MeshData.pMesh = mesh->Pointer->MeshData.pMesh;
-			pMesh->MeshData.pPatchMesh = mesh->Pointer->MeshData.pPatchMesh;
-			pMesh->MeshData.pPMesh = mesh->Pointer->MeshData.pPMesh;
-			pMesh->MeshData.Type = mesh->Pointer->MeshData.Type;
-
-			if( mesh->NextMeshContainer != nullptr )
-			{
-				MeshContainerShim* nc;
-				BuildUnmanagedMeshes( nc, mesh->NextMeshContainer );
-				pMesh->pNextMeshContainer = nc;
-			}
 		}
 	}
 

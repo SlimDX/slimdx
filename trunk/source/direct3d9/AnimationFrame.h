@@ -44,10 +44,7 @@ namespace SlimDX
 			FrameShim( Frame^ frame );
 			FrameShim( Frame^ frame, const D3DXFRAME &pFrame );
 
-			Frame^ GetFrame()
-			{
-				return m_Frame;
-			}
+			Frame^ GetFrame() { return m_Frame; }
 		};
 
 		public ref class Frame abstract : System::IEquatable<Frame^>
@@ -66,10 +63,6 @@ namespace SlimDX
 			static void BuildManagedFrames( Frame^% frame, FrameShim* pFrame );
 			static void BuildManagedMeshes( MeshContainer^% mesh, MeshContainerShim* pMesh );
 			static void RegisterAnimations( Frame^ frame, LPD3DXANIMATIONCONTROLLER animation );
-
-			static FrameShim* BuildHierarchyFromManaged( Frame^ frame );
-			static void BuildUnmanagedFrames( FrameShim*% pFrame, Frame^ frame );
-			static void BuildUnmanagedMeshes( MeshContainerShim*% pMesh, MeshContainer^ mesh );
 
 		protected:
 			Frame();

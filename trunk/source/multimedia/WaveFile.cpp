@@ -103,6 +103,8 @@ namespace Multimedia
 	{
 		MMCKINFO temp;
 		PCMWAVEFORMAT pcmFormat;
+
+		// Manual Allocation: cleaned up in destructor / finalizer
 		fileInfo = new MMCKINFO();
 
 		if( mmioDescend( fileHandle, fileInfo, NULL, 0 ) != 0 )
@@ -124,12 +126,11 @@ namespace Multimedia
 
 		if( pcmFormat.wf.wFormatTag == WAVE_FORMAT_PCM || pcmFormat.wf.wFormatTag == WAVE_FORMAT_IEEE_FLOAT )
 		{
-			WAVEFORMATEX *tempFormat = reinterpret_cast<WAVEFORMATEX*>( new BYTE[sizeof( WAVEFORMATEX )] );
-			memcpy( tempFormat, &pcmFormat, sizeof( pcmFormat ) );
+			std::auto_ptr<WAVEFORMATEX> tempFormat( reinterpret_cast<WAVEFORMATEX*>( new BYTE[sizeof( WAVEFORMATEX )] ) );
+			memcpy( tempFormat.get(), &pcmFormat, sizeof( pcmFormat ) );
 			tempFormat->cbSize = 0;
 
-			format = WaveFormat::FromUnmanaged( *tempFormat );
-			delete[] tempFormat;
+			format = WaveFormat::FromUnmanaged( *tempFormat.get() );
 		}
 		else
 		{
@@ -137,15 +138,12 @@ namespace Multimedia
 			if( mmioRead( fileHandle, reinterpret_cast<CHAR*>( &extraBytes ), sizeof( WORD ) ) != sizeof( WORD ) )
 				throw gcnew InvalidDataException( "Invalid wave file." );
 
-			WAVEFORMATEX *tempFormat = reinterpret_cast<WAVEFORMATEX*>( new BYTE[sizeof( WAVEFORMATEX ) + extraBytes] );
-			memcpy( tempFormat, &pcmFormat, sizeof( pcmFormat ) );
+			std::auto_ptr<WAVEFORMATEX> tempFormat( reinterpret_cast<WAVEFORMATEX*>( new BYTE[sizeof( WAVEFORMATEX ) + extraBytes] ) );
+			memcpy( tempFormat.get(), &pcmFormat, sizeof( pcmFormat ) );
 			tempFormat->cbSize = extraBytes;
 
 			if( mmioRead( fileHandle, reinterpret_cast<CHAR*>( reinterpret_cast<BYTE*>( &tempFormat->cbSize ) + sizeof( WORD ) ), extraBytes ) != extraBytes )
-			{
-				delete[] tempFormat;
 				throw gcnew InvalidDataException( "Invalid wave file." );
-			}
 
 			// TODO: Add support for ADPCM and XMA2 formats
 			if( pcmFormat.wf.wFormatTag == WAVE_FORMAT_ADPCM )
@@ -153,9 +151,7 @@ namespace Multimedia
 			else if( pcmFormat.wf.wFormatTag == WAVE_FORMAT_XMA2 )
 				throw gcnew NotSupportedException( "The XMA2 format is not supported at this time." );
 			else
-				format = WaveFormatExtensible::FromBase( tempFormat );
-
-			delete[] tempFormat;
+				format = WaveFormatExtensible::FromBase( tempFormat.get() );
 		}
 
 		if( mmioAscend( fileHandle, &temp, 0 ) != 0 )
@@ -169,11 +165,15 @@ namespace Multimedia
 
 		if( dataChunk != NULL )
 			delete dataChunk;
+
+		// Manual Allocation: cleaned up in destructor / finalizer
 		dataChunk = new MMCKINFO();
 		dataChunk->ckid = mmioFOURCC( 'd', 'a', 't', 'a' );
 
 		if( outputInfo != NULL )
 			delete outputInfo;
+
+		// Manual Allocation: cleaned up in destructor / finalizer
 		outputInfo = new MMIOINFO();
 
 		if( access == FileAccess::Read )
@@ -284,6 +284,7 @@ namespace Multimedia
 	{
 		this->format = format;
 
+		// Manual Allocation: cleaned up in destructor / finalizer
 		fileInfo = new MMCKINFO();
 		fileInfo->fccType = mmioFOURCC( 'W', 'A', 'V', 'E' );
 		fileInfo->cksize = 0;
@@ -291,6 +292,7 @@ namespace Multimedia
 		if( mmioCreateChunk( fileHandle, fileInfo, MMIO_CREATERIFF ) != 0 )
 			throw gcnew InvalidDataException( "Invalid wave file." );
 
+		// Manual Allocation: cleaned up in destructor / finalizer
 		dataChunk = new MMCKINFO();
 		dataChunk->ckid = mmioFOURCC( 'f', 'm', 't', ' ' );
 		dataChunk->cksize = sizeof( PCMWAVEFORMAT );

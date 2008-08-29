@@ -42,6 +42,7 @@ namespace XAudio2
 		IXAudio2SourceVoice *pointer;
 		std::auto_ptr<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( sourceFormat );
 
+		// Manual Allocation: cleaned up in the destructor / finalizer
 		callback = new VoiceCallbackShim( this );
 
 		HRESULT hr = device->InternalPointer->CreateSourceVoice( &pointer, format.get(), static_cast<UINT32>( flags ), maximumFrequencyRatio, callback );
@@ -57,6 +58,7 @@ namespace XAudio2
 		IXAudio2SourceVoice *pointer;
 		std::auto_ptr<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( sourceFormat );
 
+		// Manual Allocation: cleaned up in the destructor / finalizer
 		callback = new VoiceCallbackShim( this );
 
 		HRESULT hr = device->InternalPointer->CreateSourceVoice( &pointer, format.get(), static_cast<UINT32>( flags ), XAUDIO2_DEFAULT_FREQ_RATIO, callback );
@@ -72,6 +74,7 @@ namespace XAudio2
 		IXAudio2SourceVoice *pointer;
 		std::auto_ptr<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( sourceFormat );
 
+		// Manual Allocation: cleaned up in the destructor / finalizer
 		callback = new VoiceCallbackShim( this );
 
 		HRESULT hr = device->InternalPointer->CreateSourceVoice( &pointer, format.get(), 0, XAUDIO2_DEFAULT_FREQ_RATIO, callback );
