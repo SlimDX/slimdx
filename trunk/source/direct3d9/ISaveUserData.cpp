@@ -27,6 +27,7 @@
 #include "../ComObject.h"
 #include "../DataStream.h"
 #include "../Utilities.h"
+#include "../SlimDXException.h"
 
 #include "Device.h"
 #include "Mesh.h"
@@ -55,6 +56,10 @@ namespace Direct3D9
 			delete saveObject;
 			delete saveData;
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -73,6 +78,10 @@ namespace Direct3D9
 			delete saveObject;
 			delete saveData;
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -88,6 +97,10 @@ namespace Direct3D9
 			XFileSaveObject^ saveObject = XFileSaveObject::FromPointer( pXofSave );
 			m_WrappedInterface->AddTopLevelDataPost( saveObject );
 			delete saveObject;
+		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
 		}
 		catch( Exception^ )
 		{
@@ -105,6 +118,10 @@ namespace Direct3D9
 			m_WrappedInterface->AddTopLevelDataPre( saveObject );
 			delete saveObject;
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -121,6 +138,10 @@ namespace Direct3D9
 			m_WrappedInterface->RegisterTemplates( xFile );
 			delete xFile;
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -136,6 +157,10 @@ namespace Direct3D9
 			XFileSaveObject^ saveObject = XFileSaveObject::FromPointer( pXofSave );
 			m_WrappedInterface->SaveTemplates( saveObject );
 			delete saveObject;
+		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
 		}
 		catch( Exception^ )
 		{

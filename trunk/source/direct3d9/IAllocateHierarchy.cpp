@@ -27,6 +27,7 @@
 #include "../ComObject.h"
 #include "../DataStream.h"
 #include "../Utilities.h"
+#include "../SlimDXException.h"
 
 #include "Device.h"
 #include "Mesh.h"
@@ -57,6 +58,10 @@ namespace Direct3D9
 		try
 		{
 			frame = m_WrappedInterface->CreateFrame( gcnew String(Name) );
+		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
 		}
 		catch( Exception^ )
 		{
@@ -126,6 +131,10 @@ namespace Direct3D9
 			meshContainer = m_WrappedInterface->CreateMeshContainer( gcnew String(Name), meshData, materials, 
 				effects, adjacency, skinInfo );
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -143,6 +152,10 @@ namespace Direct3D9
 		{
 			m_WrappedInterface->DestroyFrame( ((FrameShim*)pFrameToFree)->GetFrame() );
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -156,6 +169,10 @@ namespace Direct3D9
 		try
 		{			
 			m_WrappedInterface->DestroyMeshContainer( ((MeshContainerShim*)pMeshContainerToFree)->GetMeshContainer() );
+		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
 		}
 		catch( Exception^ )
 		{
