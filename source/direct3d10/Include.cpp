@@ -23,6 +23,7 @@
 
 #include "../Utilities.h"
 #include "../DataStream.h"
+#include "../SlimDXException.h"
 
 #include "Include.h"
 
@@ -87,6 +88,10 @@ namespace Direct3D10
 
 			return S_OK;
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -106,6 +111,10 @@ namespace Direct3D10
 			frame.Close();
 
 			return S_OK;
+		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
 		}
 		catch( Exception^ )
 		{

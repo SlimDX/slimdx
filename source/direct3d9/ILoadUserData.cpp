@@ -27,6 +27,7 @@
 #include "../ComObject.h"
 #include "../DataStream.h"
 #include "../Utilities.h"
+#include "../SlimDXException.h"
 
 #include "Device.h"
 #include "Mesh.h"
@@ -53,6 +54,10 @@ namespace Direct3D9
 			m_WrappedInterface->LoadFrameData( static_cast<FrameShim*>( pFrame )->GetFrame(), data );
 			delete data;
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -69,6 +74,10 @@ namespace Direct3D9
 			m_WrappedInterface->LoadMeshData( static_cast<MeshContainerShim*>( pMeshContainer )->GetMeshContainer(), data );
 			delete data;
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -84,6 +93,10 @@ namespace Direct3D9
 			XFileData^ data = XFileData::FromPointer( pXofChildData );
 			m_WrappedInterface->LoadTopLevelData( data );
 			delete data;
+		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
 		}
 		catch( Exception^ )
 		{

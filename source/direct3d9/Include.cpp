@@ -25,6 +25,7 @@
 #include "../Utilities.h"
 #include "../DataStream.h"
 #include "../InternalHelpers.h"
+#include "../SlimDXException.h"
 
 #include "Include.h"
 
@@ -91,6 +92,10 @@ namespace Direct3D9
 
 			return S_OK;
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -110,6 +115,10 @@ namespace Direct3D9
 			frame.Close();
 
 			return S_OK;
+		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
 		}
 		catch( Exception^ )
 		{

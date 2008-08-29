@@ -27,6 +27,7 @@
 #include "../Math/Matrix.h"
 #include "../DataStream.h"
 #include "../Utilities.h"
+#include "../SlimDXException.h"
 
 #include "Enums.h"
 #include "Device.h"
@@ -77,6 +78,10 @@ namespace Direct3D9
 		{
 			m_WrappedInterface->EnableLight( Index, Enable > 0 );
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -90,6 +95,10 @@ namespace Direct3D9
 		try
 		{
 			m_WrappedInterface->SetFVF( static_cast<VertexFormat>( FVF ) );
+		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
 		}
 		catch( Exception^ )
 		{
@@ -120,6 +129,10 @@ namespace Direct3D9
 
 			m_WrappedInterface->SetLight( index, light );
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -141,6 +154,10 @@ namespace Direct3D9
 
 			m_WrappedInterface->SetMaterial( material );
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -154,6 +171,10 @@ namespace Direct3D9
 		try
 		{
 			m_WrappedInterface->SetNPatchMode( nSegments );
+		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
 		}
 		catch( Exception^ )
 		{
@@ -169,6 +190,10 @@ namespace Direct3D9
 		{
 			m_WrappedInterface->SetTransform( static_cast<TransformState>( State ), Matrix::FromD3DXMATRIX( *pMatrix ) );
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -181,7 +206,12 @@ namespace Direct3D9
 	{
 		try
 		{
+			pShader->AddRef();
 			m_WrappedInterface->SetPixelShader( PixelShader::FromPointer( pShader ) );
+		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
 		}
 		catch( Exception^ )
 		{
@@ -201,6 +231,10 @@ namespace Direct3D9
 
 			m_WrappedInterface->SetPixelShaderConstant( StartRegister, data );
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -218,6 +252,10 @@ namespace Direct3D9
 				data[i] = (pConstantData[i] > 0);
 
 			m_WrappedInterface->SetPixelShaderConstant( StartRegister, data );
+		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
 		}
 		catch( Exception^ )
 		{
@@ -237,6 +275,10 @@ namespace Direct3D9
 
 			m_WrappedInterface->SetPixelShaderConstant( StartRegister, data );
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -249,7 +291,12 @@ namespace Direct3D9
 	{
 		try
 		{
+			pShader->AddRef();
 			m_WrappedInterface->SetVertexShader( VertexShader::FromPointer( pShader ) );
+		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
 		}
 		catch( Exception^ )
 		{
@@ -269,6 +316,10 @@ namespace Direct3D9
 
 			m_WrappedInterface->SetVertexShaderConstant( StartRegister, data );
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -286,6 +337,10 @@ namespace Direct3D9
 				data[i] = (pConstantData[i] > 0);
 
 			m_WrappedInterface->SetVertexShaderConstant( StartRegister, data );
+		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
 		}
 		catch( Exception^ )
 		{
@@ -305,6 +360,10 @@ namespace Direct3D9
 
 			m_WrappedInterface->SetVertexShaderConstant( StartRegister, data );
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -318,6 +377,10 @@ namespace Direct3D9
 		try
 		{
 			m_WrappedInterface->SetRenderState( static_cast<RenderState>( State ), Value );
+		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
 		}
 		catch( Exception^ )
 		{
@@ -333,6 +396,10 @@ namespace Direct3D9
 		{
 			m_WrappedInterface->SetSamplerState( Sampler, static_cast<SamplerState>( Type ), Value );
 		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
+		}
 		catch( Exception^ )
 		{
 			return E_FAIL;
@@ -345,9 +412,14 @@ namespace Direct3D9
 	{
 		try
 		{
+			pTexture->AddRef();
 			BaseTexture^ texture = BaseTexture::FromUnmanaged( pTexture );
 
 			m_WrappedInterface->SetTexture( Stage, texture );
+		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
 		}
 		catch( Exception^ )
 		{
@@ -362,6 +434,10 @@ namespace Direct3D9
 		try
 		{
 			m_WrappedInterface->SetTextureStageState( Stage, static_cast<TextureStage>( Type ), Value );
+		}
+		catch( SlimDXException^ ex)
+		{
+			return ex->ResultCode.Code;
 		}
 		catch( Exception^ )
 		{
