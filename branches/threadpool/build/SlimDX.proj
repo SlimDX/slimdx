@@ -1,0 +1,148 @@
+<Project
+	xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+	DefaultTargets="Build">
+
+	<UsingTask TaskName="DowngradeProject" AssemblyFile="$(SlimDXRoot)tools\BuildTasks\BuildTasks.dll"/>
+	<UsingTask TaskName="DowngradeSolution" AssemblyFile="$(SlimDXRoot)tools\BuildTasks\BuildTasks.dll"/>
+
+	<PropertyGroup>
+		<SlimDXRoot>$(MSBuildProjectDirectory)\..\</SlimDXRoot>
+	</PropertyGroup>
+
+	<!-- ItemGroup: SlimDXSolutions
+				The collection of all primary (2008) .sln files in the SlimDX repository. -->
+	<ItemGroup>
+		<SlimDXSolutions
+      Include="$(SlimDXRoot)\**\*.sln"
+      Exclude="$(SlimDXRoot)\**\*.2005.sln"/>
+	</ItemGroup>
+
+	<!-- ItemGroup: SlimDXProjects
+				The collection of all primary (2008) .vcproj and .csproj files in the SlimDX repository. -->
+	<ItemGroup>
+		<SlimDXProjects
+      Include="$(SlimDXRoot)\**\*.vcproj"
+      Exclude="$(SlimDXRoot)\**\*.2005.vcproj"/>
+		<SlimDXProjects
+      Include="$(SlimDXRoot)\**\*.csproj"
+      Exclude="$(SlimDXRoot)\**\*.2005.csproj"/>
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PurgeOnClean Include="$(SlimDXRoot)\build\x86"/>
+		<PurgeOnClean Include="$(SlimDXRoot)\build\x64"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<TestProjects Include="$(SlimDXRoot)\tests\**\*.csproj"/>
+	</ItemGroup>
+
+	<Target Name="Build" DependsOnTargets="_SelectSolutions">
+		<MSBuild
+			Condition="'$(BuildWith2005)'=='True'"
+			Projects="@(BuildableSolutions)"/>
+	</Target>
+
+	<Target
+		Name="Test">
+		<Exec
+			Condition="('$(Configuration)'=='Debug' or '$(Configuration)'=='') and ('$(Platform)'=='x86' or '$(Platform)'=='')"
+			Command="&quot;$(SlimDXRoot)external\NUnit\bin\nunit-console-x86.exe&quot; &quot;$(SlimDXRoot)tests\SlimDX\bin\x86\Debug\SlimDX.Tests.dll&quot;"/>
+	</Target>
+	
+	<Target
+		Name="Clean">
+		<RemoveDir Directories="@(PurgeOnClean)"/>
+	</Target>
+
+	<Target
+		Name="Rebuild"
+		DependsOnTargets="Clean;Build">
+	</Target>
+
+	<!-- Target: Generate2005Environment
+				Generates solution and project files for building SlimDX under a VS 2005 build environment. -->
+	<Target
+    Name="Generate2005Environment">
+		<DowngradeSolution
+      InputSolutions="@(SlimDXSolutions)"
+      OutputSolutions="@(SlimDXSolutions->'%(RootDir)%(Directory)%(FileName).2005%(Extension)')"/>
+		<DowngradeProject
+			InputProjects="@(SlimDXProjects)"
+			OutputProjects="@(SlimDXProjects->'%(RootDir)%(Directory)%(FileName).2005%(Extension)')"/>
+	</Target>
+	
+	<!-- Target: _SelectSolutions
+				Populates the @(BuildableSolutions) item group with the .sln files that should
+				be built (in particular with respect to the $(BuildWith2005) property). 
+				If neccessary, this target will generate a 2005 build environment. -->
+	<Target
+		Name="_SelectSolutions"
+		DependsOnTargets="_SelectVisualCppVersion">
+		<CallTarget
+			Targets="Generate2005Environment"
+			Condition="'$(BuildWith2005)'=='True'"/>
+
+		<CreateItem
+			Condition="'$(BuildWith2005)'=='True'"
+			Include="$(SlimDXRoot)**\*.2005.sln"
+			Exclude="$(SlimDXRoot)**\*.sln">
+			<Output
+				ItemName="BuildableSolutions"
+				TaskParameter="Include"/>
+		</CreateItem>
+		<CreateItem
+			Condition="'$(BuildWith2005)'=='False'"
+			Include="$(SlimDXRoot)**\*.sln"
+			Exclude="$(SlimDXRoot)**\*.2005.sln">
+			<Output
+				ItemName="BuildableSolutions"
+				TaskParameter="Include"/>
+		</CreateItem>
+	</Target>
+
+	<!-- Target: _SelectVisualCppVersion
+				Determines which versions of Visual C++ are available and populates the
+				$(BuildWith2005) property appropriately. -->
+	<Target
+		Name="_SelectVisualCppVersion"
+		DependsOnTargets="_CheckEnvironmentVariables">
+		<!-- Use 2005 if we have it but don't have 2008. -->
+		<Message
+			Condition="'$(VS80COMNTOOLS)'!='' and '$(VS90COMNTOOLS)'==''"
+			Importance="high"
+			Text="Building with a VC++ 2005 installation."/>
+		<CreateProperty
+			Condition="'$(VS80COMNTOOLS)'!='' and '$(VS90COMNTOOLS)'==''"
+			Value="True">
+			<Output
+				PropertyName="BuildWith2005"
+				TaskParameter="Value"/>
+		</CreateProperty>
+
+		<!-- But prefer 2008 if we have it. -->
+		<Message
+			Condition="'$(VS90COMNTOOLS)'!=''"
+			Importance="high"
+			Text="Building with a VC++ 2008 installation."/>
+		<CreateProperty
+					Condition="'$(VS90COMNTOOLS)'!=''"
+					Value="False">
+			<Output
+				PropertyName="BuildWith2005"
+				TaskParameter="Value"/>
+		</CreateProperty>
+	</Target>
+
+	<!-- Target: _CheckEnvironmentVariables
+				Checks the value of environment variables that are required by the build process.
+				Raises an error and halts the build if any values are not suitable. -->
+	<Target Name="_CheckEnvironmentVariables">
+		<Error
+				Condition="'$(VS80COMNTOOLS)'=='' and '$(VS90COMNTOOLS)'==''"
+				Text="Environment variable VS80COMNTOOLS or VS90COMNTOOLS not found; have you installed Visual C++ 2005 or 2008?"/>
+		<Error
+			Condition="'$(DXSDK_DIR)'==''"
+			Text="Environment variable DXSDK_DIR not set; have you installed the DirectX SDK?"/>
+	</Target>
+</Project>

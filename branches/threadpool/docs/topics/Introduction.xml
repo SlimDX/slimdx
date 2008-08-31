@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="" revisionNumber="1">
+  <developerConceptualDocument
+    xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>SlimDX Software Development Kit</title>
+    <introduction>
+      <para>
+        SlimDX is a managed library which allows .NET applications to use Microsoft DirectX APIs, as well
+        as several related Microsoft APIs that share similar goals. This role was previously filled for 
+        .NET 1.1 applications by Microsoft's own Managed DirectX (MDX) library. However, the age of .NET 1.1, 
+        plus Microsoft's lack of interest in continuing MDX has made it necessary to build a new library. 
+        Thanks to enthusiastic community support and the invaluable contributions of several other developers 
+        who have worked on and with SlimDX, the library has made immense strides towards being a fully viable 
+        platform on which to build DirectX based applications. SlimDX is no longer a beta and is considered stable!
+      </para>
+      <para>
+        In addition, SlimDX is open source software, and the complete source code is available to anybody under 
+        the MIT/X11 license. Right now we do not offer a downloadable archive of the source code, but you can 
+        use a Subversion client to download the source. We recommend TortoiseSVN for this purpose, but any 
+        Subversion client will work just as well.
+      </para>
+    </introduction>
+    
+    <section>
+      <title>Status</title>
+      <content>
+        <para>
+          SlimDX seeks to provide support for many different game related APIs. SlimDX currently contains the
+          following components:
+        </para>
+        <list class="ordered">
+          <listItem>
+            <para>
+              <legacyBold>Direct3D9</legacyBold>
+            </para>
+            <para>
+              The Direct3D9 component combines both D3DX and Direct3D9 into one managed component. Direct3D9 is
+              almost 100% feature complete, with only a few features still waiting to be implemented. 
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <legacyBold>Direct3D10</legacyBold>
+            </para>
+            <para>
+              Direct3D10 support is nearing completion. It is considered to be fully usable at this point. At this
+              time, however, there is no support for Direct3D 10.1 features, although it is expected to be
+              implemented in the future.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <legacyBold>DXGI</legacyBold>
+            </para>
+            <para>
+              DXGI is a graphical management layer for Direct3D10. It is considered feature complete.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <legacyBold>DirectInput</legacyBold>
+            </para>
+            <para>
+              DirectInput is well supported, but not yet feature complete. The main bulk of the functionality
+              has been added, but support for advanced and/or esoteric concepts such as force feedback effects
+              and action mapping is not yet complete.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <legacyBold>RawInput</legacyBold>
+            </para>
+            <para>
+              Support for Microsoft's Raw Input API has been recently added to SlimDX. RawInput completely
+              wraps the WM_INPUT functionality, and is considered complete.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <legacyBold>XInput</legacyBold>
+            </para>
+            <para>
+              Support for Microsoft's XInput game pad API is complete.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <legacyBold>X3DAudio</legacyBold>
+            </para>
+            <para>
+              X3DAudio support is complete. However, it has not yet been tested, so its official working
+              status is unknown at this time.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <legacyBold>XAPO</legacyBold>
+            </para>
+            <para>
+              Work on XAPO has only recently begun. It is not currently usable, and it is not recommended
+              that developers make use of any XAPO functionality until more work has been done. It has not
+              been compiled into the release binary.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <legacyBold>Math</legacyBold>
+            </para>
+            <para>
+              SlimDX contains a wide range of 3D math functionality, including vectors, matrices, quaternions,
+              rays, planes, colors, bounding volumes, and several custom numeric types. Everything present
+              should work flawlessly. All current fuctionality is considered complete, although more types
+              may be added in the future.
+            </para>
+          </listItem>
+        </list>
+      </content>
+    </section>
+    
+  </developerConceptualDocument>
+</topic>
