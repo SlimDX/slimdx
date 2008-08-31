@@ -25,6 +25,7 @@ using System.Threading;
 using System.Windows.Forms;
 using SlimDX;
 using SlimDX.Direct3D9;
+using System.Collections.ObjectModel;
 
 namespace SampleFramework
 {
@@ -122,7 +123,6 @@ namespace SampleFramework
         {
             get;
             set;
-
         }
 
         /// <summary>
@@ -152,6 +152,26 @@ namespace SampleFramework
         /// </summary>
         /// <value>The resources collection.</value>
         public ResourceCollection Resources
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the interpolators collection.
+        /// </summary>
+        /// <value>The interpolators collection.</value>
+        public Collection<Interpolator> Interpolators
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the triggers collection.
+        /// </summary>
+        /// <value>The triggers collection.</value>
+        public Collection<Trigger> Triggers
         {
             get;
             private set;
@@ -231,6 +251,8 @@ namespace SampleFramework
             // create the collections
             Resources = new ResourceCollection();
             Components = new GameComponentCollection();
+            Interpolators = new Collection<Interpolator>();
+            Triggers = new Collection<Trigger>();
 
             // create the window
             Window = new GameWindow();
@@ -448,6 +470,46 @@ namespace SampleFramework
         /// <param name="gameTime">The time passed since the last update.</param>
         protected virtual void Update(GameTime gameTime)
         {
+            // process each trigger
+            for (int i = Triggers.Count - 1; i >= 0; i--)
+            {
+                // check if the trigger has a predicate that is allowing us to proceed
+                Trigger trigger = Triggers[i];
+                if (trigger.ActivationPredicate != null && trigger.ActivationPredicate())
+                {
+                    // activate the trigger
+                    trigger.Activate();
+                    if (!trigger.Repeat)
+                        Triggers.RemoveAt(i);
+                }
+                else
+                {
+                    // set the start time if it doesn't yet have one
+                    if (trigger.StartTime == 0)
+                        trigger.StartTime = gameTime.TotalGameTime;
+                    else if (gameTime.TotalGameTime - trigger.StartTime > trigger.Duration)
+                    {
+                        // activate the trigger
+                        trigger.Activate();
+                        if (!trigger.Repeat)
+                            Triggers.RemoveAt(i);
+                        else
+                            trigger.StartTime = gameTime.TotalGameTime;
+                    }
+                }
+            }
+
+            // process each interpolator
+            for (int i = Interpolators.Count - 1; i >= 0; i--)
+            {
+                // make sure it isn't dead
+                Interpolator interpolator = Interpolators[i];
+                if (interpolator.IsFinished)
+                    Interpolators.RemoveAt(i);
+                else
+                    interpolator.Update();
+            }
+
             // update the components
             foreach (IGameComponent component in Components)
                 component.Update(gameTime);

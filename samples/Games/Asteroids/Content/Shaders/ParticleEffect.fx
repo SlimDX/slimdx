@@ -1,4 +1,4 @@
-﻿// ParticleEffect.fx
+// ParticleEffect.fx
 // Renders particles for particle systems.
 // Original effect by the XNA team.
 
@@ -35,7 +35,7 @@ sampler Sampler = sampler_state
 
 struct VertexShaderInput
 {
-    float3 Position : POSITION0;
+    float3 Position : POSITION;
     float3 Velocity : NORMAL0;
     float4 Random : COLOR0;
     float Time : TEXCOORD0;
@@ -101,7 +101,7 @@ float4 ComputeParticleRotation(float randomValue, float age)
     return rotationMatrix;
 }
 
-VertexShaderOutput VertexShader(VertexShaderInput input)
+VertexShaderOutput ParticleVertexShader(VertexShaderInput input)
 {
     VertexShaderOutput output;
 
@@ -116,6 +116,12 @@ VertexShaderOutput VertexShader(VertexShaderInput input)
     output.Color = ComputeParticleColor(output.Position, input.Random.z, normalizedAge);
     output.Rotation = ComputeParticleRotation(input.Random.w, age);
     
+    // TEST:
+    float4 worldPosition = float4( 0, 0, 0, 1 );
+	float4 viewPosition = mul( worldPosition, View );
+	
+	output.Position = mul( viewPosition, Projection );
+    output.Size = 10;
     return output;
 }
 
@@ -147,15 +153,17 @@ float4 RotatingPixelShader(RotatingPixelShaderInput input) : COLOR0
     textureCoordinate *= sqrt(2);
     textureCoordinate += 0.5;
 
-    return tex2D(Sampler, textureCoordinate) * input.Color;
+// TEST
+    //return tex2D(Sampler, textureCoordinate) * input.Color;
+    return float4(1, 1, 1, 1);
 }
 
 technique NonRotatingParticles
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VertexShader();
-        PixelShader = compile ps_1_1 NonRotatingPixelShader();
+        VertexShader = compile vs_2_0 ParticleVertexShader();
+        PixelShader = compile ps_2_0 NonRotatingPixelShader();
     }
 }
 
@@ -163,7 +171,7 @@ technique RotatingParticles
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VertexShader();
+        VertexShader = compile vs_2_0 ParticleVertexShader();
         PixelShader = compile ps_2_0 RotatingPixelShader();
     }
 }

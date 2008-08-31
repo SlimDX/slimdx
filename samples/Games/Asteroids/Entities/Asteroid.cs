@@ -117,9 +117,9 @@ namespace Asteroids
                 game.Resources.Add(Model);
 
             // set properties
-            Position = new Vector2(RandomFloat(Game.WorldBounds.X, Game.WorldBounds.Z), RandomFloat(Game.WorldBounds.Y, Game.WorldBounds.W));
-            Velocity = new Vector2(RandomFloat(MinAsteroidSpeed, MaxAsteroidSpeed), RandomFloat(MinAsteroidSpeed, MaxAsteroidSpeed));
-            RotationalVelocity = RandomFloat(MinAsteroidSpin, MaxAsteroidSpin);
+            Position = new Vector2(Helpers.RandomFloat(Game.WorldBounds.X, Game.WorldBounds.Z), Helpers.RandomFloat(Game.WorldBounds.Y, Game.WorldBounds.W));
+            Velocity = new Vector2(Helpers.RandomFloat(MinAsteroidSpeed, MaxAsteroidSpeed), Helpers.RandomFloat(MinAsteroidSpeed, MaxAsteroidSpeed));
+            RotationalVelocity = Helpers.RandomFloat(MinAsteroidSpin, MaxAsteroidSpin);
 
             // update the statistics
             AsteroidCount++;
@@ -159,23 +159,11 @@ namespace Asteroids
 
             // set properties
             asteroid.Position = Position;
-            asteroid.Velocity = new Vector2(RandomFloat(MinAsteroidSpeed, MaxAsteroidSpeed), RandomFloat(MinAsteroidSpeed, MaxAsteroidSpeed));
-            asteroid.RotationalVelocity = RandomFloat(MinAsteroidSpin, MaxAsteroidSpin);
+            asteroid.Velocity = new Vector2(Helpers.RandomFloat(MinAsteroidSpeed, MaxAsteroidSpeed), Helpers.RandomFloat(MinAsteroidSpeed, MaxAsteroidSpeed));
+            asteroid.RotationalVelocity = Helpers.RandomFloat(MinAsteroidSpin, MaxAsteroidSpin);
 
             // add the item to the list
-            Game.Entities.Add(asteroid);
-        }
-
-        /// <summary>
-        /// Calculates a random floating point value.
-        /// </summary>
-        /// <param name="minValue">The minimum value.</param>
-        /// <param name="maxValue">The maximum value.</param>
-        /// <returns>The random floating point value.</returns>
-        static float RandomFloat(float minValue, float maxValue)
-        {
-            // calculate the value
-            return (float)(Asteroids.Random.NextDouble() * (maxValue - minValue)) + minValue;
+            Game.Components.Add(asteroid);
         }
     }
 }

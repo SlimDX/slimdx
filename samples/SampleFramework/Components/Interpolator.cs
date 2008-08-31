@@ -21,19 +21,19 @@
 */
 using System;
 
-namespace Asteroids
+namespace SampleFramework
 {
     /// <summary>
     /// A delegate that represents an interpolation function.
     /// </summary>
     /// <param name="currentValue">The current interpolated value.</param>
     /// <returns>The new interpolated value.</returns>
-    delegate float InterpolationFunction(float currentValue);
+    public delegate float InterpolationFunction(float currentValue);
 
     /// <summary>
     /// Implements an interpolator.
     /// </summary>
-    class Interpolator
+    public class Interpolator
     {
         // variables
         InterpolationFunction function;
@@ -78,14 +78,36 @@ namespace Asteroids
         /// Initializes a new instance of the <see cref="Interpolator"/> class.
         /// </summary>
         /// <param name="function">The function.</param>
+        public Interpolator(InterpolationFunction function)
+        {
+            // store variables
+            this.function = function;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Interpolator"/> class.
+        /// </summary>
+        /// <param name="function">The function.</param>
+        /// <param name="startValue">The start value.</param>
+        public Interpolator(InterpolationFunction function, float startValue)
+        {
+            // store variables
+            this.function = function;
+            Value = startValue;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Interpolator"/> class.
+        /// </summary>
+        /// <param name="function">The function.</param>
         /// <param name="startValue">The start value.</param>
         /// <param name="predicate">The predicate.</param>
         public Interpolator(InterpolationFunction function, float startValue, Predicate<float> predicate)
         {
             // store variables
             this.function = function;
-            Value = startValue;
             this.predicate = predicate;
+            Value = startValue;
         }
 
         /// <summary>
