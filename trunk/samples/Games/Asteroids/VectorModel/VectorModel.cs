@@ -21,9 +21,7 @@
 */
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Xml;
 using SampleFramework;
@@ -306,7 +304,7 @@ namespace Asteroids
             float maxY = float.MinValue;
 
             // process each polygon node
-            var polygons = MakeList(new { Color = new Color4(Color.White), LineWidth = 1.0f, Vertices = new List<Vector2>() });
+            var polygons = Helpers.MakeList(new { Color = new Color4(Color.White), LineWidth = 1.0f, Vertices = new List<Vector2>() });
             foreach (XmlNode polygonNode in rootNode)
             {
                 // ensure that we have a polygon node
@@ -317,13 +315,13 @@ namespace Asteroids
                 Color4 color = Color.White;
                 XmlAttribute colorAttribute = polygonNode.Attributes["Color"];
                 if (colorAttribute != null)
-                    color = Parse<Color4>(colorAttribute.Value);
+                    color = Helpers.Parse<Color4>(colorAttribute.Value);
 
                 // load the line width color, if any
                 float lineWidth = 1.0f;
                 XmlAttribute lineAttribute = polygonNode.Attributes["LineWidth"];
                 if (lineAttribute != null)
-                    lineWidth = Parse<float>(lineAttribute.Value);
+                    lineWidth = Helpers.Parse<float>(lineAttribute.Value);
 
                 // load each vertex
                 List<Vector2> verts = new List<Vector2>();
@@ -334,7 +332,7 @@ namespace Asteroids
                         continue;
 
                     // load the position
-                    Vector2 position = Parse<Vector2>(vertexNode.InnerText);
+                    Vector2 position = Helpers.Parse<Vector2>(vertexNode.InnerText);
                     verts.Add(position);
 
                     // update the extents of the model
@@ -417,31 +415,6 @@ namespace Asteroids
             float radius = Math.Max(Math.Max(Math.Abs(maxX), Math.Abs(maxY)), Math.Max(Math.Abs(minX), Math.Abs(minY)));
             model.bounds = new BoundingBox(new Vector3(minX, minY, 0.0f), new Vector3(maxX, maxY, 0.0f));
             model.Radius = radius;
-        }
-
-        /// <summary>
-        /// Makes a generic list based upong the specified type.
-        /// </summary>
-        /// <typeparam name="T">The type of the data contained in the list.</typeparam>
-        /// <param name="type">The data type.</param>
-        /// <returns>The newly created list.</returns>
-        static List<T> MakeList<T>(T type)
-        {
-            // create the list
-            return new List<T>();
-        }
-
-        /// <summary>
-        /// Parses an object using its registered type converter.
-        /// </summary>
-        /// <typeparam name="T">The type of the object.</typeparam>
-        /// <param name="value">The object value.</param>
-        /// <returns>The new object.</returns>
-        static T Parse<T>(string value)
-        {
-            // look up the type converter to convert the value
-            TypeConverter converter = TypeDescriptor.GetConverter(typeof(T));
-            return (T)converter.ConvertFromString(null, CultureInfo.InvariantCulture, value);
         }
     }
 }

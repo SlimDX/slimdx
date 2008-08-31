@@ -23,6 +23,7 @@ using System;
 using System.Windows.Forms;
 using SampleFramework;
 using SlimDX;
+using System.Drawing;
 
 namespace Asteroids
 {
@@ -35,11 +36,13 @@ namespace Asteroids
         const float Acceleration = 0.5f;
         const float RespawnInterval = 1.0f;
         const float RespawnBuffer = 50.0f;
-        static readonly float RotationDelta = ToRadians(5.0f);
+        static readonly float RotationDelta = Helpers.ToRadians(5.0f);
         static readonly Vector2 SpawnPoint = new Vector2(0.0f, 0.0f);
 
         // variables
         Weapon currentWeapon;
+        ParticleSystem engineTrail;
+        ParticleEmitter engineTrailEmitter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Player"/> class.
@@ -58,6 +61,26 @@ namespace Asteroids
 
             // set the default weapon
             currentWeapon = new PrimaryWeapon(Game);
+
+            // set up the particle system
+            engineTrail = new ParticleSystem(1000);
+            engineTrail.Duration = 300.0f;
+            engineTrail.DurationRandomness = 1.5f;
+            engineTrail.EmitterVelocitySensitivity = 0.1f;
+            engineTrail.MinimumVelocity = new Vector2(0.0f, -1.0f);
+            engineTrail.MaximumVelocity = new Vector2(1.0f, 1.0f);
+            engineTrail.MinimumColor = Color.FromArgb(255, 64, 96, 128);
+            engineTrail.MaximumColor = Color.FromArgb(128, 255, 255, 255);
+            engineTrail.MinimumRotationSpeed = -4.0f;
+            engineTrail.MaximumRotationSpeed = 4.0f;
+            engineTrail.MinimumStartSize = 2.0f;
+            engineTrail.MaximumStartSize = 4.0f;
+            engineTrail.MinimumEndSize = 5.0f;
+            engineTrail.MaximumEndSize = 15.0f;
+            engineTrail.TextureName = "Content/Textures/Smoke.png";
+            engineTrailEmitter = new ParticleEmitter(engineTrail, 100, new Vector3(Position, 0.0f));
+            Game.Resources.Add(engineTrail);
+            Game.Components.Add(engineTrail);
         }
 
         /// <summary>
@@ -84,6 +107,10 @@ namespace Asteroids
                     Velocity.Y + Acceleration * (float)Math.Cos(Rotation));
             }
 
+            // update the emitter
+            engineTrail.SetCamera(Game.Camera.ViewMatrix, Game.Camera.ProjectionMatrix);
+            engineTrailEmitter.Update(gameTime, new Vector3(Position, 0.0f));
+
             // update the weapon
             currentWeapon.Update(gameTime);
 
@@ -99,8 +126,13 @@ namespace Asteroids
 
             // check for collisions
             BoundingSphere sphere = new BoundingSphere(new Vector3(Position, 0), Model.Radius);
-            foreach (Entity entity in Game.Entities)
+            foreach (IGameComponent component in Game.Components)
             {
+                // grab the entity
+                Entity entity = component as Entity;
+                if (entity == null)
+                    continue;
+
                 // player can't collide with himself
                 if (entity == this)
                     continue;
@@ -148,8 +180,13 @@ namespace Asteroids
             // make sure there are no asteroids around that could kill us
             Trigger trigger = sender as Trigger;
             BoundingSphere sphere = new BoundingSphere(new Vector3(SpawnPoint, 0), Model.Radius);
-            foreach (Entity entity in Game.Entities)
+            foreach (IGameComponent component in Game.Components)
             {
+                // grab the entity
+                Entity entity = component as Entity;
+                if (entity == null)
+                    continue;
+
                 // only care about asteroids
                 if (!(entity is Asteroid))
                     continue;
@@ -170,7 +207,7 @@ namespace Asteroids
             Velocity = Vector2.Zero;
             Rotation = float.Epsilon;
             currentWeapon.Clear();
-            Game.Entities.Add(this);
+            Game.Components.Add(this);
         }
     }
 }

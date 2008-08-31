@@ -31,6 +31,7 @@ namespace Asteroids
         [STAThread]
         static void Main()
         {
+            // run the game
             using (Asteroids game = new Asteroids())
                 game.Run();
         }

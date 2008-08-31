@@ -20,7 +20,6 @@
 * THE SOFTWARE.
 */
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
@@ -44,9 +43,6 @@ namespace Asteroids
         static Random random = new Random();
 
         // variables
-        List<Interpolator> interpolators = new List<Interpolator>();
-        List<Entity> entities = new List<Entity>();
-        List<Trigger> triggers = new List<Trigger>();
         TextConsole console = new TextConsole();
         Camera camera = new Camera();
         bool[] keyState = new bool[256];
@@ -70,33 +66,6 @@ namespace Asteroids
         }
 
         /// <summary>
-        /// Gets the entities.
-        /// </summary>
-        /// <value>The entities.</value>
-        public List<Entity> Entities
-        {
-            get { return entities; }
-        }
-
-        /// <summary>
-        /// Gets the triggers.
-        /// </summary>
-        /// <value>The triggers.</value>
-        public List<Trigger> Triggers
-        {
-            get { return triggers; }
-        }
-
-        /// <summary>
-        /// Gets the interpolators.
-        /// </summary>
-        /// <value>The interpolators.</value>
-        public List<Interpolator> Interpolators
-        {
-            get { return interpolators; }
-        }
-
-        /// <summary>
         /// Gets or sets the world bounds.
         /// </summary>
         /// <value>The world bounds.</value>
@@ -113,6 +82,15 @@ namespace Asteroids
         public Device Device
         {
             get { return GraphicsDeviceManager.Direct3D9.Device; }
+        }
+
+        /// <summary>
+        /// Gets the camera.
+        /// </summary>
+        /// <value>The camera.</value>
+        public Camera Camera
+        {
+            get { return camera; }
         }
 
         /// <summary>
@@ -152,14 +130,15 @@ namespace Asteroids
             settings.BackBufferHeight = InitialHeight;
             settings.DeviceVersion = DeviceVersion.Direct3D9;
             settings.Windowed = true;
+#if DEBUG
             settings.EnableVSync = false;
+#else
+            settings.EnableVSync = true;
+#endif
             settings.MultisampleType = MultisampleType.EightSamples;
 
             // create resources
             Resources.Add(console);
-
-            // create game objects
-            Entities.Add(new Player(this));
 
             // create the Direct3D device
             GraphicsDeviceManager.ChangeDevice(settings);
@@ -204,7 +183,7 @@ namespace Asteroids
             // add new asteroids when enter is pressed
             // DEBUGGING ONLY
             if (e.KeyCode == Keys.Enter)
-                Entities.Add(new Asteroid(this, AsteroidSize.Huge));
+                Components.Add(new Asteroid(this, AsteroidSize.Huge));
 #endif
         }
 
@@ -278,59 +257,15 @@ namespace Asteroids
             // call the base method
             base.Update(gameTime);
 
-            // process each trigger
-            for (int i = triggers.Count - 1; i >= 0; i--)
-            {
-                // check if the trigger has a predicate that is allowing us to proceed
-                Trigger trigger = triggers[i];
-                if (trigger.ActivationPredicate != null && trigger.ActivationPredicate())
-                {
-                    // activate the trigger
-                    trigger.Activate();
-                    if (!trigger.Repeat)
-                        triggers.RemoveAt(i);
-                }
-                else
-                {
-                    // set the start time if it doesn't yet have one
-                    if (trigger.StartTime == 0)
-                        trigger.StartTime = gameTime.TotalGameTime;
-                    else if (gameTime.TotalGameTime - trigger.StartTime > trigger.Duration)
-                    {
-                        // activate the trigger
-                        trigger.Activate();
-                        if (!trigger.Repeat)
-                            triggers.RemoveAt(i);
-                        else
-                            trigger.StartTime = gameTime.TotalGameTime;
-                    }
-                }
-            }
-
-            // process each interpolator
-            for (int i = interpolators.Count - 1; i >= 0; i--)
-            {
-                // make sure it isn't dead
-                Interpolator interpolator = Interpolators[i];
-                if (interpolator.IsFinished)
-                    Interpolators.RemoveAt(i);
-                else
-                    interpolator.Update();
-            }
-
-            // update game objects
-            foreach (Entity entity in entities)
-                entity.Update(gameTime);
-
             // clear out dead entities
-            for (int i = Entities.Count - 1; i >= 0; i--)
+            for (int i = Components.Count - 1; i >= 0; i--)
             {
                 // make sure it's dead
-                Entity e = Entities[i];
-                if (e.IsDead)
+                Entity e = Components[i] as Entity;
+                if (e != null && e.IsDead)
                 {
                     // allow the entity to do last minute processing before death
-                    Entities.RemoveAt(i);
+                    Components.RemoveAt(i);
                     e.OnDeath();
                 }
             }
@@ -352,7 +287,7 @@ namespace Asteroids
                     // start the new level when the alpha of the text reaches 0
                     levelTextInterpolator = new Interpolator(a => (a - 0.01f), 1.0f, a => (a <= 0.0f));
                     levelTextInterpolator.Finished += NewLevel;
-                    interpolators.Add(levelTextInterpolator);
+                    Interpolators.Add(levelTextInterpolator);
                 };
                 Triggers.Add(trigger);
             }
@@ -364,20 +299,16 @@ namespace Asteroids
         /// <param name="gameTime">The time passed since the last frame.</param>
         protected override void Draw(GameTime gameTime)
         {
-            // call the base method
-            base.Draw(gameTime);
+            // update the vector matrices
+            VectorModel.ViewMatrix = camera.ViewMatrix;
+            VectorModel.ProjectionMatrix = camera.ProjectionMatrix;
 
             // start the scene
             Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, ClearColor, 1.0f, 0);
             Device.BeginScene();
 
-            // update the vector matrices
-            VectorModel.ViewMatrix = camera.ViewMatrix;
-            VectorModel.ProjectionMatrix = camera.ProjectionMatrix;
-
-            // draw the game objects
-            foreach (Entity entity in entities)
-                entity.Draw();
+            // call the base method
+            base.Draw(gameTime);
 
             // flush all vector data
             VectorModel.FlushAll();
@@ -451,12 +382,16 @@ namespace Asteroids
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void NewLevel(object sender, EventArgs e)
         {
+            // if this is the first level, spawn the player
+            if (currentLevel == 1)
+                Components.Add(new Player(this));
+
             // clear out the level text for now
             levelText = null;
 
             // spawn some asteroids for the player to deal with
             for (int i = 0; i < currentLevel; i++)
-                Entities.Add(new Asteroid(this, AsteroidSize.Huge));
+                Components.Add(new Asteroid(this, AsteroidSize.Huge));
         }
     }
 }

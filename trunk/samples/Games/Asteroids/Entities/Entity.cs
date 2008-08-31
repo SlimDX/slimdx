@@ -28,7 +28,7 @@ namespace Asteroids
     /// <summary>
     /// Represents a game entity.
     /// </summary>
-    abstract class Entity
+    abstract class Entity : IGameComponent
     {
         // constants
         const float VelocityEpsilon = 0.0001f;
@@ -183,8 +183,8 @@ namespace Asteroids
 
             // cap the Velocity
             Velocity = new Vector2(
-                Clamp(Velocity.X, -MaxVelocity, MaxVelocity),
-                Clamp(Velocity.Y, -MaxVelocity, MaxVelocity));
+                Helpers.Clamp(Velocity.X, -MaxVelocity, MaxVelocity),
+                Helpers.Clamp(Velocity.Y, -MaxVelocity, MaxVelocity));
 
             // cut down on accuracy errors
             if (Velocity.X < VelocityEpsilon && Velocity.X > -VelocityEpsilon)
@@ -244,35 +244,6 @@ namespace Asteroids
         /// </summary>
         public virtual void OnDeath()
         {
-        }
-
-        /// <summary>
-        /// Converts degrees to radians.
-        /// </summary>
-        /// <param name="degrees">The degrees.</param>
-        /// <returns>The equivalent value in radians.</returns>
-        static protected float ToRadians(float degrees)
-        {
-            // return the converted value
-            return (degrees / 180) * (float)Math.PI;
-        }
-
-        /// <summary>
-        /// Restricts a value to be within a specified range.
-        /// </summary>
-        /// <typeparam name="T">The type of the value.</typeparam>
-        /// <param name="value">The value to clamp.</param>
-        /// <param name="min">The minimum value.</param>
-        /// <param name="max">The maximum value.</param>
-        /// <returns>The clamped value.</returns>
-        static protected T Clamp<T>(T value, T min, T max) where T : IComparable
-        {
-            // check if the value is over the bounds
-            if (value.CompareTo(max) >= 0)
-                return max;
-            if (value.CompareTo(min) <= 0)
-                return min;
-            return value;
         }
     }
 }

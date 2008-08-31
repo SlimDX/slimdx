@@ -75,13 +75,13 @@
   <ItemGroup>
     <Compile Include="Asteroids.cs" />
     <Compile Include="Entities\Bullet.cs" />
-    <Compile Include="Events\Interpolator.cs" />
-    <Compile Include="Events\Trigger.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="Items\PrimaryWeapon.cs" />
     <Compile Include="Items\Weapon.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Asteroid.cs" />
     <Compile Include="Entities\Player.cs" />
+    <Compile Include="Particles\ParticleEmitter.cs" />
     <Compile Include="Particles\ParticleSystem.cs" />
     <Compile Include="Particles\ParticleVertex.cs" />
     <Compile Include="Program.cs" />
@@ -95,7 +95,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="Content\Shaders\ParticleEffect.fx" />
+    <None Include="Content\Shaders\ParticleEffect.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\Shaders\VectorModel.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -138,6 +140,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Models\SmallAsteroid2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Textures\smoke.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -155,8 +155,13 @@ namespace Asteroids
 
                     // check against each entity
                     BoundingSphere sphere = new BoundingSphere(new Vector3(bullet.Position, 0), BulletModel.Radius);
-                    foreach (Entity entity in Game.Entities)
+                    foreach (IGameComponent component in Game.Components)
                     {
+                        // grab the entity
+                        Entity entity = component as Entity;
+                        if (entity == null)
+                            continue;
+
                         // player can't shoot himself (well...)
                         if (entity is Player)
                             continue;

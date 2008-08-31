@@ -57,8 +57,8 @@ namespace Asteroids
         /// Gets or sets the appearance settings.
         /// </summary>
         /// <value>The appearance settings.</value>
-        [VertexElement(DeclarationType.Float4, DeclarationUsage.Color)]
-        public Vector4 Appearance
+        [VertexElement(DeclarationType.Color, DeclarationUsage.Color)]
+        public int Appearance
         {
             get;
             set;
