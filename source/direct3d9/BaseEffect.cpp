@@ -41,6 +41,7 @@
 #include "VertexShader.h"
 
 using namespace System;
+using namespace System::Reflection;
 
 namespace SlimDX
 {
@@ -296,132 +297,7 @@ namespace Direct3D9
 		return outDesc;
 	}
 
-	Result BaseEffect::SetValue( EffectHandle^ parameter, bool value )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetBool( handle, value );
-		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValue( EffectHandle^ parameter, array<bool>^ values )
-	{
-		//implementing set for bool array is REALLY ANNOYING.
-		//Win32 uses BOOL, which is an int
-		array<BOOL>^ expandedArray = gcnew array<BOOL>( values->Length );
-		Array::Copy( values, expandedArray, values->Length );
-
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		pin_ptr<BOOL> pinnedValue = &expandedArray[0];
-		HRESULT hr = InternalPointer->SetBoolArray( handle, pinnedValue, values->Length );
-		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValue( EffectHandle^ parameter, int value )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetInt( handle, value );
-		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValue( EffectHandle^ parameter, array<int>^ values )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		pin_ptr<int> pinnedValue = &values[0];
-		HRESULT hr = InternalPointer->SetIntArray( handle, pinnedValue, values->Length );
-		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValue( EffectHandle^ parameter, float value )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetFloat( handle, value );
-		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValue( EffectHandle^ parameter, array<float>^ values )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		pin_ptr<float> pinnedValues = &values[0];
-		HRESULT hr = InternalPointer->SetFloatArray( handle, pinnedValues, values->Length );
-		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValue( EffectHandle^ parameter, Vector2 value )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetFloatArray( handle, reinterpret_cast<const FLOAT*>( &value ), 2 );
-		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValue( EffectHandle^ parameter, array<Vector2>^ values )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		pin_ptr<Vector2> pinnedValue = &values[0];
-		HRESULT hr = InternalPointer->SetFloatArray( handle, reinterpret_cast<const FLOAT*>( pinnedValue ), values->Length * 2 );
-		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValue( EffectHandle^ parameter, Vector3 value )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetFloatArray( handle, reinterpret_cast<const FLOAT*>( &value ), 3 );
-		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValue( EffectHandle^ parameter, array<Vector3>^ values )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		pin_ptr<Vector3> pinnedValue = &values[0];
-		HRESULT hr = InternalPointer->SetFloatArray( handle, reinterpret_cast<const FLOAT*>( pinnedValue ), values->Length * 3 );
-		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValue( EffectHandle^ parameter, Vector4 value )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetVector( handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
-		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValue( EffectHandle^ parameter, array<Vector4>^ values )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		pin_ptr<Vector4> pinnedValue = &values[0];
-		HRESULT hr = InternalPointer->SetVectorArray( handle, reinterpret_cast<const D3DXVECTOR4*>( pinnedValue ), values->Length );
-		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValue( EffectHandle^ parameter, Color4 value )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetVector( handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
-		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValue( EffectHandle^ parameter, array<Color4>^ values )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		pin_ptr<Color4> pinnedValue = &values[0];
-		HRESULT hr = InternalPointer->SetVectorArray( handle, reinterpret_cast<const D3DXVECTOR4*>( pinnedValue ), values->Length );
-		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValue( EffectHandle^ parameter, Matrix value )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetMatrix( handle, reinterpret_cast<const D3DXMATRIX*>( &value ) );
-		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValue( EffectHandle^ parameter, array<Matrix>^ values )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		pin_ptr<Matrix> pinnedValue = &values[0];
-		HRESULT hr = InternalPointer->SetMatrixArray( handle, reinterpret_cast<const D3DXMATRIX*>( pinnedValue ), values->Length );
-		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValue( EffectHandle^ parameter, BaseTexture^ value )
+	Result BaseEffect::SetTexture( EffectHandle^ parameter, BaseTexture^ value )
 	{
 		IDirect3DBaseTexture9* texture = NULL;
 		if( value != nullptr )
@@ -432,7 +308,7 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	Result BaseEffect::SetValue( EffectHandle^ parameter, String^ value )
+	Result BaseEffect::SetString( EffectHandle^ parameter, String^ value )
 	{
 		array<unsigned char>^ valueBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( value );
 		pin_ptr<unsigned char> pinnedValue = &valueBytes[0];
@@ -440,168 +316,6 @@ namespace Direct3D9
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetString( handle, reinterpret_cast<LPCSTR>( pinnedValue ) );
 		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValueTranspose( EffectHandle^ parameter, Matrix value )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetMatrixTranspose( handle, reinterpret_cast<const D3DXMATRIX*>( &value ) );
-		return RECORD_D3D9( hr );
-	}
-
-	Result BaseEffect::SetValueTranspose( EffectHandle^ parameter, array<Matrix>^ values )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		pin_ptr<Matrix> pinnedValue = &values[0];
-		HRESULT hr = InternalPointer->SetMatrixTransposeArray( handle, reinterpret_cast<const D3DXMATRIX*>( pinnedValue ), values->Length );
-		return RECORD_D3D9( hr );
-	}
-
-	bool BaseEffect::GetBool( EffectHandle^ parameter )
-	{
-		BOOL value = FALSE;
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->GetBool( handle, &value );
-		RECORD_D3D9( hr );
-
-		return value < 0;
-	}
-
-	array<bool>^ BaseEffect::GetBoolArray( EffectHandle^ parameter, int count )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		array<BOOL>^ data = gcnew array<BOOL>( count );
-		pin_ptr<BOOL> pinnedData = &data[0];
-
-		HRESULT hr = InternalPointer->GetBoolArray( handle, pinnedData, count );
-		
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
-
-        //now we go from BOOL to bool
-        array<bool>^ boolData = gcnew array<bool>( count );
-        Array::Copy( data, boolData, count );
-        return boolData;
-	}
-
-	int BaseEffect::GetInt( EffectHandle^ parameter )
-	{
-		int value = 0;
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->GetInt( handle, &value );
-		RECORD_D3D9( hr );
-
-		return value;
-	}
-
-	array<int>^ BaseEffect::GetIntArray( EffectHandle^ parameter, int count )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		array<int>^ data = gcnew array<int>( count );
-		pin_ptr<int> pinnedData = &data[0];
-
-		HRESULT hr = InternalPointer->GetIntArray( handle, pinnedData, count );
-		
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
-
-		return data;
-	}
-
-	float BaseEffect::GetFloat( EffectHandle^ parameter )
-	{
-		float value = 0.0f;
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->GetFloat( handle, &value );
-		RECORD_D3D9( hr );
-
-		return value;
-	}
-
-	array<float>^ BaseEffect::GetFloatArray( EffectHandle^ parameter, int count )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		array<float>^ data = gcnew array<float>( count );
-		pin_ptr<float> pinnedData = &data[0];
-
-		HRESULT hr = InternalPointer->GetFloatArray( handle, pinnedData, count );
-		
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
-
-		return data;
-	}
-
-	Vector4 BaseEffect::GetVector( EffectHandle^ parameter )
-	{
-		Vector4 value = Vector4();
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->GetVector( handle, reinterpret_cast<D3DXVECTOR4*>( &value ) );
-		RECORD_D3D9( hr );
-
-		return value;
-	}
-
-	array<Vector4>^ BaseEffect::GetVectorArray( EffectHandle^ parameter, int count )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		array<Vector4>^ data = gcnew array<Vector4>( count );
-		pin_ptr<Vector4> pinnedData = &data[0];
-
-		HRESULT hr = InternalPointer->GetVectorArray( handle, reinterpret_cast<D3DXVECTOR4*>( pinnedData ), count );
-		
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
-
-		return data;
-	}
-
-	Color4 BaseEffect::GetColor( EffectHandle^ parameter )
-	{
-		Color4 value = Color4();
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->GetVector( handle, reinterpret_cast<D3DXVECTOR4*>( &value ) );
-		RECORD_D3D9( hr );
-
-		return value;
-	}
-
-	array<Color4>^ BaseEffect::GetColorArray( EffectHandle^ parameter, int count )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		array<Color4>^ data = gcnew array<Color4>( count );
-		pin_ptr<Color4> pinnedData = &data[0];
-
-		HRESULT hr = InternalPointer->GetVectorArray( handle, reinterpret_cast<D3DXVECTOR4*>( pinnedData ), count );
-		
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
-
-		return data;
-	}
-
-	Matrix BaseEffect::GetMatrix( EffectHandle^ parameter )
-	{
-		Matrix value = Matrix();
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->GetMatrix( handle, reinterpret_cast<D3DXMATRIX*>( &value ) );
-		RECORD_D3D9( hr );
-
-		return value;
-	}
-
-	array<Matrix>^ BaseEffect::GetMatrixArray( EffectHandle^ parameter, int count )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		array<Matrix>^ data = gcnew array<Matrix>( count );
-		pin_ptr<Matrix> pinnedData = &data[0];
-
-		HRESULT hr = InternalPointer->GetMatrixArray( handle, reinterpret_cast<D3DXMATRIX*>( pinnedData ), count );
-		
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
-
-		return data;
 	}
 
 	BaseTexture^ BaseEffect::GetTexture( EffectHandle^ parameter )
@@ -616,36 +330,12 @@ namespace Direct3D9
 		return BaseTexture::FromUnmanaged( texture );
 	}
 
-	Matrix BaseEffect::GetMatrixTranspose( EffectHandle^ parameter )
-	{
-		Matrix value = Matrix();
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->GetMatrixTranspose( handle, reinterpret_cast<D3DXMATRIX*>( &value ) );
-		RECORD_D3D9( hr );
-
-		return value;
-	}
-
-	array<Matrix>^ BaseEffect::GetMatrixTransposeArray( EffectHandle^ parameter, int count )
-	{
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		array<Matrix>^ data = gcnew array<Matrix>( count );
-		pin_ptr<Matrix> pinnedData = &data[0];
-
-		HRESULT hr = InternalPointer->GetMatrixTransposeArray( handle, reinterpret_cast<D3DXMATRIX*>( pinnedData ), count );
-		
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
-
-		return data;
-	}
-
 	String^ BaseEffect::GetString( EffectHandle^ parameter )
 	{
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		LPCSTR data = 0;
 
-		HRESULT hr = InternalPointer->GetString(handle,&data);
+		HRESULT hr = InternalPointer->GetString( handle, &data );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
@@ -653,31 +343,52 @@ namespace Direct3D9
 		return gcnew String(data);
 	}
 
-	DataStream^ BaseEffect::GetValue( EffectHandle^ parameter, int bytes )
+	generic<typename T> where T : value class
+	Result BaseEffect::SetValue( EffectHandle^ parameter, T value )
 	{
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 
-		// Manual Allocation: Handled properly
-		// data is either taken by the DataStream or disposed of when
-		// an exception occurs
-		char *data = new char[bytes];
+		HRESULT	hr = InternalPointer->SetValue( handle, &value, sizeof(T) );
+		return RECORD_D3D9( hr );
+	}
 
-		try
-		{
-			HRESULT hr = InternalPointer->GetValue( handle, data, bytes );
+	generic<typename T> where T : value class
+	T BaseEffect::GetValue( EffectHandle^ parameter )
+	{
+		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
+		T result;
 
-			if( RECORD_D3D9( hr ).IsFailure )
-				return nullptr;
+		HRESULT hr = InternalPointer->GetValue( handle, &result, sizeof(T) );
 
-			DataStream^ ds = gcnew DataStream( data, bytes, true, true, false );
-			ds->TakeOwnership();
-			data = NULL;
-			return ds;
-		}
-		finally
-		{
-			delete[] data;
-		}
+		if( RECORD_D3D9( hr ).IsFailure )
+			return T();
+
+		return result;
+	}
+
+	generic<typename T> where T : value class
+	Result BaseEffect::SetValue( EffectHandle^ parameter, array<T>^ values )
+	{
+		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
+		pin_ptr<T> pinnedData = &values[0];
+
+		HRESULT	hr = InternalPointer->SetValue( handle, pinnedData, sizeof(T) * values->Length );
+		return RECORD_D3D9( hr );
+	}
+
+	generic<typename T> where T : value class
+	array<T>^ BaseEffect::GetValue( EffectHandle^ parameter, int count )
+	{
+		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
+		array<T>^ results = gcnew array<T>( count );
+		pin_ptr<T> pinnedData = &results[0];
+
+		HRESULT hr = InternalPointer->GetValue( handle, pinnedData, sizeof(T) * count );
+
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		return results;
 	}
 }
 }

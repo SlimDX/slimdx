@@ -82,7 +82,7 @@ namespace Particles
             camera.Target = Vector3.Zero;
 
             // create the Direct3D device
-            GraphicsDeviceManager.ChangeDevice(DeviceVersion.Direct3D10, true, InitialWidth, InitialHeight);
+            GraphicsDeviceManager.ChangeDevice(DeviceVersion.Direct3D9, true, InitialWidth, InitialHeight);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Particles
             effect.SetValue("viewProjectionMatrix", Matrix.Transpose(viewProjectionMatrix));
             effect.SetValue("worldMatrix", worldMatrix);
             effect.SetValue("viewMatrix", Matrix.Transpose(viewMatrix));
-            effect.SetValue("particleTexture", texture);
+            effect.SetTexture("particleTexture", texture);
             effect.SetValue("explosion", 3.45f);
             effect.SetValue("diffuseColor", new Color4(1, 1, 1, 1));
 

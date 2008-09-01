@@ -1173,36 +1173,6 @@
               <Issue>
                <Item>'Utilities.AllocateNativeString(string)'</Item>
                <Item>'Marshal.StringToHGlobalAnsi(string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Utilities.AllocateNativeString(string)'&#xD;&#xA;   -&gt;'Utilities.AllocateNativeString(string)'&#xD;&#xA;   -&gt;'Frame.BuildUnmanagedFrames(ref FrameShim*, Frame)'&#xD;&#xA;   -&gt;'Frame.BuildHierarchyFromManaged(Frame)'&#xD;&#xA;   -&gt;'Frame.CalculateBoundingSphere(Frame)'</Item>
-              </Issue>
-              <Issue>
-               <Item>'Utilities.AllocateNativeString(string)'</Item>
-               <Item>'Marshal.StringToHGlobalAnsi(string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Utilities.AllocateNativeString(string)'&#xD;&#xA;   -&gt;'Utilities.AllocateNativeString(string)'&#xD;&#xA;   -&gt;'Frame.BuildUnmanagedFrames(ref FrameShim*, Frame)'&#xD;&#xA;   -&gt;'Frame.BuildHierarchyFromManaged(Frame)'&#xD;&#xA;   -&gt;'Frame.CountNamedFrames(Frame)'</Item>
-              </Issue>
-              <Issue>
-               <Item>'Utilities.AllocateNativeString(string)'</Item>
-               <Item>'Marshal.StringToHGlobalAnsi(string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Utilities.AllocateNativeString(string)'&#xD;&#xA;   -&gt;'Utilities.AllocateNativeString(string)'&#xD;&#xA;   -&gt;'Frame.BuildUnmanagedFrames(ref FrameShim*, Frame)'&#xD;&#xA;   -&gt;'Frame.BuildHierarchyFromManaged(Frame)'&#xD;&#xA;   -&gt;'Frame.DestroyHierarchy(Frame, IAllocateHierarchy)'</Item>
-              </Issue>
-              <Issue>
-               <Item>'Utilities.AllocateNativeString(string)'</Item>
-               <Item>'Marshal.StringToHGlobalAnsi(string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Utilities.AllocateNativeString(string)'&#xD;&#xA;   -&gt;'Utilities.AllocateNativeString(string)'&#xD;&#xA;   -&gt;'Frame.BuildUnmanagedFrames(ref FrameShim*, Frame)'&#xD;&#xA;   -&gt;'Frame.BuildHierarchyFromManaged(Frame)'&#xD;&#xA;   -&gt;'Frame.FindChild(string)'</Item>
-              </Issue>
-              <Issue>
-               <Item>'Utilities.AllocateNativeString(string)'</Item>
-               <Item>'Marshal.StringToHGlobalAnsi(string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Utilities.AllocateNativeString(string)'&#xD;&#xA;   -&gt;'Utilities.AllocateNativeString(string)'&#xD;&#xA;   -&gt;'Frame.BuildUnmanagedFrames(ref FrameShim*, Frame)'&#xD;&#xA;   -&gt;'Frame.BuildHierarchyFromManaged(Frame)'&#xD;&#xA;   -&gt;'Frame.SaveHierarchyToFile(string, XFileFormat, Frame, AnimationController)'</Item>
-              </Issue>
-              <Issue>
-               <Item>'Utilities.AllocateNativeString(string)'</Item>
-               <Item>'Marshal.StringToHGlobalAnsi(string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Utilities.AllocateNativeString(string)'&#xD;&#xA;   -&gt;'Utilities.AllocateNativeString(string)'&#xD;&#xA;   -&gt;'Frame.BuildUnmanagedFrames(ref FrameShim*, Frame)'&#xD;&#xA;   -&gt;'Frame.BuildHierarchyFromManaged(Frame)'&#xD;&#xA;   -&gt;'Frame.SaveHierarchyToFile(string, XFileFormat, Frame, AnimationController, ISaveUserData)'</Item>
-              </Issue>
-              <Issue>
-               <Item>'Utilities.AllocateNativeString(string)'</Item>
-               <Item>'Marshal.StringToHGlobalAnsi(string)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities.AllocateNativeString(string)'&#xD;&#xA;   -&gt;'Utilities.AllocateNativeString(string)'&#xD;&#xA;   -&gt;'Frame.Name.set(string)'</Item>
               </Issue>
               <Issue>
@@ -1256,11 +1226,6 @@
                <Item>'Utilities.FreeNativeString(sbyte*)'</Item>
                <Item>'Marshal.FreeHGlobal(IntPtr)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Utilities.FreeNativeString(sbyte*)'&#xD;&#xA;   -&gt;'Utilities.FreeNativeString(sbyte*)'&#xD;&#xA;   -&gt;'Frame.Name.set(string)'</Item>
-              </Issue>
-              <Issue>
-               <Item>'Utilities.FreeNativeString(sbyte*)'</Item>
-               <Item>'Marshal.FreeHGlobal(IntPtr)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Utilities.FreeNativeString(sbyte*)'&#xD;&#xA;   -&gt;'Utilities.FreeNativeString(sbyte*)'&#xD;&#xA;   -&gt;'Frame.SaveHierarchyToFile(string, XFileFormat, Frame, AnimationController)'</Item>
               </Issue>
               <Issue>
                <Item>'Utilities.FreeNativeString(sbyte*)'</Item>
@@ -4367,42 +4332,22 @@
          </Type>
          <Type Name="BaseEffect">
           <Members>
-           <Member Name="#GetBool(SlimDX.Direct3D9.EffectHandle)">
+           <Member Name="#GetValue`1(SlimDX.Direct3D9.EffectHandle)">
             <Messages>
-             <Message Id="bool" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="LanguageSpecificMember">
-               <Item>Bool</Item>
-               <Item>'BaseEffect.GetBool(EffectHandle)'</Item>
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2008-09-01 18:12:57Z">
+              <Issue>
+               <Item>'BaseEffect.GetValue&lt;T&gt;(EffectHandle)'</Item>
+               <Item>'T'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#GetBoolArray(SlimDX.Direct3D9.EffectHandle,System.Int32)">
+           <Member Name="#GetValue`1(SlimDX.Direct3D9.EffectHandle,System.Int32)">
             <Messages>
-             <Message Id="bool" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="LanguageSpecificMember">
-               <Item>Bool</Item>
-               <Item>'BaseEffect.GetBoolArray(EffectHandle, int)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetFloat(SlimDX.Direct3D9.EffectHandle)">
-            <Messages>
-             <Message Id="float" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="LanguageSpecificMember">
-               <Item>Float</Item>
-               <Item>'BaseEffect.GetFloat(EffectHandle)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetInt(SlimDX.Direct3D9.EffectHandle)">
-            <Messages>
-             <Message Id="int" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="LanguageSpecificMember">
-               <Item>Int</Item>
-               <Item>'BaseEffect.GetInt(EffectHandle)'</Item>
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2008-09-01 18:12:57Z">
+              <Issue>
+               <Item>'BaseEffect.GetValue&lt;T&gt;(EffectHandle, int)'</Item>
+               <Item>'T'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -15457,53 +15402,50 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Particle">
-          <Messages>
-           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-08-20 12:09:23Z">
-            <Issue>
-             <Item>'Particle'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="ParticleSystem">
-          <Messages>
-           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-08-20 12:09:23Z">
-            <Issue>
-             <Item>'ParticleSystem'</Item>
-            </Issue>
-           </Message>
-          </Messages>
+         <Type Name="Helpers">
           <Members>
-           <Member Name="#vertexBuffer">
+           <Member Name="#MakeList`1(!!0)">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-08-20 12:09:23Z">
+             <Message Id="type" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Excluded" Created="2008-09-01 18:12:57Z" FixCategory="NonBreaking">
               <Issue>
-               <Item>'ParticleSystem.vertexBuffer'</Item>
+               <Item>'type'</Item>
+               <Item>'Helpers.MakeList&lt;T&gt;(T)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
           </Members>
          </Type>
-         <Type Name="Trigger">
+         <Type Name="ParticleSystem">
+          <Messages>
+           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2008-09-01 18:12:57Z" FixCategory="NonBreaking">
+            <Issue Name="NonBreaking">
+             <Item>'ParticleSystem'</Item>
+             <Item>'VertexBuffer'</Item>
+            </Issue>
+           </Message>
+          </Messages>
           <Members>
-           <Member Name="#.ctor(Asteroids.TriggerActivation)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-08-01 14:01:04Z">
-              <Issue>
-               <Item>'Trigger.Trigger(TriggerActivation)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ActivationPredicate">
+           <Member Name="#Gravity">
             <Accessors>
-             <Accessor Name="#set_ActivationPredicate(Asteroids.TriggerActivation)">
+             <Accessor Name="#set_Gravity(SlimDX.Vector3)">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-08-01 14:01:04Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-09-01 18:12:57Z">
                 <Issue>
-                 <Item>'Trigger.ActivationPredicate.set(TriggerActivation)'</Item>
+                 <Item>'ParticleSystem.Gravity.set(Vector3)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#MaximumStartSize">
+            <Accessors>
+             <Accessor Name="#get_MaximumStartSize()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-09-01 18:12:57Z">
+                <Issue>
+                 <Item>'ParticleSystem.MaximumStartSize.get()'</Item>
                 </Issue>
                </Message>
               </Messages>
@@ -15521,18 +15463,6 @@
             </Issue>
            </Message>
           </Messages>
-          <Members>
-           <Member Name="#MakeList`1(!!0)">
-            <Messages>
-             <Message Id="type" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Excluded" Created="2008-07-13 14:30:00Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'type'</Item>
-               <Item>'VectorModel.MakeList&lt;T&gt;(T)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
          </Type>
         </Types>
        </Namespace>
@@ -16096,9 +16026,6 @@
    </Rule>
    <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
     <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
-   </Rule>
-   <Rule TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812">
-    <Resolution Name="Default">{0} is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static methods, consider adding a private constructor to prevent the compiler from generating a default constructor.</Resolution>
    </Rule>
    <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
     <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>

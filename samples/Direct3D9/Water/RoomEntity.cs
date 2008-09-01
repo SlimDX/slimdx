@@ -42,8 +42,8 @@ namespace Water
 
             Effect.Technique = "bump";
 
-            Effect.SetValue("texture0", Texture);
-            Effect.SetValue("texture1", bumpTexture);
+            Effect.SetTexture("texture0", Texture);
+            Effect.SetTexture("texture1", bumpTexture);
 
             Effect.SetValue("ModelViewProj", modelViewProjection);
             Effect.SetValue("ModelViewIT", inverted);

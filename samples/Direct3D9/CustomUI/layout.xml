@@ -37,13 +37,6 @@
       <RadioButton Text="Radio FTW EPIC" X="300" Y="400"/>
       <RadioButton Text="Radio Group 2" X="0" Y="100" Group="2"/>
       <ScrollBar X="300" Y="10"/>
-      <ListBox X="200" Y="200" Width="100" Height="100">
-        <Item>Hello</Item>
-        <Item>Test Item 2</Item>
-        <Item>Do numbers work?</Item>
-        <Item>I don't know, let's find out.</Item>
-        <Item>1234567890</Item>
-      </ListBox>
     </Dialog>
   </Interface>
 </SlimUI>

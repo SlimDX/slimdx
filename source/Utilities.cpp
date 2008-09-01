@@ -46,7 +46,7 @@ namespace SlimDX
 		array<T>^ result = gcnew array<T>( count );
 
 		pin_ptr<T> pinnedBuffer = &result[0];
-		memcpy( pinnedBuffer, buffer, count * elementSize );
+		memcpy( pinnedBuffer, buffer->GetBufferPointer(), count * elementSize );
 
 		return result;
 	}
