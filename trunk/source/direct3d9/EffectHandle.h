@@ -30,6 +30,7 @@ namespace SlimDX
 		private:
 			D3DXHANDLE m_Handle;
 			System::IntPtr m_StringData;
+			System::Int64 m_StringDataSize;
 			bool m_HasString;
 
 		internal:

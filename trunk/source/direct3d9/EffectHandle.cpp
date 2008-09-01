@@ -43,6 +43,8 @@ namespace Direct3D9
 	{
 		m_StringData = Marshal::StringToHGlobalAnsi( name );
 		m_HasString = true;
+		m_StringDataSize = name->Length;
+		GC::AddMemoryPressure( m_StringDataSize );
 
 		m_Handle = reinterpret_cast<D3DXHANDLE>( m_StringData.ToPointer() );
 	}
@@ -50,7 +52,10 @@ namespace Direct3D9
 	void EffectHandle::Destruct()
 	{
 		if( m_HasString )
+		{
 			Marshal::FreeHGlobal( m_StringData );
+			GC::RemoveMemoryPressure( m_StringDataSize );
+		}
 	}
 
 	EffectHandle::operator EffectHandle^( String^ name )

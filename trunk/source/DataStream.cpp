@@ -57,6 +57,7 @@ namespace SlimDX
 			// Manual Allocation: this is fine
 			m_Buffer = new char[static_cast<size_t>( sizeInBytes )];
 			memcpy( m_Buffer, buffer, static_cast<size_t>( sizeInBytes ) );
+			GC::AddMemoryPressure( sizeInBytes );
 		}
 		else
 		{
@@ -81,6 +82,7 @@ namespace SlimDX
 		{
 			// Manual Allocation: this is fine
 			m_Buffer = new char[ static_cast<int>( sizeInBytes ) ];
+			GC::AddMemoryPressure( sizeInBytes );
 		}
 		catch (std::bad_alloc&)
 		{
@@ -123,6 +125,7 @@ namespace SlimDX
 		if(m_OwnsBuffer)
 		{
 			delete[] m_Buffer;
+			GC::RemoveMemoryPressure( m_Size );
 			m_OwnsBuffer = false;
 		}
 		
