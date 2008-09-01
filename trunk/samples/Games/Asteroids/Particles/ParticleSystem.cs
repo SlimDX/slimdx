@@ -343,7 +343,7 @@ namespace Asteroids
 
             // set the texture
             Texture texture = Texture.FromFile(Device, TextureName);
-            effect.SetValue("Texture", texture);
+            effect.SetTexture("Texture", texture);
             texture.Dispose();
 
             // set the appropriate technique

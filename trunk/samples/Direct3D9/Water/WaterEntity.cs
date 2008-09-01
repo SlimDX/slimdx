@@ -42,8 +42,8 @@ namespace Water
 
             Effect.Technique = "water";
 
-            Effect.SetValue("texture0", Texture);
-            Effect.SetValue("texture1", cubeTexture);
+            Effect.SetTexture("texture0", Texture);
+            Effect.SetTexture("texture1", cubeTexture);
 
             Effect.SetValue("ModelViewProj", modelViewProjection);
             Effect.SetValue("ModelWorld", WorldMatrix);
