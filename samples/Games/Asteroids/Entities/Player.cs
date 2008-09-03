@@ -64,21 +64,18 @@ namespace Asteroids
 
             // set up the particle system
             engineTrail = new ParticleSystem(1000);
-            engineTrail.Duration = 300.0f;
+            engineTrail.Duration = 1.5f;
             engineTrail.DurationRandomness = 1.5f;
             engineTrail.EmitterVelocitySensitivity = 0.1f;
             engineTrail.MinimumVelocity = new Vector2(0.0f, -1.0f);
             engineTrail.MaximumVelocity = new Vector2(1.0f, 1.0f);
-            engineTrail.MinimumColor = Color.FromArgb(255, 64, 96, 128);
-            engineTrail.MaximumColor = Color.FromArgb(128, 255, 255, 255);
-            engineTrail.MinimumRotationSpeed = -4.0f;
-            engineTrail.MaximumRotationSpeed = 4.0f;
+            engineTrail.MinimumColor = Color.FromArgb(128, 255, 255, 255);
+            engineTrail.MaximumColor = Color.FromArgb(64, 255, 255, 255);
             engineTrail.MinimumStartSize = 2.0f;
-            engineTrail.MaximumStartSize = 4.0f;
+            engineTrail.MaximumStartSize = 5.0f;
             engineTrail.MinimumEndSize = 5.0f;
-            engineTrail.MaximumEndSize = 15.0f;
-            engineTrail.TextureName = "Content/Textures/Smoke.png";
-            engineTrailEmitter = new ParticleEmitter(engineTrail, 100, new Vector3(Position, 0.0f));
+            engineTrail.MaximumEndSize = 7.0f;
+            engineTrailEmitter = new ParticleEmitter(engineTrail, new Vector3(Position, 0.0f));
             Game.Resources.Add(engineTrail);
             Game.Components.Add(engineTrail);
         }
@@ -108,6 +105,7 @@ namespace Asteroids
             }
 
             // update the emitter
+            engineTrailEmitter.ParticlesPerSecond = Velocity.Length() * 10;
             engineTrail.SetCamera(Game.Camera.ViewMatrix, Game.Camera.ProjectionMatrix);
             engineTrailEmitter.Update(gameTime, new Vector3(Position, 0.0f));
 

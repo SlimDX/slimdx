@@ -32,21 +32,36 @@ namespace Asteroids
         // variables
         ParticleSystem particleSystem;
         float timeBetweenParticles;
+        float particlesPerSecond;
         Vector3 previousPosition;
         float timeLeftOver;
+
+        /// <summary>
+        /// Gets or sets the number of particles to spawn every second.
+        /// </summary>
+        /// <value>The number of particles to spawn every second.</value>
+        public float ParticlesPerSecond
+        {
+            get { return particlesPerSecond; }
+            set
+            {
+                // update both values
+                particlesPerSecond = value;
+                timeBetweenParticles = 1.0f / particlesPerSecond;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParticleEmitter"/> class.
         /// </summary>
         /// <param name="particleSystem">The particle system.</param>
-        /// <param name="particlesPerSecond">The amount of particles that should be generated each second.</param>
         /// <param name="initialPosition">The initial position.</param>
-        public ParticleEmitter(ParticleSystem particleSystem, float particlesPerSecond, Vector3 initialPosition)
+        public ParticleEmitter(ParticleSystem particleSystem, Vector3 initialPosition)
         {
             // set up variables
             this.particleSystem = particleSystem;
-            timeBetweenParticles = 1.0f / particlesPerSecond;
             previousPosition = initialPosition;
+            ParticlesPerSecond = 100.0f;
         }
 
         /// <summary>
@@ -57,7 +72,7 @@ namespace Asteroids
         public void Update(GameTime gameTime, Vector3 newPosition)
         {
             // make sure time has passed
-            if (gameTime.ElapsedGameTime > 0.0f)
+            if (gameTime.ElapsedGameTime > 0.0f && !float.IsInfinity(timeBetweenParticles))
             {
                 // calculate the velocity
                 Vector3 velocity = (newPosition - previousPosition) / gameTime.ElapsedGameTime;
