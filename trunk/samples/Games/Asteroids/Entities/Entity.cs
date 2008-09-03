@@ -221,7 +221,8 @@ namespace Asteroids
         public virtual void Draw()
         {
             // draw the model
-            Model.Draw(Position, Rotation, Alpha);
+            if (Model != null)
+                Model.Draw(Position, Rotation, Alpha);
         }
 
         /// <summary>

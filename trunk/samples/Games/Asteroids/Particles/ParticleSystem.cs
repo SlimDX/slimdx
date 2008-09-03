@@ -41,7 +41,6 @@ namespace Asteroids
         Effect effect;
         EffectHandle viewParameter;
         EffectHandle projectionParameter;
-        EffectHandle viewportHeightParameter;
         EffectHandle timeParameter;
 
         // vertex stuff
@@ -62,16 +61,6 @@ namespace Asteroids
         Device Device
         {
             get { return manager.Direct3D9.Device; }
-        }
-
-        /// <summary>
-        /// Gets or sets the name of the texture.
-        /// </summary>
-        /// <value>The name of the texture.</value>
-        public string TextureName
-        {
-            get;
-            set;
         }
 
         /// <summary>
@@ -159,26 +148,6 @@ namespace Asteroids
         /// </summary>
         /// <value>The maximum color.</value>
         public Color4 MaximumColor
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the minimum rotation speed.
-        /// </summary>
-        /// <value>The minimum rotation speed.</value>
-        public float MinimumRotationSpeed
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the maximum rotation speed.
-        /// </summary>
-        /// <value>The maximum rotation speed.</value>
-        public float MaximumRotationSpeed
         {
             get;
             set;
@@ -281,7 +250,6 @@ namespace Asteroids
             // store the effect parameters
             viewParameter = effect.GetParameter(null, "View");
             projectionParameter = effect.GetParameter(null, "Projection");
-            viewportHeightParameter = effect.GetParameter(null, "ViewportHeight");
             timeParameter = effect.GetParameter(null, "CurrentTime");
 
             // set constant values
@@ -337,20 +305,9 @@ namespace Asteroids
             effect.SetValue("EndVelocity", EndVelocity);
             effect.SetValue("MinColor", MinimumColor);
             effect.SetValue("MaxColor", MaximumColor);
-            effect.SetValue("RotateSpeed", new Vector2(MinimumRotationSpeed, MaximumRotationSpeed));
             effect.SetValue("StartSize", new Vector2(MinimumStartSize, MinimumEndSize));
             effect.SetValue("EndSize", new Vector2(MinimumEndSize, MaximumEndSize));
-
-            // set the texture
-            Texture texture = Texture.FromFile(Device, TextureName);
-            effect.SetTexture("Texture", texture);
-            texture.Dispose();
-
-            // set the appropriate technique
-            if (MinimumRotationSpeed == 0 && MaximumRotationSpeed == 0)
-                effect.Technique = "NonRotatingParticles";
-            else
-                effect.Technique = "RotatingParticles";
+            effect.Technique = "ParticleTechnique";
         }
 
         /// <summary>
@@ -445,7 +402,7 @@ namespace Asteroids
             {
                 // set render states
                 Device.SetRenderState(RenderState.PointSpriteEnable, true);
-                Device.SetRenderState(RenderState.PointSizeMax, 256);
+                Device.SetRenderState(RenderState.PointSizeMax, 256.0f);
                 Device.SetRenderState(RenderState.AlphaBlendEnable, true);
                 Device.SetRenderState(RenderState.BlendOperationAlpha, BlendOperation.Add);
                 Device.SetRenderState(RenderState.SourceBlend, SourceBlend);
@@ -457,7 +414,6 @@ namespace Asteroids
                 Device.SetRenderState(RenderState.ZWriteEnable, false);
 
                 // set effect parameters
-                effect.SetValue(viewportHeightParameter, Device.Viewport.Height);
                 effect.SetValue(timeParameter, currentTime);
 
                 // set vertex information

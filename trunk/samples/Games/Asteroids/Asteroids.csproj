@@ -76,6 +76,7 @@
     <Compile Include="Asteroids.cs" />
     <Compile Include="Entities\Bullet.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="Entities\Explosion.cs" />
     <Compile Include="Items\PrimaryWeapon.cs" />
     <Compile Include="Items\Weapon.cs" />
     <Compile Include="Entities\Entity.cs" />
@@ -140,9 +141,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Models\SmallAsteroid2.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Textures\smoke.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
