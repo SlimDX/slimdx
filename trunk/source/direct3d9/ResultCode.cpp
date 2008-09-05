@@ -63,6 +63,11 @@ namespace Direct3D9
 		return Result( D3DERR_CONFLICTINGTEXTUREPALETTE );
 	}
 	
+	Result ResultCode::DeviceHung::get()
+	{
+		return Result( D3DERR_DEVICEHUNG );
+	}
+
 	Result ResultCode::DeviceLost::get()
 	{
 		return Result( D3DERR_DEVICELOST );
@@ -71,6 +76,11 @@ namespace Direct3D9
 	Result ResultCode::DeviceNotReset::get()
 	{
 		return Result( D3DERR_DEVICENOTRESET );
+	}
+	
+	Result ResultCode::DeviceRemoved::get()
+	{
+		return Result( D3DERR_DEVICEREMOVED );
 	}
 	
 	Result ResultCode::DriverInternalError::get()
@@ -133,6 +143,11 @@ namespace Direct3D9
 		return Result( D3DERR_NOTFOUND );
 	}
 	
+	Result ResultCode::NotResident::get()
+	{
+		return Result( S_NOT_RESIDENT );
+	}
+	
 	Result ResultCode::OutOfVideoMemory::get()
 	{
 		return Result( D3DERR_OUTOFVIDEOMEMORY );
@@ -148,6 +163,11 @@ namespace Direct3D9
 		return Result( S_PRESENT_OCCLUDED );
 	}
 
+	Result ResultCode::ResidentInSharedMemory::get()
+	{
+		return Result( S_RESIDENT_IN_SHARED_MEMORY );
+	}
+	
 	Result ResultCode::SkinningNotSupported::get()
 	{
 		return Result( D3DXERR_SKINNINGNOTSUPPORTED );

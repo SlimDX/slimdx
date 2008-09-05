@@ -55,6 +55,11 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	Device::Device( bool )
+	{
+		//this is called by DeviceEx
+	}
+
 	Device::Device( IDirect3DDevice9* pointer )
 	{
 		Construct( pointer );

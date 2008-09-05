@@ -44,9 +44,9 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	Direct3D::Direct3D( IDirect3D9* line )
+	Direct3D::Direct3D( IDirect3D9* direct3d )
 	{
-		Construct( line );
+		Construct( direct3d );
 	}
 
 	Direct3D::Direct3D( IntPtr pointer )
@@ -54,9 +54,14 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
+	Direct3D::Direct3D( bool )
+	{
+		//called by Direct3D9Ex
+	}
+
 	Direct3D::Direct3D()
 	{
-		IDirect3D9 *direct3D;
+		IDirect3D9 *direct3D = NULL;
 
         try
         {
@@ -219,8 +224,10 @@ namespace Direct3D9
 
     DisplayMode Direct3D::GetAdapterDisplayMode( int adapter )
     {
-        DisplayMode displayMode;
-        InternalPointer->GetAdapterDisplayMode( adapter, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
+		DisplayMode displayMode;
+        HRESULT hr = InternalPointer->GetAdapterDisplayMode( adapter, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
+		RECORD_D3D9( hr );
+
         return displayMode;
     }
 
@@ -250,7 +257,7 @@ namespace Direct3D9
 
 	Capabilities^ Direct3D::GetDeviceCaps( int adapter, DeviceType deviceType )
 	{
-		D3DCAPS9 caps;
+		D3DCAPS9 caps = {D3DDEVTYPE_HAL, 0};
 		HRESULT hr = InternalPointer->GetDeviceCaps( adapter, static_cast<D3DDEVTYPE>( deviceType ), &caps );
 		RECORD_D3D9( hr );
 
