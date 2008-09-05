@@ -27,7 +27,6 @@
 #include "../Result.h"
 
 #include "AdapterInformation.h"
-#include "AdapterDetails.h"
 #include "AdapterCollection.h"
 #include "Direct3D.h"
 

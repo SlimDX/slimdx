@@ -45,6 +45,9 @@ namespace SlimDX
 		private:
 			AdapterCollection^ adapters;
 
+		protected:
+			Direct3D( bool doNotConstruct );
+
 		public:
 			Direct3D();
 

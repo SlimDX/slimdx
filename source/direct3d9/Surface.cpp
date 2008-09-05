@@ -28,7 +28,7 @@
 
 #include "Direct3D9Exception.h"
 
-#include "Device.h"
+#include "DeviceEx.h"
 #include "Surface.h"
 #include "Texture.h"
 
@@ -123,6 +123,119 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
+		Surface^ result = gcnew Surface( surface );
+		result->IsDefaultPool = true;
+		return result;
+	}
+
+	Surface^ Surface::CreateRenderTargetEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format,
+		MultisampleType multiSampleType, int multiSampleQuality, bool lockable, Usage usage )
+	{
+		IDirect3DSurface9* surface;
+
+		HRESULT hr = device->InternalPointer->CreateRenderTargetEx( width, height, static_cast<D3DFORMAT>( format ),
+			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality,
+			lockable, &surface, NULL, static_cast<DWORD>( usage ) );
+		
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		Surface^ result = gcnew Surface( surface );
+		result->IsDefaultPool = true;
+		return result;
+	}
+
+	Surface^ Surface::CreateRenderTargetEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format,
+		MultisampleType multiSampleType, int multiSampleQuality, bool lockable, Usage usage, [Out] IntPtr% sharedHandle )
+	{
+		IDirect3DSurface9* surface;
+		HANDLE localHandle = NULL;
+		sharedHandle = IntPtr::Zero;
+
+		HRESULT hr = device->InternalPointer->CreateRenderTargetEx( width, height, static_cast<D3DFORMAT>( format ),
+			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality, lockable,
+			&surface, &localHandle, static_cast<DWORD>( usage ) );
+		
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		sharedHandle = IntPtr( localHandle );
+		Surface^ result = gcnew Surface( surface );
+		result->IsDefaultPool = true;
+		return result;
+	}
+
+	Surface^ Surface::CreateOffscreenPlainEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, Pool pool, Usage usage )
+	{
+		IDirect3DSurface9* surface;
+
+		HRESULT hr = device->InternalPointer->CreateOffscreenPlainSurfaceEx( width, height,
+			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &surface,
+			NULL, static_cast<DWORD>( usage ) );
+		
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		Surface^ result = gcnew Surface( surface );
+		if( pool == Pool::Default )
+			result->IsDefaultPool = true;
+
+		return result;
+	}
+
+	Surface^ Surface::CreateOffscreenPlainEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, Pool pool, Usage usage, [Out] IntPtr% sharedHandle )
+	{
+		IDirect3DSurface9* surface;
+		HANDLE localHandle = NULL;
+		sharedHandle = IntPtr::Zero;
+
+		HRESULT hr = device->InternalPointer->CreateOffscreenPlainSurfaceEx( width, height,
+			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &surface,
+			&localHandle, static_cast<DWORD>( usage ) );
+		
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		sharedHandle = IntPtr( localHandle );
+		Surface^ result = gcnew Surface( surface );
+		if( pool == Pool::Default )
+			result->IsDefaultPool = true;
+
+		return result;
+	}
+
+	Surface^ Surface::CreateDepthStencilEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format,
+		MultisampleType multiSampleType, int multiSampleQuality, bool discard, Usage usage )
+	{
+		IDirect3DSurface9* surface;
+
+		HRESULT hr = device->InternalPointer->CreateDepthStencilSurfaceEx( width, height, static_cast<D3DFORMAT>( format ),
+			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality, discard,
+			&surface, NULL, static_cast<DWORD>( usage ) );
+		
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		Surface^ result = gcnew Surface( surface );
+		result->IsDefaultPool = true;
+		return result;
+	}
+
+	Surface^ Surface::CreateDepthStencilEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format,
+		MultisampleType multiSampleType, int multiSampleQuality, bool discard, Usage usage, [Out] IntPtr% sharedHandle )
+	{
+		IDirect3DSurface9* surface;
+		HANDLE localHandle = NULL;
+		sharedHandle = IntPtr::Zero;
+
+		HRESULT hr = device->InternalPointer->CreateDepthStencilSurfaceEx( width, height, static_cast<D3DFORMAT>( format ),
+			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality, discard,
+			&surface, &localHandle, static_cast<DWORD>( usage ) );
+		
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		sharedHandle = IntPtr( localHandle );
 		Surface^ result = gcnew Surface( surface );
 		result->IsDefaultPool = true;
 		return result;

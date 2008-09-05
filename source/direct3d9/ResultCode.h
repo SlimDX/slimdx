@@ -89,6 +89,15 @@ namespace SlimDX
 			};
 			
 			/// <summary>
+			/// Occurs when a device is hung.
+			/// </summary>
+			/// <unmanaged>D3DERR_DEVICEHUNG</unmanaged>
+			property static Result DeviceHung
+			{
+				Result get();
+			}
+
+			/// <summary>
 			/// Occurs when a device is lost.
 			/// </summary>
 			/// <unmanaged>D3DERR_DEVICELOST</unmanaged>
@@ -106,6 +115,15 @@ namespace SlimDX
 				Result get();
 			};
 			
+			/// <summary>
+			/// Occurs when a device is removed from the system.
+			/// </summary>
+			/// <unmanaged>D3DERR_DEVICEREMOVED</unmanaged>
+			property static Result DeviceRemoved
+			{
+				Result get();
+			};
+
 			/// <summary>
 			/// Occurs when a driver internal error is thrown.
 			/// </summary>
@@ -215,6 +233,15 @@ namespace SlimDX
 			};
 			
 			/// <summary>
+			/// Occurs when the resource is not resident in memory.
+			/// </summary>
+			/// <unmanaged>S_NOT_RESIDENT</unmanaged>
+			property static Result NotResident
+			{
+				Result get();
+			};
+			
+			/// <summary>
 			/// Occurs when the driver runs out of video memory.
 			/// </summary>
 			/// <unmanaged>D3DERR_OUTOFVIDEOMEMORY</unmanaged>
@@ -241,6 +268,15 @@ namespace SlimDX
 				Result get();
 			};
 
+			/// <summary>
+			/// Occurs when the resource is resident in shared memory.
+			/// </summary>
+			/// <unmanaged>S_RESIDENT_IN_SHARED_MEMORY</unmanaged>
+			property static Result ResidentInSharedMemory
+			{
+				Result get();
+			};
+			
 			/// <summary>
 			/// Occurs when skinning is not supported.
 			/// </summary>

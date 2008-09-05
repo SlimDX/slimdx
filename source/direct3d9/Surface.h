@@ -26,6 +26,8 @@
 
 #include "SurfaceDescription.h"
 
+using System::Runtime::InteropServices::OutAttribute;
+
 namespace SlimDX
 {
 	ref class DataStream;
@@ -33,6 +35,7 @@ namespace SlimDX
 	namespace Direct3D9
 	{
 		value class ImageInformation;
+		ref class DeviceEx;
 
 		/// <summary>Applications use the methods of the Surface class to query and prepare surfaces.</summary>
 		/// <unmanaged>IDirect3DSurface9</unmanaged>
@@ -47,6 +50,13 @@ namespace SlimDX
 			static Surface^ CreateRenderTarget( SlimDX::Direct3D9::Device^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool lockable );
 			static Surface^ CreateOffscreenPlain( SlimDX::Direct3D9::Device^ device, int width, int height, Format format, Pool pool );
 			static Surface^ CreateDepthStencil( SlimDX::Direct3D9::Device^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool discard );
+
+			static Surface^ CreateRenderTargetEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool lockable, Usage usage );
+			static Surface^ CreateRenderTargetEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool lockable, Usage usage, [Out] System::IntPtr% sharedHandle );
+			static Surface^ CreateOffscreenPlainEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, Pool pool, Usage usage );
+			static Surface^ CreateOffscreenPlainEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, Pool pool, Usage usage, [Out] System::IntPtr% sharedHandle );
+			static Surface^ CreateDepthStencilEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool discard, Usage usage );
+			static Surface^ CreateDepthStencilEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool discard, Usage usage, [Out] System::IntPtr% sharedHandle );
 
 			static Result FromMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
 			static Result FromMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, [Out] ImageInformation% imageInformation );

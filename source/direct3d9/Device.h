@@ -65,6 +65,9 @@ namespace SlimDX
 		{
 			COMOBJECT(IDirect3DDevice9, Device);
 
+		protected:
+			Device( bool doNotConstruct );
+
 		public:
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::Direct3D9::Device"/> class.
