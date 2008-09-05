@@ -3582,6 +3582,62 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Direct3DEx"
+				>
+				<File
+					RelativePath="..\source\direct3d9\AdapterExCollection.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\AdapterExCollection.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\AdapterInformationEx.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\AdapterInformationEx.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Direct3DEx.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Direct3DEx.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\DisplayModeEx.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\DisplayModeEx.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\DisplayModeFilter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\DisplayModeFilter.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="DeviceEx"
+				>
+				<File
+					RelativePath="..\source\direct3d9\DeviceEx.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\DeviceEx.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="DirectInput"
