@@ -35,6 +35,7 @@ namespace SlimDX
 	{
 	private:
 		static System::Collections::Generic::Dictionary<Result,ResultWatchFlags>^ m_Watches;
+		static System::Diagnostics::Stopwatch^ m_Stopwatch;
 	
 		static Configuration();
 		
@@ -64,6 +65,12 @@ namespace SlimDX
 		/// disposals will be silently ignored. The default value is <c>false</c>.
 		/// </summary>
 		static property bool DetectDoubleDispose;
+
+		/// <summary>
+		/// Gets or sets the SlimDX wide timer object.
+		/// </summary>
+		/// <remarks>This Timer is automatically created and started when SlimDX is loaded.</remarks>
+		static property System::Diagnostics::Stopwatch^ Timer;
 
 		/// <summary>
 		/// Adds a watch indicating the action to be taken when a method returns the

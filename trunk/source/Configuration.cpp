@@ -31,6 +31,7 @@ namespace SlimDX
 		DetectDoubleDispose = false;
 
 		m_Watches = gcnew System::Collections::Generic::Dictionary<Result,ResultWatchFlags>();
+		Timer = System::Diagnostics::Stopwatch::StartNew();
 	}
 	
 	Configuration::Configuration()
@@ -45,7 +46,7 @@ namespace SlimDX
 	void Configuration::AddResultWatch( Result result, ResultWatchFlags flags )
 	{
 		if( m_Watches->ContainsKey( result ) )
-			m_Watches[ result ] = flags;
+			m_Watches[result] = flags;
 		else
 			m_Watches->Add( result, flags );
 	}

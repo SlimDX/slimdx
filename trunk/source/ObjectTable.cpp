@@ -90,13 +90,19 @@ namespace SlimDX
 		if( object == nullptr )
 			throw gcnew ArgumentNullException( "object" );
 
+		//Record tracking information
+		object->SetCreationTime( (int) Configuration::Timer->ElapsedMilliseconds );
 		if( Configuration::EnableObjectTracking )
 			object->SetSource( gcnew StackTrace( 2, true ) );
 
+		//Add to the table
 		Monitor::Enter( m_SyncObject );
 		try
 		{
 			m_Table->Add( object->ComPointer, object );
+
+			if( ObjectAdded != nullptr )
+				ObjectAdded( object );
 		}
 		finally
 		{
@@ -116,6 +122,9 @@ namespace SlimDX
 				return false;
 
 			m_Table->Remove( object->ComPointer );
+
+			if( ObjectRemoved != nullptr )
+				ObjectRemoved( object );
 		}
 		finally
 		{

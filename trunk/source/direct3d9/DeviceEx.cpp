@@ -170,7 +170,7 @@ namespace Direct3D9
 			resourceArray.push_back( resource->InternalPointer );
 		}
 
-		HRESULT hr = InternalPointer->CheckResourceResidency( &resourceArray[0], resourceArray.size() );
+		HRESULT hr = InternalPointer->CheckResourceResidency( &resourceArray[0], resources->Length );
 		return static_cast<ResourceResidency>( hr );
 	}
 
