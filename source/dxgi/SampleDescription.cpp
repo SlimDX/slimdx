@@ -24,6 +24,8 @@
 
 #include "SampleDescription.h"
 
+using namespace System;
+
 namespace SlimDX
 {
 namespace DXGI
@@ -66,6 +68,10 @@ namespace DXGI
 	void SampleDescription::Quality::set( int value )
 	{
 		m_Quality = value;
+	}
+	
+	String^ SampleDescription::ToString() {
+		return String::Format( "{0}:{1}", m_Count, m_Quality);
 	}
 
 	bool SampleDescription::operator == ( SampleDescription left, SampleDescription right )

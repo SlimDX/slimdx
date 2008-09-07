@@ -21,8 +21,6 @@
 */
 #pragma once
 
-//using namespace System;
-
 #include "Enums.h"
 
 namespace SlimDX
