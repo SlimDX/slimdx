@@ -57,7 +57,8 @@ namespace SlimDX
 	{
 	private:
 		IUnknown* m_Unknown;		
-		System::Diagnostics::StackTrace^ source;
+		System::Diagnostics::StackTrace^ m_Source;
+		int m_CreationTime;
 
 	protected:
 		ComObject();
@@ -78,6 +79,7 @@ namespace SlimDX
 		}
 
 		void SetSource( System::Diagnostics::StackTrace^ stack );
+		void SetCreationTime( int time );
 
 	public:
 		/// <summary>
@@ -106,15 +108,24 @@ namespace SlimDX
 		}
 		
 		/// <summary>
+		/// Gets the timestamp, in millseconds, that this object was created.
+		/// </summary>
+		property int CreationTime
+		{
+			int get();
+		}
+		
+		/// <summary>
 		/// Gets or sets a value indicating whether or not the object is in the default allocation pool.
 		/// </summary>
 		property bool IsDefaultPool;
 		
 		/// <summary>
-		/// Gets or sets a string identifying the object for debug purposes.
+		/// Extra tag data stored along with the object. This member is intended for use by users of SlimDX
+		/// and has no internal meaning to the library.
 		/// </summary>
-		property System::String^ DebugName;
-		
+		property Object^ Tag;
+
 		/// <summary>
 		/// Releases all resources used by the <see cref="SlimDX::ComObject"/>.
 		/// </summary>

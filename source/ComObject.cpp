@@ -65,12 +65,22 @@ namespace SlimDX
 
 	void ComObject::SetSource( System::Diagnostics::StackTrace^ stack )
 	{
-		source = stack;
+		m_Source = stack;
 	}
 
 	System::Diagnostics::StackTrace^ ComObject::CreationSource::get()
 	{
-		return source;
+		return m_Source;
+	}
+
+	void ComObject::SetCreationTime( int time )
+	{
+		m_CreationTime = time;
+	}
+
+	int ComObject::CreationTime::get()
+	{
+		return m_CreationTime;
 	}
 
 	void ComObject::Construct( IUnknown* pointer )

@@ -31,6 +31,8 @@ namespace SlimDX
 	ref class Configuration;
 #endif
 
+	public delegate void ObjectNotification( ComObject^ comObject );
+
 	/// <summary>
 	/// Maintains a list of all the <see cref="ComObject">COM objects</see> managed by SlimDX.
 	/// </summary>
@@ -61,6 +63,16 @@ namespace SlimDX
 		{
 			System::Collections::Generic::Dictionary<System::IntPtr, ComObject^>::ValueCollection^ get();
 		}
+
+		/// <summary>
+		/// Occurs after a new object has been added to the object table.
+		/// </summary>
+		static ObjectNotification^ ObjectAdded;
+
+		/// <summary>
+		/// Occurs after an object has been removed from the object table.
+		/// </summary>
+		static ObjectNotification^ ObjectRemoved;
 
 		/// <summary>
 		/// Gets the synchronization object used by the ObjectTable. This object can be used to safely
