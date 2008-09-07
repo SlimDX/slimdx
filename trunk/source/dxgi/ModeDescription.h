@@ -109,7 +109,13 @@ namespace SlimDX
 			/// <param name="refreshRate">The refresh rate.</param>
 			/// <param name="format">The format.</param>
 			ModeDescription( int width, int height, Rational refreshRate, DXGI::Format format );
-
+			
+			/// <summary>
+			/// Converts the value of the object to its equivalent string representation.
+			/// </summary>
+			/// <returns>The string representation of the value of this instance.</returns>
+			virtual System::String^ ToString() override;
+			
 			static bool operator == ( ModeDescription left, ModeDescription right );
 			static bool operator != ( ModeDescription left, ModeDescription right );
 

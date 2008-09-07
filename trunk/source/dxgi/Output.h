@@ -136,6 +136,12 @@ namespace SlimDX
 			/// </summary>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result WaitForVerticalBlank();
+			
+			/// <summary>
+			/// Converts the value of the object to its equivalent string representation.
+			/// </summary>
+			/// <returns>The string representation of the value of this instance.</returns>
+			virtual System::String^ ToString() override;
 		};
 	}
 };

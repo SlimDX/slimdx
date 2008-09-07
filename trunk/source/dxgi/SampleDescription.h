@@ -63,7 +63,13 @@ namespace SlimDX
 			/// <param name="count">The sample count.</param>
 			/// <param name="quality">The sample quality.</param>
 			SampleDescription( int count, int quality );
-
+			
+			/// <summary>
+			/// Converts the value of the object to its equivalent string representation.
+			/// </summary>
+			/// <returns>The string representation of the value of this instance.</returns>
+			virtual System::String^ ToString() override;
+			
 			static bool operator == ( SampleDescription left, SampleDescription right );
 			static bool operator != ( SampleDescription left, SampleDescription right );
 

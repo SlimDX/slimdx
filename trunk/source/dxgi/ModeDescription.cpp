@@ -24,6 +24,8 @@
 
 #include "ModeDescription.h"
 
+using namespace System;
+
 namespace SlimDX
 {
 namespace DXGI
@@ -117,6 +119,10 @@ namespace DXGI
 	void ModeDescription::Scaling::set( DisplayModeScaling value )
 	{
 		m_Scaling = value;
+	}
+
+	String^ ModeDescription::ToString() {
+		return String::Format( "{0}x{1}x{2}", m_Width, m_Height, m_RefreshRate.Denominator == 0 ? 0 : m_RefreshRate.Numerator / m_RefreshRate.Denominator );
 	}
 
 	bool ModeDescription::operator == ( ModeDescription left, ModeDescription right )

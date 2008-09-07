@@ -179,5 +179,9 @@ namespace DXGI
 	{
 		return RECORD_DXGI( InternalPointer->WaitForVBlank() );
 	}
+	
+	String^ Output::ToString() {
+		return Description.Name;
+	}
 }
 }

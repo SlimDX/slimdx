@@ -125,5 +125,9 @@ namespace DXGI
 		userModeVersion = version.QuadPart;
 		return true;
 	}
+	
+	String^ Adapter::ToString() {
+		return Description.Description;
+	}
 }
 }

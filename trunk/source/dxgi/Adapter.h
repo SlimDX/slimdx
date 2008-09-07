@@ -82,6 +82,12 @@ namespace SlimDX
 			/// <param name="userModeVersion">Receives the user-mode driver version of the interface.</param>
 			/// <returns><c>true</c> if the device interface is supported; otherwise, <c>false</c>.</returns>
 			bool IsInterfaceSupported( System::Type^ type, [Out] System::Int64% userModeVersion );	
+			
+			/// <summary>
+			/// Converts the value of the object to its equivalent string representation.
+			/// </summary>
+			/// <returns>The string representation of the value of this instance.</returns>
+			virtual System::String^ ToString() override;
 		};
 	}
 };
