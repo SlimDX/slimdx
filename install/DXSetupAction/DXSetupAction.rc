@@ -59,15 +59,15 @@ IDR_DXSETUPEXE          BINARY MOVEABLE         "..\\ExtraFiles\\DXRedist\\dxset
 IDR_DXUPDATECAB         BINARY MOVEABLE         "..\\ExtraFiles\\DXRedist\\dxupdate.cab"
 
 #ifdef X64
-IDR_D3DX9               BINARY MOVEABLE         "..\\ExtraFiles\\DXRedist\\x64\\Jun2008_d3dx9_38_x64.cab"
-IDR_D3DX10              BINARY MOVEABLE         "..\\ExtraFiles\\DXRedist\\x64\\Jun2008_d3dx10_38_x64.cab"
+IDR_D3DX9               BINARY MOVEABLE         "..\\ExtraFiles\\DXRedist\\x64\\Aug2008_d3dx9_39_x64.cab"
+IDR_D3DX10              BINARY MOVEABLE         "..\\ExtraFiles\\DXRedist\\x64\\Aug2008_d3dx10_39_x64.cab"
 IDR_X3DAUDIO            BINARY MOVEABLE         "..\\ExtraFiles\\DXRedist\\x64\\Jun2008_X3DAudio_x64.cab"
-IDR_XAUDIO              BINARY MOVEABLE         "..\\ExtraFiles\\DXRedist\\x64\\Jun2008_XAudio_x64.cab"
+IDR_XAUDIO              BINARY MOVEABLE         "..\\ExtraFiles\\DXRedist\\x64\\Aug2008_XAudio_x64.cab"
 #else
-IDR_D3DX9               BINARY MOVEABLE         "..\\ExtraFiles\\DXRedist\\x86\\Jun2008_d3dx9_38_x86.cab"
-IDR_D3DX10              BINARY MOVEABLE         "..\\ExtraFiles\\DXRedist\\x86\\Jun2008_d3dx10_38_x86.cab"
+IDR_D3DX9               BINARY MOVEABLE         "..\\ExtraFiles\\DXRedist\\x86\\Aug2008_d3dx9_39_x86.cab"
+IDR_D3DX10              BINARY MOVEABLE         "..\\ExtraFiles\\DXRedist\\x86\\Aug2008_d3dx10_39_x86.cab"
 IDR_X3DAUDIO            BINARY MOVEABLE         "..\\ExtraFiles\\DXRedist\\x86\\Jun2008_X3DAudio_x86.cab"
-IDR_XAUDIO              BINARY MOVEABLE         "..\\ExtraFiles\\DXRedist\\x86\\Jun2008_XAudio_x86.cab"
+IDR_XAUDIO              BINARY MOVEABLE         "..\\ExtraFiles\\DXRedist\\x86\\Aug2008_XAudio_x86.cab"
 #endif
 
 #endif    // English (U.S.) resources
