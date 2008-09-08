@@ -35,7 +35,7 @@ namespace SlimDX
 	{
 	public:
 		/// <summary>
-		/// The <see cref="ComObject>COM object</see> that this notification refers to.
+		/// The <see cref="ComObject">COM object</see> that this notification refers to.
 		/// </summary>
 		property ComObject^ ComObject;
 

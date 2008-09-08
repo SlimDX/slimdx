@@ -68,7 +68,7 @@ namespace SlimDX
 			/// <summary>
 			/// Gets a list of all possible display modes for the adapter.
 			/// </summary>
-			/// <param name="format">The desired characteristics of the display mode.</param>
+			/// <param name="filter">The desired characteristics of the display mode.</param>
 			/// <returns>A collection of possibly display modes.</returns>
             DisplayModeExCollection^ GetDisplayModes( DisplayModeFilter filter );
 

@@ -28,7 +28,7 @@ namespace SlimDX
 		ref class Direct3DEx;
 		ref class AdapterInformationEx;
 
-		/// <summary>Implements a read-only collection of <see cref="AdapterInformation"/> instances.</summary>
+		/// <summary>Implements a read-only collection of <see cref="AdapterInformationEx"/> instances.</summary>
 		public ref class AdapterExCollection : public System::Collections::ObjectModel::ReadOnlyCollection<AdapterInformationEx^>
 		{
 		internal:
@@ -36,7 +36,7 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Gets the default <see cref="AdapterInformation"/> item.
+			/// Gets the default <see cref="AdapterInformationEx"/> item.
 			/// </summary>
 			property AdapterInformationEx^ DefaultAdapter
 			{
