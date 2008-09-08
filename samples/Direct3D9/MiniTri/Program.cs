@@ -75,10 +75,9 @@ namespace MiniTri
             Application.Idle += new EventHandler(Application_Idle);
             Application.Run(RenderForm);
 
-            if (Vertices != null)
-                Vertices.Dispose();
-            if (Device != null)
-                Device.Dispose();
+            Vertices.Dispose();
+            Device.Dispose();
+            direct3D.Dispose();
 
             RenderForm.Dispose();
         }
@@ -93,6 +92,7 @@ namespace MiniTri
                 Device.VertexFormat = VertexFormat.PositionRhw | VertexFormat.Diffuse;
                 Device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
                 Device.EndScene();
+
                 Device.Present();
             }
         }

@@ -100,9 +100,7 @@ namespace SlimDX
 		try
 		{
 			m_Table->Add( object->ComPointer, object );
-
-			if( ObjectAdded != nullptr )
-				ObjectAdded( object );
+			ObjectAdded( nullptr, gcnew ObjectTableEventArgs( object ) );
 		}
 		finally
 		{
@@ -122,9 +120,7 @@ namespace SlimDX
 				return false;
 
 			m_Table->Remove( object->ComPointer );
-
-			if( ObjectRemoved != nullptr )
-				ObjectRemoved( object );
+			ObjectRemoved( nullptr, gcnew ObjectTableEventArgs( object ) );
 		}
 		finally
 		{
