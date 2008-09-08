@@ -10,17 +10,9 @@
 
 #include "targetver.h"
 #include "resource.h"
+#include "version.h"
 
 #define DLLEXPORT __declspec(dllexport)
-
-#define VERSION_NUMBER L"38"
-#define VERSION_NAME L"Jun2008"
-
-#ifdef X64
-#define PLATFORM L"x64"
-#else
-#define PLATFORM L"x86"
-#endif
 
 LPCWSTR FileTable[] =
 {
@@ -30,11 +22,15 @@ LPCWSTR FileTable[] =
 	L"dxsetup.exe",
 	L"dxupdate.cab",
 
-	VERSION_NAME L"_d3dx9_" VERSION_NUMBER L"_" PLATFORM L".cab",
-	VERSION_NAME L"_d3dx10_" VERSION_NUMBER L"_" PLATFORM L".cab",
-	VERSION_NAME L"_X3DAudio_" PLATFORM L".cab",
-	VERSION_NAME L"_XAudio_" PLATFORM L".cab"
+	W_VERSION_NAME	L"_d3dx9_"		W_VERSION_NUMBER L"_"	W_PLATFORM	L".cab",
+	W_VERSION_NAME	L"_d3dx10_"		W_VERSION_NUMBER L"_"	W_PLATFORM	L".cab",
+	W_VERSION_NAME	L"_X3DAudio_"							W_PLATFORM	L".cab",
+	W_VERSION_NAME	L"_XAudio_"								W_PLATFORM	L".cab"
 };
+
+#pragma message("Version is: " VERSION_NAME)
+#pragma message("Version number: " VERSION_NUMBER)
+#pragma message("Platform: " PLATFORM)
 
 //based on http://syedgakbar.wordpress.com/2007/11/07/embedding-dll-and-binary-files-in-the-executable-applications/
 bool ExtractResource(const HINSTANCE hInstance, WORD resourceId, LPCWSTR outputFilename)
