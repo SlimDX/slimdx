@@ -32,6 +32,10 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+#ifdef XMLDOCS
+		ref class ResultCode;
+#endif
+
 		public enum class DeviceState : System::Int32
 		{
 			Ok = D3D_OK,
@@ -69,7 +73,7 @@ namespace SlimDX
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::Direct3D9::DeviceEx"/> class.
 			/// </summary>
-			/// <param name="direct3d">The Direct3D instance to create the device from.</param>
+			/// <param name="direct3D">The Direct3DEx instance to create the device from.</param>
 			/// <param name="adapter">Ordinal number that denotes the display adapter.</param>
 			/// <param name="deviceType">Denotes the desired device type. If the desired device type is not available, device creation will fail.</param>
 			/// <param name="controlHandle">Specifies the target window for Direct3D rendering.</param>
@@ -81,7 +85,7 @@ namespace SlimDX
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::Direct3D9::DeviceEx"/> class.
 			/// </summary>
-			/// <param name="direct3d">The Direct3D instance to create the device from.</param>
+			/// <param name="direct3D">The Direct3D instance to create the device from.</param>
 			/// <param name="adapter">Ordinal number that denotes the display adapter.</param>
 			/// <param name="deviceType">Denotes the desired device type. If the desired device type is not available, device creation will fail.</param>
 			/// <param name="controlHandle">Specifies the target window for Direct3D rendering.</param>
@@ -124,7 +128,7 @@ namespace SlimDX
 			/// Checks a resource to determine if it is likely that it will cause a large stall at
 			/// Draw time because the system must make the resource GPU-accessible.
 			/// </summary>
-			/// <param name="resources">An resource to check the residency status of.</param>
+			/// <param name="resource">An resource to check the residency status of.</param>
 			/// <returns>See the DirectX documentation.</returns>
 			/// <remarks>See the DirectX documentation.</remarks>
 			ResourceResidency CheckResourceResidency( Resource^ resource );
@@ -185,7 +189,7 @@ namespace SlimDX
 
 			/// <summary>
 			/// Suspend execution of the calling thread until the next vertical blank signal.
-			/// <summary>
+			/// </summary>
 			/// <param name="swapChain">Zero based swap chain index to specify the target chain on a multihead card.</param>
 			void WaitForVBlank( int swapChain );
 		};

@@ -205,8 +205,8 @@ namespace SlimDX
 			/// <summary>
 			/// Sets the value of a parameter using the specified data.
 			/// </summary>
-			/// <param name="parameter">The parameter whose value is to be set.</param>
-			/// <param name="value">The new value for the parameter.</param>
+			/// <param name="parameter">The array parameter whose value is to be set.</param>
+			/// <param name="values">The array of new values for the array parameter.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			generic<typename T> where T : value class
 				Result SetValue( EffectHandle^ parameter, array<T>^ values );
