@@ -24,7 +24,7 @@ LPCWSTR FileTable[] =
 
 	W_VERSION_NAME	L"_d3dx9_"		W_VERSION_NUMBER L"_"	W_PLATFORM	L".cab",
 	W_VERSION_NAME	L"_d3dx10_"		W_VERSION_NUMBER L"_"	W_PLATFORM	L".cab",
-	W_VERSION_NAME	L"_X3DAudio_"							W_PLATFORM	L".cab",
+	L"Jun2008"		L"_X3DAudio_"							W_PLATFORM	L".cab",
 	W_VERSION_NAME	L"_XAudio_"								W_PLATFORM	L".cab"
 };
 
