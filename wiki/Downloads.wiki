@@ -1,7 +1,7 @@
-#summary SlimDX -- June 2008 Release
+#summary SlimDX -- September 2008 Release
 = Introduction =
 
-The June 2008 release of SlimDX is now out! As of this release, SlimDX is no longer considered beta software, but a fully stable library. It is now packaged as a redistributable installer which can be used by both developers and end users. SlimDX also finally officially supports 64 bit (x64) operating systems and code.
+The September 2008 release of SlimDX is now out! This release, like the previous one, is not a beta but a fully stable self contained package that installs all of the necessary prerequisites. This release includes support for Direct3D 9Ex and DirectSound, as well as enhanced debugging support, a new Sample Framework, and many more enhancements and bug fixes.
 
 If you're new to this whole thing, read the [http://slimdx.mdxinfo.com/wiki/index.php?title=Getting_Started Getting Started] document on our wiki. It should help get you moving. Other pages of interest include:
 
@@ -16,31 +16,32 @@ If you're new to this whole thing, read the [http://slimdx.mdxinfo.com/wiki/inde
 = Files to Download =
 The following packages are available to download:
 
-[http://slimdx.googlecode.com/files/SlimDX%20%28June%202008%29%20SP1.exe SlimDX Installer  SP1] -- *Recommended for all developers and end users!* This installer contains everything you need to run and develop SlimDX applications, including the prerequisite DirectX and Visual C++ libraries.
+[http://slimdx.googlecode.com/files/SlimDX%20%28September%202008%29.exe SlimDX Installer] -- *Recommended for all developers and end users!* This installer contains everything you need to run and develop SlimDX applications, including the prerequisite DirectX and Visual C++ libraries.
 
-[http://slimdx.googlecode.com/files/SlimDX%20x64%20%28June%202008%29%20SP1.exe SlimDX Installer for x64 SP1] -- Same as the above, but contains 64 bit versions of everything. Only download this if you are using Windows XP 64 bit or Windows Vista 64 bit, and wish to develop 64 bit applications.
-  _The initial release of these two installers did not correctly install audio support. The SP1 release corrects that mistake. This does not affect anyone who already has the DirectX June 2008 SDK, and no core library changes have been made._
+[http://slimdx.googlecode.com/files/SlimDX%20x64%20%28September%202008%29.exe SlimDX Installer for x64] -- Same as the above, but contains 64 bit versions of everything. Only download this if you are using Windows XP 64 bit or Windows Vista 64 bit, and wish to develop 64 bit applications.
 
-[http://slimdx.googlecode.com/files/SlimDX%20Samples%20%28June%202008%29.zip SlimDX Samples] -- Archive of all our available samples, with source code. Currently contains 11 samples across Direct3D9, Direct3D10, DirectInupt, RawInput, and XAudio2. Also includes our SampleFramework, used to easily and quickly build SlimDX applications based on Direct3D9 without having to worry about boilerplate details. _Samples are only built as 32 bit currently._
+SlimDX Samples -- Archive of all our available samples, with source code. Currently contains 11 samples across Direct3D9, Direct3D10, DirectInupt, RawInput, and XAudio2. Also includes our SampleFramework, used to easily and quickly build SlimDX applications based on Direct3D9 without having to worry about boilerplate details. _Samples are only built as 32 bit currently._
+  _Due to exhausting our Google Code quota, the up to date samples package is currently unavailable. We have submitted a request for more space and will upload the latest samples package as soon as possible. The [http://slimdx.googlecode.com/files/SlimDX%20Samples%20%28June%202008%29.zip June samples package] is still available._
 
 [http://slimdx.mdxinfo.com/latestdocs/Help/bin/SlimDX.chm Documentation] -- In CHM format. Our official class reference documentation. Note that this documentation is also available [http://slimdx.mdxinfo.com/latestdocs/ online].
 
-[http://slimdx.googlecode.com/files/SlimDX%20Binaries%20%28June%202008%29.zip SlimDX Binaries] -- _Advanced users only._ If for some reason you don't want to use the installer, this ZIP archive contains the SlimDX binaries for x86 and x64. Not recommended for most people.
+ SlimDX Binaries -- _Advanced users only._ If for some reason you don't want to use the installer, this ZIP archive contains the SlimDX binaries for x86 and x64. Not recommended for most people.
+  _Also unavailable due to our quota issues._
 
 [http://code.google.com/p/slimdx/downloads/list?can=1 Older files] are still available, in case you have some need for them.
 
 = Remarks =
-The June release of SlimDX marks a major milestone for us, since it's no longer beta. In an effort to streamline and improve the experience for both users and developers, we've focused on two major projects that are not part of SlimDX itself:
-  * [http://slimdx.mdxinfo.com/latestdocs/ Online Documentation] -- Online documentation was available before this release, but the documentation has been heavily worked on since, both in content and layout. The new version loads much quicker, and is far easier to navigate. _We are aware of some minor rendering bugs in Firefox. If you know how to fix these, please contact us, because we have no idea how._
-  * Redistributable Installer -- Before this release, users and developers had to go out and get all the pieces that SlimDX depended on, which led to a lot of headaches in initial setup. The installer packages and installs SlimDX, a minimal subset of the DirectX redistributable, and the Visual C++ redistributable in one simple package.
+The September release of SlimDX is a somewhat incremental improvement over the June release, as we strive to improve the overall library quality. After several requests from users, we added support for both DirectSound and Direct3D 9Ex. Support for the latter is not currently at 100%, but it should be sufficient to cover the needs of nearly all users.
+
+Apart from SlimDX itself, we've also been working to improve support for developers with an all new Sample Framework, and an Asteroids game that demonstrates how to use SlimDX in a practical way, rather than just in small samples. We hope to expand the library of sample games available, and would love help achieving that goal.
+
+This installer also applies enhanced compression that has allowed us to significantly reduce the size of the redistributable package. In the case of the x86 version, the size was reduced by almost 30%, yielding an installer that is only 7.9 MB.
 
 = Known Issues =
 == 64 Bit Support ==
 While 64 bit is now a completely supported configuration, there is a glitch in the installation package. Visual Studio users may not see SlimDX as a reference that can be added in the .NET tab of the Add Reference dialog. They will need to browse to the install location and add the reference that way. _This only affects developers._ Users will not see any difference, and the assembly is still properly registered in and referenced from the Global Assembly Cache.
 == XInput Support ==
-The installer does not bundle an XInput driver, as it's unclear exactly how Microsoft intends for this package to be redistributed. Testing of the downloadable driver showed that it consistently failed to install, so it was omitted. If you are using XInput, your users may need to visit Microsoft Update in order to get a functional driver.
-== Allocation Bug ==
-Several methods across SlimDX made use of an internal stack allocation scheme to try to boost performance. Unfortunately, there was a bug in this allocator that caused intermittent crashes and AccessViolation exceptions, mostly in Release mode. The allocator has since been removed, and the current version in the repository no longer suffers from these problems. If you find yourself running into this issue, getting the current source from the repository is the way to go. 
+The installer does not bundle an XInput driver, as it's unclear exactly how Microsoft intends for this package to be redistributed. Testing of the downloadable driver showed that it consistently failed to install, so it was omitted. If you are using XInput, your users may need to visit Microsoft Update in order to get a functional driver for their controller.
 
 = Communication =
 There are several different ways to get in touch with the SlimDX team:
