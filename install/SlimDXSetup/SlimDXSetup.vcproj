@@ -212,7 +212,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)\SlimDX (June 2008).exe"
+				OutputFile="$(OutDir)\SlimDX (September 2008).exe"
 				LinkIncremental="1"
 				UACExecutionLevel="2"
 				GenerateDebugInformation="false"
@@ -291,7 +291,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)\SlimDX x64 (June 2008).exe"
+				OutputFile="$(OutDir)\SlimDX x64 (September 2008).exe"
 				LinkIncremental="1"
 				UACExecutionLevel="2"
 				GenerateDebugInformation="false"
