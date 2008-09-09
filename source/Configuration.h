@@ -35,7 +35,6 @@ namespace SlimDX
 	{
 	private:
 		static System::Collections::Generic::Dictionary<Result,ResultWatchFlags>^ m_Watches;
-		static System::Diagnostics::Stopwatch^ m_Stopwatch;
 	
 		static Configuration();
 		
