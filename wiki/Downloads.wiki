@@ -25,7 +25,7 @@ SlimDX Samples -- Archive of all our available samples, with source code. Curren
 
 [http://slimdx.mdxinfo.com/latestdocs/Help/bin/SlimDX.chm Documentation] -- In CHM format. Our official class reference documentation. Note that this documentation is also available [http://slimdx.mdxinfo.com/latestdocs/ online].
 
- SlimDX Binaries -- _Advanced users only._ If for some reason you don't want to use the installer, this ZIP archive contains the SlimDX binaries for x86 and x64. Not recommended for most people.
+SlimDX Binaries -- _Advanced users only._ If for some reason you don't want to use the installer, this ZIP archive contains the SlimDX binaries for x86 and x64. Not recommended for most people.
   _Also unavailable due to our quota issues._
 
 [http://code.google.com/p/slimdx/downloads/list?can=1 Older files] are still available, in case you have some need for them.
