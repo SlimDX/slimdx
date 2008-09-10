@@ -65,6 +65,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SlimDX, Version=2.0.5.39, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -127,10 +128,6 @@
     <Compile Include="WaterSample.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\build\SlimDX.vcproj">
-      <Project>{8ECCE443-0440-40F4-A94C-F02E027282C3}</Project>
-      <Name>SlimDX</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SampleFramework\SampleFramework.csproj">
       <Project>{CF09C015-11D7-4E97-8A29-7FA4922C8A46}</Project>
       <Name>SampleFramework</Name>
