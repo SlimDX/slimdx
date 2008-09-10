@@ -20,13 +20,13 @@ The following packages are available to download:
 
 [http://slimdx.googlecode.com/files/SlimDX%20x64%20%28September%202008%29.exe SlimDX Installer for x64] -- Same as the above, but contains 64 bit versions of everything. Only download this if you are using Windows XP 64 bit or Windows Vista 64 bit, and wish to develop 64 bit applications.
 
-SlimDX Samples -- Archive of all our available samples, with source code. Currently contains 11 samples across Direct3D9, Direct3D10, DirectInupt, RawInput, and XAudio2. Also includes our SampleFramework, used to easily and quickly build SlimDX applications based on Direct3D9 without having to worry about boilerplate details. _Samples are only built as 32 bit currently._
-  _Due to exhausting our Google Code quota, the up to date samples package is currently unavailable. We have submitted a request for more space and will upload the latest samples package as soon as possible. The [http://slimdx.googlecode.com/files/SlimDX%20Samples%20%28June%202008%29.zip June samples package] is still available._
+[http://slimdx.mdxinfo.com/SlimDX%20Samples%20%28September%202008%29.zip SlimDX Samples] -- Archive of all our available samples, with source code. Currently contains 11 samples across Direct3D9, Direct3D10, DirectInupt, RawInput, and XAudio2. Also includes our SampleFramework, used to easily and quickly build SlimDX applications based on Direct3D9 without having to worry about boilerplate details. _Samples are only built as 32 bit currently._
+  _Due to exhausting our Google Code quota, this file is temporarily hosted on our main website. Please do not directly link to this file, as it WILL be deleted later._
 
 [http://slimdx.mdxinfo.com/latestdocs/Help/bin/SlimDX.chm Documentation] -- In CHM format. Our official class reference documentation. Note that this documentation is also available [http://slimdx.mdxinfo.com/latestdocs/ online].
 
-SlimDX Binaries -- _Advanced users only._ If for some reason you don't want to use the installer, this ZIP archive contains the SlimDX binaries for x86 and x64. Not recommended for most people.
-  _Also unavailable due to our quota issues._
+[http://slimdx.mdxinfo.com/SlimDX%20Binaries%20%28September%202008%29.zip SlimDX Binaries] -- _Advanced users only._ If for some reason you don't want to use the installer, this ZIP archive contains the SlimDX binaries for x86 and x64. Not recommended for most people.
+  _Also hosted temporarily due to our quota issues; do not link to this file directly.._
 
 [http://code.google.com/p/slimdx/downloads/list?can=1 Older files] are still available, in case you have some need for them.
 
