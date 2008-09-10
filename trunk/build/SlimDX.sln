@@ -3,6 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{A2525864-A1CD-4EF2-A548-D44B524E4CDD}"
 	ProjectSection(SolutionItems) = preProject
+		SlimDX.Builder.proj = SlimDX.Builder.proj
 		SlimDX.proj = SlimDX.proj
 	EndProjectSection
 EndProject
