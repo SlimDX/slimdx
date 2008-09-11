@@ -115,7 +115,7 @@ namespace Asteroids
         /// Initializes a new instance of the <see cref="Weapon"/> class.
         /// </summary>
         /// <param name="game">The game.</param>
-        public Weapon(Asteroids game)
+        protected Weapon(Asteroids game)
         {
             // create the list of bullets
             Bullets = new List<Bullet>();

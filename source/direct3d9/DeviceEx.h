@@ -183,9 +183,9 @@ namespace SlimDX
 			/// Resets the device.
 			/// </summary>
 			/// <param name="presentParameters">A set of new presentation parameters to apply to the device.</param>
-			/// <param name="fullscreenDisplayMode">The properties of the desired display mode, when running fullscreen.</param>
+			/// <param name="fullScreenDisplayMode">The properties of the desired display mode, when running fullscreen.</param>
 			/// <returns>A <see cref="SlimDX::Result"/>Object describing the result of the operation.</returns>
-			Result ResetEx( PresentParameters^ presentParameters, DisplayModeEx fullscreenDisplayMode );
+			Result ResetEx( PresentParameters^ presentParameters, DisplayModeEx fullScreenDisplayMode );
 
 			/// <summary>
 			/// Suspend execution of the calling thread until the next vertical blank signal.
