@@ -71,7 +71,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="adapter">Index of the adapter to use.</param>
 			/// <returns>A unique identifier for the given adapter.</returns>
-			System::Int64 GetAdapterLUID( int adapter );
+			System::Int64 GetAdapterLuid( int adapter );
 
 			/// <summary>
 			/// Returns the number of display modes available on the specified adapter.

@@ -140,7 +140,7 @@ namespace Direct3D9
 		return mode;
 	}
 
-	System::Int64 Direct3DEx::GetAdapterLUID( int adapter )
+	System::Int64 Direct3DEx::GetAdapterLuid( int adapter )
 	{
 		Int64 luid = 0;
 		InternalPointer->GetAdapterLUID( adapter, reinterpret_cast<LUID*>( &luid ) );

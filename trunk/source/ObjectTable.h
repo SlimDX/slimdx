@@ -45,8 +45,6 @@ namespace SlimDX
 		}
 	};
 
-	public delegate void ObjectTableNotification( System::Object^ sender, ObjectTableEventArgs^ e );
-
 	/// <summary>
 	/// Maintains a list of all the <see cref="ComObject">COM objects</see> managed by SlimDX.
 	/// </summary>
@@ -81,12 +79,12 @@ namespace SlimDX
 		/// <summary>
 		/// Occurs after a new object has been added to the object table.
 		/// </summary>
-		static event ObjectTableNotification^ ObjectAdded;
+		static event System::EventHandler<ObjectTableEventArgs^>^ ObjectAdded;
 
 		/// <summary>
 		/// Occurs after an object has been removed from the object table.
 		/// </summary>
-		static event ObjectTableNotification^ ObjectRemoved;
+		static event System::EventHandler<ObjectTableEventArgs^>^ ObjectRemoved;
 
 		/// <summary>
 		/// Gets the synchronization object used by the ObjectTable. This object can be used to safely

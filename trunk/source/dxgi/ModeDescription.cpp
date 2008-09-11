@@ -25,6 +25,7 @@
 #include "ModeDescription.h"
 
 using namespace System;
+using namespace System::Globalization;
 
 namespace SlimDX
 {
@@ -121,8 +122,9 @@ namespace DXGI
 		m_Scaling = value;
 	}
 
-	String^ ModeDescription::ToString() {
-		return String::Format( "{0}x{1}x{2}", m_Width, m_Height, m_RefreshRate.Denominator == 0 ? 0 : m_RefreshRate.Numerator / m_RefreshRate.Denominator );
+	String^ ModeDescription::ToString()
+	{
+		return String::Format( CultureInfo::CurrentCulture, "{0}x{1}x{2}", m_Width, m_Height, m_RefreshRate.Denominator == 0 ? 0 : m_RefreshRate.Numerator / m_RefreshRate.Denominator );
 	}
 
 	bool ModeDescription::operator == ( ModeDescription left, ModeDescription right )
