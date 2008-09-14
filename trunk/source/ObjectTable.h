@@ -71,9 +71,9 @@ namespace SlimDX
 		/// Access through this member is NOT thread-safe. Use <see cref="SyncObject" />
 		/// to protect multithreaded access if necessary.
 		/// </remarks>
-		static property System::Collections::Generic::Dictionary<System::IntPtr, ComObject^>::ValueCollection^ Objects
+		static property System::Collections::Generic::IEnumerable<ComObject^>^ Objects
 		{
-			System::Collections::Generic::Dictionary<System::IntPtr, ComObject^>::ValueCollection^ get();
+			System::Collections::Generic::IEnumerable<ComObject^>^ get();
 		}
 
 		/// <summary>
@@ -104,15 +104,15 @@ namespace SlimDX
 		/// Adds a <see cref="ComObject">COM object</see> to the table. This will set the object's <see cref="SlimDX::ComObject"/><c>::CreationSource</c> property if
 		/// <see cref="SlimDX::Configuration"/><c>::EnableObjectTracking</c>object tracking is on.
 		/// </summary>
-		/// <param name="object">The object to add.</param>
-		static void Add( ComObject^ object );
+		/// <param name="comObject">The object to add.</param>
+		static void Add( ComObject^ comObject );
 		
 		/// <summary>
 		/// Removes a <see cref="SlimDX::ComObject">COM object</see> from the table.
 		/// </summary>
-		/// <param name="object">The object to remove.</param>
+		/// <param name="comObject">The object to remove.</param>
 		/// <returns><c>true</c> if the object was in the table and was removed; otherwise, <c>false</c>.</returns>
-		static bool Remove( ComObject^ object );
+		static bool Remove( ComObject^ comObject );
 		
 		/// <summary>
 		/// Generates a report of all outstanding COM objects (objects that have not been disposed)

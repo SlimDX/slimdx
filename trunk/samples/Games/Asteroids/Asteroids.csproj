@@ -124,6 +124,7 @@
     <Content Include="Content\Models\SmallAsteroid2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="ToDo.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\build\SlimDX.vcproj">

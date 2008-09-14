@@ -1,0 +1,11 @@
+﻿List of work items for the Asteroids game
+
+Player death effect
+Asteroid destruction effect
+Score / Points
+Lives/Game Over/State system
+Music
+Sound Effects
+Enemy aliens
+Hyperspace
+Bombs
