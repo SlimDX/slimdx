@@ -169,7 +169,7 @@ namespace SlimDX
 		return output;
 	}
 
-	Dictionary<IntPtr, ComObject^>::ValueCollection^ ObjectTable::Objects::get()
+	IEnumerable<ComObject^>^ ObjectTable::Objects::get()
 	{
 		return m_Table->Values;
 	}
