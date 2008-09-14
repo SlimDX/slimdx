@@ -32,6 +32,41 @@ namespace DXGI
 	{
 	}
 	
+	Result ResultCode::Occluded::get()
+	{
+		return Result( DXGI_STATUS_OCCLUDED );
+	}
+	
+	Result ResultCode::Clipped::get()
+	{
+		return Result( DXGI_STATUS_CLIPPED );
+	}
+	
+	Result ResultCode::NoRedirection::get()
+	{
+		return Result( DXGI_STATUS_NO_REDIRECTION );
+	}
+	
+	Result ResultCode::NoDesktopAccess::get()
+	{
+		return Result( DXGI_STATUS_NO_DESKTOP_ACCESS );
+	}
+	
+	Result ResultCode::VideoPresentNetworkSourceInUse::get()
+	{
+		return Result( DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE );
+	}
+	
+	Result ResultCode::ModeChanged::get()
+	{
+		return Result( DXGI_STATUS_MODE_CHANGED );
+	}
+	
+	Result ResultCode::ModeChangeInProgress::get()
+	{
+		return Result( DXGI_STATUS_MODE_CHANGE_IN_PROGRESS  );
+	}
+	
 	Result ResultCode::InvalidCall::get()
 	{
 		return Result( DXGI_ERROR_INVALID_CALL );

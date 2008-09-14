@@ -33,6 +33,41 @@ namespace SlimDX
 			ResultCode();
 			
 		public:
+			property static Result Occluded
+			{
+				Result get();
+			}
+			
+			property static Result Clipped
+			{
+				Result get();
+			}
+			
+			property static Result NoRedirection
+			{
+				Result get();
+			}
+			
+			property static Result NoDesktopAccess
+			{
+				Result get();
+			}
+			
+			property static Result VideoPresentNetworkSourceInUse
+			{
+				Result get();
+			}
+			
+			property static Result ModeChanged
+			{
+				Result get();
+			}
+			
+			property static Result ModeChangeInProgress
+			{
+				Result get();
+			}
+			
 			property static Result InvalidCall
 			{
 				Result get();
