@@ -36,7 +36,15 @@ using namespace System::Collections::ObjectModel;
 namespace SlimDX
 {
 namespace DXGI
-{ 	
+{ 
+	Device::Device( ComObject^ device ) 
+	{
+		IDXGIDevice* result = 0;
+		if( RECORD_DXGI( device->InternalPointer->QueryInterface( IID_IDXGIDevice, reinterpret_cast<void**>( &result ) ) ).IsFailure )
+			throw gcnew DXGIException( Result::Last );
+		Construct( result );
+	}
+
 	Device::Device( IDXGIDevice* pointer )
 	{
 		Construct( pointer );
