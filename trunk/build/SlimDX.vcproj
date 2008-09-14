@@ -3890,6 +3890,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\directinput\MouseState.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\MouseState.h"
 					>
 				</File>
