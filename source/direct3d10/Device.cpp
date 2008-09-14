@@ -289,5 +289,25 @@ namespace Direct3D10
 	{
 		InternalPointer->GenerateMips( view->InternalPointer );
 	}
+	
+	Result Device::CreateWithSwapChain( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain )
+	{
+		IDXGIAdapter* nativeAdapter = adapter == nullptr ? 0 : adapter->InternalPointer;
+		ID3D10Device* resultDevice = 0;
+		IDXGISwapChain* resultSwapChain = 0;
+		DXGI_SWAP_CHAIN_DESC nativeDescription = swapChainDescription.CreateNativeVersion();
+		
+		if( RECORD_D3D10( D3D10CreateDeviceAndSwapChain( nativeAdapter, static_cast<D3D10_DRIVER_TYPE>( driverType ), 0, static_cast<UINT>( flags ), D3D10_SDK_VERSION, &nativeDescription, &resultSwapChain, &resultDevice ) ).IsSuccess )
+		{
+			device = FromPointer( resultDevice );
+			swapChain = DXGI::SwapChain::FromPointer( resultSwapChain );
+		}
+		else {
+			device = nullptr;
+			swapChain = nullptr;
+		}
+		
+		return Result::Last;
+	}
 }
 }

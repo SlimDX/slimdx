@@ -30,7 +30,6 @@ namespace MiniTri
     {
         static Form RenderForm;
         static Viewport ViewArea;
-        static DXGI.Factory Factory;
         static DXGI.SwapChain SwapChain;
         static D3D10.Device Device;
         static D3D10.Effect Effect;
@@ -60,9 +59,6 @@ namespace MiniTri
             RenderForm.ClientSize = new Size(800, 600);
             RenderForm.Text = "SlimDX - MiniTri Direct3D 10 Sample";
 
-            Factory = new DXGI.Factory();
-            Device = new D3D10.Device(D3D10.DeviceCreationFlags.Debug);
-
             DXGI.SwapChainDescription swapChainDescription = new SlimDX.DXGI.SwapChainDescription();
             DXGI.ModeDescription modeDescription = new DXGI.ModeDescription();
             DXGI.SampleDescription sampleDescription = new DXGI.SampleDescription();
@@ -86,8 +82,8 @@ namespace MiniTri
             swapChainDescription.SwapEffect = DXGI.SwapEffect.Discard;
             swapChainDescription.Usage = DXGI.Usage.RenderTargetOutput;
 
-            SwapChain = new DXGI.SwapChain(Factory, Device, swapChainDescription);
-
+						D3D10.Device.CreateWithSwapChain( null, D3D10.DriverType.Hardware, D3D10.DeviceCreationFlags.Debug, swapChainDescription, out Device, out SwapChain );
+						
             using (D3D10.Texture2D resource = SwapChain.GetBuffer<D3D10.Texture2D>(0))
             {
                 RenderTarget = new D3D10.RenderTargetView(Device, resource);
@@ -151,7 +147,6 @@ namespace MiniTri
             Layout.Dispose();
             Device.Dispose();
             SwapChain.Dispose();
-            Factory.Dispose();
             RenderForm.Dispose();
         }
 

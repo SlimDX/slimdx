@@ -25,14 +25,18 @@
 
 #include "../dxgi/Adapter.h"
 #include "../dxgi/Enums.h"
+#include "../dxgi/SwapChain.h"
+#include "../dxgi/SwapChainDescription.h"
 #include "../math/Color4.h"
 
 #include "Enums.h"
 
+using System::Runtime::InteropServices::OutAttribute;
+
 namespace SlimDX
 {
 	ref class DataBox;
-
+	
 	namespace Direct3D10
 	{
 		ref class Buffer;
@@ -45,13 +49,11 @@ namespace SlimDX
 		ref class Resource;
 		ref class ShaderResourceView;
 		ref class StreamOutputWrapper;
-		ref class SwapChain;
 		value class CounterCapabilities;
 		value class CounterDescription;
 		value class CounterMetadata;
 		value class RenderTargetViewDescription;
 		value class ResourceRegion;
-		value class SwapChainDescription;
 
 		/// <summary>
 		/// A virtual adapter for performing rendering.
@@ -279,6 +281,18 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="view">A view of the resource to generate mipmaps for.</param>
 			void GenerateMips( ShaderResourceView^ view );
+			
+			/// <summary>
+			/// Creates a new device and swap chain.
+			/// </summary>
+			/// <param name="adapter">The display adapter to associate the device with when creating a hardware device.</param>
+			/// <param name="driverType">The device driver type.</param>
+			/// <param name="flags">Flags that indicate which device API layers to enable.</param>
+			/// <param name="swapChainDescription">Swap chain properties.</param>
+			/// <param name="device">The newly-created device.</param>
+			/// <param name="swapChain">The newly-created swap chain.</param>
+			/// <returns>A result code.</returns>
+			static Result CreateWithSwapChain( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain );
 		};
 	}
 };
