@@ -171,13 +171,6 @@ namespace SlimDX
 			Restart = DXGI_PRESENT_RESTART,
 			Test = DXGI_PRESENT_TEST
 		};
-
-		public enum class PresentResult : System::Int32
-		{
-			Okay = S_OK,
-			Occluded = DXGI_STATUS_OCCLUDED,
-			Failed
-		};
 		
 		public enum class Residency : System::Int32
 		{
