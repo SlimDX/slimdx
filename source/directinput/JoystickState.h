@@ -311,6 +311,9 @@ namespace SlimDX
 
 			bool IsPressed( int button ) { return buttons[button]; }
 			bool IsReleased( int button ) { return !buttons[button]; }
+
+		internal:
+			void AssignState( const DIJOYSTATE2 &joystate );
 		};
 	}
 }

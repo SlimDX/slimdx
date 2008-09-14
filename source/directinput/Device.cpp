@@ -279,13 +279,7 @@ namespace DirectInput
 				return Result::Last;
 
 			MouseState^ result = safe_cast<MouseState^>( data );
-			for( int i = 0; i < 8; i++ )
-			{
-				if( state.rgbButtons[i] & 0x80 )
-					result->buttons[i] = true;
-				else
-					result->buttons[i] = false;
-			}
+			result->AssignState(state);
 		}
 		else if( type == JoystickState::typeid )
 		{
@@ -295,49 +289,7 @@ namespace DirectInput
 				return Result::Last;
 
 			JoystickState^ state = safe_cast<JoystickState^>( data );
-			state->x = joystate.lX;
-			state->y = joystate.lY;
-			state->z = joystate.lZ;
-			state->rx = joystate.lRx;
-			state->ry = joystate.lRy;
-			state->rz = joystate.lRz;
-			state->vx = joystate.lVX;
-			state->vy = joystate.lVY;
-			state->vz = joystate.lVZ;
-			state->vrx = joystate.lVRx;
-			state->vry = joystate.lVRy;
-			state->vrz = joystate.lVRz;
-			state->ax = joystate.lAX;
-			state->ay = joystate.lAY;
-			state->az = joystate.lAZ;
-			state->arx = joystate.lARx;
-			state->ary = joystate.lARy;
-			state->arz = joystate.lARz;
-			state->fx = joystate.lFX;
-			state->fy = joystate.lFY;
-			state->fz = joystate.lFZ;
-			state->frx = joystate.lFRx;
-			state->fry = joystate.lFRy;
-			state->frz = joystate.lFRz;
-
-			for( int i = 0; i < 2; i++ )
-			{
-				state->sliders[i] = joystate.rglSlider[i];
-				state->asliders[i] = joystate.rglASlider[i];
-				state->vsliders[i] = joystate.rglVSlider[i];
-				state->fsliders[i] = joystate.rglVSlider[i];
-			}
-
-			for( int i = 0; i < 4; i++ )
-				state->povs[i] = joystate.rgdwPOV[i];
-
-			for( int i = 0; i < 128; i++ )
-			{
-				if( joystate.rgbButtons[i] )
-					state->buttons[i] = true;
-				else
-					state->buttons[i] = false;
-			}
+			state->AssignState(joystate);
 		}
 		else
 		{
@@ -359,69 +311,9 @@ namespace DirectInput
 	generic<typename DataFormat>
 	DataFormat Device<DataFormat>::GetCurrentState()
 	{
-		Type^ type = DataFormat::typeid;
-
-		if( type == KeyboardState::typeid )
-		{
-			BYTE keys[256];
-			HRESULT hr = InternalPointer->GetDeviceState( sizeof( BYTE ) * 256, keys );
-			
-			KeyboardState^ state = gcnew KeyboardState();
-
-			if( RecordError( hr ).IsFailure )
-				return reinterpret_cast<DataFormat>( state );
-
-			state->UpdateKeys( keys, 256 );
-
-			return ( DataFormat )state;
-		}
-		else if( type == MouseState::typeid )
-		{
-			DIMOUSESTATE2 state;
-			HRESULT hr = InternalPointer->GetDeviceState( sizeof( DIMOUSESTATE2 ), &state );
-			
-			if( RecordError( hr ).IsFailure )
-				return reinterpret_cast<DataFormat>( gcnew MouseState( 0, 0, 0 ) );
-
-			MouseState^ result = gcnew MouseState( state.lX, state.lY, state.lZ );
-			for( int i = 0; i < 8; i++ )
-			{
-				if( state.rgbButtons[i] & 0x80 )
-					result->buttons[i] = true;
-				else
-					result->buttons[i] = false;
-			}
-
-			return ( DataFormat )result;
-		}
-		else if( type == JoystickState::typeid )
-		{
-			DIJOYSTATE2 state;
-			HRESULT hr = InternalPointer->GetDeviceState( sizeof( DIJOYSTATE2 ), &state );
-			
-			if( RecordError( hr ).IsFailure )
-				return reinterpret_cast<DataFormat>( gcnew JoystickState() );
-
-			return reinterpret_cast<DataFormat>( gcnew JoystickState( state ) );
-		}
-		else
-		{
-			size_t typeSize = sizeof(type);
-			std::vector<BYTE> bytes(typeSize);
-			HRESULT hr = InternalPointer->GetDeviceState( static_cast<DWORD>(sizeof(BYTE) * typeSize), &bytes[0] );
-
-			DataFormat result = Activator::CreateInstance<DataFormat>();
-
-			if( RecordError( hr ).IsFailure )
-				return reinterpret_cast<DataFormat>( result );
-
-			IntPtr pointerData( &bytes[0] );
-			GCHandle handle = GCHandle::Alloc( result, GCHandleType::Pinned );
-			memcpy( handle.AddrOfPinnedObject().ToPointer(), pointerData.ToPointer(), typeSize );
-			handle.Free();
-
-			return result;
-		}
+		DataFormat result;
+		GetCurrentState( result );
+		return result;
 	}
 
 	generic<typename DataFormat>

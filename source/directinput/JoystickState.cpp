@@ -48,6 +48,18 @@ namespace DirectInput
 
 	JoystickState::JoystickState( const DIJOYSTATE2 &joystate )
 	{
+		sliders = gcnew array<int>( 2 );
+		povs = gcnew array<int>( 4 );
+		buttons = gcnew array<bool>( 128 );
+		vsliders = gcnew array<int>( 2 );
+		fsliders = gcnew array<int>( 2 );
+		asliders = gcnew array<int>( 2 );
+
+		AssignState(joystate);
+	}
+
+	void JoystickState::AssignState(const DIJOYSTATE2 &joystate)
+	{
 		x = joystate.lX;
 		y = joystate.lY;
 		z = joystate.lZ;
@@ -72,13 +84,6 @@ namespace DirectInput
 		frx = joystate.lFRx;
 		fry = joystate.lFRy;
 		frz = joystate.lFRz;
-
-		sliders = gcnew array<int>( 2 );
-		povs = gcnew array<int>( 4 );
-		buttons = gcnew array<bool>( 128 );
-		vsliders = gcnew array<int>( 2 );
-		fsliders = gcnew array<int>( 2 );
-		asliders = gcnew array<int>( 2 );
 
 		for( int i = 0; i < 2; i++ )
 		{
