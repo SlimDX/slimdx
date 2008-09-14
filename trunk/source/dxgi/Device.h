@@ -57,6 +57,12 @@ namespace SlimDX
 			}
 			
 			/// <summary>
+			/// Initializes a new instance of the <see cref="Device"/> class.
+			/// </summary>
+			/// <param name="device">The COM object implementing the IDXGIDevice interface.</param>
+			Device( ComObject^ device );
+			
+			/// <summary>
 			/// Constructs a new instance of the <see cref="Device"/> class using the specified pointer to a
 			/// previously constructed unmanaged object.
 			/// </summary>
