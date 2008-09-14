@@ -70,6 +70,11 @@ namespace SlimDX
 
 		public:
 			/// <summary>
+			/// The maximum number of multisample quality levels supported.
+			/// </summary>
+			literal int MultisampleCountMaximum = D3D10_MAX_MULTISAMPLE_SAMPLE_COUNT;
+			
+			/// <summary>
 			/// Gets the device's input assembler interface.
 			/// </summary>
 			property InputAssemblerWrapper^ InputAssembler
