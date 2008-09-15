@@ -32,7 +32,7 @@ namespace SlimDX
 	value class Quaternion;
 	value class Matrix;
 	value class Vector3;
-    value class Viewport;
+	value class Viewport;
 
 	/// <summary>
 	/// Defines a two component vector.
