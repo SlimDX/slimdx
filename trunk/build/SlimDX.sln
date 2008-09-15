@@ -80,6 +80,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{829E42C0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asteroids", "..\samples\Games\Asteroids\Asteroids.csproj", "{C7A43F84-5749-4D10-8C12-46FFCB1CCB21}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{0FBE5FEA-F20A-4D60-B605-99DE14402A64}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\run-tests.bat = scripts\run-tests.bat
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -400,6 +405,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{0FBE5FEA-F20A-4D60-B605-99DE14402A64} = {A2525864-A1CD-4EF2-A548-D44B524E4CDD}
 		{9B1D5449-9859-49A2-8099-1703FECE1914} = {244939F5-A4C6-4EB4-AC83-BBFF05962869}
 		{1E10C518-5E15-4626-A1E5-1998001D1611} = {244939F5-A4C6-4EB4-AC83-BBFF05962869}
 		{FE87CDB5-65BC-4252-8615-D4B41DF301D7} = {244939F5-A4C6-4EB4-AC83-BBFF05962869}
