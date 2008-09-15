@@ -86,4 +86,7 @@
   </Target>
   <Target Name="AfterBuild">
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>call "$(SolutionDir)scripts\run-tests.bat" "$(SolutionDir)..\" $(PlatformName) $(ConfigurationName)</PostBuildEvent>
+  </PropertyGroup>
 </Project>
