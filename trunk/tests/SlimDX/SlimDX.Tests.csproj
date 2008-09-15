@@ -73,7 +73,6 @@
   <ItemGroup>
     <Compile Include="Math\Color3Tests.cs" />
     <Compile Include="Math\Color4Tests.cs" />
-    <Compile Include="Math\Vector2Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
