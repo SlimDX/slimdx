@@ -35,12 +35,8 @@ namespace SimpleTriangle
         public int Color;
     }
 
-    /// <summary>
-    /// The top level game object. Manages the entire game.
-    /// </summary>
     class SimpleTriangleSample : Game
     {
-        // constants
         const int InitialWidth = 800;
         const int InitialHeight = 600;
 
@@ -50,47 +46,28 @@ namespace SimpleTriangle
         InputLayout layout;
         Buffer vertices;
 
-        /// <summary>
-        /// Gets the Direct3D device.
-        /// </summary>
-        /// <value>The Direct3D device.</value>
         public Device Device
         {
             get { return GraphicsDeviceManager.Direct3D10.Device; }
         }
 
-        /// <summary>
-        /// Gets or sets the clear color.
-        /// </summary>
-        /// <value>The clear color.</value>
         public Color ClearColor
         {
             get;
             set;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SimpleTriangleSample"/> class.
-        /// </summary>
         public SimpleTriangleSample()
         {
-            // initialize the clear color
             ClearColor = Color.Black;
 
-            // set up the window
             Window.ClientSize = new Size(InitialWidth, InitialHeight);
             Window.Text = "SlimDX - Simple Triangle Sample";
             Window.KeyDown += Window_KeyDown;
 
-            // create the Direct3D device
             GraphicsDeviceManager.ChangeDevice(DeviceVersion.Direct3D10, true, InitialWidth, InitialHeight);
         }
 
-        /// <summary>
-        /// Handles the KeyDown event of the Window control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Forms.KeyEventArgs"/> instance containing the event data.</param>
         void Window_KeyDown(object sender, KeyEventArgs e)
         {
             // F1 toggles between full screen and windowed mode
@@ -101,19 +78,14 @@ namespace SimpleTriangle
                 Exit();
         }
 
-        /// <summary>
-        /// Initializes the game.
-        /// </summary>
         protected override void Initialize()
         {
             base.Initialize();
 
-            // load the effect
             effect = Effect.FromFile(Device, "SimpleTriangle.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null);
             technique = effect.GetTechniqueByIndex(0);
             pass = technique.GetPassByIndex(0);
 
-            // set up the graphical data
             InputElement[] inputElements = new InputElement[]
 			{
 				new InputElement("POSITION", 0, SlimDX.DXGI.Format.R32G32B32A32_Float, 0, 0),
@@ -121,7 +93,6 @@ namespace SimpleTriangle
 			};
             layout = new InputLayout(Device, inputElements, pass.Description.Signature);
 
-            // create the vertices
             DataStream stream = new DataStream(3 * Marshal.SizeOf(typeof(Vertex)), true, true);
             stream.Write(new Vector4(0.0f, 0.5f, 0.5f, 1.0f));
             stream.Write(Color.Red.ToArgb());
@@ -135,7 +106,6 @@ namespace SimpleTriangle
             // the start of the data we just wrote.
             stream.Position = 0;
 
-            // create the buffer description
             BufferDescription bufferDescription = new BufferDescription();
             bufferDescription.BindFlags = BindFlags.VertexBuffer;
             bufferDescription.CpuAccessFlags = CpuAccessFlags.None;
@@ -143,28 +113,20 @@ namespace SimpleTriangle
             bufferDescription.SizeInBytes = 3 * Marshal.SizeOf(typeof(Vertex));
             bufferDescription.Usage = ResourceUsage.Default;
 
-            // create the vertex buffer
             vertices = new Buffer(Device, stream, bufferDescription);
             stream.Close();
         }
 
-        /// <summary>
-        /// Releases the game.
-        /// </summary>
-        protected override void Release()
+        protected override void Dispose(bool disposing)
         {
-            base.Release();
-
             Device.ClearState();
             effect.Dispose();
             vertices.Dispose();
             layout.Dispose();
+
+            base.Dispose(disposing);
         }
 
-        /// <summary>
-        /// Called when a frame is ready to be drawn.
-        /// </summary>
-        /// <param name="gameTime">The time passed since the last frame.</param>
         protected override void Draw(GameTime gameTime)
         {
             Device.ClearRenderTargetView(GraphicsDeviceManager.Direct3D10.RenderTarget, ClearColor);

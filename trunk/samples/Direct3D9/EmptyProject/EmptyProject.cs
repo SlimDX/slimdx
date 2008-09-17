@@ -26,56 +26,33 @@ using SlimDX.Direct3D9;
 
 namespace EmptyProject
 {
-    /// <summary>
-    /// The top level game object. Manages the entire game.
-    /// </summary>
     class EmptyProject : Game
     {
-        // constants
         const int InitialWidth = 800;
         const int InitialHeight = 600;
 
-        /// <summary>
-        /// Gets the Direct3D device.
-        /// </summary>
-        /// <value>The Direct3D device.</value>
         public Device Device
         {
             get { return GraphicsDeviceManager.Direct3D9.Device; }
         }
 
-        /// <summary>
-        /// Gets or sets the clear color.
-        /// </summary>
-        /// <value>The clear color.</value>
         public Color ClearColor
         {
             get;
             set;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmptyProject"/> class.
-        /// </summary>
         public EmptyProject()
         {
-            // initialize the clear color
             ClearColor = Color.FromArgb(0, 45, 50, 170);
 
-            // set up the window
             Window.ClientSize = new Size(InitialWidth, InitialHeight);
             Window.Text = "SlimDX - Empty Project Template";
             Window.KeyDown += Window_KeyDown;
 
-            // create the Direct3D device
             GraphicsDeviceManager.ChangeDevice(DeviceVersion.Direct3D9, true, InitialWidth, InitialHeight);
         }
 
-        /// <summary>
-        /// Handles the KeyDown event of the Window control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Forms.KeyEventArgs"/> instance containing the event data.</param>
         void Window_KeyDown(object sender, KeyEventArgs e)
         {
             // F1 toggles between full screen and windowed mode
@@ -86,17 +63,11 @@ namespace EmptyProject
                 Exit();
         }
 
-        /// <summary>
-        /// Called when a frame is ready to be drawn.
-        /// </summary>
-        /// <param name="gameTime">The time passed since the last frame.</param>
         protected override void Draw(GameTime gameTime)
         {
-            // start the scene
             Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, ClearColor, 1.0f, 0);
             Device.BeginScene();
 
-            // end the scene
             Device.EndScene();
         }
     }

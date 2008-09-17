@@ -81,15 +81,12 @@ namespace Mouse
 
         void ReadImmediateData()
         {
-            // be sure that the device is still acquired
             if (mouse.Acquire().IsFailure)
                 return;
 
-            // poll for more input
             if (mouse.Poll().IsFailure)
                 return;
 
-            // get the current state of the mouse
             MouseState state = mouse.GetCurrentState();
             if (Result.Last.IsFailure)
                 return;
@@ -112,15 +109,12 @@ namespace Mouse
 
         void ReadBufferedData()
         {
-            // be sure that the device is still acquired
             if (mouse.Acquire().IsFailure)
                 return;
 
-            // poll for more input
             if (mouse.Poll().IsFailure)
                 return;
 
-            // get the list of buffered data events
             BufferedDataCollection<MouseState> bufferedData = mouse.GetBufferedData();
             if (Result.Last.IsFailure || bufferedData.Count == 0)
                 return;

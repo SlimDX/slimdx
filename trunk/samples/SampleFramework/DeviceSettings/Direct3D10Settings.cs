@@ -111,12 +111,21 @@ namespace SampleFramework
 
             ModeDescription mode = new ModeDescription();
             mode.RefreshRate = new Rational(0, 0);
-            mode.Format = Format.R8G8B8A8_UNorm_SRGB;
+            mode.Format = Format.R8G8B8A8_UNorm;
             mode.Scaling = DisplayModeScaling.Unspecified;
             mode.ScanlineOrdering = DisplayModeScanlineOrdering.Unspecified;
-            Rectangle rectangle = outputInfo.OutputDescription.DesktopBounds;
-            mode.Width = rectangle.Width;
-            mode.Height = rectangle.Height;
+            mode.Width = 640;
+            mode.Height = 480;
+
+            if (outputInfo != null)
+            {
+                Rectangle rectangle = outputInfo.OutputDescription.DesktopBounds;
+                mode.Width = rectangle.Width;
+                mode.Height = rectangle.Height;
+            }
+
+            if (mode.Format == Format.B8G8R8A8_UNorm)
+                mode.Format = Format.R8G8B8A8_UNorm;
 
             return mode;
         }
@@ -163,11 +172,7 @@ namespace SampleFramework
                 mode.Format = ConversionMethods.ToDirect3D10(settings.BackBufferFormat);
 
             swapChainDescription.Usage = Usage.RenderTargetOutput;
-
-            if (ConversionMethods.ToDirect3D10(settings.DepthStencilFormat) == Format.Unknown)
-                optimal.DepthStencilFormat = Format.D32_Float;
-            else
-                optimal.DepthStencilFormat = ConversionMethods.ToDirect3D10(settings.DepthStencilFormat);
+            optimal.DepthStencilFormat = ConversionMethods.ToDirect3D10(settings.DepthStencilFormat);
 
             if (settings.RefreshRate == 0)
                 mode.RefreshRate = new Rational(0, 0);

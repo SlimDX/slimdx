@@ -26,21 +26,13 @@ using SampleFramework;
 
 namespace Asteroids
 {
-    /// <summary>
-    /// Represents an explosion.
-    /// </summary>
     class Explosion : Entity
     {
-        // variables
         ParticleSystem particleSystem;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Explosion"/> class.
-        /// </summary>
         public Explosion(Asteroids game)
             : base(game)
         {
-            // set up the particle system
             particleSystem = new ParticleSystem(100);
             Game.Resources.Add(particleSystem);
             Game.Components.Add(particleSystem);

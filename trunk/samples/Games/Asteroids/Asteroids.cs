@@ -29,20 +29,14 @@ using SlimDX.Direct3D9;
 
 namespace Asteroids
 {
-    /// <summary>
-    /// The top level game object. Manages the entire Asteroids game.
-    /// </summary>
     class Asteroids : Game
     {
-        // constants
         const int InitialWidth = 800;
         const int InitialHeight = 600;
         const float LevelInterval = 2.0f;
 
-        // static data
         static Random random = new Random();
 
-        // variables
         TextConsole console = new TextConsole();
         Camera camera = new Camera();
         bool[] keyState = new bool[256];
@@ -50,53 +44,32 @@ namespace Asteroids
         bool[] keyStateNotReleased = new bool[256];
         int currentLevel;
 
-        // fonts
         Sprite fontSprite;
         string levelText;
         SlimDX.Direct3D9.Font levelFont;
         Interpolator levelTextInterpolator;
 
-        /// <summary>
-        /// Gets the random number generator.
-        /// </summary>
-        /// <value>The random number generator.</value>
         public static Random Random
         {
             get { return random; }
         }
 
-        /// <summary>
-        /// Gets or sets the world bounds.
-        /// </summary>
-        /// <value>The world bounds.</value>
         public Vector4 WorldBounds
         {
             get;
             set;
         }
 
-        /// <summary>
-        /// Gets the Direct3D device.
-        /// </summary>
-        /// <value>The Direct3D device.</value>
         public Device Device
         {
             get { return GraphicsDeviceManager.Direct3D9.Device; }
         }
 
-        /// <summary>
-        /// Gets the camera.
-        /// </summary>
-        /// <value>The camera.</value>
         public Camera Camera
         {
             get { return camera; }
         }
 
-        /// <summary>
-        /// Gets or sets the clear color.
-        /// </summary>
-        /// <value>The clear color.</value>
         public Color ClearColor
         {
             get;
@@ -108,23 +81,19 @@ namespace Asteroids
         /// </summary>
         public Asteroids()
         {
-            // initialize settings
             ClearColor = Color.Black;
 
-            // set up the window
             Window.ClientSize = new Size(InitialWidth, InitialHeight);
             Window.Text = "Asteroids";
             Window.KeyDown += Window_KeyDown;
             Window.KeyUp += Window_KeyUp;
 
-            // initialize the camera
             camera.FieldOfView = (float)(Math.PI / 2);
             camera.NearPlane = 1.0f;
             camera.FarPlane = 1000.0f;
             camera.Location = new Vector3(0.0f, 0.0f, -750.0f);
             camera.Target = Vector3.Zero;
 
-            // set up device settings
             DeviceSettings settings = new DeviceSettings();
             settings.BackBufferWidth = InitialWidth;
             settings.BackBufferHeight = InitialHeight;
@@ -137,30 +106,17 @@ namespace Asteroids
 #endif
             settings.MultisampleType = MultisampleType.EightSamples;
 
-            // create resources
             Resources.Add(console);
 
-            // create the Direct3D device
             GraphicsDeviceManager.ChangeDevice(settings);
         }
 
-        /// <summary>
-        /// Handles the KeyUp event of the Window control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Forms.KeyEventArgs"/> instance containing the event data.</param>
         void Window_KeyUp(object sender, KeyEventArgs e)
         {
-            // update the pressed keys
             keyState[e.KeyValue] = false;
             keyStateNotReleased[e.KeyValue] = false;
         }
 
-        /// <summary>
-        /// Handles the KeyDown event of the Window control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Forms.KeyEventArgs"/> instance containing the event data.</param>
         void Window_KeyDown(object sender, KeyEventArgs e)
         {
             // F1 toggles between full screen and windowed mode
@@ -170,7 +126,6 @@ namespace Asteroids
             else if (e.KeyCode == Keys.Escape)
                 Exit();
 
-            // update the pressed keys
             keyState[e.KeyValue] = true;
             if (!keyStateNotReleased[e.KeyValue])
             {
@@ -187,74 +142,47 @@ namespace Asteroids
 #endif
         }
 
-        /// <summary>
-        /// Initializes the game.
-        /// </summary>
         protected override void Initialize()
         {
-            // call the base method
             base.Initialize();
 
-            // create fonts
             fontSprite = new Sprite(Device);
             levelFont = new SlimDX.Direct3D9.Font(Device, 40, 0, FontWeight.Bold, 0, false, CharacterSet.Default,
                 Precision.Default, FontQuality.ClearTypeNatural, PitchAndFamily.DontCare, "");
         }
 
-        /// <summary>
-        /// Loads all graphical content.
-        /// </summary>
         protected override void LoadContent()
         {
-            // call the base method
             base.LoadContent();
 
-            // update the camera
             camera.AspectRatio = (float)Window.Width / Window.Height;
 
-            // recreate the world bounds
             float halfHeight = (float)Math.Abs(Math.Tan(camera.FieldOfView / 2) * camera.Location.Z);
             float halfWidth = halfHeight * camera.AspectRatio;
             WorldBounds = new Vector4(-halfWidth, -halfHeight, halfWidth, halfHeight);
 
-            // reload fonts
             fontSprite.OnResetDevice();
             levelFont.OnResetDevice();
         }
 
-        /// <summary>
-        /// Unloads graphical resources.
-        /// </summary>
         protected override void UnloadContent()
         {
-            // call the base method
             base.UnloadContent();
 
-            // unload fonts
             fontSprite.OnLostDevice();
             levelFont.OnLostDevice();
         }
 
-        /// <summary>
-        /// Releases the game.
-        /// </summary>
-        protected override void Release()
+        protected override void Dispose(bool disposing)
         {
-            // call the base method
-            base.Release();
-
-            // release fonts
             fontSprite.Dispose();
             levelFont.Dispose();
+
+            base.Dispose(disposing);
         }
 
-        /// <summary>
-        /// Allows the game to perform logic processing.
-        /// </summary>
-        /// <param name="gameTime">The time passed since the last update.</param>
         protected override void Update(GameTime gameTime)
         {
-            // call the base method
             base.Update(gameTime);
 
             // clear out dead entities
@@ -293,33 +221,22 @@ namespace Asteroids
             }
         }
 
-        /// <summary>
-        /// Called when a frame is ready to be drawn.
-        /// </summary>
-        /// <param name="gameTime">The time passed since the last frame.</param>
         protected override void Draw(GameTime gameTime)
         {
-            // update the vector matrices
             VectorModel.ViewMatrix = camera.ViewMatrix;
             VectorModel.ProjectionMatrix = camera.ProjectionMatrix;
 
-            // start the scene
             Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, ClearColor, 1.0f, 0);
             Device.BeginScene();
 
-            // call the base method
             base.Draw(gameTime);
 
-            // flush all vector data
             VectorModel.FlushAll();
 
-            // start drawing text
             fontSprite.Begin(SpriteFlags.AlphaBlend | SpriteFlags.SortTexture);
 
-            // draw the level text, if we have any
             if (!string.IsNullOrEmpty(levelText))
             {
-                // center the text in the screen
                 Rectangle rectangle = levelFont.MeasureString(fontSprite, levelText, DrawTextFormat.Center);
                 Rectangle outputRectangle = new Rectangle((GraphicsDeviceManager.ScreenWidth - rectangle.Width) / 2,
                     (GraphicsDeviceManager.ScreenHeight - rectangle.Height) / 2, rectangle.Width, rectangle.Height);
@@ -327,59 +244,32 @@ namespace Asteroids
                     new Color4((levelTextInterpolator == null ? 1.0f : levelTextInterpolator.Value) * 0.8f, 1.0f, 1.0f, 1.0f));
             }
 
-            // stop drawing text
             fontSprite.End();
 
 #if DEBUG
-            // set up the debug console
             console.Begin();
             console.Location = new Point(5, 5);
             console.ForegroundColor = new Color4(1.0f, 1.0f, 1.0f, 0.0f);
-
-            // draw debug text
             console.WriteLine(GraphicsDeviceManager.DeviceInformation);
             console.WriteLine(GraphicsDeviceManager.DeviceStatistics);
             console.WriteLine(gameTime.FramesPerSecond.ToString(".00", CultureInfo.CurrentCulture));
             console.WriteLine("Asteroids: " + Asteroid.AsteroidCount);
-
-            // end text drawing
             console.End();
 #endif
 
-            // end the scene
             Device.EndScene();
         }
 
-        /// <summary>
-        /// Determines whether the given key is pressed.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <returns>
-        /// <c>true</c> if the given key is pressed; otherwise, <c>false</c>.
-        /// </returns>
         public bool IsKeyPressed(Keys key)
         {
-            // check the key state array
             return keyState[(int)key];
         }
 
-        /// <summary>
-        /// Determines whether the given key is pressed this frame
-        /// <param name="key">The key.</param>
-        /// <returns>
-        /// <c>true</c> if the given key is pressed this frame; otherwise, <c>false</c>.
-        /// </returns>
         public bool IsKeyPressedThisFrame(Keys key)
         {
-            // check the key state array
             return keyStateThisFrame[(int)key];
         }
 
-        /// <summary>
-        /// Starts a new level.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void NewLevel(object sender, EventArgs e)
         {
             // if this is the first level, spawn the player

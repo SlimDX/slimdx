@@ -25,13 +25,9 @@ namespace Asteroids
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // run the game
             using (Asteroids game = new Asteroids())
                 game.Run();
         }

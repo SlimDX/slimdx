@@ -35,10 +35,8 @@ namespace BasicSound
 
         static void Main()
         {
-            // initialize XAudio2
             XAudio2 device = new XAudio2();
 
-            // create a mastering voice
             MasteringVoice masteringVoice = new MasteringVoice(device);
 
             // play a PCM file
@@ -47,7 +45,6 @@ namespace BasicSound
             // play a 5.1 PCM wave extensible file (Can't do this yet)
             PlayPCM(device, "MusicSurround.wav");
 
-            // cleanup XAudio2
             masteringVoice.Dispose();
             device.Dispose();
         }
@@ -66,7 +63,6 @@ namespace BasicSound
                 file.Read(data, file.Size);
             }
 
-            // create the source voice
             SourceVoice sourceVoice = new SourceVoice(device, format);
 
             // build the wave sample data
@@ -78,10 +74,7 @@ namespace BasicSound
             // to set the output speakers, uncomment the following line
             //sourceVoice.SetOutputMatrix(1, 2, new float[] { 1.0f, 0.0f });
 
-            // submit the data
             sourceVoice.SubmitSourceBuffer(buffer);
-
-            // start the sample
             sourceVoice.Start();
 
             // loop until the sound is done playing

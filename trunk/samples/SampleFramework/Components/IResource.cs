@@ -19,13 +19,14 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+using System;
 
 namespace SampleFramework
 {
     /// <summary>
     /// Defines an interface for graphical resources.
     /// </summary>
-    public interface IResource
+    public interface IResource : IDisposable
     {
         /// <summary>
         /// Initializes the resource.
@@ -42,10 +43,5 @@ namespace SampleFramework
         /// Allows the resource to unload any short-term graphical content.
         /// </summary>
         void UnloadContent();
-
-        /// <summary>
-        /// Releases the resource.
-        /// </summary>
-        void Release();
     }
 }

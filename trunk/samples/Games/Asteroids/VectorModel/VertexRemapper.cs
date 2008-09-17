@@ -23,47 +23,28 @@ using System.Collections.Generic;
 
 namespace Asteroids
 {
-    /// <summary>
-    /// Assists in remapping vector model vertices into a range suitable for rendering.
-    /// </summary>
     class VertexRemapper
     {
-        // variables
         Dictionary<VectorModelVertex, ushort> remap = new Dictionary<VectorModelVertex, ushort>();
         List<VectorModelVertex> vertices = new List<VectorModelVertex>();
 
-        /// <summary>
-        /// Gets the vertices.
-        /// </summary>
-        /// <value>The vertices.</value>
         public List<VectorModelVertex> Vertices
         {
             get { return vertices; }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VertexRemapper"/> class.
-        /// </summary>
         public VertexRemapper()
         {
         }
 
-        /// <summary>
-        /// Retrieves the correct index for the specified vertex.
-        /// </summary>
-        /// <param name="vertex">The vertex.</param>
-        /// <returns>The correct index into the vertex buffer.</returns>
         public ushort GetIndex(VectorModelVertex vertex)
         {
-            // check if we already have this vertex
             if (!remap.ContainsKey(vertex))
             {
-                // add the vertex to both collections
                 remap.Add(vertex, (ushort)Vertices.Count);
                 Vertices.Add(vertex);
             }
 
-            // return the index
             return remap[vertex];
         }
     }

@@ -26,15 +26,8 @@ using SlimDX.Direct3D9;
 
 namespace Asteroids
 {
-    /// <summary>
-    /// Defines a vertex for particle systems.
-    /// </summary>
     struct ParticleVertex
     {
-        /// <summary>
-        /// Gets or sets the position.
-        /// </summary>
-        /// <value>The position.</value>
         [VertexElement(DeclarationType.Float3, DeclarationUsage.Position)]
         public Vector3 Position
         {
@@ -42,10 +35,6 @@ namespace Asteroids
             set;
         }
 
-        /// <summary>
-        /// Gets or sets the velocity.
-        /// </summary>
-        /// <value>The velocity.</value>
         [VertexElement(DeclarationType.Float3, DeclarationUsage.Normal)]
         public Vector3 Velocity
         {
@@ -53,10 +42,6 @@ namespace Asteroids
             set;
         }
 
-        /// <summary>
-        /// Gets or sets the appearance settings.
-        /// </summary>
-        /// <value>The appearance settings.</value>
         [VertexElement(DeclarationType.Color, DeclarationUsage.Color)]
         public int Appearance
         {
@@ -64,10 +49,6 @@ namespace Asteroids
             set;
         }
 
-        /// <summary>
-        /// Gets or sets the time that the particle was created.
-        /// </summary>
-        /// <value>The time that the particle was created.</value>
         [VertexElement(DeclarationType.Float1, DeclarationUsage.TextureCoordinate)]
         public float Time
         {
@@ -75,10 +56,6 @@ namespace Asteroids
             set;
         }
 
-        /// <summary>
-        /// Gets the size, in bytes, of the <see cref="ParticleVertex"/> structure.
-        /// </summary>
-        /// <value>The size in bytes.</value>
         public static int SizeInBytes
         {
             get { return Marshal.SizeOf(typeof(ParticleVertex)); }
