@@ -540,11 +540,9 @@ namespace SampleFramework
                 // from it to replace adapterInfo.Adapter
                 if (type != DriverType.Hardware)
                 {
-                    // TODO: Uncomment the following lines, as soon as jpetrie makes the changes
-                    // so that it will compile
-                    //SlimDX.DXGI.Device dxgiDevice = new SlimDX.DXGI.Device(device);
-                    //adapterInfo.Adapter = dxgiDevice.Adapter;
-                    //dxgiDevice.Dispose();
+                    SlimDX.DXGI.Device dxgiDevice = new SlimDX.DXGI.Device(device);
+                    adapterInfo.Adapter = dxgiDevice.Adapter;
+                    dxgiDevice.Dispose();
                 }
 
                 // release the device
@@ -639,8 +637,7 @@ namespace SampleFramework
             SlimDX.Direct3D10.Device device = new SlimDX.Direct3D10.Device(adapter, combo.DriverType, DeviceCreationFlags.None);
 
             // loop through each multisample amount
-            // TODO: replace 32 with a constant: D3D10_MAX_MULTISAMPLE_SAMPLE_COUNT
-            for (int i = 1; i < 32; i++)
+            for (int i = 1; i <= SlimDX.Direct3D10.Device.MultisampleCountMaximum; i++)
             {
                 try
                 {
