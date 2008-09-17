@@ -87,7 +87,6 @@ namespace SampleFramework
         /// <param name="usage">The vertex element usage.</param>
         public VertexElementAttribute(DeclarationType type, DeclarationUsage usage)
         {
-            // store the values
             Type = type;
             Usage = usage;
         }

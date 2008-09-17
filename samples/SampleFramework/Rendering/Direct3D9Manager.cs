@@ -34,7 +34,6 @@ namespace SampleFramework
     /// </summary>
     public class Direct3D9Manager
     {
-        // variables
         GraphicsDeviceManager manager;
 
         /// <summary>
@@ -53,7 +52,6 @@ namespace SampleFramework
         /// <param name="manager">The parent manager.</param>
         internal Direct3D9Manager(GraphicsDeviceManager manager)
         {
-            // store variables
             this.manager = manager;
         }
 
@@ -118,10 +116,7 @@ namespace SampleFramework
                     attribute.Method, attribute.Usage, (byte)index));
             }
 
-            // add the end element
             elements.Add(VertexElement.VertexDeclarationEnd);
-
-            // return the new declaration
             return new VertexDeclaration(Device, elements.ToArray());
         }
 
@@ -133,7 +128,6 @@ namespace SampleFramework
         /// <returns>The newly created render target surface.</returns>
         public Texture CreateRenderTarget(int width, int height)
         {
-            // create the surface, using the current device settings
             return new Texture(Device, width, height, 1, Usage.RenderTarget, manager.CurrentSettings.BackBufferFormat, Pool.Default);
         }
 
@@ -143,7 +137,6 @@ namespace SampleFramework
         /// <returns>The newly created resolve target.</returns>
         public Texture CreateResolveTarget()
         {
-            // create the texture target
             return new Texture(Device, manager.ScreenWidth, manager.ScreenHeight, 1, Usage.RenderTarget, manager.CurrentSettings.BackBufferFormat, Pool.Default);
         }
 
@@ -154,7 +147,6 @@ namespace SampleFramework
         /// <exception cref="InvalidOperationException">Thrown when the resolve process fails.</exception>
         public void ResolveBackBuffer(Texture target)
         {
-            // call the overload
             ResolveBackBuffer(target, 0);
         }
 
@@ -174,7 +166,6 @@ namespace SampleFramework
             Surface backBuffer = Device.GetBackBuffer(0, backBufferIndex);
             if (backBuffer == null || Result.Last.IsFailure)
             {
-                // error occurred
                 Configuration.ThrowOnError = storedThrow;
                 throw new InvalidOperationException("Could not obtain back buffer surface.");
             }
@@ -183,7 +174,6 @@ namespace SampleFramework
             Surface destination = target.GetSurfaceLevel(0);
             if (destination == null || Result.Last.IsFailure)
             {
-                // error occurred
                 backBuffer.Dispose();
                 Configuration.ThrowOnError = storedThrow;
                 throw new InvalidOperationException("Could not obtain resolve target surface.");
@@ -198,7 +188,6 @@ namespace SampleFramework
                     // that failed as well, so the last thing we can try is a load surface call
                     if (Surface.FromSurface(destination, backBuffer, Filter.Default, 0).IsFailure)
                     {
-                        // error occurred
                         backBuffer.Dispose();
                         destination.Dispose();
                         Configuration.ThrowOnError = storedThrow;
@@ -207,7 +196,6 @@ namespace SampleFramework
                 }
             }
 
-            // clean up
             backBuffer.Dispose();
             destination.Dispose();
             Configuration.ThrowOnError = storedThrow;
@@ -218,17 +206,14 @@ namespace SampleFramework
         /// </summary>
         public void ResetRenderTarget()
         {
-            // grab the back buffer
             Surface backBuffer = Device.GetBackBuffer(0, 0);
 
             try
             {
-                // reset the render target
                 Device.SetRenderTarget(0, backBuffer);
             }
             finally
             {
-                // release the back buffer
                 backBuffer.Dispose();
             }
         }

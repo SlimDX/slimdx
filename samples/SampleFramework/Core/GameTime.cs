@@ -105,7 +105,6 @@ namespace SampleFramework
         /// <param name="elapsedGameTime">The elapsed game time.</param>
         public GameTime(float totalRealTime, float elapsedRealTime, float totalGameTime, float elapsedGameTime)
         {
-            // store variables
             TotalRealTime = totalRealTime;
             ElapsedRealTime = elapsedRealTime;
             TotalGameTime = totalGameTime;

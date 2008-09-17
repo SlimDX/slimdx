@@ -28,7 +28,6 @@ namespace SampleFramework
     /// </summary>
     public class Direct3D10Manager
     {
-        // variables
         GraphicsDeviceManager manager;
 
         /// <summary>
@@ -97,7 +96,6 @@ namespace SampleFramework
         /// <param name="manager">The parent manager.</param>
         internal Direct3D10Manager(GraphicsDeviceManager manager)
         {
-            // store variables
             this.manager = manager;
         }
     }

@@ -93,7 +93,6 @@ namespace SampleFramework
         public TransformedColoredTexturedVertex(Vector4 position, int color, Vector2 textureCoordinates)
             : this()
         {
-            // store variables
             Position = position;
             Color = color;
             TextureCoordinates = textureCoordinates;
@@ -107,7 +106,6 @@ namespace SampleFramework
         /// <returns>The result of the operator.</returns>
         public static bool operator ==(TransformedColoredTexturedVertex left, TransformedColoredTexturedVertex right)
         {
-            // call the equals method instead
             return left.Equals(right);
         }
 
@@ -119,7 +117,6 @@ namespace SampleFramework
         /// <returns>The result of the operator.</returns>
         public static bool operator !=(TransformedColoredTexturedVertex left, TransformedColoredTexturedVertex right)
         {
-            // delegate the work for this method to operator ==
             return !(left == right);
         }
 
@@ -131,7 +128,6 @@ namespace SampleFramework
         /// </returns>
         public override int GetHashCode()
         {
-            // return the hash code
             return Position.GetHashCode() + Color.GetHashCode() + TextureCoordinates.GetHashCode();
         }
 
@@ -144,15 +140,12 @@ namespace SampleFramework
         /// </returns>
         public override bool Equals(object obj)
         {
-            // check for null
             if (obj == null)
                 return false;
 
-            // check for different types
             if (GetType() != obj.GetType())
                 return false;
 
-            // call the overloaded function
             return Equals((TransformedColoredTexturedVertex)obj);
         }
 
@@ -165,7 +158,6 @@ namespace SampleFramework
         /// </returns>
         public bool Equals(TransformedColoredTexturedVertex other)
         {
-            // compare the fields for equality
             return (Position == other.Position && Color == other.Color && TextureCoordinates == other.TextureCoordinates);
         }
 
@@ -177,7 +169,6 @@ namespace SampleFramework
         /// </returns>
         public override string ToString()
         {
-            // return a string representation of the vertex data
             return string.Format(CultureInfo.CurrentCulture, "{0} ({1}, {2})", Position.ToString(), System.Drawing.Color.FromArgb(Color).ToString(), TextureCoordinates.ToString());
         }
     }

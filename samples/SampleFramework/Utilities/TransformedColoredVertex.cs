@@ -81,7 +81,6 @@ namespace SampleFramework
         public TransformedColoredVertex(Vector4 position, int color)
             : this()
         {
-            // store variables
             Position = position;
             Color = color;
         }
@@ -94,7 +93,6 @@ namespace SampleFramework
         /// <returns>The result of the operator.</returns>
         public static bool operator ==(TransformedColoredVertex left, TransformedColoredVertex right)
         {
-            // call the equals method instead
             return left.Equals(right);
         }
 
@@ -106,7 +104,6 @@ namespace SampleFramework
         /// <returns>The result of the operator.</returns>
         public static bool operator !=(TransformedColoredVertex left, TransformedColoredVertex right)
         {
-            // delegate the work for this method to operator ==
             return !(left == right);
         }
 
@@ -118,7 +115,6 @@ namespace SampleFramework
         /// </returns>
         public override int GetHashCode()
         {
-            // return the hash code
             return Position.GetHashCode() + Color.GetHashCode();
         }
 
@@ -131,15 +127,12 @@ namespace SampleFramework
         /// </returns>
         public override bool Equals(object obj)
         {
-            // check for null
             if (obj == null)
                 return false;
 
-            // check for different types
             if (GetType() != obj.GetType())
                 return false;
 
-            // call the overloaded function
             return Equals((TransformedColoredVertex)obj);
         }
 
@@ -152,7 +145,6 @@ namespace SampleFramework
         /// </returns>
         public bool Equals(TransformedColoredVertex other)
         {
-            // compare the fields for equality
             return (Position == other.Position && Color == other.Color);
         }
 
@@ -164,7 +156,6 @@ namespace SampleFramework
         /// </returns>
         public override string ToString()
         {
-            // return a string representation of the vertex data
             return string.Format(CultureInfo.CurrentCulture, "{0} ({1})", Position.ToString(), System.Drawing.Color.FromArgb(Color).ToString());
         }
     }

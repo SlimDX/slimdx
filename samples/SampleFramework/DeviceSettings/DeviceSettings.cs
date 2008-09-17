@@ -214,7 +214,6 @@ namespace SampleFramework
         /// </returns>
         public DeviceSettings Clone()
         {
-            // clone the settings
             DeviceSettings result = new DeviceSettings();
             result.DeviceVersion = DeviceVersion;
             result.DeviceType = DeviceType;
@@ -231,13 +230,11 @@ namespace SampleFramework
             result.AdapterOrdinal = AdapterOrdinal;
             result.Multithreaded = Multithreaded;
 
-            // clone each API specific portion
             if (Direct3D9 != null)
                 result.Direct3D9 = Direct3D9.Clone();
             if (Direct3D10 != null)
                 result.Direct3D10 = Direct3D10.Clone();
 
-            // return the result
             return result;
         }
 
@@ -249,7 +246,6 @@ namespace SampleFramework
         /// </returns>
         object ICloneable.Clone()
         {
-            // call the overload
             return Clone();
         }
 
@@ -265,20 +261,16 @@ namespace SampleFramework
             {
                 try
                 {
-                    // ensure that Direct3D9 is initialized
                     GraphicsDeviceManager.EnsureD3D9();
                 }
                 catch (Exception e)
                 {
-                    // wrap the exception into one more suitable for the user
                     throw new NoCompatibleDevicesException("Could not initialize Direct3D9.", e);
                 }
 
-                // enumerate available devices
                 if (!Enumeration9.HasEnumerated)
                     Enumeration9.Enumerate();
 
-                // find the best settings for the job
                 DeviceSettings newSettings = settings.Clone();
                 Direct3D9Settings d3d9 = FindValidD3D9Settings(settings);
                 newSettings.Direct3D10 = null;
@@ -289,20 +281,16 @@ namespace SampleFramework
             {
                 try
                 {
-                    // ensure that Direct3D10 is initialized
                     GraphicsDeviceManager.EnsureD3D10();
                 }
                 catch (Exception e)
                 {
-                    // wrap the exception into one more suitable for the user
                     throw new NoCompatibleDevicesException("Could not initialize Direct3D10.", e);
                 }
 
-                // enumerate available devices
                 if (!Enumeration10.HasEnumerated)
                     Enumeration10.Enumerate();
 
-                // find the best settings for the job
                 DeviceSettings newSettings = settings.Clone();
                 Direct3D10Settings d3d10 = FindValidD3D10Settings(settings);
                 newSettings.Direct3D9 = null;
@@ -311,43 +299,26 @@ namespace SampleFramework
             }
         }
 
-        /// <summary>
-        /// Finds valid Direct3D9 device settings based upon the desired settings.
-        /// </summary>
-        /// <param name="settings">The desired settings.</param>
-        /// <returns>The best valid device settings matching the input settings.</returns>
         static Direct3D9Settings FindValidD3D9Settings(DeviceSettings settings)
         {
-            // build optimal settings
             Direct3D9Settings optimal = Direct3D9Settings.BuildOptimalSettings(settings);
 
-            // setup for ranking combos
             SettingsCombo9 bestCombo = null;
             float bestRanking = -1.0f;
 
-            // loop through each enumerated adapter
             foreach (AdapterInfo9 adapterInfo in Enumeration9.Adapters)
             {
-                // get the desktop display mode
                 DisplayMode desktopMode = GraphicsDeviceManager.Direct3D9Object.GetAdapterDisplayMode(adapterInfo.AdapterOrdinal);
-
-                // loop through each enumerated device
                 foreach (DeviceInfo9 deviceInfo in adapterInfo.Devices)
                 {
-                    // loop through each settings combo
                     foreach (SettingsCombo9 combo in deviceInfo.DeviceSettings)
                     {
-                        // make sure it matches the current display mode
                         if (combo.Windowed && combo.AdapterFormat != desktopMode.Format)
                             continue;
 
-                        // rank the combo
                         float ranking = Direct3D9Settings.RankSettingsCombo(combo, optimal, desktopMode);
-
-                        // check if we have a new best ranking
                         if (ranking > bestRanking)
                         {
-                            // we do, so store the best ranking information
                             bestCombo = combo;
                             bestRanking = ranking;
                         }
@@ -355,52 +326,35 @@ namespace SampleFramework
                 }
             }
 
-            // check if we couldn't find a compatible device
             if (bestCombo == null)
                 throw new NoCompatibleDevicesException("No compatible Direct3D9 devices found.");
 
-            // return the new valid settings
             return Direct3D9Settings.BuildValidSettings(bestCombo, optimal);
         }
 
-        /// <summary>
-        /// Finds valid Direct3D10 device settings based upon the desired settings.
-        /// </summary>
-        /// <param name="settings">The desired settings.</param>
-        /// <returns>The best valid device settings matching the input settings.</returns>
         static Direct3D10Settings FindValidD3D10Settings(DeviceSettings settings)
         {
-            // build optimal settings
             Direct3D10Settings optimal = Direct3D10Settings.BuildOptimalSettings(settings);
 
-            // setup for ranking combos
             SettingsCombo10 bestCombo = null;
             float bestRanking = -1.0f;
 
-            // loop through each enumerated adapter
             foreach (AdapterInfo10 adapterInfo in Enumeration10.Adapters)
             {
-                // loop through each settings combo
                 foreach (SettingsCombo10 combo in adapterInfo.SettingsCombos)
                 {
-                    // rank the combo
                     float ranking = Direct3D10Settings.RankSettingsCombo(combo, optimal);
-
-                    // check if we have a new best ranking
                     if (ranking > bestRanking)
                     {
-                        // we do, so store the best ranking information
                         bestCombo = combo;
                         bestRanking = ranking;
                     }
                 }
             }
 
-            // check if we couldn't find a compatible device
             if (bestCombo == null)
                 throw new NoCompatibleDevicesException("No compatible Direct3D10 devices found.");
 
-            // return the new valid settings
             return Direct3D10Settings.BuildValidSettings(bestCombo, optimal);
         }
     }

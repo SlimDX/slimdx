@@ -30,7 +30,6 @@ namespace SampleFramework
     /// </summary>
     public class TextConsole : IResource
     {
-        // variables
         GraphicsDeviceManager manager;
         Sprite sprite;
         SlimDX.Direct3D9.Font font;
@@ -78,11 +77,9 @@ namespace SampleFramework
             get { return fontName; }
             set
             {
-                // avoid unecessary changes
                 if (fontName == value)
                     return;
 
-                // update the value
                 fontName = value;
                 dirty = true;
             }
@@ -97,11 +94,9 @@ namespace SampleFramework
             get { return fontSize; }
             set
             {
-                // avoid unecessary changes
                 if (fontSize == value)
                     return;
 
-                // update the value
                 fontSize = value;
                 dirty = true;
             }
@@ -116,11 +111,9 @@ namespace SampleFramework
             get { return fontWeight; }
             set
             {
-                // avoid unecessary changes
                 if (fontWeight == value)
                     return;
 
-                // update the value
                 fontWeight = value;
                 dirty = true;
             }
@@ -131,7 +124,6 @@ namespace SampleFramework
         /// </summary>
         public TextConsole()
         {
-            // set default values
             FontSize = 15;
             LineHeight = 15;
             FontWeight = FontWeight.Bold;
@@ -145,13 +137,10 @@ namespace SampleFramework
         /// <param name="graphicsDeviceManager">The graphics device manager.</param>
         public void Initialize(GraphicsDeviceManager graphicsDeviceManager)
         {
-            // cache the reference
             manager = graphicsDeviceManager;
 
-            // create the font
             CreateFont();
 
-            // create the sprite
             sprite = new Sprite(manager.Direct3D9.Device);
         }
 
@@ -160,7 +149,6 @@ namespace SampleFramework
         /// </summary>
         public void LoadContent()
         {
-            // reload the resources
             font.OnResetDevice();
             sprite.OnResetDevice();
         }
@@ -170,7 +158,6 @@ namespace SampleFramework
         /// </summary>
         public void UnloadContent()
         {
-            // unload the resources
             font.OnLostDevice();
             sprite.OnLostDevice();
         }
@@ -180,7 +167,6 @@ namespace SampleFramework
         /// </summary>
         public void Release()
         {
-            // release the resources
             font.Dispose();
             sprite.Dispose();
             font = null;
@@ -191,11 +177,9 @@ namespace SampleFramework
         /// </summary>
         public void Write(string text)
         {
-            // if we have a dirty font, recreate it
             if (dirty)
                 CreateFont();
 
-            // draw the text
             font.DrawString(sprite, text, Location.X, Location.Y, ForegroundColor);
         }
 
@@ -204,7 +188,6 @@ namespace SampleFramework
         /// </summary>
         public void WriteLine()
         {
-            // increase the vertical line number
             Location = new Point(Location.X, Location.Y + LineHeight);
         }
 
@@ -213,7 +196,6 @@ namespace SampleFramework
         /// </summary>
         public void WriteLine(string text)
         {
-            // write the text and advance the line marker
             Write(text);
             WriteLine();
         }
@@ -223,7 +205,6 @@ namespace SampleFramework
         /// </summary>
         public void Begin()
         {
-            // start the sprite
             sprite.Begin(SpriteFlags.AlphaBlend | SpriteFlags.SortTexture);
         }
 
@@ -232,20 +213,14 @@ namespace SampleFramework
         /// </summary>
         public void End()
         {
-            // end the sprite
             sprite.End();
         }
 
-        /// <summary>
-        /// Creates the font.
-        /// </summary>
         void CreateFont()
         {
-            // if we already have a font, dispose of it
             if (font != null)
                 font.Dispose();
 
-            // create the font
             dirty = false;
             font = new SlimDX.Direct3D9.Font(manager.Direct3D9.Device, FontSize, 0, FontWeight, 0, false,
                 CharacterSet.Default, Precision.TrueType, FontQuality.ClearTypeNatural,

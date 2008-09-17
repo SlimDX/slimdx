@@ -29,33 +29,14 @@ namespace SampleFramework
     /// </summary>
     public class ResourceCollection : Collection<IResource>, IResource
     {
-        /// <summary>
-        /// Specifies possible resource methods.
-        /// </summary>
         enum ResourceMethod
         {
-            /// <summary>
-            /// The Initialize method.
-            /// </summary>
             Initialize,
-
-            /// <summary>
-            /// The LoadContent method.
-            /// </summary>
             LoadContent,
-
-            /// <summary>
-            /// The UnloadContent method.
-            /// </summary>
             UnloadContent,
-
-            /// <summary>
-            /// The Release method.
-            /// </summary>
             Release
         }
 
-        // variables
         GraphicsDeviceManager manager;
         ResourceMethod lastMethod = ResourceMethod.Release;
 
@@ -72,14 +53,11 @@ namespace SampleFramework
         /// <param name="graphicsDeviceManager">The graphics device manager.</param>
         public void Initialize(GraphicsDeviceManager graphicsDeviceManager)
         {
-            // store the reference
             manager = graphicsDeviceManager;
 
-            // update the resources
             foreach (IResource resource in Items)
                 resource.Initialize(graphicsDeviceManager);
 
-            // set the last method
             lastMethod = ResourceMethod.Initialize;
         }
 
@@ -88,11 +66,9 @@ namespace SampleFramework
         /// </summary>
         public void LoadContent()
         {
-            // update the resources
             foreach (IResource resource in Items)
                 resource.LoadContent();
 
-            // set the last method
             lastMethod = ResourceMethod.LoadContent;
         }
 
@@ -101,11 +77,9 @@ namespace SampleFramework
         /// </summary>
         public void UnloadContent()
         {
-            // update the resources
             foreach (IResource resource in Items)
                 resource.UnloadContent();
 
-            // set the last method
             lastMethod = ResourceMethod.UnloadContent;
         }
 
@@ -114,11 +88,9 @@ namespace SampleFramework
         /// </summary>
         public void Release()
         {
-            // update the resources
             foreach (IResource resource in Items)
                 resource.Release();
 
-            // set the last method
             lastMethod = ResourceMethod.Release;
         }
 
@@ -127,17 +99,14 @@ namespace SampleFramework
         /// </summary>
         protected override void ClearItems()
         {
-            // if the items are currently loaded, be sure to unload them
             if (lastMethod == ResourceMethod.Initialize || lastMethod == ResourceMethod.UnloadContent)
                 Release();
             else if (lastMethod == ResourceMethod.LoadContent)
             {
-                // unload and release
                 UnloadContent();
                 Release();
             }
 
-            // call the base method
             base.ClearItems();
         }
 
@@ -150,21 +119,17 @@ namespace SampleFramework
         /// 	<paramref name="index"/> is less than zero.-or-<paramref name="index"/> is greater than <see cref="P:System.Collections.ObjectModel.Collection`1.Count"/>.</exception>
         protected override void InsertItem(int index, IResource item)
         {
-            // make sure we don't have this resource already
             if (Contains(item))
                 throw new InvalidOperationException("Cannot add duplicates to the resource collection.");
 
-            // update the resource as appropriate
             if (lastMethod == ResourceMethod.Initialize || lastMethod == ResourceMethod.UnloadContent)
                 item.Initialize(manager);
             else if (lastMethod == ResourceMethod.LoadContent)
             {
-                // initialize and load
                 item.Initialize(manager);
                 item.LoadContent();
             }
 
-            // call the base method
             base.InsertItem(index, item);
         }
 
@@ -176,20 +141,16 @@ namespace SampleFramework
         /// 	<paramref name="index"/> is less than zero.-or-<paramref name="index"/> is equal to or greater than <see cref="P:System.Collections.ObjectModel.Collection`1.Count"/>.</exception>
         protected override void RemoveItem(int index)
         {
-            // grab the item
             IResource item = Items[index];
 
-            // update the resource as appropriate
             if (lastMethod == ResourceMethod.Initialize || lastMethod == ResourceMethod.UnloadContent)
                 item.Release();
             else if (lastMethod == ResourceMethod.LoadContent)
             {
-                // unload and release
                 item.UnloadContent();
                 item.Release();
             }
 
-            // call the base method
             base.RemoveItem(index);
         }
 
@@ -202,21 +163,17 @@ namespace SampleFramework
         /// 	<paramref name="index"/> is less than zero.-or-<paramref name="index"/> is greater than <see cref="P:System.Collections.ObjectModel.Collection`1.Count"/>.</exception>
         protected override void SetItem(int index, IResource item)
         {
-            // make sure we don't have this resource already
             if (Contains(item))
                 throw new InvalidOperationException("Cannot add duplicates to the resource collection.");
 
-            // update the resource as appropriate
             if (lastMethod == ResourceMethod.Initialize || lastMethod == ResourceMethod.UnloadContent)
                 item.Initialize(manager);
             else if (lastMethod == ResourceMethod.LoadContent)
             {
-                // initialize and load
                 item.Initialize(manager);
                 item.LoadContent();
             }
 
-            // call the base method
             base.SetItem(index, item);
         }
     }

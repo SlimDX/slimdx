@@ -41,7 +41,6 @@ namespace SampleFramework
         /// <param name="gameTime">The game's timing information</param>
         public void Update(GameTime gameTime)
         {
-            // update each component
             foreach (IGameComponent component in Items)
                 component.Update(gameTime);
         }
@@ -51,7 +50,6 @@ namespace SampleFramework
         /// </summary>
         public void Draw()
         {
-            // draw each component
             foreach (IGameComponent component in Items)
                 component.Draw();
         }

@@ -28,7 +28,6 @@ namespace SampleFramework
     /// </summary>
     public class Camera
     {
-        // variables
         Vector3 location;
         Vector3 target;
         float fieldOfView;
@@ -49,11 +48,9 @@ namespace SampleFramework
             get { return location; }
             set
             {
-                // avoid unecessary changes
                 if (location == value)
                     return;
 
-                // mark the view matrix as dirty
                 location = value;
                 viewDirty = true;
             }
@@ -68,11 +65,9 @@ namespace SampleFramework
             get { return target; }
             set
             {
-                // avoid unecessary changes
                 if (target == value)
                     return;
 
-                // mark the view matrix as dirty
                 target = value;
                 viewDirty = true;
             }
@@ -87,11 +82,9 @@ namespace SampleFramework
             get { return fieldOfView; }
             set
             {
-                // avoid unecessary changes
                 if (fieldOfView == value)
                     return;
 
-                // mark the projection matrix as dirty
                 fieldOfView = value;
                 projectionDirty = true;
             }
@@ -106,11 +99,9 @@ namespace SampleFramework
             get { return aspectRatio; }
             set
             {
-                // avoid unecessary changes
                 if (aspectRatio == value)
                     return;
 
-                // mark the projection matrix as dirty
                 aspectRatio = value;
                 projectionDirty = true;
             }
@@ -125,11 +116,9 @@ namespace SampleFramework
             get { return nearPlane; }
             set
             {
-                // avoid unecessary changes
                 if (nearPlane == value)
                     return;
 
-                // mark the projection matrix as dirty
                 nearPlane = value;
                 projectionDirty = true;
             }
@@ -144,11 +133,9 @@ namespace SampleFramework
             get { return farPlane; }
             set
             {
-                // avoid unecessary changes
                 if (farPlane == value)
                     return;
 
-                // mark the projection matrix as dirty
                 farPlane = value;
                 projectionDirty = true;
             }
@@ -162,7 +149,6 @@ namespace SampleFramework
         {
             get
             {
-                // if the matrix is dirty, rebuild it
                 if (viewDirty)
                     RebuildViewMatrix();
                 return viewMatrix;
@@ -177,7 +163,6 @@ namespace SampleFramework
         {
             get
             {
-                // if the matrix is dirty, rebuild it
                 if (projectionDirty)
                     RebuildProjectionMatrix();
                 return projectionMatrix;
@@ -196,7 +181,6 @@ namespace SampleFramework
         /// </summary>
         protected virtual void RebuildViewMatrix()
         {
-            // rebuild the view matrix
             viewMatrix = Matrix.LookAtLH(Location, Target, Vector3.UnitY);
             viewDirty = false;
         }
@@ -206,7 +190,6 @@ namespace SampleFramework
         /// </summary>
         protected virtual void RebuildProjectionMatrix()
         {
-            // rebuild the projection matrix
             projectionMatrix = Matrix.PerspectiveFovLH(FieldOfView, AspectRatio, NearPlane, FarPlane);
             projectionDirty = false;
         }
