@@ -35,7 +35,6 @@ namespace SampleFramework
     /// </summary>
     public class Interpolator
     {
-        // variables
         InterpolationFunction function;
         Predicate<float> predicate;
         bool finished;
@@ -64,11 +63,9 @@ namespace SampleFramework
             get { return finished; }
             set
             {
-                // avoid unecessary changes
                 if (finished == value)
                     return;
 
-                // otherwise, update the value
                 finished = value;
                 OnFinished(EventArgs.Empty);
             }
@@ -80,7 +77,6 @@ namespace SampleFramework
         /// <param name="function">The function.</param>
         public Interpolator(InterpolationFunction function)
         {
-            // store variables
             this.function = function;
         }
 
@@ -91,7 +87,6 @@ namespace SampleFramework
         /// <param name="startValue">The start value.</param>
         public Interpolator(InterpolationFunction function, float startValue)
         {
-            // store variables
             this.function = function;
             Value = startValue;
         }
@@ -104,7 +99,6 @@ namespace SampleFramework
         /// <param name="predicate">The predicate.</param>
         public Interpolator(InterpolationFunction function, float startValue, Predicate<float> predicate)
         {
-            // store variables
             this.function = function;
             this.predicate = predicate;
             Value = startValue;
@@ -115,10 +109,8 @@ namespace SampleFramework
         /// </summary>
         public void Update()
         {
-            // call the function to let it update the value
             Value = function(Value);
 
-            // check to see if we are done
             if (predicate != null && predicate(Value))
                 IsFinished = true;
         }
@@ -129,7 +121,6 @@ namespace SampleFramework
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected virtual void OnFinished(EventArgs e)
         {
-            // raise the event
             if (Finished != null)
                 Finished(this, e);
         }

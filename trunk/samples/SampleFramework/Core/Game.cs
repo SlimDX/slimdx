@@ -34,7 +34,6 @@ namespace SampleFramework
     /// </summary>
     public abstract class Game : IDisposable
     {
-        // timing variables
         GameClock clock = new GameClock();
         GameTime gameTime = new GameTime();
         TimeSpan maximumElapsedTime = TimeSpan.FromMilliseconds(500.0);
@@ -245,16 +244,13 @@ namespace SampleFramework
         /// </summary>
         protected Game()
         {
-            // set initial values
             IsFixedTimeStep = true;
 
-            // create the collections
             Resources = new ResourceCollection();
             Components = new GameComponentCollection();
             Interpolators = new Collection<Interpolator>();
             Triggers = new Collection<Trigger>();
 
-            // create the window
             Window = new GameWindow();
             Window.ApplicationActivated += Window_ApplicationActivated;
             Window.ApplicationDeactivated += Window_ApplicationDeactivated;
@@ -262,7 +258,6 @@ namespace SampleFramework
             Window.Resume += Window_Resume;
             Window.Paint += Window_Paint;
 
-            // create the manager
             GraphicsDeviceManager = new GraphicsDeviceManager(this);
         }
 
@@ -271,7 +266,6 @@ namespace SampleFramework
         /// </summary>
         public void Dispose()
         {
-            // call the overload
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -290,28 +284,23 @@ namespace SampleFramework
         /// </summary>
         public void Run()
         {
-            // let the application perform any necessary initialization
             IsRunning = true;
 
             try
             {
-                // reset the timing state
                 gameTime.ElapsedGameTime = 0;
                 gameTime.ElapsedRealTime = 0;
                 gameTime.TotalGameTime = (float)totalGameTime.TotalSeconds;
                 gameTime.TotalRealTime = (float)clock.CurrentTime.TotalSeconds;
                 gameTime.IsRunningSlowly = false;
 
-                // run the first update
                 Update(gameTime);
 
-                // run the application
                 Application.Idle += Application_Idle;
                 Application.Run(Window);
             }
             finally
             {
-                // remove the running state
                 Application.Idle -= Application_Idle;
                 IsRunning = false;
                 OnExiting(EventArgs.Empty);
@@ -331,10 +320,8 @@ namespace SampleFramework
             if (!IsActive)
                 Thread.Sleep((int)InactiveSleepTime.TotalMilliseconds);
 
-            // update the clock
             clock.Step();
 
-            // update the game time
             gameTime.TotalRealTime = (float)clock.CurrentTime.TotalSeconds;
             gameTime.ElapsedRealTime = (float)clock.ElapsedTime.TotalSeconds;
             lastFrameElapsedRealTime += clock.ElapsedTime;
@@ -342,10 +329,8 @@ namespace SampleFramework
             if (elapsedAdjustedTime < TimeSpan.Zero)
                 elapsedAdjustedTime = TimeSpan.Zero;
 
-            // check if we should force the elapsed time
             if (forceElapsedTimeToZero)
             {
-                // force the time
                 gameTime.ElapsedRealTime = 0;
                 lastFrameElapsedRealTime = elapsedAdjustedTime = TimeSpan.Zero;
                 forceElapsedTimeToZero = false;
@@ -358,7 +343,6 @@ namespace SampleFramework
             // check if we are using a fixed or variable time step
             if (IsFixedTimeStep)
             {
-                // update the timing state
                 accumulatedElapsedGameTime += elapsedAdjustedTime;
                 long ratio = accumulatedElapsedGameTime.Ticks / TargetElapsedTime.Ticks;
                 accumulatedElapsedGameTime = TimeSpan.FromTicks(accumulatedElapsedGameTime.Ticks % TargetElapsedTime.Ticks);
@@ -367,44 +351,36 @@ namespace SampleFramework
                     return;
                 TimeSpan targetElapsedTime = TargetElapsedTime;
 
-                // check if the ratio is too large (ie. running slowly)
                 if (ratio > 1)
                 {
-                    // running slowly
                     updatesSinceRunningSlowly2 = updatesSinceRunningSlowly1;
                     updatesSinceRunningSlowly1 = 0;
                 }
                 else
                 {
-                    // not running slowly
                     if (updatesSinceRunningSlowly1 < int.MaxValue)
                         updatesSinceRunningSlowly1++;
                     if (updatesSinceRunningSlowly2 < int.MaxValue)
                         updatesSinceRunningSlowly2++;
                 }
 
-                // check whether we are officially running slowly
                 drawRunningSlowly = updatesSinceRunningSlowly2 < 20;
 
                 // update until it's time to draw the next frame
                 while (ratio > 0 && !IsExiting)
                 {
-                    // decrement the ratio
                     ratio -= 1;
 
                     try
                     {
-                        // fill out the rest of the game time
                         gameTime.ElapsedGameTime = (float)targetElapsedTime.TotalSeconds;
                         gameTime.TotalGameTime = (float)totalGameTime.TotalSeconds;
                         gameTime.IsRunningSlowly = drawRunningSlowly;
 
-                        // perform an update
                         Update(gameTime);
                     }
                     finally
                     {
-                        // update the total clocks
                         lastFrameElapsedGameTime += targetElapsedTime;
                         totalGameTime += targetElapsedTime;
                     }
@@ -412,7 +388,6 @@ namespace SampleFramework
             }
             else
             {
-                // we can't be running slowly here
                 drawRunningSlowly = false;
                 updatesSinceRunningSlowly1 = int.MaxValue;
                 updatesSinceRunningSlowly2 = int.MaxValue;
@@ -422,31 +397,26 @@ namespace SampleFramework
                 {
                     try
                     {
-                        // fill out the rest of the game time
                         gameTime.ElapsedGameTime = 0;
                         lastFrameElapsedGameTime = elapsedAdjustedTime;
                         gameTime.TotalGameTime = (float)totalGameTime.TotalSeconds;
                         gameTime.IsRunningSlowly = false;
 
-                        // perform an update
                         Update(gameTime);
                     }
                     finally
                     {
-                        // update the total clocks
                         totalGameTime += elapsedAdjustedTime;
                     }
                 }
             }
 
-            // draw the frame
             DrawFrame();
 
             // refresh the FPS counter once per second
             lastUpdateFrame++;
             if ((float)clock.CurrentTime.TotalSeconds - lastUpdateTime > 1.0f)
             {
-                // update the frames per second
                 gameTime.FramesPerSecond = (float)lastUpdateFrame / (float)(clock.CurrentTime.TotalSeconds - lastUpdateTime);
                 lastUpdateTime = (float)clock.CurrentTime.TotalSeconds;
                 lastUpdateFrame = 0;
@@ -458,7 +428,6 @@ namespace SampleFramework
         /// </summary>
         public void ResetElapsedTime()
         {
-            // reset the elapsed time
             forceElapsedTimeToZero = true;
             updatesSinceRunningSlowly1 = int.MaxValue;
             updatesSinceRunningSlowly2 = int.MaxValue;
@@ -477,7 +446,6 @@ namespace SampleFramework
                 Trigger trigger = Triggers[i];
                 if (trigger.ActivationPredicate != null && trigger.ActivationPredicate())
                 {
-                    // activate the trigger
                     trigger.Activate();
                     if (!trigger.Repeat)
                         Triggers.RemoveAt(i);
@@ -489,7 +457,6 @@ namespace SampleFramework
                         trigger.StartTime = gameTime.TotalGameTime;
                     else if (gameTime.TotalGameTime - trigger.StartTime > trigger.Duration)
                     {
-                        // activate the trigger
                         trigger.Activate();
                         if (!trigger.Repeat)
                             Triggers.RemoveAt(i);
@@ -568,15 +535,12 @@ namespace SampleFramework
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            // check if we should release managed resources
             if (disposing)
             {
-                // release the graphics device manager
                 if (GraphicsDeviceManager != null)
                     GraphicsDeviceManager.Dispose();
                 GraphicsDeviceManager = null;
 
-                // if we have an event, raise it
                 if (Disposed != null)
                     Disposed(this, EventArgs.Empty);
             }
@@ -588,7 +552,6 @@ namespace SampleFramework
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected virtual void OnActivated(EventArgs e)
         {
-            // raise the event
             if (Activated != null)
                 Activated(this, e);
         }
@@ -599,7 +562,6 @@ namespace SampleFramework
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected virtual void OnDeactivated(EventArgs e)
         {
-            // raise the event
             if (Deactivated != null)
                 Deactivated(this, e);
         }
@@ -610,7 +572,6 @@ namespace SampleFramework
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected virtual void OnExiting(EventArgs e)
         {
-            // raise the event
             if (Exiting != null)
                 Exiting(this, e);
         }
@@ -621,7 +582,6 @@ namespace SampleFramework
         /// <param name="e">The <see cref="System.ComponentModel.CancelEventArgs"/> instance containing the event data.</param>
         protected virtual void OnFrameStart(CancelEventArgs e)
         {
-            // raise the event
             if (FrameStart != null)
                 FrameStart(this, e);
         }
@@ -632,61 +592,44 @@ namespace SampleFramework
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected virtual void OnFrameEnd(EventArgs e)
         {
-            // raise the event
             if (FrameEnd != null)
                 FrameEnd(this, e);
         }
 
-        /// <summary>
-        /// Draws a frame.
-        /// </summary>
         void DrawFrame()
         {
             try
             {
-                // make sure all conditions are met
                 if (!IsExiting && !Window.IsMinimized)
                 {
-                    // start the frame
                     CancelEventArgs e = new CancelEventArgs(false);
                     OnFrameStart(e);
                     if (!e.Cancel)
                     {
-                        // fill in the game time
                         gameTime.TotalRealTime = (float)clock.CurrentTime.TotalSeconds;
                         gameTime.ElapsedRealTime = (float)lastFrameElapsedRealTime.TotalSeconds;
                         gameTime.TotalGameTime = (float)totalGameTime.TotalSeconds;
                         gameTime.ElapsedGameTime = (float)lastFrameElapsedGameTime.TotalSeconds;
                         gameTime.IsRunningSlowly = drawRunningSlowly;
 
-                        // draw the frame
                         Draw(gameTime);
 
-                        // end the frame
                         OnFrameEnd(EventArgs.Empty);
                     }
                 }
             }
             finally
             {
-                // reset the elapsed counters
                 lastFrameElapsedGameTime = TimeSpan.Zero;
                 lastFrameElapsedRealTime = TimeSpan.Zero;
             }
         }
 
-        /// <summary>
-        /// Handles the Idle event of the Application control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void Application_Idle(object sender, EventArgs e)
         {
-            // loop as long as we are idle
             NativeMessage message;
             while (!NativeMethods.PeekMessage(out message, IntPtr.Zero, 0, 0, 0))
             {
-                // if an exit has been requested, close the window
                 if (IsExiting)
                     Window.Close();
                 else
@@ -694,68 +637,36 @@ namespace SampleFramework
             }
         }
 
-        /// <summary>
-        /// Handles the ApplicationDeactivated event of the Window control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void Window_ApplicationDeactivated(object sender, EventArgs e)
         {
-            // check if the state has changed
             if (IsActive)
             {
-                // raise the event
                 IsActive = false;
                 OnDeactivated(EventArgs.Empty);
             }
         }
 
-        /// <summary>
-        /// Handles the ApplicationActivated event of the Window control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void Window_ApplicationActivated(object sender, EventArgs e)
         {
-            // check if the state has changed
             if (!IsActive)
             {
-                // raise the event
                 IsActive = true;
                 OnActivated(EventArgs.Empty);
             }
         }
 
-        /// <summary>
-        /// Handles the Paint event of the Window control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Forms.PaintEventArgs"/> instance containing the event data.</param>
         void Window_Paint(object sender, PaintEventArgs e)
         {
-            // draw a frame
             DrawFrame();
         }
 
-        /// <summary>
-        /// Handles the Resume event of the Window control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void Window_Resume(object sender, EventArgs e)
         {
-            // resume the clock
             clock.Resume();
         }
 
-        /// <summary>
-        /// Handles the Suspend event of the Window control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void Window_Suspend(object sender, EventArgs e)
         {
-            // suspend the clock
             clock.Suspend();
         }
     }

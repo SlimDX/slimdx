@@ -37,14 +37,12 @@ namespace SampleFramework
     /// </summary>
     public class GraphicsDeviceManager : IDisposable
     {
-        // general variables
         Game game;
         bool ignoreSizeChanges;
         bool deviceLost;
         bool doNotStoreBufferSize;
         bool renderingOccluded;
 
-        // cached window data
         int fullscreenWindowWidth;
         int fullscreenWindowHeight;
         int windowedWindowWidth;
@@ -168,22 +166,17 @@ namespace SampleFramework
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="game"/> is <c>null</c>.</exception>
         public GraphicsDeviceManager(Game game)
         {
-            // error checking
             if (game == null)
                 throw new ArgumentNullException("game");
 
-            // store the game reference
             this.game = game;
 
-            // hook up window events
             game.Window.ScreenChanged += Window_ScreenChanged;
             game.Window.UserResized += Window_UserResized;
 
-            // hook up game events
             game.FrameStart += game_FrameStart;
             game.FrameEnd += game_FrameEnd;
 
-            // create the managers
             Direct3D9 = new Direct3D9Manager(this);
             Direct3D10 = new Direct3D10Manager(this);
         }
@@ -193,7 +186,6 @@ namespace SampleFramework
         /// </summary>
         public void Dispose()
         {
-            // call the overload
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -208,29 +200,23 @@ namespace SampleFramework
         /// <exception cref="DeviceCreationException">Thrown when device creation fails.</exception>
         public void ChangeDevice(DeviceSettings settings, DeviceSettings minimumSettings)
         {
-            // error checking
             if (settings == null)
                 throw new ArgumentNullException("settings");
 
-            // propogate the minimum settings
             Enumeration9.MinimumSettings = minimumSettings;
             Enumeration10.MinimumSettings = minimumSettings;
 
-            // find valid device settings
             DeviceSettings validSettings = DeviceSettings.FindValidSettings(settings);
 
-            // ensure that the correct window is placed into the settings
             if (validSettings.DeviceVersion == DeviceVersion.Direct3D9)
                 validSettings.Direct3D9.PresentParameters.DeviceWindowHandle = game.Window.Handle;
             else
             {
-                // set the output handle
                 SwapChainDescription scd = validSettings.Direct3D10.SwapChainDescription;
                 scd.OutputHandle = game.Window.Handle;
                 validSettings.Direct3D10.SwapChainDescription = scd;
             }
 
-            // create the device
             CreateDevice(validSettings);
         }
 
@@ -245,14 +231,12 @@ namespace SampleFramework
         /// <exception cref="DeviceCreationException">Thrown when device creation fails.</exception>
         public void ChangeDevice(DeviceVersion deviceVersion, bool windowed, int desiredWidth, int desiredHeight)
         {
-            // build up device settings
             DeviceSettings desiredSettings = new DeviceSettings();
             desiredSettings.DeviceVersion = deviceVersion;
             desiredSettings.Windowed = windowed;
             desiredSettings.BackBufferWidth = desiredWidth;
             desiredSettings.BackBufferHeight = desiredHeight;
 
-            // construct the device
             ChangeDevice(desiredSettings, null);
         }
 
@@ -265,7 +249,6 @@ namespace SampleFramework
         /// <exception cref="DeviceCreationException">Thrown when device creation fails.</exception>
         public void ChangeDevice(DeviceSettings settings)
         {
-            // call the overload
             ChangeDevice(settings, null);
         }
 
@@ -277,25 +260,19 @@ namespace SampleFramework
         /// <exception cref="DeviceCreationException">Thrown when device creation fails.</exception>
         public void ToggleFullScreen()
         {
-            // error checking
             if (!EnsureDevice())
                 throw new InvalidOperationException("No valid device.");
 
-            // set up the new settings
             DeviceSettings newSettings = CurrentSettings.Clone();
 
-            // flip the bit
             newSettings.Windowed = !newSettings.Windowed;
 
-            // go back to the previous size
             int width = newSettings.Windowed ? windowedWindowWidth : fullscreenWindowWidth;
             int height = newSettings.Windowed ? windowedWindowHeight : fullscreenWindowHeight;
 
-            // store the size
             newSettings.BackBufferWidth = width;
             newSettings.BackBufferHeight = height;
 
-            // change the device
             ChangeDevice(newSettings);
         }
 
@@ -305,15 +282,12 @@ namespace SampleFramework
         /// <returns><c>true</c> if the device is in a valid state; otherwise, <c>false</c>.</returns>
         public bool EnsureDevice()
         {
-            // make sure we have a device
             if (Direct3D10.Device != null)
                 return true;
 
-            // if we have a D3D9 device, ensure that it is not lost
             if (Direct3D9.Device != null && !deviceLost)
                 return true;
 
-            // otherwise, no good
             return false;
         }
 
@@ -323,28 +297,17 @@ namespace SampleFramework
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            // check if we should dispose of managed resources
             if (disposing)
-            {
-                // release the devices
                 ReleaseDevice();
-            }
         }
 
-        /// <summary>
-        /// Creates the device.
-        /// </summary>
-        /// <param name="settings">The settings.</param>
         void CreateDevice(DeviceSettings settings)
         {
-            // store the old settings
             DeviceSettings oldSettings = CurrentSettings;
             CurrentSettings = settings;
 
-            // ignore size changes
             ignoreSizeChanges = true;
 
-            // check if we are keeping the current window size
             bool keepCurrentWindowSize = false;
             if (settings.BackBufferWidth == 0 && settings.BackBufferHeight == 0)
                 keepCurrentWindowSize = true;
@@ -355,22 +318,18 @@ namespace SampleFramework
                 // check if we are going to windowed or fullscreen mode
                 if (settings.Windowed)
                 {
-                    // check if we have old settings
                     if (oldSettings != null && !oldSettings.Windowed)
                         NativeMethods.SetWindowLong(game.Window.Handle, WindowConstants.GWL_STYLE, (uint)windowedStyle);
                 }
                 else
                 {
-                    // check if we have old settings
                     if (oldSettings == null || oldSettings.Windowed)
                     {
-                        // save windowed settings
                         savedTopmost = game.Window.TopMost;
                         long style = NativeMethods.GetWindowLong(game.Window.Handle, WindowConstants.GWL_STYLE);
                         style &= ~WindowConstants.WS_MAXIMIZE & ~WindowConstants.WS_MINIMIZE;
                         windowedStyle = style;
 
-                        // save window placement
                         windowedPlacement = new WINDOWPLACEMENT();
                         windowedPlacement.length = WINDOWPLACEMENT.Length;
                         NativeMethods.GetWindowPlacement(game.Window.Handle, ref windowedPlacement);
@@ -380,7 +339,6 @@ namespace SampleFramework
                     game.Window.Hide();
                     NativeMethods.SetWindowLong(game.Window.Handle, WindowConstants.GWL_STYLE, (uint)(WindowConstants.WS_POPUP | WindowConstants.WS_SYSMENU));
 
-                    // get the placement of the window
                     WINDOWPLACEMENT placement = new WINDOWPLACEMENT();
                     placement.length = WINDOWPLACEMENT.Length;
                     NativeMethods.GetWindowPlacement(game.Window.Handle, ref placement);
@@ -396,23 +354,18 @@ namespace SampleFramework
                 }
             }
 
-            // check if we are windowed now or full screen
             if (settings.Windowed)
             {
-                // check if we have old settings
                 if (oldSettings != null && !oldSettings.Windowed)
                 {
-                    // store the old size of the window
                     fullscreenWindowWidth = oldSettings.BackBufferWidth;
                     fullscreenWindowHeight = oldSettings.BackBufferHeight;
                 }
             }
             else
             {
-                // check if we have old settings
                 if (oldSettings != null && oldSettings.Windowed)
                 {
-                    // save the old windowed size
                     windowedWindowWidth = oldSettings.BackBufferWidth;
                     windowedWindowHeight = oldSettings.BackBufferHeight;
                 }
@@ -424,26 +377,21 @@ namespace SampleFramework
             if (canReset)
                 result = ResetDevice();
 
-            // check if we need to do a recreate
             if (result == SlimDX.Direct3D9.ResultCode.DeviceLost)
                 deviceLost = true;
             else if (!canReset || result.IsFailure)
             {
-                // release the old device
                 if (oldSettings != null)
                     ReleaseDevice();
 
-                // initialize the new device
                 InitializeDevice();
             }
 
-            // update device stats
             UpdateDeviceInformation();
 
             // check if we changed from fullscreen to windowed mode
             if (settings.DeviceVersion == DeviceVersion.Direct3D9 && oldSettings != null && !oldSettings.Windowed && settings.Windowed)
             {
-                // restore old settings
                 NativeMethods.SetWindowPlacement(game.Window.Handle, ref windowedPlacement);
                 game.Window.TopMost = savedTopmost;
             }
@@ -451,12 +399,10 @@ namespace SampleFramework
             // check if we need to resize
             if (settings.Windowed && !keepCurrentWindowSize)
             {
-                // check the new state of the window
                 int width;
                 int height;
                 if (NativeMethods.IsIconic(game.Window.Handle))
                 {
-                    // get the placement of the window
                     WINDOWPLACEMENT placement = new WINDOWPLACEMENT();
                     placement.length = WINDOWPLACEMENT.Length;
                     NativeMethods.GetWindowPlacement(game.Window.Handle, ref placement);
@@ -464,33 +410,27 @@ namespace SampleFramework
                     // check if we are being restored
                     if ((placement.flags & WindowConstants.WPF_RESTORETOMAXIMIZED) != 0 && placement.showCmd == WindowConstants.SW_SHOWMINIMIZED)
                     {
-                        // show the window
                         NativeMethods.ShowWindow(game.Window.Handle, WindowConstants.SW_RESTORE);
 
-                        // grab the client rectangle
                         Rectangle rect = NativeMethods.GetClientRectangle(game.Window.Handle);
 
-                        // update the rectangle and reshow the window
                         width = rect.Width;
                         height = rect.Height;
                         NativeMethods.ShowWindow(game.Window.Handle, WindowConstants.SW_MINIMIZE);
                     }
                     else
                     {
-                        // grab the rectangle and adjust it
                         NativeRectangle frame = new NativeRectangle();
                         NativeMethods.AdjustWindowRect(ref frame, (uint)windowedStyle, false);
                         int frameWidth = frame.right - frame.left;
                         int frameHeight = frame.bottom - frame.top;
 
-                        // update the size
                         width = placement.rcNormalPosition.right - placement.rcNormalPosition.left - frameWidth;
                         height = placement.rcNormalPosition.bottom - placement.rcNormalPosition.top - frameHeight;
                     }
                 }
                 else
                 {
-                    // grab the client rectangle and adjust the size
                     Rectangle rect = NativeMethods.GetClientRectangle(game.Window.Handle);
                     width = rect.Width;
                     height = rect.Height;
@@ -500,45 +440,38 @@ namespace SampleFramework
                 if (width != settings.BackBufferWidth ||
                     height != settings.BackBufferHeight)
                 {
-                    // check the state of the window
                     if (NativeMethods.IsIconic(game.Window.Handle))
                         NativeMethods.ShowWindow(game.Window.Handle, WindowConstants.SW_RESTORE);
                     if (NativeMethods.IsZoomed(game.Window.Handle))
                         NativeMethods.ShowWindow(game.Window.Handle, WindowConstants.SW_RESTORE);
 
-                    // grab the rectangle and adjust it for the new size
                     NativeRectangle rect = new NativeRectangle();
                     rect.right = settings.BackBufferWidth;
                     rect.bottom = settings.BackBufferHeight;
                     NativeMethods.AdjustWindowRect(ref rect,
                         NativeMethods.GetWindowLong(game.Window.Handle, WindowConstants.GWL_STYLE), false);
 
-                    // set the window's size
                     NativeMethods.SetWindowPos(game.Window.Handle, IntPtr.Zero, 0, 0, rect.right - rect.left,
                         rect.bottom - rect.top, WindowConstants.SWP_NOZORDER | WindowConstants.SWP_NOMOVE);
 
-                    // grab the client rectangle
                     Rectangle r = NativeMethods.GetClientRectangle(game.Window.Handle);
                     int clientWidth = r.Width;
                     int clientHeight = r.Height;
 
-                    // check if the size was modified by windows
+                    // check if the size was modified by Windows
                     if (clientWidth != settings.BackBufferWidth ||
                         clientHeight != settings.BackBufferHeight)
                     {
-                        // build up the new settings
                         DeviceSettings newSettings = CurrentSettings.Clone();
                         newSettings.BackBufferWidth = 0;
                         newSettings.BackBufferHeight = 0;
                         if (newSettings.Direct3D9 != null)
                         {
-                            // clear out the old size information
                             newSettings.Direct3D9.PresentParameters.BackBufferWidth = 0;
                             newSettings.Direct3D9.PresentParameters.BackBufferHeight = 0;
                         }
                         if (newSettings.Direct3D10 != null)
                         {
-                            // clear out the old size information
                             SwapChainDescription scd = newSettings.Direct3D10.SwapChainDescription;
                             ModeDescription md = scd.ModeDescription;
                             md.Width = 0;
@@ -547,7 +480,6 @@ namespace SampleFramework
                             newSettings.Direct3D10.SwapChainDescription = scd;
                         }
 
-                        // create the device
                         CreateDevice(newSettings);
                     }
                 }
@@ -563,33 +495,22 @@ namespace SampleFramework
             else
                 NativeMethods.SetThreadExecutionState(WindowConstants.ES_CONTINUOUS);
 
-            // we are done with changes, allow size changes to be processed again
             ignoreSizeChanges = false;
         }
 
-        /// <summary>
-        /// Handles the UserResized event of the Window control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void Window_UserResized(object sender, EventArgs e)
         {
-            // skip the check for various reasons
             if (ignoreSizeChanges || !EnsureDevice() ||
                 (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9 && !IsWindowed))
                 return;
 
-            // clone the settings
             DeviceSettings newSettings = CurrentSettings.Clone();
 
-            // check the version
             if (newSettings.DeviceVersion == DeviceVersion.Direct3D9)
             {
-                // get the client rectangle
                 Rectangle rect = NativeMethods.GetClientRectangle(game.Window.Handle);
                 if (rect.Width != newSettings.BackBufferWidth || rect.Height != newSettings.BackBufferHeight)
                 {
-                    // recreate the device
                     newSettings.BackBufferWidth = 0;
                     newSettings.BackBufferHeight = 0;
                     newSettings.Direct3D9.PresentParameters.BackBufferWidth = 0;
@@ -599,7 +520,6 @@ namespace SampleFramework
             }
             else
             {
-                // update the window size
                 bool fullscreen;
                 Output output;
                 Direct3D10.SwapChain.GetFullScreenState(out fullscreen, out output);
@@ -608,21 +528,13 @@ namespace SampleFramework
             }
         }
 
-        /// <summary>
-        /// Handles the ScreenChanged event of the Window control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void Window_ScreenChanged(object sender, EventArgs e)
         {
-            // skip the check for various reasons
             if (!EnsureDevice() || !CurrentSettings.Windowed || ignoreSizeChanges)
                 return;
 
-            // check for changes
             IntPtr windowMonitor = NativeMethods.MonitorFromWindow(game.Window.Handle, WindowConstants.MONITOR_DEFAULTTOPRIMARY);
 
-            // get the new ordinals
             DeviceSettings newSettings = CurrentSettings.Clone();
             int adapterOrdinal = GetAdapterOrdinal(windowMonitor);
             if (adapterOrdinal == -1)
@@ -637,28 +549,19 @@ namespace SampleFramework
                     return;
             }
 
-            // change the device
             CreateDevice(newSettings);
         }
 
-        /// <summary>
-        /// Handles the FrameEnd event of the game control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void game_FrameEnd(object sender, EventArgs e)
         {
-            // check the device version
             if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
             {
-                // present the frame
                 Result result = Direct3D9.Device.Present();
                 if (result == SlimDX.Direct3D9.ResultCode.DeviceLost)
                     deviceLost = true;
             }
             else
             {
-                // present the frame
                 SlimDX.DXGI.PresentFlags flags = SlimDX.DXGI.PresentFlags.None;
                 if (renderingOccluded)
                     flags = SlimDX.DXGI.PresentFlags.Test;
@@ -666,7 +569,6 @@ namespace SampleFramework
                     flags = CurrentSettings.Direct3D10.PresentFlags;
                 Result result = Direct3D10.SwapChain.Present(CurrentSettings.Direct3D10.SyncInterval, flags);
 
-                // check the result for errors or status updates
                 if (result == SlimDX.DXGI.ResultCode.Occluded)
                     renderingOccluded = true;
                 else if (result == SlimDX.DXGI.ResultCode.DeviceReset)
@@ -676,33 +578,22 @@ namespace SampleFramework
             }
         }
 
-        /// <summary>
-        /// Handles the FrameStart event of the game control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.ComponentModel.CancelEventArgs"/> instance containing the event data.</param>
         void game_FrameStart(object sender, CancelEventArgs e)
         {
-            // make sure we have a valid device
             if (Direct3D9.Device == null && Direct3D10.Device == null)
             {
-                // nothing to render
                 e.Cancel = true;
                 return;
             }
 
-            // if the device is lost or the game is not active, sleep for a bit
             if (!game.IsActive || deviceLost)
                 Thread.Sleep(50);
 
-            // if the device is lost, see if we can do something about it
             if (deviceLost)
             {
-                // test to see if it's ok to render again
                 Result result = Direct3D9.Device.TestCooperativeLevel();
                 if (result == SlimDX.Direct3D9.ResultCode.DeviceLost)
                 {
-                    // device is lost but cannot be reset at this time
                     e.Cancel = true;
                     return;
                 }
@@ -711,11 +602,9 @@ namespace SampleFramework
                 // changed the desktop format, causing a lost device
                 if (IsWindowed)
                 {
-                    // get the current display mode
                     DisplayMode displayMode = GraphicsDeviceManager.Direct3D9Object.GetAdapterDisplayMode(CurrentSettings.Direct3D9.AdapterOrdinal);
                     if (CurrentSettings.Direct3D9.AdapterFormat != displayMode.Format)
                     {
-                        // create the new device
                         DeviceSettings newSettings = CurrentSettings.Clone();
                         ChangeDevice(newSettings);
                         e.Cancel = true;
@@ -723,35 +612,22 @@ namespace SampleFramework
                     }
                 }
 
-                // try to reset the device
                 result = ResetDevice();
                 if (result.IsFailure)
                 {
-                    // device is still lost
                     e.Cancel = true;
                     return;
                 }
             }
 
-            // if we made it to this point, the device is no longer lost
             deviceLost = false;
         }
 
-        /// <summary>
-        /// Determines whether the device can be reset.
-        /// </summary>
-        /// <param name="oldSettings">The old settings.</param>
-        /// <param name="newSettings">The new settings.</param>
-        /// <returns>
-        /// 	<c>true</c> if the device can be reset; otherwise, <c>false</c>.
-        /// </returns>
         bool CanDeviceBeReset(DeviceSettings oldSettings, DeviceSettings newSettings)
         {
-            // make sure we have old settings and that the two versions are equal
             if (oldSettings == null || oldSettings.DeviceVersion != newSettings.DeviceVersion)
                 return false;
 
-            // check the device to see if it can be reset
             if (oldSettings.DeviceVersion == DeviceVersion.Direct3D9)
                 return Direct3D9.Device != null &&
                     oldSettings.Direct3D9.AdapterOrdinal == newSettings.Direct3D9.AdapterOrdinal &&
@@ -766,115 +642,84 @@ namespace SampleFramework
                     oldSettings.Direct3D10.SwapChainDescription.SampleDescription.Quality == newSettings.Direct3D10.SwapChainDescription.SampleDescription.Quality;
         }
 
-        /// <summary>
-        /// Initializes the device.
-        /// </summary>
         void InitializeDevice()
         {
             try
             {
-                // create the correct device based upon the version
                 if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
                 {
-                    // ensure that D3D9 is initialized
                     EnsureD3D9();
 
-                    // create the device
                     Direct3D9.Device = new SlimDX.Direct3D9.Device(Direct3D9Object, CurrentSettings.Direct3D9.AdapterOrdinal,
                         CurrentSettings.Direct3D9.DeviceType, game.Window.Handle,
                         CurrentSettings.Direct3D9.CreationFlags, CurrentSettings.Direct3D9.PresentParameters);
 
-                    // check for a device lost scenario
                     if (Result.Last == SlimDX.Direct3D9.ResultCode.DeviceLost)
                     {
-                        // device is lost
                         deviceLost = true;
                         return;
                     }
                 }
                 else
                 {
-                    // ensure that D3D10 is initialized
                     EnsureD3D10();
 
-                    // clear window associations
                     Factory.SetWindowAssociation(IntPtr.Zero, WindowAssociationFlags.None);
 
-                    // create the device
                     Adapter adapter = null;
                     if (CurrentSettings.Direct3D10.DriverType == DriverType.Hardware)
                         adapter = Factory.GetAdapter(CurrentSettings.Direct3D10.AdapterOrdinal);
                     Direct3D10.Device = new SlimDX.Direct3D10.Device(adapter, CurrentSettings.Direct3D10.DriverType, CurrentSettings.Direct3D10.CreationFlags);
 
-                    // create the swap chain
                     Direct3D10.SwapChain = new SlimDX.DXGI.SwapChain(Factory, Direct3D10.Device, CurrentSettings.Direct3D10.SwapChainDescription);
 
-                    // setup render target and views
                     SetupD3D10Views();
                 }
             }
             catch (Exception e)
             {
-                // wrap the exception in one more user-friendly
                 throw new DeviceCreationException("Could not create graphics device.", e);
             }
 
-            // propogate the settings
             PropogateSettings();
 
-            // update device stats
             UpdateDeviceStats();
 
-            // raise events
             game.Initialize();
             game.LoadContent();
         }
 
-        /// <summary>
-        /// Resets the device.
-        /// </summary>
-        /// <returns>The result of the operation.</returns>
         Result ResetDevice()
         {
-            // raise the event
             game.UnloadContent();
 
-            // reset the correct device based upong the version
             if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
             {
-                // make sure D3D10 is released
                 ReleaseDevice10();
 
-                // reset the device
                 Result result = Direct3D9.Device.Reset(CurrentSettings.Direct3D9.PresentParameters);
                 if (result == SlimDX.Direct3D9.ResultCode.DeviceLost)
                     return result;
             }
             else
             {
-                // make sure D3D9 is released
                 ReleaseDevice9();
 
-                // resize the render target, just in case the size has changed
                 DeviceSettings newSettings = CurrentSettings.Clone();
                 if (IsWindowed && Direct3D10.SwapChain.Description.IsWindowed)
                 {
-                    // set the size of the swap chain to be the size of the window
                     SwapChainDescription scd = newSettings.Direct3D10.SwapChainDescription;
                     ModeDescription md = scd.ModeDescription;
                     md.Width = game.Window.ClientSize.Width;
                     md.Height = game.Window.ClientSize.Height;
                 }
 
-                // check if the app is trying to switch full screen state
                 if (Direct3D10.SwapChain.Description.IsWindowed != newSettings.Direct3D10.SwapChainDescription.IsWindowed)
                 {
-                    // set the fullscreen state
                     if (newSettings.Direct3D10.SwapChainDescription.IsWindowed)
                         Direct3D10.SwapChain.SetFullScreenState(false, null);
                     else
                     {
-                        // change the state, and then change the resolution to match
                         doNotStoreBufferSize = true;
                         Direct3D10.SwapChain.SetFullScreenState(true, null);
                         doNotStoreBufferSize = false;
@@ -883,7 +728,6 @@ namespace SampleFramework
                 }
                 else
                 {
-                    // check if we need to resize the buffers
                     if (newSettings.Direct3D10.SwapChainDescription.ModeDescription.Width == Direct3D10.SwapChain.Description.ModeDescription.Width &&
                         newSettings.Direct3D10.SwapChainDescription.ModeDescription.Height == Direct3D10.SwapChain.Description.ModeDescription.Height &&
                         newSettings.Direct3D10.SwapChainDescription.ModeDescription.Format != Direct3D10.SwapChain.Description.ModeDescription.Format)
@@ -894,73 +738,48 @@ namespace SampleFramework
                 }
             }
 
-            // propogate the settings
             PropogateSettings();
-
-            // update device stats
             UpdateDeviceStats();
-
-            // raise the event
             game.LoadContent();
 
-            // return the last result
             return Result.Last;
         }
 
-        /// <summary>
-        /// Releases the device.
-        /// </summary>
         void ReleaseDevice()
         {
-            // ensure that both devices are released
             ReleaseDevice9();
             ReleaseDevice10();
         }
 
-        /// <summary>
-        /// Releases the Direct3D9 device.
-        /// </summary>
         void ReleaseDevice9()
         {
-            // make sure we have a device
             if (Direct3D9.Device == null)
                 return;
 
-            // inform the game
             if (game != null)
             {
-                // inform the game
                 game.UnloadContent();
                 game.Release();
             }
 
-            // release the device
             Direct3D9.Device.Dispose();
             Direct3D9Object.Dispose();
 
-            // clear references
             Direct3D9Object = null;
             Direct3D9.Device = null;
         }
 
-        /// <summary>
-        /// Releases the Direct3D10 device.
-        /// </summary>
         void ReleaseDevice10()
         {
-            // make sure we have a device
             if (Direct3D10.Device == null)
                 return;
 
-            // inform the game
             if (game != null)
             {
-                // inform the game
                 game.UnloadContent();
                 game.Release();
             }
 
-            // release the old depth stencil stuff
             if (Direct3D10.DepthStencil != null)
                 Direct3D10.DepthStencil.Dispose();
             Direct3D10.DepthStencil = null;
@@ -968,17 +787,14 @@ namespace SampleFramework
                 Direct3D10.DepthStencilView.Dispose();
             Direct3D10.DepthStencilView = null;
 
-            // release the old render target view
             if (Direct3D10.RenderTarget != null)
                 Direct3D10.RenderTarget.Dispose();
             Direct3D10.RenderTarget = null;
 
-            // release the old rasterizer state
             if (Direct3D10.RasterizerState != null)
                 Direct3D10.RasterizerState.Dispose();
             Direct3D10.RasterizerState = null;
 
-            // release the swap chain
             if (Direct3D10.SwapChain != null)
             {
                 Direct3D10.SwapChain.SetFullScreenState(false, null);
@@ -986,24 +802,17 @@ namespace SampleFramework
             }
             Direct3D10.SwapChain = null;
 
-            // release the device
             Direct3D10.Device.Dispose();
             Factory.Dispose();
 
-            // clear references
             Direct3D10.Device = null;
             Factory = null;
         }
 
-        /// <summary>
-        /// Propogates the settings.
-        /// </summary>
         void PropogateSettings()
         {
-            // propogate new settings into the current settings account
             if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
             {
-                // propogate settings
                 CurrentSettings.BackBufferCount = CurrentSettings.Direct3D9.PresentParameters.BackBufferCount;
                 CurrentSettings.BackBufferWidth = CurrentSettings.Direct3D9.PresentParameters.BackBufferWidth;
                 CurrentSettings.BackBufferHeight = CurrentSettings.Direct3D9.PresentParameters.BackBufferHeight;
@@ -1017,7 +826,6 @@ namespace SampleFramework
             }
             else
             {
-                // propogate settings
                 CurrentSettings.BackBufferCount = CurrentSettings.Direct3D10.SwapChainDescription.BufferCount;
                 CurrentSettings.BackBufferWidth = CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Width;
                 CurrentSettings.BackBufferHeight = CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Height;
@@ -1031,18 +839,12 @@ namespace SampleFramework
             }
         }
 
-        /// <summary>
-        /// Updates the device information.
-        /// </summary>
         void UpdateDeviceInformation()
         {
-            // build up the device information
             StringBuilder builder = new StringBuilder();
 
-            // check the device version
             if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
             {
-                // print out device description
                 if (CurrentSettings.Direct3D9.DeviceType == DeviceType.Hardware)
                     builder.Append("HAL");
                 else if (CurrentSettings.Direct3D9.DeviceType == DeviceType.Reference)
@@ -1050,7 +852,6 @@ namespace SampleFramework
                 else if (CurrentSettings.Direct3D9.DeviceType == DeviceType.Software)
                     builder.Append("SW");
 
-                // print out the vertex processing information
                 if ((CurrentSettings.Direct3D9.CreationFlags & CreateFlags.HardwareVertexProcessing) != 0)
                     if (CurrentSettings.Direct3D9.DeviceType == DeviceType.Hardware)
                         builder.Append(" (hw vp)");
@@ -1064,16 +865,13 @@ namespace SampleFramework
                 else
                     builder.Append(" (sw vp)");
 
-                // append the adapter description
                 if (CurrentSettings.Direct3D9.DeviceType == DeviceType.Hardware)
                 {
                     // loop through each adapter until we find the right one
                     foreach (AdapterInfo9 adapterInfo in Enumeration9.Adapters)
                     {
-                        // check for a match
                         if (adapterInfo.AdapterOrdinal == CurrentSettings.Direct3D9.AdapterOrdinal)
                         {
-                            // found it
                             builder.AppendFormat(": {0}", adapterInfo.Description);
                             break;
                         }
@@ -1082,7 +880,6 @@ namespace SampleFramework
             }
             else
             {
-                // print out device description
                 if (CurrentSettings.Direct3D10.DriverType == DriverType.Hardware)
                     builder.Append("HARDWARE");
                 else if (CurrentSettings.Direct3D10.DriverType == DriverType.Reference)
@@ -1090,16 +887,12 @@ namespace SampleFramework
                 else if (CurrentSettings.Direct3D10.DriverType == DriverType.Software)
                     builder.Append("SOFTWARE");
 
-                // append the adapter description
                 if (CurrentSettings.Direct3D10.DriverType == DriverType.Hardware)
                 {
-                    // loop through each adapter until we find the right one
                     foreach (AdapterInfo10 adapterInfo in Enumeration10.Adapters)
                     {
-                        // check for a match
                         if (adapterInfo.AdapterOrdinal == CurrentSettings.Direct3D10.AdapterOrdinal)
                         {
-                            // found it
                             builder.AppendFormat(": {0}", adapterInfo.Description);
                             break;
                         }
@@ -1107,34 +900,24 @@ namespace SampleFramework
                 }
             }
 
-            // store the device information
             DeviceInformation = builder.ToString();
         }
 
-        /// <summary>
-        /// Updates the device stats.
-        /// </summary>
         void UpdateDeviceStats()
         {
-            // build up the static frame stats
             StringBuilder builder = new StringBuilder();
 
-            // check the device version
             if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
             {
-                // initial information
                 builder.Append("D3D9 Vsync ");
 
-                // print out the vsync status
                 if (CurrentSettings.Direct3D9.PresentParameters.PresentationInterval == PresentInterval.Immediate)
                     builder.Append("off");
                 else
                     builder.Append("on");
 
-                // print out the resolution
                 builder.AppendFormat(" ({0}x{1}), ", CurrentSettings.Direct3D9.PresentParameters.BackBufferWidth, CurrentSettings.Direct3D9.PresentParameters.BackBufferHeight);
 
-                // print out the back buffer and adapter format
                 if (CurrentSettings.Direct3D9.AdapterFormat == CurrentSettings.Direct3D9.PresentParameters.BackBufferFormat)
                     builder.Append(Enum.GetName(typeof(SlimDX.Direct3D9.Format), CurrentSettings.Direct3D9.AdapterFormat));
                 else
@@ -1142,10 +925,8 @@ namespace SampleFramework
                         Enum.GetName(typeof(SlimDX.Direct3D9.Format), CurrentSettings.Direct3D9.AdapterFormat),
                         Enum.GetName(typeof(SlimDX.Direct3D9.Format), CurrentSettings.Direct3D9.PresentParameters.BackBufferFormat));
 
-                // print out the depth / stencil format
                 builder.AppendFormat(" ({0})", Enum.GetName(typeof(SlimDX.Direct3D9.Format), CurrentSettings.Direct3D9.PresentParameters.AutoDepthStencilFormat));
 
-                // print out the multisample state
                 if (CurrentSettings.Direct3D9.PresentParameters.Multisample == MultisampleType.NonMaskable)
                     builder.Append(" (Nonmaskable Multisample)");
                 else if (CurrentSettings.Direct3D9.PresentParameters.Multisample != MultisampleType.None)
@@ -1153,67 +934,48 @@ namespace SampleFramework
             }
             else
             {
-                // initial information
                 builder.Append("D3D10 Vsync ");
 
-                // print out the vsync status
                 if (CurrentSettings.Direct3D10.SyncInterval == 0)
                     builder.Append("off");
                 else
                     builder.Append("on");
 
-                // print out the resolution
                 builder.AppendFormat(" ({0}x{1}), ", CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Width, CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Height);
-
-                // print out the back buffer format
                 builder.Append(Enum.GetName(typeof(SlimDX.DXGI.Format), CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Format));
-
-                // print out the multisample state
                 builder.AppendFormat(" (MS{0}, Q{1})", CurrentSettings.Direct3D10.SwapChainDescription.SampleDescription.Count,
                     CurrentSettings.Direct3D10.SwapChainDescription.SampleDescription.Quality);
             }
 
-            // store the static frame stats
             DeviceStatistics = builder.ToString();
         }
 
-        /// <summary>
-        /// Resizes the DXGI buffers.
-        /// </summary>
         void ResizeDXGIBuffers(int width, int height, bool fullscreen)
         {
-            // set the windowed state
             SwapChainDescription scd = CurrentSettings.Direct3D10.SwapChainDescription;
             scd.IsWindowed = !fullscreen;
             CurrentSettings.Direct3D10.SwapChainDescription = scd;
 
-            // release the old depth stencil stuff
             Direct3D10.DepthStencil.Dispose();
             Direct3D10.DepthStencil = null;
             Direct3D10.DepthStencilView.Dispose();
             Direct3D10.DepthStencilView = null;
 
-            // release the old render target view
             Direct3D10.RenderTarget.Dispose();
             Direct3D10.RenderTarget = null;
 
-            // release the old rasterizer state
             Direct3D10.RasterizerState.Dispose();
             Direct3D10.RasterizerState = null;
 
-            // figure out which flags we want
             SwapChainFlags flag = SwapChainFlags.None;
             if (fullscreen)
                 flag = SwapChainFlags.AllowModeSwitch;
 
-            // resize the buffers
             Direct3D10.SwapChain.ResizeBuffers(CurrentSettings.Direct3D10.SwapChainDescription.BufferCount, width, height,
                 CurrentSettings.Direct3D10.SwapChainDescription.ModeDescription.Format, flag);
 
-            // check if we should store the size
             if (!doNotStoreBufferSize)
             {
-                // store the size
                 ModeDescription md = scd.ModeDescription;
                 md.Width = game.Window.ClientSize.Width;
                 md.Height = game.Window.ClientSize.Height;
@@ -1221,19 +983,13 @@ namespace SampleFramework
                 CurrentSettings.Direct3D10.SwapChainDescription = scd;
             }
 
-            // set up the views
             SetupD3D10Views();
         }
 
-        /// <summary>
-        /// Sets up the Direct3D10 render target and viewport.
-        /// </summary>
         void SetupD3D10Views()
         {
-            // grab the back buffer and description
             Texture2D backBuffer = Direct3D10.SwapChain.GetBuffer<Texture2D>(0);
 
-            // set up the viewport to match the back buffer
             Viewport viewport = new Viewport();
             viewport.Width = backBuffer.Description.Width;
             viewport.Height = backBuffer.Description.Height;
@@ -1243,10 +999,8 @@ namespace SampleFramework
             viewport.Y = 0;
             Direct3D10.Device.Rasterizer.SetViewports(viewport);
 
-            // create the render target view
             Direct3D10.RenderTarget = new RenderTargetView(Direct3D10.Device, backBuffer);
 
-            // set up the depth / stencil surface
             Texture2DDescription desc = new Texture2DDescription();
             desc.Width = backBuffer.Description.Width;
             desc.Height = backBuffer.Description.Height;
@@ -1258,7 +1012,6 @@ namespace SampleFramework
             desc.BindFlags = BindFlags.DepthStencil;
             desc.CpuAccessFlags = CpuAccessFlags.None;
 
-            // create the surface and view
             DepthStencilViewDescription dsvd = new DepthStencilViewDescription();
             dsvd.Format = desc.Format;
             if (desc.SampleDescription.Count > 1)
@@ -1268,7 +1021,6 @@ namespace SampleFramework
             Direct3D10.DepthStencil = new Texture2D(Direct3D10.Device, desc);
             Direct3D10.DepthStencilView = new DepthStencilView(Direct3D10.Device, Direct3D10.DepthStencil, dsvd);
 
-            // create a default rasterizer state
             RasterizerStateDescription rsDesc = new RasterizerStateDescription();
             rsDesc.FillMode = SlimDX.Direct3D10.FillMode.Solid;
             rsDesc.CullMode = CullMode.Back;
@@ -1277,121 +1029,79 @@ namespace SampleFramework
             else
                 rsDesc.IsMultisampleEnabled = false;
 
-            // create the rasterizer state
             Direct3D10.RasterizerState = RasterizerState.FromDescription(Direct3D10.Device, rsDesc);
             Direct3D10.Device.Rasterizer.State = Direct3D10.RasterizerState;
 
-            // set the render targets
             Direct3D10.Device.OutputMerger.SetTargets(Direct3D10.DepthStencilView, Direct3D10.RenderTarget);
-
-            // clean up the back buffer
             backBuffer.Dispose();
         }
 
-        /// <summary>
-        /// Gets the adapter ordinal from the given screen.
-        /// </summary>
-        /// <param name="screen">The screen.</param>
-        /// <returns>The ordinal of the adapter that renders to the given screen.</returns>
         int GetAdapterOrdinal(IntPtr screen)
         {
-            // check the current device status
             if (CurrentSettings.DeviceVersion == DeviceVersion.Direct3D9)
             {
-                // loop through the adapters until we find the right one
                 AdapterInfo9 adapter = null;
                 foreach (AdapterInfo9 a in Enumeration9.Adapters)
                 {
-                    // check for a matching ordinal
                     if (Direct3D9Object.GetAdapterMonitor(a.AdapterOrdinal) == screen)
                     {
-                        // found a match
                         adapter = a;
                         break;
                     }
                 }
 
-                // return the found adapter
                 if (adapter != null)
                     return adapter.AdapterOrdinal;
             }
             else
             {
-                // loop through the adapters until we find the right one
                 AdapterInfo10 adapter = null;
                 foreach (AdapterInfo10 a in Enumeration10.Adapters)
                 {
-                    // loop through the outputs to look for a name
                     foreach (OutputInfo10 o in a.Outputs)
                     {
-                        // check for a match
                         if (o.OutputDescription.Name == game.Window.Screen.DeviceName)
                         {
-                            // found a match
                             adapter = a;
                             break;
                         }
                     }
                 }
 
-                // return the found adapter
                 if (adapter != null)
                     return adapter.AdapterOrdinal;
             }
 
-            // otherwise, not found
             return -1;
         }
 
-        /// <summary>
-        /// Gets the output ordinal from the given screen.
-        /// </summary>
-        /// <param name="screen">The screen.</param>
-        /// <returns>The ordinal of the output that renders to the given screen.</returns>
         static int GetOutputOrdinal(Screen screen)
         {
-            // find the right monitor
             foreach (AdapterInfo10 adapter in Enumeration10.Adapters)
             {
-                // loop through each output
                 foreach (OutputInfo10 output in adapter.Outputs)
                 {
-                    // check for a match
                     if (output.OutputDescription.Name == screen.DeviceName)
                         return output.OutputOrdinal;
                 }
             }
 
-            // otherwise, we couldn't find it
             return -1;
         }
 
-        /// <summary>
-        /// Ensures that Direct3D9 is initialized.
-        /// </summary>
         internal static void EnsureD3D9()
         {
-            // initialize Direct3D9 if we haven't already
             if (Direct3D9Object == null)
-            {
-                // create the object
                 Direct3D9Object = new Direct3D();
-            }
         }
 
-        /// <summary>
-        /// Ensures that Direct3D10 is initialized.
-        /// </summary>
         internal static void EnsureD3D10()
         {
-            // create the factory, if we don't have one yet
             if (Factory == null)
             {
-                // try to create a test device
                 SlimDX.Direct3D10.Device device = new SlimDX.Direct3D10.Device(DeviceCreationFlags.None);
                 device.Dispose();
 
-                // create the factory
                 Factory = new Factory();
             }
         }

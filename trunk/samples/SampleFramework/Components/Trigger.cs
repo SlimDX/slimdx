@@ -107,7 +107,6 @@ namespace SampleFramework
         /// <param name="duration">The duration.</param>
         public Trigger(float duration)
         {
-            // store variables
             Duration = duration;
         }
 
@@ -117,7 +116,6 @@ namespace SampleFramework
         /// <param name="activationPredicate">The activation predicate.</param>
         public Trigger(TriggerActivation activationPredicate)
         {
-            // store variables
             ActivationPredicate = activationPredicate;
         }
 
@@ -126,10 +124,8 @@ namespace SampleFramework
         /// </summary>
         public void Activate()
         {
-            // update the hit count
             HitCount++;
 
-            // call the event
             OnActivated(EventArgs.Empty);
         }
 
@@ -139,7 +135,6 @@ namespace SampleFramework
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected virtual void OnActivated(EventArgs e)
         {
-            // raise the event
             if (Activated != null)
                 Activated(this, e);
         }
