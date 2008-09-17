@@ -73,19 +73,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cameras\Camera.cs" />
+    <Compile Include="Utilities\Camera.cs" />
     <Compile Include="Components\GameComponentCollection.cs" />
     <Compile Include="Components\IGameComponent.cs" />
     <Compile Include="Components\Interpolator.cs" />
     <Compile Include="Components\Trigger.cs" />
-    <Compile Include="Controls\Button.cs" />
-    <Compile Include="Controls\CheckBox.cs" />
-    <Compile Include="Controls\Label.cs" />
-    <Compile Include="Controls\ListBox.cs" />
-    <Compile Include="Controls\RadioButton.cs" />
-    <Compile Include="Controls\ScrollBar.cs" />
-    <Compile Include="Controls\TextControl.cs">
-    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -105,17 +97,8 @@
     <Compile Include="DeviceSettings\Direct3D9Settings.cs" />
     <Compile Include="Enumeration\Enumeration10.cs" />
     <Compile Include="Enumeration\Enumeration9.cs" />
-    <Compile Include="Geometry\TransformedColoredTexturedVertex.cs" />
-    <Compile Include="Geometry\TransformedColoredVertex.cs" />
-    <Compile Include="Interface\BlendColor.cs" />
-    <Compile Include="Interface\CachedFont.cs" />
-    <Compile Include="Interface\Control.cs" />
-    <Compile Include="Interface\ControlCollection.cs" />
-    <Compile Include="Interface\Dialog.cs" />
-    <Compile Include="Interface\DialogCollection.cs" />
-    <Compile Include="Interface\DrawingElement.cs" />
-    <Compile Include="Interface\Enums.cs" />
-    <Compile Include="Interface\InterfaceManager.cs" />
+    <Compile Include="Utilities\TransformedColoredTexturedVertex.cs" />
+    <Compile Include="Utilities\TransformedColoredVertex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\DeviceCreationException.cs" />
     <Compile Include="Rendering\Direct3D10Manager.cs" />
@@ -124,7 +107,7 @@
     <Compile Include="Rendering\GraphicsDeviceManager.cs" />
     <Compile Include="Rendering\NoCompatibleDevicesException.cs" />
     <Compile Include="Components\ResourceCollection.cs" />
-    <Compile Include="Text\TextConsole.cs" />
+    <Compile Include="Utilities\TextConsole.cs" />
     <Compile Include="Win32\NativeMethods.cs" />
     <Compile Include="Win32\NativeStructures.cs" />
     <Compile Include="Win32\WindowConstants.cs" />

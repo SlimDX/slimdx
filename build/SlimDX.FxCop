@@ -25,6 +25,7 @@
   <AssemblyReferenceDirectories>
    <Directory>$(ProjectDir)/../games/Asteroids/Asteroids/bin/Debug/</Directory>
    <Directory>$(ProjectDir)/../samples/Direct3D10/MiniTri/bin/Debug/</Directory>
+   <Directory>$(ProjectDir)/../samples/Direct3D9/CustomUI/bin/x86/Debug/</Directory>
    <Directory>$(ProjectDir)/../samples/Direct3D9/MiniTri/bin/Debug/</Directory>
    <Directory>$(ProjectDir)/../samples/Direct3D9/SampleFramework/bin/Debug/</Directory>
    <Directory>$(ProjectDir)/../samples/Direct3D9/SampleFramework/bin/x86/Debug/</Directory>
@@ -39,7 +40,6 @@
   <Target Name="$(ProjectDir)/../samples/Direct3D10/EmptyProject/bin/x86/Debug/EmptyProject.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D10/MiniTri/bin/x86/Debug/MiniTri.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D10/SimpleTriangle/bin/x86/Debug/SimpleTriangle.exe" Analyze="True" AnalyzeAllChildren="True" />
-  <Target Name="$(ProjectDir)/../samples/Direct3D9/CustomUI/bin/x86/Debug/CustomUI.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/EmptyProject/bin/x86/Debug/EmptyProject.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/MiniTri/bin/x86/Debug/MiniTri.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/Particles/bin/x86/Debug/Particles.exe" Analyze="True" AnalyzeAllChildren="True" />
@@ -18142,39 +18142,6 @@
      </Module>
     </Modules>
    </Target>
-   <Target Name="$(ProjectDir)/../samples/Direct3D9/CustomUI/bin/x86/Debug/CustomUI.exe">
-    <Modules>
-     <Module Name="customui.exe">
-      <Namespaces>
-       <Namespace Name="CustomUI">
-        <Types>
-         <Type Name="CustomUI">
-          <Messages>
-           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Status="Excluded" Created="2008-09-11 20:36:25Z">
-            <Issue>
-             <Item>'CustomUI'</Item>
-             <Item>CustomUI</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#Window_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
-            <Messages>
-             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
-              <Issue Name="Member">
-               <Item>'CustomUI.Window_KeyDown(object, KeyEventArgs)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
    <Target Name="$(ProjectDir)/../samples/Direct3D9/EmptyProject/bin/x86/Debug/EmptyProject.exe">
     <Modules>
      <Module Name="emptyproject.exe">
@@ -19286,19 +19253,6 @@
       <Namespaces>
        <Namespace Name="SampleFramework">
         <Types>
-         <Type Name="BlendColor">
-          <Members>
-           <Member Name="#States">
-            <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-06-20 12:57:30Z">
-              <Issue>
-               <Item>'BlendColor.States'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="ConversionMethods">
           <Members>
            <Member Name="#ToFloat(SlimDX.Rational)">
@@ -19555,169 +19509,6 @@
             </Messages>
            </Member>
           </Members>
-         </Type>
-         <Type Name="InterfaceManager">
-          <Members>
-           <Member Name="#Control_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
-            <Messages>
-             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
-              <Issue Name="Member">
-               <Item>'InterfaceManager.Control_KeyDown(object, KeyEventArgs)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Control_KeyUp(System.Object,System.Windows.Forms.KeyEventArgs)">
-            <Messages>
-             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
-              <Issue Name="Member">
-               <Item>'InterfaceManager.Control_KeyUp(object, KeyEventArgs)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Control_MouseDown(System.Object,System.Windows.Forms.MouseEventArgs)">
-            <Messages>
-             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
-              <Issue Name="Member">
-               <Item>'InterfaceManager.Control_MouseDown(object, MouseEventArgs)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Control_MouseMove(System.Object,System.Windows.Forms.MouseEventArgs)">
-            <Messages>
-             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
-              <Issue Name="Member">
-               <Item>'InterfaceManager.Control_MouseMove(object, MouseEventArgs)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Control_MouseUp(System.Object,System.Windows.Forms.MouseEventArgs)">
-            <Messages>
-             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
-              <Issue Name="Member">
-               <Item>'InterfaceManager.Control_MouseUp(object, MouseEventArgs)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Control_MouseWheel(System.Object,System.Windows.Forms.MouseEventArgs)">
-            <Messages>
-             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
-              <Issue Name="Member">
-               <Item>'InterfaceManager.Control_MouseWheel(object, MouseEventArgs)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Dispose(System.Boolean)">
-            <Messages>
-             <Message Id="stateBlock" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Status="Excluded" Created="2008-06-20 13:14:57Z">
-              <Issue>
-               <Item>'InterfaceManager'</Item>
-               <Item>'InterfaceManager.stateBlock'</Item>
-               <Item>'StateBlock'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ToObject`1(System.String)">
-            <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2008-09-11 20:36:25Z">
-              <Issue>
-               <Item>'InterfaceManager.ToObject&lt;T&gt;(string)'</Item>
-               <Item>'T'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="ListBox">
-          <Members>
-           <Member Name="#.ctor()">
-            <Messages>
-             <Message Id="main" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-08-01 13:08:02Z">
-              <Issue>
-               <Item>'ListBox.ListBox()'</Item>
-               <Item>'main'</Item>
-               <Item>'DrawingElement'</Item>
-              </Issue>
-             </Message>
-             <Message Id="selection" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-08-01 13:08:02Z">
-              <Issue>
-               <Item>'ListBox.ListBox()'</Item>
-               <Item>'selection'</Item>
-               <Item>'DrawingElement'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#DeselectAll()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-06-24 01:53:02Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'ListBox.DeselectAll()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#DeselectItems()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-06-20 13:40:28Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'ListBox.DeselectItems()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#SelectAll()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-06-24 01:53:02Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'ListBox.SelectAll()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#SelectedIndices">
-            <Messages>
-             <Message Id="Indices" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-06-20 13:40:28Z">
-              <Issue Name="Member">
-               <Item>Indices</Item>
-               <Item>'ListBox.SelectedIndices'</Item>
-               <Item>Indexes</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#SelectItems(System.Collections.Generic.IEnumerable`1&lt;System.Int32&gt;)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-06-24 01:53:02Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'ListBox.SelectItems(IEnumerable&lt;int&gt;)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="items" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-06-24 01:53:02Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'items'</Item>
-               <Item>'ListBox.SelectItems(IEnumerable&lt;int&gt;)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="ListBox+ObjectCollection">
-          <Messages>
-           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2008-06-20 13:40:28Z">
-            <Issue>
-             <Item>'ListBox.ObjectCollection'</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
          <Type Name="NativeMessage">
           <Members>
@@ -20141,19 +19932,6 @@
            </Message>
           </Messages>
          </Type>
-         <Type Name="TextControl">
-          <Members>
-           <Member Name="#GetPreferredSize()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-06-20 13:40:28Z">
-              <Issue Certainty="50">
-               <Item>'TextControl.GetPreferredSize()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="TransformedColoredTexturedVertex">
           <Members>
            <Member Name="#SizeInBytes">
@@ -20524,9 +20302,6 @@
    <Rule TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060">
     <Resolution Name="Default">Because it is a P/Invoke method, {0} should be defined in a class named NativeMethods, SafeNativeMethods, or UnsafeNativeMethods.</Resolution>
    </Rule>
-   <Rule TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034">
-    <Resolution Name="Default">Do not nest type {0}. Alternatively, change its accessibility so that it is not externally visible.</Resolution>
-   </Rule>
    <Rule TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717">
     <Resolution Name="Default">If the name {0} is plural, change it to its singular form.</Resolution>
    </Rule>
@@ -20552,9 +20327,6 @@
    </Rule>
    <Rule TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721">
     <Resolution Name="BaseType">The property name {0} is confusing given the existence of inherited method {1}. Rename or remove this property.</Resolution>
-   </Rule>
-   <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
-    <Resolution Name="Default">{0} declares a variable, {1}, of type {2}, which is never used or is only assigned to. Use this variable or remove it.</Resolution>
    </Rule>
    <Rule TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025">
     <Resolution Name="Default">Consider implementing a version of {0} that accepts a parameter array argument.</Resolution>
