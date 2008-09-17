@@ -36,6 +36,7 @@
    <Directory>$(ProjectDir)/Debug/</Directory>
   </AssemblyReferenceDirectories>
   <Target Name="$(ProjectDir)/x86/Debug/SlimDX.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/Direct3D10/EmptyProject/bin/x86/Debug/EmptyProject.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D10/MiniTri/bin/x86/Debug/MiniTri.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/CustomUI/bin/x86/Debug/CustomUI.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/EmptyProject/bin/x86/Debug/EmptyProject.exe" Analyze="True" AnalyzeAllChildren="True" />
@@ -1081,6 +1082,30 @@
          </Type>
          <Type Name="ObjectTable">
           <Members>
+           <Member Name="#Add(SlimDX.ComObject)">
+            <Messages>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2008-09-17 02:16:58Z">
+              <Issue Name="IncorrectParameterName">
+               <Item>'ObjectTable.Add(ComObject)'</Item>
+               <Item>object</Item>
+               <Item>'paramName'</Item>
+               <Item>'ArgumentNullException'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Remove(SlimDX.ComObject)">
+            <Messages>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2008-09-17 02:16:58Z">
+              <Issue Name="IncorrectParameterName">
+               <Item>'ObjectTable.Remove(ComObject)'</Item>
+               <Item>object</Item>
+               <Item>'paramName'</Item>
+               <Item>'ArgumentNullException'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#ObjectAdded" Kind="Event">
             <Accessors>
              <Accessor Name="#raise_ObjectAdded(System.Object,SlimDX.ObjectTableEventArgs)">
@@ -2467,6 +2492,17 @@
                <Item>'Device.CopySubresourceRegion(Resource, int, ResourceRegion, Resource, int, int, int, int)'</Item>
                <Item>Subresource</Item>
                <Item>'sourceSubresource'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreateWithSwapChain(SlimDX.DXGI.Adapter,SlimDX.Direct3D10.DriverType,SlimDX.Direct3D10.DeviceCreationFlags,SlimDX.DXGI.SwapChainDescription,SlimDX.Direct3D10.Device&amp;,SlimDX.DXGI.SwapChain&amp;)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-09-17 02:16:58Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Device.CreateWithSwapChain(Adapter, DriverType, DeviceCreationFlags, SwapChainDescription, out Device, out SwapChain)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -12893,17 +12929,7 @@
              <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>'Device&lt;DataFormat&gt;.GetCurrentState()'</Item>
-               <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState()'&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'Device&lt;DataFormat&gt;.GetCurrentState()'</Item>
-               <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState()'&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState()'</Item>
-              </Issue>
-              <Issue>
-               <Item>'Device&lt;DataFormat&gt;.GetCurrentState()'</Item>
-               <Item>'GCHandle.Free()'</Item>
+               <Item>'Device&lt;DataFormat&gt;.GetCurrentState(ref DataFormat)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState()'&#xD;&#xA;   -&gt;'Device&lt;DataFormat&gt;.GetCurrentState()'</Item>
               </Issue>
              </Message>
@@ -20307,13 +20333,13 @@
     <Modules>
      <Module Name="slimdx.tests.dll">
       <Namespaces>
-       <Namespace Name="SlimDX.Tests">
+       <Namespace Name="SlimDXTests">
         <Types>
          <Type Name="Color3Tests">
           <Members>
            <Member Name="#ConstructDefault()">
             <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-01 13:08:02Z" FixCategory="DependsOnFix">
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-17 02:16:58Z" FixCategory="DependsOnFix">
               <Issue>
                <Item>'Color3Tests.ConstructDefault()'</Item>
               </Issue>
@@ -20322,13 +20348,13 @@
            </Member>
            <Member Name="#ConstructFromRgb()">
             <Messages>
-             <Message Id="Rgb" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-08-01 13:47:12Z">
+             <Message Id="Rgb" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-09-17 02:16:58Z">
               <Issue Name="Member">
                <Item>Rgb</Item>
                <Item>'Color3Tests.ConstructFromRgb()'</Item>
               </Issue>
              </Message>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-01 13:47:12Z" FixCategory="DependsOnFix">
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-17 02:16:58Z" FixCategory="DependsOnFix">
               <Issue>
                <Item>'Color3Tests.ConstructFromRgb()'</Item>
               </Issue>
@@ -20341,7 +20367,7 @@
           <Members>
            <Member Name="#ConstructDefault()">
             <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-01 13:08:02Z" FixCategory="DependsOnFix">
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-17 02:16:58Z" FixCategory="DependsOnFix">
               <Issue>
                <Item>'Color4Tests.ConstructDefault()'</Item>
               </Issue>
@@ -20350,13 +20376,13 @@
            </Member>
            <Member Name="#ConstructFromArgb()">
             <Messages>
-             <Message Id="Argb" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-08-01 13:47:12Z">
+             <Message Id="Argb" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-09-17 02:16:58Z">
               <Issue Name="Member">
                <Item>Argb</Item>
                <Item>'Color4Tests.ConstructFromArgb()'</Item>
               </Issue>
              </Message>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-01 13:47:12Z" FixCategory="DependsOnFix">
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-17 02:16:58Z" FixCategory="DependsOnFix">
               <Issue>
                <Item>'Color4Tests.ConstructFromArgb()'</Item>
               </Issue>
@@ -20477,9 +20503,13 @@
     <Resolution Name="Member">Remove the underscores from member name {0}.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711">
+    <Resolution Name="Default" />
     <Resolution Name="MemberNewerVersion">Either replace the suffix '{0}' in member name {1} with the suggested numeric alternate '2' or provide a more meaningful suffix that distinguishes it from the member it replaces.</Resolution>
     <Resolution Name="TypeNewerVersion">Either replace the suffix '{0}' in type name {1} with the suggested numeric alternate '2' or provide a more meaningful suffix that distinguishes it from the type it replaces.</Resolution>
     <Resolution Name="TypeNoAlternate">Rename type name {0} so that it does not end in '{1}'.</Resolution>
+   </Rule>
+   <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
+    <Resolution Name="IncorrectParameterName">Method {0} passes '{1}' as the {2} argument to a {3} constructor. Replace this argument with one of the method's parameter names. Note that the provided parameter name should have the exact casing as declared on the method.</Resolution>
    </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
@@ -20550,6 +20580,7 @@
     <Resolution Name="MemberNoAlternate">Replace the term '{0}' in member name {1} with an appropriate alternate or remove it entirely.</Resolution>
     <Resolution Name="MemberParameter">In member {0}, replace the term '{1}' in parameter name {2} with the preferred alternate '{3}'.</Resolution>
     <Resolution Name="MemberParameterNoAlternate">In member {0}, replace the term '{1}' in parameter name {2} with an appropriate alternate or remove it entirely.</Resolution>
+    <Resolution Name="Parameter" />
     <Resolution Name="TypeNoAlternate">Replace the term '{0}' in type name {1} with an appropriate alternate or remove it entirely.</Resolution>
    </Rule>
    <Rule TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024">
