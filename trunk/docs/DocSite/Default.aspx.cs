@@ -11,95 +11,95 @@ using System.Web.UI.HtmlControls;
 using System.Reflection;
 using DaveSexton.DocProject.DocSites;
 
-namespace SlimDXDocs
+namespace DocSite
 {
-	public partial class Default : System.Web.UI.Page, IDocSiteDefault
-	{
-		#region Public Properties
-		#endregion
+    public partial class Default : System.Web.UI.Page, IDocSiteDefault
+    {
+        #region Public Properties
+        #endregion
 
-		#region Private / Protected
-		#endregion
+        #region Private / Protected
+        #endregion
 
-		#region Constructors
-		/// <summary>
-		/// Constructs a new instance of the <see cref="Default" /> class.
-		/// </summary>
-		public Default()
-		{
-		}
-		#endregion
+        #region Constructors
+        /// <summary>
+        /// Constructs a new instance of the <see cref="Default" /> class.
+        /// </summary>
+        public Default()
+        {
+        }
+        #endregion
 
-		#region Methods
-		private void SyncSidebar()
-		{
-			string topic = null, helpFile = null;
+        #region Methods
+        private void SyncSidebar()
+        {
+            string topic = null, helpFile = null;
 
-			if(!Page.IsPostBack)
-			{
-				if(Request.QueryString["filenotfound"] != null)
-					ContentPath = DocSiteManager.Settings.FileNotFoundPath;
-				else
-				{
-					topic = Request.QueryString["topic"];
-					helpFile = Request.QueryString["helpfile"];
+            if (!Page.IsPostBack)
+            {
+                if (Request.QueryString["filenotfound"] != null)
+                    ContentPath = DocSiteManager.Settings.FileNotFoundPath;
+                else
+                {
+                    topic = Request.QueryString["topic"];
+                    helpFile = Request.QueryString["helpfile"];
 
-					if(!string.IsNullOrEmpty(topic))
-						topic = DocSiteNavigator.FormatTopic(topic, false);
-				}
-			}
-			else
-			{
-				string topicPath = ContentUrl.Value;
+                    if (!string.IsNullOrEmpty(topic))
+                        topic = DocSiteNavigator.FormatTopic(topic, false);
+                }
+            }
+            else
+            {
+                string topicPath = ContentUrl.Value;
 
-				if(!string.IsNullOrEmpty(topicPath))
-				{
-					Uri topicUri;
+                if (!string.IsNullOrEmpty(topicPath))
+                {
+                    Uri topicUri;
 
-					if(Uri.TryCreate(topicPath, UriKind.RelativeOrAbsolute, out topicUri)
-						&& (!topicUri.IsAbsoluteUri || topicUri.Host.Equals(Request.Url.Host, StringComparison.OrdinalIgnoreCase)))
-					{
-						helpFile = (topicUri.IsAbsoluteUri) ? topicUri.AbsolutePath : topicUri.ToString();
+                    if (Uri.TryCreate(topicPath, UriKind.RelativeOrAbsolute, out topicUri)
+                        && (!topicUri.IsAbsoluteUri || topicUri.Host.Equals(Request.Url.Host, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        helpFile = (topicUri.IsAbsoluteUri) ? topicUri.AbsolutePath : topicUri.ToString();
 
-						if(helpFile.StartsWith("/") || helpFile.StartsWith(@"\"))
-							helpFile = helpFile.Substring(1);
-					}
-				}
-			}
+                        if (helpFile.StartsWith("/") || helpFile.StartsWith(@"\"))
+                            helpFile = helpFile.Substring(1);
+                    }
+                }
+            }
 
-			if(string.IsNullOrEmpty(helpFile))
-				helpFile = DocSiteNavigator.ResolveTopicHelpFile(topic, false) ?? DocSiteManager.Settings.HelpFileNotFoundPath;
+            if (string.IsNullOrEmpty(helpFile))
+                helpFile = DocSiteNavigator.ResolveTopicHelpFile(topic, false) ?? DocSiteManager.Settings.HelpFileNotFoundPath;
 
-			if(string.IsNullOrEmpty(topic))
-			{
-				topic = DocSiteNavigator.ResolveHelpFileTopic(helpFile, false);
+            if (string.IsNullOrEmpty(topic))
+            {
+                topic = DocSiteNavigator.ResolveHelpFileTopic(helpFile, false);
 
-				if(topic == null)
-					helpFile = DocSiteManager.Settings.HelpFileNotFoundPath;
-			}
+                if (topic == null)
+                    helpFile = DocSiteManager.Settings.HelpFileNotFoundPath;
+            }
 
-			ContentPath = helpFile;
+            ContentPath = helpFile;
 
-			Controls.DocSiteSidebar sidebar = ((DocSite) Page.Master).Sidebar;
+            Controls.DocSiteSidebar sidebar = ((DocSite)Page.Master).Sidebar;
 
-			if(!sidebar.TableOfContents.SelectedTopic.Equals(topic, StringComparison.Ordinal))
-				sidebar.Initialize(topic, helpFile);
-		}
+            if (!sidebar.TableOfContents.SelectedTopic.Equals(topic, StringComparison.Ordinal))
+                sidebar.Initialize(topic, helpFile);
+        }
 
-		protected string GetSyncTocClientCallback()
-		{
-			return ((DocSite) Master).Sidebar.TableOfContents.GetSyncTocClientCallback();
-		}
-		#endregion
+        protected string GetSyncTocClientCallback()
+        {
+            return ((DocSite)Master).Sidebar.TableOfContents.GetSyncTocClientCallback();
+        }
+        #endregion
 
-		#region Event Handlers
-		protected override void OnLoad(EventArgs e)
-		{
-			base.OnLoad(e);
+        #region Event Handlers
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
 
-			SyncSidebar();
+            SyncSidebar();
 
-			string script = @"
+            string script = @"
 function ContentFrame_onload(eventObj)
 {
 	if (!contentFrame_FirstLoad)
@@ -115,40 +115,40 @@ function ContentFrame_onload(eventObj)
 	contentFrame_FirstLoad = false;
 }";
 
-			ScriptManager.RegisterStartupScript(Page, this.GetType(), "updateDocSitePath", script, true);
-		}
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "updateDocSitePath", script, true);
+        }
 
-		protected override void OnPreRender(EventArgs e)
-		{
-			ContentFrame.Attributes.Add("onload", "ContentFrame_onload(this);");
+        protected override void OnPreRender(EventArgs e)
+        {
+            ContentFrame.Attributes.Add("onload", "ContentFrame_onload(this);");
 
-			base.OnPreRender(e);
-		}
-		#endregion
+            base.OnPreRender(e);
+        }
+        #endregion
 
-		#region IDocSiteDefault Members
-		public string ContentPath
-		{
-			get
-			{
-				return ContentFrame.Attributes["src"];
-			}
-			set
-			{
-				if(value == null)
-					throw new ArgumentNullException("value");
+        #region IDocSiteDefault Members
+        public string ContentPath
+        {
+            get
+            {
+                return ContentFrame.Attributes["src"];
+            }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("value");
 
-				ContentFrame.Attributes["src"] = value;
-			}
-		}
+                ContentFrame.Attributes["src"] = value;
+            }
+        }
 
-		public string SelectedTopic
-		{
-			get
-			{
-				return ((DocSite) Master).Sidebar.TableOfContents.SelectedTopic;
-			}
-		}
-		#endregion
-	}
+        public string SelectedTopic
+        {
+            get
+            {
+                return ((DocSite)Master).Sidebar.TableOfContents.SelectedTopic;
+            }
+        }
+        #endregion
+    }
 }

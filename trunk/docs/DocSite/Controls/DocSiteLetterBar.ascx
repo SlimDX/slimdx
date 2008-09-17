@@ -1,4 +1,4 @@
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DocSiteLetterBar.ascx.cs" Inherits="SlimDXDocs.Controls.DocSiteLetterBar" %>
+<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DocSiteLetterBar.ascx.cs" Inherits="DocSite.Controls.DocSiteLetterBar" %>
 
 <script runat="server">
 private int position = 0;

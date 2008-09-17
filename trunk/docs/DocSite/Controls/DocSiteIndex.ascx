@@ -1,5 +1,4 @@
-<%@ Control Language="C#" AutoEventWireup="true" Codebehind="DocSiteIndex.ascx.cs" Inherits="SlimDXDocs.Controls.DocSiteIndex" %>
-<%@ Register Assembly="System.Web.Extensions, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI" TagPrefix="asp" %>
+<%@ Control Language="C#" AutoEventWireup="true" Codebehind="DocSiteIndex.ascx.cs" Inherits="DocSite.Controls.DocSiteIndex" %>
 
 <asp:UpdatePanel ID="indexUpdatePanel" runat="server">
 	<ContentTemplate>

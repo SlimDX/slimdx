@@ -1,5 +1,4 @@
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DocSiteBreadcrumbs.ascx.cs" Inherits="SlimDXDocs.Controls.DocSiteBreadcrumbs" %>
-<%@ Register Assembly="System.Web.Extensions, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI" TagPrefix="asp" %>
+<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DocSiteBreadcrumbs.ascx.cs" Inherits="DocSite.Controls.DocSiteBreadcrumbs" %>
 
 <div id="docsite_breadcrumbs_content">
   <asp:UpdatePanel runat="server" ID="breadCrumbsUpdatePanel" ChildrenAsTriggers="true">

@@ -3,17 +3,17 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System;
 
-[assembly: System.Web.UI.TagPrefix("SlimDX", "SlimDX")]
+[assembly: System.Web.UI.TagPrefix("DocSite", "DocSite")]
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SlimDX Documentation")]
-[assembly: AssemblyDescription("SlimDX Documentation.")]
+[assembly: AssemblyTitle("SlimDX Documentation (September 2008)")]
+[assembly: AssemblyDescription("SlimDX Documentation September 2008")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SlimDX Group")]
 [assembly: AssemblyProduct("SlimDX Documentation")]
-[assembly: AssemblyCopyright("Copyright © 2008 SlimDX Group")]
+[assembly: AssemblyCopyright("Copyright © 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: CLSCompliant(false)]
@@ -24,7 +24,7 @@ using System;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4f135a33-76f2-452d-814d-f971a0e0f572")]
+[assembly: Guid("ec9dc9eb-90b9-47fd-8f66-f513386ff230")]
 
 // Version information for an assembly consists of the following four values:
 //

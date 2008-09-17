@@ -2,21 +2,24 @@
 <!--
   This document specifies the ID-to-file mappings for all images that appear in conceptual documentation. 
 
-  To include an image in conceptual documentation, using MAML markup, you must reference an ID instead of a file: 
-
-  <image xlink:href="unique-id" />
-
-  Then use this document to map the ID to an actual file.
-  Here's the map that corresponds with the <image /> example above: 
+  To include an image using MAML you must reference the image's ID instead of its file path.  The following
+  example inserts an image with an ID of "myimage" into the documentation.
   
-  <item id="unique-id">
+  <para>Here's an image:</para>
+  <mediaLink>
+    <image xlink:href="myimage" />
+  </mediaLink>
+
+  The following example can be used in this document to specify an image file for "myimage".
+  
+  <item id="myimage">
     <image file="image.jpg">
       <altText>Alternate text for the image.</altText>
     </image>
   </item>
   
-  - The id attribute is case-insensitive.
-  - The image's file attribute is a name and path, relative to at least one of the specified art link target
+  - The id attribute is not case-sensitive.
+  - The image's file attribute is a name and path relative to at least one of the specified art link target
     input paths, which are found in your project's conceptual configuration files.  To reference artwork in 
     your project's Help\Art folder, simply specify the image's name without a path as in the example above.
   - The altText element is optional.

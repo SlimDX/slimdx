@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
+  <!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,71 +59,71 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="metadata">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" />
-							</xsd:sequence>
-							<xsd:attribute name="name" use="required" type="xsd:string" />
-							<xsd:attribute name="type" type="xsd:string" />
-							<xsd:attribute name="mimetype" type="xsd:string" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="assembly">
-						<xsd:complexType>
-							<xsd:attribute name="alias" type="xsd:string" />
-							<xsd:attribute name="name" type="xsd:string" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>2.0</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<data name="abstractLabelResource1.ToolTip" xml:space="preserve">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="abstractLabelResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-	<data name="browseImageButtonResource1.AlternateText" xml:space="preserve">
+  <data name="browseImageButtonResource1.AlternateText" xml:space="preserve">
     <value />
   </data>
-	<data name="helpTableLocalize.Text" xml:space="preserve">
+  <data name="helpTableLocalize.Text" xml:space="preserve">
     <value>&lt;col width="70px" /&gt;&lt;col width="200px" /&gt;
 		    &lt;tr class="table_header_row"&gt;
 		      &lt;th&gt;Function&lt;/th&gt;&lt;th&gt;Examples&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
@@ -149,58 +149,58 @@
 		      &lt;td&gt;Find all files that contain "service" and either "web" or "windows".&lt;br /&gt;&lt;br /&gt;Find all files that contain "Open" and "method", but not "File" or "Connection".&lt;/td&gt;
 		    &lt;/tr&gt;</value>
   </data>
-	<data name="localeLabelResource1.ToolTip" xml:space="preserve">
+  <data name="localeLabelResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-	<data name="locationLabelResource1.ToolTip" xml:space="preserve">
+  <data name="locationLabelResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-	<data name="nameLabelResource1.ToolTip" xml:space="preserve">
+  <data name="nameLabelResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-	<data name="PageResource1.Title" xml:space="preserve">
-    <value>SlimDX - Search</value>
+  <data name="PageResource1.Title" xml:space="preserve">
+    <value>DocSite - Search</value>
   </data>
-	<data name="positionLabelResource1.ToolTip" xml:space="preserve">
+  <data name="positionLabelResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-	<data name="rankLabelResource1.ToolTip" xml:space="preserve">
+  <data name="rankLabelResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-	<data name="resultsCountLabel.CalculatedText" xml:space="preserve">
+  <data name="resultsCountLabel.CalculatedText" xml:space="preserve">
     <value>{0} matching topic(s) for:</value>
   </data>
-	<data name="resultsGridViewResource1.Caption" xml:space="preserve">
+  <data name="resultsGridViewResource1.Caption" xml:space="preserve">
     <value />
   </data>
-	<data name="resultsGridViewResource1.EmptyDataText" xml:space="preserve">
+  <data name="resultsGridViewResource1.EmptyDataText" xml:space="preserve">
     <value />
   </data>
-	<data name="resultsGridViewResource1.ToolTip" xml:space="preserve">
+  <data name="resultsGridViewResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-	<data name="searchHelpPanelResource1.GroupingText" xml:space="preserve">
+  <data name="searchHelpPanelResource1.GroupingText" xml:space="preserve">
     <value />
   </data>
-	<data name="searchHelpPanelResource1.ToolTip" xml:space="preserve">
+  <data name="searchHelpPanelResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-	<data name="searchResultsHeaderLocalize.Text" xml:space="preserve">
+  <data name="searchResultsHeaderLocalize.Text" xml:space="preserve">
     <value>Search Results</value>
   </data>
-	<data name="statisticsPanelResource1.GroupingText" xml:space="preserve">
+  <data name="statisticsPanelResource1.GroupingText" xml:space="preserve">
     <value />
   </data>
-	<data name="statisticsPanelResource1.ToolTip" xml:space="preserve">
+  <data name="statisticsPanelResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-	<data name="TemplateFieldResource1.AccessibleHeaderText" xml:space="preserve">
+  <data name="TemplateFieldResource1.AccessibleHeaderText" xml:space="preserve">
     <value />
   </data>
-	<data name="TemplateFieldResource1.FooterText" xml:space="preserve">
+  <data name="TemplateFieldResource1.FooterText" xml:space="preserve">
     <value />
   </data>
-	<data name="TemplateFieldResource1.HeaderText" xml:space="preserve">
+  <data name="TemplateFieldResource1.HeaderText" xml:space="preserve">
     <value />
   </data>
 </root>

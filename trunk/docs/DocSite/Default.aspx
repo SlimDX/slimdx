@@ -1,8 +1,8 @@
-<%@ Page Language="C#" MasterPageFile="~/DocSite.Master" AutoEventWireup="true" Codebehind="Default.aspx.cs" Inherits="SlimDXDocs.Default" %>
+<%@ Page Language="C#" MasterPageFile="~/DocSite.Master" AutoEventWireup="true" Codebehind="Default.aspx.cs" Inherits="DocSite.Default" %>
 
 <asp:Content ID="HelpFile" ContentPlaceHolderID="contentPlaceHolder" runat="server">
   <div id="docsite_content_iframe_container">
-		<iframe runat="server" class="docsite_content_iframe" id="ContentFrame" width="100%" frameborder="0" scrolling="auto"></iframe>
+		<iframe runat="server" class="docsite_content_iframe" id="ContentFrame" width="100%" frameborder="0"></iframe>
 	</div>
 	<asp:HiddenField runat="server" ID="ContentUrl" />
 	<%-- The following variable is required by the script that is generated in the code-behind.

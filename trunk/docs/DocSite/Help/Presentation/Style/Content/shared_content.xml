@@ -10,7 +10,7 @@
 	<item id="locale">en-us</item>
 
 	<!-- header -->
-	<item id="header"><div class="header"><font color="red">This is preliminary documentation and is subject to change. </font></div></item>
+	<item id="header"><div class="header"><p> </p></div></item>
 
 	<!-- alert titles -->
 	<item id="tipTitle"><b>Tip:</b></item>
@@ -38,7 +38,7 @@
 	<!-- code labels -->
 	<item id="CSharpLabel">C#</item>
 	<item id="VisualBasicLabel">Visual Basic</item>
-	<item id="ManagedCPlusPlusLabel">C++/CLI</item>
+	<item id="ManagedCPlusPlusLabel">Visual C++</item>
 	<item id="JSharpLabel">J#</item>
 	<item id="JScriptLabel">JScript</item>
 	<item id="CSharpUsageLabel">C#</item>
