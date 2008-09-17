@@ -11,64 +11,64 @@ using System.Web.UI.HtmlControls;
 using System.Reflection;
 using DaveSexton.DocProject.DocSites;
 
-namespace SlimDXDocs.Controls
+namespace DocSite.Controls
 {
-	public partial class DocSiteHeader : System.Web.UI.UserControl
-	{
-		#region Public Properties
-		#endregion
+    public partial class DocSiteHeader : System.Web.UI.UserControl
+    {
+        #region Public Properties
+        #endregion
 
-		#region Private / Protected
-		#endregion
+        #region Private / Protected
+        #endregion
 
-		#region Constructors
-		/// <summary>
-		/// Constructs a new instance of the <see cref="DocSiteHeader" /> class.
-		/// </summary>
-		public DocSiteHeader()
-		{
-		}
-		#endregion
+        #region Constructors
+        /// <summary>
+        /// Constructs a new instance of the <see cref="DocSiteHeader" /> class.
+        /// </summary>
+        public DocSiteHeader()
+        {
+        }
+        #endregion
 
-		#region Methods
-		#endregion
+        #region Methods
+        #endregion
 
-		#region Event Handlers
-		protected override void OnInit(EventArgs e)
-		{
-			chmHyperLink.NavigateUrl = DocSiteManager.Settings.CompiledHelp1xFilePath;
+        #region Event Handlers
+        protected override void OnInit(EventArgs e)
+        {
+            chmHyperLink.NavigateUrl = DocSiteManager.Settings.CompiledHelp1xFilePath;
 
-			base.OnInit(e);
-		}
+            base.OnInit(e);
+        }
 
-		protected override void OnLoad(EventArgs e)
-		{
-			base.OnLoad(e);
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
 
-			if(!Page.IsPostBack)
-			{
-				bool authenticated = Page.User.Identity.IsAuthenticated;
+            if (!Page.IsPostBack)
+            {
+                bool authenticated = Page.User.Identity.IsAuthenticated;
 
-				searchImageButton.Visible = authenticated || DocSiteManager.Settings.SearchEnabled;
-				browseImageButton.Visible = authenticated || DocSiteManager.Settings.BrowseIndexEnabled;
+                searchImageButton.Visible = authenticated || DocSiteManager.Settings.SearchEnabled;
+                browseImageButton.Visible = authenticated || DocSiteManager.Settings.BrowseIndexEnabled;
 
-				if(!searchImageButton.Visible && !browseImageButton.Visible)
-					searchTextBox.Visible = false;
-			}
+                if (!searchImageButton.Visible && !browseImageButton.Visible)
+                    searchTextBox.Visible = false;
+            }
 
-			Page.Form.DefaultButton = searchImageButton.UniqueID;
-			searchTextBox.Focus();
-		}
+            Page.Form.DefaultButton = searchImageButton.UniqueID;
+            searchTextBox.Focus();
+        }
 
-		protected void searchImageButton_Click(object sender, ImageClickEventArgs e)
-		{
-			DocSiteNavigator.NavigateToSearchResults(searchTextBox.Text);
-		}
+        protected void searchImageButton_Click(object sender, ImageClickEventArgs e)
+        {
+            DocSiteNavigator.NavigateToSearchResults(searchTextBox.Text);
+        }
 
-		protected void browseImageButton_Click(object sender, ImageClickEventArgs e)
-		{
-			DocSiteNavigator.NavigateToBrowseIndex(searchTextBox.Text);
-		}
-		#endregion
-	}
+        protected void browseImageButton_Click(object sender, ImageClickEventArgs e)
+        {
+            DocSiteNavigator.NavigateToBrowseIndex(searchTextBox.Text);
+        }
+        #endregion
+    }
 }

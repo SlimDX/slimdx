@@ -19,8 +19,6 @@
     <xsl:if test="$group='member' and /document/reference/elements">
       <xsl:apply-templates select="/document/reference/elements/element/overloads" />
     </xsl:if>
-    <!-- Unmanaged counterpart -->
-    <xsl:apply-templates select="/document/comments/unmanaged" />
     <!-- syntax -->
 		<xsl:apply-templates select="/document/syntax" />
 		<!-- generic templates -->
@@ -99,20 +97,7 @@
 		</div>
 	</xsl:template>
 
-	<xsl:template match="unmanaged">
-		<div class="body">
-			<br />
-			<b>
-				<xsl:text>Unmanaged counterpart: </xsl:text>
-			</b>
-			<xsl:apply-templates />
-		</div>
-		<div>
-			<br />
-		</div>
-	</xsl:template>
-
-	<xsl:template match="overloads">
+  <xsl:template match="overloads">
     <xsl:choose>
       <xsl:when test="count(*) > 0">
         <xsl:apply-templates />

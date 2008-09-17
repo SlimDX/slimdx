@@ -1,4 +1,4 @@
-<%@ Control Language="C#" AutoEventWireup="true" Codebehind="DocSiteSidebar.ascx.cs" Inherits="SlimDXDocs.Controls.DocSiteSidebar" %>
+<%@ Control Language="C#" AutoEventWireup="true" Codebehind="DocSiteSidebar.ascx.cs" Inherits="DocSite.Controls.DocSiteSidebar" %>
 <%@ Register Src="~/Controls/DocSiteContents.ascx" TagName="DocSiteContents" TagPrefix="DocSite" %>
 <%@ Register Src="~/Controls/DocSiteIndex.ascx" TagName="DocSiteIndex" TagPrefix="DocSite" %>
 

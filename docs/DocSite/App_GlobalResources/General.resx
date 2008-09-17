@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
+  <!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,110 +59,107 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="metadata">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" />
-							</xsd:sequence>
-							<xsd:attribute name="name" use="required" type="xsd:string" />
-							<xsd:attribute name="type" type="xsd:string" />
-							<xsd:attribute name="mimetype" type="xsd:string" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="assembly">
-						<xsd:complexType>
-							<xsd:attribute name="alias" type="xsd:string" />
-							<xsd:attribute name="name" type="xsd:string" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>2.0</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<data name="DocSiteBookmarkButtonToolTip" xml:space="preserve">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DocSiteBookmarkButtonToolTip" xml:space="preserve">
     <value>Bookmarks the current topic.</value>
   </data>
-	<data name="DocSiteTopicButtonToolTip" xml:space="preserve">
-    <value>Click to navigate to the full URL for the current topic.</value>
-  </data>
-	<data name="DocSiteBrowseButtonToolTip" xml:space="preserve">
+  <data name="DocSiteBrowseButtonToolTip" xml:space="preserve">
     <value>Browse the index for the specified keywords.</value>
   </data>
-	<data name="DocSiteEmailButtonToolTip" xml:space="preserve">
+  <data name="DocSiteEmailButtonToolTip" xml:space="preserve">
     <value>Emails a link to the current topic.</value>
   </data>
-	<data name="DocSiteFilterButtonToolTip" xml:space="preserve">
+  <data name="DocSiteFilterButtonToolTip" xml:space="preserve">
     <value>Filters the index by the specified keywords.</value>
   </data>
-	<data name="DocSitePrintButtonToolTip" xml:space="preserve">
+  <data name="DocSitePrintButtonToolTip" xml:space="preserve">
     <value>Prints the current topic.</value>
   </data>
-	<data name="DocSiteSaveButtonToolTip" xml:space="preserve">
+  <data name="DocSiteSaveButtonToolTip" xml:space="preserve">
     <value>Saves the current topic to your local file system.</value>
   </data>
-	<data name="DocSiteSearchButtonToolTip" xml:space="preserve">
+  <data name="DocSiteSearchButtonToolTip" xml:space="preserve">
     <value>Search for matching help topics.</value>
   </data>
-	<data name="DocSiteSyncButtonToolTip" xml:space="preserve">
+  <data name="DocSiteSyncButtonToolTip" xml:space="preserve">
     <value>Synchronizes the sidebar with the current topic.</value>
   </data>
-	<data name="EmailTopicUrlBodyFormat" xml:space="preserve">
+  <data name="EmailTopicUrlBodyFormat" xml:space="preserve">
     <value>{0} - {1}:  {2}</value>
   </data>
-	<data name="EmailTopicUrlSubjectFormat" xml:space="preserve">
+  <data name="EmailTopicUrlSubjectFormat" xml:space="preserve">
     <value>{0} - {1}</value>
   </data>
-	<data name="PleaseWait" xml:space="preserve">
+  <data name="PleaseWait" xml:space="preserve">
     <value>Please wait...</value>
   </data>
-	<data name="PleaseWaitGenerateIndexLine1" xml:space="preserve">
+  <data name="PleaseWaitGenerateIndexLine1" xml:space="preserve">
     <value>Please wait while the index is generated...</value>
   </data>
-	<data name="PleaseWaitGenerateIndexLine2" xml:space="preserve">
+  <data name="PleaseWaitGenerateIndexLine2" xml:space="preserve">
     <value>This could take a long time so please be patient.</value>
   </data>
-	<data name="PleaseWaitLine2" xml:space="preserve">
+  <data name="PleaseWaitLine2" xml:space="preserve">
     <value>Your request is being processed.</value>
   </data>
-	<data name="TopicTitleFormat" xml:space="preserve">
+  <data name="TopicTitleFormat" xml:space="preserve">
     <value>{0} - {1}</value>
   </data>
 </root>

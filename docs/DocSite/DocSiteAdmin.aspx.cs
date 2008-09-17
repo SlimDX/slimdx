@@ -13,119 +13,119 @@ using System.Drawing;
 using DaveSexton.DocProject.DocSites;
 using DaveSexton.DocProject.DocSites.Configuration;
 
-namespace SlimDXDocs
+namespace DocSite
 {
-	public partial class DocSiteAdmin : System.Web.UI.Page
-	{
-		#region Public Properties
-		#endregion
+    public partial class DocSiteAdmin : System.Web.UI.Page
+    {
+        #region Public Properties
+        #endregion
 
-		#region Private / Protected
-		#endregion
+        #region Private / Protected
+        #endregion
 
-		#region Constructors
-		/// <summary>
-		/// Constructs a new instance of the <see cref="DocSiteAdmin" /> class.
-		/// </summary>
-		public DocSiteAdmin()
-		{
-		}
-		#endregion
+        #region Constructors
+        /// <summary>
+        /// Constructs a new instance of the <see cref="DocSiteAdmin" /> class.
+        /// </summary>
+        public DocSiteAdmin()
+        {
+        }
+        #endregion
 
-		#region Methods
-		public static object GetStatisticsForBinding()
-		{
-			return new SearchIndexStatistics();
-		}
+        #region Methods
+        public static object GetStatisticsForBinding()
+        {
+            return new SearchIndexStatistics();
+        }
 
-		public static DocSiteSettings GetSettingsForBinding()
-		{
-			return DocSiteManager.Settings;
-		}
+        public static DocSiteSettings GetSettingsForBinding()
+        {
+            return DocSiteManager.Settings;
+        }
 
-		public static void UpdateSettings(DocSiteSettings newSettings)
-		{
-			DocSiteSettings settings = DocSiteManager.Settings;
+        public static void UpdateSettings(DocSiteSettings newSettings)
+        {
+            DocSiteSettings settings = DocSiteManager.Settings;
 
-			settings.Update(newSettings);
+            settings.Update(newSettings);
 
-			settings.Save();
-		}
-		#endregion
+            settings.Save();
+        }
+        #endregion
 
-		#region Event Handlers
-		protected override void OnInit(EventArgs e)
-		{
-			ScriptManager.GetCurrent(Page).AsyncPostBackTimeout = DocSiteManager.Settings.CreateIndexRefreshTimeout;
+        #region Event Handlers
+        protected override void OnInit(EventArgs e)
+        {
+            ScriptManager.GetCurrent(Page).AsyncPostBackTimeout = DocSiteManager.Settings.CreateIndexRefreshTimeout;
 
-			base.OnInit(e);
-		}
+            base.OnInit(e);
+        }
 
-		protected void createIndexLinkButton_Click(object sender, EventArgs e)
-		{
-			DaveSexton.DocProject.DocSites.DocSiteSearch.CreateSearchIndex();
+        protected void createIndexLinkButton_Click(object sender, EventArgs e)
+        {
+            DaveSexton.DocProject.DocSites.DocSiteSearch.CreateSearchIndex();
 
-			searchStatsDetailsView.DataBind();
-			searchStatsUpdatePanel.Update();
-		}
+            searchStatsDetailsView.DataBind();
+            searchStatsUpdatePanel.Update();
+        }
 
-		protected void searchSettingsDetailsView_ItemUpdating(object sender, DetailsViewUpdateEventArgs e)
-		{
-			e.NewValues["SearchPath"] = ((TextBox) searchSettingsDetailsView.FindControl("searchPathTextBox")).Text;
-		}
+        protected void searchSettingsDetailsView_ItemUpdating(object sender, DetailsViewUpdateEventArgs e)
+        {
+            e.NewValues["SearchPath"] = ((TextBox)searchSettingsDetailsView.FindControl("searchPathTextBox")).Text;
+        }
 
-		protected void searchWeightFactorsDetailsView_ItemUpdating(object sender, DetailsViewUpdateEventArgs e)
-		{
-			e.NewValues["SearchEarlyKeywordWeightFactor"] = ((TextBox) searchWeightFactorsDetailsView.FindControl("earlyKeywordWeightFactorTextBox")).Text;
-			e.NewValues["SearchTitleKeywordWeightFactor"] = ((TextBox) searchWeightFactorsDetailsView.FindControl("titleKeywordWeightFactorTextBox")).Text;
-		}
-		#endregion
+        protected void searchWeightFactorsDetailsView_ItemUpdating(object sender, DetailsViewUpdateEventArgs e)
+        {
+            e.NewValues["SearchEarlyKeywordWeightFactor"] = ((TextBox)searchWeightFactorsDetailsView.FindControl("earlyKeywordWeightFactorTextBox")).Text;
+            e.NewValues["SearchTitleKeywordWeightFactor"] = ((TextBox)searchWeightFactorsDetailsView.FindControl("titleKeywordWeightFactorTextBox")).Text;
+        }
+        #endregion
 
-		#region Nested
-		private sealed class SearchIndexStatistics
-		{
-			public string ProviderName
-			{
-				get
-				{
-					return DaveSexton.DocProject.DocSites.DocSiteSearch.DefaultSearchProvider.Name;
-				}
-			}
+        #region Nested
+        private sealed class SearchIndexStatistics
+        {
+            public string ProviderName
+            {
+                get
+                {
+                    return DaveSexton.DocProject.DocSites.DocSiteSearch.DefaultSearchProvider.Name;
+                }
+            }
 
-			public DateTime? LastCreationDate
-			{
-				get
-				{
-					return (DaveSexton.DocProject.DocSites.DocSiteSearch.IndexCreated)
-						? (DateTime?) DaveSexton.DocProject.DocSites.DocSiteSearch.LastCreationDate.ToLocalTime()
-						: null;
-				}
-			}
+            public DateTime? LastCreationDate
+            {
+                get
+                {
+                    return (DaveSexton.DocProject.DocSites.DocSiteSearch.IndexCreated)
+                        ? (DateTime?)DaveSexton.DocProject.DocSites.DocSiteSearch.LastCreationDate.ToLocalTime()
+                        : null;
+                }
+            }
 
-			public int KeywordCount
-			{
-				get
-				{
-					return DaveSexton.DocProject.DocSites.DocSiteSearch.KeywordCount;
-				}
-			}
+            public int KeywordCount
+            {
+                get
+                {
+                    return DaveSexton.DocProject.DocSites.DocSiteSearch.KeywordCount;
+                }
+            }
 
-			public int DocumentCount
-			{
-				get
-				{
-					return DaveSexton.DocProject.DocSites.DocSiteSearch.DocumentCount;
-				}
-			}
+            public int DocumentCount
+            {
+                get
+                {
+                    return DaveSexton.DocProject.DocSites.DocSiteSearch.DocumentCount;
+                }
+            }
 
-			public bool IndexCreated
-			{
-				get
-				{
-					return DaveSexton.DocProject.DocSites.DocSiteSearch.IndexCreated;
-				}
-			}
-		}
-		#endregion
-	}
+            public bool IndexCreated
+            {
+                get
+                {
+                    return DaveSexton.DocProject.DocSites.DocSiteSearch.IndexCreated;
+                }
+            }
+        }
+        #endregion
+    }
 }

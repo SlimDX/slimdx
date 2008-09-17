@@ -52,9 +52,6 @@ Default skin template. The following skins are provided as examples only.
                  ImageUrl="Images/DocSiteBrowse.gif"
                  onmouseover="this.className='docsite_search_button docsite_search_button_hot';"
                  onmouseout="this.className='docsite_search_button';" />
-
-<asp:ImageButton runat="server" SkinID="TopicImageButton" CssClass="toc_topic_button"
-                 ImageUrl="Images/DocSiteHyperLink.gif" />
                  
 <asp:TextBox runat="Server" SkinID="SearchTextBox" CssClass="docsite_search_input" />
                  

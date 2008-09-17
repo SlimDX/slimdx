@@ -9,9 +9,9 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 
-namespace SlimDXDocs.Controls
+namespace DocSite.Controls
 {
-	public partial class DocSiteBreadcrumbs : System.Web.UI.UserControl
-	{
-	}
+    public partial class DocSiteBreadcrumbs : System.Web.UI.UserControl
+    {
+    }
 }
