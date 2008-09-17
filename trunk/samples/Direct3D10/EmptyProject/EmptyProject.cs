@@ -92,11 +92,8 @@ namespace EmptyProject
         /// <param name="gameTime">The time passed since the last frame.</param>
         protected override void Draw(GameTime gameTime)
         {
-            // start the scene
+            // clear the scene
             Device.ClearRenderTargetView(GraphicsDeviceManager.Direct3D10.RenderTarget, ClearColor);
-
-            // end the scene
-            GraphicsDeviceManager.Direct3D10.SwapChain.Present(0, SlimDX.DXGI.PresentFlags.None);
         }
     }
 }
