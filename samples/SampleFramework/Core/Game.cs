@@ -521,15 +521,6 @@ namespace SampleFramework
         }
 
         /// <summary>
-        /// Releases the game.
-        /// </summary>
-        protected internal virtual void Release()
-        {
-            // update the resources
-            Resources.Release();
-        }
-
-        /// <summary>
         /// Releases unmanaged and - optionally - managed resources
         /// </summary>
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
@@ -537,6 +528,8 @@ namespace SampleFramework
         {
             if (disposing)
             {
+                Resources.Dispose();
+
                 if (GraphicsDeviceManager != null)
                     GraphicsDeviceManager.Dispose();
                 GraphicsDeviceManager = null;

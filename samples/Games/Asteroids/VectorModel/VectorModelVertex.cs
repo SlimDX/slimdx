@@ -26,15 +26,8 @@ using SlimDX.Direct3D9;
 
 namespace Asteroids
 {
-    /// <summary>
-    /// Defines a vertex for vector models.
-    /// </summary>
     struct VectorModelVertex
     {
-        /// <summary>
-        /// Gets or sets the position.
-        /// </summary>
-        /// <value>The position.</value>
         [VertexElement(DeclarationType.Float2, DeclarationUsage.Position)]
         public Vector2 Position
         {
@@ -42,10 +35,6 @@ namespace Asteroids
             set;
         }
 
-        /// <summary>
-        /// Gets or sets the color.
-        /// </summary>
-        /// <value>The color.</value>
         [VertexElement(DeclarationType.Color, DeclarationUsage.Color)]
         public int Color
         {
@@ -53,10 +42,6 @@ namespace Asteroids
             set;
         }
 
-        /// <summary>
-        /// Gets or sets the padding.
-        /// </summary>
-        /// <value>The padding.</value>
         [VertexElement(DeclarationType.Float1, DeclarationUsage.TextureCoordinate)]
         public float Padding
         {
@@ -64,23 +49,13 @@ namespace Asteroids
             set;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VectorModelVertex"/> struct.
-        /// </summary>
-        /// <param name="position">The position.</param>
-        /// <param name="color">The color.</param>
         public VectorModelVertex(Vector2 position, int color)
             : this()
         {
-            // store variables
             Position = position;
             Color = color;
         }
 
-        /// <summary>
-        /// Gets the size, in bytes, of the <see cref="VectorModelVertex"/> structure.
-        /// </summary>
-        /// <value>The size in bytes.</value>
         public static int SizeInBytes
         {
             get { return Marshal.SizeOf(typeof(VectorModelVertex)); }

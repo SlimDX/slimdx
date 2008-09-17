@@ -300,7 +300,7 @@ namespace SampleFramework
 
         static void EnumerateDisplayModes(OutputInfo10 outputInfo)
         {
-            Format[] allowedFormats = { Format.R8G8B8A8_UNorm_SRGB, Format.R8G8B8A8_UNorm,
+            Format[] allowedFormats = { Format.R8G8B8A8_UNorm, Format.R8G8B8A8_UNorm_SRGB,
                 Format.R16G16B16A16_Float, Format.R10G10B10A2_UNorm };
 
             foreach (Format format in allowedFormats)
@@ -353,6 +353,8 @@ namespace SampleFramework
                 if (type != DriverType.Hardware)
                 {
                     SlimDX.DXGI.Device dxgiDevice = new SlimDX.DXGI.Device(device);
+                    if (adapterInfo.Adapter != null)
+                        adapterInfo.Adapter.Dispose();
                     adapterInfo.Adapter = dxgiDevice.Adapter;
                     dxgiDevice.Dispose();
                 }
@@ -364,7 +366,7 @@ namespace SampleFramework
 
         static void EnumerateSettingsCombos(AdapterInfo10 adapterInfo)
         {
-            Format[] backBufferFormats = { Format.R8G8B8A8_UNorm_SRGB, Format.R8G8B8A8_UNorm,
+            Format[] backBufferFormats = { Format.R8G8B8A8_UNorm, Format.R8G8B8A8_UNorm_SRGB,
                                            Format.R16G16B16A16_Float, Format.R10G10B10A2_UNorm };
 
             foreach (OutputInfo10 outputInfo in adapterInfo.Outputs)
@@ -419,7 +421,19 @@ namespace SampleFramework
             Adapter adapter = null;
             if (combo.DriverType == DriverType.Hardware)
                 adapter = GraphicsDeviceManager.Factory.GetAdapter(combo.AdapterOrdinal);
-            SlimDX.Direct3D10.Device device = new SlimDX.Direct3D10.Device(adapter, combo.DriverType, DeviceCreationFlags.None);
+            SlimDX.Direct3D10.Device device;
+
+            try
+            {
+                device = new SlimDX.Direct3D10.Device(adapter, combo.DriverType, DeviceCreationFlags.None);
+            }
+            catch (Direct3D10Exception)
+            {
+                // no good
+                if (adapter != null)
+                    adapter.Dispose();
+                return;
+            }
 
             for (int i = 1; i <= SlimDX.Direct3D10.Device.MultisampleCountMaximum; i++)
             {
@@ -436,6 +450,9 @@ namespace SampleFramework
             }
 
             device.Dispose();
+
+            if (adapter != null)
+                adapter.Dispose();
         }
     }
 }

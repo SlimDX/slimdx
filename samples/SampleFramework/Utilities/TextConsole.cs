@@ -163,9 +163,9 @@ namespace SampleFramework
         }
 
         /// <summary>
-        /// Releases the resource.
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Release()
+        public void Dispose()
         {
             font.Dispose();
             sprite.Dispose();

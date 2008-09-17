@@ -22,23 +22,14 @@
 
 namespace Asteroids
 {
-    /// <summary>
-    /// Represents the player's primary weapon.
-    /// </summary>
     class PrimaryWeapon : Weapon
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PrimaryWeapon"/> class.
-        /// </summary>
-        /// <param name="game">The game.</param>
         public PrimaryWeapon(Asteroids game)
             : base(game)
         {
-            // load the bullet model
             BulletModel = VectorModel.FromFile("Content/Models/PlayerBullet.xml");
             Game.Resources.Add(BulletModel);
 
-            // weapon settings
             CoolDownRate = 8.0f;
             BulletSpeed = 10.0f;
             BulletRotation = 4.0f;

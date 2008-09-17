@@ -4511,7 +4511,7 @@
           <Members>
            <Member Name="#.ctor({modopt(System.Runtime.CompilerServices.IsConst)}_D3D10_STATE_BLOCK_MASK{modopt(System.Runtime.CompilerServices.IsImplicitlyDereferenced)}*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-07-07 15:59:03Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-07-07 15:59:03Z">
               <Issue>
                <Item>'StateBlockMask.StateBlockMask(_D3D10_STATE_BLOCK_MASK*)'</Item>
               </Issue>
@@ -18412,31 +18412,6 @@
      </Module>
     </Modules>
    </Target>
-   <Target Name="$(ProjectDir)/../samples/Direct3D9/Water/bin/x86/Debug/Water.exe">
-    <Modules>
-     <Module Name="water.exe">
-      <Namespaces>
-       <Namespace Name="Water">
-        <Types>
-         <Type Name="WaterSample">
-          <Members>
-           <Member Name="#Window_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
-            <Messages>
-             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
-              <Issue Name="Member">
-               <Item>'WaterSample.Window_KeyDown(object, KeyEventArgs)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
    <Target Name="$(ProjectDir)/../samples/DirectInput/Joystick/bin/x86/Debug/Joystick.exe">
     <Modules>
      <Module Name="joystick.exe">
@@ -18955,6 +18930,17 @@
            </Message>
           </Messages>
           <Members>
+           <Member Name="#Dispose(System.Boolean)">
+            <Messages>
+             <Message Id="console" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Created="2008-09-17 22:31:36Z">
+              <Issue>
+               <Item>'Asteroids'</Item>
+               <Item>'Asteroids.console'</Item>
+               <Item>'TextConsole'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#Window_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
             <Messages>
              <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
@@ -19024,6 +19010,12 @@
            <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-09-09 18:08:37Z">
             <Issue>
              <Item>'Explosion'</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2008-09-17 22:31:36Z" FixCategory="NonBreaking">
+            <Issue Name="NonBreaking">
+             <Item>'Explosion'</Item>
+             <Item>'ParticleSystem'</Item>
             </Issue>
            </Message>
           </Messages>
@@ -19100,6 +19092,23 @@
            </Message>
           </Messages>
           <Members>
+           <Member Name="#Dispose()">
+            <Messages>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-09-17 22:31:36Z">
+              <Issue Name="NotCalled">
+               <Item>'ParticleSystem.Dispose()'</Item>
+               <Item>'GC.SuppressFinalize(object)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="vertexBuffer" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Created="2008-09-17 22:31:36Z">
+              <Issue>
+               <Item>'ParticleSystem'</Item>
+               <Item>'ParticleSystem.vertexBuffer'</Item>
+               <Item>'VertexBuffer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#Gravity">
             <Accessors>
              <Accessor Name="#set_Gravity(SlimDX.Vector3)">
@@ -19129,6 +19138,14 @@
           </Members>
          </Type>
          <Type Name="Player">
+          <Messages>
+           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2008-09-17 22:31:36Z" FixCategory="NonBreaking">
+            <Issue Name="NonBreaking">
+             <Item>'Player'</Item>
+             <Item>'ParticleSystem'</Item>
+            </Issue>
+           </Message>
+          </Messages>
           <Members>
            <Member Name="#Respawn(System.Object,System.EventArgs)">
             <Messages>
@@ -19171,6 +19188,32 @@
             </Issue>
            </Message>
           </Messages>
+          <Members>
+           <Member Name="#Dispose()">
+            <Messages>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-09-17 22:31:36Z">
+              <Issue Name="NotCalled">
+               <Item>'VectorModel.Dispose()'</Item>
+               <Item>'GC.SuppressFinalize(object)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="indexBuffer" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Created="2008-09-17 22:31:36Z">
+              <Issue>
+               <Item>'VectorModel'</Item>
+               <Item>'VectorModel.indexBuffer'</Item>
+               <Item>'IndexBuffer'</Item>
+              </Issue>
+             </Message>
+             <Message Id="vertexBuffer" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Created="2008-09-17 22:31:36Z">
+              <Issue>
+               <Item>'VectorModel'</Item>
+               <Item>'VectorModel.vertexBuffer'</Item>
+               <Item>'VertexBuffer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
          <Type Name="VertexRemapper">
           <Messages>
@@ -19922,8 +19965,39 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="ResourceCollection">
+          <Messages>
+           <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-09-17 22:31:36Z">
+            <Issue Name="ProvideDisposeBool">
+             <Item>'ResourceCollection'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Dispose()">
+            <Messages>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-09-17 22:31:36Z">
+              <Issue Name="NotCalled">
+               <Item>'ResourceCollection.Dispose()'</Item>
+               <Item>'GC.SuppressFinalize(object)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-09-17 22:31:36Z">
+              <Issue Name="DisposeImplementation">
+               <Item>'ResourceCollection.Dispose()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="TextConsole">
           <Messages>
+           <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-09-17 22:31:36Z">
+            <Issue Name="ProvideDisposeBool">
+             <Item>'TextConsole'</Item>
+            </Issue>
+           </Message>
            <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Excluded" Created="2008-07-07 15:59:03Z" FixCategory="DependsOnFix">
             <Issue Name="DependsOnFix">
              <Item>'TextConsole'</Item>
@@ -19931,6 +20005,23 @@
             </Issue>
            </Message>
           </Messages>
+          <Members>
+           <Member Name="#Dispose()">
+            <Messages>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-09-17 22:31:36Z">
+              <Issue Name="NotCalled">
+               <Item>'TextConsole.Dispose()'</Item>
+               <Item>'GC.SuppressFinalize(object)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-09-17 22:31:36Z">
+              <Issue Name="DisposeImplementation">
+               <Item>'TextConsole.Dispose()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
          <Type Name="TransformedColoredTexturedVertex">
           <Members>
@@ -20118,7 +20209,7 @@
           <Members>
            <Member Name="#ConstructDefault()">
             <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-17 02:16:58Z" FixCategory="DependsOnFix">
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-17 02:16:58Z" FixCategory="DependsOnFix">
               <Issue>
                <Item>'Color3Tests.ConstructDefault()'</Item>
               </Issue>
@@ -20127,13 +20218,13 @@
            </Member>
            <Member Name="#ConstructFromRgb()">
             <Messages>
-             <Message Id="Rgb" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-09-17 02:16:58Z">
+             <Message Id="Rgb" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-09-17 02:16:58Z">
               <Issue Name="Member">
                <Item>Rgb</Item>
                <Item>'Color3Tests.ConstructFromRgb()'</Item>
               </Issue>
              </Message>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-17 02:16:58Z" FixCategory="DependsOnFix">
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-17 02:16:58Z" FixCategory="DependsOnFix">
               <Issue>
                <Item>'Color3Tests.ConstructFromRgb()'</Item>
               </Issue>
@@ -20146,7 +20237,7 @@
           <Members>
            <Member Name="#ConstructDefault()">
             <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-17 02:16:58Z" FixCategory="DependsOnFix">
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-17 02:16:58Z" FixCategory="DependsOnFix">
               <Issue>
                <Item>'Color4Tests.ConstructDefault()'</Item>
               </Issue>
@@ -20155,13 +20246,13 @@
            </Member>
            <Member Name="#ConstructFromArgb()">
             <Messages>
-             <Message Id="Argb" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-09-17 02:16:58Z">
+             <Message Id="Argb" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-09-17 02:16:58Z">
               <Issue Name="Member">
                <Item>Argb</Item>
                <Item>'Color4Tests.ConstructFromArgb()'</Item>
               </Issue>
              </Message>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-17 02:16:58Z" FixCategory="DependsOnFix">
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-17 02:16:58Z" FixCategory="DependsOnFix">
               <Issue>
                <Item>'Color4Tests.ConstructFromArgb()'</Item>
               </Issue>
@@ -20191,6 +20282,7 @@
     <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
    </Rule>
    <Rule TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816">
+    <Resolution Name="NotCalled">Change {0} to call {1}. This will prevent unnecessary finalization of the object once it has been disposed and it has fallen out of scope.</Resolution>
     <Resolution Name="OutsideDispose">{0} calls {1}, a method that is typically only called within an implementation of 'IDisposable.Dispose'. Refer to the IDisposable pattern for more information.</Resolution>
    </Rule>
    <Rule TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227">
@@ -20286,6 +20378,10 @@
     <Resolution Name="MemberNewerVersion">Either replace the suffix '{0}' in member name {1} with the suggested numeric alternate '2' or provide a more meaningful suffix that distinguishes it from the member it replaces.</Resolution>
     <Resolution Name="TypeNewerVersion">Either replace the suffix '{0}' in type name {1} with the suggested numeric alternate '2' or provide a more meaningful suffix that distinguishes it from the type it replaces.</Resolution>
     <Resolution Name="TypeNoAlternate">Rename type name {0} so that it does not end in '{1}'.</Resolution>
+   </Rule>
+   <Rule TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063">
+    <Resolution Name="DisposeImplementation">Modify {0} so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Resolution>
+    <Resolution Name="ProvideDisposeBool">Provide an overridable implementation of Dispose(bool) on {0} or mark the type as sealed. A call to Dispose(false) should only clean up native resources. A call to Dispose(true) should clean up both managed and native resources.</Resolution>
    </Rule>
    <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
     <Resolution Name="IncorrectParameterName">Method {0} passes '{1}' as the {2} argument to a {3} constructor. Replace this argument with one of the method's parameter names. Note that the provided parameter name should have the exact casing as declared on the method.</Resolution>

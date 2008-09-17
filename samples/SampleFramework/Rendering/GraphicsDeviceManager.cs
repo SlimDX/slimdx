@@ -671,6 +671,9 @@ namespace SampleFramework
                         adapter = Factory.GetAdapter(CurrentSettings.Direct3D10.AdapterOrdinal);
                     Direct3D10.Device = new SlimDX.Direct3D10.Device(adapter, CurrentSettings.Direct3D10.DriverType, CurrentSettings.Direct3D10.CreationFlags);
 
+                    if (adapter != null)
+                        adapter.Dispose();
+
                     Direct3D10.SwapChain = new SlimDX.DXGI.SwapChain(Factory, Direct3D10.Device, CurrentSettings.Direct3D10.SwapChainDescription);
 
                     SetupD3D10Views();
@@ -759,7 +762,7 @@ namespace SampleFramework
             if (game != null)
             {
                 game.UnloadContent();
-                game.Release();
+                game.Dispose();
             }
 
             Direct3D9.Device.Dispose();
@@ -777,8 +780,10 @@ namespace SampleFramework
             if (game != null)
             {
                 game.UnloadContent();
-                game.Release();
+                game.Dispose();
             }
+
+            Direct3D10.Device.ClearState();
 
             if (Direct3D10.DepthStencil != null)
                 Direct3D10.DepthStencil.Dispose();
@@ -1001,36 +1006,41 @@ namespace SampleFramework
 
             Direct3D10.RenderTarget = new RenderTargetView(Direct3D10.Device, backBuffer);
 
-            Texture2DDescription desc = new Texture2DDescription();
-            desc.Width = backBuffer.Description.Width;
-            desc.Height = backBuffer.Description.Height;
-            desc.MipLevels = 1;
-            desc.ArraySize = 1;
-            desc.Format = CurrentSettings.Direct3D10.DepthStencilFormat;
-            desc.SampleDescription = CurrentSettings.Direct3D10.SwapChainDescription.SampleDescription;
-            desc.Usage = ResourceUsage.Default;
-            desc.BindFlags = BindFlags.DepthStencil;
-            desc.CpuAccessFlags = CpuAccessFlags.None;
+            if (CurrentSettings.Direct3D10.DepthStencilFormat != SlimDX.DXGI.Format.Unknown)
+            {
+                Texture2DDescription desc = new Texture2DDescription();
+                desc.Width = backBuffer.Description.Width;
+                desc.Height = backBuffer.Description.Height;
+                desc.MipLevels = 1;
+                desc.ArraySize = 1;
+                desc.Format = CurrentSettings.Direct3D10.DepthStencilFormat;
+                desc.SampleDescription = CurrentSettings.Direct3D10.SwapChainDescription.SampleDescription;
+                desc.Usage = ResourceUsage.Default;
+                desc.BindFlags = BindFlags.DepthStencil;
+                desc.CpuAccessFlags = CpuAccessFlags.None;
+                desc.OptionFlags = ResourceOptionFlags.None;
 
-            DepthStencilViewDescription dsvd = new DepthStencilViewDescription();
-            dsvd.Format = desc.Format;
-            if (desc.SampleDescription.Count > 1)
-                dsvd.Dimension = DepthStencilViewDimension.Texture2DMultisampled;
-            else
-                dsvd.Dimension = DepthStencilViewDimension.Texture2D;
-            Direct3D10.DepthStencil = new Texture2D(Direct3D10.Device, desc);
-            Direct3D10.DepthStencilView = new DepthStencilView(Direct3D10.Device, Direct3D10.DepthStencil, dsvd);
+                DepthStencilViewDescription dsvd = new DepthStencilViewDescription();
+                dsvd.Format = desc.Format;
+                if (desc.SampleDescription.Count > 1)
+                    dsvd.Dimension = DepthStencilViewDimension.Texture2DMultisampled;
+                else
+                    dsvd.Dimension = DepthStencilViewDimension.Texture2D;
+                Direct3D10.DepthStencil = new Texture2D(Direct3D10.Device, desc);
+                Direct3D10.DepthStencilView = new DepthStencilView(Direct3D10.Device, Direct3D10.DepthStencil, dsvd);
 
-            RasterizerStateDescription rsDesc = new RasterizerStateDescription();
-            rsDesc.FillMode = SlimDX.Direct3D10.FillMode.Solid;
-            rsDesc.CullMode = CullMode.Back;
-            if (desc.SampleDescription.Count > 1)
-                rsDesc.IsMultisampleEnabled = true;
-            else
-                rsDesc.IsMultisampleEnabled = false;
+                RasterizerStateDescription rsDesc = new RasterizerStateDescription();
+                rsDesc.FillMode = SlimDX.Direct3D10.FillMode.Solid;
+                rsDesc.CullMode = CullMode.Back;
+                rsDesc.IsDepthClipEnabled = true;
+                if (desc.SampleDescription.Count > 1)
+                    rsDesc.IsMultisampleEnabled = true;
+                else
+                    rsDesc.IsMultisampleEnabled = false;
 
-            Direct3D10.RasterizerState = RasterizerState.FromDescription(Direct3D10.Device, rsDesc);
-            Direct3D10.Device.Rasterizer.State = Direct3D10.RasterizerState;
+                Direct3D10.RasterizerState = RasterizerState.FromDescription(Direct3D10.Device, rsDesc);
+                Direct3D10.Device.Rasterizer.State = Direct3D10.RasterizerState;
+            }
 
             Direct3D10.Device.OutputMerger.SetTargets(Direct3D10.DepthStencilView, Direct3D10.RenderTarget);
             backBuffer.Dispose();

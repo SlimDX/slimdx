@@ -83,15 +83,12 @@ namespace Keyboard
 
         void ReadImmediateData()
         {
-            // be sure that the device is still acquired
             if (keyboard.Acquire().IsFailure)
                 return;
 
-            // poll for more input
             if (keyboard.Poll().IsFailure)
                 return;
 
-            // get the current state of the keyboard
             KeyboardState state = keyboard.GetCurrentState();
             if (Result.Last.IsFailure)
                 return;
@@ -105,15 +102,12 @@ namespace Keyboard
 
         void ReadBufferedData()
         {
-            // be sure that the device is still acquired
             if (keyboard.Acquire().IsFailure)
                 return;
 
-            // poll for more input
             if (keyboard.Poll().IsFailure)
                 return;
 
-            // get the list of buffered data events
             BufferedDataCollection<KeyboardState> bufferedData = keyboard.GetBufferedData();
             if (Result.Last.IsFailure)
                 return;
@@ -132,7 +126,6 @@ namespace Keyboard
         {
             timer.Stop();
 
-            // dispose of the device
             if (keyboard != null)
             {
                 keyboard.Unacquire();

@@ -25,76 +25,39 @@ using SlimDX;
 
 namespace Asteroids
 {
-    /// <summary>
-    /// Specifies possible asteroid sizes.
-    /// </summary>
     enum AsteroidSize
     {
-        /// <summary>
-        /// Small asteroids.
-        /// </summary>
         Small,
-
-        /// <summary>
-        /// Medium asteroids.
-        /// </summary>
         Medium,
-
-        /// <summary>
-        /// Large asteroids.
-        /// </summary>
         Large,
-
-        /// <summary>
-        /// Absolutely, rediculously huge asteroids.
-        /// </summary>
         Huge
     }
 
-    /// <summary>
-    /// Represents an asteroid.
-    /// </summary>
     class Asteroid : Entity
     {
-        // constants
         const float MaxAsteroidSpeed = 8.0f;
         const float MinAsteroidSpeed = -8.0f;
         const float MaxAsteroidSpin = 0.05f;
         const float MinAsteroidSpin = -0.05f;
 
-        /// <summary>
-        /// Gets the asteroid count.
-        /// </summary>
-        /// <value>The asteroid count.</value>
         public static int AsteroidCount
         {
             get;
             private set;
         }
 
-        /// <summary>
-        /// Gets or sets the size.
-        /// </summary>
-        /// <value>The size.</value>
         public AsteroidSize Size
         {
             get;
             set;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Asteroid"/> class.
-        /// </summary>
-        /// <param name="game">The game.</param>
-        /// <param name="size">The size.</param>
         public Asteroid(Asteroids game, AsteroidSize size)
             : base(game)
         {
-            // load the model
             int asteroidType = Asteroids.Random.Next(1, 3);
             string modelFile = "Content/Models/";
 
-            // which model we load depends on the size
             Size = size;
             if (size == AsteroidSize.Small)
                 modelFile += "Small";
@@ -107,7 +70,6 @@ namespace Asteroids
             else
                 throw new InvalidOperationException("Oh my gosh, you are retarded!");
 
-            // load the final model
             modelFile += "Asteroid";
             if (size != AsteroidSize.Huge)
                 modelFile += asteroidType.ToString(CultureInfo.InvariantCulture);
@@ -116,24 +78,18 @@ namespace Asteroids
             if (!game.Resources.Contains(Model))
                 game.Resources.Add(Model);
 
-            // set properties
             Position = new Vector2(Helpers.RandomFloat(Game.WorldBounds.X, Game.WorldBounds.Z), Helpers.RandomFloat(Game.WorldBounds.Y, Game.WorldBounds.W));
             Velocity = new Vector2(Helpers.RandomFloat(MinAsteroidSpeed, MaxAsteroidSpeed), Helpers.RandomFloat(MinAsteroidSpeed, MaxAsteroidSpeed));
             RotationalVelocity = Helpers.RandomFloat(MinAsteroidSpin, MaxAsteroidSpin);
 
-            // update the statistics
             AsteroidCount++;
         }
 
-        /// <summary>
-        /// Called when the entity dies.
-        /// </summary>
         public override void OnDeath()
         {
             // we died :(
             AsteroidCount--;
 
-            // if we are large, break into smaller pieces
             AsteroidSize newSize;
             if (Size == AsteroidSize.Huge)
                 newSize = AsteroidSize.Large;
@@ -144,25 +100,18 @@ namespace Asteroids
             else
                 return;
 
-            // create the new asteroids
             CreateNewAsteroid(newSize);
             CreateNewAsteroid(newSize);
         }
 
-        /// <summary>
-        /// Creates a new asteroid.
-        /// </summary>
         void CreateNewAsteroid(AsteroidSize size)
         {
-            // create the asteroid
             Asteroid asteroid = new Asteroid(Game, size);
 
-            // set properties
             asteroid.Position = Position;
             asteroid.Velocity = new Vector2(Helpers.RandomFloat(MinAsteroidSpeed, MaxAsteroidSpeed), Helpers.RandomFloat(MinAsteroidSpeed, MaxAsteroidSpeed));
             asteroid.RotationalVelocity = Helpers.RandomFloat(MinAsteroidSpin, MaxAsteroidSpin);
 
-            // add the item to the list
             Game.Components.Add(asteroid);
         }
     }

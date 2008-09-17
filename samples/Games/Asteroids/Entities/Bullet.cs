@@ -23,63 +23,40 @@ using SlimDX;
 
 namespace Asteroids
 {
-    /// <summary>
-    /// Represents a bullet.
-    /// </summary>
     class Bullet : Entity
     {
-        // variables
         float speed;
         Vector2 direction;
 
-        /// <summary>
-        /// Gets or sets the speed.
-        /// </summary>
-        /// <value>The speed.</value>
         public float Speed
         {
             get { return speed; }
             set
             {
-                // update the velocity
                 speed = value;
                 Velocity = direction * speed;
             }
         }
 
-        /// <summary>
-        /// Gets or sets the direction.
-        /// </summary>
-        /// <value>The direction.</value>
         public Vector2 Direction
         {
             get { return direction; }
             set
             {
-                // update the velocity
                 direction = value;
                 Velocity = direction * speed;
             }
         }
 
-        /// <summary>
-        /// Gets or sets the life.
-        /// </summary>
-        /// <value>The life.</value>
         public float Life
         {
             get;
             set;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Bullet"/> class.
-        /// </summary>
-        /// <param name="game">The game.</param>
         public Bullet(Asteroids game, VectorModel model)
             : base(game)
         {
-            // save the model
             Model = model;
         }
     }

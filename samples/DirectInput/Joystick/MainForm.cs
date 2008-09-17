@@ -80,15 +80,12 @@ namespace Joystick
 
         void ReadImmediateData()
         {
-            // be sure that the device is still acquired
             if (joystick.Acquire().IsFailure)
                 return;
 
-            // poll for more input
             if (joystick.Poll().IsFailure)
                 return;
 
-            // get the current state
             state = joystick.GetCurrentState();
             if (Result.Last.IsFailure)
                 return;
@@ -100,7 +97,6 @@ namespace Joystick
         {
             timer.Stop();
 
-            // dispose of the device
             if (joystick != null)
             {
                 joystick.Unacquire();

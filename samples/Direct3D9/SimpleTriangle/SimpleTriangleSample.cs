@@ -27,58 +27,35 @@ using SlimDX.Direct3D9;
 
 namespace SimpleTriangle
 {
-    /// <summary>
-    /// The top level game object. Manages the entire game.
-    /// </summary>
     class SimpleTriangleSample : Game
     {
-        // constants
         const int InitialWidth = 800;
         const int InitialHeight = 600;
 
         VertexBuffer vertices;
 
-        /// <summary>
-        /// Gets the Direct3D device.
-        /// </summary>
-        /// <value>The Direct3D device.</value>
         public Device Device
         {
             get { return GraphicsDeviceManager.Direct3D9.Device; }
         }
 
-        /// <summary>
-        /// Gets or sets the clear color.
-        /// </summary>
-        /// <value>The clear color.</value>
         public Color ClearColor
         {
             get;
             set;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SimpleTriangleSample"/> class.
-        /// </summary>
         public SimpleTriangleSample()
         {
-            // initialize the clear color
             ClearColor = Color.Black;
 
-            // set up the window
             Window.ClientSize = new Size(InitialWidth, InitialHeight);
             Window.Text = "SlimDX - Simple Triangle Sample";
             Window.KeyDown += Window_KeyDown;
 
-            // create the Direct3D device
             GraphicsDeviceManager.ChangeDevice(DeviceVersion.Direct3D9, true, InitialWidth, InitialHeight);
         }
 
-        /// <summary>
-        /// Handles the KeyDown event of the Window control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Forms.KeyEventArgs"/> instance containing the event data.</param>
         void Window_KeyDown(object sender, KeyEventArgs e)
         {
             // F1 toggles between full screen and windowed mode
@@ -89,55 +66,35 @@ namespace SimpleTriangle
                 Exit();
         }
 
-        /// <summary>
-        /// Loads graphical resources.
-        /// </summary>
         protected override void LoadContent()
         {
-            // create the vertex buffer for the vertices and fill it with data
             vertices = new VertexBuffer(Device, 3 * TransformedColoredVertex.SizeInBytes, Usage.WriteOnly, VertexFormat.None, Pool.Managed);
             DataStream stream = vertices.Lock(0, 0, LockFlags.None);
             stream.WriteRange(BuildVertexData());
             vertices.Unlock();
         }
 
-        /// <summary>
-        /// Unloads graphical resources.
-        /// </summary>
         protected override void UnloadContent()
         {
-            // release the vertex data
             if (vertices != null)
                 vertices.Dispose();
             vertices = null;
         }
 
-        /// <summary>
-        /// Called when a frame is ready to be drawn.
-        /// </summary>
-        /// <param name="gameTime">The time passed since the last frame.</param>
         protected override void Draw(GameTime gameTime)
         {
-            // start the scene
             Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, ClearColor, 1.0f, 0);
             Device.BeginScene();
 
-            // draw the vertices
             Device.SetStreamSource(0, vertices, 0, TransformedColoredVertex.SizeInBytes);
             Device.VertexFormat = TransformedColoredVertex.Format;
             Device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
 
-            // end the scene
             Device.EndScene();
         }
 
-        /// <summary>
-        /// Builds the vertex data.
-        /// </summary>
-        /// <returns>The created vertex data.</returns>
         static TransformedColoredVertex[] BuildVertexData()
         {
-            // build the vertex data
             return new TransformedColoredVertex[3] {
                 new TransformedColoredVertex(new Vector4(400.0f, 100.0f, 0.5f, 1.0f), Color.Red.ToArgb()),
                 new TransformedColoredVertex(new Vector4(650.0f, 500.0f, 0.5f, 1.0f), Color.Blue.ToArgb()),

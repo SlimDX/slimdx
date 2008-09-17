@@ -24,82 +24,53 @@ using SlimDX;
 
 namespace Asteroids
 {
-    /// <summary>
-    /// Handles automatic generation of particles for a moving object.
-    /// </summary>
     class ParticleEmitter
     {
-        // variables
         ParticleSystem particleSystem;
         float timeBetweenParticles;
         float particlesPerSecond;
         Vector3 previousPosition;
         float timeLeftOver;
 
-        /// <summary>
-        /// Gets or sets the number of particles to spawn every second.
-        /// </summary>
-        /// <value>The number of particles to spawn every second.</value>
         public float ParticlesPerSecond
         {
             get { return particlesPerSecond; }
             set
             {
-                // update both values
                 particlesPerSecond = value;
                 timeBetweenParticles = 1.0f / particlesPerSecond;
             }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ParticleEmitter"/> class.
-        /// </summary>
-        /// <param name="particleSystem">The particle system.</param>
-        /// <param name="initialPosition">The initial position.</param>
         public ParticleEmitter(ParticleSystem particleSystem, Vector3 initialPosition)
         {
-            // set up variables
             this.particleSystem = particleSystem;
             previousPosition = initialPosition;
             ParticlesPerSecond = 100.0f;
         }
 
-        /// <summary>
-        /// Updates the emitter.
-        /// </summary>
-        /// <param name="gameTime">The game time.</param>
-        /// <param name="newPosition">The new position.</param>
         public void Update(GameTime gameTime, Vector3 newPosition)
         {
-            // make sure time has passed
             if (gameTime.ElapsedGameTime > 0.0f && !float.IsInfinity(timeBetweenParticles))
             {
-                // calculate the velocity
                 Vector3 velocity = (newPosition - previousPosition) / gameTime.ElapsedGameTime;
 
-                // take into account any time left over from the last update
                 float totalTime = timeLeftOver + gameTime.ElapsedGameTime;
                 float currentTime = -timeLeftOver;
 
-                // create particles as long as we have time to spare
                 while (totalTime > timeBetweenParticles)
                 {
-                    // update the times
                     currentTime += timeBetweenParticles;
                     totalTime -= timeBetweenParticles;
 
-                    // figure out the correct particle position
                     Vector3 position = Vector3.Lerp(previousPosition, newPosition, currentTime / gameTime.ElapsedGameTime);
 
-                    // create the particle
                     particleSystem.SpawnParticle(position, velocity);
                 }
 
-                // store any time we didn't use
                 timeLeftOver = totalTime;
             }
 
-            // update the position
             previousPosition = newPosition;
         }
     }

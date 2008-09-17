@@ -26,123 +26,72 @@ using SlimDX;
 
 namespace Asteroids
 {
-    /// <summary>
-    /// Represents a weapon.
-    /// </summary>
     abstract class Weapon
     {
-        /// <summary>
-        /// Gets the game.
-        /// </summary>
-        /// <value>The game.</value>
         public Asteroids Game
         {
             get;
             private set;
         }
 
-        /// <summary>
-        /// Gets or sets the cool down rate.
-        /// </summary>
-        /// <value>The cool down rate.</value>
         public float CoolDownRate
         {
             get;
             protected set;
         }
 
-        /// <summary>
-        /// Gets or sets the bullet speed.
-        /// </summary>
-        /// <value>The bullet speed.</value>
         public float BulletSpeed
         {
             get;
             protected set;
         }
 
-        /// <summary>
-        /// Gets or sets the bullet rotation.
-        /// </summary>
-        /// <value>The bullet rotation.</value>
         public float BulletRotation
         {
             get;
             protected set;
         }
 
-        /// <summary>
-        /// Gets or sets the bullet life.
-        /// </summary>
-        /// <value>The bullet life.</value>
         public float BulletLife
         {
             get;
             protected set;
         }
 
-        /// <summary>
-        /// Gets or sets the bullet model.
-        /// </summary>
-        /// <value>The bullet model.</value>
         public VectorModel BulletModel
         {
             get;
             protected set;
         }
 
-        /// <summary>
-        /// Gets the bullets.
-        /// </summary>
-        /// <value>The bullets.</value>
         protected List<Bullet> Bullets
         {
             get;
             private set;
         }
 
-        /// <summary>
-        /// Gets or sets the cool down.
-        /// </summary>
-        /// <value>The cool down.</value>
         protected float CoolDown
         {
             get;
             set;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Weapon"/> class.
-        /// </summary>
-        /// <param name="game">The game.</param>
         protected Weapon(Asteroids game)
         {
-            // create the list of bullets
             Bullets = new List<Bullet>();
 
-            // store the reference
             Game = game;
         }
 
-        /// <summary>
-        /// Resets the cool down.
-        /// </summary>
         public void ResetCoolDown()
         {
-            // reset the timer
             CoolDown = CoolDownRate;
         }
 
-        /// <summary>
-        /// Updates the bullets being managed by the weapon.
-        /// </summary>
-        /// <param name="gameTime">The game time.</param>
         public virtual void Update(GameTime gameTime)
         {
-            // update the cool down rate
             CoolDown--;
 
-            // update the active bullets
             foreach (Bullet bullet in Bullets)
             {
                 // decrease the life on the bullet
@@ -150,14 +99,11 @@ namespace Asteroids
                 bullet.Life--;
                 if (bullet.Life > 0.0f)
                 {
-                    // update the bullet
                     bullet.Update(gameTime);
 
-                    // check against each entity
                     BoundingSphere sphere = new BoundingSphere(new Vector3(bullet.Position, 0), BulletModel.Radius);
                     foreach (IGameComponent component in Game.Components)
                     {
-                        // grab the entity
                         Entity entity = component as Entity;
                         if (entity == null)
                             continue;
@@ -166,7 +112,6 @@ namespace Asteroids
                         if (entity is Player)
                             continue;
 
-                        // check for enemy objects to collide with
                         if (entity.Collides(sphere))
                         {
                             // entity suicide! when will it end?
@@ -187,30 +132,17 @@ namespace Asteroids
                     Bullets.RemoveAt(i);
         }
 
-        /// <summary>
-        /// Draws the bullets.
-        /// </summary>
         public virtual void Draw()
         {
-            // draw the active bullets
             foreach (Bullet bullet in Bullets)
                 bullet.Draw();
         }
 
-        /// <summary>
-        /// Clears the currently active bullets.
-        /// </summary>
         public void Clear()
         {
-            // clear the list
             Bullets.Clear();
         }
 
-        /// <summary>
-        /// Fires the weapon instantaneously.
-        /// </summary>
-        /// <param name="position">The position of the player.</param>
-        /// <param name="rotation">The rotation of the player.</param>
         public virtual void Fire(Vector2 position, float rotation)
         {
             // fire the bullet
@@ -224,22 +156,14 @@ namespace Asteroids
             Bullets.Add(bullet);
         }
 
-        /// <summary>
-        /// Performs a shot of the weapon when in auto-fire mode. A shot may or may not
-        /// occur depending on the cool down rate.
-        /// </summary>
-        /// <param name="position">The position of the player.</param>
-        /// <param name="rotation">The rotation of the player.</param>
         public virtual void AutoFire(Vector2 position, float rotation)
         {
             // make sure the weapon has cooled down enough to fire
             if (CoolDown > 0.0f)
                 return;
 
-            // fire the bullet
             Fire(position, rotation);
 
-            // reset the timer
             CoolDown = CoolDownRate;
         }
     }

@@ -84,12 +84,12 @@ namespace SampleFramework
         }
 
         /// <summary>
-        /// Releases the resources.
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Release()
+        public void Dispose()
         {
             foreach (IResource resource in Items)
-                resource.Release();
+                resource.Dispose();
 
             lastMethod = ResourceMethod.Release;
         }
@@ -100,11 +100,11 @@ namespace SampleFramework
         protected override void ClearItems()
         {
             if (lastMethod == ResourceMethod.Initialize || lastMethod == ResourceMethod.UnloadContent)
-                Release();
+                Dispose();
             else if (lastMethod == ResourceMethod.LoadContent)
             {
                 UnloadContent();
-                Release();
+                Dispose();
             }
 
             base.ClearItems();
@@ -144,11 +144,11 @@ namespace SampleFramework
             IResource item = Items[index];
 
             if (lastMethod == ResourceMethod.Initialize || lastMethod == ResourceMethod.UnloadContent)
-                item.Release();
+                item.Dispose();
             else if (lastMethod == ResourceMethod.LoadContent)
             {
                 item.UnloadContent();
-                item.Release();
+                item.Dispose();
             }
 
             base.RemoveItem(index);
