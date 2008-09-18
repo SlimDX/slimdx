@@ -248,18 +248,30 @@ namespace SlimDX
 		return buffer;
 	}
 	
-	generic<typename T>
-	void Utilities::CheckArrayBounds( array<T>^ data, int offset, int% count )
+	void Utilities::CheckArrayBounds( Array^ data, int offset, int% count )
 	{
+		if( offset < 0 || offset >= data->Length )
+			throw gcnew ArgumentOutOfRangeException( "offset" );
+
 		if( count == 0 )
 			count = data->Length - offset;
 
-		if( offset < 0 || offset >= data->Length )
-			throw gcnew ArgumentOutOfRangeException( "offset" );
 		if( count < 0 || count > data->Length - offset )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 	}
 	
+	void Utilities::CheckBounds( int lowerBound, int size, int offset, int% count )
+	{
+		if( offset < lowerBound || offset >= (lowerBound + size) )
+			throw gcnew ArgumentOutOfRangeException( "offset" );
+			
+		if( count == 0 )
+			count = size - offset;
+
+		if( count < 0 || count > size - offset )
+			throw gcnew ArgumentOutOfRangeException( "count" );
+	}
+
 	generic<typename T>
 	bool Utilities::CheckElementEquality( IList<T>^ left, IList<T>^ right )
 	{

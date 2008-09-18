@@ -714,7 +714,7 @@ namespace SlimDX
 			/// <param name="startRegister">Register number that will contain the first constant value.</param>
 			/// <param name="data">The constant data.</param>
 			/// <param name="offset">The offset into the data where constants will start being retrieved.</param>
-			/// <param name="count">The number of constants to set.</param>
+			/// <param name="count">The number of four constant vectors to set.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetVertexShaderConstant( int startRegister, array<float>^ data, int offset, int count );
 			
@@ -724,7 +724,17 @@ namespace SlimDX
 			/// <param name="startRegister">Register number that will contain the first constant value.</param>
 			/// <param name="data">The constant data.</param>
 			/// <param name="offset">The offset into the data where constants will start being retrieved.</param>
-			/// <param name="count">The number of constants to set.</param>
+			/// <param name="count">The number of four constant vectors to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result SetVertexShaderConstant( int startRegister, array<Vector4>^ data, int offset, int count );
+			
+			/// <summary>
+			/// Sets a vertex shader constant.
+			/// </summary>
+			/// <param name="startRegister">Register number that will contain the first constant value.</param>
+			/// <param name="data">The constant data.</param>
+			/// <param name="offset">The offset into the data where constants will start being retrieved.</param>
+			/// <param name="count">The number of four constant vectors to set.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetVertexShaderConstant( int startRegister, array<int>^ data, int offset, int count );
 			
@@ -750,6 +760,14 @@ namespace SlimDX
 			/// <param name="startRegister">Register number that will contain the first constant value.</param>
 			/// <param name="data">The constant data.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result SetVertexShaderConstant( int startRegister, array<Vector4>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, 0 ); }
+			
+			/// <summary>
+			/// Sets a vertex shader constant.
+			/// </summary>
+			/// <param name="startRegister">Register number that will contain the first constant value.</param>
+			/// <param name="data">The constant data.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetVertexShaderConstant( int startRegister, array<int>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, 0 ); }
 
 			/// <summary>
@@ -768,7 +786,7 @@ namespace SlimDX
 			/// <param name="startRegister">Register number that will contain the first constant value.</param>
 			/// <param name="data">The constant data.</param>
 			/// <param name="offset">The offset into the data where constants will start being retrieved.</param>
-			/// <param name="count">The number of constants to set.</param>
+			/// <param name="count">The number of four constant vectors to set.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetPixelShaderConstant( int startRegister, array<float>^ data, int offset, int count );
 
@@ -778,7 +796,17 @@ namespace SlimDX
 			/// <param name="startRegister">Register number that will contain the first constant value.</param>
 			/// <param name="data">The constant data.</param>
 			/// <param name="offset">The offset into the data where constants will start being retrieved.</param>
-			/// <param name="count">The number of constants to set.</param>
+			/// <param name="count">The number of four constant vectors to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result SetPixelShaderConstant( int startRegister, array<Vector4>^ data, int offset, int count );
+
+			/// <summary>
+			/// Sets a pixel shader constant.
+			/// </summary>
+			/// <param name="startRegister">Register number that will contain the first constant value.</param>
+			/// <param name="data">The constant data.</param>
+			/// <param name="offset">The offset into the data where constants will start being retrieved.</param>
+			/// <param name="count">The number of four constant vectors to set.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetPixelShaderConstant( int startRegister, array<int>^ data, int offset, int count );
 
@@ -797,6 +825,14 @@ namespace SlimDX
 			/// <param name="data">The constant data.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetPixelShaderConstant( int startRegister, array<float>^ data ) { return SetPixelShaderConstant( startRegister, data, 0, 0 ); }
+			
+			/// <summary>
+			/// Sets a pixel shader constant.
+			/// </summary>
+			/// <param name="startRegister">Register number that will contain the first constant value.</param>
+			/// <param name="data">The constant data.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result SetPixelShaderConstant( int startRegister, array<Vector4>^ data ) { return SetPixelShaderConstant( startRegister, data, 0, 0 ); }
 			
 			/// <summary>
 			/// Sets a pixel shader constant.

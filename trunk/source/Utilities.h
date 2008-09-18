@@ -53,8 +53,9 @@ namespace SlimDX
 		generic<typename T> where T : value class
 		static array<T>^ ReadRange( ID3DXBuffer *buffer, int count );
 
-		generic<typename T>
-		static void CheckArrayBounds( array<T>^ data, int offset, int% count );
+		static void CheckBounds( int lowerBound, int size, int offset, int% count );
+
+		static void CheckArrayBounds( System::Array^ data, int offset, int% count );
 		
 		generic<typename T>
 		static bool CheckElementEquality( System::Collections::Generic::IList<T>^ left, System::Collections::Generic::IList<T>^ right );
