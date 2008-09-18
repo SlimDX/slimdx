@@ -962,8 +962,18 @@ namespace Direct3D9
 	{
 		pin_ptr<float> pinnedData = &data[0];
 
-		Utilities::CheckArrayBounds( data, offset, count );
+		Utilities::CheckBounds( 0, data->Length / 4, offset, count );
 		HRESULT hr = InternalPointer->SetVertexShaderConstantF( startRegister, pinnedData + offset, count );
+		return RECORD_D3D9( hr );
+	}
+
+	Result Device::SetVertexShaderConstant( int startRegister, array<Vector4>^ data, int offset, int count )
+	{
+		pin_ptr<Vector4> pinnedData = &data[0];
+		float* pinnedDataPointer = reinterpret_cast<float*>( pinnedData + offset );
+
+		Utilities::CheckArrayBounds( data, offset, count );
+		HRESULT hr = InternalPointer->SetVertexShaderConstantF( startRegister, pinnedDataPointer, count );
 		return RECORD_D3D9( hr );
 	}
 
@@ -971,7 +981,7 @@ namespace Direct3D9
 	{
 		pin_ptr<int> pinnedData = &data[0];
 
-		Utilities::CheckArrayBounds( data, offset, count );
+		Utilities::CheckBounds( 0, data->Length / 4, offset, count );
 		HRESULT hr = InternalPointer->SetVertexShaderConstantI( startRegister, pinnedData + offset, count );
 		return RECORD_D3D9( hr );
 	}
@@ -991,8 +1001,18 @@ namespace Direct3D9
 	{
 		pin_ptr<float> pinnedData = &data[0];
 
-		Utilities::CheckArrayBounds( data, offset, count );
+		Utilities::CheckBounds( 0, data->Length / 4, offset, count );
 		HRESULT hr = InternalPointer->SetPixelShaderConstantF( startRegister, pinnedData + offset, count );
+		return RECORD_D3D9( hr );
+	}
+
+	Result Device::SetPixelShaderConstant( int startRegister, array<Vector4>^ data, int offset, int count )
+	{
+		pin_ptr<Vector4> pinnedData = &data[0];
+		float* pinnedDataPointer = reinterpret_cast<float*>( pinnedData + offset );
+
+		Utilities::CheckArrayBounds( data, offset, count );
+		HRESULT hr = InternalPointer->SetPixelShaderConstantF( startRegister, pinnedDataPointer, count );
 		return RECORD_D3D9( hr );
 	}
 
@@ -1000,7 +1020,7 @@ namespace Direct3D9
 	{
 		pin_ptr<int> pinnedData = &data[0];
 
-		Utilities::CheckArrayBounds( data, offset, count );
+		Utilities::CheckBounds( 0, data->Length / 4, offset, count );
 		HRESULT hr = InternalPointer->SetPixelShaderConstantI( startRegister, pinnedData + offset, count );
 		return RECORD_D3D9( hr );
 	}
