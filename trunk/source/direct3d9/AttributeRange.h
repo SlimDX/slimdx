@@ -25,6 +25,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Stores an attribute table entry.</summary>
+		/// <unmanaged>D3DXATTRIBUTERANGE</unmanaged>
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class AttributeRange : System::IEquatable<AttributeRange>
 		{
