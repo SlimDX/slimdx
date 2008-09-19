@@ -51,6 +51,7 @@ namespace SlimDX
 			SkinInfo^ skinInfo;			
 
 		internal:
+			static System::String^ ExceptionDataKey = "MeshErrors";
 			void SetAdjacency( DWORD *adjacency );
 
 		public:
@@ -87,6 +88,8 @@ namespace SlimDX
 			static Mesh^ TessellateNPatches( Mesh^ mesh, float segmentCount, bool quadraticInterpolation );
 
 			void GenerateAdjacency( float epsilon ) new;
+
+			System::String^ Validate();
 
 			DataStream^ LockAttributeBuffer( LockFlags flags );
 			Result UnlockAttributeBuffer();
