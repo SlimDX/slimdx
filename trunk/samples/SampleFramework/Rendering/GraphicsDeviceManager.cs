@@ -762,7 +762,7 @@ namespace SampleFramework
             if (game != null)
             {
                 game.UnloadContent();
-                game.Dispose();
+                game.Dispose(true);
             }
 
             Direct3D9.Device.Dispose();
@@ -780,7 +780,7 @@ namespace SampleFramework
             if (game != null)
             {
                 game.UnloadContent();
-                game.Dispose();
+                game.Dispose(true);
             }
 
             Direct3D10.Device.ClearState();

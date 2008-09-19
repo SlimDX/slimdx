@@ -266,7 +266,15 @@ namespace SampleFramework
         /// </summary>
         public void Dispose()
         {
-            Dispose(true);
+            // GraphicsDeviceManager.Dispose will come around and call the Dispose(bool)
+            // overload, so we don't need to do it here. It's convoluted, but it works well.
+            if (GraphicsDeviceManager != null)
+                GraphicsDeviceManager.Dispose();
+            GraphicsDeviceManager = null;
+
+            if (Disposed != null)
+                Disposed(this, EventArgs.Empty);
+
             GC.SuppressFinalize(this);
         }
 
@@ -524,19 +532,10 @@ namespace SampleFramework
         /// Releases unmanaged and - optionally - managed resources
         /// </summary>
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected virtual void Dispose(bool disposing)
+        protected internal virtual void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                Resources.Dispose();
-
-                if (GraphicsDeviceManager != null)
-                    GraphicsDeviceManager.Dispose();
-                GraphicsDeviceManager = null;
-
-                if (Disposed != null)
-                    Disposed(this, EventArgs.Empty);
-            }
+            // update the resources
+            Resources.Dispose();
         }
 
         /// <summary>

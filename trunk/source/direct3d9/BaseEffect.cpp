@@ -346,6 +346,9 @@ namespace Direct3D9
 	generic<typename T> where T : value class
 	Result BaseEffect::SetValue( EffectHandle^ parameter, T value )
 	{
+		if( T::typeid == bool::typeid )
+			return SetValue( parameter, Convert::ToInt32( value ) );
+
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 
 		HRESULT	hr = InternalPointer->SetValue( handle, &value, sizeof(T) );
@@ -369,6 +372,14 @@ namespace Direct3D9
 	generic<typename T> where T : value class
 	Result BaseEffect::SetValue( EffectHandle^ parameter, array<T>^ values )
 	{
+		if( T::typeid == bool::typeid )
+		{
+			array<BOOL>^ newValues = gcnew array<BOOL>( values->Length );
+			values->CopyTo( newValues, 0 );
+
+			return SetValue( parameter, newValues );
+		}
+
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		pin_ptr<T> pinnedData = &values[0];
 
