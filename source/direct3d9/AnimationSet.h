@@ -35,6 +35,13 @@ namespace SlimDX
 	{
 		ref class Frame;
 
+		/// <summary>
+		/// This interface encapsulates the minimum functionality required of an animation set by an animation
+		/// controller. Advanced users might want to implement this interface themselves to suit their
+		/// specialized needs; for most users, however, the derived CompressedAnimationSet and
+		/// KeyframedAnimationSet interfaces should suffice.
+		/// </summary>
+		/// <unmanaged>ID3DXAnimationSet</unmanaged>
 		public ref class AnimationSet : public ComObject
 		{
 			COMOBJECT(ID3DXAnimationSet, AnimationSet);

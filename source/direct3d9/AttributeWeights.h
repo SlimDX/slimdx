@@ -25,6 +25,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Specifies mesh weight attributes.</summary>
+		/// <unmanaged>D3DXATTRIBUTEWEIGHTS</unmanaged>
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class AttributeWeights : System::IEquatable<AttributeWeights>
 		{

@@ -27,6 +27,11 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>
+		/// An application uses the methods of this interface to implement a key frame
+		/// animation set stored in a compressed data format.
+		/// </summary>
+		/// <unmanaged>ID3DXCompressedAnimationSet</unmanaged>
 		public ref class CompressedAnimationSet : public AnimationSet
 		{
 		internal:
