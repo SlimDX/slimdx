@@ -1,76 +1,72 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <topic id="598b267f-52e6-4adb-906b-879c0bc8c736" revisionNumber="0">
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <summary>
-      <para>Optional abstract</para>
-    </summary>
-
     <introduction>
-      <para>Required introduction</para>
+      <para>
+        In order to function correctly, SlimDX must merge two different paradigms for handling object lifetimes.
+        On the native side there is COM, which functions based on a reference counted system utilizing explicit calls to manipulate the reference count.
+        On the managed side the runtime uses garbage collection to determine what objects are still alive, and the rest are automatically destroyed.
+        SlimDX presents a model that is as close to the managed model as possible, given the restrictions imposed by COM and DirectX on what can be done with objects.
+        However, this model is not quite identical, and it's important to understand exactly how object lifetimes must be handled by a SlimDX based application.
+      </para>
     </introduction>
 
     <section>
-      <title>A topic section</title>
+      <title>Object Creation</title>
 
       <content>
-        <para>Some topic content</para>
+        <para>
+          SlimDX wraps all COM objects in classes that inherit from <codeEntityReference>T:SlimDX.ComObject</codeEntityReference>, and it contains any number of functions and properties that can potentially create one of these objects.
+          Some of these are explicit creation functions, such as <codeEntityReference>M:SlimDX.Direct3D9.Texture.#ctor(SlimDX.Direct3D9.Device,System.Int32,System.Int32,System.Int32,SlimDX.Direct3D9.Usage,SlimDX.Direct3D9.Format,SlimDX.Direct3D9.Pool)</codeEntityReference> or <codeEntityReference>M:SlimDX.Direct3D9.Texture.FromFile(SlimDX.Direct3D9.Device,System.String)</codeEntityReference>.
+          However, there are many functions that must internally translate from a native COM object pointer to a SlimDX object reference, such as the <codeEntityReference>P:SlimDX.Direct3D9.Effect.Device</codeEntityReference> property that many SlimDX objects have.
+          These implicit creation functions pose a problem, since various instances of unexpected or undesirable behavior can occur if not handled properly.
+          In Managed DirectX, as well as earlier iterations of SlimDX, these functions always created a brand new managed object to represent the COM object, and updated its reference count to reflect the new instance.
+          Although this is essentially reasonable and correct from the native point of view, it creates significant problems for managed code.
+        </para>
+        <para>
+          If implicit creation functions always spawn a new managed object, it becomes critical to call <codeEntityReference>M:SlimDX.ComObject.Dispose</codeEntityReference> on every single instance of every object, even if there are multiple instances representing the same actual object.
+          If any calls are missed, then the COM reference counts no longer balance out, resulting in memory leaks or other types of
+          <externalLink>
+            <linkText>pathological behavior.</linkText>
+            <linkUri>http://blogs.msdn.com/tmiller/archive/2003/11/14/57531.aspx</linkUri>
+            <linkAlternateText>The downside of using the events</linkAlternateText>
+          </externalLink>
+          It also means that calls to members that should be simple get properties will actually modify their underlying object (via the reference count), and that consecutive calls to the same property will not actually return the same object.
+          Although you can work around these issues somewhat, this approach to managing objects is basically broken beyond repair.
+        </para>
+        <para>
+          SlimDX solves the problem by maintaining an internal thread-safe table of COM object to SlimDX object mappings.
+          When a COM object needs to be wrapped by a SlimDX object, it is first looked up in the table.
+          If the table already has an entry, then no new object is created; instead the existing one is returned.
+          If it does not exist in the table, it is added and a new SlimDX object is returned.
+          When the object is disposed, it is removed from the table.
+          All of these cases manipulate the COM object's reference count appropriately, so that for any given COM object, SlimDX is responsible for at most only one of its outstanding references.
+          This model of creating objects imposes some negligible management overhead, and almost completely solves the problems discussed here.
+          Note that it is still possible for implicit creation to occur; the difference is that it will not occur in the vast majority of cases, and that in the remaining cases it can typically be moved to a single, predictable location rather than being allowed to happen arbitrarily.
+        </para>
       </content>
     </section>
 
-    <relatedTopics>
-      <!-- Supported Link Types
-    
-         All of the following linking mechanisms may be used in the topic's content 
-         as well as in the related topics section.
-    
-    Linking to API reference documentation: 
-    
-		    <codeEntityReference>API reference ID</codeEntityReference>
+    <section>
+      <title>Object Destruction</title>
 
-    Linking to external resources and custom HTML topics: 
-
-        <externalLink>
-          <linkText>  Required hyperlink text  </linkText>
-          <linkAlternateText>  Optional link title  </linkAlternateText>
-          <linkUri>  Required URI  </linkUri>
-        </externalLink>
-    
-    Linking to other conceptual topics: 
-    
-        <link xlink:href="GUID topic name (without file extension)" />
-        
-    Linking to named references:
-    
-        (Refer to the project's Help\Settings\links.xml file for more information)
-    
-        <link xref="id"> Optional link text </link>
-        <link vref="id or URI"> Optional link text </link>
-        
-    -->
-
-      <!-- Example Usage 
-
-      <codeEntityReference>T:MyNamespace.MyClass</codeEntityReference>
-      <codeEntityReference>P:MyNamespace.MyClass.MyProp</codeEntityReference>
-      <codeEntityReference>M:System.IO.File.OpenText(System.String)</codeEntityReference>
-
-      <externalLink>
-        <linkText>Sandcastle Styles</linkText>
-        <linkAlternateText>Sandcastle Styles on CodePlex</linkAlternateText>
-        <linkUri>http://www.codeplex.com/SandcastleStyles</linkUri>
-      </externalLink>
-
-      <externalLink>
-        <linkText>Change Log</linkText>
-        <linkUri>ChangeLog.html</linkUri>
-      </externalLink>
-
-      <link xlink:href="2BFD9215-1216-403d-8C46-8420A4D01B83"/>
-      
-      <link xref="home">Our Home Page</link>
-      <link vref="/controls/design.aspx">Control Architecture</link>
-      -->
-    </relatedTopics>
-
+      <content>
+        <para>
+          It is critical to destroy all of the objects in a DirectX based application correctly, or all kinds of minor and major bugs can begin to appear.
+          The normal method for handling object destruction when dealing with managed objects would be via IDisposable and the finalizer.
+          While SlimDX objects that wrap COM objects are disposable, they do not provide a finalizer.
+          The finalizer can run in a separate thread of its own, which breaks DirectX rules about releasing objects in several situations.
+          In Managed DirectX, event hooks were used to catch and handle critical points in the application and to do object cleanup.
+          While this approach worked, it could create unexpected behavior, and tended to cover up problematic memory leaks and dependencies.
+        </para>
+        <para>
+          In SlimDX, you must dispose of all your objects explicitly, by yourself, as appropriate.
+          It will never attempt to do any kind of automated cleanup.
+          Although this is unfortunate and does not really comply with how managed applications should behave, it is by far the best compromise given the circumstances.
+          Thanks to the use of an internal table to track objects, this task is much more manageable than it was previously, since the massive proliferation of duplicate object instances is avoided.
+          The table can also be used to very quickly and effectively debug problems in object cleanup.
+        </para>
+      </content>
+    </section>
   </developerConceptualDocument>
 </topic>
