@@ -615,6 +615,27 @@ namespace Direct3D9
 		SetAdjacency( adj );
 	}
 
+	String^ Mesh::Validate()
+	{
+		ID3DXBuffer *errorBuffer;
+		DWORD *adjacencyIn = NULL;
+		pin_ptr<int> pinnedAdj;
+		String^ errors;
+
+		array<int>^ adjacency = GetAdjacency();
+		if( adjacency != nullptr )
+		{
+			pinnedAdj = &adjacency[0];
+			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
+		}
+
+		HRESULT hr = D3DXValidMesh( InternalPointer, adjacencyIn, &errorBuffer );
+		errors = Utilities::BufferToString( errorBuffer );
+
+		RECORD_D3D9_EX( hr, ExceptionDataKey, errors );
+		return errors;
+	}
+
 	void Mesh::SetAdjacency( DWORD *adj )
 	{
 		if( adj == NULL )
