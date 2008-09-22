@@ -802,14 +802,29 @@ namespace Direct3D9
 		return Result::Last;
 	}
 
-	int Device::GetStreamSourceFrequency( int stream )
+	Result Device::GetStreamSourceFrequency( int stream, [Out] int% frequency, [Out] StreamSource% source )
 	{
 		UINT localFreq = 0;
 
+		//set outputs to known defaults
+		frequency = 0;
+		source = StreamSource::IndexedData;
+
 		HRESULT hr = InternalPointer->GetStreamSourceFreq( stream, &localFreq );
 		RECORD_D3D9( hr );
+
+		//default setting was indexed data, so just check if it's actually instance data
+		if( localFreq & D3DSTREAMSOURCE_INSTANCEDATA )
+		{
+			source = StreamSource::InstanceData;
+		}
+
+		//mask out the flags that are in the upper bits
+		UINT mask = ~(D3DSTREAMSOURCE_INSTANCEDATA | D3DSTREAMSOURCE_INDEXEDDATA);
+		localFreq &= mask;
+		frequency = localFreq;
 		
-		return localFreq;
+		return Result::Last;
 	}
 
 	SwapChain^ Device::GetSwapChain( int swapChainIndex )
@@ -949,6 +964,11 @@ namespace Direct3D9
 
 	Result Device::SetVertexShaderConstant( int startRegister, array<bool>^ data, int offset, int count )
 	{
+		if( data == nullptr )
+			throw gcnew ArgumentNullException( "data" );
+
+		Utilities::CheckArrayBounds( data, offset, count );
+
 		array<BOOL>^ boolData = gcnew array<BOOL>( data->Length );
 		data->CopyTo( boolData, data->Length );
 		pin_ptr<BOOL> pinnedData = &boolData[0];

@@ -329,7 +329,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="stream">A zero-based index specifying the data stream.</param>
 			/// <returns>The frequency divider value.</returns>
-			int GetStreamSourceFrequency( int stream );
+			Result GetStreamSourceFrequency( int stream, [Out] int% frequency, [Out] StreamSource% source );
 
 			/// <summary>
 			/// Generates a copy of the device's front buffer and places that copy into the specified surface.
