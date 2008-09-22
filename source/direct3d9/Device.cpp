@@ -49,7 +49,6 @@ using namespace System::Collections::Generic;
 using namespace System::Drawing;
 using namespace System::Runtime::InteropServices;
 using namespace System::Windows::Forms;
-using namespace System::Globalization;
 
 namespace SlimDX
 {
@@ -688,10 +687,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetRenderState( static_cast<D3DRENDERSTATETYPE>( state ), &value );
 		RECORD_D3D9( hr );
 
-		if( T::typeid->IsEnum )
-			return safe_cast<T>( static_cast<int>( value ) );
-		else
-			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid, CultureInfo::InvariantCulture ) );
+		return Utilities::FromIntToT<T>( value );
 	}
 	
 	int Device::GetRenderState( RenderState state )
@@ -709,10 +705,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetSamplerState( sampler, static_cast<D3DSAMPLERSTATETYPE>( type ), &value );
 		RECORD_D3D9( hr );
 
-		if( T::typeid->IsEnum )
-			return safe_cast<T>( static_cast<int>( value ) );
-		else
-			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid, CultureInfo::InvariantCulture ) );
+		return Utilities::FromIntToT<T>( value );
 	}
 #pragma warning(default:4717)
 
@@ -728,10 +721,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetTextureStageState( stage, static_cast<D3DTEXTURESTAGESTATETYPE>( type ), &value );
 		RECORD_D3D9( hr );
 
-		if( T::typeid->IsEnum )
-			return safe_cast<T>( static_cast<int>( value ) );
-		else
-			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid, CultureInfo::InvariantCulture ) );
+		return Utilities::FromIntToT<T>( value );
 	}
 
 	int Device::GetTextureStageState( int stage, TextureStage type )
