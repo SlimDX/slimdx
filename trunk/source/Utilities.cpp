@@ -29,6 +29,7 @@ using namespace System;
 using namespace System::Collections::Generic;
 using namespace System::IO;
 using namespace System::Reflection;
+using namespace System::Globalization;
 
 namespace SlimDX
 {
@@ -325,5 +326,16 @@ namespace SlimDX
 			return NULL;
 		else
 			return reinterpret_cast<LPSTR>( System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi( value ).ToPointer() );
+	}
+
+	generic<typename T>
+	T Utilities::FromIntToT( int value )
+	{
+		if( T::typeid->IsEnum )
+			return safe_cast<T>( static_cast<int>( value ) );
+		else if( T::typeid == float::typeid )
+			return safe_cast<T>( *(float*) &value );
+		else
+			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid, CultureInfo::InvariantCulture ) );
 	}
 }

@@ -64,5 +64,8 @@ namespace SlimDX
 		static void FreeNativeString( LPSTR string );
 
 		static LPSTR AllocateNativeString( System::String^ string );
+
+		generic<typename T> where T : value class
+		static T FromIntToT( int value );
 	};
 }
