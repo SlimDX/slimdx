@@ -138,10 +138,11 @@ namespace SlimDX
 		{
 			for each( KeyValuePair<IntPtr, ComObject^> pair in m_Table )
 			{
+				output += String::Format( CultureInfo::InvariantCulture, "Object of type {0} was not disposed. Stack trace of object creation:\n", pair.Value->GetType() );
+
 				if( pair.Value->CreationSource == nullptr )
 					continue;
 
-				output += String::Format( CultureInfo::InvariantCulture, "Object of type {0} was not disposed. Stack trace of object creation:\n", pair.Value->GetType() );
 				for each( StackFrame^ frame in pair.Value->CreationSource->GetFrames() )
 				{
 					if( frame->GetFileLineNumber() == 0 )
