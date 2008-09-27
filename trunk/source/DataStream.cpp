@@ -71,6 +71,9 @@ namespace SlimDX
 		m_OwnsBuffer = makeCopy;
 		
 		m_ID3DXBuffer = 0;
+
+		if( !m_OwnsBuffer )
+			GC::SuppressFinalize( this );
 	}
 	
 	DataStream::DataStream( Int64 sizeInBytes, bool canRead, bool canWrite )
@@ -113,14 +116,21 @@ namespace SlimDX
 		m_CanWrite = canWrite;
 		
 		m_ID3DXBuffer = 0;
+		GC::SuppressFinalize( this );
 	}
 
 	DataStream::~DataStream()
 	{
-		this->!DataStream();
+		Destruct();
+		GC::SuppressFinalize( this );
 	}
 	
 	DataStream::!DataStream()
+	{
+		Destruct();
+	}
+
+	void DataStream::Destruct()
 	{
 		if(m_OwnsBuffer)
 		{

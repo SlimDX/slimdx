@@ -168,6 +168,15 @@
      </Message>
     </Messages>
    </Namespace>
+   <Namespace Name="SlimDXTests">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2008-09-27 00:03:43Z">
+      <Issue>
+       <Item>SlimDXTests</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
   </Namespaces>
   <Targets>
    <Target Name="$(ProjectDir)/x86/Debug/SlimDX.dll">
@@ -401,8 +410,24 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#.ctor(System.IntPtr,System.Int64,System.Boolean,System.Boolean)">
+            <Messages>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-09-27 00:03:43Z">
+              <Issue Name="OutsideDispose">
+               <Item>'DataStream.DataStream(IntPtr, long, bool, bool)'</Item>
+               <Item>'GC.SuppressFinalize(object)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#.ctor(System.Void*,System.Int64,System.Boolean,System.Boolean,System.Boolean)">
             <Messages>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-09-27 00:03:43Z">
+              <Issue Name="OutsideDispose">
+               <Item>'DataStream.DataStream(void*, long, bool, bool, bool)'</Item>
+               <Item>'GC.SuppressFinalize(object)'</Item>
+              </Issue>
+             </Message>
              <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-09-09 18:08:37Z">
               <Issue>
                <Item>'DataStream.DataStream(void*, long, bool, bool, bool)'</Item>
@@ -588,6 +613,32 @@
                <Item>'DataStream.DataStream(void*, long, bool, bool, bool)'</Item>
                <Item>'GC.AddMemoryPressure(long)'</Item>
                <Item>&#xD;&#xA;   -&gt;'DataStream.DataStream(void*, long, bool, bool, bool)'&#xD;&#xA;   -&gt;'DataStream.DataStream(void*, long, bool, bool, bool)'&#xD;&#xA;   -&gt;'XFileData.Lock()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#~DataStream()">
+            <Messages>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-09-27 00:03:43Z">
+              <Issue Name="OutsideDispose">
+               <Item>'DataStream.~DataStream()'</Item>
+               <Item>'GC.SuppressFinalize(object)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Destruct()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-09-27 00:03:43Z">
+              <Issue>
+               <Item>'DataStream.Destruct()'</Item>
+               <Item>'GC.RemoveMemoryPressure(long)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'DataStream.Destruct()'&#xD;&#xA;   -&gt;'DataStream.Destruct()'&#xD;&#xA;   -&gt;'DataStream.!DataStream()'&#xD;&#xA;   -&gt;'DataStream.Dispose(bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'DataStream.Destruct()'</Item>
+               <Item>'GC.RemoveMemoryPressure(long)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'DataStream.Destruct()'&#xD;&#xA;   -&gt;'DataStream.Destruct()'&#xD;&#xA;   -&gt;'DataStream.~DataStream()'&#xD;&#xA;   -&gt;'DataStream.Dispose(bool)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1293,6 +1344,48 @@
             </Issue>
            </Message>
           </Messages>
+         </Type>
+         <Type Name="SHVector">
+          <Members>
+           <Member Name="#Coefficients">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2008-09-27 00:03:43Z">
+              <Issue>
+               <Item>'SHVector.Coefficients'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#op_Multiply(SlimDX.SHVector,System.Single)">
+            <Messages>
+             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2008-09-27 00:03:43Z">
+              <Issue>
+               <Item>Multiply</Item>
+               <Item>'SHVector.operator *(SHVector, float)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#op_Multiply(System.Single,SlimDX.SHVector)">
+            <Messages>
+             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2008-09-27 00:03:43Z">
+              <Issue>
+               <Item>Multiply</Item>
+               <Item>'SHVector.operator *(float, SHVector)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Scale(SlimDX.SHVector,System.Single)">
+            <Messages>
+             <Message Id="1#" TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719" Created="2008-09-27 00:03:43Z">
+              <Issue>
+               <Item>'scale'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
          <Type Name="Speakers">
           <Messages>
@@ -5287,6 +5380,17 @@
              </Accessor>
             </Accessors>
            </Member>
+           <Member Name="#SetValue`1(SlimDX.Direct3D9.EffectHandle,!!0)">
+            <Messages>
+             <Message Id="System.Convert.ToInt32(System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-09-27 00:03:43Z">
+              <Issue>
+               <Item>'Convert.ToInt32(object)'</Item>
+               <Item>'BaseEffect.SetValue&lt;T&gt;(EffectHandle, T)'</Item>
+               <Item>'Convert.ToInt32(object, IFormatProvider)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
           </Members>
          </Type>
          <Type Name="BaseMesh">
@@ -6466,6 +6570,24 @@
               <Issue Name="HResultOrErrorCode">
                <Item>'Device.SetCursor(Cursor, bool)'</Item>
                <Item>'&lt;Module&gt;.ReleaseDC(HWND__*, HDC__*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SetPaletteEntries(System.Int32,SlimDX.Direct3D9.PaletteEntry[])">
+            <Messages>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2008-09-27 00:03:43Z">
+              <Issue Name="IncorrectMessage">
+               <Item>'Device.SetPaletteEntries(int, PaletteEntry[])'</Item>
+               <Item>entries</Item>
+               <Item>'message'</Item>
+               <Item>'ArgumentException'</Item>
+              </Issue>
+              <Issue Name="IncorrectParameterName">
+               <Item>'Device.SetPaletteEntries(int, PaletteEntry[])'</Item>
+               <Item>Palettes must have exactly 256 entries.</Item>
+               <Item>'paramName'</Item>
+               <Item>'ArgumentException'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -19334,6 +19456,24 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#Dispose()">
+            <Messages>
+             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-09-27 00:03:43Z">
+              <Issue Name="DisposeImplementation">
+               <Item>'Game.Dispose()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Dispose(System.Boolean)">
+            <Messages>
+             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-09-27 00:03:43Z">
+              <Issue Name="DisposeBoolSignature">
+               <Item>'Game.Dispose(bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#Window_ApplicationActivated(System.Object,System.EventArgs)">
             <Messages>
              <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
@@ -20261,6 +20401,172 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="DeviceTests">
+          <Messages>
+           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
+            <Issue Name="DependsOnFix">
+             <Item>'DeviceTests'</Item>
+             <Item>'Form', 'Direct3D', 'Device'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#SetUp()">
+            <Messages>
+             <Message Id="SetUp" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-09-27 00:03:43Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>SetUp</Item>
+               <Item>'DeviceTests.SetUp()'</Item>
+               <Item>Setup</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#StateBlock()">
+            <Messages>
+             <Message Id="x" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-09-27 00:03:43Z">
+              <Issue>
+               <Item>'DeviceTests.StateBlock()'</Item>
+               <Item>'x'</Item>
+               <Item>'float'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TearDown()">
+            <Messages>
+             <Message Id="TearDown" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-09-27 00:03:43Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>TearDown</Item>
+               <Item>'DeviceTests.TearDown()'</Item>
+               <Item>Teardown</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Vector2Tests">
+          <Members>
+           <Member Name="#ConstructDefault()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Vector2Tests.ConstructDefault()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ConstructFromScalar()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Vector2Tests.ConstructFromScalar()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ConstructFromXY()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Vector2Tests.ConstructFromXY()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Length()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Vector2Tests.Length()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LengthSquared()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Vector2Tests.LengthSquared()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Normalize()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Vector2Tests.Normalize()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#NormalizeZeroVector()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Vector2Tests.NormalizeZeroVector()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SizeInBytesStaticProperty()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Vector2Tests.SizeInBytesStaticProperty()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#StaticNormalize()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Vector2Tests.StaticNormalize()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#StaticNormalizeByRef()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Vector2Tests.StaticNormalizeByRef()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#UnitXStaticProperty()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Vector2Tests.UnitXStaticProperty()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#UnitYStaticProperty()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Vector2Tests.UnitYStaticProperty()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ZeroStaticProperty()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'Vector2Tests.ZeroStaticProperty()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
         </Types>
        </Namespace>
       </Namespaces>
@@ -20380,10 +20686,12 @@
     <Resolution Name="TypeNoAlternate">Rename type name {0} so that it does not end in '{1}'.</Resolution>
    </Rule>
    <Rule TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063">
+    <Resolution Name="DisposeBoolSignature">Ensure that {0} is declared as protected, virtual, and unsealed.</Resolution>
     <Resolution Name="DisposeImplementation">Modify {0} so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Resolution>
     <Resolution Name="ProvideDisposeBool">Provide an overridable implementation of Dispose(bool) on {0} or mark the type as sealed. A call to Dispose(false) should only clean up native resources. A call to Dispose(true) should clean up both managed and native resources.</Resolution>
    </Rule>
    <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
+    <Resolution Name="IncorrectMessage">Method {0} passes parameter name '{1}' as the {2} argument to a {3} constructor. Replace this argument with a descriptive message and pass the parameter name in the correct position.</Resolution>
     <Resolution Name="IncorrectParameterName">Method {0} passes '{1}' as the {2} argument to a {3} constructor. Replace this argument with one of the method's parameter names. Note that the provided parameter name should have the exact casing as declared on the method.</Resolution>
    </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
@@ -20424,6 +20732,9 @@
    <Rule TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721">
     <Resolution Name="BaseType">The property name {0} is confusing given the existence of inherited method {1}. Rename or remove this property.</Resolution>
    </Rule>
+   <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
+    <Resolution Name="Default">{0} declares a variable, {1}, of type {2}, which is never used or is only assigned to. Use this variable or remove it.</Resolution>
+   </Rule>
    <Rule TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025">
     <Resolution Name="Default">Consider implementing a version of {0} that accepts a parameter array argument.</Resolution>
    </Rule>
@@ -20432,6 +20743,9 @@
    </Rule>
    <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
     <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+    <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
     <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>

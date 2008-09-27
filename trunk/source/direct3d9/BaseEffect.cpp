@@ -369,6 +369,9 @@ namespace Direct3D9
 		return result;
 	}
 
+// Turn off bogus warning:
+// warning C4717: 'SlimDX::Direct3D9::BaseEffect::SetValue<T>' : recursive on all control paths, function will cause runtime stack overflow
+#pragma warning(disable:4717)
 	generic<typename T> where T : value class
 	Result BaseEffect::SetValue( EffectHandle^ parameter, array<T>^ values )
 	{
@@ -386,6 +389,7 @@ namespace Direct3D9
 		HRESULT	hr = InternalPointer->SetValue( handle, pinnedData, sizeof(T) * values->Length );
 		return RECORD_D3D9( hr );
 	}
+#pragma warning(default:4717)
 
 	generic<typename T> where T : value class
 	array<T>^ BaseEffect::GetValue( EffectHandle^ parameter, int count )
