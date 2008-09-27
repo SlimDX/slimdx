@@ -56,10 +56,9 @@ namespace SlimDX
 		{
 			char* get();
 		}
-	
-		void TakeOwnership() { m_OwnsBuffer = true; }
 
 		ID3DXBuffer* GetD3DBuffer();
+		void Destruct();
 
 	public:
 		/// <summary>

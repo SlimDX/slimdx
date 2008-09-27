@@ -4216,6 +4216,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Spherical Harmonics"
+				>
+				<File
+					RelativePath="..\source\math\SHVector.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\SHVector.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="XAudio2"

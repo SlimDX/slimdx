@@ -39,6 +39,12 @@ namespace SlimDX
 		return Color4( color.a, color.r, color.g, color.b );
 	}
 
+	D3DXCOLOR Color4::ToUnmanaged()
+	{
+		D3DXCOLOR result( Red, Green, Blue, Alpha );
+		return result;
+	}
+
 	Color4::Color4( float alpha, float red, float green, float blue )
 	{
 		Alpha = alpha;

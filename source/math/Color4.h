@@ -43,6 +43,7 @@ namespace SlimDX
 	{
 	internal:
 		static Color4 FromUnmanaged( const D3DXCOLOR &color );
+		D3DXCOLOR ToUnmanaged();
 
 	public:
 		/// <summary>
