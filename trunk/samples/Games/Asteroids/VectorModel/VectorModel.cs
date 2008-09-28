@@ -161,6 +161,8 @@ namespace Asteroids
             if (effect != null)
                 effect.Dispose();
             effect = null;
+
+            GC.SuppressFinalize(this);
         }
 
         public void Draw(Vector2 position, float rotation, float alpha)

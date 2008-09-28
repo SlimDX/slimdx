@@ -23,19 +23,68 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SampleFramework;
+using System.Drawing;
+using SlimDX;
 
 namespace Asteroids
 {
     class Explosion : Entity
     {
+        const int ParticleCount = 360;
+        const int MaxInstances = 10;
+        float speed = 100.0f;
+
         ParticleSystem particleSystem;
 
         public Explosion(Asteroids game)
             : base(game)
         {
-            particleSystem = new ParticleSystem(100);
+            particleSystem = new ParticleSystem(ParticleCount * MaxInstances);
             Game.Resources.Add(particleSystem);
             Game.Components.Add(particleSystem);
+
+            particleSystem.Duration = 2.0f;
+            particleSystem.DurationRandomness = 1.5f;
+            particleSystem.MinimumVelocity = new Vector2(0.0f, -1.0f);
+            particleSystem.MaximumVelocity = new Vector2(1.0f, 1.0f);
+            particleSystem.MinimumColor = Color.FromArgb(200, 255, 255, 255);
+            particleSystem.MaximumColor = Color.FromArgb(100, 255, 255, 255);
+            particleSystem.MinimumStartSize = 2.0f;
+            particleSystem.MaximumStartSize = 5.0f;
+            particleSystem.MinimumEndSize = 5.0f;
+            particleSystem.MaximumEndSize = 7.0f;
+        }
+
+        public void Activate(Vector2 position, float speed)
+        {
+            this.speed = speed;
+            Position = position;
+            Activate();
+        }
+
+        void Activate()
+        {
+            float angleIncrement = (float)(2.0f * Math.PI / (double)ParticleCount);
+            float angle = 0.0f;
+
+            for (int i = 0; i < ParticleCount; i++)
+            {
+                Vector3 velocity = new Vector3((float)Math.Cos(angle) * speed, (float)Math.Sin(angle) * speed, 0.0f);
+                particleSystem.SpawnParticle(new Vector3(Position, 0.0f), velocity);
+
+                angle += angleIncrement;
+            }
+        }
+
+        /// <summary>
+        /// Does cool things to the entity, if you know what I mean.
+        /// </summary>
+        /// <param name="gameTime">What do you think it is?</param>
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            particleSystem.SetCamera(Game.Camera.ViewMatrix, Game.Camera.ProjectionMatrix);
         }
     }
 }

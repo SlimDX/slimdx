@@ -745,7 +745,7 @@ namespace Direct3D9
 	Result Device::SetPaletteEntries( int paletteNumber, array<PaletteEntry>^ entries )
 	{
 		if(entries->Length != 256)
-			throw gcnew ArgumentException( "entries", "Palettes must have exactly 256 entries." );
+			throw gcnew ArgumentException( "Palettes must have exactly 256 entries.", "entries" );
 
 		pin_ptr<PaletteEntry> pinnedEntries = &entries[0];
 

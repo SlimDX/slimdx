@@ -131,7 +131,7 @@ namespace Asteroids
 
             Position += Velocity;
 
-            if (Wrap)
+            if (Wrap && Model != null)
             {
                 float halfWidth = Model.Width / 2;
                 float halfHeight = Model.Height / 2;
@@ -159,6 +159,9 @@ namespace Asteroids
 
         public virtual bool Collides(BoundingSphere boundingSphere)
         {
+            if (Model == null)
+                return false;
+
             BoundingSphere local = new BoundingSphere(new Vector3(Position, 0), Model.Radius);
             if (IsCollidable && BoundingSphere.Intersects(local, boundingSphere))
                 return true;

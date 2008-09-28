@@ -88,7 +88,7 @@ namespace SlimDX
 	void ObjectTable::Add( ComObject^ object )
 	{
 		if( object == nullptr )
-			throw gcnew ArgumentNullException( "object" );
+			throw gcnew ArgumentNullException( "comObject" );
 
 		//Record tracking information
 		object->SetCreationTime( (int) Configuration::Timer->ElapsedMilliseconds );
@@ -111,7 +111,7 @@ namespace SlimDX
 	bool ObjectTable::Remove( ComObject^ object )
 	{
 		if( object == nullptr )
-			throw gcnew ArgumentNullException( "object" );
+			throw gcnew ArgumentNullException( "comObject" );
 
 		Monitor::Enter( m_SyncObject );
 		try

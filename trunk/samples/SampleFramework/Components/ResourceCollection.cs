@@ -27,7 +27,7 @@ namespace SampleFramework
     /// <summary>
     /// Defines a collection of resources.
     /// </summary>
-    public class ResourceCollection : Collection<IResource>, IResource
+    public sealed class ResourceCollection : Collection<IResource>, IResource
     {
         enum ResourceMethod
         {
@@ -92,6 +92,7 @@ namespace SampleFramework
                 resource.Dispose();
 
             lastMethod = ResourceMethod.Release;
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>

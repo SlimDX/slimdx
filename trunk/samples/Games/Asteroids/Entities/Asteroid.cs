@@ -27,10 +27,10 @@ namespace Asteroids
 {
     enum AsteroidSize
     {
-        Small,
-        Medium,
-        Large,
-        Huge
+        Small = 100,
+        Medium = 500,
+        Large = 1000,
+        Huge = 2000
     }
 
     class Asteroid : Entity
@@ -88,7 +88,9 @@ namespace Asteroids
         public override void OnDeath()
         {
             // we died :(
+            Game.Explosion.Activate(Position, 100.0f);
             AsteroidCount--;
+            Game.Score += (int)Size;
 
             AsteroidSize newSize;
             if (Size == AsteroidSize.Huge)
