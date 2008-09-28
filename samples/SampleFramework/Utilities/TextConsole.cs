@@ -22,13 +22,14 @@
 using System.Drawing;
 using SlimDX;
 using SlimDX.Direct3D9;
+using System;
 
 namespace SampleFramework
 {
     /// <summary>
     /// Represents a specific on-screen region where text will be rendered.
     /// </summary>
-    public class TextConsole : IResource
+    public sealed class TextConsole : IResource
     {
         GraphicsDeviceManager manager;
         Sprite sprite;
@@ -170,6 +171,8 @@ namespace SampleFramework
             font.Dispose();
             sprite.Dispose();
             font = null;
+
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>

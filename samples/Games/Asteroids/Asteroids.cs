@@ -43,11 +43,18 @@ namespace Asteroids
         bool[] keyStateThisFrame = new bool[256];
         bool[] keyStateNotReleased = new bool[256];
         int currentLevel;
+        Explosion explosion;
 
         Sprite fontSprite;
         string levelText;
         SlimDX.Direct3D9.Font levelFont;
         Interpolator levelTextInterpolator;
+
+        public int Score
+        {
+            get;
+            set;
+        }
 
         public static Random Random
         {
@@ -74,6 +81,11 @@ namespace Asteroids
         {
             get;
             set;
+        }
+
+        public Explosion Explosion
+        {
+            get { return explosion; }
         }
 
         /// <summary>
@@ -106,6 +118,8 @@ namespace Asteroids
 #endif
             settings.MultisampleType = MultisampleType.EightSamples;
 
+            explosion = new Explosion(this);
+            Components.Add(explosion);
             Resources.Add(console);
 
             GraphicsDeviceManager.ChangeDevice(settings);
@@ -243,6 +257,11 @@ namespace Asteroids
                 levelFont.DrawString(fontSprite, levelText, outputRectangle, DrawTextFormat.Center,
                     new Color4((levelTextInterpolator == null ? 1.0f : levelTextInterpolator.Value) * 0.8f, 1.0f, 1.0f, 1.0f));
             }
+
+            string scoreText = Score.ToString();
+            Rectangle scoreRectangle = levelFont.MeasureString(fontSprite, scoreText, DrawTextFormat.Center);
+            scoreRectangle = new Rectangle(GraphicsDeviceManager.ScreenWidth - scoreRectangle.Width - 10, 10, scoreRectangle.Width, scoreRectangle.Height);
+            levelFont.DrawString(fontSprite, scoreText, scoreRectangle, DrawTextFormat.Center, new Color4(1.0f, 1.0f, 1.0f));
 
             fontSprite.End();
 

@@ -91,9 +91,9 @@ namespace SlimDX
 			/// <param name="controlHandle">Specifies the target window for Direct3D rendering.</param>
 			/// <param name="createFlags">Combination of one or more options that control device creation.</param>
 			/// <param name="presentParameters">Describes the presentation parameters for the device being created.</param>
-			/// <param name="fullscreenDisplayMode">The display mode for when the device is set to fullscreen.</param>
+			/// <param name="fullScreenDisplayMode">The display mode for when the device is set to fullscreen.</param>
 			DeviceEx( Direct3DEx^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle,
-				CreateFlags createFlags, PresentParameters^ presentParameters, DisplayModeEx fullscreenDisplayMode );
+				CreateFlags createFlags, PresentParameters^ presentParameters, DisplayModeEx fullScreenDisplayMode );
 
 			/// <summary>
 			/// Constructs a new instance of the <see cref="DeviceEx"/> class using the specified pointer to a

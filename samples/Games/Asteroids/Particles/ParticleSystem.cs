@@ -192,6 +192,8 @@ namespace Asteroids
         public void Dispose()
         {
             effect.Dispose();
+
+            GC.SuppressFinalize(this);
         }
 
         public void CommitSettings()

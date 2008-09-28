@@ -30,7 +30,7 @@ namespace Asteroids
     class Player : Entity
     {
         const float Acceleration = 0.5f;
-        const float RespawnInterval = 1.0f;
+        const float RespawnInterval = 3.0f;
         const float RespawnBuffer = 50.0f;
         static readonly float RotationDelta = Helpers.ToRadians(5.0f);
         static readonly Vector2 SpawnPoint = new Vector2(0.0f, 0.0f);
@@ -135,6 +135,7 @@ namespace Asteroids
         public override void OnDeath()
         {
             // add a new trigger to happen when we need to respawn
+            Game.Explosion.Activate(Position, 1000.0f);
             Trigger trigger = new Trigger(RespawnInterval) { Repeat = true };
             trigger.Activated += Respawn;
             Game.Triggers.Add(trigger);
@@ -144,7 +145,7 @@ namespace Asteroids
         {
             // make sure there are no asteroids around that could kill us
             Trigger trigger = sender as Trigger;
-            BoundingSphere sphere = new BoundingSphere(new Vector3(SpawnPoint, 0), Model.Radius);
+            BoundingSphere sphere = new BoundingSphere(new Vector3(SpawnPoint, 0), Model.Radius * 5.0f);
             foreach (IGameComponent component in Game.Components)
             {
                 Entity entity = component as Entity;

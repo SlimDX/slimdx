@@ -42,6 +42,7 @@
 
 using namespace System;
 using namespace System::Reflection;
+using namespace System::Globalization;
 
 namespace SlimDX
 {
@@ -347,7 +348,7 @@ namespace Direct3D9
 	Result BaseEffect::SetValue( EffectHandle^ parameter, T value )
 	{
 		if( T::typeid == bool::typeid )
-			return SetValue( parameter, Convert::ToInt32( value ) );
+			return SetValue( parameter, Convert::ToInt32( value, CultureInfo::CurrentCulture ) );
 
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 
