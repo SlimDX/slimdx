@@ -377,9 +377,7 @@ namespace Direct3D9
 	{
 		if( T::typeid == bool::typeid )
 		{
-			array<BOOL>^ newValues = gcnew array<BOOL>( values->Length );
-			values->CopyTo( newValues, 0 );
-
+			array<BOOL>^ newValues = Array::ConvertAll<bool, int>( safe_cast<array<bool>>( values ), gcnew Converter<bool, int>( Convert::ToInt32 ) );
 			return SetValue( parameter, newValues );
 		}
 
