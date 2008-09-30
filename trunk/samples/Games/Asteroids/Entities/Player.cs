@@ -103,6 +103,9 @@ namespace Asteroids
             else if (Game.IsKeyPressed(Keys.Space))
                 currentWeapon.AutoFire(Position, Rotation);
 
+            if (Game.IsKeyPressedThisFrame(Keys.Down))
+                Rotation += (float)Math.PI;
+            
             BoundingSphere sphere = new BoundingSphere(new Vector3(Position, 0), Model.Radius);
             foreach (IGameComponent component in Game.Components)
             {
@@ -110,10 +113,7 @@ namespace Asteroids
                 if (entity == null)
                     continue;
 
-                if (entity == this)
-                    continue;
-
-                if (entity.Collides(sphere))
+                if (entity.Collides(GetType(), sphere))
                 {
                     // player died, haha
                     IsDead = true;
@@ -141,6 +141,14 @@ namespace Asteroids
             Game.Triggers.Add(trigger);
         }
 
+        public override bool Collides(Type type, BoundingSphere boundingSphere)
+        {
+            if (type == typeof(PrimaryWeapon) || type == typeof(Alien))
+                return false;
+
+            return base.Collides(type, boundingSphere);
+        }
+
         void Respawn(object sender, EventArgs e)
         {
             // make sure there are no asteroids around that could kill us
@@ -152,12 +160,8 @@ namespace Asteroids
                 if (entity == null)
                     continue;
 
-                // only care about asteroids
-                if (!(entity is Asteroid))
-                    continue;
-
                 // check for a collision within the allowed buffer time
-                if (entity.Collides(sphere))
+                if (entity.Collides(GetType(), sphere))
                 {
                     // no good, wait a bit more
                     trigger.Duration = RespawnInterval / 2;

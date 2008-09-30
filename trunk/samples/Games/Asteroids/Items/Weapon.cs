@@ -108,11 +108,7 @@ namespace Asteroids
                         if (entity == null)
                             continue;
 
-                        // player can't shoot himself (well...)
-                        if (entity is Player)
-                            continue;
-
-                        if (entity.Collides(sphere))
+                        if (entity.Collides(GetType(), sphere))
                         {
                             // entity suicide! when will it end?
                             entity.IsDead = true;

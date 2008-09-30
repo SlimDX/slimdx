@@ -31,7 +31,7 @@ namespace Asteroids
     class Explosion : Entity
     {
         const int ParticleCount = 360;
-        const int MaxInstances = 10;
+        const int MaxInstances = 20;
         float speed = 100.0f;
 
         ParticleSystem particleSystem;

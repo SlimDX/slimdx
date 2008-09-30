@@ -157,9 +157,12 @@ namespace Asteroids
                 Model.Draw(Position, Rotation, Alpha);
         }
 
-        public virtual bool Collides(BoundingSphere boundingSphere)
+        public virtual bool Collides(Type type, BoundingSphere boundingSphere)
         {
             if (Model == null)
+                return false;
+
+            if (type == GetType())
                 return false;
 
             BoundingSphere local = new BoundingSphere(new Vector3(Position, 0), Model.Radius);

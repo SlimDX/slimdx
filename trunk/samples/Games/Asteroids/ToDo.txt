@@ -3,6 +3,4 @@
 Lives/Game Over/State system
 Music
 Sound Effects
-Enemy aliens
 Hyperspace
-Bombs

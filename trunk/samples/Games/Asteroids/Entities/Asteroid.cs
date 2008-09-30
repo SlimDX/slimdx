@@ -106,6 +106,17 @@ namespace Asteroids
             CreateNewAsteroid(newSize);
         }
 
+        public override bool Collides(Type type, BoundingSphere boundingSphere)
+        {
+            if (base.Collides(type, boundingSphere))
+            {
+                if (type == typeof(PrimaryWeapon) || type == typeof(Player) || type == typeof(Alien) || type == typeof(AlienWeapon))
+                    return true;
+            }
+
+            return false;
+        }
+
         void CreateNewAsteroid(AsteroidSize size)
         {
             Asteroid asteroid = new Asteroid(Game, size);

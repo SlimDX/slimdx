@@ -34,6 +34,7 @@ namespace Asteroids
         const int InitialWidth = 800;
         const int InitialHeight = 600;
         const float LevelInterval = 2.0f;
+        const float AlienInterval = 20.0f;
 
         static Random random = new Random();
 
@@ -49,6 +50,8 @@ namespace Asteroids
         string levelText;
         SlimDX.Direct3D9.Font levelFont;
         Interpolator levelTextInterpolator;
+
+        float alienCounter;
 
         public int Score
         {
@@ -86,6 +89,11 @@ namespace Asteroids
         public Explosion Explosion
         {
             get { return explosion; }
+        }
+
+        public Player Player
+        {
+            get { foreach (IGameComponent component in Components) if (component is Player)return component as Player; return null; }
         }
 
         /// <summary>
@@ -152,7 +160,7 @@ namespace Asteroids
             // add new asteroids when enter is pressed
             // DEBUGGING ONLY
             if (e.KeyCode == Keys.Enter)
-                Components.Add(new Asteroid(this, AsteroidSize.Huge));
+                Components.Add(new Alien(this));
 #endif
         }
 
@@ -214,6 +222,17 @@ namespace Asteroids
 
             // reset the key frame list
             Array.Clear(keyStateThisFrame, 0, 256);
+
+            alienCounter += gameTime.ElapsedGameTime;
+            if (alienCounter > AlienInterval)
+            {
+                alienCounter = 0;
+                Alien alien = new Alien(this);
+                float x = Helpers.RandomFloat(0.0f, 1.0f) - 0.5f;
+                float y = Helpers.RandomFloat(0.0f, 1.0f) - 0.5f;
+                alien.Position = new Vector2(x * 10000.0f, y * 10000.0f);
+                Components.Add(alien);
+            }
 
             // check to see if all the asteroids are gone
             if (Asteroid.AsteroidCount == 0 && levelText == null)
