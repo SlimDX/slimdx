@@ -35,7 +35,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{3E683DA2-8FF5-43A0-AB06-A364040E1DA8}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -73,6 +73,8 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\DataBoxTests.cs" />
+    <Compile Include="Base\DataRectangleTests.cs" />
     <Compile Include="Direct3D 9\DeviceTests.cs" />
     <Compile Include="Math\Color3Tests.cs" />
     <Compile Include="Math\Color4Tests.cs" />

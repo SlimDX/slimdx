@@ -36,24 +36,31 @@ namespace SlimDX
 		int m_SlicePitch;
 		DataStream^ m_Data;
 
-	internal:
-		DataBox( int rowPitch, int slicePitch, DataStream^ data );
-
 	public:
 		/// <summary>
-		/// Gets the number of bytes of data between two consecutive (1D) rows of data.
+		/// Initializes a new instance of the <see cref="DataBox"/> class.
+		/// </summary>
+		/// <param name="rowPitch">The row pitch, in bytes.</param>
+		/// <param name="slicePitch">The slice pitch, in bytes.</param>
+		/// <param name="data">The data.</param>
+		DataBox( int rowPitch, int slicePitch, DataStream^ data );
+
+		/// <summary>
+		/// Gets or sets the number of bytes of data between two consecutive (1D) rows of data.
 		/// </summary>
 		property int RowPitch
 		{
 			int get();
+			void set( int value );
 		}
 
 		/// <summary>
-		/// Gets the number of bytes of data between two consecutive (2D) slices of data.
+		/// Gets or sets the number of bytes of data between two consecutive (2D) slices of data.
 		/// </summary>
 		property int SlicePitch
 		{
 			int get();
+			void set( int value );
 		}
 		
 		/// <summary>
