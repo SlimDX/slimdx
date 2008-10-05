@@ -887,13 +887,24 @@ namespace SlimDX
 			/// <param name="primitiveCount">The number of primitives to render. The number of vertices used is a function of the primitive count and the primitive type.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minimumVertexIndex, int vertexCount, int startIndex, int primitiveCount );
-
+			
 			/// <summary>
 			/// Renders non-indexed geometric primitives using user-supplied data.
 			/// </summary>
 			/// <typeparam name="T">The type of the user-supplied vertices.</typeparam>
 			/// <param name="primitiveType">Specifies the type of primitive to render.</param>
-			/// <param name="startIndex">Index of the first vertex to use.</param>
+			/// <param name="primitiveCount">The number of primitives to render. The number of vertices used is a function of the primitive count and the primitive type.</param>
+			/// <param name="data">User-supplied vertex data.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			generic<typename T> where T : value class
+			Result DrawUserPrimitives( PrimitiveType primitiveType, int primitiveCount, array<T>^ data );
+			
+			/// <summary>
+			/// Renders non-indexed geometric primitives using user-supplied data.
+			/// </summary>
+			/// <typeparam name="T">The type of the user-supplied vertices.</typeparam>
+			/// <param name="primitiveType">Specifies the type of primitive to render.</param>
+			/// <param name="startIndex">Index of the first vertex in the array to use.</param>
 			/// <param name="primitiveCount">The number of primitives to render. The number of vertices used is a function of the primitive count and the primitive type.</param>
 			/// <param name="data">User-supplied vertex data.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
@@ -916,7 +927,44 @@ namespace SlimDX
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			generic<typename S, typename T> where S : value class where T : value class
 			Result DrawIndexedUserPrimitives( PrimitiveType primitiveType, int minimumVertexIndex, int vertexCount, int primitiveCount, array<S>^ indexData, Format indexDataFormat, array<T>^ vertexData, int vertexStride );
+			
+			/// <summary>
+			/// Renders the specified geometric primitive using user-supplied data.
+			/// </summary>
+			/// <typeparam name="S">The type of the data contained in the index data.</typeparam>
+			/// <typeparam name="T">The type of the data contained in the vertex data.</typeparam>
+			/// <param name="primitiveType">Specifies the type of primitive to render.</param>
+			/// <param name="startIndex">Index of the first index in the array to use.</param>
+			/// <param name="minimumVertexIndex">Minimum vertex index for vertices used during this call.</param>
+			/// <param name="vertexCount">The number of vertices to render.</param>
+			/// <param name="primitiveCount">The number of primitives to render. The number of vertices used is a function of the primitive count and the primitive type.</param>
+			/// <param name="indexData">User-supplied index data.</param>
+			/// <param name="indexDataFormat">The format of the supplied index data.</param>
+			/// <param name="vertexData">User-supplied vertex data.</param>
+			/// <param name="vertexStride">The number of bytes of data for each vertex.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			generic<typename S, typename T> where S : value class where T : value class
+			Result DrawIndexedUserPrimitives( PrimitiveType primitiveType, int startIndex, int minimumVertexIndex, int vertexCount, int primitiveCount, array<S>^ indexData, Format indexDataFormat, array<T>^ vertexData, int vertexStride );
 
+			/// <summary>
+			/// Renders the specified geometric primitive using user-supplied data.
+			/// </summary>
+			/// <typeparam name="S">The type of the data contained in the index data.</typeparam>
+			/// <typeparam name="T">The type of the data contained in the vertex data.</typeparam>
+			/// <param name="primitiveType">Specifies the type of primitive to render.</param>
+			/// <param name="startIndex">Index of the first index in the array to use.</param>
+			/// <param name="startVertex">Index of the first vertex in the array to use.</param>
+			/// <param name="minimumVertexIndex">Minimum vertex index for vertices used during this call.</param>
+			/// <param name="vertexCount">The number of vertices to render.</param>
+			/// <param name="primitiveCount">The number of primitives to render. The number of vertices used is a function of the primitive count and the primitive type.</param>
+			/// <param name="indexData">User-supplied index data.</param>
+			/// <param name="indexDataFormat">The format of the supplied index data.</param>
+			/// <param name="vertexData">User-supplied vertex data.</param>
+			/// <param name="vertexStride">The number of bytes of data for each vertex.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			generic<typename S, typename T> where S : value class where T : value class
+			Result DrawIndexedUserPrimitives( PrimitiveType primitiveType, int startIndex, int startVertex, int minimumVertexIndex, int vertexCount, int primitiveCount, array<S>^ indexData, Format indexDataFormat, array<T>^ vertexData, int vertexStride );
+			
 			/// <summary>
 			/// Draws a triangular patch using the currently set streams.
 			/// </summary>
