@@ -22,11 +22,21 @@
 
 #include "DataBox.h"
 
+using namespace System;
+
 namespace SlimDX
 {
 	DataBox::DataBox( int rowPitch, int slicePitch, DataStream^ data )
 	: m_RowPitch( rowPitch), m_SlicePitch( slicePitch ), m_Data( data )
 	{
+		if( data == nullptr )
+			throw gcnew ArgumentNullException( "data" );
+			
+		if( rowPitch < 0 )
+			throw gcnew ArgumentOutOfRangeException( "rowPitch", "Row pitch cannot be negative." );
+		
+		if( slicePitch < 0 )
+			throw gcnew ArgumentOutOfRangeException( "slicePitch", "Slice pitch cannot be negative." );
 	}
 	
 	int DataBox::RowPitch::get()
@@ -34,9 +44,23 @@ namespace SlimDX
 		return m_RowPitch;
 	}
 	
+	void DataBox::RowPitch::set( int value )
+	{
+		if( value < 0 )
+			throw gcnew ArgumentOutOfRangeException( "value", "Row pitch cannot be negative." );
+		m_RowPitch = value;
+	}
+	
 	int DataBox::SlicePitch::get()
 	{
 		return m_SlicePitch;
+	}
+	
+	void DataBox::SlicePitch::set( int value )
+	{
+		if( value < 0 )
+			throw gcnew ArgumentOutOfRangeException( "value", "Slice pitch cannot be negative." );
+		m_SlicePitch = value;
 	}
 	
 	DataStream^ DataBox::Data::get()

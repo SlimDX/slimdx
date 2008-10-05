@@ -35,16 +35,21 @@ namespace SlimDX
 		int m_Pitch;
 		DataStream^ m_Data;
 
-	internal:
-		DataRectangle( int pitch, DataStream^ data );
-
 	public:
 		/// <summary>
-		/// Gets the number of bytes of data between two consecutive (1D) rows of data.
+		/// Initializes a new instance of the <see cref="DataRectangle"/> class.
+		/// </summary>
+		/// <param name="pitch">The row pitch, in bytes.</param>
+		/// <param name="data">The data.</param>
+		DataRectangle( int pitch, DataStream^ data );
+
+		/// <summary>
+		/// Gets or sets the number of bytes of data between two consecutive (1D) rows of data.
 		/// </summary>
 		property int Pitch
 		{
 			int get();
+			void set(int value);
 		}
 
 		/// <summary>

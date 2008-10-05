@@ -22,16 +22,30 @@
 
 #include "DataRectangle.h"
 
+using namespace System;
+
 namespace SlimDX
 {
 	DataRectangle::DataRectangle( int pitch, DataStream^ data )
 	: m_Pitch( pitch), m_Data( data )
 	{
+		if( data == nullptr )
+			throw gcnew ArgumentNullException( "data" );
+			
+		if( pitch < 0 )
+			throw gcnew ArgumentOutOfRangeException( "pitch", "Pitch cannot be negative." );
 	}
 	
 	int DataRectangle::Pitch::get()
 	{
 		return m_Pitch;
+	}
+	
+	void DataRectangle::Pitch::set( int value )
+	{
+		if( value < 0 )
+			throw gcnew ArgumentOutOfRangeException( "Pitch", "Pitch cannot be negative." );
+		m_Pitch = value;
 	}
 	
 	DataStream^ DataRectangle::Data::get()
