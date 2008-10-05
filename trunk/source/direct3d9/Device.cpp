@@ -164,7 +164,13 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->DrawPrimitive( static_cast<D3DPRIMITIVETYPE>( primitiveType ), startIndex, primitiveCount );
 		return RECORD_D3D9( hr );
 	}
-
+	
+	generic<typename T>
+	Result Device::DrawUserPrimitives( PrimitiveType primitiveType, int primitiveCount, array<T>^ data )
+	{
+		return DrawUserPrimitives<T>( primitiveType, 0, primitiveCount, data );
+	}
+	
 	generic<typename T>
 	Result Device::DrawUserPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount, array<T>^ data )
 	{
@@ -182,13 +188,27 @@ namespace Direct3D9
 			minVertexIndex, numVertices, startIndex, primCount );
 		return RECORD_D3D9( hr );
 	}
-
+	
 	generic<typename S, typename T>
 	Result Device::DrawIndexedUserPrimitives( PrimitiveType primitiveType, int minVertexIndex, int numVertices, int primitiveCount,
 		array<S>^ indexData, Format indexDataFormat, array<T>^ vertexData, int vertexStride )
 	{
-		pin_ptr<S> pinnedIndices = &indexData[0];
-		pin_ptr<T> pinnedVertices = &vertexData[0];
+		return DrawIndexedUserPrimitives<S,T>( primitiveType, 0, 0, minVertexIndex, numVertices, primitiveCount, indexData, indexDataFormat, vertexData, vertexStride );
+	}
+	
+	generic<typename S, typename T>
+	Result Device::DrawIndexedUserPrimitives( PrimitiveType primitiveType, int startIndex, int minVertexIndex, int numVertices, int primitiveCount,
+		array<S>^ indexData, Format indexDataFormat, array<T>^ vertexData, int vertexStride )
+	{
+		return DrawIndexedUserPrimitives<S,T>( primitiveType, startIndex, 0, minVertexIndex, numVertices, primitiveCount, indexData, indexDataFormat, vertexData, vertexStride );
+	}
+	
+	generic<typename S, typename T>
+	Result Device::DrawIndexedUserPrimitives( PrimitiveType primitiveType, int startIndex, int startVertex, int minVertexIndex, int numVertices, int primitiveCount,
+		array<S>^ indexData, Format indexDataFormat, array<T>^ vertexData, int vertexStride )
+	{
+		pin_ptr<S> pinnedIndices = &indexData[startIndex];
+		pin_ptr<T> pinnedVertices = &vertexData[startVertex];
 
 		HRESULT hr = InternalPointer->DrawIndexedPrimitiveUP( static_cast<D3DPRIMITIVETYPE>( primitiveType ), minVertexIndex, numVertices,
 			primitiveCount, pinnedIndices, static_cast<D3DFORMAT>( indexDataFormat ), pinnedVertices, vertexStride );
