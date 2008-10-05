@@ -39,17 +39,63 @@ namespace SlimDX
 		public ref class Texture3D : public Texture
 		{
 			COMOBJECT(ID3D10Texture3D, Texture3D);
-	
+			
+		private:
+				static ID3D10Texture3D* Build( SlimDX::Direct3D10::Device^ device, Texture3DDescription description, D3D10_SUBRESOURCE_DATA* data ); 
+		
 		public:
+			/// <summary>
+			/// Gets the texture description.
+			/// </summary>
 			property Texture3DDescription Description
 			{
 				Texture3DDescription get();
 			}
-
+			
+			/// <summary>
+			/// Initializes a new instance of the <see cref="Texture3D"/> class.
+			/// </summary>
+			/// <param name="device">The device to associate the texture with.</param>
+			/// <param name="description">The description of the texture.</param>
 			Texture3D( SlimDX::Direct3D10::Device^ device, Texture3DDescription description );
+			
+			/// <summary>
+			/// Initializes a new instance of the <see cref="Texture3D"/> class.
+			/// </summary>
+			/// <param name="device">The device to associate the texture with.</param>
+			/// <param name="description">The description of the texture.</param>
+			/// <param name="data">The initial texture data.</param>
+			Texture3D( SlimDX::Direct3D10::Device^ device, Texture3DDescription description, DataBox^ data );
+			
+			/// <summary>
+			/// Initializes a new instance of the <see cref="Texture3D"/> class.
+			/// </summary>
+			/// <param name="device">The device to associate the texture with.</param>
+			/// <param name="description">The description of the texture.</param>
+			/// <param name="data">An array of initial texture data for each subresource.</param>
+			Texture3D( SlimDX::Direct3D10::Device^ device, Texture3DDescription description, array<DataBox^>^ data );
+			
+			/// <summary>
+			/// Constructs a texture object from a marshalled native pointer.
+			/// </summary>
+			/// <param name="pointer">The native object pointer.</param>
+			/// <returns>The Texture2D object for the native object.</returns>
 			static Texture3D^ FromPointer( System::IntPtr pointer );
-
+			
+			/// <summary>
+			/// Maps the texture, providing CPU access to its contents.
+			/// </summary>
+			/// <param name="subresource">The subresource to map.</param>
+			/// <param name="mode">The IO operations to enable on the CPU.</param>
+			/// <param name="flags">Flags indicating how the CPU should respond when the GPU is busy.</param>
+			/// <returns>A data box containing the mapped data. This data stream is invalidated
+			/// when the buffer is unmapped.</returns>
 			DataBox^ Map( int subresource, MapMode mode, MapFlags flags );
+			
+			/// <summary>
+			/// Unmaps the texture.
+			/// </summary>
+			/// <param name="subresource">The subresource to unmap.</param>
 			void Unmap( int subresource );
 			
 			static Texture3D^ FromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName );
