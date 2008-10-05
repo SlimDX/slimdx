@@ -39,17 +39,63 @@ namespace SlimDX
 		public ref class Texture2D : public Texture
 		{
 			COMOBJECT(ID3D10Texture2D, Texture2D);
+			
+		private:
+			static ID3D10Texture2D* Build( SlimDX::Direct3D10::Device^ device, Texture2DDescription description, D3D10_SUBRESOURCE_DATA* data ); 
 		
 		public:
+			/// <summary>
+			/// Gets the texture description.
+			/// </summary>
 			property Texture2DDescription Description
 			{
 				Texture2DDescription get();
 			}
 			
+			/// <summary>
+			/// Initializes a new instance of the <see cref="Texture2D"/> class.
+			/// </summary>
+			/// <param name="device">The device to associate the texture with.</param>
+			/// <param name="description">The description of the texture.</param>
 			Texture2D( SlimDX::Direct3D10::Device^ device, Texture2DDescription description );
+			
+			/// <summary>
+			/// Initializes a new instance of the <see cref="Texture2D"/> class.
+			/// </summary>
+			/// <param name="device">The device to associate the texture with.</param>
+			/// <param name="description">The description of the texture.</param>
+			/// <param name="data">The initial texture data.</param>
+			Texture2D( SlimDX::Direct3D10::Device^ device, Texture2DDescription description, DataRectangle^ data );
+			
+			/// <summary>
+			/// Initializes a new instance of the <see cref="Texture2D"/> class.
+			/// </summary>
+			/// <param name="device">The device to associate the texture with.</param>
+			/// <param name="description">The description of the texture.</param>
+			/// <param name="data">An array of initial texture data for each subresource.</param>
+			Texture2D( SlimDX::Direct3D10::Device^ device, Texture2DDescription description, array<DataRectangle^>^ data );
+			
+			/// <summary>
+			/// Constructs a texture object from a marshalled native pointer.
+			/// </summary>
+			/// <param name="pointer">The native object pointer.</param>
+			/// <returns>The Texture2D object for the native object.</returns>
 			static Texture2D^ FromPointer( System::IntPtr pointer );
-
+		
+			/// <summary>
+			/// Maps the texture, providing CPU access to its contents.
+			/// </summary>
+			/// <param name="subresource">The subresource to map.</param>
+			/// <param name="mode">The IO operations to enable on the CPU.</param>
+			/// <param name="flags">Flags indicating how the CPU should respond when the GPU is busy.</param>
+			/// <returns>A data rectangle containing the mapped data. This data stream is invalidated
+			/// when the buffer is unmapped.</returns>
 			DataRectangle^ Map( int subresource, MapMode mode, MapFlags flags );
+			
+			/// <summary>
+			/// Unmaps the texture.
+			/// </summary>
+			/// <param name="subresource">The subresource to unmap.</param>
 			void Unmap( int subresource );
 			
 			static Texture2D^ FromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName );

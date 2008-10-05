@@ -21,6 +21,7 @@
 */
 
 #include <d3d10.h>
+#include <vector>
 
 #include "../DataBox.h"
 #include "../DataStream.h"
@@ -50,12 +51,43 @@ namespace Direct3D10
 	
 	Texture3D::Texture3D( SlimDX::Direct3D10::Device^ device, Texture3DDescription description )
 	{
-		ID3D10Texture3D* texture = 0;
-		D3D10_TEXTURE3D_DESC nativeDescription = description.CreateNativeVersion();
-		if( RECORD_D3D10( device->InternalPointer->CreateTexture3D( &nativeDescription, 0, &texture ) ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
-		
-		Construct( texture );	
+		Construct( Build( device, description, 0 ) );
+	}
+
+	Texture3D::Texture3D( SlimDX::Direct3D10::Device^ device, Texture3DDescription description, DataBox^ data )
+	{
+		if( data != nullptr )
+		{
+			D3D10_SUBRESOURCE_DATA initialData;
+			initialData.pSysMem = data->Data->RawPointer;
+			initialData.SysMemPitch = data->RowPitch;
+			initialData.SysMemSlicePitch = data->SlicePitch;
+			Construct( Build( device, description, &initialData ) );	
+		}
+		else 
+		{
+			Construct( Build( device, description, 0 ) );	
+		}
+	}
+	
+	Texture3D::Texture3D( SlimDX::Direct3D10::Device^ device, Texture3DDescription description, array<DataBox^>^ data )
+	{
+		if( data != nullptr )
+		{
+			std::vector<D3D10_SUBRESOURCE_DATA> initialData( data->Length );
+			for(unsigned int dataIndex = 0; dataIndex < initialData.size(); ++dataIndex ) 
+			{
+				initialData[dataIndex].pSysMem = data[dataIndex]->Data->RawPointer;
+				initialData[dataIndex].SysMemPitch = data[dataIndex]->RowPitch;
+				initialData[dataIndex].SysMemSlicePitch = data[dataIndex]->SlicePitch;
+			}
+			
+			Construct( Build( device, description, &initialData[0] ) );	
+		} 
+		else
+		{
+			Construct( Build( device, description, 0 ) );	
+		}
 	}
 
 	Texture3D^ Texture3D::FromPointer( ID3D10Texture3D* pointer )
@@ -86,7 +118,18 @@ namespace Direct3D10
 
 		return gcnew Texture3D( pointer );
 	}
-
+	
+	ID3D10Texture3D* Texture3D::Build( SlimDX::Direct3D10::Device^ device, Texture3DDescription description, D3D10_SUBRESOURCE_DATA* data )
+	{
+		ID3D10Texture3D* texture = 0;
+		D3D10_TEXTURE3D_DESC nativeDescription = description.CreateNativeVersion();
+		
+		if( RECORD_D3D10( device->InternalPointer->CreateTexture3D( &nativeDescription, data, &texture ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+		
+		return texture;
+	} 
+	
 	Texture3DDescription Texture3D::Description::get()
 	{
 		D3D10_TEXTURE3D_DESC nativeDescription;

@@ -21,6 +21,7 @@
 */
 
 #include <d3d10.h>
+#include <vector>
 
 #include "../DataStream.h"
 #include "../Utilities.h"
@@ -50,14 +51,39 @@ namespace Direct3D10
 	
 	Texture1D::Texture1D( SlimDX::Direct3D10::Device^ device, Texture1DDescription description )
 	{
-		ID3D10Texture1D* texture = 0;
-		D3D10_TEXTURE1D_DESC nativeDescription = description.CreateNativeVersion();
-		if( RECORD_D3D10( device->InternalPointer->CreateTexture1D( &nativeDescription, 0, &texture ) ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
-		
-		Construct( texture );	
+		Construct( Build( device, description, 0 ) );	
 	}
-
+	
+	Texture1D::Texture1D( SlimDX::Direct3D10::Device^ device, Texture1DDescription description, DataStream^ data )
+	{
+		if( data != nullptr )
+		{
+			D3D10_SUBRESOURCE_DATA initialData;
+			initialData.pSysMem = data->RawPointer;
+			Construct( Build( device, description, &initialData ) );	
+		}
+		else 
+		{
+			Construct( Build( device, description, 0 ) );	
+		}
+	}
+	
+	Texture1D::Texture1D( SlimDX::Direct3D10::Device^ device, Texture1DDescription description, array<DataStream^>^ data )
+	{
+		if( data != nullptr )
+		{
+			std::vector<D3D10_SUBRESOURCE_DATA> initialData( data->Length );
+			for(unsigned int dataIndex = 0; dataIndex < initialData.size(); ++dataIndex ) 
+				initialData[dataIndex].pSysMem = data[dataIndex]->RawPointer;
+			
+			Construct( Build( device, description, &initialData[0] ) );	
+		} 
+		else
+		{
+			Construct( Build( device, description, 0 ) );	
+		}
+	}
+	
 	Texture1D^ Texture1D::FromPointer( ID3D10Texture1D* pointer )
 	{
 		if( pointer == 0 )
@@ -86,7 +112,19 @@ namespace Direct3D10
 
 		return gcnew Texture1D( pointer );
 	}
-
+	
+	ID3D10Texture1D* Texture1D::Build( SlimDX::Direct3D10::Device^ device, Texture1DDescription description, D3D10_SUBRESOURCE_DATA* data )
+	{
+		ID3D10Texture1D* texture = 0;
+		D3D10_TEXTURE1D_DESC nativeDescription = description.CreateNativeVersion();
+		
+		if( RECORD_D3D10( device->InternalPointer->CreateTexture1D( &nativeDescription, data, &texture ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+		
+		return texture;
+	} 
+		
+	
 	Texture1DDescription Texture1D::Description::get()
 	{
 		D3D10_TEXTURE1D_DESC nativeDescription;

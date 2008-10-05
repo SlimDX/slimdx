@@ -21,6 +21,7 @@
 */
 
 #include <d3d10.h>
+#include <vector>
 
 #include "../DataRectangle.h"
 #include "../DataStream.h"
@@ -50,14 +51,43 @@ namespace Direct3D10
 	
 	Texture2D::Texture2D( SlimDX::Direct3D10::Device^ device, Texture2DDescription description )
 	{
-		ID3D10Texture2D* texture = 0;
-		D3D10_TEXTURE2D_DESC nativeDescription = description.CreateNativeVersion();
-		if( RECORD_D3D10( device->InternalPointer->CreateTexture2D( &nativeDescription, 0, &texture ) ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
-		
-		Construct( texture );	
+		Construct( Build( device, description, 0 ) );	
 	}
-
+	
+	Texture2D::Texture2D( SlimDX::Direct3D10::Device^ device, Texture2DDescription description, DataRectangle^ data )
+	{
+		if( data != nullptr )
+		{
+			D3D10_SUBRESOURCE_DATA initialData;
+			initialData.pSysMem = data->Data->RawPointer;
+			initialData.SysMemPitch = data->Pitch;
+			Construct( Build( device, description, &initialData ) );	
+		}
+		else 
+		{
+			Construct( Build( device, description, 0 ) );	
+		}
+	}
+	
+	Texture2D::Texture2D( SlimDX::Direct3D10::Device^ device, Texture2DDescription description, array<DataRectangle^>^ data )
+	{
+		if( data != nullptr )
+		{
+			std::vector<D3D10_SUBRESOURCE_DATA> initialData( data->Length );
+			for(unsigned int dataIndex = 0; dataIndex < initialData.size(); ++dataIndex ) 
+			{
+				initialData[dataIndex].pSysMem = data[dataIndex]->Data->RawPointer;
+				initialData[dataIndex].SysMemPitch = data[dataIndex]->Pitch;
+			}
+			
+			Construct( Build( device, description, &initialData[0] ) );	
+		} 
+		else
+		{
+			Construct( Build( device, description, 0 ) );	
+		}
+	}
+	
 	Texture2D^ Texture2D::FromPointer( ID3D10Texture2D* pointer )
 	{
 		if( pointer == 0 )
@@ -86,7 +116,18 @@ namespace Direct3D10
 
 		return gcnew Texture2D( pointer );
 	}
-
+	
+	ID3D10Texture2D* Texture2D::Build( SlimDX::Direct3D10::Device^ device, Texture2DDescription description, D3D10_SUBRESOURCE_DATA* data )
+	{
+		ID3D10Texture2D* texture = 0;
+		D3D10_TEXTURE2D_DESC nativeDescription = description.CreateNativeVersion();
+		
+		if( RECORD_D3D10( device->InternalPointer->CreateTexture2D( &nativeDescription, data, &texture ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+		
+		return texture;
+	} 
+	
 	Texture2DDescription Texture2D::Description::get()
 	{
 		D3D10_TEXTURE2D_DESC nativeDescription;
