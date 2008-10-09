@@ -93,6 +93,10 @@ namespace BuildTasks {
 					newValue += ".2005" + Path.GetExtension( attribute.Value );
 					writer.Write( " Include=\"{0}\"", newValue );
 				}
+				else if ( element.Name == "Import" && attribute.Name == "Project" ) {
+					string newValue = attribute.Value.Replace( "$(MSBuildToolsPath)", "$(MSBuildBinPath)" );
+					writer.Write( " Project=\"{0}\"", newValue );
+				}
 				else {
 					writer.Write( "{0}{1}{2}=\"{3}\"", Environment.NewLine, attributePrefix, attribute.Name, attribute.Value );
 				}
