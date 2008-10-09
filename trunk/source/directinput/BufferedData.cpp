@@ -168,9 +168,13 @@ namespace DirectInput
 					}
 				}
 			}
+
+			data = safe_cast<DataFormat>( result );
 		}
 		else
 		{
+			data = safe_cast<DataFormat>( Activator::CreateInstance( type ) );
+
 			array<FieldInfo^>^ fields = type->GetFields();
 			for each( FieldInfo^ field in fields )
 			{
