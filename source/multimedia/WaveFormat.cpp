@@ -84,7 +84,7 @@ namespace Multimedia
 
 #if _MSC_VER < 1500
 #define VS05_PATCH(val) Array::AsReadOnly( val )
-#pragma message(
+#pragma message("Visual C++ version earlier than 9.0 detected, applying WaveFormat patch (will hurt performance).")
 #else
 #define VS05_PATCH(val) val
 #endif
