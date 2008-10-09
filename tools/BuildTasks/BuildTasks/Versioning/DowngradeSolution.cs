@@ -72,6 +72,10 @@ namespace BuildTasks {
 					else if ( lines[lineIndex].StartsWith( sourceToolVersion ) ) {
 						lines[lineIndex] = targetToolVersion;
 					}
+					else if ( lines[lineIndex].StartsWith( "Project" ) ) {
+						lines[lineIndex] = lines[lineIndex].Replace(".vcproj", ".2005.vcproj");
+						lines[lineIndex] = lines[lineIndex].Replace(".csproj", ".2005.csproj");
+					}
 				}
 
 				File.WriteAllLines( outputSolutions[fileIndex].ItemSpec, lines );

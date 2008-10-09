@@ -98,18 +98,37 @@ namespace BuildTasks {
 				}
 			}
 
-			if ( element.HasChildren ) {
-				writer.WriteLine( ">" );
+			if ( element.Name == "Project" )
+			{
+				XPathNodeIterator ancestors = element.SelectAncestors(XPathNodeType.Element, false);
+				if ( ancestors.Count == 0 )
+					writer.Write( Environment.NewLine + "  xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\"" );
+			}
 
+			if ( element.HasChildren ) {
+				writer.Write( ">" );
+
+				bool writeNewline = true;
 				foreach ( XPathNavigator child in element.SelectChildren( XPathNodeType.Element ) ) {
+					if ( writeNewline )
+					{
+						writer.WriteLine();
+						writeNewline = false;
+					}
+
 					WriteElement( writer, indent + 1, child );
 				}
 
 				foreach ( XPathNavigator child in element.SelectChildren( XPathNodeType.Text ) ) {
-					writer.WriteLine( child.Value );
+					writer.Write( child.Value );
 				}
 
-				writer.WriteLine( "{0}</{1}>", elementPrefix, element.Name );
+				if ( !writeNewline )
+				{
+					writer.Write(elementPrefix);
+				}
+
+				writer.WriteLine( "</{0}>", element.Name );
 			}
 			else {
 				writer.WriteLine( "/>" );
