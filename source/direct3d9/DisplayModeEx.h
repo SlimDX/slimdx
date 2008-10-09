@@ -65,6 +65,11 @@ namespace SlimDX
 			/// </summary>
 			property ScanlineOrdering ScanlineOrdering;
 
+			property float AspectRatio
+			{
+				float get() { return static_cast<float>(Width) / static_cast<float>(Height); }
+			}
+
 			/// <summary>
 			/// Tests for equality between two objects.
 			/// </summary>
