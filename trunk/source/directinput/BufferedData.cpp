@@ -58,58 +58,58 @@ namespace DirectInput
 			if( objectData.dwOfs == DIMOFS_BUTTON0 )
 			{
 				if( objectData.dwData )
-					result->buttons[0] = true;
+					result->pressedButtons[0] = true;
 				else
-					result->buttons[0] = false;
+					result->releasedButtons[0] = true;
 			}
 			else if( objectData.dwOfs == DIMOFS_BUTTON1 )
 			{
 				if( objectData.dwData )
-					result->buttons[1] = true;
+					result->pressedButtons[1] = true;
 				else
-					result->buttons[1] = false;
+					result->releasedButtons[1] = true;
 			}
 			else if( objectData.dwOfs == DIMOFS_BUTTON2 )
 			{
 				if( objectData.dwData )
-					result->buttons[2] = true;
+					result->pressedButtons[2] = true;
 				else
-					result->buttons[2] = false;
+					result->releasedButtons[2] = true;
 			}
 			else if( objectData.dwOfs == DIMOFS_BUTTON3 )
 			{
 				if( objectData.dwData )
-					result->buttons[3] = true;
+					result->pressedButtons[3] = true;
 				else
-					result->buttons[3] = false;
+					result->releasedButtons[3] = true;
 			}
 			else if( objectData.dwOfs == DIMOFS_BUTTON4 )
 			{
 				if( objectData.dwData )
-					result->buttons[4] = true;
+					result->pressedButtons[4] = true;
 				else
-					result->buttons[4] = false;
+					result->releasedButtons[4] = true;
 			}
 			else if( objectData.dwOfs == DIMOFS_BUTTON5 )
 			{
 				if( objectData.dwData )
-					result->buttons[5] = true;
+					result->pressedButtons[5] = true;
 				else
-					result->buttons[5] = false;
+					result->releasedButtons[5] = true;
 			}
 			else if( objectData.dwOfs == DIMOFS_BUTTON6 )
 			{
 				if( objectData.dwData )
-					result->buttons[6] = true;
+					result->pressedButtons[6] = true;
 				else
-					result->buttons[6] = false;
+					result->releasedButtons[6] = true;
 			}
 			else if( objectData.dwOfs == DIMOFS_BUTTON7 )
 			{
 				if( objectData.dwData )
-					result->buttons[7] = true;
+					result->pressedButtons[7] = true;
 				else
-					result->buttons[7] = false;
+					result->releasedButtons[7] = true;
 			}
 			else if( objectData.dwOfs == DIMOFS_X )
 				result->X = objectData.dwData;
@@ -160,9 +160,9 @@ namespace DirectInput
 						if( objectData.dwOfs == DIJOFS_BUTTON( i ) )
 						{
 							if( objectData.dwData )
-								result->buttons[i] = true;
+								result->pressedButtons[i] = true;
 							else
-								result->buttons[i] = false;
+								result->releasedButtons[i] = true;
 							break;
 						}
 					}

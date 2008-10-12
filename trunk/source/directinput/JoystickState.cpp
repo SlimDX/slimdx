@@ -40,7 +40,8 @@ namespace DirectInput
 	{
 		sliders = gcnew array<int>( 2 );
 		povs = gcnew array<int>( 4 );
-		buttons = gcnew array<bool>( 128 );
+		pressedButtons = gcnew array<bool>( 128 );
+		releasedButtons = gcnew array<bool>( 128 );
 		vsliders = gcnew array<int>( 2 );
 		fsliders = gcnew array<int>( 2 );
 		asliders = gcnew array<int>( 2 );
@@ -50,7 +51,8 @@ namespace DirectInput
 	{
 		sliders = gcnew array<int>( 2 );
 		povs = gcnew array<int>( 4 );
-		buttons = gcnew array<bool>( 128 );
+		pressedButtons = gcnew array<bool>( 128 );
+		releasedButtons = gcnew array<bool>( 128 );
 		vsliders = gcnew array<int>( 2 );
 		fsliders = gcnew array<int>( 2 );
 		asliders = gcnew array<int>( 2 );
@@ -99,9 +101,9 @@ namespace DirectInput
 		for( int i = 0; i < 128; i++ )
 		{
 			if( joystate.rgbButtons[i] )
-				buttons[i] = true;
+				pressedButtons[i] = true;
 			else
-				buttons[i] = false;
+				releasedButtons[i] = true;
 		}
 	}
 }

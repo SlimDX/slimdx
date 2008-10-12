@@ -30,7 +30,7 @@ namespace SlimDX
 		public ref class MouseInputEventArgs : System::EventArgs
 		{
 		public:
-			MouseInputEventArgs(MouseMode mode, MouseButtonFlags buttonFlags, int wheelDelta, long rawButtons, long x, long y, long extraInformation)
+			MouseInputEventArgs(MouseMode mode, MouseButtonFlags buttonFlags, int wheelDelta, long rawButtons, long x, long y, long extraInformation, System::IntPtr device)
 			{
 				Mode = mode;
 				ButtonFlags = buttonFlags;
@@ -39,6 +39,7 @@ namespace SlimDX
 				X = x;
 				Y = y;
 				ExtraInformation = extraInformation;
+				Device = device;
 			}
 
 			property MouseMode Mode;
@@ -48,6 +49,7 @@ namespace SlimDX
 			property long X;
 			property long Y;
 			property long ExtraInformation;
+			property System::IntPtr Device;
 		};
 	}
 }

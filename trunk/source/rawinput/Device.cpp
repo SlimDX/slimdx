@@ -41,26 +41,13 @@ namespace SlimDX
 {
 namespace RawInput
 {
-	Device::Device( SlimDX::UsagePage usagePage, SlimDX::UsageId usageId, DeviceFlags flags )
+	void Device::RegisterDevice( UsagePage usagePage, UsageId usageId, DeviceFlags flags )
 	{
-		Construct( usagePage, usageId, flags, IntPtr::Zero );
+		RegisterDevice( usagePage, usageId, flags, IntPtr::Zero );
 	}
 
-	Device::Device( SlimDX::UsagePage usagePage, SlimDX::UsageId usageId, DeviceFlags flags, IntPtr target )
+	void Device::RegisterDevice( UsagePage usagePage, UsageId usageId, DeviceFlags flags, IntPtr target )
 	{
-		Construct( usagePage, usageId, flags, target );
-	}
-
-	void Device::Construct( SlimDX::UsagePage usagePage, SlimDX::UsageId usageId, DeviceFlags flags, IntPtr target )
-	{
-		mouseState = gcnew SlimDX::RawInput::MouseState( 0, 0, 0 );
-		keyboardState = gcnew SlimDX::RawInput::KeyboardState();
-
-		m_usagePage = usagePage;
-		m_usageId = usageId;
-		m_flags = flags;
-		m_target = target;
-
 		RAWINPUTDEVICE device;
 		device.usUsagePage = static_cast<USHORT>( usagePage );
 		device.usUsage = static_cast<USHORT>( usageId );
@@ -70,20 +57,10 @@ namespace RawInput
 		if( RegisterRawInputDevices( &device, 1, sizeof(RAWINPUTDEVICE) ) <= 0 )
 			throw gcnew Win32Exception();
 
-		if( target == IntPtr::Zero )
+		if( filter == nullptr )
 		{
-			if( filter == nullptr )
-			{
-				filter = gcnew InputMessageFilter();
-				Application::AddMessageFilter( filter );
-			}
-
-			filter->Add( this );
-		}
-		else
-		{
-			subclass = gcnew WindowSubclass( this );
-			subclass->AssignHandle( target );
+			filter = gcnew InputMessageFilter();
+			Application::AddMessageFilter( filter );
 		}
 	}
 
@@ -106,21 +83,21 @@ namespace RawInput
 
 			if( rawInput->header.dwType == RIM_TYPEKEYBOARD )
 			{
-				OnKeyboardInput( gcnew KeyboardInputEventArgs( rawInput->data.keyboard.MakeCode,
+				KeyboardInput( nullptr, gcnew KeyboardInputEventArgs( rawInput->data.keyboard.MakeCode,
 					static_cast<ScanCodeFlags>( rawInput->data.keyboard.Flags ),
 					static_cast<Keys>( rawInput->data.keyboard.VKey ),
 					static_cast<KeyState>( rawInput->data.keyboard.Message ),
-					rawInput->data.keyboard.ExtraInformation ) );
+					rawInput->data.keyboard.ExtraInformation, IntPtr( rawInput->header.hDevice ) ) );
 			}
 			else if( rawInput->header.dwType == RIM_TYPEMOUSE )
 			{
-				OnMouseInput( gcnew MouseInputEventArgs( static_cast<MouseMode>( rawInput->data.mouse.usFlags ),
+				MouseInput( nullptr, gcnew MouseInputEventArgs( static_cast<MouseMode>( rawInput->data.mouse.usFlags ),
 					static_cast<MouseButtonFlags>( rawInput->data.mouse.usButtonFlags ),
 					rawInput->data.mouse.usButtonData,
 					rawInput->data.mouse.ulRawButtons,
 					rawInput->data.mouse.lLastX,
 					rawInput->data.mouse.lLastY,
-					rawInput->data.mouse.ulExtraInformation ) );
+					rawInput->data.mouse.ulExtraInformation, IntPtr( rawInput->header.hDevice ) ) );
 			}
 			else
 			{
@@ -129,7 +106,7 @@ namespace RawInput
 				for( int i = 0; i < length; i++ )
 					bytes[i] = rawInput->data.hid.bRawData[i];
 
-				OnRawInput( gcnew RawInputEventArgs( rawInput->data.hid.dwSizeHid, rawInput->data.hid.dwCount, bytes ) );
+				RawInput( nullptr, gcnew RawInputEventArgs( rawInput->data.hid.dwSizeHid, rawInput->data.hid.dwCount, bytes, IntPtr( rawInput->header.hDevice ) ) );
 			}
 		}
 		finally
@@ -138,88 +115,8 @@ namespace RawInput
 		}
 	}
 
-	void Device::Destruct()
-	{
-		if( subclass != nullptr )
-		{
-			subclass->ReleaseHandle();
-			subclass = nullptr;
-		}
-
-		if( filter != nullptr )
-		{
-			filter->Remove( this );
-
-			if( filter->Count == 0 )
-			{
-				Application::RemoveMessageFilter( filter );
-				filter = nullptr;
-			}
-		}
-
-		RAWINPUTDEVICE device;
-		device.usUsagePage = static_cast<USHORT>( UsagePage );
-		device.usUsage = static_cast<USHORT>( UsageId );
-		device.dwFlags = RIDEV_REMOVE;
-		device.hwndTarget = NULL;
-
-		RegisterRawInputDevices( &device, 1, sizeof(RAWINPUTDEVICE) );
-	}
-
-	void Device::OnKeyboardInput( KeyboardInputEventArgs^ e )
-	{
-		if( e->State == KeyState::Pressed )
-			keyboardState->UpdateKey( e->Key, true );
-		else if( e->State == KeyState::Released )
-			keyboardState->UpdateKey( e->Key, false );
-
-		if( &Device::KeyboardInput != nullptr )
-			KeyboardInput( this, e );
-	}
-
-	void Device::OnMouseInput( MouseInputEventArgs^ e )
-	{
-		mouseState->X = e->X;
-		mouseState->Y = e->Y;
-		mouseState->Z = e->WheelDelta;
-
-		if( (e->ButtonFlags & MouseButtonFlags::LeftDown) != static_cast<MouseButtonFlags>( 0 ) )
-			mouseState->buttons[0] = true;
-		else if( (e->ButtonFlags & MouseButtonFlags::LeftUp) != static_cast<MouseButtonFlags>( 0 ) )
-			mouseState->buttons[0] = false;
-
-		if( (e->ButtonFlags & MouseButtonFlags::RightDown) != static_cast<MouseButtonFlags>( 0 ) )
-			mouseState->buttons[1] = true;
-		else if( (e->ButtonFlags & MouseButtonFlags::RightUp) != static_cast<MouseButtonFlags>( 0 ) )
-			mouseState->buttons[1] = false;
-
-		if( (e->ButtonFlags & MouseButtonFlags::MiddleDown) != static_cast<MouseButtonFlags>( 0 ) )
-			mouseState->buttons[2] = true;
-		else if( (e->ButtonFlags & MouseButtonFlags::MiddleUp) != static_cast<MouseButtonFlags>( 0 ) )
-			mouseState->buttons[2] = false;
-
-		if( (e->ButtonFlags & MouseButtonFlags::Button4Down) != static_cast<MouseButtonFlags>( 0 ) )
-			mouseState->buttons[3] = true;
-		else if( (e->ButtonFlags & MouseButtonFlags::Button4Up) != static_cast<MouseButtonFlags>( 0 ) )
-			mouseState->buttons[3] = false;
-
-		if( (e->ButtonFlags & MouseButtonFlags::Button5Down) != static_cast<MouseButtonFlags>( 0 ) )
-			mouseState->buttons[4] = true;
-		else if( (e->ButtonFlags & MouseButtonFlags::Button5Up) != static_cast<MouseButtonFlags>( 0 ) )
-			mouseState->buttons[4] = false;
-
-		if( &Device::MouseInput != nullptr )
-			MouseInput( this, e );
-	}
-
-	void Device::OnRawInput( RawInputEventArgs^ e )
-	{
-		if( &Device::RawInput != nullptr )
-			RawInput( this, e );
-	}
-
 	ReadOnlyCollection<DeviceInfo^>^ Device::GetDevices()
-	{
+    {
 		List<DeviceInfo^>^ devices = gcnew List<DeviceInfo^>();
 		UINT count = 0;
 
@@ -262,7 +159,7 @@ namespace RawInput
 				RID_DEVICE_INFO *nativeInfo = reinterpret_cast<RID_DEVICE_INFO*>( bytes );
 				nativeInfo->cbSize = sizeof( RID_DEVICE_INFO );
 
-				GetRawInputDeviceInfo( deviceList[i].hDevice, RIDI_DEVICEINFO, nativeInfo, &size );			
+				GetRawInputDeviceInfo( deviceList[i].hDevice, RIDI_DEVICEINFO, nativeInfo, &size );                     
 
 				if( nativeInfo->dwType == RIM_TYPEKEYBOARD )
 				{

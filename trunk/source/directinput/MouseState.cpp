@@ -32,7 +32,8 @@ namespace DirectInput
 {
 	MouseState::MouseState()
 	{
-		buttons = gcnew array<bool>( 8 );
+		pressedButtons = gcnew array<bool>( 8 );
+		releasedButtons = gcnew array<bool>( 8 );
 	}
 
 	MouseState::MouseState( int x, int y, int z )
@@ -40,12 +41,14 @@ namespace DirectInput
 		X = x;
 		Y = y;
 		Z = z;
-		buttons = gcnew array<bool>( 8 );
+		pressedButtons = gcnew array<bool>( 8 );
+		releasedButtons = gcnew array<bool>( 8 );
 	}
 
 	MouseState::MouseState( const DIMOUSESTATE2 &state )
 	{
-		buttons = gcnew array<bool>( 8 );
+		pressedButtons = gcnew array<bool>( 8 );
+		releasedButtons = gcnew array<bool>( 8 );
 		AssignState( state );
 	}
 
@@ -56,7 +59,12 @@ namespace DirectInput
 		Z = state.lZ;
 
 		for( int i = 0; i < 8; i++ )
-			buttons[i] = ( state.rgbButtons[i] & 0x80 ) != 0;
+		{
+			if( ( state.rgbButtons[i] & 0x80 ) != 0 )
+				pressedButtons[i] = true;
+			else
+				releasedButtons[i] = true;
+		}
 	}
 }
 }

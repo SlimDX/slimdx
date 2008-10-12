@@ -33,7 +33,8 @@ namespace SlimDX
 		public ref class MouseState
 		{
 		internal:
-			array<bool>^ buttons;
+			array<bool>^ pressedButtons;
+			array<bool>^ releasedButtons;
 
 		public:
 			MouseState();
@@ -60,12 +61,12 @@ namespace SlimDX
 			/// </summary>
 			array<bool>^ GetButtons()
 			{
-				return buttons;
+				return pressedButtons;
 			}
 
-			bool IsPressed(int button) { return buttons[button]; }
+			bool IsPressed(int button) { return pressedButtons[button]; }
 
-			bool IsReleased(int button) { return !buttons[button]; }
+			bool IsReleased(int button) { return releasedButtons[button]; }
 
 		internal:
 			MouseState( const DIMOUSESTATE2 &state );
