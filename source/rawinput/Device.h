@@ -24,7 +24,6 @@
 #include "../InputEnums.h"
 
 #include "Enums.h"
-#include "WindowSubclass.h"
 #include "InputMessageFilter.h"
 #include "KeyboardInputEventArgs.h"
 #include "MouseInputEventArgs.h"
@@ -40,76 +39,22 @@ namespace SlimDX
 		public ref class Device
 		{
 		private:
+			Device() { }
+
 			static InputMessageFilter^ filter;
 
-			MouseState^ mouseState;
-			KeyboardState^ keyboardState;
-
-			UsagePage m_usagePage;
-			UsageId m_usageId;
-			DeviceFlags m_flags;
-			System::IntPtr m_target;
-			WindowSubclass^ subclass;
-
-			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
-			void Construct( UsagePage usagePage, UsageId usageId, DeviceFlags flags, System::IntPtr target );
-
-			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
-			void Destruct();
-
 		internal:
-			void OnWmInput( HRAWINPUT handle );
-
-		protected:
-			void OnKeyboardInput( KeyboardInputEventArgs^ e );
-			void OnMouseInput( MouseInputEventArgs^ e );
-			void OnRawInput( RawInputEventArgs^ e );
+			static void OnWmInput( HRAWINPUT input );
 
 		public:
-			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
-			Device( UsagePage usagePage, UsageId usageId, DeviceFlags flags );
-
-			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
-			Device( UsagePage usagePage, UsageId usageId, DeviceFlags flags, System::IntPtr target );
-			
-			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
-			virtual ~Device() { Destruct(); }
+			static void RegisterDevice( UsagePage usagePage, UsageId usageId, DeviceFlags flags );
+			static void RegisterDevice( UsagePage usagePage, UsageId usageId, DeviceFlags flags, System::IntPtr target );
 
 			static System::Collections::ObjectModel::ReadOnlyCollection<DeviceInfo^>^ GetDevices();
 
-			property UsagePage UsagePage
-			{
-				SlimDX::UsagePage get() { return m_usagePage; }
-			}
-
-			property UsageId UsageId
-			{
-				SlimDX::UsageId get() { return m_usageId; }
-			}
-
-			property DeviceFlags Flags
-			{
-				DeviceFlags get() { return m_flags; }
-			}
-
-			property System::IntPtr Target
-			{
-				System::IntPtr get() { return m_target; }
-			}
-
-			property MouseState^ MouseState
-			{
-				SlimDX::RawInput::MouseState^ get() { return mouseState; }
-			}
-
-			property KeyboardState^ KeyboardState
-			{
-				SlimDX::RawInput::KeyboardState^ get() { return keyboardState; }
-			}
-
-			event System::EventHandler<KeyboardInputEventArgs^>^ KeyboardInput;
-			event System::EventHandler<MouseInputEventArgs^>^ MouseInput;
-			event System::EventHandler<RawInputEventArgs^>^ RawInput;
+			static event System::EventHandler<KeyboardInputEventArgs^>^ KeyboardInput;
+			static event System::EventHandler<MouseInputEventArgs^>^ MouseInput;
+			static event System::EventHandler<RawInputEventArgs^>^ RawInput;
 		};
 	}
 }

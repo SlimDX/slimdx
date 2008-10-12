@@ -30,13 +30,14 @@ namespace SlimDX
 		public ref class KeyboardInputEventArgs : System::EventArgs
 		{
 		public:
-			KeyboardInputEventArgs(int makeCode, ScanCodeFlags scanCodeFlags, System::Windows::Forms::Keys key, KeyState state, long extraInformation)
+			KeyboardInputEventArgs(int makeCode, ScanCodeFlags scanCodeFlags, System::Windows::Forms::Keys key, KeyState state, long extraInformation, System::IntPtr device)
 			{
 				MakeCode = makeCode;
 				ScanCodeFlags = scanCodeFlags;
 				Key = key;
 				State = state;
 				ExtraInformation = extraInformation;
+				Device = device;
 			}
 
 			property int MakeCode;
@@ -44,6 +45,7 @@ namespace SlimDX
 			property System::Windows::Forms::Keys Key;
 			property KeyState State;
 			property long ExtraInformation;
+			property System::IntPtr Device;
 		};
 	}
 }

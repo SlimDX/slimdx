@@ -5293,14 +5293,6 @@
 					RelativePath="..\source\rawinput\InputMessageFilter.h"
 					>
 				</File>
-				<File
-					RelativePath="..\source\rawinput\WindowSubclass.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\rawinput\WindowSubclass.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="Events"

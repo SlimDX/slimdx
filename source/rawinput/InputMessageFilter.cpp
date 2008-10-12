@@ -35,10 +35,7 @@ namespace RawInput
 	bool InputMessageFilter::PreFilterMessage( Message% m )
 	{
 		if( m.Msg == WM_INPUT )
-		{
-			for each( Device^ device in devices )
-				device->OnWmInput( static_cast<HRAWINPUT>( m.LParam.ToPointer() ) );
-		}
+			Device::OnWmInput( static_cast<HRAWINPUT>( m.LParam.ToPointer() ) );
 
 		return false;
 	}

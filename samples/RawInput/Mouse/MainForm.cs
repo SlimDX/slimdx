@@ -30,15 +30,13 @@ namespace Mouse
 {
     public partial class MainForm : Form
     {
-        Device mouse;
-
         public MainForm()
         {
             InitializeComponent();
 
             // setup the device
-            mouse = new Device(UsagePage.Generic, UsageId.Mouse, DeviceFlags.None);
-            mouse.MouseInput += mouse_MouseInput;
+            Device.RegisterDevice(UsagePage.Generic, UsageId.Mouse, DeviceFlags.None);
+            Device.MouseInput += mouse_MouseInput;
         }
 
         void mouse_MouseInput(object sender, MouseInputEventArgs e)
@@ -49,15 +47,6 @@ namespace Mouse
             locationLabel.Text = new Point(e.X, e.Y).ToString();
             stateLabel.Text = Enum.Format(typeof(MouseMode), e.Mode, "G");
             wheelLabel.Text = e.WheelDelta.ToString(CultureInfo.CurrentCulture);
-        }
-
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-
-            // make sure the device is disposed
-            if (mouse != null)
-                mouse.Dispose();
         }
 
         private void button1_Click(object sender, EventArgs e)

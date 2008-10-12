@@ -30,16 +30,18 @@ namespace SlimDX
 		public ref class RawInputEventArgs : System::EventArgs
 		{
 		public:
-			RawInputEventArgs( int dataSize, int count, array<System::Byte>^ rawData )
+			RawInputEventArgs( int dataSize, int count, array<System::Byte>^ rawData, System::IntPtr device )
 			{
 				DataSize = dataSize;
 				RawData = rawData;
 				Count = count;
+				Device = device;
 			}
 
 			property int DataSize;
 			property int Count;
 			property array<System::Byte>^ RawData;
+			property System::IntPtr Device;
 		};
 	}
 }

@@ -41,7 +41,8 @@ namespace SlimDX
 			int rz;
 			array<int>^ sliders;
 			array<int>^ povs;
-			array<bool>^ buttons;
+			array<bool>^ pressedButtons;
+			array<bool>^ releasedButtons;
 			int vx;
 			int vy;
 			int vz;
@@ -114,7 +115,7 @@ namespace SlimDX
 			/// </summary>
 			array<bool>^ GetButtons()
 			{
-				return buttons;
+				return pressedButtons;
 			}
 
 			/// <summary>
@@ -309,8 +310,8 @@ namespace SlimDX
 				int get() { return frz; }
 			}
 
-			bool IsPressed( int button ) { return buttons[button]; }
-			bool IsReleased( int button ) { return !buttons[button]; }
+			bool IsPressed( int button ) { return pressedButtons[button]; }
+			bool IsReleased( int button ) { return releasedButtons[button]; }
 
 		internal:
 			void AssignState( const DIJOYSTATE2 &joystate );

@@ -29,21 +29,10 @@ namespace SlimDX
 
 		ref class InputMessageFilter : System::Windows::Forms::IMessageFilter
 		{
-		private:
-			System::Collections::Generic::List<Device^>^ devices;
-
 		public:
-			InputMessageFilter() { devices = gcnew System::Collections::Generic::List<Device^>(); }
+			InputMessageFilter() { }
 
 			virtual bool PreFilterMessage( System::Windows::Forms::Message% m );
-
-			void Add( Device^ device ) { devices->Add( device ); }
-			void Remove( Device^ device ) { devices->Remove( device ); }
-
-			property int Count
-			{
-				int get() { return devices->Count; }
-			}
 		};
 	}
 }
