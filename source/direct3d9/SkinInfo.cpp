@@ -503,10 +503,13 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	Result SkinInfo::UpdateSkinnedMesh( Matrix boneTransform, Matrix boneInvTranspose, DataStream^ source, DataStream^ destination )
+	Result SkinInfo::UpdateSkinnedMesh( array<Matrix>^ boneTransforms, array<Matrix>^ boneInvTransposeTransforms, DataStream^ source, DataStream^ destination )
 	{
-		HRESULT hr = InternalPointer->UpdateSkinnedMesh( reinterpret_cast<const D3DXMATRIX*>( &boneTransform ),
-			reinterpret_cast<const D3DXMATRIX*>( &boneInvTranspose ), source->RawPointer, destination->RawPointer );
+		pin_ptr<Matrix> pinnedTransforms = &boneTransforms[0];
+		pin_ptr<Matrix> pinnedInvTransforms = &boneInvTransposeTransforms[0];
+
+		HRESULT hr = InternalPointer->UpdateSkinnedMesh( reinterpret_cast<const D3DXMATRIX*>( pinnedTransforms ),
+			reinterpret_cast<const D3DXMATRIX*>( pinnedInvTransforms ), source->RawPointer, destination->RawPointer );
 		return RECORD_D3D9( hr );
 	}
 

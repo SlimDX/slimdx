@@ -75,7 +75,7 @@ namespace SlimDX
 
 			Result Remap( array<int>^ remapData );
 
-			Result UpdateSkinnedMesh( Matrix boneTransform, Matrix boneInvTranspose, DataStream^ source, DataStream^ destination );
+			Result UpdateSkinnedMesh( array<Matrix>^ boneTransforms, array<Matrix>^ boneInvTransposeTransforms, DataStream^ source, DataStream^ destination );
 
 			property int MaximumVertexInfluences { int get(); }
 			property int BoneCount { int get(); }

@@ -370,6 +370,26 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="DataRectangle">
+          <Members>
+           <Member Name="#Pitch">
+            <Accessors>
+             <Accessor Name="#set_Pitch(System.Int32)">
+              <Messages>
+               <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2008-10-24 15:52:31Z">
+                <Issue Name="IncorrectParameterName">
+                 <Item>'DataRectangle.Pitch.set(int)'</Item>
+                 <Item>Pitch</Item>
+                 <Item>'paramName'</Item>
+                 <Item>'ArgumentOutOfRangeException'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="DataStream">
           <Members>
            <Member Name="#!DataStream()">
@@ -6335,6 +6355,26 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#DrawIndexedUserPrimitives`2(SlimDX.Direct3D9.PrimitiveType,System.Int32,System.Int32,System.Int32,System.Int32,!!0[],SlimDX.Direct3D9.Format,!!1[],System.Int32)">
+            <Messages>
+             <Message Id="T" TypeName="IdentifiersShouldHaveCorrectPrefix" Category="Microsoft.Naming" CheckId="CA1715" Created="2008-10-24 15:52:31Z" FixCategory="NonBreaking">
+              <Issue Name="MethodTypeParameter">
+               <Item>'Device.DrawIndexedUserPrimitives&lt;S, T&gt;(PrimitiveType, int, int, int, int, S[], Format, T[], int)'</Item>
+               <Item>'S'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#DrawIndexedUserPrimitives`2(SlimDX.Direct3D9.PrimitiveType,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,!!0[],SlimDX.Direct3D9.Format,!!1[],System.Int32)">
+            <Messages>
+             <Message Id="T" TypeName="IdentifiersShouldHaveCorrectPrefix" Category="Microsoft.Naming" CheckId="CA1715" Created="2008-10-24 15:52:31Z" FixCategory="NonBreaking">
+              <Issue Name="MethodTypeParameter">
+               <Item>'Device.DrawIndexedUserPrimitives&lt;S, T&gt;(PrimitiveType, int, int, int, int, int, S[], Format, T[], int)'</Item>
+               <Item>'S'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
              <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-02-27 22:14:29Z">
@@ -6654,13 +6694,6 @@
            </Member>
            <Member Name="#.ctor(SlimDX.Direct3D9.Direct3DEx,System.Int32,SlimDX.Direct3D9.DeviceType,System.IntPtr,SlimDX.Direct3D9.CreateFlags,SlimDX.Direct3D9.PresentParameters,SlimDX.Direct3D9.DisplayModeEx)">
             <Messages>
-             <Message Id="Sscreen" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-09-28 18:07:18Z">
-              <Issue Name="MemberParameter">
-               <Item>'DeviceEx.DeviceEx(Direct3DEx, int, DeviceType, IntPtr, CreateFlags, PresentParameters, DisplayModeEx)'</Item>
-               <Item>Sscreen</Item>
-               <Item>'fullSscreenDisplayMode'</Item>
-              </Issue>
-             </Message>
              <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-09-09 18:08:37Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'DeviceEx.DeviceEx(Direct3DEx, int, DeviceType, IntPtr, CreateFlags, PresentParameters, DisplayModeEx)'</Item>
@@ -13413,15 +13446,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#buttons">
-            <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'JoystickState.buttons'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#frx">
             <Messages>
              <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
@@ -13740,19 +13764,6 @@
                <Item>'destination'</Item>
                <Item>'array'</Item>
                <Item>'ICollection&lt;Key&gt;.CopyTo(Key[], int)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="MouseState">
-          <Members>
-           <Member Name="#buttons">
-            <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'MouseState.buttons'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -16812,60 +16823,14 @@
        <Namespace Name="SlimDX.RawInput">
         <Types>
          <Type Name="Device">
+          <Messages>
+           <Message TypeName="StaticHolderTypesShouldBeSealed" Category="Microsoft.Design" CheckId="CA1052" Created="2008-10-24 15:52:31Z">
+            <Issue>
+             <Item>'Device'</Item>
+            </Issue>
+           </Message>
+          </Messages>
           <Members>
-           <Member Name="#.ctor(SlimDX.UsagePage,SlimDX.UsageId,SlimDX.RawInput.DeviceFlags)">
-            <Messages>
-             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-17 13:20:24Z">
-              <Issue Name="MemberParameterNoAlternate">
-               <Item>'Device.Device(UsagePage, UsageId, DeviceFlags)'</Item>
-               <Item>flags</Item>
-               <Item>'flags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#.ctor(SlimDX.UsagePage,SlimDX.UsageId,SlimDX.RawInput.DeviceFlags,System.IntPtr)">
-            <Messages>
-             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-17 13:20:24Z">
-              <Issue Name="MemberParameterNoAlternate">
-               <Item>'Device.Device(UsagePage, UsageId, DeviceFlags, IntPtr)'</Item>
-               <Item>flags</Item>
-               <Item>'flags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Destruct()">
-            <Messages>
-             <Message Id="&lt;Module&gt;.RegisterRawInputDevices(optional(IsConst) tagRAWINPUTDEVICE*,System.UInt32,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-05-13 21:02:20Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'Device.Destruct()'</Item>
-               <Item>'&lt;Module&gt;.RegisterRawInputDevices(tagRAWINPUTDEVICE*, uint, uint)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Dispose(System.Boolean)">
-            <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-05-13 23:12:57Z">
-              <Issue>
-               <Item>'Device.Dispose(bool)'</Item>
-               <Item>'Device.~Device()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Device.Dispose(bool)'&#xD;&#xA;   -&gt;'Device.Dispose(bool)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Flags">
-            <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-13 21:02:20Z">
-              <Issue Name="MemberNoAlternate">
-               <Item>Flags</Item>
-               <Item>'Device.Flags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#GetDevices()">
             <Messages>
              <Message Id="&lt;Module&gt;.GetRawInputDeviceInfoW(System.Void*,System.UInt32,System.Void*,System.UInt32*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-05-15 20:55:44Z">
@@ -16914,6 +16879,28 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#RegisterDevice(SlimDX.UsagePage,SlimDX.UsageId,SlimDX.RawInput.DeviceFlags)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2008-10-24 15:52:31Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Device.RegisterDevice(UsagePage, UsageId, DeviceFlags)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#RegisterDevice(SlimDX.UsagePage,SlimDX.UsageId,SlimDX.RawInput.DeviceFlags,System.IntPtr)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2008-10-24 15:52:31Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Device.RegisterDevice(UsagePage, UsageId, DeviceFlags, IntPtr)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
           </Members>
          </Type>
          <Type Name="DeviceFlags">
@@ -16934,11 +16921,11 @@
          </Type>
          <Type Name="KeyboardInputEventArgs">
           <Members>
-           <Member Name="#.ctor(System.Int32,SlimDX.RawInput.ScanCodeFlags,System.Windows.Forms.Keys,SlimDX.RawInput.KeyState,{modopt(System.Runtime.CompilerServices.IsLong)}System.Int32)">
+           <Member Name="#.ctor(System.Int32,SlimDX.RawInput.ScanCodeFlags,System.Windows.Forms.Keys,SlimDX.RawInput.KeyState,{modopt(System.Runtime.CompilerServices.IsLong)}System.Int32,System.IntPtr)">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-05-13 21:02:20Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2008-10-24 15:52:31Z">
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'KeyboardInputEventArgs.KeyboardInputEventArgs(int, ScanCodeFlags, Keys, KeyState, int)'</Item>
+               <Item>'KeyboardInputEventArgs.KeyboardInputEventArgs(int, ScanCodeFlags, Keys, KeyState, int, IntPtr)'</Item>
                <Item>Flags</Item>
                <Item>'scanCodeFlags'</Item>
               </Issue>
@@ -16951,6 +16938,32 @@
               <Issue Name="MemberNoAlternate">
                <Item>Flags</Item>
                <Item>'KeyboardInputEventArgs.ScanCodeFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="KeyboardState">
+          <Members>
+           <Member Name="#UpdateKey(System.Windows.Forms.Keys,System.Boolean)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-10-24 15:52:31Z">
+              <Issue>
+               <Item>'KeyboardState.UpdateKey(Keys, bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="KeyCollection">
+          <Members>
+           <Member Name="#RemoveItem(System.Windows.Forms.Keys)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-10-24 15:52:31Z">
+              <Issue>
+               <Item>'KeyCollection.RemoveItem(Keys)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -16978,11 +16991,11 @@
          </Type>
          <Type Name="MouseInputEventArgs">
           <Members>
-           <Member Name="#.ctor(SlimDX.RawInput.MouseMode,SlimDX.RawInput.MouseButtonFlags,System.Int32,{modopt(System.Runtime.CompilerServices.IsLong)}System.Int32,{modopt(System.Runtime.CompilerServices.IsLong)}System.Int32,{modopt(System.Runtime.CompilerServices.IsLong)}System.Int32,{modopt(System.Runtime.CompilerServices.IsLong)}System.Int32)">
+           <Member Name="#.ctor(SlimDX.RawInput.MouseMode,SlimDX.RawInput.MouseButtonFlags,System.Int32,{modopt(System.Runtime.CompilerServices.IsLong)}System.Int32,{modopt(System.Runtime.CompilerServices.IsLong)}System.Int32,{modopt(System.Runtime.CompilerServices.IsLong)}System.Int32,{modopt(System.Runtime.CompilerServices.IsLong)}System.Int32,System.IntPtr)">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-07-07 15:59:03Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2008-10-24 15:52:31Z">
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'MouseInputEventArgs.MouseInputEventArgs(MouseMode, MouseButtonFlags, int, int, int, int, int)'</Item>
+               <Item>'MouseInputEventArgs.MouseInputEventArgs(MouseMode, MouseButtonFlags, int, int, int, int, int, IntPtr)'</Item>
                <Item>Flags</Item>
                <Item>'buttonFlags'</Item>
               </Issue>
@@ -19010,6 +19023,33 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#Draw(SampleFramework.GameTime)">
+            <Messages>
+             <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-10-24 15:52:31Z">
+              <Issue>
+               <Item>'int.ToString()'</Item>
+               <Item>'Asteroids.Draw(GameTime)'</Item>
+               <Item>'int.ToString(IFormatProvider)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Player">
+            <Accessors>
+             <Accessor Name="#get_Player()">
+              <Messages>
+               <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2008-10-24 15:52:31Z">
+                <Issue Name="Local">
+                 <Item>'component'</Item>
+                 <Item>'Player'</Item>
+                 <Item>'Asteroids.Player.get()'</Item>
+                 <Item>isint</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
            <Member Name="#Window_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
             <Messages>
              <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
@@ -20288,6 +20328,139 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="DataBoxTests">
+          <Messages>
+           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2008-10-24 15:52:31Z" FixCategory="DependsOnFix">
+            <Issue Name="DependsOnFix">
+             <Item>'DataBoxTests'</Item>
+             <Item>'DataStream'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#ConstructFromValuesWithNegativeRowPitch()">
+            <Messages>
+             <Message Id="box" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-10-24 15:52:31Z">
+              <Issue>
+               <Item>'DataBoxTests.ConstructFromValuesWithNegativeRowPitch()'</Item>
+               <Item>'box'</Item>
+               <Item>'DataBox'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ConstructFromValuesWithNegativeSlicePitch()">
+            <Messages>
+             <Message Id="box" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-10-24 15:52:31Z">
+              <Issue>
+               <Item>'DataBoxTests.ConstructFromValuesWithNegativeSlicePitch()'</Item>
+               <Item>'box'</Item>
+               <Item>'DataBox'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ConstructFromValuesWithNullData()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-10-24 15:52:31Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'DataBoxTests.ConstructFromValuesWithNullData()'</Item>
+              </Issue>
+             </Message>
+             <Message Id="box" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-10-24 15:52:31Z">
+              <Issue>
+               <Item>'DataBoxTests.ConstructFromValuesWithNullData()'</Item>
+               <Item>'box'</Item>
+               <Item>'DataBox'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SetUp()">
+            <Messages>
+             <Message Id="SetUp" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-10-24 15:52:31Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>SetUp</Item>
+               <Item>'DataBoxTests.SetUp()'</Item>
+               <Item>Setup</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TearDown()">
+            <Messages>
+             <Message Id="TearDown" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-10-24 15:52:31Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>TearDown</Item>
+               <Item>'DataBoxTests.TearDown()'</Item>
+               <Item>Teardown</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="DataRectangleTests">
+          <Messages>
+           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2008-10-24 15:52:31Z" FixCategory="DependsOnFix">
+            <Issue Name="DependsOnFix">
+             <Item>'DataRectangleTests'</Item>
+             <Item>'DataStream'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#ConstructFromValuesWithNegativePitch()">
+            <Messages>
+             <Message Id="rectangle" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-10-24 15:52:31Z">
+              <Issue>
+               <Item>'DataRectangleTests.ConstructFromValuesWithNegativePitch()'</Item>
+               <Item>'rectangle'</Item>
+               <Item>'DataRectangle'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ConstructFromValuesWithNullData()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-10-24 15:52:31Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'DataRectangleTests.ConstructFromValuesWithNullData()'</Item>
+              </Issue>
+             </Message>
+             <Message Id="rectangle" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-10-24 15:52:31Z">
+              <Issue>
+               <Item>'DataRectangleTests.ConstructFromValuesWithNullData()'</Item>
+               <Item>'rectangle'</Item>
+               <Item>'DataRectangle'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SetUp()">
+            <Messages>
+             <Message Id="SetUp" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-10-24 15:52:31Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>SetUp</Item>
+               <Item>'DataRectangleTests.SetUp()'</Item>
+               <Item>Setup</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TearDown()">
+            <Messages>
+             <Message Id="TearDown" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-10-24 15:52:31Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>TearDown</Item>
+               <Item>'DataRectangleTests.TearDown()'</Item>
+               <Item>Teardown</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="DeviceTests">
           <Messages>
            <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Excluded" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
@@ -20489,6 +20662,9 @@
    <Rule TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213">
     <Resolution Name="Default">{0} contains field {1} that is of IDisposable type: {2}. Change the Dispose method on {0} to call Dispose or Close on this field.</Resolution>
    </Rule>
+   <Rule TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800">
+    <Resolution Name="Local">{0}, a variable, is cast to type {1} multiple times in method {2}. Cache the result of the 'as' operator or direct cast in order to eliminate the redundant {3} instruction.</Resolution>
+   </Rule>
    <Rule TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047">
     <Resolution Name="Member">Make member {0} private, public, or internal (Friend in Visual Basic).</Resolution>
    </Rule>
@@ -20575,6 +20751,9 @@
     <Resolution Name="DisposeBoolSignature">Ensure that {0} is declared as protected, virtual, and unsealed.</Resolution>
     <Resolution Name="DisposeImplementation">Modify {0} so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Resolution>
    </Rule>
+   <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
+    <Resolution Name="IncorrectParameterName">Method {0} passes '{1}' as the {2} argument to a {3} constructor. Replace this argument with one of the method's parameter names. Note that the provided parameter name should have the exact casing as declared on the method.</Resolution>
+   </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
    </Rule>
@@ -20625,8 +20804,14 @@
    <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
     <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
    </Rule>
+   <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+    <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
+   </Rule>
    <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
     <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>
+   </Rule>
+   <Rule TypeName="StaticHolderTypesShouldBeSealed" Category="Microsoft.Design" CheckId="CA1052">
+    <Resolution Name="Default">Mark {0} as sealed.</Resolution>
    </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
