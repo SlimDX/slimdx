@@ -1134,6 +1134,17 @@ namespace Direct3D9
 		return StateBlock::FromPointer( stateBlock );
 	}
 
+	StateBlock^ Device::CreateStateBlock(StateBlockType type)
+	{
+		IDirect3DStateBlock9* stateBlock;
+		HRESULT hr = InternalPointer->CreateStateBlock( static_cast<D3DSTATEBLOCKTYPE>(type), &stateBlock );
+
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		return StateBlock::FromPointer( stateBlock );
+	}
+
 	SlimDX::Direct3D9::CreationParameters Device::CreationParameters::get()
 	{
 		SlimDX::Direct3D9::CreationParameters parameters;

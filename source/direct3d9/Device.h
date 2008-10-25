@@ -855,6 +855,12 @@ namespace SlimDX
 			StateBlock^ EndStateBlock();
 
 			/// <summary>
+			/// Create a device-state block containing the current device state.
+			/// </summary>
+			/// <returns>The current device-state block.</returns>
+			StateBlock^ CreateStateBlock( StateBlockType type );
+
+			/// <summary>
 			/// Applies the vertex processing defined by the vertex shader to the set of input data streams,
 			/// generating a single stream of interleaved vertex data to the destination vertex buffer.
 			/// </summary>
