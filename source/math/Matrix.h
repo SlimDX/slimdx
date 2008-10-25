@@ -39,10 +39,27 @@ namespace SlimDX
 	/// Defines a 4x4 matrix.
 	/// </summary>
 	[System::Serializable]
-	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential, Pack = 4 )]
 	[System::ComponentModel::TypeConverter( SlimDX::Design::MatrixConverter::typeid )]
 	public value class Matrix : System::IEquatable<Matrix>
 	{
+		float m_11;
+		float m_12;
+		float m_13;
+		float m_14;
+		float m_21;
+		float m_22;
+		float m_23;
+		float m_24;
+		float m_31;
+		float m_32;
+		float m_33;
+		float m_34;
+		float m_41;
+		float m_42;
+		float m_43;
+		float m_44;
+	
 	internal:
 		static D3DXMATRIX ToD3DXMATRIX( Matrix matrix );
 		static Matrix FromD3DXMATRIX( const D3DXMATRIX &matrix );
@@ -51,83 +68,153 @@ namespace SlimDX
 		/// <summary>
 		/// Gets or sets the element of the matrix that exists in the first row and first column. 
 		/// </summary>
-		property float M11; 
+		property float M11
+		{
+			float get();
+			void set( float value );
+		} 
 		
 		/// <summary>
 		/// Gets or sets the element of the matrix that exists in the first row and second column. 
 		/// </summary>
-		property float M12; 
+		property float M12
+		{
+			float get();
+			void set( float value );
+		} 
 		
 		/// <summary>
 		/// Gets or sets the element of the matrix that exists in the first row and third column. 
 		/// </summary>
-		property float M13; 
+		property float M13
+		{
+			float get();
+			void set( float value );
+		} 
 		
 		/// <summary>
 		/// Gets or sets the element of the matrix that exists in the first row and fourth column. 
 		/// </summary>
-		property float M14;
+		property float M14
+		{
+			float get();
+			void set( float value );
+		}
 
 		/// <summary>
 		/// Gets or sets the element of the matrix that exists in the second row and first column. 
 		/// </summary>
-		property float M21; 
+		property float M21
+		{
+			float get();
+			void set( float value );
+		} 
 		
 		/// <summary>
 		/// Gets or sets the element of the matrix that exists in the second row and second column. 
 		/// </summary>
-		property float M22; 
+		property float M22
+		{
+			float get();
+			void set( float value );
+		} 
 		
 		/// <summary>
 		/// Gets or sets the element of the matrix that exists in the second row and third column. 
 		/// </summary>
-		property float M23; 
+		property float M23
+		{
+			float get();
+			void set( float value );
+		} 
 		
 		/// <summary>
 		/// Gets or sets the element of the matrix that exists in the second row and fourth column. 
 		/// </summary>
-		property float M24;
+		property float M24
+		{
+			float get();
+			void set( float value );
+		}
 
 		/// <summary>
 		/// Gets or sets the element of the matrix that exists in the third row and first column. 
 		/// </summary>
-		property float M31; 
+		property float M31
+		{
+			float get();
+			void set( float value );
+		} 
 		
 		/// <summary>
 		/// Gets or sets the element of the matrix that exists in the third row and second column. 
 		/// </summary>
-		property float M32; 
+		property float M32
+		{
+			float get();
+			void set( float value );
+		} 
 		
 		/// <summary>
 		/// Gets or sets the element of the matrix that exists in the third row and third column. 
 		/// </summary>
-		property float M33; 
+		property float M33
+		{
+			float get();
+			void set( float value );
+		} 
 		
 		/// <summary>
 		/// Gets or sets the element of the matrix that exists in the third row and fourth column. 
 		/// </summary>
-		property float M34;
+		property float M34
+		{
+			float get();
+			void set( float value );
+		}
 
 		/// <summary>
 		/// Gets or sets the element of the matrix that exists in the fourth row and first column. 
 		/// </summary>
-		property float M41; 
+		property float M41
+		{
+			float get();
+			void set( float value );
+		} 
 		
 		/// <summary>
 		/// Gets or sets the element of the matrix that exists in the fourth row and second column. 
 		/// </summary>
-		property float M42; 
+		property float M42
+		{
+			float get();
+			void set( float value );
+		} 
 		
 		/// <summary>
 		/// Gets or sets the element of the matrix that exists in the fourth row and third column. 
 		/// </summary>
-		property float M43; 
+		property float M43
+		{
+			float get();
+			void set( float value );
+		} 
 		
 		/// <summary>
 		/// Gets or sets the element of the matrix that exists in the fourth row and fourth column. 
 		/// </summary>
-		property float M44;
-
+		property float M44
+		{
+			float get();
+			void set( float value );
+		}
+		
+		property float default[int, int]
+		{
+			float get( int row, int column );
+			void set( int row, int column, float value );
+		}
+		
 		/// <summary>
 		/// Gets a <see cref="Matrix"/> that represents an identity matrix.
 		/// </summary>

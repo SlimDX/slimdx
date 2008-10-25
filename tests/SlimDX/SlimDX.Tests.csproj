@@ -78,6 +78,7 @@
     <Compile Include="Direct3D 9\DeviceTests.cs" />
     <Compile Include="Math\Color3Tests.cs" />
     <Compile Include="Math\Color4Tests.cs" />
+    <Compile Include="Math\MatrixTests.cs" />
     <Compile Include="Math\Vector2Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUtils.cs" />
