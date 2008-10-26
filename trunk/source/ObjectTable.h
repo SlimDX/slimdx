@@ -71,9 +71,9 @@ namespace SlimDX
 		/// Access through this member is NOT thread-safe. Use <see cref="SyncObject" />
 		/// to protect multithreaded access if necessary.
 		/// </remarks>
-		static property System::Collections::Generic::IEnumerable<ComObject^>^ Objects
+		static property System::Collections::ObjectModel::ReadOnlyCollection<ComObject^>^ Objects
 		{
-			System::Collections::Generic::IEnumerable<ComObject^>^ get();
+			System::Collections::ObjectModel::ReadOnlyCollection<ComObject^>^ get();
 		}
 
 		/// <summary>
