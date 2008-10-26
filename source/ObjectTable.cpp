@@ -27,6 +27,7 @@
 using namespace System;
 using namespace System::Threading;
 using namespace System::Globalization;
+using namespace System::Collections::ObjectModel;
 using namespace System::Collections::Generic;
 using namespace System::Diagnostics;
 
@@ -170,9 +171,9 @@ namespace SlimDX
 		return output;
 	}
 
-	IEnumerable<ComObject^>^ ObjectTable::Objects::get()
+	ReadOnlyCollection<ComObject^>^ ObjectTable::Objects::get()
 	{
-		return m_Table->Values;
+		return gcnew ReadOnlyCollection<ComObject^>( gcnew List<ComObject^>( m_Table->Values ) );
 	}
 
 	Object^ ObjectTable::SyncObject::get()
