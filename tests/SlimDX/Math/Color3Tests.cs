@@ -24,30 +24,30 @@ using SlimDX;
 
 namespace SlimDXTests
 {
-	[TestFixture]
-	public class Color3Tests
-	{
-		// =========================================================================
-		// Tests
+    [TestFixture]
+    public class Color3Tests
+    {
+        // =========================================================================
+        // Tests
 
-		[Test]
-		public void ConstructDefault()
-		{
-			Color3 color = new Color3();
+        [Test]
+        public void ConstructDefault()
+        {
+            Color3 color = new Color3();
 
-			Assert.AreEqual(color.Red, 0.0f);
-			Assert.AreEqual(color.Green, 0.0f);
-			Assert.AreEqual(color.Blue, 0.0f);
-		}
+            Assert.AreEqual(color.Red, 0.0f);
+            Assert.AreEqual(color.Green, 0.0f);
+            Assert.AreEqual(color.Blue, 0.0f);
+        }
 
-		[Test]
-		public void ConstructFromRgb()
-		{
-			Color3 color = new Color3(1.0f, 0.5f, 0.25f);
+        [Test]
+        public void ConstructFromRgb()
+        {
+            Color3 color = new Color3(1.0f, 0.5f, 0.25f);
 
-			Assert.AreEqual(color.Red, 1.0f);
-			Assert.AreEqual(color.Green, 0.5f);
-			Assert.AreEqual(color.Blue, 0.25f);
-		}
-	}
+            Assert.AreEqual(color.Red, 1.0f);
+            Assert.AreEqual(color.Green, 0.5f);
+            Assert.AreEqual(color.Blue, 0.25f);
+        }
+    }
 }

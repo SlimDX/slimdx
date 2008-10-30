@@ -23,84 +23,96 @@ using System;
 using NUnit.Framework;
 using SlimDX;
 
-namespace SlimDXTests {
-	[TestFixture]
-	public class DataBoxTests {
-		// =========================================================================
-		// Tests
+namespace SlimDXTests
+{
+    [TestFixture]
+    public class DataBoxTests
+    {
+        // =========================================================================
+        // Tests
 
-		[Test]
-		public void ConstructFromValues() {
-			DataBox box = new DataBox( 1, 2, m_stream );
+        [Test]
+        public void ConstructFromValues()
+        {
+            DataBox box = new DataBox(1, 2, m_stream);
 
-			Assert.AreSame( m_stream, box.Data );
-			Assert.AreEqual( 1, box.RowPitch );
-			Assert.AreEqual( 2, box.SlicePitch );
-		}
+            Assert.AreSame(m_stream, box.Data);
+            Assert.AreEqual(1, box.RowPitch);
+            Assert.AreEqual(2, box.SlicePitch);
+        }
 
-		[Test]
-		[ExpectedException( typeof( ArgumentNullException ) )]
-		public void ConstructFromValuesWithNullData() {
-			DataBox box = new DataBox( 1, 2, null );
-		}
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ConstructFromValuesWithNullData()
+        {
+            DataBox box = new DataBox(1, 2, null);
+        }
 
-		[Test]
-		[ExpectedException( typeof( ArgumentOutOfRangeException ) )]
-		public void ConstructFromValuesWithNegativeRowPitch() {
-			DataBox box = new DataBox( -1, 2, m_stream );
-		}
+        [Test]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void ConstructFromValuesWithNegativeRowPitch()
+        {
+            DataBox box = new DataBox(-1, 2, m_stream);
+        }
 
-		[Test]
-		[ExpectedException( typeof( ArgumentOutOfRangeException ) )]
-		public void ConstructFromValuesWithNegativeSlicePitch() {
-			DataBox box = new DataBox( 1, -2, m_stream );
-		}
+        [Test]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void ConstructFromValuesWithNegativeSlicePitch()
+        {
+            DataBox box = new DataBox(1, -2, m_stream);
+        }
 
-		[Test]
-		public void SetRowPitch() {
-			DataBox box = new DataBox( 1, 2, m_stream );
-		
-			box.RowPitch = 100;
-			Assert.AreEqual( 100, box.RowPitch );
-		}
+        [Test]
+        public void SetRowPitch()
+        {
+            DataBox box = new DataBox(1, 2, m_stream);
 
-		[Test]
-		[ExpectedException( typeof( ArgumentOutOfRangeException ) )]
-		public void SetRowPitchToNegative() {
-			DataBox box = new DataBox( 1, 2, m_stream );
+            box.RowPitch = 100;
+            Assert.AreEqual(100, box.RowPitch);
+        }
 
-			box.RowPitch = -100;
-		}
+        [Test]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void SetRowPitchToNegative()
+        {
+            DataBox box = new DataBox(1, 2, m_stream);
 
-		[Test]
-		public void SetSlicePitch() {
-			DataBox box = new DataBox( 1, 2, m_stream );
+            box.RowPitch = -100;
+        }
 
-			box.SlicePitch = 200;
-			Assert.AreEqual( 200, box.SlicePitch );
-		}
+        [Test]
+        public void SetSlicePitch()
+        {
+            DataBox box = new DataBox(1, 2, m_stream);
 
-		[Test]
-		[ExpectedException( typeof( ArgumentOutOfRangeException ) )]
-		public void SetSlicePitchToNegative() {
-			DataBox box = new DataBox( 1, 2, m_stream );
+            box.SlicePitch = 200;
+            Assert.AreEqual(200, box.SlicePitch);
+        }
 
-			box.SlicePitch = -200;
-		}
+        [Test]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void SetSlicePitchToNegative()
+        {
+            DataBox box = new DataBox(1, 2, m_stream);
 
-		// =========================================================================
-		// Implementation Detail
+            box.SlicePitch = -200;
+        }
 
-		DataStream m_stream;
+        // =========================================================================
+        // Implementation Detail
 
-		[TestFixtureSetUp]
-		public void SetUp() {
-			m_stream = new DataStream( 100, true, true );
-		}
+        DataStream m_stream;
 
-		[TestFixtureTearDown]
-		public void TearDown() {
-			m_stream.Dispose();
-		}
-	}
+        [TestFixtureSetUp]
+        public void SetUp()
+        {
+            m_stream = new DataStream(100, true, true);
+        }
+
+        [TestFixtureTearDown]
+        public void TearDown()
+        {
+            m_stream.Dispose();
+        }
+    }
 }

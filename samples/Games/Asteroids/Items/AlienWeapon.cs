@@ -10,8 +10,8 @@ namespace Asteroids
             : base(game)
         {
             BulletModel = VectorModel.FromFile("Content/Models/AlienBullet.xml");
-            
-            if(!Game.Resources.Contains(BulletModel))
+
+            if (!Game.Resources.Contains(BulletModel))
                 Game.Resources.Add(BulletModel);
 
             CoolDownRate = 8.0f;

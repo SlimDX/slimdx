@@ -105,7 +105,7 @@ namespace Asteroids
 
             if (Game.IsKeyPressedThisFrame(Keys.Down))
                 Rotation += (float)Math.PI;
-            
+
             BoundingSphere sphere = new BoundingSphere(new Vector3(Position, 0), Model.Radius);
             foreach (IGameComponent component in Game.Components)
             {

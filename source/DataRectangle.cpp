@@ -44,7 +44,7 @@ namespace SlimDX
 	void DataRectangle::Pitch::set( int value )
 	{
 		if( value < 0 )
-			throw gcnew ArgumentOutOfRangeException( "Pitch", "Pitch cannot be negative." );
+			throw gcnew ArgumentOutOfRangeException( "value", "Pitch cannot be negative." );
 		m_Pitch = value;
 	}
 	
