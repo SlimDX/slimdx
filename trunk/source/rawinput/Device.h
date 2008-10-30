@@ -29,14 +29,12 @@
 #include "MouseInputEventArgs.h"
 #include "RawInputEventArgs.h"
 #include "DeviceInfo.h"
-#include "MouseState.h"
-#include "KeyboardState.h"
 
 namespace SlimDX
 {
 	namespace RawInput
 	{
-		public ref class Device
+		public ref class Device sealed
 		{
 		private:
 			Device() { }

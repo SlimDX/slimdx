@@ -82,8 +82,8 @@ namespace MiniTri
             swapChainDescription.SwapEffect = DXGI.SwapEffect.Discard;
             swapChainDescription.Usage = DXGI.Usage.RenderTargetOutput;
 
-						D3D10.Device.CreateWithSwapChain( null, D3D10.DriverType.Hardware, D3D10.DeviceCreationFlags.Debug, swapChainDescription, out Device, out SwapChain );
-						
+            D3D10.Device.CreateWithSwapChain(null, D3D10.DriverType.Hardware, D3D10.DeviceCreationFlags.Debug, swapChainDescription, out Device, out SwapChain);
+
             using (D3D10.Texture2D resource = SwapChain.GetBuffer<D3D10.Texture2D>(0))
             {
                 RenderTarget = new D3D10.RenderTargetView(Device, resource);

@@ -277,7 +277,7 @@ namespace Asteroids
                     new Color4((levelTextInterpolator == null ? 1.0f : levelTextInterpolator.Value) * 0.8f, 1.0f, 1.0f, 1.0f));
             }
 
-            string scoreText = Score.ToString();
+            string scoreText = Score.ToString(CultureInfo.CurrentCulture);
             Rectangle scoreRectangle = levelFont.MeasureString(fontSprite, scoreText, DrawTextFormat.Center);
             scoreRectangle = new Rectangle(GraphicsDeviceManager.ScreenWidth - scoreRectangle.Width - 10, 10, scoreRectangle.Width, scoreRectangle.Height);
             levelFont.DrawString(fontSprite, scoreText, scoreRectangle, DrawTextFormat.Center, new Color4(1.0f, 1.0f, 1.0f));

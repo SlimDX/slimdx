@@ -32,5 +32,5 @@ namespace SimpleLighting
                 sample.Run();
         }
     }
-    
+
 }

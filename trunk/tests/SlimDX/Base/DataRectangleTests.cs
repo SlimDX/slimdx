@@ -23,61 +23,70 @@ using System;
 using NUnit.Framework;
 using SlimDX;
 
-namespace SlimDXTests {
-	[TestFixture]
-	public class DataRectangleTests {
-		// =========================================================================
-		// Tests
-		
-		[Test]
-		public void ConstructFromValues() {
-			DataRectangle rectangle = new DataRectangle( 1, m_stream );
+namespace SlimDXTests
+{
+    [TestFixture]
+    public class DataRectangleTests
+    {
+        // =========================================================================
+        // Tests
 
-			Assert.AreSame( m_stream, rectangle.Data );
-			Assert.AreEqual( 1, rectangle.Pitch );
-		}
+        [Test]
+        public void ConstructFromValues()
+        {
+            DataRectangle rectangle = new DataRectangle(1, m_stream);
 
-		[Test]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void ConstructFromValuesWithNullData() {
-			DataRectangle rectangle = new DataRectangle( 1, null );
-		}
+            Assert.AreSame(m_stream, rectangle.Data);
+            Assert.AreEqual(1, rectangle.Pitch);
+        }
 
-		[Test]
-		[ExpectedException( typeof( ArgumentOutOfRangeException ) )]
-		public void ConstructFromValuesWithNegativePitch() {
-			DataRectangle rectangle = new DataRectangle( -1, m_stream );
-		}
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ConstructFromValuesWithNullData()
+        {
+            DataRectangle rectangle = new DataRectangle(1, null);
+        }
 
-		[Test]
-		public void SetPitch() {
-			DataRectangle rectangle = new DataRectangle( 1, m_stream );
-		
-			rectangle.Pitch = 100;
-			Assert.AreEqual( 100, rectangle.Pitch );
-		}
+        [Test]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void ConstructFromValuesWithNegativePitch()
+        {
+            DataRectangle rectangle = new DataRectangle(-1, m_stream);
+        }
 
-		[Test]
-		[ExpectedException( typeof( ArgumentOutOfRangeException ) )]
-		public void SetPitchToNegative() {
-			DataRectangle rectangle = new DataRectangle( 1, m_stream );
+        [Test]
+        public void SetPitch()
+        {
+            DataRectangle rectangle = new DataRectangle(1, m_stream);
 
-			rectangle.Pitch = -100;
-		}
+            rectangle.Pitch = 100;
+            Assert.AreEqual(100, rectangle.Pitch);
+        }
 
-		// =========================================================================
-		// Implementation Detail
-		
-		DataStream m_stream;
-		
-		[TestFixtureSetUp]
-		public void SetUp() {
-			m_stream = new DataStream( 8, true, true );
-		}
+        [Test]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void SetPitchToNegative()
+        {
+            DataRectangle rectangle = new DataRectangle(1, m_stream);
 
-		[TestFixtureTearDown]
-		public void TearDown() {
-			m_stream.Dispose();
-		}
-	}
+            rectangle.Pitch = -100;
+        }
+
+        // =========================================================================
+        // Implementation Detail
+
+        DataStream m_stream;
+
+        [TestFixtureSetUp]
+        public void SetUp()
+        {
+            m_stream = new DataStream(8, true, true);
+        }
+
+        [TestFixtureTearDown]
+        public void TearDown()
+        {
+            m_stream.Dispose();
+        }
+    }
 }
