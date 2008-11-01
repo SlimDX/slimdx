@@ -272,7 +272,24 @@ namespace SlimDX
 		if( count < 0 || count > size - offset )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 	}
-
+	
+	generic<typename T>
+	bool Utilities::CheckElementEquality( array<T>^ left, array<T>^ right )
+	{
+		if( left->Length != right->Length )
+			return false;
+		
+		for( int index = 0; index < left->Length; ++index )
+		{
+			if( !left[index]->Equals( right[index] ) ) 
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	generic<typename T>
 	bool Utilities::CheckElementEquality( IList<T>^ left, IList<T>^ right )
 	{
