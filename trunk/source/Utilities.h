@@ -58,6 +58,8 @@ namespace SlimDX
 		static void CheckArrayBounds( System::Array^ data, int offset, int% count );
 		
 		generic<typename T>
+		static bool CheckElementEquality( array<T>^ left, array<T>^ right );
+		generic<typename T>
 		static bool CheckElementEquality( System::Collections::Generic::IList<T>^ left, System::Collections::Generic::IList<T>^ right );
 		
 		static void FreeNativeString( LPCSTR string );
