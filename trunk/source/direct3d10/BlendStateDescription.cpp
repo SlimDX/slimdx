@@ -45,6 +45,11 @@ namespace Direct3D10
 		m_BlendOpAlpha = static_cast<Direct3D10::BlendOperation>( native.BlendOpAlpha );
 		
 		ConstructLazyProperties();
+		for(int index = 0; index < 8; ++index)
+		{
+			m_BlendEnable[ index ] = native.BlendEnable[ index ];
+			m_RenderTargetWriteMask[ index ] = static_cast<ColorWriteMaskFlags>( native.RenderTargetWriteMask[ index ] );
+		}
 	}
 	
 	D3D10_BLEND_DESC BlendStateDescription::CreateNativeVersion()
