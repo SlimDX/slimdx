@@ -27,9 +27,6 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{	
-		ref class RenderTargetEnabledCollection;
-		ref class RenderTargetWriteMaskCollection;
-	
 		public value class BlendStateDescription : System::IEquatable<BlendStateDescription>
 		{
 		private:		
