@@ -65,6 +65,58 @@ namespace SlimDX
 		W = w;
 	}
 	
+	float Vector4::X::get()
+	{
+		return m_X;
+	}
+	
+	void Vector4::X::set( float value )
+	{
+		m_X = value;
+	}
+	
+	float Vector4::Y::get()
+	{
+		return m_Y;
+	}
+	
+	void Vector4::Y::set( float value )
+	{
+		m_Y = value;
+	}
+	
+	float Vector4::Z::get()
+	{
+		return m_Z;
+	}
+	
+	void Vector4::Z::set( float value )
+	{
+		m_Z = value;
+	}
+	
+	float Vector4::W::get()
+	{
+		return m_W;
+	}
+	
+	void Vector4::W::set( float value )
+	{
+		m_W = value;
+	}
+	
+	float Vector4::default::get( int index )
+	{
+		pin_ptr<float> first = &m_X;
+		return *( first + index );
+	}
+	
+	void Vector4::default::set( int index, float value )
+	{
+		pin_ptr<float> first = &m_X;
+		*( first + index ) = value;
+	}
+	
 	float Vector4::Length()
 	{
 		return static_cast<float>( Math::Sqrt( (X * X) + (Y * Y) + (Z * Z) + (W * W) ) );
