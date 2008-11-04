@@ -48,5 +48,50 @@ namespace DirectSound
 		StaticBuffer = ( caps.dwFlags & DSBCAPS_STATIC ) != 0;
 		StickyFocus = ( caps.dwFlags & DSBCAPS_STICKYFOCUS ) != 0;
 	}
+
+	bool BufferCapabilities::operator == ( BufferCapabilities left, BufferCapabilities right )
+	{
+		return BufferCapabilities::Equals( left, right );
+	}
+
+	bool BufferCapabilities::operator != ( BufferCapabilities left, BufferCapabilities right )
+	{
+		return !BufferCapabilities::Equals( left, right );
+	}
+
+	int BufferCapabilities::GetHashCode()
+	{
+		return StickyFocus.GetHashCode() + StaticBuffer.GetHashCode() + PrimaryBuffer.GetHashCode() + Mute3DAtMaximumDistance.GetHashCode() + LocationDefer.GetHashCode() + 
+			LocateInSoftware.GetHashCode() + LocateInHardware.GetHashCode() + GlobalFocus.GetHashCode() + ControlEffects.GetHashCode() + 
+			ControlPositionNotify.GetHashCode() + ControlPan.GetHashCode() + ControlVolume.GetHashCode() + ControlFrequency.GetHashCode() + 
+			Control3D.GetHashCode() + CanGetCurrentPosition.GetHashCode() + PlayCpuOverhead.GetHashCode() + UnlockTransferRate.GetHashCode() + BufferSize.GetHashCode();
+	}
+
+	bool BufferCapabilities::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( safe_cast<BufferCapabilities>( value ) );
+	}
+
+	bool BufferCapabilities::Equals( BufferCapabilities value )
+	{
+		return ( StickyFocus == value.StickyFocus && StaticBuffer == value.StaticBuffer && PrimaryBuffer == value.PrimaryBuffer && 
+			Mute3DAtMaximumDistance == value.Mute3DAtMaximumDistance && LocationDefer == value.LocationDefer && 
+			LocateInSoftware == value.LocateInSoftware && LocateInHardware == value.LocateInHardware && GlobalFocus == value.GlobalFocus && 
+			ControlEffects == value.ControlEffects && ControlPositionNotify == value.ControlPositionNotify && ControlPan == value.ControlPan && 
+			ControlVolume == value.ControlVolume && ControlFrequency == value.ControlFrequency && Control3D == value.Control3D && 
+			CanGetCurrentPosition == value.CanGetCurrentPosition && PlayCpuOverhead == value.PlayCpuOverhead && 
+			UnlockTransferRate == value.UnlockTransferRate && BufferSize == value.BufferSize );
+	}
+
+	bool BufferCapabilities::Equals( BufferCapabilities% value1, BufferCapabilities% value2 )
+	{
+		return value1.Equals( value2 );
+	}
 }
 }

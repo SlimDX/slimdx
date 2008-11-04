@@ -34,6 +34,7 @@
    <Directory>$(ProjectDir)/../samples/DirectInput/Joystick/bin/Debug/</Directory>
    <Directory>$(ProjectDir)/../samples/DirectInput/Keyboard/bin/Debug/</Directory>
    <Directory>$(ProjectDir)/../samples/DirectInput/Mouse/bin/Debug/</Directory>
+   <Directory>$(ProjectDir)/../tests/SlimDX/bin/x86/Debug/</Directory>
    <Directory>$(ProjectDir)/Debug/</Directory>
   </AssemblyReferenceDirectories>
   <Target Name="$(ProjectDir)/x86/Debug/SlimDX.dll" Analyze="True" AnalyzeAllChildren="True" />
@@ -53,7 +54,6 @@
   <Target Name="$(ProjectDir)/../samples/RawInput/Mouse/bin/x86/Debug/Mouse.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/SampleFramework/bin/x86/Debug/SampleFramework.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/XAudio2/BasicSound/bin/x86/Debug/BasicSound.exe" Analyze="True" AnalyzeAllChildren="True" />
-  <Target Name="$(ProjectDir)/../tests/SlimDX/bin/x86/Debug/SlimDX.Tests.dll" Analyze="True" AnalyzeAllChildren="True" />
  </Targets>
  <Rules>
   <RuleFiles>
@@ -164,15 +164,6 @@
      <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-08-02 13:07:30Z">
       <Issue>
        <Item>SlimDX.Multimedia</Item>
-      </Issue>
-     </Message>
-    </Messages>
-   </Namespace>
-   <Namespace Name="SlimDXTests">
-    <Messages>
-     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-09-27 00:03:43Z">
-      <Issue>
-       <Item>SlimDXTests</Item>
       </Issue>
      </Message>
     </Messages>
@@ -1747,6 +1738,30 @@
          </Type>
          <Type Name="Vector2">
           <Members>
+           <Member Name="#Item[System.Int32]">
+            <Accessors>
+             <Accessor Name="#get_Item(System.Int32)">
+              <Messages>
+               <Message Id="index*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2008-11-04 18:37:13Z">
+                <Issue>
+                 <Item>index*4</Item>
+                 <Item>'Vector2.this.get(int)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+             <Accessor Name="#set_Item(System.Int32,System.Single)">
+              <Messages>
+               <Message Id="index*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2008-11-04 18:37:13Z">
+                <Issue>
+                 <Item>index*4</Item>
+                 <Item>'Vector2.this.set(int, float)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
            <Member Name="#SizeInBytes">
             <Accessors>
              <Accessor Name="#get_SizeInBytes()">
@@ -14106,16 +14121,6 @@
           </Members>
          </Type>
          <Type Name="Buffer3DSettings">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-08-01 13:08:02Z">
-            <Issue Name="Equals">
-             <Item>'Buffer3DSettings'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'Buffer3DSettings'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#ToUnmanaged(_DS3DBUFFER*)">
             <Messages>
@@ -14129,18 +14134,6 @@
             </Messages>
            </Member>
           </Members>
-         </Type>
-         <Type Name="BufferCapabilities">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-08-01 13:08:02Z">
-            <Issue Name="Equals">
-             <Item>'BufferCapabilities'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'BufferCapabilities'</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
          <Type Name="BufferFlags">
           <Messages>
@@ -14189,16 +14182,6 @@
           </Members>
          </Type>
          <Type Name="CaptureBufferDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-08-01 13:08:02Z">
-            <Issue Name="Equals">
-             <Item>'CaptureBufferDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'CaptureBufferDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#EffectDescriptions">
             <Messages>
@@ -14222,29 +14205,7 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="CaptureCapabilities">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-08-01 13:08:02Z">
-            <Issue Name="Equals">
-             <Item>'CaptureCapabilities'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'CaptureCapabilities'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="CaptureEffectDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-08-01 13:08:02Z">
-            <Issue Name="Equals">
-             <Item>'CaptureEffectDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'CaptureEffectDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Marshal(_DSCEFFECTDESC*)">
             <Messages>
@@ -15130,16 +15091,6 @@
           </Members>
          </Type>
          <Type Name="SoundBufferDescription">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2008-08-01 13:08:02Z">
-            <Issue Name="Equals">
-             <Item>'SoundBufferDescription'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'SoundBufferDescription'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Flags">
             <Messages>
@@ -20248,818 +20199,6 @@
      </Module>
     </Modules>
    </Target>
-   <Target Name="$(ProjectDir)/../tests/SlimDX/bin/x86/Debug/SlimDX.Tests.dll">
-    <Modules>
-     <Module Name="slimdx.tests.dll">
-      <Namespaces>
-       <Namespace Name="SlimDXTests">
-        <Types>
-         <Type Name="Color3Tests">
-          <Members>
-           <Member Name="#ConstructDefault()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-17 02:16:58Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'Color3Tests.ConstructDefault()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ConstructFromRgb()">
-            <Messages>
-             <Message Id="Rgb" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-09-17 02:16:58Z">
-              <Issue Name="Member">
-               <Item>Rgb</Item>
-               <Item>'Color3Tests.ConstructFromRgb()'</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-17 02:16:58Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'Color3Tests.ConstructFromRgb()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Color4Tests">
-          <Members>
-           <Member Name="#ConstructDefault()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-17 02:16:58Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'Color4Tests.ConstructDefault()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ConstructFromArgb()">
-            <Messages>
-             <Message Id="Argb" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-09-17 02:16:58Z">
-              <Issue Name="Member">
-               <Item>Argb</Item>
-               <Item>'Color4Tests.ConstructFromArgb()'</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-17 02:16:58Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'Color4Tests.ConstructFromArgb()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="DataBoxTests">
-          <Messages>
-           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Excluded" Created="2008-10-24 15:52:31Z" FixCategory="DependsOnFix">
-            <Issue Name="DependsOnFix">
-             <Item>'DataBoxTests'</Item>
-             <Item>'DataStream'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#ConstructFromValuesWithNegativeRowPitch()">
-            <Messages>
-             <Message Id="box" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Excluded" Created="2008-10-24 15:52:31Z">
-              <Issue>
-               <Item>'DataBoxTests.ConstructFromValuesWithNegativeRowPitch()'</Item>
-               <Item>'box'</Item>
-               <Item>'DataBox'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ConstructFromValuesWithNegativeSlicePitch()">
-            <Messages>
-             <Message Id="box" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Excluded" Created="2008-10-24 15:52:31Z">
-              <Issue>
-               <Item>'DataBoxTests.ConstructFromValuesWithNegativeSlicePitch()'</Item>
-               <Item>'box'</Item>
-               <Item>'DataBox'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ConstructFromValuesWithNullData()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-24 15:52:31Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'DataBoxTests.ConstructFromValuesWithNullData()'</Item>
-              </Issue>
-             </Message>
-             <Message Id="box" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Excluded" Created="2008-10-24 15:52:31Z">
-              <Issue>
-               <Item>'DataBoxTests.ConstructFromValuesWithNullData()'</Item>
-               <Item>'box'</Item>
-               <Item>'DataBox'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#SetUp()">
-            <Messages>
-             <Message Id="SetUp" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-10-24 15:52:31Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>SetUp</Item>
-               <Item>'DataBoxTests.SetUp()'</Item>
-               <Item>Setup</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TearDown()">
-            <Messages>
-             <Message Id="TearDown" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-10-24 15:52:31Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>TearDown</Item>
-               <Item>'DataBoxTests.TearDown()'</Item>
-               <Item>Teardown</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="DataRectangleTests">
-          <Messages>
-           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Excluded" Created="2008-10-24 15:52:31Z" FixCategory="DependsOnFix">
-            <Issue Name="DependsOnFix">
-             <Item>'DataRectangleTests'</Item>
-             <Item>'DataStream'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#ConstructFromValuesWithNegativePitch()">
-            <Messages>
-             <Message Id="rectangle" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Excluded" Created="2008-10-24 15:52:31Z">
-              <Issue>
-               <Item>'DataRectangleTests.ConstructFromValuesWithNegativePitch()'</Item>
-               <Item>'rectangle'</Item>
-               <Item>'DataRectangle'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ConstructFromValuesWithNullData()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-24 15:52:31Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'DataRectangleTests.ConstructFromValuesWithNullData()'</Item>
-              </Issue>
-             </Message>
-             <Message Id="rectangle" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Excluded" Created="2008-10-24 15:52:31Z">
-              <Issue>
-               <Item>'DataRectangleTests.ConstructFromValuesWithNullData()'</Item>
-               <Item>'rectangle'</Item>
-               <Item>'DataRectangle'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#SetUp()">
-            <Messages>
-             <Message Id="SetUp" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-10-24 15:52:31Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>SetUp</Item>
-               <Item>'DataRectangleTests.SetUp()'</Item>
-               <Item>Setup</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TearDown()">
-            <Messages>
-             <Message Id="TearDown" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-10-24 15:52:31Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>TearDown</Item>
-               <Item>'DataRectangleTests.TearDown()'</Item>
-               <Item>Teardown</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="DeviceTests">
-          <Messages>
-           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Excluded" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
-            <Issue Name="DependsOnFix">
-             <Item>'DeviceTests'</Item>
-             <Item>'Form', 'Direct3D', 'Device'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#SetUp()">
-            <Messages>
-             <Message Id="SetUp" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-09-27 00:03:43Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>SetUp</Item>
-               <Item>'DeviceTests.SetUp()'</Item>
-               <Item>Setup</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#StateBlock()">
-            <Messages>
-             <Message Id="x" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Excluded" Created="2008-09-27 00:03:43Z">
-              <Issue>
-               <Item>'DeviceTests.StateBlock()'</Item>
-               <Item>'x'</Item>
-               <Item>'float'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TearDown()">
-            <Messages>
-             <Message Id="TearDown" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-09-27 00:03:43Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>TearDown</Item>
-               <Item>'DeviceTests.TearDown()'</Item>
-               <Item>Teardown</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="MatrixTests">
-          <Members>
-           <Member Name="#ConstructDefault()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.ConstructDefault()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M11IndexedGetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M11IndexedGetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M11IndexedSetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M11IndexedSetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M11Property()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M11Property()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M12IndexedGetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M12IndexedGetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M12IndexedSetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M12IndexedSetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M12Property()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M12Property()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M13IndexedGetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M13IndexedGetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M13IndexedSetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M13IndexedSetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M13Property()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M13Property()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M14IndexedGetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M14IndexedGetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M14IndexedSetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M14IndexedSetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M14Property()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M14Property()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M21IndexedGetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M21IndexedGetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M21IndexedSetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M21IndexedSetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M21Property()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M21Property()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M22IndexedGetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M22IndexedGetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M22IndexedSetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M22IndexedSetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M22Property()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M22Property()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M23IndexedGetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M23IndexedGetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M23IndexedSetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M23IndexedSetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M23Property()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M23Property()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M24IndexedGetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M24IndexedGetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M24IndexedSetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M24IndexedSetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M24Property()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M24Property()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M31IndexedGetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M31IndexedGetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M31IndexedSetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M31IndexedSetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M31Property()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M31Property()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M32IndexedGetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M32IndexedGetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M32IndexedSetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M32IndexedSetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M32Property()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M32Property()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M33IndexedGetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M33IndexedGetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M33IndexedSetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M33IndexedSetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M33Property()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M33Property()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M34IndexedGetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M34IndexedGetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M34IndexedSetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M34IndexedSetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M34Property()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M34Property()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M41IndexedGetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M41IndexedGetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M41IndexedSetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M41IndexedSetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M41Property()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M41Property()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M42IndexedGetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M42IndexedGetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M42IndexedSetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M42IndexedSetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M42Property()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M42Property()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M43IndexedGetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M43IndexedGetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M43IndexedSetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M43IndexedSetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M43Property()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M43Property()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M44IndexedGetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M44IndexedGetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M44IndexedSetter()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M44IndexedSetter()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#M44Property()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-10-30 15:59:21Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'MatrixTests.M44Property()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Vector2Tests">
-          <Members>
-           <Member Name="#ConstructDefault()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'Vector2Tests.ConstructDefault()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ConstructFromScalar()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'Vector2Tests.ConstructFromScalar()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ConstructFromXY()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'Vector2Tests.ConstructFromXY()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Length()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'Vector2Tests.Length()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LengthSquared()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'Vector2Tests.LengthSquared()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Normalize()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'Vector2Tests.Normalize()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#NormalizeZeroVector()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'Vector2Tests.NormalizeZeroVector()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#SizeInBytesStaticProperty()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'Vector2Tests.SizeInBytesStaticProperty()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#StaticNormalize()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'Vector2Tests.StaticNormalize()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#StaticNormalizeByRef()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'Vector2Tests.StaticNormalizeByRef()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#UnitXStaticProperty()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'Vector2Tests.UnitXStaticProperty()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#UnitYStaticProperty()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'Vector2Tests.UnitYStaticProperty()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ZeroStaticProperty()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-09-27 00:03:43Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'Vector2Tests.ZeroStaticProperty()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
   </Targets>
   <Rules>
    <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
@@ -21184,9 +20323,6 @@
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
    </Rule>
-   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
-    <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
-   </Rule>
    <Rule TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223">
     <Resolution Name="Default">'{0}' should differ from other members by more than its return type.</Resolution>
    </Rule>
@@ -21203,10 +20339,6 @@
     <Resolution Name="Default">Provide a method named '{0}' as a friendly alternate for operator {1}.</Resolution>
     <Resolution Name="Multiple">Provide a method named '{0}' or '{1}' as an alternate for operator {2}.</Resolution>
    </Rule>
-   <Rule TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815">
-    <Resolution Name="Equals">{0} should override Equals.</Resolution>
-    <Resolution Name="op_Equality">{0} should override the equality (==) and inequality (!=) operators.</Resolution>
-   </Rule>
    <Rule TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725">
     <Resolution Name="Default">In member {0}, change parameter name {1} to {2} in order to match the identifier as it has been declared in {3}.</Resolution>
    </Rule>
@@ -21218,9 +20350,6 @@
    </Rule>
    <Rule TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721">
     <Resolution Name="BaseType">The property name {0} is confusing given the existence of inherited method {1}. Rename or remove this property.</Resolution>
-   </Rule>
-   <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
-    <Resolution Name="Default">{0} declares a variable, {1}, of type {2}, which is never used or is only assigned to. Use this variable or remove it.</Resolution>
    </Rule>
    <Rule TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025">
     <Resolution Name="Default">Consider implementing a version of {0} that accepts a parameter array argument.</Resolution>

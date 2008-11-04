@@ -55,5 +55,41 @@ namespace DirectSound
 
 		return result;
 	}
+
+	bool SoundBufferDescription::operator == ( SoundBufferDescription left, SoundBufferDescription right )
+	{
+		return SoundBufferDescription::Equals( left, right );
+	}
+
+	bool SoundBufferDescription::operator != ( SoundBufferDescription left, SoundBufferDescription right )
+	{
+		return !SoundBufferDescription::Equals( left, right );
+	}
+
+	int SoundBufferDescription::GetHashCode()
+	{
+		return AlgorithmFor3D.GetHashCode() + Format->GetHashCode() + Flags.GetHashCode() + SizeInBytes.GetHashCode();
+	}
+
+	bool SoundBufferDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( safe_cast<SoundBufferDescription>( value ) );
+	}
+
+	bool SoundBufferDescription::Equals( SoundBufferDescription value )
+	{
+		return ( AlgorithmFor3D == value.AlgorithmFor3D && Format == value.Format && Flags == value.Flags && SizeInBytes == value.SizeInBytes );
+	}
+
+	bool SoundBufferDescription::Equals( SoundBufferDescription% value1, SoundBufferDescription% value2 )
+	{
+		return value1.Equals( value2 );
+	}
 }
 }
