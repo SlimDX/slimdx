@@ -50,7 +50,7 @@ namespace DirectInput
 		dip.diph.dwSize = sizeof( DIPROPSTRING );
 		dip.diph.dwHeaderSize = sizeof( DIPROPHEADER );
 		dip.diph.dwObj = DeviceConstantConverter::KeyToDIK( key );
-		dip.diph.dwHow = DIPH_DEVICE;
+		dip.diph.dwHow = DIPH_BYID;
 
 		hr = pointer->GetProperty( DIPROP_KEYNAME, &dip.diph );
 		RECORD_DINPUT( hr );
