@@ -43,6 +43,38 @@ namespace SlimDX
 		Y = y;
 	}
 	
+	float Vector2::X::get()
+	{
+		return m_X;
+	}
+	
+	void Vector2::X::set( float value )
+	{
+		m_X = value;
+	}
+	
+	float Vector2::Y::get()
+	{
+		return m_Y;
+	}
+	
+	void Vector2::Y::set( float value )
+	{
+		m_Y = value;
+	}
+	
+	float Vector2::default::get( int index )
+	{
+		pin_ptr<float> first = &m_X;
+		return *( first + index );
+	}
+	
+	void Vector2::default::set( int index, float value )
+	{
+		pin_ptr<float> first = &m_X;
+		*( first + index ) = value;
+	}
+	
 	float Vector2::Length()
 	{
 		return static_cast<float>( Math::Sqrt( (X * X) + (Y * Y) ) );

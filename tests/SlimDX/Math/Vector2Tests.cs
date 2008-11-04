@@ -56,7 +56,43 @@ namespace SlimDXTests
             Assert.AreEqual(0.5f, vector.X);
             Assert.AreEqual(1.5f, vector.Y);
         }
+				
+				[Test]
+				public void XIndexedGetter()
+				{
+            Vector2 vector = new Vector2();
+						vector.X = 99.0f;
 
+						Assert.AreEqual( 99.0f, vector[0] );
+				}
+				
+				[Test]
+				public void YIndexedGetter()
+				{
+            Vector2 vector = new Vector2();
+						vector.Y = 99.0f;
+
+						Assert.AreEqual( 99.0f, vector[1] );
+				}
+				
+				[Test]
+				public void XIndexedSetter()
+				{
+            Vector2 vector = new Vector2();
+						vector[0] = 73.0f;
+
+						Assert.AreEqual( 73.0f, vector.X );
+				}
+				
+				[Test]
+				public void YIndexedSetter()
+				{
+            Vector2 vector = new Vector2();
+						vector[1] = 73.0f;
+
+						Assert.AreEqual( 73.0f, vector.Y );
+				}
+				
         [Test]
         public void Length()
         {
