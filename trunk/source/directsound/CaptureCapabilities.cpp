@@ -55,5 +55,53 @@ namespace DirectSound
 		Format96KhzStereo16Bit = ( caps.dwFormats & WAVE_FORMAT_96S16 ) != 0;
 		Format96KhzStereo8Bit = ( caps.dwFormats & WAVE_FORMAT_96S08 ) != 0;
 	}
+
+	bool CaptureCapabilities::operator == ( CaptureCapabilities left, CaptureCapabilities right )
+	{
+		return CaptureCapabilities::Equals( left, right );
+	}
+
+	bool CaptureCapabilities::operator != ( CaptureCapabilities left, CaptureCapabilities right )
+	{
+		return !CaptureCapabilities::Equals( left, right );
+	}
+
+	int CaptureCapabilities::GetHashCode()
+	{
+		return MultipleCapture.GetHashCode() + Format96KhzStereo8Bit.GetHashCode() + Format96KhzStereo16Bit.GetHashCode() + Format96KhzMono8Bit.GetHashCode() + 
+			Format96KhzMono16Bit.GetHashCode() + Format48KhzStereo8Bit.GetHashCode() + Format48KhzStereo16Bit.GetHashCode() + Format48KhzMono8Bit.GetHashCode() + 
+			Format48KhzMono16Bit.GetHashCode() + Format44KhzStereo8Bit.GetHashCode() + Format44KhzStereo16Bit.GetHashCode() + Format44KhzMono8Bit.GetHashCode() + 
+			Format44KhzMono16Bit.GetHashCode() + Format22KhzStereo8Bit.GetHashCode() + Format22KhzStereo16Bit.GetHashCode() + Format22KhzMono8Bit.GetHashCode() + 
+			Format22KhzMono16Bit.GetHashCode() + Format11KhzStereo8Bit.GetHashCode() + Format11KhzStereo16Bit.GetHashCode() + Format11KhzMono8Bit.GetHashCode() + 
+			Format11KhzMono16Bit.GetHashCode() + EmulatedDriver.GetHashCode() + Channels.GetHashCode() + Certified.GetHashCode();
+	}
+
+	bool CaptureCapabilities::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( safe_cast<CaptureCapabilities>( value ) );
+	}
+
+	bool CaptureCapabilities::Equals( CaptureCapabilities value )
+	{
+		return ( MultipleCapture == value.MultipleCapture && Format96KhzStereo8Bit == value.Format96KhzStereo8Bit && Format96KhzStereo16Bit == value.Format96KhzStereo16Bit 
+			&& Format96KhzMono8Bit == value.Format96KhzMono8Bit && Format96KhzMono16Bit == value.Format96KhzMono16Bit && Format48KhzStereo8Bit == value.Format48KhzStereo8Bit && 
+			Format48KhzStereo16Bit == value.Format48KhzStereo16Bit && Format48KhzMono8Bit == value.Format48KhzMono8Bit && Format48KhzMono16Bit == value.Format48KhzMono16Bit && 
+			Format44KhzStereo8Bit == value.Format44KhzStereo8Bit && Format44KhzStereo16Bit == value.Format44KhzStereo16Bit && Format44KhzMono8Bit == value.Format44KhzMono8Bit && 
+			Format44KhzMono16Bit == value.Format44KhzMono16Bit && Format22KhzStereo8Bit == value.Format22KhzStereo8Bit && Format22KhzStereo16Bit == value.Format22KhzStereo16Bit && 
+			Format22KhzMono8Bit == value.Format22KhzMono8Bit && Format22KhzMono16Bit == value.Format22KhzMono16Bit && Format11KhzStereo8Bit == value.Format11KhzStereo8Bit && 
+			Format11KhzStereo16Bit == value.Format11KhzStereo16Bit && Format11KhzMono8Bit == value.Format11KhzMono8Bit && Format11KhzMono16Bit == value.Format11KhzMono16Bit && 
+			EmulatedDriver == value.EmulatedDriver && Channels == value.Channels && Certified == value.Certified );
+	}
+
+	bool CaptureCapabilities::Equals( CaptureCapabilities% value1, CaptureCapabilities% value2 )
+	{
+		return value1.Equals( value2 );
+	}
 }
 }

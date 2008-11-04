@@ -47,7 +47,7 @@ namespace Direct3D10
 		ConstructLazyProperties();
 		for(int index = 0; index < 8; ++index)
 		{
-			m_BlendEnable[ index ] = native.BlendEnable[ index ];
+			m_BlendEnable[ index ] = (native.BlendEnable[ index ] > 0);
 			m_RenderTargetWriteMask[ index ] = static_cast<ColorWriteMaskFlags>( native.RenderTargetWriteMask[ index ] );
 		}
 	}

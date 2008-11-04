@@ -46,5 +46,42 @@ namespace DirectSound
 
 		return description;
 	}
+
+	bool CaptureEffectDescription::operator == ( CaptureEffectDescription left, CaptureEffectDescription right )
+	{
+		return CaptureEffectDescription::Equals( left, right );
+	}
+
+	bool CaptureEffectDescription::operator != ( CaptureEffectDescription left, CaptureEffectDescription right )
+	{
+		return !CaptureEffectDescription::Equals( left, right );
+	}
+
+	int CaptureEffectDescription::GetHashCode()
+	{
+		return LocateInSoftware.GetHashCode() + LocateInHardware.GetHashCode() + CaptureEffectInstance.GetHashCode() + CaptureEffectClass.GetHashCode();
+	}
+
+	bool CaptureEffectDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( safe_cast<CaptureEffectDescription>( value ) );
+	}
+
+	bool CaptureEffectDescription::Equals( CaptureEffectDescription value )
+	{
+		return ( LocateInSoftware == value.LocateInSoftware && LocateInHardware == value.LocateInHardware && 
+			CaptureEffectInstance == value.CaptureEffectInstance && CaptureEffectClass == value.CaptureEffectClass );
+	}
+
+	bool CaptureEffectDescription::Equals( CaptureEffectDescription% value1, CaptureEffectDescription% value2 )
+	{
+		return value1.Equals( value2 );
+	}
 }
 }

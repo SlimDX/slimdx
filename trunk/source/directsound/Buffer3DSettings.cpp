@@ -63,5 +63,44 @@ namespace DirectSound
 
 		return result;
 	}
+
+	bool Buffer3DSettings::operator == ( Buffer3DSettings left, Buffer3DSettings right )
+	{
+		return Buffer3DSettings::Equals( left, right );
+	}
+
+	bool Buffer3DSettings::operator != ( Buffer3DSettings left, Buffer3DSettings right )
+	{
+		return !Buffer3DSettings::Equals( left, right );
+	}
+
+	int Buffer3DSettings::GetHashCode()
+	{
+		return Velocity.GetHashCode() + Position.GetHashCode() + OutsideConeAngle.GetHashCode() + Mode.GetHashCode() + MinDistance.GetHashCode() + 
+			MaxDistance.GetHashCode() + InsideConeAngle.GetHashCode() + ConeOutsideVolume.GetHashCode() + ConeOrientation.GetHashCode();
+	}
+
+	bool Buffer3DSettings::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( safe_cast<Buffer3DSettings>( value ) );
+	}
+
+	bool Buffer3DSettings::Equals( Buffer3DSettings value )
+	{
+		return ( Velocity == value.Velocity && Position == value.Position && OutsideConeAngle == value.OutsideConeAngle && Mode == value.Mode && 
+			MinDistance == value.MinDistance && MaxDistance == value.MaxDistance && InsideConeAngle == value.InsideConeAngle && 
+			ConeOutsideVolume == value.ConeOutsideVolume && ConeOrientation == value.ConeOrientation );
+	}
+
+	bool Buffer3DSettings::Equals( Buffer3DSettings% value1, Buffer3DSettings% value2 )
+	{
+		return value1.Equals( value2 );
+	}
 }
 }
