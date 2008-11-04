@@ -20072,16 +20072,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="TextConsole">
-          <Messages>
-           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Excluded" Created="2008-07-07 15:59:03Z" FixCategory="DependsOnFix">
-            <Issue Name="DependsOnFix">
-             <Item>'TextConsole'</Item>
-             <Item>'Sprite', 'Font'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="TransformedColoredTexturedVertex">
           <Members>
            <Member Name="#SizeInBytes">
