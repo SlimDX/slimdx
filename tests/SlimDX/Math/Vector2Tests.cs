@@ -42,7 +42,7 @@ namespace SlimDXTests
         [Test]
         public void ConstructFromScalar()
         {
-            Vector2 vector = new Vector2(0.75f, 0.75f);
+            Vector2 vector = new Vector2 (0.75f );
 
             Assert.AreEqual(0.75f, vector.X);
             Assert.AreEqual(0.75f, vector.Y);
@@ -51,7 +51,7 @@ namespace SlimDXTests
         [Test]
         public void ConstructFromXY()
         {
-            Vector2 vector = new Vector2(0.5f, 1.5f);
+            Vector2 vector = new Vector2( 0.5f, 1.5f );
 
             Assert.AreEqual(0.5f, vector.X);
             Assert.AreEqual(1.5f, vector.Y);

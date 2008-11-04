@@ -37,29 +37,51 @@ namespace SlimDX
 	/// Defines a three component vector.
 	/// </summary>
 	[System::Serializable]
-	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
+	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential, Pack = 4 )]
 	[System::ComponentModel::TypeConverter( SlimDX::Design::Vector3Converter::typeid )]
 	public value class Vector3 : System::IEquatable<Vector3>
 	{
+		float m_X;
+		float m_Y;
+		float m_Z;
+		
 	public:
 		/// <summary>
 		/// Gets or sets the X component of the vector.
 		/// </summary>
 		/// <value>The X component of the vector.</value>
-		property float X;
+		property float X
+		{
+			float get();
+			void set( float value );
+		}
 
 		/// <summary>
 		/// Gets or sets the Y component of the vector.
 		/// </summary>
 		/// <value>The Y component of the vector.</value>
-		property float Y;
+		property float Y
+		{
+			float get();
+			void set( float value );
+		}
 
 		/// <summary>
 		/// Gets or sets the Z component of the vector.
 		/// </summary>
 		/// <value>The Z component of the vector.</value>
-		property float Z;
-
+		property float Z
+		{
+			float get();
+			void set( float value );
+		}
+		
+		property float default[int]
+		{
+			float get( int index );
+			void set( int index, float value );
+		}
+		
 		/// <summary>
 		/// Gets a <see cref="Vector3"/> with all of its components set to zero.
 		/// </summary>
