@@ -33,16 +33,13 @@ namespace SlimDX
 		/// <unmanaged>ID3DXKeyframedAnimationSet</unmanaged>
 		public ref class KeyframedAnimationSet : public AnimationSet
 		{
-		internal:
-			property ID3DXKeyframedAnimationSet* KASPointer
-			{
-				ID3DXKeyframedAnimationSet* get() { return static_cast<ID3DXKeyframedAnimationSet*>( InternalPointer ); }
-			}
+			COMOBJECT(ID3DXKeyframedAnimationSet, KeyframedAnimationSet);
 
 		public:
-			KeyframedAnimationSet( System::IntPtr pointer );
 			KeyframedAnimationSet( System::String^ name, double ticksPerSecond, PlaybackType playbackType, int animationCount, array<CallbackKey>^ callbackKeys );
 			virtual ~KeyframedAnimationSet() { }
+
+			static KeyframedAnimationSet^ FromPointer( System::IntPtr pointer );
 
 			DataStream^ Compress( float lossiness );
 			DataStream^ Compress( float lossiness, Frame^ frameHierarchy );

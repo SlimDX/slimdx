@@ -34,6 +34,33 @@ namespace SlimDX
 	namespace Direct3D9
 	{
 		ref class Frame;
+		ref class AnimationSet;
+
+		class AnimationShim : public ID3DXAnimationSet
+		{
+		private:
+			int refCount;
+			gcroot<AnimationSet^> animationSet;
+			gcroot<System::Collections::Generic::Dictionary<System::String^, System::Runtime::InteropServices::GCHandle>^> nameHandles;
+
+		public:
+			AnimationShim( AnimationSet^ animationSet );
+			virtual ~AnimationShim();
+			AnimationSet^ GetAnimationSet();
+
+			HRESULT WINAPI QueryInterface( const IID &iid, LPVOID *ppv );
+			ULONG   WINAPI AddRef();
+			ULONG   WINAPI Release();
+
+			HRESULT WINAPI GetAnimationIndexByName( LPCSTR Name, UINT *pIndex );
+			HRESULT WINAPI GetAnimationNameByIndex( UINT Index, LPCSTR *ppName );
+			HRESULT WINAPI GetCallback( DOUBLE Position, DWORD Flags, DOUBLE *pCallbackPosition, LPVOID *ppCallbackData );
+			LPCSTR	WINAPI GetName();
+			UINT	WINAPI GetNumAnimations();
+			DOUBLE	WINAPI GetPeriod();
+			DOUBLE	WINAPI GetPeriodicPosition( DOUBLE Position );
+			HRESULT WINAPI GetSRT( DOUBLE PeriodicPosition, UINT Animation, D3DXVECTOR3 *pScale, D3DXQUATERNION *pRotation, D3DXVECTOR3 *pTranslation );
+		};
 
 		/// <summary>
 		/// This interface encapsulates the minimum functionality required of an animation set by an animation
@@ -42,25 +69,32 @@ namespace SlimDX
 		/// KeyframedAnimationSet interfaces should suffice.
 		/// </summary>
 		/// <unmanaged>ID3DXAnimationSet</unmanaged>
-		public ref class AnimationSet : public ComObject
+		public ref class AnimationSet abstract : public ComObject
 		{
-			COMOBJECT(ID3DXAnimationSet, AnimationSet);
+			COMOBJECT_BASE(ID3DXAnimationSet);
+
+		private:
+			void Free();
+
+		internal:
+			AnimationShim *shim;
 
 		protected:
-			AnimationSet() { }
+			AnimationSet();
 
 		public:
-			static AnimationSet^ FromPointer( System::IntPtr pointer );
+			virtual ~AnimationSet();
+			!AnimationSet();
 
-			int GetAnimationIndex( System::String^ name );
-			System::String^ GetAnimationName( int index );
-			System::IntPtr GetCallback( double position, CallbackSearchFlags flags, [Out] double% callbackPosition );
-			AnimationOutput GetTransformation( double periodicPosition, int animation );
-			double GetPeriodicPosition( double position );
+			virtual int GetAnimationIndex( System::String^ name );
+			virtual System::String^ GetAnimationName( int index );
+			virtual System::IntPtr GetCallback( double position, CallbackSearchFlags flags, [Out] double% callbackPosition );
+			virtual AnimationOutput GetTransformation( double periodicPosition, int animation );
+			virtual double GetPeriodicPosition( double position );
 
-			property System::String^ Name { System::String^ get(); }
-			property int AnimationCount { int get(); }
-			property double Period { double get(); }
+			virtual property System::String^ Name { System::String^ get(); }
+			virtual property int AnimationCount { int get(); }
+			virtual property double Period { double get(); }
 		};
 	}
 }

@@ -43,9 +43,43 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	CompressedAnimationSet::CompressedAnimationSet( ID3DXCompressedAnimationSet* pointer )
+	{
+		Construct( pointer );
+	}
+
 	CompressedAnimationSet::CompressedAnimationSet( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
+	}
+
+	CompressedAnimationSet^ CompressedAnimationSet::FromPointer( ID3DXCompressedAnimationSet* pointer )
+	{
+		if( pointer == 0 )
+			return nullptr;
+
+		CompressedAnimationSet^ tableEntry = safe_cast<CompressedAnimationSet^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew CompressedAnimationSet( pointer );
+	}
+
+	CompressedAnimationSet^ CompressedAnimationSet::FromPointer( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		CompressedAnimationSet^ tableEntry = safe_cast<CompressedAnimationSet^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew CompressedAnimationSet( pointer );
 	}
 
 	CompressedAnimationSet::CompressedAnimationSet( String^ name, double ticksPerSecond,
@@ -79,12 +113,10 @@ namespace Direct3D9
 		int count = CallbackKeyCount;
 		std::vector<D3DXKEY_CALLBACK> keys( count );
 
-		HRESULT hr = CASPointer->GetCallbackKeys( &keys[0] );
+		HRESULT hr = InternalPointer->GetCallbackKeys( &keys[0] );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
-		{
 			return nullptr;
-		}
 
 		array<CallbackKey>^ results = gcnew array<CallbackKey>( count );
 		for( int i = 0; i < count; i++ )
@@ -97,7 +129,7 @@ namespace Direct3D9
 	{
 		LPD3DXBUFFER buffer;
 
-		HRESULT hr = CASPointer->GetCompressedData( &buffer );
+		HRESULT hr = InternalPointer->GetCompressedData( &buffer );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
@@ -107,17 +139,17 @@ namespace Direct3D9
 
 	int CompressedAnimationSet::CallbackKeyCount::get()
 	{
-		return CASPointer->GetNumCallbackKeys();
+		return InternalPointer->GetNumCallbackKeys();
 	}
 
 	SlimDX::Direct3D9::PlaybackType CompressedAnimationSet::PlaybackType::get()
 	{
-		return static_cast<SlimDX::Direct3D9::PlaybackType>( CASPointer->GetPlaybackType() );
+		return static_cast<SlimDX::Direct3D9::PlaybackType>( InternalPointer->GetPlaybackType() );
 	}
 
 	double CompressedAnimationSet::SourceTicksPerSecond::get()
 	{
-		return CASPointer->GetSourceTicksPerSecond();
+		return InternalPointer->GetSourceTicksPerSecond();
 	}
 }
 }
