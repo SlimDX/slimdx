@@ -34,16 +34,13 @@ namespace SlimDX
 		/// <unmanaged>ID3DXCompressedAnimationSet</unmanaged>
 		public ref class CompressedAnimationSet : public AnimationSet
 		{
-		internal:
-			property ID3DXCompressedAnimationSet* CASPointer
-			{
-				ID3DXCompressedAnimationSet* get() { return static_cast<ID3DXCompressedAnimationSet*>( InternalPointer ); }
-			}
+			COMOBJECT(ID3DXCompressedAnimationSet, CompressedAnimationSet);
 
 		public:
-			CompressedAnimationSet( System::IntPtr pointer );
 			CompressedAnimationSet( System::String^ name, double ticksPerSecond, PlaybackType playbackType, DataStream^ compressedData, array<CallbackKey>^ callbackKeys );
 			virtual ~CompressedAnimationSet() { }
+
+			static CompressedAnimationSet^ FromPointer( System::IntPtr pointer );
 
 			array<CallbackKey>^ GetCallbackKeys();
 			DataStream^ GetCompressedData();

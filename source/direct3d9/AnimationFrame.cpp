@@ -100,12 +100,10 @@ namespace Direct3D9
 		}
 	}
 
-	// TODO: Check this
 	void Frame::AppendChild( Frame^ child )
 	{
 		if( child == this )
-			throw gcnew Direct3D9Exception("Child frame can't be the same as the parent." + 
-			" This will cause a StackOverflowException.");
+			throw gcnew Direct3D9Exception("Child frame can't be the same as the parent. This will cause a StackOverflowException.");
 
 		if( m_FirstChild != nullptr )
 		{
@@ -116,8 +114,6 @@ namespace Direct3D9
 				lastValidChild = current;
 				current = current->Sibling;
 			}
-
-			System::Diagnostics::Debug::Assert(lastValidChild != nullptr, "lastValidChild != nullptr");
 		
 			lastValidChild->Sibling = child;		
 		}

@@ -37,48 +37,210 @@
 #include "Direct3D9Exception.h"
 
 using namespace System;
+using namespace System::Collections::Generic;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
 namespace Direct3D9
 {
-	AnimationSet::AnimationSet( ID3DXAnimationSet* pointer )
+	AnimationShim::AnimationShim( AnimationSet^ animationSet )
 	{
-		Construct( pointer );
+		nameHandles = gcnew Dictionary<String^, GCHandle>();
+		this->animationSet = animationSet;
+		refCount = 1;
 	}
 
-	AnimationSet::AnimationSet( IntPtr pointer )
+	AnimationShim::~AnimationShim()
 	{
-		Construct( pointer, NativeInterface );
+		for each( GCHandle handle in nameHandles->Values )
+			handle.Free();
+		nameHandles->Clear();
 	}
 
-	AnimationSet^ AnimationSet::FromPointer( ID3DXAnimationSet* pointer )
+	AnimationSet^ AnimationShim::GetAnimationSet()
 	{
-		if( pointer == 0 )
-			return nullptr;
+		return animationSet;
+	}
 
-		AnimationSet^ tableEntry = safe_cast<AnimationSet^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
+	HRESULT AnimationShim::QueryInterface( const IID &iid, LPVOID *ppv )
+	{
+		if( iid == IID_ID3DXAnimationSet )
 		{
-			pointer->Release();
-			return tableEntry;
+			AddRef();
+			*reinterpret_cast<ID3DXAnimationSet**>( ppv ) = this;
+			return S_OK;
 		}
 
-		return gcnew AnimationSet( pointer );
+		return E_NOTIMPL;
 	}
 
-	AnimationSet^ AnimationSet::FromPointer( IntPtr pointer )
+	ULONG AnimationShim::AddRef()
 	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
+		return ++refCount;
+	}
 
-		AnimationSet^ tableEntry = safe_cast<AnimationSet^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
+	ULONG AnimationShim::Release()
+	{
+		if( --refCount == 0 )
+			delete this;
+		return refCount;
+	}
+
+	HRESULT AnimationShim::GetAnimationIndexByName( LPCSTR Name, UINT *pIndex )
+	{
+		try
 		{
-			return tableEntry;
+			*pIndex = animationSet->GetAnimationIndex( gcnew String( Name ) );
+		}
+		catch(Exception^)
+		{
+			return E_FAIL;
 		}
 
-		return gcnew AnimationSet( pointer );
+		return S_OK;
+	}
+
+	HRESULT AnimationShim::GetAnimationNameByIndex( UINT Index, LPCSTR *ppName )
+	{
+		try
+		{
+			String^ name = animationSet->GetAnimationName( Index );
+			
+			GCHandle handle;
+			if( !nameHandles->TryGetValue( name, handle ) )
+			{
+				array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+				handle = GCHandle::Alloc( nameBytes, GCHandleType::Pinned );
+
+				nameHandles->Add( name, handle );
+			}
+
+			*ppName = reinterpret_cast<LPCSTR>( handle.AddrOfPinnedObject().ToPointer() );
+		}
+		catch(Exception^)
+		{
+			return E_FAIL;
+		}
+
+		return S_OK;
+	}
+
+	HRESULT AnimationShim::GetCallback( DOUBLE Position, DWORD Flags, DOUBLE *pCallbackPosition, LPVOID *ppCallbackData )
+	{
+		try
+		{
+			double outPosition = *pCallbackPosition;
+			IntPtr result = animationSet->GetCallback( Position, static_cast<CallbackSearchFlags>( Flags ), outPosition );
+
+			*pCallbackPosition = outPosition;
+			*ppCallbackData = result.ToPointer();
+		}
+		catch(Exception^)
+		{
+			return E_FAIL;
+		}
+
+		return S_OK;
+	}
+
+	LPCSTR AnimationShim::GetName()
+	{
+		String^ name = animationSet->Name;
+
+		GCHandle handle;
+		if( !nameHandles->TryGetValue( name, handle ) )
+		{
+			array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+			handle = GCHandle::Alloc( nameBytes, GCHandleType::Pinned );
+
+			nameHandles->Add( name, handle );
+		}
+
+		return reinterpret_cast<LPCSTR>( handle.AddrOfPinnedObject().ToPointer() );
+	}
+
+	UINT AnimationShim::GetNumAnimations()
+	{
+		try
+		{
+			return animationSet->AnimationCount;
+		}
+		catch(Exception^)
+		{
+		}
+
+		return 0;
+	}
+
+	DOUBLE AnimationShim::GetPeriod()
+	{
+		try
+		{
+			return animationSet->Period;
+		}
+		catch(Exception^)
+		{
+		}
+
+		return 0.0;
+	}
+
+	DOUBLE AnimationShim::GetPeriodicPosition( DOUBLE Position )
+	{
+		try
+		{
+			return animationSet->GetPeriodicPosition( Position );
+		}
+		catch(Exception^)
+		{
+		}
+
+		return 0.0;
+	}
+
+	HRESULT AnimationShim::GetSRT( DOUBLE PeriodicPosition, UINT Animation, D3DXVECTOR3 *pScale, D3DXQUATERNION *pRotation, D3DXVECTOR3 *pTranslation )
+	{
+		try
+		{
+			AnimationOutput output = animationSet->GetTransformation( PeriodicPosition, Animation );
+
+			*pRotation = D3DXQUATERNION( output.Rotation.X, output.Rotation.Y, output.Rotation.Z, output.Rotation.W );
+			*pScale = D3DXVECTOR3( output.Scaling.X, output.Scaling.Y, output.Scaling.Z );
+			*pTranslation = D3DXVECTOR3( output.Translation.X, output.Translation.Y, output.Translation.Z );
+		}
+		catch(Exception^)
+		{
+			return E_FAIL;
+		}
+
+		return S_OK;
+	}
+
+	AnimationSet::AnimationSet()
+	{
+		// Manual Allocation: released in the destructor
+		// the pointer is never stored elsewhere
+		shim = new AnimationShim( this );
+	}
+
+	AnimationSet::~AnimationSet()
+	{
+		Free();
+	}
+
+	AnimationSet::!AnimationSet()
+	{
+		Free();
+	}
+
+	void AnimationSet::Free()
+	{
+		if( shim != NULL )
+		{
+			delete shim;
+			shim = NULL;
+		}
 	}
 
 	int AnimationSet::GetAnimationIndex( String^ name )
