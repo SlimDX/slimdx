@@ -5329,28 +5329,6 @@
          </Type>
          <Type Name="AnimationSet">
           <Members>
-           <Member Name="#.ctor(System.IntPtr)">
-            <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-01-06 19:04:15Z">
-              <Issue Name="LanguageIndependentMemberParameter">
-               <Item>'AnimationSet.AnimationSet(IntPtr)'</Item>
-               <Item>pointer</Item>
-               <Item>'pointer'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FromPointer(System.IntPtr)">
-            <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-02-27 22:14:29Z">
-              <Issue Name="LanguageIndependentMemberParameter">
-               <Item>'AnimationSet.FromPointer(IntPtr)'</Item>
-               <Item>pointer</Item>
-               <Item>'pointer'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#GetCallback(System.Double,SlimDX.Direct3D9.CallbackSearchFlags,System.Double&amp;)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-01-06 19:04:15Z">
@@ -5361,6 +5339,19 @@
               </Issue>
              </Message>
             </Messages>
+           </Member>
+           <Member Name="#NativeInterface">
+            <Accessors>
+             <Accessor Name="#get_NativeInterface()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-11-06 23:05:31Z">
+                <Issue>
+                 <Item>'AnimationSet.NativeInterface.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -5764,6 +5755,15 @@
          </Type>
          <Type Name="CompressedAnimationSet">
           <Members>
+           <Member Name="#.ctor(ID3DXCompressedAnimationSet*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-11-06 23:05:31Z">
+              <Issue>
+               <Item>'CompressedAnimationSet.CompressedAnimationSet(ID3DXCompressedAnimationSet*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#.ctor(System.IntPtr)">
             <Messages>
              <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-01-06 19:04:15Z">
@@ -5775,13 +5775,22 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#CASPointer">
+           <Member Name="#FromPointer(ID3DXCompressedAnimationSet*)">
             <Messages>
-             <Message Id="CAS" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
-              <Issue Name="Member">
-               <Item>CAS</Item>
-               <Item>'CompressedAnimationSet.CASPointer'</Item>
-               <Item>Cas</Item>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-11-06 23:05:31Z">
+              <Issue>
+               <Item>'CompressedAnimationSet.FromPointer(ID3DXCompressedAnimationSet*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-11-06 23:05:31Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'CompressedAnimationSet.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -8738,6 +8747,15 @@
          </Type>
          <Type Name="KeyframedAnimationSet">
           <Members>
+           <Member Name="#.ctor(ID3DXKeyframedAnimationSet*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-11-06 23:05:31Z">
+              <Issue>
+               <Item>'KeyframedAnimationSet.KeyframedAnimationSet(ID3DXKeyframedAnimationSet*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#.ctor(System.IntPtr)">
             <Messages>
              <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-01-06 19:04:15Z">
@@ -8749,13 +8767,22 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#KASPointer">
+           <Member Name="#FromPointer(ID3DXKeyframedAnimationSet*)">
             <Messages>
-             <Message Id="KAS" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
-              <Issue Name="Member">
-               <Item>KAS</Item>
-               <Item>'KeyframedAnimationSet.KASPointer'</Item>
-               <Item>Kas</Item>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-11-06 23:05:31Z">
+              <Issue>
+               <Item>'KeyframedAnimationSet.FromPointer(ID3DXKeyframedAnimationSet*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-11-06 23:05:31Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'KeyframedAnimationSet.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -20368,7 +20395,6 @@
     <Resolution Name="System">The type name {0} conflicts in whole or in part with the namespace name '{1}' defined in the .NET Framework. Rename the type to eliminate the conflict.</Resolution>
    </Rule>
    <Rule TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001">
-    <Resolution Name="DependsOnFix">Implement IDisposable on {0} because it creates members of the following IDisposable types: {1}. If {0} has previously shipped, adding new members that implement IDisposable to this type is considered a breaking change to existing consumers.</Resolution>
     <Resolution Name="NonBreaking">Implement IDisposable on {0} because it creates members of the following IDisposable types: {1}.</Resolution>
    </Rule>
    <Rule TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726">
