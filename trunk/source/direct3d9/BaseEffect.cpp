@@ -370,25 +370,47 @@ namespace Direct3D9
 		return result;
 	}
 
-// Turn off bogus warning:
-// warning C4717: 'SlimDX::Direct3D9::BaseEffect::SetValue<T>' : recursive on all control paths, function will cause runtime stack overflow
-#pragma warning(disable:4717)
 	generic<typename T> where T : value class
 	Result BaseEffect::SetValue( EffectHandle^ parameter, array<T>^ values )
 	{
+		HRESULT hr;
+		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
+
 		if( T::typeid == bool::typeid )
 		{
 			array<BOOL>^ newValues = Array::ConvertAll<bool, int>( safe_cast<array<bool>>( values ), gcnew Converter<bool, int>( Convert::ToInt32 ) );
-			return SetValue( parameter, newValues );
+			pin_ptr<BOOL> pinnedValues = &newValues[0];
+
+			hr = InternalPointer->SetBoolArray( handle, pinnedValues, values->Length );
+		}
+		else if( T::typeid == float::typeid )
+		{
+			pin_ptr<T> pinnedData = &values[0];
+			hr = InternalPointer->SetFloatArray( handle, reinterpret_cast<FLOAT*>( pinnedData ), values->Length );
+		}
+		else if( T::typeid == int::typeid )
+		{
+			pin_ptr<T> pinnedData = &values[0];
+			hr = InternalPointer->SetIntArray( handle, reinterpret_cast<INT*>( pinnedData ), values->Length );
+		}
+		else if( T::typeid == Matrix::typeid )
+		{
+			pin_ptr<T> pinnedData = &values[0];
+			hr = InternalPointer->SetMatrixArray( handle, reinterpret_cast<D3DXMATRIX*>( pinnedData ), values->Length );
+		}
+		else if( T::typeid == Vector4::typeid )
+		{
+			pin_ptr<T> pinnedData = &values[0];
+			hr = InternalPointer->SetVectorArray( handle, reinterpret_cast<D3DXVECTOR4*>( pinnedData ), values->Length );
+		}
+		else
+		{
+			pin_ptr<T> pinnedData = &values[0];
+			hr = InternalPointer->SetValue( handle, pinnedData, sizeof(T) * values->Length );
 		}
 
-		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		pin_ptr<T> pinnedData = &values[0];
-
-		HRESULT	hr = InternalPointer->SetValue( handle, pinnedData, sizeof(T) * values->Length );
 		return RECORD_D3D9( hr );
 	}
-#pragma warning(default:4717)
 
 	generic<typename T> where T : value class
 	array<T>^ BaseEffect::GetValue( EffectHandle^ parameter, int count )
