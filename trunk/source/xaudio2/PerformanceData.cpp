@@ -40,7 +40,14 @@ namespace XAudio2
 		ActiveSourceVoiceCount = data.ActiveSourceVoiceCount;
 		TotalSourceVoiceCount = data.TotalSourceVoiceCount;
 		ActiveSubmixVoiceCount = data.ActiveSubmixVoiceCount;
+
+#if SLIMDX_XAUDIO2_VERSION < 23
 		TotalSubmixVoiceCount = data.TotalSubmixVoiceCount;
+#else
+		ActiveResamplerCount = data.ActiveResamplerCount;
+		ActiveMatrixMixCount = data.ActiveMatrixMixCount;
+#endif
+
 		ActiveXmaSourceVoices = data.ActiveXmaSourceVoices;
 		ActiveXmaStreams = data.ActiveXmaStreams;
 	}
@@ -59,7 +66,14 @@ namespace XAudio2
 		result->ActiveSourceVoiceCount = ActiveSourceVoiceCount;
 		result->TotalSourceVoiceCount = TotalSourceVoiceCount;
 		result->ActiveSubmixVoiceCount = ActiveSubmixVoiceCount;
+
+#if SLIMDX_XAUDIO2_VERSION < 23
 		result->TotalSubmixVoiceCount = TotalSubmixVoiceCount;
+#else
+		result->ActiveResamplerCount = ActiveResamplerCount;
+		result->ActiveMatrixMixCount = ActiveMatrixMixCount;
+#endif
+
 		result->ActiveXmaSourceVoices = ActiveXmaSourceVoices;
 		result->ActiveXmaStreams = ActiveXmaStreams;
 
@@ -83,7 +97,12 @@ namespace XAudio2
 	{		
 		return AudioCyclesSinceLastQuery.GetHashCode() + TotalCyclesSinceLastQuery.GetHashCode() + MinimumCyclesPerQuantum.GetHashCode() +
 			MaximumCyclesPerQuantum.GetHashCode() + MemoryUsageInBytes.GetHashCode() + CurrentLatencyInSamples.GetHashCode() +
-			GlitchesSinceEngineStarted.GetHashCode() + ActiveSubmixVoiceCount.GetHashCode() + TotalSubmixVoiceCount.GetHashCode() +
+			GlitchesSinceEngineStarted.GetHashCode() + ActiveSubmixVoiceCount.GetHashCode() + 
+#if SLIMDX_XAUDIO2_VERSION < 23
+			TotalSubmixVoiceCount.GetHashCode() +
+#else
+			ActiveResamplerCount.GetHashCode() + ActiveMatrixMixCount.GetHashCode() +
+#endif
 			ActiveSourceVoiceCount.GetHashCode() + TotalSourceVoiceCount.GetHashCode() + ActiveXmaSourceVoices.GetHashCode() + ActiveXmaStreams.GetHashCode();
 	}
 
@@ -108,7 +127,12 @@ namespace XAudio2
 
 		return ( value->AudioCyclesSinceLastQuery == AudioCyclesSinceLastQuery && value->TotalCyclesSinceLastQuery == TotalCyclesSinceLastQuery && value->MinimumCyclesPerQuantum == MinimumCyclesPerQuantum &&
 			value->MaximumCyclesPerQuantum == MaximumCyclesPerQuantum && value->MemoryUsageInBytes == MemoryUsageInBytes && value->CurrentLatencyInSamples == CurrentLatencyInSamples &&
-			value->GlitchesSinceEngineStarted == GlitchesSinceEngineStarted && value->ActiveSubmixVoiceCount == ActiveSubmixVoiceCount && value->TotalSubmixVoiceCount == TotalSubmixVoiceCount &&
+			value->GlitchesSinceEngineStarted == GlitchesSinceEngineStarted && value->ActiveSubmixVoiceCount == ActiveSubmixVoiceCount &&
+#if SLIMDX_XAUDIO2_VERSION < 23
+			value->TotalSubmixVoiceCount == TotalSubmixVoiceCount &&
+#else
+			value->ActiveResamplerCount == ActiveResamplerCount && value->ActiveMatrixMixCount == ActiveMatrixMixCount &&
+#endif
 			value->ActiveSourceVoiceCount == ActiveSourceVoiceCount && value->TotalSourceVoiceCount == TotalSourceVoiceCount && value->ActiveXmaSourceVoices == ActiveXmaSourceVoices &&
 			value->ActiveXmaStreams == ActiveXmaStreams);
 	}

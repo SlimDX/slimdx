@@ -21,7 +21,7 @@
 */
 
 #include <xaudio2.h>
-
+#include "../VersionConfig.h"
 #include "AudioBuffer.h"
 
 using namespace System::Runtime::InteropServices;
@@ -45,7 +45,11 @@ namespace XAudio2
 		result.LoopLength = LoopLength;
 		result.LoopCount = LoopCount;
 		result.pContext = Context.ToPointer();
+#if SLIMDX_XAUDIO2_VERSION < 23
 		result.pAudioData = reinterpret_cast<const BYTE*>( handle.AddrOfPinnedObject().ToPointer() );
+#else
+		result.pAudioData = reinterpret_cast<BYTE*>( handle.AddrOfPinnedObject().ToPointer() );
+#endif
 
 		return result;
 	}
