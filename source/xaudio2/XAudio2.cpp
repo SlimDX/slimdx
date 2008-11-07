@@ -125,7 +125,7 @@ namespace XAudio2
 		return XAudio2AmplitudeRatioToDecibels( volume );
 	}
 
-	float XAudio2::CutoffFrequencyToRadians( double cutoffFrequency, int sampleRate )
+	float XAudio2::CutoffFrequencyToRadians( float cutoffFrequency, int sampleRate )
 	{
 		return XAudio2CutoffFrequencyToRadians( cutoffFrequency, sampleRate );
 	}
@@ -140,7 +140,7 @@ namespace XAudio2
 		return XAudio2FrequencyRatioToSemitones( frequencyRatio );
 	}
 
-	float XAudio2::RadiansToCutoffFrequency( double radians, double sampleRate )
+	float XAudio2::RadiansToCutoffFrequency( float radians, float sampleRate )
 	{
 		return XAudio2RadiansToCutoffFrequency( radians, sampleRate );
 	}

@@ -23,6 +23,7 @@
 #include <xaudio2.h>
 #include <vcclr.h>
 
+#include "../VersionConfig.h"
 #include "../ComObject.h"
 
 #include "XAudio2Exception.h"
@@ -211,7 +212,11 @@ namespace XAudio2
 
 		XAUDIO2_BUFFER_WMA wma;
 		wma.PacketCount = decodedPacketCumulativeBytes->Length;
+#if SLIMDX_XAUDIO2_VERSION < 23
 		wma.pDecodedPacketCumulativeBytes = reinterpret_cast<const UINT32*>( pinnedData );
+#else
+		wma.pDecodedPacketCumulativeBytes = reinterpret_cast<UINT32*>( pinnedData );
+#endif
 
 		HRESULT hr = SourcePointer->SubmitSourceBuffer( &input, &wma );
 		return RECORD_XAUDIO2( hr );

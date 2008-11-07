@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../VersionConfig.h"
+
 namespace SlimDX
 {
 	namespace XAudio2
@@ -48,7 +50,13 @@ namespace SlimDX
 			property int ActiveSourceVoiceCount;
 			property int TotalSourceVoiceCount;
 			property int ActiveSubmixVoiceCount;
+#if SLIMDX_XAUDIO2_VERSION < 23
 			property int TotalSubmixVoiceCount;
+#else
+			property int ActiveResamplerCount;
+			property int ActiveMatrixMixCount;
+#endif
+
 			property int ActiveXmaSourceVoices;
 			property int ActiveXmaStreams;
 

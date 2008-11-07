@@ -64,10 +64,10 @@ namespace SlimDX
 			static XAudio2^ FromPointer( System::IntPtr pointer );
 
 			static float AmplitudeRatioToDecibels( float volume );
-			static float CutoffFrequencyToRadians( double cutoffFrequency, int sampleRate );
+			static float CutoffFrequencyToRadians( float cutoffFrequency, int sampleRate );
 			static float DecibelsToAmplitudeRatio( float decibels );
 			static float FrequencyRatioToSemitones( float frequencyRatio );
-			static float RadiansToCutoffFrequency( double radians, double sampleRate );
+			static float RadiansToCutoffFrequency( float radians, float sampleRate );
 			static float SemitonesToFrequencyRatio( float semitones );
 
 			Result StartEngine();
