@@ -2,6 +2,7 @@
 <topics>
   <topic id="993669c0-4082-4959-805d-a6451e75ef27" file="Introduction.aml" />
   <topic id="28607cc6-92e6-4585-85ac-d080e489a9a6" file="Programming Guide.aml">
+    <topic id="10407d29-3a6c-49cc-8c77-e96cd4659780" file="Getting Started.aml" />
     <topic id="598b267f-52e6-4adb-906b-879c0bc8c736" file="Object Lifetimes.aml" />
   </topic>
   <topic id="3f421301-4a9f-446a-b9e6-87adf8d2f850" file="Reference.aml">
