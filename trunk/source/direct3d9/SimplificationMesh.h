@@ -29,6 +29,7 @@ namespace SlimDX
 	{
 		ref class ProgressiveMesh;
 
+		[System::Obsolete("SimplificationMesh is deprecated and may be removed in future releases.")]
 		public ref class SimplificationMesh : ComObject
 		{
 			COMOBJECT(ID3DXSPMesh, SimplificationMesh);

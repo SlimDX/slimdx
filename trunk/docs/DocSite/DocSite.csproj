@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{39CED32B-8B35-4099-B167-F3B228BFE6B4}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -473,10 +473,6 @@
     <None Include="Help\Topics\Object Lifetimes.cmp">
       <DependentUpon>Object Lifetimes.aml</DependentUpon>
     </None>
-    <None Include="Help\Topics\Object Lifetimes_temp.aml" />
-    <None Include="Help\Topics\Object Lifetimes_temp.cmp">
-      <DependentUpon>Object Lifetimes_temp.aml</DependentUpon>
-    </None>
     <None Include="Help\Topics\Programming Guide.aml" />
     <None Include="Help\Topics\Programming Guide.cmp">
       <DependentUpon>Programming Guide.aml</DependentUpon>
@@ -484,6 +480,10 @@
     <None Include="Help\Topics\Reference.aml" />
     <None Include="Help\Topics\Reference.cmp">
       <DependentUpon>Reference.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\What_s New in the November 2008 SDK.aml" />
+    <None Include="Help\Topics\What_s New in the November 2008 SDK.cmp">
+      <DependentUpon>What_s New in the November 2008 SDK.aml</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -522,6 +522,9 @@
           <IISUrl>
           </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

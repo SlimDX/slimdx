@@ -46,9 +46,13 @@ namespace SlimDX
 				SlimDX::Direct3D9::Device^ get();
 			}
 
+			[System::Obsolete("Gather is deprecated and may be removed in future releases.")]
 			static DataStream^ Gather( array<System::Byte>^ sourceData, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
+
+			[System::Obsolete("Gather is deprecated and may be removed in future releases.")]
 			static DataStream^ Gather( System::String^ sourceData, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 
+			[System::Obsolete("GatherFromFile is deprecated and may be removed in future releases.")]
 			static DataStream^ GatherFromFile( System::String^ fileName, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% errors );
 
 			Result AddFragments( array<int>^ fragments );

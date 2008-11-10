@@ -124,12 +124,15 @@ namespace Direct3D9
 		return gcnew DataStream( fragmentBuffer );
 	}
 
+// We know that Gather is obsolete, we declared it ourselves
+#pragma warning(disable:4947)
 	DataStream^ FragmentLinker::Gather( String^ sourceData, array<Macro>^ defines,
 		Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
 	{
 		array<Byte>^ sourceBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( sourceData );
 		return Gather( sourceBytes, defines, includeFile, flags, errors );
 	}
+#pragma warning(default:4947)
 
 	DataStream^ FragmentLinker::GatherFromFile( String^ fileName, array<Macro>^ defines,
 		Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
