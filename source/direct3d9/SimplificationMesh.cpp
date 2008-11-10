@@ -153,6 +153,8 @@ namespace Direct3D9
 		Construct(result);
 	}
 
+// We know that Gather is obsolete, we declared it ourselves
+#pragma warning(disable:4947)
 	SimplificationMesh^ SimplificationMesh::FromPointer( ID3DXSPMesh* pointer )
 	{
 		if( pointer == 0 )
@@ -181,6 +183,7 @@ namespace Direct3D9
 
 		return gcnew SimplificationMesh( pointer );
 	}
+#pragma warning(default:4947)
 
 	Mesh^ SimplificationMesh::Clone( SlimDX::Direct3D9::Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap )
 	{

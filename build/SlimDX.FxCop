@@ -1781,6 +1781,30 @@
          </Type>
          <Type Name="Vector3">
           <Members>
+           <Member Name="#Item[System.Int32]">
+            <Accessors>
+             <Accessor Name="#get_Item(System.Int32)">
+              <Messages>
+               <Message Id="index*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2008-11-09 20:14:37Z">
+                <Issue>
+                 <Item>index*4</Item>
+                 <Item>'Vector3.this.get(int)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+             <Accessor Name="#set_Item(System.Int32,System.Single)">
+              <Messages>
+               <Message Id="index*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2008-11-09 20:14:37Z">
+                <Issue>
+                 <Item>index*4</Item>
+                 <Item>'Vector3.this.set(int, float)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
            <Member Name="#SizeInBytes">
             <Accessors>
              <Accessor Name="#get_SizeInBytes()">
@@ -1800,6 +1824,30 @@
          </Type>
          <Type Name="Vector4">
           <Members>
+           <Member Name="#Item[System.Int32]">
+            <Accessors>
+             <Accessor Name="#get_Item(System.Int32)">
+              <Messages>
+               <Message Id="index*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2008-11-09 20:14:37Z">
+                <Issue>
+                 <Item>index*4</Item>
+                 <Item>'Vector4.this.get(int)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+             <Accessor Name="#set_Item(System.Int32,System.Single)">
+              <Messages>
+               <Message Id="index*4" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2008-11-09 20:14:37Z">
+                <Issue>
+                 <Item>index*4</Item>
+                 <Item>'Vector4.this.set(int, float)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
            <Member Name="#SizeInBytes">
             <Accessors>
              <Accessor Name="#get_SizeInBytes()">

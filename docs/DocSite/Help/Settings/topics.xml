@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <topics>
-  <topic id="993669c0-4082-4959-805d-a6451e75ef27" file="Introduction.aml" />
+  <topic id="993669c0-4082-4959-805d-a6451e75ef27" file="Introduction.aml">
+    <topic id="27464930-9654-4a6e-873c-4b6991e2f8c3" file="What_s New in the November 2008 SDK.aml" />
+  </topic>
   <topic id="28607cc6-92e6-4585-85ac-d080e489a9a6" file="Programming Guide.aml">
     <topic id="10407d29-3a6c-49cc-8c77-e96cd4659780" file="Getting Started.aml" />
     <topic id="598b267f-52e6-4adb-906b-879c0bc8c736" file="Object Lifetimes.aml" />
