@@ -48,7 +48,7 @@
           <listItem>
             <legacyBold>DirectInput</legacyBold>
             <list class="bullet">
-              <listItem>Fixed a bug in <codeEntityReference autoUpgrade="true">M:SlimDX.DirectInput.Device.GetCurrentState(DataFormat)</codeEntityReference> that caused it to not work with <codeEntityReference>T:SlimDX.DirectInput.MouseState</codeEntityReference> data formats.</listItem>
+              <listItem>Fixed a bug in <codeEntityReference>M:SlimDX.DirectInput.Device`1.GetCurrentState(`0@)</codeEntityReference> that caused it to not work with <codeEntityReference>T:SlimDX.DirectInput.MouseState</codeEntityReference> data formats.</listItem>
               <listItem>Fixed a bug that would cause buffered input for joysticks to not report properly.</listItem>
               <listItem>Fixed a bug in <codeEntityReference autoUpgrade="true">M:SlimDX.DirectInput.DeviceProperties.GetKeyName(SlimDX.DirectInput.Key)</codeEntityReference> that caused the method to always fail.</listItem>
             </list>
@@ -64,19 +64,19 @@
             <legacyBold>Direct3D 9</legacyBold>
             <list class="bullet">
               <listItem>Fixed a bug where <codeEntityReference autoUpgrade="true">M:SlimDX.Direct3D9.Device.SetVertexShaderConstant(System.Int32,System.Boolean[])</codeEntityReference> and <codeEntityReference autoUpgrade="true">M:SlimDX.Direct3D9.Device.SetPixelShaderConstant(System.Int32,System.Boolean[])</codeEntityReference> functions were not correctly handling array bounds checks.</listItem>
-              <listItem>Fixed a bug in <codeEntityReference autoUpgrade="true">M:SlimDX.Direct3D9.Effect.SetValue</codeEntityReference> that caused issues when boolean data was set.</listItem>
+              <listItem>Fixed a bug in <codeEntityReference autoUpgrade="true">M:SlimDX.Direct3D9.BaseEffect.SetValue``1(SlimDX.Direct3D9.EffectHandle,``0)</codeEntityReference> that caused issues when boolean data was set.</listItem>
               <listItem>Fixed <codeEntityReference autoUpgrade="true">M:SlimDX.Direct3D9.Device.SetPaletteEntries(System.Int32,SlimDX.Direct3D9.PaletteEntry[])</codeEntityReference> to check the size of the palette array.</listItem>
-              <listItem>Changed <codeEntityReference autoUpgrade="true">M:SlimDX.Direct3D9.Device.GetStreamSourceFrequency(System.Int32,System.Int32,SlimDX.Direct3D9.StreamSource)</codeEntityReference> to return more meaningful results.</listItem>
+              <listItem>Changed <codeEntityReference autoUpgrade="true">M:SlimDX.Direct3D9.Device.GetStreamSourceFrequency(System.Int32,System.Int32@,SlimDX.Direct3D9.StreamSource@)</codeEntityReference> to return more meaningful results.</listItem>
               <listItem>Added overloads for <codeEntityReference autoUpgrade="true">M:SlimDX.Direct3D9.Device.SetVertexShaderConstant(System.Int32,System.Boolean[])</codeEntityReference> and <codeEntityReference autoUpgrade="true">M:SlimDX.Direct3D9.Device.SetPixelShaderConstant(System.Int32,System.Boolean[])</codeEntityReference> to take arrays of <codeEntityReference>T:SlimDX.Vector4</codeEntityReference>.</listItem>
               <listItem>Added <codeEntityReference autoUpgrade="true">M:SlimDX.Direct3D9.Mesh.Validate</codeEntityReference>.</listItem>
-              <listItem>Added overloads to <codeEntityReference autoUpgrade="true">SlimDX.Direct3D9.Device.DrawUserPrimitives</codeEntityReference> and <codeEntityReference autoUpgrade="true">M:SlimDX.Direct3D9.Device.DrawIndexedUserPrimitives(SlimDX.Direct3D9.PrimitiveType,System.Int32,System.Int32,System.Int32,S[],SlimDX.Direct3D9.Format,T[],System.Int32)</codeEntityReference> to allow (or omit) the specification of an offset into the user data arrays, to avoid the need for client code to perform an expensive array copy operation.</listItem>
+              <listItem>Added overloads to <codeEntityReference autoUpgrade="true">M:SlimDX.Direct3D9.Device.DrawUserPrimitives``1(SlimDX.Direct3D9.PrimitiveType,System.Int32,System.Int32,``0[])</codeEntityReference> and <codeEntityReference autoUpgrade="true">M:SlimDX.Direct3D9.Device.DrawIndexedUserPrimitives``2(SlimDX.Direct3D9.PrimitiveType,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,``0[],SlimDX.Direct3D9.Format,``1[],System.Int32)</codeEntityReference> to allow (or omit) the specification of an offset into the user data arrays, to avoid the need for client code to perform an expensive array copy operation.</listItem>
               <listItem>Modified <codeEntityReference>T:SlimDX.Direct3D9.AnimationSet</codeEntityReference> to allow the user to inherit and override method implementations.</listItem>
             </list>
           </listItem>
           <listItem>
             <legacyBold>Direct3D 10</legacyBold>
             <list class="bullet">
-              <listItem>Added <codeEntityReference autoUpgrade="true">M:SlimDX.Direct3D10.Device.CreateWithSwapChain</codeEntityReference> to construct both a device and swap chain simultaniously.</listItem>
+              <listItem>Added <codeEntityReference autoUpgrade="true">M:SlimDX.Direct3D10.Device.CreateWithSwapChain(SlimDX.DXGI.Adapter,SlimDX.Direct3D10.DriverType,SlimDX.Direct3D10.DeviceCreationFlags,SlimDX.DXGI.SwapChainDescription,SlimDX.Direct3D10.Device@,SlimDX.DXGI.SwapChain@)</codeEntityReference> to construct both a device and swap chain simultaniously.</listItem>
               <listItem>Added the ability to construct textures with initial data.</listItem>
               <listItem>Fixed a bug in <codeEntityReference>T:SlimDX.Direct3D10.BlendStateDescription</codeEntityReference> that would cause it to return false negatives.</listItem>
               <listItem>Fixed a bug in <codeEntityReference>T:SlimDX.Direct3D10.BlendStateDescription</codeEntityReference> that would cause it to improperly copy values from underlying native objects.</listItem>
