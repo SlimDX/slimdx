@@ -12,7 +12,7 @@ namespace WikiToMAML
         {
             if (args.Length != 1)
             {
-                Console.WriteLine("Usage: ValueGenerator assemblyName");
+                Console.WriteLine("Usage: ValueGenerator wikiFile");
                 return;
             }
 
