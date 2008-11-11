@@ -27,6 +27,7 @@
           SlimDX supports all of the following gaming, graphics, and multimedia APIs.
         </para>
         <list class="bullet">
+          <listItem><para>Math Library</para></listItem>
           <listItem><para>Direct3D9</para></listItem>
           <listItem><para>Direct3D9Ex</para></listItem>
           <listItem><para>Direct3D10</para></listItem>
@@ -39,7 +40,6 @@
           <listItem><para>XAPO</para></listItem>
           <listItem><para>XAudio2</para></listItem>
           <listItem><para>XInput</para></listItem>
-          <listItem><para>Extensive Math Library</para></listItem>
         </list>
         <para>
           In addition, SlimDX plans to fully support these additional APIs.
