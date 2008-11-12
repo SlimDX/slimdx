@@ -30,64 +30,70 @@ namespace SampleFramework
     {
         GraphicsDeviceManager manager;
 
+		private Device m_Device;
         /// <summary>
         /// Gets the graphics device.
         /// </summary>
         /// <value>The graphics device.</value>
         public Device Device
         {
-            get;
-            internal set;
+			get { return m_Device; }
+			internal set { m_Device = value; }
         }
 
+		private SlimDX.DXGI.SwapChain m_SwapChain;
         /// <summary>
         /// Gets the swap chain.
         /// </summary>
         /// <value>The swap chain.</value>
         public SlimDX.DXGI.SwapChain SwapChain
         {
-            get;
-            internal set;
+			get { return m_SwapChain; }
+			internal set { m_SwapChain = value; }
         }
 
+		private RenderTargetView m_RenderTarget;
         /// <summary>
         /// Gets the render target.
         /// </summary>
         /// <value>The render target.</value>
         public RenderTargetView RenderTarget
         {
-            get;
-            internal set;
+			get { return m_RenderTarget; }
+			internal set { m_RenderTarget = value; }
         }
 
+		private DepthStencilView m_DepthStencilView;
         /// <summary>
         /// Gets the depth stencil view.
         /// </summary>
         /// <value>The depth stencil view.</value>
         public DepthStencilView DepthStencilView
         {
-            get;
-            internal set;
+			get { return m_DepthStencilView; }
+			internal set { m_DepthStencilView = value; }
         }
 
+		private Texture2D m_DepthStencil;
         /// <summary>
         /// Gets the depth stencil surface.
         /// </summary>
         /// <value>The depth stencil surface.</value>
         public Texture2D DepthStencil
         {
-            get;
-            internal set;
+			get { return m_DepthStencil; }
+			internal set { m_DepthStencil = value; }
         }
 
+		private RasterizerState m_RasterizerState;
         /// <summary>
         /// Gets the rasterizer state.
         /// </summary>
         /// <value>The rasterizer state.</value>
         public RasterizerState RasterizerState
         {
-            get;
-            internal set;
+			get { return m_RasterizerState; }
+			internal set { m_RasterizerState = value; }
         }
 
         /// <summary>
