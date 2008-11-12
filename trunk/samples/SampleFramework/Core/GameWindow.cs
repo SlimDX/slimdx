@@ -111,14 +111,15 @@ namespace SampleFramework
             get { return maximized; }
         }
 
+		private Screen m_Screen;
         /// <summary>
         /// Gets the screen on which the window resides.
         /// </summary>
         /// <value>The screen.</value>
         public Screen Screen
         {
-            get;
-            private set;
+			get { return m_Screen; }
+			private set { m_Screen = value; }
         }
 
         /// <summary>

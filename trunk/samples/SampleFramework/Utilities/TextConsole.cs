@@ -39,34 +39,37 @@ namespace SampleFramework
         FontWeight fontWeight;
         bool dirty;
 
+        private Point m_Location;
         /// <summary>
         /// Gets or sets the location.
         /// </summary>
         /// <value>The location.</value>
         public Point Location
         {
-            get;
-            set;
+            get { return m_Location; }
+            set { m_Location = value;}
         }
 
+        private Color4 m_ForegroundColor;
         /// <summary>
         /// Gets or sets the color of the foreground.
         /// </summary>
         /// <value>The color of the foreground.</value>
         public Color4 ForegroundColor
         {
-            get;
-            set;
+            get { return m_ForegroundColor; }
+            set { m_ForegroundColor = value; }
         }
 
+		private int m_LineHeight;
         /// <summary>
         /// Gets or sets the height of a line.
         /// </summary>
         /// <value>The height of a line.</value>
         public int LineHeight
         {
-            get;
-            set;
+			get { return m_LineHeight; }
+			set { m_LineHeight = value; }
         }
 
         /// <summary>

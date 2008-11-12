@@ -33,6 +33,7 @@ namespace SampleFramework
     [StructLayout(LayoutKind.Sequential)]
     public struct TransformedColoredTexturedVertex : IEquatable<TransformedColoredTexturedVertex>
     {
+		private Vector4 m_Position;
         /// <summary>
         /// Gets or sets the transformed position of the vertex.
         /// </summary>
@@ -40,10 +41,11 @@ namespace SampleFramework
         [VertexElement(DeclarationType.Float4, DeclarationUsage.PositionTransformed)]
         public Vector4 Position
         {
-            get;
-            set;
+			get { return m_Position; }
+			set { m_Position = value; }
         }
 
+		private int m_Color;
         /// <summary>
         /// Gets or sets the color of the vertex.
         /// </summary>
@@ -51,10 +53,11 @@ namespace SampleFramework
         [VertexElement(DeclarationType.Color, DeclarationUsage.Color)]
         public int Color
         {
-            get;
-            set;
+			get { return m_Color; }
+			set { m_Color = value; }
         }
 
+		private Vector2 m_TextureCoordinates;
         /// <summary>
         /// Gets or sets the texture coordinates.
         /// </summary>
@@ -62,8 +65,8 @@ namespace SampleFramework
         [VertexElement(DeclarationType.Float2, DeclarationUsage.TextureCoordinate)]
         public Vector2 TextureCoordinates
         {
-            get;
-            set;
+			get { return m_TextureCoordinates; }
+			set { m_TextureCoordinates = value; }
         }
 
         /// <summary>

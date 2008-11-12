@@ -27,36 +27,40 @@ namespace SampleFramework
     /// </summary>
     public class GameTime
     {
+		private float m_FramesPerSecond;
         /// <summary>
         /// Gets the current frames-per-second measure.
         /// </summary>
         /// <value>The current frames-per-second measure.</value>
         public float FramesPerSecond
         {
-            get;
-            internal set;
+			get { return m_FramesPerSecond; }
+			internal set { m_FramesPerSecond = value; }
         }
 
+		private float m_ElapsedGameTime;
         /// <summary>
         /// Gets the elapsed game time, in seconds.
         /// </summary>
         /// <value>The elapsed game time.</value>
         public float ElapsedGameTime
         {
-            get;
-            internal set;
+			get { return m_ElapsedGameTime; }
+			internal set { m_ElapsedGameTime = value; }
         }
 
+		private float m_ElapsedRealTime;
         /// <summary>
         /// Gets the elapsed real time, in seconds.
         /// </summary>
         /// <value>The elapsed real time.</value>
         public float ElapsedRealTime
         {
-            get;
-            internal set;
+			get { return m_ElapsedRealTime; }
+			internal set { m_ElapsedRealTime = value; }
         }
 
+		private float m_TotalGameTime;
         /// <summary>
         /// Gets the total game time, in seconds.
         /// </summary>
