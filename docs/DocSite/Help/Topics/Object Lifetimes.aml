@@ -1,15 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <topic id="598b267f-52e6-4adb-906b-879c0bc8c736" revisionNumber="0">
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <introduction>
-      <para>
-        In order to function correctly, SlimDX must merge two different paradigms for handling object lifetimes.
-        On the native side there is COM, which functions based on a reference counted system utilizing explicit calls to manipulate the reference count.
-        On the managed side the runtime uses garbage collection to determine what objects are still alive, and the rest are automatically destroyed.
-        SlimDX presents a model that is as close to the managed model as possible, given the restrictions imposed by COM and DirectX on what can be done with objects.
-        However, this model is not quite identical, and it's important to understand exactly how object lifetimes must be handled by a SlimDX based application.
-      </para>
-    </introduction>
+    <section>
+      <title>Object Lifetimes</title>
+      <content>
+        <para>
+          In order to function correctly, SlimDX must merge two different paradigms for handling object lifetimes.
+          On the native side there is COM, which functions based on a reference counted system utilizing explicit calls to manipulate the reference count.
+          On the managed side the runtime uses garbage collection to determine what objects are still alive, and the rest are automatically destroyed.
+          SlimDX presents a model that is as close to the managed model as possible, given the restrictions imposed by COM and DirectX on what can be done with objects.
+          However, this model is not quite identical, and it's important to understand exactly how object lifetimes must be handled by a SlimDX based application.
+        </para>
+      </content>
+    </section>
 
     <section>
       <title>Object Creation</title>
