@@ -352,7 +352,7 @@ namespace Direct3D9
 
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 
-		HRESULT	hr = InternalPointer->SetValue( handle, &value, sizeof(T) );
+		HRESULT	hr = InternalPointer->SetValue( handle, &value, (DWORD) sizeof(T) );
 		return RECORD_D3D9( hr );
 	}
 
@@ -362,7 +362,7 @@ namespace Direct3D9
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		T result;
 
-		HRESULT hr = InternalPointer->GetValue( handle, &result, sizeof(T) );
+		HRESULT hr = InternalPointer->GetValue( handle, &result, (DWORD) sizeof(T) );
 
 		if( RECORD_D3D9( hr ).IsFailure )
 			return T();
@@ -406,7 +406,7 @@ namespace Direct3D9
 		else
 		{
 			pin_ptr<T> pinnedData = &values[0];
-			hr = InternalPointer->SetValue( handle, pinnedData, sizeof(T) * values->Length );
+			hr = InternalPointer->SetValue( handle, pinnedData, (DWORD) sizeof(T) * values->Length );
 		}
 
 		return RECORD_D3D9( hr );
@@ -419,7 +419,7 @@ namespace Direct3D9
 		array<T>^ results = gcnew array<T>( count );
 		pin_ptr<T> pinnedData = &results[0];
 
-		HRESULT hr = InternalPointer->GetValue( handle, pinnedData, sizeof(T) * count );
+		HRESULT hr = InternalPointer->GetValue( handle, pinnedData, (DWORD) sizeof(T) * count );
 
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
