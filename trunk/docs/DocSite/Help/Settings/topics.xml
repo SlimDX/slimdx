@@ -7,6 +7,7 @@
     <topic id="10407d29-3a6c-49cc-8c77-e96cd4659780" file="Getting Started.aml" />
     <topic id="598b267f-52e6-4adb-906b-879c0bc8c736" file="Object Lifetimes.aml" />
   </topic>
+  <topic id="50d38541-4add-4911-b088-d29a017ed068" file="Deployment Guide.aml" />
   <topic id="3f421301-4a9f-446a-b9e6-87adf8d2f850" file="Reference.aml">
     <stoc project="Project" />
   </topic>
