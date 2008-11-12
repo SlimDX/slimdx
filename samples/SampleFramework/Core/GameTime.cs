@@ -67,8 +67,8 @@ namespace SampleFramework
         /// <value>The total game time.</value>
         public float TotalGameTime
         {
-            get;
-            internal set;
+            get { return m_TotalGameTime; }
+            internal set { m_TotalGameTime = value; }
         }
 
         /// <summary>
