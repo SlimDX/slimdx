@@ -311,7 +311,7 @@ namespace DirectInput
 	generic<typename DataFormat>
 	DataFormat Device<DataFormat>::GetCurrentState()
 	{
-		DataFormat result;
+		DataFormat result = Activator::CreateInstance<DataFormat>();
 		GetCurrentState( result );
 		return result;
 	}

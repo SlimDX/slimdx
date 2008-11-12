@@ -961,16 +961,19 @@ namespace SampleFramework
             scd.IsWindowed = !fullscreen;
             CurrentSettings.Direct3D10.SwapChainDescription = scd;
 
-            Direct3D10.DepthStencil.Dispose();
-            Direct3D10.DepthStencil = null;
-            Direct3D10.DepthStencilView.Dispose();
-            Direct3D10.DepthStencilView = null;
+            if (Direct3D10.DepthStencil != null)
+            {
+                Direct3D10.DepthStencil.Dispose();
+                Direct3D10.DepthStencil = null;
+                Direct3D10.DepthStencilView.Dispose();
+                Direct3D10.DepthStencilView = null;
+
+                Direct3D10.RasterizerState.Dispose();
+                Direct3D10.RasterizerState = null;
+            }
 
             Direct3D10.RenderTarget.Dispose();
             Direct3D10.RenderTarget = null;
-
-            Direct3D10.RasterizerState.Dispose();
-            Direct3D10.RasterizerState = null;
 
             SwapChainFlags flag = SwapChainFlags.None;
             if (fullscreen)
