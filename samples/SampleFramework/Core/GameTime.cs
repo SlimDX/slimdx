@@ -71,16 +71,18 @@ namespace SampleFramework
             internal set { m_TotalGameTime = value; }
         }
 
+        private float m_TotalRealTime;
         /// <summary>
         /// Gets the total real time, in seconds.
         /// </summary>
         /// <value>The total real time.</value>
         public float TotalRealTime
         {
-            get;
-            internal set;
+            get { return m_TotalRealTime; }
+            internal set { m_TotalRealTime = value; }
         }
 
+        private bool m_IsRunningSlowly;
         /// <summary>
         /// Gets or sets a value indicating whether this instance is running slowly.
         /// </summary>
@@ -89,8 +91,8 @@ namespace SampleFramework
         /// </value>
         public bool IsRunningSlowly
         {
-            get;
-            internal set;
+            get { return m_IsRunningSlowly; }
+            internal set { m_IsRunningSlowly = value; }
         }
 
         /// <summary>
