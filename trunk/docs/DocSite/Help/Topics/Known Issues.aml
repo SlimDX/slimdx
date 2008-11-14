@@ -16,6 +16,7 @@
               While 64 bit is now a completely supported configuration, there is a glitch in the installation package. Visual Studio users may not see SlimDX as a 
               reference that can be added in the .NET tab of the Add Reference dialog. They will need to browse to the install location and add the reference that way. 
               This only affects developers. Users will not see any difference, and the assembly is still properly registered in and referenced from the Global Assembly Cache.
+              It is recommended that you check the .NET tab first, as this bug does not affect all users.
             </para>
           </listItem>
           <listItem>
