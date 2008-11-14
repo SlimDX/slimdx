@@ -4,7 +4,7 @@
     <Package InstallerVersion="200" Compressed="yes" />
 
     <PropertyRef Id="NETFRAMEWORK20" />
-    <PropertyRef Id="NETFRAMEWORK20_SP_LEVEL" />
+    <PropertyRef Id="NETFRAMEWORK35" />
 
     <WixVariable Id="WixUILicenseRtf" Value="..\ExtraFiles\License.rtf" />
     <WixVariable Id="WixUIDialogBmp" Value="..\ExtraFiles\SdxSideLogo.jpg" />
@@ -50,12 +50,18 @@
             <File Id="Nov2008_d3dx9_40_x86.cab" Name="Nov2008_d3dx9_40_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Nov2008_d3dx9_40_x86.cab" />
           </Component>
           <Component Id="D3D9_x64" DiskId="1" Guid="45C1DD95-0608-4E12-83E0-F0FCAE410072">
+            <Condition>
+              <![CDATA[Installed OR VersionNT64]]>
+            </Condition>
             <File Id="Nov2008_d3dx9_40_x64.cab" Name="Nov2008_d3dx9_40_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Nov2008_d3dx9_40_x64.cab" />
           </Component>
           <Component Id="D3D10_x86" DiskId="1" Guid="4EC2831F-89D2-45EE-974F-4AA33FBA89C8">
             <File Id="Nov2008_d3dx10_40_x86.cab" Name="Nov2008_d3dx10_40_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Nov2008_d3dx10_40_x86.cab" />
           </Component>
           <Component Id="D3D10_x64" DiskId="1" Guid="F9E02061-F1D1-4908-85C8-5203BDBB037E">
+            <Condition>
+              <![CDATA[Installed OR VersionNT64]]>
+            </Condition>
             <File Id="Nov2008_d3dx10_40_x64.cab" Name="Nov2008_d3dx10_40_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Nov2008_d3dx10_40_x64.cab" />
           </Component>
           <Component Id="XAudio_x86" DiskId="1" Guid="EE1AD00E-3092-47EB-9208-674C6044D32C">
@@ -63,9 +69,21 @@
             <File Id="Nov2008_XAudio_x86.cab" Name="Nov2008_XAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Nov2008_XAudio_x86.cab" />
           </Component>
           <Component Id="XAudio_x64" DiskId="1" Guid="FBCE9D47-EC9B-4DCE-A29C-BFBC8F60AA74">
+            <Condition>
+              <![CDATA[Installed OR VersionNT64]]>
+            </Condition>
             <File Id="Jun2008_X3DAudio_x64.cab" Name="Jun2008_X3DAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Jun2008_X3DAudio_x64.cab" />
             <File Id="Nov2008_X3DAudio_x64.cab" Name="Nov2008_X3DAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Nov2008_X3DAudio_x64.cab" />
             <File Id="Nov2008_XAudio_x64.cab" Name="Nov2008_XAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Nov2008_XAudio_x64.cab" />
+          </Component>
+          <Component Id="XInput_x86" DiskId="1" Guid="9536D158-C39C-4B45-AB0B-8C125EB63E72">
+            <File Id="APR2007_xinput_x86.cab" Name="APR2007_xinput_x86.cab" Source="..\ExtraFiles\DXRedist\x86\APR2007_xinput_x86.cab" />
+          </Component>
+          <Component Id="XInput_x64" DiskId="1" Guid="DE999254-2C35-4D6A-A3AD-FA8882F7B26F">
+            <Condition>
+              <![CDATA[Installed OR VersionNT64]]>
+            </Condition>
+            <File Id="APR2007_xinput_x64.cab" Name="APR2007_xinput_x64.cab" Source="..\ExtraFiles\DXRedist\x64\APR2007_xinput_x64.cab" />
           </Component>
         </Directory>
       </Directory>
@@ -84,9 +102,11 @@
       <ComponentRef Id="D3D10_x64" />
       <ComponentRef Id="XAudio_x86" />
       <ComponentRef Id="XAudio_x64" />
+      <ComponentRef Id="XInput_x86" />
+      <ComponentRef Id="XInput_x64" />
     </Feature>
-    <Condition Message="This application requires .NET Framework 2.0 SP1 or later. Please install the .NET Framework then run this installer again.">
-      <![CDATA[Installed OR (NETFRAMEWORK20_SP_LEVEL and NOT NETFRAMEWORK20_SP_LEVEL = "#0")]]>
+    <Condition Message="This application requires .NET Framework 2.0 or later. Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR NETFRAMEWORK20 OR NETFRAMEWORK35]]>
     </Condition>
     <CustomAction Id="InstallDirectX" FileKey="DXSETUP.exe" ExeCommand="/silent" Execute="deferred" Impersonate="no" Return="check" />
     <InstallExecuteSequence>

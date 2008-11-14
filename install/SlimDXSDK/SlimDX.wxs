@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
-  <Product Id="DDA880E2-0ED1-43D7-96ED-C71D7872D9C3" Language="1033" Manufacturer="SlimDX Group" Name="SlimDX (November 2008)" Version="2.0.6.40">
+  <Product Id="DDA880E2-0ED1-43D7-96ED-C71D7872D9C3" Language="1033" Manufacturer="SlimDX Group" Name="SlimDX SDK (November 2008)" Version="2.0.6.40" UpgradeCode="730EA5FE-BC35-47D9-A782-8CBED83CEA93">
     <Package InstallerVersion="200" Compressed="yes" />
 
     <PropertyRef Id="NETFRAMEWORK20" />
-    <PropertyRef Id="NETFRAMEWORK20_SP_LEVEL" />
+    <PropertyRef Id="NETFRAMEWORK35" />
 
-    <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
-    <WixVariable Id="WixUIDialogBmp" Value="SdxSideLogo.jpg" />
-    <WixVariable Id="WixUIBannerBmp" Value="SdxLogo.jpg" />
+    <WixVariable Id="WixUILicenseRtf" Value="..\ExtraFiles\License.rtf" />
+    <WixVariable Id="WixUIDialogBmp" Value="..\ExtraFiles\SdxSideLogo.jpg" />
+    <WixVariable Id="WixUIBannerBmp" Value="..\ExtraFiles\SdxLogo.jpg" />
 
     <Media Id="1" Cabinet="SlimDXNov08.cab" EmbedCab="yes" />
 
@@ -16,14 +16,14 @@
     <Property Id="ARPPRODUCTICON" Value="SdxIconBlack.exe" />
     <Property Id="ALLUSERS" Value="1" />
     
-    <UIRef Id="WixUI_FeatureTree"/>
+    <UIRef Id="WixUI_FeatureTree"/>    
     <UI>
       <ProgressText Action="InstallDirectX">Installing DirectX runtime components (November 2008)</ProgressText>
     </UI>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="APPLICATIONROOTDIRECTORY" Name="SlimDX (November 2008)">
+        <Directory Id="APPLICATIONROOTDIRECTORY" Name="SlimDX SDK (November 2008)">
           <Component Id="Licenses" DiskId="1" Guid="01CB4F3C-E3BE-48B9-84B1-3A9CCCBF7A63">
             <File Id="CodeLicense.txt" Name="CodeLicense.txt" Source="..\..\publish\CodeLicense.txt" />
             <File Id="MediaLicense.txt" Name="MediaLicense.txt" Source="..\..\publish\MediaLicense.txt" />
@@ -59,7 +59,7 @@
               </Directory>
             </Directory>
           </Directory>
-          <Directory Id="DXRedist" Name="DXRedist">
+          <Directory Id="DXRedist" Name="DirectX Redist">
             <Component Id="DXRedist" DiskId="1" Guid="DE294C24-BB98-4479-86AD-FA2F3736DC73">
               <File Id="DSETUP.dll" Name="DSETUP.dll" Source="..\ExtraFiles\DXRedist\DSETUP.dll" />
               <File Id="dsetup32.dll" Name="dsetup32.dll" Source="..\ExtraFiles\DXRedist\dsetup32.dll" />
@@ -71,10 +71,12 @@
               <File Id="Nov2008_d3dx9_40_x64.cab" Name="Nov2008_d3dx9_40_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Nov2008_d3dx9_40_x64.cab" />
               <File Id="Nov2008_X3DAudio_x64.cab" Name="Nov2008_X3DAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Nov2008_X3DAudio_x64.cab" />
               <File Id="Nov2008_XAudio_x64.cab" Name="Nov2008_XAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Nov2008_XAudio_x64.cab" />
+              <File Id="APR2007_xinput_x64.cab" Name="APR2007_xinput_x64.cab" Source="..\ExtraFiles\DXRedist\x64\APR2007_xinput_x64.cab" />
               <File Id="Nov2008_d3dx10_40_x86.cab" Name="Nov2008_d3dx10_40_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Nov2008_d3dx10_40_x86.cab" />
               <File Id="Nov2008_d3dx9_40_x86.cab" Name="Nov2008_d3dx9_40_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Nov2008_d3dx9_40_x86.cab" />
               <File Id="Nov2008_X3DAudio_x86.cab" Name="Nov2008_X3DAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Nov2008_X3DAudio_x86.cab" />
               <File Id="Nov2008_XAudio_x86.cab" Name="Nov2008_XAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Nov2008_XAudio_x86.cab" />
+              <File Id="APR2007_xinput_x86.cab" Name="APR2007_xinput_x86.cab" Source="..\ExtraFiles\DXRedist\x86\APR2007_xinput_x86.cab" />
             </Component>
           </Directory>
           <Directory Id="Documentation" Name="Documentation">
@@ -536,6 +538,15 @@
               </Directory>
             </Directory>
           </Directory>
+          <Directory Id="Redist" Name="Redist">
+            <Component Id="Redist" DiskId="1" Guid="DD6BFE46-05D3-4C5B-9E50-B1B3DDC066FF">
+              <File Id="SlimDXRedist.wixproj" Name="SlimDXRedist.wixproj" Source="..\..\publish\Redist\SlimDXRedist.wixproj" />
+              <File Id="Redist.wxs" Name="Redist.wxs" Source="..\..\publish\Redist\Redist.wxs" />
+              <File Id="License.rtf" Name="License.rtf" Source="..\..\publish\Redist\License.rtf" />
+              <File Id="SdxLogo.jpg" Name="SdxLogo.jpg" Source="..\..\publish\Redist\SdxLogo.jpg" />
+              <File Id="SdxSideLogo.jpg" Name="SdxSideLogo.jpg" Source="..\..\publish\Redist\SdxSideLogo.jpg" />
+            </Component>
+          </Directory>
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
@@ -648,6 +659,10 @@
       <ComponentRef Id="BasicSound" />
       <ComponentRef Id="BasicSound_Properties" />
     </Feature>
+    <Feature Id="Redist" Level="1" AllowAdvertise="no"
+             Title="Redistributable Package Source" Description="The source code to produce the public WiX based redistributable installation package for SlimDX.">
+      <ComponentRef Id="Redist" />
+    </Feature>
     <Feature Id="Shortcuts" Level="1" AllowAdvertise="no"
              Title="Start menu shortcuts" Description="Start menu shortcuts to SlimDX.">
       <ComponentRef Id="SlimDXShortcuts"/>
@@ -655,8 +670,8 @@
     <Feature Id="Licenses" Level="1" Absent="disallow" AllowAdvertise="no" Display="hidden">
       <ComponentRef Id="Licenses" />
     </Feature>
-    <Condition Message="This application requires .NET Framework 2.0 SP1 or later. Please install the .NET Framework then run this installer again.">
-      <![CDATA[Installed OR (NETFRAMEWORK20_SP_LEVEL and NOT NETFRAMEWORK20_SP_LEVEL = "#0")]]>
+    <Condition Message="This application requires .NET Framework 2.0 or later. Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR NETFRAMEWORK20 OR NETFRAMEWORK35]]>
     </Condition>
     <CustomAction Id="InstallDirectX" FileKey="DXSETUP.exe" ExeCommand="/silent" Execute="deferred" Impersonate="no" Return="check" />
     <InstallExecuteSequence>
