@@ -17,11 +17,12 @@
 
       <content>
         <list class="bullet">
-          <listItem>Microsoft .NET Framework 2.0 SP1 or 3.5
+          <listItem>Microsoft .NET Framework 2.0 or later
             <para>
               The most fundamental requirement for any SlimDX based application is Microsoft's .NET Framework.
-              SlimDX requires a minimum .NET version of <legacyBold>2.0, Service Pack 1</legacyBold>.
-              .NET 3.5 (but not 3.0) may be substituted successfully, and is the only option on Vista, since 2.0 SP1 is not supported.
+              SlimDX requires a minimum .NET version of <legacyBold>2.0</legacyBold>.
+              Any later version may be substituted successfully (up to .NET 3.5 tested at the time of writing).
+              Windows Vista includes a suitable version of .NET out of the box and so no further work is needed.
               Previous versions of SlimDX also required the Visual C++ Runtime, however, since the November 2008 release SlimDX uses the same version that is included with .NET itself.
               (September 2008 required the Visual C++ 2008 runtime, and most versions previous to that required the Visual C++ 2005 SP1 runtime.)
               This is sufficient to load the SlimDX library and begin using some core components, such as the math library and utilities.
