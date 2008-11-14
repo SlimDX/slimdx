@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="3f421301-4a9f-446a-b9e6-87adf8d2f850" revisionNumber="0">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <section>
+      <title>Class Reference</title>
+      <content>
+        <para>
+          This section contains a complete reference for all types and methods contained in SlimDX.
+          Although they are not all completely documented at this point, we are working on rectifying
+          this situation. If you need clarification on a certain method, see the corresponding entry
+          in the DirectX SDK's documentation. The SlimDX methods closely match their DirectX counterparts.
+        </para>
+      </content>
+    </section>
+  
+</developerConceptualDocument>
+</topic>
