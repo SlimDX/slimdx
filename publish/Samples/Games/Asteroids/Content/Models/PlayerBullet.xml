@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VectorModel>
+  <Polygon LineWidth="4.0" Color="1.0, 1.0, 0.9, 0.2">
+    <Vertex>-5, 5</Vertex>
+    <Vertex>-5, -5</Vertex>
+    <Vertex>5, -5</Vertex>
+    <Vertex>5, 5</Vertex>
+  </Polygon>
+</VectorModel>
