@@ -17,11 +17,11 @@
 
       <content>
         <list class="bullet">
-          <listItem>Microsoft .NET Framework 2.0 SP1
+          <listItem>Microsoft .NET Framework 2.0 SP1 or 3.5
             <para>
               The most fundamental requirement for any SlimDX based application is Microsoft's .NET Framework.
               SlimDX requires a minimum .NET version of <legacyBold>2.0, Service Pack 1</legacyBold>.
-              Any later version of .NET (up to 3.5 Service Pack 1 at the time of writing) may be substituted successfully.
+              .NET 3.5 (but not 3.0) may be substituted successfully, and is the only option on Vista, since 2.0 SP1 is not supported.
               Previous versions of SlimDX also required the Visual C++ Runtime, however, since the November 2008 release SlimDX uses the same version that is included with .NET itself.
               (September 2008 required the Visual C++ 2008 runtime, and most versions previous to that required the Visual C++ 2005 SP1 runtime.)
               This is sufficient to load the SlimDX library and begin using some core components, such as the math library and utilities.
@@ -57,8 +57,9 @@
           It also registers the signed SlimDX assembly in the Global Assembly Cache as a shared assembly, thus allowing other applications to use it as well.
           If you intend to set up SlimDX as a shared assembly, it is strongly recommended that you use the redistributable package.
           SlimDX versions can be identified in the GAC using the last two pieces of the version number (the first two match the base framework version, currently 2.0).
-          The third value is the SlimDX release number, which is 8 in the November 2008 release..
+          The third value is the SlimDX release number, which is 8 in the November 2008 release.
           The last value corresponds to the Direct3DX version number for the SDK used to build SlimDX, which is 40 in the November 2008 release.
+          Note that the source code for the redistributable is a WiX script and accompanying Visual Studio project, which is included in the SDK and may be customized if desired.
         </para>
         <para>
           SlimDX can also be used as a private assembly; developers may choose to use either the publicly released version or a customized build in this case.
