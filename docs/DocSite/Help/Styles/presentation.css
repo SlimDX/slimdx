@@ -39,11 +39,11 @@ div#control {
 }
 
 span.productTitle {
-	font-size: 80%;
+	font-size: 100%;
 }
 
 span.topicTitle {
-	font-size: 140%;
+	font-size: 180%;
 	font-weight: bold;
 	color: #003399;
 }
@@ -102,6 +102,7 @@ div.sectionContent {
 
 span.subsectionTitle {
 	font-weight: bold;
+	font-size: 140%;
 }
 
 div#footer {
