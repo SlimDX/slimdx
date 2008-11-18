@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{39CED32B-8B35-4099-B167-F3B228BFE6B4}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -473,6 +473,10 @@
     <None Include="Help\Topics\Getting Started.cmp">
       <DependentUpon>Getting Started.aml</DependentUpon>
     </None>
+    <None Include="Help\Topics\Handling Bitness.aml" />
+    <None Include="Help\Topics\Handling Bitness.cmp">
+      <DependentUpon>Handling Bitness.aml</DependentUpon>
+    </None>
     <None Include="Help\Topics\Introduction.aml" />
     <None Include="Help\Topics\Introduction.cmp">
       <DependentUpon>Introduction.aml</DependentUpon>
@@ -538,13 +542,10 @@
           <IISUrl>
           </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties DefaultApplyToAll="True" DoNotAskIncludeOutputInProject="True" Sandcastle_UseFriendlyHtmlFileNames="True" Sandcastle_DocumentationSetName="SlimDX" ExternalSources="" Sandcastle_ProduceHelp1x="True" Sandcastle_PresentationName="Sandcastle Prototype" Sandcastle_Version="2.4.10520.1" BuildEngineProviderName="Sandcastle" DocProjectVersion="1.11.0.0" ProcessComponentTypeName="DocSite.BuildProcess" IsDocProject="true" />
+      <UserProperties IsDocProject="true" ProcessComponentTypeName="DocSite.BuildProcess" DocProjectVersion="1.11.0.0" BuildEngineProviderName="Sandcastle" Sandcastle_Version="2.4.10520.1" Sandcastle_PresentationName="Sandcastle Prototype" Sandcastle_ProduceHelp1x="True" ExternalSources="" Sandcastle_DocumentationSetName="SlimDX" Sandcastle_UseFriendlyHtmlFileNames="True" DoNotAskIncludeOutputInProject="True" DefaultApplyToAll="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
