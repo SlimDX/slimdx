@@ -47,11 +47,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XAudio2", "XAudio2", "{F187
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicSound", "..\samples\XAudio2\BasicSound\BasicSound.csproj", "{EAFA9427-D9FC-45AC-908C-30CE59DCB957}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Help Topics", "Help Topics", "{FC3A2124-8A6F-4CCF-8715-3AC40568755D}"
-	ProjectSection(SolutionItems) = preProject
-		..\docs\topics\Introduction.xml = ..\docs\topics\Introduction.xml
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Particles", "..\samples\Direct3D9\Particles\Particles.csproj", "{C04384EF-8C89-4209-97A5-E7E16D68B4FF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLighting", "..\samples\Direct3D9\SimpleLighting\SimpleLighting.csproj", "{40B42F27-6758-4997-94CA-472DABC73323}"
