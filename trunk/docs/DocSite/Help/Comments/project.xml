@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="N:SlimDX.Direct3D9">
+      <summary>
+        <p>Provides access to Direct3D 9.0c and Direct3D 9 Ex interfaces.</p>
+      </summary>
+    </member>
+  </members>
+</doc>

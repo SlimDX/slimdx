@@ -1,0 +1,6 @@
+﻿List of work items for the Asteroids game
+
+Lives/Game Over/State system
+Music
+Sound Effects
+Hyperspace

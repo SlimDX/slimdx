@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+  <Product Id="*" Language="1033" Manufacturer="SlimDX Group" Name="SlimDX Redistributable (November 2008)" Version="2.0.6.40">
+    <Package InstallerVersion="200" Compressed="yes" />
+
+    <PropertyRef Id="NETFRAMEWORK20" />
+    <PropertyRef Id="NETFRAMEWORK35" />
+
+    <WixVariable Id="WixUILicenseRtf" Value="..\ExtraFiles\License.rtf" />
+    <WixVariable Id="WixUIDialogBmp" Value="..\ExtraFiles\SdxSideLogo.jpg" />
+    <WixVariable Id="WixUIBannerBmp" Value="..\ExtraFiles\SdxLogo.jpg" />
+
+    <Media Id="1" Cabinet="SlimDXNov08Redist.cab" EmbedCab="yes" />
+
+    <Icon Id="SdxIconBlack.exe" SourceFile="..\..\media\sdx_icon_black.ico" />
+    <Property Id="ARPPRODUCTICON" Value="SdxIconBlack.exe" />
+    <Property Id="ALLUSERS" Value="1" />
+
+    <UIRef Id="WixUI_Minimal" />
+    <UI>
+      <ProgressText Action="InstallDirectX">Installing DirectX runtime components (November 2008)</ProgressText>
+    </UI>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="x64_GAC" Name="x64_GAC">
+        <Component Id="x64_GAC" DiskId="1" Guid="49CD009B-2541-484D-BEEB-83D79E7DD9D7">
+          <Condition>
+            <![CDATA[Installed OR VersionNT64]]>
+          </Condition>
+          <File Id="SlimDX.dll_x64_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\x64\SlimDX.dll"
+                KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x64_GAC"/>
+        </Component>
+      </Directory>
+      <Directory Id="x86_GAC" Name="x86_GAC">
+        <Component Id="x86_GAC" DiskId="1" Guid="862BB85B-0A7A-4FB4-9942-644387DF7B8D">
+          <File Id="SlimDX.dll_x86_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\x86\SlimDX.dll"
+                KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x86_GAC" />
+        </Component>
+      </Directory>
+      <Directory Id="TempFolder" Name="TempFolder" >
+        <Directory Id="DXRedist" Name="DirectX Redist">
+          <Component Id="DXRedist" DiskId="1" Guid="DE294C24-BB98-4479-86AD-FA2F3736DC73">
+            <File Id="DSETUP.dll" Name="DSETUP.dll" Source="..\ExtraFiles\DXRedist\DSETUP.dll" />
+            <File Id="dsetup32.dll" Name="dsetup32.dll" Source="..\ExtraFiles\DXRedist\dsetup32.dll" />
+            <File Id="dxdllreg_x86.cab" Name="dxdllreg_x86.cab" Source="..\ExtraFiles\DXRedist\dxdllreg_x86.cab" />
+            <File Id="DXSETUP.exe" Name="DXSETUP.exe" Source="..\ExtraFiles\DXRedist\DXSETUP.exe" />
+            <File Id="dxupdate.cab" Name="dxupdate.cab" Source="..\ExtraFiles\DXRedist\dxupdate.cab" />
+          </Component>
+          <Component Id="D3D9_x86" DiskId="1" Guid="B2E02CED-418D-4BD9-B3A6-CDD06BAF745C">
+            <File Id="Nov2008_d3dx9_40_x86.cab" Name="Nov2008_d3dx9_40_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Nov2008_d3dx9_40_x86.cab" />
+          </Component>
+          <Component Id="D3D9_x64" DiskId="1" Guid="45C1DD95-0608-4E12-83E0-F0FCAE410072">
+            <Condition>
+              <![CDATA[Installed OR VersionNT64]]>
+            </Condition>
+            <File Id="Nov2008_d3dx9_40_x64.cab" Name="Nov2008_d3dx9_40_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Nov2008_d3dx9_40_x64.cab" />
+          </Component>
+          <Component Id="D3D10_x86" DiskId="1" Guid="4EC2831F-89D2-45EE-974F-4AA33FBA89C8">
+            <File Id="Nov2008_d3dx10_40_x86.cab" Name="Nov2008_d3dx10_40_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Nov2008_d3dx10_40_x86.cab" />
+          </Component>
+          <Component Id="D3D10_x64" DiskId="1" Guid="F9E02061-F1D1-4908-85C8-5203BDBB037E">
+            <Condition>
+              <![CDATA[Installed OR VersionNT64]]>
+            </Condition>
+            <File Id="Nov2008_d3dx10_40_x64.cab" Name="Nov2008_d3dx10_40_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Nov2008_d3dx10_40_x64.cab" />
+          </Component>
+          <Component Id="XAudio_x86" DiskId="1" Guid="EE1AD00E-3092-47EB-9208-674C6044D32C">
+            <File Id="Nov2008_X3DAudio_x86.cab" Name="Nov2008_X3DAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Nov2008_X3DAudio_x86.cab" />
+            <File Id="Nov2008_XAudio_x86.cab" Name="Nov2008_XAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Nov2008_XAudio_x86.cab" />
+          </Component>
+          <Component Id="XAudio_x64" DiskId="1" Guid="FBCE9D47-EC9B-4DCE-A29C-BFBC8F60AA74">
+            <Condition>
+              <![CDATA[Installed OR VersionNT64]]>
+            </Condition>
+            <File Id="Jun2008_X3DAudio_x64.cab" Name="Jun2008_X3DAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Jun2008_X3DAudio_x64.cab" />
+            <File Id="Nov2008_X3DAudio_x64.cab" Name="Nov2008_X3DAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Nov2008_X3DAudio_x64.cab" />
+            <File Id="Nov2008_XAudio_x64.cab" Name="Nov2008_XAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Nov2008_XAudio_x64.cab" />
+          </Component>
+          <Component Id="XInput_x86" DiskId="1" Guid="9536D158-C39C-4B45-AB0B-8C125EB63E72">
+            <File Id="APR2007_xinput_x86.cab" Name="APR2007_xinput_x86.cab" Source="..\ExtraFiles\DXRedist\x86\APR2007_xinput_x86.cab" />
+          </Component>
+          <Component Id="XInput_x64" DiskId="1" Guid="DE999254-2C35-4D6A-A3AD-FA8882F7B26F">
+            <Condition>
+              <![CDATA[Installed OR VersionNT64]]>
+            </Condition>
+            <File Id="APR2007_xinput_x64.cab" Name="APR2007_xinput_x64.cab" Source="..\ExtraFiles\DXRedist\x64\APR2007_xinput_x64.cab" />
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="Binaries" Title="SlimDX Binaries" Absent="disallow" AllowAdvertise="no" Level="1" Description="SlimDX binary assemblies.">
+      <ComponentRef Id="x86_GAC" />
+      <ComponentRef Id="x64_GAC" />
+    </Feature>
+    <Feature Id="DirectX" Level="1" AllowAdvertise="no" Absent="disallow"
+             Title="DirectX runtime" Description="DirectX runtime components for November 2008. Does not include XACT or older releases. Strongly recommended.">
+      <ComponentRef Id="DXRedist" />
+      <ComponentRef Id="D3D9_x86" />
+      <ComponentRef Id="D3D9_x64" />
+      <ComponentRef Id="D3D10_x86" />
+      <ComponentRef Id="D3D10_x64" />
+      <ComponentRef Id="XAudio_x86" />
+      <ComponentRef Id="XAudio_x64" />
+      <ComponentRef Id="XInput_x86" />
+      <ComponentRef Id="XInput_x64" />
+    </Feature>
+    <Condition Message="This application requires .NET Framework 2.0 or later. Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR NETFRAMEWORK20 OR NETFRAMEWORK35]]>
+    </Condition>
+    <CustomAction Id="InstallDirectX" FileKey="DXSETUP.exe" ExeCommand="/silent" Execute="deferred" Impersonate="no" Return="check" />
+    <InstallExecuteSequence>
+      <Custom Action="InstallDirectX" Before="InstallFinalize"><![CDATA[NOT REMOVE]]></Custom>
+    </InstallExecuteSequence>
+  </Product>
+</Wix>
