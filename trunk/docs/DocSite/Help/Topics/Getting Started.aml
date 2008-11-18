@@ -1,15 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <topic id="10407d29-3a6c-49cc-8c77-e96cd4659780" revisionNumber="0">
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <section>
-      <title>Getting Started</title>
-      <content>
-        <para>
-          Getting started with SlimDX is easy, but the steps are not necessarily obvious.
-          This guide should help anyone interested to begin developing SlimDX based applications.
-        </para>
-      </content>
-    </section>
+    <introduction>
+      <para>
+        Getting started with SlimDX is easy, but the steps are not necessarily obvious.
+        This guide should help anyone interested to begin developing SlimDX based applications.
+      </para>
+    </introduction>
 
     <section>
       <title>Prequisites</title>

@@ -216,7 +216,7 @@
 	</xsl:template>
 
 	<xsl:template name="head">
-		<include item="header" />
+		<!--<include item="header" />-->
 	</xsl:template>
 
 	<xsl:template name="body">
