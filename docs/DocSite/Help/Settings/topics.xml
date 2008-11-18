@@ -11,6 +11,7 @@
     <topic id="598b267f-52e6-4adb-906b-879c0bc8c736" file="Object Lifetimes.aml" />
     <topic id="1db9c09e-396b-4631-b48e-2e5b4895c49b" file="Handling Bitness.aml" />
   </topic>
+  <topic id="39736a8d-047e-4395-bae5-1faa9b549ab3" file="Custom Builds.aml" />
   <topic id="50d38541-4add-4911-b088-d29a017ed068" file="Deployment Guide.aml" />
   <topic id="3f421301-4a9f-446a-b9e6-87adf8d2f850" file="Reference.aml">
     <stoc project="Project" />
