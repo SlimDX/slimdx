@@ -359,11 +359,6 @@
     <Content Include="Help\Presentation\Style\Configuration\sandcastle.help2x.config" />
     <Content Include="Help\Settings\topics.xml" />
     <Content Include="Images\sdx_icon_black.png" />
-    <None Include="Help\Presentation\Style\Transforms\.svn\all-wcprops" />
-    <None Include="Help\Presentation\Style\Transforms\.svn\entries" />
-    <None Include="Help\Presentation\Style\Transforms\.svn\format" />
-    <None Include="Help\Presentation\Style\Transforms\.svn\prop-base\main_sandcastle.xsl.svn-base" />
-    <None Include="Help\Presentation\Style\Transforms\.svn\text-base\main_sandcastle.xsl.svn-base" />
     <None Include="Help\Schemas\base.xsd" />
     <None Include="Help\Schemas\base.xsx">
       <DependentUpon>base.xsd</DependentUpon>
@@ -465,6 +460,10 @@
     <None Include="Help\Topics\Contact Us.cmp">
       <DependentUpon>Contact Us.aml</DependentUpon>
     </None>
+    <None Include="Help\Topics\Custom Builds.aml" />
+    <None Include="Help\Topics\Custom Builds.cmp">
+      <DependentUpon>Custom Builds.aml</DependentUpon>
+    </None>
     <None Include="Help\Topics\Deployment Guide.aml" />
     <None Include="Help\Topics\Deployment Guide.cmp">
       <DependentUpon>Deployment Guide.aml</DependentUpon>
@@ -516,10 +515,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Help\Art\" />
     <Folder Include="Help\bin\" />
-    <Folder Include="Help\Presentation\Style\Transforms\.svn\props\" />
-    <Folder Include="Help\Presentation\Style\Transforms\.svn\tmp\prop-base\" />
-    <Folder Include="Help\Presentation\Style\Transforms\.svn\tmp\props\" />
-    <Folder Include="Help\Presentation\Style\Transforms\.svn\tmp\text-base\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />

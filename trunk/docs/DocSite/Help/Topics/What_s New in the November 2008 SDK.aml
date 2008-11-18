@@ -1,25 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <topic id="27464930-9654-4a6e-873c-4b6991e2f8c3" revisionNumber="0">
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <section>
-      <title>What's Changed in the November 2008 SlimDX SDK</title>
-      <content>
-        <para>
-          The November release is an incremental release, with relatively few new features added. Instead, we focused on fixing outstanding bugs,
-          cleaning up the source internally, working on the build system, and making the library more usable. We started integrating unit testing into our 
-          project, and will continue to add more tests until the entire library is covered. Even the relatively few tests we've added have
-          exposed corner cases and bugs in our implementation, and we believe the addition of more tests will only make the library more stable.
-        </para>
-        <para>
-          Another issue we focused on was distribution. After receiving numerous questions and noticing general confusion regarding
-          library distribution, we decided to work towards making things on that end easier. In the November release the library has
-          been split into two installers. One will install the SlimDX SDK, and includes the samples, documentation, and the SlimDX binary. 
-          The other will act as an end user installer, and will install the components necessary for SlimDX applications
-          to run on a non-developer computer. See the <link xlink:href="50d38541-4add-4911-b088-d29a017ed068">Deployment Guide</link> for more information on this subject.
-        </para>
-      </content>
-    </section>
-    
+    <introduction>
+      <para>
+        The November release is an incremental release, with relatively few new features added. Instead, we focused on fixing outstanding bugs,
+        cleaning up the source internally, working on the build system, and making the library more usable. We started integrating unit testing into our
+        project, and will continue to add more tests until the entire library is covered. Even the relatively few tests we've added have
+        exposed corner cases and bugs in our implementation, and we believe the addition of more tests will only make the library more stable.
+      </para>
+      <para>
+        Another issue we focused on was distribution. After receiving numerous questions and noticing general confusion regarding
+        library distribution, we decided to work towards making things on that end easier. In the November release the library has
+        been split into two installers. One will install the SlimDX SDK, and includes the samples, documentation, and the SlimDX binary.
+        The other will act as an end user installer, and will install the components necessary for SlimDX applications
+        to run on a non-developer computer. See the <link xlink:href="50d38541-4add-4911-b088-d29a017ed068">Deployment Guide</link> for more information on this subject.
+      </para>
+    </introduction>
+
     <section>
       <title>Full Release Notes</title>
       <content>

@@ -1,27 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <topic id="993669c0-4082-4959-805d-a6451e75ef27" revisionNumber="1">
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <section>
-      <title>SlimDX Software Development Kit</title>
-      <content>
-        <para>
-          SlimDX is a managed library which allows .NET applications to use Microsoft DirectX APIs, as well
-          as several related Microsoft APIs that share similar goals. This role was previously filled for
-          .NET 1.1 applications by Microsoft's own Managed DirectX (MDX) library. However, the age of .NET 1.1,
-          plus Microsoft's lack of interest in continuing MDX has made it necessary to build a new library.
-          Thanks to enthusiastic community support and the invaluable contributions of several other developers
-          who have worked on and with SlimDX, the library has made immense strides towards being a fully viable
-          platform on which to build DirectX based applications. SlimDX is no longer a beta and is considered stable!
-        </para>
-        <para>
-          In addition, SlimDX is open source software, and the complete source code is available to anybody under
-          the MIT/X11 license. Right now we do not offer a downloadable archive of the source code, but you can
-          use a Subversion client to download the source. We recommend TortoiseSVN for this purpose, but any
-          Subversion client will work just as well.
-        </para>
-      </content>
-    </section>
-
+    <introduction>
+      <para>
+        SlimDX is a managed library which allows .NET applications to use Microsoft DirectX APIs, as well
+        as several related Microsoft APIs that share similar goals. This role was previously filled for
+        .NET 1.1 applications by Microsoft's own Managed DirectX (MDX) library. However, the age of .NET 1.1,
+        plus Microsoft's lack of interest in continuing MDX has made it necessary to build a new library.
+        Thanks to enthusiastic community support and the invaluable contributions of several other developers
+        who have worked on and with SlimDX, the library has made immense strides towards being a fully viable
+        platform on which to build DirectX based applications. SlimDX is no longer a beta and is considered stable!
+      </para>
+      <para>
+        In addition, SlimDX is open source software, and the complete source code is available to anybody under
+        the MIT/X11 license. Right now we do not offer a downloadable archive of the source code, but you can
+        use a Subversion client to download the source. We recommend TortoiseSVN for this purpose, but any
+        Subversion client will work just as well.
+      </para>
+    </introduction>
+    
     <section>
       <title>Supported APIs</title>
       <content>

@@ -1,23 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <topic id="50d38541-4add-4911-b088-d29a017ed068" revisionNumber="0">
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <section>
-      <title>Deployment Guide</title>
-      
-      <content>
-        <para>
-          Deployment of SlimDX applications can be relatively simple or complex, depending on the sophistication of the application being deployed and the method of deployment.
-          This document will cover the exact components required for a SlimDX application to run and how best to handle installation of those components on a client system.
-        </para>
-      </content>
-    </section>
-
+    <introduction>
+      <para>
+        Deployment of SlimDX applications can be relatively simple or complex, depending on the sophistication of the application being deployed and the method of deployment.
+        This document will cover the exact components required for a SlimDX application to run and how best to handle installation of those components on a client system.
+      </para>
+    </introduction>
     <section>
       <title>Dependencies</title>
 
       <content>
         <list class="bullet">
-          <listItem>Microsoft .NET Framework 2.0 or later
+          <listItem>
+            Microsoft .NET Framework 2.0 or later
             <para>
               The most fundamental requirement for any SlimDX based application is Microsoft's .NET Framework.
               SlimDX requires a minimum .NET version of <legacyBold>2.0</legacyBold>.
@@ -28,7 +24,8 @@
               This is sufficient to load the SlimDX library and begin using some core components, such as the math library and utilities.
             </para>
           </listItem>
-          <listItem>DirectX Components (November 2008)
+          <listItem>
+            DirectX Components (November 2008)
             <para>
               Most SlimDX based applications will also want to use at least some of DirectX.
               SlimDX is configured to <legacyItalic>delay load</legacyItalic> all of its DirectX DLL dependencies.
