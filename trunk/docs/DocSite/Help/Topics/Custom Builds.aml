@@ -31,7 +31,8 @@
           </listItem>
           <listItem>
             <para>
-              Visual Studio Versions - This section covers how to build SlimDX in different versions of Visual Studio.
+              <link xlink:href="70ba8bb5-61d9-467d-ac5b-ae150a3d534e">Visual Studio Versions</link>
+              - This section covers how to build SlimDX in different versions of Visual Studio.
             </para>
           </listItem>
         </list>
