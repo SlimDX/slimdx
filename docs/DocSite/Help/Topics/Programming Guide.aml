@@ -9,6 +9,29 @@
           wishing to work with SlimDX. Reading them will give insight on design choices taken
           for the library's development, and will help ensure that it is used correctly and efficiently.
         </para>
+        <para>
+          This guide is divided into the following sections:
+        </para>
+        <list class="bullet">
+          <listItem>
+            <para>
+              <link xlink:href="10407d29-3a6c-49cc-8c77-e96cd4659780">Getting Started</link>
+              - This section explains the basics of how to get started with SlimDX.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <link xlink:href="598b267f-52e6-4adb-906b-879c0bc8c736">Object Lifetimes</link>
+              - This section discusses the mechanics behind construction, disposal, and destruction of objects in SlimDX.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <link xlink:href="1db9c09e-396b-4631-b48e-2e5b4895c49b">Handling 32 and 64 Bit Targets</link>
+              - This section covers how to correctly configure a SlimDX application to run properly on both 32 bit and 64 bit systems.
+            </para>
+          </listItem>
+        </list>
       </content>
     </section>
 
