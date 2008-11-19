@@ -24,7 +24,7 @@
           </listItem>
           <listItem>
             <para>
-              Version Configuration - This section covers how SlimDX can be retargeted to use a different version of DirectX SDK than the latest released one.
+              DirectX Versions - This section covers how SlimDX can be retargeted to use a different version of DirectX SDK than the latest released one.
             </para>
           </listItem>
           <listItem>
