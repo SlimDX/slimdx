@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="f8935b39-75cc-4663-9ba0-d7c84f2fb56d" revisionNumber="0">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        This document covers the process used to build the official SlimDX binary that is released to the public.
+        It serves as a guide for both the SlimDX team and developers interested in making custom builds.
+      </para>
+    </introduction>
+
+    <section>
+      <title>Goals</title>
+
+      <content>
+        <para>
+          The main goal of this build process is to create a SlimDX binary that is compatible with as many systems as possible with the least amount of configuration.
+          This means using the most common baselines for .NET and C++ runtime version.
+          SlimDX has always been compatible with .NET 2.0.
+          However, releases of SlimDX prior to November 2008 all depended on dynamically linked versions of the C++ runtime.
+          The exact version was dependent on what exact version the development team was using.
+          As a result, the SlimDX end user runtime, as well as any developers building their own installation packages, were required to include the correct version.
+          (That correct version was itself not always properly documented.)
+          It is primarily this problem that the current build process strives to fix.
+        </para>
+        <para>
+          Extensive testing of various clean installs of Windows XP and Vista and .NET 2.0, 3.0, and 3.5 revealed that the only version of the C++ runtime that could be safely depended on was 2.0 without any service packs.
+          (Note that this does not apply to systems lacking .NET 2.0 or later.)
+          It is impossible to create SlimDX binaries using this version of the C++ runtime in Visual Studio 2008, so the builds are done in Visual Studio 2005.
+          For various reasons, the Visual Studio 2005 installation used to build does have service pack 1 installed, so this dependency is removed as part of the final build process.
+          This is only done for official signed builds of SlimDX and never during development.
+        </para>
+      </content>
+    </section>
+
+    <section>
+      <title>C++ Runtime Configuration</title>
+
+      <content>
+        <para>
+          If left to its own devices, Visual Studio SP1 will create a SlimDX binary that depends on the SP1 version of the C++ runtimes.
+          This behavior is undesirable, because it means that the target system requires .NET 2.0 Service Pack 1 or the Visual C++ 2005 SP1 runtime package, even if .NET 3.5 is installed.
+          That requirement applies to Windows Vista systems as well.
+          It is thus necessary to redirect the built file to use the original, pre-service pack version of the runtime.
+          That redirection is supported in the form of application manifests.
+        </para>
+        <para>
+          Manifests are part of the Windows side-by-side (WinSxS) assembly mechanism.
+          A thorough discussion of WinSxS is beyond the scope of this document.
+          Suffice it to say that modern applications now used a manifest file embedded in the built binary to control their DLL search (amongst other things).
+          This provides more powerful control over what version of a dependency DLL is used than the old search path system.
+          The manifest is simply a specially formatted XML file that signals to the operating system how to select a DLL to load when that dependency is requested.
+          WinSxS also supports policy files, which are able to redirect all applications attempting to use a certain DLL to use a different version instead.
+          Such a policy file is used when the Visual C++ 2005 SP1 runtime is installed to redirect all applications away from the older version of the runtime.
+        </para>
+        <para>
+          Visual Studio 2005 automatically generates and embeds a manifest in its default configuration.
+          This manifest requests the SP1 version of the C++ runtime, so it's not appropriate for us.
+          The SlimDX Public configuration instructs the compiler not to generate a manifest.
+          Instead, the build folder in the source repository contains custom manifests that are used instead to instruct WinSxS to use the original C++ 2005 runtime.
+          One of these manifests is embedded into the SlimDX DLL, and thanks to the SP1 policy file, we will always use the latest version of the 2005 runtime.
+          This works with all current releases of .NET starting with 2.0, and will always work on Windows Vista.
+          Windows 7 has not been tested at the time of writing.
+        </para>
+        <para>
+          The SlimDX assembly cannot be digitally signed until the manifest has been embedded, but signatures cannot be added after the assembly has been built, either.
+          To get around this, the Public configuration delay signs the assembly, and the signing process is completed after the manifest has been embedded.
+          You should not attempt to test or use the delay signed assembly; it is a strictly an intermediate file.
+        </para>
+      </content>
+    </section>
+
+    <section>
+      <title>Official Build Steps</title>
+
+      <content>
+        <para>Note that the steps listed below are still being filled out and may not be comprehensive.</para>
+        <para>
+          <list class="bullet">
+            <listItem>
+              <para>Create a fresh set of Visual Studio 2005 build files.</para>
+            </listItem>
+            <listItem>
+              <para>
+                Open the project in Visual Studio 2005 SP1, and do a Public build of the desired platform.
+                This produces a delay signed executable with no manifest.
+              </para>
+            </listItem>
+            <listItem>
+              <para>
+                Embed the correct manifest (x86 or x64) into the SlimDX DLL. This can be done with the following command line:
+                <code>mt.exe –manifest ..\..\SlimDX.dll.x86.manifest -outputresource:SlimDX.dll;2</code>
+              </para>
+            </listItem>
+            <listItem>
+              <para>
+                Complete the signing process so that the SlimDX DLL is no longer delay signed. This can be done with the following command line:
+                <code>sn -R SlimDX.DLL S:\slimdxKey.snk</code>
+              </para>
+            </listItem>
+          </list>
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>
