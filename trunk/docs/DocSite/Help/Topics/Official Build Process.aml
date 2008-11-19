@@ -88,17 +88,13 @@
             <listItem>
               <para>
                 Embed the correct manifest (x86 or x64) into the SlimDX DLL. This can be done with the following command line:
-                <code>
-mt.exe –manifest ..\..\SlimDX.dll.x86.manifest -outputresource:SlimDX.dll;2
-                </code>
+                <code>mt.exe –manifest ..\..\SlimDX.dll.x86.manifest -outputresource:SlimDX.dll;2</code>
               </para>
             </listItem>
             <listItem>
               <para>
                 Complete the signing process so that the SlimDX DLL is no longer delay signed. This can be done with the following command line:
-                <code>
-sn -R SlimDX.DLL S:\slimdxKey.snk
-                </code>
+                <code>sn -R SlimDX.DLL S:\slimdxKey.snk</code>
               </para>
             </listItem>
           </list>

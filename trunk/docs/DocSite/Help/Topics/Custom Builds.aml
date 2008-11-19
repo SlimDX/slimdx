@@ -19,12 +19,14 @@
         <list class="bullet">
           <listItem>
             <para>
-              Official Build Process - This section covers the process used to create the official SlimDX build that is released to the public.
+              <link xlink:href="f8935b39-75cc-4663-9ba0-d7c84f2fb56d">Official Build Process</link>
+              - This section covers the process used to create the official SlimDX build that is released to the public.
             </para>
           </listItem>
           <listItem>
             <para>
-              DirectX Versions - This section covers how SlimDX can be retargeted to use a different version of DirectX SDK than the latest released one.
+              <link xlink:href="8dae9bb0-ad12-4c93-a4cd-8715c4694e54">DirectX Versions</link>
+              - This section covers how SlimDX can be retargeted to use a different version of DirectX SDK than the latest released one.
             </para>
           </listItem>
           <listItem>
