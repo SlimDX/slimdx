@@ -1,14 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <topic id="28607cc6-92e6-4585-85ac-d080e489a9a6" revisionNumber="0">
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        This section contains articles that relay important and useful information for developers
+        wishing to work with SlimDX. Reading them will give insight on design choices taken
+        for the library's development, and will help ensure that it is used correctly and efficiently.
+      </para>
+    </introduction>
+
     <section>
       <title>Programming Guide</title>
+      
       <content>
-        <para>
-          This section contains articles that relay important and useful information for developers
-          wishing to work with SlimDX. Reading them will give insight on design choices taken
-          for the library's development, and will help ensure that it is used correctly and efficiently.
-        </para>
         <para>
           This guide is divided into the following sections:
         </para>

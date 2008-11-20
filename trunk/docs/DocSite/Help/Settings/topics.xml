@@ -16,7 +16,13 @@
     <topic id="8dae9bb0-ad12-4c93-a4cd-8715c4694e54" file="DirectX Versions.aml" />
     <topic id="70ba8bb5-61d9-467d-ac5b-ae150a3d534e" file="Visual Studio Versions.aml" />
   </topic>
-  <topic id="50d38541-4add-4911-b088-d29a017ed068" file="Deployment Guide.aml" />
+  <topic id="50d38541-4add-4911-b088-d29a017ed068" file="Deployment Guide.aml">
+    <topic id="2182dbe0-c28f-4efa-94a5-85e41db3947e" file="Installation.aml" />
+    <topic id="11a5d549-0aef-4262-9971-b92b8c16e4fc" file="Uninstallation.aml" />
+    <topic id="ce2c6a61-a922-43bf-85f4-7888fb8971b9" file="Deployment Testing.aml" />
+    <topic id="a2beac1b-ae9d-4695-8520-5731221e8f60" file="Integrating the Runtime.aml" />
+    <topic id="ce55d4f2-33c3-4677-8ad4-e2ac0a56fa2e" file="Customizing the Runtime.aml" />
+  </topic>
   <topic id="3f421301-4a9f-446a-b9e6-87adf8d2f850" file="Reference.aml">
     <stoc project="Project" />
   </topic>

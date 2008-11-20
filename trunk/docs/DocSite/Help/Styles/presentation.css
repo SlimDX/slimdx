@@ -36,6 +36,7 @@ div#control {
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 	z-index: 2;
+	position: fixed;
 }
 
 span.productTitle {

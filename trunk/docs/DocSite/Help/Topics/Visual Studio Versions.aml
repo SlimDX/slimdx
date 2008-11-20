@@ -17,7 +17,11 @@
           Building SlimDX in VS 2005 is a very simple task. The root MSBuild project contains a target, <codeInline>Create2005Environment</codeInline>, that runs a set of custom build steps.
           These build steps automatically downgrade the projects and solutions to 2005, injecting ".2005" into the file name just before the extension.
           The <codeInline>Create2005Environment</codeInline> target can be invoked with the following command line in the Visual Studio Command Prompt:
-          <code>msbuild /t:Create2005Environment SlimDX.proj</code>
+        </para>
+        <para>
+          <command>msbuild /t:Create2005Environment SlimDX.proj</command>
+        </para>
+        <para>
           This command should be run in the trunk/build directory that contains the project files.
         </para>
       </content>
