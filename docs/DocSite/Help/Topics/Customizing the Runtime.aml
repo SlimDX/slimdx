@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="ce55d4f2-33c3-4677-8ad4-e2ac0a56fa2e" revisionNumber="0">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        It's possible that the official SlimDX Runtime installation package will be insufficient or inappropriate for your needs.
+        This is unlikely, and we strongly recommend that you read <link xlink:href="a2beac1b-ae9d-4695-8520-5731221e8f60">Integrating the Runtime</link> to see if that is a more reasonable approach to solving your problem.
+        However, in the very unlikely case that you do actually need to modify the installer, this guide will help ensure that you do so correctly.
+        This is not recommended for any kind of public product, and should only be considered inside corporate intranets and similar private setups.
+        Integration will be a better choice than customization for nearly all developers.
+      </para>
+    </introduction>
+
+    <section>
+      <title>Modifying the Installation Script</title>
+
+      <content>
+        <para>
+          The SlimDX SDK includes a WiX installer script in the <application>Redist</application> subdirectory.
+          There is also a version of the script in our Subversion repository, but this is not intended for public consumption.
+          The one included with the SDK has been modified in several ways.
+          Most importantly, it does not use our product GUID.
+          The Id is specified simply as <literal>*</literal>.
+          This directs the compiler to generate a new GUID every time the script is compiled.
+          It's recommended that you copy this script elsewhere and fill in a proper fixed GUID for yourself.
+          You should change the product name and other attributes as appropriate as well.
+        </para>
+        <para>
+          Note that when you change the GUID, the installer becomes a separate product from our official runtime (this is intended).
+          It will have its own entry in the Windows program uninstallation list and its own MSI file.
+          You are responsible for uninstalling this new product, and doing so will not affect the official runtime in any way, even if they register identical assemblies in the Global Assembly Cache.
+          Windows Installer is capable of reference counting these situations correctly.
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

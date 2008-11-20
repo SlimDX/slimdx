@@ -4,70 +4,52 @@
     <introduction>
       <para>
         Deployment of SlimDX applications can be relatively simple or complex, depending on the sophistication of the application being deployed and the method of deployment.
-        This document will cover the exact components required for a SlimDX application to run and how best to handle installation of those components on a client system.
+        This section covers all of the issues in deploying SlimDX based applications to user systems.
+        It is strongly recommended that you be familiar with all of the information in this section before building an installer or deploying your application.
+        There are a number of important decisions to be made about how to use SlimDX and how to install its dependencies.
+        The pages in this section will help you make the best decisions for your needs.
       </para>
     </introduction>
+
     <section>
-      <title>Dependencies</title>
+      <title>Deployment Guide</title>
 
       <content>
+        <para>
+          This guide is divided into the following sections:
+        </para>
         <list class="bullet">
           <listItem>
-            Microsoft .NET Framework 2.0 or later
             <para>
-              The most fundamental requirement for any SlimDX based application is Microsoft's .NET Framework.
-              SlimDX requires a minimum .NET version of <legacyBold>2.0</legacyBold>.
-              Any later version may be substituted successfully (up to .NET 3.5 tested at the time of writing).
-              Windows Vista includes a suitable version of .NET out of the box and so no further work is needed.
-              Previous versions of SlimDX also required the Visual C++ Runtime, however, since the November 2008 release SlimDX uses the same version that is included with .NET itself.
-              (September 2008 required the Visual C++ 2008 runtime, and most versions previous to that required the Visual C++ 2005 SP1 runtime.)
-              This is sufficient to load the SlimDX library and begin using some core components, such as the math library and utilities.
+              <link xlink:href="2182dbe0-c28f-4efa-94a5-85e41db3947e">Installation</link>
+              - This section covers all of the information necessary to install a SlimDX based application correctly and completely.
             </para>
           </listItem>
           <listItem>
-            DirectX Components (November 2008)
             <para>
-              Most SlimDX based applications will also want to use at least some of DirectX.
-              SlimDX is configured to <newTerm>delay load</newTerm> all of its DirectX DLL dependencies.
-              This means that none of it is required until an application actually tries to use that component.
-              (Note that Direct3DX is forcibly loaded along with Direct3D in the November 2008 release; this may change in future versions.)
-              Because SlimDX releases are matched with DirectX SDK releases, the versions of the two match up.
-              The November 2008 release of SlimDX is built on the November 2008 release of DirectX, which uses Direct3DX version 40.
-              An end user can install the November 2008 DirectX redistributable package, or any later version, and their system will be correctly configured.
+              <link xlink:href="11a5d549-0aef-4262-9971-b92b8c16e4fc">Uninstallation</link>
+              - This section covers all of the information necessary to install a SlimDX based application correctly and completely.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <link xlink:href="ce2c6a61-a922-43bf-85f4-7888fb8971b9">Testing</link>
+              - This section explains how to test that an installation has been successful and that there are no deployment bugs, before giving your product to users.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <link xlink:href="a2beac1b-ae9d-4695-8520-5731221e8f60">Integrating the Runtime</link>
+              - Explains how to integrate the SlimDX Runtime installation into your own installer for situations where the stock installer is not appropriate.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <link xlink:href="ce55d4f2-33c3-4677-8ad4-e2ac0a56fa2e">Customizing the Runtime</link>
+              - Explains how to correctly customize the SlimDX Runtime installer for situations where the stock installer is not appropriate.
             </para>
           </listItem>
         </list>
-      </content>
-    </section>
-
-    <section>
-      <title>Deployment</title>
-
-      <content>
-        <para>
-          The first component to deploy to a client system is the .NET Framework.
-          Because is is a rather large package (around 22 megabytes), and also fairly common, we recommend that you direct your users to the Microsoft website to download and install it themselves.
-          This is especially true because the exact version of the Framework required will depend on your application, and may not match the minimum requirement of SlimDX itself.
-        </para>
-        <para>
-          For the remaining DirectX dependencies, developers may choose to direct the user to download the SlimDX End User Redistributable package, or embed it in their own installer.
-          This package installs a minimal compressed subset of the DirectX components containing only what is required for SlimDX applications.
-          It also registers the signed SlimDX assembly in the Global Assembly Cache as a shared assembly, thus allowing other applications to use it as well.
-          If you intend to set up SlimDX as a shared assembly, it is strongly recommended that you use the redistributable package.
-          SlimDX versions can be identified in the GAC using the last two pieces of the version number (the first two match the base framework version, currently 2.0).
-          The third value is the SlimDX release number, which is 8 in the November 2008 release.
-          The last value corresponds to the Direct3DX version number for the SDK used to build SlimDX, which is 40 in the November 2008 release.
-          Note that the source code for the redistributable is a WiX script and accompanying Visual Studio project, which is included in the SDK and may be customized if desired.
-        </para>
-        <para>
-          SlimDX can also be used as a private assembly; developers may choose to use either the publicly released version or a customized build in this case.
-          If you do use a customized build, please set it up as a private assembly and do <legacyBold>not</legacyBold> install it to the Global Assembly Cache.
-          We also ask that when using a private build, you change the version number, preferably using a 0 for the major version or changing the format entirely.
-          In either case, the SlimDX redistributable package is probably not an appropriate choice.
-          You can point users to the correct version of the DirectX redistributable on Microsoft's site, or to the much smaller DirectX web installer also hosted by Microsoft.
-          Alternately you can package the redistributable with your own installer, or create a customized minimal redistributable like SlimDX does.
-          Note that the Microsoft DirectX web installer is <legacyBold>not</legacyBold> redistributable and you are required to point users to their website.
-        </para>
       </content>
     </section>
   </developerConceptualDocument>
