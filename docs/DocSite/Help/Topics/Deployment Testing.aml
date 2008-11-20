@@ -9,7 +9,7 @@
         The SlimDX team uses virtual machine based testing instead, which has a number of advantages.
       </para>
     </introduction>
-    
+
     <section>
       <title>Virtual Machine Software</title>
 
@@ -45,23 +45,25 @@
     <section>
       <title>Hardware Graphics Acceleration</title>
 
-      <para>
-        Unfortunately, Virtual PC does not support hardware acceleration of 3D graphics.
-        As a result, any attempts to initialize a hardware Direct3D device, regardless of version, will fail.
-        Typically the error description is <errorInline>Not Available</errorInline>.
-        You are allowed to create a reference device, however the reference device is only available in the debug version of the DirectX runtimes.
-        In other words, it can't be used without a full installation of the SDK, which will interfere with testing an installer.
-      </para>
-      <para>
-        For the vast majority of applications, it is not actually necessary to test that it can run and render correctly.
-        (At least for the purposes of testing installation and deployment.)
-        What is usually checked is simply that all the dependent libraries can actually be loaded cleanly.
-        Even though you cannot create a Direct3D device inside a virtual machine system, you can still load the relevant DLLS simply by entering a function that eventually tries to create a Device.
-        Actually creating the device is completely unnecessary.
-        If you are testing inside a virtual machine, we suggest that you simply inject a call (possibly to Environment.Exit) to terminate the application just before the Direct3D device is created.
-        (It's also recommended that you make a note via your logging subsystem that the initialization did not crash but terminated as expected.)
-        If you don't see a crash, then you know that the Direct3D and D3DX libraries were loaded successfully, and there should be no installation related problems.
-      </para>
+      <content>
+        <para>
+          Unfortunately, Virtual PC does not support hardware acceleration of 3D graphics.
+          As a result, any attempts to initialize a hardware Direct3D device, regardless of version, will fail.
+          Typically the error description is <errorInline>Not Available</errorInline>.
+          You are allowed to create a reference device, however the reference device is only available in the debug version of the DirectX runtimes.
+          In other words, it can't be used without a full installation of the SDK, which will interfere with testing an installer.
+        </para>
+        <para>
+          For the vast majority of applications, it is not actually necessary to test that it can run and render correctly.
+          (At least for the purposes of testing installation and deployment.)
+          What is usually checked is simply that all the dependent libraries can actually be loaded cleanly.
+          Even though you cannot create a Direct3D device inside a virtual machine system, you can still load the relevant DLLS simply by entering a function that eventually tries to create a Device.
+          Actually creating the device is completely unnecessary.
+          If you are testing inside a virtual machine, we suggest that you simply inject a call (possibly to Environment.Exit) to terminate the application just before the Direct3D device is created.
+          (It's also recommended that you make a note via your logging subsystem that the initialization did not crash but terminated as expected.)
+          If you don't see a crash, then you know that the Direct3D and D3DX libraries were loaded successfully, and there should be no installation related problems.
+        </para>
+      </content>
     </section>
   </developerConceptualDocument>
 </topic>

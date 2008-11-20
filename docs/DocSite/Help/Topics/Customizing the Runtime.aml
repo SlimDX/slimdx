@@ -3,7 +3,7 @@
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        It's possible that the official SlimDX Runtime installation package will be insufficient or inappropriate for your needs.
+        It's possible that the official SlimDX Runtime installation package will be insufficient or inappropriate for your needs and you will need to produce a custom runtime installer instead.
         This is unlikely, and we strongly recommend that you read <link xlink:href="a2beac1b-ae9d-4695-8520-5731221e8f60">Integrating the Runtime</link> to see if that is a more reasonable approach to solving your problem.
         However, in the very unlikely case that you do actually need to modify the installer, this guide will help ensure that you do so correctly.
         This is not recommended for any kind of public product, and should only be considered inside corporate intranets and similar private setups.
