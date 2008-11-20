@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{39CED32B-8B35-4099-B167-F3B228BFE6B4}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -456,6 +456,10 @@
     <None Include="Help\Schemas\__internal.xsx">
       <DependentUpon>__internal.xsd</DependentUpon>
     </None>
+    <None Include="Help\Topics\August 2007.aml" />
+    <None Include="Help\Topics\August 2007.cmp">
+      <DependentUpon>August 2007.aml</DependentUpon>
+    </None>
     <None Include="Help\Topics\Contact Us.aml" />
     <None Include="Help\Topics\Contact Us.cmp">
       <DependentUpon>Contact Us.aml</DependentUpon>
@@ -500,6 +504,10 @@
     <None Include="Help\Topics\Introduction.cmp">
       <DependentUpon>Introduction.aml</DependentUpon>
     </None>
+    <None Include="Help\Topics\June 2008.aml" />
+    <None Include="Help\Topics\June 2008.cmp">
+      <DependentUpon>June 2008.aml</DependentUpon>
+    </None>
     <None Include="Help\Topics\License Information.aml" />
     <None Include="Help\Topics\License Information.cmp">
       <DependentUpon>License Information.aml</DependentUpon>
@@ -507,6 +515,14 @@
     <None Include="Help\Topics\Known Issues.aml" />
     <None Include="Help\Topics\Known Issues.cmp">
       <DependentUpon>Known Issues.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\March 2008.aml" />
+    <None Include="Help\Topics\March 2008.cmp">
+      <DependentUpon>March 2008.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\November 2007.aml" />
+    <None Include="Help\Topics\November 2007.cmp">
+      <DependentUpon>November 2007.aml</DependentUpon>
     </None>
     <None Include="Help\Topics\Object Lifetimes.aml" />
     <None Include="Help\Topics\Object Lifetimes.cmp">
@@ -516,6 +532,10 @@
     <None Include="Help\Topics\Official Build Process.cmp">
       <DependentUpon>Official Build Process.aml</DependentUpon>
     </None>
+    <None Include="Help\Topics\Previous Releases.aml" />
+    <None Include="Help\Topics\Previous Releases.cmp">
+      <DependentUpon>Previous Releases.aml</DependentUpon>
+    </None>
     <None Include="Help\Topics\Programming Guide.aml" />
     <None Include="Help\Topics\Programming Guide.cmp">
       <DependentUpon>Programming Guide.aml</DependentUpon>
@@ -523,6 +543,14 @@
     <None Include="Help\Topics\Reference.aml" />
     <None Include="Help\Topics\Reference.cmp">
       <DependentUpon>Reference.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\September 2007.aml" />
+    <None Include="Help\Topics\September 2007.cmp">
+      <DependentUpon>September 2007.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\September 2008.aml" />
+    <None Include="Help\Topics\September 2008.cmp">
+      <DependentUpon>September 2008.aml</DependentUpon>
     </None>
     <None Include="Help\Topics\Uninstallation.aml" />
     <None Include="Help\Topics\Uninstallation.cmp">
@@ -569,10 +597,13 @@
           <IISUrl>
           </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties IsDocProject="true" ProcessComponentTypeName="DocSite.BuildProcess" DocProjectVersion="1.11.0.0" BuildEngineProviderName="Sandcastle" Sandcastle_Version="2.4.10520.1" Sandcastle_PresentationName="Sandcastle Prototype" Sandcastle_ProduceHelp1x="True" ExternalSources="" Sandcastle_DocumentationSetName="SlimDX" Sandcastle_UseFriendlyHtmlFileNames="True" DoNotAskIncludeOutputInProject="True" DefaultApplyToAll="True" />
+      <UserProperties DefaultApplyToAll="True" DoNotAskIncludeOutputInProject="True" Sandcastle_UseFriendlyHtmlFileNames="True" Sandcastle_DocumentationSetName="SlimDX" ExternalSources="" Sandcastle_ProduceHelp1x="True" Sandcastle_PresentationName="Sandcastle Prototype" Sandcastle_Version="2.4.10520.1" BuildEngineProviderName="Sandcastle" DocProjectVersion="1.11.0.0" ProcessComponentTypeName="DocSite.BuildProcess" IsDocProject="true" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

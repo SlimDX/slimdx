@@ -3,7 +3,7 @@
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        The November release is an incremental release, with relatively few new features added. Instead, we focused on fixing outstanding bugs,
+        The November 2008 release is an incremental release, with relatively few new features added. Instead, we focused on fixing outstanding bugs,
         cleaning up the source internally, working on the build system, and making the library more usable. We started integrating unit testing into our
         project, and will continue to add more tests until the entire library is covered. Even the relatively few tests we've added have
         exposed corner cases and bugs in our implementation, and we believe the addition of more tests will only make the library more stable.
@@ -21,7 +21,7 @@
       <title>Full Release Notes</title>
       <content>
         <para>
-          The following is a list of changes that were made to SlimDX for the November release.
+          The following is a list of changes that were made to SlimDX for the November 2008 release.
         </para>
         <para>
           <list class="bullet">
