@@ -57,7 +57,7 @@
           It also registers the signed SlimDX assembly in the Global Assembly Cache as a shared assembly, thus allowing other applications to use it as well.
           If you intend to set up SlimDX as a shared assembly, it is strongly recommended that you use the redistributable package.
           SlimDX versions can be identified in the GAC using the last two pieces of the version number (the first two match the base framework version, currently 2.0).
-          The third value is the SlimDX release number, which is 8 in the November 2008 release.
+          The third value is the SlimDX release number, which is 6 in the November 2008 release.
           The last value corresponds to the Direct3DX version number for the SDK used to build SlimDX, which is 40 in the November 2008 release.
           Note that the source code for the redistributable is a WiX script and accompanying Visual Studio project, which is included in the SDK and may be customized if desired.
           Please read <link xlink:href="a2beac1b-ae9d-4695-8520-5731221e8f60">Integrating the Runtime</link> and <link xlink:href="ce55d4f2-33c3-4677-8ad4-e2ac0a56fa2e">Customizing the Runtime</link> for more information.

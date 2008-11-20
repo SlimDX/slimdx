@@ -25,7 +25,7 @@
             <linkUri>http://wix.sourceforge.net/manual-wix2/authoring_merge_modules.htm</linkUri>
           </externalLink>
           explains how to create and use merge modules with WiX, but any installation technology that generates MSI files should be able to use merge modules.
-          By adding a merge module to your installer, you automatically all of the installation steps of that merge module.
+          By adding a merge module to your installer, all of the installation steps of that merge module are automatically included.
           This makes it a very useful way to add extra dependencies to your installer easily.
         </para>
         <para>
@@ -36,6 +36,9 @@
           Instead of attempting to customize the script, it's recommended that you create a new merge module WiX script and copy the relevant pieces of the script.
           The pieces you're most likely interested in are the top level Directory tag and everything underneath it, the CustomAction tag, and the InstallExecuteSequence tag.
           Further customization of the Directory tag's contents may be necessary, depending on why exactly you are integrating the installer.
+        </para>
+        <para>
+          We are planning to include a pre-built merge module with the next release of the SDK, but it is not currently available.
         </para>
       </content>
     </section>
