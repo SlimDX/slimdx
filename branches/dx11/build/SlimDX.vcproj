@@ -46,7 +46,6 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/MP"
 				Optimization="0"
-				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;_DEBUG;D3D_DEBUG_INFO;WINVER=0x501;_WIN32_WINNT=0x501;DIRECTINPUT_VERSION=0x0800"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
@@ -65,10 +64,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="d3d11_beta.lib d3dx11.lib user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib $(NOINHERIT)"
-				Version="2.0.3"
+				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib $(NOINHERIT)"
+				Version="0.0.7.40"
 				LinkIncremental="2"
-				DelayLoadDLLs="d3d9.dll;d3dx9_39.dll;d3dx10_39.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_4.dll;xinput1_3.dll;dsound.dll"
+				DelayLoadDLLs="d3d9.dll;d3dx9_40.dll;d3dx10_40.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_5.dll;xinput1_3.dll;dsound.dll"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				RandomizedBaseAddress="1"
@@ -148,10 +147,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib $(NOINHERIT)"
-				Version="2.0.3"
+				AdditionalDependencies="d3d11_beta.lib d3dx11.lib user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib $(NOINHERIT)"
+				Version="0.0.7.40"
 				LinkIncremental="2"
-				DelayLoadDLLs="d3d9.dll;d3dx9_39.dll;d3dx10_39.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_4.dll;xinput1_3.dll;dsound.dll"
+				DelayLoadDLLs="d3d9.dll;d3dx9_40.dll;d3dx10_40.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_5.dll;xinput1_3.dll;dsound.dll"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				RandomizedBaseAddress="1"
@@ -232,9 +231,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib $(NOINHERIT)"
-				Version="2.0.4.38"
+				Version="0.0.7.40"
 				LinkIncremental="1"
-				DelayLoadDLLs="d3d9.dll;d3dx9_39.dll;d3dx10_39.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_4.dll;xinput1_3.dll;dsound.dll"
+				DelayLoadDLLs="d3d9.dll;d3dx9_40.dll;d3dx10_40.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_5.dll;xinput1_3.dll;dsound.dll"
 				GenerateDebugInformation="true"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -314,9 +313,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib $(NOINHERIT)"
-				Version="2.0.3.37"
+				Version="0.0.7.40"
 				LinkIncremental="1"
-				DelayLoadDLLs="d3d9.dll;d3dx9_39.dll;d3dx10_39.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_4.dll;xinput1_3.dll;dsound.dll"
+				DelayLoadDLLs="d3d9.dll;d3dx9_40.dll;d3dx10_40.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_5.dll;xinput1_3.dll;dsound.dll"
 				GenerateDebugInformation="true"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -394,9 +393,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib $(NOINHERIT)"
-				Version="2.0.5.39"
+				Version="2.0.6.40"
 				LinkIncremental="1"
-				DelayLoadDLLs="d3d9.dll;d3dx9_39.dll;d3dx10_39.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_4.dll;xinput1_3.dll;dsound.dll"
+				DelayLoadDLLs="d3d9.dll;d3dx9_40.dll;d3dx10_40.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_5.dll;xinput1_3.dll;dsound.dll"
 				GenerateDebugInformation="true"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -476,9 +475,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib $(NOINHERIT)"
-				Version="2.0.5.39"
+				Version="2.0.6.40"
 				LinkIncremental="1"
-				DelayLoadDLLs="d3d9.dll;d3dx9_39.dll;d3dx10_39.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_4.dll;xinput1_3.dll;dsound.dll"
+				DelayLoadDLLs="d3d9.dll;d3dx9_40.dll;d3dx10_40.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_4.dll;xinput1_3.dll;dsound.dll"
 				GenerateDebugInformation="true"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -1904,10 +1903,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\ComObjectMacro.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\Configuration.cpp"
 				>
 			</File>
@@ -2007,6 +2002,10 @@
 			</File>
 			<File
 				RelativePath="..\source\Utilities.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\VersionConfig.h"
 				>
 			</File>
 			<Filter
@@ -5933,7 +5932,7 @@
 				RelativePath="..\source\direct3d11\Asynchronous.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -5949,7 +5948,7 @@
 				RelativePath="..\source\direct3d11\BlendState.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -5965,7 +5964,7 @@
 				RelativePath="..\source\direct3d11\BlendStateDescription.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -5981,7 +5980,7 @@
 				RelativePath="..\source\direct3d11\Buffer.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -5997,7 +5996,7 @@
 				RelativePath="..\source\direct3d11\BufferDescription.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6013,7 +6012,7 @@
 				RelativePath="..\source\direct3d11\Counter.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6029,7 +6028,7 @@
 				RelativePath="..\source\direct3d11\CounterCapabilities.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6045,7 +6044,7 @@
 				RelativePath="..\source\direct3d11\CounterDescription.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6061,7 +6060,7 @@
 				RelativePath="..\source\direct3d11\CounterMetadata.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6077,7 +6076,7 @@
 				RelativePath="..\source\direct3d11\Debug.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6093,7 +6092,7 @@
 				RelativePath="..\source\direct3d11\DepthStencilOperationDescription.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6109,7 +6108,7 @@
 				RelativePath="..\source\direct3d11\DepthStencilState.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6125,7 +6124,7 @@
 				RelativePath="..\source\direct3d11\DepthStencilStateDescription.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6141,7 +6140,7 @@
 				RelativePath="..\source\direct3d11\DepthStencilView.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6157,7 +6156,7 @@
 				RelativePath="..\source\direct3d11\DepthStencilViewDescription.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6173,7 +6172,7 @@
 				RelativePath="..\source\direct3d11\Device.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6189,7 +6188,7 @@
 				RelativePath="..\source\direct3d11\DeviceChild.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6205,7 +6204,7 @@
 				RelativePath="..\source\direct3d11\DeviceContext.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6220,14 +6219,6 @@
 			<File
 				RelativePath="..\source\direct3d11\Direct3D11Exception.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)11.obj"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\source\direct3d11\Direct3D11Exception.h"
@@ -6241,7 +6232,7 @@
 				RelativePath="..\source\direct3d11\GeometryShader.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6257,7 +6248,7 @@
 				RelativePath="..\source\direct3d11\InputAssemblerWrapper.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6273,7 +6264,7 @@
 				RelativePath="..\source\direct3d11\InputElement.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6289,7 +6280,7 @@
 				RelativePath="..\source\direct3d11\InputLayout.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6305,7 +6296,7 @@
 				RelativePath="..\source\direct3d11\OutputMergerWrapper.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6321,7 +6312,7 @@
 				RelativePath="..\source\direct3d11\PixelShader.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6337,7 +6328,7 @@
 				RelativePath="..\source\direct3d11\RasterizerState.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6353,7 +6344,7 @@
 				RelativePath="..\source\direct3d11\RasterizerStateDescription.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6369,7 +6360,7 @@
 				RelativePath="..\source\direct3d11\RasterizerWrapper.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6385,7 +6376,7 @@
 				RelativePath="..\source\direct3d11\RenderTargetView.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6401,7 +6392,7 @@
 				RelativePath="..\source\direct3d11\RenderTargetViewDescription.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6417,7 +6408,7 @@
 				RelativePath="..\source\direct3d11\Resource.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6433,7 +6424,7 @@
 				RelativePath="..\source\direct3d11\ResourceRegion.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6449,7 +6440,7 @@
 				RelativePath="..\source\direct3d11\ResourceView.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6465,7 +6456,7 @@
 				RelativePath="..\source\direct3d11\ResultCode.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6480,6 +6471,14 @@
 			<File
 				RelativePath="..\source\direct3d11\ShaderBlob.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)11.obj"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\source\direct3d11\ShaderBlob.h"
@@ -6489,7 +6488,7 @@
 				RelativePath="..\source\direct3d11\ShaderBytecode.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6505,7 +6504,7 @@
 				RelativePath="..\source\direct3d11\ShaderMacro.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6521,7 +6520,7 @@
 				RelativePath="..\source\direct3d11\ShaderResourceView.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6537,7 +6536,7 @@
 				RelativePath="..\source\direct3d11\ShaderResourceViewDescription.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6553,7 +6552,7 @@
 				RelativePath="..\source\direct3d11\ShaderSignature.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6573,7 +6572,7 @@
 				RelativePath="..\source\direct3d11\StreamOutputBufferBinding.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6589,7 +6588,7 @@
 				RelativePath="..\source\direct3d11\StreamOutputWrapper.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6605,7 +6604,7 @@
 				RelativePath="..\source\direct3d11\Texture.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6621,7 +6620,7 @@
 				RelativePath="..\source\direct3d11\Texture1D.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6637,7 +6636,7 @@
 				RelativePath="..\source\direct3d11\Texture1DDescription.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6653,7 +6652,7 @@
 				RelativePath="..\source\direct3d11\Texture2D.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6669,7 +6668,7 @@
 				RelativePath="..\source\direct3d11\Texture2DDescription.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6685,7 +6684,7 @@
 				RelativePath="..\source\direct3d11\Texture3D.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6701,7 +6700,7 @@
 				RelativePath="..\source\direct3d11\Texture3DDescription.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6717,7 +6716,7 @@
 				RelativePath="..\source\direct3d11\ThreadPump.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6733,7 +6732,7 @@
 				RelativePath="..\source\direct3d11\ThreadPumpStatus.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6749,7 +6748,7 @@
 				RelativePath="..\source\direct3d11\VertexBufferBinding.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -6765,7 +6764,7 @@
 				RelativePath="..\source\direct3d11\VertexShader.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
