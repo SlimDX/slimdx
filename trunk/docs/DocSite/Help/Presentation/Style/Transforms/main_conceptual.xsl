@@ -180,12 +180,17 @@
         </div>
       </xsl:if>
      
-<!--
-			<div id="toolbar">
+
+			<!--<div id="toolbar">
 				<span class="chickenFeet"><xsl:call-template name="chickenFeet" /></span>
-			</div>
--->
-		</div>
+			</div>-->
+      <div id="toolbar">
+        <span class="chickenFeet">
+          Conceptual Documentation
+        </span>
+      </div>
+
+    </div>
 	</xsl:template>
 
 	<!-- Title in topic -->

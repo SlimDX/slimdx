@@ -1,64 +1,60 @@
 /* page style */
 
-body {
+body
+{
 	margin: 0;
 	background-color: #FFFFFF;
 	padding: 0;
 	font-size: 8.5pt;
 	font-family: verdana, arial, sans-serif;
 	color: #000000;
-    	overflow: hidden;
+	overflow: hidden;
 }
 
-html>body {
+html > body
+{
 	margin: 0;
 	background-color: #FFFFFF;
 	padding: 0;
 	font-size: 8.5pt;
 	font-family: verdana, arial, sans-serif;
 	color: #000000;
-    	overflow: auto;
+	overflow: auto;
 }
 
-table {
+table
+{
 	/* this is a trick to force tables to inherit the body font size */
 	font-size: 100%;
 }
 
 /* non-scrolling (control) region style */
 
-div#control {
+div#control
+{
 	margin: 0;
 	background-color: #D4DFFF;
 	padding: 4px;
-	width: 100%;
 	border-bottom-color: #C8CDDE;
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 	z-index: 2;
-	position: fixed;
 }
 
-span.productTitle {
+span.productTitle
+{
 	font-size: 100%;
 }
 
-span.topicTitle {
+span.topicTitle
+{
 	font-size: 180%;
 	font-weight: bold;
 	color: #003399;
 }
 
-span#chickenFeet {
-	float: left;
-}
-
-span#languageFilter {
-	float: right;
-	height: 1px;
-	max-height: 1px;
-	vertical-align: bottom;
-	overflow: visible;
+span#chickenFeet
+{
 }
 
 /* scrolling (content) region style */
@@ -68,63 +64,72 @@ div#main
 	clear: both;
 	margin: 0;
 	padding: 1em;
-	width: 100%;
 	z-index: 1;
-    overflow: auto;
+	overflow: auto;
 }
 
 /* sections */
 
-div#header {
+div#header
+{
 	font-size: 80%;
 	color: #666666;
 	margin-bottom: 0.5em;
 }
 
-div.summary {
+div.summary
+{
 	margin-top: 0em;
 	margin-bottom: 1em;
 }
 
-div.section {
+div.section
+{
 	margin-bottom: 1em;
 }
 
-div.sectionTitle {
+div.sectionTitle
+{
 	display: inline;
 	font-size: 120%;
 	font-weight: bold;
 	color: #003399;
 }
 
-div.sectionContent {
+div.sectionContent
+{
 	margin-top: 0.2em;
 }
 
-span.subsectionTitle {
+span.subsectionTitle
+{
 	font-weight: bold;
 	font-size: 140%;
 }
 
-div#footer {
+div#footer
+{
 	margin-top: 1em;
 	border-top: thin solid #003399;
 	padding-top: 0.5em;
 }
 
-div#footer p {
+div#footer p
+{
 	margin-top: 0.2em;
 	margin-bottom: 0.2em;
 }
 
 /* authored content (block) */
 
-p {
+p
+{
 	margin-top: 1em;
 	margin-bottom: 1em;
 }
 
-dl {
+dl
+{
 	margin-top: 0.5em;
 	margin-bottom: 0.5em;
 }
@@ -135,19 +140,21 @@ ul
 	margin-bottom: 1em;
 }
 
-ol {
+ol
+{
 	margin-top: 1em;
 	margin-bottom: 1em;
 }
 
-li {
+li
+{
 	margin-top: 0.5em;
 	margin-bottom: 0.5em;
 }
 
 ul.nobullet
 {
-    list-style-type: none;
+	list-style-type: none;
 }
 
 div.code
@@ -156,23 +163,26 @@ div.code
 	width: 100%;
 	background: #EFEFF7;
 	padding: 0.4em;
-    font-family: Consolas, "Courier New", Courier, monospace;
-    font-size: 9pt;
+	font-family: Consolas, "Courier New" , Courier, monospace;
+	font-size: 9pt;
 	margin-bottom: 1em;
 }
 
-pre {
+pre
+{
 	margin: 0;
 	padding: 0;
-    font-family: Consolas, "Courier New", Courier, monospace;
+	font-family: Consolas, "Courier New" , Courier, monospace;
 }
 
-table.authoredTable {
+table.authoredTable
+{
 	width: 100%;
 	margin-bottom: 1em;
 }
 
-table.authoredTable th {
+table.authoredTable th
+{
 	border-bottom-color: #C8CDDE;
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
@@ -183,7 +193,8 @@ table.authoredTable th {
 	font-weight: bold;
 }
 
-table.authoredTable td {
+table.authoredTable td
+{
 	border-bottom-style: solid;
 	border-bottom-color: #C8CDDE;
 	border-bottom-width: 1px;
@@ -195,51 +206,55 @@ table.authoredTable td {
 /*------------------------------ Begin Note Styles -------------------------------*/
 div.alert table
 {
-    border: 0px;
-    font-size: 100%;
-    width: 100%;
-    margin-top: 5px;
-    margin-bottom: 5px;
+	border: 0px;
+	font-size: 100%;
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 div.alert table th
 {
-    text-align: left;
-    background: #EFEFF7;
-    border-bottom-width: 0px;
-    color: #000066;
-    padding-left: 5px;
-    padding-right: 5px;
+	text-align: left;
+	background: #EFEFF7;
+	border-bottom-width: 0px;
+	color: #000066;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 div.alert table td
 {
-    background:	#F7F7FF;
-    border-top-color: #FFFFFF;
-    border-top-style: solid;
-    border-top-width: 1px;
-    padding-left: 5px;
-    padding-right: 5px;
+	background: #F7F7FF;
+	border-top-color: #FFFFFF;
+	border-top-style: solid;
+	border-top-width: 1px;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 /*------------------------------ End Note Styles -------------------------------*/
 
-span.media {
+span.media
+{
 	margin-left: 5px;
 	margin-right: 5px;
 }
 
-div.mediaNear {
+div.mediaNear
+{
 	text-align: left;
 	margin: 1em;
 }
 
-div.mediaFar {
+div.mediaFar
+{
 	text-align: right;
 	margin: 1em;
 }
 
-div.mediaCenter {
+div.mediaCenter
+{
 	text-align: center;
 	margin: 1em;
 }
@@ -248,31 +263,32 @@ div.caption
 {
 	margin-top: 1em;
 	margin-bottom: 1em;
-	font-size:100%;
-	color:#003399;
+	font-size: 100%;
+	color: #003399;
 }
 
 span.captionLead
 {
-  font-weight: bold;
-  margin-right: .5em;
+	font-weight: bold;
+	margin-right: .5em;
 }
 
 /* authored content (inline) */
 
-span.keyword {
-/*	font-weight: bold;*/
+span.keyword
+{
+	/*	font-weight: bold;*/
 }
 
 span.code, span.command
 {
-    font-family: Consolas, "Courier New", Courier, monospace;
+	font-family: Consolas, "Courier New" , Courier, monospace;
 	font-size: 110%;
-	color:	#000066;
+	color: #000066;
 }
 span.literalValue
 {
-	color:#8B0000;
+	color: #8B0000;
 }
 span.ui
 {
@@ -297,11 +313,13 @@ span.label
 
 /* auto-generated controls */
 
-div.langTabs {
+div.langTabs
+{
 	/*width: 100%;*/
 }
 
-div.langTab {
+div.langTab
+{
 	float: left;
 	width: 15%;
 	border-top: 1px solid #C8CDDE;
@@ -314,7 +332,8 @@ div.langTab {
 	font-weight: normal;
 }
 
-div.activeLangTab {
+div.activeLangTab
+{
 	float: left;
 	width: 15%;
 	border-top: 1px solid #C8CDDE;
@@ -327,24 +346,29 @@ div.activeLangTab {
 	font-weight: bold;
 }
 
-table.members {
+table.members
+{
 	/* table-layout: fixed; */
 	width: 100%;
 }
 
-table.members th.iconColumn {
+table.members th.iconColumn
+{
 	width: 60px;
 }
 
-table.members th.nameColumn {
+table.members th.nameColumn
+{
 	width: 40%;
 }
 
-table.members th.descriptionColumn {
+table.members th.descriptionColumn
+{
 	width: 60%;
 }
 
-table.members th {
+table.members th
+{
 	border-bottom-color: #C8CDDE;
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
@@ -355,7 +379,8 @@ table.members th {
 	font-weight: bold;
 }
 
-table.members td {
+table.members td
+{
 	border-bottom-style: solid;
 	border-bottom-color: #C8CDDE;
 	border-bottom-width: 1px;
@@ -365,21 +390,25 @@ table.members td {
 	overflow: hidden;
 }
 
-table.exceptions {
+table.exceptions
+{
 	table-layout: fixed;
 	width: 100%;
 }
 
 
-table.exceptions th.exceptionNameColumn {
+table.exceptions th.exceptionNameColumn
+{
 	width: 40%;
 }
 
-table.exceptions th.exceptionConditionColumn {
+table.exceptions th.exceptionConditionColumn
+{
 	width: 60%;
 }
 
-table.exceptions th {
+table.exceptions th
+{
 	border-bottom-color: #C8CDDE;
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
@@ -390,7 +419,8 @@ table.exceptions th {
 	font-weight: bold;
 }
 
-table.exceptions td {
+table.exceptions td
+{
 	border-bottom-style: solid;
 	border-bottom-color: #C8CDDE;
 	border-bottom-width: 1px;
@@ -399,21 +429,25 @@ table.exceptions td {
 	vertical-align: top;
 }
 
-table.permissions {
+table.permissions
+{
 	table-layout: fixed;
 	width: 100%;
 }
 
 
-table.permissions th.permissionNameColumn {
+table.permissions th.permissionNameColumn
+{
 	width: 40%;
 }
 
-table.permissions th.permissionConditionColumn {
+table.permissions th.permissionConditionColumn
+{
 	width: 60%;
 }
 
-table.permissions th {
+table.permissions th
+{
 	border-bottom-color: #C8CDDE;
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
@@ -424,7 +458,8 @@ table.permissions th {
 	font-weight: bold;
 }
 
-table.permissions td {
+table.permissions td
+{
 	border-bottom-style: solid;
 	border-bottom-color: #C8CDDE;
 	border-bottom-width: 1px;
@@ -433,19 +468,23 @@ table.permissions td {
 	vertical-align: top;
 }
 
-span.obsolete {
+span.obsolete
+{
 	color: red;
 }
 
-span.cs {
+span.cs
+{
 	display: inline;
 }
 
-span.vb {
+span.vb
+{
 	display: none;
 }
 
-span.cpp {
+span.cpp
+{
 	display: none;
 }
 
@@ -456,24 +495,29 @@ span.nu
 
 /* syntax styling */
 
-div.code span.identifier {
-/*	font-weight: bold;*/
+div.code span.identifier
+{
+	/*	font-weight: bold;*/
 }
 
-div.code span.keyword {
+div.code span.keyword
+{
 	color: green;
 }
 
-div.code span.parameter {
+div.code span.parameter
+{
 	font-style: italic;
 	color: purple;
 }
 
-div.code span.literal {
+div.code span.literal
+{
 	color: purple;
 }
 
-div.code span.comment {
+div.code span.comment
+{
 	color: red;
 }
 q
@@ -485,35 +529,40 @@ span.foreignPhrase, span.phrase
 	font-style: italic;
 }
 
-span.placeholder {
+span.placeholder
+{
 	font-style: italic;
 }
 
 span.parameter
 {
-  font-style: italic;
+	font-style: italic;
 }
 
 span.typeparameter
 {
-  font-style: italic;
+	font-style: italic;
 }
 
-a:link {
-	color:	#0000FF;
+a:link
+{
+	color: #0000FF;
 }
 
-a:visited {
-	color:	#0000FF;
+a:visited
+{
+	color: #0000FF;
 }
 
-a:hover {
+a:hover
+{
 	color: #DD7C3B;
 }
 
-MSHelp\:link {
+MSHelp\:link
+{
 	color: blue;
-	hoverColor: #3366ff;
+	hovercolor: #3366ff;
 }
 
 span.italic
@@ -521,19 +570,23 @@ span.italic
 	font-style: italic;
 }
 
-span.nolink {
+span.nolink
+{
 	font-weight: bold;
 }
 
-span.selflink {
+span.selflink
+{
 	font-weight: bold;
 }
 
-table.filter {
+table.filter
+{
 	table-layout: fixed;
 }
 
-tr.tabs td.tab {
+tr.tabs td.tab
+{
 	width: 10em;
 	background: #F7F7FF;
 	padding: 0.2em;
@@ -544,7 +597,8 @@ tr.tabs td.tab {
 	cursor: pointer;
 }
 
-tr.tabs td.activeTab {
+tr.tabs td.activeTab
+{
 	width: 10em;
 	background: #EFEFF7;
 	padding: 0.2em;
@@ -554,34 +608,38 @@ tr.tabs td.activeTab {
 	overflow: hidden;
 }
 
-td.line {
+td.line
+{
 	background: #EFEFF7;
 }
 
-dt {
+dt
+{
 	font-weight: bold;
-    margin-top: 10px;
-    margin-left: 10px;
+	margin-top: 10px;
+	margin-left: 10px;
 }
 
-dl.authored dt {
+dl.authored dt
+{
 	font-weight: bold;
 	margin-top: 5px;
 }
 
-dl.authored dd {
+dl.authored dd
+{
 	margin-left: 20px;
-    margin-bottom: 5px;
+	margin-bottom: 5px;
 }
 
 /* Glossary styles */
 
 h1.glossaryTitle
 {
-  color: #000000;
-  font-size: 140%;
-  margin-top: 10px;
-  margin-bottom: 10px;
+	color: #000000;
+	font-size: 140%;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 div.glossaryDiv
@@ -590,28 +648,28 @@ div.glossaryDiv
 
 h2.glossaryDivHeading
 {
-  color: Black;
-  font-size: 115%;
-  margin-top: 1em;
-  margin-bottom: 0px;
+	color: Black;
+	font-size: 115%;
+	margin-top: 1em;
+	margin-bottom: 0px;
 }
 
 div.glossaryLetterBar
 {
-  font-size: 90%;
+	font-size: 90%;
 }
 
 hr.glossaryRule
 {
-  text-align: left;
-  color: Black;
+	text-align: left;
+	color: Black;
 }
 
 h3.glossaryGroupHeading
 {
-  font-size: 120%;
-  color: Gray;
-  margin: 5px 0 5px 0;
+	font-size: 120%;
+	color: Gray;
+	margin: 5px 0 5px 0;
 }
 
 div.glossaryGroup
@@ -620,36 +678,36 @@ div.glossaryGroup
 
 dl.glossaryGroupList
 {
-  margin: 0;
-  color: Black;
+	margin: 0;
+	color: Black;
 }
 
 dt.glossaryEntry
 {
-  font-weight: bold;
-  margin-left: 2em;
+	font-weight: bold;
+	margin-left: 2em;
 }
 
 dd.glossaryEntry
 {
-  margin-left: 2em;
-  margin-bottom: 2em;
+	margin-left: 2em;
+	margin-bottom: 2em;
 }
 
 dd.glossaryEntry p
 {
-  margin-top: 0;
+	margin-top: 0;
 }
 
 div.relatedEntry
 {
-  margin-bottom: 4px;
+	margin-bottom: 4px;
 }
 
 /* Bibliography */
 div.bibliographStyle
 {
-  padding-top:5px; 
+	padding-top: 5px;
 }
 
 span.bibliographyNumber
@@ -658,12 +716,12 @@ span.bibliographyNumber
 
 span.bibliographyAuthor
 {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 span.bibliographyTitle
 {
-  font-style: italic;
+	font-style: italic;
 }
 
 span.bibliographyPublisher
@@ -672,7 +730,7 @@ span.bibliographyPublisher
 
 sup.citation a:link a:visited a:active
 {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 /* autoOutline styles */
