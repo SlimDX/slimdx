@@ -20,6 +20,9 @@ namespace DocScanner
 
 		string GetFileForMethod(MethodDefinition methodDef)
 		{
+			if(methodDef.Body == null)
+				return null;
+
 			SequencePoint sp = methodDef.Body.Instructions[0].SequencePoint;
 			return sp.Document.Url;
 		}
@@ -27,6 +30,10 @@ namespace DocScanner
 		string GetFileForType(string typename)
 		{
 			TypeDefinition typeDef = m_moduleDef.Types[typename];
+			if(typeDef.Methods.Count == 0)
+			{
+				return null;
+			}
 			return GetFileForMethod(typeDef.Methods[0]);
 		}
 
