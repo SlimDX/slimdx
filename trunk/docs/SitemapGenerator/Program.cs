@@ -21,7 +21,7 @@ namespace SitemapGenerator
 				if(topic.Attributes["file"].Value == string.Empty)
 					continue;
 
-				string name = HttpUtility.UrlEncode((string) topic.Attributes["name"].Value);
+				var name = HttpUtility.UrlEncode((string) topic.Attributes["name"].Value);
 				m_urlList.Add(rootString + name);
 
 				AddTopic(rootString + name + "/", topic);
@@ -30,8 +30,8 @@ namespace SitemapGenerator
 
 		static void WriteSitemap()
 		{
-			FileStream stream = File.OpenWrite("sitemap.xml");
-			StreamWriter writer = new StreamWriter(stream);
+			var stream = File.OpenWrite("sitemap.xml");
+			var writer = new StreamWriter(stream);
 
 			writer.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			writer.WriteLine("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
