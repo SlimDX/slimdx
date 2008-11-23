@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Xml;
+using System.Diagnostics;
 
 namespace DocScanner
 {
@@ -25,6 +26,8 @@ namespace DocScanner
 
 	public partial class ScanResultsWindow : Form
 	{
+		SymbolEngine m_Symbols;
+
 		public ScanResultsWindow()
 		{
 			InitializeComponent();
@@ -112,6 +115,8 @@ namespace DocScanner
 				if(addItem)
 					ResultsList.Items.Add(name);
 			}
+
+			m_Symbols = new SymbolEngine(assemblyPath);
 		}
 
 		private void CopyMenuItem_Click(object sender, EventArgs e)
@@ -142,6 +147,31 @@ namespace DocScanner
 				ResultsList.SelectedIndex = index;
 				ItemContextMenu.Show(ResultsList, e.X, e.Y);
 			}
+		}
+
+		private void OpenHeaderFile()
+		{
+			string file = m_Symbols.GetFileForSymbol((string) ResultsList.SelectedItem);
+			if(file != null)
+			{
+				//SlimDX doc comments always live in the header but the SymbolEngine
+				//almost always returns source files, so we try to find the header instead
+				string header = Path.ChangeExtension(file, "h");
+				if(File.Exists(header))
+					file = header;
+
+				System.Diagnostics.Process.Start(file);
+			}
+		}
+
+		private void ResultsList_DoubleClick(object sender, EventArgs e)
+		{
+			OpenHeaderFile();
+		}
+
+		private void GoToHeaderMenuItem_Click(object sender, EventArgs e)
+		{
+			OpenHeaderFile();
 		}
 	}
 }
