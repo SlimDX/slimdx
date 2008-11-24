@@ -251,26 +251,23 @@ namespace SlimDX
 	
 	void Utilities::CheckArrayBounds( Array^ data, int offset, int% count )
 	{
-		if( offset < 0 || offset >= data->Length )
-			throw gcnew ArgumentOutOfRangeException( "offset" );
+		if( data == nullptr )
+			throw gcnew ArgumentNullException( "data" );
 
-		if( count == 0 )
-			count = data->Length - offset;
-
-		if( count < 0 || count > data->Length - offset )
-			throw gcnew ArgumentOutOfRangeException( "count" );
+		CheckBounds( 0, data->Length, offset, count );
 	}
 	
 	void Utilities::CheckBounds( int lowerBound, int size, int offset, int% count )
 	{
-		if( offset < lowerBound || offset >= (lowerBound + size) )
+		if( offset < lowerBound )
 			throw gcnew ArgumentOutOfRangeException( "offset" );
+		if( count < 0 )
+			throw gcnew ArgumentOutOfRangeException( "count" );
+		if( offset + count > size )
+			throw gcnew ArgumentException( "The sum of offset and count is greater than the buffer length." );
 			
 		if( count == 0 )
 			count = size - offset;
-
-		if( count < 0 || count > size - offset )
-			throw gcnew ArgumentOutOfRangeException( "count" );
 	}
 	
 	generic<typename T>

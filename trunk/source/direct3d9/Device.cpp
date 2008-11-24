@@ -981,9 +981,6 @@ namespace Direct3D9
 
 	Result Device::SetVertexShaderConstant( int startRegister, array<bool>^ data, int offset, int count )
 	{
-		if( data == nullptr )
-			throw gcnew ArgumentNullException( "data" );
-
 		Utilities::CheckArrayBounds( data, offset, count );
 
 		array<BOOL>^ boolData = gcnew array<BOOL>( data->Length );

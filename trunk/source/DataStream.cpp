@@ -203,32 +203,17 @@ namespace SlimDX
 		if( !m_CanWrite )
 			throw gcnew NotSupportedException();
 
-		Int64 size = static_cast<Int64>( sizeof(T) );
+		Int64 elementSize = static_cast<Int64>( sizeof(T) );
+		if( m_Position + elementSize > m_Size )
+			throw gcnew EndOfStreamException();
 
-		if( m_Position + size > m_Size )
-			throw gcnew InvalidOperationException();
-
-		memcpy( m_Buffer + m_Position, &value, static_cast<size_t>( size ) );
-		m_Position += size;
+		memcpy( m_Buffer + m_Position, &value, static_cast<size_t>( elementSize ) );
+		m_Position += elementSize;
 	}
 	
 	void DataStream::Write( array<Byte>^ buffer, int offset, int count )
 	{
-		if( !m_CanWrite )
-			throw gcnew NotSupportedException();
-		if( buffer == nullptr )
-			throw gcnew ArgumentNullException( "buffer" );
-		if( offset < 0 || offset >= buffer->Length )
-			throw gcnew ArgumentOutOfRangeException( "offset" );
-		if( count < 0 || offset + count > buffer->Length )
-			throw gcnew ArgumentOutOfRangeException( "count" );
-		if( m_Position + count > m_Size )
-			throw gcnew InvalidOperationException();
-
-		pin_ptr<Byte> pinnedBuffer = &buffer[offset];
-		memcpy( m_Buffer + m_Position, pinnedBuffer, count );
-
-		m_Position += count;
+		WriteRange<Byte>( buffer, offset, count );
 	}
 
 	generic<typename T> where T : value class
@@ -237,24 +222,15 @@ namespace SlimDX
 		if( !m_CanWrite )
 			throw gcnew NotSupportedException();
 		
-		Int64 size = static_cast<Int64>( sizeof(T) );
+		Utilities::CheckArrayBounds( data, offset, count );
 
-		if( data == nullptr )
-			throw gcnew ArgumentNullException( "data" );
-		if( offset < 0 || offset > data->Length - 1 )
-			throw gcnew ArgumentOutOfRangeException( "offset" );
-		if( count < 0 )
-			throw gcnew ArgumentOutOfRangeException( "count" );
-		if( count == 0 )
-			count = data->Length;
-		if( offset + count > data->Length )
-			throw gcnew ArgumentOutOfRangeException( "data" );
-		if( (m_Position + count * size) > m_Size )
-			throw gcnew InvalidOperationException();
+		Int64 elementSize = static_cast<Int64>( sizeof(T) );
+		if( (m_Position + count * elementSize) > m_Size )
+			throw gcnew EndOfStreamException();
 
 		pin_ptr<T> pinnedData = &data[offset];
-		memcpy( m_Buffer + m_Position, pinnedData, static_cast<size_t>( size * count ) );
-		m_Position += size * count;
+		memcpy( m_Buffer + m_Position, pinnedData, static_cast<size_t>( elementSize ) * count );
+		m_Position += elementSize * count;
 	}
 	
 	void DataStream::WriteRange( IntPtr source, Int64 count )
@@ -267,7 +243,7 @@ namespace SlimDX
 		if( count < 0 )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 		if( m_Position + count > m_Size )
-			throw gcnew InvalidOperationException();
+			throw gcnew EndOfStreamException();
 
 		memcpy( m_Buffer + m_Position, source.ToPointer(), static_cast<size_t>( count ) );
 		m_Position += count;
@@ -279,35 +255,37 @@ namespace SlimDX
 		if( !m_CanRead )
 			throw gcnew NotSupportedException();
 
+		Int64 elementSize = static_cast<Int64>( sizeof(T) );
+		if( Length - m_Position < elementSize )
+			throw gcnew EndOfStreamException();
+
 		T result;
-		Int64 size = static_cast<Int64>( sizeof(T) );
-
-		if( Length - m_Position < size )
-			throw gcnew InvalidOperationException();
-
-		memcpy( &result, m_Buffer + m_Position, (size_t) size );
-		m_Position += size;
+		memcpy( &result, m_Buffer + m_Position, static_cast<size_t>( elementSize ) );
+		m_Position += elementSize;
 		return result;
 	}
 	
 	int DataStream::Read( array<Byte>^ buffer, int offset, int count )
 	{
+		return ReadRange<Byte>( buffer, offset, count );
+	}
+
+	generic<typename T> where T : value class
+	int DataStream::ReadRange( array<T>^ buffer, int offset, int count )
+	{
 		if( !m_CanRead )
 			throw gcnew NotSupportedException();
-		if( buffer == nullptr )
-			throw gcnew ArgumentNullException( "buffer" );
-		if( offset < 0 || offset >= buffer->Length )
-			throw gcnew ArgumentOutOfRangeException( "offset" );
-		if( count < 0 || offset + count > buffer->Length )
-			throw gcnew ArgumentOutOfRangeException( "count" );
+		
+		Utilities::CheckArrayBounds( buffer, offset, count );
 
-		int actualCount = min( static_cast<int>(Length - m_Position), count );
+		//Truncate the count to the end of the stream
+		Int64 elementSize = static_cast<Int64>( sizeof(T) );
+		size_t actualCount = min( static_cast<size_t>((Length - m_Position) / elementSize), static_cast<size_t>( count ) );
 
-		pin_ptr<Byte> pinnedBuffer = &buffer[offset];
-		memcpy( pinnedBuffer, m_Buffer + m_Position, actualCount );
-
-		m_Position += actualCount;
-		return actualCount;
+		pin_ptr<T> pinnedBuffer = &buffer[0];
+		memcpy( pinnedBuffer, m_Buffer + m_Position, static_cast<size_t>( actualCount * elementSize ) );
+		m_Position += actualCount * elementSize;
+		return static_cast<int>( actualCount );
 	}
 
 	generic<typename T> where T : value class
@@ -317,10 +295,11 @@ namespace SlimDX
 			throw gcnew NotSupportedException();
 		if( count < 0 )
 			throw gcnew ArgumentOutOfRangeException( "count" );
-			
-		size_t elementSize = sizeof(T);
-		unsigned int actualCount = min( static_cast<unsigned int>((Length - m_Position) / elementSize), static_cast<unsigned int>( count ) );
-		array<T>^ result = gcnew array<T>( actualCount );
+		
+		//Truncate the count to the end of the stream
+		Int64 elementSize = static_cast<Int64>( sizeof(T) );
+		size_t actualCount = min( static_cast<size_t>((Length - m_Position) / elementSize), static_cast<size_t>( count ) );
+		array<T>^ result = gcnew array<T>( static_cast<int>( actualCount ) );
 
 		pin_ptr<T> pinnedBuffer = &result[0];
 		memcpy( pinnedBuffer, m_Buffer + m_Position, actualCount * elementSize );
