@@ -182,6 +182,21 @@ namespace SlimDX
 		virtual int Read( array<System::Byte>^ buffer, int offset, int count ) override;
 
 		/// <summary>
+		/// Reads a sequence of elements from the current stream into a target buffer and
+		/// advances the position within the stream by the number of bytes read.
+		/// </summary>
+		/// <param name="buffer">An array of values to be read from the stream.</param>
+		/// <param name="offset">The zero-based byte offset in buffer at which to begin storing
+		/// the data read from the current stream.</param>
+		/// <param name="count">The maximum number of bytes to be read from the current stream.</param>
+		/// <returns>The number of bytes read from the stream.</returns>
+		/// <exception cref="NotSupportedException">This stream does not support reading.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="buffer" /> is a null reference.</exception>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="offset" /> or <paramref name="count" /> leads outside the bounds of <paramref name="buffer" />.</exception>
+		generic<typename T> where T : value class
+		int ReadRange( array<T>^ buffer, int offset, int count );
+
+		/// <summary>
 		/// Reads an array of values from the current stream, and advances the current position
 		/// within this stream by the number of bytes written.
 		/// </summary>
