@@ -32,6 +32,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes a display mode.
 		/// </summary>
+		/// <unmanaged>DXGI_MODE_DESC</unmanaged>
 		public value class ModeDescription : System::IEquatable<ModeDescription>
 		{
 			int m_Width;

@@ -36,6 +36,7 @@ namespace SlimDX
 		/// <summary>
 		/// An interface for controlling debug state and validating pipeline settings.
 		/// </summary>
+		/// <unmanaged>ID3D10Debug</unmanaged>
 		public ref class Debug : public ComObject
 		{
 			COMOBJECT(ID3D10Debug, Debug);

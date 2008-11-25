@@ -35,6 +35,7 @@ namespace SlimDX
 	/// <summary>
 	/// A bounding sphere, specified by a center vector and a radius.
 	/// </summary>
+	/// <unmanaged>None</unmanaged>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 	[System::ComponentModel::TypeConverter( SlimDX::Design::BoundingSphereConverter::typeid )]

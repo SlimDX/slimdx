@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// The SoundEffectWavesReverb object is used to set and retrieve effect parameters on a buffer that supports waves reverberation.
 		/// </summary>
+		/// <unmanaged>IDirectSoundFXWavesReverb</unmanaged>
 		public ref class WavesReverb : public ComObject
 		{
 			COMOBJECT(IDirectSoundFXWavesReverb, WavesReverb);

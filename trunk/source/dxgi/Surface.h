@@ -38,6 +38,7 @@ namespace SlimDX
 		/// <summary>
 		/// A <see cref="Surface"/> implements methods for image-data objects.
 		/// </summary>
+		/// <unmanaged>IDXGISurface</unmanaged>
 		public ref class Surface : public DeviceChild
 		{
 			COMOBJECT(IDXGISurface, Surface);

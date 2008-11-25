@@ -34,6 +34,7 @@ namespace SlimDX
 		/// <summary>
 		/// An object that produces image data.
 		/// </summary>
+		/// <unmanaged>IDXGIDevice</unmanaged>
 		public ref class Device : public ComObject
 		{
 			COMOBJECT(IDXGIDevice, Device);

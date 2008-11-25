@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// The SoundEffectFlanger object is used to set and retrieve effect parameters on a buffer that supports flange.
 		/// </summary>
+		/// <unmanaged>IDirectSoundFXFlanger</unmanaged>
 		public ref class FlangerEffect : public ComObject
 		{
 			COMOBJECT(IDirectSoundFXFlanger, FlangerEffect);

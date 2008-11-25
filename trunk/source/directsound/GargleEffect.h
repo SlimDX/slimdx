@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// The SoundEffectGargle object is used to set and retrieve effect parameters on a buffer that supports amplitude modulation.
 		/// </summary>
+		/// <unmanaged>IDirectSoundFXGargle</unmanaged>
 		public ref class GargleEffect : public ComObject
 		{
 			COMOBJECT(IDirectSoundFXGargle, GargleEffect);

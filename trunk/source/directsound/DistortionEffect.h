@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// The SoundEffectDistortion object is used to set and retrieve effect parameters on a buffer that supports distortion.
 		/// </summary>
+		/// <unmanaged>IDirectSoundFXDistortion</unmanaged>
 		public ref class DistortionEffect : public ComObject
 		{
 			COMOBJECT(IDirectSoundFXDistortion, DistortionEffect);

@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// The SoundEffectParametricEqualizer object is used to set and retrieve effect parameters on a buffer that supports parametric equalizer effects.
 		/// </summary>
+		/// <unmanaged>IDirectSoundFXParamEq</unmanaged>
 		public ref class ParametricEqualizer : public ComObject
 		{
 			COMOBJECT(IDirectSoundFXParamEq, ParametricEqualizer);

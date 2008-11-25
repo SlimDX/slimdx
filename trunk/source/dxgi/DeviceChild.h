@@ -32,6 +32,7 @@ namespace SlimDX
 		/// <summary>
 		/// An object that is bound to a Device.
 		/// </summary>
+		/// <unmanaged>IDXGIDeviceSubObject</unmanaged>
 		public ref class DeviceChild : public ComObject 
 		{
 			COMOBJECT_BASE(IDXGIDeviceSubObject);

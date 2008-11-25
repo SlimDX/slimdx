@@ -31,6 +31,7 @@ namespace SlimDX
 		/// <summary>
 		/// The SoundBuffer3D object is used to retrieve and set parameters that describe the position, orientation, and environment of a sound buffer in 3-D space.
 		/// </summary>
+		/// <unmanaged>IDirectSound3DBuffer</unmanaged>
 		public ref class SoundBuffer3D : public ComObject
 		{
 			COMOBJECT(IDirectSound3DBuffer, SoundBuffer3D);

@@ -35,6 +35,7 @@ namespace SlimDX
 		/// <summary>
 		/// A display subsystem (one or more GPUs, DACs, and video memory).
 		/// </summary>
+		/// <unmanaged>IDXGIAdapter</unmanaged>
 		public ref class Adapter : public ComObject
 		{
 			COMOBJECT(IDXGIAdapter, Adapter);

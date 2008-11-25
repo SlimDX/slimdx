@@ -30,6 +30,7 @@ namespace SlimDX
 	/// <summary>
 	/// Defines a two component vector, using half precision floating point coordinates.
 	/// </summary>
+	/// <unmanaged>D3DXVECTOR2_16F</unmanaged>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 	[System::ComponentModel::TypeConverter( SlimDX::Design::Half2Converter::typeid )]

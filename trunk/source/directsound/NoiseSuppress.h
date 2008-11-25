@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// The NoiseSuppress object is used to set and retrieve parameters on a capture buffer that supports noise suppression. This object requires Microsoft Windows XP or later.
 		/// </summary>
+		/// <unmanaged>IDirectSoundCaptureFXNoiseSuppress</unmanaged>
 		public ref class NoiseSuppress : public ComObject
 		{
 			COMOBJECT(IDirectSoundCaptureFXNoiseSuppress, NoiseSuppress);

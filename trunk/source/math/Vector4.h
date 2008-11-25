@@ -35,6 +35,7 @@ namespace SlimDX
 	/// <summary>
 	/// Defines a four component vector.
 	/// </summary>
+	/// <unmanaged>D3DXVECTOR4</unmanaged>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential, Pack = 4 )]
 	[System::ComponentModel::TypeConverter( SlimDX::Design::Vector4Converter::typeid )]

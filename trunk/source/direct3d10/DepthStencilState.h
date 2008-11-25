@@ -36,6 +36,7 @@ namespace SlimDX
 		/// <summary>
 		/// A state object defining the behavior of the depth and stencil test stages of the output merger. 
 		/// </summary>
+		/// <unmanaged>ID3D10DepthStencilState</unmanaged>
 		public ref class DepthStencilState : public DeviceChild
 		{
 			COMOBJECT(ID3D10DepthStencilState, DepthStencilState);

@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// Represents a compiled shader designed to fill textures with image data.
 		/// </summary>
+		/// <unmanaged>ID3DXTextureShader</unmanaged>
 		public ref class TextureShader : public ComObject
 		{
 			COMOBJECT(ID3DXTextureShader, TextureShader);

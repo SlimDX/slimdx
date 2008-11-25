@@ -29,6 +29,7 @@ namespace SlimDX
 	/// A DataRectangle provides supporting information for a <see cref="SlimDX::DataStream"/> whose
 	/// data is organized within two dimensions (a rectangle).
 	/// </summary>
+	/// <unmanaged>None</unmanaged>
 	public ref class DataRectangle
 	{
 	private:

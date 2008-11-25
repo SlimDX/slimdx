@@ -36,6 +36,7 @@ namespace SlimDX
 		/// <summary>
 		/// A state object defining the behavior of the pixel-blending stage of the output merger. 
 		/// </summary>
+		/// <unmanaged>ID3D10BlendState</unmanaged>
 		public ref class BlendState : public DeviceChild
 		{
 			COMOBJECT(ID3D10BlendState, BlendState);

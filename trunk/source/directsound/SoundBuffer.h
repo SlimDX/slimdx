@@ -35,6 +35,7 @@ namespace SlimDX
 		/// <summary>
 		/// The SoundBuffer object is used to manage sound buffers.
 		/// </summary>
+		/// <unmanaged>IDirectSoundBuffer</unmanaged>
 		public ref class SoundBuffer abstract : public ComObject
 		{
 			COMOBJECT_BASE(IDirectSoundBuffer);

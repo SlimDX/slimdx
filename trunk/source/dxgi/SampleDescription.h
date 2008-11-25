@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes multisample parameters.
 		/// </summary>
+		/// <unmanaged>DXGI_SAMPLE_DESC</unmanaged>
 		public value class SampleDescription : System::IEquatable<SampleDescription>
 		{
 			int m_Count;

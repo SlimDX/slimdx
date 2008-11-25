@@ -29,6 +29,7 @@ namespace SlimDX
 	/// A DataBox provides supporting information for a <see cref="SlimDX::DataStream"/> whose
 	/// data is organized within three dimensions (a box).
 	/// </summary>
+	/// <unmanaged>None</unmanaged>
 	public ref class DataBox
 	{
 	private:

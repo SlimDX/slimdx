@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// The SoundEffectChorus object is used to set and retrieve effect parameters on a buffer that supports chorus.
 		/// </summary>
+		/// <unmanaged>IDirectSoundFXChorus</unmanaged>
 		public ref class ChorusEffect : public ComObject
 		{
 			COMOBJECT(IDirectSoundFXChorus, ChorusEffect);

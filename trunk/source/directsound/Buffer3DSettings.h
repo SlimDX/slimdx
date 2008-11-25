@@ -31,6 +31,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains all information necessary to uniquely describe the location, orientation, and motion of a 3-D sound buffer.
 		/// </summary>
+		/// <unmanaged>DS3DBUFFER</unmanaged>
 		public value class Buffer3DSettings : System::IEquatable<Buffer3DSettings>
 		{
 		internal:

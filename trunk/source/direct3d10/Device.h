@@ -58,6 +58,7 @@ namespace SlimDX
 		/// <summary>
 		/// A virtual adapter for performing rendering.
 		/// </summary>
+		/// <unmanaged>ID3D10Device</unmanaged>
 		public ref class Device : ComObject
 		{
 			COMOBJECT(ID3D10Device, Device);

@@ -36,6 +36,7 @@ namespace SlimDX
 	/// <summary>
 	/// Defines a three component vector.
 	/// </summary>
+	/// <unmanaged>D3DXVECTOR3</unmanaged>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential, Pack = 4 )]
 	[System::ComponentModel::TypeConverter( SlimDX::Design::Vector3Converter::typeid )]

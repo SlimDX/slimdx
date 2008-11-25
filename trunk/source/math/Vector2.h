@@ -37,6 +37,7 @@ namespace SlimDX
 	/// <summary>
 	/// Defines a two component vector.
 	/// </summary>
+	/// <unmanaged>D3DXVECTOR2</unmanaged>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential, Pack = 4 )]
 	[System::ComponentModel::TypeConverter( SlimDX::Design::Vector2Converter::typeid )]

@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes the capabilities of a DirectSound device.
 		/// </summary>
+		/// <unmanaged>DSCAPS</unmanaged>
 		public ref class Capabilities
 		{
 		internal:

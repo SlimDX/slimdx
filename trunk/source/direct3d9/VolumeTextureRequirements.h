@@ -30,6 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains suggested texture creation parameters for volume textures.
 		/// </summary>
+		/// <unmanaged>None</unmanaged>
 		public value class VolumeTextureRequirements : System::IEquatable<VolumeTextureRequirements>
 		{
 		public:

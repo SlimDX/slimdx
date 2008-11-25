@@ -30,6 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains suggested texture creation parameters.
 		/// </summary>
+		/// <unmanaged>None</unmanaged>
 		public value class TextureRequirements : System::IEquatable<TextureRequirements>
 		{
 		public:

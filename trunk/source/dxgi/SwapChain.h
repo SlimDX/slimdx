@@ -44,6 +44,7 @@ namespace SlimDX
 		/// Holds one or more surfaces that store rendered data prior to presenting
 		/// that data to an output.
 		/// </summary>
+		/// <unmanaged>IDXGISwapChain</unmanaged>
 		public ref class SwapChain : public DeviceChild
 		{
 			COMOBJECT(IDXGISwapChain, SwapChain);

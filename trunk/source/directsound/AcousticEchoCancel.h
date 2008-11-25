@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// The CaptureEffectAcousticEchoCancel object is used to set and retrieve parameters on a capture buffer that supports acoustic echo cancellation. This object requires Microsoft® Windows® XP or later operating systems.
 		/// </summary>
+		/// <unmanaged>IDirectSoundCaptureFXAec</unmanaged>
 		public ref class AcousticEchoCancel : public ComObject
 		{
 			COMOBJECT(IDirectSoundCaptureFXAec, AcousticEchoCancel);

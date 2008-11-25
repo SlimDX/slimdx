@@ -41,6 +41,7 @@ namespace SlimDX
 		/// <summary>
 		/// Represents the output of an adapter (such as a monitor).
 		/// </summary>
+		/// <unmanaged>IDXGIOutput</unmanaged>
 		public ref class Output : public ComObject
 		{
 			COMOBJECT(IDXGIOutput, Output);

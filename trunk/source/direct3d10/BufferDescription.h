@@ -30,6 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes a buffer resource.
 		/// </summary>
+		/// <unmanaged>D3D10_BUFFER_DESC</unmanaged>
 		public value class BufferDescription : System::IEquatable<BufferDescription>
 		{
 		private:

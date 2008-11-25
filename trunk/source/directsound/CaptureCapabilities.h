@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes the capabilities of the capture device.
 		/// </summary>
+		/// <unmanaged>DSCCAPS</unmanaged>
 		public value class CaptureCapabilities : System::IEquatable<CaptureCapabilities>
 		{
 		internal:

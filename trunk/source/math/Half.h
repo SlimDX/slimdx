@@ -28,6 +28,7 @@ namespace SlimDX
 	/// <summary>
 	/// A half precision (16 bit) floating point value.
 	/// </summary>
+	/// <unmanaged>D3DXFLOAT16</unmanaged>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 	[System::ComponentModel::TypeConverter( SlimDX::Design::HalfConverter::typeid )]

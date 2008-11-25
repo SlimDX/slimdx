@@ -32,6 +32,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes the capabilities of a DirectSound buffer object.
 		/// </summary>
+		/// <unmanaged>DSBCAPS</unmanaged>
 		public value class BufferCapabilities : System::IEquatable<BufferCapabilities>
 		{
 		internal:

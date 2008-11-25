@@ -32,6 +32,7 @@ namespace SlimDX
 		/// <summary>
 		/// Performs asynchronous data loading and processing.
 		/// </summary>
+		/// <unmanaged>ID3DX10ThreadPump</unmanaged>
 		public ref class ThreadPump : public ComObject
 		{
 			COMOBJECT(ID3DX10ThreadPump, ThreadPump);

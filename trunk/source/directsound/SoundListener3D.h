@@ -30,6 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// The Listener3D object is used to retrieve and set parameters that describe a listener's position, orientation, and listening environment in 3-D space.
 		/// </summary>
+		/// <unmanaged>IDirectSound3DListener</unmanaged>
 		public ref class SoundListener3D : public ComObject
 		{
 			COMOBJECT(IDirectSound3DListener, SoundListener3D);
