@@ -30,6 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// The FullDuplex object represents a full-duplex stream.
 		/// </summary>
+		/// <unmanaged>IDirectSoundFullDuplex</unmanaged>
 		public ref class FullDuplex : public ComObject
 		{
 			COMOBJECT(IDirectSoundFullDuplex, FullDuplex);

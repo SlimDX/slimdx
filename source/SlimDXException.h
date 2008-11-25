@@ -33,6 +33,7 @@ namespace SlimDX
 	/// <summary>
 	/// The base class for errors that occur in SlimDX.
 	/// </summary>
+	/// <unmanaged>None</unmanaged>
 	[System::Serializable]
 	public ref class SlimDXException : public System::Exception
 	{

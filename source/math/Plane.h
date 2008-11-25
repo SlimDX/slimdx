@@ -37,6 +37,7 @@ namespace SlimDX
 	/// <summary>
 	/// Defines a plane in three dimensions.
 	/// </summary>
+	/// <unmanaged>D3DXPLANE</unmanaged>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 	[System::ComponentModel::TypeConverter( SlimDX::Design::PlaneConverter::typeid )]

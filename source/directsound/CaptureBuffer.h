@@ -34,6 +34,7 @@ namespace SlimDX
 		/// <summary>
 		/// The CaptureBuffer object is used to manipulate sound capture buffers.
 		/// </summary>
+		/// <unmanaged>IDirectSoundCaptureBuffer8</unmanaged>
 		public ref class CaptureBuffer : public ComObject
 		{
 			COMOBJECT(IDirectSoundCaptureBuffer8, CaptureBuffer);

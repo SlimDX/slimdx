@@ -31,6 +31,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes properties of a surface.
 		/// </summary>
+		/// <unmanaged>DXGI_SURFACE_DESC</unmanaged>
 		public value class SurfaceDescription : System::IEquatable<SurfaceDescription>
 		{
 			int m_Width;

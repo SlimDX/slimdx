@@ -26,6 +26,7 @@ namespace SlimDX
 	/// <summary>
 	/// Represents the result of a method or operation.
 	/// </summary>
+	/// <unmanaged>HRESULT</unmanaged>
 	public value class Result : System::IEquatable<Result>
 	{
 		int m_Code;

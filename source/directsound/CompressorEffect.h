@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// The SoundEffectCompressor object is used to set and retrieve effect parameters on a buffer that supports compression.
 		/// </summary>
+		/// <unmanaged>IDirectSoundFXCompressor</unmanaged>
 		public ref class CompressorEffect : public ComObject
 		{
 			COMOBJECT(IDirectSoundFXCompressor, CompressorEffect);

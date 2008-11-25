@@ -30,6 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains suggested texture creation parameters for cube textures.
 		/// </summary>
+		/// <unmanaged>None</unmanaged>
 		public value class CubeTextureRequirements : System::IEquatable<CubeTextureRequirements>
 		{
 		public:

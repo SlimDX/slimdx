@@ -36,6 +36,7 @@ namespace SlimDX
 		/// <summary>
 		/// The DirectSound object is used to create buffer objects, manage devices, and set up the environment.
 		/// </summary>
+		/// <unmanaged>IDirectSound8</unmanaged>
 		public ref class DirectSound : public ComObject
 		{
 			COMOBJECT(IDirectSound8, DirectSound);

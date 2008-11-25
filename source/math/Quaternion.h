@@ -33,6 +33,7 @@ namespace SlimDX
 	/// <summary>
 	/// Defines a four dimensional mathematical quaternion.
 	/// </summary>
+	/// <unmanaged>D3DXQUATERNION</unmanaged>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 	[System::ComponentModel::TypeConverter( SlimDX::Design::QuaternionConverter::typeid )]

@@ -36,6 +36,7 @@ namespace SlimDX
 		/// <summary>
 		/// A state object defining the behavior of the rasterizer stage. 
 		/// </summary>
+		/// <unmanaged>ID3D10RasterizerState</unmanaged>
 		public ref class RasterizerState : public DeviceChild
 		{
 			COMOBJECT(ID3D10RasterizerState, RasterizerState);

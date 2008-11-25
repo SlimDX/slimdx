@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes various properties of an Adapter.
 		/// </summary>
+		/// <unmanaged>DXGI_ADAPTER_DESC</unmanaged>
 		public value class AdapterDescription : System::IEquatable<AdapterDescription>
 		{
 			System::String^ m_Description;

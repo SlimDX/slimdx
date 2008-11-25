@@ -31,6 +31,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes a capture buffer.
 		/// </summary>
+		/// <unmanaged>DSCBUFFERDESC</unmanaged>
 		public value class CaptureBufferDescription : System::IEquatable<CaptureBufferDescription>
 		{
 		internal:

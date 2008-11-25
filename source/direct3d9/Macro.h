@@ -32,7 +32,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes preprocessor definitions used by an effect object.
 		/// </summary>
-		/// <unmanaged></unmanaged>
+		/// <unmanaged>D3DXMACRO</unmanaged>
 		public value class Macro : System::IEquatable<Macro>
 		{
 		internal:

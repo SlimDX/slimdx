@@ -33,6 +33,7 @@ namespace SlimDX
 		/// <summary>
 		/// Provides an interface to DirectInput.
 		/// </summary>
+		/// <unmanaged>IDirectInput8W</unmanaged>
 		public ref class DirectInput sealed
 		{
 		private:

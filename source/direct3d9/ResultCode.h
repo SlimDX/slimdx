@@ -28,6 +28,7 @@ namespace SlimDX
 	namespace Direct3D9
 	{
 		/// <summary>Defines result codes that are returned by Direct3D 9 functions.</summary>
+		/// <unmanaged>None</unmanaged>
 		public ref class ResultCode sealed
 		{
 		private:

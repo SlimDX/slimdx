@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// Represents a 3D region of a resource's data.
 		/// </summary>
+		/// <unmanaged>D3D10_BOX</unmanaged>
 		public value class ResourceRegion : System::IEquatable<ResourceRegion>
 		{
 		private:

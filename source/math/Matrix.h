@@ -38,6 +38,7 @@ namespace SlimDX
 	/// <summary>
 	/// Defines a 4x4 matrix.
 	/// </summary>
+	/// <unmanaged>D3DXMATRIX</unmanaged>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential, Pack = 4 )]
 	[System::ComponentModel::TypeConverter( SlimDX::Design::MatrixConverter::typeid )]

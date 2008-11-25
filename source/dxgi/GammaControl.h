@@ -30,6 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes gamma control settings.
 		/// </summary>
+		/// <unmanaged>DXGI_GAMMA_CONTROL</unmanaged>
 		public value class GammaControl : System::IEquatable<GammaControl>
 		{
 			Color3 m_Scale;

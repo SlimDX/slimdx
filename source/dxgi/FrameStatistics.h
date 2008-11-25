@@ -30,6 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// Provides basic rendering statistics. All counts are relative to machine boot. 
 		/// </summary>
+		/// <unmanaged>DXGI_FRAME_STATISTICS</unmanaged>
 		public value class FrameStatistics : System::IEquatable<FrameStatistics>
 		{
 			int m_PresentCount;

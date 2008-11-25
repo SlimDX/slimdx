@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains system-defined identifiers for DirectSound default playback and capture devices.
 		/// </summary>
+		/// <unmanaged>None</unmanaged>
 		public ref class DirectSoundGuid sealed
 		{
 		private: 
@@ -78,6 +79,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains system-defined identifiers for DirectSound capture effects.
 		/// </summary>
+		/// <unmanaged>None</unmanaged>
 		public ref class CaptureEffectGuid sealed
 		{
 		private:
@@ -136,6 +138,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains system-defined identifiers for DirectSound sound effects.
 		/// </summary>
+		/// <unmanaged>None</unmanaged>
 		public ref class SoundEffectGuid sealed 
 		{
 		private:
@@ -218,6 +221,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains system-defined identifiers for DirectSound 3-D Algorithms.
 		/// </summary>
+		/// <unmanaged>None</unmanaged>
 		public ref class DirectSound3DAlgorithmGuid sealed
 		{
 		private:

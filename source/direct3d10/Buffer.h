@@ -38,6 +38,7 @@ namespace SlimDX
 		/// A buffer resource. A buffer is a sequential collection of typed data elements,
 		/// typically used to contain vertex, index or shader constant data.
 		/// </summary>
+		/// <unmanaged>ID3D10Buffer</unmanaged>
 		public ref class Buffer : public Resource
 		{
 			COMOBJECT(ID3D10Buffer, Buffer);

@@ -37,6 +37,7 @@ namespace SlimDX
 		/// <summary>
 		/// Represents a raw shader function stream.
 		/// </summary>
+		/// <unmanaged>ID3DXBuffer</unmanaged>
 		public ref class ShaderBytecode : ComObject
 		{
 			COMOBJECT(ID3DXBuffer, ShaderBytecode);

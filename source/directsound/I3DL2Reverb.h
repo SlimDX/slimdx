@@ -30,6 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// The SoundEffectI3DL2Reverb object is used to set and retrieve effect parameters on a buffer that supports I3DL2 (Interactive 3D Audio Level 2) reverberation effects.
 		/// </summary>
+		/// <unmanaged>IDirectSoundFXI3DL2Reverb</unmanaged>
 		public ref class I3DL2Reverb : public ComObject
 		{
 			COMOBJECT(IDirectSoundFXI3DL2Reverb, I3DL2Reverb);

@@ -30,6 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// The SecondarySoundBuffer object is used to manage sound buffers and effects.
 		/// </summary>
+		/// <unmanaged>IDirectSoundBuffer8</unmanaged>
 		public ref class SecondarySoundBuffer : public SoundBuffer
 		{
 			COMOBJECT(IDirectSoundBuffer8, SecondarySoundBuffer);

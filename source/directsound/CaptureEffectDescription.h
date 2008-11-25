@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains parameters for an effect associated with a capture buffer.
 		/// </summary>
+		/// <unmanaged>DSCEFFECTDESC</unmanaged>
 		public value class CaptureEffectDescription : System::IEquatable<CaptureEffectDescription>
 		{
 		internal:

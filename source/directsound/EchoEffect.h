@@ -28,6 +28,7 @@ namespace SlimDX
 		/// <summary>
 		/// The SoundEffectEcho object is used to set and retrieve effect parameters on a buffer that supports echo.
 		/// </summary>
+		/// <unmanaged>IDirectSoundFXEcho</unmanaged>
 		public ref class EchoEffect : public ComObject
 		{
 			COMOBJECT(IDirectSoundFXEcho, EchoEffect);

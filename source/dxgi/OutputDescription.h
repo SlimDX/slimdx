@@ -30,6 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes various properties of an Output.
 		/// </summary>
+		/// <unmanaged>DXGI_OUTPUT_DESC</unmanaged>
 		public value class OutputDescription : System::IEquatable<OutputDescription>
 		{
 			System::String^ m_DeviceName;

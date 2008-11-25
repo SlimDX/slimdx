@@ -33,6 +33,7 @@ namespace SlimDX
 		/// Provides a type converter to convert <see cref="Matrix"/> objects to and from various 
 		/// other representations.
 		/// </summary>
+		/// <unmanaged>None</unmanaged>
 		public ref class MatrixConverter : System::ComponentModel::ExpandableObjectConverter
 		{
 		public:

@@ -31,6 +31,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes the characteristics of a new buffer object.
 		/// </summary>
+		/// <unmanaged>DSBUFFERDESC</unmanaged>
 		public value class SoundBufferDescription : System::IEquatable<SoundBufferDescription>
 		{
 		internal:

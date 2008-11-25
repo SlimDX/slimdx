@@ -32,6 +32,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes properties of a swap chain.
 		/// </summary>
+		/// <unmanaged>DXGI_SWAP_CHAIN_DESC</unmanaged>
 		public value class SwapChainDescription : System::IEquatable<SwapChainDescription>
 		{
 		private:

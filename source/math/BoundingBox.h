@@ -37,6 +37,7 @@ namespace SlimDX
 	/// <summary>
 	/// An axis aligned bounding box, specified by minimum and maximum vectors.
 	/// </summary>
+	/// <unmanaged>None</unmanaged>
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 	[System::ComponentModel::TypeConverter( SlimDX::Design::BoundingBoxConverter::typeid )]

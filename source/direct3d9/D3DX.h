@@ -36,6 +36,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains miscellaneous constants and methods for use with D3DX.
 		/// </summary>
+		/// <unmanaged>None</unmanaged>
 		public ref class D3DX sealed
 		{
 		private:
