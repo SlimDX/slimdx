@@ -302,7 +302,7 @@ namespace SlimDX
 		array<T>^ result = gcnew array<T>( static_cast<int>( actualCount ) );
 
 		pin_ptr<T> pinnedBuffer = &result[0];
-		memcpy( pinnedBuffer, m_Buffer + m_Position, actualCount * elementSize );
+		memcpy( pinnedBuffer, m_Buffer + m_Position, static_cast<size_t>( actualCount * elementSize ) );
 		m_Position += actualCount * elementSize;
 		return result;
 	}
