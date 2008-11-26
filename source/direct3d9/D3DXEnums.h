@@ -37,6 +37,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies which members of the <see cref="AnimationOutput"/> structure are valid.
 		/// </summary>
+		/// <unmanaged>None</unmanaged>
 		[System::Flags]
 		public enum class AnimationOutputFlags : System::Int32
 		{

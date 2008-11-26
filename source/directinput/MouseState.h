@@ -30,6 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes the state of a mouse device.
 		/// </summary>
+		/// <unmanaged>DIMOUSESTATE2</unmanaged>
 		public ref class MouseState
 		{
 		internal:
