@@ -36,6 +36,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies an interface for handling #include directives in shader or effect files.
 		/// </summary>
+		/// <unmanaged>ID3D10Include</unmanaged>
 		public interface struct Include
 		{
 			/// <summary>

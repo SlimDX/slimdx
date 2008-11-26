@@ -30,6 +30,7 @@ namespace SlimDX
 		/// <summary>
 		/// Describes the state of a joystick device.
 		/// </summary>
+		/// <unmanaged>DIJOYSTATE2</unmanaged>
 		public ref class JoystickState
 		{
 		internal:

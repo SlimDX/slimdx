@@ -32,6 +32,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the cooperative level for a DirectInput device.
 		/// </summary>
+		/// <unmanaged>DISCL</unmanaged>
 		[System::Flags]
 		public enum class CooperativeLevel : System::Int32
 		{
@@ -64,6 +65,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies other attributes of a data format.
 		/// </summary>
+		/// <unmanaged>DIDF</unmanaged>
 		public enum class DataFormatFlag : System::Int32
 		{
 			/// <summary>
@@ -80,6 +82,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the axis mode for the device.
 		/// </summary>
+		/// <unmanaged>DIPROPAXISMODE</unmanaged>
 		public enum class DeviceAxisMode : System::Int32
 		{
 			/// <summary>
@@ -93,6 +96,7 @@ namespace SlimDX
 			Relative = DIPROPAXISMODE_REL
 		};
 
+		/// <unmanaged>DI8DEVCLASS</unmanaged>
 		public enum class DeviceClass : System::Int32
 		{
 			All = DI8DEVCLASS_ALL,
@@ -123,6 +127,7 @@ namespace SlimDX
 			Joystick
 		};
 
+		/// <unmanaged>DIEDFL</unmanaged>
 		[System::Flags]
 		public enum class DeviceEnumerationFlags : System::Int32
 		{
@@ -137,6 +142,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the flags that can be associated with a DirectInput device.
 		/// </summary>
+		/// <unmanaged>DIDC</unmanaged>
 		[System::Flags]
 		public enum class DeviceFlags : System::Int32
 		{
@@ -222,6 +228,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the main type of a DirectInput device.
 		/// </summary>
+		/// <unmanaged>DI8DEVTYPE</unmanaged>
 		public enum class DeviceType : System::Int32
 		{
 			/// <summary>
@@ -1076,6 +1083,7 @@ namespace SlimDX
 			ZAxis
 		};
 
+		/// <unmanaged>DIDOI</unmanaged>
 		public enum class ObjectAspect : System::Int32
 		{
 			Acceleration = DIDOI_ASPECTACCEL,
@@ -1124,6 +1132,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the device type of an object data format.
 		/// </summary>
+		/// <unmanaged>DIDFT</unmanaged>
 		[System::Flags]
 		public enum class ObjectDeviceType : System::Int32
 		{

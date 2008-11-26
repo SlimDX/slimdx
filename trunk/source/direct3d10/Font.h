@@ -33,6 +33,8 @@ namespace SlimDX
 		ref class Sprite;
 		value class FontDescription;
 		
+		/// <summary>Encapsulates all of the textures and resources needed to render a font through a Direct3D 10 device.</summary>
+		/// <unmanaged>ID3DX10Font</unmanaged>
 		public ref class Font : public ComObject
 		{
 			COMOBJECT(ID3DX10Font, Font);

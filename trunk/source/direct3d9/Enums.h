@@ -41,6 +41,7 @@ namespace SlimDX
 		/// <summary>
 		/// Defines stream sources for hardware instancing.
 		/// </summary>
+		/// <unmanaged>D3DSTREAMSOURCE</unmanaged>
 		public enum class StreamSource : System::Int32
 		{
 			/// <summary>
@@ -331,6 +332,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies wrapping options for texture coordinates.
 		/// </summary>
+		/// <unmanaged>D3DWRAPCOORD</unmanaged>
 		[System::Flags]
 		public enum class TextureWrapping : System::Int32
 		{
@@ -684,6 +686,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the flexible vertex format capabilities of the device.
 		/// </summary>
+		/// <unmanaged>D3DFVFCAPS</unmanaged>
 		[System::Flags]
 		public enum class VertexFormatCaps : System::Int32
 		{
@@ -712,6 +715,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies vertex processing capabilities supported by the device.
 		/// </summary>
+		/// <unmanaged>D3DVTXCAPS</unmanaged>
 		[System::Flags]
 		public enum class VertexProcessingCaps
 		{
@@ -777,6 +781,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies possible XFile formats.
 		/// </summary>
+		/// <unmanaged>D3DXF_FILEFORMAT</unmanaged>
 		[System::Flags]
 		public enum class XFileFormat : System::Int32
 		{
@@ -927,6 +932,7 @@ namespace SlimDX
 		/// <summary>
 		/// Defines possible source blending capabilities.
 		/// </summary>
+		/// <unmanaged>D3DBLENDCAPS</unmanaged>
 		[System::Flags]
 		public enum class BlendCaps : System::Int32
 		{
@@ -1027,6 +1033,7 @@ namespace SlimDX
 		};
 
 		/// <summary>Driver-specific capability flags.</summary>
+		/// <unmanaged>D3DCAPS</unmanaged>
 		[System::Flags]
 		public enum class Caps : System::Int32
 		{
@@ -1114,6 +1121,7 @@ namespace SlimDX
 		/// <summary>
 		/// Defines possible character sets for fonts.
 		/// </summary>
+		/// <unmanaged>CHARSET</unmanaged>
 		public enum class CharacterSet : System::Int32
 		{
 			/// <summary>
@@ -1243,6 +1251,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies a set of values that describe the current clip status.
 		/// </summary>
+		/// <unmanaged>D3DCS</unmanaged>
 		[System::Flags]
 		public enum class ClipFlags : System::Int32
 		{
@@ -1337,6 +1346,7 @@ namespace SlimDX
 		/// <summary>
 		/// Flags that enable a per-channel write for the render target color buffer.
 		/// </summary>
+		/// <unmanaged>D3DCOLORWRITEENABLE</unmanaged>
 		[System::Flags]
 		public enum class ColorWriteEnable : System::Int32
 		{
@@ -1414,6 +1424,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies a set of flags that describe the supported compare capabilities of the device.
 		/// </summary>
+		/// <unmanaged>D3DPCMPCAPS</unmanaged>
 		[System::Flags]
 		public enum class CompareCaps : System::Int32
 		{
@@ -1798,6 +1809,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the declaration types supported by the device.
 		/// </summary>
+		/// <unmanaged>D3DDTCAPS</unmanaged>
 		[System::Flags]
 		public enum class DeclarationTypeCaps
 		{
@@ -1996,6 +2008,7 @@ namespace SlimDX
 		/// <summary>
 		/// Flags identifying the capabilities of the device.
 		/// </summary>
+		/// <unmanaged>D3DDEVCAPS</unmanaged>
 		[System::Flags]
 		public enum class DeviceCaps : System::Int32
 		{
@@ -2128,6 +2141,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies formatting options for text rendering.
 		/// </summary>
+		/// <unmanaged>DT</unmanaged>
 		[System::Flags]
 		public enum class DrawTextFormat : System::Int32
 		{
@@ -2190,6 +2204,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies possible driver levels.
 		/// </summary>
+		/// <unmanaged>None</unmanaged>
 		public enum class DriverLevel : System::Int32
 		{
 			/// <summary>
@@ -2328,6 +2343,7 @@ namespace SlimDX
 		/// <summary>
 		/// Device constants that describe the fog mode.
 		/// </summary>
+		/// <unmanaged>D3DFOGMODE</unmanaged>
 		public enum class FogMode : System::Int32
 		{
 			/// <summary>
@@ -2354,6 +2370,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies quality options for font rendering.
 		/// </summary>
+		/// <unmanaged>QUALITY</unmanaged>
 		public enum class FontQuality : System::Int32
 		{
 			/// <summary>
@@ -2395,6 +2412,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies weights for font rendering.
 		/// </summary>
+		/// <unmanaged>FW</unmanaged>
 		public enum class FontWeight : System::Int32
 		{
 			/// <summary>
@@ -2830,6 +2848,7 @@ namespace SlimDX
 		/// <summary>
 		/// Defines constants for query issues.
 		/// </summary>
+		/// <unmanaged>D3DISSUE</unmanaged>
 		[System::Flags]
 		public enum class Issue
 		{
@@ -2869,6 +2888,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the line drawing capabilities of a device.
 		/// </summary>
+		/// <unmanaged>D3DLINECAPS</unmanaged>
 		[System::Flags]
 		public enum class LineCaps : System::Int32
 		{
@@ -3061,6 +3081,7 @@ namespace SlimDX
 		/// <summary>
 		/// Defines pitch and family settings for fonts.
 		/// </summary>
+		/// <unmanaged>(various constants)</unmanaged>
 		[System::Flags]
 		public enum class PitchAndFamily : System::Int32
 		{
@@ -3186,6 +3207,7 @@ namespace SlimDX
 		/// <summary>
 		/// Defines precision levels for font rendering.
 		/// </summary>
+		/// <unmanaged>OUT</unmanaged>
 		public enum class Precision : System::Int32
 		{
 			/// <summary>
@@ -3581,6 +3603,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies sampler values for Render-To-Vertex-Buffer (R2VB).
 		/// </summary>
+		/// <unmanaged>R2VB_VSMP</unmanaged>
 		public enum class R2VBSampler : System::Int32
 		{
 			/// <summary>
@@ -3617,6 +3640,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies information about raster capabilities of the device.
 		/// </summary>
+		/// <unmanaged>D3DPRASTERCAPS</unmanaged>
 		[System::Flags]
 		public enum class RasterCaps : System::Int32
 		{
@@ -4448,6 +4472,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the shading operations that a device supports.
 		/// </summary>
+		/// <unmanaged>D3DPSHADECAPS</unmanaged>
 		[System::Flags]
 		public enum class ShadeCaps : System::Int32
 		{
@@ -4514,6 +4539,7 @@ namespace SlimDX
 		/// <summary>
 		/// Defines a set of stencil operations supported by a device.
 		/// </summary>
+		/// <unmanaged>D3DSTENCILCAPS</unmanaged>
 		[System::Flags]
 		public enum class StencilCaps : System::Int32
 		{
@@ -4566,6 +4592,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies possible stream frequencies.
 		/// </summary>
+		/// <unmanaged>D3DSTREAMSOURCE</unmanaged>
 		public enum class StreamFrequency : System::Int32
 		{
 			/// <summary>
@@ -4582,6 +4609,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the set of texture addressing modes supported by the device.
 		/// </summary>
+		/// <unmanaged>D3DPTADDRESSCAPS</unmanaged>
 		[System::Flags]
 		public enum class TextureAddressCaps : System::Int32
 		{
@@ -4677,6 +4705,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies miscellaneous texture mapping capabilities supported by the device.
 		/// </summary>
+		/// <unmanaged>D3DPTEXTURECAPS</unmanaged>
 		[System::Flags]
 		public enum class TextureCaps : System::Int32
 		{
@@ -4940,6 +4969,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the texture operations supported by the device.
 		/// </summary>
+		/// <unmanaged>D3DTEXOPCAPS</unmanaged>
 		[System::Flags]
 		public enum class TextureOperationCaps : System::Int32
 		{
