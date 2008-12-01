@@ -28,6 +28,7 @@
 #include "../Utilities.h"
 
 #include "../math/Vector2.h"
+#include "../math/Color4.h"
 
 #include "Device.h"
 #include "D3DX.h"
@@ -337,58 +338,41 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	// Native callback used by FillTexture.
 	void WINAPI NativeD3DXFill2D(D3DXVECTOR4 *out, CONST D3DXVECTOR2 *pTexCoord, CONST D3DXVECTOR2 *pTexelSize, LPVOID data)
 	{
-		Fill2DCallback^ callback = nullptr;									// Our callback.
-		Vector2 coordinate = Vector2::Vector2(pTexCoord->x, pTexCoord->y);	// Managed coordinate.
-		Vector2 size = Vector2::Vector2(pTexelSize->x, pTexelSize->y);		// Managed size.
-		Vector4 result;														// Result vector.
+		Fill2DCallback^ callback = nullptr;
+		Vector2 coordinate = Vector2::Vector2(pTexCoord->x, pTexCoord->y);
+		Vector2 size = Vector2::Vector2(pTexelSize->x, pTexelSize->y);
+		Color4 result;
 
-		// Get the delegate.
 		callback = safe_cast<Fill2DCallback^>(Marshal::GetDelegateForFunctionPointer(IntPtr::IntPtr(data), Fill2DCallback::typeid));			
-
-		// Call the callback delegate.
 		result = callback(coordinate, size);
 
-		// Return the 4D vector.
-		out->x = result.X;
-		out->y = result.Y;
-		out->z = result.Z;
-		out->w = result.W;
+		out->x = result.Red;
+		out->y = result.Green;
+		out->z = result.Blue;
+		out->w = result.Alpha;
 	}
 
-	// Native callback used by FillTexture.
 	void WINAPI NativeD3DXFill3D(D3DXVECTOR4 *out, CONST D3DXVECTOR3 *pTexCoord, CONST D3DXVECTOR3 *pTexelSize, LPVOID data)
 	{
-		Fill3DCallback^ callback = nullptr;									// Our callback.
-		Vector3 coordinate = Vector3(pTexCoord->x, pTexCoord->y, pTexCoord->z);			// Managed coordinate.
-		Vector3 size = Vector3(pTexelSize->x, pTexelSize->y, pTexelSize->z);				// Managed size.
-		Vector4 result;														// Result vector.
+		Fill3DCallback^ callback = nullptr;
+		Vector3 coordinate = Vector3(pTexCoord->x, pTexCoord->y, pTexCoord->z);
+		Vector3 size = Vector3(pTexelSize->x, pTexelSize->y, pTexelSize->z);
+		Color4 result;
 
-		// Get the delegate.
 		callback = safe_cast<Fill3DCallback^>(Marshal::GetDelegateForFunctionPointer(IntPtr::IntPtr(data), Fill3DCallback::typeid));			
-
-		// Call the callback delegate.
 		result = callback(coordinate, size);
 
-		// Return the 4D vector.
-		out->x = result.X;
-		out->y = result.Y;
-		out->z = result.Z;
-		out->w = result.W;
+		out->x = result.Red;
+		out->y = result.Green;
+		out->z = result.Blue;
+		out->w = result.Alpha;
 	}
 
-	/// <summary>
-	/// Uses a user-provided function to fill each texel of each mip level of a given texture.
-	/// </summary>
-	/// <param name="callback">A function that uses the signature of the Fill2DCallback delegate.</param>
 	Result Texture::Fill(Fill2DCallback^ callback)
 	{
-		HRESULT hr;		// Error code.
-
-		// Call the function.
-		hr = D3DXFillTexture(InternalPointer, NativeD3DXFill2D, Marshal::GetFunctionPointerForDelegate(callback).ToPointer());
+		HRESULT hr = D3DXFillTexture(InternalPointer, NativeD3DXFill2D, Marshal::GetFunctionPointerForDelegate(callback).ToPointer());
 
 		return RECORD_D3D9(hr);
 	}

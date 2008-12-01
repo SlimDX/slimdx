@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../math/Color4.h"
+
 namespace SlimDX
 {
 	namespace Direct3D9
@@ -37,17 +39,17 @@ namespace SlimDX
 		/// </summary>
 		/// <param name="coordinate">Texture coordinate being sampled.</param>
 		/// <param name="texelSize">Dimensions of the texel.</param>
-		/// <returns>A 4 dimensional vector, representing a color value. X, Y, Z, and W map to R, G, B, and A, respectively.</returns>
+		/// <returns>The desired color of the specified texel.</returns>
 		/// <unmanaged>LPD3DXFILL2D</unmanaged>
-		public delegate Vector4 Fill2DCallback(Vector2 coordinate, Vector2 texelSize);
+		public delegate Color4 Fill2DCallback(Vector2 coordinate, Vector2 texelSize);
 
 		/// <summary>
 		/// Callback function used by 3D texture fill functions.
 		/// </summary>
 		/// <param name="coordinate">Texture coordinate being sampled.</param>
 		/// <param name="texelSize">Dimensions of the texel.</param>
-		/// <returns>A 4 dimensional vector, representing a color value. X, Y, Z, and W map to R, G, B, and A, respectively.</returns>
+		/// <returns>The desired color of the specified texel.</returns>
 		/// <unmanaged>LPD3DXFILL3D</unmanaged>
-		public delegate Vector4 Fill3DCallback(Vector3 coordinate, Vector3 texelSize);
+		public delegate Color4 Fill3DCallback(Vector3 coordinate, Vector3 texelSize);
 	}
 }
