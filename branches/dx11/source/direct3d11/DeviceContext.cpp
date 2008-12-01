@@ -30,6 +30,7 @@
 #include "Direct3D11Exception.h"
 
 #include "Buffer.h"
+#include "CommandList.h"
 #include "CounterCapabilities.h"
 #include "CounterDescription.h"
 #include "CounterMetadata.h"
@@ -190,6 +191,27 @@ namespace Direct3D11
 		InternalPointer->DrawAuto();
 	}
 	
+	CommandList^ DeviceContext::FinishCommandList( bool resetState )
+	{
+		ID3D11CommandList *commandList;
+		HRESULT hr = InternalPointer->FinishCommandList( resetState, &commandList );
+		RECORD_D3D11(hr);
+		if( Result::Last.IsFailure )
+		{
+			return nullptr;
+		}
+
+		return CommandList::FromPointer( commandList );
+	}
+
+	void DeviceContext::ExecuteCommandList( CommandList^ commandList, bool restoreState )
+	{
+		if (commandList == nullptr)
+			throw gcnew ArgumentNullException( "commandList" );
+
+		InternalPointer->ExecuteCommandList( commandList->InternalPointer, restoreState );
+	}
+
 	void DeviceContext::Flush()
 	{
 		InternalPointer->Flush();

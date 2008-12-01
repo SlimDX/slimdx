@@ -32,6 +32,7 @@
 
 #include "Texture.h"
 #include "Device.h"
+#include "DeviceContext.h"
 
 using namespace System;
 using namespace System::IO;
@@ -74,27 +75,22 @@ namespace Direct3D11
 	}
 
 
-	bool Texture::ToFile( Texture^ texture, ImageFileFormat format, String^ fileName )
+	bool Texture::ToFile( DeviceContext^ deviceContext, Texture^ texture, ImageFileFormat format, String^ fileName )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
-		// TODO: Fix or Remove
-		//HRESULT hr = D3DX11SaveTextureToFile( texture->InternalPointer, (D3DX11_IMAGE_FILE_FORMAT) format, pinnedName );
-		HRESULT hr = E_FAIL;
+		HRESULT hr = D3DX11SaveTextureToFile( deviceContext->InternalPointer, texture->InternalPointer, (D3DX11_IMAGE_FILE_FORMAT) format, pinnedName );
 		RECORD_D3D11( hr );
 		
 		return ( FAILED( hr ) );
 	}
 	
-	bool Texture::ToStream( Texture^ texture, ImageFileFormat format, Stream^ stream )
+	bool Texture::ToStream( DeviceContext^ deviceContext, Texture^ texture, ImageFileFormat format, Stream^ stream )
 	{
-		// TODO: Fix or Remove
-//		ID3D11Blob* blob = 0;
-//		HRESULT hr = D3DX11SaveTextureToMemory( texture->InternalPointer, (D3DX11_IMAGE_FILE_FORMAT) format, &blob, 0 );
-		HRESULT hr = E_FAIL;
+		ID3D10Blob* blob = 0;
+		HRESULT hr = D3DX11SaveTextureToMemory( deviceContext->InternalPointer, texture->InternalPointer, (D3DX11_IMAGE_FILE_FORMAT) format, &blob, 0 );
 		if( RECORD_D3D11( hr ).IsFailure )
 			return false;
-		
-		/*
+
 		if( static_cast<SIZE_T>( stream->Length - stream->Position ) < blob->GetBufferSize() )
 			throw gcnew InvalidOperationException( "The specified stream does not have sufficient capacity for the specified texture." );
 		
@@ -104,7 +100,7 @@ namespace Direct3D11
 			stream->WriteByte( bytes[byteIndex] );
 		
 		blob->Release();
-		*/
+
 		return true;
 	}
 

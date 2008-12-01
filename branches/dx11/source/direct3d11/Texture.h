@@ -28,6 +28,7 @@ namespace SlimDX
 	namespace Direct3D11
 	{
 		ref class Device;
+		ref class DeviceContext;
 		
 		public ref class Texture : public Resource
 		{
@@ -50,8 +51,8 @@ namespace SlimDX
 			static Texture^ FromMemory( SlimDX::Direct3D11::Device^ device, array<System::Byte>^ memory );
 			static Texture^ FromStream( SlimDX::Direct3D11::Device^ device, System::IO::Stream^ stream, int sizeInBytes );
 
-			static bool ToFile( Texture^ texture, ImageFileFormat format, System::String^ fileName );
-			static bool ToStream( Texture^ texture, ImageFileFormat format, System::IO::Stream^ stream );
+			static bool ToFile( DeviceContext^ deviceContext, Texture^ texture, ImageFileFormat format, System::String^ fileName );
+			static bool ToStream( DeviceContext^ deviceContext, Texture^ texture, ImageFileFormat format, System::IO::Stream^ stream );
 		};
 	}
 };

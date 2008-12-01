@@ -6209,6 +6209,62 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\direct3d11\CommandList.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)11.obj"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)11.obj"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)11.obj"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)11.obj"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Public|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)11.obj"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Public|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)11.obj"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\source\direct3d11\CommandList.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\direct3d11\Counter.cpp"
 				>
 				<FileConfiguration

@@ -140,6 +140,18 @@ namespace Direct3D11
 	{
 		return m_ImmediateContext;
 	}
+
+	DeviceContext^ Device::CreateDeferredContext()
+	{
+		ID3D11DeviceContext *context;
+		HRESULT hr = InternalPointer->CreateDeferredContext( 0, &context);
+		RECORD_D3D11(hr);
+		if( Result::Last.IsFailure )
+		{
+			return nullptr;
+		}
+		return DeviceContext::FromPointer( context );
+	}
 	
 	CounterCapabilities Device::GetCounterCapabilities()
 	{

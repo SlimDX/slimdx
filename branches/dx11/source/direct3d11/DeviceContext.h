@@ -40,6 +40,7 @@ namespace SlimDX
 	namespace Direct3D11
 	{
 		ref class Buffer;
+		ref class CommandList;
 		ref class DepthStencilView;
 		ref class InputAssemblerWrapper;
 		ref class InputLayout;
@@ -77,7 +78,7 @@ namespace SlimDX
 			literal int MultisampleCountMaximum = D3D11_MAX_MULTISAMPLE_SAMPLE_COUNT;
 			
 			/// <summary>
-			/// Gets the device's input assembler interface.
+			/// Gets the Device Context's input assembler interface.
 			/// </summary>
 			property InputAssemblerWrapper^ InputAssembler
 			{
@@ -85,7 +86,7 @@ namespace SlimDX
 			}
 
 			/// <summary>
-			/// Gets the device's output merger interface.
+			/// Gets the Device Context's output merger interface.
 			/// </summary>
 			property OutputMergerWrapper^ OutputMerger
 			{
@@ -93,7 +94,7 @@ namespace SlimDX
 			}
 
 			/// <summary>
-			/// Gets the device's stream output interface.
+			/// Gets the Device Context's stream output interface.
 			/// </summary>
 			property StreamOutputWrapper^ StreamOutput
 			{
@@ -101,7 +102,7 @@ namespace SlimDX
 			}
 
 			/// <summary>
-			/// Gets the device's rasterizer interface.
+			/// Gets the Device Context's rasterizer interface.
 			/// </summary>
 			property RasterizerWrapper^ Rasterizer
 			{
@@ -109,7 +110,7 @@ namespace SlimDX
 			}
 						
 			/// <summary>
-			/// Constructs a Device object from a marshalled native pointer.
+			/// Constructs a Device Context object from a marshalled native pointer.
 			/// </summary>
 			/// <param name="pointer">The native object pointer.</param>
 			/// <returns>The Device object for the native object.</returns>
@@ -132,7 +133,7 @@ namespace SlimDX
 			void ClearRenderTargetView( RenderTargetView^ view, Color4 color );
 
 			/// <summary>
-			/// Restores all device state to defaults.
+			/// Restores all device context states to defaults.
 			/// </summary>
 			void ClearState();
 			
@@ -219,6 +220,16 @@ namespace SlimDX
 			/// Renders primitive data of an unknown size that was created by a geometry shader.
 			/// </summary>
 			void DrawAuto();
+
+			/// <summary>
+			/// Finalizes the commands issues to the context and creates a CommandList object containing those states.
+			/// </summary>
+			CommandList^ FinishCommandList(bool resetState);
+
+			/// <summary>
+			/// Executes the provided command list on this device context.
+			/// </summary>
+			void ExecuteCommandList( CommandList ^commandList, bool restoreState );
 
 			/// <summary>
 			/// Sends queued commands in the command buffer to the GPU.

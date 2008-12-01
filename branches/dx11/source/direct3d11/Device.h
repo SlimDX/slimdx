@@ -111,6 +111,13 @@ namespace SlimDX
 			/// <param name="pointer">The native object pointer.</param>
 			/// <returns>The Device object for the native object.</returns>
 			static Device^ FromPointer( System::IntPtr pointer );
+
+			/// <summary>
+			/// Constructs a new DeviceContext that represents a deferred context
+			/// on the Device.
+			/// </summary>
+			/// <returns>The newly constructed deferred context on the device.</returns>
+			DeviceContext^ CreateDeferredContext( );
 			
 			/// <summary>
 			/// Gets information about the device's performance counters.
