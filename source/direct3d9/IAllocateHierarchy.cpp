@@ -57,7 +57,7 @@ namespace Direct3D9
 
 		try
 		{
-			frame = m_WrappedInterface->CreateFrame( gcnew String(Name) );
+			frame = m_WrappedInterface->CreateFrame( gcnew String( Name ) );
 		}
 		catch( SlimDXException^ ex)
 		{
@@ -67,8 +67,7 @@ namespace Direct3D9
 		{
 			return E_FAIL;
 		}
-		 
-		// return the unmanaged shim
+
 		*ppNewFrame = frame->Pointer;
 
 		return D3D_OK;
@@ -87,20 +86,20 @@ namespace Direct3D9
 
 		if( pMeshData->Type == D3DXMESHTYPE_MESH )
 		{
+			pMeshData->pMesh->AddRef();
 			meshData = gcnew MeshData( Mesh::FromPointer( pMeshData->pMesh ) );
-			meshData->Mesh->InternalPointer->AddRef();
 			count = meshData->Mesh->FaceCount;
 		}
 		else if( pMeshData->Type == D3DXMESHTYPE_PMESH )
 		{
+			pMeshData->pPMesh->AddRef();
 			meshData = gcnew MeshData( ProgressiveMesh::FromPointer( pMeshData->pPMesh ) );
-			meshData->ProgressiveMesh->InternalPointer->AddRef();
 			count = meshData->ProgressiveMesh->FaceCount;
 		}
 		else if( pMeshData->Type == D3DXMESHTYPE_PATCHMESH )
 		{
+			pMeshData->pPatchMesh->AddRef();
 			meshData = gcnew MeshData( PatchMesh::FromPointer( pMeshData->pPatchMesh ) );
-			meshData->PatchMesh->InternalPointer->AddRef();
 			count = meshData->PatchMesh->PatchCount;
 		}
 
@@ -120,15 +119,15 @@ namespace Direct3D9
 			adjacency[i] = pAdjacency[i];
 
 		SkinInfo^ skinInfo = nullptr;
-		if(pSkinInfo != NULL)
+		if( pSkinInfo != NULL )
 		{
-			skinInfo = SkinInfo::FromPointer( pSkinInfo );
 			pSkinInfo->AddRef();
+			skinInfo = SkinInfo::FromPointer( pSkinInfo );
 		}
 
 		try
 		{
-			meshContainer = m_WrappedInterface->CreateMeshContainer( gcnew String(Name), meshData, materials, 
+			meshContainer = m_WrappedInterface->CreateMeshContainer( gcnew String( Name ), meshData, materials, 
 				effects, adjacency, skinInfo );
 		}
 		catch( SlimDXException^ ex)
@@ -140,7 +139,6 @@ namespace Direct3D9
 			return E_FAIL;
 		}
 
-		// return the unmanaged shim
 		*ppNewMeshContainer = meshContainer->Pointer; 
 
 		return D3D_OK;
@@ -150,7 +148,7 @@ namespace Direct3D9
 	{
 		try
 		{
-			m_WrappedInterface->DestroyFrame( ((FrameShim*)pFrameToFree)->GetFrame() );
+			m_WrappedInterface->DestroyFrame( static_cast<FrameShim*>( pFrameToFree )->GetFrame() );
 		}
 		catch( SlimDXException^ ex)
 		{
@@ -168,7 +166,7 @@ namespace Direct3D9
 	{
 		try
 		{			
-			m_WrappedInterface->DestroyMeshContainer( ((MeshContainerShim*)pMeshContainerToFree)->GetMeshContainer() );
+			m_WrappedInterface->DestroyMeshContainer( static_cast<MeshContainerShim*>( pMeshContainerToFree )->GetMeshContainer() );
 		}
 		catch( SlimDXException^ ex)
 		{
