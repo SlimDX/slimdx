@@ -3384,6 +3384,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d9\DefaultAllocateHierarchy.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\DefaultAllocateHierarchy.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d9\IAllocateHierarchy.cpp"
 					>
 				</File>

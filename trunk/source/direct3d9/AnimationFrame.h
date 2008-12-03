@@ -47,7 +47,7 @@ namespace SlimDX
 			Frame^ GetFrame() { return m_Frame; }
 		};
 
-		public ref class Frame abstract : System::IEquatable<Frame^>
+		public ref class Frame : System::IEquatable<Frame^>
 		{
 		internal:
 			property D3DXFRAME *Pointer;
@@ -64,10 +64,8 @@ namespace SlimDX
 			static void BuildManagedMeshes( MeshContainer^% mesh, MeshContainerShim* pMesh );
 			static void RegisterAnimations( Frame^ frame, LPD3DXANIMATIONCONTROLLER animation );
 
-		protected:
-			Frame();
-
 		public:
+			Frame();
 			virtual ~Frame();
 			!Frame();
 

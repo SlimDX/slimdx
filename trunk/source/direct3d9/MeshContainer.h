@@ -43,7 +43,7 @@ namespace SlimDX
 			}
 		};
 
-		public ref class MeshContainer abstract
+		public ref class MeshContainer
 		{
 		internal:
 			property D3DXMESHCONTAINER *Pointer;
@@ -55,10 +55,8 @@ namespace SlimDX
 			MeshData^ m_MeshData;
 			SkinInfo^ m_SkinInfo;
 
-		protected:
-			MeshContainer();
-
 		public:
+			MeshContainer();
 			virtual ~MeshContainer();
 			!MeshContainer();
 
