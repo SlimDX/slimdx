@@ -28,7 +28,11 @@ struct VSOutput
 
 float3 Diffuse(float3 normal)
 {
-	return max(0.0f, dot(normal, LightDirection.xyz));
+	float cosTheta;
+
+	cosTheta = max(0.0f, dot(normal, LightDirection.xyz));
+	
+	return (cosTheta);
 }
 
 VSOutput VS(VSInput input, uniform int boneCount)
@@ -66,10 +70,10 @@ VSOutput VS(VSInput input, uniform int boneCount)
 }
 
 int CurrentBoneCount = 2;
-VertexShader shaderArray[4] = { compile vs_2_0 VS(1),
-								compile vs_2_0 VS(2),
-								compile vs_2_0 VS(3),
-								compile vs_2_0 VS(4)
+VertexShader shaderArray[4] = { compile vs_1_1 VS(1),
+								compile vs_1_1 VS(2),
+								compile vs_1_1 VS(3),
+								compile vs_1_1 VS(4)
 							  };
 
 technique SkinnedMesh
