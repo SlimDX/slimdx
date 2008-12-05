@@ -8,7 +8,7 @@ float4 MaterialDiffuse	= {0.8f, 0.8f, 0.8f, 1.0f};
 
 static const int MaxMatrices = 26;
 float4x3 WorldMatrices[MaxMatrices];
-float4x1 ViewProjectionMatrix;
+float4x4 ViewProjectionMatrix;
 
 struct VSInput
 {
