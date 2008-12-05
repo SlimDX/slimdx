@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,47 +19,17 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+using System;
 
-namespace SlimDX
+namespace SkinnedMesh
 {
-	namespace Direct3D9
-	{
-		ref class ProgressiveMesh;
-		ref class PatchMesh;
-
-		public ref class MeshData
-		{
-		private:
-			MeshDataType type;
-			Mesh^ mesh;
-			ProgressiveMesh^ progressiveMesh;
-			PatchMesh^ patchMesh;
-
-		public:
-			MeshData( Mesh^ mesh );
-			MeshData( ProgressiveMesh^ mesh );
-			MeshData( PatchMesh^ mesh );
-
-			property MeshDataType Type
-			{
-				MeshDataType get() { return type; }
-			}
-
-			property Mesh^ Mesh
-			{
-				SlimDX::Direct3D9::Mesh^ get() { return mesh; }
-			}
-
-			property ProgressiveMesh^ ProgressiveMesh
-			{
-				SlimDX::Direct3D9::ProgressiveMesh^ get() { return progressiveMesh; }
-			}
-
-			property PatchMesh^ PatchMesh
-			{
-				SlimDX::Direct3D9::PatchMesh^ get() { return patchMesh; }
-			}
-		};
-	}
+    static class Program
+    {
+        [STAThread]
+        static void Main()
+        {
+            using (SkinnedMesh game = new SkinnedMesh())
+                game.Run();
+        }
+    }
 }

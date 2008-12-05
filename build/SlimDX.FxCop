@@ -46,6 +46,7 @@
   <Target Name="$(ProjectDir)/../samples/Direct3D9/Particles/bin/x86/Debug/Particles.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/SimpleLighting/bin/x86/Debug/SimpleLighting.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/SimpleTriangle/bin/x86/Debug/SimpleTriangle.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/Direct3D9/SkinnedMesh/bin/x86/Debug/SkinnedMesh.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Direct3D9/Water/bin/x86/Debug/Water.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/DirectInput/Joystick/bin/x86/Debug/Joystick.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/DirectInput/Keyboard/bin/x86/Debug/Keyboard.exe" Analyze="True" AnalyzeAllChildren="True" />
@@ -672,6 +673,18 @@
               <Issue>
                <Item>'DataStream.ReadRange&lt;T&gt;(int)'</Item>
                <Item>'T'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Write(System.Byte[],System.Int32,System.Int32)">
+            <Messages>
+             <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Created="2008-12-05 02:10:48Z">
+              <Issue>
+               <Item>'DataStream.Write(byte[], int, int)'</Item>
+               <Item>'data'</Item>
+               <Item>'buffer'</Item>
+               <Item>'Stream.Write(byte[], int, int)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -18523,6 +18536,180 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/../samples/Direct3D9/SkinnedMesh/bin/x86/Debug/SkinnedMesh.exe">
+    <Modules>
+     <Module Name="skinnedmesh.exe">
+      <Messages>
+       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Created="2008-12-05 02:10:48Z">
+        <Issue>
+         <Item>'SkinnedMesh.exe'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="SkinnedMesh">
+        <Types>
+         <Type Name="CustomAllocateHierarchy">
+          <Members>
+           <Member Name="#GenerateSkinnedMesh(SkinnedMesh.CustomMeshContainer)">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-12-05 02:10:48Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'CustomAllocateHierarchy.GenerateSkinnedMesh(CustomMeshContainer)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="CustomFrame">
+          <Members>
+           <Member Name="#CombinedTransform">
+            <Accessors>
+             <Accessor Name="#get_CombinedTransform()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
+                <Issue>
+                 <Item>'CustomFrame.CombinedTransform.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="CustomMeshContainer">
+          <Members>
+           <Member Name="#AttributeTable">
+            <Accessors>
+             <Accessor Name="#get_AttributeTable()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
+                <Issue>
+                 <Item>'CustomMeshContainer.AttributeTable.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+             <Accessor Name="#set_AttributeTable(SlimDX.Direct3D9.AttributeRange[])">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
+                <Issue>
+                 <Item>'CustomMeshContainer.AttributeTable.set(AttributeRange[])'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#BoneCombinations">
+            <Accessors>
+             <Accessor Name="#get_BoneCombinations()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
+                <Issue>
+                 <Item>'CustomMeshContainer.BoneCombinations.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#BoneMatricesLookup">
+            <Accessors>
+             <Accessor Name="#get_BoneMatricesLookup()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
+                <Issue>
+                 <Item>'CustomMeshContainer.BoneMatricesLookup.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+             <Accessor Name="#set_BoneMatricesLookup(SkinnedMesh.CustomFrame[])">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
+                <Issue>
+                 <Item>'CustomMeshContainer.BoneMatricesLookup.set(CustomFrame[])'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#Influences">
+            <Accessors>
+             <Accessor Name="#get_Influences()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
+                <Issue>
+                 <Item>'CustomMeshContainer.Influences.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SkinnedMesh">
+          <Members>
+           <Member Name="#Dispose(System.Boolean)">
+            <Messages>
+             <Message Id="textSprite" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Created="2008-12-05 02:10:48Z">
+              <Issue>
+               <Item>'SkinnedMesh'</Item>
+               <Item>'SkinnedMesh.textSprite'</Item>
+               <Item>'Sprite'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#projectionMatrix">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-12-05 02:10:48Z">
+              <Issue>
+               <Item>'SkinnedMesh.projectionMatrix'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SetupBoneMatrices(SkinnedMesh.CustomMeshContainer)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
+              <Issue>
+               <Item>'SkinnedMesh.SetupBoneMatrices(CustomMeshContainer)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SetupBoneMatrices(SlimDX.Direct3D9.Frame)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
+              <Issue>
+               <Item>'SkinnedMesh.SetupBoneMatrices(Frame)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#viewMatrix">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-12-05 02:10:48Z">
+              <Issue>
+               <Item>'SkinnedMesh.viewMatrix'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
    <Target Name="$(ProjectDir)/../samples/DirectInput/Joystick/bin/x86/Debug/Joystick.exe">
     <Modules>
      <Module Name="joystick.exe">
@@ -20395,8 +20582,14 @@
    <Rule TypeName="IndexersShouldNotBeMultidimensional" Category="Microsoft.Design" CheckId="CA1023">
     <Resolution Name="Default">Redesign indexer {0} to use a single string or integer value as its index.</Resolution>
    </Rule>
+   <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
+    <Resolution Name="Default">Because assembly {0} contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Resolution>
+   </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
+    <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
    </Rule>
    <Rule TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223">
     <Resolution Name="Default">'{0}' should differ from other members by more than its return type.</Resolution>

@@ -63,7 +63,7 @@ namespace Direct3D9
 	{
 		MeshContainer^ container = gcnew MeshContainer();
 		container->Name = name;
-        container->Mesh = meshData;
+        container->MeshData = meshData;
         container->SetMaterials( materials );
         container->SetEffects( effectInstances );
         container->SetAdjacency( adjacency );
