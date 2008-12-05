@@ -41,8 +41,6 @@ namespace SkinnedMesh
         Matrix projectionMatrix;
         Matrix viewMatrix;
 
-        float x, y, z;
-
         public Device Device
         {
             get { return GraphicsDeviceManager.Direct3D9.Device; }
@@ -73,18 +71,6 @@ namespace SkinnedMesh
                 GraphicsDeviceManager.ToggleFullScreen();
             else if (e.KeyCode == Keys.Escape)
                 Exit();
-            else if (e.KeyCode == Keys.W)
-                z += 1.0f;
-            else if (e.KeyCode == Keys.S)
-                z -= 1.0f;
-            else if (e.KeyCode == Keys.A)
-                x -= 1.0f;
-            else if (e.KeyCode == Keys.D)
-                x += 1.0f;
-            else if (e.KeyCode == Keys.Q)
-                y += 1.0f;
-            else if (e.KeyCode == Keys.E)
-                y -= 1.0f;
         }
 
         protected override void Initialize()
@@ -94,8 +80,8 @@ namespace SkinnedMesh
             effect = Effect.FromFile(Device, "SkinnedMesh.fx", ShaderFlags.None);
             rootFrame = Frame.LoadHierarchyFromX(Device, "tiny.x", MeshFlags.Managed, new CustomAllocateHierarchy(), null, out animationController);
 
-            SetupBoneMatrices(rootFrame);
             boundingSphere = Frame.CalculateBoundingSphere(rootFrame);
+            SetupBoneMatrices(rootFrame);
         }
 
         protected override void LoadContent()
@@ -105,19 +91,18 @@ namespace SkinnedMesh
             effect.OnResetDevice();
             textSprite = new Sprite(Device);
 
-            Device.SetRenderState(RenderState.Lighting, true);
-            Device.SetRenderState(RenderState.DitherEnable, true);
-            Device.SetRenderState(RenderState.ZEnable, true);
-            Device.SetRenderState(RenderState.CullMode, Cull.None);
-            Device.SetRenderState(RenderState.Ambient, 0x33333333);
-            Device.SetRenderState(RenderState.NormalizeNormals, true);
-            Device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.Linear);
-            Device.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Linear);
-
             projectionMatrix = Matrix.PerspectiveFovLH((float)Math.PI / 4, (float)GraphicsDeviceManager.ScreenWidth / (float)GraphicsDeviceManager.ScreenHeight,
                 boundingSphere.Radius / 64.0f, boundingSphere.Radius * 200.0f);
 
             viewMatrix = Matrix.LookAtLH(new Vector3(0.0f, 0.0f, -2 * boundingSphere.Radius), new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 1.0f, 0.0f));
+
+            Device.SetTransform(TransformState.Projection, projectionMatrix);
+            Device.SetTransform(TransformState.View, viewMatrix);
+
+            Device.EnableLight(0, true);
+            Device.SetLight(0, new Light() { Type = LightType.Directional, Direction = new Vector3(0.0f, -1.0f, 1.0f), Diffuse = Color.White });
+
+            effect.Technique = "SkinnedMesh";
         }
 
         protected override void UnloadContent()
@@ -144,20 +129,27 @@ namespace SkinnedMesh
         {
             base.Update(gameTime);
 
-            if (animationController != null)
-                animationController.AdvanceTime(gameTime.ElapsedGameTime, null);
+            Matrix world = Matrix.Translation(-boundingSphere.Center);
+            Device.SetTransform(TransformState.World, world);
 
-            Matrix worldMatrix = Matrix.Translation(new Vector3(x, y, z));
-            UpdateFrameMatrices(rootFrame, worldMatrix);
+            if (gameTime.ElapsedGameTime > 0)
+            {
+                //if (animationController != null)
+                //    animationController.AdvanceTime(gameTime.ElapsedGameTime, null);
+
+                UpdateFrameMatrices(rootFrame, world);
+            }
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            effect.SetValue("ViewProjectionMatrix", viewMatrix * projectionMatrix);
-            effect.SetValue("LightDirection", Vector4.Normalize(new Vector4(0.0f, 1.0f, -1.0f, 0.0f)));
-
             Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, ClearColor, 1.0f, 0);
             Device.BeginScene();
+
+            Matrix view = Matrix.LookAtLH(new Vector3(0, 500, -500), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+            view = Matrix.Identity;
+            effect.SetValue("ViewProjectionMatrix", view * projectionMatrix);
+            effect.SetValue("LightDirection", Vector4.Normalize(new Vector4(0.0f, 1.0f, -1.0f, 0.0f)));
 
             DrawFrame(rootFrame);
 
@@ -197,6 +189,14 @@ namespace SkinnedMesh
 
         void DrawMeshContainer(CustomMeshContainer meshContainer, CustomFrame frame)
         {
+            if (meshContainer.Influences == 1)
+                Device.SetRenderState(RenderState.VertexBlend, VertexBlend.Weights0);
+            else
+                Device.SetRenderState(RenderState.VertexBlend, (VertexBlend)(meshContainer.Influences - 1));
+
+            if (meshContainer.Influences > 0)
+                Device.SetRenderState(RenderState.IndexedVertexBlendEnable, true);
+
             boneMatrices = new Matrix[meshContainer.PaletteEntries];
 
             BoneCombination[] combinations = meshContainer.BoneCombinations;
@@ -205,10 +205,12 @@ namespace SkinnedMesh
                 for (int pe = 0; pe < meshContainer.PaletteEntries; pe++)
                 {
                     int index = combinations[i].BoneIds[pe];
-                    if (index >= 0)
+                    if (index != -1)
                     {
-                        boneMatrices[pe] = meshContainer.BoneOffsets[index] * meshContainer.BoneMatricesLookup[index].TransformationMatrix * viewMatrix;
+                        boneMatrices[pe] = meshContainer.BoneOffsets[index] * meshContainer.BoneMatricesLookup[index].CombinedTransform;
                     }
+                    else
+                        boneMatrices[pe] = Matrix.Identity;
                 }
 
                 effect.SetValue("WorldMatrices", boneMatrices);
@@ -217,7 +219,7 @@ namespace SkinnedMesh
                 Color4 diffuse = meshContainer.GetMaterials()[combinations[i].AttributeId].MaterialD3D.Diffuse;
                 Color4 emissive = meshContainer.GetMaterials()[combinations[i].AttributeId].MaterialD3D.Emissive;
 
-                Color4 finalColor = Color4.Modulate(ambient, new Color4(0.25f, 0.25f, 0.25f, 1.0f)) + emissive;
+                Color4 finalColor = Color4.Modulate(ambient, new Color4(1.0f, 0.25f, 0.25f, 0.25f)) + emissive;
 
                 effect.SetValue("MaterialAmbient", finalColor);
                 effect.SetValue("MaterialDiffuse", diffuse);

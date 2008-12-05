@@ -21,7 +21,6 @@ namespace SkinnedMesh
     {
         public Texture[] Textures { get; set; }
         public Mesh OriginalMesh { get; set; }
-        public AttributeRange[] AttributeTable { get; set; }
         
         public CustomFrame[] BoneMatricesLookup { get; set; }
         public Matrix[] BoneOffsets { get; set; }
@@ -62,14 +61,6 @@ namespace SkinnedMesh
 
         public override MeshContainer CreateMeshContainer(string name, MeshData meshData, ExtendedMaterial[] materials, EffectInstance[] effectInstances, int[] adjacency, SkinInfo skinInfo)
         {
-            // only handle ordinary meshes, not patch meshes
-            if (meshData.Type != MeshDataType.Mesh)
-                throw new SlimDXException(ResultCode.Failure);
-
-            // ensure that we have an FVF set up with normals
-            if (meshData.Mesh.VertexFormat == VertexFormat.None || (meshData.Mesh.VertexFormat & VertexFormat.Normal) == 0)
-                throw new SlimDXException(ResultCode.Failure);
-
             CustomMeshContainer meshContainer = new CustomMeshContainer();
             meshContainer.Name = name;
             meshContainer.MeshData = meshData;
@@ -108,21 +99,11 @@ namespace SkinnedMesh
             BoneCombination[] boneCombinations;
             int[] adjacency = meshContainer.GetAdjacency();
 
-            Mesh temp = meshContainer.MeshData.Mesh;
+            meshContainer.MeshData.Mesh.Dispose();
             meshContainer.MeshData = new MeshData(meshContainer.SkinInfo.ConvertToIndexedBlendedMesh(meshContainer.OriginalMesh, meshContainer.PaletteEntries,
                 adjacency, out influences, out boneCombinations));
             meshContainer.Influences = influences;
             meshContainer.BoneCombinations = boneCombinations;
-
-            VertexFormat desiredFormat = (meshContainer.MeshData.Mesh.VertexFormat & VertexFormat.PositionMask) | VertexFormat.Normal |
-                VertexFormat.Texture1 | VertexFormat.LastBetaUByte4;
-
-            if (desiredFormat != meshContainer.MeshData.Mesh.VertexFormat)
-            {
-                Mesh mesh = meshContainer.MeshData.Mesh.Clone(meshContainer.MeshData.Mesh.Device, meshContainer.MeshData.Mesh.CreationOptions, desiredFormat);
-                meshContainer.MeshData.Mesh.Dispose();
-                meshContainer.MeshData = new MeshData(mesh);
-            }
 
             VertexElement[] elements = meshContainer.MeshData.Mesh.GetDeclaration();
             for (int i = 0; i < elements.Length; i++)
@@ -135,8 +116,6 @@ namespace SkinnedMesh
             }
 
             meshContainer.MeshData.Mesh.UpdateSemantics(elements);
-
-            temp.Dispose();
         }
     }
 }
