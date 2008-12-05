@@ -75,10 +75,10 @@ namespace SlimDX
 				void set( System::String^ value );
 			}
 
-			property MeshData^ Mesh
+			property MeshData^ MeshData
 			{
-				MeshData^ get();
-				void set( MeshData^ value );
+				SlimDX::Direct3D9::MeshData^ get();
+				void set( SlimDX::Direct3D9::MeshData^ value );
 			}
 
 			property SkinInfo^ SkinInfo

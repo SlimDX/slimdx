@@ -191,12 +191,12 @@ namespace Direct3D9
 	{
 		int count = 0;
 
-		if( Mesh->Type == MeshDataType::Mesh )
-			count = Mesh->Mesh->FaceCount;
-		else if( Mesh->Type == MeshDataType::ProgressiveMesh )
-			count = Mesh->ProgressiveMesh->FaceCount;
-		else if( Mesh->Type == MeshDataType::PatchMesh )
-			count = Mesh->PatchMesh->PatchCount;
+		if( MeshData->Type == MeshDataType::Mesh )
+			count = MeshData->Mesh->FaceCount;
+		else if( MeshData->Type == MeshDataType::ProgressiveMesh )
+			count = MeshData->ProgressiveMesh->FaceCount;
+		else if( MeshData->Type == MeshDataType::PatchMesh )
+			count = MeshData->PatchMesh->PatchCount;
 		count *= 3;
 
 		array<int>^ results = gcnew array<int>( count );
@@ -235,12 +235,12 @@ namespace Direct3D9
 		Pointer->Name = Utilities::AllocateNativeString( value );
 	}
 
-	MeshData^ MeshContainer::Mesh::get()
+	MeshData^ MeshContainer::MeshData::get()
 	{
 		return m_MeshData;
 	}
 
-	void MeshContainer::Mesh::set( MeshData^ value )
+	void MeshContainer::MeshData::set( SlimDX::Direct3D9::MeshData^ value )
 	{
 		m_MeshData = value;
 
