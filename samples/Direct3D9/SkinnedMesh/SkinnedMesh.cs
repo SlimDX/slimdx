@@ -37,7 +37,6 @@ namespace SkinnedMesh
         Frame rootFrame;
         AnimationController animationController;
         BoundingSphere boundingSphere;
-        Sprite textSprite;
         Matrix projectionMatrix;
         Matrix viewMatrix;
 
@@ -80,8 +79,8 @@ namespace SkinnedMesh
             effect = Effect.FromFile(Device, "SkinnedMesh.fx", ShaderFlags.None);
             rootFrame = Frame.LoadHierarchyFromX(Device, "tiny.x", MeshFlags.Managed, new CustomAllocateHierarchy(), null, out animationController);
 
-            boundingSphere = Frame.CalculateBoundingSphere(rootFrame);
             SetupBoneMatrices(rootFrame);
+            boundingSphere = Frame.CalculateBoundingSphere(rootFrame);
         }
 
         protected override void LoadContent()
@@ -89,20 +88,11 @@ namespace SkinnedMesh
             base.LoadContent();
 
             effect.OnResetDevice();
-            textSprite = new Sprite(Device);
 
             projectionMatrix = Matrix.PerspectiveFovLH((float)Math.PI / 4, (float)GraphicsDeviceManager.ScreenWidth / (float)GraphicsDeviceManager.ScreenHeight,
                 boundingSphere.Radius / 64.0f, boundingSphere.Radius * 200.0f);
 
             viewMatrix = Matrix.LookAtLH(new Vector3(0.0f, 0.0f, -2 * boundingSphere.Radius), new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 1.0f, 0.0f));
-
-            Device.SetTransform(TransformState.Projection, projectionMatrix);
-            Device.SetTransform(TransformState.View, viewMatrix);
-
-            Device.EnableLight(0, true);
-            Device.SetLight(0, new Light() { Type = LightType.Directional, Direction = new Vector3(0.0f, -1.0f, 1.0f), Diffuse = Color.White });
-
-            effect.Technique = "SkinnedMesh";
         }
 
         protected override void UnloadContent()
@@ -110,7 +100,6 @@ namespace SkinnedMesh
             base.UnloadContent();
 
             effect.OnLostDevice();
-            textSprite.Dispose();
         }
 
         protected override void Dispose(bool disposing)
@@ -130,15 +119,11 @@ namespace SkinnedMesh
             base.Update(gameTime);
 
             Matrix world = Matrix.Translation(-boundingSphere.Center);
-            Device.SetTransform(TransformState.World, world);
 
-            if (gameTime.ElapsedGameTime > 0)
-            {
-                //if (animationController != null)
-                //    animationController.AdvanceTime(gameTime.ElapsedGameTime, null);
+            if (animationController != null)
+                animationController.AdvanceTime(gameTime.ElapsedGameTime, null);
 
-                UpdateFrameMatrices(rootFrame, world);
-            }
+            UpdateFrameMatrices(rootFrame, world);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -146,9 +131,7 @@ namespace SkinnedMesh
             Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, ClearColor, 1.0f, 0);
             Device.BeginScene();
 
-            Matrix view = Matrix.LookAtLH(new Vector3(0, 500, -500), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
-            view = Matrix.Identity;
-            effect.SetValue("ViewProjectionMatrix", view * projectionMatrix);
+            effect.SetValue("ViewProjectionMatrix", projectionMatrix);
             effect.SetValue("LightDirection", Vector4.Normalize(new Vector4(0.0f, 1.0f, -1.0f, 0.0f)));
 
             DrawFrame(rootFrame);
@@ -189,14 +172,6 @@ namespace SkinnedMesh
 
         void DrawMeshContainer(CustomMeshContainer meshContainer, CustomFrame frame)
         {
-            if (meshContainer.Influences == 1)
-                Device.SetRenderState(RenderState.VertexBlend, VertexBlend.Weights0);
-            else
-                Device.SetRenderState(RenderState.VertexBlend, (VertexBlend)(meshContainer.Influences - 1));
-
-            if (meshContainer.Influences > 0)
-                Device.SetRenderState(RenderState.IndexedVertexBlendEnable, true);
-
             boneMatrices = new Matrix[meshContainer.PaletteEntries];
 
             BoneCombination[] combinations = meshContainer.BoneCombinations;
@@ -206,11 +181,7 @@ namespace SkinnedMesh
                 {
                     int index = combinations[i].BoneIds[pe];
                     if (index != -1)
-                    {
-                        boneMatrices[pe] = meshContainer.BoneOffsets[index] * meshContainer.BoneMatricesLookup[index].CombinedTransform;
-                    }
-                    else
-                        boneMatrices[pe] = Matrix.Identity;
+                        boneMatrices[pe] = meshContainer.BoneOffsets[index] * meshContainer.BoneMatricesLookup[index].CombinedTransform * viewMatrix;
                 }
 
                 effect.SetValue("WorldMatrices", boneMatrices);

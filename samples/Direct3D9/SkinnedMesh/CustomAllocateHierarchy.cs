@@ -76,28 +76,17 @@ namespace SkinnedMesh
                     meshContainer.Textures[i] = Texture.FromFile(meshData.Mesh.Device, materials[i].TextureFileName);
             }
 
-            if (skinInfo != null)
-            {
-                meshContainer.SkinInfo = skinInfo;
-                meshContainer.OriginalMesh = meshData.Mesh.Clone(meshData.Mesh.Device, meshData.Mesh.CreationOptions, meshData.Mesh.VertexFormat);
+            meshContainer.SkinInfo = skinInfo;
+            meshContainer.OriginalMesh = meshData.Mesh.Clone(meshData.Mesh.Device, meshData.Mesh.CreationOptions, meshData.Mesh.VertexFormat);
 
-                meshContainer.BoneOffsets = new Matrix[skinInfo.BoneCount];
-                for (int i = 0; i < skinInfo.BoneCount; i++)
-                    meshContainer.BoneOffsets[i] = skinInfo.GetBoneOffsetMatrix(i);
+            meshContainer.BoneOffsets = new Matrix[skinInfo.BoneCount];
+            for (int i = 0; i < skinInfo.BoneCount; i++)
+                meshContainer.BoneOffsets[i] = skinInfo.GetBoneOffsetMatrix(i);
 
-                GenerateSkinnedMesh(meshContainer);
-            }
-
-            return meshContainer;
-        }
-
-        void GenerateSkinnedMesh(CustomMeshContainer meshContainer)
-        {
             meshContainer.PaletteEntries = Math.Min(MaxMatrices, meshContainer.SkinInfo.BoneCount);
 
             int influences;
             BoneCombination[] boneCombinations;
-            int[] adjacency = meshContainer.GetAdjacency();
 
             meshContainer.MeshData.Mesh.Dispose();
             meshContainer.MeshData = new MeshData(meshContainer.SkinInfo.ConvertToIndexedBlendedMesh(meshContainer.OriginalMesh, meshContainer.PaletteEntries,
@@ -116,6 +105,8 @@ namespace SkinnedMesh
             }
 
             meshContainer.MeshData.Mesh.UpdateSemantics(elements);
+
+            return meshContainer;
         }
     }
 }
