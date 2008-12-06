@@ -40,5 +40,10 @@ namespace Direct3D10
 	{
 		return m_Length;
 	}
+	
+	int ShaderSignature::GetHashCode()
+	{
+		return reinterpret_cast<int>( m_Buffer );
+	}
 }
 }
