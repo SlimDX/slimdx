@@ -47,6 +47,13 @@ namespace SlimDX
 			}
 			
 			ShaderSignature( const void* buffer, System::Int64 length );
+		
+		public:
+			/// <summary>
+			/// Returns the hash code for this instance.
+			/// </summary>
+			/// <returns>A 32-bit signed integer hash code.</returns>
+			virtual int GetHashCode() override;
 		};
 	}
 };
