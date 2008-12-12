@@ -86,7 +86,9 @@ namespace XAudio2
 
 	MasteringVoice::~MasteringVoice()
 	{
-		InternalPointer->DestroyVoice();
+		if( InternalPointer != NULL )
+			InternalPointer->DestroyVoice();
+		InternalPointer = NULL;
 	}
 }
 }
