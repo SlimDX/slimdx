@@ -1542,6 +1542,14 @@
 				Name="Texture"
 				>
 				<File
+					RelativePath="..\source\direct3d10\ImageInformation.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ImageInformation.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\Texture.cpp"
 					>
 					<FileConfiguration
