@@ -266,6 +266,27 @@ namespace SlimDX
 			Wireframe = D3D10_FILL_WIREFRAME,
 			Solid = D3D10_FILL_SOLID
 		};
+		
+		/// <summary></summary>
+		/// <unmanaged>D3DX10_FILTER_FLAG</unmanaged>
+		[System::Flags]
+		public enum class FilterFlags : System::Int32
+		{
+			None = D3DX10_FILTER_NONE,
+			Point = D3DX10_FILTER_POINT,
+			Linear = D3DX10_FILTER_LINEAR,
+			Triangle = D3DX10_FILTER_TRIANGLE,
+			Box = D3DX10_FILTER_BOX,
+			MirrorU = D3DX10_FILTER_MIRROR_U,
+			MirrorV = D3DX10_FILTER_MIRROR_V,
+			MirrowW = D3DX10_FILTER_MIRROR_W,
+			Mirror = D3DX10_FILTER_MIRROR,
+			Dither = D3DX10_FILTER_DITHER,
+			DitherDiffusion = D3DX10_FILTER_DITHER_DIFFUSION,
+			StandardRgbIn = D3DX10_FILTER_SRGB_IN,
+			StandardRgbOut = D3DX10_FILTER_SRGB_OUT,
+			StandardRgb = D3DX10_FILTER_SRGB,
+		};
 	
 		/// <summary></summary>
 		/// <unmanaged>CHARSET</unmanaged>

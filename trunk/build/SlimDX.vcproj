@@ -1550,6 +1550,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d10\ImageLoadInformation.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\ImageLoadInformation.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\Texture.cpp"
 					>
 					<FileConfiguration
