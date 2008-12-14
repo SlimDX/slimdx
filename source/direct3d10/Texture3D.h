@@ -99,8 +99,11 @@ namespace SlimDX
 			void Unmap( int subresource );
 			
 			static Texture3D^ FromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName );
+			static Texture3D^ FromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName, ImageLoadInformation loadInfo );
 			static Texture3D^ FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory );
+			static Texture3D^ FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory, ImageLoadInformation loadInfo );
 			static Texture3D^ FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes );
+			static Texture3D^ FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes, ImageLoadInformation loadInfo );
 		};
 	}
 };

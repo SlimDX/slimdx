@@ -186,7 +186,7 @@ namespace SlimDX
 				m_MiscFlags == value.m_MiscFlags && 
 				m_Format == value.m_Format &&
 				m_Dimension == value.m_Dimension &&
-				m_FileFormat == value.m_FileFormat &&
+				m_FileFormat == value.m_FileFormat
 			);
 		}
 
@@ -201,7 +201,7 @@ namespace SlimDX
 				value1.m_MiscFlags == value2.m_MiscFlags && 
 				value1.m_Format == value2.m_Format &&
 				value1.m_Dimension == value2.m_Dimension &&
-				value1.m_FileFormat == value2.m_FileFormat &&
+				value1.m_FileFormat == value2.m_FileFormat
 			);
 		}
 	}

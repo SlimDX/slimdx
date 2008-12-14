@@ -30,8 +30,8 @@
 
 #include "../DataStream.h"
 
-#include "Texture.h"
 #include "Device.h"
+#include "Texture.h"
 
 using namespace System;
 using namespace System::IO;
@@ -51,7 +51,7 @@ namespace Direct3D10
 
 	Texture^ Texture::FromFile( SlimDX::Direct3D10::Device^ device, String^ fileName )
 	{	
-		ID3D10Resource* resource = ConstructFromFile( device, fileName );
+		ID3D10Resource* resource = ConstructFromFile( device, fileName, 0 );
 		if( resource == 0 )
 			return nullptr;
 		return gcnew Texture( resource );
@@ -59,7 +59,7 @@ namespace Direct3D10
 
 	Texture^ Texture::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory )
 	{
-		ID3D10Resource* resource = ConstructFromMemory( device, memory );
+		ID3D10Resource* resource = ConstructFromMemory( device, memory, 0 );
 		if( resource == 0 )
 			return nullptr;
 		return gcnew Texture( resource );
@@ -67,7 +67,34 @@ namespace Direct3D10
 
 	Texture^ Texture::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, int sizeInBytes )
 	{
-		ID3D10Resource* resource = ConstructFromStream( device, stream, sizeInBytes );
+		ID3D10Resource* resource = ConstructFromStream( device, stream, sizeInBytes, 0 );
+		if( resource == 0 )
+			return nullptr;
+		return gcnew Texture( resource );
+	}
+	
+	Texture^ Texture::FromFile( SlimDX::Direct3D10::Device^ device, String^ fileName, ImageLoadInformation loadInfo )
+	{	
+		D3DX10_IMAGE_LOAD_INFO info = loadInfo.CreateNativeVersion();
+		ID3D10Resource* resource = ConstructFromFile( device, fileName, &info );
+		if( resource == 0 )
+			return nullptr;
+		return gcnew Texture( resource );
+	}
+
+	Texture^ Texture::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, ImageLoadInformation loadInfo )
+	{
+		D3DX10_IMAGE_LOAD_INFO info = loadInfo.CreateNativeVersion();
+		ID3D10Resource* resource = ConstructFromMemory( device, memory, &info );
+		if( resource == 0 )
+			return nullptr;
+		return gcnew Texture( resource );
+	}
+
+	Texture^ Texture::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, int sizeInBytes, ImageLoadInformation loadInfo )
+	{
+		D3DX10_IMAGE_LOAD_INFO info = loadInfo.CreateNativeVersion();
+		ID3D10Resource* resource = ConstructFromStream( device, stream, sizeInBytes, &info );
 		if( resource == 0 )
 			return nullptr;
 		return gcnew Texture( resource );
@@ -115,31 +142,31 @@ namespace Direct3D10
 		return (static_cast< int >(size));
 	}
 	
-	ID3D10Resource* Texture::ConstructFromFile( SlimDX::Direct3D10::Device^ device, String^ fileName )
+	ID3D10Resource* Texture::ConstructFromFile( SlimDX::Direct3D10::Device^ device, String^ fileName, D3DX10_IMAGE_LOAD_INFO* info )
 	{	
 		ID3D10Resource* resource = 0;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
-		HRESULT hr = D3DX10CreateTextureFromFile( device->InternalPointer, pinnedName, 0, 0, &resource, 0 );
+		HRESULT hr = D3DX10CreateTextureFromFile( device->InternalPointer, pinnedName, info, 0, &resource, 0 );
 		RECORD_D3D10( hr );
 		
 		return resource;
 	}
 	
-	ID3D10Resource* Texture::ConstructFromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory )
+	ID3D10Resource* Texture::ConstructFromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, D3DX10_IMAGE_LOAD_INFO* info )
 	{
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 		
 		ID3D10Resource* resource = 0;
-		HRESULT hr = D3DX10CreateTextureFromMemory( device->InternalPointer, pinnedMemory, memory->Length, 0, 0, &resource, 0 ); 
+		HRESULT hr = D3DX10CreateTextureFromMemory( device->InternalPointer, pinnedMemory, memory->Length, info, 0, &resource, 0 ); 
 		RECORD_D3D10( hr );
 		
 		return resource;
 	}
 	
-	ID3D10Resource* Texture::ConstructFromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, int sizeInBytes )
+	ID3D10Resource* Texture::ConstructFromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, int sizeInBytes, D3DX10_IMAGE_LOAD_INFO* info )
 	{
 		array<Byte>^ memory = SlimDX::Utilities::ReadStream( stream, sizeInBytes );
-		return ConstructFromMemory( device, memory );
+		return ConstructFromMemory( device, memory, info );
 	}
 }
 }
