@@ -1544,6 +1544,14 @@
 				<File
 					RelativePath="..\source\direct3d10\ImageInformation.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\ImageInformation2.obj"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\ImageInformation.h"
