@@ -55,6 +55,10 @@ namespace SlimDX
 			D3DX10_IMAGE_LOAD_INFO CreateNativeVersion();
 
 		public:
+			property static int FileDefaultValue {
+				int get();
+			}
+			
 			/// <summary>
 			/// Width of the original image, in pixels.
 			/// </summary>
