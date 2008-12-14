@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../dxgi/Enums.h"
+
 #include "Enums.h"
 
 namespace SlimDX

@@ -21,6 +21,9 @@
 */
 #pragma once
 
+#include <d3d10.h>
+
+#include "ImageLoadInformation.h"
 #include "Resource.h"
 
 namespace SlimDX
@@ -36,9 +39,9 @@ namespace SlimDX
 		internal:
 			static int GetMipSize( int mipSlice, int baseSliceSize );
 			
-			static ID3D10Resource* ConstructFromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName );
-			static ID3D10Resource* ConstructFromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory );
-			static ID3D10Resource* ConstructFromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes );
+			static ID3D10Resource* ConstructFromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName, D3DX10_IMAGE_LOAD_INFO* info );
+			static ID3D10Resource* ConstructFromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory, D3DX10_IMAGE_LOAD_INFO* info );
+			static ID3D10Resource* ConstructFromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes, D3DX10_IMAGE_LOAD_INFO* info );
 			
 		protected:
 			Texture( ID3D10Resource *pointer );
@@ -47,8 +50,12 @@ namespace SlimDX
 			Texture();
 
 			static Texture^ FromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName );
+			static Texture^ FromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName, ImageLoadInformation loadInfo );
 			static Texture^ FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory );
+			static Texture^ FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory, ImageLoadInformation loadInfo  );
 			static Texture^ FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes );
+			static Texture^ FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes, ImageLoadInformation loadInfo  );
+
 
 			static bool ToFile( Texture^ texture, ImageFileFormat format, System::String^ fileName );
 			static bool ToStream( Texture^ texture, ImageFileFormat format, System::IO::Stream^ stream );
