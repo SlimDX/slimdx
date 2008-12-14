@@ -1552,6 +1552,46 @@
 							ObjectFile="$(IntDir)\ImageInformation2.obj"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug|x64"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\ImageInformation2.obj"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\ImageInformation2.obj"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|x64"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\ImageInformation2.obj"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\ImageInformation2.obj"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|x64"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\ImageInformation2.obj"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\ImageInformation.h"
