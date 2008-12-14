@@ -62,6 +62,10 @@ namespace SlimDX
 
 			return native;
 		}
+	
+		int ImageLoadInformation::FileDefaultValue::get() {
+			return D3DX10_DEFAULT;
+		}
 
 		int ImageLoadInformation::Width::get()
 		{
