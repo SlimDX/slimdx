@@ -347,12 +347,35 @@ namespace Direct3D9
 	generic<typename T> where T : value class
 	Result BaseEffect::SetValue( EffectHandle^ parameter, T value )
 	{
-		if( T::typeid == bool::typeid )
-			return SetValue( parameter, Convert::ToInt32( value, CultureInfo::CurrentCulture ) );
-
+		HRESULT hr;
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 
-		HRESULT	hr = InternalPointer->SetValue( handle, &value, (DWORD) sizeof(T) );
+		if( T::typeid == bool::typeid )
+		{
+			BOOL newValue = Convert::ToInt32( value );
+			hr = InternalPointer->SetBool( handle, newValue );
+		}
+		else if( T::typeid == float::typeid )
+		{
+			hr = InternalPointer->SetFloat( handle, static_cast<FLOAT>( value ) );
+		}
+		else if( T::typeid == int::typeid )
+		{
+			hr = InternalPointer->SetInt( handle, static_cast<INT>( value ) );
+		}
+		else if( T::typeid == Matrix::typeid )
+		{
+			hr = InternalPointer->SetMatrix( handle, reinterpret_cast<D3DXMATRIX*>( &value ) );
+		}
+		else if( T::typeid == Vector4::typeid )
+		{
+			hr = InternalPointer->SetVector( handle, reinterpret_cast<D3DXVECTOR4*>( &value ) );
+		}
+		else
+		{
+			hr = InternalPointer->SetValue( handle, &value, static_cast<DWORD>( sizeof(T) ) );
+		}
+
 		return RECORD_D3D9( hr );
 	}
 
@@ -362,7 +385,7 @@ namespace Direct3D9
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		T result;
 
-		HRESULT hr = InternalPointer->GetValue( handle, &result, (DWORD) sizeof(T) );
+		HRESULT hr = InternalPointer->GetValue( handle, &result, static_cast<DWORD>( sizeof(T) ) );
 
 		if( RECORD_D3D9( hr ).IsFailure )
 			return T();
@@ -406,7 +429,7 @@ namespace Direct3D9
 		else
 		{
 			pin_ptr<T> pinnedData = &values[0];
-			hr = InternalPointer->SetValue( handle, pinnedData, (DWORD) sizeof(T) * values->Length );
+			hr = InternalPointer->SetValue( handle, pinnedData, static_cast<DWORD>( sizeof(T) ) * values->Length );
 		}
 
 		return RECORD_D3D9( hr );
@@ -419,7 +442,7 @@ namespace Direct3D9
 		array<T>^ results = gcnew array<T>( count );
 		pin_ptr<T> pinnedData = &results[0];
 
-		HRESULT hr = InternalPointer->GetValue( handle, pinnedData, (DWORD) sizeof(T) * count );
+		HRESULT hr = InternalPointer->GetValue( handle, pinnedData, static_cast<DWORD>( sizeof(T) ) * count );
 
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;

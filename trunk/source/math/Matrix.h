@@ -215,6 +215,18 @@ namespace SlimDX
 			float get( int row, int column );
 			void set( int row, int column, float value );
 		}
+
+		property Vector4 Rows[int]
+		{
+			Vector4 get( int row );
+			void set( int row, Vector4 value );
+		}
+
+		property Vector4 Columns[int]
+		{
+			Vector4 get( int column );
+			void set( int column, Vector4 value );
+		}
 		
 		/// <summary>
 		/// Gets a <see cref="Matrix"/> that represents an identity matrix.
