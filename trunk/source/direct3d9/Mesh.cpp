@@ -131,11 +131,7 @@ namespace Direct3D9
 
 		result->SetAdjacency( Utilities::ReadRange<int>( adjacencyBuffer, mesh->GetNumFaces() * 3 ) );
 		result->SetMaterials( ExtendedMaterial::FromBuffer( materialBuffer, materialCount ) );
-
-		// figure out how many effect instances there are, and get them out of the buffer
-		DWORD instanceCount = 0;
-		hr = mesh->GetAttributeTable( NULL, &instanceCount );
-		result->SetEffects( EffectInstance::FromBuffer( instanceBuffer, instanceCount ) );
+		result->SetEffects( EffectInstance::FromBuffer( instanceBuffer, materialCount ) );
 
 		materialBuffer->Release();
 		instanceBuffer->Release();
@@ -168,10 +164,7 @@ namespace Direct3D9
 
 		result->SetAdjacency( Utilities::ReadRange<int>( adjacencyBuffer, mesh->GetNumFaces() * 3 ) );
 		result->SetMaterials( ExtendedMaterial::FromBuffer( materialBuffer, materialCount ) );
-
-		DWORD instanceCount = 0;
-		hr = mesh->GetAttributeTable( NULL, &instanceCount );
-		result->SetEffects( EffectInstance::FromBuffer( instanceBuffer, instanceCount ) );
+		result->SetEffects( EffectInstance::FromBuffer( instanceBuffer, materialCount ) );
 
 		materialBuffer->Release();
 		instanceBuffer->Release();
@@ -198,10 +191,7 @@ namespace Direct3D9
 
 		result->SetAdjacency( Utilities::ReadRange<int>( adjacencyBuffer, mesh->GetNumFaces() * 3 ) );
 		result->SetMaterials( ExtendedMaterial::FromBuffer( materialBuffer, materialCount ) );
-
-		DWORD instanceCount = 0;
-		hr = mesh->GetAttributeTable( NULL, &instanceCount );
-		result->SetEffects( EffectInstance::FromBuffer( instanceBuffer, instanceCount ) );
+		result->SetEffects( EffectInstance::FromBuffer( instanceBuffer, materialCount ) );
 
 		materialBuffer->Release();
 		instanceBuffer->Release();
