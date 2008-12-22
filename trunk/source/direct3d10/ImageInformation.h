@@ -130,6 +130,9 @@ namespace SlimDX
 				void set( ImageFileFormat value );
 			}
 
+			static System::Nullable<ImageInformation> FromFile( System::String^ fileName );
+			static System::Nullable<ImageInformation> FromMemory( array<System::Byte>^ memory );
+
 			/// <summary>
 			/// Tests for equality between two objects.
 			/// </summary>

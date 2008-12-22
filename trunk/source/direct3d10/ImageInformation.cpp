@@ -21,8 +21,13 @@
 */
 
 #include <d3d10.h>
+#include <vcclr.h>
+
+#include "Direct3D10Exception.h"
 
 #include "ImageInformation.h"
+
+using namespace System;
 
 namespace SlimDX
 {
@@ -145,6 +150,28 @@ namespace SlimDX
 		void ImageInformation::FileFormat::set( ImageFileFormat value )
 		{
 			m_FileFormat = value;
+		}
+		
+		Nullable<ImageInformation> ImageInformation::FromFile( String^ fileName )
+		{
+			D3DX10_IMAGE_INFO info;
+			pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+			HRESULT hr = D3DX10GetImageInfoFromFile( pinnedName, 0, &info, 0 );
+			if( RECORD_D3D10( hr ).IsFailure )
+				return Nullable<ImageInformation>();
+			
+			return ImageInformation( info );
+		}
+		
+		Nullable<ImageInformation> ImageInformation::FromMemory( array<Byte>^ memory )
+		{
+			D3DX10_IMAGE_INFO info;
+			pin_ptr<unsigned char> pinnedMemory = &memory[0];
+			HRESULT hr = D3DX10GetImageInfoFromMemory( pinnedMemory, memory->Length, 0, &info, 0 );
+			if( RECORD_D3D10( hr ).IsFailure )
+				return Nullable<ImageInformation>();
+			
+			return ImageInformation( info );
 		}
 
 		bool ImageInformation::operator == ( ImageInformation left, ImageInformation right )
