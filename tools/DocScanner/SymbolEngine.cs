@@ -18,22 +18,31 @@ namespace DocScanner
 			m_moduleDef.LoadSymbols(reader);
 		}
 
-		string GetFileForMethod(MethodDefinition methodDef)
+		string GetFileForMethodBody(MethodBody body)
 		{
-			if(methodDef.Body == null)
+			if(body == null)
 				return null;
 
-			SequencePoint sp = methodDef.Body.Instructions[0].SequencePoint;
+			SequencePoint sp = body.Instructions[0].SequencePoint;
 			return sp.Document.Url;
+		}
+
+		string GetFileForMethod(MethodDefinition methodDef)
+		{
+			return GetFileForMethodBody(methodDef.Body);
 		}
 
 		string GetFileForType(string typename)
 		{
 			TypeDefinition typeDef = m_moduleDef.Types[typename];
+
 			if(typeDef.Methods.Count == 0)
 			{
+				//Need a method to track down the header.
+				//I'm assuming that constructor methods are included here.
 				return null;
 			}
+
 			return GetFileForMethod(typeDef.Methods[0]);
 		}
 
