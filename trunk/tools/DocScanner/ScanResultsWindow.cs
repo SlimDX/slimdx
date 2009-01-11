@@ -144,6 +144,8 @@ namespace DocScanner
 					return;
 
 				ResultsList.SelectedIndex = index;
+				string file = m_Symbols.GetFileForSymbol((string) ResultsList.SelectedItem);
+				GoToHeaderMenuItem.Enabled = file != null;
 				ItemContextMenu.Show(ResultsList, e.X, e.Y);
 			}
 		}
