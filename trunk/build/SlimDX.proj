@@ -10,6 +10,9 @@
 		<BuildDir>$(RootDir)\build</BuildDir>
 		<SamplesDir>$(RootDir)\samples</SamplesDir>
 		<StagingDir>$(RootDir)\artifact\stage</StagingDir>
+
+		<TestsBinDir>$(RootDir)\tests\SlimDX\bin</TestsBinDir>
+		<NUnitBinDir>$(RootDir)\external\NUnit\bin</NUnitBinDir>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -25,6 +28,16 @@
 
 		<MakeDir Directories="%(SampleOutputFiles.PathInArtifacts)"/>
 		<Copy SourceFiles="@(SampleOutputFiles)" DestinationFiles="@(SampleOutputFiles->'%(PathInArtifacts)%(FileName)%(Extension)')"/>
+	</Target>
+
+	<!-- ===================================================================== 
+	     RunTests
+	       Runs SlimDX unit tests. Expects the tests to have been built.
+       ===================================================================== -->
+	<Target
+    Name="RunTests" DependsOnTargets="_CheckEnvironmentVariables">
+		<Exec Command="$(NUnitBinDir)\nunit-console-x86.exe $(TestsBinDir)\x86\Release\SlimDX.Tests.dll /nologo /nodots /labels"/>
+		<Exec Condition="'$(MachineIs64Bit)'=='True'" Command="$(NUnitBinDir)\nunit-console.exe $(TestsBinDir)\x64\Release\SlimDX.Tests.dll /nologo /nodots /labels"/>
 	</Target>
 
 	<!-- ===================================================================== 
@@ -159,6 +172,22 @@
 		<Error
 			Condition="'$(DXSDK_DIR)'==''"
 			Text="Environment variable DXSDK_DIR not set; have you installed the DirectX SDK?"/>
+
+		<!-- This assumes that 'x86' is the only 32-bit value for PROCESSOR_ARCHITECTURE. -->
+		<CreateProperty
+			Condition="'$(PROCESSOR_ARCHITECTURE)'=='x86'"
+			Value="False">
+			<Output
+				PropertyName="MachineIs64Bit"
+				TaskParameter="Value"/>
+		</CreateProperty>
+		<CreateProperty
+			Condition="'$(PROCESSOR_ARCHITECTURE)'!='x86'"
+			Value="True">
+			<Output
+				PropertyName="MachineIs64Bit"
+				TaskParameter="Value"/>
+		</CreateProperty>
 	</Target>
 
 	<!-- ===================================================================== 
