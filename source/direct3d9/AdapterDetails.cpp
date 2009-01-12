@@ -38,7 +38,7 @@ namespace Direct3D9
 {
 	AdapterDetails::AdapterDetails( IDirect3D9 *direct3D, unsigned int adapter, bool checkWhql )
 	{
-		D3DADAPTER_IDENTIFIER9 ident;
+		D3DADAPTER_IDENTIFIER9 ident = {0};
 		DWORD flags = checkWhql ? D3DENUM_WHQL_LEVEL : 0;
 
 		HRESULT hr = direct3D->GetAdapterIdentifier( adapter, flags, &ident );

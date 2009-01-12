@@ -115,7 +115,7 @@ namespace Direct3D9
 
     DisplayModeEx Direct3DEx::GetAdapterDisplayModeEx( int adapter )
 	{
-		D3DDISPLAYMODEEX nativeMode;
+		D3DDISPLAYMODEEX nativeMode = {0};
 		HRESULT hr = InternalPointer->GetAdapterDisplayModeEx( adapter, &nativeMode, NULL );
 		RECORD_D3D9( hr );
 

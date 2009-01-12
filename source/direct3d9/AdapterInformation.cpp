@@ -24,6 +24,7 @@
 
 #include "../ComObject.h"
 
+#include "Direct3D9Exception.h"
 #include "Direct3D.h"
 #include "AdapterDetails.h"
 #include "AdapterInformation.h"
@@ -49,15 +50,18 @@ namespace Direct3D9
 
 	DisplayMode AdapterInformation::CurrentDisplayMode::get()
 	{
-        DisplayMode displayMode;
-        m_direct3D->GetAdapterDisplayMode( m_Adapter, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
+		DisplayMode displayMode;
+        HRESULT hr = m_direct3D->GetAdapterDisplayMode( m_Adapter, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
+		RECORD_D3D9( hr );
         return displayMode;
 	}
 
     Capabilities^ AdapterInformation::GetCaps( DeviceType type )
     {
 		D3DCAPS9 caps;
-		m_direct3D->GetDeviceCaps( m_Adapter, static_cast<D3DDEVTYPE>( type ), &caps );
+		HRESULT hr = m_direct3D->GetDeviceCaps( m_Adapter, static_cast<D3DDEVTYPE>( type ), &caps );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
 
 		return gcnew Capabilities( caps );
     }

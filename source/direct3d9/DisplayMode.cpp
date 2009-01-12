@@ -26,6 +26,7 @@
 #include "../InternalHelpers.h"
 #include "../Result.h"
 
+#include "Direct3D9Exception.h"
 #include "Direct3D.h"
 #include "DisplayMode.h"
 
@@ -83,7 +84,10 @@ namespace Direct3D9
 		for( int i = 0; i < count; ++i )
 		{
 			DisplayMode displayMode;
-			direct3D->EnumAdapterModes( adapter, static_cast<D3DFORMAT>( format ), i, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
+			HRESULT hr = direct3D->EnumAdapterModes( adapter, static_cast<D3DFORMAT>( format ), i, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
+			if( RECORD_D3D9( hr ).IsFailure )
+				continue;
+
 			Items->Add( displayMode );
 		}
 	}
