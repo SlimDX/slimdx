@@ -246,7 +246,7 @@ namespace Direct3D9
 
     DisplayMode Direct3D::EnumerateAdapterModes( int adapter, Format format, int modeIndex )
     {
-        DisplayMode displayMode;
+		DisplayMode displayMode;
         HRESULT hr = InternalPointer->EnumAdapterModes( adapter, static_cast<D3DFORMAT>( format ),
 			modeIndex, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
         RECORD_D3D9( hr );
@@ -262,7 +262,8 @@ namespace Direct3D9
 	{
 		D3DCAPS9 caps = {D3DDEVTYPE_HAL, 0};
 		HRESULT hr = InternalPointer->GetDeviceCaps( adapter, static_cast<D3DDEVTYPE>( deviceType ), &caps );
-		RECORD_D3D9( hr );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
 
 		return gcnew Capabilities( caps );
 	}
