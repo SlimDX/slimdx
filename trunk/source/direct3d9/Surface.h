@@ -58,15 +58,25 @@ namespace SlimDX
 			static Surface^ CreateDepthStencilEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool discard, Usage usage );
 			static Surface^ CreateDepthStencilEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool discard, Usage usage, [Out] System::IntPtr% sharedHandle );
 
-			static Result FromMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
-			static Result FromMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, [Out] ImageInformation% imageInformation );
-			static Result FromMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle );
-			static Result FromMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey );
+			static Result FromMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey, Format sourceFormat, int sourcePitch, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, array<PaletteEntry>^ sourcePalette, array<PaletteEntry>^ destinationPalette );
+			static Result FromMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey, Format sourceFormat, int sourcePitch, System::Drawing::Rectangle sourceRectangle, array<PaletteEntry>^ sourcePalette, array<PaletteEntry>^ destinationPalette );
+			static Result FromMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey, Format sourceFormat, int sourcePitch, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle );
+			static Result FromMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey, Format sourceFormat, int sourcePitch, System::Drawing::Rectangle sourceRectangle );
 
-			static Result FromStream( Surface^ surface, System::IO::Stream^ stream, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
-			static Result FromStream( Surface^ surface, System::IO::Stream^ stream, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, [Out] ImageInformation% imageInformation );
-			static Result FromStream( Surface^ surface, System::IO::Stream^ stream, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle );
-			static Result FromStream( Surface^ surface, System::IO::Stream^ stream, Filter filter, int colorKey );
+			static Result FromStream( Surface^ surface, System::IO::Stream^ stream, Filter filter, int colorKey, Format sourceFormat, int sourcePitch, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, array<PaletteEntry>^ sourcePalette, array<PaletteEntry>^ destinationPalette );
+			static Result FromStream( Surface^ surface, System::IO::Stream^ stream, Filter filter, int colorKey, Format sourceFormat, int sourcePitch, System::Drawing::Rectangle sourceRectangle, array<PaletteEntry>^ sourcePalette, array<PaletteEntry>^ destinationPalette );
+			static Result FromStream( Surface^ surface, System::IO::Stream^ stream, Filter filter, int colorKey, Format sourceFormat, int sourcePitch, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle );
+			static Result FromStream( Surface^ surface, System::IO::Stream^ stream, Filter filter, int colorKey, Format sourceFormat, int sourcePitch, System::Drawing::Rectangle sourceRectangle );
+
+			static Result FromFileInMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
+			static Result FromFileInMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, [Out] ImageInformation% imageInformation );
+			static Result FromFileInMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle );
+			static Result FromFileInMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey );
+
+			static Result FromFileInStream( Surface^ surface, System::IO::Stream^ stream, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
+			static Result FromFileInStream( Surface^ surface, System::IO::Stream^ stream, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, [Out] ImageInformation% imageInformation );
+			static Result FromFileInStream( Surface^ surface, System::IO::Stream^ stream, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle );
+			static Result FromFileInStream( Surface^ surface, System::IO::Stream^ stream, Filter filter, int colorKey );
 
 			static Result FromFile( Surface^ surface, System::String^ fileName, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
 			static Result FromFile( Surface^ surface, System::String^ fileName, Filter filter, int colorKey, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, [Out] ImageInformation% imageInformation );
