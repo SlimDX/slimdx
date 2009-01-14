@@ -108,7 +108,7 @@ namespace SlimDX
 			/// <summary>
 			/// Default number of milliseconds the input is delayed before it is played back. The default value is 50. 
 			/// </summary>
-			literal float DelayDefault = 50.0f;
+			literal float DelayDefault = 16.0f;
 
 			/// <summary>
 			/// Maximum number of milliseconds the input is delayed before it is played back. 

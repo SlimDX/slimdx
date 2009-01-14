@@ -22,6 +22,7 @@
 #pragma once
 
 #include "DeviceInformation.h"
+#include <vcclr.h>
 
 namespace SlimDX
 {
@@ -31,6 +32,20 @@ namespace SlimDX
 		{
 		public:
 			DeviceCollection() { }
+		};
+
+		class DeviceCollectionShim
+		{
+		private:
+			gcroot<DeviceCollection^> m_collection;
+
+		public:
+			DeviceCollectionShim( DeviceCollection^ collection ) 
+				: m_collection( collection )
+			{
+			}
+
+			DeviceCollection^ GetCollection() { return m_collection; }
 		};
 	}
 }

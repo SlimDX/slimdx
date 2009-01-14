@@ -331,7 +331,7 @@ namespace SampleFramework
 				}
 			}
 
-			int bestSyncInterval = 1;
+			int bestSyncInterval = input.SyncInterval;
 			if(combo.DriverType == DriverType.Reference)
 				bestSyncInterval = 0;
 

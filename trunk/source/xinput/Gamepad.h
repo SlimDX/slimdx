@@ -77,7 +77,7 @@ namespace SlimDX
             }
 
 			/// <summary>
-			/// Gets the right thumbstick y-axis value. The value is between -32768 and 32767.
+			/// Gets the left thumbstick y-axis value. The value is between -32768 and 32767.
 			/// </summary>
             property System::Int16 LeftThumbX
             {
