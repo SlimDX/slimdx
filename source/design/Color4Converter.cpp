@@ -116,9 +116,9 @@ namespace Design
 				if( int::TryParse( stringArray[0], red ) && int::TryParse( stringArray[1], green ) && int::TryParse( stringArray[2], blue ) )
 					return gcnew Color4( Color::FromArgb( red, green, blue ) );
 
-				float r = safe_cast<float>( floatConverter->ConvertFromString( context, culture, stringArray[1] ) );
-				float g = safe_cast<float>( floatConverter->ConvertFromString( context, culture, stringArray[2] ) );
-				float b = safe_cast<float>( floatConverter->ConvertFromString( context, culture, stringArray[3] ) );
+				float r = safe_cast<float>( floatConverter->ConvertFromString( context, culture, stringArray[0] ) );
+				float g = safe_cast<float>( floatConverter->ConvertFromString( context, culture, stringArray[1] ) );
+				float b = safe_cast<float>( floatConverter->ConvertFromString( context, culture, stringArray[2] ) );
 
 				return gcnew Color4( r, g, b );
 			}

@@ -21,6 +21,7 @@
 */
 #include <windows.h>
 #include <dsound.h>
+#include <memory>
 
 #include "../ComObject.h"
 #include "../Utilities.h"
@@ -114,10 +115,9 @@ namespace DirectSound
 	DeviceCollection^ DirectSoundCapture::GetDevices()
 	{
 		DeviceCollection^ results = gcnew DeviceCollection();
-		GCHandle handle = GCHandle::Alloc( results, GCHandleType::Pinned );
+		std::auto_ptr<DeviceCollectionShim> shim( new DeviceCollectionShim( results ) );
 
-		HRESULT hr = DirectSoundCaptureEnumerate( EnumerateDevices, handle.AddrOfPinnedObject().ToPointer() );
-		handle.Free();
+		HRESULT hr = DirectSoundCaptureEnumerate( EnumerateDevices, shim.get() );
 
 		if( RECORD_DSOUND( hr ).IsFailure )
 			return nullptr;

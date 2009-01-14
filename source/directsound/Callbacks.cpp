@@ -37,9 +37,6 @@ namespace DirectSound
 {
 	BOOL CALLBACK EnumerateDevices( LPGUID lpGuid, LPCWSTR description, LPCWSTR module, LPVOID lpContext )
 	{
-		GCHandle handle = GCHandle::FromIntPtr( IntPtr( lpContext ) );
-		DeviceCollection^ collection = safe_cast<DeviceCollection^>( handle.Target );
-
 		DeviceInformation^ info = gcnew DeviceInformation();
 		info->Description = gcnew String( description );
 		info->ModuleName = gcnew String( module );
@@ -49,9 +46,8 @@ namespace DirectSound
 		else
 			info->DriverGuid = Utilities::ConvertNativeGuid( *lpGuid );
 
+		DeviceCollection^ collection = reinterpret_cast<DeviceCollectionShim*>( lpContext )->GetCollection();
 		collection->Add( info );
-
-		handle.Free();
 
 		return TRUE;
 	}

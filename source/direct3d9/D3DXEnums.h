@@ -44,27 +44,27 @@ namespace SlimDX
 			/// <summary>
 			/// None of the members are valid.
 			/// </summary>
-			None,
+			None = 0,
 
 			/// <summary>
 			/// The transformation member is valid.
 			/// </summary>
-			Transformation,
+			Transformation = 1,
 
 			/// <summary>
 			/// The translation member is valid.
 			/// </summary>
-			Translation,
+			Translation = 2,
 
 			/// <summary>
 			/// The scale member is valid.
 			/// </summary>
-			Scale,
+			Scale = 4,
 
 			/// <summary>
 			/// The rotation member is valid.
 			/// </summary>
-			Rotation
+			Rotation = 8
 		};
 
 		/// <summary>
