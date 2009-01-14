@@ -23,7 +23,6 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <vcclr.h>
-#include <memory>
 
 #include "../ComObject.h"
 #include "../Utilities.h"

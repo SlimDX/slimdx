@@ -41,7 +41,7 @@ namespace XAudio2
 	SourceVoice::SourceVoice( XAudio2^ device, WaveFormat^ sourceFormat, VoiceFlags flags, float maximumFrequencyRatio )
 	{
 		IXAudio2SourceVoice *pointer;
-		std::auto_ptr<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( sourceFormat );
+		auto_array<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( sourceFormat );
 
 		// Manual Allocation: cleaned up in the destructor / finalizer
 		callback = new VoiceCallbackShim( this );
@@ -57,7 +57,7 @@ namespace XAudio2
 	SourceVoice::SourceVoice( XAudio2^ device, WaveFormat^ sourceFormat, VoiceFlags flags )
 	{
 		IXAudio2SourceVoice *pointer;
-		std::auto_ptr<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( sourceFormat );
+		auto_array<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( sourceFormat );
 
 		// Manual Allocation: cleaned up in the destructor / finalizer
 		callback = new VoiceCallbackShim( this );
@@ -73,7 +73,7 @@ namespace XAudio2
 	SourceVoice::SourceVoice( XAudio2^ device, WaveFormat^ sourceFormat )
 	{
 		IXAudio2SourceVoice *pointer;
-		std::auto_ptr<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( sourceFormat );
+		auto_array<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( sourceFormat );
 
 		// Manual Allocation: cleaned up in the destructor / finalizer
 		callback = new VoiceCallbackShim( this );

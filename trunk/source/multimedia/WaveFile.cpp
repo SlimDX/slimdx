@@ -126,7 +126,7 @@ namespace Multimedia
 
 		if( pcmFormat.wf.wFormatTag == WAVE_FORMAT_PCM || pcmFormat.wf.wFormatTag == WAVE_FORMAT_IEEE_FLOAT )
 		{
-			std::auto_ptr<WAVEFORMATEX> tempFormat( reinterpret_cast<WAVEFORMATEX*>( new BYTE[sizeof( WAVEFORMATEX )] ) );
+			auto_array<WAVEFORMATEX> tempFormat( reinterpret_cast<WAVEFORMATEX*>( new BYTE[sizeof( WAVEFORMATEX )] ) );
 			memcpy( tempFormat.get(), &pcmFormat, sizeof( pcmFormat ) );
 			tempFormat->cbSize = 0;
 
@@ -138,7 +138,7 @@ namespace Multimedia
 			if( mmioRead( fileHandle, reinterpret_cast<CHAR*>( &extraBytes ), sizeof( WORD ) ) != sizeof( WORD ) )
 				throw gcnew InvalidDataException( "Invalid wave file." );
 
-			std::auto_ptr<WAVEFORMATEX> tempFormat( reinterpret_cast<WAVEFORMATEX*>( new BYTE[sizeof( WAVEFORMATEX ) + extraBytes] ) );
+			auto_array<WAVEFORMATEX> tempFormat( reinterpret_cast<WAVEFORMATEX*>( new BYTE[sizeof( WAVEFORMATEX ) + extraBytes] ) );
 			memcpy( tempFormat.get(), &pcmFormat, sizeof( pcmFormat ) );
 			tempFormat->cbSize = extraBytes;
 
@@ -300,7 +300,7 @@ namespace Multimedia
 		if( mmioCreateChunk( fileHandle, dataChunk, 0 ) != 0 )
 			throw gcnew InvalidDataException( "Invalid wave file." );
 
-		std::auto_ptr<WAVEFORMATEX> fmtPtr = WaveFormat::ToUnmanaged( format );
+		auto_array<WAVEFORMATEX> fmtPtr = WaveFormat::ToUnmanaged( format );
 
 		if( format->FormatTag == WaveFormatTag::Pcm )
 		{

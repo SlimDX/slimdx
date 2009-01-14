@@ -1959,6 +1959,10 @@
 			Name="Base"
 			>
 			<File
+				RelativePath="..\source\auto_array.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\ComObject.cpp"
 				>
 			</File>

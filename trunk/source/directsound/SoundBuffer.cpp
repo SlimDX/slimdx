@@ -111,7 +111,7 @@ namespace DirectSound
 
 	void SoundBuffer::Format::set( WaveFormat^ sourceFormat )
 	{
-		std::auto_ptr<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( sourceFormat );
+		auto_array<WAVEFORMATEX> format = WaveFormat::ToUnmanaged( sourceFormat );
 
 		HRESULT hr = InternalPointer->SetFormat( format.get() );
 		RECORD_DSOUND( hr );

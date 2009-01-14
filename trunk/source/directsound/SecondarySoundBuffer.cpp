@@ -83,7 +83,7 @@ namespace DirectSound
 		
 		HRESULT hr = dsound->InternalPointer->CreateSoundBuffer( &nativeDesc, &buffer, NULL );
 
-		delete nativeDesc.lpwfxFormat;
+		delete[] nativeDesc.lpwfxFormat;
 
 		if( RECORD_DSOUND( hr ).IsFailure )
 			throw gcnew DirectSoundException( Result::Last );

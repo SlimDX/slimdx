@@ -59,7 +59,7 @@ namespace DirectSound
 		HRESULT hr = capture->InternalPointer->CreateCaptureBuffer( &value, &buffer, NULL );
 
 		delete[] value.lpDSCFXDesc;
-		delete value.lpwfxFormat;
+		delete[] value.lpwfxFormat;
 
 		if( RECORD_DSOUND( hr ).IsFailure )
 			throw gcnew DirectSoundException( Result::Last );
