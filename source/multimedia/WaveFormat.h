@@ -22,7 +22,7 @@
 #pragma once
 
 #include "Enums.h"
-#include <memory>
+#include "../auto_array.h"
 
 namespace SlimDX
 {
@@ -31,7 +31,7 @@ namespace SlimDX
 		public ref class WaveFormat : System::ICloneable, System::IEquatable<WaveFormat^>
 		{
 		internal:
-			static std::auto_ptr<WAVEFORMATEX> ToUnmanaged( WaveFormat^ format );
+			static auto_array<WAVEFORMATEX> ToUnmanaged( WaveFormat^ format );
 			static WaveFormat^ FromUnmanaged( const WAVEFORMATEX &format );
 
 			virtual System::Object^ Clone2() = System::ICloneable::Clone

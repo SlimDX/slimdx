@@ -22,7 +22,6 @@
 #include <windows.h>
 #include <dinput.h>
 #include <vcclr.h>
-#include <memory>
 
 #include "DirectInput.h"
 #include "DirectInputException.h"

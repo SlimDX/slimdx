@@ -88,8 +88,8 @@ namespace DirectSound
 		IDirectSoundBuffer8* buffer;
 		HRESULT hr = DirectSoundFullDuplexCreate( reinterpret_cast<GUID*>( &captureDevice ), reinterpret_cast<GUID*>( &playbackDevice ), &cbDesc, &bDesc, static_cast<HWND>( windowHandle.ToPointer() ), static_cast<DWORD>( level ), &duplex, &capture, &buffer, NULL );
 		
-		delete cbDesc.lpwfxFormat;
-		delete bDesc.lpwfxFormat;
+		delete[] cbDesc.lpwfxFormat;
+		delete[] bDesc.lpwfxFormat;
 
 		if( RECORD_DSOUND( hr ).IsFailure )
 		{

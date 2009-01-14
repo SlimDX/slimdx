@@ -33,16 +33,16 @@ namespace SlimDX
 {
 namespace Multimedia
 {
-	std::auto_ptr<WAVEFORMATEX> WaveFormat::ToUnmanaged( WaveFormat^ format )
+	auto_array<WAVEFORMATEX> WaveFormat::ToUnmanaged( WaveFormat^ format )
 	{
 		array<Byte>^ bytes = format->GetBytes();
 		pin_ptr<Byte> pinnedBytes = &bytes[0];
 
-		// Manual Allocation: it's ok, the pointer gets wrapped up into a std::auto_ptr
+		// Manual Allocation: it's ok, the pointer gets wrapped up into an auto_array
 		BYTE *result = new BYTE[bytes->Length];
 		memcpy( result, pinnedBytes, bytes->Length * sizeof( BYTE ) );
 
-		return std::auto_ptr<WAVEFORMATEX>( reinterpret_cast<WAVEFORMATEX*>( result ) );
+		return auto_array<WAVEFORMATEX>( reinterpret_cast<WAVEFORMATEX*>( result ) );
 	}
 
 	WaveFormat^ WaveFormat::FromUnmanaged( const WAVEFORMATEX &format )
