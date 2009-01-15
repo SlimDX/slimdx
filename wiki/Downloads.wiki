@@ -11,7 +11,9 @@ This is the package for end users. It works on both 32 and 64 bit systems, for a
 [http://slimdx.googlecode.com/files/SlimDX%20Runtime%20%28November%202008%29.msi Download the SlimDX Runtime for November 2008]
 
 = Information For Developers =
-If you're new to this whole thing, read the [http://slimdx.mdxinfo.com/wiki/index.php?title=Getting_Started Getting Started] document on our wiki. It should help get you moving. Other pages of interest include:
+If you're new to this whole thing, read the [http://slimdx.mdxinfo.com/latestdocs/Default.aspx?topic=Programming+Guide/Getting+Started Getting Started] documentation page. It should help get you moving. Other pages of interest include:
+
+[http://slimdx.mdxinfo.com/latestdocs/Default.aspx?topic=SlimDX+Software+Development+Kit/What's+Changed+in+the+November+2008+SDK What's Changed in the November 2008 SDK] -- Information on the work we did for the November 2008 SDK release.
 
 [http://slimdx.mdxinfo.com/wiki/index.php?title=Main_Page SlimDX Main Page] -- The front page of our wiki. This page makes it fairly straightforward to get to all of the other pages related to this project, both in the wiki and outside of it.
 
