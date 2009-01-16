@@ -69,26 +69,34 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
-	Device::Device( Direct3D^ direct3D, int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParameters )
+	Device::Device( Direct3D^ direct3D, int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, ... array<PresentParameters^>^ presentParameters )
 	{
 		IDirect3DDevice9* device;
-		D3DPRESENT_PARAMETERS d3dpp;
+		std::vector<D3DPRESENT_PARAMETERS> d3dpp;
+		d3dpp.reserve( presentParameters->Length );
 
-		d3dpp = presentParameters->ToUnmanaged();
+		for( int p = 0; p < presentParameters->Length; ++p )
+		{
+			d3dpp.push_back( presentParameters[p]->ToUnmanaged() );
+		}
+
 		HRESULT hr = direct3D->InternalPointer->CreateDevice( adapter,
 			static_cast<D3DDEVTYPE>( deviceType ),
 			static_cast<HWND>( controlHandle.ToPointer() ), 
 			static_cast<DWORD>( createFlags ),
-			reinterpret_cast<D3DPRESENT_PARAMETERS*>( &d3dpp ),
+			reinterpret_cast<D3DPRESENT_PARAMETERS*>( &d3dpp[0] ),
 			&device );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
-		presentParameters->BackBufferCount = d3dpp.BackBufferCount;
-		presentParameters->BackBufferFormat = static_cast<Format>( d3dpp.BackBufferFormat );
-		presentParameters->BackBufferWidth = d3dpp.BackBufferWidth;
-		presentParameters->BackBufferHeight = d3dpp.BackBufferHeight;
+		for( int p = 0; p < presentParameters->Length; ++p )
+		{
+			presentParameters[p]->BackBufferCount = d3dpp[p].BackBufferCount;
+			presentParameters[p]->BackBufferFormat = static_cast<Format>( d3dpp[p].BackBufferFormat );
+			presentParameters[p]->BackBufferWidth = d3dpp[p].BackBufferWidth;
+			presentParameters[p]->BackBufferHeight = d3dpp[p].BackBufferHeight;
+		}
 
 		Construct(device);
 	}

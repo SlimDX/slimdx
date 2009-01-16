@@ -77,7 +77,7 @@ namespace SlimDX
 			/// <param name="controlHandle">Specifies the target window for Direct3D rendering.</param>
 			/// <param name="createFlags">Combination of one or more options that control device creation.</param>
 			/// <param name="presentParameters">Describes the presentation parameters for the device being created.</param>
-			Device( Direct3D^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle, CreateFlags createFlags, PresentParameters^ presentParameters );
+			Device( Direct3D^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle, CreateFlags createFlags, ... array<PresentParameters^>^ presentParameters );
 			
 			/// <summary>
 			/// Constructs a new instance of the <see cref="Device"/> class using the specified pointer to a
