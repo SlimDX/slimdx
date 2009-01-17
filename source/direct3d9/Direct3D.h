@@ -42,11 +42,10 @@ namespace SlimDX
 		{
 			COMOBJECT(IDirect3D9, Direct3D);
 
-		private:
-			AdapterCollection^ adapters;
-
 		protected:
 			Direct3D( bool doNotConstruct );
+
+			AdapterCollection^ adapters;
 
 		public:
 			Direct3D();
