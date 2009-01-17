@@ -67,7 +67,7 @@ namespace SlimDX
 
 		private:
 			void Internal_Constructor( Direct3DEx^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle,
-				CreateFlags createFlags, PresentParameters^ presentParameters, D3DDISPLAYMODEEX* fullscreenDisplayMode );
+				CreateFlags createFlags, D3DDISPLAYMODEEX* fullscreenDisplayMode, ... array<PresentParameters^>^ presentParameters );
 
 		public:
 			/// <summary>
@@ -94,6 +94,31 @@ namespace SlimDX
 			/// <param name="fullScreenDisplayMode">The display mode for when the device is set to fullscreen.</param>
 			DeviceEx( Direct3DEx^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle,
 				CreateFlags createFlags, PresentParameters^ presentParameters, DisplayModeEx fullScreenDisplayMode );
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::Direct3D9::DeviceEx"/> class.
+			/// </summary>
+			/// <param name="direct3D">The Direct3DEx instance to create the device from.</param>
+			/// <param name="adapter">Ordinal number that denotes the display adapter.</param>
+			/// <param name="deviceType">Denotes the desired device type. If the desired device type is not available, device creation will fail.</param>
+			/// <param name="controlHandle">Specifies the target window for Direct3D rendering.</param>
+			/// <param name="createFlags">Combination of one or more options that control device creation.</param>
+			/// <param name="presentParameters">Describes the presentation parameters for the device being created.</param>
+			DeviceEx( Direct3DEx^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle,
+				CreateFlags createFlags, array<PresentParameters^>^ presentParameters );
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::Direct3D9::DeviceEx"/> class.
+			/// </summary>
+			/// <param name="direct3D">The Direct3D instance to create the device from.</param>
+			/// <param name="adapter">Ordinal number that denotes the display adapter.</param>
+			/// <param name="deviceType">Denotes the desired device type. If the desired device type is not available, device creation will fail.</param>
+			/// <param name="controlHandle">Specifies the target window for Direct3D rendering.</param>
+			/// <param name="createFlags">Combination of one or more options that control device creation.</param>
+			/// <param name="presentParameters">Describes the presentation parameters for the device being created.</param>
+			/// <param name="fullScreenDisplayMode">The display mode for when the device is set to fullscreen.</param>
+			DeviceEx( Direct3DEx^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle,
+				CreateFlags createFlags, array<PresentParameters^>^ presentParameters, array<DisplayModeEx>^ fullScreenDisplayMode );
 
 			/// <summary>
 			/// Constructs a new instance of the <see cref="DeviceEx"/> class using the specified pointer to a

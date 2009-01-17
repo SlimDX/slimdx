@@ -51,24 +51,32 @@ namespace Direct3D9
 	}
 
 	void DeviceEx::Internal_Constructor( Direct3DEx^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle,
-				CreateFlags createFlags, PresentParameters^ presentParameters, D3DDISPLAYMODEEX* fullscreenDisplayMode )
+				CreateFlags createFlags, D3DDISPLAYMODEEX* fullscreenDisplayMode, ... array<PresentParameters^>^ presentParameters )
 	{
 		IDirect3DDevice9Ex* device;
-		D3DPRESENT_PARAMETERS d3dpp = presentParameters->ToUnmanaged();
+		std::vector<D3DPRESENT_PARAMETERS> d3dpp;
+		d3dpp.reserve( presentParameters->Length );
+		for( int i = 0; i < presentParameters->Length; ++i )
+		{
+			d3dpp.push_back( presentParameters[i]->ToUnmanaged() );
+		}
 
 		HRESULT hr = direct3D->InternalPointer->CreateDeviceEx( adapter,
 			static_cast<D3DDEVTYPE>( deviceType ),
 			static_cast<HWND>( controlHandle.ToPointer() ), 
 			static_cast<DWORD>( createFlags ),
-			&d3dpp, fullscreenDisplayMode, &device );
+			&d3dpp[0], fullscreenDisplayMode, &device );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
-		presentParameters->BackBufferCount = d3dpp.BackBufferCount;
-		presentParameters->BackBufferFormat = static_cast<Format>( d3dpp.BackBufferFormat );
-		presentParameters->BackBufferWidth = d3dpp.BackBufferWidth;
-		presentParameters->BackBufferHeight = d3dpp.BackBufferHeight;
+		for( int i = 0; i < presentParameters->Length; ++i )
+		{
+			presentParameters[i]->BackBufferCount = d3dpp[i].BackBufferCount;
+			presentParameters[i]->BackBufferFormat = static_cast<Format>( d3dpp[i].BackBufferFormat );
+			presentParameters[i]->BackBufferWidth = d3dpp[i].BackBufferWidth;
+			presentParameters[i]->BackBufferHeight = d3dpp[i].BackBufferHeight;
+		}
 
 		Construct(device);
 	}
@@ -77,7 +85,7 @@ namespace Direct3D9
 		CreateFlags createFlags, PresentParameters^ presentParameters )
 		: Device( true )
 	{
-		Internal_Constructor( direct3D, adapter, deviceType, controlHandle, createFlags, presentParameters, NULL );
+		Internal_Constructor( direct3D, adapter, deviceType, controlHandle, createFlags, NULL, presentParameters );
 	}
 
 	DeviceEx::DeviceEx( Direct3DEx^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle,
@@ -85,7 +93,28 @@ namespace Direct3D9
 		: Device( true )
 	{
 		D3DDISPLAYMODEEX nativeMode = fullscreenDisplayMode.ToUnmanaged();
-		Internal_Constructor( direct3D, adapter, deviceType, controlHandle, createFlags, presentParameters, &nativeMode );
+		Internal_Constructor( direct3D, adapter, deviceType, controlHandle, createFlags, &nativeMode, presentParameters );
+	}
+
+	DeviceEx::DeviceEx( Direct3DEx^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle,
+		CreateFlags createFlags, array<PresentParameters^>^ presentParameters )
+		: Device( true )
+	{
+		Internal_Constructor( direct3D, adapter, deviceType, controlHandle, createFlags, NULL, presentParameters );
+	}
+
+	DeviceEx::DeviceEx( Direct3DEx^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle,
+		CreateFlags createFlags, array<PresentParameters^>^ presentParameters, array<DisplayModeEx>^ fullscreenDisplayModes )
+		: Device( true )
+	{
+		std::vector<D3DDISPLAYMODEEX> nativeModes;
+		nativeModes.reserve( fullscreenDisplayModes->Length );
+		for( int i = 0; i < fullscreenDisplayModes->Length; ++i )
+		{
+			nativeModes.push_back( fullscreenDisplayModes[i].ToUnmanaged() );
+		}
+
+		Internal_Constructor( direct3D, adapter, deviceType, controlHandle, createFlags, &nativeModes[0], presentParameters );
 	}
 
 	DeviceEx^ DeviceEx::FromPointer( IDirect3DDevice9Ex* pointer )
