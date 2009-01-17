@@ -5989,14 +5989,14 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="WaveFile"
+				Name="WaveStream"
 				>
 				<File
-					RelativePath="..\source\multimedia\WaveFile.cpp"
+					RelativePath="..\source\multimedia\WaveStream.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\multimedia\WaveFile.h"
+					RelativePath="..\source\multimedia\WaveStream.h"
 					>
 				</File>
 			</Filter>

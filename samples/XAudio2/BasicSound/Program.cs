@@ -55,12 +55,12 @@ namespace BasicSound
             WaveFormat format;
 
             // read in the wav file
-            using (WaveFile file = new WaveFile(fileName))
+            using(WaveStream stream = new WaveStream(fileName))
             {
-                format = file.Format;
-                data = new byte[file.Size];
+                format = stream.Format;
+                data = new byte[stream.Length];
 
-                file.Read(data, file.Size);
+                stream.Read(data, 0, (int)stream.Length);
             }
 
             SourceVoice sourceVoice = new SourceVoice(device, format);
@@ -70,9 +70,6 @@ namespace BasicSound
             buffer.AudioData = data;
             buffer.AudioBytes = data.Length;
             buffer.Flags = BufferFlags.EndOfStream;
-
-            // to set the output speakers, uncomment the following line
-            //sourceVoice.SetOutputMatrix(1, 2, new float[] { 1.0f, 0.0f });
 
             sourceVoice.SubmitSourceBuffer(buffer);
             sourceVoice.Start();
