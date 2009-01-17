@@ -25,6 +25,7 @@
 
 #include "../InternalHelpers.h"
 #include "../Utilities.h"
+#include "../DataStream.h"
 
 #include "WaveStream.h"
 
@@ -35,12 +36,8 @@ namespace SlimDX
 {
 namespace Multimedia
 {
-	WaveStream::WaveStream( System::String^ path )
+	WaveStream::WaveStream( String^ path )
 	{
-		MMCKINFO fileInfo;
-		MMCKINFO chunk;
-		PCMWAVEFORMAT pcmFormat;
-
 		if( String::IsNullOrEmpty( path ) )
 			throw gcnew ArgumentNullException( "path" );
 
@@ -51,6 +48,48 @@ namespace Multimedia
 		handle = mmioOpen( const_cast<LPWSTR>( reinterpret_cast<LPCWSTR>( pinnedPath ) ), NULL, MMIO_ALLOCBUF | MMIO_READ );
 		if( handle == NULL )
 			throw gcnew FileLoadException( "Could not open the file", path );
+
+		Init();
+	}
+
+	WaveStream::WaveStream( Stream^ stream )
+	{
+		InitStream( stream, 0 );
+	}
+
+	WaveStream::WaveStream( Stream^ stream, int length )
+	{
+		InitStream( stream, length );
+	}
+
+	void WaveStream::InitStream( Stream^ stream, int length )
+	{
+		if( stream == nullptr )
+			throw gcnew ArgumentNullException( "stream" );
+
+		array<Byte>^ bytes = Utilities::ReadStream( stream, length );
+
+		internalMemory = gcnew DataStream( bytes->LongLength, true, false );
+		internalMemory->Write( bytes, 0, bytes->Length );
+
+		MMIOINFO info;
+		ZeroMemory( &info, sizeof( info ) );
+		info.fccIOProc = FOURCC_MEM;
+		info.cchBuffer = bytes->Length;
+		info.pchBuffer = internalMemory->RawPointer;
+
+		handle = mmioOpen( NULL, &info, MMIO_ALLOCBUF | MMIO_READ );
+		if( handle == NULL )
+			throw gcnew InvalidDataException( "Invalid wave file." );
+
+		Init();
+	}
+
+	void WaveStream::Init()
+	{
+		MMCKINFO fileInfo;
+		MMCKINFO chunk;
+		PCMWAVEFORMAT pcmFormat;		
 
 		if( mmioDescend( handle, &fileInfo, NULL, 0 ) != 0 )
 			throw gcnew InvalidDataException( "Invalid wave file." );
@@ -124,6 +163,12 @@ namespace Multimedia
 		{
 			mmioClose( handle, 0 );
 			handle = NULL;
+		}
+
+		if( internalMemory != nullptr )
+		{
+			delete internalMemory;
+			internalMemory = nullptr;
 		}
 	}
 

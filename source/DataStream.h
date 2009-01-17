@@ -114,14 +114,14 @@ namespace SlimDX
 		/// Writes a sequence of bytes to the current stream and advances the current
 		/// position within this stream by the number of bytes written.
 		/// </summary>
-		/// <param name="data">An array of bytes. This method copies count bytes from buffer to the current stream.</param>
+		/// <param name="buffer">An array of bytes. This method copies count bytes from buffer to the current stream.</param>
 		/// <param name="offset">The zero-based byte offset in buffer at which to begin copying bytes to the current stream.</param>
 		/// <param name="count">The number of bytes to be written to the current stream.</param>
 		/// <exception cref="NotSupportedException">This stream does not support writing.</exception>
 		/// <exception cref="ArgumentNullException"><paramref name="data" /> is a null reference.</exception>
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="offset" /> or <paramref name="count" /> is negative.</exception>
 		/// <exception cref="ArgumentException">The sum of <paramref name="offset" /> and <paramref name="count" /> is greater than the buffer length.</exception>
-		virtual void Write( array<System::Byte>^ data, int offset, int count ) override;
+		virtual void Write( array<System::Byte>^ buffer, int offset, int count ) override;
 
 		/// <summary>
 		/// Writes an array of values to the current stream, and advances the current position
