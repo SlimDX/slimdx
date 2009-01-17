@@ -35,11 +35,16 @@ namespace SlimDX
 			int dataOffset;
 			int size;
 			WaveFormat^ format;
+			DataStream^ internalMemory;
 
 			void Destruct();
+			void Init();
+			void InitStream( System::IO::Stream^ stream, int length );
 
 		public:
 			WaveStream( System::String^ path );
+			WaveStream( System::IO::Stream^ stream );
+			WaveStream( System::IO::Stream^ stream, int length );
 			~WaveStream();
 			!WaveStream();
 
@@ -53,7 +58,7 @@ namespace SlimDX
 			/// Not supported.
 			/// </summary>
 			/// <exception cref="NotSupportedException">Always thrown.</exception>
-			virtual void Write( array<System::Byte>^ data, int offset, int count ) override;
+			virtual void Write( array<System::Byte>^ buffer, int offset, int count ) override;
 
 			/// <summary>
 			/// Reads a sequence of bytes from the current stream and advances the position
