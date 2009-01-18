@@ -207,9 +207,9 @@ namespace Multimedia
 
 	void WaveStream::Write( array<Byte>^ buffer, int offset, int count )
 	{
-		SLIMDX_DEBUG_UNREFERENCED_PARAMETER(buffer);
-		SLIMDX_DEBUG_UNREFERENCED_PARAMETER(offset);
-		SLIMDX_DEBUG_UNREFERENCED_PARAMETER(count);
+		SLIMDX_UNREFERENCED_PARAMETER(buffer);
+		SLIMDX_UNREFERENCED_PARAMETER(offset);
+		SLIMDX_UNREFERENCED_PARAMETER(count);
 
 		throw gcnew NotSupportedException("WaveStream objects cannot be written to.");
 	}
@@ -222,7 +222,7 @@ namespace Multimedia
 		size_t actualCount = min( static_cast<size_t>( Length - Position ), static_cast<size_t>( count ) );
 
 		pin_ptr<Byte> pinnedBuffer = &buffer[0];
-		int read = mmioRead( handle, reinterpret_cast<HPSTR>( pinnedBuffer ), actualCount );
+		int read = mmioRead( handle, reinterpret_cast<HPSTR>( pinnedBuffer ), static_cast<LONG>( actualCount ) );
 
 		return read;
 	}

@@ -130,7 +130,7 @@ namespace SlimDX
 		/// <param name="offset">The zero-based byte offset in buffer at which to begin copying bytes to the current stream.</param>
 		/// <param name="count">The number of bytes to be written to the current stream.</param>
 		/// <exception cref="NotSupportedException">This stream does not support writing.</exception>
-		/// <exception cref="ArgumentNullException"><paramref name="data" /> is a null reference.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="buffer" /> is a null reference.</exception>
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="offset" /> or <paramref name="count" /> is negative.</exception>
 		/// <exception cref="ArgumentException">The sum of <paramref name="offset" /> and <paramref name="count" /> is greater than the buffer length.</exception>
 		virtual void Write( array<System::Byte>^ buffer, int offset, int count ) override;
