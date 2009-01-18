@@ -107,16 +107,13 @@ namespace Direct3D9
 		return XFileEnumerationObject::FromPointer( result );
 	}
 
-	XFileEnumerationObject^ XFile::CreateEnumerationObject( array<Byte>^ memory )
+	XFileEnumerationObject^ XFile::CreateEnumerationObject_Internal( const void* memory, SIZE_T size )
 	{
 		ID3DXFileEnumObject *result;
-		pin_ptr<unsigned char> pinnedMemory = &memory[0];
-
 		D3DXF_FILELOADMEMORY mem;
-		mem.lpMemory = reinterpret_cast<LPCVOID>( pinnedMemory );
-		mem.dSize = memory->Length;
+		mem.dSize = size;
 
-		HRESULT hr = InternalPointer->CreateEnumObject( reinterpret_cast<LPCVOID>( &mem ), D3DXF_FILELOAD_FROMMEMORY, &result );
+		HRESULT hr = InternalPointer->CreateEnumObject( memory, D3DXF_FILELOAD_FROMMEMORY, &result );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
@@ -124,9 +121,23 @@ namespace Direct3D9
 		return XFileEnumerationObject::FromPointer( result );
 	}
 
+	XFileEnumerationObject^ XFile::CreateEnumerationObject( array<Byte>^ memory )
+	{
+		pin_ptr<Byte> pinnedMemory = &memory[0];
+		return CreateEnumerationObject_Internal( pinnedMemory, static_cast<SIZE_T>( memory->Length ) );
+	}
+
 	XFileEnumerationObject^ XFile::CreateEnumerationObject( Stream^ memory )
 	{
-		array<Byte>^ data = Utilities::ReadStream( memory, 0 );
+		DataStream^ ds = nullptr;
+		array<Byte>^ data = Utilities::ReadStream( memory, 0, &ds );
+
+		if( data == nullptr )
+		{
+			SIZE_T size = static_cast<SIZE_T>( ds->RemainingLength );
+			return CreateEnumerationObject_Internal( ds->SeekToEnd(), size );
+		}
+
 		return CreateEnumerationObject( data );
 	}
 
@@ -156,17 +167,29 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
+	Result XFile::RegisterTemplates_Internal( const void* memory, SIZE_T size )
+	{
+		HRESULT hr = InternalPointer->RegisterTemplates( memory, size );
+		return RECORD_D3D9( hr );
+	}
+
 	Result XFile::RegisterTemplates( array<Byte>^ memory )
 	{
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
-
-		HRESULT hr = InternalPointer->RegisterTemplates( reinterpret_cast<LPCVOID>( pinnedMemory ), memory->Length );
-		return RECORD_D3D9( hr );
+		return RegisterTemplates_Internal( pinnedMemory, static_cast<SIZE_T>( memory->Length ) );
 	}
 
 	Result XFile::RegisterTemplates( Stream^ stream )
 	{
-		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
+		DataStream^ ds = nullptr;
+		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+
+		if( data == nullptr )
+		{
+			SIZE_T size = static_cast<SIZE_T>( ds->RemainingLength );
+			return RegisterTemplates_Internal( ds->SeekToEnd(), size );
+		}
+
 		return RegisterTemplates( data );
 	}
 

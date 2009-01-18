@@ -36,6 +36,10 @@ namespace SlimDX
 		{
 			COMOBJECT(ID3DXFile, XFile);
 
+		private:
+			XFileEnumerationObject^ CreateEnumerationObject_Internal( const void* memory, SIZE_T size );
+			Result RegisterTemplates_Internal( const void* memory, SIZE_T size );
+
 		public:
 			XFile();
 			static XFile^ FromPointer( System::IntPtr pointer );

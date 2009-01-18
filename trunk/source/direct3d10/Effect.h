@@ -43,6 +43,9 @@ namespace SlimDX
 		{
 			COMOBJECT(ID3D10Effect, Effect);
 		
+		private:
+			static Effect^ FromMemory_Internal( SlimDX::Direct3D10::Device^ device, const void* memory, SIZE_T size, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, System::String^* compilationErrors );
+
 		public:
 			property EffectDescription Description
 			{

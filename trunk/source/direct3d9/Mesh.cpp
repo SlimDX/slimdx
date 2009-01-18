@@ -112,16 +112,15 @@ namespace Direct3D9
 		return gcnew Mesh( pointer );
 	}
 
-	Mesh^ Mesh::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, MeshFlags flags )
+	Mesh^ Mesh::FromMemory_Internal( SlimDX::Direct3D9::Device^ device, const void* memory, DWORD size, MeshFlags flags )
 	{
 		ID3DXMesh* mesh;
 		ID3DXBuffer* adjacencyBuffer;
 		ID3DXBuffer* materialBuffer;
 		ID3DXBuffer* instanceBuffer;
 		DWORD materialCount;
-		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 		
-		HRESULT hr = D3DXLoadMeshFromXInMemory( pinnedMemory, memory->Length, static_cast<DWORD>( flags ), device->InternalPointer,
+		HRESULT hr = D3DXLoadMeshFromXInMemory( memory, size, static_cast<DWORD>( flags ), device->InternalPointer,
 			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -139,9 +138,23 @@ namespace Direct3D9
 		return result;
 	}
 
+	Mesh^ Mesh::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, MeshFlags flags )
+	{
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+		return Mesh::FromMemory_Internal( device, pinnedMemory, static_cast<DWORD>( memory->Length ), flags );
+	}
+
 	Mesh^ Mesh::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, MeshFlags flags )
 	{
-		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
+		DataStream^ ds = nullptr;
+		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+
+		if( data == nullptr )
+		{
+			DWORD size = static_cast<DWORD>( ds->RemainingLength );
+			return Mesh::FromMemory_Internal( device, ds->SeekToEnd(), size, flags );
+		}
+
 		return Mesh::FromMemory( device, data, flags );
 	}
 

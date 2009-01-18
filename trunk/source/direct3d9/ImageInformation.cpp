@@ -24,6 +24,7 @@
 #include <vcclr.h>
 
 #include "../Utilities.h"
+#include "../DataStream.h"
 
 #include "Direct3D9Exception.h"
 #include "ImageInformation.h"
@@ -89,10 +90,17 @@ namespace Direct3D9
 			prevPosition = stream->Position;
 
 		// Create buffer.
-		buffer = Utilities::ReadStream( stream, static_cast<int>( stream->Length ) );
+		DataStream^ ds = nullptr;
+		buffer = Utilities::ReadStream( stream, static_cast<int>( stream->Length ), &ds );
 
 		if (peek)
 			stream->Position = prevPosition;
+
+		if( buffer == nullptr )
+		{
+			UINT size = static_cast<UINT>( ds->RemainingLength );
+			return FromMemory_Internal( ds->SeekToEnd(), size );
+		}
 
 		// Extract from the byte buffer.
 		return FromMemory(buffer);
@@ -114,15 +122,20 @@ namespace Direct3D9
 		return info;
 	}
 
-	ImageInformation ImageInformation::FromMemory( array<Byte>^ memory )
+	ImageInformation ImageInformation::FromMemory_Internal( const void* data, UINT size )
 	{
 		ImageInformation info;
-		pin_ptr<const unsigned char> pinnedMemory = &memory[0];
 
-		HRESULT hr = D3DXGetImageInfoFromFileInMemory( pinnedMemory, memory->Length, reinterpret_cast<D3DXIMAGE_INFO*>( &info ) );
+		HRESULT hr = D3DXGetImageInfoFromFileInMemory( data, size, reinterpret_cast<D3DXIMAGE_INFO*>( &info ) );
 		RECORD_D3D9( hr );
 
 		return info;
+	}
+
+	ImageInformation ImageInformation::FromMemory( array<Byte>^ memory )
+	{
+		pin_ptr<const unsigned char> pinnedMemory = &memory[0];
+		return FromMemory_Internal( pinnedMemory, static_cast<UINT>( memory->Length ) );
 	}
 }
 }

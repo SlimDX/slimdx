@@ -47,6 +47,9 @@ namespace SlimDX
 		{
 			COMOBJECT(IDirect3DVolumeTexture9, VolumeTexture);
 
+		private:
+			static VolumeTexture^ FromMemory_Internal( SlimDX::Direct3D9::Device^ device, const void* memory, UINT size, int width, int height, int depth, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, ImageInformation* imageInformation, PaletteEntry* palette );
+
 		public:
 			/// <summary>
 			/// Initializes a new instance of the <see cref="VolumeTexture"/> class.

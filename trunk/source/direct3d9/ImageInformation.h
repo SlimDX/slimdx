@@ -34,6 +34,9 @@ namespace SlimDX
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class ImageInformation : System::IEquatable<ImageInformation>
 		{
+		private:
+			static ImageInformation FromMemory_Internal( const void* data, UINT size );
+
 		public:
 			/// <summary>
 			/// Width of the original image, in pixels.
