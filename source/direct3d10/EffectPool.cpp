@@ -26,6 +26,7 @@
 
 #include "Direct3D10Exception.h"
 
+#include "../DataStream.h"
 #include "EffectPool.h"
 #include "Device.h"
 #include "Effect.h"
@@ -121,31 +122,39 @@ namespace Direct3D10
 	EffectPool^ EffectPool::FromStream( Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags )
 	{
 		String^ compilationErrors;
-		return (FromStream( device, stream, profile, shaderFlags, effectFlags, compilationErrors ));
+		return FromStream( device, stream, profile, shaderFlags, effectFlags, compilationErrors );
 	}
 	
 	EffectPool^ EffectPool::FromStream( Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, [Out] String^ %compilationErrors  )
 	{
-		array<Byte>^ memory = Utilities::ReadStream( stream, 0 );
-		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, compilationErrors ));
+		DataStream^ ds = nullptr;
+		array<Byte>^ memory = Utilities::ReadStream( stream, 0, &ds );
+
+		if( memory == nullptr )
+		{
+			SIZE_T size = static_cast<SIZE_T>( ds->RemainingLength );
+			return FromMemory_Internal( device, ds->SeekToEnd(), size,
+				profile, shaderFlags, effectFlags, compilationErrors );
+		}
+
+		return FromMemory( device, memory, profile, shaderFlags, effectFlags, compilationErrors );
 	}
 	
 	EffectPool^ EffectPool::FromMemory( Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags )
 	{
 		String^ compilationErrors;
-		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, compilationErrors ));
+		return FromMemory( device, memory, profile, shaderFlags, effectFlags, compilationErrors );
 	}
-	
-	EffectPool^ EffectPool::FromMemory( Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, [Out] String^ %compilationErrors )
+
+	EffectPool^ EffectPool::FromMemory_Internal( Device^ device, const void* data, SIZE_T size, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, [Out] String^ %compilationErrors )
 	{
 		ID3D10EffectPool* effectPool;
 		ID3D10Blob* errorBlob;
 	
 		array<unsigned char>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 		pin_ptr<unsigned char> pinnedProfile = &profileBytes[0];
-		pin_ptr<unsigned char> pinnedData = &memory[0];
 
-		HRESULT hr = D3DX10CreateEffectPoolFromMemory( pinnedData, memory->Length, "<no file name>", NULL, NULL,
+		HRESULT hr = D3DX10CreateEffectPoolFromMemory( data, size, "<no file name>", NULL, NULL,
 			reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<UINT>(shaderFlags), static_cast< UINT>(effectFlags ), device->InternalPointer,
 			NULL, &effectPool, &errorBlob, NULL );
 
@@ -163,6 +172,13 @@ namespace Direct3D10
 		if( effectPool == NULL)
 			return nullptr;
 		return gcnew EffectPool( effectPool );
-		}
+	}
+	
+	EffectPool^ EffectPool::FromMemory( Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, [Out] String^ %compilationErrors )
+	{
+		pin_ptr<unsigned char> pinnedData = &memory[0];
+		return FromMemory_Internal( device, pinnedData, static_cast<SIZE_T>( memory->Length ), profile,
+			shaderFlags, effectFlags, compilationErrors );
+	}
 }
 }

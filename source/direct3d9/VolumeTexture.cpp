@@ -129,21 +129,17 @@ namespace Direct3D9
 		return result;
 	}
 
-	VolumeTexture^ VolumeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, int width, int height, int depth,
-		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
-		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
+	VolumeTexture^ VolumeTexture::FromMemory_Internal( SlimDX::Direct3D9::Device^ device, const void* memory, UINT size,
+		int width, int height, int depth, int numLevels, Usage usage, Format format, Pool pool, Filter filter,
+		Filter mipFilter, int colorKey, ImageInformation* imageInformation, PaletteEntry* palette )
 	{
 		IDirect3DVolumeTexture9* texture;
-		pin_ptr<unsigned char> pinnedMemory = &memory[0];
-		imageInformation = ImageInformation();
-		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
-		palette = gcnew array<PaletteEntry>( 256 );
-		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
 
-		HRESULT hr = D3DXCreateVolumeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length,
-			width, height, depth, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ),
-			static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), static_cast<D3DCOLOR>( colorKey ), 
-			reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), reinterpret_cast<PALETTEENTRY*>( pinnedPalette ), &texture );
+		HRESULT hr = D3DXCreateVolumeTextureFromFileInMemoryEx( device->InternalPointer, memory, size,
+			width, height, depth, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ),
+			static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
+			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( imageInformation ),
+			reinterpret_cast<PALETTEENTRY*>( palette ), &texture );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 		{
@@ -159,43 +155,36 @@ namespace Direct3D9
 
 	VolumeTexture^ VolumeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, int width, int height, int depth,
 		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
+		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
+	{
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+		imageInformation = ImageInformation();
+		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		palette = gcnew array<PaletteEntry>( 256 );
+		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+
+		return FromMemory_Internal( device, pinnedMemory, static_cast<UINT>( memory->Length ), width, height, depth, numLevels,
+			usage, format, pool, filter, mipFilter, colorKey, pinnedImageInfo, pinnedPalette );
+	}
+
+	VolumeTexture^ VolumeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, int width, int height, int depth,
+		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation )
 	{
-		IDirect3DVolumeTexture9* texture;
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
 
-		HRESULT hr = D3DXCreateVolumeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length,
-			width, height, depth, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ),
-			static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), static_cast<D3DCOLOR>( colorKey ), 
-			reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), NULL, &texture );
-		
-		if( RECORD_D3D9(hr).IsFailure )
-			return nullptr;
-
-		VolumeTexture^ result = gcnew VolumeTexture( texture );
-		if( pool == Pool::Default )
-			result->IsDefaultPool = true;
-		return result;
+		return FromMemory_Internal( device, pinnedMemory, static_cast<UINT>( memory->Length ), width, height, depth, numLevels,
+			usage, format, pool, filter, mipFilter, colorKey, pinnedImageInfo, NULL );
 	}
 
 	VolumeTexture^ VolumeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, int width, int height, int depth,
 		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
-		IDirect3DVolumeTexture9* texture;
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
-		HRESULT hr = D3DXCreateVolumeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length,
-			width, height, depth, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ),
-			static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ), static_cast<D3DCOLOR>( colorKey ), 0, 0, &texture );
-		
-		if( RECORD_D3D9(hr).IsFailure )
-			return nullptr;
-
-		VolumeTexture^ result = gcnew VolumeTexture( texture );
-		if( pool == Pool::Default )
-			result->IsDefaultPool = true;
-		return result;
+		return FromMemory_Internal( device, pinnedMemory, static_cast<UINT>( memory->Length ), width, height, depth, numLevels,
+			usage, format, pool, filter, mipFilter, colorKey, NULL, NULL );
 	}
 
 	VolumeTexture^ VolumeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, Usage usage, Pool pool )
@@ -213,7 +202,23 @@ namespace Direct3D9
 		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
 	{
-		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
+		DataStream^ ds;
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes, &ds );
+		
+		if( data == nullptr )
+		{
+			palette = gcnew array<PaletteEntry>( 256 );
+			pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+			imageInformation = ImageInformation();
+			pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+
+			VolumeTexture^ texture = FromMemory_Internal( device, ds->PositionPointer, sizeBytes, width, height, depth,
+				numLevels, usage, format, pool, filter, mipFilter, colorKey, pinnedImageInfo, pinnedPalette );
+
+			ds->Seek( sizeBytes, SeekOrigin::Current );
+			return texture;
+		}
+
 		return VolumeTexture::FromMemory( device, data, width, height, depth, numLevels,
 			usage, format, pool, filter, mipFilter, colorKey, imageInformation, palette );
 	}
@@ -222,7 +227,21 @@ namespace Direct3D9
 		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation )
 	{
-		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
+		DataStream^ ds;
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes, &ds );
+		
+		if( data == nullptr )
+		{
+			imageInformation = ImageInformation();
+			pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+
+			VolumeTexture^ texture = FromMemory_Internal( device, ds->PositionPointer, sizeBytes, width, height, depth,
+				numLevels, usage, format, pool, filter, mipFilter, colorKey, pinnedImageInfo, NULL );
+
+			ds->Seek( sizeBytes, SeekOrigin::Current );
+			return texture;
+		}
+
 		return VolumeTexture::FromMemory( device, data, width, height, depth, numLevels,
 			usage, format, pool, filter, mipFilter, colorKey, imageInformation );
 	}
@@ -230,7 +249,18 @@ namespace Direct3D9
 	VolumeTexture^ VolumeTexture::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, int sizeBytes, int width, int height, int depth,
 		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
-		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
+		DataStream^ ds;
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes, &ds );
+		
+		if( data == nullptr )
+		{
+			VolumeTexture^ texture = FromMemory_Internal( device, ds->PositionPointer, sizeBytes, width, height, depth,
+				numLevels, usage, format, pool, filter, mipFilter, colorKey, NULL, NULL );
+
+			ds->Seek( sizeBytes, SeekOrigin::Current );
+			return texture;
+		}
+
 		return VolumeTexture::FromMemory( device, data, width, height, depth, numLevels,
 			usage, format, pool, filter, mipFilter, colorKey );
 	}

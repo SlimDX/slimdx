@@ -74,7 +74,7 @@ namespace Direct3D9
 				else
 				{
 					//Read the stream into a byte array and pin it
-					array<Byte>^ data = Utilities::ReadStream( stream, 0 );
+					array<Byte>^ data = Utilities::ReadStream( stream, 0, NULL );
 					GCHandle handle = GCHandle::Alloc( data, GCHandleType::Pinned );
 					*ppData = handle.AddrOfPinnedObject().ToPointer();
 					*pBytes = data->Length;

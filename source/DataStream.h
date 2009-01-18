@@ -60,6 +60,18 @@ namespace SlimDX
 			char* get();
 		}
 
+		property char* PositionPointer
+		{
+			char* get();
+		}
+
+		property System::Int64 RemainingLength
+		{
+			System::Int64 get();
+		}
+
+		char* SeekToEnd();
+
 		ID3DXBuffer* GetD3DBuffer();
 		void Destruct();
 

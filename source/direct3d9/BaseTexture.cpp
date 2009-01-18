@@ -61,7 +61,7 @@ namespace Direct3D9
 	DataStream^ BaseTexture::ToStream( BaseTexture^ texture, ImageFileFormat format, array<PaletteEntry>^ palette )
 	{
 		ID3DXBuffer *buffer = NULL;
-		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+		pin_ptr<PaletteEntry> pinnedPalette = palette == nullptr ? nullptr : &palette[0];
 		
 		HRESULT hr = D3DXSaveTextureToFileInMemory( &buffer, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			texture->InternalPointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ) );
@@ -88,7 +88,7 @@ namespace Direct3D9
 	Result BaseTexture::ToFile( BaseTexture^ texture, String^ fileName, ImageFileFormat format, array<PaletteEntry>^ palette )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fileName);
-		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+		pin_ptr<PaletteEntry> pinnedPalette = palette == nullptr ? nullptr : &palette[0];
 		
 		HRESULT hr = D3DXSaveTextureToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
 			texture->InternalPointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ) );
@@ -106,7 +106,7 @@ namespace Direct3D9
 
 	Result BaseTexture::FilterTexture( int sourceLevel, Filter filter, array<PaletteEntry>^ palette )
 	{
-		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+		pin_ptr<PaletteEntry> pinnedPalette = palette == nullptr ? nullptr : &palette[0];
 
 		HRESULT hr = D3DXFilterTexture( InternalPointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
 			sourceLevel, static_cast<DWORD>( filter ) );

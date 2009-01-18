@@ -38,6 +38,9 @@ namespace SlimDX
 		{
 			COMOBJECT(ID3D10EffectPool, EffectPool);
 
+		private:
+			static EffectPool^ FromMemory_Internal( Device^ device, const void* data, SIZE_T size, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, [Out] System::String^ %compilationErrors );
+
 		public:
 			static EffectPool^ FromPointer( System::IntPtr pointer );
 			

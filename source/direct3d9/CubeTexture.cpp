@@ -108,8 +108,8 @@ namespace Direct3D9
 
 		// Get texture requirements.
 		hr = D3DXCheckCubeTextureRequirements(device->InternalPointer, reinterpret_cast<UINT*>( &size ), 
-			reinterpret_cast<UINT*>( &numMipLevels ),
-			static_cast<DWORD>( usage ), reinterpret_cast<D3DFORMAT*>( &d3dFormat ), static_cast<D3DPOOL>( pool ) );
+			reinterpret_cast<UINT*>( &numMipLevels ), static_cast<DWORD>( usage ),
+			reinterpret_cast<D3DFORMAT*>( &d3dFormat ), static_cast<D3DPOOL>( pool ) );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			return CubeTextureRequirements();
@@ -122,21 +122,16 @@ namespace Direct3D9
 		return result;
 	}
 
-	CubeTexture^ CubeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, int size, int numLevels,
-		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
-		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
+	CubeTexture^ CubeTexture::FromMemory_Internal( SlimDX::Direct3D9::Device^ device, const void* memory, UINT sizeBytes,
+		int size, int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
+		ImageInformation* imageInformation, PaletteEntry* palette )
 	{
 		IDirect3DCubeTexture9* texture;
-		pin_ptr<unsigned char> pinnedMemory = &memory[0];
-		imageInformation = ImageInformation();
-		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
-		palette = gcnew array<PaletteEntry>( 256 );
-		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
 
-		HRESULT hr = D3DXCreateCubeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, size, numLevels,
+		HRESULT hr = D3DXCreateCubeTextureFromFileInMemoryEx( device->InternalPointer, memory, sizeBytes, size, numLevels,
 			static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
-			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), 
-			reinterpret_cast<PALETTEENTRY*>( pinnedPalette ), &texture );
+			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( imageInformation ), 
+			reinterpret_cast<PALETTEENTRY*>( palette ), &texture );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 		{
@@ -152,43 +147,36 @@ namespace Direct3D9
 
 	CubeTexture^ CubeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, int size, int numLevels,
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
+		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
+	{
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+		imageInformation = ImageInformation();
+		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+		palette = gcnew array<PaletteEntry>( 256 );
+		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+
+		return FromMemory_Internal( device, pinnedMemory, static_cast<UINT>( memory->Length ), size, numLevels,
+			usage, format, pool, filter, mipFilter, colorKey, pinnedImageInfo, pinnedPalette );
+	}
+
+	CubeTexture^ CubeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, int size, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation )
 	{
-		IDirect3DCubeTexture9* texture;
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
 
-		HRESULT hr = D3DXCreateCubeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, size, numLevels,
-			static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
-			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), 
-			NULL, &texture );
-		
-		if( RECORD_D3D9(hr).IsFailure )
-			return nullptr;
-
-		CubeTexture^ result = gcnew CubeTexture( texture );
-		if( pool == Pool::Default )
-			result->IsDefaultPool = true;
-		return result;
+		return FromMemory_Internal( device, pinnedMemory, static_cast<UINT>( memory->Length ), size, numLevels,
+			usage, format, pool, filter, mipFilter, colorKey, pinnedImageInfo, NULL );
 	}
 
 	CubeTexture^ CubeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, int size, int numLevels,
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
-		IDirect3DCubeTexture9* texture;
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
-		HRESULT hr = D3DXCreateCubeTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, size, numLevels,
-			static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
-			static_cast<D3DCOLOR>( colorKey ), 0, 0, &texture );
-		
-		if( RECORD_D3D9(hr).IsFailure )
-			return nullptr;
-
-		CubeTexture^ result = gcnew CubeTexture( texture );
-		if( pool == Pool::Default )
-			result->IsDefaultPool = true;
-		return result;
+		return FromMemory_Internal( device, pinnedMemory, static_cast<UINT>( memory->Length ), size, numLevels,
+			usage, format, pool, filter, mipFilter, colorKey, NULL, NULL );
 	}
 
 	CubeTexture^ CubeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, Usage usage, Pool pool )
@@ -206,7 +194,23 @@ namespace Direct3D9
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
 	{
-		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
+		DataStream^ ds;
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes, &ds );
+		
+		if( data == nullptr )
+		{
+			palette = gcnew array<PaletteEntry>( 256 );
+			pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+			imageInformation = ImageInformation();
+			pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+
+			CubeTexture^ texture = FromMemory_Internal( device, ds->PositionPointer, sizeBytes, size, numLevels,
+				usage, format, pool, filter, mipFilter, colorKey, pinnedImageInfo, pinnedPalette );
+
+			ds->Seek( sizeBytes, SeekOrigin::Current );
+			return texture;
+		}
+
 		return CubeTexture::FromMemory( device, data, size, numLevels, usage, format, pool, filter, mipFilter, 
 			colorKey, imageInformation, palette );
 	}
@@ -215,7 +219,21 @@ namespace Direct3D9
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation )
 	{
-		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
+		DataStream^ ds;
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes, &ds );
+		
+		if( data == nullptr )
+		{
+			imageInformation = ImageInformation();
+			pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+
+			CubeTexture^ texture = FromMemory_Internal( device, ds->PositionPointer, sizeBytes, size, numLevels,
+				usage, format, pool, filter, mipFilter, colorKey, pinnedImageInfo, NULL );
+
+			ds->Seek( sizeBytes, SeekOrigin::Current );
+			return texture;
+		}
+
 		return CubeTexture::FromMemory( device, data, size, numLevels, usage, format, pool, filter, mipFilter, 
 			colorKey, imageInformation );
 	}
@@ -223,7 +241,18 @@ namespace Direct3D9
 	CubeTexture^ CubeTexture::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, int sizeBytes, int size, int numLevels,
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
-		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
+		DataStream^ ds;
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes, &ds );
+		
+		if( data == nullptr )
+		{
+			CubeTexture^ texture = FromMemory_Internal( device, ds->PositionPointer, sizeBytes, size, numLevels,
+				usage, format, pool, filter, mipFilter, colorKey, NULL, NULL );
+
+			ds->Seek( sizeBytes, SeekOrigin::Current );
+			return texture;
+		}
+
 		return CubeTexture::FromMemory( device, data, size, numLevels, usage, format, pool, filter, mipFilter, colorKey );
 	}
 

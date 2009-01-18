@@ -237,6 +237,36 @@ namespace Direct3D9
 			Pointer->pFrameFirstChild = value->Pointer;
 	}
 
+	Frame^ Frame::LoadHierarchyFromX_Internal( Device^ device, const void* memory, DWORD size, MeshFlags options, IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
+	{
+		IAllocateHierarchyShim allocatorShim( allocator );
+		ID3DXLoadUserData *userDataLoaderShimPtr = NULL;
+		ILoadUserDataShim userDataLoaderShim( userDataLoader );
+		LPD3DXFRAME result = NULL;
+		LPD3DXANIMATIONCONTROLLER animationResult;
+
+		animationController = nullptr;
+
+		if( userDataLoader != nullptr )
+			userDataLoaderShimPtr = &userDataLoaderShim;
+
+		HRESULT hr = D3DXLoadMeshHierarchyFromXInMemory( memory, size, static_cast<DWORD>( options ), device->InternalPointer,
+			&allocatorShim, userDataLoaderShimPtr, &result, &animationResult);
+
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		if( animationResult != NULL )
+			animationController = AnimationController::FromPointer( animationResult );
+
+		Frame^ frame = Frame::BuildHierarchyFromUnmanaged( static_cast<FrameShim*>( result ) );
+
+		if( animationResult != NULL )
+			Frame::RegisterAnimations( frame, animationResult );
+
+		return frame;
+	}
+
 	Frame^ Frame::LoadHierarchyFromX( Device^ device, String^ fileName, MeshFlags options, 
 		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
 	{
@@ -272,39 +302,24 @@ namespace Direct3D9
 	Frame^ Frame::LoadHierarchyFromX( Device^ device, array<Byte>^ memory, MeshFlags options, 
 		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
 	{
-		IAllocateHierarchyShim allocatorShim( allocator );
-		ID3DXLoadUserData *userDataLoaderShimPtr = NULL;
-		ILoadUserDataShim userDataLoaderShim( userDataLoader );
-		LPD3DXFRAME result = NULL;
-		LPD3DXANIMATIONCONTROLLER animationResult;
-
-		animationController = nullptr;
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
-
-		if( userDataLoader != nullptr )
-			userDataLoaderShimPtr = &userDataLoaderShim;
-
-		HRESULT hr = D3DXLoadMeshHierarchyFromXInMemory( reinterpret_cast<LPCVOID>( pinnedMemory ), memory->Length, static_cast<DWORD>( options ), device->InternalPointer,
-			&allocatorShim, userDataLoaderShimPtr, &result, &animationResult);
-
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
-
-		if( animationResult != NULL )
-			animationController = AnimationController::FromPointer( animationResult );
-
-		Frame^ frame = Frame::BuildHierarchyFromUnmanaged( static_cast<FrameShim*>( result ) );
-
-		if( animationResult != NULL )
-			Frame::RegisterAnimations( frame, animationResult );
-
-		return frame;
+		return Frame::LoadHierarchyFromX_Internal( device, pinnedMemory, memory->Length, options, allocator,
+			userDataLoader, animationController );
 	}
 
 	Frame^ Frame::LoadHierarchyFromX( Device^ device, Stream^ stream, MeshFlags options, 
 		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
 	{
-		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
+		DataStream^ ds = nullptr;
+		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+
+		if( data == nullptr )
+		{
+			DWORD size = static_cast<DWORD>( ds->RemainingLength );
+			return Frame::LoadHierarchyFromX_Internal( device, reinterpret_cast<Byte*>( ds->SeekToEnd() ),
+				size, options, allocator, userDataLoader, animationController );
+		}
+
 		return Frame::LoadHierarchyFromX( device, data, options, allocator, userDataLoader, animationController );
 	}
 

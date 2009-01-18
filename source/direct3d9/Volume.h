@@ -41,19 +41,22 @@ namespace SlimDX
 		{
 			COMOBJECT(IDirect3DVolume9, Volume);
 
+		private:
+			static Result FromFileInMemory_Internal( Volume^ volume, const void* memory, UINT size, Filter filter, int colorKey, Box* sourceBox, Box* destinationBox, PaletteEntry* palette, ImageInformation* imageInformation );
+
 		public:
 			virtual ~Volume() { }
 			static Volume^ FromPointer( System::IntPtr pointer );
 
-			static Result FromMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
-			static Result FromMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox, [Out] ImageInformation% imageInformation );
-			static Result FromMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox );
-			static Result FromMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey );
+			static Result FromFileInMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
+			static Result FromFileInMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox, [Out] ImageInformation% imageInformation );
+			static Result FromFileInMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox );
+			static Result FromFileInMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey );
 
-			static Result FromStream( Volume^ volume, System::IO::Stream^stream, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
-			static Result FromStream( Volume^ volume, System::IO::Stream^stream, Filter filter, int colorKey, Box sourceBox, Box destinationBox, [Out] ImageInformation% imageInformation );
-			static Result FromStream( Volume^ volume, System::IO::Stream^stream, Filter filter, int colorKey, Box sourceBox, Box destinationBox );
-			static Result FromStream( Volume^ volume, System::IO::Stream^stream, Filter filter, int colorKey );
+			static Result FromFileInStream( Volume^ volume, System::IO::Stream^stream, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
+			static Result FromFileInStream( Volume^ volume, System::IO::Stream^stream, Filter filter, int colorKey, Box sourceBox, Box destinationBox, [Out] ImageInformation% imageInformation );
+			static Result FromFileInStream( Volume^ volume, System::IO::Stream^stream, Filter filter, int colorKey, Box sourceBox, Box destinationBox );
+			static Result FromFileInStream( Volume^ volume, System::IO::Stream^stream, Filter filter, int colorKey );
 
 			static Result FromFile( Volume^ volume, System::String^ fileName, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
 			static Result FromFile( Volume^ volume, System::String^ fileName, Filter filter, int colorKey, Box sourceBox, Box destinationBox, [Out] ImageInformation% imageInformation );

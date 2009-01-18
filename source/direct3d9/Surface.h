@@ -43,6 +43,10 @@ namespace SlimDX
 		{
 			COMOBJECT(IDirect3DSurface9, Surface);
 
+		private:
+			static Result FromMemory_Internal( Surface^ surface, const void* memory, Filter filter, int colorKey, Format sourceFormat, int sourcePitch, System::Drawing::Rectangle* sourceRectangle, System::Drawing::Rectangle* destinationRectangle, array<PaletteEntry>^ sourcePalette, array<PaletteEntry>^ destinationPalette );
+			static Result FromFileInMemory_Internal( Surface^ surface, const void* memory, UINT size, Filter filter, int colorKey, System::Drawing::Rectangle* sourceRectangle, System::Drawing::Rectangle* destinationRectangle, array<PaletteEntry>^ palette, ImageInformation* imageInformation );
+
 		public:
 			virtual ~Surface() { }
 			static Surface^ FromPointer( System::IntPtr pointer );

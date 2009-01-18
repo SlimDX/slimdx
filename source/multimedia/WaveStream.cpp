@@ -67,10 +67,20 @@ namespace Multimedia
 		if( stream == nullptr )
 			throw gcnew ArgumentNullException( "stream" );
 
-		array<Byte>^ bytes = Utilities::ReadStream( stream, length );
+		DataStream^ ds = nullptr;
+		array<Byte>^ bytes = Utilities::ReadStream( stream, length, &ds );
 
-		internalMemory = gcnew DataStream( bytes->LongLength, true, false );
-		internalMemory->Write( bytes, 0, bytes->Length );
+		if( bytes == nullptr )
+		{
+			Int64 size = ds->RemainingLength;
+			internalMemory = gcnew DataStream( size, true, false );
+			internalMemory->WriteRange( IntPtr( ds->SeekToEnd() ), size );
+		}
+		else
+		{
+			internalMemory = gcnew DataStream( bytes->LongLength, true, false );
+			internalMemory->Write( bytes, 0, bytes->Length );
+		}
 
 		MMIOINFO info;
 		ZeroMemory( &info, sizeof( info ) );

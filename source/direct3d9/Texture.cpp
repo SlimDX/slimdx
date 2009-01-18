@@ -121,21 +121,17 @@ namespace Direct3D9
 		return result;
 	}
 
-	Texture^ Texture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, int width, int height, int numLevels,
-		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, 
-		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
+	Texture^ Texture::FromMemory_Internal( SlimDX::Direct3D9::Device^ device, const void* memory, UINT size, int width,
+		int height, int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, 
+		ImageInformation* imageInformation, PaletteEntry* palette )
 	{
 		IDirect3DTexture9* texture;
-		pin_ptr<unsigned char> pinnedMemory = &memory[0];
-		imageInformation = ImageInformation();
-		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
-		palette = gcnew array<PaletteEntry>( 256 );
-		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
 
-		HRESULT hr = D3DXCreateTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, width,
-			height, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
-			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ), 
-			reinterpret_cast<PALETTEENTRY*>( pinnedPalette ), &texture );
+		HRESULT hr = D3DXCreateTextureFromFileInMemoryEx( device->InternalPointer, memory, size, width,
+			height, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ),
+			static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
+			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( imageInformation ), 
+			reinterpret_cast<PALETTEENTRY*>( palette ), &texture );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 		{
@@ -147,6 +143,20 @@ namespace Direct3D9
 		if( pool == Pool::Default )
 			result->IsDefaultPool = true;
 		return result;
+	}
+
+	Texture^ Texture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, int width, int height, int numLevels,
+		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, 
+		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
+	{
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+		palette = gcnew array<PaletteEntry>( 256 );
+		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+		imageInformation = ImageInformation();
+		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+
+		return FromMemory_Internal( device, pinnedMemory, static_cast<UINT>( memory->Length ), width, height, numLevels,
+			usage, format, pool, filter, mipFilter, colorKey, pinnedImageInfo, pinnedPalette );
 	}
 
 	Texture^ Texture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, int width, int height, int numLevels,
@@ -206,7 +216,23 @@ namespace Direct3D9
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
 	{
-		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
+		DataStream^ ds;
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes, &ds );
+		
+		if( data == nullptr )
+		{
+			palette = gcnew array<PaletteEntry>( 256 );
+			pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+			imageInformation = ImageInformation();
+			pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+
+			Texture^ texture = FromMemory_Internal( device, ds->PositionPointer, sizeBytes, width, height, numLevels,
+				usage, format, pool, filter, mipFilter, colorKey, pinnedImageInfo, pinnedPalette );
+
+			ds->Seek( sizeBytes, SeekOrigin::Current );
+			return texture;
+		}
+
 		return Texture::FromMemory( device, data, width, height, numLevels, usage, format, pool, filter, 
 			mipFilter, colorKey, imageInformation, palette );
 	}
@@ -215,7 +241,21 @@ namespace Direct3D9
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation )
 	{
-		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
+		DataStream^ ds;
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes, &ds );
+		
+		if( data == nullptr )
+		{
+			imageInformation = ImageInformation();
+			pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
+
+			Texture^ texture = FromMemory_Internal( device, ds->PositionPointer, sizeBytes, width, height, numLevels,
+				usage, format, pool, filter, mipFilter, colorKey, pinnedImageInfo, NULL );
+
+			ds->Seek( sizeBytes, SeekOrigin::Current );
+			return texture;
+		}
+
 		return Texture::FromMemory( device, data, width, height, numLevels, usage, format, pool, filter, 
 			mipFilter, colorKey, imageInformation );
 	}
@@ -223,7 +263,18 @@ namespace Direct3D9
 	Texture^ Texture::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, int sizeBytes, int width, int height, int numLevels,
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
-		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes );
+		DataStream^ ds;
+		array<Byte>^ data = Utilities::ReadStream( stream, sizeBytes, &ds );
+		
+		if( data == nullptr )
+		{
+			Texture^ texture = FromMemory_Internal( device, ds->PositionPointer, sizeBytes, width, height, numLevels,
+				usage, format, pool, filter, mipFilter, colorKey, NULL, NULL );
+
+			ds->Seek( sizeBytes, SeekOrigin::Current );
+			return texture;
+		}
+
 		return Texture::FromMemory( device, data, width, height, numLevels, usage, format, pool, filter, mipFilter, colorKey );
 	}
 
@@ -324,7 +375,7 @@ namespace Direct3D9
 
 	Result Texture::ComputeNormalMap( Texture^ texture, Texture^ sourceTexture, array<PaletteEntry>^ palette, NormalMapFlags flags, Channel channel, float amplitude )
 	{
-		pin_ptr<PaletteEntry> pinnedPalette = &palette[0];
+		pin_ptr<PaletteEntry> pinnedPalette = palette == nullptr ? nullptr : &palette[0];
 
 		HRESULT hr = D3DXComputeNormalMap( texture->InternalPointer, sourceTexture->InternalPointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
 			static_cast<DWORD>( flags ), static_cast<DWORD>( channel ), amplitude );
@@ -333,9 +384,7 @@ namespace Direct3D9
 
 	Result Texture::ComputeNormalMap( Texture^ texture, Texture^ sourceTexture, NormalMapFlags flags, Channel channel, float amplitude )
 	{
-		HRESULT hr = D3DXComputeNormalMap( texture->InternalPointer, sourceTexture->InternalPointer, NULL,
-			static_cast<DWORD>( flags ), static_cast<DWORD>( channel ), amplitude );
-		return RECORD_D3D9( hr );
+		return ComputeNormalMap( texture, sourceTexture, nullptr, flags, channel, amplitude );
 	}
 
 	void WINAPI NativeD3DXFill2D(D3DXVECTOR4 *out, CONST D3DXVECTOR2 *pTexCoord, CONST D3DXVECTOR2 *pTexelSize, LPVOID data)

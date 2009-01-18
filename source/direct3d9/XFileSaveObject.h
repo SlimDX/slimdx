@@ -36,6 +36,9 @@ namespace SlimDX
 		{
 			COMOBJECT(ID3DXFileSaveObject, XFileSaveObject);
 
+		private:
+			XFileSaveData^ AddDataObject_Internal( System::Guid dataTemplate, System::String^ name, System::Guid id, const void* data, SIZE_T size );
+
 		public:
 			static XFileSaveObject^ FromPointer( System::IntPtr pointer );
 

@@ -153,6 +153,23 @@ namespace SlimDX
 		return m_Buffer;
 	}
 
+	char* DataStream::PositionPointer::get()
+	{
+		return m_Buffer + m_Position;
+	}
+
+	Int64 DataStream::RemainingLength::get()
+	{
+		return m_Size - m_Position;
+	}
+
+	char* DataStream::SeekToEnd()
+	{
+		char* pointer = PositionPointer;
+		Seek( 0, SeekOrigin::End );
+		return pointer;
+	}
+
 	ID3DXBuffer* DataStream::GetD3DBuffer()
 	{
 		if( m_ID3DXBuffer != 0 )

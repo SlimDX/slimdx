@@ -64,6 +64,9 @@ namespace SlimDX
 			static void BuildManagedMeshes( MeshContainer^% mesh, MeshContainerShim* pMesh );
 			static void RegisterAnimations( Frame^ frame, LPD3DXANIMATIONCONTROLLER animation );
 
+		private:
+			static Frame^ LoadHierarchyFromX_Internal( Device^ device, const void* memory, DWORD size, MeshFlags options, IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController );
+
 		public:
 			Frame();
 			virtual ~Frame();

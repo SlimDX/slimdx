@@ -776,10 +776,10 @@ namespace Direct3D9
 
 	Result Device::SetPaletteEntries( int paletteNumber, array<PaletteEntry>^ entries )
 	{
-		if(entries->Length != 256)
+		if( entries != nullptr && entries->Length != 256 )
 			throw gcnew ArgumentException( "Palettes must have exactly 256 entries.", "entries" );
 
-		pin_ptr<PaletteEntry> pinnedEntries = &entries[0];
+		pin_ptr<PaletteEntry> pinnedEntries = entries == nullptr ? nullptr : &entries[0];
 
 		HRESULT hr = InternalPointer->SetPaletteEntries( paletteNumber, reinterpret_cast<PALETTEENTRY*>( pinnedEntries ) );
 		return RECORD_D3D9( hr );

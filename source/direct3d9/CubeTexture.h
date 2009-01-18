@@ -47,6 +47,9 @@ namespace SlimDX
 		{
 			COMOBJECT(IDirect3DCubeTexture9, CubeTexture);
 
+		private:
+			static CubeTexture^ FromMemory_Internal( SlimDX::Direct3D9::Device^ device, const void* memory, UINT sizeBytes, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, ImageInformation* imageInformation, PaletteEntry* palette );
+
 		public:
 			/// <summary>
 			/// Initializes a new instance of the <see cref="CubeTexture"/> class.
@@ -58,7 +61,7 @@ namespace SlimDX
 			/// <param name="format">The surface format of the texture.</param>
 			/// <param name="pool">The memory class into which the texture should be placed.</param>
 			CubeTexture( SlimDX::Direct3D9::Device^ device, int edgeLength, int levelCount, Usage usage, Format format, Pool pool );
-			
+
 			/// <summary>
 			/// Releases all resources used by the <see cref="CubeTexture"/>.
 			/// </summary>
@@ -101,7 +104,7 @@ namespace SlimDX
 			/// <param name="palette">When the method completes, contains the texture palette.</param>
 			/// <returns>The created texture object.</returns>
 			static CubeTexture^ FromMemory( SlimDX::Direct3D9::Device^ device, array<System::Byte>^ memory, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette );
-			
+
 			/// <summary>
 			/// Creates a texture from a specified block of memory.
 			/// </summary>
@@ -118,7 +121,7 @@ namespace SlimDX
 			/// <param name="imageInformation">When the method completes, contains additional information about the texture.</param>
 			/// <returns>The created texture object.</returns>
 			static CubeTexture^ FromMemory( SlimDX::Direct3D9::Device^ device, array<System::Byte>^ memory, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation );
-			
+
 			/// <summary>
 			/// Creates a texture from a specified block of memory.
 			/// </summary>
@@ -134,7 +137,7 @@ namespace SlimDX
 			/// <param name="colorKey">Color value in the image to replace with black, or 0 to disable the color key.</param>
 			/// <returns>The created texture object.</returns>
 			static CubeTexture^ FromMemory( SlimDX::Direct3D9::Device^ device, array<System::Byte>^ memory, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
-			
+
 			/// <summary>
 			/// Creates a texture from a specified block of memory.
 			/// </summary>
@@ -144,7 +147,7 @@ namespace SlimDX
 			/// <param name="pool">The memory class into which the texture should be placed.</param>
 			/// <returns>The created texture object.</returns>
 			static CubeTexture^ FromMemory( SlimDX::Direct3D9::Device^ device, array<System::Byte>^ memory, Usage usage, Pool pool );
-			
+
 			/// <summary>
 			/// Creates a texture from a specified block of memory.
 			/// </summary>
@@ -171,7 +174,7 @@ namespace SlimDX
 			/// <param name="palette">When the method completes, contains the texture palette.</param>
 			/// <returns>The created texture object.</returns>
 			static CubeTexture^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, int sizeBytes, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette );
-			
+
 			/// <summary>
 			/// Creates a texture from a stream.
 			/// </summary>
@@ -189,7 +192,7 @@ namespace SlimDX
 			/// <param name="imageInformation">When the method completes, contains additional information about the texture.</param>
 			/// <returns>The created texture object.</returns>
 			static CubeTexture^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, int sizeBytes, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation );
-			
+
 			/// <summary>
 			/// Creates a texture from a stream.
 			/// </summary>
@@ -206,7 +209,7 @@ namespace SlimDX
 			/// <param name="colorKey">Color value in the image to replace with black, or 0 to disable the color key.</param>
 			/// <returns>The created texture object.</returns>
 			static CubeTexture^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, int sizeBytes, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
-			
+
 			/// <summary>
 			/// Creates a texture from a stream.
 			/// </summary>
@@ -222,7 +225,7 @@ namespace SlimDX
 			/// <param name="colorKey">Color value in the image to replace with black, or 0 to disable the color key.</param>
 			/// <returns>The created texture object.</returns>
 			static CubeTexture^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
-			
+
 			/// <summary>
 			/// Creates a texture from a stream.
 			/// </summary>
@@ -232,7 +235,7 @@ namespace SlimDX
 			/// <param name="pool">The memory class into which the texture should be placed.</param>
 			/// <returns>The created texture object.</returns>
 			static CubeTexture^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, Usage usage, Pool pool );
-			
+
 			/// <summary>
 			/// Creates a texture from a stream.
 			/// </summary>
@@ -258,7 +261,7 @@ namespace SlimDX
 			/// <param name="palette">When the method completes, contains the texture palette.</param>
 			/// <returns>The created texture object.</returns>
 			static CubeTexture^ FromFile( SlimDX::Direct3D9::Device^ device, System::String^ fileName, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette );
-			
+
 			/// <summary>
 			/// Loads a texture from file.
 			/// </summary>
@@ -275,7 +278,7 @@ namespace SlimDX
 			/// <param name="imageInformation">When the method completes, contains additional information about the texture.</param>
 			/// <returns>The created texture object.</returns>
 			static CubeTexture^ FromFile( SlimDX::Direct3D9::Device^ device, System::String^ fileName, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, [Out] ImageInformation% imageInformation );
-			
+
 			/// <summary>
 			/// Loads a texture from file.
 			/// </summary>
@@ -291,7 +294,7 @@ namespace SlimDX
 			/// <param name="colorKey">Color value in the image to replace with black, or 0 to disable the color key.</param>
 			/// <returns>The created texture object.</returns>
 			static CubeTexture^ FromFile( SlimDX::Direct3D9::Device^ device, System::String^ fileName, int size, int levelCount, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey );
-			
+
 			/// <summary>
 			/// Loads a texture from file.
 			/// </summary>
@@ -301,7 +304,7 @@ namespace SlimDX
 			/// <param name="pool">The memory class into which the texture should be placed.</param>
 			/// <returns>The created texture object.</returns>
 			static CubeTexture^ FromFile( SlimDX::Direct3D9::Device^ device, System::String^ fileName, Usage usage, Pool pool );
-			
+
 			/// <summary>
 			/// Loads a texture from file.
 			/// </summary>
@@ -343,7 +346,7 @@ namespace SlimDX
 			/// <param name="flags">Locking flags.</param>
 			/// <returns>A <see cref="DataRectangle"/> describing the locked region.</returns>
 			DataRectangle^ LockRectangle( CubeMapFace face, int level, System::Drawing::Rectangle rectangle, LockFlags flags );
-			
+
 			/// <summary>
 			/// Unlocks a previously locked region of a texture.
 			/// </summary>

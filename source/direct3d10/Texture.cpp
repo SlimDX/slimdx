@@ -165,7 +165,20 @@ namespace Direct3D10
 	
 	ID3D10Resource* Texture::ConstructFromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, int sizeInBytes, D3DX10_IMAGE_LOAD_INFO* info )
 	{
-		array<Byte>^ memory = SlimDX::Utilities::ReadStream( stream, sizeInBytes );
+		DataStream^ ds = nullptr;
+		array<Byte>^ memory = SlimDX::Utilities::ReadStream( stream, sizeInBytes, &ds );
+		
+		if( memory == nullptr )
+		{
+			ID3D10Resource* resource = NULL;
+			SIZE_T size = static_cast<SIZE_T>( ds->RemainingLength );
+			HRESULT hr = D3DX10CreateTextureFromMemory( device->InternalPointer, ds->SeekToEnd(), size,
+				info, NULL, &resource, NULL );
+			RECORD_D3D10( hr );
+
+			return resource;
+		}
+
 		return ConstructFromMemory( device, memory, info );
 	}
 }

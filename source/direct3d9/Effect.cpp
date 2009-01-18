@@ -78,13 +78,12 @@ namespace Direct3D9
 		return gcnew Effect( pointer );
 	}
 
-	Effect^ Effect::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, array<Macro>^ preprocessorDefines,
-		Include ^includeFile, String^ skipConstants, ShaderFlags flags, EffectPool^ pool,
-		[Out] String^ %compilationErrors )
+	Effect^ Effect::FromMemory_Internal( SlimDX::Direct3D9::Device^ device, const void* memory, UINT size,
+		array<Macro>^ preprocessorDefines, Include ^includeFile, String^ skipConstants, ShaderFlags flags,
+		EffectPool^ pool, String^* compilationErrors )
 	{
 		ID3DXEffect* effect;
 		ID3DXBuffer* errorBuffer;
-		pin_ptr<unsigned char> pinnedData = &memory[0];
 
 		LPCSTR skipString = NULL;
 		pin_ptr<Byte> pinnedSkip;
@@ -105,132 +104,108 @@ namespace Direct3D9
 		std::vector<D3DXMACRO> macros = Macro::Marshal( preprocessorDefines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
-		HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinnedData, memory->Length, macrosPtr, includePtr,
+		HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, memory, size, macrosPtr, includePtr,
 			skipString, static_cast<DWORD>( flags ), effectPool, &effect, &errorBuffer );
 		
 		Macro::Unmarshal( macros, handles );
-		compilationErrors = Utilities::BufferToString( errorBuffer );
+
+		String^ compilationErrorsLocal = Utilities::BufferToString( errorBuffer );
+		if( compilationErrors != NULL )
+			*compilationErrors = compilationErrorsLocal;
 		
-		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
+		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrorsLocal ).IsFailure )
 			return nullptr;
 
 		return gcnew Effect( effect );
+	}
+
+	Effect^ Effect::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, array<Macro>^ preprocessorDefines,
+		Include ^includeFile, String^ skipConstants, ShaderFlags flags, EffectPool^ pool,
+		[Out] String^% compilationErrors )
+	{
+		pin_ptr<unsigned char> pinnedData = &memory[0];
+		String^ compileErrorsLocal;
+
+		Effect^ effect = FromMemory_Internal( device, pinnedData, static_cast<UINT>( memory->Length ), preprocessorDefines,
+			includeFile, skipConstants, flags, pool, &compileErrorsLocal );
+		compilationErrors = compileErrorsLocal;
+
+		return effect;
 	}
 
 	Effect^ Effect::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, array<Macro>^ preprocessorDefines,
 		Include ^includeFile, String^ skipConstants, ShaderFlags flags, EffectPool^ pool )
 	{
-		ID3DXEffect* effect;
-		ID3DXBuffer* errorBuffer;
 		pin_ptr<unsigned char> pinnedData = &memory[0];
 
-		LPCSTR skipString = NULL;
-		pin_ptr<Byte> pinnedSkip;
-		if( skipConstants != nullptr )
-		{
-			array<Byte>^ skipBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( skipConstants );
-			pinnedSkip = &skipBytes[0];
-			skipString = reinterpret_cast<LPCSTR>( pinnedSkip );
-		}
-
-		IncludeShim includeShim = IncludeShim( includeFile );
-		ID3DXInclude* includePtr = NULL;
-		if( includeFile != nullptr )
-			includePtr = &includeShim;
-
-		ID3DXEffectPool* effectPool = pool != nullptr ? pool->InternalPointer : NULL;
-		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( preprocessorDefines, handles );
-		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
-
-		HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinnedData, memory->Length, macrosPtr, includePtr,
-			skipString, static_cast<DWORD>( flags ), effectPool, &effect, &errorBuffer );
-		
-		Macro::Unmarshal( macros, handles );
-		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
-		
-		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
-			return nullptr;
-
-		return gcnew Effect( effect );
+		return FromMemory_Internal( device, pinnedData, static_cast<UINT>( memory->Length ), preprocessorDefines,
+			includeFile, skipConstants, flags, pool, NULL );
 	}
 
 	Effect^ Effect::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, array<Macro>^ preprocessorDefines,
 		Include ^includeFile, String^ skipConstants, ShaderFlags flags )
 	{
-		ID3DXEffect* effect;
-		ID3DXBuffer* errorBuffer;
 		pin_ptr<unsigned char> pinnedData = &memory[0];
 
-		LPCSTR skipString = NULL;
-		pin_ptr<Byte> pinnedSkip;
-		if( skipConstants != nullptr )
-		{
-			array<Byte>^ skipBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( skipConstants );
-			pinnedSkip = &skipBytes[0];
-			skipString = reinterpret_cast<LPCSTR>( pinnedSkip );
-		}
-
-		IncludeShim includeShim = IncludeShim( includeFile );
-		ID3DXInclude* includePtr = NULL;
-		if( includeFile != nullptr )
-			includePtr = &includeShim;
-
-		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( preprocessorDefines, handles );
-		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
-
-		HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinnedData, memory->Length, macrosPtr, includePtr,
-			skipString, static_cast<DWORD>( flags ), NULL, &effect, &errorBuffer );
-		
-		Macro::Unmarshal( macros, handles );
-		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
-		
-		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
-			return nullptr;
-
-		return gcnew Effect( effect );
+		return FromMemory_Internal( device, pinnedData, static_cast<UINT>( memory->Length ), preprocessorDefines,
+			includeFile, skipConstants, flags, nullptr, NULL );
 	}
 
 	Effect^ Effect::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, ShaderFlags flags )
 	{
-		ID3DXEffect* effect;
-		ID3DXBuffer* errorBuffer;
 		pin_ptr<unsigned char> pinnedData = &memory[0];
 
-		HRESULT hr = D3DXCreateEffectEx( device->InternalPointer, pinnedData, memory->Length, NULL, NULL,
-			NULL, static_cast<DWORD>( flags ), NULL, &effect, &errorBuffer );
-		
-		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
-
-		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
-			return nullptr;
-
-		return gcnew Effect( effect );
+		return FromMemory_Internal( device, pinnedData, static_cast<UINT>( memory->Length ), nullptr,
+			nullptr, nullptr, flags, nullptr, NULL );
 	}
 
 	Effect^ Effect::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, array<Macro>^ preprocessorDefines, Include^ includeFile,
 		String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors )
 	{
-		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
+		DataStream^ ds = nullptr;
+		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		if( data == nullptr )
+		{
+			String^ compilationErrorsLocal;
+			UINT size = static_cast<SIZE_T>( ds->RemainingLength );
+			Effect^ effect = FromMemory_Internal( device, ds->SeekToEnd(), size, preprocessorDefines, includeFile,
+				skipConstants, flags, pool, &compilationErrorsLocal );
 
-		return Effect::FromMemory( device, data, preprocessorDefines, includeFile,
+			compilationErrors = compilationErrorsLocal;
+			return effect;
+		}
+
+		return FromMemory( device, data, preprocessorDefines, includeFile,
 			skipConstants, flags, pool, compilationErrors );
 	}
 
 	Effect^ Effect::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, array<Macro>^ preprocessorDefines, Include^ includeFile,
 		String^ skipConstants, ShaderFlags flags, EffectPool^ pool )
 	{
-		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
+		DataStream^ ds = nullptr;
+		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		if( data == nullptr )
+		{
+			UINT size = static_cast<SIZE_T>( ds->RemainingLength );
+			return FromMemory_Internal( device, ds->SeekToEnd(), size, preprocessorDefines, includeFile,
+				skipConstants, flags, pool, NULL );
+		}
 
-		return Effect::FromMemory( device, data, preprocessorDefines, includeFile,
+		return FromMemory( device, data, preprocessorDefines, includeFile,
 			skipConstants, flags, pool );
 	}
 
 	Effect^ Effect::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, array<Macro>^ preprocessorDefines, Include^ includeFile,
 		String^ skipConstants, ShaderFlags flags )
 	{
-		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
+		DataStream^ ds = nullptr;
+		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		if( data == nullptr )
+		{
+			UINT size = static_cast<UINT>( ds->RemainingLength );
+			return FromMemory_Internal( device, ds->SeekToEnd(), size, preprocessorDefines, includeFile,
+				skipConstants, flags, nullptr, NULL );
+		}
 
 		return Effect::FromMemory( device, data, preprocessorDefines, includeFile,
 			skipConstants, flags );
@@ -238,9 +213,16 @@ namespace Direct3D9
 
 	Effect^ Effect::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, ShaderFlags flags )
 	{
-		array<Byte>^ data = Utilities::ReadStream( stream, 0 );
+		DataStream^ ds = nullptr;
+		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		if( data == nullptr )
+		{
+			UINT size = static_cast<SIZE_T>( ds->RemainingLength );
+			return FromMemory_Internal( device, ds->SeekToEnd(), size, nullptr, nullptr,
+				nullptr, flags, nullptr, NULL );
+		}
 
-		return Effect::FromMemory( device, data, flags );
+		return FromMemory( device, data, flags );
 	}
 
 	Effect^ Effect::FromString( SlimDX::Direct3D9::Device^ device, String^ sourceData, array<Macro>^ preprocessorDefines, Include^ includeFile,
@@ -248,7 +230,7 @@ namespace Direct3D9
 	{
 		array<Byte>^ data = System::Text::ASCIIEncoding::ASCII->GetBytes( sourceData );
 
-		return Effect::FromMemory( device, data, preprocessorDefines, includeFile,
+		return FromMemory( device, data, preprocessorDefines, includeFile,
 			skipConstants, flags, pool, compilationErrors );
 	}
 
@@ -257,7 +239,7 @@ namespace Direct3D9
 	{
 		array<Byte>^ data = System::Text::ASCIIEncoding::ASCII->GetBytes( sourceData );
 
-		return Effect::FromMemory( device, data, preprocessorDefines, includeFile,
+		return FromMemory( device, data, preprocessorDefines, includeFile,
 			skipConstants, flags, pool );
 	}
 
@@ -266,7 +248,7 @@ namespace Direct3D9
 	{
 		array<Byte>^ data = System::Text::ASCIIEncoding::ASCII->GetBytes( sourceData );
 
-		return Effect::FromMemory( device, data, preprocessorDefines, includeFile,
+		return FromMemory( device, data, preprocessorDefines, includeFile,
 			skipConstants, flags );
 	}
 
@@ -274,7 +256,7 @@ namespace Direct3D9
 	{
 		array<Byte>^ data = System::Text::ASCIIEncoding::ASCII->GetBytes( sourceData );
 
-		return Effect::FromMemory( device, data, flags );
+		return FromMemory( device, data, flags );
 	}
 
 	Effect^ Effect::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, array<Macro>^ preprocessorDefines, Include^ includeFile,

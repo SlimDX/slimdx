@@ -39,6 +39,7 @@ using System::IO::EndOfStreamException;
 namespace SlimDX
 {
 	ref class ComObject;
+	ref class DataStream;
 
 	ref class Utilities sealed
 	{
@@ -57,7 +58,7 @@ namespace SlimDX
 
 		static System::String^ BufferToString( ID3DXBuffer *buffer );
 
-		static array<System::Byte>^ ReadStream( System::IO::Stream^ stream, int readLength );
+		static array<System::Byte>^ ReadStream( System::IO::Stream^ stream, int readLength, DataStream^* dataStream );
 
 		generic<typename T> where T : value class
 		static array<T>^ ReadRange( ID3DXBuffer *buffer, int count );

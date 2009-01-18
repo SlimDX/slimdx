@@ -24,6 +24,7 @@
 #include <d3dx10.h>
 #include <vcclr.h>
 
+#include "../DataStream.h"
 #include "Effect.h"
 
 #include "Direct3D10Exception.h"
@@ -246,15 +247,8 @@ namespace Direct3D10
 		return gcnew Effect( effect );
 	}
 	
-	Effect^ Effect::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include )
+	Effect^ Effect::FromMemory_Internal( SlimDX::Direct3D10::Device^ device, const void* memory, SIZE_T size, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, String^* compilationErrors )
 	{
-		String^ compilationErrors;
-		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, pool, include, compilationErrors ) );
-	}
-	
-	Effect^ Effect::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors  )
-	{
-		pin_ptr<unsigned char> pinnedData = &memory[ 0 ];
 		array<unsigned char>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 		pin_ptr<unsigned char> pinnedProfile = &profileBytes[ 0 ];
 		ID3D10Effect* effect = 0;
@@ -268,8 +262,8 @@ namespace Direct3D10
 		}
 		
 		HRESULT hr = D3DX10CreateEffectFromMemory(
-			pinnedData,
-			memory->Length,
+			memory,
+			size,
 			"n/a",
 			0,
 			nativeInclude,
@@ -283,23 +277,40 @@ namespace Direct3D10
 			&errorBlob,
 			0
 		);
-			
-		if( errorBlob != 0 )
+
+		if( compilationErrors != 0 )
 		{
-		  compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBlob->GetBufferPointer() ) );
-		  errorBlob->Release();
-		}
-		else
-		{
-			compilationErrors = String::Empty;
-		}
+			if( errorBlob != 0 )
+				*compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBlob->GetBufferPointer() ) );
+			else
+				*compilationErrors = nullptr;
+		}		
 		
+		if( errorBlob != 0 )
+			errorBlob->Release();
+
 		RECORD_D3D10( hr );
 		if( effect == NULL )
 			return nullptr;
 		return gcnew Effect( effect );
 	}
+
+	Effect^ Effect::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors  )
+	{
+		String^ compilationErrorsLocal;
+		pin_ptr<unsigned char> pinnedMemory = &memory[ 0 ];
+
+		Effect^ effect = FromMemory_Internal( device, pinnedMemory, static_cast<SIZE_T>( memory->Length ), profile, shaderFlags, effectFlags, pool, include, &compilationErrorsLocal );
+		compilationErrors = compilationErrorsLocal;
+		return effect;
+	}	
 	
+	Effect^ Effect::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include )
+	{
+		String^ compilationErrors;
+		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, pool, include, compilationErrors ) );
+	}
+
 	Effect^ Effect::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include )
 	{
 		String^ compilationErrors;
@@ -308,7 +319,18 @@ namespace Direct3D10
 	
 	Effect^ Effect::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors )
 	{
-		array<Byte>^ memory = Utilities::ReadStream( stream, 0 );
+		DataStream^ ds = nullptr;
+		array<Byte>^ memory = Utilities::ReadStream( stream, 0, &ds );
+
+		if( memory == nullptr )
+		{
+			String^ compilationErrorsLocal;
+			SIZE_T size = static_cast<SIZE_T>( ds->RemainingLength );
+			Effect^ effect = FromMemory_Internal( device, ds->SeekToEnd(), size, profile, shaderFlags, effectFlags, pool, include, &compilationErrorsLocal );
+			compilationErrors = compilationErrorsLocal;
+			return effect;
+		}
+
 		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, pool, include, compilationErrors ) );
 	}
 	

@@ -33,6 +33,9 @@ namespace SlimDX
 		{
 			COMOBJECT(ID3DXEffectCompiler, EffectCompiler);
 
+		private:
+			static EffectCompiler^ FromMemory_Internal( const char* memory, UINT size, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, System::String^* compilationErrors );
+
 		public:
 			EffectCompiler( System::String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% compilationErrors );
 			EffectCompiler( System::String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags );
@@ -44,9 +47,9 @@ namespace SlimDX
 			static EffectCompiler^ FromMemory( array<System::Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags );
 			static EffectCompiler^ FromMemory( array<System::Byte>^ data, ShaderFlags flags );
 
-			static EffectCompiler^ FromStream( System::IO::Stream^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% compilationErrors );
-			static EffectCompiler^ FromStream( System::IO::Stream^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags );
-			static EffectCompiler^ FromStream( System::IO::Stream^ data, ShaderFlags flags );
+			static EffectCompiler^ FromStream( System::IO::Stream^ stream, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% compilationErrors );
+			static EffectCompiler^ FromStream( System::IO::Stream^ stream, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags );
+			static EffectCompiler^ FromStream( System::IO::Stream^ stream, ShaderFlags flags );
 
 			static EffectCompiler^ FromFile( System::String^ fileName, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% compilationErrors );
 			static EffectCompiler^ FromFile( System::String^ fileName, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags );

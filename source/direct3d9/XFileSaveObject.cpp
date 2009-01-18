@@ -75,7 +75,7 @@ namespace Direct3D9
 		return gcnew XFileSaveObject( pointer );
 	}
 
-	XFileSaveData^ XFileSaveObject::AddDataObject( Guid dataTemplate, String^ name, Guid id, array<Byte>^ data )
+	XFileSaveData^ XFileSaveObject::AddDataObject_Internal( Guid dataTemplate, String^ name, Guid id, const void* data, SIZE_T size )
 	{
 		ID3DXFileSaveData *result;
 		GUID nativeId = Utilities::ConvertManagedGuid( id );
@@ -85,10 +85,9 @@ namespace Direct3D9
 
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
-		pin_ptr<unsigned char> pinnedMemory = &data[0];
 
-		HRESULT hr = InternalPointer->AddDataObject( Utilities::ConvertManagedGuid( dataTemplate ), reinterpret_cast<LPCSTR>( pinnedName ), pointer, 
-			data->Length, reinterpret_cast<LPCVOID>( pinnedMemory ), &result );
+		HRESULT hr = InternalPointer->AddDataObject( Utilities::ConvertManagedGuid( dataTemplate ),
+			reinterpret_cast<LPCSTR>( pinnedName ), pointer, size, data, &result );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
@@ -96,9 +95,23 @@ namespace Direct3D9
 		return XFileSaveData::FromPointer( result );
 	}
 
+	XFileSaveData^ XFileSaveObject::AddDataObject( Guid dataTemplate, String^ name, Guid id, array<Byte>^ data )
+	{
+		pin_ptr<unsigned char> pinnedData = &data[0];
+		return AddDataObject_Internal( dataTemplate, name, id, pinnedData, static_cast<SIZE_T>( data->Length ) );
+	}
+
 	XFileSaveData^ XFileSaveObject::AddDataObject( Guid dataTemplate, String^ name, Guid id, Stream^ data )
 	{
-		array<Byte>^ memory = Utilities::ReadStream( data, 0 );
+		DataStream^ ds = nullptr;
+		array<Byte>^ memory = Utilities::ReadStream( data, 0, &ds );
+
+		if( memory == nullptr )
+		{
+			SIZE_T size = static_cast<SIZE_T>( ds->RemainingLength );
+			return AddDataObject_Internal( dataTemplate, name, id, ds->SeekToEnd(), size );
+		}
+
 		return AddDataObject( dataTemplate, name, id, memory );
 	}
 

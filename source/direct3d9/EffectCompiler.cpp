@@ -154,12 +154,10 @@ namespace Direct3D9
 		Construct( compiler );
 	}
 
-	EffectCompiler^ EffectCompiler::FromMemory( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% compilationErrors )
+	EffectCompiler^ EffectCompiler::FromMemory_Internal( const char* memory, UINT size, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, String^* compilationErrors )
 	{
 		ID3DXEffectCompiler* compiler;
 		ID3DXBuffer* errorBuffer;
-
-		pin_ptr<Byte> pinnedData = &data[0];
 
 		IncludeShim includeShim = IncludeShim( includeFile );
 		ID3DXInclude* includePtr = NULL;
@@ -170,80 +168,90 @@ namespace Direct3D9
 		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
-		HRESULT hr = D3DXCreateEffectCompiler( reinterpret_cast<LPCSTR>( pinnedData ), data->Length, macrosPtr, includePtr,
+		HRESULT hr = D3DXCreateEffectCompiler( memory, size, macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
 
 		Macro::Unmarshal( macros, handles );
-		compilationErrors = Utilities::BufferToString( errorBuffer );
+
+		String^ compilationErrorsLocal = Utilities::BufferToString( errorBuffer );
+		if( compilationErrors != NULL )
+			*compilationErrors = compilationErrorsLocal;
 		
-		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
+		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrorsLocal ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
 		return EffectCompiler::FromPointer( compiler );
+	}
+
+	EffectCompiler^ EffectCompiler::FromMemory( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% compilationErrors )
+	{
+		pin_ptr<Byte> pinnedData = &data[0];
+		String^ compileErrorsLocal;
+
+		EffectCompiler^ effectCompiler = FromMemory_Internal( reinterpret_cast<const char*>( pinnedData ),
+			static_cast<UINT>( data->Length ), defines, includeFile, flags, &compileErrorsLocal );
+		compilationErrors = compileErrorsLocal;
+
+		return effectCompiler;
 	}
 
 	EffectCompiler^ EffectCompiler::FromMemory( array<Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags )
 	{
-		ID3DXEffectCompiler* compiler;
-		ID3DXBuffer* errorBuffer;
-
 		pin_ptr<Byte> pinnedData = &data[0];
 
-		IncludeShim includeShim = IncludeShim( includeFile );
-		ID3DXInclude* includePtr = NULL;
-		if( includeFile != nullptr )
-			includePtr = &includeShim;
-
-		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
-		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
-
-		HRESULT hr = D3DXCreateEffectCompiler( reinterpret_cast<LPCSTR>( pinnedData ), data->Length, macrosPtr, includePtr,
-			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
-
-		Macro::Unmarshal( macros, handles );
-		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
-		
-		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
-			throw gcnew Direct3D9Exception( Result::Last );
-
-		return EffectCompiler::FromPointer( compiler );
+		return FromMemory_Internal( reinterpret_cast<const char*>( pinnedData ),
+			static_cast<UINT>( data->Length ), defines, includeFile, flags, NULL );
 	}
 
 	EffectCompiler^ EffectCompiler::FromMemory( array<Byte>^ data, ShaderFlags flags )
 	{
-		ID3DXEffectCompiler* compiler;
-		ID3DXBuffer* errorBuffer;
-
 		pin_ptr<Byte> pinnedData = &data[0];
 
-		HRESULT hr = D3DXCreateEffectCompiler( reinterpret_cast<LPCSTR>( pinnedData ), data->Length, NULL, NULL,
-			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
-
-		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
-		
-		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
-			throw gcnew Direct3D9Exception( Result::Last );
-
-		return EffectCompiler::FromPointer( compiler );
+		return FromMemory_Internal( reinterpret_cast<const char*>( pinnedData ),
+			static_cast<UINT>( data->Length ), nullptr, nullptr, flags, NULL );
 	}
 
-	EffectCompiler^ EffectCompiler::FromStream( Stream^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% compilationErrors )
+	EffectCompiler^ EffectCompiler::FromStream( Stream^ stream, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% compilationErrors )
 	{
-		array<Byte>^ bytes = Utilities::ReadStream( data, 0 );
-		return EffectCompiler::FromMemory( bytes, defines, includeFile, flags, compilationErrors );
+		DataStream^ ds = nullptr;
+		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		if( data == nullptr )
+		{
+			String^ compilationErrorsLocal;
+			UINT size = static_cast<SIZE_T>( ds->RemainingLength );
+			EffectCompiler^ effectCompiler = FromMemory_Internal( ds->SeekToEnd(), size, defines, includeFile, flags, &compilationErrorsLocal );
+
+			compilationErrors = compilationErrorsLocal;
+			return effectCompiler;
+		}
+
+		return FromMemory( data, defines, includeFile, flags, compilationErrors );
 	}
 
-	EffectCompiler^ EffectCompiler::FromStream( Stream^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags )
+	EffectCompiler^ EffectCompiler::FromStream( Stream^ stream, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags )
 	{
-		array<Byte>^ bytes = Utilities::ReadStream( data, 0 );
-		return EffectCompiler::FromMemory( bytes, defines, includeFile, flags );
+		DataStream^ ds = nullptr;
+		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		if( data == nullptr )
+		{
+			UINT size = static_cast<SIZE_T>( ds->RemainingLength );
+			return FromMemory_Internal( ds->SeekToEnd(), size, defines, includeFile, flags, NULL );
+		}
+
+		return FromMemory( data, defines, includeFile, flags );
 	}
 
-	EffectCompiler^ EffectCompiler::FromStream( Stream^ data, ShaderFlags flags )
+	EffectCompiler^ EffectCompiler::FromStream( Stream^ stream, ShaderFlags flags )
 	{
-		array<Byte>^ bytes = Utilities::ReadStream( data, 0 );
-		return EffectCompiler::FromMemory( bytes, flags );
+		DataStream^ ds = nullptr;
+		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		if( data == nullptr )
+		{
+			UINT size = static_cast<SIZE_T>( ds->RemainingLength );
+			return FromMemory_Internal( ds->SeekToEnd(), size, nullptr, nullptr, flags, NULL );
+		}
+
+		return FromMemory( data, flags );
 	}
 
 	EffectCompiler^ EffectCompiler::FromFile( String^ fileName, array<Macro>^ defines, Include^ includeFile, 

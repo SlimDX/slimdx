@@ -214,7 +214,7 @@ namespace SlimDX
 		return Drawing::Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
 	}
 
-	array<Byte>^ Utilities::ReadStream( Stream^ stream, int readLength )
+	array<Byte>^ Utilities::ReadStream( Stream^ stream, int readLength, DataStream^* dataStream )
 	{
 		if( stream == nullptr )
 			throw gcnew ArgumentNullException( "stream" );
@@ -230,21 +230,25 @@ namespace SlimDX
 		if( readLength == 0 )
 			return gcnew array<Byte>( 0 );
 
+		//if we're reading a DataStream, don't return anything and send back the casted DataStream
+		DataStream^ ds = dynamic_cast<DataStream^>( stream );
+		if( ds != nullptr && dataStream != NULL )
+		{
+			*dataStream = ds;
+			return nullptr;
+		}
+
+		//if we're reading an entire memory stream from beginning to end, just return the internal buffer
+		MemoryStream^ ms = dynamic_cast<MemoryStream^>( stream );
+		if( ms != nullptr && stream->Position == 0 && readLength == stream->Length )
+		{
+			return ms->GetBuffer();
+		}
+
 		array<Byte>^ buffer = gcnew array<Byte>( readLength ); 
-
-		if( stream->GetType() == DataStream::typeid )
-		{
-			DataStream^ ds = safe_cast<DataStream^>( stream );
-
-			pin_ptr<Byte> pinnedBuffer = &buffer[0];
-			memcpy( pinnedBuffer, ds->RawPointer + ds->Position, readLength );
-		}
-		else
-		{
-			int bytesRead = 0;
-			while( bytesRead < readLength )
-				bytesRead += stream->Read( buffer, bytesRead, readLength - bytesRead );
-		}
+		int bytesRead = 0;
+		while( bytesRead < readLength )
+			bytesRead += stream->Read( buffer, bytesRead, readLength - bytesRead );
 
 		return buffer;
 	}
