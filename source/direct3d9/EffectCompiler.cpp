@@ -218,7 +218,7 @@ namespace Direct3D9
 		if( data == nullptr )
 		{
 			String^ compilationErrorsLocal;
-			UINT size = static_cast<SIZE_T>( ds->RemainingLength );
+			UINT size = static_cast<UINT>( ds->RemainingLength );
 			EffectCompiler^ effectCompiler = FromMemory_Internal( ds->SeekToEnd(), size, defines, includeFile, flags, &compilationErrorsLocal );
 
 			compilationErrors = compilationErrorsLocal;
@@ -234,7 +234,7 @@ namespace Direct3D9
 		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
 		if( data == nullptr )
 		{
-			UINT size = static_cast<SIZE_T>( ds->RemainingLength );
+			UINT size = static_cast<UINT>( ds->RemainingLength );
 			return FromMemory_Internal( ds->SeekToEnd(), size, defines, includeFile, flags, NULL );
 		}
 
@@ -247,7 +247,7 @@ namespace Direct3D9
 		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
 		if( data == nullptr )
 		{
-			UINT size = static_cast<SIZE_T>( ds->RemainingLength );
+			UINT size = static_cast<UINT>( ds->RemainingLength );
 			return FromMemory_Internal( ds->SeekToEnd(), size, nullptr, nullptr, flags, NULL );
 		}
 
