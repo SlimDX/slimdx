@@ -55,6 +55,7 @@
   <Target Name="$(ProjectDir)/../samples/RawInput/Mouse/bin/x86/Debug/Mouse.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/SampleFramework/bin/x86/Debug/SampleFramework.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/XAudio2/BasicSound/bin/x86/Debug/BasicSound.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../windows7/x86/Debug/SlimDX.Windows7.dll" Analyze="True" AnalyzeAllChildren="True" />
  </Targets>
  <Rules>
   <RuleFiles>
@@ -165,6 +166,24 @@
      <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-08-02 13:07:30Z">
       <Issue>
        <Item>SlimDX.Multimedia</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="SlimDX.Windows">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2009-01-19 04:11:40Z">
+      <Issue>
+       <Item>SlimDX.Windows</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="SlimDX.Windows7">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2009-01-19 04:11:40Z">
+      <Issue>
+       <Item>SlimDX.Windows7</Item>
       </Issue>
      </Message>
     </Messages>
@@ -469,7 +488,12 @@
               <Issue>
                <Item>'DataStream.DataStream(void*, long, bool, bool, bool)'</Item>
                <Item>'GC.AddMemoryPressure(long)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'DataStream.DataStream(void*, long, bool, bool, bool)'&#xD;&#xA;   -&gt;'DataStream.DataStream(void*, long, bool, bool, bool)'&#xD;&#xA;   -&gt;'EffectInstance.FromBuffer(ID3DXBuffer*, uint)'&#xD;&#xA;   -&gt;'Mesh.FromMemory(Device, byte[], MeshFlags)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'DataStream.DataStream(void*, long, bool, bool, bool)'&#xD;&#xA;   -&gt;'DataStream.DataStream(void*, long, bool, bool, bool)'&#xD;&#xA;   -&gt;'EffectInstance.FromBuffer(ID3DXBuffer*, uint)'&#xD;&#xA;   -&gt;'Mesh.FromMemory_Internal(Device, void*, uint, MeshFlags)'&#xD;&#xA;   -&gt;'Mesh.FromMemory(Device, byte[], MeshFlags)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'DataStream.DataStream(void*, long, bool, bool, bool)'</Item>
+               <Item>'GC.AddMemoryPressure(long)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'DataStream.DataStream(void*, long, bool, bool, bool)'&#xD;&#xA;   -&gt;'DataStream.DataStream(void*, long, bool, bool, bool)'&#xD;&#xA;   -&gt;'EffectInstance.FromBuffer(ID3DXBuffer*, uint)'&#xD;&#xA;   -&gt;'Mesh.FromMemory_Internal(Device, void*, uint, MeshFlags)'&#xD;&#xA;   -&gt;'Mesh.FromStream(Device, Stream, MeshFlags)'</Item>
               </Issue>
               <Issue>
                <Item>'DataStream.DataStream(void*, long, bool, bool, bool)'</Item>
@@ -673,18 +697,6 @@
               <Issue>
                <Item>'DataStream.ReadRange&lt;T&gt;(int)'</Item>
                <Item>'T'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Write(System.Byte[],System.Int32,System.Int32)">
-            <Messages>
-             <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Created="2008-12-05 02:10:48Z">
-              <Issue>
-               <Item>'DataStream.Write(byte[], int, int)'</Item>
-               <Item>'data'</Item>
-               <Item>'buffer'</Item>
-               <Item>'Stream.Write(byte[], int, int)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3481,6 +3493,58 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="FilterFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2009-01-19 04:11:40Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'FilterFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#MirrowW">
+            <Messages>
+             <Message Id="Mirrow" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-19 04:11:40Z">
+              <Issue Name="Member">
+               <Item>Mirrow</Item>
+               <Item>'FilterFlags.MirrowW'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#StandardRgb">
+            <Messages>
+             <Message Id="Rgb" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-19 04:11:40Z">
+              <Issue Name="Member">
+               <Item>Rgb</Item>
+               <Item>'FilterFlags.StandardRgb'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#StandardRgbIn">
+            <Messages>
+             <Message Id="Rgb" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-19 04:11:40Z">
+              <Issue Name="Member">
+               <Item>Rgb</Item>
+               <Item>'FilterFlags.StandardRgbIn'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#StandardRgbOut">
+            <Messages>
+             <Message Id="Rgb" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-19 04:11:40Z">
+              <Issue Name="Member">
+               <Item>Rgb</Item>
+               <Item>'FilterFlags.StandardRgbOut'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="Font">
           <Members>
            <Member Name="#.ctor(ID3DX10Font*)">
@@ -3728,6 +3792,92 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="ImageInformation">
+          <Members>
+           <Member Name="#CreateNativeVersion(D3DX10_IMAGE_INFO*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-19 04:11:40Z">
+              <Issue>
+               <Item>'ImageInformation.CreateNativeVersion(D3DX10_IMAGE_INFO*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#OptionFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2009-01-19 04:11:40Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'ImageInformation.OptionFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ImageLoadInformation">
+          <Members>
+           <Member Name="#.ctor({modopt(System.Runtime.CompilerServices.IsConst)}D3DX10_IMAGE_LOAD_INFO{modopt(System.Runtime.CompilerServices.IsImplicitlyDereferenced)}*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-19 04:11:40Z">
+              <Issue>
+               <Item>'ImageLoadInformation.ImageLoadInformation(D3DX10_IMAGE_LOAD_INFO*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#BindFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2009-01-19 04:11:40Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'ImageLoadInformation.BindFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CpuAccessFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2009-01-19 04:11:40Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'ImageLoadInformation.CpuAccessFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FilterFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2009-01-19 04:11:40Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'ImageLoadInformation.FilterFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#MipFilterFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2009-01-19 04:11:40Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'ImageLoadInformation.MipFilterFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#OptionFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2009-01-19 04:11:40Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'ImageLoadInformation.OptionFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="Include">
           <Messages>
            <Message Id="I" TypeName="IdentifiersShouldHaveCorrectPrefix" Category="Microsoft.Naming" CheckId="CA1715" Status="Excluded" Created="2008-05-30 21:21:38Z" FixCategory="Breaking">
@@ -3750,7 +3900,12 @@
               <Issue>
                <Item>'IncludeFrame.Close()'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D10.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], string, ShaderFlags, EffectFlags, EffectPool, Include, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D10.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, string, ShaderFlags, EffectFlags, EffectPool, Include, string*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], string, ShaderFlags, EffectFlags, EffectPool, Include, out string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'IncludeFrame.Close()'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D10.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, string, ShaderFlags, EffectFlags, EffectPool, Include, string*)'&#xD;&#xA;   -&gt;'Effect.FromStream(Device, Stream, string, ShaderFlags, EffectFlags, EffectPool, Include, out string)'</Item>
               </Issue>
               <Issue>
                <Item>'IncludeFrame.Close()'</Item>
@@ -5466,6 +5621,17 @@
              </Accessor>
             </Accessors>
            </Member>
+           <Member Name="#SetValue`1(SlimDX.Direct3D9.EffectHandle,!!0)">
+            <Messages>
+             <Message Id="System.Convert.ToInt32(System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2009-01-19 04:11:40Z">
+              <Issue>
+               <Item>'Convert.ToInt32(object)'</Item>
+               <Item>'BaseEffect.SetValue&lt;T&gt;(EffectHandle, T)'</Item>
+               <Item>'Convert.ToInt32(object, IFormatProvider)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
           </Members>
          </Type>
          <Type Name="BaseMesh">
@@ -6329,11 +6495,11 @@
          </Type>
          <Type Name="Device">
           <Members>
-           <Member Name="#.ctor(SlimDX.Direct3D9.Direct3D,System.Int32,SlimDX.Direct3D9.DeviceType,System.IntPtr,SlimDX.Direct3D9.CreateFlags,SlimDX.Direct3D9.PresentParameters)">
+           <Member Name="#.ctor(SlimDX.Direct3D9.Direct3D,System.Int32,SlimDX.Direct3D9.DeviceType,System.IntPtr,SlimDX.Direct3D9.CreateFlags,SlimDX.Direct3D9.PresentParameters[])">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2008-07-07 20:26:00Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2009-01-19 04:11:40Z">
               <Issue Name="MemberParameterNoAlternate">
-               <Item>'Device.Device(Direct3D, int, DeviceType, IntPtr, CreateFlags, PresentParameters)'</Item>
+               <Item>'Device.Device(Direct3D, int, DeviceType, IntPtr, CreateFlags, params PresentParameters[])'</Item>
                <Item>Flags</Item>
                <Item>'createFlags'</Item>
               </Issue>
@@ -6811,6 +6977,28 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#.ctor(SlimDX.Direct3D9.Direct3DEx,System.Int32,SlimDX.Direct3D9.DeviceType,System.IntPtr,SlimDX.Direct3D9.CreateFlags,SlimDX.Direct3D9.PresentParameters[])">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2009-01-19 04:11:40Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'DeviceEx.DeviceEx(Direct3DEx, int, DeviceType, IntPtr, CreateFlags, PresentParameters[])'</Item>
+               <Item>Flags</Item>
+               <Item>'createFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(SlimDX.Direct3D9.Direct3DEx,System.Int32,SlimDX.Direct3D9.DeviceType,System.IntPtr,SlimDX.Direct3D9.CreateFlags,SlimDX.Direct3D9.PresentParameters[],SlimDX.Direct3D9.DisplayModeEx[])">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2009-01-19 04:11:40Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'DeviceEx.DeviceEx(Direct3DEx, int, DeviceType, IntPtr, CreateFlags, PresentParameters[], DisplayModeEx[])'</Item>
+               <Item>Flags</Item>
+               <Item>'createFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#.ctor(System.IntPtr)">
             <Messages>
              <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
@@ -6868,22 +7056,6 @@
               <Issue Name="Member">
                <Item>Gpu</Item>
                <Item>'DeviceEx.GpuThreadPriority'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Internal_Constructor(SlimDX.Direct3D9.Direct3DEx,System.Int32,SlimDX.Direct3D9.DeviceType,System.IntPtr,SlimDX.Direct3D9.CreateFlags,SlimDX.Direct3D9.PresentParameters,D3DDISPLAYMODEEX*)">
-            <Messages>
-             <Message Id="fullscreen" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
-              <Issue Name="MemberParameter">
-               <Item>'DeviceEx.Internal_Constructor(Direct3DEx, int, DeviceType, IntPtr, CreateFlags, PresentParameters, D3DDISPLAYMODEEX*)'</Item>
-               <Item>fullscreen</Item>
-               <Item>'fullscreenDisplayMode'</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
-              <Issue Name="Member">
-               <Item>'DeviceEx.Internal_Constructor(Direct3DEx, int, DeviceType, IntPtr, CreateFlags, PresentParameters, D3DDISPLAYMODEEX*)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -6955,6 +7127,12 @@
          </Type>
          <Type Name="Direct3D">
           <Messages>
+           <Message TypeName="IdentifiersShouldDifferByMoreThanCase" Category="Microsoft.Naming" CheckId="CA1708" Created="2009-01-19 04:11:40Z">
+            <Issue Name="Member">
+             <Item>'adapters'</Item>
+             <Item>Adapters</Item>
+            </Issue>
+           </Message>
            <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Status="Excluded" Created="2007-10-01 21:38:08Z">
             <Issue>
              <Item>'Direct3D'</Item>
@@ -7009,6 +7187,15 @@
               <Issue Name="Member">
                <Item>Whql</Item>
                <Item>'Direct3D.&lt;backing_store&gt;CheckWhql'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#adapters">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2009-01-19 04:11:40Z">
+              <Issue>
+               <Item>'Direct3D.adapters'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -8542,17 +8729,42 @@
               <Issue>
                <Item>'IncludeFrame.Close()'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags)'</Item>
               </Issue>
               <Issue>
                <Item>'IncludeFrame.Close()'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool)'</Item>
               </Issue>
               <Issue>
                <Item>'IncludeFrame.Close()'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'IncludeFrame.Close()'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], ShaderFlags)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'IncludeFrame.Close()'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromStream(Device, Stream, Macro[], Include, string, ShaderFlags)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'IncludeFrame.Close()'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromStream(Device, Stream, Macro[], Include, string, ShaderFlags, EffectPool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'IncludeFrame.Close()'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromStream(Device, Stream, Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'IncludeFrame.Close()'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromStream(Device, Stream, ShaderFlags)'</Item>
               </Issue>
               <Issue>
                <Item>'IncludeFrame.Close()'</Item>
@@ -8577,12 +8789,32 @@
               <Issue>
                <Item>'IncludeFrame.Close()'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], Macro[], Include, ShaderFlags)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], Macro[], Include, ShaderFlags)'</Item>
               </Issue>
               <Issue>
                <Item>'IncludeFrame.Close()'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'IncludeFrame.Close()'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], ShaderFlags)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'IncludeFrame.Close()'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromStream(Stream, Macro[], Include, ShaderFlags)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'IncludeFrame.Close()'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromStream(Stream, Macro[], Include, ShaderFlags, out string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'IncludeFrame.Close()'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'IncludeFrame.Close()'&#xD;&#xA;   -&gt;'&lt;Module&gt;.SlimDX.Direct3D9.IncludeShim.{dtor}(IncludeShim*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromStream(Stream, ShaderFlags)'</Item>
               </Issue>
               <Issue>
                <Item>'IncludeFrame.Close()'</Item>
@@ -8956,17 +9188,42 @@
               <Issue>
                <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags)'</Item>
               </Issue>
               <Issue>
                <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool)'</Item>
               </Issue>
               <Issue>
                <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.AddrOfPinnedObject()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], ShaderFlags)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.AddrOfPinnedObject()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromStream(Device, Stream, Macro[], Include, string, ShaderFlags)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.AddrOfPinnedObject()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromStream(Device, Stream, Macro[], Include, string, ShaderFlags, EffectPool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.AddrOfPinnedObject()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromStream(Device, Stream, Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.AddrOfPinnedObject()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromStream(Device, Stream, ShaderFlags)'</Item>
               </Issue>
               <Issue>
                <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
@@ -8991,12 +9248,32 @@
               <Issue>
                <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], Macro[], Include, ShaderFlags)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], Macro[], Include, ShaderFlags)'</Item>
               </Issue>
               <Issue>
                <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.AddrOfPinnedObject()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.AddrOfPinnedObject()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], ShaderFlags)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.AddrOfPinnedObject()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromStream(Stream, Macro[], Include, ShaderFlags)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.AddrOfPinnedObject()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromStream(Stream, Macro[], Include, ShaderFlags, out string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.AddrOfPinnedObject()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromStream(Stream, ShaderFlags)'</Item>
               </Issue>
               <Issue>
                <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
@@ -9086,17 +9363,42 @@
               <Issue>
                <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags)'</Item>
               </Issue>
               <Issue>
                <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool)'</Item>
               </Issue>
               <Issue>
                <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], ShaderFlags)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromStream(Device, Stream, Macro[], Include, string, ShaderFlags)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromStream(Device, Stream, Macro[], Include, string, ShaderFlags, EffectPool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromStream(Device, Stream, Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromStream(Device, Stream, ShaderFlags)'</Item>
               </Issue>
               <Issue>
                <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
@@ -9121,12 +9423,32 @@
               <Issue>
                <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], Macro[], Include, ShaderFlags)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], Macro[], Include, ShaderFlags)'</Item>
               </Issue>
               <Issue>
                <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
                <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], ShaderFlags)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromStream(Stream, Macro[], Include, ShaderFlags)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromStream(Stream, Macro[], Include, ShaderFlags, out string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
+               <Item>'GCHandle.Alloc(object, GCHandleType)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromStream(Stream, ShaderFlags)'</Item>
               </Issue>
               <Issue>
                <Item>'Macro.Marshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, Macro[], out GCHandle[])'</Item>
@@ -9229,17 +9551,42 @@
               <Issue>
                <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags)'</Item>
               </Issue>
               <Issue>
                <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool)'</Item>
               </Issue>
               <Issue>
                <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromMemory(Device, byte[], ShaderFlags)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromStream(Device, Stream, Macro[], Include, string, ShaderFlags)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromStream(Device, Stream, Macro[], Include, string, ShaderFlags, EffectPool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromStream(Device, Stream, Macro[], Include, string, ShaderFlags, EffectPool, out string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Effect.FromMemory_Internal(Device, void*, uint, Macro[], Include, string, ShaderFlags, EffectPool, string*)'&#xD;&#xA;   -&gt;'Effect.FromStream(Device, Stream, ShaderFlags)'</Item>
               </Issue>
               <Issue>
                <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
@@ -9264,12 +9611,32 @@
               <Issue>
                <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], Macro[], Include, ShaderFlags)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], Macro[], Include, ShaderFlags)'</Item>
               </Issue>
               <Issue>
                <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
                <Item>'GCHandle.Free()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], Macro[], Include, ShaderFlags, out string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory(byte[], ShaderFlags)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromStream(Stream, Macro[], Include, ShaderFlags)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromStream(Stream, Macro[], Include, ShaderFlags, out string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
+               <Item>'GCHandle.Free()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'&#xD;&#xA;   -&gt;'EffectCompiler.FromMemory_Internal(sbyte*, uint, Macro[], Include, ShaderFlags, string*)'&#xD;&#xA;   -&gt;'EffectCompiler.FromStream(Stream, ShaderFlags)'</Item>
               </Issue>
               <Issue>
                <Item>'Macro.Unmarshal(vector&lt;_D3DXMACRO,std::allocator&lt;_D3DXMACRO&gt; &gt;*, GCHandle[])'</Item>
@@ -16829,51 +17196,24 @@
        </Namespace>
        <Namespace Name="SlimDX.Multimedia">
         <Types>
-         <Type Name="WaveFile">
+         <Type Name="WaveStream">
           <Members>
-           <Member Name="#Close()">
+           <Member Name="#~WaveStream()">
             <Messages>
-             <Message Id="&lt;Module&gt;.mmioAscend(HMMIO__*,_MMCKINFO*,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-08-02 13:07:30Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'WaveFile.Close()'</Item>
-               <Item>'&lt;Module&gt;.mmioAscend(HMMIO__*, _MMCKINFO*, uint)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="&lt;Module&gt;.mmioClose(HMMIO__*,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-08-02 13:07:30Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'WaveFile.Close()'</Item>
-               <Item>'&lt;Module&gt;.mmioClose(HMMIO__*, uint)'</Item>
-              </Issue>
-              <Issue Name="HResultOrErrorCode">
-               <Item>'WaveFile.Close()'</Item>
-               <Item>'&lt;Module&gt;.mmioClose(HMMIO__*, uint)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="&lt;Module&gt;.mmioSeek(HMMIO__*,optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.Int32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-08-02 13:07:30Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'WaveFile.Close()'</Item>
-               <Item>'&lt;Module&gt;.mmioSeek(HMMIO__*, int, int)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="&lt;Module&gt;.mmioWrite(HMMIO__*,System.optional(IsConst) optional(IsSignUnspecifiedByte) SByte*,optional(System.Runtime.CompilerServices.IsLong) System.Int32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2008-08-02 13:07:30Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'WaveFile.Close()'</Item>
-               <Item>'&lt;Module&gt;.mmioWrite(HMMIO__*, sbyte*, int)'</Item>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2009-01-19 04:11:40Z">
+              <Issue Name="OutsideDispose">
+               <Item>'WaveStream.~WaveStream()'</Item>
+               <Item>'GC.SuppressFinalize(object)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-          </Members>
-         </Type>
-         <Type Name="WaveFormat">
-          <Members>
-           <Member Name="#ToUnmanaged(std.auto_ptr&lt;tWAVEFORMATEX&gt;*,SlimDX.Multimedia.WaveFormat)">
+           <Member Name="#Destruct()">
             <Messages>
-             <Message Id="param" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-09-11 20:36:25Z" FixCategory="NonBreaking">
-              <Issue Name="MemberParameter">
-               <Item>'WaveFormat.ToUnmanaged(auto_ptr&lt;tWAVEFORMATEX&gt;*, WaveFormat)'</Item>
-               <Item>param</Item>
-               <Item>'param0'</Item>
+             <Message Id="&lt;Module&gt;.mmioClose(HMMIO__*,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-01-19 04:11:40Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'WaveStream.Destruct()'</Item>
+               <Item>'&lt;Module&gt;.mmioClose(HMMIO__*, uint)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -17125,6 +17465,290 @@
             </Issue>
            </Message>
           </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="SlimDX.Windows">
+        <Types>
+         <Type Name="MessagePump">
+          <Messages>
+           <Message TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053" Created="2009-01-19 04:11:40Z">
+            <Issue>
+             <Item>'MessagePump'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="RenderWindow">
+          <Members>
+           <Member Name="#.ctor(System.Windows.Forms.Control)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-01-19 04:11:40Z">
+              <Issue>
+               <Item>'RenderWindow.RenderWindow(Control)'</Item>
+               <Item>'NativeWindow.AssignHandle(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'RenderWindow.RenderWindow(Control)'&#xD;&#xA;   -&gt;'RenderWindow.RenderWindow(Control)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'RenderWindow.RenderWindow(Control)'</Item>
+               <Item>'NativeWindow.Handle.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'RenderWindow.RenderWindow(Control)'&#xD;&#xA;   -&gt;'RenderWindow.RenderWindow(Control)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'RenderWindow.RenderWindow(Control)'</Item>
+               <Item>'NativeWindow.NativeWindow()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'RenderWindow.RenderWindow(Control)'&#xD;&#xA;   -&gt;'RenderWindow.RenderWindow(Control)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Destruct()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-01-19 04:11:40Z">
+              <Issue>
+               <Item>'RenderWindow.Destruct()'</Item>
+               <Item>'NativeWindow.ReleaseHandle()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'RenderWindow.Destruct()'&#xD;&#xA;   -&gt;'RenderWindow.Destruct()'&#xD;&#xA;   -&gt;'RenderWindow.!RenderWindow()'&#xD;&#xA;   -&gt;'RenderWindow.Dispose(bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'RenderWindow.Destruct()'</Item>
+               <Item>'NativeWindow.ReleaseHandle()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'RenderWindow.Destruct()'&#xD;&#xA;   -&gt;'RenderWindow.Destruct()'&#xD;&#xA;   -&gt;'RenderWindow.~RenderWindow()'&#xD;&#xA;   -&gt;'RenderWindow.Dispose(bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Dispose(System.Boolean)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-01-19 04:11:40Z">
+              <Issue>
+               <Item>'RenderWindow.Dispose(bool)'</Item>
+               <Item>'NativeWindow.~NativeWindow()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'RenderWindow.Dispose(bool)'&#xD;&#xA;   -&gt;'RenderWindow.Dispose(bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#EndDeviceChange()">
+            <Messages>
+             <Message Id="&lt;Module&gt;.AdjustWindowRect(tagRECT*,optional(System.Runtime.CompilerServices.IsLong) System.UInt32,System.Int32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-01-19 04:11:40Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.EndDeviceChange()'</Item>
+               <Item>'&lt;Module&gt;.AdjustWindowRect(tagRECT*, uint, int)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.EndDeviceChange()'</Item>
+               <Item>'&lt;Module&gt;.AdjustWindowRect(tagRECT*, uint, int)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="&lt;Module&gt;.GetClientRect(HWND__*,tagRECT*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-01-19 04:11:40Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.EndDeviceChange()'</Item>
+               <Item>'&lt;Module&gt;.GetClientRect(HWND__*, tagRECT*)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.EndDeviceChange()'</Item>
+               <Item>'&lt;Module&gt;.GetClientRect(HWND__*, tagRECT*)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.EndDeviceChange()'</Item>
+               <Item>'&lt;Module&gt;.GetClientRect(HWND__*, tagRECT*)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="&lt;Module&gt;.GetWindowPlacement(HWND__*,tagWINDOWPLACEMENT*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-01-19 04:11:40Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.EndDeviceChange()'</Item>
+               <Item>'&lt;Module&gt;.GetWindowPlacement(HWND__*, tagWINDOWPLACEMENT*)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="&lt;Module&gt;.SetThreadExecutionState(optional(System.Runtime.CompilerServices.IsLong) System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-01-19 04:11:40Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.EndDeviceChange()'</Item>
+               <Item>'&lt;Module&gt;.SetThreadExecutionState(uint)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.EndDeviceChange()'</Item>
+               <Item>'&lt;Module&gt;.SetThreadExecutionState(uint)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="&lt;Module&gt;.SetWindowPlacement(HWND__*,optional(IsConst) tagWINDOWPLACEMENT*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-01-19 04:11:40Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.EndDeviceChange()'</Item>
+               <Item>'&lt;Module&gt;.SetWindowPlacement(HWND__*, tagWINDOWPLACEMENT*)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="&lt;Module&gt;.SetWindowPos(HWND__*,HWND__*,System.Int32,System.Int32,System.Int32,System.Int32,System.UInt32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-01-19 04:11:40Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.EndDeviceChange()'</Item>
+               <Item>'&lt;Module&gt;.SetWindowPos(HWND__*, HWND__*, int, int, int, int, uint)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.EndDeviceChange()'</Item>
+               <Item>'&lt;Module&gt;.SetWindowPos(HWND__*, HWND__*, int, int, int, int, uint)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="&lt;Module&gt;.ShowWindow(HWND__*,System.Int32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-01-19 04:11:40Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.EndDeviceChange()'</Item>
+               <Item>'&lt;Module&gt;.ShowWindow(HWND__*, int)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.EndDeviceChange()'</Item>
+               <Item>'&lt;Module&gt;.ShowWindow(HWND__*, int)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.EndDeviceChange()'</Item>
+               <Item>'&lt;Module&gt;.ShowWindow(HWND__*, int)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.EndDeviceChange()'</Item>
+               <Item>'&lt;Module&gt;.ShowWindow(HWND__*, int)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.EndDeviceChange()'</Item>
+               <Item>'&lt;Module&gt;.ShowWindow(HWND__*, int)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-01-19 04:11:40Z">
+              <Issue>
+               <Item>'RenderWindow.EndDeviceChange()'</Item>
+               <Item>'NativeWindow.Handle.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'RenderWindow.EndDeviceChange()'&#xD;&#xA;   -&gt;'RenderWindow.EndDeviceChange()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Finalize()">
+            <Messages>
+             <Message TypeName="OverrideLinkDemandsShouldBeIdenticalToBase" Category="Microsoft.Security" CheckId="CA2123" Created="2009-01-19 04:11:40Z">
+              <Issue Name="BaseOnly">
+               <Item>'RenderWindow.~RenderWindow()'</Item>
+               <Item>'NativeWindow.~NativeWindow()'</Item>
+               <Item>[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FullscreenSize">
+            <Messages>
+             <Message Id="Fullscreen" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-19 04:11:40Z">
+              <Issue Name="Member">
+               <Item>Fullscreen</Item>
+               <Item>'RenderWindow.FullscreenSize'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#OnMonitorChanged(System.EventArgs)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-01-19 04:11:40Z">
+              <Issue>
+               <Item>'RenderWindow.OnMonitorChanged(EventArgs)'</Item>
+               <Item>'NativeWindow.Handle.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'RenderWindow.OnMonitorChanged(EventArgs)'&#xD;&#xA;   -&gt;'RenderWindow.OnMonitorChanged(EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#StartDeviceChange(System.Boolean,System.Int32,System.Int32)">
+            <Messages>
+             <Message Id="&lt;Module&gt;.GetWindowPlacement(HWND__*,tagWINDOWPLACEMENT*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-01-19 04:11:40Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.StartDeviceChange(bool, int, int)'</Item>
+               <Item>'&lt;Module&gt;.GetWindowPlacement(HWND__*, tagWINDOWPLACEMENT*)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.StartDeviceChange(bool, int, int)'</Item>
+               <Item>'&lt;Module&gt;.GetWindowPlacement(HWND__*, tagWINDOWPLACEMENT*)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="&lt;Module&gt;.SetWindowLongW(HWND__*,System.Int32,optional(System.Runtime.CompilerServices.IsLong) System.Int32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-01-19 04:11:40Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.StartDeviceChange(bool, int, int)'</Item>
+               <Item>'&lt;Module&gt;.SetWindowLongW(HWND__*, int, int)'</Item>
+              </Issue>
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.StartDeviceChange(bool, int, int)'</Item>
+               <Item>'&lt;Module&gt;.SetWindowLongW(HWND__*, int, int)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="&lt;Module&gt;.SetWindowPlacement(HWND__*,optional(IsConst) tagWINDOWPLACEMENT*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-01-19 04:11:40Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.StartDeviceChange(bool, int, int)'</Item>
+               <Item>'&lt;Module&gt;.SetWindowPlacement(HWND__*, tagWINDOWPLACEMENT*)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="&lt;Module&gt;.ShowWindow(HWND__*,System.Int32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-01-19 04:11:40Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.StartDeviceChange(bool, int, int)'</Item>
+               <Item>'&lt;Module&gt;.ShowWindow(HWND__*, int)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-01-19 04:11:40Z">
+              <Issue>
+               <Item>'RenderWindow.StartDeviceChange(bool, int, int)'</Item>
+               <Item>'NativeWindow.Handle.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'RenderWindow.StartDeviceChange(bool, int, int)'&#xD;&#xA;   -&gt;'RenderWindow.StartDeviceChange(bool, int, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#UpdateScreen()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-01-19 04:11:40Z">
+              <Issue>
+               <Item>'RenderWindow.UpdateScreen()'</Item>
+               <Item>'NativeWindow.Handle.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'RenderWindow.UpdateScreen()'&#xD;&#xA;   -&gt;'RenderWindow.UpdateScreen()'&#xD;&#xA;   -&gt;'RenderWindow.WndProc(ref Message)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#WndProc(System.Windows.Forms.Message&amp;)">
+            <Messages>
+             <Message Id="&lt;Module&gt;.GetClientRect(HWND__*,tagRECT*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-01-19 04:11:40Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RenderWindow.WndProc(ref Message)'</Item>
+               <Item>'&lt;Module&gt;.GetClientRect(HWND__*, tagRECT*)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-01-19 04:11:40Z">
+              <Issue>
+               <Item>'RenderWindow.WndProc(ref Message)'</Item>
+               <Item>'Message.Msg.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'RenderWindow.WndProc(ref Message)'&#xD;&#xA;   -&gt;'RenderWindow.WndProc(ref Message)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'RenderWindow.WndProc(ref Message)'</Item>
+               <Item>'Message.Result.set(IntPtr)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'RenderWindow.WndProc(ref Message)'&#xD;&#xA;   -&gt;'RenderWindow.WndProc(ref Message)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'RenderWindow.WndProc(ref Message)'</Item>
+               <Item>'Message.WParam.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'RenderWindow.WndProc(ref Message)'&#xD;&#xA;   -&gt;'RenderWindow.WndProc(ref Message)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'RenderWindow.WndProc(ref Message)'</Item>
+               <Item>'NativeWindow.Handle.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'RenderWindow.WndProc(ref Message)'&#xD;&#xA;   -&gt;'RenderWindow.WndProc(ref Message)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'RenderWindow.WndProc(ref Message)'</Item>
+               <Item>'NativeWindow.WndProc(ref Message)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'RenderWindow.WndProc(ref Message)'&#xD;&#xA;   -&gt;'RenderWindow.WndProc(ref Message)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="OverrideLinkDemandsShouldBeIdenticalToBase" Category="Microsoft.Security" CheckId="CA2123" Created="2009-01-19 04:11:40Z">
+              <Issue Name="BaseOnly">
+               <Item>'RenderWindow.WndProc(ref Message)'</Item>
+               <Item>'NativeWindow.WndProc(ref Message)'</Item>
+               <Item>[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
         </Types>
        </Namespace>
@@ -18539,165 +19163,17 @@
    <Target Name="$(ProjectDir)/../samples/Direct3D9/SkinnedMesh/bin/x86/Debug/SkinnedMesh.exe">
     <Modules>
      <Module Name="skinnedmesh.exe">
-      <Messages>
-       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Created="2008-12-05 02:10:48Z">
-        <Issue>
-         <Item>'SkinnedMesh.exe'</Item>
-        </Issue>
-       </Message>
-      </Messages>
       <Namespaces>
        <Namespace Name="SkinnedMesh">
         <Types>
-         <Type Name="CustomAllocateHierarchy">
-          <Members>
-           <Member Name="#GenerateSkinnedMesh(SkinnedMesh.CustomMeshContainer)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-12-05 02:10:48Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'CustomAllocateHierarchy.GenerateSkinnedMesh(CustomMeshContainer)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="CustomFrame">
-          <Members>
-           <Member Name="#CombinedTransform">
-            <Accessors>
-             <Accessor Name="#get_CombinedTransform()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
-                <Issue>
-                 <Item>'CustomFrame.CombinedTransform.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="CustomMeshContainer">
-          <Members>
-           <Member Name="#AttributeTable">
-            <Accessors>
-             <Accessor Name="#get_AttributeTable()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
-                <Issue>
-                 <Item>'CustomMeshContainer.AttributeTable.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-             <Accessor Name="#set_AttributeTable(SlimDX.Direct3D9.AttributeRange[])">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
-                <Issue>
-                 <Item>'CustomMeshContainer.AttributeTable.set(AttributeRange[])'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#BoneCombinations">
-            <Accessors>
-             <Accessor Name="#get_BoneCombinations()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
-                <Issue>
-                 <Item>'CustomMeshContainer.BoneCombinations.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#BoneMatricesLookup">
-            <Accessors>
-             <Accessor Name="#get_BoneMatricesLookup()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
-                <Issue>
-                 <Item>'CustomMeshContainer.BoneMatricesLookup.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-             <Accessor Name="#set_BoneMatricesLookup(SkinnedMesh.CustomFrame[])">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
-                <Issue>
-                 <Item>'CustomMeshContainer.BoneMatricesLookup.set(CustomFrame[])'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#Influences">
-            <Accessors>
-             <Accessor Name="#get_Influences()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
-                <Issue>
-                 <Item>'CustomMeshContainer.Influences.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="SkinnedMesh">
           <Members>
-           <Member Name="#Dispose(System.Boolean)">
+           <Member Name="#DrawMeshContainer(SkinnedMesh.CustomMeshContainer,SkinnedMesh.CustomFrame)">
             <Messages>
-             <Message Id="textSprite" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Created="2008-12-05 02:10:48Z">
+             <Message Id="frame" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2009-01-19 04:11:40Z" FixCategory="NonBreaking">
               <Issue>
-               <Item>'SkinnedMesh'</Item>
-               <Item>'SkinnedMesh.textSprite'</Item>
-               <Item>'Sprite'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#projectionMatrix">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-12-05 02:10:48Z">
-              <Issue>
-               <Item>'SkinnedMesh.projectionMatrix'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#SetupBoneMatrices(SkinnedMesh.CustomMeshContainer)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
-              <Issue>
-               <Item>'SkinnedMesh.SetupBoneMatrices(CustomMeshContainer)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#SetupBoneMatrices(SlimDX.Direct3D9.Frame)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-05 02:10:48Z">
-              <Issue>
-               <Item>'SkinnedMesh.SetupBoneMatrices(Frame)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#viewMatrix">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-12-05 02:10:48Z">
-              <Issue>
-               <Item>'SkinnedMesh.viewMatrix'</Item>
+               <Item>'frame'</Item>
+               <Item>'SkinnedMesh.DrawMeshContainer(CustomMeshContainer, CustomFrame)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -20553,6 +21029,7 @@
     <Resolution Name="Type">Correct the spelling of '{0}' in type name {1}.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldDifferByMoreThanCase" Category="Microsoft.Naming" CheckId="CA1708">
+    <Resolution Name="Member">Change member names {0} and '{1}' so that they differ by more than case.</Resolution>
     <Resolution Name="Type">Change type names {0} and '{1}' so that they differ by more than case.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldHaveCorrectPrefix" Category="Microsoft.Naming" CheckId="CA1715">
@@ -20582,14 +21059,8 @@
    <Rule TypeName="IndexersShouldNotBeMultidimensional" Category="Microsoft.Design" CheckId="CA1023">
     <Resolution Name="Default">Redesign indexer {0} to use a single string or integer value as its index.</Resolution>
    </Rule>
-   <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
-    <Resolution Name="Default">Because assembly {0} contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Resolution>
-   </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
-   </Rule>
-   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
-    <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
    </Rule>
    <Rule TypeName="MembersShouldDifferByMoreThanReturnType" Category="Microsoft.Usage" CheckId="CA2223">
     <Resolution Name="Default">'{0}' should differ from other members by more than its return type.</Resolution>
@@ -20607,9 +21078,10 @@
     <Resolution Name="Default">Provide a method named '{0}' as a friendly alternate for operator {1}.</Resolution>
     <Resolution Name="Multiple">Provide a method named '{0}' or '{1}' as an alternate for operator {2}.</Resolution>
    </Rule>
-   <Rule TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725">
-    <Resolution Name="Default">In member {0}, change parameter name {1} to {2} in order to match the identifier as it has been declared in {3}.</Resolution>
+   <Rule TypeName="OverrideLinkDemandsShouldBeIdenticalToBase" Category="Microsoft.Security" CheckId="CA2123">
+    <Resolution Name="BaseOnly">Add the following security attribute to {0} in order to match a LinkDemand on base method {1}:  {2}.</Resolution>
    </Rule>
+   <Rule TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" />
    <Rule TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719">
     <Resolution Name="Default">Change either member or parameter name {0} so that one differs from the other.</Resolution>
    </Rule>
@@ -20628,8 +21100,14 @@
    <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
     <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
    </Rule>
+   <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+    <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
+   </Rule>
    <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
     <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>
+   </Rule>
+   <Rule TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053">
+    <Resolution Name="Default">Remove the public constructors from {0}.</Resolution>
    </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
