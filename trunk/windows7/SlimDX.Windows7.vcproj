@@ -63,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="2"
 				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll"
@@ -141,7 +141,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="2"
 				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll"
@@ -218,7 +218,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="1"
 				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll"
@@ -295,7 +295,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="1"
 				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll"
@@ -371,7 +371,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="1"
 				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll"
@@ -448,7 +448,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="1"
 				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll"
@@ -495,6 +495,11 @@
 		<AssemblyReference
 			RelativePath="System.XML.dll"
 			AssemblyName="System.Xml, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
+			MinFrameworkVersion="131072"
+		/>
+		<AssemblyReference
+			RelativePath="System.Drawing.dll"
+			AssemblyName="System.Drawing, Version=2.0.0.0, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
 			MinFrameworkVersion="131072"
 		/>
 	</References>
@@ -762,6 +767,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\direct3d11\ShaderBlob.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct3d11\ShaderBlob.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\direct3d11\ShaderBytecode.cpp"
 					>
 				</File>
@@ -966,6 +979,82 @@
 				RelativePath=".\source\ComObject.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="Direct2D"
+			>
+			<File
+				RelativePath=".\source\direct2d\Direct2DException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct2d\Direct2DException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct2d\Enums.h"
+				>
+			</File>
+			<Filter
+				Name="Factory"
+				>
+				<File
+					RelativePath=".\source\direct2d\Factory.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\Factory.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="RenderTarget"
+				>
+				<File
+					RelativePath=".\source\direct2d\PixelFormat.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\PixelFormat.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\RenderTarget.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\RenderTarget.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\RenderTargetProperties.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\RenderTargetProperties.h"
+					>
+				</File>
+				<Filter
+					Name="WindowRenderTarget"
+					>
+					<File
+						RelativePath=".\source\direct2d\WindowRenderTarget.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\WindowRenderTarget.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\WindowRenderTargetProperties.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\WindowRenderTargetProperties.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\source\AssemblyInfo.cpp"

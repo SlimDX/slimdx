@@ -28,8 +28,8 @@
 #include "DeviceChild.h"
 #include "VertexShader.h"
 #include "Device.h"
-#include "ShaderBlob.h"
 #include "Direct3D11Exception.h"
+#include "ShaderBlob.h"
 
 using namespace System;
 
