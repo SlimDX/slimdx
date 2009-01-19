@@ -58,7 +58,9 @@ namespace Direct3D11
 	
 	void RasterizerWrapper::SetViewports( SlimDX::Viewport viewport )
 	{
-		D3D11_VIEWPORT nativeVP = { viewport.X, viewport.Y, viewport.Width, viewport.Height, viewport.MinZ, viewport.MaxZ };
+		D3D11_VIEWPORT nativeVP = { static_cast<FLOAT>( viewport.X ), static_cast<FLOAT>( viewport.Y ), 
+			static_cast<FLOAT>( viewport.Width ), static_cast<FLOAT>( viewport.Height ), 
+			static_cast<FLOAT>( viewport.MinZ ), static_cast<FLOAT>( viewport.MaxZ ) };
 		m_DeviceContext->RSSetViewports( 1, &nativeVP );
 	}
 
@@ -73,12 +75,12 @@ namespace Direct3D11
 			D3D11_VIEWPORT nativeVPs[D3D11_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE];
 			for( int i = 0; i < viewports->Length; ++i )
 			{
-				nativeVPs[ i ].TopLeftX = viewports[ i ].X;
-				nativeVPs[ i ].TopLeftY = viewports[ i ].Y;
-				nativeVPs[ i ].Width = viewports[ i ].Width;
-				nativeVPs[ i ].Height = viewports[ i ].Height;
-				nativeVPs[ i ].MinDepth = viewports[ i ].MinZ;
-				nativeVPs[ i ].MaxDepth = viewports[ i ].MaxZ;
+				nativeVPs[ i ].TopLeftX = static_cast<FLOAT>( viewports[ i ].X );
+				nativeVPs[ i ].TopLeftY = static_cast<FLOAT>( viewports[ i ].Y );
+				nativeVPs[ i ].Width = static_cast<FLOAT>( viewports[ i ].Width );
+				nativeVPs[ i ].Height = static_cast<FLOAT>( viewports[ i ].Height );
+				nativeVPs[ i ].MinDepth = static_cast<FLOAT>( viewports[ i ].MinZ );
+				nativeVPs[ i ].MaxDepth = static_cast<FLOAT>( viewports[ i ].MaxZ );
 			}
 			
 			m_DeviceContext->RSSetViewports( viewports->Length, nativeVPs );
