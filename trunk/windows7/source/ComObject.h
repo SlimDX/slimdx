@@ -21,7 +21,27 @@
 */
 #pragma once
 
+#ifdef X64
+#ifdef PUBLIC
+#using "../build/x64/Public/SlimDX.dll" as_friend
+#else
+#ifdef NDEBUG
+#using "../build/x64/Release/SlimDX.dll" as_friend
+#else
+#using "../build/x64/Debug/SlimDX.dll" as_friend
+#endif
+#endif
+#else
+#ifdef PUBLIC
+#using "../build/x86/Public/SlimDX.dll" as_friend
+#else
+#ifdef NDEBUG
+#using "../build/x86/Release/SlimDX.dll" as_friend
+#else
 #using "../build/x86/Debug/SlimDX.dll" as_friend
+#endif
+#endif
+#endif
 
 #define COMOBJECT_BASE(nativeType) \
 	internal: \
