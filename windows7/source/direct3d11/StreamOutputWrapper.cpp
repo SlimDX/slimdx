@@ -20,32 +20,50 @@
 * THE SOFTWARE.
 */
 
-#include <dxgi.h>
+#include <d3d11.h>
+#include <d3dx11.h>
 
-#include "../ComObject.h"
-
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
+#include "StreamOutputWrapper.h"
+#include "Buffer.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace DXGI
+namespace Direct3D11
 { 
-	DeviceChild::DeviceChild()
+	StreamOutputWrapper::StreamOutputWrapper( ID3D11DeviceContext* deviceContext )
 	{
+		if( deviceContext == 0 )
+			throw gcnew ArgumentNullException( "deviceContext" );
+		m_DeviceContext = deviceContext;
 	}
 
-	DXGI::Device^ DeviceChild::Device::get()
+	void StreamOutputWrapper::SetTargets( ... array<StreamOutputBufferBinding>^ bufferBindings )
 	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
+		if( bufferBindings == nullptr )
+		{
+			m_DeviceContext->SOSetTargets( 0, 0, 0 );	
+		}
+		else 
+		{
+			ID3D11Buffer* buffers[D3D11_SO_BUFFER_SLOT_COUNT];
+			UINT offsets[D3D11_SO_BUFFER_SLOT_COUNT];
+			
+			for( int i = 0; i < D3D11_SO_BUFFER_SLOT_COUNT; ++i )
+			{
+				buffers[ i ] = 0;
+				offsets[ i ] = 0;
+			}
+			
+			for( int i = 0; i < bufferBindings->Length; ++i )
+			{
+				buffers[i] = static_cast<ID3D11Buffer*>( bufferBindings[ i ].Buffer->InternalPointer );
+				offsets[i] = bufferBindings[ i ].Offset;
+			}
+			
+			m_DeviceContext->SOSetTargets( bufferBindings->Length, buffers, offsets );
+		}
 	}
 }
 }

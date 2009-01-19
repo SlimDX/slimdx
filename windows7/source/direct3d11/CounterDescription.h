@@ -19,33 +19,40 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include <dxgi.h>
-
-#include "../ComObject.h"
-
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
-
-using namespace System;
+#include "Enums.h"
 
 namespace SlimDX
 {
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
-	{
-	}
+	namespace Direct3D11
+	{	
+		public value class CounterDescription : System::IEquatable<CounterDescription>
+		{
+		private:
+			Direct3D11::CounterKind m_Counter;
 
-	DXGI::Device^ DeviceChild::Device::get()
-	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
+		internal:
+			CounterDescription( const D3D11_COUNTER_DESC& native );
+			
+			D3D11_COUNTER_DESC CreateNativeVersion();
+			
+		public:
+			property Direct3D11::CounterKind CounterKind
+			{
+				Direct3D11::CounterKind get();
+				void set( Direct3D11::CounterKind value );
+			}
+			
+			CounterDescription( Direct3D11::CounterKind kind );
+
+			static bool operator == ( CounterDescription left, CounterDescription right );
+			static bool operator != ( CounterDescription left, CounterDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( CounterDescription other );
+			static bool Equals( CounterDescription% value1, CounterDescription% value2 );
+		};
 	}
-}
-}
+};

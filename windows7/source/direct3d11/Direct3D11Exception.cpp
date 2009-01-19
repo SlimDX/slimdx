@@ -20,32 +20,37 @@
 * THE SOFTWARE.
 */
 
-#include <dxgi.h>
-
-#include "../ComObject.h"
-
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
+#include "Direct3D11Exception.h"
 
 using namespace System;
+using namespace System::Runtime::Serialization;
 
 namespace SlimDX
 {
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
+namespace Direct3D11
+{
+	Direct3D11Exception::Direct3D11Exception( SerializationInfo^ info, StreamingContext context )
+	: SlimDXException( info, context )
 	{
 	}
 
-	DXGI::Device^ DeviceChild::Device::get()
+	Direct3D11Exception::Direct3D11Exception()
 	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
+	}
+
+	Direct3D11Exception::Direct3D11Exception( String^ message )
+	: SlimDXException( message )
+	{
+	}
+
+	Direct3D11Exception::Direct3D11Exception( String^ message, Exception^ innerException )
+	: SlimDXException( message, innerException )
+	{
+	}
+
+	Direct3D11Exception::Direct3D11Exception( Result result )
+	: SlimDXException( result )
+	{
 	}
 }
 }

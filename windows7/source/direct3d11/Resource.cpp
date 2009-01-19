@@ -20,32 +20,46 @@
 * THE SOFTWARE.
 */
 
-#include <dxgi.h>
+#include <d3d11.h>
+#include <d3dx11.h>
 
-#include "../ComObject.h"
-
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
+#include "Resource.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace DXGI
+namespace Direct3D11
 { 
-	DeviceChild::DeviceChild()
+	Resource::Resource()
 	{
 	}
-
-	DXGI::Device^ DeviceChild::Device::get()
+	
+	Resource::Resource( ID3D11Resource* pointer )
 	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
+		Construct( pointer );
+	}
+
+	Resource::Resource( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+	
+	DXGI::ResourcePriority Resource::EvictionPriority::get()
+	{
+		return static_cast<DXGI::ResourcePriority>( InternalPointer->GetEvictionPriority() );
+	}
+	
+	void Resource::EvictionPriority::set( DXGI::ResourcePriority value )
+	{
+		InternalPointer->SetEvictionPriority( static_cast<UINT>( value ) );
+	}
+	
+	ResourceDimension Resource::Dimension::get()
+	{
+		D3D11_RESOURCE_DIMENSION type;
+		InternalPointer->GetType(&type);
+		return static_cast<ResourceDimension>( type );
 	}
 }
 }

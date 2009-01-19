@@ -19,33 +19,39 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <dxgi.h>
-
-#include "../ComObject.h"
-
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
-
-using namespace System;
+#pragma once
 
 namespace SlimDX
 {
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
+	namespace Direct3D11
 	{
+		ref class Device;
+		
+		/// <summary>
+		/// An object that is bound to a Device.
+		/// </summary>
+		public ref class DeviceChild : public ComObject 
+		{
+			COMOBJECT(ID3D11DeviceChild, DeviceChild);
+		
+		protected:
+			DeviceChild();
+			
+		public:
+			/// <summary>
+			/// Constructs a DeviceChild object from a marshalled native pointer.
+			/// </summary>
+			/// <param name="pointer">The native object pointer.</param>
+			/// <returns>The DeviceChild object for the native object.</returns>
+			static DeviceChild^ FromPointer( System::IntPtr pointer );
+			
+			/// <summary>
+			/// Gets the device the object is bound to.
+			/// </summary>
+			property SlimDX::Direct3D11::Device^ Device
+			{
+				SlimDX::Direct3D11::Device^ get();
+			}
+		};
 	}
-
-	DXGI::Device^ DeviceChild::Device::get()
-	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
-	}
-}
-}
+};

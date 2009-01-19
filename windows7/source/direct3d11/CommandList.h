@@ -19,33 +19,28 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <dxgi.h>
+#pragma once
 
 #include "../ComObject.h"
 
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
-
-using namespace System;
-
 namespace SlimDX
 {
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
+	namespace Direct3D11
 	{
+		/// <summary>
+		/// A virtual adapter for performing rendering.
+		/// </summary>
+		public ref class CommandList : ComObject
+		{
+			COMOBJECT(ID3D11CommandList, CommandList);
+		
+		public:
+			/// <summary>
+			/// Constructs a CommandList object from a marshalled native pointer.
+			/// </summary>
+			/// <param name="pointer">The native object pointer.</param>
+			/// <returns>The CommandList object for the native object.</returns>
+			static CommandList^ FromPointer( System::IntPtr pointer );
+		};
 	}
-
-	DXGI::Device^ DeviceChild::Device::get()
-	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
-	}
-}
-}
+};

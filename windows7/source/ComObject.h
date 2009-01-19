@@ -19,33 +19,28 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include <dxgi.h>
+#using "../build/x86/Debug/SlimDX.dll" as_friend
 
-#include "../ComObject.h"
+#define COMOBJECT_BASE(nativeType) \
+	internal: \
+	static property System::Guid NativeInterface { System::Guid get() { return Utilities::ConvertNativeGuid( IID_ ## nativeType ); } } \
+	property nativeType* InternalPointer { nativeType* get() new { return static_cast<nativeType*>( UnknownPointer ); } } \
+	private:
 
-#include "DXGIException.h"
+#define COMOBJECT(nativeType, managedType) \
+	private: \
+	managedType( nativeType* pointer ); \
+	managedType( System::IntPtr pointer ); \
+	internal: \
+	static managedType^ FromPointer( nativeType* pointer ); \
+	COMOBJECT_BASE(nativeType)
 
-#include "Device.h"
-#include "DeviceChild.h"
+#define SLIMDX_UNREFERENCED_PARAMETER(P) (P)
 
-using namespace System;
-
-namespace SlimDX
-{
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
-	{
-	}
-
-	DXGI::Device^ DeviceChild::Device::get()
-	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
-	}
-}
-}
+#ifdef NDEBUG
+#	define SLIMDX_DEBUG_UNREFERENCED_PARAMETER(P)
+#else
+#	define SLIMDX_DEBUG_UNREFERENCED_PARAMETER(P) (P)
+#endif

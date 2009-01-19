@@ -20,32 +20,57 @@
 * THE SOFTWARE.
 */
 
-#include <dxgi.h>
+#include <d3d11.h>
+#include <vector>
 
-#include "../ComObject.h"
+#include "Direct3D11Exception.h"
 
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
+#include "CommandList.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
+namespace Direct3D11
+{
+	CommandList::CommandList( ID3D11CommandList* pointer )
 	{
+		Construct( pointer );
+	}
+	
+	CommandList::CommandList( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+	
+	CommandList^ CommandList::FromPointer( ID3D11CommandList* pointer )
+	{
+		if( pointer == 0 )
+			return nullptr;
+
+		CommandList^ tableEntry = safe_cast<CommandList^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew CommandList( pointer );
 	}
 
-	DXGI::Device^ DeviceChild::Device::get()
+	CommandList^ CommandList::FromPointer( IntPtr pointer )
 	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		CommandList^ tableEntry = safe_cast<CommandList^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew CommandList( pointer );
 	}
+
 }
 }

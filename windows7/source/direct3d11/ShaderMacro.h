@@ -19,33 +19,36 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <dxgi.h>
-
-#include "../ComObject.h"
-
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
-
-using namespace System;
+#pragma once
 
 namespace SlimDX
 {
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
+	namespace Direct3D11
 	{
-	}
+		public value class ShaderMacro : System::IEquatable<ShaderMacro>
+		{
+		private:
+			System::String^ m_Name;
+			System::String^ m_Value;
+			
+		public:
+			property System::String^ Name
+			{
+				System::String^ get();
+			}
+			
+			property System::String^ Value
+			{
+				System::String^ get();
+			}
 
-	DXGI::Device^ DeviceChild::Device::get()
-	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
+			static bool operator == ( ShaderMacro left, ShaderMacro right );
+			static bool operator != ( ShaderMacro left, ShaderMacro right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( ShaderMacro other );
+			static bool Equals( ShaderMacro% value1, ShaderMacro% value2 );
+		};
 	}
-}
-}
+};

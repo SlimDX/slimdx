@@ -20,11 +20,11 @@
 * THE SOFTWARE.
 */
 
-#include <dxgi.h>
+#include <d3d11.h>
 
 #include "../ComObject.h"
 
-#include "DXGIException.h"
+#include "Direct3D11Exception.h"
 
 #include "Device.h"
 #include "DeviceChild.h"
@@ -33,19 +33,56 @@ using namespace System;
 
 namespace SlimDX
 {
-namespace DXGI
+namespace Direct3D11
 { 
 	DeviceChild::DeviceChild()
 	{
 	}
-
-	DXGI::Device^ DeviceChild::Device::get()
+	
+	DeviceChild::DeviceChild( ID3D11DeviceChild* pointer )
 	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
+		Construct( pointer );
+	}
+
+	DeviceChild::DeviceChild( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+
+	DeviceChild^ DeviceChild::FromPointer( ID3D11DeviceChild* pointer )
+	{
+		if( pointer == 0 )
 			return nullptr;
-		return DXGI::Device::FromPointer( device );
+
+		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew DeviceChild( pointer );
+	}
+
+	DeviceChild^ DeviceChild::FromPointer( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew DeviceChild( pointer );
+	}
+
+	SlimDX::Direct3D11::Device^ DeviceChild::Device::get()
+	{
+		ID3D11Device* device = 0;
+		InternalPointer->GetDevice( &device );
+		return SlimDX::Direct3D11::Device::FromPointer( device );
 	}
 }
 }

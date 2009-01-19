@@ -19,33 +19,77 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <dxgi.h>
-
-#include "../ComObject.h"
-
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
-
-using namespace System;
+#pragma once
 
 namespace SlimDX
 {
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
+	namespace Direct3D11
 	{
-	}
+		public ref class ResultCode sealed
+		{
+		private:
+			ResultCode();
+			
+		public:
+			property static Result InvalidCall
+			{
+				Result get();
+			};
+			
+			property static Result CannotModifyIndexBuffer
+			{
+				Result get();
+			};
+			
+			property static Result InvalidMesh
+			{
+				Result get();
+			};
+			
+			property static Result CannotSortByAttribute
+			{
+				Result get();
+			};
+			
+			property static Result SkinningNotSupported
+			{
+				Result get();
+			};
+			
+			property static Result TooManyInfluences
+			{
+				Result get();
+			};
+			
+			property static Result InvalidData
+			{
+				Result get();
+			};
+			
+			property static Result LoadedMeshHasNoData
+			{
+				Result get();
+			};
+			
+			property static Result DuplicateNamedFragment
+			{
+				Result get();
+			};
+			
+			property static Result CannotRemoveLastItem
+			{
+				Result get();
+			};
 
-	DXGI::Device^ DeviceChild::Device::get()
-	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
+			property static Result Success
+			{
+				Result get();
+			};
+
+			property static Result Failure
+			{
+				Result get();
+			};
+		};
 	}
-}
 }

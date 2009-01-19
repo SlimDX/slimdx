@@ -63,9 +63,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="2"
+				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				RandomizedBaseAddress="1"
@@ -140,7 +141,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
@@ -216,7 +217,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
@@ -292,7 +293,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
@@ -367,7 +368,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
@@ -443,7 +444,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
@@ -491,12 +492,444 @@
 			AssemblyName="System.Xml, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
 			MinFrameworkVersion="131072"
 		/>
-		<ProjectReference
-			ReferencedProjectIdentifier="{8ECCE443-0440-40F4-A94C-F02E027282C3}"
-			RelativePathToProject=".\SlimDX.vcproj"
-		/>
 	</References>
 	<Files>
+		<Filter
+			Name="Direct3D11"
+			>
+			<File
+				RelativePath=".\source\direct3d11\Asynchronous.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Asynchronous.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\BlendState.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\BlendState.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\BlendStateDescription.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\BlendStateDescription.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Buffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Buffer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\BufferDescription.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\BufferDescription.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\CommandList.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\CommandList.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Counter.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Counter.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\CounterCapabilities.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\CounterCapabilities.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\CounterDescription.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\CounterDescription.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\CounterMetadata.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\CounterMetadata.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Debug.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Debug.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\DepthStencilOperationDescription.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\DepthStencilOperationDescription.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\DepthStencilState.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\DepthStencilState.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\DepthStencilStateDescription.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\DepthStencilStateDescription.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\DepthStencilView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\DepthStencilView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\DepthStencilViewDescription.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\DepthStencilViewDescription.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Device.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Device.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\DeviceChild.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\DeviceChild.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\DeviceContext.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\DeviceContext.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Direct3D11Exception.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Direct3D11Exception.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Enums.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\GeometryShader.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\GeometryShader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\InputAssemblerWrapper.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\InputAssemblerWrapper.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\InputElement.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\InputElement.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\InputLayout.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\InputLayout.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\OutputMergerWrapper.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\OutputMergerWrapper.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\PixelShader.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\PixelShader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\RasterizerState.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\RasterizerState.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\RasterizerStateDescription.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\RasterizerStateDescription.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\RasterizerWrapper.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\RasterizerWrapper.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\RenderTargetView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\RenderTargetView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\RenderTargetViewDescription.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\RenderTargetViewDescription.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Resource.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ResourceRegion.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ResourceRegion.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ResourceView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ResourceView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ResultCode.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ResultCode.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ShaderBlob.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ShaderBlob.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ShaderBytecode.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ShaderBytecode.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ShaderMacro.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ShaderMacro.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ShaderResourceView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ShaderResourceView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ShaderResourceViewDescription.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ShaderResourceViewDescription.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ShaderSignature.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\ShaderSignature.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\StencilOperation.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\StreamOutputBufferBinding.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\StreamOutputBufferBinding.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\StreamOutputWrapper.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\StreamOutputWrapper.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Texture.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Texture.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Texture1D.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Texture1D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Texture1DDescription.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Texture1DDescription.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Texture2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Texture2D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Texture2DDescription.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Texture2DDescription.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Texture3D.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Texture3D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Texture3DDescription.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\Texture3DDescription.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\VertexBufferBinding.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\VertexBufferBinding.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\VertexShader.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\direct3d11\VertexShader.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Base"
+			>
+			<File
+				RelativePath=".\source\ComObject.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\source\AssemblyInfo.cpp"
 			>

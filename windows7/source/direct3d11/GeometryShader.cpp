@@ -20,32 +20,53 @@
 * THE SOFTWARE.
 */
 
-#include <dxgi.h>
+#include <d3d11.h>
 
-#include "../ComObject.h"
-
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
+#include "GeometryShader.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace DXGI
+namespace Direct3D11
 { 
-	DeviceChild::DeviceChild()
+	GeometryShader::GeometryShader( ID3D11GeometryShader* pointer )
 	{
+		Construct( pointer );
+	}
+	
+	GeometryShader::GeometryShader( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
 	}
 
-	DXGI::Device^ DeviceChild::Device::get()
+	GeometryShader^ GeometryShader::FromPointer( ID3D11GeometryShader* pointer )
 	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
+		if( pointer == 0 )
 			return nullptr;
-		return DXGI::Device::FromPointer( device );
+
+		GeometryShader^ tableEntry = safe_cast<GeometryShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew GeometryShader( pointer );
+	}
+
+	GeometryShader^ GeometryShader::FromPointer( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		GeometryShader^ tableEntry = safe_cast<GeometryShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew GeometryShader( pointer );
 	}
 }
 }
