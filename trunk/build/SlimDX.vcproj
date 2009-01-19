@@ -65,7 +65,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib $(NOINHERIT)"
-				Version="0.0.7.40"
+				Version="2.0.6.40"
 				LinkIncremental="2"
 				DelayLoadDLLs="d3d9.dll;d3dx9_40.dll;d3dx10_40.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_5.dll;xinput1_3.dll;dsound.dll"
 				GenerateDebugInformation="true"
@@ -148,7 +148,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib $(NOINHERIT)"
-				Version="0.0.7.40"
+				Version="2.0.6.40"
 				LinkIncremental="2"
 				DelayLoadDLLs="d3d9.dll;d3dx9_40.dll;d3dx10_40.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_5.dll;xinput1_3.dll;dsound.dll"
 				GenerateDebugInformation="true"
@@ -158,6 +158,7 @@
 				TargetMachine="17"
 				KeyFile=""
 				KeyContainer=""
+				CLRUnmanagedCodeCheck="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -231,7 +232,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib $(NOINHERIT)"
-				Version="0.0.7.40"
+				Version="2.0.6.40"
 				LinkIncremental="1"
 				DelayLoadDLLs="d3d9.dll;d3dx9_40.dll;d3dx10_40.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_5.dll;xinput1_3.dll;dsound.dll"
 				GenerateDebugInformation="true"
@@ -313,7 +314,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib $(NOINHERIT)"
-				Version="0.0.7.40"
+				Version="2.0.6.40"
 				LinkIncremental="1"
 				DelayLoadDLLs="d3d9.dll;d3dx9_40.dll;d3dx10_40.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_5.dll;xinput1_3.dll;dsound.dll"
 				GenerateDebugInformation="true"
@@ -321,6 +322,7 @@
 				DataExecutionPrevention="0"
 				TargetMachine="17"
 				KeyFile=""
+				CLRUnmanagedCodeCheck="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -477,12 +479,13 @@
 				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="1"
-				DelayLoadDLLs="d3d9.dll;d3dx9_40.dll;d3dx10_40.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_4.dll;xinput1_3.dll;dsound.dll"
+				DelayLoadDLLs="d3d9.dll;d3dx9_40.dll;d3dx10_40.dll;d3d10.dll;dxgi.dll;dinput8.dll;x3daudio1_5.dll;xinput1_3.dll;dsound.dll"
 				GenerateDebugInformation="true"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 				TargetMachine="17"
 				KeyFile="slimdxKey.snk"
+				CLRUnmanagedCodeCheck="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
