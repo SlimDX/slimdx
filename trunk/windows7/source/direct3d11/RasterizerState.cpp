@@ -20,69 +20,77 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
+#include <d3d11.h>
 
-#include "../ComObject.h"
-
-#include "Direct3D10Exception.h"
+#include "Direct3D11Exception.h"
 
 #include "Device.h"
-#include "DeviceChild.h"
+#include "RasterizerState.h"
+#include "RasterizerStateDescription.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 { 
-	DeviceChild::DeviceChild()
-	{
-	}
-	
-	DeviceChild::DeviceChild( ID3D10DeviceChild* pointer )
+	RasterizerState::RasterizerState( ID3D11RasterizerState* pointer )
 	{
 		Construct( pointer );
 	}
-
-	DeviceChild::DeviceChild( IntPtr pointer )
+	
+	RasterizerState::RasterizerState( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
 
-	DeviceChild^ DeviceChild::FromPointer( ID3D10DeviceChild* pointer )
+	RasterizerState^ RasterizerState::FromDescription( SlimDX::Direct3D11::Device^ device, RasterizerStateDescription description )
+	{
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+		
+		ID3D11RasterizerState* state = 0;
+		D3D11_RASTERIZER_DESC nativeDescription = description.CreateNativeVersion();
+		if( RECORD_D3D11( device->InternalPointer->CreateRasterizerState( &nativeDescription, &state ) ).IsFailure )
+			return nullptr;
+		
+		return FromPointer( state );
+	}
+
+	RasterizerState^ RasterizerState::FromPointer( ID3D11RasterizerState* pointer )
 	{
 		if( pointer == 0 )
 			return nullptr;
 
-		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		RasterizerState^ tableEntry = safe_cast<RasterizerState^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
 			return tableEntry;
 		}
 
-		return gcnew DeviceChild( pointer );
+		return gcnew RasterizerState( pointer );
 	}
 
-	DeviceChild^ DeviceChild::FromPointer( IntPtr pointer )
+	RasterizerState^ RasterizerState::FromPointer( IntPtr pointer )
 	{
 		if( pointer == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "pointer" );
 
-		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		RasterizerState^ tableEntry = safe_cast<RasterizerState^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
 		}
 
-		return gcnew DeviceChild( pointer );
+		return gcnew RasterizerState( pointer );
 	}
 
-	SlimDX::Direct3D10::Device^ DeviceChild::Device::get()
+	RasterizerStateDescription RasterizerState::Description::get()
 	{
-		ID3D10Device* device = 0;
-		InternalPointer->GetDevice( &device );
-		return SlimDX::Direct3D10::Device::FromPointer( device );
+		D3D11_RASTERIZER_DESC description;
+		InternalPointer->GetDesc( &description );
+		return RasterizerStateDescription( description );
 	}
 }
 }

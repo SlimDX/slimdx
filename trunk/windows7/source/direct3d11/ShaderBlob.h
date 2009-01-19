@@ -19,33 +19,19 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <dxgi.h>
+#pragma once
 
 #include "../ComObject.h"
 
-#include "DXGIException.h"
-
-#include "Device.h"
 #include "DeviceChild.h"
-
-using namespace System;
 
 namespace SlimDX
 {
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
+	namespace Direct3D11
 	{
+		public ref class ShaderBlob : public ComObject
+		{
+			COMOBJECT(ID3D10Blob, ShaderBlob);
+		};
 	}
-
-	DXGI::Device^ DeviceChild::Device::get()
-	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
-	}
-}
-}
+};

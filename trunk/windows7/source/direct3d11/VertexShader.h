@@ -19,33 +19,21 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <dxgi.h>
-
-#include "../ComObject.h"
-
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
-
-using namespace System;
+#pragma once
 
 namespace SlimDX
 {
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
+	namespace Direct3D11
 	{
-	}
+		ref class ShaderBlob;
 
-	DXGI::Device^ DeviceChild::Device::get()
-	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
+		public ref class VertexShader : public DeviceChild
+		{
+			COMOBJECT(ID3D11VertexShader, VertexShader);
+
+		public:
+			static VertexShader^ FromPointer( System::IntPtr pointer );
+			static VertexShader^ CompileFromFile( SlimDX::Direct3D11::Device^ device, System::String^ fileName, System::String^ entryPoint, System::String^ profile, [System::Runtime::InteropServices::OutAttribute] ShaderBlob^ %shaderBlob, [System::Runtime::InteropServices::OutAttribute] System::String^ %compilationErrors );
+		};
 	}
-}
-}
+};

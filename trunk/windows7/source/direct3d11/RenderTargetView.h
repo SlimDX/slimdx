@@ -19,33 +19,31 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include <dxgi.h>
-
-#include "../ComObject.h"
-
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
-
-using namespace System;
+#include "ResourceView.h"
 
 namespace SlimDX
 {
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
+	namespace Direct3D11
 	{
+		ref class Device;
+		ref class Resource;
+		value class RenderTargetViewDescription;
+		
+		public ref class RenderTargetView : public ResourceView
+		{
+			COMOBJECT(ID3D11RenderTargetView, RenderTargetView);
+		
+		public:
+			property RenderTargetViewDescription Description
+			{
+				RenderTargetViewDescription get();
+			}
+			
+			RenderTargetView( SlimDX::Direct3D11::Device^ device, Resource^ resource );
+			RenderTargetView( SlimDX::Direct3D11::Device^ device, Resource^ resource, RenderTargetViewDescription description );
+			static RenderTargetView^ FromPointer( System::IntPtr pointer );
+		};
 	}
-
-	DXGI::Device^ DeviceChild::Device::get()
-	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
-	}
-}
-}
+};

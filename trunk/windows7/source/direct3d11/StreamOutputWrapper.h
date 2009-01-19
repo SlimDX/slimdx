@@ -19,33 +19,24 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include <dxgi.h>
-
-#include "../ComObject.h"
-
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
-
-using namespace System;
+#include "StreamOutputBufferBinding.h"
 
 namespace SlimDX
 {
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
+	namespace Direct3D11
 	{
+		public ref class StreamOutputWrapper
+		{
+		private:
+			ID3D11DeviceContext* m_DeviceContext;
+			
+		internal:
+			StreamOutputWrapper( ID3D11DeviceContext* deviceContext );
+			
+		public:
+			void SetTargets( ... array<StreamOutputBufferBinding>^ bufferBindings );
+		};
 	}
-
-	DXGI::Device^ DeviceChild::Device::get()
-	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
-	}
-}
-}
+};

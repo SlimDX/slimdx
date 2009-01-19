@@ -20,32 +20,15 @@
 * THE SOFTWARE.
 */
 
-#include <dxgi.h>
-
-#include "../ComObject.h"
-
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
-
-using namespace System;
+#include "ShaderBytecode.h"
 
 namespace SlimDX
 {
-namespace DXGI
+namespace Direct3D11
 { 
-	DeviceChild::DeviceChild()
+	ShaderBytecode::ShaderBytecode( const void* buffer, int length )
+	: ShaderSignature( buffer, length )
 	{
-	}
-
-	DXGI::Device^ DeviceChild::Device::get()
-	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
 	}
 }
 }

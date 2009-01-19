@@ -19,33 +19,29 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <dxgi.h>
+#pragma once
 
 #include "../ComObject.h"
 
-#include "DXGIException.h"
-
-#include "Device.h"
 #include "DeviceChild.h"
-
-using namespace System;
+#include "InputElement.h"
 
 namespace SlimDX
 {
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
+	namespace Direct3D11
 	{
+		ref class Device;
+		ref class ShaderSignature;
+		ref class ShaderBlob;
+		
+		public ref class InputLayout : public DeviceChild
+		{
+			COMOBJECT(ID3D11InputLayout, InputLayout);
+		
+		public:
+			InputLayout( SlimDX::Direct3D11::Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature );
+			InputLayout( SlimDX::Direct3D11::Device^ device, array<InputElement>^ elements, ShaderBlob^ shaderBlob );
+			static InputLayout^ FromPointer( System::IntPtr pointer );
+		};
 	}
-
-	DXGI::Device^ DeviceChild::Device::get()
-	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
-	}
-}
-}
+};

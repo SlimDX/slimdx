@@ -20,32 +20,39 @@
 * THE SOFTWARE.
 */
 
-#include <dxgi.h>
+#include <d3d11.h>
 
-#include "../ComObject.h"
-
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
+#include "ShaderBlob.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace DXGI
+namespace Direct3D11
 { 
-	DeviceChild::DeviceChild()
+	ShaderBlob::ShaderBlob( ID3D10Blob* pointer )
 	{
+		Construct( pointer );
+	}
+	
+	ShaderBlob::ShaderBlob( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
 	}
 
-	DXGI::Device^ DeviceChild::Device::get()
+	ShaderBlob^ ShaderBlob::FromPointer( ID3D10Blob* pointer )
 	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
+		if( pointer == 0 )
 			return nullptr;
-		return DXGI::Device::FromPointer( device );
+
+		ShaderBlob^ tableEntry = safe_cast<ShaderBlob^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew ShaderBlob( pointer );
 	}
 }
 }

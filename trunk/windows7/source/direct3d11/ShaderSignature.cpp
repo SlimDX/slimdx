@@ -20,32 +20,25 @@
 * THE SOFTWARE.
 */
 
-#include <dxgi.h>
-
-#include "../ComObject.h"
-
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
-
-using namespace System;
+#include "ShaderSignature.h"
 
 namespace SlimDX
 {
-namespace DXGI
+namespace Direct3D11
 { 
-	DeviceChild::DeviceChild()
+	ShaderSignature::ShaderSignature( const void* buffer, System::Int64 length )
+	: m_Buffer( buffer ), m_Length( length )
 	{
 	}
-
-	DXGI::Device^ DeviceChild::Device::get()
+	
+	const void* ShaderSignature::Buffer::get()
 	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
+		return m_Buffer;
+	}
+	
+	System::Int64 ShaderSignature::Length::get()
+	{
+		return m_Length;
 	}
 }
 }

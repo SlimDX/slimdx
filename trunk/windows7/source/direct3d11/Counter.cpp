@@ -20,69 +20,74 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
+#include <d3d11.h>
 
-#include "../ComObject.h"
+#include "Direct3D11Exception.h"
 
-#include "Direct3D10Exception.h"
-
+#include "Counter.h"
+#include "CounterDescription.h"
 #include "Device.h"
-#include "DeviceChild.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 { 
-	DeviceChild::DeviceChild()
-	{
-	}
-	
-	DeviceChild::DeviceChild( ID3D10DeviceChild* pointer )
+	Counter::Counter( ID3D11Counter* pointer )
 	{
 		Construct( pointer );
 	}
 
-	DeviceChild::DeviceChild( IntPtr pointer )
+	Counter::Counter( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
+	
+	Counter::Counter( SlimDX::Direct3D11::Device^ device, CounterDescription description )
+	{
+		ID3D11Counter* counter = 0;
+		D3D11_COUNTER_DESC nativeDescription = description.CreateNativeVersion();
+		if( RECORD_D3D11( device->InternalPointer->CreateCounter( &nativeDescription, &counter ) ).IsFailure )
+			throw gcnew Direct3D11Exception( Result::Last );
+		
+		Construct( counter );
+	}
 
-	DeviceChild^ DeviceChild::FromPointer( ID3D10DeviceChild* pointer )
+	Counter^ Counter::FromPointer( ID3D11Counter* pointer )
 	{
 		if( pointer == 0 )
 			return nullptr;
 
-		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		Counter^ tableEntry = safe_cast<Counter^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
 			return tableEntry;
 		}
 
-		return gcnew DeviceChild( pointer );
+		return gcnew Counter( pointer );
 	}
 
-	DeviceChild^ DeviceChild::FromPointer( IntPtr pointer )
+	Counter^ Counter::FromPointer( IntPtr pointer )
 	{
 		if( pointer == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "pointer" );
 
-		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		Counter^ tableEntry = safe_cast<Counter^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
 		}
 
-		return gcnew DeviceChild( pointer );
+		return gcnew Counter( pointer );
 	}
 
-	SlimDX::Direct3D10::Device^ DeviceChild::Device::get()
+	CounterDescription Counter::Description::get()
 	{
-		ID3D10Device* device = 0;
-		InternalPointer->GetDevice( &device );
-		return SlimDX::Direct3D10::Device::FromPointer( device );
+		D3D11_COUNTER_DESC description;
+		InternalPointer->GetDesc( &description );
+		return CounterDescription( description );
 	}
 }
 }

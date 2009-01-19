@@ -19,33 +19,45 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <dxgi.h>
-
-#include "../ComObject.h"
-
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
-
-using namespace System;
+#pragma once
 
 namespace SlimDX
 {
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
-	{
-	}
+	namespace Direct3D11
+	{	
+		public value class CounterCapabilities : System::IEquatable<CounterCapabilities>
+		{
+		private:
+			int m_LastDeviceDependentCounter;
+			int m_NumSimultaneousCounters;
+			System::Byte m_NumDetectableParallelUnits; 
 
-	DXGI::Device^ DeviceChild::Device::get()
-	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
+		internal:
+			CounterCapabilities( const D3D11_COUNTER_INFO& native );
+			
+		public:
+			property int LastDeviceDependantCounter
+			{
+				int get();
+			}
+			
+			property int MaximumSimultaneousCounters
+			{
+				int get();
+			}
+			
+			property int MaximumParallelUnits
+			{
+				int get();
+			}
+
+			static bool operator == ( CounterCapabilities left, CounterCapabilities right );
+			static bool operator != ( CounterCapabilities left, CounterCapabilities right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( CounterCapabilities other );
+			static bool Equals( CounterCapabilities% value1, CounterCapabilities% value2 );
+		};
 	}
-}
-}
+};

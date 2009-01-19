@@ -19,33 +19,34 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <dxgi.h>
+#pragma once
 
 #include "../ComObject.h"
 
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
-
-using namespace System;
+#include "Enums.h"
+#include "Resource.h"
 
 namespace SlimDX
 {
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
+	namespace Direct3D11
 	{
+		public ref class ShaderSignature
+		{
+			const void* m_Buffer;
+			System::Int64 m_Length;
+		
+		internal:
+			property const void* Buffer
+			{
+				const void* get();
+			}
+			
+			property System::Int64 Length
+			{
+				System::Int64 get();
+			}
+			
+			ShaderSignature( const void* buffer, System::Int64 length );
+		};
 	}
-
-	DXGI::Device^ DeviceChild::Device::get()
-	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
-	}
-}
-}
+};

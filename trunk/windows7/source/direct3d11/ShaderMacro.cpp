@@ -20,32 +20,58 @@
 * THE SOFTWARE.
 */
 
-#include <dxgi.h>
-
-#include "../ComObject.h"
-
-#include "DXGIException.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
+#include "ShaderMacro.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace DXGI
+namespace Direct3D11
 { 
-	DeviceChild::DeviceChild()
+	String^ ShaderMacro::Name::get()
 	{
+		return m_Name;
+	}
+	
+	String^ ShaderMacro::Value::get()
+	{
+		return m_Value;
 	}
 
-	DXGI::Device^ DeviceChild::Device::get()
+	bool ShaderMacro::operator == ( ShaderMacro left, ShaderMacro right )
 	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
+		return ShaderMacro::Equals( left, right );
+	}
+
+	bool ShaderMacro::operator != ( ShaderMacro left, ShaderMacro right )
+	{
+		return !ShaderMacro::Equals( left, right );
+	}
+
+	int ShaderMacro::GetHashCode()
+	{
+		return m_Name->GetHashCode() + m_Value->GetHashCode();
+	}
+
+	bool ShaderMacro::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( safe_cast<ShaderMacro>( value ) );
+	}
+
+	bool ShaderMacro::Equals( ShaderMacro value )
+	{
+		return ( m_Name == value.m_Name && m_Value == value.m_Value );
+	}
+
+	bool ShaderMacro::Equals( ShaderMacro% value1, ShaderMacro% value2 )
+	{
+		return ( value1.m_Name == value2.m_Name && value1.m_Value == value2.m_Value );
 	}
 }
 }

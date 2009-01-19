@@ -20,69 +20,89 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
+#include <d3d11.h>
 
-#include "../ComObject.h"
+#include "Direct3D11Exception.h"
 
-#include "Direct3D10Exception.h"
-
-#include "Device.h"
-#include "DeviceChild.h"
+#include "Asynchronous.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 { 
-	DeviceChild::DeviceChild()
+	Asynchronous::Asynchronous()
 	{
 	}
 	
-	DeviceChild::DeviceChild( ID3D10DeviceChild* pointer )
+	Asynchronous::Asynchronous( ID3D11Asynchronous* pointer )
 	{
 		Construct( pointer );
 	}
 
-	DeviceChild::DeviceChild( IntPtr pointer )
+	Asynchronous::Asynchronous( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
-	}
+	}	
 
-	DeviceChild^ DeviceChild::FromPointer( ID3D10DeviceChild* pointer )
+	Asynchronous^ Asynchronous::FromPointer( ID3D11Asynchronous* pointer )
 	{
 		if( pointer == 0 )
 			return nullptr;
 
-		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		Asynchronous^ tableEntry = safe_cast<Asynchronous^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
 			return tableEntry;
 		}
 
-		return gcnew DeviceChild( pointer );
+		return gcnew Asynchronous( pointer );
 	}
 
-	DeviceChild^ DeviceChild::FromPointer( IntPtr pointer )
+	Asynchronous^ Asynchronous::FromPointer( IntPtr pointer )
 	{
 		if( pointer == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "pointer" );
 
-		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		Asynchronous^ tableEntry = safe_cast<Asynchronous^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
 		}
 
-		return gcnew DeviceChild( pointer );
+		return gcnew Asynchronous( pointer );
 	}
 
-	SlimDX::Direct3D10::Device^ DeviceChild::Device::get()
+	/*
+	bool Asynchronous::IsDataAvailable::get()
 	{
-		ID3D10Device* device = 0;
-		InternalPointer->GetDevice( &device );
-		return SlimDX::Direct3D10::Device::FromPointer( device );
+		return InternalPointer->GetData( 0, 0, 0 ) == S_OK;
 	}
+	
+	void Asynchronous::Begin()
+	{
+		InternalPointer->Begin();
+	}
+	
+	void Asynchronous::End()
+	{
+		InternalPointer->End();
+	}
+	
+	DataStream^ Asynchronous::GetData()
+	{
+		return GetData( AsynchronousFlags::None );
+	}
+	
+	DataStream^ Asynchronous::GetData( AsynchronousFlags flags )
+	{
+		int size = InternalPointer->GetDataSize();
+		DataStream^ result = gcnew DataStream( size, true, true );
+		if( RECORD_D3D11( InternalPointer->GetData( result->RawPointer, size, static_cast<UINT>( flags ) ) ).IsFailure )
+			return nullptr;
+		return result;
+	}*/
 }
 }

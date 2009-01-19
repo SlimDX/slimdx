@@ -19,33 +19,54 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <dxgi.h>
+#pragma once
 
 #include "../ComObject.h"
 
-#include "DXGIException.h"
-
-#include "Device.h"
 #include "DeviceChild.h"
-
-using namespace System;
+#include "Enums.h"
 
 namespace SlimDX
 {
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
+	namespace Direct3D11
 	{
+		/// <summary>
+		/// A resource object.
+		/// </summary>
+		public ref class Resource : public DeviceChild
+		{
+			COMOBJECT_BASE(ID3D11Resource);
+		
+		protected:
+			Resource();
+			
+		internal:
+			Resource( ID3D11Resource* pointer );
+		
+		public:
+			/// <summary>
+			/// Constructs a Resource object from a marshalled native pointer.
+			/// </summary>
+			/// <param name="pointer">The native object pointer.</param>
+			/// <returns>The Resource object for the native object.</returns>
+			Resource( System::IntPtr pointer );
+			
+			/// <summary>
+			/// Gets or sets the resource's eviction priority.
+			/// </summary>
+			property DXGI::ResourcePriority EvictionPriority
+			{
+				DXGI::ResourcePriority get();
+				void set(DXGI::ResourcePriority value);
+			}
+			
+			/// <summary>
+			/// Gets the resource's dimension (type).
+			/// </summary>
+			property ResourceDimension Dimension
+			{
+				ResourceDimension get();
+			}
+		};
 	}
-
-	DXGI::Device^ DeviceChild::Device::get()
-	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
-	}
-}
-}
+};
