@@ -37,6 +37,8 @@ namespace SlimDX
 
 			static WindowRenderTarget^ FromPointer( System::IntPtr pointer );
 
+			Result Resize( System::Drawing::Size size );
+
 			property System::IntPtr Handle
 			{
 				System::IntPtr get();
