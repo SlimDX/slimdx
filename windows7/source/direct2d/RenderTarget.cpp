@@ -32,10 +32,89 @@
 const IID IID_ID2D1RenderTarget = __uuidof(ID2D1RenderTarget);
 
 using namespace System;
+using namespace System::Drawing;
 
 namespace SlimDX
 {
 namespace Direct2D
 {
+	void RenderTarget::BeginDraw()
+	{
+		InternalPointer->BeginDraw();
+	}
+
+	void RenderTarget::EndDraw()
+	{
+		InternalPointer->EndDraw();
+	}
+
+	void RenderTarget::Clear()
+	{
+		InternalPointer->Clear( NULL );
+	}
+
+	void RenderTarget::Clear( Color4 color )
+	{
+		InternalPointer->Clear( reinterpret_cast<D2D1_COLOR_F*>( &color ) );
+	}
+
+	void RenderTarget::DrawLine( Brush^ brush, PointF point1, PointF point2 )
+	{
+		D2D1_POINT_2F point1_n = D2D1::Point2F( point1.X, point1.Y );
+		D2D1_POINT_2F point2_n = D2D1::Point2F( point2.X, point2.Y );
+
+		InternalPointer->DrawLine( point1_n, point2_n, brush->InternalPointer );
+	}
+
+	void RenderTarget::DrawLine( Brush^ brush, PointF point1, PointF point2, float strokeWidth )
+	{
+		D2D1_POINT_2F point1_n = D2D1::Point2F( point1.X, point1.Y );
+		D2D1_POINT_2F point2_n = D2D1::Point2F( point2.X, point2.Y );
+
+		InternalPointer->DrawLine( point1_n, point2_n, brush->InternalPointer, strokeWidth );
+	}
+
+	void RenderTarget::DrawLine( Brush^ brush, PointF point1, PointF point2, float strokeWidth, StrokeStyle^ strokeStyle )
+	{
+		ID2D1StrokeStyle *style = strokeStyle == nullptr ? NULL : strokeStyle->InternalPointer;
+		D2D1_POINT_2F point1_n = D2D1::Point2F( point1.X, point1.Y );
+		D2D1_POINT_2F point2_n = D2D1::Point2F( point2.X, point2.Y );
+
+		InternalPointer->DrawLine( point1_n, point2_n, brush->InternalPointer, strokeWidth, style );
+	}
+
+	void RenderTarget::DrawLine( Brush^ brush, float x1, float y1, float x2, float y2 )
+	{
+		DrawLine( brush, PointF( x1, y1 ), PointF( x2, y2 ) );
+	}
+
+	void RenderTarget::DrawLine( Brush^ brush, float x1, float y1, float x2, float y2, float strokeWidth )
+	{
+		DrawLine( brush, PointF( x1, y1 ), PointF( x2, y2 ), strokeWidth );
+	}
+
+	void RenderTarget::DrawLine( Brush^ brush, float x1, float y1, float x2, float y2, float strokeWidth, StrokeStyle^ strokeStyle )
+	{
+		DrawLine( brush, PointF( x1, y1 ), PointF( x2, y2 ), strokeWidth, strokeStyle );
+	}
+
+	Matrix3x2 RenderTarget::Transform::get()
+	{
+		Matrix3x2 result;
+		InternalPointer->GetTransform( reinterpret_cast<D2D1_MATRIX_3X2_F*>( &result ) );
+
+		return result;
+	}
+
+	void RenderTarget::Transform::set( Matrix3x2 value )
+	{
+		InternalPointer->SetTransform( reinterpret_cast<D2D1_MATRIX_3X2_F*>( &value ) );
+	}
+
+	System::Drawing::SizeF RenderTarget::Size::get()
+	{
+		D2D1_SIZE_F size = InternalPointer->GetSize();
+		return System::Drawing::SizeF( size.width, size.height );
+	}
 }
 }

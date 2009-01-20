@@ -21,44 +21,19 @@
 */
 #pragma once
 
-#include "Resource.h"
-#include "Matrix3x2.h"
-#include "StrokeStyle.h"
-#include "Brush.h"
-
 namespace SlimDX
 {
 	namespace Direct2D
 	{
-		public ref class RenderTarget abstract : Resource
+		public value class Matrix3x2
 		{
-			COMOBJECT_BASE(ID2D1RenderTarget);
-
 		public:
-			void BeginDraw();
-			void EndDraw();
-
-			void Clear();
-			void Clear( Color4 color );
-
-			void DrawLine( Brush^ brush, System::Drawing::PointF point1, System::Drawing::PointF point2 );
-			void DrawLine( Brush^ brush, System::Drawing::PointF point1, System::Drawing::PointF point2, float strokeWidth );
-			void DrawLine( Brush^ brush, System::Drawing::PointF point1, System::Drawing::PointF point2, float strokeWidth, StrokeStyle^ strokeStyle );
-
-			void DrawLine( Brush^ brush, float x1, float y1, float x2, float y2 );
-			void DrawLine( Brush^ brush, float x1, float y1, float x2, float y2, float strokeWidth );
-			void DrawLine( Brush^ brush, float x1, float y1, float x2, float y2, float strokeWidth, StrokeStyle^ style );
-
-			property Matrix3x2 Transform
-			{
-				Matrix3x2 get();
-				void set( Matrix3x2 value );
-			}
-
-			property System::Drawing::SizeF Size
-			{
-				System::Drawing::SizeF get();
-			}
+			property float M11;
+			property float M12;
+			property float M21;
+			property float M22;
+			property float M31;
+			property float M32;
 		};
 	}
 }

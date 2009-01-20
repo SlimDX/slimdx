@@ -27,89 +27,53 @@
 
 #include "Direct2DException.h"
 
-#include "Factory.h"
+#include "StrokeStyle.h"
 
-const IID IID_ID2D1Factory = __uuidof(ID2D1Factory);
+const IID IID_ID2D1StrokeStyle = __uuidof(ID2D1StrokeStyle);
 
 using namespace System;
 
 namespace SlimDX
 {
 namespace Direct2D
-{ 
-	Factory::Factory()
-	{
-		Init( FactoryType::SingleThreaded, DebugLevel::None );
-	}
-
-	Factory::Factory( FactoryType factoryType )
-	{
-		Init( factoryType, DebugLevel::None );
-	}
-
-	Factory::Factory( FactoryType factoryType, DebugLevel debugLevel )
-	{
-		Init( factoryType, debugLevel );
-	}
-
-	Factory::Factory( ID2D1Factory* pointer )
+{
+	StrokeStyle::StrokeStyle( ID2D1StrokeStyle* pointer )
 	{
 		Construct( pointer );
 	}
-
-	Factory::Factory( IntPtr pointer )
+	
+	StrokeStyle::StrokeStyle( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
-
-	Factory^ Factory::FromPointer( ID2D1Factory* pointer )
+	
+	StrokeStyle^ StrokeStyle::FromPointer( ID2D1StrokeStyle* pointer )
 	{
 		if( pointer == 0 )
 			return nullptr;
 
-		Factory^ tableEntry = safe_cast<Factory^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		StrokeStyle^ tableEntry = safe_cast<StrokeStyle^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
 			return tableEntry;
 		}
 
-		return gcnew Factory( pointer );
+		return gcnew StrokeStyle( pointer );
 	}
 
-	Factory^ Factory::FromPointer( IntPtr pointer )
+	StrokeStyle^ StrokeStyle::FromPointer( IntPtr pointer )
 	{
 		if( pointer == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "pointer" );
 
-		Factory^ tableEntry = safe_cast<Factory^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		StrokeStyle^ tableEntry = safe_cast<StrokeStyle^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
 		}
 
-		return gcnew Factory( pointer );
-	}
-
-	void Factory::Init( FactoryType factoryType, DebugLevel debugLevel )
-	{
-		ID2D1Factory *factory = NULL;
-
-		D2D1_FACTORY_OPTIONS options;
-		options.debugLevel = static_cast<D2D1_DEBUG_LEVEL>( debugLevel );
-
-		if( RECORD_D2D( D2D1CreateFactory( static_cast<D2D1_FACTORY_TYPE>( factoryType ), options, &factory ) ).IsFailure )
-			throw gcnew Direct2DException( Result::Last );
-
-		Construct( factory );
-	}
-
-	System::Drawing::SizeF Factory::DesktopDpi::get()
-	{
-		float x, y;
-		InternalPointer->GetDesktopDpi( &x, &y );
-
-		return System::Drawing::SizeF( x, y );
+		return gcnew StrokeStyle( pointer );
 	}
 }
 }

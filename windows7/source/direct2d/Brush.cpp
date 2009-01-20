@@ -19,31 +19,23 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Enums.h"
+#define DEFINE_ENUM_FLAG_OPERATORS(x)
+
+#include <d2d1.h>
+#include <d2d1helper.h>
+
+#include "Direct2DException.h"
+
+#include "Brush.h"
+
+const IID IID_ID2D1Brush = __uuidof(ID2D1Brush);
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct2D
-	{
-		public ref class Factory : public ComObject
-		{
-			COMOBJECT(ID2D1Factory, Factory);
-
-			void Init( FactoryType factoryType, DebugLevel debugLevel );
-			
-		public:
-			Factory();
-			Factory( FactoryType factoryType );
-			Factory( FactoryType factoryType, DebugLevel debugLevel );
-
-			static Factory^ FromPointer( System::IntPtr pointer );
-
-			property System::Drawing::SizeF DesktopDpi
-			{
-				System::Drawing::SizeF get();
-			}
-		};
-	}
+namespace Direct2D
+{
+}
 }

@@ -27,89 +27,77 @@
 
 #include "Direct2DException.h"
 
-#include "Factory.h"
+#include "RenderTarget.h"
+#include "SolidColorBrush.h"
 
-const IID IID_ID2D1Factory = __uuidof(ID2D1Factory);
+const IID IID_ID2D1SolidColorBrush = __uuidof(ID2D1SolidColorBrush);
 
 using namespace System;
 
 namespace SlimDX
 {
 namespace Direct2D
-{ 
-	Factory::Factory()
-	{
-		Init( FactoryType::SingleThreaded, DebugLevel::None );
-	}
-
-	Factory::Factory( FactoryType factoryType )
-	{
-		Init( factoryType, DebugLevel::None );
-	}
-
-	Factory::Factory( FactoryType factoryType, DebugLevel debugLevel )
-	{
-		Init( factoryType, debugLevel );
-	}
-
-	Factory::Factory( ID2D1Factory* pointer )
+{
+	SolidColorBrush::SolidColorBrush( ID2D1SolidColorBrush* pointer )
 	{
 		Construct( pointer );
 	}
-
-	Factory::Factory( IntPtr pointer )
+	
+	SolidColorBrush::SolidColorBrush( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
-
-	Factory^ Factory::FromPointer( ID2D1Factory* pointer )
+	
+	SolidColorBrush^ SolidColorBrush::FromPointer( ID2D1SolidColorBrush* pointer )
 	{
 		if( pointer == 0 )
 			return nullptr;
 
-		Factory^ tableEntry = safe_cast<Factory^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		SolidColorBrush^ tableEntry = safe_cast<SolidColorBrush^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
 			return tableEntry;
 		}
 
-		return gcnew Factory( pointer );
+		return gcnew SolidColorBrush( pointer );
 	}
 
-	Factory^ Factory::FromPointer( IntPtr pointer )
+	SolidColorBrush^ SolidColorBrush::FromPointer( IntPtr pointer )
 	{
 		if( pointer == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "pointer" );
 
-		Factory^ tableEntry = safe_cast<Factory^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		SolidColorBrush^ tableEntry = safe_cast<SolidColorBrush^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
 		}
 
-		return gcnew Factory( pointer );
+		return gcnew SolidColorBrush( pointer );
 	}
 
-	void Factory::Init( FactoryType factoryType, DebugLevel debugLevel )
+	SolidColorBrush::SolidColorBrush( RenderTarget^ renderTarget, Color4 color )
 	{
-		ID2D1Factory *factory = NULL;
+		Init( renderTarget, color, BrushProperties() );
+	}
 
-		D2D1_FACTORY_OPTIONS options;
-		options.debugLevel = static_cast<D2D1_DEBUG_LEVEL>( debugLevel );
+	SolidColorBrush::SolidColorBrush( RenderTarget^ renderTarget, Color4 color, BrushProperties properties )
+	{
+		Init( renderTarget, color, properties );
+	}
 
-		if( RECORD_D2D( D2D1CreateFactory( static_cast<D2D1_FACTORY_TYPE>( factoryType ), options, &factory ) ).IsFailure )
+	void SolidColorBrush::Init( RenderTarget^ renderTarget, Color4 color, BrushProperties properties )
+	{
+		ID2D1SolidColorBrush *brush = NULL;
+
+		HRESULT hr = renderTarget->InternalPointer->CreateSolidColorBrush( reinterpret_cast<D2D1_COLOR_F*>( &color ),
+			reinterpret_cast<D2D1_BRUSH_PROPERTIES*>( &properties ), &brush );
+
+		if( RECORD_D2D( hr ).IsFailure )
 			throw gcnew Direct2DException( Result::Last );
 
-		Construct( factory );
-	}
-
-	System::Drawing::SizeF Factory::DesktopDpi::get()
-	{
-		float x, y;
-		InternalPointer->GetDesktopDpi( &x, &y );
-
-		return System::Drawing::SizeF( x, y );
+		Construct( brush );
 	}
 }
 }
