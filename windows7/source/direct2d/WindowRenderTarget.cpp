@@ -103,6 +103,11 @@ namespace Direct2D
 		Construct( renderTarget );
 	}
 
+	Result WindowRenderTarget::Resize( System::Drawing::Size size )
+	{
+		return RECORD_D2D( InternalPointer->Resize( reinterpret_cast<D2D1_SIZE_U*>( &size ) ) );
+	}
+
 	IntPtr WindowRenderTarget::Handle::get()
 	{
 		return IntPtr( InternalPointer->GetHwnd() );

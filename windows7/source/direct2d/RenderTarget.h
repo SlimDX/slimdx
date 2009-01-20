@@ -36,7 +36,7 @@ namespace SlimDX
 
 		public:
 			void BeginDraw();
-			void EndDraw();
+			Result EndDraw();
 
 			void Clear();
 			void Clear( Color4 color );
@@ -48,6 +48,17 @@ namespace SlimDX
 			void DrawLine( Brush^ brush, float x1, float y1, float x2, float y2 );
 			void DrawLine( Brush^ brush, float x1, float y1, float x2, float y2, float strokeWidth );
 			void DrawLine( Brush^ brush, float x1, float y1, float x2, float y2, float strokeWidth, StrokeStyle^ style );
+
+			void FillRectangle( Brush^ brush, System::Drawing::Rectangle rectangle );
+			void FillRectangle( Brush^ brush, System::Drawing::RectangleF rectangle );
+
+			void DrawRectangle( Brush^ brush, System::Drawing::Rectangle rectangle );
+			void DrawRectangle( Brush^ brush, System::Drawing::Rectangle rectangle, float strokeWidth );
+			void DrawRectangle( Brush^ brush, System::Drawing::Rectangle rectangle, float strokeWidth, StrokeStyle^ strokeStyle );
+
+			void DrawRectangle( Brush^ brush, System::Drawing::RectangleF rectangle );
+			void DrawRectangle( Brush^ brush, System::Drawing::RectangleF rectangle, float strokeWidth );
+			void DrawRectangle( Brush^ brush, System::Drawing::RectangleF rectangle, float strokeWidth, StrokeStyle^ strokeStyle );
 
 			property Matrix3x2 Transform
 			{
